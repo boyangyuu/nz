@@ -17,8 +17,8 @@ function MainScene:ctor()
         :addTo(self, 1000)
     
     --todo
---    local fightLayer = FightLayer.new()
---    self:addChild(fightLayer)
+    local fightLayer = FightLayer.new()
+    self:addChild(fightLayer)
 end
 
 function MainScene:onEnter()
