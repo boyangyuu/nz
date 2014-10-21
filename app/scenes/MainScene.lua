@@ -1,5 +1,6 @@
 
 local FightLayer = import("..fight.FightLayer")
+local LevelMapLayer = import("..levelMap.LevelMapLayer")
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
@@ -17,8 +18,13 @@ function MainScene:ctor()
         :addTo(self, 1000)
     
     --todo
-    local fightLayer = FightLayer.new()
-    self:addChild(fightLayer)
+    -- local fightLayer = FightLayer.new()
+    -- self:addChild(fightLayer)
+
+    --to levelMapLayer
+    local levelMapLayer = LevelMapLayer.new()
+    self:addChild(levelMapLayer)
+
 end
 
 function MainScene:onEnter()
