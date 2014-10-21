@@ -1,5 +1,5 @@
 
-local FightLayer = import("..fight.FightLayer")
+local FightPlayer = import("..fight.FightPlayer")
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
@@ -17,8 +17,8 @@ function MainScene:ctor()
         :addTo(self, 1000)
     
     --todo
-    local fightLayer = FightLayer.new()
-    self:addChild(fightLayer)
+    local FightPlayer = FightPlayer.new()
+    self:addChild(FightPlayer)
 end
 
 function MainScene:onEnter()
