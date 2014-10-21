@@ -25,6 +25,9 @@ function FightPlayer:ctor()
     self.hero = app:getInstance(Hero)
     self.gunView = GunView.new()
 
+    --instance
+    self.gunBtnPressed = false
+
     --ui
     self:initUI()
 
@@ -129,9 +132,9 @@ function FightPlayer:canGunShot()
 end
 
 function FightPlayer:fire()
-    --check
-    if not self.hero:canFire() then return end
-
+    --hero
+    self.hero:fire()
+    
     --gun
     print("fire")
     self.gunView:playFire()

@@ -10,7 +10,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = class("Actor", cc.mvc.ModelBase)
 
 -- 常量
-Actor.FIRE_COOLDOWN = 10.2 -- 开火冷却时间
+Actor.FIRE_COOLDOWN = 0.2 -- 开火冷却时间
 
 -- 定义事件
 Actor.CHANGE_STATE_EVENT = "CHANGE_STATE_EVENT"
@@ -256,6 +256,7 @@ end
 function Actor:onLeaveFiring_(event)
     local cooldown = checknumber(event.args[1])
     if cooldown > 0 then
+        print("Actor:onLeaveFiring_ 111")
         -- 如果开火后的冷却时间大于 0，则需要等待
         scheduler.performWithDelayGlobal(function()
             event.transition()
