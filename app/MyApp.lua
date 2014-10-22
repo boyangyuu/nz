@@ -65,4 +65,10 @@ function MyApp:getArmature(name, src)
     return armature
 end
 
+function MyApp:addChildCenter(child, parent)
+    child:setPosition(parent:getContentSize().width/2, parent:getContentSize().height/2)
+    parent:addChild(child)
+end
+
+
 return MyApp
