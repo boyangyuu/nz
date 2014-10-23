@@ -37,10 +37,6 @@ function FightPlayer:ctor()
 
     --config
     -- json解码用 json
-    local size = 0
-    -- cc.FileUtils:getInstance():addSearchPath("res/config")
-    -- local testCfg = cc.FileUtils:getInstance():getFileData("test.json", "r", size)
-    -- local testCfg =  cc.loader.getRes("res/config.json")
     local fileUtil = cc.FileUtils:getInstance()
     local fullPath = fileUtil:fullPathForFilename("config/test.json")
     local jsonStr = fileUtil:getStringFromFile(fullPath)  
@@ -79,27 +75,39 @@ function FightPlayer:loadCCS()
 end
 
 function FightPlayer:initTouchArea()
-	--控制层    
+	--control    
     local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
     layerTouch:setTouchEnabled(true)  
-
-	local layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
-	layerControl:setTouchEnabled(true)
-	layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-	layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
-	    printf("%s %s [TARGETING]", "layerControl", event.name)
-        if event.name == "moved" then 
+    local layerControl = display.newScale9Sprite()
+    layerControl:setContentSize(cc.size(936, 640))
+    layerControl:setPosition(0, 0)
+    layerControl:setAnchorPoint(0, 0)
+    layerControl:setOpacity(0)
+    layerTouch:addChild(layerControl)
+    layerControl:setTouchEnabled(true)
+    layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    layerControl:setTouchSwallowEnabled(false)
+    layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        printf("%s %s [TARGETING]", "button1", event.name)
+        if event.name == "ended" or event.name == "cancelled" then
+            print("-----------------------------")
+        elseif event.name == "moved" then 
             self:onTouchMoved(event)
+            print("")
         end
         return true
-    end)
+    end)    
+
+    --btn
     self:initFireBtn()
 end
 
 function FightPlayer:initFireBtn()
+    --btnfire    
     local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    -- btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    dump(btnFire, "btnFire")
     btnFire:setTouchEnabled(true)
+    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
     btnFire:setTouchSwallowEnabled(true)
     btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         printf("%s %s [TARGETING]", "btnFire", event.name)

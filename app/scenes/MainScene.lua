@@ -15,7 +15,6 @@ function MainScene:ctor()
             text = "-- 122" .. " --", size = 24, color = display.COLOR_WHITE})
         :align(display.CENTER, display.cx, display.top - 20)
         :addTo(self, 1000)
-    
     --todo
     local FightPlayer = FightPlayer.new()
     self:addChild(FightPlayer)
