@@ -87,7 +87,8 @@ function FightPlayer:initTouchArea()
 	layerControl:setTouchEnabled(true)
 	layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 	layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
-	    if event.name == "moved" then 
+	    printf("%s %s [TARGETING]", "layerControl", event.name)
+        if event.name == "moved" then 
             self:onTouchMoved(event)
         end
         return true
@@ -97,10 +98,11 @@ end
 
 function FightPlayer:initFireBtn()
     local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     btnFire:setTouchSwallowEnabled(true)
     btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name == "began" then
+        printf("%s %s [TARGETING]", "btnFire", event.name)
+        if event.name == "began" or event.name == "added" then
             print("onButtonClicked")
             self.gunBtnPressed = true
             --动画
@@ -152,12 +154,7 @@ function FightPlayer:fire()
     --gun
     print("fire")
     self.gunView:playFire()
-
-    --target
-
-    --..
 end
-
 
 ----touch----
 function FightPlayer:printTouch(event)
@@ -167,45 +164,17 @@ function FightPlayer:printTouch(event)
         print(str)
     end
 end
---[[
-function FightPlayer:onTouchBegan(event)
-    for id, point in pairs(event.points) do
-        self:printTouch(event)
-
-        --check btnLayer
-        -- local 
-    end    
-end
-
-function FightPlayer:onTouchAdded(event)
-    
-end
 
 function FightPlayer:onTouchMoved(event)
-    
-end
-
-function FightPlayer:onTouchRemoved(event)
-    
-end
-
-function FightPlayer:onTouchEnded(event)
-    
-end
-]]
-function FightPlayer:onTouchMoved(event)
-    dump(event, "onTouchMoved")
+    -- dump(event, "onTouchMoved")
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
         x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
         -- print("onTouchMoved", i .. " : " .. x ..";" .. y)
-
-        -- local isBtnTouch = self:
     end
     local offsetX = x - prevX 
     local offsetY = y - prevY
 
--- cc.rectContainsPoint todoyby
     --处理瞄准
     self:moveFocus(offsetX, offsetY)
     
@@ -214,10 +183,6 @@ function FightPlayer:onTouchMoved(event)
 
     return true
 end
-
--- function FightPlayer:( ... )
---     -- body
--- end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
