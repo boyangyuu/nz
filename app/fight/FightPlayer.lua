@@ -99,6 +99,7 @@ end
 function FightPlayer:initFireBtn()
     local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     -- btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    btnFire:setTouchEnabled(true)
     btnFire:setTouchSwallowEnabled(true)
     btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         printf("%s %s [TARGETING]", "btnFire", event.name)
@@ -116,7 +117,8 @@ function FightPlayer:initFireBtn()
                 armature:removeFromParent()
             end
             armature:getAnimation():setMovementEventCallFunc(animationEvent)
-            btnFire:addChild(armature)
+            app:addChildCenter(armature, btnFire)
+            -- btnFire:addChild(armature)
             armature:setTag(1)            
         end
         if event.name == "cancelled" or event.name == "ended" then
