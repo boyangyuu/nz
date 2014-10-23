@@ -1,6 +1,6 @@
 
 local FightLayer = import("..fight.FightLayer")
-local LevelMapLayer = import("..levelMap.LevelMapLayer")
+local LevelMapLayer_1 = import("..levelMap.LevelMapLayer_1")
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
@@ -22,8 +22,8 @@ function MainScene:ctor()
     -- self:addChild(fightLayer)
 
     --to levelMapLayer
-    local levelMapLayer = LevelMapLayer.new()
-    self:addChild(levelMapLayer)
+    local levelMapLayer_1 = LevelMapLayer_1.new()
+    self:addChild(levelMapLayer_1)
 
 end
 
