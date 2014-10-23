@@ -55,8 +55,6 @@ function FightPlayer:initUI()
 	--touch area
 	self:initTouchArea()
 
-    --btn area
-    self:initBtnArea()
 end
 
 function FightPlayer:loadCCS()
@@ -81,34 +79,26 @@ function FightPlayer:loadCCS()
 end
 
 function FightPlayer:initTouchArea()
-	--滑动层    
+	--控制层    
     local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
-    layerTouch:setTouchEnabled(true)
-    -- layerTouch:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
-        if event.name == "began" then    
-            -- self:onTouchBegan(event)
-        elseif event.name == "added" then 
-            -- self:onTouchAdded(event)
-        elseif event.name == "moved" then 
+    layerTouch:setTouchEnabled(true)  
+
+	local layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
+	layerControl:setTouchEnabled(true)
+	layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+	layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function (event)
+	    if event.name == "moved" then 
             self:onTouchMoved(event)
-        elseif event.name == "removed" then 
-            -- self:onTouchRemoved(event)
-        elseif event.name == "ended" or event.name == "cancelled" then
-            -- self:onTouchEnded(event)
         end
         return true
-    end)   
-
+    end)
+    self:initFireBtn()
 end
 
-function FightPlayer:initBtnArea()
-    local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
-    layerBtn:setTouchEnabled(true)
-    layerBtn:setTouchSwallowEnabled(false)
+function FightPlayer:initFireBtn()
     local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    -- btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-
+    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    btnFire:setTouchSwallowEnabled(true)
     btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name == "began" then
             print("onButtonClicked")
@@ -204,15 +194,14 @@ function FightPlayer:onTouchEnded(event)
 end
 ]]
 function FightPlayer:onTouchMoved(event)
-    -- dump(event, "onTouchMoved")
-    -- for i,v in ipairs(event.points) do
-    --     local  x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
-    --     print("onTouchMoved", i .. " : " .. x ..";" .. y)
+    dump(event, "onTouchMoved")
+    local  x, y, prevX, prevY 
+    for i,v in pairs(event.points) do
+        x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
+        -- print("onTouchMoved", i .. " : " .. x ..";" .. y)
 
-    --     -- local isBtnTouch = self:
-    -- end
-    local  x, y, prevX, prevY = event.x,  event.y,  event.prevX,  event.prevY
-
+        -- local isBtnTouch = self:
+    end
     local offsetX = x - prevX 
     local offsetY = y - prevY
 
