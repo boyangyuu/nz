@@ -4,8 +4,7 @@
 “准星”的视图
 
 ]]
-
-local ViewUtils = import("..ViewUtils")
+import("..includes.functionUtils")
 
 local FocusView = class("FocusView", function()
     return display.newNode()

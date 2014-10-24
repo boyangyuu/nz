@@ -4,7 +4,7 @@
 “枪”的视图
 
 ]]
-local ViewUtils = import("..ViewUtils")
+import("..includes.functionUtils")
 
 local GunView = class("GunView", function()
     return display.newNode()
@@ -13,7 +13,7 @@ end)
 function GunView:ctor()
 	local gunId = 1   -- todo 外界传
     local src = "Fight/gunsAnim/anim_gun_jiqiang/anim_gun_jiqiang.ExportJson"
-    local armature = ViewUtils:getArmature("anim_gun_jiqiang", src) 
+    local armature = getArmature("anim_gun_jiqiang", src) 
 	self.gun = armature
 
 	--换肤

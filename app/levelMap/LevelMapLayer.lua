@@ -2,16 +2,16 @@
 -- Author: Fangzhongzheng
 -- Date: 2014-10-21 14:32:57
 --
-local ViewUtils = import("..ViewUtils")
+import("..includes.functionUtils")
 
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
-    
+
 function LevelMapLayer:ctor()
     self:onEnter()
 end
-    
+    -- 
 function LevelMapLayer:onEnter() 
 -- Member variables
     self.index = 1
@@ -20,7 +20,8 @@ function LevelMapLayer:onEnter()
     self.totalLevelNumber_1 = 6  -- "Interior small level" of 1 big level total number
 
 -- load bg ang play bg starting animation
-    local bg = display.newSprite("res/LevelMap/levelMap_bg.png", 0, 0)
+    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
+    local bg = display.newSprite("levelMap_bg.png", 0, 0)
     bg:setScaleX(1)
     bg:setScaleY(1)
     bg:setAnchorPoint(0, 0)
@@ -29,7 +30,6 @@ function LevelMapLayer:onEnter()
     self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
 -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local controlNode = cc.uiloader:load("levelMap_ui.ExportJson")
     controlNode:setPosition(0, 0) -- Because anchor is (0, 0)
     self:addChild(controlNode, 2)
@@ -62,7 +62,7 @@ function LevelMapLayer:onEnter()
     self.programBtn[11]:addChild(display.newSprite("1.png", 60, 25), 2)
 
     -- add listener (attention: this isnot button, so we add node event listener)
-    ViewUtils:addBtnEventListener(self.programBtn[1], function(event)
+    addBtnEventListener(self.programBtn[1], function(event)
         if event.name=='began' then
             print("programBtn is begining!")
             return true
@@ -78,7 +78,7 @@ function LevelMapLayer:onEnter()
             self:bgAnimation()
         end
     end)
-    ViewUtils:addBtnEventListener(self.programBtn[2], function(event)
+    addBtnEventListener(self.programBtn[2], function(event)
         if event.name=='began' then
             print("programBtn is begining!")
             return true
@@ -96,7 +96,7 @@ function LevelMapLayer:onEnter()
     end)
 
     for i = 3, 10 do
-        ViewUtils:addBtnEventListener(self.programBtn[i], function(event)
+        addBtnEventListener(self.programBtn[i], function(event)
             if event.name=='began' then
                 print("programBtn is begining!")
             return true
@@ -124,9 +124,10 @@ function LevelMapLayer:changeBigLevel()
         levelBtn[i]:setTouchEnabled(true)
 
     -- add listener
-        ViewUtils:addBtnEventListener(levelBtn[i], function(event)
+        addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
+                addPopupWindows(self, "levelMap_popup.ExportJson", 2)
             return true
             elseif event.name=='ended' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
