@@ -1,6 +1,6 @@
 --
 -- Author: Fangzhongzheng
--- Date: 2014-10-20 17:53:15
+-- Date: 2014-10-21 14:32:57
 --
 local ViewUtils = import("..ViewUtils")
 
@@ -13,211 +13,174 @@ function LevelMapLayer:ctor()
 end
     
 function LevelMapLayer:onEnter() 
+-- Member variables
+    self.index = 1
+    self.preIndex = 0
+    self.totalLevelNumber = 4    -- "Big level" total number
+    self.totalLevelNumber_1 = 6  -- "Interior small level" of 1 big level total number
+
+-- load bg ang play bg starting animation
+    local bg = display.newSprite("res/LevelMap/levelMap_bg.png", 0, 0)
+    bg:setScaleX(1)
+    bg:setScaleY(1)
+    bg:setAnchorPoint(0, 0)
+    self:addChild(bg, 0) 
+    self.bg = bg
+    self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
 -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local controlNode = cc.uiloader:load("levelMap_ui.ExportJson")
-    
-    -- Because anchor is (0, 0)
-    controlNode:setPosition(0, 0)
+    controlNode:setPosition(0, 0) -- Because anchor is (0, 0)
     self:addChild(controlNode, 2)
 
     -- seek all button
-    local nextButton = cc.uiloader:seekNodeByName(self, "btn_next")
-    local preButton = cc.uiloader:seekNodeByName(self, "btn_pre")
-    local settingButton = cc.uiloader:seekNodeByName(self, "btn_setting")
-    local buyCoinButton = cc.uiloader:seekNodeByName(self, "btn_buyCoin")
-    local arsenalButton = cc.uiloader:seekNodeByName(self, "btn_arsenal")
-    local inlayButton = cc.uiloader:seekNodeByName(self, "btn_inlay")
-    local shopButton = cc.uiloader:seekNodeByName(self, "btn_shop")
-    local saleButton = cc.uiloader:seekNodeByName(self, "btn_sale")
-    local taskButton = cc.uiloader:seekNodeByName(self, "btn_task")
-    local giftButton = cc.uiloader:seekNodeByName(self, "btn_gift")
+    local ccsBtn = 
+    {
+    "btn_next", 
+    "btn_pre",
+    "btn_setting",
+    "btn_buyCoin",
+    "btn_arsenal",
+    "btn_inlay",
+    "btn_shop",
+    "btn_sale",
+    "btn_task",
+    "btn_gift",
+    "level"
+    }
+    local programBtn = {}
 
-    -- setTouchEnabled
-    nextButton:setTouchEnabled(true)
-    preButton:setTouchEnabled(true)
-    settingButton:setTouchEnabled(true)
-    buyCoinButton:setTouchEnabled(true)
-    arsenalButton:setTouchEnabled(true)
-    inlayButton:setTouchEnabled(true)
-    shopButton:setTouchEnabled(true)
-    saleButton:setTouchEnabled(true)
-    taskButton:setTouchEnabled(true)
-    giftButton:setTouchEnabled(true)
+    for i, v in ipairs(ccsBtn) do
+        programBtn[i] = cc.uiloader:seekNodeByName(self, v)
+        programBtn[i]:setTouchEnabled(true)
+    end
+
+    -- set Member variables(or U can setting global variables)
+    self.programBtn = programBtn
+    self.programBtn[11]:setTouchEnabled(false)
+    self.programBtn[11]:addChild(display.newSprite("1.png", 60, 25), 2)
 
     -- add listener (attention: this isnot button, so we add node event listener)
-    ViewUtils:addBtnEventListener(nextButton, function(event)
+    ViewUtils:addBtnEventListener(self.programBtn[1], function(event)
         if event.name=='began' then
-        	print("nextButton is begining!")
+            print("programBtn is begining!")
             return true
         elseif event.name=='ended' then
-            print("nextButton is pressed!")
+            print("programBtn is pressed!")
+            if self.index >= self.totalLevelNumber then
+                self.index = 1
+                self.preIndex = self.totalLevelNumber
+            else
+                self.index = self.index + 1
+                self.preIndex = self.index - 1
+            end
+            self:bgAnimation()
         end
     end)
-    ViewUtils:addBtnEventListener(preButton, function(event)
+    ViewUtils:addBtnEventListener(self.programBtn[2], function(event)
         if event.name=='began' then
-            print("preButton is begining!")
+            print("programBtn is begining!")
             return true
         elseif event.name=='ended' then
-            print("preButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(settingButton, function(event)
-        if event.name=='began' then
-            print("settingButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("settingButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(buyCoinButton, function(event)
-        if event.name=='began' then
-            print("buyCoinButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("buyCoinButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(arsenalButton, function(event)
-        if event.name=='began' then
-            print("arsenalButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("arsenalButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(inlayButton, function(event)
-        if event.name=='began' then
-            print("inlayButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("inlayButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(shopButton, function(event)
-        if event.name=='began' then
-            print("shopButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("shopButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(saleButton, function(event)
-        if event.name=='began' then
-            print("saleButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("saleButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(taskButton, function(event)
-        if event.name=='began' then
-            print("taskButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("taskButton is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(giftButton, function(event)
-        if event.name=='began' then
-            print("giftButton is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("giftButton is pressed!")
+            print("programBtn is pressed!")
+            if self.index < 2 then
+                self.index = self.totalLevelNumber
+                self.preIndex = 1
+            else
+                self.index = self.index - 1
+                self.preIndex = self.index + 1
+            end
+            self:bgAnimation()
         end
     end)
 
--- load background
-    -- local bgNode = cc.uiloader:load("levelMap_bg.ExportJson")
-    -- bgNode:setPosition(0, 0)
-    -- self:addChild(bgNode, 0)
-
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:removeArmatureFileInfo("levelMap_bg.ExportJson")
-    manager:addArmatureFileInfo("levelMap_bg.ExportJson")
-
-    local armature = ccs.Armature:create("map_shijie")
-    armature:getAnimation():play("0_1")
-    -- armature:setPosition(cc.p(display.cx, display.cy))
-    self:addChild(armature)
+    for i = 3, 10 do
+        ViewUtils:addBtnEventListener(self.programBtn[i], function(event)
+            if event.name=='began' then
+                print("programBtn is begining!")
+            return true
+            elseif event.name=='ended' then
+                print("programBtn is pressed!")
+            end
+        end)
+    end
 
 -- load level layer
-    local bgNode = cc.uiloader:load("levelMap_1.ExportJson")
+    self:changeBigLevel()
+end
+
+function LevelMapLayer:changeBigLevel()
+    -- load level layer
+    local bgNode = cc.uiloader:load("levelMap_"..self.index..".ExportJson")
     bgNode:setPosition(0, 0)
     self:addChild(bgNode, 1)
+    self.bgNode = bgNode
 
     -- seek all button
-    local levelBtn1 = cc.uiloader:seekNodeByName(self, "level_1")
-    local levelBtn2 = cc.uiloader:seekNodeByName(self, "level_2")
-    local levelBtn3 = cc.uiloader:seekNodeByName(self, "level_3")
-    local levelBtn4 = cc.uiloader:seekNodeByName(self, "level_4")
-    local levelBtn5 = cc.uiloader:seekNodeByName(self, "level_5")
-    local levelBtn6 = cc.uiloader:seekNodeByName(self, "level_6")
+    local levelBtn = {}
+    for i = 1, self.totalLevelNumber_1 do
+        levelBtn[i] = cc.uiloader:seekNodeByName(self, "level_"..i)
+        levelBtn[i]:setTouchEnabled(true)
 
-     -- setTouchEnabled
-    levelBtn1:setTouchEnabled(true)
-    levelBtn2:setTouchEnabled(true)
-    levelBtn3:setTouchEnabled(true)
-    levelBtn4:setTouchEnabled(true)
-    levelBtn5:setTouchEnabled(true)
-    levelBtn6:setTouchEnabled(true)
-
--- add listener
-    ViewUtils:addBtnEventListener(levelBtn1, function(event)
-        if event.name=='began' then
-            print("levelBtn1 is begining!")
+    -- add listener
+        ViewUtils:addBtnEventListener(levelBtn[i], function(event)
+            if event.name=='began' then
+                print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
             return true
-        elseif event.name=='ended' then
-            print("levelBtn1 is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(levelBtn2, function(event)
-        if event.name=='began' then
-            print("levelBtn2 is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("levelBtn2 is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(levelBtn3, function(event)
-        if event.name=='began' then
-            print("levelBtn3 is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("levelBtn3 is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(levelBtn4, function(event)
-        if event.name=='began' then
-            print("levelBtn4 is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("levelBtn4 is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(levelBtn5, function(event)
-        if event.name=='began' then
-            print("levelBtn5 is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("levelBtn5 is pressed!")
-        end
-    end)
-    ViewUtils:addBtnEventListener(levelBtn6, function(event)
-        if event.name=='began' then
-            print("levelBtn6 is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("levelBtn6 is pressed!")
-        end
-    end)
-
-    -- set gray Btn_1
-
-
+            elseif event.name=='ended' then
+                print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
+            end
+        end)
+    end
 end
     
+function LevelMapLayer:bgAnimation()
+    --Amplify times of background
+    self.amplifyTimes = 2
+    self.smallTime = 0.7
+    self.bigTime = 0.7
+
+    -- switching animation
+    if self.index == 1 then
+        self.x, self.y = 0, 0
+    elseif self.index == 2 then
+        self.x, self.y = -display.width*(self.amplifyTimes - 1), 0
+    elseif self.index == 3 then
+        self.x, self.y = -display.width*(self.amplifyTimes - 1), -display.height*(self.amplifyTimes - 1)
+    elseif self.index == 4 then
+        self.x, self.y = 0, -display.height*(self.amplifyTimes - 1)
+    end
+
+    local bgScaleToSmall = cc.ScaleTo:create(self.smallTime, 1)
+    local bgScaleToBig = cc.ScaleTo:create(self.bigTime, self.amplifyTimes)
+    local bgMoveToOrigin = cc.MoveTo:create(self.smallTime, cc.p(0, 0))
+    local delay = cc.DelayTime:create(self.smallTime)
+    local bgMoveTo = cc.MoveTo:create(self.bigTime, cc.p(self.x, self.y))
+
+    self.bg:runAction(cc.EaseIn:create(bgScaleToSmall, 1))   -- Native C++
+    self.bg:runAction(transition.newEasing(bgMoveToOrigin, "In", 1))  -- quick package
+    self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(bgScaleToBig, 2.5)}))  -- Native C++
+    self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(bgMoveTo, 2.5)}))  -- Native C++
+
+-- To make button disabled for a while
+    self.programBtn[1]:setTouchEnabled(false)
+    self.programBtn[2]:setTouchEnabled(false)
+    self.bgNode:removeFromParent()
+
+    transition.execute(self.programBtn[1], cc.ScaleTo:create(0, 1), {
+            delay = self.smallTime + self.bigTime,
+            easing = "backout",
+            onComplete = function()
+                self.programBtn[1]:setTouchEnabled(true)
+                self.programBtn[2]:setTouchEnabled(true)
+                self.programBtn[11]:removeAllChildren()
+                self.programBtn[11]:addChild(display.newSprite(self.index..".png", 60, 25), 2)
+                self:changeBigLevel()
+            end,
+        })
+end
+
 function LevelMapLayer:onExit()
 end
     

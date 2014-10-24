@@ -1,4 +1,5 @@
 
+
 local FightLayer = import("..fight.FightLayer")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
@@ -8,24 +9,10 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
---    cc.ui.UILabel.new({
---            UILabelType = 2, text = "Hello, World12w1323", size = 64})
---        :align(display.CENTER, display.cx, display.cy)
---        :addTo(self)
-    -- cc.ui.UILabel.new({
-    
-    --         text = "-- 122" .. " --", size = 24, color = display.COLOR_WHITE})
-    --     :align(display.CENTER, display.cx, display.top - 20)
-    --     :addTo(self, 1000)
-    
-    --todo
-    -- local fightLayer = FightLayer.new()
-    -- self:addChild(fightLayer)
-
-    --to levelMapLayer
     local levelMapLayer = LevelMapLayer.new()
     self:addChild(levelMapLayer)
-
+    -- local FightPlayer = FightPlayer.new()
+    -- self:addChild(FightPlayer)
 end
 
 function MainScene:onEnter()
