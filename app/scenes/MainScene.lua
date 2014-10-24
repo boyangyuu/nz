@@ -9,10 +9,10 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
-    local levelMapLayer = LevelMapLayer.new()
-    self:addChild(levelMapLayer)
-    -- local FightPlayer = FightPlayer.new()
-    -- self:addChild(FightPlayer)
+    -- local levelMapLayer = LevelMapLayer.new()
+    -- self:addChild(levelMapLayer)
+    local FightPlayer = FightPlayer.new()
+    self:addChild(FightPlayer)
 end
 
 function MainScene:onEnter()

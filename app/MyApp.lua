@@ -1,6 +1,8 @@
 
 require("config")
 require("framework.init")
+-- require("includes.functionUtils")
+
 
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
