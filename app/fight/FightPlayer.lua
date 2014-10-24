@@ -4,6 +4,7 @@ local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
+local ViewUtils = import("..ViewUtils")
 
 --k
 local kBgMap = 10001
@@ -67,7 +68,7 @@ function FightPlayer:loadCCS()
     local level = "" 
     local bgMap = display.newSprite("map_demo"..level..".png") --todo
     bgMap:setTag(kBgMap)
-    app:addChildCenter(bgMap, layerBg)
+    ViewUtils:addChildCenter(bgMap, layerBg)
 
     --load gun 
     local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
@@ -75,7 +76,7 @@ function FightPlayer:loadCCS()
 
     --load focus
     local focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
-    app:addChildCenter(self.focusView, focusNode)
+    ViewUtils:addChildCenter(self.focusView, focusNode)
 end
 
 function FightPlayer:initTouchArea()
@@ -123,13 +124,13 @@ function FightPlayer:initFireBtn()
                 btnFire:removeChildByTag(1)
             end
             local src = "fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
-            local armature = app:getArmature("effect_gun_kaiqiang", src)
+            local armature = ViewUtils:getArmature("effect_gun_kaiqiang", src)
             armature:getAnimation():playWithIndex(0 , -1, 0)
             local function animationEvent(armatureBack,movementType,movementID)
                 armature:removeFromParent()
             end
             armature:getAnimation():setMovementEventCallFunc(animationEvent)
-            app:addChildCenter(armature, btnFire)
+            ViewUtils:addChildCenter(armature, btnFire)
             armature:setTag(1)            
         end
         if event.name == "cancelled" or event.name == "ended" then

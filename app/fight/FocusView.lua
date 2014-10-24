@@ -5,6 +5,8 @@
 
 ]]
 
+local ViewUtils = import("..ViewUtils")
+
 local FocusView = class("FocusView", function()
     return display.newNode()
 end)
@@ -15,7 +17,7 @@ function FocusView:ctor()
 	local gunId = 1   -- todo 外界传
 	local focusId = gunId+11
     local src = "Fight/gunsAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
-    local armature = app:getArmature("anim_zunxin_sq", src) 
+    local armature = ViewUtils:getArmature("anim_zunxin_sq", src) 
 	self.focus = armature
 	self.focus:getAnimation():setMovementEventCallFunc(self.animationEvent)	
 	self:addChild(armature)    

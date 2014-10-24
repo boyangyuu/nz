@@ -55,20 +55,4 @@ function MyApp:getInstance(cls, id)
     return modelObj
 end
 
-function MyApp:getArmature(name, src)
-    assert(name, "name is invalid")
-    assert(src, "src is invalid")
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:removeArmatureFileInfo(src)
-    manager:addArmatureFileInfo(src)
-    local armature = ccs.Armature:create(name) 
-    return armature
-end
-
-function MyApp:addChildCenter(child, parent)
-    child:setPosition(parent:getContentSize().width/2, parent:getContentSize().height/2)
-    parent:addChild(child)
-end
-
-
 return MyApp

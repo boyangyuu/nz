@@ -59,4 +59,19 @@ function ViewUtils:grayOrBright(node, isGray, isBright)
     end       
 end
 
+function ViewUtils:getArmature(name, src)
+    assert(name, "name is invalid")
+    assert(src, "src is invalid")
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:removeArmatureFileInfo(src)
+    manager:addArmatureFileInfo(src)
+    local armature = ccs.Armature:create(name) 
+    return armature
+end
+
+function ViewUtils:addChildCenter(child, parent)
+    child:setPosition(parent:getContentSize().width/2, parent:getContentSize().height/2)
+    parent:addChild(child)
+end
+
 return ViewUtils
