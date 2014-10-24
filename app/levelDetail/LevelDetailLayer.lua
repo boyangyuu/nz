@@ -13,88 +13,88 @@ end
 function LevelDetailLayer:onEnter()
 	self:loadCCS()
 
-	-- seek button
-	local ButtonOff    = cc.uiloader:seekNodeByName(self, "btn_guanqia_off")
-	local ButtonStart  = cc.uiloader:seekNodeByName(self, "btn_startgame")
-	local ButtonYjzb   = cc.uiloader:seekNodeByName(self, "btn_yjzb")
-	local ButtonYjhq   = cc.uiloader:seekNodeByName(self, "btn_yjhq")
-	local ButtonYjhq02 = cc.uiloader:seekNodeByName(self, "btn_yjhq02")
+	-- seek btn
+	local btnOff    = cc.uiloader:seekNodeByName(self, "btn_off")
+	local btnStart  = cc.uiloader:seekNodeByName(self, "btn_start")
+	local btnBibei   = cc.uiloader:seekNodeByName(self, "btn_bibei")
+	local btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
+	local btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
 
 	-- seek label
-	local LabelGuanqiaName = cc.uiloader:seekNodeByName(self, "label_guanqianame")
-	local LabelGuanqiaNum  = cc.uiloader:seekNodeByName(self, "label_guanqianum")
-	local LabelTask        = cc.uiloader:seekNodeByName(self, "label_task_text")
-	local LabelEnemyNum    = cc.uiloader:seekNodeByName(self, "label_enemynum_text")
-	local LabelTasktype    = cc.uiloader:seekNodeByName(self, "label_tasktype_text")
+	local lblTitle = cc.uiloader:seekNodeByName(self, "label_title")
+	local lblId  = cc.uiloader:seekNodeByName(self, "label_id")
+	local lblTask        = cc.uiloader:seekNodeByName(self, "label_task")
+	local lblEnemyNum    = cc.uiloader:seekNodeByName(self, "label_total")
+	local lblTasktype    = cc.uiloader:seekNodeByName(self, "label_tasktype")
 
-	self.LabelGuanqiaName = LabelGuanqiaName
-	self.LabelGuanqiaNum  = LabelGuanqiaNum
-	self.LabelTask        = LabelTask
-	self.LabelEnemyNum    = LabelEnemyNum
-	self.LabelTasktype    = LabelTasktype
+	self.lblTitle = lblTitle
+	self.lblId  = lblId
+	self.lblTask        = lblTask
+	self.lblEnemyNum    = lblEnemyNum
+	self.lblTasktype    = lblTasktype
 
-	-- seek image
-	local ImageTuijian = cc.uiloader:seekNodeByName(self, "icon_tuijian_guanqia001")
-	local ImageHjwq    = cc.uiloader:seekNodeByName(self, "icon_hjwu")
-	local ImageJijia   = cc.uiloader:seekNodeByName(self, "icon_jijia")
-	local ImageMapxiao = cc.uiloader:seekNodeByName(self, "mapxiao_guanqia001")
+	-- seek layer for image
+	local lyrMap = cc.uiloader:seekNodeByName(self, "layer_mapimage")
+	local lyrBibei    = cc.uiloader:seekNodeByName(self, "layer_bibei")
+	local lyrGold   = cc.uiloader:seekNodeByName(self, "layer_gold")
+	local lyrJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
 	-- self.ImageMapxiao=ImageMapxiao
 		self:removeChild(ImageMapxiao)
 
 	
 
 	-- set touch enable
-	ButtonOff    :setTouchEnabled(true)
-	ButtonStart  :setTouchEnabled(true)
-	ButtonYjzb   :setTouchEnabled(true)
-	ButtonYjhq   :setTouchEnabled(true)
-	ButtonYjhq02 :setTouchEnabled(true)
+	btnOff    :setTouchEnabled(true)
+	btnStart  :setTouchEnabled(true)
+	btnBibei   :setTouchEnabled(true)
+	btnGold  :setTouchEnabled(true)
+	btnJijia :setTouchEnabled(true)
 
 
 	------ on btn clicked
-	--offButton
-	ViewUtils:addBtnEventListener(ButtonOff, function(event)
+	--offbtn
+	ViewUtils:addBtnEventListener(btnOff, function(event)
         if event.name=='began' then
-            print("offButton is begining!")
+            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnOff()
         end
     end)
-    --startButton
-    ViewUtils:addBtnEventListener(ButtonStart, function(event)
+    --startbtn
+    ViewUtils:addBtnEventListener(btnStart, function(event)
         if event.name=='began' then
-            print("startButton is begining!")
+            print("startbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnStart()
         end
     end)
-    --yjzbButton
-    ViewUtils:addBtnEventListener(ButtonYjzb, function(event)
+    --bibei
+    ViewUtils:addBtnEventListener(btnBibei, function(event)
         if event.name=='began' then
-            print("yjzbButton is begining!")
+            print("bibeibtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:onClickBtnYJZB()
+            self:onClickBtnBibei()
         end
     end)
-    --yjhqButton
-    ViewUtils:addBtnEventListener(ButtonYjhq, function(event)
+    --gold
+    ViewUtils:addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
-            print("yjhqButton is begining!")
+            print("btngold is begining!")
             return true
         elseif event.name=='ended' then
-            self:onClickBtnYJHQ()
+            self:onClickBtnGold()
         end
     end)
-    --yjhq02Button
-    ViewUtils:addBtnEventListener(ButtonYjhq02, function(event)
+    --jijia
+    ViewUtils:addBtnEventListener(btnJijia, function(event)
         if event.name=='began' then
-            print("yjhq02Button is begining!")
+            print("btnJijia is begining!")
             return true
         elseif event.name=='ended' then
-            self:onClickBtnYJHQ02()
+            self:onClickBtnJijia()
         end
     end)
 	
@@ -105,27 +105,27 @@ end
 function LevelDetailLayer:onClickBtnOff()
 
 	-- DataUtils:getConfigByID("config/tet.json",3)
--- 		local node = cc.ui.UIImage.new("res/anim_btnFire020.png")
+		local node = cc.ui.UIImage.new("res/anim_btnFire020.png")
 -- dump(node)
 -- 	self.ImageMapxiao:createImage(node)
 	-- self:removeChild(self.ImageMapxiao)
-	print("offButton is clicked!")
+	print("offbtn is clicked!")
 end
 
 function LevelDetailLayer:onClickBtnStart()
-	print("startButton is clicked!")
+	print("startbtn is clicked!")
 end
 
-function LevelDetailLayer:onClickBtnYJZB()
-	print("yjzbButton is clicked!")
+function LevelDetailLayer:onClickBtnBibei()
+	print("bibeibtn is clicked!")
 end
 
-function LevelDetailLayer:onClickBtnYJHQ()
-	print("yjhqButton is clicked!")
+function LevelDetailLayer:onClickBtnGold()
+	print("goldbtn is clicked!")
 end
 
-function LevelDetailLayer:onClickBtnYJHQ02()
-	print("yjhq02Button is clicked!")
+function LevelDetailLayer:onClickBtnJijia()
+	print("jijiabtn is clicked!")
 end
 
 
@@ -133,10 +133,10 @@ end
 function LevelDetailLayer:loadCCS()
 	-- load control bar
 	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
-	local controlNode = cc.uiloader:load("guanqiaxiangqing001_1.ExportJson")
+	local controlNode = cc.uiloader:load("LevelDetail.ExportJson")
 	-- controlNode:setPosition(0, 0)
     self.ui = controlNode
-    self:addChild(controlNode, 2)
+    self:addChild(controlNode, 1000)
 end
 function LevelDetailLayer:onExit()
 

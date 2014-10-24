@@ -11,8 +11,10 @@ end)
 function MainScene:ctor()
     -- local levelMapLayer = LevelMapLayer.new()
     -- self:addChild(levelMapLayer)
-    local FightPlayer = FightPlayer.new()
-    self:addChild(FightPlayer)
+    -- local FightPlayer = FightPlayer.new()
+    -- self:addChild(FightPlayer)
+    local DetailLayer=LevelDetailLayer.new()
+    self:addChild(DetailLayer)
 end
 
 function MainScene:onEnter()
