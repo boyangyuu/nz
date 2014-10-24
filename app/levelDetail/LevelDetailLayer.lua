@@ -52,7 +52,7 @@ function LevelDetailLayer:onEnter()
 
 	------ on btn clicked
 	--offbtn
-	ViewUtils:addBtnEventListener(btnOff, function(event)
+	addBtnEventListener(btnOff, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
             return true
@@ -61,7 +61,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --startbtn
-    ViewUtils:addBtnEventListener(btnStart, function(event)
+    addBtnEventListener(btnStart, function(event)
         if event.name=='began' then
             print("startbtn is begining!")
             return true
@@ -70,7 +70,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --bibei
-    ViewUtils:addBtnEventListener(btnBibei, function(event)
+    addBtnEventListener(btnBibei, function(event)
         if event.name=='began' then
             print("bibeibtn is begining!")
             return true
@@ -79,7 +79,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --gold
-    ViewUtils:addBtnEventListener(btnGold, function(event)
+    addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
             print("btngold is begining!")
             return true
@@ -88,7 +88,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --jijia
-    ViewUtils:addBtnEventListener(btnJijia, function(event)
+    addBtnEventListener(btnJijia, function(event)
         if event.name=='began' then
             print("btnJijia is begining!")
             return true
@@ -103,11 +103,8 @@ end
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
 
-	-- DataUtils:getConfigByID("config/tet.json",3)
 		local node = cc.ui.UIImage.new("res/anim_btnFire020.png")
--- dump(node)
--- 	self.ImageMapxiao:createImage(node)
-	-- self:removeChild(self.ImageMapxiao)
+
 	print("offbtn is clicked!")
 end
 
