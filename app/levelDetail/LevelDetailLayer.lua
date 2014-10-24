@@ -1,5 +1,4 @@
-local ViewUtils = import("..ViewUtils")
-local DataUtils = import("..DataUtils")
+import("..includes.functionUtils")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
