@@ -1,17 +1,11 @@
 --
 -- Author: Fangzhongzheng
--- Date: 2014-10-20 20:36:31
+-- Date: 2014-10-24 18:17:32
 --
-local ViewUtils = class("ViewUtils", function()
-    return display.newNode()
-end)
 
-function ViewUtils:ctor()
-end
-
-
-function ViewUtils:addBtnEventListener(node, callfunc)
-    -- add listener
+---- View ----
+function addBtnEventListener(node, callfunc)
+	 -- add listener
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         callfunc(event)
         if event.name=='began' then
@@ -25,14 +19,7 @@ function ViewUtils:addBtnEventListener(node, callfunc)
     end)
 end
 
-function ViewUtils:setGray(node)
-end
-
-function ViewUtils:removeGray(node)
-end
-
--- Cooldown: To make button disabled for a while
-function ViewUtils:disableBtn(delayTime, node)
+function disableBtn(delayTime, node)
     node:setTouchEnabled(false)
     transition.execute(node, cc.ScaleTo:create(0, 1), {
             delay = delayTime,
@@ -43,23 +30,7 @@ function ViewUtils:disableBtn(delayTime, node)
         })
 end
 
-function ViewUtils:grayOrBright(node, isGray, isBright)
-    if isGray then
-        grayFilter = filter.newFilter("GRAY", {0.2, 0.3, 0.5, 0.1})
-        node:setFilter(grayFilter)
-    elseif grayFilter ~= nil then
-        node:clearFilter()
-    end
-
-    if isBright then
-        brightFilter = filter.newFilter("BRIGHTNESS", {0.3})
-        node:setFilter(brightFilter)
-    elseif brightFilter ~= nil then
-        node:clearFilter()
-    end       
-end
-
-function ViewUtils:getArmature(name, src)
+function getArmature(name, src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
     local manager = ccs.ArmatureDataManager:getInstance()
@@ -69,9 +40,33 @@ function ViewUtils:getArmature(name, src)
     return armature
 end
 
-function ViewUtils:addChildCenter(child, parent)
+function addChildCenter(child, parent)
     child:setPosition(parent:getContentSize().width/2, parent:getContentSize().height/2)
     parent:addChild(child)
 end
 
-return ViewUtils
+
+
+---- Data ----
+function getConfig( configFileDir )
+    assert(configFileDir ~= "" and type(configFileDir) == "string", "invalid param")
+    local fileUtil = cc.FileUtils:getInstance()
+    local fullPath = fileUtil:fullPathForFilename(configFileDir)
+    local jsonStr = fileUtil:getStringFromFile(fullPath)
+    local configTb = json.decode(jsonStr)
+    return configTb
+end
+
+-- 通过表ID获取res下json文件内容
+function getConfigByID( configFileDir, tableID  )
+    assert(tableID ~= "" and type(tableID) == "number", "invalid param")
+    local configTable = self:getConfig(configFileDir)
+    for k,v in pairs(configTable) do
+        if k == tableID then
+            dump(v)
+            return v
+        end
+    end
+    print("not found")
+    return nil
+end

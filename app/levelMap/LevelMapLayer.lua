@@ -11,7 +11,7 @@ end)
 function LevelMapLayer:ctor()
     self:onEnter()
 end
-    
+    -- 
 function LevelMapLayer:onEnter() 
 -- Member variables
     self.index = 1
@@ -20,7 +20,8 @@ function LevelMapLayer:onEnter()
     self.totalLevelNumber_1 = 6  -- "Interior small level" of 1 big level total number
 
 -- load bg ang play bg starting animation
-    local bg = display.newSprite("res/LevelMap/levelMap_bg.png", 0, 0)
+    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
+    local bg = display.newSprite("levelMap_bg.png", 0, 0)
     bg:setScaleX(1)
     bg:setScaleY(1)
     bg:setAnchorPoint(0, 0)
@@ -29,7 +30,6 @@ function LevelMapLayer:onEnter()
     self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
 -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local controlNode = cc.uiloader:load("levelMap_ui.ExportJson")
     controlNode:setPosition(0, 0) -- Because anchor is (0, 0)
     self:addChild(controlNode, 2)
@@ -182,6 +182,26 @@ function LevelMapLayer:bgAnimation()
 end
 
 function LevelMapLayer:onExit()
+end
+
+function LevelMapLayer:addLevelMapPopup(parent, fileName, renderLayer)
+    -- load .ExportJson
+    local popupNode = cc.uiloader:load(fileName)
+    popupNode:setPosition(0, 0)
+    parent:addChild(popupNode, renderLayer)
+    :addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        callfunc(event)
+        if event.name=='began' then
+            print("LevelMap popup is off!")
+            self:removeLevelMapPopup(node)
+            return true
+        elseif event.name=='ended' then
+        end
+    end)
+end
+
+function LevelMapLayer:removeLevelMapPopup(node)
+    node:removeFromParent()
 end
     
 return LevelMapLayer
