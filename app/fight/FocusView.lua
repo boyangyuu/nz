@@ -21,6 +21,7 @@ function FocusView:ctor()
 	self.focus:getAnimation():setMovementEventCallFunc(self.animationEvent)	
 	self:addChild(armature)    
 	self:playIdle()
+	self:setFocusRange()
 end
 
 function FocusView:playIdle()
@@ -51,6 +52,28 @@ end
 
 function FocusView:stopFire()
 	self.playIndex = "stand"
+end
+
+function FocusView:setFocusRange()
+	local size = cc.size(100, 100)
+    self.focusRange = display.newScale9Sprite()
+    self.focusRange:setContentSize(size)
+    ViewUtils:addChildCenter(self.focusRange, self)
+    self:drawBoundingBox(self, self.focusRange, cc.c4f(0, 1.0, 0, 1.0))    	
+end
+
+function FocusView:drawBoundingBox(parent, target, color)
+    local cbb = target:getCascadeBoundingBox()
+    local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
+    local points = {
+        {left, bottom},
+        {left + width, bottom},
+        {left + width, bottom + height},
+        {left, bottom + height},
+        {left, bottom},
+    }
+    local box = display.newPolygon(points, {borderColor = color})
+    parent:addChild(box, 1000)
 end
 
 return FocusView

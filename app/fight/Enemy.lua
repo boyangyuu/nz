@@ -2,7 +2,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 --[[--
 
-“我”的实体
+“敵人”的实体
 
 ]]
 

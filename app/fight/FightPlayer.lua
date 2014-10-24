@@ -1,21 +1,18 @@
 --import
+import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
+local ViewUtils = import("..ViewUtils")
 local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
-import("..includes.functionUtils")
-
---k
-local kBgMap = 10001
-local kScaleBg = 2
+local MapView = import(".MapView")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
     scaleMoveFocus = 1.3,
     scaleMoveGun = 1.3, 
 }
-
 
 local FightPlayer = class("FightPlayer", function ()
 	return display.newLayer()
@@ -27,6 +24,8 @@ function FightPlayer:ctor()
     self.hero = app:getInstance(Hero)
     self.gunView = GunView.new()
     self.focusView = FocusView.new()
+    self.mapView = MapView:new()
+
     --instance
     self.gunBtnPressed = false
 
@@ -36,15 +35,6 @@ function FightPlayer:ctor()
     --帧事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()    
-
-    --config
-    -- json解码用 json
-    local fileUtil = cc.FileUtils:getInstance()
-    local fullPath = fileUtil:fullPathForFilename("config/test.json")
-    local jsonStr = fileUtil:getStringFromFile(fullPath)  
-    -- local jsonStr = fileUtil:gettextFromFile(fullPath)  
-    -- gettextFromFile
-    -- dump(jsonStr, "11")
 end
 
 function FightPlayer:initUI()
@@ -63,12 +53,9 @@ function FightPlayer:loadCCS()
     self.ui = node
     self:addChild(node)
 
-    --load bg
+    --load map
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    local level = "" 
-    local bgMap = display.newSprite("map_demo"..level..".png") --todo
-    bgMap:setTag(kBgMap)
-    addChildCenter(bgMap, layerBg)
+    ViewUtils:addChildCenter(self.mapView, layerBg) 
 
     --load gun 
     local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
@@ -219,9 +206,10 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     local xOri, yOri = layerBg:getPosition()
     local scale = KFightConfig.scaleMoveBg
     layerBg:setPosition(xOri + offsetX * scale, yOri + offsetY * scale)
-    local bgMap = layerBg:getChildByTag(kBgMap)
     local x, y = layerBg:getPosition()
+    print(x,y)
     self:justBgPos(layerBg)
+
 
 end
 
@@ -232,9 +220,10 @@ end
 
 function FightPlayer:justBgPos(node)
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    local bgMap = layerBg:getChildByTag(kBgMap)    
-    local w, h = bgMap:getContentSize().width * kScaleBg, 
-        bgMap:getContentSize().height * kScaleBg      
+    local bgMap = self.mapView  
+    local w, h = bgMap:getSize().width , 
+        bgMap:getSize().height
+
     local xL = (w - display.width) / 2  
     local yL = (h - display.height) / 2 
     local x, y = node:getPosition()
@@ -242,14 +231,14 @@ function FightPlayer:justBgPos(node)
     --x
     if x <= -xL then
         x = -xL
-    elseif x >= xL then 
+    elseif x >= xL  then 
         x = xL
     end
 
     --y
-    if y <= -yL then
+    if y <= -yL  then
         y = -yL
-    elseif y >=  yL then 
+    elseif y >=  yL  then 
         y = yL
     end    
     node:setPosition(x, y)    
