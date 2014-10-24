@@ -1,6 +1,7 @@
 
 local FightLayer = import("..fight.FightLayer")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
+local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
