@@ -3,6 +3,7 @@ local scheduler = require("framework.scheduler")
 local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
+local FocusView = import(".FocusView")
 
 --k
 local kBgMap = 10001
@@ -24,7 +25,7 @@ function FightPlayer:ctor()
     --model 
     self.hero = app:getInstance(Hero)
     self.gunView = GunView.new()
-
+    self.focusView = FocusView.new()
     --instance
     self.gunBtnPressed = false
 
@@ -55,7 +56,6 @@ end
 
 function FightPlayer:loadCCS()
     --load fightUI
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/gun")
     cc.FileUtils:getInstance():addSearchPath("res/Fight/map")  
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui/zhandou_demo_1")
     local node = cc.uiloader:load("zhandou_demo_1.ExportJson")
@@ -72,6 +72,10 @@ function FightPlayer:loadCCS()
     --load gun 
     local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
     layerGun:addChild(self.gunView)
+
+    --load focus
+    local focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
+    app:addChildCenter(self.focusView, focusNode)
 end
 
 function FightPlayer:initTouchArea()
@@ -126,11 +130,11 @@ function FightPlayer:initFireBtn()
             end
             armature:getAnimation():setMovementEventCallFunc(animationEvent)
             app:addChildCenter(armature, btnFire)
-            -- btnFire:addChild(armature)
             armature:setTag(1)            
         end
         if event.name == "cancelled" or event.name == "ended" then
             print("onButtonRelease")
+            self:onCancelledFire()
             self.gunBtnPressed = false
         end        
         return true
@@ -148,7 +152,6 @@ end
 
 function FightPlayer:canGunShot()
     if  self.hero:canFire() 
-        and self.gunView
         and self.gunBtnPressed
     then 
         return true 
@@ -162,8 +165,14 @@ function FightPlayer:fire()
     self.hero:fire()
 
     --gun
-    print("fire")
     self.gunView:playFire()
+
+    --focus
+    self.focusView:playFire()
+end
+
+function FightPlayer:onCancelledFire()
+    self.focusView:stopFire()
 end
 
 ----touch----
