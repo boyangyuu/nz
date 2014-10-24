@@ -20,15 +20,13 @@ function LevelMapLayer:onEnter()
     self.totalLevelNumber_1 = 6  -- "Interior small level" of 1 big level total number
 
 -- load bg ang play bg starting animation
-    local bg = display.newSprite("res/LevelMap/levelMap_bg.png", 0, 0, {class=cc.FilteredSpriteWithOne})
+    local bg = display.newSprite("res/LevelMap/levelMap_bg.png", 0, 0)
     bg:setScaleX(1)
     bg:setScaleY(1)
     bg:setAnchorPoint(0, 0)
     self:addChild(bg, 0) 
     self.bg = bg
-    self.bg:runAction(cc.ScaleTo:create(1.2, 2.0))  -- Starting action
-    grayFilter = filter.newFilter("GRAY", {0.2, 0.3, 0.5, 0.1})
-    self.bg:setFilter(grayFilter)
+    self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
 -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
@@ -138,27 +136,32 @@ function LevelMapLayer:changeBigLevel()
 end
     
 function LevelMapLayer:bgAnimation()
+    --Amplify times of background
+    self.amplifyTimes = 2
+    self.smallTime = 0.7
+    self.bigTime = 0.7
+
     -- switching animation
     if self.index == 1 then
         self.x, self.y = 0, 0
     elseif self.index == 2 then
-        self.x, self.y = -display.width, 0
+        self.x, self.y = -display.width*(self.amplifyTimes - 1), 0
     elseif self.index == 3 then
-        self.x, self.y = -display.width, -display.height
+        self.x, self.y = -display.width*(self.amplifyTimes - 1), -display.height*(self.amplifyTimes - 1)
     elseif self.index == 4 then
-        self.x, self.y = 0, -display.height
+        self.x, self.y = 0, -display.height*(self.amplifyTimes - 1)
     end
 
-    local bgScaleToSmall = cc.ScaleTo:create(0.6, 1)
-    local bgScaleToBig = cc.ScaleTo:create(1, 2)
-    local bgMoveToOrigin = cc.MoveTo:create(0.6, cc.p(0, 0))
-    local delay = cc.DelayTime:create(0.6)  
-    local bgMoveTo = cc.MoveTo:create(1, cc.p(self.x, self.y))
+    local bgScaleToSmall = cc.ScaleTo:create(self.smallTime, 1)
+    local bgScaleToBig = cc.ScaleTo:create(self.bigTime, self.amplifyTimes)
+    local bgMoveToOrigin = cc.MoveTo:create(self.smallTime, cc.p(0, 0))
+    local delay = cc.DelayTime:create(self.smallTime)
+    local bgMoveTo = cc.MoveTo:create(self.bigTime, cc.p(self.x, self.y))
 
-    self.bg:runAction(bgScaleToSmall)
-    self.bg:runAction(bgMoveToOrigin)
-    self.bg:runAction(cc.Sequence:create({delay, bgScaleToBig}))
-    self.bg:runAction(cc.Sequence:create({delay, bgMoveTo}))
+    self.bg:runAction(cc.EaseIn:create(bgScaleToSmall, 1))   -- Native C++
+    self.bg:runAction(transition.newEasing(bgMoveToOrigin, "In", 1))  -- quick package
+    self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(bgScaleToBig, 2.5)}))  -- Native C++
+    self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(bgMoveTo, 2.5)}))  -- Native C++
 
 -- To make button disabled for a while
     self.programBtn[1]:setTouchEnabled(false)
@@ -166,7 +169,7 @@ function LevelMapLayer:bgAnimation()
     self.bgNode:removeFromParent()
 
     transition.execute(self.programBtn[1], cc.ScaleTo:create(0, 1), {
-            delay = 1.6,
+            delay = self.smallTime + self.bigTime,
             easing = "backout",
             onComplete = function()
                 self.programBtn[1]:setTouchEnabled(true)

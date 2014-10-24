@@ -13,7 +13,6 @@ end
 function ViewUtils:addBtnEventListener(node, callfunc)
     -- add listener
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        self.nodeSprite = display.newSprite(node, nil, nil,  {class=cc.FilteredSpriteWithOne})
         callfunc(event)
         if event.name=='began' then
         	print("高亮!")
