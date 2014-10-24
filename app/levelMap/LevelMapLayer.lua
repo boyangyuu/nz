@@ -127,6 +127,7 @@ function LevelMapLayer:changeBigLevel()
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
+                addPopupWindows(self, "levelMap_popup.ExportJson", 2)
             return true
             elseif event.name=='ended' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
@@ -183,25 +184,5 @@ end
 
 function LevelMapLayer:onExit()
 end
-
--- function LevelMapLayer:addLevelMapPopup(parent, fileName, renderLayer)
---     -- load .ExportJson
---     local popupNode = cc.uiloader:load(fileName)
---     popupNode:setPosition(0, 0)
---     parent:addChild(popupNode, renderLayer)
---     :addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
---         callfunc(event)
---         if event.name=='began' then
---             print("LevelMap popup is off!")
---             self:removeLevelMapPopup(node)
---             return true
---         elseif event.name=='ended' then
---         end
---     end)
--- end
-
--- function LevelMapLayer:removeLevelMapPopup(node)
---     node:removeFromParent()
--- end
     
 return LevelMapLayer

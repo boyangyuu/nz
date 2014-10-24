@@ -4,8 +4,10 @@
 --
 
 ---- View ----
+-- add button event listener
 function addBtnEventListener(node, callfunc)
-	 -- add listener
+    assert(node, "node is invalid")
+    assert(callfunc, "callfunc is invalid")
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         callfunc(event)
         if event.name=='began' then
@@ -19,7 +21,34 @@ function addBtnEventListener(node, callfunc)
     end)
 end
 
+-- add levelMap popup windows
+function addPopupWindows(parent, fileName, renderLayer)
+    assert(parent, "parent is invalid")
+    assert(fileName, "fileName is invalid")
+    assert(renderLayer, "renderLayer is invalid")
+
+    -- load .ExportJson
+    local popupNode = cc.uiloader:load(fileName)
+    popupNode:setPosition(0, 0)
+    popupNode:setTouchEnabled(true)
+    popupNode:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        if event.name=='began' then
+            removeLevelMapPopup(popupNode)
+            return true
+        elseif event.name=='ended' then
+        end
+    end)
+    parent:addChild(popupNode, renderLayer)
+end
+
+function removeLevelMapPopup(node)
+    node:removeFromParent()
+end
+
+-- Cooldown the button
 function disableBtn(delayTime, node)
+    assert(delayTime, "delayTime is invalid")
+    assert(node, "node is invalid")
     node:setTouchEnabled(false)
     transition.execute(node, cc.ScaleTo:create(0, 1), {
             delay = delayTime,
@@ -30,6 +59,7 @@ function disableBtn(delayTime, node)
         })
 end
 
+-- Get armature from name and src
 function getArmature(name, src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
