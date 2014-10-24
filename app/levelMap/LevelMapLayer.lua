@@ -2,12 +2,12 @@
 -- Author: Fangzhongzheng
 -- Date: 2014-10-21 14:32:57
 --
-local ViewUtils = import("..ViewUtils")
+import("..includes.functionUtils")
 
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
-    
+
 function LevelMapLayer:ctor()
     self:onEnter()
 end
@@ -62,7 +62,7 @@ function LevelMapLayer:onEnter()
     self.programBtn[11]:addChild(display.newSprite("1.png", 60, 25), 2)
 
     -- add listener (attention: this isnot button, so we add node event listener)
-    ViewUtils:addBtnEventListener(self.programBtn[1], function(event)
+    addBtnEventListener(self.programBtn[1], function(event)
         if event.name=='began' then
             print("programBtn is begining!")
             return true
@@ -78,7 +78,7 @@ function LevelMapLayer:onEnter()
             self:bgAnimation()
         end
     end)
-    ViewUtils:addBtnEventListener(self.programBtn[2], function(event)
+    addBtnEventListener(self.programBtn[2], function(event)
         if event.name=='began' then
             print("programBtn is begining!")
             return true
@@ -96,7 +96,7 @@ function LevelMapLayer:onEnter()
     end)
 
     for i = 3, 10 do
-        ViewUtils:addBtnEventListener(self.programBtn[i], function(event)
+        addBtnEventListener(self.programBtn[i], function(event)
             if event.name=='began' then
                 print("programBtn is begining!")
             return true
@@ -124,7 +124,7 @@ function LevelMapLayer:changeBigLevel()
         levelBtn[i]:setTouchEnabled(true)
 
     -- add listener
-        ViewUtils:addBtnEventListener(levelBtn[i], function(event)
+        addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
             return true
@@ -184,24 +184,24 @@ end
 function LevelMapLayer:onExit()
 end
 
-function LevelMapLayer:addLevelMapPopup(parent, fileName, renderLayer)
-    -- load .ExportJson
-    local popupNode = cc.uiloader:load(fileName)
-    popupNode:setPosition(0, 0)
-    parent:addChild(popupNode, renderLayer)
-    :addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        callfunc(event)
-        if event.name=='began' then
-            print("LevelMap popup is off!")
-            self:removeLevelMapPopup(node)
-            return true
-        elseif event.name=='ended' then
-        end
-    end)
-end
+-- function LevelMapLayer:addLevelMapPopup(parent, fileName, renderLayer)
+--     -- load .ExportJson
+--     local popupNode = cc.uiloader:load(fileName)
+--     popupNode:setPosition(0, 0)
+--     parent:addChild(popupNode, renderLayer)
+--     :addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+--         callfunc(event)
+--         if event.name=='began' then
+--             print("LevelMap popup is off!")
+--             self:removeLevelMapPopup(node)
+--             return true
+--         elseif event.name=='ended' then
+--         end
+--     end)
+-- end
 
-function LevelMapLayer:removeLevelMapPopup(node)
-    node:removeFromParent()
-end
+-- function LevelMapLayer:removeLevelMapPopup(node)
+--     node:removeFromParent()
+-- end
     
 return LevelMapLayer

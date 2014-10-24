@@ -1,5 +1,4 @@
-local ViewUtils = import("..ViewUtils")
-local DataUtils = import("..DataUtils")
+import("..includes.functionUtils")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
@@ -53,7 +52,7 @@ function LevelDetailLayer:onEnter()
 
 	------ on btn clicked
 	--offButton
-	ViewUtils:addBtnEventListener(ButtonOff, function(event)
+	addBtnEventListener(ButtonOff, function(event)
         if event.name=='began' then
             print("offButton is begining!")
             return true
@@ -62,7 +61,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --startButton
-    ViewUtils:addBtnEventListener(ButtonStart, function(event)
+    addBtnEventListener(ButtonStart, function(event)
         if event.name=='began' then
             print("startButton is begining!")
             return true
@@ -71,7 +70,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --yjzbButton
-    ViewUtils:addBtnEventListener(ButtonYjzb, function(event)
+    addBtnEventListener(ButtonYjzb, function(event)
         if event.name=='began' then
             print("yjzbButton is begining!")
             return true
@@ -80,7 +79,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --yjhqButton
-    ViewUtils:addBtnEventListener(ButtonYjhq, function(event)
+    addBtnEventListener(ButtonYjhq, function(event)
         if event.name=='began' then
             print("yjhqButton is begining!")
             return true
@@ -89,7 +88,7 @@ function LevelDetailLayer:onEnter()
         end
     end)
     --yjhq02Button
-    ViewUtils:addBtnEventListener(ButtonYjhq02, function(event)
+    addBtnEventListener(ButtonYjhq02, function(event)
         if event.name=='began' then
             print("yjhq02Button is begining!")
             return true
@@ -104,7 +103,7 @@ end
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
 
-	-- DataUtils:getConfigByID("config/tet.json",3)
+	-- getConfigByID("config/tet.json",3)
 -- 		local node = cc.ui.UIImage.new("res/anim_btnFire020.png")
 -- dump(node)
 -- 	self.ImageMapxiao:createImage(node)
