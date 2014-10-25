@@ -54,6 +54,7 @@ function FightPlayer:loadCCS()
 
     --load map
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
+    layerBg:setScale(1.0)
     addChildCenter(self.mapView, layerBg) 
 
     --load gun 

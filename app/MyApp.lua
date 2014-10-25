@@ -41,7 +41,7 @@ function MyApp:isObjectExists(id)
 end
 
 function MyApp:getInstance(cls, id)
-    local modelObj 
+    local modelObj  
     local idStr = id or cls.__cname
     if not self:isObjectExists(idStr) then
         modelObj = cls.new(

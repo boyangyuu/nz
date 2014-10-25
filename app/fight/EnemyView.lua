@@ -50,7 +50,7 @@ function EnemyView:animationEvent(armatureBack,movementType,id)
 
     	elseif id == "fire02" then
 
-    	end
+    	end 
 	end
 end
 
@@ -77,6 +77,11 @@ function EnemyView:tick(t)
 			self:playFire()
 		end
 		self.playIndex = state
+	end
+
+	--change state
+	if t % 100 == 0 then 
+		self:playFire()
 	end
 end
 

@@ -25,6 +25,7 @@ function MapView:ctor()
 	--map
 	local mapId = ""   -- todo 外界
 	self.bgMap = display.newSprite("Fight/maps/map_demo"..mapId..".png") 
+	self.bgMap:setScale(kScaleBg)
 	self:addChild(self.bgMap)
 
 	--focus
