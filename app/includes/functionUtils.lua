@@ -21,12 +21,14 @@ function addBtnEventListener(node, callfunc)
     end)
 end
 
--- add levelMap popup windows
-function getPopupLayer(fileName)
-    assert(fileName, "fileName is invalid")
+-- add levelMap popup windows  -- self:addChild(getPopupLayer("关卡尚未开启！"), 100)
+function getPopupLayer(text)
+    assert(text, "fileName is invalid")
 
     -- load .ExportJson
-    local popupNode = cc.uiloader:load(fileName)
+    local popupNode = cc.uiloader:load("res/LevelMap_popup/levelMap_popup.ExportJson")
+    local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
+    labelTip:setString(text)
     popupNode:setTouchEnabled(true)
     popupNode:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then
@@ -42,7 +44,6 @@ function getPopupLayer(fileName)
             end)}))
     return popupNode
 end
-
 
 -- Cooldown the button
 function disableBtn(delayTime, node)
