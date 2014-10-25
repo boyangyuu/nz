@@ -66,10 +66,10 @@ function getArmature(name, src)
 end
 
 function addChildCenter(child, parent)
-    child:setPosition(parent:getContentSize().width/2, parent:getContentSize().height/2)
+    child:setPosition(parent:getBoundingBox().width/2, parent:getBoundingBox().height/2)
+    child:setAnchorPoint(0.5, 0.5)
     parent:addChild(child)
 end
-
 
 
 ---- Data ----

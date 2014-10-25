@@ -41,15 +41,15 @@ end
 function MyApp:getInstance(cls, id)
     local modelObj 
     local idStr = id or cls.__cname
-    print(1)
     if not self:isObjectExists(idStr) then
         modelObj = cls.new(
             {
-                id = "hero",
+                id = idStr,
             })
-        self:setObject(idStr, model)
+        self:setObject(idStr, modelObj)
         print("MyApp create model id is:", idStr)
     else
+        print("MyApp get model id is:", idStr)
         modelObj = self:getObject(idStr)
     end  
     return modelObj
