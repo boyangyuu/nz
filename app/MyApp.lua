@@ -45,7 +45,7 @@ function MyApp:getInstance(cls, id)
     if not self:isObjectExists(idStr) then
         modelObj = cls.new(
             {
-                id = "hero",
+                id = idStr,
             })
         self:setObject(idStr, model)
         print("MyApp create model id is:", idStr)
