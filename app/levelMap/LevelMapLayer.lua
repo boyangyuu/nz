@@ -22,25 +22,29 @@ function LevelMapLayer:onEnter()
 -- load bg ang play bg starting animation
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local bg = display.newSprite("levelMap_bg.png", 0, 0)
-    bg:setScaleX(1)
-    bg:setScaleY(1)
+    -- bg:setScaleX(1)
+    -- bg:setScaleY(1)
     bg:setAnchorPoint(0, 0)
     self:addChild(bg, 0) 
     self.bg = bg
     self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
-    local label = ui.newTTFLabelWithOutline({
-        text = "超值礼包",
-        font = "隶书",
-        size = 32,
-        color = cc.c3b(0, 0, 0),
-        align = cc.ui.TEXT_ALIGN_LEFT,
-        outlineColor = cc.c4b(255, 255, 0, 255),
-        })
-    self:addChild(label, 2)
+-- Setting shadow and outline for TTFlabel
+    -- local label = display.newTTFLabel({
+    -- text = "人生就是干。",
+    -- font = "黑体",
+    -- size = 64,
+    -- color = cc.c3b(255, 255, 255),
+    -- align = cc.ui.TEXT_ALIGN_LEFT,
+    -- })
+    -- label:setPosition(display.cx, display.cy)
+    -- -- label:enableOutline(cc.c4b(255, 0, 0, 255), 4) -- only ios and Android
+    -- label:enableGlow(cc.c4b(255, 0, 0, 255))
+    -- label:enableShadow(cc.c4b(255, 0, 0, 255))
+    -- self:addChild(label, 2)
 
 -- load control bar
-    local controlNode = cc.uiloader:load("levelMap_ui.ExportJson")
+    local controlNode = cc.uiloader:load("LevelMap_ui/levelMap_ui.ExportJson")
     controlNode:setPosition(0, 0) -- Because anchor is (0, 0)
     self:addChild(controlNode, 2)
 
@@ -57,7 +61,10 @@ function LevelMapLayer:onEnter()
     "btn_sale",
     "btn_task",
     "btn_gift",
-    "level"
+    "level",
+    "Panel_up",
+    "Panel_right",
+    "panl_level",
     }
     local programBtn = {}
 
@@ -69,7 +76,7 @@ function LevelMapLayer:onEnter()
     -- set Member variables(or U can setting global variables)
     self.programBtn = programBtn
     self.programBtn[11]:setTouchEnabled(false)
-    self.programBtn[11]:addChild(display.newSprite("1.png", 60, 25), 2)
+    self.programBtn[11]:addChild(display.newSprite("LevelMap_ui/1.png", 60, 25), 2)
 
     -- add listener (attention: this isnot button, so we add node event listener)
     addBtnEventListener(self.programBtn[1], function(event)
@@ -86,6 +93,7 @@ function LevelMapLayer:onEnter()
                 self.preIndex = self.index - 1
             end
             self:bgAnimation()
+            self:btnAnimation()
         end
     end)
     addBtnEventListener(self.programBtn[2], function(event)
@@ -102,6 +110,7 @@ function LevelMapLayer:onEnter()
                 self.preIndex = self.index + 1
             end
             self:bgAnimation()
+            self:btnAnimation()
         end
     end)
 
@@ -122,7 +131,7 @@ end
 
 function LevelMapLayer:changeBigLevel()
     -- load level layer
-    local bgNode = cc.uiloader:load("levelMap_"..self.index..".ExportJson")
+    local bgNode = cc.uiloader:load("LevelMap_levelBtn/levelMap_"..self.index..".ExportJson")
     bgNode:setPosition(0, 0)
     self:addChild(bgNode, 1)
     self.bgNode = bgNode
@@ -137,7 +146,7 @@ function LevelMapLayer:changeBigLevel()
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
-                self:addChild(getPopupLayer("levelMap_popup.ExportJson"), 100)
+                self:addChild(getPopupLayer("关卡尚未开启！"), 100)
             return true
             elseif event.name=='ended' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
@@ -184,8 +193,22 @@ function LevelMapLayer:bgAnimation()
                 self.programBtn[1]:setTouchEnabled(true)
                 self.programBtn[2]:setTouchEnabled(true)
                 self.programBtn[11]:removeAllChildren()
-                self.programBtn[11]:addChild(display.newSprite(self.index..".png", 60, 25), 2)
+                self.programBtn[11]:addChild(display.newSprite("LevelMap_ui/"..self.index..".png", 60, 25), 2)
                 self:changeBigLevel()
+            end)}))
+end
+
+function LevelMapLayer:btnAnimation()
+    local changeTime = 0.2
+    self.programBtn[12]:runAction(cc.MoveBy:create(changeTime, cc.p(0, 74)))
+    self.programBtn[13]:runAction(cc.MoveBy:create(changeTime, cc.p(230, 0)))
+    self.programBtn[14]:runAction(cc.MoveBy:create(changeTime, cc.p(0, -70)))
+    self.programBtn[12]:runAction(transition.sequence({cc.DelayTime:create(self.smallTime + self.bigTime), 
+        cc.CallFunc:create(function()
+            -- reverse() is not work!
+                self.programBtn[12]:runAction(cc.MoveBy:create(changeTime, cc.p(0, -74)))
+                self.programBtn[13]:runAction(cc.MoveBy:create(changeTime, cc.p(-230, 0)))
+                self.programBtn[14]:runAction(cc.MoveBy:create(changeTime, cc.p(0, 70)))
             end)}))
 end
 
