@@ -11,17 +11,16 @@ import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
 local Enemy = import("..Enemy")
 
-
 local EnemyView = class("EnemyView", function()
     return display.newNode()
 end)
 
 function EnemyView:ctor()
-	local id = 1   -- todo 外界传
-
-	--instance
-	self.enemy = Enemy.new()
+	local id = "1"   -- todo 外界传
 	self.playIndex 
+
+	--model
+	self.enemy = Enemy.new({id = id})
 
 	--armature
     local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
@@ -34,9 +33,15 @@ function EnemyView:ctor()
     --帧事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()  
-
 end
 
+function EnemyView:playIdle()
+	self.armature:getAnimation():play("stand" , -1, 1) 
+end
+
+function EnemyView:playFire()
+	self.armature:getAnimation():play("fire" , -1, 0) 
+end
 function EnemyView:animationEvent(armatureBack,movementType,id)
 	if movementType == ccs.MovementEventType.loopComplete then
 		if id == "fire01" then
@@ -72,7 +77,5 @@ function EnemyView:tick(t)
 		self.playIndex = state
 	end
 end
-
-
 
 return EnemyView

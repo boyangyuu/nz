@@ -10,7 +10,7 @@ local FocusView = class("FocusView", function()
     return display.newNode()
 end)
 
-function FocusView:ctor()
+function FocusView:ctor(properties)
 	self.playIndex = "stand"
 
 	local gunId = 1   -- todo 外界传
@@ -58,22 +58,9 @@ function FocusView:setFocusRange()
 	local size = cc.size(100, 100)
     self.focusRange = display.newScale9Sprite()
     self.focusRange:setContentSize(size)
-    ViewUtils:addChildCenter(self.focusRange, self)
-    self:drawBoundingBox(self, self.focusRange, cc.c4f(0, 1.0, 0, 1.0))    	
+    addChildCenter(self.focusRange, self)
+    drawBoundingBox(self, self.focusRange, cc.c4f(0, 1.0, 0, 1.0))    	
 end
 
-function FocusView:drawBoundingBox(parent, target, color)
-    local cbb = target:getCascadeBoundingBox()
-    local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
-    local points = {
-        {left, bottom},
-        {left + width, bottom},
-        {left + width, bottom + height},
-        {left, bottom + height},
-        {left, bottom},
-    }
-    local box = display.newPolygon(points, {borderColor = color})
-    parent:addChild(box, 1000)
-end
 
 return FocusView

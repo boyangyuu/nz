@@ -22,7 +22,7 @@ function FightPlayer:ctor()
     --model 
     self.hero = app:getInstance(Hero)
     self.gunView = GunView.new()
-    self.focusView = FocusView.new()
+    self.focusView = app:getInstance(FocusView)
     self.mapView = MapView:new()
 
     --instance
@@ -54,7 +54,7 @@ function FightPlayer:loadCCS()
 
     --load map
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    ViewUtils:addChildCenter(self.mapView, layerBg) 
+    addChildCenter(self.mapView, layerBg) 
 
     --load gun 
     local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
@@ -146,7 +146,7 @@ function FightPlayer:canGunShot()
 
     return false
 end
-
+ 
 function FightPlayer:fire()
     --hero
     self.hero:fire()
@@ -156,6 +156,9 @@ function FightPlayer:fire()
 
     --focus
     self.focusView:playFire()
+
+    --map check
+    self.mapView:checkFire()
 end
 
 function FightPlayer:onCancelledFire()
