@@ -1,20 +1,17 @@
 import("..includes.functionUtils")
 
-local LevelDetailModel = import(".LevelDetailModel")
-
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
 end)
 
 function LevelDetailLayer:ctor()
-	--model
-	self.model = app:getInstance(LevelDetailModel)
-
-	self:loadCCS()
-	self:initUI()
+	self:onEnter()
+	-- self.guanqiaNameLabel:setString("hello")
 end
 
-function LevelDetailLayer:initUI()
+function LevelDetailLayer:onEnter()
+	self:loadCCS()
+
 	-- seek btn
 	local btnOff    = cc.uiloader:seekNodeByName(self, "btn_off")
 	local btnStart  = cc.uiloader:seekNodeByName(self, "btn_start")
@@ -40,7 +37,8 @@ function LevelDetailLayer:initUI()
 	local lyrBibei    = cc.uiloader:seekNodeByName(self, "layer_bibei")
 	local lyrGold   = cc.uiloader:seekNodeByName(self, "layer_gold")
 	local lyrJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
-    self.lyrMap=lyrMap
+	-- self.ImageMapxiao=ImageMapxiao
+		self:removeChild(ImageMapxiao)
 
 	
 
@@ -104,15 +102,14 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-	LevelDetailModel:getDataFromTb()
-	LevelDetailModel:getDetailName()
+
+		local node = cc.ui.UIImage.new("res/anim_btnFire020.png")
+
 	print("offbtn is clicked!")
 end
 
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
-
-
 end
 
 function LevelDetailLayer:onClickBtnBibei()
@@ -135,7 +132,7 @@ function LevelDetailLayer:loadCCS()
 	local controlNode = cc.uiloader:load("LevelDetail.ExportJson")
 	-- controlNode:setPosition(0, 0)
     self.ui = controlNode
-    self:addChild(controlNode)
+    self:addChild(controlNode, 1000)
 end
 function LevelDetailLayer:onExit()
 
