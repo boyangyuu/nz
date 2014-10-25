@@ -47,14 +47,13 @@ end
 function FightPlayer:loadCCS()
     --load fightUI
     cc.FileUtils:getInstance():addSearchPath("res/Fight/map")  
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui/zhandou_demo_1")
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui/zhandou_demo")
     local node = cc.uiloader:load("zhandou_demo_1.ExportJson")
     self.ui = node
     self:addChild(node)
 
     --load map
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    layerBg:setScale(1.0)
     addChildCenter(self.mapView, layerBg) 
 
     --load gun 
