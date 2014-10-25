@@ -29,6 +29,16 @@ function LevelMapLayer:onEnter()
     self.bg = bg
     self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
+    local label = ui.newTTFLabelWithOutline({
+        text = "超值礼包",
+        font = "隶书",
+        size = 32,
+        color = cc.c3b(0, 0, 0),
+        align = cc.ui.TEXT_ALIGN_LEFT,
+        outlineColor = cc.c4b(255, 255, 0, 255),
+        })
+    self:addChild(label, 2)
+
 -- load control bar
     local controlNode = cc.uiloader:load("levelMap_ui.ExportJson")
     controlNode:setPosition(0, 0) -- Because anchor is (0, 0)
@@ -127,7 +137,7 @@ function LevelMapLayer:changeBigLevel()
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
-                addPopupWindows(self, "levelMap_popup.ExportJson", 2)
+                self:addChild(getPopupLayer("levelMap_popup.ExportJson"), 100)
             return true
             elseif event.name=='ended' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
@@ -169,17 +179,14 @@ function LevelMapLayer:bgAnimation()
     self.programBtn[2]:setTouchEnabled(false)
     self.bgNode:removeFromParent()
 
-    transition.execute(self.programBtn[1], cc.ScaleTo:create(0, 1), {
-            delay = self.smallTime + self.bigTime,
-            easing = "backout",
-            onComplete = function()
+    self.programBtn[1]:runAction(transition.sequence({cc.DelayTime:create(self.smallTime + self.bigTime), 
+        cc.CallFunc:create(function()
                 self.programBtn[1]:setTouchEnabled(true)
                 self.programBtn[2]:setTouchEnabled(true)
                 self.programBtn[11]:removeAllChildren()
                 self.programBtn[11]:addChild(display.newSprite(self.index..".png", 60, 25), 2)
                 self:changeBigLevel()
-            end,
-        })
+            end)}))
 end
 
 function LevelMapLayer:onExit()
