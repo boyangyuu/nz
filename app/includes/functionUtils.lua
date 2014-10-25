@@ -71,7 +71,6 @@ function addChildCenter(child, parent)
 end
 
 
-
 ---- Data ----
 function getConfig( configFileDir )
     assert(configFileDir ~= "" and type(configFileDir) == "string", "invalid param")
