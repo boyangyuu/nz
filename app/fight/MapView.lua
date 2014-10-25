@@ -8,7 +8,7 @@ desc：
 	3.enemy的活动
 	4.攻击检测
 ]]
-local scheduler = require("framework.scheduler")
+-- local scheduler = require("framework.scheduler")
 local kScaleBg = 2
 local FocusView = import(".FocusView")
 local Hero = import(".Hero")
@@ -30,10 +30,10 @@ function MapView:ctor()
 	--focus
 	self.focusView = app:getInstance(FocusView)
 
-	--enemys
+	-- enemys
 	self:createEnemys()
 
-	--event
+	-- event
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()    	
 end

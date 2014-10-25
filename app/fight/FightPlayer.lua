@@ -1,7 +1,6 @@
 --import
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
-local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
@@ -21,9 +20,10 @@ end)
 function FightPlayer:ctor()
     --model 
     self.hero = app:getInstance(Hero)
-    self.gunView = GunView.new()
     self.focusView = app:getInstance(FocusView)
-    self.mapView = MapView:new()
+    -- self.mapView = app:getInstance(MapView)
+     self.mapView = MapView.new()
+    self.gunView = GunView.new()
 
     --instance
     self.gunBtnPressed = false

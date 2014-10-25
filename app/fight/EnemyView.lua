@@ -9,7 +9,7 @@
 --model
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
-local Enemy = import("..Enemy")
+local Enemy = import(".Enemy")
 
 local EnemyView = class("EnemyView", function()
     return display.newNode()
@@ -17,7 +17,7 @@ end)
 
 function EnemyView:ctor()
 	local id = "1"   -- todo 外界传
-	self.playIndex 
+	self.playIndex = nil
 
 	--model
 	self.enemy = Enemy.new({id = id})
@@ -27,6 +27,7 @@ function EnemyView:ctor()
     local armature = getArmature("anim_enemy_001", src) 
 	self.armature = armature
 	self.armature:getAnimation():setMovementEventCallFunc(self.animationEvent)	
+	
 	--换肤
 	self:addChild(armature)
 
@@ -42,6 +43,7 @@ end
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 0) 
 end
+
 function EnemyView:animationEvent(armatureBack,movementType,id)
 	if movementType == ccs.MovementEventType.loopComplete then
 		if id == "fire01" then
