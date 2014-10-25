@@ -22,41 +22,36 @@ function addBtnEventListener(node, callfunc)
 end
 
 -- add levelMap popup windows
-function addPopupWindows(parent, fileName, renderLayer)
-    assert(parent, "parent is invalid")
+function getPopupLayer(fileName)
     assert(fileName, "fileName is invalid")
-    assert(renderLayer, "renderLayer is invalid")
 
     -- load .ExportJson
     local popupNode = cc.uiloader:load(fileName)
-    popupNode:setPosition(0, 0)
     popupNode:setTouchEnabled(true)
     popupNode:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then
-            removeLevelMapPopup(popupNode)
+            popupNode:removeFromParent()
             return true
         elseif event.name=='ended' then
         end
     end)
-    parent:addChild(popupNode, renderLayer)
+
+    -- auto remove popup windows after 2 secs.
+    popupNode:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
+                 popupNode:removeFromParent()
+            end)}))
+    return popupNode
 end
 
-function removeLevelMapPopup(node)
-    node:removeFromParent()
-end
 
 -- Cooldown the button
 function disableBtn(delayTime, node)
     assert(delayTime, "delayTime is invalid")
     assert(node, "node is invalid")
     node:setTouchEnabled(false)
-    transition.execute(node, cc.ScaleTo:create(0, 1), {
-            delay = delayTime,
-            easing = "backout",
-            onComplete = function()
-                node:setTouchEnabled(true)
-            end,
-        })
+    node:runAction(transition.sequence({cc.DelayTime:create(delayTime), cc.CallFunc:create(function()
+                 node:setTouchEnabled(true)
+            end)}))
 end
 
 -- Get armature from name and src
