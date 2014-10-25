@@ -59,7 +59,6 @@ function disableBtn(delayTime, node)
         })
 end
 
--- Get armature from name and src
 function getArmature(name, src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
