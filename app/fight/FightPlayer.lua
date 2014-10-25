@@ -1,7 +1,6 @@
 --import
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
-local ViewUtils = import("..ViewUtils")
 local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")

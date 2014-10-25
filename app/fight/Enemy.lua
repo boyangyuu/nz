@@ -13,4 +13,5 @@ function Enemy:ctor(properties, events, callbacks)
     Enemy.super.ctor(self, properties)
 end
 
+
 return Enemy
