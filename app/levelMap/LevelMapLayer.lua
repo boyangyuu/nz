@@ -29,15 +29,15 @@ function LevelMapLayer:onEnter()
     self.bg = bg
     self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
-    local label = ui.newTTFLabelWithOutline({
-        text = "超值礼包",
-        font = "隶书",
-        size = 32,
-        color = cc.c3b(0, 0, 0),
-        align = cc.ui.TEXT_ALIGN_LEFT,
-        outlineColor = cc.c4b(255, 255, 0, 255),
-        })
-    self:addChild(label, 2)
+    -- local label = ui.newTTFLabelWithOutline({
+    --     text = "超值礼包",
+    --     font = "隶书",
+    --     size = 32,
+    --     color = cc.c3b(0, 0, 0),
+    --     align = cc.ui.TEXT_ALIGN_LEFT,
+    --     outlineColor = cc.c4b(255, 255, 0, 255),
+    --     })
+    -- self:addChild(label, 2)
 
 -- load control bar
     local controlNode = cc.uiloader:load("levelMap_ui.ExportJson")
