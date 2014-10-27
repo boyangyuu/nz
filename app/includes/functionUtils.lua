@@ -55,7 +55,6 @@ function disableBtn(delayTime, node)
             end)}))
 end
 
--- Get armature from name and src
 function getArmature(name, src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
@@ -67,10 +66,10 @@ function getArmature(name, src)
 end
 
 function addChildCenter(child, parent)
-    child:setPosition(parent:getContentSize().width/2, parent:getContentSize().height/2)
+    child:setPosition(parent:getBoundingBox().width/2, parent:getBoundingBox().height/2)
+    child:setAnchorPoint(0.5, 0.5)
     parent:addChild(child)
 end
-
 
 
 ---- Data ----
@@ -86,7 +85,7 @@ end
 -- 通过表ID获取res下json文件内容
 function getConfigByID( configFileDir, tableID  )
     assert(tableID ~= "" and type(tableID) == "number", "invalid param")
-    local configTable = self:getConfig(configFileDir)
+    local configTable = getConfig(configFileDir)
     for k,v in pairs(configTable) do
         if k == tableID then
             dump(v)
@@ -95,4 +94,21 @@ function getConfigByID( configFileDir, tableID  )
     end
     print("not found")
     return nil
+end
+
+-- 通过某列属性(PropertyName)查找在表(Table)中对应的(Key)的记录
+-- 并返回多条记录在数组中(recordArr)
+function getRecord( Table, PropertyName, Key )
+    assert(Table ~= "" and type(Table) == "string", "invalid param")
+    assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
+    assert(Key ~= "" and type(Key) == "string", "invalid param")
+    local recordArr={}
+    for k,v in pairs(Table) do
+        for k1,v1 in pairs(v) do
+            if k1 == PropertyName and v1 == Key then
+                recordArr[#recordArr + 1] = v
+            end
+        end
+    end
+    return recordArr
 end
