@@ -11,6 +11,7 @@ function LevelDetailLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
+	self:initData(2)
 end
 
 function LevelDetailLayer:initUI()
@@ -40,7 +41,9 @@ function LevelDetailLayer:initUI()
 	local lyrGold   = cc.uiloader:seekNodeByName(self, "layer_gold")
 	local lyrJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
     self.lyrMap=lyrMap
-
+    self.lyrBibei=lyrBibei
+    self.lyrGold=lyrGold
+    self.lyrJijia=lyrJijia
 	
 
 	-- set touch enable
@@ -103,8 +106,8 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-	LevelDetailModel:getDataFromTb()
-	LevelDetailModel:getDetailName()
+	-- LevelDetailModel:getDataFromTb()
+	-- LevelDetailModel:getDetailName()
 	print("offbtn is clicked!")
 end
 
@@ -116,6 +119,7 @@ end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
+	self:addChild(getPopupLayer("LevelMap/LevelMap_ui/levelMap_popup.ExportJson"))
 end
 
 function LevelDetailLayer:onClickBtnGold()
@@ -126,6 +130,30 @@ function LevelDetailLayer:onClickBtnJijia()
 	print("jijiabtn is clicked!")
 end
 
+---- initData ----
+function LevelDetailLayer:initData(LevelID)
+	local DataTable = LevelDetailModel:getConfig(LevelID)
+
+	--Label
+	self.lblTitle:setString(DataTable["guanqiaName"])
+	self.lblId:setString(DataTable["guanqiaNum"])
+	self.lblTask:setString(DataTable["task"])
+	self.lblEnemyNum:setString("共"..DataTable["enemyNum"].."波")
+	self.lblTasktype:setString(DataTable["taskType"])
+
+	--Image
+	--map从所有map里找寻，配表内填写为地图名，待修改
+	--gun从所有gun里找寻，配表内填写为枪名，待修改
+	local mapimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["mapxiaoImg"]..".png")
+	local jijiaimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["jijia"]..".png")
+	local goldimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
+	local weaponimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
+
+	addChildCenter(mapimg, self.lyrMap)
+	addChildCenter(jijiaimg, self.lyrJijia)
+	addChildCenter(goldimg, self.lyrGold)
+	addChildCenter(weaponimg, self.lyrBibei)
+end
 
 
 function LevelDetailLayer:loadCCS()

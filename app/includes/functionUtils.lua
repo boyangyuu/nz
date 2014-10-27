@@ -84,7 +84,7 @@ end
 -- 通过表ID获取res下json文件内容
 function getConfigByID( configFileDir, tableID  )
     assert(tableID ~= "" and type(tableID) == "number", "invalid param")
-    local configTable = self:getConfig(configFileDir)
+    local configTable = getConfig(configFileDir)
     for k,v in pairs(configTable) do
         if k == tableID then
             dump(v)
