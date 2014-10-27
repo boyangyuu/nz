@@ -11,7 +11,7 @@ function LevelDetailLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-	self:initData(2)
+	self:initData(1,2)
 end
 
 function LevelDetailLayer:initUI()
@@ -131,8 +131,8 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 ---- initData ----
-function LevelDetailLayer:initData(LevelID)
-	local DataTable = LevelDetailModel:getConfig(LevelID)
+function LevelDetailLayer:initData(BigID,SmallID)
+	local DataTable = LevelDetailModel:getConfig(BigID,SmallID)
 
 	--Label
 	self.lblTitle:setString(DataTable["guanqiaName"])
