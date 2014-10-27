@@ -11,7 +11,7 @@ function LevelDetailLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-	self:initData(2)
+	self:initData(1,2)
 end
 
 function LevelDetailLayer:initUI()
@@ -113,13 +113,11 @@ end
 
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
-
-
 end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
-	self:addChild(getPopupLayer("LevelMap/LevelMap_ui/levelMap_popup.ExportJson"))
+	-- self:addChild(getPopupLayer("LevelMap/LevelMap_ui/levelMap_popup.ExportJson"))
 end
 
 function LevelDetailLayer:onClickBtnGold()
@@ -131,8 +129,8 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 ---- initData ----
-function LevelDetailLayer:initData(LevelID)
-	local DataTable = LevelDetailModel:getConfig(LevelID)
+function LevelDetailLayer:initData(BigID,SmallID)
+	local DataTable = LevelDetailModel:getConfig(BigID,SmallID)
 
 	--Label
 	self.lblTitle:setString(DataTable["guanqiaName"])
