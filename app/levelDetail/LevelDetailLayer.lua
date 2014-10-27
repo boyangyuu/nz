@@ -108,6 +108,18 @@ function LevelDetailLayer:onClickBtnOff()
 -- dump(node)
 -- 	self.ImageMapxiao:createImage(node)
 	-- self:removeChild(self.ImageMapxiao)
+
+    transition.execute(self, cc.ScaleTo:create(0.5, 0.25), {
+    	delay = 0,
+    	easing = "In",
+    	onComplete = function() 
+    		self:removeFromParent()
+    		self = nil
+       end, 
+})
+
+    
+
 	print("offButton is clicked!")
 end
 
