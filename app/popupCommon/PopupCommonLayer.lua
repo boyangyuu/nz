@@ -29,7 +29,6 @@ function PopupCommonLayer:onExit()
     		self:setVisible(false)
        end, 
 	})
-
 end
 
 return PopupCommonLayer

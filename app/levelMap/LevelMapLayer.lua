@@ -6,30 +6,35 @@ import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 
+--常量
+local kZ_bar = 2
+
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
 
 function LevelMapLayer:ctor()
-    self:onEnter()
-end
-    -- 
-function LevelMapLayer:onEnter() 
 -- Member variables
     self.index = 1
     self.preIndex = 0
     self.totalLevelNumber = 4    -- "Big level" total number
     self.totalLevelNumber_1 = 6  -- "Interior small level" of 1 big level total number
 
--- load bg ang play bg starting animation
+    --ui
+    self:onEnter()
+end
+    -- 
+function LevelMapLayer:onEnter() 
+
+    -- load bg ang play bg starting animation
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
-    local bg = display.newSprite("levelMap_bg.png", 0, 0)
+    local bg = display.newSprite("levelMap_bg.png")
     bg:setAnchorPoint(0, 0)
-    self:addChild(bg, 0) 
+    self:addChild(bg) 
     self.bg = bg
     self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
 
--- Setting shadow and outline for TTFlabel
+    -- Setting shadow and outline for TTFlabel
     -- local label = display.newTTFLabel({
     -- text = "人生就是干。",
     -- font = "黑体",
@@ -43,38 +48,24 @@ function LevelMapLayer:onEnter()
     -- label:enableShadow(cc.c4b(255, 0, 0, 255))
     -- self:addChild(label, 2)
 
--- load control bar
+    -- load control bar
     local controlNode = cc.uiloader:load("LevelMap_ui/levelMap_ui.ExportJson")
-    controlNode:setPosition(0, 0) -- Because anchor is (0, 0)
-    self:addChild(controlNode, 2)
+    self:addChild(controlNode, kZ_bar)
 
     -- seek all button
-    local ccsBtn = 
-    {
-    "btn_next", 
-    "btn_pre",
-    "btn_setting",
-    "btn_buyCoin",
-    "btn_arsenal",
-    "btn_inlay",
-    "btn_shop",
-    "btn_sale",
-    "btn_task",
-    "btn_gift",
-    "level",
-    "Panel_up",
-    "Panel_right",
-    "panl_level",
-    }
-    local programBtn = {}
+    self:initBtn()
 
-    for i, v in ipairs(ccsBtn) do
-        programBtn[i] = cc.uiloader:seekNodeByName(self, v)
-        programBtn[i]:setTouchEnabled(true)
-    end
+    -- load level layer
+    self:refreshLevels(groupId)
+end
+
+function LevelMapLayer:initBtn()
+    local ccsBtn = 
+        {"btn_next", "btn_pre","btn_setting","btn_buyCoin",
+        "btn_arsenal","btn_inlay", "btn_shop","btn_sale",
+        "btn_task","btn_gift", "level","Panel_up","Panel_right","panl_level", }
 
     -- set Member variables(or U can setting global variables)
-    self.programBtn = programBtn
     self.programBtn[11]:setTouchEnabled(false)
     self.programBtn[11]:addChild(display.newSprite("LevelMap_ui/1.png", 60, 25), 2)
 
@@ -123,13 +114,10 @@ function LevelMapLayer:onEnter()
                 print("programBtn is pressed!")
             end
         end)
-    end
-
--- load level layer
-    self:changeBigLevel()
+    end    
 end
 
-function LevelMapLayer:changeBigLevel()
+function LevelMapLayer:refreshLevels(groupId)
     -- load level layer
     local bgNode = cc.uiloader:load("LevelMap_levelBtn/levelMap_"..self.index..".ExportJson")
     bgNode:setPosition(0, 0)
@@ -143,20 +131,20 @@ function LevelMapLayer:changeBigLevel()
         levelBtn[i]:setTouchEnabled(true)
 
     -- add listener
-        addBtnEventListener(levelBtn[i], function(event)
-            if event.name=='began' then
-                print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
-                
-                local levelDetailLayer = LevelDetailLayer.new(self.index, i)
-                self.popupCommonLayer = app:getInstance(PopupCommonLayer)
-                self.popupCommonLayer:showPopup(levelDetailLayer)
+    addBtnEventListener(levelBtn[i], function(event)
+        if event.name=='began' then
+            print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
+            
+            local levelDetailLayer = LevelDetailLayer.new(self.index, i)
+            self.popupCommonLayer = app:getInstance(PopupCommonLayer)
+            self.popupCommonLayer:showPopup(levelDetailLayer)
 
-                -- self:addChild(getPopupLayer("关卡尚未开启！"), 100)
+            -- self:addChild(getPopupTips("关卡尚未开启！"), 100)
             return true
-            elseif event.name=='ended' then
-                print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
-            end
-        end)
+        elseif event.name=='ended' then
+            print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
+        end
+    end)
     end
 end
     
@@ -199,7 +187,7 @@ function LevelMapLayer:bgAnimation()
                 self.programBtn[2]:setTouchEnabled(true)
                 self.programBtn[11]:removeAllChildren()
                 self.programBtn[11]:addChild(display.newSprite("LevelMap_ui/"..self.index..".png", 60, 25), 2)
-                self:changeBigLevel()
+                self:refreshLevels()
             end)}))
 end
 
