@@ -1,17 +1,18 @@
 import("..includes.functionUtils")
 
 local LevelDetailModel = import(".LevelDetailModel")
+local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
 end)
 
-function LevelDetailLayer:ctor()
+function LevelDetailLayer:ctor(index1, index2)
 	--model
 	self.model = app:getInstance(LevelDetailModel)
 
 	self:loadCCS()
 	self:initUI()
-	self:initData(1,2)
+	self:initData(index1, index2)
 end
 
 function LevelDetailLayer:initUI()
@@ -108,7 +109,7 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-	print("offbtn is clicked!")
+    app:getInstance(PopupCommonLayer):onExit()
 end
 
 function LevelDetailLayer:onClickBtnStart()

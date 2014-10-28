@@ -3,6 +3,8 @@
 -- Date: 2014-10-21 14:32:57
 --
 import("..includes.functionUtils")
+local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
+local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
@@ -22,8 +24,6 @@ function LevelMapLayer:onEnter()
 -- load bg ang play bg starting animation
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local bg = display.newSprite("levelMap_bg.png", 0, 0)
-    -- bg:setScaleX(1)
-    -- bg:setScaleY(1)
     bg:setAnchorPoint(0, 0)
     self:addChild(bg, 0) 
     self.bg = bg
@@ -146,7 +146,12 @@ function LevelMapLayer:changeBigLevel()
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
-                self:addChild(getPopupLayer("关卡尚未开启！"), 100)
+                
+                local levelDetailLayer = LevelDetailLayer.new(self.index, i)
+                self.popupCommonLayer = app:getInstance(PopupCommonLayer)
+                self.popupCommonLayer:showPopup(levelDetailLayer)
+
+                -- self:addChild(getPopupLayer("关卡尚未开启！"), 100)
             return true
             elseif event.name=='ended' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")

@@ -99,8 +99,8 @@ end
 -- 通过某列属性(PropertyName)查找在表(Table)中对应的(Key)的记录
 -- 并返回多条记录在数组中(recordArr)
 function getRecord( Table, PropertyName, Key )
-    assert(Table ~= "" and type(Table) == "table", "invalid param")
-    assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
+    -- assert(Table ~= "" and type(Table) == "string", "invalid param")
+    -- assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
     -- assert(Key ~= "" and type(Key) == "string", "invalid param")
     local recordArr={}
     for k,v in pairs(Table) do
