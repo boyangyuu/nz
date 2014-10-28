@@ -16,42 +16,42 @@ end
 
 function LevelDetailLayer:initUI()
 	-- seek btn
-	local btnOff    = cc.uiloader:seekNodeByName(self, "btn_off")
-	local btnStart  = cc.uiloader:seekNodeByName(self, "btn_start")
-	local btnBibei   = cc.uiloader:seekNodeByName(self, "btn_bibei")
+	local btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
+	local btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
+	local btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
 	local btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
 	local btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
 
 	-- seek label
-	local lblTitle = cc.uiloader:seekNodeByName(self, "label_title")
-	local lblId  = cc.uiloader:seekNodeByName(self, "label_id")
-	local lblTask        = cc.uiloader:seekNodeByName(self, "label_task")
-	local lblEnemyNum    = cc.uiloader:seekNodeByName(self, "label_total")
-	local lblTasktype    = cc.uiloader:seekNodeByName(self, "label_tasktype")
+	local lblTitle    = cc.uiloader:seekNodeByName(self, "label_title")
+	local lblId       = cc.uiloader:seekNodeByName(self, "label_id")
+	local lblTask     = cc.uiloader:seekNodeByName(self, "label_task")
+	local lblEnemyNum = cc.uiloader:seekNodeByName(self, "label_total")
+	local lblTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
 
-	self.lblTitle = lblTitle
-	self.lblId  = lblId
-	self.lblTask        = lblTask
-	self.lblEnemyNum    = lblEnemyNum
+	self.lblTitle    = lblTitle
+	self.lblId       = lblId
+	self.lblTask     = lblTask
+	self.lblEnemyNum = lblEnemyNum
 	self.lblTasktype    = lblTasktype
 
 	-- seek layer for image
-	local lyrMap = cc.uiloader:seekNodeByName(self, "layer_mapimage")
-	local lyrBibei    = cc.uiloader:seekNodeByName(self, "layer_bibei")
-	local lyrGold   = cc.uiloader:seekNodeByName(self, "layer_gold")
+	local lyrMap   = cc.uiloader:seekNodeByName(self, "layer_mapimage")
+	local lyrBibei = cc.uiloader:seekNodeByName(self, "layer_bibei")
+	local lyrGold  = cc.uiloader:seekNodeByName(self, "layer_gold")
 	local lyrJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
 
-    self.lyrMap=lyrMap
-    self.lyrBibei=lyrBibei
-    self.lyrGold=lyrGold
-    self.lyrJijia=lyrJijia
+    self.lyrMap   = lyrMap
+    self.lyrBibei = lyrBibei
+    self.lyrGold  = lyrGold
+    self.lyrJijia = lyrJijia
 
 	
 
 	-- set touch enable
-	btnOff    :setTouchEnabled(true)
-	btnStart  :setTouchEnabled(true)
-	btnBibei   :setTouchEnabled(true)
+	btnOff   :setTouchEnabled(true)
+	btnStart :setTouchEnabled(true)
+	btnBibei :setTouchEnabled(true)
 	btnGold  :setTouchEnabled(true)
 	btnJijia :setTouchEnabled(true)
 
@@ -108,9 +108,6 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-
-		local node = cc.ui.UIImage.new("res/anim_btnFire020.png")
-
 	print("offbtn is clicked!")
 end
 
@@ -124,6 +121,7 @@ end
 
 function LevelDetailLayer:onClickBtnGold()
 	print("goldbtn is clicked!")
+	dump(GameState.load(GameData))
 end
 
 function LevelDetailLayer:onClickBtnJijia()

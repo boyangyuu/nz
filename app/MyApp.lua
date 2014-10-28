@@ -1,12 +1,17 @@
 
 require("config")
 require("framework.init")
+GameState = require("framework.cc.utils.GameState")
 
 local MyApp = class("MyApp", cc.mvc.AppBase)
+
+-- global var
+GameData={}
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
+    self:initGameState()
 end
 
 function MyApp:run()
@@ -53,6 +58,32 @@ function MyApp:getInstance(cls, id)
         modelObj = self:getObject(idStr)
     end  
     return modelObj
+end
+
+function MyApp:initGameState(  )
+    -- init GameState
+    GameState.init(function(param)
+        local returnValue=nil
+        if param.errorCode then
+            CCLuaLog("error")
+        else
+            -- crypto
+            if param.name=="save" then
+                local str=json.encode(param.values)
+                str=crypto.encryptXXTEA(str, "abcd")
+                returnValue={data=str}
+            elseif param.name=="load" then
+                local str=crypto.decryptXXTEA(param.values.data, "abcd")
+                returnValue=json.decode(str)
+            end
+            -- returnValue=param.values
+        end
+        return returnValue
+    end, "data.txt","1234")
+    if io.exists(GameState.getGameStatePath()) then
+        GameData=GameState.load()
+    end
+
 end
 
 return MyApp

@@ -4,7 +4,6 @@ local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
-local ViewUtils = import("..ViewUtils")
 import("..includes.functionUtils")
 
 --k
