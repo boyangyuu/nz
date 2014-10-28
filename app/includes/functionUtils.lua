@@ -11,24 +11,24 @@ function addBtnEventListener(node, callfunc)
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         callfunc(event)
         if event.name=='began' then
-        	print("高亮!")
-            -- self:grayOrBright(self.nodeSprite, true, false)
+        	print("缩小到0.9倍，高亮!")
+            node:runAction(cc.ScaleTo:create(0.05, 0.9))
         	return true
         elseif event.name=='ended' then
-            -- self:grayOrBright(self.nodeSprite, false, false)
-            print("高亮结束")
+            print("大小还原，高亮")
+            node:runAction(cc.ScaleTo:create(0.05, 1))
         end
     end)
 end
 
 --[[
-    example:self:addChild(getPopupTips("关卡尚未开启！"), 100)
+    example:self:addChild(getPopupTips("关卡尚未开启！"))
 ]]
 function getPopupTips(text)
     assert(text, "fileName is invalid")
 
     -- load .ExportJson
-    local popupNode = cc.uiloader:load("res/LevelMap_popup/levelMap_popup.ExportJson")
+    local popupNode = cc.uiloader:load("res/popupCommonTips/popupCommonTips.ExportJson")
     local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
     labelTip:setString(text)
     popupNode:setTouchEnabled(true)
@@ -36,7 +36,6 @@ function getPopupTips(text)
         if event.name=='began' then
             popupNode:removeFromParent()
             return true
-        elseif event.name=='ended' then
         end
     end)
 
@@ -44,6 +43,7 @@ function getPopupTips(text)
     popupNode:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
                  popupNode:removeFromParent()
             end)}))
+    popupNode:setZOrderOnTop(true)
     return popupNode
 end
 
@@ -103,7 +103,7 @@ end
 function getRecord( Table, PropertyName, Key )
     assert(Table ~= "" and type(Table) == "table", "invalid param")
     assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
-    assert(Key ~= "" and type(Key) == "string", "invalid param")
+    -- assert(Key ~= "" and type(Key) == "string", "invalid param")
     local recordArr={}
     for k,v in pairs(Table) do
         for k1,v1 in pairs(v) do
