@@ -7,7 +7,7 @@ local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 
 --------  Constants  ---------
-local Zorder_ui = 2
+local Zorder_home, Zorder_choose = 200, 2
 
 -- Interior levels and group numbers
 local levelBtnNum_1, levelBtnNum_2, levelBtnNum_3, levelBtnNum_4 = 6, 6, 6, 6
@@ -28,26 +28,14 @@ function LevelMapLayer:ctor()
 
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
 
-    --ui
-    self:onEnter()
-end
+    -- init bg
+    self:initEnter()
 
----------  onEnter  ---------
-function LevelMapLayer:onEnter() 
+    -- init home layer
+    self:initHomeLayer()
 
-    -- bg starting animation
-    local bg = display.newSprite("levelMap_bg.png")
-    self:addChild(bg) 
-    bg:setAnchorPoint(cc.p(0, 0))
-    self.bg = bg
-    self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
-
-    -- load control layer
-    local uiNode = cc.uiloader:load("LevelMap_ui/levelMap_ui.ExportJson")
-    self:addChild(uiNode, Zorder_ui) 
-
-    -- init ui buttons
-    self:initUiBtn(uiNode)
+    -- init choose layer
+    self:initChooseLayer()
 
     -- load level layer
     self:refreshLevelsBtn(self.index)
@@ -67,23 +55,104 @@ function LevelMapLayer:onEnter()
     -- self:addChild(label, 2)
 end
 
----------  init Ui Btn  ---------
-function LevelMapLayer:initUiBtn(uiNode)
-    local ccsBtn = 
-        {"btn_next", "btn_pre", "btn_setting", "btn_buyCoin", "btn_arsenal",
-        "btn_inlay", "btn_shop", "btn_sale", "btn_task", "btn_gift", 
-        "level", "Panel_up", "Panel_right", "panl_level", }
-    self.btn = {}
+function LevelMapLayer:initEnter()
+-- bg starting animation
+    local bg = display.newSprite("levelMap_bg.png")
+    self:addChild(bg) 
+    bg:setAnchorPoint(cc.p(0, 0))
+    self.bg = bg
+    self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
+end
 
-    for k, v in pairs(ccsBtn) do
-        self.btn[k] = cc.uiloader:seekNodeByName(uiNode, v)
-        self.btn[k]:setTouchEnabled(true)
-    end
+function LevelMapLayer:initHomeLayer()
+ -- load home layer
+    local homeNode = cc.uiloader:load("LevelMap_home/levelMap_home.ExportJson")
+    self:addChild(homeNode, Zorder_home)
 
-    self.btn[11]:addChild(display.newSprite("LevelMap_ui/1.png", 60, 25), Zorder_ui)
+    self.btnSetting = cc.uiloader:seekNodeByName(homeNode, "btn_setting")
+    self.btnBuyCoin = cc.uiloader:seekNodeByName(homeNode, "btn_buyCoin")
+    self.btnArsenal = cc.uiloader:seekNodeByName(homeNode, "btn_arsenal")
+    self.btnInlay = cc.uiloader:seekNodeByName(homeNode, "btn_inlay")
+    self.btnShop = cc.uiloader:seekNodeByName(homeNode, "btn_shop")
+    self.panelUp = cc.uiloader:seekNodeByName(homeNode, "Panel_up")
+
+    self.btnSetting:setTouchEnabled(true)
+    self.btnBuyCoin:setTouchEnabled(true)
+    self.btnArsenal:setTouchEnabled(true)
+    self.btnInlay:setTouchEnabled(true)
+    self.btnShop:setTouchEnabled(true)
+    self.panelUp:setTouchEnabled(true)
+    
+    addBtnEventListener(self.btnSetting, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+    addBtnEventListener(self.btnBuyCoin, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+    addBtnEventListener(self.btnArsenal, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+    addBtnEventListener(self.btnInlay, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+    addBtnEventListener(self.btnShop, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+end
+
+function LevelMapLayer:initChooseLayer()
+-- load choose layer
+    local chooseNode = cc.uiloader:load("LevelMap_choose/levelMap_choose.ExportJson")
+    self:addChild(chooseNode, Zorder_choose)
+
+    self.btnNext = cc.uiloader:seekNodeByName(chooseNode, "btn_next")
+    self.btnPre = cc.uiloader:seekNodeByName(chooseNode, "btn_pre")
+    self.btnSale = cc.uiloader:seekNodeByName(chooseNode, "btn_sale")
+    self.btnTask = cc.uiloader:seekNodeByName(chooseNode, "btn_task")
+    self.btnGift = cc.uiloader:seekNodeByName(chooseNode, "btn_gift")
+    self.btnLevel = cc.uiloader:seekNodeByName(chooseNode, "level")
+    self.panelRight = cc.uiloader:seekNodeByName(chooseNode, "Panel_right")
+    self.panelDown = cc.uiloader:seekNodeByName(chooseNode, "panl_level")
+
+    self.btnNext:setTouchEnabled(true)
+    self.btnPre:setTouchEnabled(true)
+    self.btnSale:setTouchEnabled(true)
+    self.btnTask:setTouchEnabled(true)
+    self.btnGift:setTouchEnabled(true)
+    self.btnLevel:setTouchEnabled(true)
+    self.panelRight:setTouchEnabled(true)
+    self.panelDown:setTouchEnabled(true)
+
+    self.btnLevel:addChild(display.newSprite("LevelMap_choose/1.png", 
+        self.btnLevel:getContentSize().width/2, self.btnLevel:getContentSize().height/2), Zorder_choose)
 
     -- add listener (attention: this isnot button, so we add node event listener)
-    addBtnEventListener(self.btn[1], function(event)
+    addBtnEventListener(self.btnNext, function(event)
         if event.name=='began' then
             print("Btn is begining!")
             return true
@@ -100,7 +169,7 @@ function LevelMapLayer:initUiBtn(uiNode)
             self:btnAction()
         end
     end)
-    addBtnEventListener(self.btn[2], function(event)
+    addBtnEventListener(self.btnPre, function(event)
         if event.name=='began' then
             print("Btn is begining!")
             return true
@@ -117,17 +186,31 @@ function LevelMapLayer:initUiBtn(uiNode)
             self:btnAction()
         end
     end)
-
-    for i = 3, 10 do
-        addBtnEventListener(self.btn[i], function(event)
-            if event.name=='began' then
-                print("Btn is begining!")
+     addBtnEventListener(self.btnSale, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
             return true
-            elseif event.name=='ended' then
-                print("Btn is pressed!")
-            end
-        end)
-    end    
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+    addBtnEventListener(self.btnTask, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+    addBtnEventListener(self.btnGift, function(event)
+        if event.name=='began' then
+            print("Btn is begining!")
+            return true
+        elseif event.name=='ended' then
+            print("Btn is pressed!")
+        end
+    end)
+
 end
 
 --------refresh Levels Btn--------
@@ -142,16 +225,21 @@ function LevelMapLayer:refreshLevelsBtn(groupId)
 
     local levelBtn = {}
     for i = 1, levelBtnNum[groupId] do
-        levelBtn[i] = cc.uiloader:seekNodeByName(self, "level_"..i)
+        levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnNode, "level_"..i)
         levelBtn[i]:setTouchEnabled(true)
 
         -- add listener
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
-                print("bigLevel = ", groupId, "smallLevelBtn = "..i.." is begining!")
-                
-                app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i))
-
+                levelBtn[i]:runAction(transition.sequence({
+                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() + 5, levelBtn[i]:getPositionY())), 
+                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() + 5)), 
+                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() - 5, levelBtn[i]:getPositionY())),
+                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() - 5)),
+                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() + 5, levelBtn[i]:getPositionY())),
+                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY())),
+                    cc.CallFunc:create(function()
+                        app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i))end)}))
                 -- self:addChild(getPopupTips("关卡尚未开启！"), 100)
             end
         end)
@@ -183,16 +271,16 @@ function LevelMapLayer:bgAction()
     self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(moveTo, 2.5)}))  -- Native C++
 
 -- To make button disabled for a while
-    self.btn[1]:setTouchEnabled(false)
-    self.btn[2]:setTouchEnabled(false)
+    self.btnNext:setTouchEnabled(false)
+    self.btnPre:setTouchEnabled(false)
     self.levelBtnNode:removeFromParent()
 
-    self.btn[1]:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
+    self.btnNext:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
-                self.btn[1]:setTouchEnabled(true)
-                self.btn[2]:setTouchEnabled(true)
-                self.btn[11]:removeAllChildren()
-                self.btn[11]:addChild(display.newSprite("LevelMap_ui/"..self.index..".png", 60, 25), 2)
+                self.btnNext:setTouchEnabled(true)
+                self.btnPre:setTouchEnabled(true)
+                self.btnLevel:removeAllChildren()
+                self.btnLevel:addChild(display.newSprite("LevelMap_choose/"..self.index..".png", 60, 25), 2)
                 self:refreshLevelsBtn(self.index)
             end)}))
 end
@@ -200,15 +288,15 @@ end
 -----------  btn Action  -----------
 function LevelMapLayer:btnAction()
     local changeTime = 0.2
-    self.btn[12]:runAction(cc.MoveBy:create(changeTime, cc.p(0, 74)))
-    self.btn[13]:runAction(cc.MoveBy:create(changeTime, cc.p(230, 0)))
-    self.btn[14]:runAction(cc.MoveBy:create(changeTime, cc.p(0, -70)))
-    self.btn[12]:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
+    self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
+    self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width, 0)))
+    self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height)))
+    self.panelUp:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
             -- reverse() is not work!
-                self.btn[12]:runAction(cc.MoveBy:create(changeTime, cc.p(0, -74)))
-                self.btn[13]:runAction(cc.MoveBy:create(changeTime, cc.p(-230, 0)))
-                self.btn[14]:runAction(cc.MoveBy:create(changeTime, cc.p(0, 70)))
+                self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
+                self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width, 0)))
+                self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height)))
             end)}))
 end
 

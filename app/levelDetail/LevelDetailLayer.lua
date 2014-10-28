@@ -11,8 +11,9 @@ function LevelDetailLayer:ctor(index1, index2)
 	self.model = app:getInstance(LevelDetailModel)
 
 	self:loadCCS()
-	self:initData(index1, index2)	
 	self:initUI()
+	self:initData(index1, index2)	
+
 end
 
 function LevelDetailLayer:initUI()
@@ -129,6 +130,7 @@ function LevelDetailLayer:initData(BigID,SmallID)
 	local DataTable = LevelDetailModel:getConfig(BigID,SmallID)
 
 	--Label
+	dump(DataTable["guanqiaName"])
 	self.lblTitle:setString(DataTable["guanqiaName"])
 	self.lblId:setString(DataTable["guanqiaNum"])
 	self.lblTask:setString(DataTable["task"])
