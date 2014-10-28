@@ -10,7 +10,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = class("Actor", cc.mvc.ModelBase)
 
 -- 常量
-Actor.FIRE_COOLDOWN = 0.2 -- 开火冷却时间
 
 -- 定义事件
 Actor.CHANGE_STATE_EVENT = "CHANGE_STATE_EVENT"
@@ -21,7 +20,8 @@ Actor.FREEZE_EVENT        = "FREEZE_EVENT"
 Actor.THAW_EVENT          = "THAW_EVENT"
 Actor.KILL_EVENT          = "KILL_EVENT"
 Actor.RELIVE_EVENT        = "RELIVE_EVENT"
-Actor.HP_CHANGED_EVENT    = "HP_CHANGED_EVENT"
+Actor.HP_DECREASE_EVENT    = "HP_DECREASE_EVENT"
+Actor.HP_INCREASE_EVENT    = "HP_INCREASE_EVENT"
 Actor.ATTACK_EVENT        = "ATTACK_EVENT"
 Actor.UNDER_ATTACK_EVENT  = "UNDER_ATTACK_EVENT"
 
@@ -30,6 +30,7 @@ Actor.schema = clone(cc.mvc.ModelBase.schema)
 Actor.schema["nickname"] = {"string"} -- 字符串类型，没有默认值
 Actor.schema["level"]    = {"number", 1} -- 数值类型，默认值 1
 Actor.schema["hp"]       = {"number", 1}
+Actor.schema["cooldown"] = {"number", 0.2} 
 
 function Actor:ctor(properties, events, callbacks)
     Actor.super.ctor(self, properties)
@@ -87,17 +88,37 @@ function Actor:ctor(properties, events, callbacks)
     self.fsm__:doEvent("start") -- 启动状态机
 end
 
+---- property----
+function Actor:setNickname(nickname_)
+    self.nickname_ = nickname_
+end
 
 function Actor:getNickname()
     return self.nickname_
+end
+
+function Actor:setLevel()
+    -- body
 end
 
 function Actor:getLevel()
     return self.level_
 end
 
+function Actor:setHp(hp_)
+    self.hp_ = hp_
+end
+
 function Actor:getHp()
     return self.hp_
+end
+
+function Actor:setCooldown(cooldown_)
+    self.cooldown_ = cooldown_
+end
+
+function Actor:getCooldown()
+    return self.cooldown_
 end
 
 function Actor:getMaxHp()
@@ -128,6 +149,10 @@ function Actor:isDead()
     return self.fsm__:getState() == "dead"
 end
 
+function Actor:canHitted()
+    return not self:isDead()
+end
+
 function Actor:isFrozen()
     return self.fsm__:getState() == "frozen"
 end
@@ -148,7 +173,7 @@ function Actor:increaseHp(hp)
 
     if newhp > self.hp_ then
         self.hp_ = newhp
-        self:dispatchEvent({name = Actor.HP_CHANGED_EVENT})
+        self:dispatchEvent({name = Actor.HP_INCREASE_EVENT})
     end
 
     return self
@@ -165,7 +190,7 @@ function Actor:decreaseHp(hp)
 
     if newhp < self.hp_ then
         self.hp_ = newhp
-        self:dispatchEvent({name = Actor.HP_CHANGED_EVENT})
+        self:dispatchEvent({name = Actor.HP_DECREASE_EVENT})
         if newhp == 0 then
             self.fsm__:doEvent("kill")
         end
@@ -178,7 +203,8 @@ end
 function Actor:fire()
     print("----------")
     self.fsm__:doEvent("fire")
-    self.fsm__:doEvent("ready", Actor.FIRE_COOLDOWN)
+    local cooldown_ = self:getCooldown()
+    self.fsm__:doEvent("ready", cooldown_)
 end
 
 -- 命中目标
@@ -228,7 +254,7 @@ end
 
 function Actor:onFire_(event)
     printf("actor %s:%s fire", self:getId(), self.nickname_)
-    self:dispatchEvent({name = Actor.FIRE_EVENT})
+    self:dispatchEvent({name = Actor.FIRE_EVENT, demage = self:getAttack()*5})
 end
 
 function Actor:onFreeze_(event)

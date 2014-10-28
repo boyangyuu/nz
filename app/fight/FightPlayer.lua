@@ -157,8 +157,6 @@ function FightPlayer:fire()
     --focus
     self.focusView:playFire()
 
-    --map check
-    self.mapView:checkFire()
 end
 
 function FightPlayer:onCancelledFire()

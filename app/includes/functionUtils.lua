@@ -71,6 +71,9 @@ function addChildCenter(child, parent)
 end
 
 function drawBoundingBox(parent, target, color)
+    -- if isTest == false then 
+    --     return 
+    -- end
     local cbb = target:getCascadeBoundingBox()
     local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
     local points = {
