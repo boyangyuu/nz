@@ -5,7 +5,6 @@
 import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
-local scheduler = require("framework.scheduler")
 
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
@@ -25,8 +24,6 @@ function LevelMapLayer:onEnter()
 -- load bg ang play bg starting animation
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local bg = display.newSprite("levelMap_bg.png", 0, 0)
-    -- bg:setScaleX(1)
-    -- bg:setScaleY(1)
     bg:setAnchorPoint(0, 0)
     self:addChild(bg, 0) 
     self.bg = bg
@@ -149,41 +146,12 @@ function LevelMapLayer:changeBigLevel()
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is begining!")
-                -- self:addChild(getPopupLayer("关卡尚未开启！"), 100)
                 
-                -- add color layer
-                local popupCommonLayer = PopupCommonLayer.new()
-                self:addChild(popupCommonLayer)
-
-                -- run scheduler after runAction
-                -- local function removeColorLayer()
-                --     if self.levelDetailLayer == nil then
-                --         print("0000000000000111111111111111")
-                --         scheduler.unscheduleGlobal(self.handle)
-                --         popupCommonLayer:removeFromParent()
-                --     end
-                -- end
-
                 local levelDetailLayer = LevelDetailLayer.new(self.index, i)
-                -- self.levelDetailLayer = levelDetailLayer
-                transition.execute(levelDetailLayer, transition.sequence({cc.ScaleTo:create(0.01, 0.25),
-                    cc.ScaleTo:create(0.5, 1)}), {
-                    delay = 0,
-                    easing = "In",
-                    onComplete = function() 
-                        -- local handle = scheduler.scheduleGlobal(removeColorLayer, 0.5)
-                        -- self.handle = handle 
-                   end          
-                })
+                self.popupCommonLayer = app:getInstance(PopupCommonLayer)
+                self.popupCommonLayer:showPopup(levelDetailLayer)
 
-                -- add new layer
-                -- local levelDetailLayer = LevelDetailLayer.new(self.index, i)
-                -- local popupCommonLayer = PopupCommonLayer.new()
-                -- levelDetailLayer:addChild(popupCommonLayer, 0)
-                -- levelDetailLayer:runAction(transition.sequence({cc.ScaleTo:create(0.01, 0.25),
-                -- cc.ScaleTo:create(0.5, 1)}))
-                self:addChild(levelDetailLayer, 2)
-                
+                -- self:addChild(getPopupLayer("关卡尚未开启！"), 100)
             return true
             elseif event.name=='ended' then
                 print("bigLevel = ", self.index, "smallLevelBtn = "..i.." is pressed!")
