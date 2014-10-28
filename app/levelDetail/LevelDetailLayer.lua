@@ -11,8 +11,8 @@ function LevelDetailLayer:ctor(index1, index2)
 	self.model = app:getInstance(LevelDetailModel)
 
 	self:loadCCS()
+	self:initData(index1, index2)	
 	self:initUI()
-	self:initData(index1, index2)
 end
 
 function LevelDetailLayer:initUI()
@@ -29,7 +29,6 @@ function LevelDetailLayer:initUI()
 	local lblTask     = cc.uiloader:seekNodeByName(self, "label_task")
 	local lblEnemyNum = cc.uiloader:seekNodeByName(self, "label_total")
 	local lblTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
-
 	self.lblTitle    = lblTitle
 	self.lblId       = lblId
 	self.lblTask     = lblTask
@@ -41,13 +40,10 @@ function LevelDetailLayer:initUI()
 	local lyrBibei = cc.uiloader:seekNodeByName(self, "layer_bibei")
 	local lyrGold  = cc.uiloader:seekNodeByName(self, "layer_gold")
 	local lyrJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
-
     self.lyrMap   = lyrMap
     self.lyrBibei = lyrBibei
     self.lyrGold  = lyrGold
     self.lyrJijia = lyrJijia
-
-	
 
 	-- set touch enable
 	btnOff   :setTouchEnabled(true)
@@ -55,7 +51,6 @@ function LevelDetailLayer:initUI()
 	btnBibei :setTouchEnabled(true)
 	btnGold  :setTouchEnabled(true)
 	btnJijia :setTouchEnabled(true)
-
 
 	------ on btn clicked
 	--offbtn
@@ -143,10 +138,10 @@ function LevelDetailLayer:initData(BigID,SmallID)
 	--Image
 	--map从所有map里找寻，配表内填写为地图名，待修改
 	--gun从所有gun里找寻，配表内填写为枪名，待修改
-	local mapimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["mapxiaoImg"]..".png")
-	local jijiaimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["jijia"]..".png")
-	local goldimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
-	local weaponimg=cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
+	local mapimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["mapxiaoImg"]..".png")
+	local jijiaimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["jijia"]..".png")
+	local goldimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
+	local weaponimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
 
 	addChildCenter(mapimg, self.lyrMap)
 	addChildCenter(jijiaimg, self.lyrJijia)
