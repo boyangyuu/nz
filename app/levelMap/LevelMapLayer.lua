@@ -5,40 +5,20 @@
 import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
-
---------  Constants  ---------
-local Zorder_home, Zorder_choose = 200, 2
-
--- Interior levels and group numbers
-local levelBtnNum_1, levelBtnNum_2, levelBtnNum_3, levelBtnNum_4 = 6, 6, 6, 6
-local groupNum = 4
-
---Amplify times and time of background
-local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7
-
-----------  Class  -----------
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
 
------------  Ctor  -----------
+--------  Constants  ---------
+local Zorder_home, Zorder_choose = 200, 2
+local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time of background
+
 function LevelMapLayer:ctor()
-    self.index = 1
-    self.preIndex = 0
-
-    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
-
-    -- init bg
-    self:initEnter()
-
-    -- init home layer
+    self:initNumber()
+    self:initBgLayer()
     self:initHomeLayer()
-
-    -- init choose layer
     self:initChooseLayer()
-
-    -- load level layer
-    self:refreshLevelsBtn(self.index)
+    self:refreshLevelLayer(self.index)
 
     -- Setting shadow and outline for TTFlabel
     -- local label = display.newTTFLabel({
@@ -55,8 +35,28 @@ function LevelMapLayer:ctor()
     -- self:addChild(label, 2)
 end
 
-function LevelMapLayer:initEnter()
+function LevelMapLayer:initNumber()
+    self.index = 1
+    self.preIndex = 0
+
+-- Obtain group and litter levels amount from json
+    local config = getConfig("config/3.json")
+    local recordsLevel = getRecord(config,"xiaoguanqia",1)
+    self.groupNum = #recordsLevel
+
+    self.levelBtnNum = {}
+    for i = 1, self.groupNum do
+        local recordsGroup = getRecord(config,"daguanqia",i)
+        self.levelBtnNum[i] = #recordsGroup
+
+        print("self.groupNum =",  self.groupNum, 
+            "self.levelBtnNum["..i.."] = ", self.levelBtnNum[i])
+    end
+end
+
+function LevelMapLayer:initBgLayer()
 -- bg starting animation
+    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     local bg = display.newSprite("levelMap_bg.png")
     self:addChild(bg) 
     bg:setAnchorPoint(cc.p(0, 0))
@@ -158,9 +158,9 @@ function LevelMapLayer:initChooseLayer()
             return true
         elseif event.name=='ended' then
             print("Btn is pressed!")
-            if self.index >= groupNum then
+            if self.index >= self.groupNum then
                 self.index = 1
-                self.preIndex = groupNum
+                self.preIndex = self.groupNum
             else
                 self.index = self.index + 1
                 self.preIndex = self.index - 1
@@ -176,7 +176,7 @@ function LevelMapLayer:initChooseLayer()
         elseif event.name=='ended' then
             print("Btn is pressed!")
             if self.index < 2 then
-                self.index = groupNum
+                self.index = self.groupNum
                 self.preIndex = 1
             else
                 self.index = self.index - 1
@@ -213,18 +213,15 @@ function LevelMapLayer:initChooseLayer()
 
 end
 
---------refresh Levels Btn--------
-function LevelMapLayer:refreshLevelsBtn(groupId)
+function LevelMapLayer:refreshLevelLayer(groupId)
     -- load level layer
     self.levelBtnNode = cc.uiloader:load("LevelMap_levelBtn/levelMap_"..groupId..".ExportJson")
     self.levelBtnNode:setPosition(0, 0)
     self:addChild(self.levelBtnNode)  
 
     -- seek level buttons
-    local levelBtnNum = {levelBtnNum_1, levelBtnNum_2, levelBtnNum_3 ,levelBtnNum_4, }
-
     local levelBtn = {}
-    for i = 1, levelBtnNum[groupId] do
+    for i = 1, self.levelBtnNum[groupId] do
         levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnNode, "level_"..i)
         levelBtn[i]:setTouchEnabled(true)
 
@@ -246,7 +243,6 @@ function LevelMapLayer:refreshLevelsBtn(groupId)
     end
 end
 
------------  bg Action  -----------
 function LevelMapLayer:bgAction()
     -- switching animation
     if self.index == 1 then
@@ -281,11 +277,10 @@ function LevelMapLayer:bgAction()
                 self.btnPre:setTouchEnabled(true)
                 self.btnLevel:removeAllChildren()
                 self.btnLevel:addChild(display.newSprite("LevelMap_choose/"..self.index..".png", 60, 25), 2)
-                self:refreshLevelsBtn(self.index)
+                self:refreshLevelLayer(self.index)
             end)}))
 end
 
------------  btn Action  -----------
 function LevelMapLayer:btnAction()
     local changeTime = 0.2
     self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
