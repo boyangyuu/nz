@@ -65,14 +65,8 @@ function LevelMapLayer:initBgLayer()
 end
 
 function LevelMapLayer:initHomeLayer()
- -- load home layer
-<<<<<<< HEAD
-    local homeNode = cc.uiloader:load("levelMap_home/levelMap_home.ExportJson")
-=======
     local homeNode = cc.uiloader:load("HomeBarLayer/homeBarLayer.ExportJson")
->>>>>>> f389183f39cec6bbe3ced6f6dfe8672e60fcba46
     self:addChild(homeNode, Zorder_home)
-
     self.btnSetting = cc.uiloader:seekNodeByName(homeNode, "btn_setting")
     self.btnBuyCoin = cc.uiloader:seekNodeByName(homeNode, "btn_buyCoin")
     self.btnArsenal = cc.uiloader:seekNodeByName(homeNode, "btn_arsenal")
