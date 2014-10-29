@@ -14,8 +14,7 @@ function LevelDetailLayer:ctor(index1, index2)
 
 	self:loadCCS()
 	self:initUI()
-	self:initData(index1, index2)	
-
+	self:initData(index1, index2)
 end
 
 function LevelDetailLayer:initUI()
@@ -27,26 +26,17 @@ function LevelDetailLayer:initUI()
 	local btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
 
 	-- seek label
-	local lblTitle    = cc.uiloader:seekNodeByName(self, "label_title")
-	local lblId       = cc.uiloader:seekNodeByName(self, "label_id")
-	local lblTask     = cc.uiloader:seekNodeByName(self, "label_task")
-	local lblEnemyNum = cc.uiloader:seekNodeByName(self, "label_total")
-	local lblTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
-	self.lblTitle    = lblTitle
-	self.lblId       = lblId
-	self.lblTask     = lblTask
-	self.lblEnemyNum = lblEnemyNum
-	self.lblTasktype    = lblTasktype
+	self.labelTitle    = cc.uiloader:seekNodeByName(self, "label_title")
+	self.labelId       = cc.uiloader:seekNodeByName(self, "label_id")
+	self.labelTask     = cc.uiloader:seekNodeByName(self, "label_task")
+	self.labelEnemyNum = cc.uiloader:seekNodeByName(self, "label_total")
+	self.labelTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
 
 	-- seek layer for image
-	local lyrMap   = cc.uiloader:seekNodeByName(self, "layer_mapimage")
-	local lyrBibei = cc.uiloader:seekNodeByName(self, "layer_bibei")
-	local lyrGold  = cc.uiloader:seekNodeByName(self, "layer_gold")
-	local lyrJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
-    self.lyrMap   = lyrMap
-    self.lyrBibei = lyrBibei
-    self.lyrGold  = lyrGold
-    self.lyrJijia = lyrJijia
+	self.layerMap   = cc.uiloader:seekNodeByName(self, "layer_mapimage")
+	self.layerBibei = cc.uiloader:seekNodeByName(self, "layer_bibei")
+	self.layerGold  = cc.uiloader:seekNodeByName(self, "layer_gold")
+	self.layerJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
 
 	-- set touch enable
 	btnOff   :setTouchEnabled(true)
@@ -54,6 +44,7 @@ function LevelDetailLayer:initUI()
 	btnBibei :setTouchEnabled(true)
 	btnGold  :setTouchEnabled(true)
 	btnJijia :setTouchEnabled(true)
+
 
 	------ on btn clicked
 	--offbtn
@@ -132,29 +123,30 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 ---- initData ----
-function LevelDetailLayer:initData(BigID,SmallID)
-	local DataTable = LevelDetailModel:getConfig(BigID,SmallID)
+function LevelDetailLayer:initData(gropID,levelID)
+	local DataTable = LevelDetailModel:getConfig(gropID,levelID)
 
 	--Label
-	dump(DataTable["guanqiaName"])
-	self.lblTitle:setString(DataTable["guanqiaName"])
-	self.lblId:setString(DataTable["guanqiaNum"])
-	self.lblTask:setString(DataTable["task"])
-	self.lblEnemyNum:setString("共"..DataTable["enemyNum"].."波")
-	self.lblTasktype:setString(DataTable["taskType"])
+
+	self.labelTitle:setString(DataTable["guanqiaName"])
+	self.labelId:setString(DataTable["daguanqia"].."-"..DataTable["xiaoguanqia"])
+	self.labelTask:setString(DataTable["task"])
+	self.labelEnemyNum:setString("共"..DataTable["enemyNum"].."波")
+	self.labelTasktype:setString(DataTable["taskType"])
+
 
 	--Image
 	--map从所有map里找寻，配表内填写为地图名，待修改
 	--gun从所有gun里找寻，配表内填写为枪名，待修改
-	local mapimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["mapxiaoImg"]..".png")
-	local jijiaimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["jijia"]..".png")
-	local goldimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
-	local weaponimg = cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
+	local mapImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["mapxiaoImg"]..".png")
+	local jijiaImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["jijia"]..".png")
+	local goldImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
+	local weaponImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
 
-	addChildCenter(mapimg, self.lyrMap)
-	addChildCenter(jijiaimg, self.lyrJijia)
-	addChildCenter(goldimg, self.lyrGold)
-	addChildCenter(weaponimg, self.lyrBibei)
+	addChildCenter(mapImg   , self.layerMap)
+	addChildCenter(jijiaImg , self.layerJijia)
+	addChildCenter(goldImg  , self.layerGold)
+	addChildCenter(weaponImg, self.layerBibei)
 end
 
 
