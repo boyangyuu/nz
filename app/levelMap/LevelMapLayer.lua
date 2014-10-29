@@ -124,12 +124,7 @@ function LevelMapLayer:initHomeLayer()
 end
 
 function LevelMapLayer:initChooseLayer()
--- load choose layer
-<<<<<<< HEAD
-    local chooseNode = cc.uiloader:load("levelMap_choose/levelMap_choose.ExportJson")
-=======
     local chooseNode = cc.uiloader:load("LevelMap/chooseLevelLayer/chooseLevelLayer.ExportJson")
->>>>>>> f389183f39cec6bbe3ced6f6dfe8672e60fcba46
     self:addChild(chooseNode, Zorder_choose)
 
     self.btnNext = cc.uiloader:seekNodeByName(chooseNode, "btn_next")
@@ -150,12 +145,8 @@ function LevelMapLayer:initChooseLayer()
     self.panelRight:setTouchEnabled(true)
     self.panelDown:setTouchEnabled(true)
 
-<<<<<<< HEAD
-    self.btnLevel:addChild(display.newSprite("levelMap_choose/1.png", 
-=======
     self.btnLevel:addChild(display.newSprite("LevelMap/chooseLevelLayer/1.png", 
->>>>>>> f389183f39cec6bbe3ced6f6dfe8672e60fcba46
-        self.btnLevel:getContentSize().width/2, self.btnLevel:getContentSize().height/2), Zorder_choose)
+    self.btnLevel:getContentSize().width/2, self.btnLevel:getContentSize().height/2), Zorder_choose)
 
     -- add listener (attention: this isnot button, so we add node event listener)
     addBtnEventListener(self.btnNext, function(event)
@@ -220,12 +211,7 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
-    -- load level layer
-<<<<<<< HEAD
-    self.levelBtnNode = cc.uiloader:load("levelMap_levelBtn/levelMap_"..groupId..".ExportJson")
-=======
     self.levelBtnNode = cc.uiloader:load("LevelMap/LevelMap_levelBtn/levelMap_"..groupId..".ExportJson")
->>>>>>> f389183f39cec6bbe3ced6f6dfe8672e60fcba46
     self.levelBtnNode:setPosition(0, 0)
     self:addChild(self.levelBtnNode)  
 
@@ -276,7 +262,7 @@ function LevelMapLayer:bgAction()
     self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(scaleToBig, 2.5)}))  -- Native C++
     self.bg:runAction(cc.Sequence:create({delay, cc.EaseIn:create(moveTo, 2.5)}))  -- Native C++
 
--- To make button disabled for a while
+    -- To make button disabled for a while
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnNode:removeFromParent()
@@ -286,11 +272,7 @@ function LevelMapLayer:bgAction()
                 self.btnNext:setTouchEnabled(true)
                 self.btnPre:setTouchEnabled(true)
                 self.btnLevel:removeAllChildren()
-<<<<<<< HEAD
-                self.btnLevel:addChild(display.newSprite("levelMap_choose/"..self.index..".png", 60, 25), 2)
-=======
                 self.btnLevel:addChild(display.newSprite("LevelMap/chooseLevelLayer/"..self.index..".png", 60, 25), 2)
->>>>>>> f389183f39cec6bbe3ced6f6dfe8672e60fcba46
                 self:refreshLevelLayer(self.index)
             end)}))
 end
