@@ -81,7 +81,7 @@ function MapView:addEnemys(id , num, place)
 
 	local boundPlace = placeNode:getBoundingBox()
 	print("boundPlace width", boundPlace.width)
-
+	math.newrandomseed()
 	local xPos = math.random(boundEnemy.width, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	placeNode:addChild(enemyView)
