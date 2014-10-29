@@ -1,21 +1,16 @@
 --import
+import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
-local GunModel = import(".GunModel")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
-import("..includes.functionUtils")
-
---k
-local kBgMap = 10001
-local kScaleBg = 2
+local MapView = import(".MapView")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
     scaleMoveFocus = 1.3,
     scaleMoveGun = 1.3, 
 }
-
 
 local FightPlayer = class("FightPlayer", function ()
 	return display.newLayer()
@@ -25,8 +20,11 @@ end)
 function FightPlayer:ctor()
     --model 
     self.hero = app:getInstance(Hero)
+    self.focusView = app:getInstance(FocusView)
+    -- self.mapView = app:getInstance(MapView)
+     self.mapView = MapView.new()
     self.gunView = GunView.new()
-    self.focusView = FocusView.new()
+
     --instance
     self.gunBtnPressed = false
 
@@ -36,15 +34,6 @@ function FightPlayer:ctor()
     --帧事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()    
-
-    --config
-    -- json解码用 json
-    local fileUtil = cc.FileUtils:getInstance()
-    local fullPath = fileUtil:fullPathForFilename("config/test.json")
-    local jsonStr = fileUtil:getStringFromFile(fullPath)  
-    -- local jsonStr = fileUtil:gettextFromFile(fullPath)  
-    -- gettextFromFile
-    -- dump(jsonStr, "11")
 end
 
 function FightPlayer:initUI()
@@ -63,13 +52,9 @@ function FightPlayer:loadCCS()
     self.ui = node
     self:addChild(node)
 
-    --load bg
+    --load map
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    local level = "" 
-    local bgMap = display.newSprite("map_demo"..level..".png") --todo
-    bgMap:setTag(kBgMap)
-    addChildCenter(bgMap, layerBg)
-    print("bgMap:getPositionX()", bgMap:getPositionX())
+    addChildCenter(self.mapView, layerBg) 
 
     --load gun 
     local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
@@ -94,12 +79,12 @@ function FightPlayer:initTouchArea()
     layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     layerControl:setTouchSwallowEnabled(false)
     layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        printf("%s %s [TARGETING]", "button1", event.name)
+        -- printf("%s %s [TARGETING]", "button1", event.name)
         if event.name == "ended" or event.name == "cancelled" then
-            print("-----------------------------")
+            -- print("-----------------------------")
         elseif event.name == "moved" then 
             self:onTouchMoved(event)
-            print("")
+            -- print("")
         end
         return true
     end)    
@@ -111,14 +96,13 @@ end
 function FightPlayer:initFireBtn()
     --btnfire    
     local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    dump(btnFire, "btnFire")
     btnFire:setTouchEnabled(true)
     btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
     btnFire:setTouchSwallowEnabled(true)
     btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        printf("%s %s [TARGETING]", "btnFire", event.name)
+        -- printf("%s %s [TARGETING]", "btnFire", event.name)
         if event.name == "began" or event.name == "added" then
-            print("onButtonClicked")
+            -- print("onButtonClicked")
             self.gunBtnPressed = true
             --动画
             if btnFire:getChildByTag(1) then 
@@ -135,7 +119,7 @@ function FightPlayer:initFireBtn()
             armature:setTag(1)            
         end
         if event.name == "cancelled" or event.name == "ended" then
-            print("onButtonRelease")
+            -- print("onButtonRelease")
             self:onCancelledFire()
             self.gunBtnPressed = false
         end        
@@ -161,7 +145,7 @@ function FightPlayer:canGunShot()
 
     return false
 end
-
+ 
 function FightPlayer:fire()
     --hero
     self.hero:fire()
@@ -171,6 +155,7 @@ function FightPlayer:fire()
 
     --focus
     self.focusView:playFire()
+
 end
 
 function FightPlayer:onCancelledFire()
@@ -179,11 +164,11 @@ end
 
 ----touch----
 function FightPlayer:printTouch(event)
-    print("printTouch:", event.name)
-    for id, point in ipairs(event.points) do
-        local str = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)
-        print(str)
-    end
+    -- print("printTouch:", event.name)
+    -- for id, point in ipairs(event.points) do
+    --     local str = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)
+    --     print(str)
+    -- end
 end
 
 function FightPlayer:onTouchMoved(event)
@@ -219,11 +204,9 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
     local xOri, yOri = layerBg:getPosition()
     local scale = KFightConfig.scaleMoveBg
-    layerBg:setPosition(xOri + offsetX * scale, yOri + offsetY * scale)
-    local bgMap = layerBg:getChildByTag(kBgMap)
+    layerBg:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
     local x, y = layerBg:getPosition()
     self:justBgPos(layerBg)
-
 end
 
 function FightPlayer:moveGun(x) 
@@ -233,9 +216,10 @@ end
 
 function FightPlayer:justBgPos(node)
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    local bgMap = layerBg:getChildByTag(kBgMap)    
-    local w, h = bgMap:getContentSize().width * kScaleBg, 
-        bgMap:getContentSize().height * kScaleBg      
+    local bgMap = self.mapView  
+    local w, h = bgMap:getSize().width , 
+        bgMap:getSize().height
+
     local xL = (w - display.width) / 2  
     local yL = (h - display.height) / 2 
     local x, y = node:getPosition()
@@ -243,14 +227,14 @@ function FightPlayer:justBgPos(node)
     --x
     if x <= -xL then
         x = -xL
-    elseif x >= xL then 
+    elseif x >= xL  then 
         x = xL
     end
 
     --y
-    if y <= -yL then
+    if y <= -yL  then
         y = -yL
-    elseif y >=  yL then 
+    elseif y >=  yL  then 
         y = yL
     end    
     node:setPosition(x, y)    

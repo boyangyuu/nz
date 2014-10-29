@@ -73,6 +73,28 @@ function addChildCenter(child, parent)
     parent:addChild(child)
 end
 
+function drawBoundingBox(parent, target, color)
+    -- if isTest == false then 
+    --     return 
+    -- end
+    local cbb = target:getCascadeBoundingBox()
+    local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
+    local points = {
+        {left, bottom},
+        {left + width, bottom},
+        {left + width, bottom + height},
+        {left, bottom + height},
+        {left, bottom},
+    }
+    local box = display.newPolygon(points, {borderColor = color})
+    parent:addChild(box, 1000)
+end
+
+function rectIntersectsRect(rectNode1, rectNode2)
+    local bound1 = rectNode1:getCascadeBoundingBox()
+    local bound2 = rectNode2:getCascadeBoundingBox()
+    return cc.rectIntersectsRect(bound1, bound2)
+end
 
 ---- Data ----
 function getConfig( configFileDir )
