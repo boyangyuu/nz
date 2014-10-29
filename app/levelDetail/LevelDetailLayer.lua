@@ -127,20 +127,13 @@ function LevelDetailLayer:refershData(gropID,levelID)
 	local DataTable = LevelDetailModel:getConfig(gropID,levelID)
 
 	--Label
-<<<<<<< HEAD
+
 	self.labelTitle:setString(DataTable["guanqiaName"])
 	self.labelId:setString(DataTable["gropID"].."-"..DataTable["levelID"])
 	self.labelTask:setString(DataTable["task"])
 	self.labelEnemyNum:setString("共"..DataTable["enemyNum"].."波")
 	self.labelTasktype:setString(DataTable["taskType"])
-=======
-	dump(DataTable["guanqiaName"])
-	self.lblTitle:setString(DataTable["guanqiaName"])
-	self.lblId:setString(DataTable["guanqiaNum"])
-	self.lblTask:setString(DataTable["task"])
-	self.lblEnemyNum:setString("共"..DataTable["enemyNum"].."波")
-	self.lblTasktype:setString(DataTable["taskType"])
->>>>>>> f72ca094a8b79e913e88d0c959e683a64dec2143
+
 
 	--Image
 	--map从所有map里找寻，配表内填写为地图名，待修改
