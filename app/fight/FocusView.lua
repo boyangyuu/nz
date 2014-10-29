@@ -25,6 +25,7 @@ function FocusView:ctor(properties)
 	local focusId = gunId+11
     local src = "Fight/gunsAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
     local armature = getArmature("anim_zunxin_sq", src) 
+    armature:setAnchorPoint(0.5,0.5)
 	self.focus = armature
 	self.focus:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(armature)    
@@ -46,7 +47,7 @@ function FocusView:playFire()
 		self.focus:getAnimation():play("fire01" , -1, 0) 
 		self.playIndex = "fire01"
 	elseif self.playIndex == "fire01" or self.playIndex == "fire02" then 
-		print("fire02")
+		-- print("fire02")
 		self.focus:getAnimation():play("fire02" , -1, 0) 
 		self.playIndex = "fire02"
 	end
@@ -67,18 +68,16 @@ function FocusView:stopFire()
 end
 
 function FocusView:setFocusRange(size)
+	if self.focusRange then 
+		self.focusRange:removeFromParent()
+	end
     self.focusRange = display.newScale9Sprite()
     self.focusRange:setContentSize(size)
     addChildCenter(self.focusRange, self)
 end
 
-function FocusView:getFocusRect()
-	local bound = self.focusRange:getBoundingBox()
-	local nodePoint = self.focusRange:convertToWorldSpace(
-	cc.p(bound.x, bound.y))
-	bound.x = nodePoint.x
-	bound.y = nodePoint.y	
-	return bound
+function FocusView:getFocusRange()
+	return self.focusRange
 end
 
 function FocusView:test()

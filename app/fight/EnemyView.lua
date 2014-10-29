@@ -6,6 +6,11 @@
 2. enemy的移动范围判断
 ]]
 
+--k
+local kRateFire = 200
+local kRateRoll = 200
+local kRateWalk = 200
+
 --import
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
@@ -29,6 +34,7 @@ function EnemyView:ctor()
     local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
     local armature = getArmature("anim_enemy_001", src) 
 	self.armature = armature
+
 	self.armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	
 	--换肤
@@ -54,13 +60,21 @@ function EnemyView:onHitted(demage)
 	end
 end
 
---state
+---- state ----
 function EnemyView:playIdle()
 	self.armature:getAnimation():play("stand" , -1, 1)  
 end
 
 function EnemyView:playFire(event)
 	self.armature:getAnimation():play("fire" , -1, 1) 
+end
+
+function EnemyView:playWalk()
+	self.armature:getAnimation():play("walk" , -1, 1) 
+end
+
+function EnemyView:playRoll()
+	self.armature:getAnimation():play("roll" , -1, 1) 
 end
 
 function EnemyView:playHitted(event)
@@ -73,46 +87,70 @@ function EnemyView:playKill(event)
 	self.armature:getAnimation():play("die" , -1, 1)
 end
 
-
+function EnemyView:canChangeState(stateId)
+	local id = self.armature:getAnimation():getCurrentMovementID()
+	-- print("stateId", stateId)
+	-- print("id", id)
+	if stateId == "hit" then 
+		local notConflict = id ~= "roll"
+		return self.enemy:canHitted() and notConflict
+	elseif stateId == "fire" then 
+		local notConflict = id == "stand" or id == "hit"
+		return notConflict
+	elseif stateId == "walk" or "roll" then 
+		local notConflict = id == "stand" 
+		return  notConflict	
+	end		
+	return false
+end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
-	print("animationEvent id ", movementID)
+	-- print("animationEvent id ", movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if movementID == "fire" or movementID == "hit" then
-			print("animationEvent idle from ", movementID)
+		if movementID ~= "die" then
+			-- print("animationEvent idle from ", movementID)
 			armatureBack:stopAllActions()
 			self:playIdle()
     	elseif movementID == "die" then 
-    		print("died, remove")
+    		-- print("died, remove")
     		armatureBack:stopAllActions()
     		self:setDeadDone()
-			self:removeAllChildren()
     	end 
 	end
 end
 
-----  ----
-function EnemyView:getRect(rectName)
+----hited  ----
+function EnemyView:getRange(rectName)
 	assert(rectName, "invalid param")
-	local bound 
-	if rectName == "body" then
-		bound = self.armature:getBoundingBox()
-		local nodePoint = self.armature:convertToWorldSpace(
- 		cc.p(bound.x, bound.y))
- 		bound.x = nodePoint.x
-  		bound.y = nodePoint.y	
-  	end
-  	return bound
+  	return self.armature or nil
 end
 
---random create state
+----attack----
 
 --tick
 function EnemyView:tick(t)
 	--change state
-	local randomSeed = math.random(1, 200)
-	if randomSeed > 199 and self.enemy:canFire() then
-		self.enemy:fire()
+	local randomSeed 
+	if self:canChangeState("fire") then
+		randomSeed = math.random(1, kRateFire)
+		if randomSeed > kRateFire - 1 then 
+			self.enemy:fire() 
+			return
+		end
+	end
+	if self:canChangeState("walk") then 
+		randomSeed =  math.random(1, kRateWalk)
+		if randomSeed > kRateWalk - 1 then 
+			self:playWalk()
+			return 
+		end
+	end
+	if self:canChangeState("roll") then 
+		randomSeed =  math.random(1, kRateRoll)
+		if randomSeed > kRateRoll - 1 then 
+			self:playRoll() 
+			return
+		end
 	end
 end
 
@@ -124,7 +162,7 @@ function EnemyView:getDeadDone()
 	return self.deadDone or false 
 end
 
-function EnemyView:setDeadDone()
+function EnemyView:setDeadDone()	
 	self.deadDone = true
 end
 

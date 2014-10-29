@@ -8,8 +8,12 @@ desc：
 	3.enemy的活动
 	4.攻击检测
 ]]
--- local scheduler = require("framework.scheduler")
-local kScaleBg = 2
+
+import("..includes.functionUtils")
+import(".Fight_001")
+
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+local Timer = require("framework.cc.utils.Timer")
 local FocusView = import(".FocusView")
 local Hero = import(".Hero")
 local Actor = import(".Actor")
@@ -27,32 +31,66 @@ function MapView:ctor()
 
 	--map
 	local mapId = ""   -- todo 外界
-	self.bgMap = display.newSprite("Fight/maps/map_demo"..mapId..".png") 
-	self.bgMap:setScale(kScaleBg)
-	self:addChild(self.bgMap)
-
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
+    local node = cc.uiloader:load("map_1.ExportJson")	
+	self.map = node
+	addChildCenter(self.map, self)
+	
 	-- enemys
-	self:createEnemys()
+	-- local appTimer = Timer.new()
+	-- appTimer:addEventListener("REFRESH_WAVES", handler(self, self.createEnemys))
+	-- appTimer:addCountdown("REFRESH_WAVES", 40)
+	self:updateEnemys()
 
 	-- event
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    self:scheduleUpdate()    	
+    self:scheduleUpdate()
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))       
+        :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
+
 end
 
 --enemy
-function MapView:createEnemys()
+function MapView:updateEnemys(event)
+	--timer
+    -- if event.countdown > 0 then
+    -- 	return
+    -- end
+
+	--config
+	local waves = getWaves()
+	dump(waves, "waves")
+	for i, wave in ipairs(waves) do
+		for groupId, group in ipairs(wave.enemys) do
+			function addEnemysFunc()
+				self:addEnemys(group.id, group.num, group.place)
+			end
+			scheduler.performWithDelayGlobal(addEnemysFunc ,group.time)
+		end
+	end
+end
+
+function MapView:addEnemys(id , num, place)
+	assert(id and num and place, "invalid param")
 	local enemyView = EnemyView.new()
-	enemyView:setScale(0.5)  --暂时这么写 实际上要bg和enemy的层是分开的
-	enemyView:setPosition( display.cx/2, display.cy/3 )
 	self.enemys[#self.enemys + 1] = enemyView
-	self.bgMap:addChild(enemyView, 1000)
+	local placeNode = cc.uiloader:seekNodeByName(self, place)
+
+	local boundEnemy = enemyView:getRange("body"):getBoundingBox()
+	print("enemyView width", boundEnemy.width)
+
+	local boundPlace = placeNode:getBoundingBox()
+	print("boundPlace width", boundPlace.width)
+
+	local xPos = math.random(boundEnemy.width, boundPlace.width)
+	enemyView:setPosition(xPos, 0)
+	placeNode:addChild(enemyView)
 end
 
 function MapView:getSize()
-	local size = cc.size(self.bgMap:getBoundingBox().width ,
-		self.bgMap:getBoundingBox().height)
+	local bg = cc.uiloader:seekNodeByName(self, "bg")
+	local size = cc.size(bg:getBoundingBox().width ,
+		bg:getBoundingBox().height)
 	return size
 end
 
@@ -60,8 +98,9 @@ end
 function MapView:tick(dt)
 	--检查enemys的状态
 	for i,enemy in ipairs(self.enemys) do
-		if enemy:getDeadDone() then 
+		if enemy and enemy:getDeadDone() then
 			table.remove(self.enemys, i)
+			enemy:removeFromParent()
 		end
 	end
 end
@@ -69,13 +108,10 @@ end
 function MapView:getDestEnemys()
 	local enemys = {}
 	for i,enemy in ipairs(self.enemys) do
-		local rectEnemy = enemy:getRect("body") 
-		local rectFocus = self.focusView:getFocusRect()
-		local isHit = cc.rectIntersectsRect(rectEnemy, rectFocus)
-		
-		dump(rectEnemy, "rectEnemy")
-		dump(rectFocus, "rectFocus")
-		if isHit then 
+		local rectEnemy = enemy:getRange("body") 
+		local rectFocus = self.focusView:getFocusRange()
+		local isInRange = rectIntersectsRect(rectEnemy, rectFocus)
+		if isInRange and enemy:canChangeState("hit") then 
 			enemys[#enemys + 1] = enemy
 		end
 	end

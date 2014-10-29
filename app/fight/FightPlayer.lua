@@ -79,12 +79,12 @@ function FightPlayer:initTouchArea()
     layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     layerControl:setTouchSwallowEnabled(false)
     layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        printf("%s %s [TARGETING]", "button1", event.name)
+        -- printf("%s %s [TARGETING]", "button1", event.name)
         if event.name == "ended" or event.name == "cancelled" then
-            print("-----------------------------")
+            -- print("-----------------------------")
         elseif event.name == "moved" then 
             self:onTouchMoved(event)
-            print("")
+            -- print("")
         end
         return true
     end)    
@@ -96,14 +96,13 @@ end
 function FightPlayer:initFireBtn()
     --btnfire    
     local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    dump(btnFire, "btnFire")
     btnFire:setTouchEnabled(true)
     btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
     btnFire:setTouchSwallowEnabled(true)
     btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        printf("%s %s [TARGETING]", "btnFire", event.name)
+        -- printf("%s %s [TARGETING]", "btnFire", event.name)
         if event.name == "began" or event.name == "added" then
-            print("onButtonClicked")
+            -- print("onButtonClicked")
             self.gunBtnPressed = true
             --动画
             if btnFire:getChildByTag(1) then 
@@ -120,7 +119,7 @@ function FightPlayer:initFireBtn()
             armature:setTag(1)            
         end
         if event.name == "cancelled" or event.name == "ended" then
-            print("onButtonRelease")
+            -- print("onButtonRelease")
             self:onCancelledFire()
             self.gunBtnPressed = false
         end        
@@ -165,11 +164,11 @@ end
 
 ----touch----
 function FightPlayer:printTouch(event)
-    print("printTouch:", event.name)
-    for id, point in ipairs(event.points) do
-        local str = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)
-        print(str)
-    end
+    -- print("printTouch:", event.name)
+    -- for id, point in ipairs(event.points) do
+    --     local str = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)
+    --     print(str)
+    -- end
 end
 
 function FightPlayer:onTouchMoved(event)
@@ -205,12 +204,9 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
     local xOri, yOri = layerBg:getPosition()
     local scale = KFightConfig.scaleMoveBg
-    layerBg:setPosition(xOri + offsetX * scale, yOri + offsetY * scale)
+    layerBg:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
     local x, y = layerBg:getPosition()
-    print(x,y)
     self:justBgPos(layerBg)
-
-
 end
 
 function FightPlayer:moveGun(x) 

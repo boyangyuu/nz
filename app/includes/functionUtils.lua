@@ -87,6 +87,11 @@ function drawBoundingBox(parent, target, color)
     parent:addChild(box, 1000)
 end
 
+function rectIntersectsRect(rectNode1, rectNode2)
+    local bound1 = rectNode1:getCascadeBoundingBox()
+    local bound2 = rectNode2:getCascadeBoundingBox()
+    return cc.rectIntersectsRect(bound1, bound2)
+end
 
 ---- Data ----
 function getConfig( configFileDir )
