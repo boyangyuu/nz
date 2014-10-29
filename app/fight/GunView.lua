@@ -19,7 +19,7 @@ function GunView:ctor()
 	--换肤
 	local srcSkin = "icon_shouqiang.png"
     local skin = ccs.Skin:createWithSpriteFrameName(srcSkin)
-    dump(skin, "skin")
+    -- dump(skin, "skin")
     armature:getBone("gun"):addDisplay(skin,1)
     armature:getBone("gun"):changeDisplayWithIndex(1, true)
 

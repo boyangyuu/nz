@@ -4,23 +4,37 @@
 “准星”的视图
 
 ]]
+
+--import
 import("..includes.functionUtils")
+local Hero = import(".Hero")
+local Gun = import(".Gun")
 
 local FocusView = class("FocusView", function()
     return display.newNode()
 end)
 
-function FocusView:ctor()
-	self.playIndex = "stand"
+function FocusView:ctor(properties)
+	
+	--instance
+	self.hero = app:getInstance(Hero)
+	self.gun = app:getInstance(Gun)
 
-	local gunId = 1   -- todo 外界传
+	--focus
+	local gunId = 1   -- todo 外界传 Gun
 	local focusId = gunId+11
     local src = "Fight/gunsAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
     local armature = getArmature("anim_zunxin_sq", src) 
+    armature:setAnchorPoint(0.5,0.5)
 	self.focus = armature
-	self.focus:getAnimation():setMovementEventCallFunc(self.animationEvent)	
+	self.focus:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(armature)    
 	self:playIdle()
+	self:setFocusRange(cc.size(100, 100))
+	self.playIndex = "stand"
+
+    --test
+    self:test()
 end
 
 function FocusView:playIdle()
@@ -33,13 +47,13 @@ function FocusView:playFire()
 		self.focus:getAnimation():play("fire01" , -1, 0) 
 		self.playIndex = "fire01"
 	elseif self.playIndex == "fire01" or self.playIndex == "fire02" then 
-		print("fire02")
+		-- print("fire02")
 		self.focus:getAnimation():play("fire02" , -1, 0) 
 		self.playIndex = "fire02"
 	end
 end
 
-function FocusView:animationEvent(armatureBack,movementType,movementID)
+function FocusView:animationEvent(movementType,movementID,armatureBack)
 	if movementType == ccs.MovementEventType.loopComplete then
 		if id == "fire01" then
 
@@ -51,6 +65,23 @@ end
 
 function FocusView:stopFire()
 	self.playIndex = "stand"
+end
+
+function FocusView:setFocusRange(size)
+	if self.focusRange then 
+		self.focusRange:removeFromParent()
+	end
+    self.focusRange = display.newScale9Sprite()
+    self.focusRange:setContentSize(size)
+    addChildCenter(self.focusRange, self)
+end
+
+function FocusView:getFocusRange()
+	return self.focusRange
+end
+
+function FocusView:test()
+    drawBoundingBox(self, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 
 return FocusView

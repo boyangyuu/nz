@@ -11,24 +11,22 @@ function addBtnEventListener(node, callfunc)
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         callfunc(event)
         if event.name=='began' then
-        	print("高亮!")
-            -- self:grayOrBright(self.nodeSprite, true, false)
+            node:runAction(cc.ScaleTo:create(0.05, 0.9))
         	return true
         elseif event.name=='ended' then
-            -- self:grayOrBright(self.nodeSprite, false, false)
-            print("高亮结束")
+            node:runAction(cc.ScaleTo:create(0.05, 1))
         end
     end)
 end
 
 --[[
-    example:self:addChild(getPopupTips("关卡尚未开启！"), 100)
+    example:self:addChild(getPopupTips("关卡尚未开启！"))
 ]]
 function getPopupTips(text)
     assert(text, "fileName is invalid")
 
     -- load .ExportJson
-    local popupNode = cc.uiloader:load("res/LevelMap_popup/levelMap_popup.ExportJson")
+    local popupNode = cc.uiloader:load("res/popupCommonTips/popupCommonTips.ExportJson")
     local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
     labelTip:setString(text)
     popupNode:setTouchEnabled(true)
@@ -36,7 +34,6 @@ function getPopupTips(text)
         if event.name=='began' then
             popupNode:removeFromParent()
             return true
-        elseif event.name=='ended' then
         end
     end)
 
@@ -44,6 +41,7 @@ function getPopupTips(text)
     popupNode:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
                  popupNode:removeFromParent()
             end)}))
+    popupNode:setZOrderOnTop(true)
     return popupNode
 end
 
@@ -73,6 +71,28 @@ function addChildCenter(child, parent)
     parent:addChild(child)
 end
 
+function drawBoundingBox(parent, target, color)
+    -- if isTest == false then 
+    --     return 
+    -- end
+    local cbb = target:getCascadeBoundingBox()
+    local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
+    local points = {
+        {left, bottom},
+        {left + width, bottom},
+        {left + width, bottom + height},
+        {left, bottom + height},
+        {left, bottom},
+    }
+    local box = display.newPolygon(points, {borderColor = color})
+    parent:addChild(box, 1000)
+end
+
+function rectIntersectsRect(rectNode1, rectNode2)
+    local bound1 = rectNode1:getCascadeBoundingBox()
+    local bound2 = rectNode2:getCascadeBoundingBox()
+    return cc.rectIntersectsRect(bound1, bound2)
+end
 
 ---- Data ----
 function getConfig( configFileDir )
@@ -103,7 +123,7 @@ end
 function getRecord( Table, PropertyName, Key )
     assert(Table ~= "" and type(Table) == "table", "invalid param")
     assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
-    assert(Key ~= "" and type(Key) == "string", "invalid param")
+    -- assert(Key ~= "" and type(Key) == "string", "invalid param")
     local recordArr={}
     for k,v in pairs(Table) do
         for k1,v1 in pairs(v) do
