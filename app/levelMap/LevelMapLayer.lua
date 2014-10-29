@@ -14,7 +14,7 @@ local Zorder_home, Zorder_choose = 200, 2
 local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time of background
 
 function LevelMapLayer:ctor()
-    self:initNumber()
+    self:initData()
     self:initBgLayer()
     self:initHomeLayer()
     self:initChooseLayer()
@@ -35,22 +35,22 @@ function LevelMapLayer:ctor()
     -- self:addChild(label, 2)
 end
 
-function LevelMapLayer:initNumber()
+function LevelMapLayer:initData()
+    --userData
     self.index = 1
     self.preIndex = 0
 
--- Obtain group and litter levels amount from json
+    --config
     local config = getConfig("config/3.json")
     local recordsLevel = getRecord(config,"xiaoguanqia",1)
     self.groupNum = #recordsLevel
 
-    self.levelBtnNum = {}
+    self.levelNum = {}
     for i = 1, self.groupNum do
         local recordsGroup = getRecord(config,"daguanqia",i)
-        self.levelBtnNum[i] = #recordsGroup
-
-        print("self.groupNum =",  self.groupNum, 
-            "self.levelBtnNum["..i.."] = ", self.levelBtnNum[i])
+        self.levelNum[i] = #recordsGroup
+        -- print("self.groupNum =",  self.groupNum, 
+        --     "self.levelNum["..i.."] = ", self.levelNum[i])
     end
 end
 
@@ -221,7 +221,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
 
     -- seek level buttons
     local levelBtn = {}
-    for i = 1, self.levelBtnNum[groupId] do
+    for i = 1, self.levelNum[groupId] do
         levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnNode, "level_"..i)
         levelBtn[i]:setTouchEnabled(true)
 
