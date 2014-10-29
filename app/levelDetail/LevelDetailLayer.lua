@@ -123,13 +123,13 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 ---- initData ----
-function LevelDetailLayer:refershData(gropID,levelID)
+function LevelDetailLayer:initData(gropID,levelID)
 	local DataTable = LevelDetailModel:getConfig(gropID,levelID)
 
 	--Label
 
 	self.labelTitle:setString(DataTable["guanqiaName"])
-	self.labelId:setString(DataTable["gropID"].."-"..DataTable["levelID"])
+	self.labelId:setString(DataTable["daguanqia"].."-"..DataTable["xiaoguanqia"])
 	self.labelTask:setString(DataTable["task"])
 	self.labelEnemyNum:setString("共"..DataTable["enemyNum"].."波")
 	self.labelTasktype:setString(DataTable["taskType"])
@@ -143,10 +143,10 @@ function LevelDetailLayer:refershData(gropID,levelID)
 	local goldImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
 	local weaponImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
 
-	addChildCenter(mapimg   , self.layerMap)
-	addChildCenter(jijiaimg , self.layerJijia)
-	addChildCenter(goldimg  , self.layerGold)
-	addChildCenter(weaponimg, self.layerBibei)
+	addChildCenter(mapImg   , self.layerMap)
+	addChildCenter(jijiaImg , self.layerJijia)
+	addChildCenter(goldImg  , self.layerGold)
+	addChildCenter(weaponImg, self.layerBibei)
 end
 
 

@@ -108,7 +108,7 @@ function FightPlayer:initFireBtn()
             if btnFire:getChildByTag(1) then 
                 btnFire:removeChildByTag(1)
             end
-            local src = "fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
+            local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
             local armature = getArmature("effect_gun_kaiqiang", src)
             armature:getAnimation():playWithIndex(0 , -1, 0)
             local function animationEvent(armatureBack,movementType,movementID)
