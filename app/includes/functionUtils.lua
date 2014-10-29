@@ -11,11 +11,9 @@ function addBtnEventListener(node, callfunc)
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         callfunc(event)
         if event.name=='began' then
-        	print("缩小到0.9倍，高亮!")
             node:runAction(cc.ScaleTo:create(0.05, 0.9))
         	return true
         elseif event.name=='ended' then
-            print("大小还原，高亮")
             node:runAction(cc.ScaleTo:create(0.05, 1))
         end
     end)

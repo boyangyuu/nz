@@ -2,6 +2,8 @@ import("..includes.functionUtils")
 
 local LevelDetailModel = import(".LevelDetailModel")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
+local FightPlayer = import("..fight.FightPlayer")
+
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
 end)
@@ -110,6 +112,10 @@ end
 
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
+	local scene = display.newScene("FightScene")
+	local FightPlayer = FightPlayer.new()
+	scene:addChild(FightPlayer)
+	display.replaceScene(scene)
 end
 
 function LevelDetailLayer:onClickBtnBibei()
