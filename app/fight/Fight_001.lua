@@ -5,13 +5,13 @@ local waves = {
 			{
 				time = 3,
 				id = 1,
-				num = 2,
+				num = 5,
 				place = "place1",
 			},
 			{
 				time = 6,
 				id = 1,
-				num = 2,
+				num = 5,
 				place = "place2",
 			},			
 		},

@@ -72,19 +72,22 @@ end
 
 function MapView:addEnemys(id , num, place)
 	assert(id and num and place, "invalid param")
-	local enemyView = EnemyView.new()
-	self.enemys[#self.enemys + 1] = enemyView
-	local placeNode = cc.uiloader:seekNodeByName(self, place)
+	for i=1,num do
+		local enemyView = EnemyView.new()
+		self.enemys[#self.enemys + 1] = enemyView
+		local placeNode = cc.uiloader:seekNodeByName(self, place)
 
-	local boundEnemy = enemyView:getRange("body"):getBoundingBox()
-	print("enemyView width", boundEnemy.width)
+		local boundEnemy = enemyView:getRange("body"):getBoundingBox()
+		print("enemyView width", boundEnemy.width)
 
-	local boundPlace = placeNode:getBoundingBox()
-	print("boundPlace width", boundPlace.width)
-	math.newrandomseed()
-	local xPos = math.random(boundEnemy.width, boundPlace.width)
-	enemyView:setPosition(xPos, 0)
-	placeNode:addChild(enemyView)
+		local boundPlace = placeNode:getBoundingBox()
+		print("boundPlace width", boundPlace.width)
+		math.newrandomseed()
+		local xPos = math.random(boundEnemy.width, boundPlace.width)
+		enemyView:setPosition(xPos, 0)
+		placeNode:addChild(enemyView)
+	end
+
 end
 
 function MapView:getSize()

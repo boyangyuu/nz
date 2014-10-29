@@ -75,16 +75,19 @@ end
 
 function EnemyView:playRoll()
 	self.armature:getAnimation():play("roll" , -1, 1) 
+	local frameCnts = self.armature:getAnimation():getMovementCount()
+	local dis = 50
+	self.armature:runAction(cc.MoveTo:create(frameCnts, cc.p(dis, 0)))
 end
 
 function EnemyView:playHitted(event)
 	if not self.enemy:isDead() then
-		self.armature:getAnimation():play("hit" , -1, 1)
+		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
 end
 
 function EnemyView:playKill(event)
-	self.armature:getAnimation():play("die" , -1, 1)
+	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
 function EnemyView:canChangeState(stateId)
