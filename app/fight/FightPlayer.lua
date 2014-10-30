@@ -65,6 +65,10 @@ function FightPlayer:loadCCS()
 end
 
 function FightPlayer:initTouchArea()
+    --[[
+    多点触摸:layerTouch为
+    ]]
+
 	--control    
     local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
     layerTouch:setTouchEnabled(true)  
@@ -214,7 +218,7 @@ function FightPlayer:moveGun(x)
 end
 
 function FightPlayer:justBgPos(node)
-    local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
+    local layerBg = self.layerBg
     local bgMap = self.mapView  
     local w, h = bgMap:getSize().width , 
         bgMap:getSize().height

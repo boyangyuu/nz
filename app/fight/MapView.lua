@@ -29,13 +29,9 @@ function MapView:ctor()
 	self.focusView = app:getInstance(FocusView)
 	self.enemys = {}
 
-	--map
-	local mapId = ""   -- todo 外界
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
-    local node = cc.uiloader:load("map_1.ExportJson")	
-	self.map = node
-	addChildCenter(self.map, self)
-	
+	--ccs
+	self:loadCCS()
+
 	-- enemys
 	-- local appTimer = Timer.new()
 	-- appTimer:addEventListener("REFRESH_WAVES", handler(self, self.createEnemys))
@@ -48,6 +44,31 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
 
+end
+
+function MapView:loadCCS()
+	--map
+	local mapId = ""   -- todo 外界
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
+    local node = cc.uiloader:load("map_1.ExportJson")	
+	self.map = node
+	addChildCenter(self.map, self)	
+
+	--bg
+	self.bg = cc.uiloader:seekNodeByName(self, "bg")
+
+	--enemy places
+	local index = 1
+	self.places = {}
+    while true do
+    	local name = "place" .. index 
+    	local placeNode = cc.uiloader:seekNodeByName(self, name)
+        if placeNode == nil then
+            break
+        end
+        self.places[name] = placeNode
+        index = index + 1
+    end
 end
 
 --enemy
@@ -65,25 +86,25 @@ function MapView:updateEnemys(event)
 			function addEnemysFunc()
 				self:addEnemys(group.id, group.num, group.place)
 			end
-			scheduler.performWithDelayGlobal(addEnemysFunc ,group.time)
+			--todo 做个延时创建处理 避免峰值
+			scheduler.performWithDelayGlobal(addEnemysFunc, group.time) 
 		end
 	end
 end
 
-function MapView:addEnemys(id , num, place)
-	assert(id and num and place, "invalid param")
+function MapView:addEnemys(id , num, placeName)
+	assert(id and num and placeName, "invalid param")
 	for i=1,num do
 		local enemyView = EnemyView.new()
 		self.enemys[#self.enemys + 1] = enemyView
-		local placeNode = cc.uiloader:seekNodeByName(self, place)
-
+		local placeNode = self.places[placeName]
 		local boundEnemy = enemyView:getRange("body"):getBoundingBox()
-		print("enemyView width", boundEnemy.width)
-
 		local boundPlace = placeNode:getBoundingBox()
+		print("enemyView width", boundEnemy.width)		
 		print("boundPlace width", boundPlace.width)
+		
 		math.newrandomseed()
-		local xPos = math.random(boundEnemy.width, boundPlace.width)
+		local xPos = math.random(boundEnemy.width/2, boundPlace.width)
 		enemyView:setPosition(xPos, 0)
 		placeNode:addChild(enemyView)
 	end
@@ -91,7 +112,7 @@ function MapView:addEnemys(id , num, place)
 end
 
 function MapView:getSize()
-	local bg = cc.uiloader:seekNodeByName(self, "bg")
+	local bg = self.bg
 	local size = cc.size(bg:getBoundingBox().width ,
 		bg:getBoundingBox().height)
 	return size
