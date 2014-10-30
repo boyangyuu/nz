@@ -5,6 +5,7 @@
 import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
+local InlayLayer = import("..inlay.InlayLayer")
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
@@ -68,25 +69,29 @@ function LevelMapLayer:initHomeLayer()
     local homeNode = cc.uiloader:load("HomeBarLayer/homeBarLayer.ExportJson")
     self:addChild(homeNode, Zorder_home)
     self.btnSetting = cc.uiloader:seekNodeByName(homeNode, "btn_setting")
+    self.btnBack = cc.uiloader:seekNodeByName(homeNode, "btn_back")
     self.btnBuyCoin = cc.uiloader:seekNodeByName(homeNode, "btn_buyCoin")
     self.btnArsenal = cc.uiloader:seekNodeByName(homeNode, "btn_arsenal")
     self.btnInlay = cc.uiloader:seekNodeByName(homeNode, "btn_inlay")
     self.btnShop = cc.uiloader:seekNodeByName(homeNode, "btn_shop")
     self.panelUp = cc.uiloader:seekNodeByName(homeNode, "Panel_up")
-
-    self.btnSetting:setTouchEnabled(true)
-    self.btnBuyCoin:setTouchEnabled(true)
-    self.btnArsenal:setTouchEnabled(true)
-    self.btnInlay:setTouchEnabled(true)
-    self.btnShop:setTouchEnabled(true)
-    self.panelUp:setTouchEnabled(true)
     
     addBtnEventListener(self.btnSetting, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
+            print("settingBtn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            print("settingBtn is pressed!")
+        end
+    end)
+    self.btnBack:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        if event.name=='began' then
+            self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.4524, 0.9))
+            return true
+        elseif event.name=='ended' then
+            self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
+            self.inlayLayer:removeSelf()
+            self.btnInlay:setTouchEnabled(true)
         end
     end)
     addBtnEventListener(self.btnBuyCoin, function(event)
@@ -110,7 +115,16 @@ function LevelMapLayer:initHomeLayer()
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            self.btnSetting:setVisible(false)
+            self.btnBack:setVisible(true)
+
+            self.inlayLayer = InlayLayer.new()
+            self:addChild(self.inlayLayer)
+
+            self.btnInlay:setTouchEnabled(false)
+            self.bg:removeSelf()
+            self.chooseNode:removeSelf()
+            self.levelBtnNode:removeSelf()
         end
     end)
     addBtnEventListener(self.btnShop, function(event)
@@ -124,26 +138,17 @@ function LevelMapLayer:initHomeLayer()
 end
 
 function LevelMapLayer:initChooseLayer()
-    local chooseNode = cc.uiloader:load("LevelMap/chooseLevelLayer/chooseLevelLayer.ExportJson")
-    self:addChild(chooseNode, Zorder_choose)
+    self.chooseNode = cc.uiloader:load("LevelMap/chooseLevelLayer/chooseLevelLayer.ExportJson")
+    self:addChild(self.chooseNode, Zorder_choose)
 
-    self.btnNext = cc.uiloader:seekNodeByName(chooseNode, "btn_next")
-    self.btnPre = cc.uiloader:seekNodeByName(chooseNode, "btn_pre")
-    self.btnSale = cc.uiloader:seekNodeByName(chooseNode, "btn_sale")
-    self.btnTask = cc.uiloader:seekNodeByName(chooseNode, "btn_task")
-    self.btnGift = cc.uiloader:seekNodeByName(chooseNode, "btn_gift")
-    self.btnLevel = cc.uiloader:seekNodeByName(chooseNode, "level")
-    self.panelRight = cc.uiloader:seekNodeByName(chooseNode, "Panel_right")
-    self.panelDown = cc.uiloader:seekNodeByName(chooseNode, "panl_level")
-
-    self.btnNext:setTouchEnabled(true)
-    self.btnPre:setTouchEnabled(true)
-    self.btnSale:setTouchEnabled(true)
-    self.btnTask:setTouchEnabled(true)
-    self.btnGift:setTouchEnabled(true)
-    self.btnLevel:setTouchEnabled(true)
-    self.panelRight:setTouchEnabled(true)
-    self.panelDown:setTouchEnabled(true)
+    self.btnNext = cc.uiloader:seekNodeByName(self.chooseNode, "btn_next")
+    self.btnPre = cc.uiloader:seekNodeByName(self.chooseNode, "btn_pre")
+    self.btnSale = cc.uiloader:seekNodeByName(self.chooseNode, "btn_sale")
+    self.btnTask = cc.uiloader:seekNodeByName(self.chooseNode, "btn_task")
+    self.btnGift = cc.uiloader:seekNodeByName(self.chooseNode, "btn_gift")
+    self.btnLevel = cc.uiloader:seekNodeByName(self.chooseNode, "level")
+    self.panelRight = cc.uiloader:seekNodeByName(self.chooseNode, "Panel_right")
+    self.panelDown = cc.uiloader:seekNodeByName(self.chooseNode, "panl_level")
 
     self.btnLevel:addChild(display.newSprite("LevelMap/chooseLevelLayer/1.png", 
     self.btnLevel:getContentSize().width/2, self.btnLevel:getContentSize().height/2), Zorder_choose)
@@ -211,7 +216,7 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
-    self.levelBtnNode = cc.uiloader:load("LevelMap/LevelMap_levelBtn/levelMap_"..groupId..".ExportJson")
+    self.levelBtnNode = cc.uiloader:load("LevelMap/levelMap_levelBtn/levelMap_"..groupId..".ExportJson")
     self.levelBtnNode:setPosition(0, 0)
     self:addChild(self.levelBtnNode)  
 
