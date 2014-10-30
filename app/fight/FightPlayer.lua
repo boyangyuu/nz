@@ -66,12 +66,32 @@ end
 
 function FightPlayer:initTouchArea()
     --[[
-    多点触摸:layerTouch为
+    多点触摸:layerTouch为母层 包含btn
     ]]
 
 	--control    
     local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
     layerTouch:setTouchEnabled(true)  
+    --test
+    layerTouch:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    --testend
+
+    layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
+        -- printf("%s %s [TARGETING]", "button1", event.name)
+        if event.name == "began" then
+            return false 
+            -- print("----layerTouch began-----------------")
+        elseif event.name == "ended" or event.name == "cancelled" then
+            -- print("-----------------------------")
+        elseif event.name == "moved" then 
+            self:onTouchMoved(event)
+            print("move")
+        end
+        return false
+    end) 
+    drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
+
+--[[
     local layerControl = display.newScale9Sprite()
     layerControl:setContentSize(cc.size(936, 640))
     layerControl:setPosition(0, 0)
@@ -91,7 +111,7 @@ function FightPlayer:initTouchArea()
         end
         return true
     end)    
-
+]]
     --btn
     self:initFireBtn()
 end
@@ -190,7 +210,6 @@ function FightPlayer:onTouchMoved(event)
     --处理滑屏
     self:moveBgLayer(offsetX, offsetY)
 
-    return true
 end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
