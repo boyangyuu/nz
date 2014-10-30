@@ -70,13 +70,15 @@ function FightPlayer:initTouchArea()
     ]]
 
 	--control    
-    local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
-    layerTouch:setTouchEnabled(true)  
-    --test
+    local layerTouch = display.newScale9Sprite()
+    layerTouch:setContentSize(cc.size(1136, 640))
+    layerTouch:setPosition(0, 0)
+    layerTouch:setAnchorPoint(0, 0)
+    layerTouch:setOpacity(0)
+    self:addChild(layerTouch)
+    layerTouch:setTouchEnabled(true)
     layerTouch:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    --testend
-
-    local 
+    layerTouch:setTouchSwallowEnabled(false)    
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
         printf("%s %s [TARGETING]", "button1", event.name)
         if event.name == "began" or event.name == "added" then
@@ -87,7 +89,7 @@ function FightPlayer:initTouchArea()
             self:onTouchMoved(event)
             print("move")
         elseif event.name == "removed" then
-            
+
         end
         return true
     end) 
