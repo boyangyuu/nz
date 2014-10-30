@@ -16,6 +16,7 @@ local FightPlayer = class("FightPlayer", function ()
 	return display.newLayer()
 end)
 
+--定义事件
 
 function FightPlayer:ctor()
     --model 
@@ -26,13 +27,13 @@ function FightPlayer:ctor()
 
     --instance
     self.gunBtnPressed = false
-
+    self.touchs = {}
     --ui
     self:initUI()
 
-    --帧事件
+    --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    self:scheduleUpdate()    
+    self:scheduleUpdate()   
 end
 
 function FightPlayer:initUI()
@@ -62,6 +63,9 @@ function FightPlayer:loadCCS()
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
     addChildCenter(self.focusView, self.focusNode)
+
+    --load btns
+
 end
 
 function FightPlayer:initTouchArea()
@@ -70,26 +74,17 @@ function FightPlayer:initTouchArea()
     ]]
 
 	--control    
-    local layerTouch = display.newScale9Sprite()
-    layerTouch:setContentSize(cc.size(1136, 640))
-    layerTouch:setPosition(0, 0)
-    layerTouch:setAnchorPoint(0, 0)
-    layerTouch:setOpacity(0)
-    self:addChild(layerTouch)
-    layerTouch:setTouchEnabled(true)
+    local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
+    layerTouch:setTouchEnabled(true)  
     layerTouch:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    layerTouch:setTouchSwallowEnabled(false)    
+
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
-        printf("%s %s [TARGETING]", "button1", event.name)
         if event.name == "began" or event.name == "added" then
-            -- print("----layerTouch began-----------------")
-        elseif event.name == "ended" or event.name == "cancelled" then
-            -- print("-----------------------------")
+            self:onMutiTouchBegin(event)
+        elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
+            self:onMutiTouchEnd(event)
         elseif event.name == "moved" then 
             self:onTouchMoved(event)
-            print("move")
-        elseif event.name == "removed" then
-
         end
         return true
     end) 
@@ -116,42 +111,59 @@ function FightPlayer:initTouchArea()
         return true
     end)    
 ]]
-    --btn
+    -- btn
     self:initFireBtn()
 end
 
+function FightPlayer:onMutiTouchBegin(event)
+    --check
+    dump(event, "event onMutiTouchBegin")
+    local isTouch = false
+    local rect = self.btnFire:getCascadeBoundingBox()   
+    for id,point in pairs(event.points) do
+        dump(point, "point")
+        dump(rect, "rect")
+        if isTouch == false then 
+            isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))    
+            if isTouch then self.touchs["fire"] = id end
+        end
+    end
+
+    --click
+    if isTouch then 
+
+        print("FireBtn onButtonClicked")
+        self.gunBtnPressed = true
+        --动画
+        if self.btnFire:getChildByTag(1) then 
+            self.btnFire:removeChildByTag(1)
+        end
+        local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
+        local armature = getArmature("effect_gun_kaiqiang", src)
+        armature:getAnimation():playWithIndex(0 , -1, 0)
+        local function animationEvent(armatureBack,movementType,movementID)
+            armature:removeFromParent()
+        end
+        armature:getAnimation():setMovementEventCallFunc(animationEvent)
+        addChildCenter(armature, self.btnFire)
+        armature:setTag(1)
+    end
+end
+
+function FightPlayer:onMutiTouchEnd(event)
+    self:onCancelledFire()
+    self.gunBtnPressed = false
+
+end
+
 function FightPlayer:initFireBtn()
-    --btnfire    
-    local btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
+    --btnfire   
+    self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
+    local btnFire = self.btnFire
     btnFire:setTouchEnabled(true)
     btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
     btnFire:setTouchSwallowEnabled(true)
-    btnFire:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        -- printf("%s %s [TARGETING]", "btnFire", event.name)
-        if event.name == "began" or event.name == "added" then
-            -- print("onButtonClicked")
-            self.gunBtnPressed = true
-            --动画
-            if btnFire:getChildByTag(1) then 
-                btnFire:removeChildByTag(1)
-            end
-            local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
-            local armature = getArmature("effect_gun_kaiqiang", src)
-            armature:getAnimation():playWithIndex(0 , -1, 0)
-            local function animationEvent(armatureBack,movementType,movementID)
-                armature:removeFromParent()
-            end
-            armature:getAnimation():setMovementEventCallFunc(animationEvent)
-            addChildCenter(armature, btnFire)
-            armature:setTag(1)            
-        end
-        if event.name == "cancelled" or event.name == "ended" then
-            -- print("onButtonRelease")
-            self:onCancelledFire()
-            self.gunBtnPressed = false
-        end        
-        return true
-    end)
+    drawBoundingBox(btnFire:getParent(), btnFire, cc.c4f(0, 1.0, 0, 1.0))
 
 end
 
