@@ -76,18 +76,20 @@ function FightPlayer:initTouchArea()
     layerTouch:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     --testend
 
+    local 
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
-        -- printf("%s %s [TARGETING]", "button1", event.name)
-        if event.name == "began" then
-            return false 
+        printf("%s %s [TARGETING]", "button1", event.name)
+        if event.name == "began" or event.name == "added" then
             -- print("----layerTouch began-----------------")
         elseif event.name == "ended" or event.name == "cancelled" then
             -- print("-----------------------------")
         elseif event.name == "moved" then 
             self:onTouchMoved(event)
             print("move")
+        elseif event.name == "removed" then
+            
         end
-        return false
+        return true
     end) 
     drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
