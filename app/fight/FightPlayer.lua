@@ -21,7 +21,6 @@ function FightPlayer:ctor()
     --model 
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
-    -- self.mapView = app:getInstance(MapView)
      self.mapView = MapView.new()
     self.gunView = GunView.new()
 
@@ -53,16 +52,16 @@ function FightPlayer:loadCCS()
     self:addChild(node)
 
     --load map
-    local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    addChildCenter(self.mapView, layerBg) 
+    self.layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
+    addChildCenter(self.mapView, self.layerBg) 
 
     --load gun 
-    local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
-    layerGun:addChild(self.gunView)
+    self.layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
+    self.layerGun:addChild(self.gunView)
 
     --load focus
-    local focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
-    addChildCenter(self.focusView, focusNode)
+    self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
+    addChildCenter(self.focusView, self.focusNode)
 end
 
 function FightPlayer:initTouchArea()
@@ -191,7 +190,7 @@ function FightPlayer:onTouchMoved(event)
 end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
-    local focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
+    local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
     focusNode:setPosition(xOri + offsetX*scale, yOri + offsetY*scale)
@@ -201,7 +200,7 @@ function FightPlayer:moveFocus(offsetX, offsetY)
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
-    local layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
+    local layerBg = self.layerBg
     local xOri, yOri = layerBg:getPosition()
     local scale = KFightConfig.scaleMoveBg
     layerBg:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
@@ -210,7 +209,7 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
 end
 
 function FightPlayer:moveGun(x) 
-    local layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
+    local layerGun = self.layerGun
     layerGun:setPositionX(x + 280)   --todo 需要改为美术资源提供
 end
 
