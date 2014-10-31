@@ -157,25 +157,24 @@ end
 
 function FightPlayer:onTouchMoved(event)
     -- dump(event, "onTouchMoved")
-    dump(self.touchs, "self.touchs")
+    -- dump(self.touchs, "self.touchs")
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
-        local isBtnTouchPoint
+        local isBtnTouchPoint = false
         for btnName,id in pairs(self.touchs) do
             if id == i then isBtnTouchPoint = true end 
         end
         if isBtnTouchPoint == false then 
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
+            local offsetX = x - prevX 
+            local offsetY = y - prevY
+            --处理瞄准
+            self:moveFocus(offsetX, offsetY)
+            
+            --处理滑屏
+            self:moveBgLayer(offsetX, offsetY)    
         end
     end
-    local offsetX = x - prevX 
-    local offsetY = y - prevY
-
-    --处理瞄准
-    self:moveFocus(offsetX, offsetY)
-    
-    --处理滑屏
-    self:moveBgLayer(offsetX, offsetY)
 end
 
 
