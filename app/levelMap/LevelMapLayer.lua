@@ -75,6 +75,8 @@ function LevelMapLayer:initHomeLayer()
     self.btnInlay = cc.uiloader:seekNodeByName(homeNode, "btn_inlay")
     self.btnShop = cc.uiloader:seekNodeByName(homeNode, "btn_shop")
     self.panelUp = cc.uiloader:seekNodeByName(homeNode, "Panel_up")
+
+    self.btnBack:setVisible(false)
     
     addBtnEventListener(self.btnSetting, function(event)
         if event.name=='began' then
@@ -90,8 +92,16 @@ function LevelMapLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
-            self.inlayLayer:removeSelf()
+            
+            self.inlayLayer:removeFromParent()
+            self:initData()
+            self:initBgLayer()
+            self:initChooseLayer()
+            self:refreshLevelLayer(self.index)
+            
             self.btnInlay:setTouchEnabled(true)
+            self.btnBack:setVisible(false)
+            self.btnSetting:setVisible(true)
         end
     end)
     addBtnEventListener(self.btnBuyCoin, function(event)
@@ -122,9 +132,9 @@ function LevelMapLayer:initHomeLayer()
             self:addChild(self.inlayLayer)
 
             self.btnInlay:setTouchEnabled(false)
-            self.bg:removeSelf()
-            self.chooseNode:removeSelf()
-            self.levelBtnNode:removeSelf()
+            self.bg:removeFromParent()
+            self.chooseNode:removeFromParent()
+            self.levelBtnNode:removeFromParent()
         end
     end)
     addBtnEventListener(self.btnShop, function(event)
