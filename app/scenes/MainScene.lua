@@ -1,5 +1,5 @@
 local FightPlayer = import("..fight.FightPlayer")
-local LevelMapLayer = import("..levelMap.LevelMapLayer")
+local HomeBarLayer = import("..homeBar.HomeBarLayer")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 
@@ -8,8 +8,8 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
-    local levelMapLayer = LevelMapLayer.new()
-    self:addChild(levelMapLayer)
+    local homeBarLayer = HomeBarLayer.new()
+    self:addChild(homeBarLayer)
     -- local FightPlayer = FightPlayer.new()
     -- self:addChild(FightPlayer)
     -- local DetailLayer=LevelDetailLayer.new()

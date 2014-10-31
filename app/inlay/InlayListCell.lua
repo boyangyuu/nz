@@ -4,15 +4,21 @@
 --
 import("..includes.functionUtils")
 local InlayModel = import(".InlayModel")
-local InlayListView = class("InlayListView", function()
+local InlayListCell = class("InlayListCell", function()
     return display.newLayer()
 end)
 
-function InlayListView:ctor(index)
+function InlayListCell:ctor(index)
 	self:refreshRightScroll(index)
+
+    -- set swallow, otherwise, the left buttons arenot touching enabled
+    self:setTouchEnabled(true)
+    self:setTouchSwallowEnabled(false)
 end
 
-function InlayListView:refreshRightScroll(index)
+function InlayListCell:refreshRightScroll(index)
+    cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
+
 	-- listview
     self.listView = cc.ui.UIListView.new {
         viewRect = cc.rect(593, 23, 530, 500),
@@ -29,8 +35,7 @@ function InlayListView:refreshRightScroll(index)
             local item = self.listView:newItem()
 
             -- loac ccs
-            content = 
-            
+            content = cc.uiloader:load("xiangqian_type1.ExportJson")
 
             item:addContent(content)
             item:setItemSize(514, 159)
@@ -43,7 +48,7 @@ function InlayListView:refreshRightScroll(index)
             local item = self.listView:newItem()
 
             -- load ccs
-            content = 
+            content = cc.uiloader:load("xiangqian_type2.ExportJson")
 
             item:addContent(content)
             item:setItemSize(514, 159)
@@ -51,18 +56,21 @@ function InlayListView:refreshRightScroll(index)
         end
 
     -- Create the kind of "type = 3" buttons
-    else
+    elseif 3 == (table[1])["type"] then
         for i = 1, cellNum do
             local item = self.listView:newItem()
 
             -- load ccs
-            content = cc.uiloader:load("inlay/xiangqian_type3.ExportJson")
+            content = cc.uiloader:load("xiangqian_type3.ExportJson")
             item:addContent(content)
             item:setItemSize(514, 159)
             self.listView:addItem(item)
         end
+
+    else
+        print("The (table[1])[type] is wrong!")
     end
     self.listView:reload()
 end
 
-return InlayListView
+return InlayListCell

@@ -6,7 +6,7 @@ import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local InlayLayer = import("..inlay.InlayLayer")
-local LevelMapLayer = class("LevelMapLayer", function()
+local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
 
@@ -14,59 +14,17 @@ end)
 local Zorder_home, Zorder_choose = 200, 2
 local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time of background
 
-function LevelMapLayer:ctor()
-    self:initData()
-    self:initBgLayer()
+function HomeBarLayer:ctor()
+    -- init homeLayer
     self:initHomeLayer()
-    self:initChooseLayer()
-    self:refreshLevelLayer(self.index)
 
-    -- Setting shadow and outline for TTFlabel
-    -- local label = display.newTTFLabel({
-    -- text = "人生就是干。",
-    -- font = "黑体",
-    -- size = 64,
-    -- color = cc.c3b(255, 255, 255),
-    -- align = cc.ui.TEXT_ALIGN_LEFT,
-    -- })
-    -- label:setPosition(display.cx, display.cy)
-    -- -- label:enableOutline(cc.c4b(255, 0, 0, 255), 4) -- only ios and Android
-    -- label:enableGlow(cc.c4b(255, 0, 0, 255))
-    -- label:enableShadow(cc.c4b(255, 0, 0, 255))
-    -- self:addChild(label, 2)
+    -- init levelMapLayer
+    self:initLevelMapLayer()
 end
 
-function LevelMapLayer:initData()
-    --userData
-    self.index = 1
-    self.preIndex = 0
-
-    --config
-    local config = getConfig("config/3.json")
-    local recordsLevel = getRecord(config,"xiaoguanqia",1)
-    self.groupNum = #recordsLevel
-
-    self.levelNum = {}
-    for i = 1, self.groupNum do
-        local recordsGroup = getRecord(config,"daguanqia",i)
-        self.levelNum[i] = #recordsGroup
-        -- print("self.groupNum =",  self.groupNum, 
-        --     "self.levelNum["..i.."] = ", self.levelNum[i])
-    end
-end
-
-function LevelMapLayer:initBgLayer()
--- bg starting animation
-    cc.FileUtils:getInstance():addSearchPath("res/")
-    local bg = display.newSprite("LevelMap/levelMap_bg.png")
-    self:addChild(bg) 
-    bg:setAnchorPoint(cc.p(0, 0))
-    self.bg = bg
-    self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
-end
-
-function LevelMapLayer:initHomeLayer()
-    local homeNode = cc.uiloader:load("HomeBarLayer/homeBarLayer.ExportJson")
+function HomeBarLayer:initHomeLayer()
+    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/")
+    local homeNode = cc.uiloader:load("homeBarLayer/homeBarLayer.ExportJson")
     self:addChild(homeNode, Zorder_home)
     self.btnSetting = cc.uiloader:seekNodeByName(homeNode, "btn_setting")
     self.btnBack = cc.uiloader:seekNodeByName(homeNode, "btn_back")
@@ -74,7 +32,7 @@ function LevelMapLayer:initHomeLayer()
     self.btnArsenal = cc.uiloader:seekNodeByName(homeNode, "btn_arsenal")
     self.btnInlay = cc.uiloader:seekNodeByName(homeNode, "btn_inlay")
     self.btnShop = cc.uiloader:seekNodeByName(homeNode, "btn_shop")
-    self.panelUp = cc.uiloader:seekNodeByName(homeNode, "Panel_up")
+    self.panelUp = cc.uiloader:seekNodeByName(homeNode, "homeLayer")
 
     self.btnBack:setVisible(false)
     
@@ -147,8 +105,45 @@ function LevelMapLayer:initHomeLayer()
     end)
 end
 
-function LevelMapLayer:initChooseLayer()
-    self.chooseNode = cc.uiloader:load("LevelMap/chooseLevelLayer/chooseLevelLayer.ExportJson")
+function HomeBarLayer:initLevelMapLayer()
+    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/")
+    
+    self:initData()
+    self:initBgLayer()
+    self:initChooseLayer()
+    self:refreshLevelLayer(self.index)
+end
+
+function HomeBarLayer:initData()
+    --userData
+    self.index = 1
+    self.preIndex = 0
+
+    --config
+    local config = getConfig("config/3.json")
+    local recordsLevel = getRecord(config,"xiaoguanqia",1)
+    self.groupNum = #recordsLevel
+
+    self.levelNum = {}
+    for i = 1, self.groupNum do
+        local recordsGroup = getRecord(config,"daguanqia",i)
+        self.levelNum[i] = #recordsGroup
+        -- print("self.groupNum =",  self.groupNum, 
+        --     "self.levelNum["..i.."] = ", self.levelNum[i])
+    end
+end
+
+function HomeBarLayer:initBgLayer()
+-- bg starting animation
+    local bg = display.newSprite("levelMap_bg.png")
+    self:addChild(bg) 
+    bg:setAnchorPoint(cc.p(0, 0))
+    self.bg = bg
+    self.bg:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
+end
+
+function HomeBarLayer:initChooseLayer()
+    self.chooseNode = cc.uiloader:load("levelMap_choose/chooseLevelLayer.ExportJson")
     self:addChild(self.chooseNode, Zorder_choose)
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseNode, "btn_next")
@@ -160,7 +155,7 @@ function LevelMapLayer:initChooseLayer()
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseNode, "Panel_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseNode, "panl_level")
 
-    self.btnLevel:addChild(display.newSprite("LevelMap/chooseLevelLayer/1.png", 
+    self.btnLevel:addChild(display.newSprite("levelMap_choose/1.png", 
     self.btnLevel:getContentSize().width/2, self.btnLevel:getContentSize().height/2), Zorder_choose)
 
     -- add listener (attention: this isnot button, so we add node event listener)
@@ -225,8 +220,8 @@ function LevelMapLayer:initChooseLayer()
 
 end
 
-function LevelMapLayer:refreshLevelLayer(groupId)
-    self.levelBtnNode = cc.uiloader:load("LevelMap/levelMap_levelBtn/levelMap_"..groupId..".ExportJson")
+function HomeBarLayer:refreshLevelLayer(groupId)
+    self.levelBtnNode = cc.uiloader:load("levelMap_level/levelMap_"..groupId..".ExportJson")
     self.levelBtnNode:setPosition(0, 0)
     self:addChild(self.levelBtnNode)  
 
@@ -254,7 +249,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     end
 end
 
-function LevelMapLayer:bgAction()
+function HomeBarLayer:bgAction()
     -- switching animation
     if self.index == 1 then
         self.x, self.y = 0, 0
@@ -287,12 +282,12 @@ function LevelMapLayer:bgAction()
                 self.btnNext:setTouchEnabled(true)
                 self.btnPre:setTouchEnabled(true)
                 self.btnLevel:removeAllChildren()
-                self.btnLevel:addChild(display.newSprite("LevelMap/chooseLevelLayer/"..self.index..".png", 60, 25), 2)
+                self.btnLevel:addChild(display.newSprite("levelMap_choose/"..self.index..".png", 60, 25), 2)
                 self:refreshLevelLayer(self.index)
             end)}))
 end
 
-function LevelMapLayer:panelAction()
+function HomeBarLayer:panelAction()
     local changeTime = 0.2
     self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width, 0)))
@@ -306,7 +301,7 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onExit()
+function HomeBarLayer:onExit()
 end
     
-return LevelMapLayer
+return HomeBarLayer
