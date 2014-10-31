@@ -153,6 +153,10 @@ function Actor:canHitted()
     return not self:isDead()
 end
 
+function Actor:canDie()
+    return self.fsm__:canDoEvent("kill")
+end
+
 function Actor:isFrozen()
     return self.fsm__:getState() == "frozen"
 end

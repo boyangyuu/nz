@@ -22,7 +22,7 @@ function FightPlayer:ctor()
     --model 
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
-     self.mapView = MapView.new()
+    self.mapView = MapView.new()
     self.gunView = GunView.new()
 
     --instance
@@ -157,13 +157,16 @@ end
 
 function FightPlayer:onTouchMoved(event)
     -- dump(event, "onTouchMoved")
+    dump(self.touchs, "self.touchs")
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
+        local isBtnTouchPoint
         for btnName,id in pairs(self.touchs) do
-            if id == i then return end
+            if id == i then isBtnTouchPoint = true end 
         end
-        x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
-        -- print("onTouchMoved", i .. " : " .. x ..";" .. y)
+        if isBtnTouchPoint == false then 
+            x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
+        end
     end
     local offsetX = x - prevX 
     local offsetY = y - prevY
@@ -173,7 +176,6 @@ function FightPlayer:onTouchMoved(event)
     
     --处理滑屏
     self:moveBgLayer(offsetX, offsetY)
-
 end
 
 
