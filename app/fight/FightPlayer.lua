@@ -65,7 +65,7 @@ function FightPlayer:loadCCS()
     addChildCenter(self.focusView, self.focusNode)
 
     --load btns
-
+    
 end
 
 function FightPlayer:initTouchArea()
@@ -90,49 +90,53 @@ function FightPlayer:initTouchArea()
     end) 
     drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
---[[
-    local layerControl = display.newScale9Sprite()
-    layerControl:setContentSize(cc.size(936, 640))
-    layerControl:setPosition(0, 0)
-    layerControl:setAnchorPoint(0, 0)
-    layerControl:setOpacity(0)
-    layerTouch:addChild(layerControl)
-    layerControl:setTouchEnabled(true)
-    layerControl:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    layerControl:setTouchSwallowEnabled(false)
-    layerControl:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        -- printf("%s %s [TARGETING]", "button1", event.name)
-        if event.name == "ended" or event.name == "cancelled" then
-            -- print("-----------------------------")
-        elseif event.name == "moved" then 
-            self:onTouchMoved(event)
-            -- print("")
-        end
-        return true
-    end)    
-]]
     -- btn
     self:initFireBtn()
 end
 
+function FightPlayer:initFireBtn()
+    --btnfire   
+    self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
+    local btnFire = self.btnFire
+    btnFire:setTouchEnabled(true)
+    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
+    btnFire:setTouchSwallowEnabled(true)
+    drawBoundingBox(btnFire:getParent(), btnFire, cc.c4f(0, 1.0, 0, 1.0))
+
+end
+
+---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
     --check
     dump(event, "event onMutiTouchBegin")
-    local isTouch = false
-    local rect = self.btnFire:getCascadeBoundingBox()   
     for id,point in pairs(event.points) do
-        dump(point, "point")
-        dump(rect, "rect")
-        if isTouch == false then 
-            isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))    
-            if isTouch then self.touchs["fire"] = id end
+        local isTouch = self:checkBtnFire(id, point,"begin")
+        if isTouch then return true end
+    end
+    return false
+end
+
+function FightPlayer:onMutiTouchEnd(event)
+    for id,point in pairs(event.points) do
+        if id == self.touchs["fire"] then
+            self:checkBtnFire(nil, nil, "ended")
         end
     end
+end
 
-    --click
+function FightPlayer:checkBtnFire(id,point,eventName)
+    if eventName == "ended" then
+        self:onCancelledFire()
+        self.gunBtnPressed = false
+        self.touchs["fire"] = nil 
+        return
+    end
+    assert(id and point , "invalid params")
+    local isTouch
+    local rect = self.btnFire:getCascadeBoundingBox()      
+    isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
-
-        print("FireBtn onButtonClicked")
+        self.touchs["fire"] = id 
         self.gunBtnPressed = true
         --动画
         if self.btnFire:getChildByTag(1) then 
@@ -147,25 +151,31 @@ function FightPlayer:onMutiTouchBegin(event)
         armature:getAnimation():setMovementEventCallFunc(animationEvent)
         addChildCenter(armature, self.btnFire)
         armature:setTag(1)
+    end    
+    return isTouch
+end
+
+function FightPlayer:onTouchMoved(event)
+    -- dump(event, "onTouchMoved")
+    local  x, y, prevX, prevY 
+    for i,v in pairs(event.points) do
+        for btnName,id in pairs(self.touchs) do
+            if id == i then return end
+        end
+        x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
+        -- print("onTouchMoved", i .. " : " .. x ..";" .. y)
     end
-end
+    local offsetX = x - prevX 
+    local offsetY = y - prevY
 
-function FightPlayer:onMutiTouchEnd(event)
-    self:onCancelledFire()
-    self.gunBtnPressed = false
-
-end
-
-function FightPlayer:initFireBtn()
-    --btnfire   
-    self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    local btnFire = self.btnFire
-    btnFire:setTouchEnabled(true)
-    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
-    btnFire:setTouchSwallowEnabled(true)
-    drawBoundingBox(btnFire:getParent(), btnFire, cc.c4f(0, 1.0, 0, 1.0))
+    --处理瞄准
+    self:moveFocus(offsetX, offsetY)
+    
+    --处理滑屏
+    self:moveBgLayer(offsetX, offsetY)
 
 end
+
 
 ----attack----
 function FightPlayer:tick(dt)
@@ -201,31 +211,13 @@ function FightPlayer:onCancelledFire()
     self.focusView:stopFire()
 end
 
-----touch----
+----move----
 function FightPlayer:printTouch(event)
     -- print("printTouch:", event.name)
     -- for id, point in ipairs(event.points) do
     --     local str = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)
     --     print(str)
     -- end
-end
-
-function FightPlayer:onTouchMoved(event)
-    -- dump(event, "onTouchMoved")
-    local  x, y, prevX, prevY 
-    for i,v in pairs(event.points) do
-        x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
-        -- print("onTouchMoved", i .. " : " .. x ..";" .. y)
-    end
-    local offsetX = x - prevX 
-    local offsetY = y - prevY
-
-    --处理瞄准
-    self:moveFocus(offsetX, offsetY)
-    
-    --处理滑屏
-    self:moveBgLayer(offsetX, offsetY)
-
 end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
