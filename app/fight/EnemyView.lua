@@ -47,7 +47,7 @@ function EnemyView:ctor()
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
-        :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
+        -- :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
           
     --test
     self:test()
@@ -62,49 +62,67 @@ end
 
 ---- state ----
 function EnemyView:playIdle()
+	if not self:canChangeState("stand") then return end
 	self.armature:getAnimation():play("stand" , -1, 1)  
 end
 
-function EnemyView:playFire(event)
+function EnemyView:playFire()
+	if not self:canChangeState("fire") then return end
 	self.armature:getAnimation():play("fire" , -1, 1) 
 end
 
 function EnemyView:playWalk()
-	self.armature:getAnimation():play("walk" , -1, 1) 
+	if not self:canChangeState("walk") then return end
+	self.armature:getAnimation():play("walkleft" , -1, 1) 
 end
 
 function EnemyView:playRoll()
-	self.armature:getAnimation():play("roll" , -1, 1) 
-	local frameCnts = self.armature:getAnimation():getMovementCount()
-	local dis = 50
-	self.armature:runAction(cc.MoveTo:create(frameCnts, cc.p(dis, 0)))
+	if not self:canChangeState("roll") then return end
+	-- local frameCnts = self.armature:getAnimation():getMovementCount()
+	-- local dis = 50
+	-- self:runAction(cc.MoveBy:create(frameCnts/60, cc.p(dis, 0)))	
+	self.armature:getAnimation():play("rollleft" , -1, 1) 
 end
 
 function EnemyView:playHitted(event)
-	if not self.enemy:isDead() then
+	if not self:canChangeState("hit") then return end
+	if not self.enemy:isDead()  then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
 end
 
 function EnemyView:playKill(event)
+	if not self:canChangeState("die") then return end
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
+
+local stateConflicts = {
+	hit = {"roll", "die", 
+		checkFunc = function(self) 
+			return self.enemy:canHitted()
+		end,},
+	fire = {"stand", "hit", "stand", "die"},
+	walk = {"stand", "die"},
+	roll = {"stand", "die"},
+	stand = {"die"},	
+	die = {},
+}
 function EnemyView:canChangeState(stateId)
 	local id = self.armature:getAnimation():getCurrentMovementID()
-	-- print("stateId", stateId)
-	-- print("id", id)
-	if stateId == "hit" then 
-		local notConflict = id ~= "roll"
-		return self.enemy:canHitted() and notConflict
-	elseif stateId == "fire" then 
-		local notConflict = id == "stand" or id == "hit"
-		return notConflict
-	elseif stateId == "walk" or "roll" then 
-		local notConflict = id == "stand" 
-		return  notConflict	
-	end		
-	return false
+	if stateId == id then return end
+	local conflicts = stateConflicts[stateId] or {}
+	for i,v in ipairs(conflicts) do
+		if conflicts[tostring(id)] then 
+			return false
+		end
+	end
+	if conflicts.checkFunc then
+		return conflicts.checkFunc(self) 
+	else 
+		return true	
+	end
+	return true
 end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
@@ -133,32 +151,40 @@ end
 --tick
 function EnemyView:tick(t)
 	--change state
+	--fire
 	local randomSeed 
-	if self:canChangeState("fire") then
-		randomSeed = math.random(1, kRateFire)
-		if randomSeed > kRateFire - 1 then 
-			self.enemy:fire() 
-			return
-		end
+	randomSeed = math.random(1, kRateFire)
+	if randomSeed > kRateFire - 1 then 
+		self:playFire() 
+		return
 	end
-	if self:canChangeState("walk") then 
-		randomSeed =  math.random(1, kRateWalk)
-		if randomSeed > kRateWalk - 1 then 
-			self:playWalk()
-			return 
-		end
+
+	--walk
+	randomSeed =  math.random(1, kRateWalk)
+	if randomSeed > kRateWalk - 1 then 
+		self:playWalk()
+		return 
 	end
-	if self:canChangeState("roll") then 
-		randomSeed =  math.random(1, kRateRoll)
-		if randomSeed > kRateRoll - 1 then 
-			self:playRoll() 
-			return
-		end
+
+	--roll
+	randomSeed =  math.random(1, kRateRoll)
+	if randomSeed > kRateRoll - 1 then 
+		self:playRoll() 
+		return
+	end
+
+	--检测死亡
+	if self.enemy:getHp() == 0 then
+		self:playKill()
 	end
 end
 
 function EnemyView:test()
-    drawBoundingBox(self, self.armature, cc.c4f(1.0, 0.0, 0, 1.0))
+	--body
+	local bodyNode = self.armature:getBone("Layer5"):getDisplayRenderNode()
+	drawBoundingBox(self.armature, bodyNode, cc.c4f(1.0, 0.0, 0, 1.0))
+	--
+    drawBoundingBox(self.armature, self.armature, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 
 function EnemyView:getDeadDone()

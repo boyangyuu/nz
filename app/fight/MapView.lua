@@ -32,10 +32,7 @@ function MapView:ctor()
 	--ccs
 	self:loadCCS()
 
-	-- enemys
-	-- local appTimer = Timer.new()
-	-- appTimer:addEventListener("REFRESH_WAVES", handler(self, self.createEnemys))
-	-- appTimer:addCountdown("REFRESH_WAVES", 40)
+	--enemys
 	self:updateEnemys()
 
 	-- event
@@ -57,7 +54,7 @@ function MapView:loadCCS()
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self, "bg")
 
-	--enemy places
+	--init enemy places
 	local index = 1
 	self.places = {}
     while true do
@@ -121,7 +118,11 @@ end
 --fight
 function MapView:tick(dt)
 	--检查enemys的状态
+	-- print("MapView:tick ------------- ")
 	for i,enemy in ipairs(self.enemys) do
+		 -- print("self.enemy:getHp()",enemy.enemy:getHp() == 0 )
+
+		 -- print("enemy.enemy:canDie",enemy.enemy:canDie())
 		if enemy and enemy:getDeadDone() then
 			table.remove(self.enemys, i)
 			enemy:removeFromParent()
