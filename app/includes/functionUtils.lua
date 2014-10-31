@@ -26,7 +26,7 @@ function getPopupTips(text)
     assert(text, "fileName is invalid")
 
     -- load .ExportJson
-    local popupNode = cc.uiloader:load("res/CommonPopup/CommonPopup.ExportJson")
+    local popupNode = cc.uiloader:load("res/CommonPopup/commonPopup.ExportJson")
     local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
     labelTip:setString(text)
     popupNode:setTouchEnabled(true)
