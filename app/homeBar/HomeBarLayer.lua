@@ -5,6 +5,7 @@
 import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
+local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
@@ -69,6 +70,12 @@ function HomeBarLayer:initHomeLayer()
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
+            btnSetting:setVisible(false)
+            btnBack:setVisible(true)
+
+            self.commonRootNode:removeAllChildren()
+            local WeaponListLayer = WeaponListLayer.new()
+            self.commonRootNode:addChild(WeaponListLayer)
             print("Btn is pressed!")
         end
     end)
