@@ -8,69 +8,44 @@ local InlayListCell = class("InlayListCell", function()
     return display.newLayer()
 end)
 
-function InlayListCell:ctor(index)
-	self:refreshRightScroll(index)
-
-    -- set swallow, otherwise, the left buttons arenot touching enabled
+function InlayListCell:ctor()
+    -- Setting swallow, otherwise, the rootNode will cover the left buttons.
     self:setTouchEnabled(true)
     self:setTouchSwallowEnabled(false)
 end
 
-function InlayListCell:refreshRightScroll(index)
+function InlayListCell:getListCell(string, index1, index2)
     cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
+    local table = InlayModel:getConfigTable("type", string)
 
-	-- listview
-    self.listView = cc.ui.UIListView.new {
-        viewRect = cc.rect(593, 23, 530, 500),
-        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
-        :addTo(self)
-
-    local table = InlayModel:getConfigTable("typeId", index)
-    local cellNum = #table
+    -- Create the kind of "type = 1" listView cells
     local content
+    if index1 < 5 then
+        -- loac ccs
+        content = cc.uiloader:load("xiangqian_type1.ExportJson")
+        local title = cc.uiloader:seekNodeByName(content, "label_title")
+        local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
+        local describe = cc.uiloader:seekNodeByName(content, "Label_describe")
+        title:setString((table[index2])["name"])
+        describe:setString((table[index2])["describe"])
+        local img=cc.ui.UIImage.new((table[index2])["imgName"]..".png")
+        addChildCenter(img, imgPanel)
 
-    -- Create the kind of "type = 1" button
-    if 1 == (table[1])["type"] then
-        for i = 1, cellNum do
-            local item = self.listView:newItem()
-
-            -- loac ccs
-            content = cc.uiloader:load("xiangqian_type1.ExportJson")
-
-            item:addContent(content)
-            item:setItemSize(514, 159)
-            self.listView:addItem(item)
-        end
-
-    -- Create the kind of "type = 2" buttons
-    elseif 2 == (table[1])["type"] then
-        for i = 1, cellNum do
-            local item = self.listView:newItem()
-
-            -- load ccs
-            content = cc.uiloader:load("xiangqian_type2.ExportJson")
-
-            item:addContent(content)
-            item:setItemSize(514, 159)
-            self.listView:addItem(item)
-        end
-
-    -- Create the kind of "type = 3" buttons
-    elseif 3 == (table[1])["type"] then
-        for i = 1, cellNum do
-            local item = self.listView:newItem()
-
-            -- load ccs
-            content = cc.uiloader:load("xiangqian_type3.ExportJson")
-            item:addContent(content)
-            item:setItemSize(514, 159)
-            self.listView:addItem(item)
-        end
-
+    -- Create the kind of "type = 2" listView cells
     else
-        print("The (table[1])[type] is wrong!")
+        -- load ccs
+        content = cc.uiloader:load("xiangqian_type2.ExportJson")
+        local title = cc.uiloader:seekNodeByName(content, "label_title")
+        local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
+        local describe = cc.uiloader:seekNodeByName(content, "describe")
+        local ownNum = cc.uiloader:seekNodeByName(content, "label_ownNum")
+        title:setString((table[index2])["name"])
+        describe:setString((table[index2])["describe"])
+        ownNum:setString("0")
+        local img=cc.ui.UIImage.new((table[index2])["imgName"]..".png")
+        addChildCenter(img, imgPanel)
     end
-    self.listView:reload()
+    return content
 end
 
 return InlayListCell
