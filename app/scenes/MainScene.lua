@@ -14,7 +14,7 @@ function MainScene:ctor()
     -- self:addChild(FightPlayer)
     -- local DetailLayer=LevelDetailLayer.new()
     -- self:addChild(DetailLayer)
-
+	
 	local popupCommonLayer = app:getInstance(PopupCommonLayer)
     self:addChild(popupCommonLayer, 200)
 end
