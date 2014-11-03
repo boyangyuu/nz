@@ -8,9 +8,9 @@
 
 --k
 local kRateFire = 200
-local kRateRoll = 200
-local kRateWalk = 200
-
+local kRateRoll = 400
+local kRateWalk = 400
+local isAdded = false
 --import
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
@@ -23,7 +23,7 @@ local EnemyView = class("EnemyView", function()
     return display.newNode()
 end)
 
-function EnemyView:ctor()
+function EnemyView:ctor(property)
 	local id = "1"   -- todo 外界传
 
 	--instance
@@ -71,17 +71,67 @@ function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
 end
 
-function EnemyView:playWalk()
-	if not self:canChangeState("walk") then return end
-	self.armature:getAnimation():play("walkleft" , -1, 1) 
+function EnemyView:checkPlace(widthOffset)
+	print("isAdded", isAdded)
+	local x1, x2 = self.placeBound.x , self.placeBound.x + self.placeBound.width
+	print("self.placeBound %d %d",x1, x2) 
+	if self.placeBound == nil return false end
+	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+	local bound = self.armature:getCascadeBoundingBox()
+	bound.x, bound.y = pWorld.x, bound.y
+	print("self.armature %d %d",bound.x, bound.y)
+	local destx =  bound.x + widthOffset
+	return x1 < destx and x2 > destx
 end
 
+function EnemyView:playWalk()
+	if not self:canChangeState("walk") then return end
+	local isLeft = 1
+	local randomSeed = math.random(1, 2)
+	if randomSeed == 1 then isLeft = -1 end
+	local dis = 2 * isLeft
+    local widthOffset = 100 * isLeft
+    local isAble = self:checkPlace(widthOffset)
+
+    if not isAble then return end
+	self.armature:getAnimation():play("walk" , -1, 1)
+	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
+    local seq = cc.Sequence:create(action)	
+    self.armature:runAction(cc.RepeatForever:create(seq))	
+end
+
+
+
 function EnemyView:playRoll()
-	if not self:canChangeState("roll") then return end
-	-- local frameCnts = self.armature:getAnimation():getMovementCount()
-	-- local dis = 50
-	-- self:runAction(cc.MoveBy:create(frameCnts/60, cc.p(dis, 0)))	
+	local isLeft = 1
+	local randomSeed = math.random(1, 2)
+	if randomSeed == 1 then 
+		self:playRollLeft()
+	else
+		self:playRollRight()
+	end
+end
+
+function EnemyView:playRollLeft()
+	if not self:canChangeState("rollleft") then return end
+	if not self:checkPlace(-150) then return end
 	self.armature:getAnimation():play("rollleft" , -1, 1) 
+	local dis = 5 
+
+	local action = cc.MoveBy:create(1/60, cc.p(-dis, 0))
+    local seq = cc.Sequence:create(action)	
+    self.armature:runAction(cc.RepeatForever:create(seq))	
+end
+
+function EnemyView:playRollRight()
+	if not self:canChangeState("rollright") then return end
+	if not self:checkPlace(150) then return end
+	self.armature:getAnimation():play("rollright" , -1, 1) 
+	local dis = 5
+
+	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
+    local seq = cc.Sequence:create(action)	
+    self.armature:runAction(cc.RepeatForever:create(seq))			
 end
 
 function EnemyView:playHitted(event)
@@ -96,45 +146,46 @@ function EnemyView:playKill(event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
-
-local stateConflicts = {
-	hit = {"roll", "die", 
+local stateMatches = {
+	stand = {"rollleft", "rollright", "hit", "walk", "fire"},
+	walk = {"stand"},
+	rollleft = {"stand"},
+	rollright = {"stand"},	
+	fire = {"stand","hit",},
+	hit = {"walk", "stand", "fire",
 		checkFunc = function(self) 
-			return self.enemy:canHitted()
+			return self.enemy:canHitted()  
 		end,},
-	fire = {"stand", "hit", "stand", "die"},
-	walk = {"stand", "die"},
-	roll = {"stand", "die"},
-	stand = {"die"},	
-	die = {},
+	die = {"stand", "rollleft", "rollright", "hit", "walk", "fire"},
 }
 function EnemyView:canChangeState(stateId)
 	local id = self.armature:getAnimation():getCurrentMovementID()
-	if stateId == id then return end
-	local conflicts = stateConflicts[stateId] or {}
-	for i,v in ipairs(conflicts) do
-		if conflicts[tostring(id)] then 
-			return false
+	if id == "" then return true end
+	if stateId == id then return false end
+	print("canChangeState? from", id, "to", stateId)
+	local matchs = stateMatches[stateId] 
+	assert(matchs, "")
+	for i,v in ipairs(matchs) do
+		-- print(i,v)
+		if v == tostring(id) then 
+			if matchs.checkFunc then
+				return matchs.checkFunc(self) 
+			else 
+				return true
+			end
 		end
 	end
-	if conflicts.checkFunc then
-		return conflicts.checkFunc(self) 
-	else 
-		return true	
-	end
-	return true
+	return false
 end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
 	-- print("animationEvent id ", movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
+		armatureBack:stopAllActions()
+		self.armature:stopAllActions()
 		if movementID ~= "die" then
-			-- print("animationEvent idle from ", movementID)
-			armatureBack:stopAllActions()
 			self:playIdle()
     	elseif movementID == "die" then 
-    		-- print("died, remove")
-    		armatureBack:stopAllActions()
     		self:setDeadDone()
     	end 
 	end
@@ -143,7 +194,9 @@ end
 ----hited  ----
 function EnemyView:getRange(rectName)
 	assert(rectName, "invalid param")
-  	return self.armature or nil
+	local bone = self.armature:getBone(rectName)
+	if not bone then return end
+	return bone:getDisplayRenderNode() or {}
 end
 
 ----attack----
@@ -181,10 +234,11 @@ end
 
 function EnemyView:test()
 	--body
-	local bodyNode = self.armature:getBone("Layer5"):getDisplayRenderNode()
-	drawBoundingBox(self.armature, bodyNode, cc.c4f(1.0, 0.0, 0, 1.0))
-	--
-    drawBoundingBox(self.armature, self.armature, cc.c4f(1.0, 0.0, 0, 1.0))
+	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+	drawBoundingBox(self.armature, weakNode, "red") 
+	drawBoundingBox(self.armature, bodyNode, "yellow") 
+    -- drawBoundingBox(self, self, "white") 
 end
 
 function EnemyView:getDeadDone()
@@ -193,6 +247,18 @@ end
 
 function EnemyView:setDeadDone()	
 	self.deadDone = true
+end
+
+
+function EnemyView:setPlaceBound(bound)
+	assert(bound, self.id)
+	isAdded = true
+	print("isAdded", isAdded)
+	self.placeBound = bound
+end
+
+function EnemyView:getPlaceBound()
+	return self.placeBound 
 end
 
 return EnemyView

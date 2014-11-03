@@ -60,6 +60,8 @@ function MapView:loadCCS()
     while true do
     	local name = "place" .. index 
     	local placeNode = cc.uiloader:seekNodeByName(self, name)
+    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
+    	if scaleNode then scaleNode:setVisible(false) end
         if placeNode == nil then
             break
         end
@@ -91,11 +93,15 @@ end
 
 function MapView:addEnemys(id , num, placeName)
 	assert(id and num and placeName, "invalid param")
-	for i=1,num do
-		local enemyView = EnemyView.new()
+	for i = 1, num do
+		local enemyView = EnemyView.new(i)
 		self.enemys[#self.enemys + 1] = enemyView
 		local placeNode = self.places[placeName]
-		local boundEnemy = enemyView:getRange("body"):getBoundingBox()
+		assert(placeNode, "invalid param")
+		local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
+		enemyView:setScaleX(scale:getScaleX())
+		enemyView:setScaleY(scale:getScaleY())
+		local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
 		local boundPlace = placeNode:getBoundingBox()
 		print("enemyView width", boundEnemy.width)		
 		print("boundPlace width", boundPlace.width)
@@ -103,6 +109,12 @@ function MapView:addEnemys(id , num, placeName)
 		math.newrandomseed()
 		local xPos = math.random(boundEnemy.width/2, boundPlace.width)
 		enemyView:setPosition(xPos, 0)
+		local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
+		dump(boundPlace, "boundPlace")
+		boundPlace.x = pWorld.x
+		boundPlace.y = boundPlace.y
+		dump(boundPlace, "boundPlace--------------")
+		EnemyView:setPlaceBound(boundPlace)
 		placeNode:addChild(enemyView)
 	end
 
@@ -133,7 +145,8 @@ end
 function MapView:getDestEnemys()
 	local enemys = {}
 	for i,enemy in ipairs(self.enemys) do
-		local rectEnemy = enemy:getRange("body") 
+		local rectEnemy = enemy:getRange("body1") 
+		dump(rectEnemy, "rectEnemy")
 		local rectFocus = self.focusView:getFocusRange()
 		local isInRange = rectIntersectsRect(rectEnemy, rectFocus)
 		if isInRange and enemy:canChangeState("hit") then 

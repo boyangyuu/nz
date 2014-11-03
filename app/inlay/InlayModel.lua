@@ -4,16 +4,17 @@
 --
 import("..includes.functionUtils")
 
-local InlayModelModel = class("InlayModelModel", cc.mvc.ModelBase)
+local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
-function InlayModelModel:ctor()
+function InlayModel:ctor(properties)
 
 end
 
-function InlayModelModel:getConfigTable(fileName, index)
+function InlayModel:getConfigTable(fileName, index)
+	assert(fileName and index, "invalid param")
 	local config = getConfig("config/json_inlay.json")
-	local records = getRecord(config, fileName, index)
+	local records = getRecord(config, fileName, index) or {}
 	return records
 end
 
-return InlayModelModel
+return InlayModel
