@@ -3,163 +3,134 @@
 -- Date: 2014-10-30 09:24:41
 --
 --------  Constants  ---------
-local Zorder_insertLayer, Zorder_bgLayer = 10, 0
+local Color_WHITE, Color_RED = cc.c3b(255, 255, 255), cc.c3b(251, 25, 0)
+local ListView_RECT = cc.rect(593, 23, 530, 500)
+local ItemSize_X, ItemSize_Y = 514, 159
+local btn = {}
+local panel = {}
 
 import("..includes.functionUtils")
 local InlayListCell = import(".InlayListCell")
 local InlayModel = import(".InlayModel")
+
+-- local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local InlayLayer = class("InlayLayer", function()
     return display.newLayer()
 end)
 
 function InlayLayer:ctor()
 	self:initLeftBtn()
-    -- print("1111111111 = ", app:getImgByName("icon_jiqiang"))
+    self:addListener()
+    self:onEnter()
+
+    -- local popupCommonLayer = app:getInstance(PopupCommonLayer)
+    -- print("1111111111 = ", popupCommonLayer:getImgByName("icon_jiqiang"))
 end
 
 function InlayLayer:initLeftBtn()
     -- load ccs
 	cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
     local inlayRootNode = cc.uiloader:load("xiangqian_main.ExportJson")
-    self:addChild(inlayRootNode, Zorder_bgLayer)
-    self.listView = cc.uiloader:seekNodeByName(inlayRootNode, "listView")
-
-    local btnName = {
-    "btn_up", "btn_down", "btn_left1", "btn_left2", "btn_left3", "btn_right1", 
-    "btn_right2", "btn_right3", }
-
-    local btn = {}
+    self:addChild(inlayRootNode)
+    self.rootListView = cc.uiloader:seekNodeByName(inlayRootNode, "listView")
+    
     -- seek buttons and add listeners
-    for i, v in ipairs(btnName) do
-        btn[v] = cc.uiloader:seekNodeByName(inlayRootNode, v)
-
-        if i < 3 then
-            addBtnEventListener(btn[v], function(event)
+    local godWeaponBtn = cc.uiloader:seekNodeByName(inlayRootNode, "btn_up")
+    local oneForAllBtn = cc.uiloader:seekNodeByName(inlayRootNode, "btn_down")
+    addBtnEventListener(godWeaponBtn, function(event)
                 if event.name=='began' then
-                    -- print("btn upAndDown is begining!")
+                    print("godWeaponBtn is begining!")
                     return true
                 elseif event.name=='ended' then
-                    -- print("btn upAndDown is pressed!")
+                    print("godWeaponBtn is pressed!")
                 end
             end)
-        elseif i >= 3 then
-            btn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+    addBtnEventListener(oneForAllBtn, function(event)
                 if event.name=='began' then
-                    -- print("btn"..i.."is begining!")
+                    print("oneForAllBtn is begining!")
                     return true
                 elseif event.name=='ended' then
-                    -- recover original color
-                    for i, v in ipairs(btnName) do
-                        btn[v]:setColor(cc.c3b(255, 255, 255))
-                    end
-                    btn[v]:setColor(cc.c3b(251, 252, 0))
-
-                    -- 方法一：直接加
-                    -- read json
-                    local typeId = {"demage", "secure", "clip", "bullet", 
-                    "helper", "grenade",}
-                    local table = InlayModel:getConfigTable("type", typeId[i - 2])
-
-                    for j = 1, #table do
-                        local inlayListCell = InlayListCell:getListCell(typeId[i - 2], i - 2, j)
-                        -- self.listView:addItem(inlayListCell)
-                        -- self.listView:addChild(inlayListCell)
-                        -- self:addChild(inlayListCell)
-                    end
-
-                    -- 方法二：转成item的content
-                    -- self:refresh(i - 2)
+                    print("oneForAllBtn is pressed!")
                 end
             end)
-        end
+
+    -- 获得6个按钮并设置监听
+    for i = 1, 6 do
+        btn[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btn_"..i)
+        btn[i]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+            if event.name=='began' then
+                print("1 of 6 Btns is begining!")
+                return true
+            elseif event.name=='ended' then
+                print("1 of 6 Btns is pressed!")
+                self:refreshBtnColor(i)
+                self:refreshListView(i)
+            end
+        end)
+    end
+
+    -- 获得6个panel根节点
+    for i = 1, 6 do
+        panel[i] = cc.uiloader:seekNodeByName(inlayRootNode, "Panel_"..i)
     end
 end
 
--- function InlayLayer:refresh(index)
---     -- read json
---     local typeId = {"demage", "secure", "clip", "bullet", 
---     "helper", "grenade",}
---     local table = InlayModel:getConfigTable("type", typeId[index])
+function InlayLayer:addListener()
+    self.inlayModel = app:getInstance(InlayModel)
+    cc.EventProxy.new(self.inlayModel , self)
+        :addEventListener("REFRESH_BTN_ICON_EVENT", handler(self, self.refreshBtnIcon))
+end
 
---     -- add child
---     for j = 1, #table do
---         local item = self.listView:newItem()
---         local inlayListCell = InlayListCell:getListCell(typeId[index], index, j)
---         item:addContent(inlayListCell)
---         item:setItemSize(514, 159)
---         self.listView:addItem(item)
---     end
---     self.listView:reload()
--- end
+function InlayLayer:onEnter()
+    btn[1]:setColor(Color_RED)
+    self:refreshListView(1)
+end
 
+function InlayLayer:refreshBtnColor(index)
+    for i = 1, 6 do
+        btn[i]:setColor(Color_WHITE)
+    end
+    btn[index]:setColor(Color_RED)
+end
 
--- function InlayLayer:refresh(index)
---     -- 方法一：判断非空后removeFromParent
---     -- if self.listView ~= nil then
---     --     self.listView:removeFromParent()
---     -- end
+function InlayLayer:refreshBtnIcon(parameterTable)
+    local table = self.inlayModel:getConfigTable("type", parameterTable.string)
+    local img = cc.ui.UIImage.new((table[parameterTable.index])["imgName"]..".png")
+    local revTypeId = {["demage"] = 1, ["secure"] = 2, ["clip"] = 3, 
+    ["bullet"] = 4, ["helper"] = 5, ["grenade"] = 6,}
 
---     -- -- listview
---     -- self.listView = cc.ui.UIListView.new {
---     --     viewRect = cc.rect(593, 23, 530, 500),
---     --     direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
---     --     :addTo(self)
+    local num = revTypeId[parameterTable.string]
+    panel[num]:removeAllChildren()
+    if num == 1 then
+        img:setScale(0.5)
+    end
+    addChildCenter(img, panel[num])
+end
 
---     --方法二：加listview层，直接removeAllChildren
---     self.listView:removeAllChildren()
+function InlayLayer:refreshListView(index)
+    self.rootListView:removeAllChildren()
 
---     -- listview
---     self.listView = cc.ui.UIListView.new {
---         viewRect = cc.rect(593, 23, 530, 500),
---         direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
---         :addTo(self.listView)
+    -- new listview
+    self.listView = cc.ui.UIListView.new {
+        viewRect = ListView_RECT,
+        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
+        :addTo(self.rootListView)
 
---     -- read json
---     local typeId = {"demage", "secure", "clip", "bullet", 
---     "helper", "grenade",}
---     local table = InlayModel:getConfigTable("type", typeId[index])
+    -- read json
+    local typeId = {"demage", "secure", "clip", "bullet", 
+    "helper", "grenade",}
+    local table = self.inlayModel :getConfigTable("type", typeId[index])
 
---     -- add child
---     for j = 1, #table do
---         local item = self.listView:newItem()
-
---         -- Create the kind of "type = 1" listView content
-
---         -- 方法一：导入content
---         local content = InlayListCell:getListCell(typeId[index], index, j)
-
---         --方法二：写content
---         -- local content
---         -- if index < 5 then
---         --     -- loac ccs
---         --     content = cc.uiloader:load("xiangqian_type1.ExportJson")
---         --     local title = cc.uiloader:seekNodeByName(content, "label_title")
---         --     local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
---         --     local describe = cc.uiloader:seekNodeByName(content, "Label_describe")
---         --     title:setString((table[j])["name"])
---         --     describe:setString((table[j])["describe"])
---         --     local img=cc.ui.UIImage.new((table[j])["imgName"]..".png")
---         --     addChildCenter(img, imgPanel)
-
---         -- -- Create the kind of "type = 2" listView content
---         -- else
---         --     -- load ccs
---         --     content = cc.uiloader:load("xiangqian_type2.ExportJson")
---         --     local title = cc.uiloader:seekNodeByName(content, "label_title")
---         --     local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
---         --     local describe = cc.uiloader:seekNodeByName(content, "describe")
---         --     local ownNum = cc.uiloader:seekNodeByName(content, "label_ownNum")
---         --     title:setString((table[j])["name"])
---         --     describe:setString((table[j])["describe"])
---         --     ownNum:setString("0")
---         --     local img=cc.ui.UIImage.new((table[j])["imgName"]..".png")
---         --     addChildCenter(img, imgPanel)
---         -- end
---         item:addContent(content)
---         item:setItemSize(514, 159)
---         self.listView:addItem(item)
---     end
---     self.listView:reload()
--- end
+    -- add child
+    for j = 1, #table do
+        local item = self.listView:newItem()
+        local cell = InlayListCell.new()
+        local content = cell:getListCell(typeId[index], j)
+        item:addContent(content)
+        item:setItemSize(ItemSize_X, ItemSize_Y)
+        self.listView:addItem(item)
+    end
+    self.listView:reload()
+end
 
 return InlayLayer

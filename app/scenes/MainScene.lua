@@ -17,6 +17,7 @@ function MainScene:ctor()
 
 	local popupCommonLayer = app:getInstance(PopupCommonLayer)
     self:addChild(popupCommonLayer, 200)
+    popupCommonLayer:loadAllImg()
 end
 
 function MainScene:onEnter()

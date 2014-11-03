@@ -18,7 +18,6 @@ end
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
-    self:loadAllImg()
 end
 
 function MyApp:loadCCSJsonFile(scene, jsonFile)
@@ -85,15 +84,6 @@ function MyApp:initGameState(  )
     if io.exists(GameState.getGameStatePath()) then
         GameData=GameState.load()
     end
-end
-
-function MyApp:loadAllImg()
-    self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
-end
-
-function MyApp:getImgByName(fileName)
-    local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
-    return file
 end
 
 return MyApp
