@@ -15,15 +15,26 @@ end
 function WeaponListCell:initCellUI(weaponRecord)
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
 	local controlNode = cc.uiloader:load("gunzb_2.ExportJson")
-	local weaponImg = cc.ui.UIImage.new(weaponRecord["name"]..".png")
+	local weaponImg = cc.ui.UIImage.new(weaponRecord["imgName"]..".png")
+	weaponImg:setLayoutSize(250, 100)
 	local weaponLayer = cc.uiloader:seekNodeByName(controlNode, "Panel_6")
-	addChildCenter(weaponImg, weaponLayer)	
+	local weaponName = cc.uiloader:seekNodeByName(controlNode, "label_name")
+	self.weaponSelect = cc.uiloader:seekNodeByName(controlNode, "panl_gunbkhl")
+	self.weaponSelect:setVisible(false)
+	addChildCenter(weaponImg, weaponLayer)
+	weaponName:setString(weaponRecord["name"])	
 	controlNode:setPosition(0, 0)
     self:addChild(controlNode)
 end
-
-function WeaponListCell:onSelect( x,y )
-	-- body
+function WeaponListCell:setSelected(isSelected)
+	if isSelected == true then
+		--todo
+		self.weaponSelect:setVisible(true)
+	else
+		--todo
+	end
+	-- seekNodeByName(parent, name)
+	-- visiable
 end
 
 return WeaponListCell

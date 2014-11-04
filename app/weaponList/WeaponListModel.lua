@@ -11,8 +11,9 @@ function WeaponListModel:ctor(properties)
 
 end
 
-function WeaponListModel:getConfig()
-	getConfig("config/4.json")
+function WeaponListModel:getWeaponRecord(index)
+	local WeaponRecord = getConfigByID("config/weapon.json", index)
+	return WeaponRecord
 end
 
 return WeaponListModel

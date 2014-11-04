@@ -124,7 +124,7 @@ end
 
 ---- initData ----
 function LevelDetailLayer:initData(gropID,levelID)
-	local DataTable = LevelDetailModel:getConfig(gropID,levelID)
+	local DataTable = self.model:getConfig(gropID,levelID)
 
 	--Label
 

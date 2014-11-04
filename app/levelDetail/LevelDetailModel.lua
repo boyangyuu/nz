@@ -12,7 +12,7 @@ function LevelDetailModel:ctor(properties)
 end
 
 function LevelDetailModel:getConfig(BigID,SmallID)
-	local config = getConfig("config/3.json")
+	local config = getConfig("config/levelDetail.json")
 	local records = getRecord(config,"daguanqia",BigID)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
