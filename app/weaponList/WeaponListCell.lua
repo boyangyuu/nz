@@ -20,6 +20,7 @@ function WeaponListCell:initCellUI(weaponRecord)
 	local weaponLayer = cc.uiloader:seekNodeByName(controlNode, "Panel_6")
 	local weaponName = cc.uiloader:seekNodeByName(controlNode, "label_name")
 	self.weaponSelect = cc.uiloader:seekNodeByName(controlNode, "panl_gunbkhl")
+	self.weaponCover = cc.uiloader:seekNodeByName(controlNode, "panl_gundi")
 	self.weaponSelect:setVisible(false)
 	addChildCenter(weaponImg, weaponLayer)
 	weaponName:setString(weaponRecord["name"])	
@@ -28,10 +29,12 @@ function WeaponListCell:initCellUI(weaponRecord)
 end
 function WeaponListCell:setSelected(isSelected)
 	if isSelected == true then
-		--todo
 		self.weaponSelect:setVisible(true)
+		self.weaponCover:setVisible(false)
 	else
-		--todo
+		dump(self.weaponSelect)	
+		self.weaponSelect:setVisible(false)
+		self.weaponCover:setVisible(true)
 	end
 	-- seekNodeByName(parent, name)
 	-- visiable
