@@ -11,6 +11,8 @@ local HomeBarLayer = class("HomeBarLayer", function()
 end)
 
 function HomeBarLayer:ctor()
+    self:loadAllImg()
+
     self:loadCCS()
     self:initHomeLayer()
     self:initCommonLayer()
@@ -103,5 +105,17 @@ end
 function HomeBarLayer:initCommonLayer()
     local levelMapRootNode = LevelMapLayer.new()
     self.commonRootNode:addChild(levelMapRootNode)
+end
+
+function HomeBarLayer:loadAllImg()
+    self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
+    print(".......HomeBarLayer:loadAllImg()")
+end
+
+function HomeBarLayer:getImgByName(fileName)
+    dump(self.imgRootNode, ".........imgRootNode")
+    -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
+    local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
+    return file
 end
 return HomeBarLayer
