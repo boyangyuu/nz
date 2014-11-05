@@ -29,7 +29,7 @@ function LevelMapLayer:initData()
     self.preIndex = 0
 
     --config
-    local config = getConfig("config/3.json")
+    local config = getConfig("config/levelDetail.json")
     local recordsLevel = getRecord(config,"xiaoguanqia",1)
     self.groupNum = #recordsLevel
 
