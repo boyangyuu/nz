@@ -19,6 +19,7 @@ function InlayModel:getConfigTable(fileName, index)
 end
 
 function InlayModel:refreshBtnIcon(string, index)
+	assert(string and index, "invalid param")
 	self:dispatchEvent({name = "REFRESH_BTN_ICON_EVENT", string = string, index = index})
 end
 

@@ -37,22 +37,16 @@ function InlayListCell:getListCell(string, index)
         local btnBuy = cc.uiloader:seekNodeByName(content, "btn_buy")
         local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
         addBtnEventListener(btnBuy, function(event)
-                if event.name=='began' then
-                    print("btnBuy is begining!")
-                    return true
-                elseif event.name=='ended' then
-                    print("btnBuy is pressed!")
-                end
-            end)
+            if event.name=='began' then
+                print("btnBuy is begining!")
+                return true
+            elseif event.name=='ended' then
+                print("btnBuy is pressed!")
+            end
+        end)
         addBtnEventListener(btnLoad, function(event)
-                if event.name=='began' then
-                    print("btnLoad is begining!")
-                    return true
-                elseif event.name=='ended' then
-                    print("btnLoad is pressed!")
-                    self.inlayModel:refreshBtnIcon(string, index)
-                end
-            end)
+            return self:onClickLoadBtn(event, string, index)
+        end)
 
     -- Create the kind of "type = 2" listView cells
     else
@@ -72,24 +66,28 @@ function InlayListCell:getListCell(string, index)
         local btnBuy = cc.uiloader:seekNodeByName(content, "btn_buy")
         local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
         addBtnEventListener(btnBuy, function(event)
-                if event.name=='began' then
-                    print("btnBuy is begining!")
-                    return true
-                elseif event.name=='ended' then
-                    print("btnBuy is pressed!")
-                end
-            end)
+            if event.name=='began' then
+                print("btnBuy is begining!")
+                return true
+            elseif event.name=='ended' then
+                print("btnBuy is pressed!")
+            end
+        end)
         addBtnEventListener(btnLoad, function(event)
-                if event.name=='began' then
-                    print("btnLoad is begining!")
-                    return true
-                elseif event.name=='ended' then
-                    print("btnLoad is pressed!")
-                    self.inlayModel:refreshBtnIcon(string, index)
-                end
-            end)
+            return self:onClickLoadBtn(event, string, index)
+        end)
     end
     return content
+end
+
+function InlayListCell:onClickLoadBtn(event, string, index)
+    if event.name=='began' then
+        print("btnLoad is begining!")
+        return true
+    elseif event.name=='ended' then
+        print("btnLoad is pressed!")
+        self.inlayModel:refreshBtnIcon(string, index)
+    end
 end
 
 return InlayListCell
