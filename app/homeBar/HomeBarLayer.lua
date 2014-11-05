@@ -108,7 +108,7 @@ function HomeBarLayer:initCommonLayer()
 end
 
 function HomeBarLayer:loadAllImg()
-    self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
+    self.imgRootNode = cc.uiloader:load("AllImg/allImg.ExportJson")
     print(".......HomeBarLayer:loadAllImg()")
 end
 
