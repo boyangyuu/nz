@@ -1,4 +1,7 @@
-
+--
+-- Author: Fangzhongzheng
+-- Date: 2014-11-05 19:45:59
+--
 local ScrollViewCell = class("ScrollViewCell", function(contentSize)
     local node = display.newNode()
     if contentSize then node:setContentSize(contentSize) end

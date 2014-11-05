@@ -5,6 +5,7 @@
 import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
+local HomeModel = import("..homeBar.HomeModel")
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
@@ -28,7 +29,7 @@ function LevelMapLayer:initData()
     self.preIndex = 0
 
     --config
-    local config = getConfig("config/3.json")
+    local config = getConfig("config/levelDetail.json")
     local recordsLevel = getRecord(config,"xiaoguanqia",1)
     self.groupNum = #recordsLevel
 
@@ -66,6 +67,7 @@ function LevelMapLayer:initChooseLayer()
     self.levelNum:addChild(display.newSprite("chooseLevel/1.png", 
     self.levelNum:getContentSize().width/2, self.levelNum:getContentSize().height/2), Zorder_up)
 
+
     -- add listener (attention: this isnot button, so we add node event listener)
     addBtnEventListener(self.btnNext, function(event)
         if event.name=='began' then
@@ -82,6 +84,7 @@ function LevelMapLayer:initChooseLayer()
             end
             self:bgAction()
             self:panelAction()
+            app:getInstance(HomeModel):panelAction()
         end
     end)
     addBtnEventListener(self.btnPre, function(event)
@@ -99,6 +102,7 @@ function LevelMapLayer:initChooseLayer()
             end
             self:bgAction()
             self:panelAction()
+            app:getInstance(HomeModel):panelAction()
         end
     end)
      addBtnEventListener(btnSale, function(event)
@@ -197,13 +201,11 @@ end
 
 function LevelMapLayer:panelAction()
     local changeTime = 0.2
-    -- self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width, 0)))
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
             -- reverse() is not work!
-                -- self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width, 0)))
                 self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height)))
             end)}))
