@@ -38,6 +38,8 @@ function WeaponListLayer:initUI()
     self.progBullet=cc.uiloader:seekNodeByName(self, "progress_bullet")
     self.progAccuracy=cc.uiloader:seekNodeByName(self, "progress_accuracy")
     self.progReload=cc.uiloader:seekNodeByName(self, "progress_reload")
+    self.labelDamage = cc.uiloader:seekNodeByName(self, "Label_damage")
+    self.labelPercent = cc.uiloader:seekNodeByName(self, "Label_percent")
 end
 
 -- 初始化ListView
@@ -93,7 +95,7 @@ function WeaponListLayer:getWeaponOfCell( index )
     self.progBullet:setPercent(weaponrecord["bulletNum"]/85*100)
     self.progAccuracy:setPercent(weaponrecord["accuracy"]/99*100)
     self.progReload:setPercent((1-weaponrecord["reloadTime"]/4.2)*100)
-
+    self.labelDamage:setString(weaponrecord["demage"])
 end
 
 return WeaponListLayer
