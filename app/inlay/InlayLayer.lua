@@ -3,11 +3,12 @@
 -- Date: 2014-10-30 09:24:41
 --
 --------  Constants  ---------
-local Color_WHITE, Color_RED = cc.c3b(255, 255, 255), cc.c3b(251, 25, 0)
+local color_WHITE, color_RED = cc.c3b(255, 255, 255), cc.c3b(251, 25, 0)
 local ListView_RECT = cc.rect(593, 23, 530, 500)
 local ItemSize_X, ItemSize_Y = 514, 159
 local btn = {}
 local panel = {}
+local colorBtnNum = {}
 
 import("..includes.functionUtils")
 local InlayListCell = import(".InlayListCell")
@@ -63,7 +64,8 @@ function InlayLayer:initLeftBtn()
                 return true
             elseif event.name=='ended' then
                 print("1 of 6 Btns is pressed!")
-                self:refreshBtnColor(i)
+                colorBtnNum[#colorBtnNum + 1] = i
+                self:refreshBtncolor(i)
                 self:refreshListView(i)
             end
         end)
@@ -82,15 +84,17 @@ function InlayLayer:addListener()
 end
 
 function InlayLayer:onEnter()
-    btn[1]:setColor(Color_RED)
+    colorBtnNum[#colorBtnNum + 1] = 1
+    self:refreshBtncolor(1)
     self:refreshListView(1)
 end
 
-function InlayLayer:refreshBtnColor(index)
-    for i = 1, 6 do
-        btn[i]:setColor(Color_WHITE)
+function InlayLayer:refreshBtncolor(index)
+    if #colorBtnNum - 1 > 0 then
+        btn[colorBtnNum[#colorBtnNum - 1]]:setColor(color_WHITE)
     end
-    btn[index]:setColor(Color_RED)
+
+    btn[index]:setColor(color_RED)
 end
 
 function InlayLayer:refreshBtnIcon(parameterTable)

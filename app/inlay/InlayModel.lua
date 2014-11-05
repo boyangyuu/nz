@@ -12,7 +12,7 @@ function InlayModel:ctor(properties, events, callbacks)
 end
 
 function InlayModel:getConfigTable(fileName, index)
-	local config = getConfig("config/json_inlay.json")
+	local config = getConfig("config/items_xq.json")
 	local records = getRecord(config, fileName, index)
 	return records
 end
