@@ -61,7 +61,6 @@ function FightPlayer:initUI()
     --init panel
     self:initBar()    
     
-
 end
 
 function FightPlayer:initBar()

@@ -17,7 +17,7 @@ local Timer = require("framework.cc.utils.Timer")
 local FocusView = import(".FocusView")
 local Hero = import(".Hero")
 local Actor = import(".Actor")
-local EnemyView = import(".EnemyView")
+local EnemyView = import(".enemys.EnemyView")
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -180,7 +180,7 @@ end
 function MapView:getDestEnemys()
 	local enemys = {}
 	for i,enemy in ipairs(self.enemys) do
-		local rectEnemy = enemy:getRange("body1") 
+		local rectEnemy = enemy:getRange("weak1") 
 		-- dump(rectEnemy, "rectEnemy")
 		local rectFocus = self.focusView:getFocusRange()
 		local isInRange = rectIntersectsRect(rectEnemy, rectFocus)

@@ -6,17 +6,12 @@
 2. enemy的移动范围判断
 ]]
 
---k
-local kRateFire = 200
-local kRateRoll = 400
-local kRateWalk = 400
 --import
-import("..includes.functionUtils")
+import("...includes.functionUtils")
 local scheduler = require("framework.scheduler")
 local Enemy = import(".Enemy")
-local Hero = import(".Hero")
-local Actor = import(".Actor")
-
+local Hero = import("..Hero")
+local Actor = import("..Actor")
 
 local EnemyView = class("EnemyView", function()
     return display.newNode()
@@ -65,12 +60,7 @@ function EnemyView:initCCS()
     self.blood:setPosition(0, bound.height/2 + 100)
     self.armature:addChild(self.blood) 
 	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
-
-    --set blood
-    local bloodBg = cc.uiloader:seekNodeByName(self.blood, "bloodBg")
-    local oSize = bloodBg:getContentSize()
-    self.bloodValueNode:setLayoutSize(oSize.width, oSize.height)
-    --set
+	self:setBlood(1)
 end
 
 ---- event ----
@@ -78,6 +68,16 @@ function EnemyView:onHitted(demage)
 	if self.enemy:canHitted() then
 		self.enemy:decreaseHp(demage)
 	end
+
+	local maxHp = self.enemy:getMaxHp()
+	local hp = self.enemy:getHp()
+	self:setBlood(hp/maxHp)
+end
+
+function EnemyView:setBlood(scale)
+    local bloodBg = cc.uiloader:seekNodeByName(self.blood, "bloodBg")
+    local oSize = bloodBg:getContentSize()
+    self.bloodValueNode:setLayoutSize(oSize.width * scale, oSize.height)	
 end
 
 ---- state ----
@@ -225,23 +225,26 @@ end
 function EnemyView:tick(t)
 	--change state
 	--fire
+	local fireRate = self.enemy:getFireRate()
 	local randomSeed 
-	randomSeed = math.random(1, kRateFire)
-	if randomSeed > kRateFire - 1 then 
+	randomSeed = math.random(1, fireRate)
+	if randomSeed > fireRate - 1 then 
 		self:playFire() 
 		return
 	end
 
 	--walk
-	randomSeed =  math.random(1, kRateWalk)
-	if randomSeed > kRateWalk - 1 then 
+	local walkRate = self.enemy:getWalkRate()
+	randomSeed =  math.random(1, walkRate)
+	if randomSeed > walkRate - 1 then 
 		self:playWalk()
 		return 
 	end
 
 	--roll
-	randomSeed =  math.random(1, kRateRoll)
-	if randomSeed > kRateRoll - 1 then 
+	local rollRate = self.enemy:getRollRate()
+	randomSeed =  math.random(1, rollRate)
+	if randomSeed > rollRate - 1 then 
 		self:playRoll() 
 		return
 	end
