@@ -9,6 +9,9 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local Actor = class("Actor", cc.mvc.ModelBase)
 
+--import
+import("..includes.functionUtils")
+
 -- 常量
 
 -- 定义事件
@@ -23,13 +26,14 @@ Actor.RELIVE_EVENT        = "RELIVE_EVENT"
 Actor.HP_DECREASE_EVENT    = "HP_DECREASE_EVENT"
 Actor.HP_INCREASE_EVENT    = "HP_INCREASE_EVENT"
 Actor.ATTACK_EVENT        = "ATTACK_EVENT"
-Actor.UNDER_ATTACK_EVENT  = "UNDER_ATTACK_EVENT"
 
 -- 定义属性
 Actor.schema = clone(cc.mvc.ModelBase.schema)
 Actor.schema["nickname"] = {"string"} -- 字符串类型，没有默认值
 Actor.schema["level"]    = {"number", 1} -- 数值类型，默认值 1
 Actor.schema["hp"]       = {"number", 1}
+Actor.schema["maxHp"]    = {"number", 1}
+Actor.schema["demage"] = {"number", 0.2} 
 Actor.schema["cooldown"] = {"number", 0.2} 
 
 function Actor:ctor(properties, events, callbacks)
@@ -121,21 +125,25 @@ function Actor:getCooldown()
     return self.cooldown_
 end
 
-function Actor:getMaxHp()
-    -- 简化算法：最大 Hp = 等级 x 100
-    return self.level_ * 100
+function Actor:setDemage(demage)
+    self.demage_ = demage
 end
 
-function Actor:getAttack()
-    -- 简化算法：攻击力是等级 x 5
-    return self.level_ * 5
+function Actor:getDemage()
+    return self.demage_
+end 
+
+function Actor:setMaxHp(maxHp)
+    self.maxHp_ = maxHp
+end
+
+function Actor:getMaxHp()
+    return self.maxHp_ 
 end
 
 function Actor:getArmor()
-    -- 简化算法：防御是等级 x 2
-    return self.level_ * 2
+    return 0
 end
-
 
 function Actor:getState()
     return self.fsm__:getState()
@@ -163,7 +171,7 @@ end
 
 function Actor:setFullHp()
     self.hp_ = self:getMaxHp()
-    return sef
+    print("self.hp_", self.hp_)
 end
 
 function Actor:increaseHp(hp)
@@ -217,20 +225,22 @@ function Actor:hit(enemy)
 
     -- 简化算法：伤害 = 自己的攻击力 - 目标防御
     local damage = 0
-    if math.random(1, 100) <= 80 then -- 命中率 80%
+    if math.random(1, 100) <= 100 then -- 命中率 80%
         local armor = 0
         if not enemy:isFrozen() then -- 如果目标被冰冻，则无视防御
             armor = enemy:getArmor()
         end
-        damage = self:getAttack() - armor
+        damage = self:getDemage() - armor
         if damage <= 0 then damage = 1 end -- 只要命中，强制扣 HP
     end
+    print("------------------------e")
+    print("demage", demage)
+    print("enemy.hp_)", enemy.hp_)
     -- 触发事件，damage <= 0 可以视为 miss
     self:dispatchEvent({name = Actor.ATTACK_EVENT, enemy = enemy, damage = damage})
     if damage > 0 then
         -- 扣除目标 HP，并触发事件
         enemy:decreaseHp(damage) -- 扣除目标 Hp
-        enemy:dispatchEvent({name = Actor.UNDER_ATTACK_EVENT, source = self, damage = damage})
     end
 
     return damage
@@ -258,7 +268,7 @@ end
 
 function Actor:onFire_(event)
     printf("actor %s:%s fire", self:getId(), self.nickname_)
-    self:dispatchEvent({name = Actor.FIRE_EVENT, demage = self:getAttack()*5})
+    self:dispatchEvent({name = Actor.FIRE_EVENT, demage = self:getDemage()})
 end
 
 function Actor:onFreeze_(event)

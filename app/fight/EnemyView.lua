@@ -10,7 +10,6 @@
 local kRateFire = 200
 local kRateRoll = 400
 local kRateWalk = 400
-local isAdded = false
 --import
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
@@ -24,22 +23,16 @@ local EnemyView = class("EnemyView", function()
 end)
 
 function EnemyView:ctor(property)
-	local id = "1"   -- todo 外界传
 
 	--instance
-	self.enemy = Enemy.new({id = id})
+	self.enemy = Enemy.new(property)
     self.hero = app:getInstance(Hero)
 
-	--armature
-    local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
-    local armature = getArmature("anim_enemy_001", src) 
-	self.armature = armature
+    --ccs
+    self:initCCS()
 
-	self.armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	
-	--换肤
-	self:addChild(armature)
-	self:playIdle()
+	--play
+	self:playStartState(property.startState)
 
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
@@ -48,9 +41,36 @@ function EnemyView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         -- :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
-          
     --test
     self:test()
+end
+
+--ui
+function EnemyView:initCCS()
+	--armature
+    local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
+    local armature = getArmature("anim_enemy_001", src) 
+	self.armature = armature
+	self.armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+	
+	--换肤
+	self:addChild(armature)
+    
+    --add blood
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
+    local node = cc.uiloader:load("UI.ExportJson")    
+    self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
+    self.blood:removeFromParent()
+    local bound = self.armature:getBoundingBox()
+    self.blood:setPosition(0, bound.height/2 + 100)
+    self.armature:addChild(self.blood) 
+	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
+
+    --set blood
+    local bloodBg = cc.uiloader:seekNodeByName(self.blood, "bloodBg")
+    local oSize = bloodBg:getContentSize()
+    self.bloodValueNode:setLayoutSize(oSize.width, oSize.height)
+    --set
 end
 
 ---- event ----
@@ -61,7 +81,17 @@ function EnemyView:onHitted(demage)
 end
 
 ---- state ----
-function EnemyView:playIdle()
+function EnemyView:playStartState(state)
+	if state == "rollleft" then 
+		self:playRollLeft()
+	elseif state == "rollright" then
+		self:playRollRight()
+	else 
+		self:playStand()
+	end
+end
+
+function EnemyView:playStand()
 	if not self:canChangeState("stand") then return end
 	self.armature:getAnimation():play("stand" , -1, 1)  
 end
@@ -69,19 +99,11 @@ end
 function EnemyView:playFire()
 	if not self:canChangeState("fire") then return end
 	self.armature:getAnimation():play("fire" , -1, 1) 
-end
 
-function EnemyView:checkPlace(widthOffset)
-	print("isAdded", isAdded)
-	local x1, x2 = self.placeBound.x , self.placeBound.x + self.placeBound.width
-	print("self.placeBound %d %d",x1, x2) 
-	if self.placeBound == nil return false end
-	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-	local bound = self.armature:getCascadeBoundingBox()
-	bound.x, bound.y = pWorld.x, bound.y
-	print("self.armature %d %d",bound.x, bound.y)
-	local destx =  bound.x + widthOffset
-	return x1 < destx and x2 > destx
+	--fire 
+	print("self.hero:getHp()", self.hero:getHp())
+	print("self.enemy:getDemage()", self.enemy:getDemage())
+	self.enemy:hit(self.hero)
 end
 
 function EnemyView:playWalk()
@@ -99,8 +121,6 @@ function EnemyView:playWalk()
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))	
 end
-
-
 
 function EnemyView:playRoll()
 	local isLeft = 1
@@ -162,7 +182,7 @@ function EnemyView:canChangeState(stateId)
 	local id = self.armature:getAnimation():getCurrentMovementID()
 	if id == "" then return true end
 	if stateId == id then return false end
-	print("canChangeState? from", id, "to", stateId)
+	-- print("canChangeState? from", id, "to", stateId)
 	local matchs = stateMatches[stateId] 
 	assert(matchs, "")
 	for i,v in ipairs(matchs) do
@@ -184,7 +204,7 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 		armatureBack:stopAllActions()
 		self.armature:stopAllActions()
 		if movementID ~= "die" then
-			self:playIdle()
+			self:playStand()
     	elseif movementID == "die" then 
     		self:setDeadDone()
     	end 
@@ -241,6 +261,18 @@ function EnemyView:test()
     -- drawBoundingBox(self, self, "white") 
 end
 
+function EnemyView:checkPlace(widthOffset)
+	if self.placeBound == nil then return false end
+	local x1, x2 = self.placeBound.x , self.placeBound.x + self.placeBound.width
+	-- print("self.placeBound %d %d",x1, x2) 
+	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+	local bound = self.armature:getCascadeBoundingBox()
+	bound.x, bound.y = pWorld.x, bound.y
+	-- print("self.armature %d %d",bound.x, bound.y)
+	local destx =  bound.x + widthOffset
+	return x1 < destx and x2 > destx
+end
+
 function EnemyView:getDeadDone()
 	return self.deadDone or false 
 end
@@ -252,8 +284,6 @@ end
 
 function EnemyView:setPlaceBound(bound)
 	assert(bound, self.id)
-	isAdded = true
-	print("isAdded", isAdded)
 	self.placeBound = bound
 end
 

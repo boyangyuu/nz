@@ -120,16 +120,17 @@ function getConfig( configFileDir )
 end
 
 -- 通过表ID获取res下json文件内容
-function getConfigByID( configFileDir, tableID  )
+function getConfigByID( configFileDir, tableID )
+    tableID = tonumber(tableID)
     assert(tableID ~= "" and type(tableID) == "number", "invalid param")
     local configTable = getConfig(configFileDir)
     for k,v in pairs(configTable) do
         if k == tableID then
-            dump(v)
+            -- dump(v)
             return v
         end
     end
-    print("not found")
+    print("not found, tableID is "..tableID)
     return nil
 end
 

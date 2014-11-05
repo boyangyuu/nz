@@ -28,6 +28,7 @@ function MapView:ctor()
 	self.hero = app:getInstance(Hero)
 	self.focusView = app:getInstance(FocusView)
 	self.enemys = {}
+	self.waveIndex = 1
 
 	--ccs
 	self:loadCCS()
@@ -77,47 +78,81 @@ function MapView:updateEnemys(event)
     -- 	return
     -- end
 
-	--config
-	local waves = getWaves()
-	dump(waves, "waves")
-	for i, wave in ipairs(waves) do
-		for groupId, group in ipairs(wave.enemys) do
-			function addEnemysFunc()
-				self:addEnemys(group.id, group.num, group.place)
+	--wave config
+	local wave = getWaves(self.waveIndex)
+	dump(wave, "wave")
+	if wave == nil then return end
+	-- if wave.type = "enemy" then .. 
+	local lastTime = 0
+	for groupId, group in ipairs(wave.enemys) do
+		
+		for i = 1, group.num do
+			--delay
+			local delay = group.delay or 0.1
+			delay = group.time + delay * i
+			if delay > lastTime then lastTime = delay end
+			--pos
+			local pos = nil
+			if group.pos then 
+				pos = group.pos + group.offset * i
 			end
-			--todo 做个延时创建处理 避免峰值
-			scheduler.performWithDelayGlobal(addEnemysFunc, group.time) 
+
+			--add
+			local function addEnemyFunc()
+				self:addEnemy(group.place, group.property, pos)
+			end
+			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
 	end
+	--check next wave
+	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:addEnemys(id , num, placeName)
-	assert(id and num and placeName, "invalid param")
-	for i = 1, num do
-		local enemyView = EnemyView.new(i)
-		self.enemys[#self.enemys + 1] = enemyView
-		local placeNode = self.places[placeName]
-		assert(placeNode, "invalid param")
-		local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-		enemyView:setScaleX(scale:getScaleX())
-		enemyView:setScaleY(scale:getScaleY())
-		local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
-		local boundPlace = placeNode:getBoundingBox()
-		print("enemyView width", boundEnemy.width)		
-		print("boundPlace width", boundPlace.width)
-		
-		math.newrandomseed()
-		local xPos = math.random(boundEnemy.width/2, boundPlace.width)
-		enemyView:setPosition(xPos, 0)
-		local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
-		dump(boundPlace, "boundPlace")
-		boundPlace.x = pWorld.x
-		boundPlace.y = boundPlace.y
-		dump(boundPlace, "boundPlace--------------")
-		EnemyView:setPlaceBound(boundPlace)
-		placeNode:addChild(enemyView)
-	end
 
+
+function MapView:checkWave()
+	local function checkEnemysEmpty()
+		if #self.enemys == 0 then 
+			print("第"..self.waveIndex.."波怪物消灭完毕")
+			self.waveIndex = self.waveIndex + 1
+			self:updateEnemys()
+			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+		end
+	end
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 2)
+end
+
+function MapView:addEnemy(placeName, property, pos)
+	assert(placeName and property, "invalid param")
+
+	--enemy
+	local enemyView = EnemyView.new(property)
+	self.enemys[#self.enemys + 1] = enemyView
+
+	--scale
+	local placeNode = self.places[placeName]
+	assert(placeNode, "invalid param")		
+	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
+	enemyView:setScaleX(scale:getScaleX())
+	enemyView:setScaleY(scale:getScaleY())
+
+	--pos
+	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
+	local boundPlace = placeNode:getBoundingBox()
+	-- print("enemyView width", boundEnemy.width)
+	-- print("boundPlace width", boundPlace.width)
+	math.newrandomseed()
+	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
+	enemyView:setPosition(xPos, 0)
+	
+	--place
+	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
+	-- dump(boundPlace, "boundPlace")
+	boundPlace.x = pWorld.x
+	boundPlace.y = boundPlace.y
+	-- dump(boundPlace, "boundPlace--------------")
+	EnemyView:setPlaceBound(boundPlace)
+	placeNode:addChild(enemyView)
 end
 
 function MapView:getSize()
@@ -146,7 +181,7 @@ function MapView:getDestEnemys()
 	local enemys = {}
 	for i,enemy in ipairs(self.enemys) do
 		local rectEnemy = enemy:getRange("body1") 
-		dump(rectEnemy, "rectEnemy")
+		-- dump(rectEnemy, "rectEnemy")
 		local rectFocus = self.focusView:getFocusRange()
 		local isInRange = rectIntersectsRect(rectEnemy, rectFocus)
 		if isInRange and enemy:canChangeState("hit") then 
