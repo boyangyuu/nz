@@ -6,6 +6,7 @@ import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
+local HomeModel = import(".HomeModel")
 local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
@@ -13,9 +14,14 @@ end)
 function HomeBarLayer:ctor()
     self:loadAllImg()
 
+    self:addEventProtocolListener()
     self:loadCCS()
     self:initHomeLayer()
     self:initCommonLayer()
+end
+
+function HomeBarLayer:addEventProtocolListener()
+    app:getInstance(HomeModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
 end
 
 function HomeBarLayer:loadCCS()
@@ -33,6 +39,7 @@ function HomeBarLayer:initHomeLayer()
     local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_arsenal")
     local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_inlay")
     local btnShop = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_shop")
+    self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "homeLayer")
 
     btnBack:setVisible(false)
     
@@ -118,4 +125,15 @@ function HomeBarLayer:getImgByName(fileName)
     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
     return file
 end
+
+function HomeBarLayer:homeBarAction()
+    local changeTime = 0.2
+    local smallTime, bigTime = 0.7, 0.7
+    self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
+    self.panelUp:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
+        cc.CallFunc:create(function()
+            self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
+        end)}))
+end
+
 return HomeBarLayer
