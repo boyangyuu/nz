@@ -37,18 +37,9 @@ function FightPlayer:ctor()
 end
 
 function FightPlayer:initUI()
-    self:loadCCS()
-	
-	--touch area
-	self:initTouchArea()
-
-end
-
-function FightPlayer:loadCCS()
-    --load fightUI
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/map")  
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui/zhandou_demo")
-    local node = cc.uiloader:load("zhandou_demo_1.ExportJson")
+    --load fightUI  
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
+    local node = cc.uiloader:load("mainUI.ExportJson")
     self.ui = node
     self:addChild(node)
 
@@ -64,8 +55,23 @@ function FightPlayer:loadCCS()
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
     addChildCenter(self.focusView, self.focusNode)
 
-    --load btns
+    --touch area
+    self:initTouchArea()
+
+    --init panel
+    self:initBar()    
     
+end
+
+function FightPlayer:initBar()
+    --blood
+    self.heroBlood = cc.uiloader:seekNodeByName(self, "heroBlood")
+    local bloodValue = cc.uiloader:seekNodeByName(self.heroBlood, "bloodValue")
+    local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
+    local size = bloodBg:getContentSize()
+    bloodValue:setLayoutSize(size.width, size.height)
+
+    --gold
 end
 
 function FightPlayer:initTouchArea()
@@ -99,10 +105,9 @@ function FightPlayer:initFireBtn()
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     local btnFire = self.btnFire
     btnFire:setTouchEnabled(true)
-    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
+    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     btnFire:setTouchSwallowEnabled(true)
     drawBoundingBox(btnFire:getParent(), btnFire, cc.c4f(0, 1.0, 0, 1.0))
-
 end
 
 ---- touch and btn----
@@ -184,6 +189,16 @@ function FightPlayer:tick(dt)
     if self:canGunShot() then 
         self:fire()
     end
+
+    --hero血量
+    local bloodPer = self.hero:getHp() / self.hero:getMaxHp()
+    local bloodValue = cc.uiloader:seekNodeByName(self.heroBlood, "bloodValue")
+    local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
+    local size = bloodBg:getContentSize()
+    bloodValue:setLayoutSize(size.width * bloodPer, size.height)
+
+    --hero各种状态
+
 end
 
 function FightPlayer:canGunShot()

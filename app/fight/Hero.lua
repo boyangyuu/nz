@@ -15,11 +15,17 @@ local Hero = class("Hero", Actor)
 --events
 
 function Hero:ctor(properties, events, callbacks)
-    Hero.super.ctor(self, properties)
-
+    --instance
     self.gun = app:getInstance(Gun)
+    
+    --property
     local coolDown = self.gun:getCooldown()
     self:setCooldown(coolDown)
+    self:setDemage(30)
+    self:setMaxHp(1000)  
+    Hero.super.ctor(self, properties)   
 end
+
+
 
 return Hero

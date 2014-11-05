@@ -84,6 +84,12 @@ function drawBoundingBox(parent, target, color)
         {left, bottom + height},
         {left, bottom},
     }
+    if type(color) == "string" then 
+        if color == "red" then color =  cc.c4f(1.0, 0.0, 0, 1.0) 
+        elseif color == "yellow" then color = cc.c4f(1.0, 1.0, 0, 1.0) 
+        elseif color == "white" then color = cc.c4f(1.0, 1.0, 0, 1.0) 
+        end
+    end
     local box = display.newPolygon(points, {borderColor = color})
     parent:addChild(box, 1000)
 end
@@ -91,6 +97,15 @@ end
 function rectIntersectsRect(rectNode1, rectNode2)
     local bound1 = rectNode1:getCascadeBoundingBox()
     local bound2 = rectNode2:getCascadeBoundingBox()
+
+    local pWorld1 = rectNode1:convertToWorldSpace(cc.p(0,0))
+    bound1.x = pWorld1.x
+    bound1.y = pWorld1.y
+    local pWorld2 = rectNode2:convertToWorldSpace(cc.p(0,0))
+    bound2.x = pWorld2.x
+    bound2.y = pWorld2.y    
+    -- dump(bound1, "bound1 ------")
+    -- dump(bound2, "bound2 -------")    
     return cc.rectIntersectsRect(bound1, bound2)
 end
 
@@ -105,16 +120,17 @@ function getConfig( configFileDir )
 end
 
 -- 通过表ID获取res下json文件内容
-function getConfigByID( configFileDir, tableID  )
+function getConfigByID( configFileDir, tableID )
+    tableID = tonumber(tableID)
     assert(tableID ~= "" and type(tableID) == "number", "invalid param")
     local configTable = getConfig(configFileDir)
     for k,v in pairs(configTable) do
         if k == tableID then
-            dump(v)
+            -- dump(v)
             return v
         end
     end
-    print("not found")
+    print("not found, tableID is "..tableID)
     return nil
 end
 

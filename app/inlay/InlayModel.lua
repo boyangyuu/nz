@@ -4,16 +4,22 @@
 --
 import("..includes.functionUtils")
 
-local InlayModelModel = class("InlayModelModel", cc.mvc.ModelBase)
+local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
-function InlayModelModel:ctor()
-
+function InlayModel:ctor(properties, events, callbacks)
+	InlayModel.super.ctor(self, properties)
+	self:addComponent("components.behavior.EventProtocol"):exportMethods()
 end
 
-function InlayModelModel:getConfigTable(fileName, index)
-	local config = getConfig("config/json_inlay.json")
-	local records = getRecord(config, fileName, index)
+function InlayModel:getConfigTable(fileName, index)
+	assert(fileName and index, "invalid param")
+	local config = getConfig("config/items_xq.json")
+	local records = getRecord(config, fileName, index) or {}
 	return records
 end
 
-return InlayModelModel
+function InlayModel:refreshBtnIcon(string, index)
+	self:dispatchEvent({name = "REFRESH_BTN_ICON_EVENT", string = string, index = index})
+end
+
+return InlayModel
