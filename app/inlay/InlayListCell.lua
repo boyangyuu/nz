@@ -12,24 +12,47 @@ function InlayListCell:ctor()
     -- Setting swallow, otherwise, the rootNode will cover the left buttons.
     self:setTouchEnabled(true)
     self:setTouchSwallowEnabled(false)
+    self.inlayModel = app:getInstance(InlayModel)
 end
 
-function InlayListCell:getListCell(string, index1, index2)
+function InlayListCell:getListCell(string, index)
     cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
-    local table = InlayModel:getConfigTable("type", string)
+    local table = self.inlayModel:getConfigTable("type", string)
 
     -- Create the kind of "type = 1" listView cells
     local content
-    if index1 < 5 then
+    if string == "demage" or string == "secure" or
+     string == "clip" or string == "bullet" then
         -- loac ccs
         content = cc.uiloader:load("xiangqian_type1.ExportJson")
         local title = cc.uiloader:seekNodeByName(content, "label_title")
         local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
         local describe = cc.uiloader:seekNodeByName(content, "Label_describe")
-        title:setString((table[index2])["name"])
-        describe:setString((table[index2])["describe"])
-        local img=cc.ui.UIImage.new((table[index2])["imgName"]..".png")
+        title:setString((table[index])["name"])
+        describe:setString((table[index])["describe"])
+        local img=cc.ui.UIImage.new((table[index])["imgName"]..".png")
         addChildCenter(img, imgPanel)
+
+        -- 获得两个按钮并设置监听
+        local btnBuy = cc.uiloader:seekNodeByName(content, "btn_buy")
+        local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
+        addBtnEventListener(btnBuy, function(event)
+                if event.name=='began' then
+                    print("btnBuy is begining!")
+                    return true
+                elseif event.name=='ended' then
+                    print("btnBuy is pressed!")
+                end
+            end)
+        addBtnEventListener(btnLoad, function(event)
+                if event.name=='began' then
+                    print("btnLoad is begining!")
+                    return true
+                elseif event.name=='ended' then
+                    print("btnLoad is pressed!")
+                    self.inlayModel:refreshBtnIcon(string, index)
+                end
+            end)
 
     -- Create the kind of "type = 2" listView cells
     else
@@ -39,11 +62,32 @@ function InlayListCell:getListCell(string, index1, index2)
         local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
         local describe = cc.uiloader:seekNodeByName(content, "describe")
         local ownNum = cc.uiloader:seekNodeByName(content, "label_ownNum")
-        title:setString((table[index2])["name"])
-        describe:setString((table[index2])["describe"])
+        title:setString((table[index])["name"])
+        describe:setString((table[index])["describe"])
         ownNum:setString("0")
-        local img=cc.ui.UIImage.new((table[index2])["imgName"]..".png")
+        local img=cc.ui.UIImage.new((table[index])["imgName"]..".png")
         addChildCenter(img, imgPanel)
+
+        -- 获得两个按钮并设置监听
+        local btnBuy = cc.uiloader:seekNodeByName(content, "btn_buy")
+        local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
+        addBtnEventListener(btnBuy, function(event)
+                if event.name=='began' then
+                    print("btnBuy is begining!")
+                    return true
+                elseif event.name=='ended' then
+                    print("btnBuy is pressed!")
+                end
+            end)
+        addBtnEventListener(btnLoad, function(event)
+                if event.name=='began' then
+                    print("btnLoad is begining!")
+                    return true
+                elseif event.name=='ended' then
+                    print("btnLoad is pressed!")
+                    self.inlayModel:refreshBtnIcon(string, index)
+                end
+            end)
     end
     return content
 end

@@ -10,10 +10,11 @@ end)
 function MainScene:ctor()
     local homeBarLayer = HomeBarLayer.new()
     self:addChild(homeBarLayer)
-    local FightPlayer = FightPlayer.new()
-    self:addChild(FightPlayer)
+    -- local FightPlayer = FightPlayer.new()
+    -- self:addChild(FightPlayer)
 	local popupCommonLayer = app:getInstance(PopupCommonLayer)
     self:addChild(popupCommonLayer, 200)
+    -- popupCommonLayer:loadAllImg()
 end
 
 function MainScene:onEnter()

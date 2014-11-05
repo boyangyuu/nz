@@ -76,16 +76,4 @@ function MyApp:initGameState(  )
     end
 end
 
--- function MyApp:loadAllImg()
---     self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
---     print(".......MyApp:loadAllImg()")
--- end
-
--- function MyApp:getImgByName(fileName)
---     dump(self.imgRootNode, ".........imgRootNode")
---     -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
---     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
---     return file
--- end
-
 return MyApp
