@@ -2,6 +2,10 @@
 -- Author: Fangzhongzheng
 -- Date: 2014-10-31 12:54:04
 --
+--------  Constants  ---------
+local color_BLACK = cc.c4b(255, 255, 255, 255)
+local outline_SIZE = 4
+
 import("..includes.functionUtils")
 local InlayModel = import(".InlayModel")
 local InlayListCell = class("InlayListCell", function()
@@ -23,28 +27,38 @@ function InlayListCell:getListCell(string, index)
     local content
     if string == "demage" or string == "secure" or
      string == "clip" or string == "bullet" then
-        -- loac ccs
+        -- load CCS
         content = cc.uiloader:load("xiangqian_type1.ExportJson")
-        local title = cc.uiloader:seekNodeByName(content, "label_title")
-        local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
-        local describe = cc.uiloader:seekNodeByName(content, "Label_describe")
-        title:setString((table[index])["name"])
-        describe:setString((table[index])["describe"])
+        local titleLabel = cc.uiloader:seekNodeByName(content, "titleLabel")
+        local describeLabel = cc.uiloader:seekNodeByName(content, "describeLabel")
+        local loadLabel = cc.uiloader:seekNodeByName(content, "loadLabel")
+        local buyLabel = cc.uiloader:seekNodeByName(content, "buyLabel")
+        local imgPanel = cc.uiloader:seekNodeByName(content, "imgPanel")
+
+        -- 读表替换
+        titleLabel:setString((table[index])["name"])
+        describeLabel:setString((table[index])["describe"])
         local img=cc.ui.UIImage.new((table[index])["imgName"]..".png")
         addChildCenter(img, imgPanel)
 
+        -- 字体描边
+        titleLabel:enableOutline(color_BLACK, outline_SIZE)
+        describeLabel:enableOutline(color_BLACK, outline_SIZE)
+        loadLabel:enableOutline(color_BLACK, outline_SIZE)
+        buyLabel:enableOutline(color_BLACK, outline_SIZE)
+
         -- 获得两个按钮并设置监听
-        local btnBuy = cc.uiloader:seekNodeByName(content, "btn_buy")
-        local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
-        addBtnEventListener(btnBuy, function(event)
+        local buyBtn = cc.uiloader:seekNodeByName(content, "buyBtn")
+        local loadBtn = cc.uiloader:seekNodeByName(content, "loadBtn")
+        addBtnEventListener(buyBtn, function(event)
             if event.name=='began' then
-                print("btnBuy is begining!")
+                print("buyBtn is begining!")
                 return true
             elseif event.name=='ended' then
-                print("btnBuy is pressed!")
+                print("buyBtn is pressed!")
             end
         end)
-        addBtnEventListener(btnLoad, function(event)
+        addBtnEventListener(loadBtn, function(event)
             return self:onClickLoadBtn(event, string, index)
         end)
 
@@ -52,28 +66,39 @@ function InlayListCell:getListCell(string, index)
     else
         -- load ccs
         content = cc.uiloader:load("xiangqian_type2.ExportJson")
-        local title = cc.uiloader:seekNodeByName(content, "label_title")
-        local imgPanel = cc.uiloader:seekNodeByName(content, "Panel_img")
-        local describe = cc.uiloader:seekNodeByName(content, "describe")
-        local ownNum = cc.uiloader:seekNodeByName(content, "label_ownNum")
-        title:setString((table[index])["name"])
-        describe:setString((table[index])["describe"])
+        local titleLabel = cc.uiloader:seekNodeByName(content, "titleLabel")
+        local describeLabel = cc.uiloader:seekNodeByName(content, "describeLabel")
+        local loadLabel = cc.uiloader:seekNodeByName(content, "loadLabel")
+        local buyLabel = cc.uiloader:seekNodeByName(content, "buyLabel")
+        local ownLabel = cc.uiloader:seekNodeByName(content, "ownLabel")
+        local ownNum = cc.uiloader:seekNodeByName(content, "ownNum")
+        local imgPanel = cc.uiloader:seekNodeByName(content, "imgPanel")
+
+
+        titleLabel:setString((table[index])["name"])
+        describeLabel:setString((table[index])["describe"])
         ownNum:setString("0")
         local img=cc.ui.UIImage.new((table[index])["imgName"]..".png")
         addChildCenter(img, imgPanel)
 
+        titleLabel:enableOutline(color_BLACK, outline_SIZE)
+        describeLabel:enableOutline(color_BLACK, outline_SIZE)
+        loadLabel:enableOutline(color_BLACK, outline_SIZE)
+        buyLabel:enableOutline(color_BLACK, outline_SIZE)
+        ownLabel:enableOutline(color_BLACK, outline_SIZE)
+
         -- 获得两个按钮并设置监听
-        local btnBuy = cc.uiloader:seekNodeByName(content, "btn_buy")
-        local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
-        addBtnEventListener(btnBuy, function(event)
+        local buyBtn = cc.uiloader:seekNodeByName(content, "buyBtn")
+        local loadBtn = cc.uiloader:seekNodeByName(content, "loadBtn")
+        addBtnEventListener(buyBtn, function(event)
             if event.name=='began' then
-                print("btnBuy is begining!")
+                print("buyBtn is begining!")
                 return true
             elseif event.name=='ended' then
-                print("btnBuy is pressed!")
+                print("buyBtn is pressed!")
             end
         end)
-        addBtnEventListener(btnLoad, function(event)
+        addBtnEventListener(loadBtn, function(event)
             return self:onClickLoadBtn(event, string, index)
         end)
     end
@@ -82,10 +107,10 @@ end
 
 function InlayListCell:onClickLoadBtn(event, string, index)
     if event.name=='began' then
-        print("btnLoad is begining!")
+        print("loadBtn is begining!")
         return true
     elseif event.name=='ended' then
-        print("btnLoad is pressed!")
+        print("loadBtn is pressed!")
         self.inlayModel:refreshBtnIcon(string, index)
     end
 end

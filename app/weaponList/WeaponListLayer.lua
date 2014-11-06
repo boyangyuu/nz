@@ -11,21 +11,11 @@ function WeaponListLayer:ctor()
     self.selectedContent = nil
 
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
-	self:loadCCSJsonFile(self, "gunzb_1.ExportJson")
+	local ccs = cc.uiloader:load("gunzb_1.ExportJson")
+    self:addChild(ccs)
 	self:initUI()
     -- 点开页面默认选择某个武器
     self:selectCell(2)
-end
-
--- loadCCS
-function WeaponListLayer:loadCCSJsonFile(scene, jsonFile)
-    local node, width, height = cc.uiloader:load(jsonFile)
-    width = width or display.width
-    height = height or display.height
-    if node then
-        node:setPosition((display.width - width)/2, (display.height - height)/2)
-        scene:addChild(node)
-    end
 end
 
 function WeaponListLayer:initUI()

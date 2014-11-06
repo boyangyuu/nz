@@ -3,11 +3,13 @@
 -- Date: 2014-10-30 09:24:41
 --
 --------  Constants  ---------
-local color_WHITE, color_RED = cc.c3b(255, 255, 255), cc.c3b(251, 25, 0)
+local color_WHITE, color_RED, color_BLACK = cc.c3b(255, 255, 255),
+    cc.c3b(251, 25, 0), cc.c4b(255, 255, 255, 255)
+local outline_SIZE = 4
 local ListView_RECT = cc.rect(593, 23, 530, 500)
 local ItemSize_X, ItemSize_Y = 514, 159
 local Init_NUM = 1
-local btn, panel = {}, {}
+local btn, panel, label = {}, {}, {}
 
 import("..includes.functionUtils")
 local InlayListCell = import(".InlayListCell")
@@ -32,14 +34,21 @@ function InlayLayer:initUI()
     cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
     local inlayRootNode = cc.uiloader:load("xiangqian_main.ExportJson")
     self:addChild(inlayRootNode)
-    self.rootListView = cc.uiloader:seekNodeByName(inlayRootNode, "listView")
-    local goldWeaponBtn = cc.uiloader:seekNodeByName(inlayRootNode, "btn_up")
-    local oneForAllBtn = cc.uiloader:seekNodeByName(inlayRootNode, "btn_down")
+    self.rootListView = cc.uiloader:seekNodeByName(inlayRootNode, "rootListView")
+    local goldWeaponBtn = cc.uiloader:seekNodeByName(inlayRootNode, "goldWeaponBtn")
+    local oneForAllBtn = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllBtn")
+    local goldWeaponLabel = cc.uiloader:seekNodeByName(inlayRootNode, "goldWeaponLabel")
+    local oneForAllLabel = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllLabel")
     for i = 1, 6 do
-        btn[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btn_"..i)
-        panel[i] = cc.uiloader:seekNodeByName(inlayRootNode, "Panel_"..i)
+        btn[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btn"..i)
+        panel[i] = cc.uiloader:seekNodeByName(inlayRootNode, "panel"..i)
+        label[i] = cc.uiloader:seekNodeByName(inlayRootNode, "label"..i)
+        label[i]:enableOutline(color_BLACK, outline_SIZE)
     end
 
+    goldWeaponLabel:enableOutline(color_BLACK, outline_SIZE)
+    oneForAllLabel:enableOutline(color_BLACK, outline_SIZE)
+    
     -- 添加监听
     addBtnEventListener(goldWeaponBtn, function(event)
         return self:onClickGoldWeaponBtn( event )

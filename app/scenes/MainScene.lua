@@ -15,6 +15,9 @@ function MainScene:ctor()
 	local popupCommonLayer = app:getInstance(PopupCommonLayer)
     self:addChild(popupCommonLayer, 200)
     -- popupCommonLayer:loadAllImg()
+
+    --场景居中
+    self:setPosition(cc.p(0, (display.height - 640)/2))
 end
 
 function MainScene:onEnter()

@@ -33,7 +33,10 @@ function FightPlayer:ctor()
 
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    self:scheduleUpdate()   
+    self:scheduleUpdate()
+
+    -- 战斗层居中
+    self:setPosition(cc.p(0, (display.height - 640)/2))
 end
 
 function FightPlayer:initUI()
