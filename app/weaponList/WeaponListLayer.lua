@@ -50,7 +50,7 @@ function WeaponListLayer:initUI()
     self.btnOncefull   = cc.uiloader:seekNodeByName(self, "btn_equip")
     self.btnBuy        = cc.uiloader:seekNodeByName(self, "btn_buy")
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    self:loadWeaponList(self.weaponLV, getConfig("config/weapon.json"))
+    self:loadWeaponList(self.weaponLV, getConfig("config/weapon_weapon.json"))
     self.btnBuy:setTouchEnabled(true)
     addBtnEventListener(self.btnBuy, function(event)
         if event.name=='began' then
