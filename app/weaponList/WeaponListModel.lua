@@ -13,7 +13,7 @@ function WeaponListModel:ctor(properties, events, callbacks)
 end
 
 function WeaponListModel:getWeaponRecord(index)
-	local WeaponRecord = getConfigByID("config/weapon.json", index)
+	local WeaponRecord = getConfigByID("config/weapon_weapon.json", index)
 	return WeaponRecord
 end
 

@@ -67,7 +67,7 @@ end
 -- 初始化ListView
 function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	for i=1, #weaponTable do
-		local weaponRecord = getConfigByID("config/weapon.json", i)
+		local weaponRecord = getConfigByID("config/weapon_weapon.json", i)
 		local item = weaponListView:newItem()
 		-- local item
 		local content
