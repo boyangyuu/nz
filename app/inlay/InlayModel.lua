@@ -18,9 +18,19 @@ function InlayModel:getConfigTable(fileName, index)
 	return records
 end
 
-function InlayModel:refreshBtnIcon(string, index)
+function InlayModel:btnIconDispatch(string, index)
 	assert(string and index, "invalid param")
 	self:dispatchEvent({name = "REFRESH_BTN_ICON_EVENT", string = string, index = index})
+end
+
+function InlayModel:popupDispatch(table, string, index, btnVariable)
+	assert(table and string and index, "invalid param")
+	self:dispatchEvent({name = "INLAY_POPUP_TIPS_EVENT", table = table,
+	 string = string, index = index, btnVariable = btnVariable})
+end
+
+function InlayModel:loadedDispatch(btnVariable)
+	self:dispatchEvent({name = "EQUIPMENT_ALREADY_LOADED", btnVariable = btnVariable})
 end
 
 return InlayModel

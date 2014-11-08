@@ -2,9 +2,13 @@
 -- Author: Fangzhongzheng
 -- Date: 2014-10-21 14:32:57
 --
+local Zorder_TOP = 100
+
 import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
+local InlayModel = import("..inlay.InlayModel")
+local InlayPopup = import("..inlay.InlayPopup")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local HomeModel = import(".HomeModel")
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -22,9 +26,14 @@ end
 
 function HomeBarLayer:addEventProtocolListener()
     app:getInstance(HomeModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
+    app:getInstance(InlayModel):addEventListener("INLAY_POPUP_TIPS_EVENT", handler(self, self.addInlayPopupLayer))
 end
 
 function HomeBarLayer:loadCCS()
+    -- local my = MySprite:createMS("res/Inlay/icon_jiqiang.png")
+    -- self:addChild(my)
+    -- local loadCCS = cc.LoadCCSFromC2plus.new()
+    -- print("........anqu1111111111111111111.........", LoadCCSFromC2plus:getTest(3))
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/")
     local rootNode = cc.uiloader:load("homeBarLayer.ExportJson")
     self:addChild(rootNode)
@@ -59,6 +68,8 @@ function HomeBarLayer:initHomeLayer()
             btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
             btnBack:setVisible(false)
             btnSetting:setVisible(true)
+            btnInlay:setTouchEnabled(true)
+            btnArsenal:setTouchEnabled(true)
 
             self.commonRootNode:removeAllChildren()
             self:initCommonLayer()
@@ -79,6 +90,8 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
+            btnArsenal:setTouchEnabled(false)
+            btnInlay:setTouchEnabled(true)
 
             self.commonRootNode:removeAllChildren()
             local WeaponListLayer = WeaponListLayer.new()
@@ -93,6 +106,8 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
+            btnInlay:setTouchEnabled(false)
+            btnArsenal:setTouchEnabled(true)
 
             self.commonRootNode:removeAllChildren()
             local inlayLayer = InlayLayer.new()
@@ -134,6 +149,11 @@ function HomeBarLayer:homeBarAction()
         cc.CallFunc:create(function()
             self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
         end)}))
+end
+
+function HomeBarLayer:addInlayPopupLayer(parameterTable)
+    local inlayPopup = InlayPopup.new()
+    self:addChild(inlayPopup:getTipsPopup(parameterTable), Zorder_TOP)
 end
 
 return HomeBarLayer

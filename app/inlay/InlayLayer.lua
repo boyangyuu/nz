@@ -3,8 +3,8 @@
 -- Date: 2014-10-30 09:24:41
 --
 --------  Constants  ---------
-local color_WHITE, color_RED, color_BLACK = cc.c3b(255, 255, 255),
-    cc.c3b(251, 25, 0), cc.c4b(255, 255, 255, 255)
+local color_WHITE, color_RED, color_BLACK, color_BLUE = cc.c3b(255, 255, 255),
+    cc.c3b(251, 25, 0), cc.c4b(255, 255, 255, 255), cc.c4b(0, 0, 255, 255)
 local outline_SIZE = 4
 local ListView_RECT = cc.rect(593, 23, 530, 500)
 local ItemSize_X, ItemSize_Y = 514, 159
@@ -43,11 +43,11 @@ function InlayLayer:initUI()
         btn[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btn"..i)
         panel[i] = cc.uiloader:seekNodeByName(inlayRootNode, "panel"..i)
         label[i] = cc.uiloader:seekNodeByName(inlayRootNode, "label"..i)
-        label[i]:enableOutline(color_BLACK, outline_SIZE)
+        label[i]:enableGlow(color_BLUE, outline_SIZE)
     end
 
-    goldWeaponLabel:enableOutline(color_BLACK, outline_SIZE)
-    oneForAllLabel:enableOutline(color_BLACK, outline_SIZE)
+    goldWeaponLabel:enableGlow(color_BLUE, outline_SIZE)
+    oneForAllLabel:enableGlow(color_BLUE, outline_SIZE)
     
     -- 添加监听
     addBtnEventListener(goldWeaponBtn, function(event)
@@ -100,6 +100,7 @@ end
 
 function InlayLayer:initEnterPage()
     self.variable = nil
+    self.btnVariable = nil
     self:refreshBtncolor(Init_NUM)
     self:refreshListView(Init_NUM)
 end
@@ -119,14 +120,11 @@ function InlayLayer:refreshBtnIcon(parameterTable)
     local table = self.inlayModel:getConfigTable("type", parameterTable.string)
     local img = cc.ui.UIImage.new((table[parameterTable.index])["imgName"]..".png")
 
-    local revTypeId = {["demage"] = 1, ["secure"] = 2, ["clip"] = 3, 
-    ["bullet"] = 4, ["helper"] = 5, ["grenade"] = 6,}
+    local revTypeId = {["bullet"] = 1, ["clip"] = 2, ["speed"] = 3, 
+    ["aim"] = 4, ["blood"] = 5, ["helper"] = 6,}
 
     local num = revTypeId[parameterTable.string]
     panel[num]:removeAllChildren()
-    if num == 1 then
-        img:setScale(0.5)
-    end
     addChildCenter(img, panel[num])
 end
 
@@ -140,8 +138,8 @@ function InlayLayer:refreshListView(index)
         :addTo(self.rootListView)
 
     -- read json
-    local typeId = {"demage", "secure", "clip", "bullet", 
-    "helper", "grenade",}
+    local typeId = {"bullet", "clip", "speed", "aim", 
+    "blood", "helper",}
     local table = self.inlayModel :getConfigTable("type", typeId[index])
 
     -- add child
