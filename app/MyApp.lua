@@ -62,10 +62,11 @@ function MyApp:initGameState(  )
             if param.name=="save" then
                 local str=json.encode(param.values)
                 str=crypto.encryptXXTEA(str, "abcd")
-                returnValue={data=str}
+                returnValue={data=param.values}
             elseif param.name=="load" then
                 local str=crypto.decryptXXTEA(param.values.data, "abcd")
-                returnValue=json.decode(str)
+                -- returnValue=json.decode(str)
+                returnValue=param.values
             end
             -- returnValue=param.values
         end
@@ -73,7 +74,27 @@ function MyApp:initGameState(  )
     end, "data.txt","1234")
     if io.exists(GameState.getGameStatePath()) then
         GameData=GameState.load()
+    else
+        self:createGameStateFile()
+        GameData=GameState.load()
     end
 end
+
+function MyApp:createGameStateFile(  )
+    local data = GameData.data
+    data = {
+            weapons = {
+                        bags = {}, 
+                    weaponed = {}
+                      }, 
+              inlay = {
+                        bags = {}, 
+                    inlayed  = {}
+                      }
+           }
+    GameState.save(data)
+    dump(GameState.load())
+end
+
 
 return MyApp

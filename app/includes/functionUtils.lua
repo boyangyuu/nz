@@ -125,7 +125,7 @@ function getConfigByID( configFileDir, tableID )
     assert(tableID ~= "" and type(tableID) == "number", "invalid param")
     local configTable = getConfig(configFileDir)
     for k,v in pairs(configTable) do
-        if k == tableID then
+        if v["id"] == tableID then
             -- dump(v)
             return v
         end
@@ -150,3 +150,13 @@ function getRecord( Table, PropertyName, Key )
     end
     return recordArr
 end
+
+function getUserData(  )
+    return GameData.data
+end
+
+function setUserData(data)
+    GameState.save(data)
+end
+
+

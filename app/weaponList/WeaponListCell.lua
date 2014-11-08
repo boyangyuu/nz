@@ -32,7 +32,6 @@ function WeaponListCell:setSelected(isSelected)
 		self.weaponSelect:setVisible(true)
 		self.weaponCover:setVisible(false)
 	else
-		dump(self.weaponSelect)	
 		self.weaponSelect:setVisible(false)
 		self.weaponCover:setVisible(true)
 	end
