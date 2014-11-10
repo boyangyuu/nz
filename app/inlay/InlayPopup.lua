@@ -12,7 +12,7 @@ function InlayPopup:ctor()
 end
 
 function InlayPopup:getTipsPopup(table)
-    self.popupbtn = cc.uiloader:load("res/Inlay/xiangqian_popup.ExportJson")
+    self.popupbtn = cc.uiloader:load("res/InlayShop/xiangqian_popup.ExportJson")
     local firstLabel = cc.uiloader:seekbtnByName(self.popupbtn, "firstLabel")
     local secondLabel = cc.uiloader:seekbtnByName(self.popupbtn, "secondLabel")
     local loadLabel = cc.uiloader:seekbtnByName(self.popupbtn, "loadLabel")

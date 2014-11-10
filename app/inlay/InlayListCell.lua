@@ -17,7 +17,7 @@ function InlayListCell:ctor()
 end
 
 function InlayListCell:getListCell(type, index)
-    cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
+    cc.FileUtils:getInstance():addSearchPath("res/InlayShop/")
 
     -- load CCS
     content             = cc.uiloader:load("xiangqian_type.ExportJson")
@@ -48,22 +48,13 @@ function InlayListCell:refreshListCell(type, index)
     addChildCenter(self.img, self.imgPanel)
 
     -- 字体描边
-    -- self.titleLabel:enableOutline(color_BLACK, 4)
+    -- self.titleLabel:enableOutline(cc.c3b(255, 0, 0), 4)
     -- self.describeLabel:enableOutline(color_BLACK, 4)
     -- self.describeValue:enableOutline(color_BLACK, 4)
     -- self.goldPrice:enableOutline(color_BLACK, 4)
     -- self.loadLabel:enableOutline(color_BLACK, 4)
     -- self.ownNum:enableOutline(color_BLACK, 4)
     -- self.buyLabel:enableOutline(color_BLACK, 4)
-
-    -- -- 设置字体
-    -- tself.itleLabel:setFontName(“黑体”) 
-    -- self.describeLabel:setFontName(“黑体”)
-    -- self.describeValue:setFontName(“黑体”)
-    -- self.goldPrice:setFontName(“黑体”)
-    -- self.ownNum:setFontName(“黑体”)
-    -- self.loadLabel:setFontName(“黑体”)
-    -- self.buyLabel:setFontName(“黑体”)
 
     -- 注册监听
     addBtnEventListener(self.buyBtn, function(event)

@@ -24,28 +24,7 @@ function InlayModel:getConfigTable(tableName, index)
 end
 
 -- 数据储存，1储存是否已装备并设置touchEnabled；2储存耗材的数量；
-function InlayModel:loadWeapon(record)
-	if self:isWeaponLoaded(record)  then
-        print("已装备")
-    else
-    	local intensify = {weaponid = record["id"],intenlevel = 1}
-	    local data = getUserData()
-	    table.insert(data.inlay.bags, intensify)
-	    setUserData(data)
-	    dump(GameState.load())
-    end 
-end
 
-function InlayModel:isWeaponLoaded(record)
-	for k,v in pairs(getUserData().inlay.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == record["id"] then
-				return true
-			end
-		end
-	end
-	return false
-end
 
 function InlayModel:btnIconDispatch(string, index)
 	assert(string and index, "invalid param")
