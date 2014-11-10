@@ -23,11 +23,12 @@ function FightPlayer:ctor()
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
     self.mapView = MapView.new()
-    self.gunView = GunView.new()
+    self.gunView = GunView.new({id = 1})
 
     --instance
     self.gunBtnPressed = false
     self.touchs = {}
+    
     --ui
     self:initUI()
 
@@ -84,6 +85,9 @@ function FightPlayer:initTouchArea()
     layerTouch:setTouchEnabled(true)  
     layerTouch:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
+    --move区域
+    self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
+
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
         if event.name == "began" or event.name == "added" then
             self:onMutiTouchBegin(event)
@@ -97,17 +101,19 @@ function FightPlayer:initTouchArea()
     drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
     -- btn
-    self:initFireBtn()
+    self:initBtns()
 end
 
-function FightPlayer:initFireBtn()
+function FightPlayer:initBtns()
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    local btnFire = self.btnFire
-    btnFire:setTouchEnabled(true)
-    btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    btnFire:setTouchSwallowEnabled(true)
-    drawBoundingBox(btnFire:getParent(), btnFire, cc.c4f(0, 1.0, 0, 1.0))
+    self.btnFire:setTouchEnabled(true)  
+    self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+
+    --btnChange
+    self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
+    self.btnChange:setTouchEnabled(true)  
+    self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 end
 
 ---- touch and btn----
@@ -115,8 +121,11 @@ function FightPlayer:onMutiTouchBegin(event)
     --check
     dump(event, "event onMutiTouchBegin")
     for id,point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point,"begin")
+        local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
+
+        isTouch = self:checkBtnChange(id, point, "begin")
+        if isTouch then return true end        
     end
     return false
 end
@@ -127,6 +136,18 @@ function FightPlayer:onMutiTouchEnd(event)
             self:checkBtnFire(nil, nil, "ended")
         end
     end
+end
+
+function FightPlayer:checkBtnChange(id,point,eventName)
+    assert(id and point , "invalid params")
+    local rect = self.btnChange:getCascadeBoundingBox()      
+    isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
+    if isTouch then 
+        self.touchs["change"] = id 
+        --换枪
+        self.gunView:playChange(math.random(1, 2))
+    end    
+    return isTouch    
 end
 
 function FightPlayer:checkBtnFire(id,point,eventName)
@@ -166,9 +187,9 @@ function FightPlayer:onTouchMoved(event)
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
         local isBtnTouchPoint = false
-        for btnName,id in pairs(self.touchs) do
-            if id == i then isBtnTouchPoint = true end 
-        end
+        if not self.layerControl:getCascadeBoundingBox():containsPoint(cc.p(v.x, v.y)) then 
+            isBtnTouchPoint = true
+        end 
         if isBtnTouchPoint == false then 
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
             local offsetX = x - prevX 
@@ -216,14 +237,15 @@ function FightPlayer:fire()
     self.hero:fire()
 
     --gun
-    self.gunView:playFire()
-
-    --focus
-    self.focusView:playFire()
+    if  self.gunView:canShot() then 
+        self.gunView:fire()
+        self.focusView:playFire()
+    end
 
 end
 
 function FightPlayer:onCancelledFire()
+    self.gunView:stopFire()
     self.focusView:stopFire()
 end
 

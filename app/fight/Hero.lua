@@ -22,7 +22,7 @@ function Hero:ctor(properties, events, callbacks)
     local coolDown = self.gun:getCooldown()
     self:setCooldown(coolDown)
     self:setDemage(30)
-    self:setMaxHp(1000)  
+    self:setMaxHp(10000000000000)  
     Hero.super.ctor(self, properties)   
 end
 
