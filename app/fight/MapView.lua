@@ -187,7 +187,6 @@ end
 
 	}
 ]]
-
 function MapView:getTargetDatas()
 	local targetDatas = {}
 	for i,enemy in ipairs(self.enemys) do

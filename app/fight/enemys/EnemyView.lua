@@ -8,14 +8,13 @@
 
 --import
 import("...includes.functionUtils")
+local AbstractEnemyView = import(".AbstractEnemyView")
 local scheduler = require("framework.scheduler")
 local Enemy = import(".Enemy")
 local Hero = import("..Hero")
 local Actor = import("..Actor")
 
-local EnemyView = class("EnemyView", function()
-    return display.newNode()
-end)
+local EnemyView = class("EnemyView", AbstractEnemyView)
 
 function EnemyView:ctor(property)
 
@@ -61,17 +60,6 @@ function EnemyView:initCCS()
     self.armature:addChild(self.blood) 
 	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
 	self:setBlood(1.0)
-end
-
----- event ----
-function EnemyView:onHitted(demage)
-	if self.enemy:canHitted() then
-		self.enemy:decreaseHp(demage)
-	end
-
-	local maxHp = self.enemy:getMaxHp()
-	local hp = self.enemy:getHp()
-	self:setBlood(hp/maxHp)
 end
 
 function EnemyView:setBlood(scale)
@@ -266,14 +254,9 @@ function EnemyView:checkPlace(widthOffset)
 	return x1 < destx and x2 > destx
 end
 
-function EnemyView:getDeadDone()
-	return self.deadDone or false 
-end
 
-function EnemyView:setDeadDone()	
-	self.deadDone = true
-end
 
+----implement AbstractEnemyView  ----
 function EnemyView:setPlaceBound(bound)
 	assert(bound, self.id)
 	self.placeBound = bound
@@ -283,8 +266,24 @@ function EnemyView:getPlaceBound()
 	return self.placeBound 
 end
 
-----attack----
---@required
+function EnemyView:getDeadDone()
+	return self.deadDone or false 
+end
+
+function EnemyView:setDeadDone()	
+	self.deadDone = true
+end
+
+function EnemyView:onHitted(demage)
+	if self.enemy:canHitted() then
+		self.enemy:decreaseHp(demage)
+	end
+
+	local maxHp = self.enemy:getMaxHp()
+	local hp = self.enemy:getHp()
+	self:setBlood(hp/maxHp)
+end
+
 function EnemyView:getRange(rectName)
 	assert(rectName, "invalid param")
 	local bone = self.armature:getBone(rectName)
@@ -292,7 +291,6 @@ function EnemyView:getRange(rectName)
 	return bone:getDisplayRenderNode() --test visible
 end
 
---@required
 function EnemyView:getTargetData(rectFocus)
 	local targetData = {}
 	local i = 0
@@ -337,5 +335,6 @@ function EnemyView:getTargetData(rectFocus)
 	end	
 	return false, nil
 end
+----implement AbstractEnemyView ended  ----
 
 return EnemyView
