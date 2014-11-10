@@ -14,12 +14,7 @@ function WeaponListLayer:ctor()
     self.selectedWeapon  = nil
 
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
-<<<<<<< HEAD
-	local ccs = cc.uiloader:load("gunzb_1.ExportJson")
-    self:addChild(ccs)
-=======
 	self:loadCCS()
->>>>>>> nz
 	self:initUI()
     -- 点开页面默认选择某个武器
 
@@ -28,8 +23,6 @@ function WeaponListLayer:ctor()
     --     :addEventListener(eventName, listener, tag)
 end
 
-<<<<<<< HEAD
-=======
 -- loadCCS
 function WeaponListLayer:loadCCS()
     -- load control bar
@@ -40,7 +33,6 @@ function WeaponListLayer:loadCCS()
     self:addChild(controlNode)
 end
 
->>>>>>> nz
 function WeaponListLayer:initUI()
     self.weaponLV      = cc.uiloader:seekNodeByName(self, "ListView_49")
     self.labelName     = cc.uiloader:seekNodeByName(self, "label_name")

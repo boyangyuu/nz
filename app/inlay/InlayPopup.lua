@@ -11,62 +11,65 @@ end)
 function InlayPopup:ctor()
 end
 
-function InlayPopup:getTipsPopup(parameterTable)
-    self.popupNode = cc.uiloader:load("res/Inlay/xiangqian_popup.ExportJson")
-    local firstLabel = cc.uiloader:seekNodeByName(self.popupNode, "firstLabel")
-    local secondLabel = cc.uiloader:seekNodeByName(self.popupNode, "secondLabel")
-    local loadLabel = cc.uiloader:seekNodeByName(self.popupNode, "loadLabel")
-    local buyLabel = cc.uiloader:seekNodeByName(self.popupNode, "buyLabel")
-    local noteLabel = cc.uiloader:seekNodeByName(self.popupNode, "noteLabel")
-    local changeLabel = cc.uiloader:seekNodeByName(self.popupNode, "changeLabel")
-    local yesBtn = cc.uiloader:seekNodeByName(self.popupNode, "yesBtn")
-    local noBtn = cc.uiloader:seekNodeByName(self.popupNode, "noBtn")
-    if parameterTable.btnVariable == nil then
+function InlayPopup:getTipsPopup(table)
+    self.popupbtn = cc.uiloader:load("res/Inlay/xiangqian_popup.ExportJson")
+    local firstLabel = cc.uiloader:seekbtnByName(self.popupbtn, "firstLabel")
+    local secondLabel = cc.uiloader:seekbtnByName(self.popupbtn, "secondLabel")
+    local loadLabel = cc.uiloader:seekbtnByName(self.popupbtn, "loadLabel")
+    local buyLabel = cc.uiloader:seekbtnByName(self.popupbtn, "buyLabel")
+    local noteLabel = cc.uiloader:seekbtnByName(self.popupbtn, "noteLabel")
+    local changeLabel = cc.uiloader:seekbtnByName(self.popupbtn, "changeLabel")
+    local confirmBtn = cc.uiloader:seekbtnByName(self.popupbtn, "confirmBtn")
+    local cancelBtn = cc.uiloader:seekbtnByName(self.popupbtn, "cancelBtn")
+    if table.btnVariable == nil then
         firstLabel:setString("装备")
-        secondLabel:setString(parameterTable.table["describe2"].."零件："..
-            parameterTable.table["describe1"]..parameterTable.table["valueDisplay"])
+        secondLabel:setString(table.table["describe2"].."零件："..
+            table.table["describe1"]..table.table["valueDisplay"])
         noteLabel:setString("(注：零件一旦装备将无法卸下。)")
         changeLabel:setVisible(false)
 
-        self:addYesBtnListener(parameterTable, yesBtn, parameterTable.string, parameterTable.index)
-        self:addNoBtnListener(noBtn)
-        parameterTable.btnVariable = parameterTable.table
+        self:initConfirmBtn(table, yesBtn)
+        self:initCancelBtn(noBtn)
+        table.btnVariable = table.table
     else
-        firstLabel:setString(parameterTable.table["describe2"].."零件："..
-            parameterTable.table["describe1"]..parameterTable.table["valueDisplay"])
-        secondLabel:setString(parameterTable.btnVariable["describe2"].."零件："..
-            parameterTable.btnVariable["describe1"]..parameterTable.btnVariable["valueDisplay"])
+        firstLabel:setString(table.table["describe2"].."零件："..
+            table.table["describe1"]..table.table["valueDisplay"])
+        secondLabel:setString(table.btnVariable["describe2"].."零件："..
+            table.btnVariable["describe1"]..table.btnVariable["valueDisplay"])
         noteLabel:setString("(注：更换后旧的装备将会消失。)")
         changeLabel:setVisible(true)
 
-        self:addYesBtnListener(parameterTable, yesBtn, parameterTable.string, parameterTable.index)
-        self:addNoBtnListener(noBtn)
-        parameterTable.btnVariable = parameterTable.table
+        self:initConfirmBtn(table, yesBtn)
+        self:initCancelBtn(noBtn)
+        table.btnVariable = table.table
     end
-    self.popupNode:setTouchEnabled(true)
-    self.popupNode:setTouchSwallowEnabled(true)
-    return self.popupNode
+    self.popupbtn:setTouchEnabled(true)
+    self.popupbtn:setTouchSwallowEnabled(true)
+    return self.popupbtn
 end
 
-function InlayPopup:addYesBtnListener(parameterTable, btn, string, index, event)
+function InlayPopup:initConfirmBtn(table, btn)
     addBtnEventListener(btn, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
         	local inlayModel = app:getInstance(InlayModel)
             inlayModel:btnIconDispatch(string, index)
-            inlayModel:loadedDispatch(parameterTable.btnVariable)
-            self.popupNode:removeFromParent()
+            inlayModel:loadedDispatch(table.btnVariable)
+
+            --model setdata
+            --dispach listView refresh
+            self.popupbtn:removeFromParent()
         end 
     end)
 end
 
-function InlayPopup:addNoBtnListener(btn)
+function InlayPopup:initCancelBtn(btn)
     addBtnEventListener(btn, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.popupNode:removeFromParent()
+            self.popupbtn:removeFromParent()
         end
     end)
 end

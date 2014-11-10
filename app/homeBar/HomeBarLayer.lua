@@ -2,13 +2,10 @@
 -- Author: Fangzhongzheng
 -- Date: 2014-10-21 14:32:57
 --
-local Zorder_TOP = 100
 
 import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
-local InlayModel = import("..inlay.InlayModel")
-local InlayPopup = import("..inlay.InlayPopup")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local HomeModel = import(".HomeModel")
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -25,8 +22,7 @@ function HomeBarLayer:ctor()
 end
 
 function HomeBarLayer:addEventProtocolListener()
-    app:getInstance(HomeModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
-    app:getInstance(InlayModel):addEventListener("INLAY_POPUP_TIPS_EVENT", handler(self, self.addInlayPopupLayer))
+    app:getInstance(HomeModel):addEventListener(HomeModel.HOMEBAR_ACTION_UP_EVENT, handler(self, self.homeBarAction))
 end
 
 function HomeBarLayer:loadCCS()
@@ -131,11 +127,11 @@ end
 
 function HomeBarLayer:loadAllImg()
     self.imgRootNode = cc.uiloader:load("AllImg/allImg.ExportJson")
-    print(".......HomeBarLayer:loadAllImg()")
+    -- print(".......HomeBarLayer:loadAllImg()")
 end
 
 function HomeBarLayer:getImgByName(fileName)
-    dump(self.imgRootNode, ".........imgRootNode")
+    -- dump(self.imgRootNode, ".........imgRootNode")
     -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
     return file
@@ -149,11 +145,6 @@ function HomeBarLayer:homeBarAction()
         cc.CallFunc:create(function()
             self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
         end)}))
-end
-
-function HomeBarLayer:addInlayPopupLayer(parameterTable)
-    local inlayPopup = InlayPopup.new()
-    self:addChild(inlayPopup:getTipsPopup(parameterTable), Zorder_TOP)
 end
 
 return HomeBarLayer

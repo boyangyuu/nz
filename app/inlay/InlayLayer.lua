@@ -3,67 +3,62 @@
 -- Date: 2014-10-30 09:24:41
 --
 --------  Constants  ---------
-local color_WHITE, color_RED, color_BLACK, color_BLUE = cc.c3b(255, 255, 255),
-    cc.c3b(251, 25, 0), cc.c4b(255, 255, 255, 255), cc.c4b(0, 0, 255, 255)
-local outline_SIZE = 4
-local ListView_RECT = cc.rect(593, 23, 530, 500)
-local ItemSize_X, ItemSize_Y = 514, 159
-local Init_NUM = 1
-local btn, panel, label = {}, {}, {}
+local btn, btnRed, panel, label, typeId, item, itemVariable 
+    = {}, {}, {}, {}, {}, {}, {}
 
 import("..includes.functionUtils")
 local InlayListCell = import(".InlayListCell")
-local InlayModel = import(".InlayModel")
--- local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
-
-local InlayLayer = class("InlayLayer", function()
+local InlayModel    = import(".InlayModel")
+local InlayPopup    = import(".InlayPopup")
+local InlayLayer    = class("InlayLayer", function()
     return display.newLayer()
 end)
 
 function InlayLayer:ctor()
 	self:initUI()
-    self:addEventProtocolListener()
+    self:initEventProtocol()
     self:initEnterPage()
-
-    -- local popupCommonLayer = app:getInstance(PopupCommonLayer)
-    -- print("1111111111 = ", popupCommonLayer:getImgByName("icon_jiqiang"))
 end
 
 function InlayLayer:initUI()
     -- looad CCS
     cc.FileUtils:getInstance():addSearchPath("res/Inlay/")
-    local inlayRootNode = cc.uiloader:load("xiangqian_main.ExportJson")
-    self:addChild(inlayRootNode)
-    self.rootListView = cc.uiloader:seekNodeByName(inlayRootNode, "rootListView")
-    local goldWeaponBtn = cc.uiloader:seekNodeByName(inlayRootNode, "goldWeaponBtn")
-    local oneForAllBtn = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllBtn")
+    local inlayRootNode   = cc.uiloader:load("xiangqian_main.ExportJson")
+    self.rootListView     = cc.uiloader:seekNodeByName(inlayRootNode, "rootListView")
+    local goldWeaponBtn   = cc.uiloader:seekNodeByName(inlayRootNode, "goldWeaponBtn")
+    local oneForAllBtn    = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllBtn")
     local goldWeaponLabel = cc.uiloader:seekNodeByName(inlayRootNode, "goldWeaponLabel")
-    local oneForAllLabel = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllLabel")
-    for i = 1, 6 do
-        btn[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btn"..i)
-        panel[i] = cc.uiloader:seekNodeByName(inlayRootNode, "panel"..i)
-        label[i] = cc.uiloader:seekNodeByName(inlayRootNode, "label"..i)
-        label[i]:enableGlow(color_BLUE, outline_SIZE)
-    end
+    local oneForAllLabel  = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllLabel")
+    self:addChild(inlayRootNode)
 
-    goldWeaponLabel:enableGlow(color_BLUE, outline_SIZE)
-    oneForAllLabel:enableGlow(color_BLUE, outline_SIZE)
+    -- 6个按钮的类型
+    typeId = {"bullet", "clip", "speed", "aim", 
+    "blood", "helper",}
+
+    for i = 1, 6 do
+        btn[i]    = cc.uiloader:seekNodeByName(inlayRootNode, "btn"..i)
+        btnRed[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btnRed"..i)
+        panel[i]  = cc.uiloader:seekNodeByName(inlayRootNode, "panel"..i)
+        label[i]  = cc.uiloader:seekNodeByName(inlayRootNode, "label"..i)
+        btnRed[i]:setVisible(false)
+        btn[i]   :addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+            return self:onClickBtn(event, i, typeId[i])
+        end)
+    end
     
     -- 添加监听
     addBtnEventListener(goldWeaponBtn, function(event)
-        return self:onClickGoldWeaponBtn( event )
+        return self:onClickGoldWeaponBtn(event)
     end)
     addBtnEventListener(oneForAllBtn, function(event)
-        return self:onClickOneForAllBtn( event )
+        return self:onClickOneForAllBtn(event)
     end)
-    for i = 1, 6 do
-        btn[i]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            return self:onClickBtn(event, i)
-        end)
-    end
+    
+    -- goldWeaponLabel:enableGlow(cc.c4b(0, 0, 255, 255), 4)
+    -- oneForAllLabel:enableGlow(cc.c4b(0, 0, 255, 255), 4)
 end
 
-function InlayLayer:onClickGoldWeaponBtn( event )
+function InlayLayer:onClickGoldWeaponBtn(event)
     if event.name =='began' then
         print("goldWeaponBtn is begining!")
         return true
@@ -72,7 +67,7 @@ function InlayLayer:onClickGoldWeaponBtn( event )
     end
 end
 
-function InlayLayer:onClickOneForAllBtn( event )
+function InlayLayer:onClickOneForAllBtn(event)
     if event.name =='began' then
         print("oneForAllBtn is begining!")
         return true
@@ -81,77 +76,272 @@ function InlayLayer:onClickOneForAllBtn( event )
     end
 end
 
-function InlayLayer:onClickBtn(event, index)
+function InlayLayer:onClickBtn(event, index, type)
     if event.name=='began' then
-        print("1 of 6 Btns is begining!")
         return true
     elseif event.name=='ended' then
-        print("1 of 6 Btns is pressed!")
         self:refreshBtncolor(index)
-        self:refreshListView(index)
+        self:refreshListView(type)
     end
 end
 
-function InlayLayer:addEventProtocolListener()
+function InlayLayer:initEventProtocol()
     self.inlayModel = app:getInstance(InlayModel)
-    cc.EventProxy.new(self.inlayModel , self)
-        :addEventListener("REFRESH_BTN_ICON_EVENT", handler(self, self.refreshBtnIcon))
+    cc.EventProxy.new(self.inlayModel, self)
+        :addEventListener(InlayModel.REFRESH_BTN_ICON_EVENT, handler(self, self.refreshBtnIcon))
+        :addEventListener(InlayModel.INLAY_POPUP_TIPS_EVENT, handler(self, self.showInlayPopup))
 end
 
 function InlayLayer:initEnterPage()
-    self.variable = nil
-    self.btnVariable = nil
-    self:refreshBtncolor(Init_NUM)
-    self:refreshListView(Init_NUM)
+    self.variable1    = nil
+    self.variable2    = nil
+    self.variable = nil  -- 无用，可删除
+    self:refreshBtncolor(1)
+    self:refreshListView("bullet")
+    -- self:initListView("bullet")
 end
 
 function InlayLayer:refreshBtncolor(index)
-    if self.variable == nil then
-        btn[index]:setColor(color_RED)
-        self.variable = btn[index]
+    if self.variable1 == nil then
+        btnRed[index]:setVisible(true)
+        btn[index]:setVisible(false)
+        self.variable1 = btnRed[index]
+        self.variable2 = btn[index]
     else
-        self.variable:setColor(color_WHITE)
-        btn[index]:setColor(color_RED)
-        self.variable = btn[index]
+        self.variable1:setVisible(false)
+        self.variable2:setVisible(true)
+        btnRed[index]:setVisible(true)
+        btn[index]:setVisible(false)
+        self.variable1 = btnRed[index]
+        self.variable2 = btn[index]
     end
 end
 
-function InlayLayer:refreshBtnIcon(parameterTable)
-    local table = self.inlayModel:getConfigTable("type", parameterTable.string)
-    local img = cc.ui.UIImage.new((table[parameterTable.index])["imgName"]..".png")
+function InlayLayer:refreshBtnIcon(table_)
+    local table = self.inlayModel:getConfigTable("type", table_.string)
+    local img = cc.ui.UIImage.new((table[table_.index])["imgName"]..".png")
 
     local revTypeId = {["bullet"] = 1, ["clip"] = 2, ["speed"] = 3, 
     ["aim"] = 4, ["blood"] = 5, ["helper"] = 6,}
 
-    local num = revTypeId[parameterTable.string]
+    local num = revTypeId[table_.string]
     panel[num]:removeAllChildren()
     addChildCenter(img, panel[num])
 end
 
-function InlayLayer:refreshListView(index)
-    self.rootListView:removeAllChildren()
+-- -- 方法一：
+-- function InlayLayer:refreshListView(type)
+--     local listCell = InlayListCell.new()
+--     if itemVariable[1] == nil then
+--         self.table1 = self.inlayModel:getConfigTable("type", type)
 
-    -- new listview
-    self.listView = cc.ui.UIListView.new {
-        viewRect = ListView_RECT,
-        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL}
-        :addTo(self.rootListView)
+--         -- add child
+--         for i = 1, #self.table1 do
+--             item[i] = self.rootListView:newItem()
+--             local content = listCell:getListCell(type, i)
+--             item[i]:addContent(content)
+--             item[i]:setItemSize(514, 159)
+--             self.rootListView:addItem(item[i])
+--             itemVariable[i] = item[i]
+--         end
+--         self.rootListView:reload()
+--         return true
+--     else
+--         -- 删除item
+--         self.table2 = self.inlayModel:getConfigTable("type", type)
+--         for i = 1, #self.table1 do
+--             -- 当注释掉时，会再加上4个item，猜测是removeItem的问题
+--             -- self.rootListView:removeItem(itemVariable[i])
+--         end
 
-    -- read json
-    local typeId = {"bullet", "clip", "speed", "aim", 
-    "blood", "helper",}
-    local table = self.inlayModel :getConfigTable("type", typeId[index])
+--         -- 添加item
+--         for i = 1, #self.table2 do
+--             print("01234567899999999")
+--             item[i] = self.rootListView:newItem()
+--             local content = listCell:getListCell(type, i)
+--             item[i]:addContent(content)
+--             item[i]:setItemSize(514, 159)
+--             self.rootListView:addItem(item[i])
+--             itemVariable[i] = item[i]
+--         end
+--         self.rootListView:reload()
+--     end
+-- end
 
-    -- add child
-    for j = 1, #table do
-        local item = self.listView:newItem()
-        local cell = InlayListCell.new()
-        local content = cell:getListCell(typeId[index], j)
-        item:addContent(content)
-        item:setItemSize(ItemSize_X, ItemSize_Y)
-        self.listView:addItem(item)
+-- 方法二：
+function InlayLayer:refreshListView(type)
+    local listCell = InlayListCell.new()
+    local table = self.inlayModel:getConfigTable("type", type)
+
+    for i = 1, #table do
+        item[i] = self.rootListView:newItem()
     end
-    self.listView:reload()
+
+    -- 初始化item
+    if itemVariable[1] == nil then
+        -- add child
+        for i = 1, #table do
+            local content = listCell:getListCell(type, i)
+            item[i]:addContent(content)
+            item[i]:setItemSize(514, 159)
+            self.rootListView:addItem(item[i])
+            itemVariable[i] = item[i]
+        end
+        self.rootListView:reload()
+        return true
+    else
+        -- 删除item
+        for i = 1, #table do
+            -- 当注释掉时，依然会加上4个item；当取消注释时，无法添加。
+            -- self.rootListView:removeItem(itemVariable[i])
+        end
+
+        -- 添加item
+        for i = 1, #table do
+            local content = listCell:getListCell(type, i)
+            item[i]:addContent(content)
+            item[i]:setItemSize(514, 159)
+            self.rootListView:addItem(item[i])
+            itemVariable[i] = item[i]
+        end
+        self.rootListView:reload()
+    end
+end
+
+-- 方法三
+-- function InlayLayer:initListView(type)
+--     local table = self.inlayModel:getConfigTable("type", type)
+
+--     -- add child
+--     for i = 1, #table do
+--         self.listCell = InlayListCell.new()
+--         item[i] = self.rootListView:newItem()
+--         local content = self.listCell:getListCell(type, i)
+--         item[i]:addContent(content)
+--         item[i]:setItemSize(514, 159)
+--         self.rootListView:addItem(item[i])
+--         itemVariable[i] = item[i]
+--     end
+--     self.rootListView:reload()
+--     return true
+-- end
+
+-- function InlayLayer:refreshListView(type)
+--     local table = self.inlayModel:getConfigTable("type", type)
+--     for i = 1, #table do
+--         -- InlayListCell.new():getListCell(type, i)
+--         -- InlayListCell.new():refreshListCell(type, i)
+--         -- self.listCell:getListCell(type, i)
+
+--         -- 其他三种无任何变化，最后一种只是最后一个cell发生变化
+--         self.listCell:refreshListCell(type, i)
+--     end
+-- end
+
+-- 方法一的另一种尝试：
+-- function InlayLayer:refreshListView(type)
+--     if itemVariable[1] == nil then
+--         self.table1 = self.inlayModel:getConfigTable("type", type)
+
+--         -- add child
+--         for i = 1, #self.table1 do
+--             item[i] = self.rootListView:newItem()
+--             local content = InlayListCell.new():getListCell(type, i)
+--             item[i]:addContent(content)
+--             item[i]:setItemSize(514, 159)
+--             self.rootListView:addItem(item[i])
+--             itemVariable[i] = item[i]
+--         end
+--         self.rootListView:reload()
+--         return true
+--     else
+--         -- 删除item
+--         self.table2 = self.inlayModel:getConfigTable("type", type)
+--         for i = 1, #self.table1 do
+--             -- 当注释掉时，会再加上4个item，猜测是removeItem的问题
+--             self.rootListView:removeItem(itemVariable[i])
+--         end
+
+--         -- 添加item
+--         for i = 1, #self.table2 do
+--             print("01234567899999999")
+--             item[i] = self.rootListView:newItem()
+--             local content = InlayListCell.new():getListCell(type, i)
+--             item[i]:addContent(content)
+--             item[i]:setItemSize(514, 159)
+--             self.rootListView:addItem(item[i])
+--             itemVariable[i] = item[i]
+--         end
+--         self.rootListView:reload()
+--     end
+-- end
+
+-- 方法一的再次尝试
+-- function InlayLayer:refreshListView(type)
+--     local listCell = InlayListCell.new()
+--     self.table = self.inlayModel:getConfigTable("type", type)
+--     if itemVariable[1] == nil then
+
+--         -- add child
+--         for i = 1, #self.table do
+--             item[i] = self.rootListView:newItem()
+--             local content = listCell:getListCell(type, i)
+--             item[i]:addContent(content)
+--             item[i]:setItemSize(514, 159)
+--             self.rootListView:addItem(item[i])
+--             itemVariable[i] = item[i]
+--         end
+--         self.rootListView:reload()
+--         return true
+--     else
+--         -- -- 删除两个可以，但删除3、4个时出错
+--         -- self.rootListView:removeItem(itemVariable[1])
+--         -- self.rootListView:removeItem(itemVariable[2])
+--         -- self.rootListView:removeItem(itemVariable[3])
+
+--         -- 添加item
+--         for i = 5 , #self.table + 4 do
+--             item[i] = self.rootListView:newItem()
+--             local content = InlayListCell.new():getListCell(type, i - 4)
+--             item[i]:addContent(content)
+--             item[i]:setItemSize(514, 159)
+--             self.rootListView:addItem(item[i])
+--             itemVariable[i] = item[i]
+--         end
+--         self.rootListView:removeItem(item[1])
+--         self.rootListView:removeItem(item[2])
+--         self.rootListView:removeItem(item[3])
+--         self.rootListView:removeItem(item[4])
+--         self.rootListView:reload()
+--     end
+-- end
+
+-- -- 方法一，未将item储存在table中
+-- function InlayLayer:refreshListView(type)
+--     local listCell = InlayListCell.new()
+--     self.table = self.inlayModel:getConfigTable("type", type)
+--     if self.variable == nil then
+
+--         -- add child
+--         for i = 1, #self.table do
+--             self.item = self.rootListView:newItem()
+--             local content = listCell:getListCell(type, i)
+--             self.item:addContent(content)
+--             self.item:setItemSize(514, 159)
+--             self.rootListView:addItem(self.item)
+--         end
+--         self.rootListView:reload()
+--         self.variable = self.item
+--         return true
+--     else
+--         -- 删掉最后一个item
+--         self.rootListView:removeItem(self.item)
+--     end
+-- end
+
+function InlayLayer:showInlayPopup(table)
+    local inlayPopup = InlayPopup.new()
+    self:addChild(inlayPopup:getTipsPopup(table), 100)
 end
 
 return InlayLayer
