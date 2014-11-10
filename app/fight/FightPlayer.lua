@@ -53,8 +53,8 @@ function FightPlayer:initUI()
     self.layerGun:addChild(self.gunView)
 
     --load heroView
-    local heroView = cc.uiloader:seekNodeByName(self, "self.heroView")
-    addChildCenter(heroView, self.heroView)
+    local layerHero = cc.uiloader:seekNodeByName(self, "layerHero")
+    addChildCenter(self.heroView, layerHero)
     
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
