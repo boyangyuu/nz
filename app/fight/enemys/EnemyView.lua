@@ -8,14 +8,13 @@
 
 --import
 import("...includes.functionUtils")
+local AbstractEnemyView = import(".AbstractEnemyView")
 local scheduler = require("framework.scheduler")
 local Enemy = import(".Enemy")
 local Hero = import("..Hero")
 local Actor = import("..Actor")
 
-local EnemyView = class("EnemyView", function()
-    return display.newNode()
-end)
+local EnemyView = class("EnemyView", AbstractEnemyView)
 
 function EnemyView:ctor(property)
 
@@ -60,18 +59,7 @@ function EnemyView:initCCS()
     self.blood:setPosition(0, bound.height/2 + 100)
     self.armature:addChild(self.blood) 
 	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
-	self:setBlood(1)
-end
-
----- event ----
-function EnemyView:onHitted(demage)
-	if self.enemy:canHitted() then
-		self.enemy:decreaseHp(demage)
-	end
-
-	local maxHp = self.enemy:getMaxHp()
-	local hp = self.enemy:getHp()
-	self:setBlood(hp/maxHp)
+	self:setBlood(1.0)
 end
 
 function EnemyView:setBlood(scale)
@@ -211,16 +199,6 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 	end
 end
 
-----hited  ----
-function EnemyView:getRange(rectName)
-	assert(rectName, "invalid param")
-	local bone = self.armature:getBone(rectName)
-	if not bone then return end
-	return bone:getDisplayRenderNode() or {}
-end
-
-----attack----
-
 --tick
 function EnemyView:tick(t)
 	--change state
@@ -276,15 +254,9 @@ function EnemyView:checkPlace(widthOffset)
 	return x1 < destx and x2 > destx
 end
 
-function EnemyView:getDeadDone()
-	return self.deadDone or false 
-end
-
-function EnemyView:setDeadDone()	
-	self.deadDone = true
-end
 
 
+----implement AbstractEnemyView  ----
 function EnemyView:setPlaceBound(bound)
 	assert(bound, self.id)
 	self.placeBound = bound
@@ -293,5 +265,76 @@ end
 function EnemyView:getPlaceBound()
 	return self.placeBound 
 end
+
+function EnemyView:getDeadDone()
+	return self.deadDone or false 
+end
+
+function EnemyView:setDeadDone()	
+	self.deadDone = true
+end
+
+function EnemyView:onHitted(demage)
+	if self.enemy:canHitted() then
+		self.enemy:decreaseHp(demage)
+	end
+
+	local maxHp = self.enemy:getMaxHp()
+	local hp = self.enemy:getHp()
+	self:setBlood(hp/maxHp)
+end
+
+function EnemyView:getRange(rectName)
+	assert(rectName, "invalid param")
+	local bone = self.armature:getBone(rectName)
+	if not bone then return end
+	return bone:getDisplayRenderNode() --test visible
+end
+
+function EnemyView:getTargetData(rectFocus)
+	local targetData = {}
+	local i = 0
+
+	--weak
+	while true do
+		i = i + 1
+		local rangeStr = "weak"..i
+		local rectEnemy = self:getRange(rangeStr)
+		if rectEnemy == nil then break end 
+		local isInRange = rectIntersectsRect(rectEnemy,
+				 rectFocus)
+		if isInRange then 
+			local isHited = isInRange and self:canChangeState("fire")
+			
+			targetData.demageScale = 4.0 --读表
+			targetData.demageType = "head"
+			targetData.enemy = self
+			return isHited,  targetData
+		end
+	end
+
+	--body
+	i = 0
+	while true do
+		i = i + 1
+		local rangeStr = "body"..i
+		-- print("rangeStr", rangeStr)
+		local rectEnemy = self:getRange(rangeStr)
+		-- dump(rectEnemy)
+		if rectEnemy == nil then break end 
+		local isInRange = rectIntersectsRect(rectEnemy,
+				 rectFocus)
+		if isInRange then 
+			local isHited = isInRange and self:canChangeState("fire")
+			
+			targetData.demageScale = 1.0
+			targetData.demageType = "body"
+			targetData.enemy = self
+			return isHited,  targetData
+		end
+	end	
+	return false, nil
+end
+----implement AbstractEnemyView ended  ----
 
 return EnemyView

@@ -26,6 +26,8 @@ function FocusView:ctor(properties)
     local src = "Fight/gunsAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
     local armature = getArmature("anim_zunxin_sq", src) 
     armature:setAnchorPoint(0.5,0.5)
+	
+    --都配在武器表里 
 	self.focus = armature
 	self.focus:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(armature)    

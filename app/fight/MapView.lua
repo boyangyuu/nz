@@ -3,10 +3,8 @@
 
 “战斗地图”的视图
 desc： 
-	1.生成enemy
-	2.加载地图 	
-	3.enemy的活动
-	4.攻击检测
+	1.地图管理者
+	2.敌人管理者
 ]]
 
 import("..includes.functionUtils")
@@ -18,10 +16,12 @@ local FocusView = import(".FocusView")
 local Hero = import(".Hero")
 local Actor = import(".Actor")
 local EnemyView = import(".enemys.EnemyView")
+local EnemyManager = import(".EnemyManager")
 
 local MapView = class("MapView", function()
     return display.newNode()
 end)
+
 
 function MapView:ctor()
 	--instance
@@ -29,6 +29,7 @@ function MapView:ctor()
 	self.focusView = app:getInstance(FocusView)
 	self.enemys = {}
 	self.waveIndex = 1
+	self.enemyManager = app:getInstance(EnemyManager)
 
 	--ccs
 	self:loadCCS()
@@ -42,6 +43,10 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
 
+end
+
+function MapView:getEnemyDatas()
+	return self.enemyManager:getEnemyDatas()
 end
 
 function MapView:loadCCS()
@@ -83,6 +88,7 @@ function MapView:updateEnemys(event)
 	dump(wave, "wave")
 	if wave == nil then return end
 	-- if wave.type = "enemy" then .. 
+	-- if wave.type = "boss" then .. 
 	local lastTime = 0
 	for groupId, group in ipairs(wave.enemys) do
 		
@@ -107,8 +113,6 @@ function MapView:updateEnemys(event)
 	--check next wave
 	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
-
-
 
 function MapView:checkWave()
 	local function checkEnemysEmpty()
@@ -139,20 +143,20 @@ function MapView:addEnemy(placeName, property, pos)
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
 	local boundPlace = placeNode:getBoundingBox()
-	-- print("enemyView width", boundEnemy.width)
-	-- print("boundPlace width", boundPlace.width)
 	math.newrandomseed()
 	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	
 	--place
 	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
-	-- dump(boundPlace, "boundPlace")
 	boundPlace.x = pWorld.x
 	boundPlace.y = boundPlace.y
-	-- dump(boundPlace, "boundPlace--------------")
 	EnemyView:setPlaceBound(boundPlace)
 	placeNode:addChild(enemyView)
+end
+
+function MapView:addBoss()
+	
 end
 
 function MapView:getSize()
@@ -164,12 +168,8 @@ end
 
 --fight
 function MapView:tick(dt)
-	--检查enemys的状态
-	-- print("MapView:tick ------------- ")
+	--检查enemy和boss的状态
 	for i,enemy in ipairs(self.enemys) do
-		 -- print("self.enemy:getHp()",enemy.enemy:getHp() == 0 )
-
-		 -- print("enemy.enemy:canDie",enemy.enemy:canDie())
 		if enemy and enemy:getDeadDone() then
 			table.remove(self.enemys, i)
 			enemy:removeFromParent()
@@ -177,26 +177,33 @@ function MapView:tick(dt)
 	end
 end
 
-function MapView:getDestEnemys()
-	local enemys = {}
+--[[
+	TargetDatas = {
+		{
+			demageType = "head", --"head", "body"
+			demageScale = 2.0,
+			enemy = xx,
+		},
+
+	}
+]]
+function MapView:getTargetDatas()
+	local targetDatas = {}
 	for i,enemy in ipairs(self.enemys) do
-		local rectEnemy = enemy:getRange("weak1") 
-		-- dump(rectEnemy, "rectEnemy")
 		local rectFocus = self.focusView:getFocusRange()
-		local isInRange = rectIntersectsRect(rectEnemy, rectFocus)
-		if isInRange and enemy:canChangeState("hit") then 
-			enemys[#enemys + 1] = enemy
-		end
+		local isHited, targetData = enemy:getTargetData(rectFocus)
+		if isHited then targetDatas[#targetDatas + 1] = targetData end
 	end
-	return enemys 
+	return targetDatas 
 end
 
 --events
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
-	local enemys = self:getDestEnemys()
-	for i,enemy in ipairs(enemys) do
-		enemy:onHitted(event.demage)
+	local datas = self:getTargetDatas()
+	for i,data in ipairs(datas) do
+		local demageScale = data.demageScale or 1.0
+		data.enemy:onHitted(event.demage * demageScale)
 	end
 end
 
