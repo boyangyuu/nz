@@ -9,7 +9,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 --import
 local Actor = import(".Actor")
 local Gun = import(".Gun")
-
 local Hero = class("Hero", Actor)
 
 --events

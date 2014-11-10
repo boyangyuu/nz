@@ -5,6 +5,7 @@ local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
 local MapView = import(".MapView")
+local HeroView = import(".HeroView")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
@@ -19,13 +20,12 @@ end)
 --定义事件
 
 function FightPlayer:ctor()
-    --model 
+    --instance
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
     self.mapView = MapView.new()
     self.gunView = GunView.new({id = 1})
-
-    --instance
+    self.heroView = HeroView.new()
     self.gunBtnPressed = false
     self.touchs = {}
     
@@ -52,6 +52,10 @@ function FightPlayer:initUI()
     self.layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
     self.layerGun:addChild(self.gunView)
 
+    --load heroView
+    local heroView = cc.uiloader:seekNodeByName(self, "self.heroView")
+    addChildCenter(heroView, self.heroView)
+    
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
     addChildCenter(self.focusView, self.focusNode)
