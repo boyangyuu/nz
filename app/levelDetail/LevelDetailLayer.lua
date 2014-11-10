@@ -115,7 +115,6 @@ end
 
 function LevelDetailLayer:onClickBtnGold()
 	print("goldbtn is clicked!")
-	dump(GameState.load(GameData))
 end
 
 function LevelDetailLayer:onClickBtnJijia()
