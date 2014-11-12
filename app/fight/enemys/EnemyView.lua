@@ -214,7 +214,7 @@ end
 function EnemyView:tick(t)
 	--change state
 	--fire
-	local fireRate = self.enemy:getFireRate()
+	local fireRate = self.enemy:getFireRate() * 4
 	local randomSeed 
 	randomSeed = math.random(1, fireRate)
 	if randomSeed > fireRate - 1 then 
