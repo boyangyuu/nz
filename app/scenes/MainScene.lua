@@ -8,12 +8,14 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
+	-- local levelDetail = LevelDetailLayer.new()
+	-- self:addChild(levelDetail)
     -- local homeBarLayer = HomeBarLayer.new()
     -- self:addChild(homeBarLayer)
     local FightPlayer = FightPlayer.new()
     self:addChild(FightPlayer)
 	-- local popupCommonLayer = app:getInstance(PopupCommonLayer)
- --    self:addChild(popupCommonLayer, 200)
+    -- self:addChild(popupCommonLayer, 200)
     -- popupCommonLayer:loadAllImg()
 end
 

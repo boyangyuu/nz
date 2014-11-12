@@ -28,6 +28,7 @@ function FightPlayer:ctor()
     self.heroView = HeroView.new()
     self.gunBtnPressed = false
     self.touchs = {}
+    self:setTag(521)
     
     --ui
     self:initUI()
@@ -55,6 +56,7 @@ function FightPlayer:initUI()
     --load heroView
     local layerHero = cc.uiloader:seekNodeByName(self, "layerHero")
     addChildCenter(self.heroView, layerHero)
+    self.heroView:setPosition(0, 0)
     
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")

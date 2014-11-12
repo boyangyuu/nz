@@ -13,6 +13,7 @@ local scheduler = require("framework.scheduler")
 local Enemy = import(".Enemy")
 local Hero = import("..Hero")
 local Actor = import("..Actor")
+-- local HeroLayer = require("...HeroView")
 
 local EnemyView = class("EnemyView", AbstractEnemyView)
 
@@ -87,11 +88,21 @@ end
 function EnemyView:playFire()
 	if not self:canChangeState("fire") then return end
 	self.armature:getAnimation():play("fire" , -1, 1) 
-
+	-- local parent = self.hero:getParent()
 	--fire 
 	print("self.hero:getHp()", self.hero:getHp())
 	print("self.enemy:getDemage()", self.enemy:getDemage())
 	self.enemy:hit(self.hero)
+
+	-- -- parent:HeroBehurt()
+	-- local tRunningScene = cc.Director:getInstance():getRunningScene()
+	-- local tHeroLayer = tRunningScene:getChildByTag(521);
+	-- -- tHeroLayer.layerHero:HeroBehurt()
+	-- local bloodX = math.random(50, 1100)
+	-- local bloodY = math.random(50, 600)
+	-- local test = display.newSprite("blood1/Resources/blood1_01.png")
+	-- test:setPosition(bloodX, bloodY)
+	-- tHeroLayer.layerHero:addChild(test)
 end
 
 function EnemyView:playWalk()
