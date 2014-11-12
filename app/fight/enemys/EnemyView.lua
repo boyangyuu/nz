@@ -9,28 +9,19 @@
 --import
 import("...includes.functionUtils")
 local AbstractEnemyView = import(".AbstractEnemyView")
-local scheduler = require("framework.scheduler")
-local Enemy = import(".Enemy")
-local Hero = import("..Hero")
 local Actor = import("..Actor")
-
+local Enemy = import(".Enemy")
 local EnemyView = class("EnemyView", AbstractEnemyView)
 
 function EnemyView:ctor(property)
+	EnemyView.super.ctor(self, property) 
 
-	--instance
-	self.enemy = Enemy.new(property)
-    self.hero = app:getInstance(Hero)
-
-    --ccs
-    self:initCCS()
+    --blood
+    self:initBlood() 
 
 	--play
 	self:playStartState(property.startState)
 
-    --events
-    self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    self:scheduleUpdate()  
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
@@ -40,19 +31,10 @@ function EnemyView:ctor(property)
 end
 
 --ui
-function EnemyView:initCCS()
-	--armature
-    local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
-    local armature = getArmature("anim_enemy_001", src) 
-	self.armature = armature
-	self.armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	
-	--换肤
-	self:addChild(armature)
-    
+function EnemyView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("UI.ExportJson")    
+    local node = cc.uiloader:load("UI.json")    
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
@@ -111,7 +93,6 @@ function EnemyView:playWalk()
 end
 
 function EnemyView:playRoll()
-	local isLeft = 1
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then 
 		self:playRollLeft()
@@ -154,52 +135,19 @@ function EnemyView:playKill(event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
-local stateMatches = {
-	stand = {"rollleft", "rollright", "hit", "walk", "fire"},
-	walk = {"stand"},
-	rollleft = {"stand"},
-	rollright = {"stand"},	
-	fire = {"stand","hit",},
-	hit = {"walk", "stand", "fire",
-		checkFunc = function(self) 
-			return self.enemy:canHitted()  
-		end,},
-	die = {"stand", "rollleft", "rollright", "hit", "walk", "fire"},
-}
-function EnemyView:canChangeState(stateId)
-	local id = self.armature:getAnimation():getCurrentMovementID()
-	if id == "" then return true end
-	if stateId == id then return false end
-	-- print("canChangeState? from", id, "to", stateId)
-	local matchs = stateMatches[stateId] 
-	assert(matchs, "")
-	for i,v in ipairs(matchs) do
-		-- print(i,v)
-		if v == tostring(id) then 
-			if matchs.checkFunc then
-				return matchs.checkFunc(self) 
-			else 
-				return true
-			end
-		end
-	end
-	return false
+
+
+function EnemyView:test()
+	--body
+	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+	drawBoundingBox(self.armature, weakNode, "red") 
+	drawBoundingBox(self.armature, bodyNode, "yellow") 
+    -- drawBoundingBox(self, self, "white") 
 end
 
-function EnemyView:animationEvent(armatureBack,movementType,movementID)
-	-- print("animationEvent id ", movementID)
-	if movementType == ccs.MovementEventType.loopComplete then
-		armatureBack:stopAllActions()
-		self.armature:stopAllActions()
-		if movementID ~= "die" then
-			self:playStand()
-    	elseif movementID == "die" then 
-    		self:setDeadDone()
-    	end 
-	end
-end
+--接口
 
---tick
 function EnemyView:tick(t)
 	--change state
 	--fire
@@ -233,47 +181,6 @@ function EnemyView:tick(t)
 	end
 end
 
-function EnemyView:test()
-	--body
-	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-	drawBoundingBox(self.armature, weakNode, "red") 
-	drawBoundingBox(self.armature, bodyNode, "yellow") 
-    -- drawBoundingBox(self, self, "white") 
-end
-
-function EnemyView:checkPlace(widthOffset)
-	if self.placeBound == nil then return false end
-	local x1, x2 = self.placeBound.x , self.placeBound.x + self.placeBound.width
-	-- print("self.placeBound %d %d",x1, x2) 
-	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-	local bound = self.armature:getCascadeBoundingBox()
-	bound.x, bound.y = pWorld.x, bound.y
-	-- print("self.armature %d %d",bound.x, bound.y)
-	local destx =  bound.x + widthOffset
-	return x1 < destx and x2 > destx
-end
-
-
-
-----implement AbstractEnemyView  ----
-function EnemyView:setPlaceBound(bound)
-	assert(bound, self.id)
-	self.placeBound = bound
-end
-
-function EnemyView:getPlaceBound()
-	return self.placeBound 
-end
-
-function EnemyView:getDeadDone()
-	return self.deadDone or false 
-end
-
-function EnemyView:setDeadDone()	
-	self.deadDone = true
-end
-
 function EnemyView:onHitted(demage)
 	if self.enemy:canHitted() then
 		self.enemy:decreaseHp(demage)
@@ -284,57 +191,46 @@ function EnemyView:onHitted(demage)
 	self:setBlood(hp/maxHp)
 end
 
-function EnemyView:getRange(rectName)
-	assert(rectName, "invalid param")
-	local bone = self.armature:getBone(rectName)
-	if not bone then return end
-	return bone:getDisplayRenderNode() --test visible
-end
-
-function EnemyView:getTargetData(rectFocus)
-	local targetData = {}
-	local i = 0
-
-	--weak
-	while true do
-		i = i + 1
-		local rangeStr = "weak"..i
-		local rectEnemy = self:getRange(rangeStr)
-		if rectEnemy == nil then break end 
-		local isInRange = rectIntersectsRect(rectEnemy,
-				 rectFocus)
-		if isInRange then 
-			local isHited = isInRange and self:canChangeState("fire")
-			
-			targetData.demageScale = 4.0 --读表
-			targetData.demageType = "head"
-			targetData.enemy = self
-			return isHited,  targetData
-		end
+function EnemyView:animationEvent(armatureBack,movementType,movementID)
+	-- print("animationEvent id ", movementID)
+	if movementType == ccs.MovementEventType.loopComplete then
+		armatureBack:stopAllActions()
+		self.armature:stopAllActions()
+		if movementID ~= "die" then
+			self:playStand()
+    	elseif movementID == "die" then 
+    		self:setDeadDone()
+    	end 
 	end
-
-	--body
-	i = 0
-	while true do
-		i = i + 1
-		local rangeStr = "body"..i
-		-- print("rangeStr", rangeStr)
-		local rectEnemy = self:getRange(rangeStr)
-		-- dump(rectEnemy)
-		if rectEnemy == nil then break end 
-		local isInRange = rectIntersectsRect(rectEnemy,
-				 rectFocus)
-		if isInRange then 
-			local isHited = isInRange and self:canChangeState("fire")
-			
-			targetData.demageScale = 1.0
-			targetData.demageType = "body"
-			targetData.enemy = self
-			return isHited,  targetData
-		end
-	end	
-	return false, nil
 end
-----implement AbstractEnemyView ended  ----
+
+function EnemyView:getEnemyArmature()
+	if self.armature then return self.armature end 
+	--armature
+    local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
+    local armature = getArmature("anim_enemy_001", src) 
+	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+	return armature
+end
+
+function EnemyView:getModel(id)
+	return Enemy.new({id = id})
+end
+
+function EnemyView:getStateMatches()
+	local stateMatches = {
+		stand = {"rollleft", "rollright", "hit", "walk", "fire"},
+		walk = {"stand"},
+		rollleft = {"stand"},
+		rollright = {"stand"},	
+		fire = {"stand","hit",},
+		hit = {"walk", "stand", "fire",
+			checkFunc = function(self) 
+				return self.enemy:canHitted()  
+			end,},
+		die = {"stand", "rollleft", "rollright", "hit", "walk", "fire"},
+	}	
+	return stateMatches
+end
 
 return EnemyView

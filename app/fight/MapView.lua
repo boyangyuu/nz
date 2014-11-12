@@ -16,6 +16,7 @@ local FocusView = import(".FocusView")
 local Hero = import(".Hero")
 local Actor = import(".Actor")
 local EnemyView = import(".enemys.EnemyView")
+local BossView = import(".enemys.BossView")
 local EnemyManager = import(".EnemyManager")
 
 local MapView = class("MapView", function()
@@ -107,6 +108,7 @@ function MapView:updateEnemys(event)
 			local function addEnemyFunc()
 				self:addEnemy(group.place, group.property, pos)
 			end
+
 			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
 	end
@@ -129,29 +131,36 @@ end
 function MapView:addEnemy(placeName, property, pos)
 	assert(placeName and property, "invalid param")
 
+	--place
+	local placeNode = self.places[placeName]
+	assert(placeNode, "invalid param")		
+	local boundPlace = placeNode:getBoundingBox()
+	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
+	boundPlace.x = pWorld.x
+	boundPlace.y = boundPlace.y	
+	property.boundPlace = boundPlace
+
 	--enemy
-	local enemyView = EnemyView.new(property)
+	local enemyView
+	if property.type == "boss" then 
+		enemyView = BossView.new(property)
+	else 
+		enemyView = EnemyView.new(property)
+	end
 	self.enemys[#self.enemys + 1] = enemyView
 
 	--scale
-	local placeNode = self.places[placeName]
-	assert(placeNode, "invalid param")		
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
 	enemyView:setScaleX(scale:getScaleX())
 	enemyView:setScaleY(scale:getScaleY())
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
-	local boundPlace = placeNode:getBoundingBox()
 	math.newrandomseed()
 	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	
 	--place
-	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
-	boundPlace.x = pWorld.x
-	boundPlace.y = boundPlace.y
-	EnemyView:setPlaceBound(boundPlace)
 	placeNode:addChild(enemyView)
 end
 
@@ -199,7 +208,7 @@ end
 
 --events
 function MapView:onHeroFire(event)
-	-- dump(event, " MapView onHeroFire event")
+	dump(event, " MapView onHeroFire event")
 	local datas = self:getTargetDatas()
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0

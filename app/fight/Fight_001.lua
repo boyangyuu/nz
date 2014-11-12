@@ -1,30 +1,19 @@
 local waves = {
 	{
-		enemys = {
+		enemys = {  --boss
 			{
 				time = 3,	
-				num = 5,
+				num = 1,
 				place = "place1",
 				delay = 0.3,
 				property = { 
-					startState = "rollright", --出生状态
+					type = "boss",
 					id = "1",
 				},
-				
-			},
-			{
-				time = 6,
-				num = 5,
-				place = "place2",
-				delay = 0.3,
-				property = { 
-					startState = "rollright",
-					id = "2",
-				},
-			},			
+			},		
 		},
 	},
-	 {
+	{
 		enemys = {
 			{
 				time = 10,
@@ -62,6 +51,22 @@ local waves = {
 			},						
 		},
 	},	
+	{
+		enemys = {
+			{
+				time = 10,
+				num = 5,
+				place = "place1",
+				delay = 0.3,
+				pos = 20,
+				offset = 5,
+				property = { 
+					startState = "rollright",
+					id = "1",
+				},
+			},					
+		},
+	},		
 }
 
 function getWaves(waveIndex)

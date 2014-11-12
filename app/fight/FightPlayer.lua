@@ -40,7 +40,7 @@ end
 function FightPlayer:initUI()
     --load fightUI  
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("mainUI.ExportJson")
+    local node = cc.uiloader:load("mainUI.json")
     self.ui = node
     self:addChild(node)
 
@@ -102,7 +102,7 @@ function FightPlayer:initTouchArea()
         end
         return true
     end) 
-    drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
+    -- drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
     -- btn
     self:initBtns()
@@ -172,7 +172,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         if self.btnFire:getChildByTag(1) then 
             self.btnFire:removeChildByTag(1)
         end
-        local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
+        local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
         local armature = getArmature("effect_gun_kaiqiang", src)
         armature:getAnimation():playWithIndex(0 , -1, 0)
         local function animationEvent(armatureBack,movementType,movementID)
