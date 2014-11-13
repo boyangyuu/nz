@@ -15,24 +15,22 @@ local HeroView = class("HeroView", function()
     return display.newNode()
 end)
 
-_heroBeHurtBloodArmature = nil
-_beHurtNode = nil
-_screenEffectIsStop = true
+local _beHurtNode = nil
 
 function HeroView:ctor(properties)
 	--instance
 	self.hero = app:getInstance(Hero)
-	cc.EventProxy.new(self.hero, self):addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.heroBeHurtEffect))
+	cc.EventProxy.new(self.hero, self):addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
 	local test = cc.uiloader:load("Fight/fightLayer/ui/UI.ExportJson")
-	_beHurtNode = cc.uiloader:seekNodeByName(test, "hit_red")
+	_beHurtNode = cc.uiloader:seekNodeByName(test, "screenHurtedEffect")
 	_beHurtNode:removeFromParent()
     self:addChild(_beHurtNode)
     _beHurtNode:setVisible(false)
 end
 
-function HeroView:heroBeHurtEffect()
+function HeroView:beHurtEffect()
+	self:screenHurtedEffect()
 
-	self:screenEffect_()
     --hero behurt blood effect
     local tBloodArmature = getArmature("blood1", "blood1/blood1.ExportJson")
     local tBloodAniamtion = tBloodArmature:getAnimation()
@@ -48,9 +46,9 @@ function HeroView:heroBeHurtEffect()
     self:addChild(tBloodArmature)
 end
 
-function HeroView:screenEffect_()
+function HeroView:screenHurtedEffect()
 	--hero behurt screen effect
-	if true == _screenEffectIsStop then
+	if true ~= _beHurtNode:isVisible() then
 		_beHurtNode:setVisible(true)
 	    _beHurtNode:runAction(
 	    	cc.Sequence:create(
@@ -58,29 +56,11 @@ function HeroView:screenEffect_()
 	    		cc.FadeOut:create(0.3), 
 		    	cc.CallFunc:create(
 	    		function ()
-		 			_screenEffectIsStop = true 
 		 			_beHurtNode:setVisible(false)
 		   		end
 		   		)
 		   	)
 		)
 	end
-    _screenEffectIsStop = false
 end
-
-
-    -- if nil ~= _heroBeHurtBloodArmature then return end
-    -- _heroBeHurtBloodArmature = getArmature("blood1", "blood1/blood1.ExportJson")
-    -- local tBloodAniamtion = _heroBeHurtBloodArmature:getAnimation()
-    -- tBloodAniamtion:playWithIndex(0)
-    -- _heroBeHurtBloodArmature:setPosition(math.random(0, display.width), math.random(0, display.height))
-    -- tBloodAniamtion:setMovementEventCallFunc(
-    -- 	function ( armatureBack,movementType,movementI ) 
-	   -- 		if movementType ~= ccs.MovementEventType.Complete then 
-	   -- 			return 
-	   -- 		end
-	   --  	armatureBack:removeFromParent()
-	   --  	_heroBeHurtBloodArmature = nil 
-    -- 	end)
-    -- self:addChild(_heroBeHurtBloodArmature)
 return HeroView
