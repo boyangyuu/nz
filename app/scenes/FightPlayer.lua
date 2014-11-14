@@ -1,11 +1,12 @@
 --import
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
-local Hero = import(".Hero")
-local GunView = import(".GunView")
-local FocusView = import(".FocusView")
-local MapView = import(".MapView")
-local HeroView = import(".HeroView")
+local Hero = import("..fight.Hero")
+local GunView = import("..fight.GunView")
+local FocusView = import("..fight.FocusView")
+local MapView = import("..fight.MapView")
+local HeroView = import("..fight.HeroView")
+local fightResultLayer = import("..fightResult.FightResultLayer")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
@@ -14,7 +15,7 @@ local KFightConfig = {
 }
 
 local FightPlayer = class("FightPlayer", function ()
-	return display.newLayer()
+	return display.newScene("FightPlayer")
 end)
 
 --定义事件
@@ -22,8 +23,8 @@ end)
 function FightPlayer:ctor()
     --instance
     self.hero = app:getInstance(Hero)
-    self.focusView = app:getInstance(FocusView)
-    self.mapView = MapView.new()
+    self.focusView = FocusView.new()
+    self.mapView = MapView.new(self.focusView)
     self.gunView = GunView.new({id = 1})
     self.heroView = HeroView.new()
     self.gunBtnPressed = false
@@ -35,6 +36,9 @@ function FightPlayer:ctor()
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()   
+    cc.EventProxy.new(self.hero, self)
+        :addEventListener("win", handler(self, self.win))
+        :addEventListener("failed", handler(self, self.failed))
 end
 
 function FightPlayer:initUI()
@@ -102,7 +106,7 @@ function FightPlayer:initTouchArea()
         end
         return true
     end) 
-    drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
+    -- drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
     -- btn
     self:initBtns()
@@ -172,7 +176,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         if self.btnFire:getChildByTag(1) then 
             self.btnFire:removeChildByTag(1)
         end
-        local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
+        local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
         local armature = getArmature("effect_gun_kaiqiang", src)
         armature:getAnimation():playWithIndex(0 , -1, 0)
         local function animationEvent(armatureBack,movementType,movementID)
@@ -328,6 +332,19 @@ function FightPlayer:justFocusPos(node)
         y = display.height - offsetY
     end
     node:setPosition(x, y)
+end
+
+function FightPlayer:win()
+    print("fightResultLayer win")
+    local fightResultLayer = fightResultLayer.new(true)
+    self:addChild(fightResultLayer)
+    -- self.success:setVisible(true)
+end
+
+function FightPlayer:failed()
+    local fightResultLayer = fightResultLayer.new(false)
+    self:addChild(fightResultLayer)
+    -- self.failed:setVisible(true)
 end
 
 return FightPlayer

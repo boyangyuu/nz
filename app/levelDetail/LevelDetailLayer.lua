@@ -1,8 +1,6 @@
 import("..includes.functionUtils")
 
 local LevelDetailModel = import(".LevelDetailModel")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
-local FightPlayer = import("..fight.FightPlayer")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
@@ -11,7 +9,6 @@ end)
 function LevelDetailLayer:ctor(index1, index2)
 	--model
 	self.model = app:getInstance(LevelDetailModel)
-
 	self:loadCCS()
 	self:initUI()
 	self:initData(index1, index2)
@@ -98,19 +95,22 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-    app:getInstance(PopupCommonLayer):onExit()
+    -- app:getInstance(PopupCommonLayer):onExit()
+    app.homeScene.popupCommonLayer:onExit()
 end
 
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
-	local scene = display.newScene("FightScene")
-	local FightPlayer = FightPlayer.new()
-	scene:addChild(FightPlayer)
-	display.replaceScene(scene)
+	-- local scene = display.newScene("FightScene")
+	-- local FightPlayer = FightPlayer.new()
+	-- scene:addChild(FightPlayer)
+	-- display.replaceScene(scene)
+	app:runa()
 end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
+
 end
 
 function LevelDetailLayer:onClickBtnGold()

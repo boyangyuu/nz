@@ -244,7 +244,7 @@ end
 
 -- 装备事件
 function WeaponListLayer:equip(weaponid)
-    app:getInstance(PopupCommonLayer):showPopup(WeaponBag.new(weaponid),0)
+   app.homeScene.popupCommonLayer:showPopup(WeaponBag.new(weaponid),0)
 end
 
 return WeaponListLayer

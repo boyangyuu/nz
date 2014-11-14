@@ -81,7 +81,7 @@ end
 
 
 function WeaponBag:onClickBtnOff()
-    app:getInstance(PopupCommonLayer):onExit()
+    app.homeScene.popupCommonLayer:onExit()
 end
 
 return WeaponBag

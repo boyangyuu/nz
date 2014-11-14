@@ -13,6 +13,9 @@ function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()
+
+    
+    
 end
 
 function MyApp:run()
@@ -20,6 +23,19 @@ function MyApp:run()
     self:enterScene("MainScene")
 end
 
+function MyApp:runa()
+    -- self:enterScene("FightPlayer")
+    self.fightPlayer = require("app.scenes.FightPlayer").new()
+    display.replaceScene(self.fightPlayer)
+end
+function MyApp:runb()
+    self:enterScene("MainScene")
+end
+function MyApp:runc()
+    self.homeScene = require("app.scenes.HomeScene").new()
+    display.replaceScene(self.homeScene)
+    -- self:enterScene("HomeScene")
+end
 function MyApp:setObject(id, object)
     assert(self.objects_[id] == nil, string.format("MyApp:setObject() - id \"%s\" already exists", id))
     self.objects_[id] = object
@@ -51,7 +67,7 @@ function MyApp:getInstance(cls, id)
     return modelObj
 end
 
-function MyApp:initGameState(  )
+function MyApp:initGameState()
     -- init GameState
     GameState.init(function(param)
         local returnValue=nil

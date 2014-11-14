@@ -23,10 +23,10 @@ local MapView = class("MapView", function()
 end)
 
 
-function MapView:ctor()
+function MapView:ctor(focusView)
 	--instance
 	self.hero = app:getInstance(Hero)
-	self.focusView = app:getInstance(FocusView)
+	self.focusView = focusView
 	self.enemys = {}
 	self.waveIndex = 1
 	self.enemyManager = app:getInstance(EnemyManager)
@@ -89,6 +89,8 @@ function MapView:updateEnemys(event)
 	if wave == nil then 
 		print("赢了")
 		self.hero:win()
+		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		return
 	end
 	
 	-- if wave.type = "enemy" then .. 
@@ -115,7 +117,7 @@ function MapView:updateEnemys(event)
 		end
 	end
 	--check next wave
-	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 1)
 end
 
 function MapView:checkWave()

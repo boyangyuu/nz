@@ -75,6 +75,8 @@ function drawBoundingBox(parent, target, color)
     -- if isTest == false then 
     --     return 
     -- end
+
+    --[[
     local cbb = target:getCascadeBoundingBox()
     local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
     local points = {
@@ -92,6 +94,7 @@ function drawBoundingBox(parent, target, color)
     end
     local box = display.newPolygon(points, {borderColor = color})
     parent:addChild(box, 1000)
+    ]]
 end
 
 function rectIntersectsRect(rectNode1, rectNode2)

@@ -1,13 +1,23 @@
-local fightResultLayer = class("fightResultLayer", function()
+
+local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)
 
-function fightResultLayer:ctor()
+function FightResultLayer:ctor(result)
 	self:loadCCS()
 	self:initUI()
+    if result == true then
+        --todo
+        self.failed:setVisible(false)
+        self.success:setVisible(true)
+    else
+        self.success:setVisible(false)
+        self.failed:setVisible(true)
+        --todo
+    end
 end
 
-function fightResultLayer:loadCCS()
+function FightResultLayer:loadCCS()
     -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/fightResult")
     local controlNode = cc.uiloader:load("renwuwc.json")
@@ -16,11 +26,27 @@ function fightResultLayer:loadCCS()
     self:addChild(controlNode)
 end
 
-function fightResultLayer:initUI()
-    local success = cc.uiloader:seekNodeByName(self, "panl_renwuwc")
-    local success = cc.uiloader:seekNodeByName(self, "panl_renwusb")
+function FightResultLayer:initUI()
+    self.success = cc.uiloader:seekNodeByName(self, "panl_renwuwc")
+    self.failed  = cc.uiloader:seekNodeByName(self, "panl_renwusb")
+    self.success:setTouchEnabled(true)
+    self.failed:setTouchEnabled(true)
+    addBtnEventListener(self.success, function(event)
+        if event.name == 'began' then
+            print("btnBegin is begining!")
+            return true
+        elseif event.name == 'ended' then
+            app:runc()
+        end
+    end)
+    addBtnEventListener(self.failed, function(event)
+        if event.name == 'began' then
+            print("btnBegin is begining!")
+            return true
+        elseif event.name == 'ended' then
+            app:runc()
+        end
+    end)
 end
 
-
-
-return fightResultLayer
+return FightResultLayer

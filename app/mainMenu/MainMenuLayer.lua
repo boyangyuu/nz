@@ -1,5 +1,5 @@
-local HomeBarLayer = import("..homeBar.HomeBarLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
+local HomeBarLayer = import("..homeBar.HomeBarLayer")
 
 local MainMenuLayer = class("MainMenuLayer", function()
 	return display.newLayer()
@@ -33,8 +33,10 @@ function MainMenuLayer:initUI()
 end
 
 function MainMenuLayer:beginGame()
-	local homeBarLayer = HomeBarLayer.new()
-    self:addChild(homeBarLayer)
+ --    self:removeAllChildren()
+	-- local homeBarLayer = HomeBarLayer.new()
+ --    self:addChild(homeBarLayer)
+    app:runc()
 end
 
 return MainMenuLayer

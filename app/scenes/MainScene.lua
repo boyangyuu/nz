@@ -1,7 +1,4 @@
-local FightPlayer = import("..fight.FightPlayer")
-local HomeBarLayer = import("..homeBar.HomeBarLayer")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local WeaponBag = import("..weaponList.WeaponBag")
 local MainMenuLayer = import("..mainMenu.MainMenuLayer")
 local MainScene = class("MainScene", function()
@@ -11,20 +8,14 @@ end)
 function MainScene:ctor()
     local mainMenuLayer = MainMenuLayer.new()
     self:addChild(mainMenuLayer)
-    -- local FightPlayer = FightPlayer.new()
-    -- self:addChild(FightPlayer)
-	local popupCommonLayer = app:getInstance(PopupCommonLayer)
-    self:addChild(popupCommonLayer, 200)
-    popupCommonLayer:loadAllImg()
-
-    -- local PopupWeaponBag = PopupWeaponBag.new()
-    -- self:addChild(PopupWeaponBag)
 end
 
 function MainScene:onEnter()
+
 end
 
 function MainScene:onExit()
+    
 end
 
 return MainScene
