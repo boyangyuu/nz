@@ -25,6 +25,14 @@ function Hero:ctor(properties, events, callbacks)
     Hero.super.ctor(self, properties)   
 end
 
+function Hero:win()
+    print("Hero:win()")
+    self:dispatchEvent({name = "win"})
+end
 
+function Hero:onKill_()
+    print(" Hero:onKill_()")
+    self:dispatchEvent({name = "failed"})
+end
 
 return Hero

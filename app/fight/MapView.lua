@@ -86,7 +86,11 @@ function MapView:updateEnemys(event)
 	--wave config
 	local wave = getWaves(self.waveIndex)
 	dump(wave, "wave")
-	if wave == nil then return end
+	if wave == nil then 
+		print("赢了")
+		self.hero:win()
+	end
+	
 	-- if wave.type = "enemy" then .. 
 	-- if wave.type = "boss" then .. 
 	local lastTime = 0

@@ -26,7 +26,7 @@ function getPopupTips(text)
     assert(text, "fileName is invalid")
 
     -- load .ExportJson
-    local popupNode = cc.uiloader:load("res/CommonPopup/commonPopup.ExportJson")
+    local popupNode = cc.uiloader:load("res/CommonPopup/commonPopup.json")
     local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
     labelTip:setString(text)
     popupNode:setTouchEnabled(true)
@@ -126,7 +126,6 @@ function getConfigByID( configFileDir, tableID )
     local configTable = getConfig(configFileDir)
     for k,v in pairs(configTable) do
         if v["id"] == tableID then
-            -- dump(v)
             return v
         end
     end

@@ -52,7 +52,7 @@ function LevelMapLayer:initBgLayer()
 end
 
 function LevelMapLayer:initChooseLayer()
-    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.ExportJson")
+    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.json")
     self:addChild(self.chooseRootNode, Zorder_up)
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
@@ -133,7 +133,7 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
-    self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".ExportJson")
+    self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".json")
     self.levelBtnRootNode:setPosition(0, 0)
     self:addChild(self.levelBtnRootNode, Zorder_up)
 
@@ -154,7 +154,9 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() + 5, levelBtn[i]:getPositionY())),
                     cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY())),
                     cc.CallFunc:create(function()
-                        app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i))end)}))
+                        app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i),200)
+                    end
+                        )}))
                 -- self:addChild(getPopupTips("关卡尚未开启！"), 100)
             end
         end)
