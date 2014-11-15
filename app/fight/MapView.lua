@@ -10,6 +10,7 @@ desc：
 import("..includes.functionUtils")
 import(".Fight_001")
 
+_testMode = getIsTest()
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Timer = require("framework.cc.utils.Timer")
 local FocusView = import(".FocusView")
@@ -17,12 +18,12 @@ local Hero = import(".Hero")
 local Actor = import(".Actor")
 local EnemyView = import(".enemys.EnemyView")
 local BossView = import(".enemys.BossView")
+local MissileEnemyView = import(".enemys.MissileEnemyView")
 local EnemyManager = import(".EnemyManager")
 
 local MapView = class("MapView", function()
     return display.newNode()
 end)
-
 
 function MapView:ctor()
 	--instance
@@ -43,7 +44,7 @@ function MapView:ctor()
     self:scheduleUpdate()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
-
+        :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
 end
 
 function MapView:getEnemyDatas()
@@ -87,7 +88,9 @@ function MapView:updateEnemys(event)
 	--wave config
 	local wave = getWaves(self.waveIndex)
 	dump(wave, "wave")
-	if wave == nil then return end
+	if wave == nil then 
+		print("赢了")
+	end
 	-- if wave.type = "enemy" then .. 
 	-- if wave.type = "boss" then .. 
 	local lastTime = 0
@@ -101,7 +104,8 @@ function MapView:updateEnemys(event)
 			--pos
 			local pos = nil
 			if group.pos then 
-				pos = group.pos + group.offset * i
+				local offset = group.offset or 0
+				pos = group.pos + offset * i
 			end
 
 			--add
@@ -128,6 +132,18 @@ function MapView:checkWave()
 	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 2)
 end
 
+function MapView:callfuncAddEnemys(event)
+	for i,enemyData in ipairs(event.enemys) do
+		local function addEnemyFunc()
+			self:addEnemy(enemyData.placeName, 
+				enemyData.property, enemyData.pos.x) --todo
+		end		
+		
+		scheduler.performWithDelayGlobal(addEnemyFunc, 
+			enemyData.delayOffset * (i - 1) )
+	end
+end
+
 function MapView:addEnemy(placeName, property, pos)
 	assert(placeName and property, "invalid param")
 
@@ -140,11 +156,14 @@ function MapView:addEnemy(placeName, property, pos)
 	boundPlace.y = boundPlace.y	
 	property.boundPlace = boundPlace
 
-	--enemy
+	--enemy 改为工厂
 	local enemyView
+	print("create enemy", property.type)
 	if property.type == "boss" then 
 		enemyView = BossView.new(property)
-	else 
+	elseif property.type == "missile" then
+		enemyView =  MissileEnemyView.new(property)
+	else
 		enemyView = EnemyView.new(property)
 	end
 	self.enemys[#self.enemys + 1] = enemyView
@@ -164,8 +183,8 @@ function MapView:addEnemy(placeName, property, pos)
 	placeNode:addChild(enemyView)
 end
 
-function MapView:addBoss()
-	
+function MapView:addDaoDan()
+	-- body
 end
 
 function MapView:getSize()
@@ -208,7 +227,7 @@ end
 
 --events
 function MapView:onHeroFire(event)
-	dump(event, " MapView onHeroFire event")
+	-- dump(event, " MapView onHeroFire event")
 	local datas = self:getTargetDatas()
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0

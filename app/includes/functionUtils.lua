@@ -161,4 +161,6 @@ function setUserData(data)
     GameState.save(data)
 end
 
-
+function getIsTest()
+    return false
+end

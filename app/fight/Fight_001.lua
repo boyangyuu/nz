@@ -1,18 +1,19 @@
 local waves = {
-	{
-		enemys = {  --boss
-			{
-				time = 3,	
-				num = 1,
-				place = "place1",
-				delay = 0.3,
-				property = { 
-					type = "boss",
-					id = "1",
-				},
-			},		
-		},
-	},
+	-- {
+	-- 	enemys = {  --boss
+	-- 		{
+	-- 			time = 3,	
+	-- 			num = 1,
+	-- 			place = "place3",
+	-- 			pos = 500,
+	-- 			delay = 0.3,
+	-- 			property = { 
+	-- 				type = "boss",
+	-- 				id = "1",
+	-- 			},
+	-- 		},		
+	-- 	},
+	-- },
 	{
 		enemys = {
 			{

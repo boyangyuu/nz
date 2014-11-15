@@ -62,12 +62,10 @@ function EnemyView:playStartState(state)
 end
 
 function EnemyView:playStand()
-	if not self:canChangeState("stand") then return end
 	self.armature:getAnimation():play("stand" , -1, 1)  
 end
 
 function EnemyView:playFire()
-	if not self:canChangeState("fire") then return end
 	self.armature:getAnimation():play("fire" , -1, 1) 
 
 	--fire 
@@ -77,7 +75,6 @@ function EnemyView:playFire()
 end
 
 function EnemyView:playWalk()
-	if not self:canChangeState("walk") then return end
 	local isLeft = 1
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then isLeft = -1 end
@@ -102,7 +99,6 @@ function EnemyView:playRoll()
 end
 
 function EnemyView:playRollLeft()
-	if not self:canChangeState("rollleft") then return end
 	if not self:checkPlace(-150) then return end
 	self.armature:getAnimation():play("rollleft" , -1, 1) 
 	local dis = 5 
@@ -113,7 +109,6 @@ function EnemyView:playRollLeft()
 end
 
 function EnemyView:playRollRight()
-	if not self:canChangeState("rollright") then return end
 	if not self:checkPlace(150) then return end
 	self.armature:getAnimation():play("rollright" , -1, 1) 
 	local dis = 5
@@ -124,14 +119,12 @@ function EnemyView:playRollRight()
 end
 
 function EnemyView:playHitted(event)
-	if not self:canChangeState("hit") then return end
 	if not self.enemy:isDead()  then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
 end
 
 function EnemyView:playKill(event)
-	if not self:canChangeState("die") then return end
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
@@ -175,10 +168,10 @@ function EnemyView:tick(t)
 		return
 	end
 
-	--检测死亡
-	if self.enemy:getHp() == 0 then
-		self:playKill()
-	end
+	-- --检测死亡
+	-- if self.enemy:getHp() == 0 then
+	-- 	self:playKill()
+	-- end
 end
 
 function EnemyView:onHitted(demage)
@@ -192,8 +185,9 @@ function EnemyView:onHitted(demage)
 end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
-	-- print("animationEvent id ", movementID)
+	
 	if movementType == ccs.MovementEventType.loopComplete then
+		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		self.armature:stopAllActions()
 		if movementID ~= "die" then
@@ -217,20 +211,5 @@ function EnemyView:getModel(id)
 	return Enemy.new({id = id})
 end
 
-function EnemyView:getStateMatches()
-	local stateMatches = {
-		stand = {"rollleft", "rollright", "hit", "walk", "fire"},
-		walk = {"stand"},
-		rollleft = {"stand"},
-		rollright = {"stand"},	
-		fire = {"stand","hit",},
-		hit = {"walk", "stand", "fire",
-			checkFunc = function(self) 
-				return self.enemy:canHitted()  
-			end,},
-		die = {"stand", "rollleft", "rollright", "hit", "walk", "fire"},
-	}	
-	return stateMatches
-end
 
 return EnemyView

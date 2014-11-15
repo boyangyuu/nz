@@ -113,18 +113,25 @@ function FightPlayer:initBtns()
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     self.btnFire:setTouchEnabled(true)  
     self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    --test
+    --gl.ONE, gl.ZERO
+    --gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA
+    -- self.btnFire:setBlendFunc(gl.ONE, gl.ZERO)
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
-    self.btnChange:setTouchEnabled(true)  
+    self.btnChange:setTouchEnabled(true)
+    -- self.btnChange:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)  
+    -- -- self.btnChange:setBlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 end
 
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
     --check
-    dump(event, "event onMutiTouchBegin")
-    for id,point in pairs(event.points) do
+    -- dump(event, "event onMutiTouchBegin")
+    if event.points == nil then return false end
+    for id, point in pairs(event.points) do
         local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
 

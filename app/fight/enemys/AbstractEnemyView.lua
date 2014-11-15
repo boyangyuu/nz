@@ -3,6 +3,10 @@ local scheduler = require("framework.scheduler")
 local Hero = import("..Hero")
 local Actor = import("..Actor")
 
+
+--[[
+	attackable
+]]
 local AbstractEnemyView = class("AbstractEnemyView", function()
     return display.newNode()
 end)
@@ -13,6 +17,7 @@ function AbstractEnemyView:ctor(property)
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property.id)
 	self:setPlaceBound(property.boundPlace)
+	self.deadDone = false
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -32,9 +37,6 @@ end
 			enemy = xx,
 		},}
 ]]
-function AbstractEnemyView:getTargetData(rectFocus)
-	assert("required method, must implement me")	
-end
 
 function AbstractEnemyView:getTargetData(rectFocus)
 	local targetData = {}
@@ -85,7 +87,8 @@ end
 ]]
 function AbstractEnemyView:getRange(rectName)
 	assert(rectName, "invalid param")
-	local bone = self.armature:getBone(rectName)
+	local armature = self:getEnemyArmature()
+	local bone = armature:getBone(rectName)
 	if not bone then return end
 	return bone:getDisplayRenderNode() --test visible
 end
@@ -107,27 +110,6 @@ function AbstractEnemyView:setDeadDone()
 	self.deadDone = true
 end
 
-function AbstractEnemyView:canChangeState(stateId)
-	local stateMatches = self:getStateMatches()
-	local id = self.armature:getAnimation():getCurrentMovementID()
-	if id == "" then return true end
-	if stateId == id then return false end
-	print("canChangeState? from", id, "to", stateId)
-	local matchs = stateMatches[stateId] 
-	assert(matchs, "stateMatches has no stateId: "..stateId)
-	for i,v in ipairs(matchs) do
-		-- print(i,v)
-		if v == tostring(id) then 
-			if matchs.checkFunc then
-				return matchs.checkFunc(self) 
-			else 
-				return true
-			end
-		end
-	end
-	return false
-end
-
 function AbstractEnemyView:checkPlace(widthOffset)
 	if self.placeBound == nil then 
 		print("self.placeBound is nil")
@@ -144,10 +126,20 @@ function AbstractEnemyView:checkPlace(widthOffset)
 end
 
 function AbstractEnemyView:play(state, handlerFunc)
-	if self:canChangeState(state) then 
-		print("self:canChangeState(state", state)
+	local function play()
 		handlerFunc()
+		self:clearPlayCache()
+		print("清理cache")
 	end
+	self.playCache = play
+end
+
+function AbstractEnemyView:getPlayCache()
+	return self.playCache
+end
+
+function AbstractEnemyView:clearPlayCache()
+	self.playCache = nil
 end
 
 --接口
@@ -170,26 +162,6 @@ end
 
 function AbstractEnemyView:getModel(id)
 	assert("required method, must implement me")	
-end
-
---[[
-	local stateMatches = {
-		stand = {"hit", "walk", "fire"},
-		move = {"stand"},
-		fire = {"stand","hit",},
-		hit = {"walk", "stand", "fire",
-			checkFunc = function(self) 
-				return self.enemy:canHitted()  
-			end,},
-		die = {"stand", "hit", "walk", "fire"},
-	}	
-	desc: 
-	stand: 目的状态
-	{"hit", "walk", "fire"}: 对应的animIds(ccs动作列表)
-	代表可以从hit walk fire动作 跳转为stand形态
-]]
-function AbstractEnemyView:getStateMatches()
-	assert("required method, must implement me")
 end
 
 return AbstractEnemyView

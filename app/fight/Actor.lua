@@ -213,7 +213,6 @@ end
 
 -- 开火
 function Actor:fire()
-    print("----------")
     self.fsm__:doEvent("fire")
     local cooldown_ = self:getCooldown()
     self.fsm__:doEvent("ready", cooldown_)
@@ -225,6 +224,8 @@ function Actor:hit(enemy)
 
     -- 简化算法：伤害 = 自己的攻击力 - 目标防御
     local damage = 0
+    
+    --命中率 和护甲
     if math.random(1, 100) <= 100 then -- 命中率 80%
         local armor = 0
         if not enemy:isFrozen() then -- 如果目标被冰冻，则无视防御
@@ -233,9 +234,10 @@ function Actor:hit(enemy)
         damage = self:getDemage() - armor
         if damage <= 0 then damage = 1 end -- 只要命中，强制扣 HP
     end
-    print("------------------------e")
-    print("demage", demage)
-    print("enemy.hp_)", enemy.hp_)
+
+    -- print("------------------------e")
+    -- print("demage", demage)
+    -- print("enemy.hp_)", enemy.hp_)
     -- 触发事件，damage <= 0 可以视为 miss
     self:dispatchEvent({name = Actor.ATTACK_EVENT, enemy = enemy, damage = damage})
     if damage > 0 then
@@ -249,25 +251,25 @@ end
 ---- state callbacks
 
 function Actor:onChangeState_(event)
-    printf("actor %s:%s state change from %s to %s", self:getId(), self.nickname_, event.from, event.to)
+    -- printf("actor %s:%s state change from %s to %s", self:getId(), self.nickname_, event.from, event.to)
     event = {name = Actor.CHANGE_STATE_EVENT, from = event.from, to = event.to}
     self:dispatchEvent(event)
 end
 
 -- 启动状态机时，设定角色默认 Hp
 function Actor:onStart_(event)
-    printf("actor %s:%s start", self:getId(), self.nickname_)
+    -- printf("actor %s:%s start", self:getId(), self.nickname_)
     self:setFullHp()
     self:dispatchEvent({name = Actor.START_EVENT})
 end
 
 function Actor:onReady_(event)
-    printf("actor %s:%s ready", self:getId(), self.nickname_)
+    -- printf("actor %s:%s ready", self:getId(), self.nickname_)
     self:dispatchEvent({name = Actor.READY_EVENT})
 end
 
 function Actor:onFire_(event)
-    printf("actor %s:%s fire", self:getId(), self.nickname_)
+    -- printf("actor %s:%s fire", self:getId(), self.nickname_)
     self:dispatchEvent({name = Actor.FIRE_EVENT, demage = self:getDemage()})
 end
 
@@ -296,7 +298,7 @@ end
 function Actor:onLeaveFiring_(event)
     local cooldown = checknumber(event.args[1])
     if cooldown > 0 then
-        print("Actor:onLeaveFiring_ 111")
+        -- print("Actor:onLeaveFiring_ 111")
         -- 如果开火后的冷却时间大于 0，则需要等待
         scheduler.performWithDelayGlobal(function()
             event.transition()

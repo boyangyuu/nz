@@ -16,7 +16,7 @@ function Boss:ctor(properties)
     assert(config, "config id is wrong id:"..properties.id)
     local property = {
         id = "boss"..properties.id,
-        maxHp = config.hp,
+        maxHp = 3000,
         demage = config.demage,
     }
     Boss.super.ctor(self, property)	
