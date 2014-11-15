@@ -2,6 +2,8 @@ import("..includes.functionUtils")
 
 local WeaponListCell = import(".WeaponListCell")
 local WeaponListModel = import(".WeaponListModel")
+local PopupWeaponBag = import(".PopupWeaponBag")
+
 
 local WeaponListLayer = class("WeaponListLayer", function()
 	return display.newLayer()
@@ -12,13 +14,16 @@ function WeaponListLayer:ctor()
     -- instance
     self.selectedContent = nil
     self.selectedWeapon  = nil
+    self.weaponID = nil
+    self.weaponListModel = app:getInstance(WeaponListModel)
 
+    -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
 	self:initUI()
     -- 点开页面默认选择某个武器
-
-    self.weaponListModel = app:getInstance(WeaponListModel)
+      self:selectCell(3)
+    --events
     -- cc.EventProxy.new(self.weaponListModel, self)
     --     :addEventListener(eventName, listener, tag)
 end
@@ -45,19 +50,46 @@ function WeaponListLayer:initUI()
     self.labelPercent  = cc.uiloader:seekNodeByName(self, "Label_percent")
     self.btnEquiped    = cc.uiloader:seekNodeByName(self, "btn_equiped")
     self.btnEquip      = cc.uiloader:seekNodeByName(self, "btn_equip")
-    self.btnUpgrade    = cc.uiloader:seekNodeByName(self, "btn_equip")
+    self.btnUpgrade    = cc.uiloader:seekNodeByName(self, "btn_upgrade")
     self.btnFull       = cc.uiloader:seekNodeByName(self, "btn_equip")
-    self.btnOncefull   = cc.uiloader:seekNodeByName(self, "btn_equip")
+    self.btnOncefull   = cc.uiloader:seekNodeByName(self, "btn_oncefull")
     self.btnBuy        = cc.uiloader:seekNodeByName(self, "btn_buy")
     self.weaponLV:onTouch(handler(self,self.touchListener))
     self:loadWeaponList(self.weaponLV, getConfig("config/weapon_weapon.json"))
     self.btnBuy:setTouchEnabled(true)
+    self.btnUpgrade:setTouchEnabled(true)
+    self.btnOncefull:setTouchEnabled(true)
+    self.btnEquip:setTouchEnabled(true)
     addBtnEventListener(self.btnBuy, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:buyWeapon(self.selectedWeapon)
+            self:buyWeapon(self.weaponrecord)
+        end
+    end)
+    addBtnEventListener(self.btnUpgrade, function(event)
+        if event.name=='began' then
+            print("offbtn is begining!")
+            return true
+        elseif event.name=='ended' then
+            self:strengthen(self.weaponrecord)
+        end
+    end)
+    addBtnEventListener(self.btnOncefull, function(event)
+        if event.name=='began' then
+            print("offbtn is begining!")
+            return true
+        elseif event.name=='ended' then
+            self:onceFull(self.weaponrecord)
+        end
+    end)
+    addBtnEventListener(self.btnEquip, function(event)
+        if event.name=='began' then
+            print("offbtn is begining!")
+            return true
+        elseif event.name=='ended' then
+            self:equip(self.weaponrecord)
         end
     end)
 end
@@ -67,8 +99,9 @@ end
 -- 初始化ListView
 function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	for i=1, #weaponTable do
-		local weaponRecord = getConfigByID("config/weapon_weapon.json", i)
-		local item = weaponListView:newItem()
+		-- local weaponRecord = getConfigByID("config/weapon_weapon.json", i)
+		local weaponRecord = self.weaponListModel:getWeaponRecord(i)
+        local item = weaponListView:newItem()
 		-- local item
 		local content
 		if weaponTable[i] then
@@ -101,7 +134,7 @@ function WeaponListLayer:selectCell( index )
     itemContent:setSelected(true)
 
     -- 详情内容
-    self.selectedWeapon = self:getWeaponOfCell(index)
+    self.weaponrecord = self:getWeaponOfCell(index)
 end
 
 -- 从列表cell索引index获取显示武器详情
@@ -117,7 +150,7 @@ function WeaponListLayer:getWeaponOfCell( index )
     self.progAccuracy:setPercent(weaponrecord["accuracy"]/99*100)
     self.progReload  :setPercent((1-weaponrecord["reloadTime"]/4.2)*100)
     self.labelDamage :setString(weaponrecord["demage"])
-    -- self:showButton(weaponrecord)
+    self:showButton(weaponrecord)
     return weaponrecord
 end
 
@@ -127,6 +160,8 @@ end
 function WeaponListLayer:showButton(weaponrecord)
     if self.weaponListModel:isWeaponExist(weaponrecord) then
         self.btnBuy:setVisible(false)
+    else
+        self.btnBuy:setVisible(true)
     end
 
 end              
@@ -134,7 +169,24 @@ end
 -- 购买事件
 function WeaponListLayer:buyWeapon(weaponrecord)
     self.weaponListModel:buyWeapon(weaponrecord)
+    self:showButton(weaponrecord)
 
+end
+
+-- 升级事件
+function WeaponListLayer:strengthen(weaponrecord)
+    self.weaponListModel:strengthen(weaponrecord)
+end
+
+-- 一键满级事件
+function WeaponListLayer:onceFull(weaponrecord)
+    self.weaponListModel:onceFull(weaponrecord)
+end
+
+-- 装备事件
+function WeaponListLayer:equip(weaponrecord)
+
+    self.weaponListModel:equip(weaponrecord)
 end
 
 return WeaponListLayer
