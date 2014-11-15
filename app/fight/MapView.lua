@@ -129,7 +129,7 @@ function MapView:checkWave()
 			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
 		end
 	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 2)
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
 end
 
 function MapView:callfuncAddEnemys(event)

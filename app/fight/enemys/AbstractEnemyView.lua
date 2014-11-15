@@ -52,7 +52,7 @@ function AbstractEnemyView:getTargetData(rectFocus)
 				 rectFocus)
 		if isInRange then 
 			local isHited = isInRange 
-			targetData.demageScale = 4.0 --读表
+			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
 			targetData.demageType = "head"
 			targetData.enemy = self
 			return isHited,  targetData

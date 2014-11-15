@@ -37,4 +37,9 @@ function Enemy:getRollRate()
 	return self.config["rollRate"]
 end
 
+function Enemy:getDemageScale(rangeStr)
+    print(rangeStr, "rangeStr")
+    return self.config[rangeStr]
+end
+
 return Enemy

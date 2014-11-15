@@ -17,36 +17,35 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 10,
+				time = 2,
 				num = 5,
 				place = "place1",
 				delay = 0.3,
 				pos = 20,
-				offset = 5,
+				offset = 35,
 				property = { 
 					startState = "rollright",
 					id = "1",
 				},
 			},
 			{
-				time = 12,
+				time = 3,
 				num = 5,
 				place = "place2",
 				delay = 0.3,
 				pos = 20,
-				offset = 5,			
+				offset = 25,			
 				property = { 
-					startState = "rollright",
+					startState = "rollleft",
 					id = "1",
 				},
 			},	
 			{
-				time = 20,
+				time = 2,
 				num = 5,
 				place = "place2",
 				delay = 0.5,
 				property = { 
-					startState = "rollright",
 					id = "1",
 				},
 			},						
@@ -60,7 +59,7 @@ local waves = {
 				place = "place1",
 				delay = 0.3,
 				pos = 20,
-				offset = 5,
+				offset = 15,
 				property = { 
 					startState = "rollright",
 					id = "1",
@@ -72,4 +71,8 @@ local waves = {
 
 function getWaves(waveIndex)
 	return waves[waveIndex] 
+end
+
+function getFocusRange()
+	return 20
 end

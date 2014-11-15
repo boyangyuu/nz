@@ -67,10 +67,6 @@ end
 
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
-
-	--fire 
-	print("self.hero:getHp()", self.hero:getHp())
-	print("self.enemy:getDemage()", self.enemy:getDemage())
 	self.enemy:hit(self.hero)
 end
 
@@ -136,7 +132,6 @@ function EnemyView:test()
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
 	drawBoundingBox(self.armature, weakNode, "red") 
 	drawBoundingBox(self.armature, bodyNode, "yellow") 
-    -- drawBoundingBox(self, self, "white") 
 end
 
 --接口
@@ -148,7 +143,7 @@ function EnemyView:tick(t)
 	local randomSeed 
 	randomSeed = math.random(1, fireRate)
 	if randomSeed > fireRate - 1 then 
-		self:playFire() 
+		self:play("", handler(self, self.playFire))
 		return
 	end
 
@@ -156,7 +151,7 @@ function EnemyView:tick(t)
 	local walkRate = self.enemy:getWalkRate()
 	randomSeed =  math.random(1, walkRate)
 	if randomSeed > walkRate - 1 then 
-		self:playWalk()
+		self:play("", handler(self, self.playWalk))
 		return 
 	end
 
@@ -164,7 +159,7 @@ function EnemyView:tick(t)
 	local rollRate = self.enemy:getRollRate()
 	randomSeed =  math.random(1, rollRate)
 	if randomSeed > rollRate - 1 then 
-		self:playRoll() 
+		self:play("", handler(self, self.playRoll))
 		return
 	end
 
@@ -191,7 +186,12 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 		armatureBack:stopAllActions()
 		self.armature:stopAllActions()
 		if movementID ~= "die" then
-			self:playStand()
+			local playCache = self:getPlayCache()
+			if playCache then 
+				playCache()
+			else 					
+				self:playStand()
+			end
     	elseif movementID == "die" then 
     		self:setDeadDone()
     	end 
