@@ -34,8 +34,11 @@ function BossView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     
+   
     --test
-    self:test()
+    self:initBody()
+
+    self:playWeak(1)
 end
 
 --ui
@@ -93,11 +96,13 @@ function BossView:playMove()  --改为onMove
 end
 
 function BossView:playKill(event)
-	self.armature:getAnimation():play("die" ,-1 , 1)
+	self.armature:getAnimation():play("dead" ,-1 , 1)
 end
 
 function BossView:playSkill(skillName)
 	print("BossView:playSkill: "..skillName)
+	local str =  string.sub(skillName, 1, 4)
+	print("skillName", str)
 	if skillName == "moveLeftFire" then 
 		self:play("skill", handler(self, self.playMoveLeftFire))
 	elseif skillName == "moveRightFire" then 
@@ -106,6 +111,11 @@ function BossView:playSkill(skillName)
 		self:play("skill", handler(self, self.playSaoShe))
 	elseif skillName == "daoDan" then
 		self:play("skill", handler(self, self.playDaoDan))
+	
+	elseif string.sub(skillName, 1, 4) == "weak" then 
+		local index = string.sub(skillName, 5, 5)
+		print("index", index)
+		self:playWeak(tonumber(index))
 	end
 end
 
@@ -165,29 +175,48 @@ function BossView:playDaoDan()
     self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
 end
 
---skillEnd
+function BossView:playWeak(index)
+	--clear weaks
+	for i,weakData in pairs(self.weakNode) do
+		local anim = weakData["anim"]
+		anim:setVisible(false)
+		weakData.valid = false
+	end
 
-function BossView:test()
-	--body
-	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-	drawBoundingBox(self.armature, weakNode, "red") 
-	drawBoundingBox(self.armature, bodyNode, "yellow")  
+	--play
+	local weakData = self.weakNode["weak"..index]
+	assert(weakData, "invalid index :"..index)
+	local anim = weakData["anim"]
+	weakData.valid = true
+	anim:setVisible(true)
+	anim:getAnimation():play("pre", -1, 1)
+
+	local function animationWeak(armatureBack,movementType,movementID)
+        if movementType == ccs.MovementEventType.loopComplete then
+            if movementID == "pre" then
+                armatureBack:stopAllActions()
+                armatureBack:getAnimation():play("idle")
+            end
+        end
+	end
+	anim:getAnimation():setMovementEventCallFunc(animationWeak)
 end
 
---接口
+--skillEnd
+
+--接口F BossView:
 function BossView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
 		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
-		if movementID ~= "die" then
+		if movementID ~= "dead" then
 			local playCache = self:getPlayCache()
 			if playCache then 
 				playCache()
 			else 					
 				self:playStand()
 			end
-    	elseif movementID == "die" then 
+    	elseif movementID == "dead" then 
     		self:setDeadDone()
     	end 
 	end
@@ -222,20 +251,25 @@ function BossView:tick(t)
 end
 
 function BossView:checkSkill(demage)
+	if not demage then demage = 0 end 
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
-	local persentO = (hp + demage) / maxHp
-	local persentC = hp / maxHp
+	local persentO = (hp + demage)
+	local persentC = hp
 	local skilltrigger = self.config.skilltrigger
 	for skillName,persents in pairs(skilltrigger) do
 		for i, v in ipairs(persents) do
+			local v = v * maxHp
 			if persentC < v and v <= persentO then 
+				print("v", v)
+				-- print("persentC", persentC)
+				-- print("persentO", persentO)
 				print("playSKill:"..skillName)
 				local function callfuncSkill()
 					self:playSkill(skillName)
 				end
-				scheduler.performWithDelayGlobal(callfuncSkill, 2)
-				return 
+				scheduler.performWithDelayGlobal(callfuncSkill, 1)
+				return
 			end
 		end
 	end
@@ -269,13 +303,44 @@ function BossView:onHitted(demage)
 		isRed = false
 	end
 
-	if not isRed then 
-		print("变红")
-		isRed = true
-		self.armature:setColor(cc.c3b(255,50,5))
-		scheduler.performWithDelayGlobal(callfunc, 20/60)
-		scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+	print("变红")
+	isRed = true
+	self.armature:setColor(cc.c3b(255,50,5))
+	scheduler.performWithDelayGlobal(callfunc, 20/60)
+	scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+end
+
+function BossView:initBody()
+	--body
+	self.weakNode = {}
+	local index = 1
+	while(true) do 
+		local boneName = "weak"..index
+		local bone = self.armature:getBone(boneName)
+		if bone == nil then break end
+		
+		--node
+		local weakNode = bone:getDisplayRenderNode()
+		local srcName = "Fight/uiAnim/ruodiangj/ruodiangj.ExportJson"
+		
+		--anim
+		local animWeak = getArmature("ruodiangj", srcName)
+		animWeak:getAnimation():play("idle" , -1, 1)
+		local cbb = weakNode:getCascadeBoundingBox()
+		animWeak:setPosition(cbb.origin.x + cbb.size.width/2,
+					cbb.origin.y + cbb.size.height/2)
+		animWeak:setVisible(false)
+		self.armature:addChild(animWeak, 1000)
+
+		--data
+		local weakData = {node = weakNode , anim = animWeak, valid = false}
+		self.weakNode[boneName] = weakData
+		drawBoundingBox(self.armature, weakNode, "red") 
+		index = index + 1
 	end
+
+	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+	drawBoundingBox(self.armature, bodyNode, "yellow")  
 end
 
 function BossView:getEnemyArmature()
@@ -287,7 +352,22 @@ function BossView:getEnemyArmature()
 	return armature
 end
 
+function BossView:getRange(rectName)
+	print("rectName", rectName)
+	local range, isValid = BossView.super.getRange(self, rectName)
+	if range == nil then return nil, false end
+	local str =  string.sub(rectName, 1, 4)
+	if str == "weak" then 
+		local weakData = self.weakNode[rectName]
+		assert(weakData, "weakData is nil" .. rectName) 
+		isValid = weakData["valid"]
+		print("isValid", isValid)
+	end
+	return range, isValid
+end
+
 function BossView:getModel(id)
 	return Boss.new({id = id})
 end
+
 return BossView

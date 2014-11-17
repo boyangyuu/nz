@@ -18,6 +18,8 @@ function AbstractEnemyView:ctor(property)
 	self.enemy = self:getModel(property.id)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
+	self.playCache = {}
+
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -46,13 +48,14 @@ function AbstractEnemyView:getTargetData(rectFocus)
 	while true do
 		i = i + 1
 		local rangeStr = "weak"..i
-		local rectEnemy = self:getRange(rangeStr)
+		local rectEnemy, isValid = self:getRange(rangeStr)
 		if rectEnemy == nil then break end 
 		local isInRange = rectIntersectsRect(rectEnemy,
 				 rectFocus)
-		if isInRange then 
+		if isInRange and isValid then 
 			local isHited = isInRange 
 			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
+			print("targetData.demageScale", targetData.demageScale)
 			targetData.demageType = "head"
 			targetData.enemy = self
 			return isHited,  targetData
@@ -90,7 +93,8 @@ function AbstractEnemyView:getRange(rectName)
 	local armature = self:getEnemyArmature()
 	local bone = armature:getBone(rectName)
 	if not bone then return end
-	return bone:getDisplayRenderNode() --test visible
+	local node = bone:getDisplayRenderNode() 
+	return node, true
 end
 
 function AbstractEnemyView:setPlaceBound(bound)
@@ -126,20 +130,20 @@ function AbstractEnemyView:checkPlace(widthOffset)
 end
 
 function AbstractEnemyView:play(state, handlerFunc)
+	local index = #self.playCache + 1
 	local function play()
 		handlerFunc()
-		self:clearPlayCache()
-		print("清理cache")
+		table.remove(self.playCache, index)
 	end
-	self.playCache = play
+	self.playCache[index] = play
 end
 
 function AbstractEnemyView:getPlayCache()
-	return self.playCache
+	return self.playCache[#self.playCache] or nil
 end
 
 function AbstractEnemyView:clearPlayCache()
-	self.playCache = nil
+	-- self.playCache = nil
 end
 
 --接口

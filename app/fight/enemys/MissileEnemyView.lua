@@ -36,7 +36,7 @@ function MissileEnemyView:tick()
 end
 
 function MissileEnemyView:playFire()
-    print("issileEnemyView:playStand")
+    -- print("issileEnemyView:playStand")
     self.armature:getAnimation():play("fire" , -1, 1) 
     local time = 3.0
     local scale = 1
@@ -50,7 +50,7 @@ function MissileEnemyView:playFire()
 end
 
 function MissileEnemyView:playBomb()
-    print("MissileEnemyView:playBomb")
+    -- print("MissileEnemyView:playBomb")
 
     --bomb动画
     -- self.armature:getAnimation():play("bomb" , -1, 1)  
@@ -63,11 +63,11 @@ function MissileEnemyView:playBomb()
 end
 
 function MissileEnemyView:playHitted(event)
-    print("MissileEnemyView:playHitted")
+    -- print("MissileEnemyView:playHitted")
 end
 
 function MissileEnemyView:playKill(event)
-    print("MissileEnemyView:playKill") 
+    -- print("MissileEnemyView:playKill") 
     self:setDeadDone() 
 
     --bomb动画

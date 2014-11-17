@@ -101,12 +101,10 @@ function MapView:updateEnemys(event)
 			local delay = group.delay or 0.1
 			delay = group.time + delay * i
 			if delay > lastTime then lastTime = delay end
+			
 			--pos
-			local pos = nil
-			if group.pos then 
-				local offset = group.offset or 0
-				pos = group.pos + offset * i
-			end
+			assert(group["pos"], "group pos")
+			local pos = group["pos"][i] or 0
 
 			--add
 			local function addEnemyFunc()
@@ -162,7 +160,7 @@ function MapView:addEnemy(placeName, property, pos)
 	if property.type == "boss" then 
 		enemyView = BossView.new(property)
 	elseif property.type == "missile" then
-		enemyView =  MissileEnemyView.new(property)
+		enemyView = MissileEnemyView.new(property)
 	else
 		enemyView = EnemyView.new(property)
 	end

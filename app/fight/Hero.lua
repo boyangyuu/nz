@@ -17,7 +17,7 @@ function Hero:ctor(properties, events, callbacks)
     --instance
     local property = {
     	id = "hero",
-    	maxHp = 100,
+    	maxHp = 1000000,
     	demage = 10,
 	}
     Hero.super.ctor(self, property)       
