@@ -17,8 +17,8 @@ function PopupCommonLayer:showPopup(layerNode,Layer_OPACITY)
 	self.layerNode = layerNode
 	self:setOpacity(Layer_OPACITY)
 	self:addChild(self.layerNode)
-	self.layerNode:runAction(transition.sequence({cc.ScaleTo:create(0.01, 0.25),
-		cc.ScaleTo:create(0.3, 1)}))
+	self.layerNode:scale(0.25)
+	self.layerNode:scaleTo(0.3, 1)
 end
 
 function PopupCommonLayer:onExit()
