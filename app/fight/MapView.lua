@@ -53,7 +53,7 @@ function MapView:loadCCS()
 	--map
 	local mapId = ""   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
-    local node = cc.uiloader:load("map_1.ExportJson")	
+    local node = cc.uiloader:load("map_1.json")	
 	self.map = node
 	addChildCenter(self.map, self)	
 

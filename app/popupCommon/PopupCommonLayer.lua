@@ -2,7 +2,7 @@
 -- Author: Fangzhongzheng
 -- Date: 2014-10-27 16:14:14
 --
-local LayerColor_BLACK, Layer_OPACITY = cc.c4b(0, 0, 0, 0), 200
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 0)
 
 local PopupCommonLayer = class("PopupCommonLayer", function()
     return display.newColorLayer(LayerColor_BLACK)
@@ -12,7 +12,7 @@ function PopupCommonLayer:ctor(properties)
 	self:setVisible(false)
 end
 
-function PopupCommonLayer:showPopup(layerNode)
+function PopupCommonLayer:showPopup(layerNode,Layer_OPACITY)
 	self:setVisible(true)
 	self.layerNode = layerNode
 	self:setOpacity(Layer_OPACITY)
@@ -34,7 +34,7 @@ end
 
 function PopupCommonLayer:loadAllImg()
 	print("......PopupCommonLayer:loadAllImg()")
-    self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
+    self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.json")
 end
 
 function PopupCommonLayer:getImgByName(fileName)
