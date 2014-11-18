@@ -60,6 +60,7 @@ function FightPlayer:initUI()
     --load fightUI  
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
     local node = cc.uiloader:load("res/Fight/fightLayer/ui/mainUI.ExportJson")
+
     self.ui = node
     self:addChild(node)
 
@@ -164,7 +165,8 @@ end
 
 --加载defenceResume bar 控件
 function FightPlayer:loadDefenceResumeBar()
-    self.defenceResumeLoadingBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+    self.defenceResumeLoadingBar = display.newProgressTimer("#huan_hui.png", display.PROGRESS_TIMER_RADIAL)
+    self.defenceResumeLoadingBar = display.newProgressTimer("#huan_hui.png", display.PROGRESS_TIMER_RADIAL)
     self:addChild(self.defenceResumeLoadingBar)
     self.defenceResumeLoadingBar:setOpacity(130)
     self.defenceResumeLoadingBar:setPosition(1052, 370)
@@ -224,8 +226,10 @@ function FightPlayer:onMutiTouchBegin(event)
     -- dump(event, "event onMutiTouchBegin")
 
     local eventName = "begin"
-    for id,point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point, eventName)
+
+    if event.points == nil then return false end
+    for id, point in pairs(event.points) do
+        local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
 
         isTouch = self:checkBtnChange(id, point, eventName)

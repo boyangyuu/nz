@@ -10,8 +10,6 @@
 import("...includes.functionUtils")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
--- local HeroLayer = require("...HeroView")
-
 local Enemy = import(".Enemy")
 local EnemyView = class("EnemyView", AbstractEnemyView)
 
@@ -36,7 +34,7 @@ end
 function EnemyView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("heroUI.ExportJson")    
+    local node = cc.uiloader:load("res/Fight/fightLayer/ui/heroUI.ExportJson")    
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()

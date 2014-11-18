@@ -202,7 +202,6 @@ function MapView:tick(dt)
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
 			local pos = cc.p(enemy:getPositionX(), enemy:getPositionY())
-			-- self:killEnmeyGold(pos)
 			table.remove(self.enemys, i)
 			enemy:removeFromParent()
 

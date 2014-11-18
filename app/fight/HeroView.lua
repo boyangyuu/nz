@@ -44,7 +44,7 @@ end
 function HeroView:initKillTimerNode()
 	self.killEnemyTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
     self:addChild(self.killEnemyTimer)
-    self.killEnemyTimer:setPosition(84, 445)
+    self.killEnemyTimer:setPosition(76, 420)
     self.killEnemyTimer:setReverseDirection(true)
     self.killEnemyTimer:setPercentage(100)
     self.killEnemyTimer:setVisible(false)
@@ -245,24 +245,6 @@ end
 --手雷
 function HeroView:throwGrenade(event)
 
-	--grenade 
-	-- local size = display.size
-	-- local bezier = {cc.p(size.width / 2, 100), cc.p(size.width / 2 - 100, size.height), cc.p(size.width / 2 - 200, 100), }
-	-- local bezierForward = cc.BezierTo:create(1, bezier)
-	-- local tGrenade = getArmature("shoulei", "res/shoulei/shoulei.ExportJson")
-	-- self:addChild(tGrenade)
-	-- tGrenade:setPosition(display.width / 2, 0)
-	-- tGrenade:getAnimation():play("lei", -1, 1)
-	-- tGrenade:runAction(
-	-- 	cc.Sequence:create(
-	-- 		cc.Spawn:create(bezierForward, cc.ScaleTo:create(1, 0.3)),
-	-- 	 	cc.CallFunc:create(
-	-- 	 		function (  )
-	-- 				tGrenade:removeFromParent()
-	-- 			end
-	-- 		)
-	-- 	)
-	-- )
 
 	local tGrenade = getArmature("shoulei", "res/shoulei/shoulei.ExportJson")
 	self:addChild(tGrenade)
@@ -280,7 +262,7 @@ function HeroView:throwGrenade(event)
 	)
 
 	-- shadow effect
-	local shadow = display.newSprite("#btn_dun03.png")
+	local shadow = display.newSprite("#huan_hui.png")
 	shadow:setOpacity(100)
 	shadow:setSkewY(60)
 	shadow:setPosition(display.width / 2, 0)

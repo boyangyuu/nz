@@ -41,6 +41,7 @@ function Hero:ctor(properties, events, callbacks)
     self:setDemage(30)
     self:setMaxHp(100000000)  
     Hero.super.ctor(self, properties)   
+
 end
 
 function Hero:BeHurt(event)

@@ -45,7 +45,8 @@ end
 function BossView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("heroUI.ExportJson")    
+   
+    local node = cc.uiloader:load("heroUI.ExportJson")
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
