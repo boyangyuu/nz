@@ -21,6 +21,7 @@ Hero.RESUME_DEFENCE_EVENT   = "RESUME_DEFENCE_EVENT"
 
 --enemy
 Hero.ENEMY_KILL_EVENT   = "ENEMY_KILL_EVENT"
+Hero.GRENADE_ARRIVE_EVENT = "GRENADE_ARRIVE_EVENT"
 
 function Hero:ctor(properties, events, callbacks)
     --instance

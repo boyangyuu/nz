@@ -47,6 +47,7 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
+
 	if self.playIndex == "stand" then 
 		self.focus:getAnimation():play("fire01" , -1, 0) 
 		self.playIndex = "fire01"

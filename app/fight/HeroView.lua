@@ -52,17 +52,25 @@ end
 
 
 function HeroView:killEnmeyGold(enemyPos)
-	local gold = getArmature("gold", "res/gold/gold.ExportJson")
-	gold:setPosition(enemyPos)
-	gold:getAnimation():play("Animation1", -1, 1)
-	gold:runAction(cc.Sequence:create(
-		cc.DelayTime:create(2),
-		cc.MoveTo:create(0.5, cc.p(884, 591)),
-		cc.CallFunc:create(function (  )
-			gold:removeFromParent()
-		end)
+	local pos = enemyPos
+	local posX = enemyPos.x - 160
+	local goldNode = display.newNode()
+
+	for i = 1, 3 do
+		local gold = getArmature("gold", "res/gold/gold.ExportJson")
+		gold:setPosition(posX + i * 40, enemyPos.y)
+		gold:getAnimation():play("Animation1", -1, 1)
+		gold:runAction(cc.Sequence:create(
+			cc.DelayTime:create(2 - i * 0.2),
+			cc.MoveTo:create(0.5, cc.p(884, 591)),
+			cc.CallFunc:create(function ()
+				gold:removeFromParent()
+			end)
 		))
-	self:addChild(gold)
+		goldNode:addChild(gold)
+	end
+	goldNode:runAction(cc.JumpBy:create(1, cc.p(30, 0), 20, 1))
+	self:addChild(goldNode)
 end
 
 --杀掉敌人后的回调
@@ -245,7 +253,6 @@ end
 --手雷
 function HeroView:throwGrenade(event)
 
-
 	local tGrenade = getArmature("shoulei", "res/shoulei/shoulei.ExportJson")
 	self:addChild(tGrenade)
 	tGrenade:setPosition(display.width / 2, 0)
@@ -255,6 +262,7 @@ function HeroView:throwGrenade(event)
 			cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 		 	cc.CallFunc:create(
 		 		function ()
+                    self.hero:dispatchEvent({name = Hero.GRENADE_ARRIVE_EVENT, damage = 100, destPos = event.throwPos})
 					tGrenade:removeFromParent()
 				end
 			)
@@ -280,8 +288,6 @@ function HeroView:throwGrenade(event)
 
 end
 
-
-
 --英雄受到伤害时,屏幕闪红效果
 function HeroView:screenHurtedEffect()
 
@@ -302,9 +308,5 @@ function HeroView:screenHurtedEffect()
     self:addChild(tBeHurtScreenArmature)
 end
 
---装备机甲
-function HeroView:fitArmoured()
-
-end
 
 return HeroView

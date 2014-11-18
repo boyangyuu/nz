@@ -166,7 +166,6 @@ end
 --加载defenceResume bar 控件
 function FightPlayer:loadDefenceResumeBar()
     self.defenceResumeLoadingBar = display.newProgressTimer("#huan_hui.png", display.PROGRESS_TIMER_RADIAL)
-    self.defenceResumeLoadingBar = display.newProgressTimer("#huan_hui.png", display.PROGRESS_TIMER_RADIAL)
     self:addChild(self.defenceResumeLoadingBar)
     self.defenceResumeLoadingBar:setOpacity(130)
     self.defenceResumeLoadingBar:setPosition(1052, 370)
@@ -200,7 +199,10 @@ function FightPlayer:initBtns()
 
     --loadingBarDefenceHp
     self.loadingBarDefenceHp = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
+    self.loadingBarDefenceHp:removeFromParent()
     self.loadingBarDefenceHp:setDirection(2)
+    self:addChild(self.loadingBarDefenceHp)
+    self.loadingBarDefenceHp:setPosition(1052, 373)
 
     --labelDefenceHp
     self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
@@ -285,7 +287,7 @@ function FightPlayer:checkbtnGrenade(id, point, eventName)
     isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
         self.touchs["grenade"] = id
-        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(500, 200)})
+        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(self.focusNode:getPositionX(), self.focusNode:getPositionY())})
     end
 end
 
@@ -392,7 +394,6 @@ function FightPlayer:fire()
         self.gunView:fire()
         self.focusView:playFire()
     end
-
 end
 
 function FightPlayer:onCancelledFire()

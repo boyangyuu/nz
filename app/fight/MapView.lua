@@ -45,7 +45,7 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
         :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
-        :addEventListener(Actor.FIRE_THROW_EVENT, handler(self, self.onHeroThrowFire))
+        :addEventListener(Hero.GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
 
 end
 
@@ -187,8 +187,6 @@ function MapView:addDaoDan()
 	-- body
 end
 
-
-
 function MapView:getSize()
 	local bg = self.bg
 	local size = cc.size(bg:getBoundingBox().width ,
@@ -201,13 +199,18 @@ function MapView:tick(dt)
 	--检查enemy和boss的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
-			local pos = cc.p(enemy:getPositionX(), enemy:getPositionY())
-			table.remove(self.enemys, i)
-			enemy:removeFromParent()
-
-			self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
+			self:popGold(enemy, i)
 		end
 	end
+end
+
+function MapView:popGold(enemy, i)
+	local boundingbox = enemy:getCascadeBoundingBox()
+	local size = boundingbox.size
+	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
+	table.remove(self.enemys, i)
+	enemy:removeFromParent()
 end
 
 --[[
@@ -242,8 +245,12 @@ function MapView:onHeroFire(event)
 end
 
 function MapView:onHeroThrowFire(event)
-	--target
-
+	-- target
+	for i,enemy in ipairs(self.enemys) do
+		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
+			self:popGold(enemy, i)
+		end
+	end
 end
 
 function MapView:onHeroPlaneFire(event)
