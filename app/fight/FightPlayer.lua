@@ -41,7 +41,7 @@ end
 function FightPlayer:initUI()
     --load fightUI  
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("mainUI.ExportJson")
+    local node = cc.uiloader:load("mainUI.json")
     self.ui = node
     self:addChild(node)
 
@@ -104,7 +104,7 @@ function FightPlayer:initTouchArea()
         end
         return true
     end) 
-    drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
+    -- drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
     -- btn
     self:initBtns()
@@ -115,18 +115,25 @@ function FightPlayer:initBtns()
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     self.btnFire:setTouchEnabled(true)  
     self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    --test
+    --gl.ONE, gl.ZERO
+    --gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA
+    -- self.btnFire:setBlendFunc(gl.ONE, gl.ZERO)
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
-    self.btnChange:setTouchEnabled(true)  
+    self.btnChange:setTouchEnabled(true)
+    -- self.btnChange:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)  
+    -- -- self.btnChange:setBlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
     self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 end
 
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
     --check
-    dump(event, "event onMutiTouchBegin")
-    for id,point in pairs(event.points) do
+    -- dump(event, "event onMutiTouchBegin")
+    if event.points == nil then return false end
+    for id, point in pairs(event.points) do
         local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
 
@@ -174,7 +181,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         if self.btnFire:getChildByTag(1) then 
             self.btnFire:removeChildByTag(1)
         end
-        local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
+        local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
         local armature = getArmature("effect_gun_kaiqiang", src)
         armature:getAnimation():playWithIndex(0 , -1, 0)
         local function animationEvent(armatureBack,movementType,movementID)

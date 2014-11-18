@@ -65,10 +65,14 @@ function getArmature(name, src)
     return armature
 end
 
-function addChildCenter(child, parent)
+function addChildCenter(child, parent, zorder)
     child:setPosition(parent:getBoundingBox().width/2, parent:getBoundingBox().height/2)
     child:setAnchorPoint(0.5, 0.5)
-    parent:addChild(child)
+    if zorder then 
+        parent:addChild(child, zorder)
+    else 
+        parent:addChild(child)
+    end
 end
 
 function drawBoundingBox(parent, target, color)
@@ -116,6 +120,8 @@ function getConfig( configFileDir )
     local fullPath = fileUtil:fullPathForFilename(configFileDir)
     local jsonStr = fileUtil:getStringFromFile(fullPath)
     local configTb = json.decode(jsonStr)
+    --
+
     return configTb
 end
 
@@ -159,4 +165,6 @@ function setUserData(data)
     GameState.save(data)
 end
 
-
+function getIsTest()
+    return false
+end

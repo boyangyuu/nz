@@ -7,6 +7,7 @@
 
 --import
 import("..includes.functionUtils")
+import(".Fight_001")
 local Hero = import(".Hero")
 local Gun = import(".Gun")
 
@@ -32,7 +33,8 @@ function FocusView:ctor(properties)
 	self.focus:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(armature)    
 	self:playIdle()
-	self:setFocusRange(cc.size(100, 100))
+	local range = getFocusRange()
+	self:setFocusRange(cc.size(range, range))
 	self.playIndex = "stand"
 
     --test
