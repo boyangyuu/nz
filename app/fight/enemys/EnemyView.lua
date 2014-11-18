@@ -10,6 +10,8 @@
 import("...includes.functionUtils")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
+-- local HeroLayer = require("...HeroView")
+
 local Enemy = import(".Enemy")
 local EnemyView = class("EnemyView", AbstractEnemyView)
 
@@ -34,7 +36,7 @@ end
 function EnemyView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("UI.json")    
+    local node = cc.uiloader:load("heroUI.ExportJson")    
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
@@ -67,7 +69,21 @@ end
 
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
+
+	--fire 
+	print("self.hero:getHp()", self.hero:getHp())
+	print("self.enemy:getDemage()", self.enemy:getDemage())
 	self.enemy:hit(self.hero)
+
+	-- -- parent:HeroBehurt()
+	-- local tRunningScene = cc.Director:getInstance():getRunningScene()
+	-- local tHeroLayer = tRunningScene:getChildByTag(521);
+	-- -- tHeroLayer.layerHero:HeroBehurt()
+	-- local bloodX = math.random(50, 1100)
+	-- local bloodY = math.random(50, 600)
+	-- local test = display.newSprite("blood1/Resources/blood1_01.png")
+	-- test:setPosition(bloodX, bloodY)
+	-- tHeroLayer.layerHero:addChild(test)
 end
 
 function EnemyView:playWalk()
@@ -115,6 +131,7 @@ function EnemyView:playRollRight()
 end
 
 function EnemyView:playHitted(event)
+	print("EnemyView:playHitted(event)")
 	if not self.enemy:isDead()  then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
@@ -139,7 +156,7 @@ end
 function EnemyView:tick(t)
 	--change state
 	--fire
-	local fireRate = self.enemy:getFireRate()
+	local fireRate = self.enemy:getFireRate() * 4
 	local randomSeed 
 	randomSeed = math.random(1, fireRate)
 	if randomSeed > fireRate - 1 then 

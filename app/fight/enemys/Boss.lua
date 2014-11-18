@@ -32,4 +32,9 @@ function Boss:getMoveRate()
 	return self.config["walkRate"]
 end
 
+function Boss:getDemageScale(rangeStr)
+    print(rangeStr, "rangeStr")
+    return self.config[rangeStr]
+end
+
 return Boss
