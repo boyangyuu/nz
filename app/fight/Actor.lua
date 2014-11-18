@@ -26,6 +26,8 @@ Actor.RELIVE_EVENT        = "RELIVE_EVENT"
 Actor.HP_DECREASE_EVENT    = "HP_DECREASE_EVENT"
 Actor.HP_INCREASE_EVENT    = "HP_INCREASE_EVENT"
 Actor.ATTACK_EVENT        = "ATTACK_EVENT"
+Actor.FIRE_THROW_EVENT    = "FIRE_THROW_EVENT"
+
 
 -- 定义属性
 Actor.schema = clone(cc.mvc.ModelBase.schema)

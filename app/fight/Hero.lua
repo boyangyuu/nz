@@ -13,6 +13,15 @@ local Hero = class("Hero", Actor)
 
 --events
 
+--skill
+Hero.SKILL_ARMOURED_EVENT   = "SKILL_ARMOURED_EVENT"
+Hero.SKILL_DEFENCE_EVENT    = "SKILL_DEFENCE_EVENT"
+Hero.BEHURT_DEFENCE_EVENT 	= "BEHURT_DEFENCE_EVENT"
+Hero.RESUME_DEFENCE_EVENT   = "RESUME_DEFENCE_EVENT"
+
+--enemy
+Hero.ENEMY_KILL_EVENT   = "ENEMY_KILL_EVENT"
+
 function Hero:ctor(properties, events, callbacks)
     --instance
     local property = {
@@ -28,6 +37,10 @@ function Hero:ctor(properties, events, callbacks)
     print("--------------------------")
     print("coolDown", coolDown)
     self:setCooldown(coolDown)
+
+    self:setDemage(30)
+    self:setMaxHp(100000000)  
+    Hero.super.ctor(self, properties)   
 end
 
 function Hero:BeHurt(event)
