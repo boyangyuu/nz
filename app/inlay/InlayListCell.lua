@@ -6,14 +6,25 @@ local InlayListCell = class("InlayListCell", ScrollViewCell)
 function InlayListCell:ctor(record)
     self.inlayModel = app:getInstance(InlayModel)
 	self:initCellUI(record)
+    self:refreshCellData(record)
 end
 
 function InlayListCell:initCellUI(record)
 	cc.FileUtils:getInstance():addSearchPath("res/InlayShop/")
 	local controlNode = cc.uiloader:load("xiangqian_type.json")
     local imgPanel = cc.uiloader:seekNodeByName(controlNode, "imgPanel")
+    local describe2 = cc.uiloader:seekNodeByName(controlNode, "titleLabel")
+    local describe1 = cc.uiloader:seekNodeByName(controlNode, "describeLabel")
+    local valueDisplay = cc.uiloader:seekNodeByName(controlNode, "describeValue")
+    local goldPrice = cc.uiloader:seekNodeByName(controlNode, "goldPrice")
+    self.ownNum = cc.uiloader:seekNodeByName(controlNode, "ownNum")
+
     local Img = cc.ui.UIImage.new(record["imgnam"]..".png")
     addChildCenter(Img, imgPanel)
+    describe2:setString(record["describe2"])
+    describe1:setString(record["describe1"])
+    valueDisplay:setString(record["valueDisplay"])
+    goldPrice:setString(record["goldPrice"])
 
     local btnBuy = cc.uiloader:seekNodeByName(controlNode, "buyBtn")
     local btnLoad = cc.uiloader:seekNodeByName(controlNode, "loadBtn")
@@ -23,6 +34,8 @@ function InlayListCell:initCellUI(record)
                 return true
             elseif event.name=='ended' then
                 print("btnBuy is pressed!")
+                self.inlayModel:buyInlay(record["id"])
+                self:refreshCellData(record)
             end
         end)
     addBtnEventListener(btnLoad, function(event)
@@ -31,12 +44,23 @@ function InlayListCell:initCellUI(record)
                 return true
             elseif event.name=='ended' then
                 print("btnLoad is pressed!")
-                self.inlayModel:refreshBtnIcon(record["type"],record["id"])
+                if self.inlayModel:isInlayExist(record["id"]) then
+                    self.inlayModel:equipInlay(record["id"])
+                    self.inlayModel:refreshBtnIcon(record["type"],record["id"])
+                    self:refreshCellData(record)
+                else
+                    print("请购买")
+                    self.inlayModel:refreshBtnIcon(record["type"],0)
+                end
             end
         end)
 
 	controlNode:setPosition(0, 0)
     self:addChild(controlNode)
+end
+
+function InlayListCell:refreshCellData(record)
+    self.ownNum:setString(self.inlayModel:getInlayNum(record["id"]))
 end
 
 return InlayListCell

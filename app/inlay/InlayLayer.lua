@@ -43,7 +43,6 @@ function InlayLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-        self.rootListView:removeItem(self.rootListView.items_[3],true)
         end
     end)
     for k,v in pairs(self.typeId) do
@@ -81,13 +80,14 @@ function InlayLayer:refreshListView(index)
 end
 
 function InlayLayer:refreshBtnIcon(parameterTable)
-    -- local img = cc.ui.UIImage.new(["imgnam"]..".png")
-    local table = self.inlayModel:getConfigTable("id", parameterTable.index)
-    local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
-
-self.btnImg[parameterTable.string]:removeAllChildren()
-    addChildCenter(img,self.btnImg[parameterTable.string])
-     -- self.btn[parameterTable.string]:removeChild(img)
+    if parameterTable.index == 0 then
+        self.btnImg[parameterTable.string]:removeAllChildren()
+    else
+        local table = self.inlayModel:getConfigTable("id", parameterTable.index)
+        local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
+        self.btnImg[parameterTable.string]:removeAllChildren()
+        addChildCenter(img,self.btnImg[parameterTable.string])
+    end
 end
 
 function InlayLayer:removeAllItems(listView)

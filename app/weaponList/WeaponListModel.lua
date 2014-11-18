@@ -36,8 +36,6 @@ function WeaponListModel:getWeaponProperity(weaponid)
 	local growTableName = record[1]["growTable"]
 	local level = self:getIntenlevel(weaponid)
 	local growtable = getConfig("config/weapon_"..growTableName..".json")
-	dump(getConfig("config/weapon_"..growTableName..".json"))
-
 	local intenlevelData = getRecord(growtable,"level",level)
 	local bulletNum = intenlevelData[1]["bulletNum"]
 	local accuracy = intenlevelData[1]["accuracy"]
