@@ -84,8 +84,26 @@ function MyApp:createGameStateFile(  )
     local data = GameData.data
     data = {
             weapons = {
-                        bags = {}, 
-                    weaponed = {}
+                        bags = {
+                                    {
+                                    intenlevel = 0,
+                                    weaponid   = 2,
+                                    },
+                                    {
+                                    intenlevel = 0,
+                                    weaponid   = 3 ,           
+                                    },
+                                },
+                    weaponed = {
+                                bag1 =  {
+                                        intenlevel = 0,
+                                        weaponid   = 2,
+                                        },
+                                bag2 =  {
+                                        intenlevel = 0,
+                                        weaponid   = 3,
+                                        }
+                                }
                       }, 
               inlay = {
                         bags = {}, 
