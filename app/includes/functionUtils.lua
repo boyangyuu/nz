@@ -116,6 +116,8 @@ function getConfig( configFileDir )
     local fullPath = fileUtil:fullPathForFilename(configFileDir)
     local jsonStr = fileUtil:getStringFromFile(fullPath)
     local configTb = json.decode(jsonStr)
+    --
+
     return configTb
 end
 
@@ -159,4 +161,6 @@ function setUserData(data)
     GameState.save(data)
 end
 
-
+function getIsTest()
+    return false
+end

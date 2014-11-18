@@ -1,30 +1,57 @@
 local waves = {
+	-- {
+	-- 	enemys = {  --boss
+	-- 		{
+	-- 			time = 3,	
+	-- 			num = 1,
+	-- 			place = "place3",
+	-- 			pos = 500,
+	-- 			delay = 0.3,
+	-- 			property = { 
+	-- 				type = "boss",
+	-- 				id = "1",
+	-- 			},
+	-- 		},		
+	-- 	},
+	-- },
 	{
 		enemys = {
 			{
-				time = 3,	
+				time = 2,
 				num = 5,
 				place = "place1",
 				delay = 0.3,
+				pos = 20,
+				offset = 35,
 				property = { 
-					startState = "rollright", --出生状态
+					startState = "rollright",
 					id = "1",
 				},
-				
 			},
 			{
-				time = 6,
+				time = 3,
 				num = 5,
 				place = "place2",
 				delay = 0.3,
+				pos = 20,
+				offset = 25,			
 				property = { 
-					startState = "rollright",
-					id = "2",
+					startState = "rollleft",
+					id = "1",
 				},
-			},			
+			},	
+			{
+				time = 2,
+				num = 5,
+				place = "place2",
+				delay = 0.5,
+				property = { 
+					id = "1",
+				},
+			},						
 		},
-	},
-	 {
+	},	
+	{
 		enemys = {
 			{
 				time = 10,
@@ -32,38 +59,20 @@ local waves = {
 				place = "place1",
 				delay = 0.3,
 				pos = 20,
-				offset = 5,
+				offset = 15,
 				property = { 
 					startState = "rollright",
 					id = "1",
 				},
-			},
-			{
-				time = 12,
-				num = 5,
-				place = "place2",
-				delay = 0.3,
-				pos = 20,
-				offset = 5,			
-				property = { 
-					startState = "rollright",
-					id = "1",
-				},
-			},	
-			{
-				time = 20,
-				num = 5,
-				place = "place2",
-				delay = 0.5,
-				property = { 
-					startState = "rollright",
-					id = "1",
-				},
-			},						
+			},					
 		},
-	},	
+	},		
 }
 
 function getWaves(waveIndex)
 	return waves[waveIndex] 
+end
+
+function getFocusRange()
+	return 20
 end

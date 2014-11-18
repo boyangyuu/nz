@@ -10,15 +10,19 @@ local Actor = import("..Actor")
 local Enemy = class("Enemy", Actor)
 
 function Enemy:ctor(properties)
-    --instance
-
-    --property	
+    --super
     local config = getConfigByID("config/enemy.json", properties.id)
-    self.config = config
+    self.config = config    
     assert(config, "config id is wrong id:"..properties.id)
-    self:setDemage(config.demage)
-    self:setMaxHp(config.hp)
-    Enemy.super.ctor(self, properties)
+    local property = {
+        id = "enemy"..properties.id,
+        maxHp = config.hp,
+        demage = config.demage,
+    }
+    Enemy.super.ctor(self, property) 
+
+    --
+
 end
 
 function Enemy:getFireRate()
@@ -31,6 +35,11 @@ end
 
 function Enemy:getRollRate()
 	return self.config["rollRate"]
+end
+
+function Enemy:getDemageScale(rangeStr)
+    print(rangeStr, "rangeStr")
+    return self.config[rangeStr]
 end
 
 return Enemy
