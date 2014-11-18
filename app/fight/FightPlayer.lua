@@ -6,6 +6,7 @@ local GunView = import(".GunView")
 local FocusView = import(".FocusView")
 local MapView = import(".MapView")
 local HeroView = import(".HeroView")
+local Actor = import(".Actor")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
@@ -29,13 +30,30 @@ function FightPlayer:ctor()
     self.gunBtnPressed = false
     self.touchs = {}
     self:setTag(521)
-    
+    self.btnsIsShow = true
+    self.resumeDefenceTinkHandler = nil
+
     --ui
     self:initUI()
 
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
+    cc.EventProxy.new(self.hero, self):addEventListener(Hero.BEHURT_DEFENCE_EVENT, handler(self, self.defenceBeHurtCallBack))
+
     self:scheduleUpdate()   
+end
+
+function FightPlayer:fitArmoured()
+    self:setBtnIsVisible()
+    self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_EVENT})
+end
+
+function FightPlayer:setBtnIsVisible()
+    self.btnsIsShow = not self.btnsIsShow
+    self.btnDefence:setVisible(self.btnsIsShow)
+    self.btnArmoured:setVisible(self.btnsIsShow)
+    self.btnChange:setVisible(self.btnsIsShow)
+    self.btnGrenade:setVisible(self.btnsIsShow)
 end
 
 function FightPlayer:initUI()
@@ -66,9 +84,42 @@ function FightPlayer:initUI()
     self:initTouchArea()
 
     --init panel
-    self:initBar()    
-    
+    self:initBar()
+
 end
+
+--启动盾牌恢复
+function FightPlayer:launchDefenceResume()
+    self.labelDefenceResume:setVisible(true)
+    self:loadDefenceResumeBar()
+
+    local function tick(dt)
+        local t = self.defenceResumeLoadingBar:getPercentage()
+        local t1 = tonumber(self.labelDefenceResume:getString())
+        if 0 == t1 then
+            scheduler.unscheduleGlobal(self.resumeDefenceTinkHandler)
+            self.defenceResumeLoadingBar:removeFromParent()
+            self.labelDefenceResume:setVisible(false)
+            self.labelDefenceResume:setString(90)
+            self.hero:dispatchEvent({name = Hero.RESUME_DEFENCE_EVENT, isResumeDefence = false})
+            return
+        end
+        self.labelDefenceResume:setString(t1 - 1)
+        self.defenceResumeLoadingBar:setPercentage(t - 1)
+    end
+
+    self.resumeDefenceTinkHandler = scheduler.scheduleGlobal(tick, 0.03)
+end
+
+--盾牌受伤回调,盾牌血条变化方法
+function FightPlayer:defenceBeHurtCallBack(event)
+    self.loadingBarDefenceHp:setPercent(event.damage)
+    if 100 <= event.damage then
+        self.loadingBarDefenceHp:setPercent(0)
+        self:launchDefenceResume()
+    end
+end
+
 
 function FightPlayer:initBar()
     --blood
@@ -80,6 +131,7 @@ function FightPlayer:initBar()
 
     --gold
 end
+
 
 function FightPlayer:initTouchArea()
     --[[
@@ -110,6 +162,18 @@ function FightPlayer:initTouchArea()
     self:initBtns()
 end
 
+--加载defenceResume bar 控件
+function FightPlayer:loadDefenceResumeBar()
+    self.defenceResumeLoadingBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+    self:addChild(self.defenceResumeLoadingBar)
+    self.defenceResumeLoadingBar:setOpacity(130)
+    self.defenceResumeLoadingBar:setPosition(1052, 370)
+    self.defenceResumeLoadingBar:setReverseDirection(true)
+    self.defenceResumeLoadingBar:setScale(2)
+    self.defenceResumeLoadingBar:setPercentage(100)
+end
+
+
 function FightPlayer:initBtns()
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
@@ -120,18 +184,54 @@ function FightPlayer:initBtns()
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
     self.btnChange:setTouchEnabled(true)  
     self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+
+    --btnDefence
+    self.btnDefence = cc.uiloader:seekNodeByName(self, "btnDun")
+    self.btnDefence:setTouchEnabled(true)
+    self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+
+    --loadingBarDefenceHp
+    self.loadingBarDefenceHp = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
+    self.loadingBarDefenceHp:setDirection(2)
+
+    --labelDefenceHp
+    self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
+    self.labelDefenceResume:setVisible(false)
+
+    --btnArmoured
+    self.btnArmoured = cc.uiloader:seekNodeByName(self, "btnRobot")
+    self.btnArmoured:setTouchEnabled(true)
+    self.btnArmoured:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+
+    --btnGrenade
+    self.btnGrenade = cc.uiloader:seekNodeByName(self, "btnLei")
+    self.btnGrenade:setTouchEnabled(true)
+    self.btnGrenade:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+
+    self.btnArmoured:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
 end
 
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
     --check
-    dump(event, "event onMutiTouchBegin")
+    -- dump(event, "event onMutiTouchBegin")
+    local eventName = "begin"
     for id,point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point, "begin")
+        local isTouch = self:checkBtnFire(id, point, eventName)
         if isTouch then return true end
 
-        isTouch = self:checkBtnChange(id, point, "begin")
+        isTouch = self:checkBtnChange(id, point, eventName)
         if isTouch then return true end        
+
+        isTouch = self:checkBtnArmoured(id, point, eventName)
+        if isTouch then return true end
+
+        isTouch = self:checkbtnDefence(id, point, eventName)
+        if isTouch then return true end 
+
+        isTouch = self:checkbtnGrenade(id, point, eventName)
+        if isTouch then return true end
+
     end
     return false
 end
@@ -141,6 +241,39 @@ function FightPlayer:onMutiTouchEnd(event)
         if id == self.touchs["fire"] then
             self:checkBtnFire(nil, nil, "ended")
         end
+    end
+end
+
+function FightPlayer:checkBtnArmoured( id, point, eventName )
+    assert(id and point, "invalid params")
+    local rect = self.btnArmoured:getCascadeBoundingBox()
+    isTouch = cc.rectContainsPoint(rect, point)
+    if isTouch then
+        self.touchs["armoured"] = id
+        self:fitArmoured()
+    end
+    return isTouch
+end
+
+function FightPlayer:checkbtnDefence( id, point, eventName )
+    assert(id and point, "invalid params")
+    local rect = self.btnDefence:getCascadeBoundingBox()
+    isTouch = cc.rectContainsPoint(rect, point)
+    if isTouch then
+        print("-----------fit defence")
+        self.touchs["defence"] = id
+        self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_EVENT})
+    end
+    return isTouch
+end
+
+function FightPlayer:checkbtnGrenade(id, point, eventName)
+    assert(id and point, "invalid parames")
+    local rect = self.btnGrenade:getCascadeBoundingBox()
+    isTouch = cc.rectContainsPoint(rect, point)
+    if isTouch then
+        self.touchs["grenade"] = id
+        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(500, 200)})
     end
 end
 
@@ -174,7 +307,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         if self.btnFire:getChildByTag(1) then 
             self.btnFire:removeChildByTag(1)
         end
-        local src = "Fight/fightLayer/effectBtnFire/effect_gun_kaiqiang.ExportJson"
+        local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
         local armature = getArmature("effect_gun_kaiqiang", src)
         armature:getAnimation():playWithIndex(0 , -1, 0)
         local function animationEvent(armatureBack,movementType,movementID)

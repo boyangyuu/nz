@@ -42,6 +42,7 @@ function MapView:ctor()
     self:scheduleUpdate()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
+        -- :addEventListener(Actor.FIRE_THROW_EVENT, handler(self, self.onHeroThrowFire))
 
 end
 
@@ -159,6 +160,8 @@ function MapView:addBoss()
 	
 end
 
+
+
 function MapView:getSize()
 	local bg = self.bg
 	local size = cc.size(bg:getBoundingBox().width ,
@@ -171,8 +174,12 @@ function MapView:tick(dt)
 	--检查enemy和boss的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
+			local pos = cc.p(enemy:getPositionX(), enemy:getPositionY())
+			-- self:killEnmeyGold(pos)
 			table.remove(self.enemys, i)
 			enemy:removeFromParent()
+
+			self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
 		end
 	end
 end
@@ -205,6 +212,16 @@ function MapView:onHeroFire(event)
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(event.demage * demageScale)
 	end
+
+end
+
+function MapView:onHeroThrowFire(event)
+	--target
+
+end
+
+function MapView:onHeroPlaneFire(event)
+	
 end
 
 return MapView
