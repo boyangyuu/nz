@@ -36,29 +36,23 @@ function WeaponListModel:getWeaponProperity(weaponid,level)
 	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
 	local growTableName = record[1]["growTable"]
 	if level == nil then
-		--todo
-	else
-		--todo
+		level = self:getIntenlevel(weaponid)
+	elseif level == "nextLevel" then
+		level = self:getIntenlevel(weaponid)
+		if level == 10 then
+			level = 10
+		else
+			level =self:getIntenlevel(weaponid)+1
+		end
 	end
-	local level = self:getIntenlevel(weaponid)
 	local growtable = getConfig("config/weapon_"..growTableName..".json")
 	local intenlevelData = getRecord(growtable,"level",level)[1]
 	local bulletNum = intenlevelData["bulletNum"]
 	local accuracy = intenlevelData["accuracy"]
 	local reloadTime = intenlevelData["reloadTime"]
 	local demage = intenlevelData["demage"]
-	-- if level == 10 then
-	-- 	intenNextlevelData = getRecord(growtable,"level",level)
-	-- else
-	-- 	intenNextlevelData = getRecord(growtable,"level",level+1)
-	-- end
-	-- local bulletNumNext = intenNextlevelData[1]["bulletNum"]
-	-- local accuracyNext = intenNextlevelData[1]["accuracy"]
-	-- local reloadTimeNext = intenNextlevelData[1]["reloadTime"]
-	-- local demageNext = intenNextlevelData[1]["demage"]
-	-- local demageMax = getRecord(growtable,"level",10)[1]["demage"]
-
-	return bulletNum,accuracy,reloadTime,demage
+	local property = {bulletNum = bulletNum,accuracy  = accuracy,reloadTime = reloadTime,demage = demage}
+	return property
 end
 
 function WeaponListModel:buyWeapon(weaponid)
@@ -150,8 +144,8 @@ function WeaponListModel:isFull(weaponid)
 end
 
 
------ weaponBag getWeaponInBag
-function WeaponListModel:getGun()
+----- weaponBag 
+function WeaponListModel:getWeaponInBag()
 	local data = getUserData()
 	dump(data)
 	local twoWeapon={}

@@ -94,32 +94,38 @@ function InlayModel:oneForAllBtn()
 					if v1 > bestBullet then
 						bestBullet = v1
 					end
+						print("bullet")
 					self:equipInlay(bestBullet)
 				elseif self:getInlayType(v1) == "clip" then
 					if v1 > bestClip then
 						bestClip = v1
 					end
+						print("clip")
 					self:equipInlay(bestClip)
 				elseif self:getInlayType(v1) == "speed" then
 					if v1 > bestSpeed then
 						bestSpeed = v1
 					end
+						print("speed")
 					self:equipInlay(bestSpeed)
 				elseif self:getInlayType(v1) == "aim" then
 					if v1 > bestAim then
 						bestAim = v1
 					end
+						print("aim")
 					self:equipInlay(bestAim)
 				elseif self:getInlayType(v1) == "blood" then
 					if v1 > bestBlood then
 						bestBlood = v1
 					end
+						print("blood")
 					self:equipInlay(bestBlood)
 				elseif self:getInlayType(v1) == "helper" then
 					if v1 > bestHelper then
 						bestHelper = v1
 					end
 					self:equipInlay(bestHelper)
+						print("helper")
 				end
 			end
 		end
