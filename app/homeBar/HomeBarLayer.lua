@@ -26,7 +26,7 @@ end
 
 function HomeBarLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/")
-    local rootNode = cc.uiloader:load("homeBarLayer.ExportJson")
+    local rootNode = cc.uiloader:load("homeBarLayer.json")
     self:addChild(rootNode)
     self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "homeLayer")
     self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonLayer")
@@ -115,7 +115,7 @@ function HomeBarLayer:initCommonLayer()
 end
 
 function HomeBarLayer:loadAllImg()
-    self.imgRootNode = cc.uiloader:load("AllImg/allImg.ExportJson")
+    self.imgRootNode = cc.uiloader:load("AllImg/allImg.json")
     print(".......HomeBarLayer:loadAllImg()")
 end
 

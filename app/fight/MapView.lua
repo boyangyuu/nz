@@ -48,6 +48,8 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
         :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
+        :addEventListener(Hero.GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
+
 end
 
 function MapView:getEnemyDatas()
@@ -97,12 +99,14 @@ end
 --enemy
 function MapView:updateEnemys(event)
 	--wave config
-
 	local waveConfig = FightConfigs:getWaveConfig(groupId, levelId)
 	local wave = waveConfig:getWaves(self.waveIndex)
 	dump(wave, "wave")
+
 	if wave == nil then 
 		print("赢了")
+		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		return
 	end
 
 	local lastTime = 0
@@ -126,7 +130,19 @@ function MapView:updateEnemys(event)
 		end
 	end
 	--check next wave
-	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + waveDelay)
+	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+end
+
+function MapView:checkWave()
+	local function checkEnemysEmpty()
+		if #self.enemys == 0 then 
+			-- print("第"..self.waveIndex.."波怪物消灭完毕")
+			self.waveIndex = self.waveIndex + 1
+			self:updateEnemys()
+			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+		end
+	end
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
 end
 
 function MapView:callfuncAddEnemys(event)
@@ -194,10 +210,22 @@ function MapView:tick(dt)
 	--检查enemy和boss的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
-			table.remove(self.enemys, i)
-			enemy:removeFromParent()
+			self:removeEnemy(enemy, i)
 		end
 	end
+end
+
+function MapView:removeEnemy(enemy, i)
+	self:popGold(enemy)
+	table.remove(self.enemys, i)
+	enemy:removeFromParent()
+end
+
+function MapView:popGold(enemy)
+	local boundingbox = enemy:getCascadeBoundingBox()
+	local size = boundingbox.size
+	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
 end
 
 --[[
@@ -227,7 +255,22 @@ function MapView:onHeroFire(event)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(event.demage * demageScale)
+		
 	end
+
+end
+
+function MapView:onHeroThrowFire(event)
+	-- target
+	for i,enemy in ipairs(self.enemys) do
+		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
+			self:removeEnemy(enemy, i)
+		end
+	end
+end
+
+function MapView:onHeroPlaneFire(event)
+	
 end
 
 return MapView

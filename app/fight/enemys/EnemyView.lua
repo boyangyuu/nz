@@ -66,6 +66,8 @@ end
 
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
+	print("self.hero:getHp()", self.hero:getHp())
+	print("self.enemy:getDemage()", self.enemy:getDemage())
 	self.enemy:hit(self.hero)
 end
 
@@ -179,7 +181,7 @@ end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
