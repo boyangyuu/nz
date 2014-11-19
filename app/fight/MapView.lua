@@ -171,7 +171,7 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--enemy 改为工厂
 	local enemyView
-	print("create enemy", property.type)
+	-- print("create enemy", property.type)
 	if property.type == "boss" then 
 		enemyView = BossView.new(property)
 	elseif property.type == "missile" then
@@ -216,7 +216,7 @@ function MapView:tick(dt)
 end
 
 function MapView:removeEnemy(enemy, i)
-	self:popGold(enemy)
+	-- self:popGold(enemy)
 	table.remove(self.enemys, i)
 	enemy:removeFromParent()
 end

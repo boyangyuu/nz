@@ -64,11 +64,9 @@ end
 
 --AbstractEnemyView接口
 function MissileEnemyView:playHitted(event)
-    -- print("MissileEnemyView:playHitted")
 end
 
 function MissileEnemyView:playKill(event)
-    -- print("MissileEnemyView:playKill") 
     self:setDeadDone() 
 
     --bomb动画

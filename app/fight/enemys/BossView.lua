@@ -358,7 +358,7 @@ function BossView:getEnemyArmature()
 end
 
 function BossView:getRange(rectName)
-	print("rectName", rectName)
+	-- print("rectName", rectName)
 	local range, isValid = BossView.super.getRange(self, rectName)
 	if range == nil then return nil, false end
 	local str =  string.sub(rectName, 1, 4)
@@ -366,7 +366,7 @@ function BossView:getRange(rectName)
 		local weakData = self.weakNode[rectName]
 		assert(weakData, "weakData is nil" .. rectName) 
 		isValid = weakData["valid"]
-		print("isValid", isValid)
+		-- print("isValid", isValid)
 	end
 	return range, isValid
 end

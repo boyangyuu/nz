@@ -1,21 +1,21 @@
 local waveClass = class("wave1_1", cc.mvc.ModelBase)
 
 local waves = {
-	{
-		enemys = {  --boss
-			{
-				time = 3,	
-				num = 1,
-				place = "place3",
-				pos = {250},
-				delay = {0.3},
-				property = { 
-					type = "boss",
-					id = 1,
-				},
-			},		
-		},
-	},
+	-- {
+	-- 	enemys = {  --boss
+	-- 		{
+	-- 			time = 3,	
+	-- 			num = 1,
+	-- 			place = "place3",
+	-- 			pos = {250},
+	-- 			delay = {0.3},
+	-- 			property = { 
+	-- 				type = "boss",
+	-- 				id = 1,
+	-- 			},
+	-- 		},		
+	-- 	},
+	-- },
 	{
 		enemys = {
 			{

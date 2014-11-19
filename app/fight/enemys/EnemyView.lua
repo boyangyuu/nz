@@ -66,8 +66,8 @@ end
 
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
-	print("self.hero:getHp()", self.hero:getHp())
-	print("self.enemy:getDemage()", self.enemy:getDemage())
+	-- print("self.hero:getHp()", self.hero:getHp())
+	-- print("self.enemy:getDemage()", self.enemy:getDemage())
 	self.enemy:hit(self.hero)
 end
 
@@ -116,7 +116,6 @@ function EnemyView:playRollRight()
 end
 
 function EnemyView:playHitted(event)
-	print("EnemyView:playHitted(event)")
 	if not self.enemy:isDead()  then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end

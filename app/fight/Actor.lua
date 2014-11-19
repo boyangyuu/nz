@@ -173,7 +173,6 @@ end
 
 function Actor:setFullHp()
     self.hp_ = self:getMaxHp()
-    print("self.hp_", self.hp_)
 end
 
 function Actor:increaseHp(hp)
