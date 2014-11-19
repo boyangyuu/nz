@@ -1,4 +1,4 @@
-
+local waveClass = class("wave1_1", cc.mvc.ModelBase)
 
 local waves = {
 	{
@@ -89,7 +89,9 @@ local waves = {
 -- 		},
 -- 	},
 -- }
-function getWaves(waveIndex)
+
+function waveClass:getWaves(waveIndex)
 	return waves[waveIndex] 
 end
 
+return waveClass

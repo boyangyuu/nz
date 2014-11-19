@@ -40,7 +40,7 @@ end
 function FightPlayer:initUI()
     --load fightUI  
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("mainUI.json")
+    local node = cc.uiloader:load("mainUI.ExportJson")
     self.ui = node
     self:addChild(node)
 

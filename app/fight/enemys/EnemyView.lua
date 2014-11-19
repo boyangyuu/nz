@@ -7,7 +7,6 @@
 ]]
 
 --import
-import("...includes.functionUtils")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
@@ -34,7 +33,7 @@ end
 function EnemyView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("UI.json")    
+    local node = cc.uiloader:load("heroUI.ExportJson")    
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
@@ -122,9 +121,13 @@ function EnemyView:playHitted(event)
 end
 
 function EnemyView:playKill(event)
+	--clear
+	self:clearPlayCache()
+	self.armature:stopAllActions()
+
+	--play
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
-
 
 
 function EnemyView:test()
@@ -135,8 +138,7 @@ function EnemyView:test()
 	drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
---接口
-
+--AbstractEnemyView interface
 function EnemyView:tick(t)
 	--change state
 	--fire
@@ -163,11 +165,6 @@ function EnemyView:tick(t)
 		self:play("", handler(self, self.playRoll))
 		return
 	end
-
-	-- --检测死亡
-	-- if self.enemy:getHp() == 0 then
-	-- 	self:playKill()
-	-- end
 end
 
 function EnemyView:onHitted(demage)
@@ -181,11 +178,9 @@ function EnemyView:onHitted(demage)
 end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
-	
 	if movementType == ccs.MovementEventType.loopComplete then
 		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
-		self.armature:stopAllActions()
 		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
 			if playCache then 
@@ -194,6 +189,7 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 				self:playStand()
 			end
     	elseif movementID == "die" then 
+    		print("self:setDeadDone()")
     		self:setDeadDone()
     	end 
 	end
@@ -211,6 +207,5 @@ end
 function EnemyView:getModel(id)
 	return Enemy.new({id = id})
 end
-
 
 return EnemyView

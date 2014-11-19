@@ -8,9 +8,7 @@ desc：
 ]]
 
 import("..includes.functionUtils")
-import(".Fight_001")
-
-_testMode = getIsTest()
+local FightConfigs = import(".fightConfigs.FightConfigs")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Timer = require("framework.cc.utils.Timer")
 local FocusView = import(".FocusView")
@@ -19,7 +17,12 @@ local Actor = import(".Actor")
 local EnemyView = import(".enemys.EnemyView")
 local BossView = import(".enemys.BossView")
 local MissileEnemyView = import(".enemys.MissileEnemyView")
+local SanEnemyView = import(".enemys.SanEnemyView")
 local EnemyManager = import(".EnemyManager")
+
+--常量
+local groupId = 1
+local levelId = 1
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -53,9 +56,10 @@ end
 
 function MapView:loadCCS()
 	--map
-	local mapId = ""   -- todo 外界
+	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
-    local node = cc.uiloader:load("map_1.ExportJson")	
+
+    local node = cc.uiloader:load(mapSrcName)
 	self.map = node
 	addChildCenter(self.map, self)	
 
@@ -78,46 +82,6 @@ function MapView:loadCCS()
     end
 end
 
---enemy
-function MapView:updateEnemys(event)
-	--timer
-    -- if event.countdown > 0 then
-    -- 	return
-    -- end
-
-	--wave config
-	local wave = getWaves(self.waveIndex)
-	dump(wave, "wave")
-	if wave == nil then 
-		print("赢了")
-	end
-	-- if wave.type = "enemy" then .. 
-	-- if wave.type = "boss" then .. 
-	local lastTime = 0
-	for groupId, group in ipairs(wave.enemys) do
-		
-		for i = 1, group.num do
-			--delay
-			local delay = group.delay or 0.1
-			delay = group.time + delay * i
-			if delay > lastTime then lastTime = delay end
-			
-			--pos
-			assert(group["pos"], "group pos")
-			local pos = group["pos"][i] or 0
-
-			--add
-			local function addEnemyFunc()
-				self:addEnemy(group.place, group.property, pos)
-			end
-
-			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
-		end
-	end
-	--check next wave
-	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
-end
-
 function MapView:checkWave()
 	local function checkEnemysEmpty()
 		if #self.enemys == 0 then 
@@ -130,6 +94,41 @@ function MapView:checkWave()
 	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
 end
 
+--enemy
+function MapView:updateEnemys(event)
+	--wave config
+
+	local waveConfig = FightConfigs:getWaveConfig(groupId, levelId)
+	local wave = waveConfig:getWaves(self.waveIndex)
+	dump(wave, "wave")
+	if wave == nil then 
+		print("赢了")
+	end
+
+	local lastTime = 0
+	local waveDelay = 2.0
+	for groupId, group in ipairs(wave.enemys) do
+		for i = 1, group.num do
+			--delay
+			local delay = group.delay[i] or lastTime
+			if delay > lastTime then lastTime = delay end
+			
+			--pos
+			assert(group["pos"], "group pos"..i)
+			local pos = group["pos"][i] or 0
+
+			--add
+			local function addEnemyFunc()
+				self:addEnemy(group.place, group.property, pos)
+			end
+
+			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
+		end
+	end
+	--check next wave
+	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + waveDelay)
+end
+
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
 		local function addEnemyFunc()
@@ -138,7 +137,7 @@ function MapView:callfuncAddEnemys(event)
 		end		
 		
 		scheduler.performWithDelayGlobal(addEnemyFunc, 
-			enemyData.delayOffset * (i - 1) )
+			enemyData.delay)
 	end
 end
 
@@ -161,6 +160,8 @@ function MapView:addEnemy(placeName, property, pos)
 		enemyView = BossView.new(property)
 	elseif property.type == "missile" then
 		enemyView = MissileEnemyView.new(property)
+	elseif property.type == "san" then
+		enemyView = SanEnemyView.new(property)
 	else
 		enemyView = EnemyView.new(property)
 	end
@@ -168,8 +169,8 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	enemyView:setScaleX(scale:getScaleX())
-	enemyView:setScaleY(scale:getScaleY())
+	-- enemyView:setScaleX(scale:getScaleX())
+	-- enemyView:setScaleY(scale:getScaleY())
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
@@ -179,10 +180,6 @@ function MapView:addEnemy(placeName, property, pos)
 	
 	--place
 	placeNode:addChild(enemyView)
-end
-
-function MapView:addDaoDan()
-	-- body
 end
 
 function MapView:getSize()

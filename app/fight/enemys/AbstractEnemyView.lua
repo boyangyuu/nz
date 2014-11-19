@@ -55,7 +55,7 @@ function AbstractEnemyView:getTargetData(rectFocus)
 		if isInRange and isValid then 
 			local isHited = isInRange 
 			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
-			print("targetData.demageScale", targetData.demageScale)
+			-- print("targetData.demageScale", targetData.demageScale)
 			targetData.demageType = "head"
 			targetData.enemy = self
 			return isHited,  targetData
@@ -114,6 +114,14 @@ function AbstractEnemyView:setDeadDone()
 	self.deadDone = true
 end
 
+-- function AbstractEnemyView:setWillRemove()
+-- 	self.willRemove = true
+-- end
+
+-- function AbstractEnemyView:get( ... )
+-- 	-- body
+-- end
+
 function AbstractEnemyView:checkPlace(widthOffset)
 	if self.placeBound == nil then 
 		print("self.placeBound is nil")
@@ -143,11 +151,10 @@ function AbstractEnemyView:getPlayCache()
 end
 
 function AbstractEnemyView:clearPlayCache()
-	-- self.playCache = nil
+	self.playCache = {}
 end
 
 --接口
-
 function AbstractEnemyView:tick(t)
 	assert("required method, must implement me")	
 end
