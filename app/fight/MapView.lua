@@ -89,9 +89,11 @@ function MapView:updateEnemys(event)
 
 	--wave config
 	local wave = getWaves(self.waveIndex)
-	dump(wave, "wave")
+	-- dump(wave, "wave")
 	if wave == nil then 
 		print("赢了")
+		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		return
 	end
 	-- if wave.type = "enemy" then .. 
 	-- if wave.type = "boss" then .. 
@@ -117,13 +119,13 @@ function MapView:updateEnemys(event)
 		end
 	end
 	--check next wave
-	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
 function MapView:checkWave()
 	local function checkEnemysEmpty()
 		if #self.enemys == 0 then 
-			print("第"..self.waveIndex.."波怪物消灭完毕")
+			-- print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 			self:updateEnemys()
 			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
@@ -199,18 +201,22 @@ function MapView:tick(dt)
 	--检查enemy和boss的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
-			self:popGold(enemy, i)
+			self:removeEnemy(enemy, i)
 		end
 	end
 end
 
-function MapView:popGold(enemy, i)
+function MapView:removeEnemy(enemy, i)
+	self:popGold(enemy)
+	table.remove(self.enemys, i)
+	enemy:removeFromParent()
+end
+
+function MapView:popGold(enemy)
 	local boundingbox = enemy:getCascadeBoundingBox()
 	local size = boundingbox.size
 	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
 	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
-	table.remove(self.enemys, i)
-	enemy:removeFromParent()
 end
 
 --[[
@@ -240,6 +246,7 @@ function MapView:onHeroFire(event)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(event.demage * demageScale)
+		
 	end
 
 end
@@ -248,7 +255,7 @@ function MapView:onHeroThrowFire(event)
 	-- target
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
-			self:popGold(enemy, i)
+			self:removeEnemy(enemy, i)
 		end
 	end
 end

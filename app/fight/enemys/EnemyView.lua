@@ -197,7 +197,7 @@ end
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
 	
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		self.armature:stopAllActions()
 		if movementID ~= "die" then

@@ -26,7 +26,8 @@ function HeroView:ctor(properties)
 	self.crackTable = {}
 	self.behurtCount = 1
 	self.isResumeDefence = false
-
+	self.killEnemyCount = 0
+	self.killEnemyTimerHandler = nil
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self):addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
 	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_ARMOURED_EVENT, handler(self, self.setShowArmoured))
@@ -42,7 +43,17 @@ end
 
 --初始化连杀倒计时节点
 function HeroView:initKillTimerNode()
-	self.killEnemyTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
+    self.killEnemyTimerBg = cc.uiloader:seekNodeByName(self.uiRootNode, "killEnemyTimerBg")
+    self.killEnemyTimerBg:removeFromParent()
+    self:addChild(self.killEnemyTimerBg)
+    self.killEnemyTimerBg:setVisible(false)
+
+    self.killEnemyCountLabel = cc.uiloader:seekNodeByName(self.uiRootNode, "labelKillEnemyCount")
+    self.killEnemyCountLabel:removeFromParent()
+    self:addChild(self.killEnemyCountLabel)
+    self.killEnemyCountLabel:setVisible(false)
+
+    self.killEnemyTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
     self:addChild(self.killEnemyTimer)
     self.killEnemyTimer:setPosition(76, 420)
     self.killEnemyTimer:setReverseDirection(true)
@@ -53,46 +64,54 @@ end
 
 function HeroView:killEnmeyGold(enemyPos)
 	local pos = enemyPos
-	local posX = enemyPos.x - 160
-	local goldNode = display.newNode()
+	local posX = enemyPos.x - 80
 
 	for i = 1, 3 do
-		local gold = getArmature("gold", "res/gold/gold.ExportJson")
-		gold:setPosition(posX + i * 40, enemyPos.y)
+		local gold = getArmature("gold", "res/Fight/heroAnim/gold/gold.ExportJson")
+		gold:setPosition(posX, enemyPos.y)
 		gold:getAnimation():play("Animation1", -1, 1)
 		gold:runAction(cc.Sequence:create(
-			cc.DelayTime:create(2 - i * 0.2),
-			cc.MoveTo:create(0.5, cc.p(884, 591)),
+			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
+			cc.DelayTime:create(0.5 - i * 0.1),
+			cc.MoveTo:create(0.15, cc.p(884, 591)),
 			cc.CallFunc:create(function ()
 				gold:removeFromParent()
 			end)
 		))
-		goldNode:addChild(gold)
+		self:addChild(gold)
 	end
-	goldNode:runAction(cc.JumpBy:create(1, cc.p(30, 0), 20, 1))
-	self:addChild(goldNode)
 end
 
 --杀掉敌人后的回调
 function HeroView:killEnemyCallBack( event )
 
+	self.killEnemyCountLabel:setVisible(true)
+	self.killEnemyTimerBg:setVisible(true)
 	self:killEnmeyGold(event.enemyPos)
-
+	self.killEnemyCount = self.killEnemyCount + 1
+	local strKillEnemyCount = string.format("X %d", self.killEnemyCount)
+	self.killEnemyCountLabel:setString(strKillEnemyCount)
 	-- body
 	self.killEnemyTimer:setVisible(true)
 	self.killEnemyTimer:setPercentage(100)
-	local testHandler = nil
+
+	--如果发生连杀,在第二次倒计时的时候将上次倒计时的进度条关闭
+	if nil ~= self.killEnemyTimerHandler then 
+		scheduler.unscheduleGlobal(self.killEnemyTimerHandler)
+	end
+
     local function tick(dt)
         local t = self.killEnemyTimer:getPercentage()
         if 0 == t then
-        	scheduler.unscheduleGlobal(testHandler)
+        	scheduler.unscheduleGlobal(self.killEnemyTimerHandler)
+        	self.killEnemyCount = 0
+    		self.killEnemyCountLabel:setVisible(false)
+			self.killEnemyTimerBg:setVisible(false)
         end
         self.killEnemyTimer:setPercentage(t - 1)
     end
 
-    testHandler = scheduler.scheduleGlobal(tick, 0.03)
-
-
+    self.killEnemyTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
 --是否显示机甲
@@ -223,7 +242,7 @@ function HeroView:bloodBehurtEffect()
 	end
 
     --hero behurt blood effect
-    local tBloodArmature = getArmature(tRandomBlood, tRandomBlood .. "/" .. tRandomBlood .. ".ExportJson")
+    local tBloodArmature = getArmature(tRandomBlood, "Fight/heroAnim/" .. tRandomBlood .. "/" .. tRandomBlood .. ".ExportJson")
     local tBloodAniamtion = tBloodArmature:getAnimation()
 
     -- tBloodAniamtion:play("blood1_01" , -1, 1)
@@ -253,7 +272,7 @@ end
 --手雷
 function HeroView:throwGrenade(event)
 
-	local tGrenade = getArmature("shoulei", "res/shoulei/shoulei.ExportJson")
+	local tGrenade = getArmature("shoulei", "res/Fight/heroAnim/shoulei/shoulei.ExportJson")
 	self:addChild(tGrenade)
 	tGrenade:setPosition(display.width / 2, 0)
 	tGrenade:getAnimation():play("lei", -1, 1)
