@@ -310,7 +310,7 @@ end
 --英雄受到伤害时,屏幕闪红效果
 function HeroView:screenHurtedEffect()
 
-	local tBeHurtScreenArmature = getArmature("avatarhit", "Fight/avatarhit/avatarhit.ExportJson")
+	local tBeHurtScreenArmature = getArmature("avatarhit", "Fight/heroAnim/avatarhit/avatarhit.ExportJson")
     local tAniamtion = tBeHurtScreenArmature:getAnimation()
 
 	-- tAniamtion:playWithIndex(0)
