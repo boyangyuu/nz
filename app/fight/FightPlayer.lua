@@ -130,6 +130,10 @@ function FightPlayer:initBar()
     local size = bloodBg:getContentSize()
     bloodValue:setLayoutSize(size.width, size.height)
 
+    --init hero hp loadingbar
+
+    -- self.loadingBarHp = cc.uiloader:seekNodeByName(self, "loadingBarHeroHp")
+
     --gold
 end
 
@@ -165,7 +169,7 @@ end
 
 --加载defenceResume bar 控件
 function FightPlayer:loadDefenceResumeBar()
-    self.defenceResumeLoadingBar = display.newProgressTimer("#huan_hui.png", display.PROGRESS_TIMER_RADIAL)
+    self.defenceResumeLoadingBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
     self:addChild(self.defenceResumeLoadingBar)
     self.defenceResumeLoadingBar:setOpacity(130)
     self.defenceResumeLoadingBar:setPosition(1052, 370)
