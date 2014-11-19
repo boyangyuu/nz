@@ -164,14 +164,6 @@ function HeroView:initUiRootNode()
 	self.uiRootNode = cc.uiloader:load("Fight/fightLayer/ui/heroUI.ExportJson")
 end
 
--- --获得英雄受伤时的屏幕效果图节点
--- function HeroView:getScreenHurtEfNode()
--- 	_beHurtNode = cc.uiloader:seekNodeByName(self.uiRootNode, "screenHurtedEffect")
--- 	_beHurtNode:removeFromParent()
---     self:addChild(_beHurtNode)
---     _beHurtNode:setVisible(false)
--- end
-
 --获得装备机甲Ui节点
 function HeroView:initArmouredNode()
 	print("fit Armoured")
@@ -313,7 +305,6 @@ function HeroView:screenHurtedEffect()
 	local tBeHurtScreenArmature = getArmature("avatarhit", "Fight/heroAnim/avatarhit/avatarhit.ExportJson")
     local tAniamtion = tBeHurtScreenArmature:getAnimation()
 
-	-- tAniamtion:playWithIndex(0)
 	tAniamtion:play("avatarhit" , -1, 1)
     tBeHurtScreenArmature:setPosition(display.width / 2, display.height / 2)
     tAniamtion:setMovementEventCallFunc(
