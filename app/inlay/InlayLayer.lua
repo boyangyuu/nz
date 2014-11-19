@@ -13,7 +13,7 @@ function InlayLayer:ctor()
         :addEventListener("REFRESH_BTN_ICON_EVENT", handler(self, self.refreshBtnIcon))
 
 	self.btn = {}
-    self.btnImg = {}
+    -- self.btnImg = {}
     self.typeId = {"speed", "aim", "clip", "bullet", 
     "helper", "blood",}
 
@@ -36,20 +36,29 @@ end
 
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listView")
-    self.oneForAllBtn = cc.uiloader:seekNodeByName(self, "oneForAllBtn")
-    self.oneForAllBtn:setTouchEnabled(true)
-    addBtnEventListener(self.oneForAllBtn, function(event)
+    local oneForAllBtn = cc.uiloader:seekNodeByName(self, "oneForAllBtn")
+    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "goldWeaponBtn")
+    oneForAllBtn:setTouchEnabled(true)
+    goldWeaponBtn:setTouchEnabled(true)
+    addBtnEventListener(oneForAllBtn, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
+            self.inlayModel:oneForAllBtn()
         end
     end)
-    for k,v in pairs(self.typeId) do
-        self.btnImg[v] = cc.uiloader:seekNodeByName(self, "panel"..v.."img")
-    end
-    for k,v in pairs(self.typeId) do
 
+    addBtnEventListener(goldWeaponBtn, function(event)
+        if event.name=='began' then
+            print("offbtn is begining!")
+            return true
+        elseif event.name=='ended' then
+        
+        end
+    end)
+
+    for k,v in pairs(self.typeId) do
         self.btn[v] = cc.uiloader:seekNodeByName(self, "panel"..v)
         self.btn[v]:setTouchEnabled(true)
         self.btn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
@@ -80,13 +89,11 @@ function InlayLayer:refreshListView(index)
 end
 
 function InlayLayer:refreshBtnIcon(parameterTable)
-    if parameterTable.index == 0 then
-        self.btnImg[parameterTable.string]:removeAllChildren()
-    else
+    self.btn[self.inlayModel:getInlayType(parameterTable.index)]:removeAllChildren()
+    if parameterTable.index ~= 0 then
         local table = self.inlayModel:getConfigTable("id", parameterTable.index)
         local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
-        self.btnImg[parameterTable.string]:removeAllChildren()
-        addChildCenter(img,self.btnImg[parameterTable.string])
+        addChildCenter(img,self.btn[self.inlayModel:getInlayType(parameterTable.index)])
     end
 end
 

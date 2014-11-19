@@ -44,13 +44,12 @@ function InlayListCell:initCellUI(record)
                 return true
             elseif event.name=='ended' then
                 print("btnLoad is pressed!")
-                if self.inlayModel:isInlayExist(record["id"]) then
+                if self.inlayModel:isBagsExist(record["id"]) then
                     self.inlayModel:equipInlay(record["id"])
-                    self.inlayModel:refreshBtnIcon(record["type"],record["id"])
                     self:refreshCellData(record)
                 else
                     print("请购买")
-                    self.inlayModel:refreshBtnIcon(record["type"],0)
+                    self.inlayModel:refreshBtnIcon(0)
                 end
             end
         end)

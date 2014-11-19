@@ -9,6 +9,9 @@ local WeaponListLayer = class("WeaponListLayer", function()
 	return display.newLayer()
 end)
 
+local kMaxBullet = 100
+local kMaxAccuracy = 100
+local kMaxSpeed = 1
 
 function WeaponListLayer:ctor()
 
@@ -35,8 +38,8 @@ end
 -- loadCCS
 function WeaponListLayer:loadCCS()
     -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
-    local controlNode = cc.uiloader:load("gunzb_1.json")
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb")
+    local controlNode = cc.uiloader:load("gunzb_1.ExportJson")
     -- controlNode:setPosition(0, 0)
     self.ui = controlNode
     self:addChild(controlNode)
@@ -87,7 +90,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:strengthen(self.weaponId)
+            self:intensify(self.weaponId)
         end
     end)
     addBtnEventListener(self.btnOncefull, function(event)
@@ -147,7 +150,7 @@ function WeaponListLayer:refreshComment(index)
     
     self.selectedCellId = index
 
-    -- 选择状态
+    -- refresh 选择状态
     local itemContent = self.weaponLV.items_[index]:getContent()
     if self.selectedContent == nil then
         self.selectedContent = itemContent
@@ -157,7 +160,7 @@ function WeaponListLayer:refreshComment(index)
     end
     itemContent:setSelected(true)
 
-    -- 详情内容
+    -- refresh 详情内容
     for k,v in pairs(self.stars) do
             v:setVisible(false)
     end
@@ -169,14 +172,17 @@ function WeaponListLayer:refreshComment(index)
     local weaponImg = cc.ui.UIImage.new("WeaponList/"..self.weaponrecord["imgName"]..".png")
     weaponImg:setLayoutSize(430, 180)
     addChildCenter(weaponImg, self.layerGun)
-    local bulletNum,accuracy,reloadTime,demage,bulletNumNext,accuracyNext,
-    reloadTimeNext,demageNext,demageMax = self.weaponListModel:getWeaponProperity(self.weaponId)
-    self.progBullet  :setPercent(bulletNum/85*100)
-    self.progAccuracy:setPercent(accuracy/99*100)
-    self.progReload  :setPercent((1-reloadTime/4.2)*100)
-    self.progBulletNext  :setPercent(bulletNumNext/85*100)
-    self.progAccuracyNext:setPercent(accuracyNext/99*100)
-    self.progReloadNext  :setPercent((1-reloadTimeNext/4.2)*100)
+    local bulletNum,accuracy,reloadTime,demage = self.weaponListModel:getWeaponProperity(self.weaponId)
+    local bulletNumNext,accuracyNext,reloadTimeNext,demageNext = self.weaponListModel:getWeaponProperity(self.weaponId+1)
+    local demageMax = self.weaponListModel:getWeaponProperity(10).demage
+    self.progBullet  :setPercent(bulletNum/kMaxBullet*100)
+    self.progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
+    self.progReload  :setPercent((kMaxSpeed/reloadTime)*100)
+
+    self.progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)
+    self.progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
+    self.progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
+
     self.labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
@@ -192,7 +198,8 @@ function WeaponListLayer:refreshComment(index)
             end
         end
     end
-    self.weaponListModel:getWeaponProperity(self.weaponId)
+
+    -- refresh button
     self:showButton()
 end
 ------------- 
@@ -233,8 +240,8 @@ function WeaponListLayer:buyWeapon(weaponid)
 end
 
 -- 升级事件
-function WeaponListLayer:strengthen(weaponid)
-    self.weaponListModel:strengthen(weaponid)
+function WeaponListLayer:intensify(weaponid)
+    self.weaponListModel:intensify(weaponid)
 end
 
 -- 一键满级事件
