@@ -28,7 +28,6 @@ local configs = {
 			0.30,
 		},							
 	}
-	
 }
 
 

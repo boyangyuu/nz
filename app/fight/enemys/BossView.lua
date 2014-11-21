@@ -8,7 +8,7 @@
 
 --import
 
-import(".BossConfigs")
+import(".BossConfig_1")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")

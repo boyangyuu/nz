@@ -133,18 +133,6 @@ function MapView:updateEnemys(event)
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:checkWave()
-	local function checkEnemysEmpty()
-		if #self.enemys == 0 then 
-			-- print("第"..self.waveIndex.."波怪物消灭完毕")
-			self.waveIndex = self.waveIndex + 1
-			self:updateEnemys()
-			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-		end
-	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
-end
-
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
 		local function addEnemyFunc()
@@ -208,7 +196,7 @@ end
 
 --fight
 function MapView:tick(dt)
-	--检查enemy和boss的状态
+	--检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
 			self:removeEnemy(enemy, i)

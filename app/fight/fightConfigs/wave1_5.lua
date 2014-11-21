@@ -11,7 +11,7 @@ local waves = {
 				delay = {0.3},
 				property = { 
 					type = "boss",
-					id = 1,
+					bossId = 1,
 				},
 			},		
 		},
