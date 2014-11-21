@@ -59,7 +59,7 @@ function getArmature(name, src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:removeArmatureFileInfo(src)
+    -- manager:removeArmatureFileInfo(src)
     manager:addArmatureFileInfo(src)
     local armature = ccs.Armature:create(name) 
     return armature
@@ -77,8 +77,9 @@ end
 
 function drawBoundingBox(parent, target, color)
     -- if isTest == false then 
-    --     return 
-    -- end
+    if true then
+        return 
+    end
     local cbb = target:getCascadeBoundingBox()
     local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
     local points = {

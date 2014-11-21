@@ -15,7 +15,7 @@ import("..includes.functionUtils")
 -- 常量
 
 -- 定义事件
-Actor.CHANGE_STATE_EVENT = "CHANGE_STATE_EVENT"
+Actor.CHANGE_STATE_EVENT  = "CHANGE_STATE_EVENT"
 Actor.START_EVENT         = "START_EVENT"
 Actor.READY_EVENT         = "READY_EVENT"
 Actor.FIRE_EVENT          = "FIRE_EVENT"
@@ -23,10 +23,11 @@ Actor.FREEZE_EVENT        = "FREEZE_EVENT"
 Actor.THAW_EVENT          = "THAW_EVENT"
 Actor.KILL_EVENT          = "KILL_EVENT"
 Actor.RELIVE_EVENT        = "RELIVE_EVENT"
-Actor.HP_DECREASE_EVENT    = "HP_DECREASE_EVENT"
-Actor.HP_INCREASE_EVENT    = "HP_INCREASE_EVENT"
+Actor.HP_DECREASE_EVENT   = "HP_DECREASE_EVENT"
+Actor.HP_INCREASE_EVENT   = "HP_INCREASE_EVENT"
 Actor.ATTACK_EVENT        = "ATTACK_EVENT"
 Actor.FIRE_THROW_EVENT    = "FIRE_THROW_EVENT"
+Actor.STOP_EVENT          = "STOP_EVENT"  
 
 
 -- 定义属性
@@ -173,7 +174,7 @@ end
 
 function Actor:setFullHp()
     self.hp_ = self:getMaxHp()
-    print("self.hp_", self.hp_)
+    -- print("self.hp_", self.hp_)
 end
 
 function Actor:increaseHp(hp)
@@ -194,8 +195,8 @@ function Actor:increaseHp(hp)
 end
 
 function Actor:decreaseHp(hp)
-    assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
-    assert(hp > 0, "Actor:increaseHp() - invalid hp")
+    -- assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
+    -- assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ - hp
     if newhp <= 0 then
@@ -276,23 +277,23 @@ function Actor:onFire_(event)
 end
 
 function Actor:onFreeze_(event)
-    printf("actor %s:%s frozen", self:getId(), self.nickname_)
+    -- printf("actor %s:%s frozen", self:getId(), self.nickname_)
     self:dispatchEvent({name = Actor.FREEZE_EVENT})
 end
 
 function Actor:onThaw_(event)
-    printf("actor %s:%s thawing", self:getId(), self.nickname_)
+    -- printf("actor %s:%s thawing", self:getId(), self.nickname_)
     self:dispatchEvent({name = Actor.THAW_EVENT})
 end
 
 function Actor:onKill_(event)
-    printf("actor %s:%s dead", self:getId(), self.nickname_)
+    -- printf("actor %s:%s dead", self:getId(), self.nickname_)
     self.hp_ = 0
     self:dispatchEvent({name = Actor.KILL_EVENT})
 end
 
 function Actor:onRelive_(event)
-    printf("actor %s:%s relive", self:getId(), self.nickname_)
+    -- printf("actor %s:%s relive", self:getId(), self.nickname_)
     self:setFullHp()
     self:dispatchEvent({name = Actor.RELIVE_EVENT})
 end

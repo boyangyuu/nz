@@ -40,18 +40,18 @@ function InlayLayer:initLeftBtn()
     local oneForAllBtn = cc.uiloader:seekNodeByName(inlayRootNode, "oneForAllBtn")
     addBtnEventListener(godWeaponBtn, function(event)
                 if event.name=='began' then
-                    print("godWeaponBtn is begining!")
+                    -- print("godWeaponBtn is begining!")
                     return true
                 elseif event.name=='ended' then
-                    print("godWeaponBtn is pressed!")
+                    -- print("godWeaponBtn is pressed!")
                 end
             end)
     addBtnEventListener(oneForAllBtn, function(event)
                 if event.name=='began' then
-                    print("oneForAllBtn is begining!")
+                    -- print("oneForAllBtn is begining!")
                     return true
                 elseif event.name=='ended' then
-                    print("oneForAllBtn is pressed!")
+                    -- print("oneForAllBtn is pressed!")
                 end
             end)
 
@@ -60,10 +60,10 @@ function InlayLayer:initLeftBtn()
         btn[i] = cc.uiloader:seekNodeByName(inlayRootNode, "btn_"..i)
         btn[i]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then
-                print("1 of 6 Btns is begining!")
+                -- print("1 of 6 Btns is begining!")
                 return true
             elseif event.name=='ended' then
-                print("1 of 6 Btns is pressed!")
+                -- print("1 of 6 Btns is pressed!")
                 colorBtnNum[#colorBtnNum + 1] = i
                 self:refreshBtncolor(i)
                 self:refreshListView(i)

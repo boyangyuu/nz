@@ -32,8 +32,7 @@ function BossView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
-    
-   
+
     --test
     self:initBody()
 
@@ -45,19 +44,30 @@ function BossView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
     local node = cc.uiloader:load("heroUI.ExportJson")
-    self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
+    self.blood = cc.uiloader:seekNodeByName(node, "bossBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
     self.blood:setPosition(0, bound.height/2 + 150)
-    self.armature:addChild(self.blood, 100) 
-	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
-	self:setBlood(1.0)
+    self.armature:addChild(self.blood, 100)
 end
 
 function BossView:setBlood(scale)
-    local bloodBg = cc.uiloader:seekNodeByName(self.blood, "bloodBg")
-    local oSize = bloodBg:getContentSize()
-    self.bloodValueNode:setLayoutSize(oSize.width * scale, oSize.height)	
+    local test = 1 / 3
+    local bloodHp = nil
+    if scale > test * 2 then
+    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood1")
+    	test = 100 - (1 - scale) * 3 * 100
+    elseif scale > test and scale <= test * 2 then
+    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood2")
+    	cc.uiloader:seekNodeByName(self.blood, "bossBlood1"):setPercent(0)
+    	test = 100 - (test * 2 - scale) * 3 * 100
+    else
+    	cc.uiloader:seekNodeByName(self.blood, "bossBlood2"):setPercent(0)
+    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood3")
+    	test = scale * 3 * 100
+    end
+    
+    bloodHp:setPercent(test)
 end
 
 function BossView:playStand()
@@ -105,7 +115,7 @@ function BossView:playKill(event)
 end
 
 function BossView:playSkill(skillName)
-	print("BossView:playSkill: "..skillName)
+	-- print("BossView:playSkill: "..skillName)
 	local str =  string.sub(skillName, 1, 4)
 	print("skillName", str)
 	if skillName == "moveLeftFire" then 
@@ -119,7 +129,7 @@ function BossView:playSkill(skillName)
 	
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
-		print("index", index)
+		-- print("index", index)
 		self:playWeak(tonumber(index))
 	end
 end
@@ -266,7 +276,7 @@ function BossView:checkSkill(demage)
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				print("v", v)
+				-- print("v", v)
 				-- print("persentC", persentC)
 				-- print("persentO", persentO)
 				print("playSKill:"..skillName)
@@ -298,7 +308,7 @@ function BossView:onHitted(demage)
 	if isRed then return end
 	local function callfunc()
 		if isRed then 
-			print("回复")
+			-- print("回复")
 			self.armature:setColor(cc.c3b(255,255,255))
 			
 		end
@@ -308,7 +318,7 @@ function BossView:onHitted(demage)
 		isRed = false
 	end
 
-	print("变红")
+	-- print("变红")
 	isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
 	scheduler.performWithDelayGlobal(callfunc, 20/60)
@@ -358,7 +368,7 @@ function BossView:getEnemyArmature()
 end
 
 function BossView:getRange(rectName)
-	print("rectName", rectName)
+	-- print("rectName", rectName)
 	local range, isValid = BossView.super.getRange(self, rectName)
 	if range == nil then return nil, false end
 	local str =  string.sub(rectName, 1, 4)
@@ -366,7 +376,7 @@ function BossView:getRange(rectName)
 		local weakData = self.weakNode[rectName]
 		assert(weakData, "weakData is nil" .. rectName) 
 		isValid = weakData["valid"]
-		print("isValid", isValid)
+		-- print("isValid", isValid)
 	end
 	return range, isValid
 end

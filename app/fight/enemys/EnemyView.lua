@@ -10,6 +10,7 @@
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
+local Grenade = import("..Entity.Grenade")
 local EnemyView = class("EnemyView", AbstractEnemyView)
 
 function EnemyView:ctor(property)
@@ -66,8 +67,36 @@ end
 
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
-	print("self.hero:getHp()", self.hero:getHp())
-	print("self.enemy:getDemage()", self.enemy:getDemage())
+	-- print("self.hero:getHp()", self.hero:getHp())
+	-- print("self.enemy:getDemage()", self.enemy:getDemage())
+	self.enemy:hit(self.hero)
+	-- self:playThrow()
+end
+
+function EnemyView:playThrow()
+	self.armature:getAnimation():play("throw", -1, 1)
+	local pos = cc.p(self:getPositionX(), self:getPositionY() + 220)
+	local function test( )
+		print("hello world")
+	end
+	-- self:getParent():addChild(Grenade.createGrenade(pos, cc.p(200, 0), test, true))
+
+	-- local tGrenade = getArmature("shoulei", "res/Fight/heroAnim/shoulei/shoulei.ExportJson")
+	-- self:getParent():addChild(tGrenade)
+	-- tGrenade:setPosition(self:getPositionX(), self:getPositionY() + 220)
+	-- tGrenade:setScale(0.5)
+	-- tGrenade:getAnimation():play("lei", -1, 1)
+	-- tGrenade:runAction(
+	-- 	cc.Sequence:create(
+	-- 		cc.Spawn:create(cc.JumpTo:create(1, cc.p(200, 0), 200, 1), cc.ScaleTo:create(1, 2.5)),
+	-- 	 	cc.CallFunc:create(
+	-- 	 		function ()
+ --                    -- self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, damage = 600, destPos = event.throwPos})
+	-- 				tGrenade:removeFromParent()
+	-- 			end
+	-- 		)
+	-- 	)
+	-- )
 	self.enemy:hit(self.hero)
 end
 
@@ -116,7 +145,7 @@ function EnemyView:playRollRight()
 end
 
 function EnemyView:playHitted(event)
-	print("EnemyView:playHitted(event)")
+	-- print("EnemyView:playHitted(event)")
 	if not self.enemy:isDead()  then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
@@ -167,7 +196,11 @@ function EnemyView:tick(t)
 		self:play("", handler(self, self.playRoll))
 		return
 	end
+
+	--throw 
 end
+
+--throw 
 
 function EnemyView:onHitted(demage)
 	if self.enemy:canHitted() then
@@ -191,7 +224,7 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 				self:playStand()
 			end
     	elseif movementID == "die" then 
-    		print("self:setDeadDone()")
+    		-- print("self:setDeadDone()")
     		self:setDeadDone()
     	end 
 	end

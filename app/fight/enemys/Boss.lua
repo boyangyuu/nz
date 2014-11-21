@@ -33,7 +33,7 @@ function Boss:getMoveRate()
 end
 
 function Boss:getDemageScale(rangeStr)
-    print(rangeStr, "rangeStr")
+    -- print(rangeStr, "rangeStr")
     return self.config[rangeStr]
 end
 

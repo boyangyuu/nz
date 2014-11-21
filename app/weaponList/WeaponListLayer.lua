@@ -35,8 +35,8 @@ end
 -- loadCCS
 function WeaponListLayer:loadCCS()
     -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
-    local controlNode = cc.uiloader:load("gunzb_1.json")
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb/")
+    local controlNode = cc.uiloader:load("gunzb_1.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 end
