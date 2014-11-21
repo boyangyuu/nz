@@ -18,6 +18,7 @@ function AbstractEnemyView:ctor(property)
 	self.enemy = self:getModel(property.id)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
+	self.isPause = false
 	self.playCache = {}
 
 	--init armature
@@ -27,6 +28,7 @@ function AbstractEnemyView:ctor(property)
 
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
+    cc.EventProxy.new(self.hero, self):addEventListener("stop", handler(self, self.testStop))
     self:scheduleUpdate()  	
 end
 
@@ -39,6 +41,21 @@ end
 			enemy = xx,
 		},}
 ]]
+
+function AbstractEnemyView:testStop()
+	self.isPause = not self.isPause
+	local actionManager = cc.Director:getInstance():getActionManager()
+	local tAnimation = self.armature:getAnimation()
+	if self.isPause then
+		self:pause()
+		tAnimation:pause()
+		actionManager:pauseTarget(self)
+	else
+		self:resume()
+		tAnimation:resume()
+		actionManager:resumeTarget(self)
+	end
+end
 
 function AbstractEnemyView:getTargetData(rectFocus)
 	local targetData = {}

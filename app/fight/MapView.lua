@@ -51,24 +51,25 @@ end
 
 
 function MapView:setAllEntityActive( event )
-	local actionManager = cc.Director:getInstance():getActionManager()
-	self.isPause = not self.isPause
-	for i,enemy in ipairs(self.enemys) do
-		if enemy and not enemy:getDeadDone() then
-			if true == self.isPause then
-				enemy.armature:getAnimation():pause()
-				enemy:pause()
-				actionManager:pauseTarget(enemy)
-			end
-			if false == self.isPause then
-				-- print("enemy resume")
-				actionManager:resumeTarget(enemy)
-				enemy.armature:getAnimation():resume()
-				enemy:resume()
+	self.hero:dispatchEvent({name = "stop"})
+	-- local actionManager = cc.Director:getInstance():getActionManager()
+	-- self.isPause = not self.isPause
+	-- for i,enemy in ipairs(self.enemys) do
+	-- 	if enemy and not enemy:getDeadDone() then
+	-- 		if true == self.isPause then
+	-- 			enemy.armature:getAnimation():pause()
+	-- 			enemy:pause()
+	-- 			actionManager:pauseTarget(enemy)
+	-- 		end
+	-- 		if false == self.isPause then
+	-- 			-- print("enemy resume")
+	-- 			actionManager:resumeTarget(enemy)
+	-- 			enemy.armature:getAnimation():resume()
+	-- 			enemy:resume()
 
-			end
-		end
-	end
+	-- 		end
+	-- 	end
+	-- end
 end
 
 function MapView:loadCCS()
