@@ -6,18 +6,20 @@ local configs = {
 	levelId = 1, --第1小关
 	groupId = 1, --第1大关
 	animName = "boss1", --图片名字
+	hp = 2000,
+	demage = 50,
 	skilltrigger = {   --技能触发
 		moveLeftFire = {
-			0.95, 0.80,
+			0.95, 0.70,
 		},
 		moveRightFire = {
 			0.65, 0.30,
 		},
 		daoDan = {
-			0.99,0.90,0.70, 0.60, 0.50, 0.40,
+			0.90, 0.60, 0.50, 0.40,
 		},
 		saoShe = {
-			0.90,0.65, 0.55,
+			0.65, 0.55,
 		},
 		weak2 = {
 			0.70,
@@ -28,7 +30,6 @@ local configs = {
 	}
 	
 }
-
 
 
 function getBoss(levelId, groupId)

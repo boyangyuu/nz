@@ -22,7 +22,7 @@ local EnemyManager = import(".EnemyManager")
 
 --常量
 local groupId = 1
-local levelId = 1
+local levelId = 5
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -171,6 +171,7 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--enemy 改为工厂
 	local enemyView
+	property.placeNode = placeNode
 	print("create enemy", property.type)
 	if property.type == "boss" then 
 		enemyView = BossView.new(property)
@@ -181,6 +182,7 @@ function MapView:addEnemy(placeName, property, pos)
 	else
 		enemyView = EnemyView.new(property)
 	end
+
 	self.enemys[#self.enemys + 1] = enemyView
 
 	--scale

@@ -2,52 +2,37 @@ local waveClass = class("wave1_1", cc.mvc.ModelBase)
 
 local waves = {
 	{
-		enemys = {  --boss
-			{
-				time = 3,	
-				num = 1,
-				place = "place3",
-				pos = {250},
-				delay = {0.3},
-				property = { 
-					type = "boss",
-					id = 1,
-				},
-			},		
-		},
-	},
-	{
 		enemys = {
 			{
 				time = 2,
-				num = 5,
+				num = 1,
 				place = "place1",
-				delay = {0.3, 0.6},
-				pos = {10, 200, 50, 100, 90},
+				delay = {0, 0.3},
+				pos = {50, 20},
 				property = { 
-					startState = "rollright",
-					id = 1,
+					startState = "",
+					id = "1",
 				},
 			},
 			{
-				time = 3,
-				num = 5,
+				time = 7,
+				num = 2,
 				place = "place2",
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 200, 50, 100, 90},	
+				delay ={0, 0.3},
+				pos = {10,100},		
 				property = { 
-					startState = "rollleft",
-					id = 1,
+					startState = "",
+					id = "1",
 				},
 			},	
 			{
-				time = 2,
-				num = 5,
+				time = 8,
+				num = 1,
 				place = "place2",
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},					
+				delay = {0.5},
+				pos = {50},
 				property = { 
-					id = 1,
+					id = "1",
 				},
 			},						
 		},
@@ -55,19 +40,81 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 10,
-				num = 5,
-				place = "place1",
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},
+				time = 3,
+				num = 2,
+				place = "place3",
+				delay = {0, 0.3},
+				pos = {120,130},
+				property = { 
+					startState = "rollleft",
+					id = "1",
+				},
+			},	
+			{
+				time = 8,
+				num = 3,
+				place = "place4",
+				delay = {0, 0.4, 0.8},
+				pos = {0, 50, 100},
 				property = { 
 					startState = "rollright",
-					id = 1,
+					id = "1",
 				},
-			},					
+			},						
 		},
-	},		
+
+	},
+	{
+		enemys = {
+			{
+				time = 3,
+				num = 2,
+				place = "place5",
+				delay = {0, 0.1},
+				pos = {0,100},
+				property = { 
+					startState = "",
+					id = "1",
+				},
+			},	
+			{
+				time = 4,
+				num = 2,
+				place = "place6",
+				delay = {0, 0.1},
+				pos = {20,90},
+				property = { 
+					startState = "",
+					id = "1",
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				place = "place7",
+				delay = {0.1},
+				pos = {20},
+				property = { 
+					startState = "",
+					id = "1",
+				},
+			},
+			{
+				time = 6,
+				num = 2,
+				place = "place8",
+				delay = {0, 0.3},
+				pos = {100, 150},
+				property = { 
+					startState = "rollleft",
+					id = "1",
+				},
+			},						
+		},
+
+	},				
 }
+
 
 --测试 sanBing
 -- waves = {

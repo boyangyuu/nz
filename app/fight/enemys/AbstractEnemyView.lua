@@ -17,6 +17,7 @@ function AbstractEnemyView:ctor(property)
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property.id)
 	self:setPlaceBound(property.boundPlace)
+	self.placeNode = property.placeNode
 	self.deadDone = false
 	self.playCache = {}
 
@@ -122,36 +123,61 @@ end
 -- 	-- body
 -- end
 
-function AbstractEnemyView:checkPlace(widthOffset)
-	if self.placeBound == nil then 
-		print("self.placeBound is nil")
-		return false 
-	end
-	local x1, x2 = self.placeBound.x , self.placeBound.x + self.placeBound.width
-	-- print("self.placeBound %d %d",x1, x2) 
-	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-	local bound = self.armature:getCascadeBoundingBox()
-	bound.x, bound.y = pWorld.x, bound.y
-	-- print("self.armature %d %d",bound.x, bound.y)
-	local destx =  bound.x + widthOffset
-	return x1 < destx and x2 > destx
+function AbstractEnemyView:checkPlace(offset)
+	local offset = offset or 0
+	--place的范围
+	local placeNode = self:getParent()
+	local pWorld1	  = placeNode:convertToWorldSpace(cc.p(0,0))
+	local bound1 	  = placeNode:getBoundingBox()
+	
+	local xLeftLimit  = pWorld1.x  
+	local xRightLimit = pWorld1.x + bound1.width
+	-- dump(pWorld1, "pWorld1")
+	-- print("xLeftLimit", xLeftLimit)
+	-- print("xRightLimit", xRightLimit)
+
+	--我的范围
+	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+	local pWorld2 = self.armature:convertToWorldSpace(cc.p(0,0))
+	-- dump(pWorld2, "pWorld2")
+	local scale = self:getScale()
+	local bound2  = bodyNode:getBoundingBox()
+	local xLeft   = pWorld2.x - bound2.width/2 * scale + offset
+	local xRight  = pWorld2.x + bound2.width/2 * scale + offset
+	-- print("xLeft", xLeft)
+	-- print("xRight", xRight)	
+	return xLeftLimit < xLeft and xRight < xRightLimit 
 end
 
 function AbstractEnemyView:play(state, handlerFunc)
+	local per = self.enemy:getHp() / self.enemy:getMaxHp()
+	print("进栈 state: "..state..", 当前血量:"..per)
+	
 	local index = #self.playCache + 1
 	local function play()
 		handlerFunc()
-		table.remove(self.playCache, index)
+		dump(self.playCache, "self.playCache")
+		local state = self.playCache[1].state
+		table.remove(self.playCache, 1)
+		print("出栈 state:"..state)
 	end
-	self.playCache[index] = play
+	self.playCache[index] = {func = play, state = state}
+	
 end
 
 function AbstractEnemyView:getPlayCache()
-	return self.playCache[#self.playCache] or nil
+	if self.playCache[1] == nil then 
+		return nil 
+	end
+	return self.playCache[1].func
 end
 
 function AbstractEnemyView:clearPlayCache()
 	self.playCache = {}
+end
+
+function AbstractEnemyView:getScale()
+	return self:getScaleX()
 end
 
 --接口

@@ -40,7 +40,7 @@ function Hero:ctor(properties, events, callbacks)
     self:setCooldown(coolDown)
 
     self:setDemage(30)
-    self:setMaxHp(100000000)  
+    self:setMaxHp(100000)  
     Hero.super.ctor(self, properties)   
 
 end

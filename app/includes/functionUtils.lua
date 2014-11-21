@@ -79,8 +79,9 @@ function drawBoundingBox(parent, target, color)
     -- if isTest == false then 
     --     return 
     -- end
-    local cbb = target:getCascadeBoundingBox()
-    local left, bottom, width, height = cbb.origin.x, cbb.origin.y, cbb.size.width, cbb.size.height
+    local cbb = target:getBoundingBox()
+    -- dump(cbb, "cbb")
+    local left, bottom, width, height = cbb.x, cbb.y, cbb.width, cbb.height
     local points = {
         {left, bottom},
         {left + width, bottom},

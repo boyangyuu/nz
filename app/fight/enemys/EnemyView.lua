@@ -11,6 +11,10 @@ local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local EnemyView = class("EnemyView", AbstractEnemyView)
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+
+local kWalkWidth = 20
+local kRollWidth = 100
 
 function EnemyView:ctor(property)
 	EnemyView.super.ctor(self, property) 
@@ -19,12 +23,16 @@ function EnemyView:ctor(property)
     self:initBlood() 
 
 	--play
-	self:playStartState(property.startState)
+	self:playStand()
+	local function start()
+		self:playStartState(property.startState)
+	end
+	scheduler.performWithDelayGlobal(start, 0.000)
+	
 
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
-        -- :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     --test
     self:test()
 end
@@ -52,11 +60,11 @@ end
 ---- state ----
 function EnemyView:playStartState(state)
 	if state == "rollleft" then 
-		self:playRollLeft()
+		self:play("playRollLeft", handler(self, self.playRollLeft))
 	elseif state == "rollright" then
-		self:playRollRight()
+		self:play("playRollRight", handler(self, self.playRollRight))
 	else 
-		self:playStand()
+		self:play("playStand", handler(self, self.playStand))
 	end
 end
 
@@ -75,9 +83,9 @@ function EnemyView:playWalk()
 	local isLeft = 1
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then isLeft = -1 end
-	local dis = 2 * isLeft
-    local widthOffset = 100 * isLeft
-    local isAble = self:checkPlace(widthOffset)
+	local dis = 5 * isLeft * self:getScale()
+    local widthOffset = kWalkWidth * isLeft
+    local isAble = self:checkPlace(widthOffset * self:getScale())
 
     if not isAble then return end
 	self.armature:getAnimation():play("walk" , -1, 1)
@@ -89,16 +97,16 @@ end
 function EnemyView:playRoll()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then 
-		self:playRollLeft()
+		self:play("playRollLeft", handler(self, self.playRollLeft))
 	else
-		self:playRollRight()
+		self:play("playRollRight", handler(self, self.playRollRight))
 	end
 end
 
 function EnemyView:playRollLeft()
-	if not self:checkPlace(-150) then return end
+	if not self:checkPlace(-kRollWidth * self:getScale()) then return end
 	self.armature:getAnimation():play("rollleft" , -1, 1) 
-	local dis = 5 
+	local dis = 8 * self:getScale() 
 
 	local action = cc.MoveBy:create(1/60, cc.p(-dis, 0))
     local seq = cc.Sequence:create(action)	
@@ -106,9 +114,9 @@ function EnemyView:playRollLeft()
 end
 
 function EnemyView:playRollRight()
-	if not self:checkPlace(150) then return end
+	if not self:checkPlace(kRollWidth * self:getScale()) then return end
 	self.armature:getAnimation():play("rollright" , -1, 1) 
-	local dis = 5
+	local dis = 8 * self:getScale() 
 
 	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
     local seq = cc.Sequence:create(action)	
@@ -136,8 +144,8 @@ function EnemyView:test()
 	--body
 	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-	drawBoundingBox(self.armature, weakNode, "red") 
-	drawBoundingBox(self.armature, bodyNode, "yellow") 
+-- 	drawBoundingBox(self.armature, weakNode, "red") 
+-- 	drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
 --AbstractEnemyView interface
@@ -145,10 +153,11 @@ function EnemyView:tick(t)
 	--change state
 	--fire
 	local fireRate = self.enemy:getFireRate()
-	local randomSeed 
+	local randomSeed  
+	math.newrandomseed()
 	randomSeed = math.random(1, fireRate)
 	if randomSeed > fireRate - 1 then 
-		self:play("", handler(self, self.playFire))
+		self:play("playFire", handler(self, self.playFire))
 		return
 	end
 
@@ -156,15 +165,15 @@ function EnemyView:tick(t)
 	local walkRate = self.enemy:getWalkRate()
 	randomSeed =  math.random(1, walkRate)
 	if randomSeed > walkRate - 1 then 
-		self:play("", handler(self, self.playWalk))
+		self:play("playWalk", handler(self, self.playWalk))
 		return 
 	end
 
 	--roll
-	local rollRate = self.enemy:getRollRate()
+	local rollRate = self.enemy:getRollRate()/4
 	randomSeed =  math.random(1, rollRate)
 	if randomSeed > rollRate - 1 then 
-		self:play("", handler(self, self.playRoll))
+		self:playRoll()
 		return
 	end
 end
@@ -181,7 +190,7 @@ end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		-- print("animationEvent id ", movementID)
+		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
@@ -191,7 +200,8 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 				self:playStand()
 			end
     	elseif movementID == "die" then 
-    		print("self:setDeadDone()")
+    		-- print("self:setDeadDone()")
+    		self:clearPlayCache()
     		self:setDeadDone()
     	end 
 	end
