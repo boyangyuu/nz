@@ -457,8 +457,8 @@ function BossView:getRange(rectName)
 	return range, isValid
 end
 
-function BossView:getModel(id)
-	return Boss.new({id = id})
+function BossView:getModel(property)
+	return Boss.new(properties)
 end
 
 return BossView

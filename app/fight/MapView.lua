@@ -18,11 +18,9 @@ local EnemyView = import(".enemys.EnemyView")
 local BossView = import(".enemys.BossView")
 local MissileEnemyView = import(".enemys.MissileEnemyView")
 local SanEnemyView = import(".enemys.SanEnemyView")
-local EnemyManager = import(".EnemyManager")
 
 --常量
-local groupId = 1
-local levelId = 5
+
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -34,8 +32,7 @@ function MapView:ctor()
 	self.focusView = app:getInstance(FocusView)
 	self.enemys = {}
 	self.waveIndex = 1
-	self.enemyManager = app:getInstance(EnemyManager)
-
+	self.fightConfigs = app:getInstance(FightConfigs)
 	--ccs
 	self:loadCCS()
 
@@ -58,6 +55,9 @@ end
 
 function MapView:loadCCS()
 	--map
+	local groupId = self.hero:getGroupId()
+	local levelId = self.hero:getLevelId()
+
 	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
@@ -99,7 +99,7 @@ end
 --enemy
 function MapView:updateEnemys(event)
 	--wave config
-	local waveConfig = FightConfigs:getWaveConfig(groupId, levelId)
+	local waveConfig = self.fightConfigs:getWaveConfig(groupId, levelId)
 	local wave = waveConfig:getWaves(self.waveIndex)
 	dump(wave, "wave")
 

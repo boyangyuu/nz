@@ -99,8 +99,8 @@ function MissileEnemyView:getEnemyArmature()
 end
 
 
-function MissileEnemyView:getModel(id)
-    return Enemy.new({id = id})
+function MissileEnemyView:getModel(property)
+    return Enemy.new(property)
 end
 
 

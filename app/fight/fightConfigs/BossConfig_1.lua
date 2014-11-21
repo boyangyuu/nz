@@ -1,6 +1,9 @@
 --[[
-	关卡1-2 【boss】
+	boss 1
 ]]
+
+local BossConfig = class("BossConfig_1", cc.mvc.ModelBase)
+local FightConfigs = import(".FightConfigs")
 local configs = {
 
 	levelId = 1, --第1小关
@@ -8,7 +11,12 @@ local configs = {
 	animName = "boss1", --图片名字
 	hp = 2000,
 	demage = 50,
-	skilltrigger = {   --技能触发
+	fireRate = 200,
+	walkRate = 200,
+	fireOffset = 0.2,
+	dmageScale = 2.1,
+	
+	skilltrigger = {   --技能触发(可以同时)
 		moveLeftFire = {
 			0.95, 0.70,
 		},
@@ -31,9 +39,8 @@ local configs = {
 }
 
 
-function getBoss(levelId, groupId)
-	assert(configs)
-	return configs
+function getBoss(index)
+	local wave = FightConfigs:getWaveConfig(levelId, groupId)
 end
 
 function getMoveLeftAction(scale)

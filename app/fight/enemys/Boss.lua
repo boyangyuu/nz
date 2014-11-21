@@ -11,30 +11,32 @@ local Boss = class("Boss", Actor)
 
 function Boss:ctor(properties)
     --super
-    local config = getConfigByID("config/boss.json", properties.id)
-    self.config = config    
-    assert(config, "config id is wrong id:"..properties.id)
+    dump(properties, "properties")
+    -- self.config = .. --根据bossconfig_1 
     local property = {
-        id = "boss"..properties.id,
+        id = "boss",
         maxHp = 4000,
-        demage = config.demage,
+        demage = 20,
     }
-    Boss.super.ctor(self, property)	
+    Boss.super.ctor(self, property)
 
     --
 end
 
 function Boss:getFireRate()
-	return self.config["fireRate"]
+    return 100
+	-- return self.config["fireRate"] 
 end
 
 function Boss:getMoveRate()
-	return self.config["walkRate"]
+    return 100
+	-- return self.config["walkRate"]
 end
 
 function Boss:getDemageScale(rangeStr)
-    print(rangeStr, "rangeStr")
-    return self.config[rangeStr]
+    return 2.0
+    -- print(rangeStr, "rangeStr")
+    -- return self.config[rangeStr]
 end
 
 return Boss

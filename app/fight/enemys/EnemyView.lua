@@ -215,8 +215,8 @@ function EnemyView:getEnemyArmature()
 	return armature
 end
 
-function EnemyView:getModel(id)
-	return Enemy.new({id = id})
+function EnemyView:getModel(property)
+	return Enemy.new(property)
 end
 
 return EnemyView

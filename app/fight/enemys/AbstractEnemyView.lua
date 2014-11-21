@@ -13,9 +13,10 @@ end)
 
 ---- event ----
 function AbstractEnemyView:ctor(property)
+	dump(property, "AbstractEnemyView property")
 	--instance
     self.hero = app:getInstance(Hero)	
-	self.enemy = self:getModel(property.id)
+	self.enemy = self:getModel(property)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.playCache = {}
