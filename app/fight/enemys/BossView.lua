@@ -71,7 +71,6 @@ function BossView:playFire()
 end
 
 function BossView:playHitted(event)
-	-- print("playHitted")
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)	
@@ -222,6 +221,7 @@ end
 function BossView:playSaoShe()
 	self.armature:getAnimation():play("saoshe" , -1, 1)
 
+	--持续开枪 0.1
 	self.enemy:hit(self.hero)
 end
 

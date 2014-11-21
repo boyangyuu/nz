@@ -45,7 +45,7 @@ function MyApp:getInstance(cls, id)
         self:setObject(idStr, modelObj)
         print("MyApp create model id is:", idStr)
     else
-        print("MyApp get model id is:", idStr)
+        -- print("MyApp get model id is:", idStr)
         modelObj = self:getObject(idStr)
     end  
     return modelObj

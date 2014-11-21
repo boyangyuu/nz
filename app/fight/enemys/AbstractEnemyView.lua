@@ -17,7 +17,6 @@ function AbstractEnemyView:ctor(property)
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property.id)
 	self:setPlaceBound(property.boundPlace)
-	self.placeNode = property.placeNode
 	self.deadDone = false
 	self.playCache = {}
 
