@@ -8,23 +8,24 @@
 
 --import
 
-import(".BossConfig_1")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
+local FightConfigs = import("..fightConfigs.FightConfigs")
 local BossView = class("BossView", AbstractEnemyView)
 
 function BossView:ctor(property)
 	BossView.super.ctor(self, property) 
 
 	--config
-	self.config = getBoss(1,1)
+	self.config = FightConfigs:getBossConfig(property.configName)
+	dump(self.config, "self.config")
 
     --blood
     self:initBlood() 
 
-	--play
+	-- --play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
     --event
@@ -34,7 +35,7 @@ function BossView:ctor(property)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     
    
-    --test
+ --    --test
     self:initBody()
 
     self:playWeak(1)
@@ -84,12 +85,12 @@ function BossView:playMove()  --改为onMove
 	
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
-		local action = getMoveRightAction(1)
+		local action = self.config:getMoveRightAction(1)
 		self.armature:runAction(cc.RepeatForever:create(action))	
 
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
-		local action = getMoveLeftAction(1)
+		local action = self.config:getMoveLeftAction(1)
 		self.armature:runAction(cc.RepeatForever:create(action))		
 	end	
 end
@@ -349,6 +350,7 @@ function BossView:checkSkill(demage)
 	local persentO = (hp + demage)
 	local persentC = hp
 	local skilltrigger = self.config.skilltrigger
+	local skilltrigger = self.enemy:getSkillTrigger()
 	for skillName,persents in pairs(skilltrigger) do
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
@@ -458,7 +460,7 @@ function BossView:getRange(rectName)
 end
 
 function BossView:getModel(property)
-	return Boss.new(properties)
+	return Boss.new(property)
 end
 
 return BossView

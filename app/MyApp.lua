@@ -36,6 +36,7 @@ end
 
 function MyApp:getInstance(cls, id)
     local modelObj  
+    assert(cls, "cls is nil"..tostring(cls))
     local idStr = id or cls.__cname
     if not self:isObjectExists(idStr) then
         modelObj = cls.new(
