@@ -123,8 +123,8 @@ function SanEnemyView:getEnemyArmature()
     return armature
 end
 
-function SanEnemyView:getModel(id)
-    return Enemy.new({id = id})
+function SanEnemyView:getModel(property)
+    return Enemy.new(property)
 end
 
 return SanEnemyView

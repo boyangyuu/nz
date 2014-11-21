@@ -47,6 +47,22 @@ function Hero:ctor(properties, events, callbacks)
 
 end
 
+function Hero:setGroupId()
+    
+end
+
+function Hero:getGroupId()
+    return 1
+end
+
+function Hero:setLevelId()
+    
+end
+
+function Hero:getLevelId()
+    return 5
+end
+
 function Hero:BeHurt(event)
 
 	-- body

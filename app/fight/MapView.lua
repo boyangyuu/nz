@@ -32,6 +32,7 @@ function MapView:ctor()
 	self.waveIndex = 1
 	self.killEnemyCount = 0
 	self.isPause = false
+	self.fightConfigs = app:getInstance(FightConfigs)
 	--ccs
 	self:loadCCS()
 
@@ -73,6 +74,9 @@ end
 
 function MapView:loadCCS()
 	--map
+	local groupId = self.hero:getGroupId()
+	local levelId = self.hero:getLevelId()
+
 	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
@@ -114,7 +118,7 @@ end
 --enemy
 function MapView:updateEnemys(event)
 	--wave config
-	local waveConfig = FightConfigs:getWaveConfig(groupId, levelId)
+	local waveConfig = self.fightConfigs:getWaveConfig(groupId, levelId)
 	local wave = waveConfig:getWaves(self.waveIndex)
 	-- dump(wave, "wave")
 
@@ -148,18 +152,6 @@ function MapView:updateEnemys(event)
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:checkWave()
-	local function checkEnemysEmpty()
-		if #self.enemys == 0 then 
-			-- print("第"..self.waveIndex.."波怪物消灭完毕")
-			self.waveIndex = self.waveIndex + 1
-			self:updateEnemys()
-			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-		end
-	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
-end
-
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
 		local function addEnemyFunc()
@@ -191,8 +183,6 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	-- enemyView:setScaleX(scale:getScaleX())
-	-- enemyView:setScaleY(scale:getScaleY())
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
@@ -213,7 +203,7 @@ end
 
 --fight
 function MapView:tick(dt)
-	--检查enemy和boss的状态
+	--检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
 			self:removeEnemy(enemy, i)
@@ -222,7 +212,7 @@ function MapView:tick(dt)
 end
 
 function MapView:removeEnemy(enemy, i)
-	self:popGold(enemy)
+	-- self:popGold(enemy)
 	table.remove(self.enemys, i)
 	enemy:removeFromParent()
 	self.killEnemyCount = self.killEnemyCount + 1

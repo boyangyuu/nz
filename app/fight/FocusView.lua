@@ -18,12 +18,13 @@ end)
 function FocusView:ctor(properties)
 	
 	--instance
+	-- local fightConfigs = app:getInstance(FightConfigs)
 	self.hero = app:getInstance(Hero)
 	self.gun = app:getInstance(Gun)
 
 	--focus
 	local gunId = 1   -- todo 外界传 Gun
-	local focusId = gunId+11
+	local focusId = gunId + 11
     local src = "Fight/gunsAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
     local armature = getArmature("anim_zunxin_sq", src) 
     armature:setAnchorPoint(0.5,0.5)
@@ -33,7 +34,7 @@ function FocusView:ctor(properties)
 	self.focus:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(armature)    
 	self:playIdle()
-	local range = FightConfigs:getFocusRange()
+	local range = FightConfigs:getFocusRange() --todo 不要 fightConfigs 需要根据枪表来设置
 	self:setFocusRange(cc.size(range, range))
 	self.playIndex = "stand"
 

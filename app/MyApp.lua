@@ -36,6 +36,7 @@ end
 
 function MyApp:getInstance(cls, id)
     local modelObj  
+    assert(cls, "cls is nil"..tostring(cls))
     local idStr = id or cls.__cname
     if not self:isObjectExists(idStr) then
         modelObj = cls.new(
@@ -51,7 +52,7 @@ function MyApp:getInstance(cls, id)
     return modelObj
 end
 
-function MyApp:initGameState(  )
+function MyApp:initGameState()
     -- init GameState
     GameState.init(function(param)
         local returnValue=nil
@@ -73,14 +74,18 @@ function MyApp:initGameState(  )
         return returnValue
     end, "data.txt","1234")
     if io.exists(GameState.getGameStatePath()) then
+        print("dasfadfdf")
         GameData=GameState.load()
     else
+                print("5464536146846")
+
         self:createGameStateFile()
         GameData=GameState.load()
     end
 end
 
-function MyApp:createGameStateFile(  )
+function MyApp:createGameStateFile()
+    print("createGameStateFile")
     local data = GameData.data
     data = {
             weapons = {
@@ -111,7 +116,7 @@ function MyApp:createGameStateFile(  )
                       }
            }
     GameState.save(data)
-    dump(GameState.load())
+    dump(GameState.load(), "GameState.load()")
 end
 
 
