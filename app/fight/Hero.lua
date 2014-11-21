@@ -40,7 +40,7 @@ function Hero:ctor(properties, events, callbacks)
     self:setCooldown(coolDown)
 
     self:setDemage(30)
-    self:setMaxHp(100000)  
+    self:setMaxHp(10000)  
     Hero.super.ctor(self, properties)   
 
 end
@@ -58,7 +58,7 @@ function Hero:setLevelId()
 end
 
 function Hero:getLevelId()
-    return 5
+    return 1
 end
 
 function Hero:BeHurt(event)
