@@ -21,6 +21,7 @@ end)
 --定义事件
 
 function FightPlayer:ctor()
+    
     --instance
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
@@ -32,20 +33,44 @@ function FightPlayer:ctor()
     self:setTag(521)
     self.btnsIsShow = true
     self.resumeDefenceTinkHandler = nil
+    self.isPause = false
 
     --ui
     self:initUI()
 
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    cc.EventProxy.new(self.hero, self):addEventListener(Hero.BEHURT_DEFENCE_EVENT, handler(self, self.defenceBeHurtCallBack))
+    cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
+    cc.EventProxy.new(self.hero, self):addEventListener(Actor.STOP_EVENT, handler(self, self.setPause))
+    cc.EventProxy.new(self.hero, self):addEventListener("changeGold", handler(self, self.changeGoldCount))
 
     self:scheduleUpdate()   
 end
 
+function FightPlayer:setPause()
+    self.isPause = not self.isPause
+    self.gunBtnPressed = false
+end
+
+function FightPlayer:changeGoldCount(event)
+    local totolGold = event.goldCount
+    local tempChangeGoldHandler = nil
+    local function changeGold()
+        local currentGold = tonumber(self.labelGoldCount:getString())
+        if currentGold < totolGold then
+            currentGold = currentGold + 1
+            self.labelGoldCount:setString(currentGold)
+        else
+            scheduler.unscheduleGlobal(tempChangeGoldHandler)
+        end
+    end
+
+    tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.05)
+end
+
 function FightPlayer:fitArmoured()
     self:setBtnIsVisible()
-    self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_EVENT})
+    self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_START_EVENT})
 end
 
 function FightPlayer:setBtnIsVisible()
@@ -83,10 +108,6 @@ function FightPlayer:initUI()
 
     --touch area
     self:initTouchArea()
-
-    --init panel
-    self:initBar()
-
 end
 
 --启动盾牌恢复
@@ -102,7 +123,7 @@ function FightPlayer:launchDefenceResume()
             self.defenceResumeLoadingBar:removeFromParent()
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
-            self.hero:dispatchEvent({name = Hero.RESUME_DEFENCE_EVENT, isResumeDefence = false})
+            self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_RESUME_EVENT, isResumeDefence = false})
             return
         end
         self.labelDefenceResume:setString(t1 - 1)
@@ -119,22 +140,6 @@ function FightPlayer:defenceBeHurtCallBack(event)
         self.loadingBarDefenceHp:setPercent(0)
         self:launchDefenceResume()
     end
-end
-
-
-function FightPlayer:initBar()
-    --blood
-    self.heroBlood = cc.uiloader:seekNodeByName(self, "heroBlood")
-    local bloodValue = cc.uiloader:seekNodeByName(self.heroBlood, "bloodValue")
-    local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
-    local size = bloodBg:getContentSize()
-    bloodValue:setLayoutSize(size.width, size.height)
-
-    --init hero hp loadingbar
-
-    -- self.loadingBarHp = cc.uiloader:seekNodeByName(self, "loadingBarHeroHp")
-
-    --gold
 end
 
 
@@ -222,11 +227,15 @@ function FightPlayer:initBtns()
     self.btnGrenade:setTouchEnabled(true)
     self.btnGrenade:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
+    --labelGoldCount
+    self.labelGoldCount = cc.uiloader:seekNodeByName(self, "labelGoldCount")
+
     self.btnArmoured:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
 end
 
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
+    if self.isPause then return end
 
     --check
     -- dump(event, "event onMutiTouchBegin")
@@ -255,6 +264,9 @@ function FightPlayer:onMutiTouchBegin(event)
 end
 
 function FightPlayer:onMutiTouchEnd(event)
+
+    if self.isPause then return end
+
     for id,point in pairs(event.points) do
         if id == self.touchs["fire"] then
             self:checkBtnFire(nil, nil, "ended")
@@ -271,6 +283,7 @@ function FightPlayer:checkBtnArmoured( id, point, eventName )
         self:fitArmoured()
     end
     return isTouch
+    -- self.hero:dispatchEvent({name = Actor.STOP_EVENT, isPause = true})
 end
 
 function FightPlayer:checkbtnDefence( id, point, eventName )
@@ -278,9 +291,9 @@ function FightPlayer:checkbtnDefence( id, point, eventName )
     local rect = self.btnDefence:getCascadeBoundingBox()
     isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        print("-----------fit defence")
+        -- print("-----------fit defence")
         self.touchs["defence"] = id
-        self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_EVENT})
+        self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_START_EVENT})
     end
     return isTouch
 end
@@ -339,6 +352,9 @@ function FightPlayer:checkBtnFire(id,point,eventName)
 end
 
 function FightPlayer:onTouchMoved(event)
+
+    if self.isPause then return end
+
     -- dump(event, "onTouchMoved")
     -- dump(self.touchs, "self.touchs")
     local  x, y, prevX, prevY 
@@ -369,20 +385,18 @@ function FightPlayer:tick(dt)
     end
 
     --hero血量
-    local bloodPer = self.hero:getHp() / self.hero:getMaxHp()
-    local bloodValue = cc.uiloader:seekNodeByName(self.heroBlood, "bloodValue")
-    local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
-    local size = bloodBg:getContentSize()
-    bloodValue:setLayoutSize(size.width * bloodPer, size.height)
+    -- local bloodPer = self.hero:getHp() / self.hero:getMaxHp()
+    -- local bloodValue = cc.uiloader:seekNodeByName(self.heroBlood, "bloodValue")
+    -- local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
+    -- local size = bloodBg:getContentSize()
+    -- bloodValue:setLayoutSize(size.width * bloodPer, size.height)
 
     --hero各种状态
 
 end
 
 function FightPlayer:canGunShot()
-    if  self.hero:canFire() 
-        and self.gunBtnPressed
-    then 
+    if  self.hero:canFire() and self.gunBtnPressed then 
         return true 
     end
 
@@ -390,6 +404,8 @@ function FightPlayer:canGunShot()
 end
  
 function FightPlayer:fire()
+    if self.isPause then return end
+
     --hero
     self.hero:fire()
 

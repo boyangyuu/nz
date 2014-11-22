@@ -38,18 +38,18 @@ function InlayListCell:getListCell(string, index)
         local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
         addBtnEventListener(btnBuy, function(event)
                 if event.name=='began' then
-                    print("btnBuy is begining!")
+                    -- print("btnBuy is begining!")
                     return true
                 elseif event.name=='ended' then
-                    print("btnBuy is pressed!")
+                    -- print("btnBuy is pressed!")
                 end
             end)
         addBtnEventListener(btnLoad, function(event)
                 if event.name=='began' then
-                    print("btnLoad is begining!")
+                    -- print("btnLoad is begining!")
                     return true
                 elseif event.name=='ended' then
-                    print("btnLoad is pressed!")
+                    -- print("btnLoad is pressed!")
                     self.inlayModel:refreshBtnIcon(string, index)
                 end
             end)
@@ -73,18 +73,18 @@ function InlayListCell:getListCell(string, index)
         local btnLoad = cc.uiloader:seekNodeByName(content, "btn_load")
         addBtnEventListener(btnBuy, function(event)
                 if event.name=='began' then
-                    print("btnBuy is begining!")
+                    -- print("btnBuy is begining!")
                     return true
                 elseif event.name=='ended' then
-                    print("btnBuy is pressed!")
+                    -- print("btnBuy is pressed!")
                 end
             end)
         addBtnEventListener(btnLoad, function(event)
                 if event.name=='began' then
-                    print("btnLoad is begining!")
+                    -- print("btnLoad is begining!")
                     return true
                 elseif event.name=='ended' then
-                    print("btnLoad is pressed!")
+                    -- print("btnLoad is pressed!")
                     self.inlayModel:refreshBtnIcon(string, index)
                 end
             end)

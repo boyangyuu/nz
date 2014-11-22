@@ -30,26 +30,26 @@ function InlayListCell:initCellUI(record)
     local btnLoad = cc.uiloader:seekNodeByName(controlNode, "loadBtn")
     addBtnEventListener(btnBuy, function(event)
             if event.name=='began' then
-                print("btnBuy is begining!")
+                -- print("btnBuy is begining!")
                 return true
             elseif event.name=='ended' then
-                print("btnBuy is pressed!")
+                -- print("btnBuy is pressed!")
                 self.inlayModel:buyInlay(record["id"])
                 self:refreshCellData(record)
             end
         end)
     addBtnEventListener(btnLoad, function(event)
             if event.name=='began' then
-                print("btnLoad is begining!")
+                -- print("btnLoad is begining!")
                 return true
             elseif event.name=='ended' then
-                print("btnLoad is pressed!")
+                -- print("btnLoad is pressed!")
                 if self.inlayModel:isInlayExist(record["id"]) then
                     self.inlayModel:equipInlay(record["id"])
                     self.inlayModel:refreshBtnIcon(record["type"],record["id"])
                     self:refreshCellData(record)
                 else
-                    print("请购买")
+                    -- print("请购买")
                     self.inlayModel:refreshBtnIcon(record["type"],0)
                 end
             end

@@ -7,7 +7,7 @@ local Hero = import("..Hero")
 
 local FightConfigs = class("FightConfigs", cc.mvc.ModelBase)
 
-local p = "app.fight.FightConfigs"
+local p = "app.fight.fightConfigs"
 
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)

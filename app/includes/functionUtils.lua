@@ -59,7 +59,7 @@ function getArmature(name, src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:removeArmatureFileInfo(src)
+    -- manager:removeArmatureFileInfo(src)
     manager:addArmatureFileInfo(src)
     local armature = ccs.Armature:create(name) 
     return armature
@@ -76,9 +76,6 @@ function addChildCenter(child, parent, zorder)
 end
 
 function drawBoundingBox(parent, target, color)
-    -- if isTest == false then 
-    --     return 
-    -- end
     local cbb = target:getBoundingBox()
     -- dump(cbb, "cbb")
     local left, bottom, width, height = cbb.x, cbb.y, cbb.width, cbb.height

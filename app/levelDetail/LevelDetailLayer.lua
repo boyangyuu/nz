@@ -50,7 +50,7 @@ function LevelDetailLayer:initUI()
 	--offbtn
 	addBtnEventListener(btnOff, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
+            -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnOff()
@@ -59,7 +59,7 @@ function LevelDetailLayer:initUI()
     --startbtn
     addBtnEventListener(btnStart, function(event)
         if event.name=='began' then
-            print("startbtn is begining!")
+            -- print("startbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnStart()
@@ -68,7 +68,7 @@ function LevelDetailLayer:initUI()
     --bibei
     addBtnEventListener(btnBibei, function(event)
         if event.name=='began' then
-            print("bibeibtn is begining!")
+            -- print("bibeibtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnBibei()
@@ -77,7 +77,7 @@ function LevelDetailLayer:initUI()
     --gold
     addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
-            print("btngold is begining!")
+            -- print("btngold is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnGold()
@@ -86,7 +86,7 @@ function LevelDetailLayer:initUI()
     --jijia
     addBtnEventListener(btnJijia, function(event)
         if event.name=='began' then
-            print("btnJijia is begining!")
+            -- print("btnJijia is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnJijia()
@@ -102,7 +102,7 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-	print("startbtn is clicked!")
+	-- print("startbtn is clicked!")
 	local scene = display.newScene("FightScene")
 	local FightPlayer = FightPlayer.new()
 	scene:addChild(FightPlayer)

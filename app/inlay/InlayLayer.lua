@@ -40,7 +40,7 @@ function InlayLayer:initUI()
     self.oneForAllBtn:setTouchEnabled(true)
     addBtnEventListener(self.oneForAllBtn, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
+            -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
         end
@@ -54,16 +54,16 @@ function InlayLayer:initUI()
         self.btn[v]:setTouchEnabled(true)
         self.btn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then
-                print("1 of 6 Btns is begining!")
+                -- print("1 of 6 Btns is begining!")
                 
                 return true
             elseif event.name=='ended' then
-                print("1 of 6 Btns is pressed!")
+                -- print("1 of 6 Btns is pressed!")
                 self:refreshListView(v)    
             end
         end)
     end
-    dump(self.btn)
+    -- dump(self.btn)
 end
 
 function InlayLayer:refreshListView(index)

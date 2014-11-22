@@ -94,11 +94,11 @@ end
 
 --AbstractEnemyView interface
 function SanEnemyView:playHitted(event)
-    print("SanEnemyView:playHitted")
+    -- print("SanEnemyView:playHitted")
 end
 
 function SanEnemyView:playKill(event)
-    print("SanEnemyView:playKill") 
+    -- print("SanEnemyView:playKill") 
     self:setDeadDone()
 
     --屏幕动画

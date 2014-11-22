@@ -36,6 +36,7 @@ function Boss:getMoveRate()
 end
 
 function Boss:getDemageScale(rangeStr)
+
     assert(self.config.demageScale[rangeStr], "wave config is invalid:"..rangeStr)
     return self.config.demageScale[rangeStr]
 end

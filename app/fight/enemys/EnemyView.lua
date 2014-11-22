@@ -10,6 +10,7 @@
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
+local Grenade = import("..Entity.Grenade")
 local EnemyView = class("EnemyView", AbstractEnemyView)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
@@ -74,8 +75,17 @@ end
 
 function EnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
-	-- print("self.hero:getHp()", self.hero:getHp())
-	-- print("self.enemy:getDemage()", self.enemy:getDemage())
+	self.enemy:hit(self.hero)
+	-- self:playThrow()
+end
+
+function EnemyView:playThrow()
+	self.armature:getAnimation():play("throw", -1, 1)
+	local pos = cc.p(self:getPositionX(), self:getPositionY() + 220)
+	local function test( )
+		print("hello world")
+	end
+	-- self:getParent():addChild(Grenade.createGrenade(pos, cc.p(200, 0), test, true))
 	self.enemy:hit(self.hero)
 end
 
@@ -175,7 +185,11 @@ function EnemyView:tick(t)
 		self:playRoll()
 		return
 	end
+
+	--throw 
 end
+
+--throw 
 
 function EnemyView:onHitted(demage)
 	if self.enemy:canHitted() then
@@ -199,8 +213,6 @@ function EnemyView:animationEvent(armatureBack,movementType,movementID)
 				self:playStand()
 			end
     	elseif movementID == "die" then 
-    		-- print("self:setDeadDone()")
-    		self:clearPlayCache()
     		self:setDeadDone()
     	end 
 	end
