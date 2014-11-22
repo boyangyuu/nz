@@ -13,7 +13,7 @@ function WeaponListCell:ctor(weaponRecord)
 end
 
 function WeaponListCell:initCellUI(weaponRecord)
-	cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
+	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb/")
 	local controlNode = cc.uiloader:load("gunzb_2.ExportJson")
 	local weaponImg = cc.ui.UIImage.new(weaponRecord["imgName"]..".png")
 	weaponImg:setLayoutSize(250, 100)

@@ -45,10 +45,10 @@ function HomeBarLayer:initHomeLayer()
     
     addBtnEventListener(btnSetting, function(event)
         if event.name=='began' then
-            print("settingBtn is begining!")
+            -- print("settingBtn is begining!")
             return true
         elseif event.name=='ended' then
-            print("settingBtn is pressed!")
+            -- print("settingBtn is pressed!")
         end
     end)
     btnBack:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
@@ -66,15 +66,15 @@ function HomeBarLayer:initHomeLayer()
     end)
     addBtnEventListener(btnBuyCoin, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
+            -- print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            -- print("Btn is pressed!")
         end
     end)
     addBtnEventListener(btnArsenal, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
+            -- print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
@@ -83,12 +83,12 @@ function HomeBarLayer:initHomeLayer()
             self.commonRootNode:removeAllChildren()
             local WeaponListLayer = WeaponListLayer.new()
             self.commonRootNode:addChild(WeaponListLayer)
-            print("Btn is pressed!")
+            -- print("Btn is pressed!")
         end
     end)
     addBtnEventListener(btnInlay, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
+            -- print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
@@ -101,10 +101,10 @@ function HomeBarLayer:initHomeLayer()
     end)
     addBtnEventListener(btnShop, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
+            -- print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            -- print("Btn is pressed!")
         end
     end)
 end
@@ -116,11 +116,11 @@ end
 
 function HomeBarLayer:loadAllImg()
     self.imgRootNode = cc.uiloader:load("AllImg/allImg.json")
-    print(".......HomeBarLayer:loadAllImg()")
+    -- print(".......HomeBarLayer:loadAllImg()")
 end
 
 function HomeBarLayer:getImgByName(fileName)
-    dump(self.imgRootNode, ".........imgRootNode")
+    -- dump(self.imgRootNode, ".........imgRootNode")
     -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
     return file

@@ -14,15 +14,11 @@ local Timer = require("framework.cc.utils.Timer")
 local FocusView = import(".FocusView")
 local Hero = import(".Hero")
 local Actor = import(".Actor")
-local EnemyView = import(".enemys.EnemyView")
-local BossView = import(".enemys.BossView")
-local MissileEnemyView = import(".enemys.MissileEnemyView")
-local SanEnemyView = import(".enemys.SanEnemyView")
-local EnemyManager = import(".EnemyManager")
+local EnemyFactroy = import(".EnemyFactroy")
 
 --常量
 local groupId = 1
-local levelId = 1
+local levelId = 5
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -34,8 +30,9 @@ function MapView:ctor()
 	self.focusView = app:getInstance(FocusView)
 	self.enemys = {}
 	self.waveIndex = 1
-	self.enemyManager = app:getInstance(EnemyManager)
-
+	self.killEnemyCount = 0
+	self.isPause = false
+	self.fightConfigs = app:getInstance(FightConfigs)
 	--ccs
 	self:loadCCS()
 
@@ -48,16 +45,39 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
         :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
-        :addEventListener(Hero.GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
+        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
+        :addEventListener(Actor.STOP_EVENT, handler(self, self.setAllEntityActive))
 
 end
 
-function MapView:getEnemyDatas()
-	return self.enemyManager:getEnemyDatas()
+
+function MapView:setAllEntityActive( event )
+	self.hero:dispatchEvent({name = "stop"})
+	-- local actionManager = cc.Director:getInstance():getActionManager()
+	-- self.isPause = not self.isPause
+	-- for i,enemy in ipairs(self.enemys) do
+	-- 	if enemy and not enemy:getDeadDone() then
+	-- 		if true == self.isPause then
+	-- 			enemy.armature:getAnimation():pause()
+	-- 			enemy:pause()
+	-- 			actionManager:pauseTarget(enemy)
+	-- 		end
+	-- 		if false == self.isPause then
+	-- 			-- print("enemy resume")
+	-- 			actionManager:resumeTarget(enemy)
+	-- 			enemy.armature:getAnimation():resume()
+	-- 			enemy:resume()
+
+	-- 		end
+	-- 	end
+	-- end
 end
 
 function MapView:loadCCS()
 	--map
+	local groupId = self.hero:getGroupId()
+	local levelId = self.hero:getLevelId()
+
 	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
@@ -87,7 +107,7 @@ end
 function MapView:checkWave()
 	local function checkEnemysEmpty()
 		if #self.enemys == 0 then 
-			print("第"..self.waveIndex.."波怪物消灭完毕")
+			-- print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 			self:updateEnemys()
 			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
@@ -99,9 +119,9 @@ end
 --enemy
 function MapView:updateEnemys(event)
 	--wave config
-	local waveConfig = FightConfigs:getWaveConfig(groupId, levelId)
+	local waveConfig = self.fightConfigs:getWaveConfig(groupId, levelId)
 	local wave = waveConfig:getWaves(self.waveIndex)
-	dump(wave, "wave")
+	-- dump(wave, "wave")
 
 	if wave == nil then 
 		print("赢了")
@@ -114,7 +134,8 @@ function MapView:updateEnemys(event)
 	for groupId, group in ipairs(wave.enemys) do
 		for i = 1, group.num do
 			--delay
-			local delay = group.delay[i] or lastTime
+			print("group time", group.time)
+			local delay = (group.delay[i] or lastTime) + group.time
 			if delay > lastTime then lastTime = delay end
 			
 			--pos
@@ -131,18 +152,6 @@ function MapView:updateEnemys(event)
 	end
 	--check next wave
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
-end
-
-function MapView:checkWave()
-	local function checkEnemysEmpty()
-		if #self.enemys == 0 then 
-			-- print("第"..self.waveIndex.."波怪物消灭完毕")
-			self.waveIndex = self.waveIndex + 1
-			self:updateEnemys()
-			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-		end
-	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
 end
 
 function MapView:callfuncAddEnemys(event)
@@ -170,24 +179,14 @@ function MapView:addEnemy(placeName, property, pos)
 	property.boundPlace = boundPlace
 
 	--enemy 改为工厂
-	local enemyView
-	-- print("create enemy", property.type)
-	if property.type == "boss" then 
-		enemyView = BossView.new(property)
-	elseif property.type == "missile" then
-		enemyView = MissileEnemyView.new(property)
-	elseif property.type == "san" then
-		enemyView = SanEnemyView.new(property)
-	else
-		enemyView = EnemyView.new(property)
-	end
+	local enemyView = EnemyFactroy.createEnemy(property)
+
 	self.enemys[#self.enemys + 1] = enemyView
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	-- enemyView:setScaleX(scale:getScaleX())
-	-- enemyView:setScaleY(scale:getScaleY())
-
+	enemyView:setScaleX(scale:getScaleX())
+	enemyView:setScaleY(scale:getScaleY())
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
 	math.newrandomseed()
@@ -207,7 +206,7 @@ end
 
 --fight
 function MapView:tick(dt)
-	--检查enemy和boss的状态
+	--检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
 			self:removeEnemy(enemy, i)
@@ -216,16 +215,17 @@ function MapView:tick(dt)
 end
 
 function MapView:removeEnemy(enemy, i)
-	-- self:popGold(enemy)
+	self:popGold(enemy)
 	table.remove(self.enemys, i)
 	enemy:removeFromParent()
+	self.killEnemyCount = self.killEnemyCount + 1
 end
 
 function MapView:popGold(enemy)
 	local boundingbox = enemy:getCascadeBoundingBox()
 	local size = boundingbox.size
 	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
-	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
+	self.hero:dispatchEvent({name = Hero.SKILL_KILL_ENEMY_EVENT, enemyPos = pos, goldCount = self.killEnemyCount * 50})
 end
 
 --[[
@@ -255,16 +255,14 @@ function MapView:onHeroFire(event)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(event.demage * demageScale)
-		
 	end
-
 end
 
 function MapView:onHeroThrowFire(event)
 	-- target
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
-			self:removeEnemy(enemy, i)
+			enemy:onHitted(event.damage)
 		end
 	end
 end

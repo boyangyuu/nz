@@ -118,6 +118,7 @@ end
 
 function WeaponListModel:isWeaponed(weaponid)
 	local data = getUserData()
+	dump(data.weapons, "data.weapons")
 	if data.weapons.weaponed.bag1.weaponid == weaponid then
 		return 1
 	elseif data.weapons.weaponed.bag2.weaponid == weaponid then

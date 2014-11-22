@@ -13,7 +13,6 @@ function InlayLayer:ctor()
         :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
 
 	self.btn = {}
-    -- self.btnImg = {}
     self.typeId = {"speed", "aim", "clip", "bullet", 
     "helper", "blood",}
 
@@ -47,7 +46,6 @@ function InlayLayer:initUI()
     goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(oneForAllBtn, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self.inlayModel:oneForAllBtn()
@@ -75,17 +73,13 @@ function InlayLayer:initUI()
         self.btn[v] = cc.uiloader:seekNodeByName(self, "panel"..v)
         self.btn[v]:setTouchEnabled(true)
         self.btn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            if event.name=='began' then
-                print("1 of 6 Btns is begining!")
-                
+            if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-                print("1 of 6 Btns is pressed!")
                 self:refreshListView(v)    
             end
         end)
     end
-    dump(self.btn)
 end
 
 function InlayLayer:refreshListView(index)
@@ -108,7 +102,6 @@ function InlayLayer:refreshBtnIcon()
         self.btn[k]:removeAllChildren()
     end
     for k,v in pairs(allInlayed) do
-        -- self:refreshBtnIcon(v.index,v.typename)
         local table = self.inlayModel:getConfigTable("id", v.index)
         local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
         addChildCenter(img,self.btn[v.typename])

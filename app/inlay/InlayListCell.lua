@@ -31,24 +31,21 @@ function InlayListCell:initCellUI(record)
     local btnLoad = cc.uiloader:seekNodeByName(controlNode, "loadBtn")
     addBtnEventListener(btnBuy, function(event)
             if event.name=='began' then
-                print("btnBuy is begining!")
+                -- print("btnBuy is begining!")
                 return true
             elseif event.name=='ended' then
-                print("btnBuy is pressed!")
+                -- print("btnBuy is pressed!")
                 self.inlayModel:buyInlay(record["id"])
             end
         end)
     addBtnEventListener(btnLoad, function(event)
             if event.name=='began' then
-                print("btnLoad is begining!")
+                -- print("btnLoad is begining!")
                 return true
             elseif event.name=='ended' then
                 print("btnLoad is pressed!")
-                -- if self.inlayModel:isBagsExist(record["id"])  then
-                    self.inlayModel:equipInlay(record["id"],true)
-                -- else
-                    -- print("请购买")
-                -- end
+                self.inlayModel:equipInlay(record["id"],true)
+
             end
         end)
 

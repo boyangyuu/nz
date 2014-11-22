@@ -89,7 +89,7 @@ function GunView:setGun(id)
 	self.gunId = id
 	local config = getConfigByID("config/weapon_weapon.json", id)
 	assert(config, "invalid id")
-	dump(config, "config")
+	-- dump(config, "config")
 	
 	--动作
 	local effectName = config.effectName --动作特效
@@ -100,7 +100,7 @@ function GunView:setGun(id)
 
 	--换肤
 	local srcSkin = config.displayImage  -- 图片
-	print("srcSkin", srcSkin)
+	-- print("srcSkin", srcSkin)
     local skin = ccs.Skin:createWithSpriteFrameName(srcSkin)
     armature:getBone("gun"):addDisplay(skin, 1)
     armature:getBone("gun"):changeDisplayWithIndex(1, true)

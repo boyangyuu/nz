@@ -5,15 +5,106 @@ local waves = {
 		enemys = {  --boss
 			{
 				time = 3,	
-				num = 1,
-				place = "place3",
-				pos = {250},
-				delay = {0.3},
+				num = 5,
+				place = "place1",
+				pos = {10,110,210,310,410},
+				delay = {0,0.3,0.6,0.5,0.8},
 				property = { 
-					type = "boss",
+					id = "1",
+				},
+			},
+						{
+				time = 4,	
+				num = 3,
+				place = "place3",
+				pos = {100,200,300},
+				delay = {0,0,0},
+				property = { 
+					startState = "rollleft",
 					id = 1,
 				},
 			},		
+			{
+				time = 5,	
+				num = 3,
+				place = "place2",
+				pos = {200,100,300},
+				delay = {0.3,0.3,0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 8,	
+				num = 1,
+				place = "place4",
+				pos = {25},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 10,	
+				num = 1,
+				place = "place5",
+				pos = {40},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 10,	
+				num = 1,
+				place = "place6",
+				pos = {30},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 10,	
+				num = 1,
+				place = "place7",
+				pos = {30},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 13,	
+				num = 1,
+				place = "place8",
+				pos = {30},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 13,	
+				num = 1,
+				place = "place9",
+				pos = {30},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+			{
+				time = 16,	
+				num = 1,
+				place = "place10",
+				pos = {10},
+				delay = {0.3},
+				property = { 
+					id = 1,
+				},
+			},		
+		
 		},
 	},
 	{
@@ -69,26 +160,7 @@ local waves = {
 	},		
 }
 
---测试 sanBing
--- waves = {
--- 	{
--- 		enemys = {  
--- 			{
--- 				time = 2,	
--- 				num = 6,
--- 				place = "place2",
--- 				pos = {100, 200, 0, 170, 190, 100},
--- 				delay = {0.1, 0.4, 0.7, 0.9, 1.2, 1.5},
--- 				property = { 
--- 					type = "san",
--- 					id = 1,
--- 					enemyId = 1,
--- 					placeName = "place2",
--- 				},
--- 			},		
--- 		},
--- 	},
--- }
+
 
 function waveClass:getWaves(waveIndex)
 	return waves[waveIndex] 

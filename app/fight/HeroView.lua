@@ -16,29 +16,61 @@ local HeroView = class("HeroView", function()
     return display.newNode()
 end)
 
-local tinkTest = nil
-
 function HeroView:ctor(properties)
+
 	--instance
-
 	self.hero = app:getInstance(Hero)
-
 	self.crackTable = {}
 	self.behurtCount = 1
 	self.isResumeDefence = false
+	self.keepKillEnemyCount = 0
 	self.killEnemyCount = 0
 	self.killEnemyTimerHandler = nil
+
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self):addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_ARMOURED_EVENT, handler(self, self.setShowArmoured))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_EVENT, handler(self, self.setShowDefence))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.RESUME_DEFENCE_EVENT, handler(self, self.resumeDefence))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.ENEMY_KILL_EVENT, handler(self, self.killEnemyCallBack))
+	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.setShowArmoured))
+	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.setShowDefence))
+	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.resumeDefence))
+	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_KILL_ENEMY_EVENT, handler(self, self.killEnemyCallBack))
 	cc.EventProxy.new(self.hero, self):addEventListener(Actor.FIRE_THROW_EVENT, handler(self, self.throwGrenade))
+
 	self:initUiRootNode()
+	self:initHeroHpNode()
 	self:initArmouredNode()
 	self:initDefenceNode()
 	self:initKillTimerNode()
+end
+
+--初始化英雄血条
+function HeroView:initHeroHpNode()
+
+	self.loadingBarHeroHp = cc.uiloader:seekNodeByName(self.uiRootNode, "loadingBarHeroHp")
+	self.loadingBarHeroHp:removeFromParent()
+	self:addChild(self.loadingBarHeroHp)
+end
+
+--player血条血量改变
+function HeroView:heroHpChange()
+	local t = self.hero:getHp() / self.hero:getMaxHp() * 100
+	local t1 = self.loadingBarHeroHp:getPercent()
+	local tempHandler = nil
+
+	local function checkHeroHp( dt )
+		if t1 < t then
+			scheduler.unscheduleGlobal(tempHandler)
+			return
+		end
+
+		t1 = t1 - 0.4
+		if t1 > 0 then
+			self.loadingBarHeroHp:setPercent(t1)
+			local posX = self.loadingBarHeroHp.viewRect_.width * t1 / 100
+		else
+			scheduler.unscheduleGlobal(tempHandler)
+		end
+	end
+	tempHandler = scheduler.scheduleGlobal(checkHeroHp, 0.05)
 end
 
 --初始化连杀倒计时节点
@@ -61,25 +93,42 @@ function HeroView:initKillTimerNode()
     self.killEnemyTimer:setVisible(false)
 end
 
-
+--杀死敌人后跳出金币
 function HeroView:killEnmeyGold(enemyPos)
-	local pos = enemyPos
-	local posX = enemyPos.x - 80
 
 	for i = 1, 3 do
-		local gold = getArmature("gold", "res/Fight/heroAnim/gold/gold.ExportJson")
-		gold:setPosition(posX, enemyPos.y)
-		gold:getAnimation():play("Animation1", -1, 1)
+		local gold = getArmature("gold1", "res/Fight/heroAnim/gold/gold1.ExportJson")
+		gold:setPosition(enemyPos.x, enemyPos.y)
+		gold:getAnimation():play("gold", -1, 1)
 		gold:runAction(cc.Sequence:create(
 			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
 			cc.DelayTime:create(0.5 - i * 0.1),
-			cc.MoveTo:create(0.15, cc.p(884, 591)),
+			cc.MoveTo:create(0.5, cc.p(884, 591)),
 			cc.CallFunc:create(function ()
+				self.hero:dispatchEvent({name = "changeGold", goldCount = self.killEnemyCount * 50})
 				gold:removeFromParent()
 			end)
 		))
 		self:addChild(gold)
 	end
+end
+
+--触发黄金武器
+function HeroView:activeGoldWeapon()
+	self.hero:dispatchEvent({name = Actor.STOP_EVENT})
+	local color = display.newColorLayer(cc.c4b(0, 0, 0, 180))
+	cc.Director:getInstance():getRunningScene():addChild(color)
+	-- self:addChild(testLayerColer)
+	-- display.newColorLayer(cc.c4b(0xfa,0xf8,0xef, 255))
+	local function test(  )
+		-- local actionManager = cc.ActionManagerEx:getInstance()
+		-- local uitest = actionManager:playActionByName("res/Fight/fightLayer/qdchuxian/qiangdi.ExportJson", "Animation0")
+		-- uitest:play()
+		self.hero:dispatchEvent({name = Actor.STOP_EVENT})
+		color:removeFromParent()
+
+	end
+	scheduler.performWithDelayGlobal(test, 5)
 end
 
 --杀掉敌人后的回调
@@ -88,9 +137,18 @@ function HeroView:killEnemyCallBack( event )
 	self.killEnemyCountLabel:setVisible(true)
 	self.killEnemyTimerBg:setVisible(true)
 	self:killEnmeyGold(event.enemyPos)
+	self.keepKillEnemyCount = self.keepKillEnemyCount + 1
 	self.killEnemyCount = self.killEnemyCount + 1
-	local strKillEnemyCount = string.format("X %d", self.killEnemyCount)
+	local strKillEnemyCount = string.format("X %d", self.keepKillEnemyCount)
 	self.killEnemyCountLabel:setString(strKillEnemyCount)
+
+	--触发黄金武器
+	if 10 <= self.keepKillEnemyCount then
+		self.keepKillEnemyCount = 0
+		self:activeGoldWeapon()
+		return
+	end
+
 	-- body
 	self.killEnemyTimer:setVisible(true)
 	self.killEnemyTimer:setPercentage(100)
@@ -104,7 +162,7 @@ function HeroView:killEnemyCallBack( event )
         local t = self.killEnemyTimer:getPercentage()
         if 0 == t then
         	scheduler.unscheduleGlobal(self.killEnemyTimerHandler)
-        	self.killEnemyCount = 0
+        	self.keepKillEnemyCount = 0
     		self.killEnemyCountLabel:setVisible(false)
 			self.killEnemyTimerBg:setVisible(false)
         end
@@ -161,12 +219,12 @@ end
 
 --获得UI.ExportJson数据
 function HeroView:initUiRootNode()
-	self.uiRootNode = cc.uiloader:load("Fight/fightLayer/ui/heroUI.ExportJson")
+	self.uiRootNode = cc.uiloader:load("res/Fight/fightLayer/ui/heroUI.ExportJson")
 end
 
 --获得装备机甲Ui节点
 function HeroView:initArmouredNode()
-	print("fit Armoured")
+	-- print("fit Armoured")
 	self.layerArmoured = cc.uiloader:seekNodeByName(self.uiRootNode, "armoured")
 	self.layerArmoured:removeFromParent()
 	self:addChild(self.layerArmoured)
@@ -215,15 +273,14 @@ function HeroView:defenceBehurtEffect()
 		for k, v in pairs(self.crackTable) do
 			v:removeFromParent()
 		end
-		self.beHurtEffect = 1
+		-- self.beHurtEffect = 1
 		self.crackTable = {}
 		self.isResumeDefence = true
 		self.defenceHp = 100
 	end
-	self.hero:dispatchEvent({name = Hero.BEHURT_DEFENCE_EVENT, damage = tCurrentHp})
+	self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, damage = tCurrentHp})
 end
 
---
 function HeroView:bloodBehurtEffect()
 
 	local tRandomBlood = nil
@@ -234,7 +291,7 @@ function HeroView:bloodBehurtEffect()
 	end
 
     --hero behurt blood effect
-    local tBloodArmature = getArmature(tRandomBlood, "Fight/heroAnim/" .. tRandomBlood .. "/" .. tRandomBlood .. ".ExportJson")
+    local tBloodArmature = getArmature(tRandomBlood, "res/Fight/heroAnim/" .. tRandomBlood .. "/" .. tRandomBlood .. ".ExportJson")
     local tBloodAniamtion = tBloodArmature:getAnimation()
 
     -- tBloodAniamtion:play("blood1_01" , -1, 1)
@@ -258,6 +315,7 @@ function HeroView:beHurtEffect()
 		if false == self.isLaunchDefenceResume then self:defenceBehurtEffect() end
 	else
 	 	self:bloodBehurtEffect()
+		self:heroHpChange()
 	end
 end
 
@@ -267,13 +325,14 @@ function HeroView:throwGrenade(event)
 	local tGrenade = getArmature("shoulei", "res/Fight/heroAnim/shoulei/shoulei.ExportJson")
 	self:addChild(tGrenade)
 	tGrenade:setPosition(display.width / 2, 0)
+	tGrenade:setScale(3)
 	tGrenade:getAnimation():play("lei", -1, 1)
 	tGrenade:runAction(
 		cc.Sequence:create(
 			cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 		 	cc.CallFunc:create(
 		 		function ()
-                    self.hero:dispatchEvent({name = Hero.GRENADE_ARRIVE_EVENT, damage = 100, destPos = event.throwPos})
+                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, damage = 600, destPos = event.throwPos})
 					tGrenade:removeFromParent()
 				end
 			)
@@ -281,9 +340,9 @@ function HeroView:throwGrenade(event)
 	)
 
 	-- shadow effect
-	local shadow = display.newSprite("#huan_hui.png")
+	local shadow = display.newSprite("#btn_dun03.png")
 	shadow:setOpacity(100)
-	shadow:setSkewY(60)
+	shadow:setSkewY(70)
 	shadow:setPosition(display.width / 2, 0)
 	self:addChild(shadow)
 	shadow:runAction( 
@@ -302,7 +361,7 @@ end
 --英雄受到伤害时,屏幕闪红效果
 function HeroView:screenHurtedEffect()
 
-	local tBeHurtScreenArmature = getArmature("avatarhit", "Fight/heroAnim/avatarhit/avatarhit.ExportJson")
+	local tBeHurtScreenArmature = getArmature("avatarhit", "res/Fight/heroAnim/avatarhit/avatarhit.ExportJson")
     local tAniamtion = tBeHurtScreenArmature:getAnimation()
 
 	tAniamtion:play("avatarhit" , -1, 1)

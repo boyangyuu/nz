@@ -8,24 +8,27 @@
 
 local Actor = import("..Actor")
 local Boss = class("Boss", Actor)
+local FightConfigs = import("..fightConfigs.FightConfigs")
 
 function Boss:ctor(properties)
     --super
-    local config = getConfigByID("config/boss.json", properties.id)
-    self.config = config    
-    assert(config, "config id is wrong id:"..properties.id)
+    dump(properties, "properties")
+    local index = properties.index
+    local waveConfig = FightConfigs:getWaveConfig()
+    self.config = waveConfig:getBoss(index)
+    dump(self.config, " Boss config")
     local property = {
-        id = "boss"..properties.id,
-        maxHp = 4000,
-        demage = config.demage,
+        id = "boss",
+        maxHp = self.config["hp"],
+        demage = self.config["demage"],
     }
-    Boss.super.ctor(self, property)	
+    Boss.super.ctor(self, property)
 
     --
 end
 
 function Boss:getFireRate()
-	return self.config["fireRate"]
+	return self.config["fireRate"] 
 end
 
 function Boss:getMoveRate()
@@ -33,8 +36,12 @@ function Boss:getMoveRate()
 end
 
 function Boss:getDemageScale(rangeStr)
-    print(rangeStr, "rangeStr")
-    return self.config[rangeStr]
+
+    assert(self.config.demageScale[rangeStr], "wave config is invalid:"..rangeStr)
+    return self.config.demageScale[rangeStr]
+end
+function Boss:getSkillTrigger()
+    return self.config.skilltrigger
 end
 
 return Boss
