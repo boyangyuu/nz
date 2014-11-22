@@ -18,10 +18,8 @@ function InlayModel:getInlayNum(inlayid)
 	local data = getUserData()
 	if self:isBagsExist(inlayid)  then
 		for k,v in pairs(data.inlay.bags) do
-			for k1,v1 in pairs(v) do
-				if k1 == "inlayid" and v1 == inlayid then
-					return data.inlay.bags[k].ownednum
-				end
+			if v.inlayid == inlayid then
+				return data.inlay.bags[k].ownednum
 			end
 		end
 	else
@@ -29,18 +27,17 @@ function InlayModel:getInlayNum(inlayid)
 	end
 end
 
-function InlayModel:refreshBtnIcon(index)
-	self:dispatchEvent({name = "REFRESH_BTN_ICON_EVENT",index = index})
+function InlayModel:refreshInfo(typename)
+	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = typename})
 end
+
 
 function InlayModel:buyInlay(inlayid)
  	local data = getUserData()
 	if self:isBagsExist(inlayid)  then
 		for k,v in pairs(data.inlay.bags) do
-			for k1,v1 in pairs(v) do
-				if k1 == "inlayid" and v1 == inlayid then
-					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
-				end
+			if v.inlayid == inlayid then
+				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
 			end
 		end
 	else
@@ -49,105 +46,105 @@ function InlayModel:buyInlay(inlayid)
 	end
     setUserData(data)
     dump(GameState.load())
+    self:refreshInfo(self:getInlayType(inlayid))
 end
 
-function InlayModel:equipInlay(inlayid)
+function InlayModel:equipInlay(inlayid, Refresh)
 	local data = getUserData()
+	-- dump(data.inlay.bags)
 	for k,v in pairs(data.inlay.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "inlayid" and v1 == inlayid and data.inlay.bags[k].ownednum > 0 then
+		if v.inlayid == inlayid and data.inlay.bags[k].ownednum > 0 then
+			print("equipInlay", self:isInlayedExist(inlayid))
+		-- case 1 已经装备过相同的
+			if self:isInlayedExist(inlayid) == 2 then
+				print("已经装备过了")
+
+		-- case 2 有相同type的，但是不同的inlay
+			elseif self:isInlayedExist(inlayid) == 1 then
+				-- 1、bags数量-1
 				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum - 1
-				self:replaceInlayed(inlayid)
 				if data.inlay.bags[k].ownednum == 0 then
 					table.remove(data.inlay.bags,k)
 				end
-			end
+
+				-- 2、从inlayed里替换,找到这个inlayed在bags里数量+1
+				self:replaceInlayed(inlayid)
+
+		-- case 3 不存在
+			else
+				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum - 1
+				table.insert(data.inlay.inlayed[self:getInlayType(inlayid)],{inlayid = inlayid})
+				if data.inlay.bags[k].ownednum == 0 then
+					table.remove(data.inlay.bags,k)
+				end
+			end 
 		end
 	end
+
+	if Refresh then
+		self:refreshInfo(self:getInlayType(inlayid))
+	end
+    
     setUserData(data)
-    self:refreshBtnIcon(inlayid)
+    dump(GameState.load())
 end
 
 function InlayModel:replaceInlayed(inlayid)
 	local data = getUserData()
-	if self:isInlayedExist(inlayid) then
-		return
-	else
-		for k,v in pairs(data.inlay.inlayed) do
-			for k1,v1 in pairs(v) do
-				if k1 == "inlayid" and self:getInlayType(v1) == self:getInlayType(inlayid) then
-					table.remove(data.inlay.inlayed,k)
-				end
+	local strType = self:getInlayType(inlayid)
+	local inlaydata = data.inlay.inlayed[strType]
+	local inlayedData = inlaydata[1]
+
+	if self:isBagsExist(inlayedData.inlayid) then
+		for k1,v1 in pairs(data.inlay.bags) do
+			if v1.inlayid == inlayedData.inlayid then
+				data.inlay.bags[k1].ownednum = data.inlay.bags[k1].ownednum + 1
 			end
 		end
-		table.insert(data.inlay.inlayed,{inlayid = inlayid})
+	else
+		local inlay = {inlayid = inlayedData.inlayid, ownednum = 1}
+	    table.insert(data.inlay.bags, inlay)
 	end
+	table.remove(inlaydata,1)
+	table.insert(inlaydata,{inlayid = inlayid})
+	    setUserData(data)
 end
 
 function InlayModel:oneForAllBtn()
 	local data = getUserData()
 	local bestBullet,bestClip,bestSpeed,bestAim,bestBlood,bestHelper = 0,0,0,0,0,0
+	local bags = {}
 	for k,v in pairs(data.inlay.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "inlayid" then
-				if self:getInlayType(v1) == "bullet" then
-					if v1 > bestBullet then
-						bestBullet = v1
-					end
-						print("bullet")
-					self:equipInlay(bestBullet)
-				elseif self:getInlayType(v1) == "clip" then
-					if v1 > bestClip then
-						bestClip = v1
-					end
-						print("clip")
-					self:equipInlay(bestClip)
-				elseif self:getInlayType(v1) == "speed" then
-					if v1 > bestSpeed then
-						bestSpeed = v1
-					end
-						print("speed")
-					self:equipInlay(bestSpeed)
-				elseif self:getInlayType(v1) == "aim" then
-					if v1 > bestAim then
-						bestAim = v1
-					end
-						print("aim")
-					self:equipInlay(bestAim)
-				elseif self:getInlayType(v1) == "blood" then
-					if v1 > bestBlood then
-						bestBlood = v1
-					end
-						print("blood")
-					self:equipInlay(bestBlood)
-				elseif self:getInlayType(v1) == "helper" then
-					if v1 > bestHelper then
-						bestHelper = v1
-					end
-					self:equipInlay(bestHelper)
-						print("helper")
-				end
-			end
-		end
+		bags[k] = v
 	end
+	-- local allinlayed = self:getAllInlayed()
+	for k,v in pairs(bags) do
+		self:getBestInlay(v.inlayid)
+	end
+	self:refreshInfo("speed")
     dump(GameState.load())
 end
 
-function InlayModel:getBestInlay(item)
-	local allItem = {}
-	table.insert(self.all)
-
-	local best = nil
-
+function InlayModel:getBestInlay(inlayid)
+	local allinlayed = self:getAllInlayed()
+	local bestInlay = {bullet=0,clip=0,speed=0,aim=0,blood=0,helper=0}
+	local typename = self:getInlayType(inlayid)
+	if inlayid > bestInlay[typename] then
+		bestInlay[typename] = inlayid
+	end
+	for k,v in pairs(allinlayed) do
+		if v.typename == typename and bestInlay[typename] < v.index then
+			bestInlay[typename] = v.index
+		end
+	end
+	self:equipInlay(bestInlay[typename], false)
 end
 
 function InlayModel:isBagsExist(inlayid)
 	local data = getUserData()
 	for k,v in pairs(data.inlay.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "inlayid" and v1 == inlayid then
-				return true
-			end
+		if v.inlayid == inlayid then
+			return true
 		end
 	end
 	return false
@@ -155,30 +152,38 @@ end
 
 function InlayModel:isInlayedExist(inlayid)
 	local data = getUserData()
-	for k,v in pairs(data.inlay.inlayed) do
-		for k1,v1 in pairs(v) do
-			if k1 == "inlayid" and v1 == inlayid then
-				return true
-			end
-		end
+	local strType = self:getInlayType(inlayid)
+	local inlaydata = data.inlay.inlayed[strType]
+	local inlayedData = inlaydata[1]
+	if inlayedData == nil then
+		-- 没有装备
+		return 0
+	elseif inlayedData.inlayid ~= inlayid then
+		-- 装备过同类型
+		return 1
+	else
+		-- 装备了一样的
+		return 2
 	end
-	return false
 end
 
 function InlayModel:getInlayType(inlayid)
-	if inlayid > 0 and inlayid<5 then
-		return "bullet"
-	elseif inlayid < 9 then
-		return "clip"
-	elseif inlayid < 13 then
-		return "speed"
-	elseif inlayid < 17 then
-		return "aim"
-	elseif inlayid < 21 then
-		return "blood"
-	else
-		return "helper"
+	return self:getConfigTable("id", inlayid)[1]["type"]
+end
+
+function InlayModel:getAllInlayed()
+	local data = getUserData()
+	local allInlayed = {}
+    for k,v in pairs(data.inlay.inlayed) do
+		local inlaydata = data.inlay.inlayed[k]
+		local inlayedData = inlaydata[1]
+		if inlayedData ~= nil then
+			--todo
+			table.insert(allInlayed,{index = inlayedData.inlayid,typename = k})
+		end
 	end
+	return allInlayed
+
 end
 
 return InlayModel

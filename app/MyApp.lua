@@ -107,7 +107,14 @@ function MyApp:createGameStateFile(  )
                       }, 
               inlay = {
                         bags = {}, 
-                    inlayed  = {}
+                    inlayed  = {
+                                   bullet = {},
+                                   clip = {},
+                                   speed = {},
+                                   aim = {},
+                                   blood = {},
+                                   helper = {}, 
+                                }
                       }
            }
     GameState.save(data)

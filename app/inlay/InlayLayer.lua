@@ -10,7 +10,7 @@ function InlayLayer:ctor()
     self.inlayModel = app:getInstance(InlayModel)
 
     cc.EventProxy.new(self.inlayModel , self)
-        :addEventListener("REFRESH_BTN_ICON_EVENT", handler(self, self.refreshBtnIcon))
+        :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
 
 	self.btn = {}
     -- self.btnImg = {}
@@ -31,9 +31,14 @@ function InlayLayer:loadCCS()
 end
 
 function InlayLayer:onEnter()
+    self:refreshBtnIcon()
     self:refreshListView("speed")
 end
 
+function InlayLayer:refreshInlay(event)
+    self:refreshBtnIcon()
+    self:refreshListView(event.typename)
+end
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listView")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "oneForAllBtn")
@@ -54,7 +59,15 @@ function InlayLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-        
+            local data = getUserData()
+            for k,v in pairs(data.inlay.inlayed) do
+                for i=1,#data.inlay.inlayed[k] do
+                    table.remove(data.inlay.inlayed[k],1)
+                end
+            end
+            setUserData(data)
+            dump(GameState.load())
+            self:refreshBtnIcon()
         end
     end)
 
@@ -88,13 +101,19 @@ function InlayLayer:refreshListView(index)
     self.rootListView:reload()
 end
 
-function InlayLayer:refreshBtnIcon(parameterTable)
-    self.btn[self.inlayModel:getInlayType(parameterTable.index)]:removeAllChildren()
-    if parameterTable.index ~= 0 then
-        local table = self.inlayModel:getConfigTable("id", parameterTable.index)
-        local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
-        addChildCenter(img,self.btn[self.inlayModel:getInlayType(parameterTable.index)])
+function InlayLayer:refreshBtnIcon()
+    local allInlayed = self.inlayModel:getAllInlayed()
+    dump(allInlayed)
+    for k,v in pairs(self.btn) do
+        self.btn[k]:removeAllChildren()
     end
+    for k,v in pairs(allInlayed) do
+        -- self:refreshBtnIcon(v.index,v.typename)
+        local table = self.inlayModel:getConfigTable("id", v.index)
+        local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
+        addChildCenter(img,self.btn[v.typename])
+    end
+
 end
 
 function InlayLayer:removeAllItems(listView)
