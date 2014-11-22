@@ -211,7 +211,7 @@ function FightPlayer:initBtns()
     self.loadingBarDefenceHp:removeFromParent()
     self.loadingBarDefenceHp:setDirection(2)
     self:addChild(self.loadingBarDefenceHp)
-    self.loadingBarDefenceHp:setPosition(1052, 373)
+    self.loadingBarDefenceHp:setPosition(1052, 373) --todo yanxin
 
     --labelDefenceHp
     self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
@@ -383,19 +383,10 @@ function FightPlayer:tick(dt)
     if self:canGunShot() then 
         self:fire()
     end
-
-    --hero血量
-    -- local bloodPer = self.hero:getHp() / self.hero:getMaxHp()
-    -- local bloodValue = cc.uiloader:seekNodeByName(self.heroBlood, "bloodValue")
-    -- local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
-    -- local size = bloodBg:getContentSize()
-    -- bloodValue:setLayoutSize(size.width * bloodPer, size.height)
-
-    --hero各种状态
-
 end
 
 function FightPlayer:canGunShot()
+    self.gunBtnPressed = true
     if  self.hero:canFire() and self.gunBtnPressed then 
         return true 
     end
