@@ -15,7 +15,7 @@ function EnemyFactory.createEnemy(property)
 		enemyView = MissileEnemyView.new(property)
 	elseif property.type == "san" then
 		enemyView = SanEnemyView.new(property)
-	elseif property.type = "jin" then
+	elseif property.type == "jin" then
 		enemyView = JinEnemyView.new(property)
 	else
 		enemyView = EnemyView.new(property)
