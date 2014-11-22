@@ -7,14 +7,13 @@
 ]]
 
 --import
-import("...includes.functionUtils")
+
 import(".BossConfigs")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
 local BossView = class("BossView", AbstractEnemyView)
-
 
 function BossView:ctor(property)
 	BossView.super.ctor(self, property) 
@@ -45,7 +44,7 @@ end
 function BossView:initBlood()
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("heroUI.ExportJson")    
+    local node = cc.uiloader:load("heroUI.ExportJson")
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
@@ -71,7 +70,6 @@ function BossView:playFire()
 end
 
 function BossView:playHitted(event)
-	-- print("playHitted")
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)	
@@ -96,6 +94,12 @@ function BossView:playMove()  --改为onMove
 end
 
 function BossView:playKill(event)
+	--clear
+	self:clearPlayCache()
+	self.armature:stopAllActions()
+	self:clearWeak()
+
+	--play dead
 	self.armature:getAnimation():play("dead" ,-1 , 1)
 end
 
@@ -121,6 +125,9 @@ end
 
 --skill
 function BossView:playMoveLeftFire()
+	--移到屏幕左侧外
+
+	--
 	local dis = 2 
     local widthOffset = 100 
     local isAble = self:checkPlace(-widthOffset)
@@ -151,6 +158,7 @@ end
 function BossView:playSaoShe()
 	self.armature:getAnimation():play("saoshe" , -1, 1)
 
+	--持续开枪 0.1
 	self.enemy:hit(self.hero)
 end
 
@@ -164,7 +172,7 @@ function BossView:playDaoDan()
 		local data = {
 			placeName = "place3",
 			pos = cc.p(xPos, 10),
-			delayOffset = 0.4,
+			delay = 0.4 * i,
 			property = {
 					type = "missile",
 					id = 1,
@@ -175,13 +183,18 @@ function BossView:playDaoDan()
     self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
 end
 
-function BossView:playWeak(index)
+function BossView:clearWeak()
 	--clear weaks
 	for i,weakData in pairs(self.weakNode) do
 		local anim = weakData["anim"]
 		anim:setVisible(false)
 		weakData.valid = false
 	end
+
+end
+
+function BossView:playWeak(index)
+	self:clearWeak()
 
 	--play
 	local weakData = self.weakNode["weak"..index]
@@ -242,11 +255,6 @@ function BossView:tick(t)
 	if randomSeed > moveRate - 1 then 
 		self:play("move", handler(self, self.playMove))
 		return 
-	end
-
-	--检测死亡
-	if self.enemy:getHp() == 0 then
-		self:play("die", handler(self, self.playKill))
 	end
 end
 
@@ -353,7 +361,7 @@ function BossView:getEnemyArmature()
 end
 
 function BossView:getRange(rectName)
-	print("rectName", rectName)
+	-- print("rectName", rectName)
 	local range, isValid = BossView.super.getRange(self, rectName)
 	if range == nil then return nil, false end
 	local str =  string.sub(rectName, 1, 4)
@@ -361,7 +369,7 @@ function BossView:getRange(rectName)
 		local weakData = self.weakNode[rectName]
 		assert(weakData, "weakData is nil" .. rectName) 
 		isValid = weakData["valid"]
-		print("isValid", isValid)
+		-- print("isValid", isValid)
 	end
 	return range, isValid
 end

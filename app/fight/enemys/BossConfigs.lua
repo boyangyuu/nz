@@ -16,6 +16,9 @@ local configs = {
 		daoDan = {
 			0.99,0.90,0.70, 0.60, 0.50, 0.40,
 		},
+		saoShe = {
+			0.90,0.65, 0.55,
+		},
 		weak2 = {
 			0.70,
 		},	
@@ -34,25 +37,20 @@ function getBoss(levelId, groupId)
 end
 
 function getMoveLeftAction(scale)
-	local move1 = cc.MoveBy:create(6/60, cc.p(0, 0))
-	local move2 = cc.MoveBy:create(7/60, cc.p(-23, 0))
-	local move3 = cc.MoveBy:create(7/60, cc.p(-33, 0))	
-	local move4 = cc.MoveBy:create(9/60, cc.p(-32, 0))
-	local move5 = cc.MoveBy:create(9/60, cc.p(-10, 0))
+	local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
+	local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
+	local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
+	local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
+	local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
 	return cc.Sequence:create(move1, move2, move3, move4, move5)
 end
---  0帧：     0；0
---  6帧：     0；0
--- 13帧： -23；2
--- 20帧： -56；-5
--- 29帧： -88；-4
--- 40帧：-78；-4
+
 function getMoveRightAction(scale)
-	local move1 = cc.MoveBy:create(6/60, cc.p(0, 0))
-	local move2 = cc.MoveBy:create(7/60, cc.p(23, 0))
-	local move3 = cc.MoveBy:create(7/60, cc.p(33, 0))	
-	local move4 = cc.MoveBy:create(9/60, cc.p(32, 0))
-	local move5 = cc.MoveBy:create(9/60, cc.p(10, 0))
+	local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
+	local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
+	local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
+	local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
+	local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
 	return cc.Sequence:create(move1, move2, move3, move4, move5)
 end
 

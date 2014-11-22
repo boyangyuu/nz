@@ -24,7 +24,6 @@ function MissileEnemyView:ctor(properties)
         :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill)) 
 
-    --
     self:playFire() 
 
     --test
@@ -62,12 +61,12 @@ function MissileEnemyView:playBomb()
     --dispatch effect_hurted_bomb
 end
 
+
+--AbstractEnemyView接口
 function MissileEnemyView:playHitted(event)
-    -- print("MissileEnemyView:playHitted")
 end
 
 function MissileEnemyView:playKill(event)
-    -- print("MissileEnemyView:playKill") 
     self:setDeadDone() 
 
     --bomb动画

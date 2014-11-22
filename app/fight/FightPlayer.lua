@@ -59,7 +59,8 @@ end
 function FightPlayer:initUI()
     --load fightUI  
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("res/Fight/fightLayer/ui/mainUI.ExportJson")
+    local node = cc.uiloader:load("mainUI.ExportJson")
+
     self.ui = node
     self:addChild(node)
 
@@ -128,6 +129,10 @@ function FightPlayer:initBar()
     local bloodBg = cc.uiloader:seekNodeByName(self.heroBlood, "bloodBg")
     local size = bloodBg:getContentSize()
     bloodValue:setLayoutSize(size.width, size.height)
+
+    --init hero hp loadingbar
+
+    -- self.loadingBarHp = cc.uiloader:seekNodeByName(self, "loadingBarHeroHp")
 
     --gold
 end
@@ -198,7 +203,10 @@ function FightPlayer:initBtns()
 
     --loadingBarDefenceHp
     self.loadingBarDefenceHp = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
+    self.loadingBarDefenceHp:removeFromParent()
     self.loadingBarDefenceHp:setDirection(2)
+    self:addChild(self.loadingBarDefenceHp)
+    self.loadingBarDefenceHp:setPosition(1052, 373)
 
     --labelDefenceHp
     self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
@@ -224,8 +232,10 @@ function FightPlayer:onMutiTouchBegin(event)
     -- dump(event, "event onMutiTouchBegin")
 
     local eventName = "begin"
-    for id,point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point, eventName)
+
+    if event.points == nil then return false end
+    for id, point in pairs(event.points) do
+        local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
 
         isTouch = self:checkBtnChange(id, point, eventName)
@@ -281,7 +291,7 @@ function FightPlayer:checkbtnGrenade(id, point, eventName)
     isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
         self.touchs["grenade"] = id
-        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(500, 200)})
+        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(self.focusNode:getPositionX(), self.focusNode:getPositionY())})
     end
 end
 
@@ -388,7 +398,6 @@ function FightPlayer:fire()
         self.gunView:fire()
         self.focusView:playFire()
     end
-
 end
 
 function FightPlayer:onCancelledFire()

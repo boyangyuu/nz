@@ -28,8 +28,8 @@ function GunView:fire()
 end
 
 function GunView:playFire()
-	self.gun:getAnimation():play("fire" , -1, 0)
 
+	self.gun:getAnimation():play("fire" , -1, 0)
 	--枪火
 	self.jqk:setVisible(true)
 	self.jqk:getAnimation():play("fire" , -1, 0)

@@ -8,9 +8,7 @@ desc：
 ]]
 
 import("..includes.functionUtils")
-import(".Fight_001")
-
-_testMode = getIsTest()
+local FightConfigs = import(".fightConfigs.FightConfigs")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Timer = require("framework.cc.utils.Timer")
 local FocusView = import(".FocusView")
@@ -19,7 +17,12 @@ local Actor = import(".Actor")
 local EnemyView = import(".enemys.EnemyView")
 local BossView = import(".enemys.BossView")
 local MissileEnemyView = import(".enemys.MissileEnemyView")
+local SanEnemyView = import(".enemys.SanEnemyView")
 local EnemyManager = import(".EnemyManager")
+
+--常量
+local groupId = 1
+local levelId = 1
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -45,7 +48,7 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
         :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
-        :addEventListener(Actor.FIRE_THROW_EVENT, handler(self, self.onHeroThrowFire))
+        :addEventListener(Hero.GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
 
 end
 
@@ -55,9 +58,10 @@ end
 
 function MapView:loadCCS()
 	--map
-	local mapId = ""   -- todo 外界
+	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
-    local node = cc.uiloader:load("map_1.ExportJson")	
+
+    local node = cc.uiloader:load(mapSrcName)
 	self.map = node
 	addChildCenter(self.map, self)	
 
@@ -80,32 +84,41 @@ function MapView:loadCCS()
     end
 end
 
+function MapView:checkWave()
+	local function checkEnemysEmpty()
+		if #self.enemys == 0 then 
+			print("第"..self.waveIndex.."波怪物消灭完毕")
+			self.waveIndex = self.waveIndex + 1
+			self:updateEnemys()
+			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+		end
+	end
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
+end
+
 --enemy
 function MapView:updateEnemys(event)
-	--timer
-    -- if event.countdown > 0 then
-    -- 	return
-    -- end
-
 	--wave config
-	local wave = getWaves(self.waveIndex)
+	local waveConfig = FightConfigs:getWaveConfig(groupId, levelId)
+	local wave = waveConfig:getWaves(self.waveIndex)
 	dump(wave, "wave")
+
 	if wave == nil then 
 		print("赢了")
+		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		return
 	end
-	-- if wave.type = "enemy" then .. 
-	-- if wave.type = "boss" then .. 
+
 	local lastTime = 0
+	local waveDelay = 2.0
 	for groupId, group in ipairs(wave.enemys) do
-		
 		for i = 1, group.num do
 			--delay
-			local delay = group.delay or 0.1
-			delay = group.time + delay * i
+			local delay = group.delay[i] or lastTime
 			if delay > lastTime then lastTime = delay end
 			
 			--pos
-			assert(group["pos"], "group pos")
+			assert(group["pos"], "group pos"..i)
 			local pos = group["pos"][i] or 0
 
 			--add
@@ -117,13 +130,13 @@ function MapView:updateEnemys(event)
 		end
 	end
 	--check next wave
-	scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
 function MapView:checkWave()
 	local function checkEnemysEmpty()
 		if #self.enemys == 0 then 
-			print("第"..self.waveIndex.."波怪物消灭完毕")
+			-- print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 			self:updateEnemys()
 			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
@@ -140,7 +153,7 @@ function MapView:callfuncAddEnemys(event)
 		end		
 		
 		scheduler.performWithDelayGlobal(addEnemyFunc, 
-			enemyData.delayOffset * (i - 1) )
+			enemyData.delay)
 	end
 end
 
@@ -158,11 +171,13 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--enemy 改为工厂
 	local enemyView
-	print("create enemy", property.type)
+	-- print("create enemy", property.type)
 	if property.type == "boss" then 
 		enemyView = BossView.new(property)
 	elseif property.type == "missile" then
 		enemyView = MissileEnemyView.new(property)
+	elseif property.type == "san" then
+		enemyView = SanEnemyView.new(property)
 	else
 		enemyView = EnemyView.new(property)
 	end
@@ -170,8 +185,8 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	enemyView:setScaleX(scale:getScaleX())
-	enemyView:setScaleY(scale:getScaleY())
+	-- enemyView:setScaleX(scale:getScaleX())
+	-- enemyView:setScaleY(scale:getScaleY())
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
@@ -182,12 +197,6 @@ function MapView:addEnemy(placeName, property, pos)
 	--place
 	placeNode:addChild(enemyView)
 end
-
-function MapView:addDaoDan()
-	-- body
-end
-
-
 
 function MapView:getSize()
 	local bg = self.bg
@@ -201,14 +210,22 @@ function MapView:tick(dt)
 	--检查enemy和boss的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
-			local pos = cc.p(enemy:getPositionX(), enemy:getPositionY())
-			-- self:killEnmeyGold(pos)
-			table.remove(self.enemys, i)
-			enemy:removeFromParent()
-
-			self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
+			self:removeEnemy(enemy, i)
 		end
 	end
+end
+
+function MapView:removeEnemy(enemy, i)
+	-- self:popGold(enemy)
+	table.remove(self.enemys, i)
+	enemy:removeFromParent()
+end
+
+function MapView:popGold(enemy)
+	local boundingbox = enemy:getCascadeBoundingBox()
+	local size = boundingbox.size
+	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_EVENT, enemyPos = pos})
 end
 
 --[[
@@ -238,13 +255,18 @@ function MapView:onHeroFire(event)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(event.demage * demageScale)
+		
 	end
 
 end
 
 function MapView:onHeroThrowFire(event)
-	--target
-
+	-- target
+	for i,enemy in ipairs(self.enemys) do
+		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
+			self:removeEnemy(enemy, i)
+		end
+	end
 end
 
 function MapView:onHeroPlaneFire(event)
