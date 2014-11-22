@@ -396,6 +396,7 @@ function FightPlayer:tick(dt)
 end
 
 function FightPlayer:canGunShot()
+    self.gunBtnPressed = true
     if  self.hero:canFire() and self.gunBtnPressed then 
         return true 
     end
