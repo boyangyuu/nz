@@ -26,6 +26,7 @@ function HeroView:ctor(properties)
 	self.keepKillEnemyCount = 0
 	self.killEnemyCount = 0
 	self.killEnemyTimerHandler = nil
+
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self):addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
 	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.setShowArmoured))
@@ -41,7 +42,7 @@ function HeroView:ctor(properties)
 	self:initKillTimerNode()
 end
 
-
+--初始化英雄血条
 function HeroView:initHeroHpNode()
 
 	self.loadingBarHeroHp = cc.uiloader:seekNodeByName(self.uiRootNode, "loadingBarHeroHp")
@@ -49,6 +50,7 @@ function HeroView:initHeroHpNode()
 	self:addChild(self.loadingBarHeroHp)
 end
 
+--player血条血量改变
 function HeroView:heroHpChange()
 	local t = self.hero:getHp() / self.hero:getMaxHp() * 100
 	local t1 = self.loadingBarHeroHp:getPercent()
@@ -91,7 +93,7 @@ function HeroView:initKillTimerNode()
     self.killEnemyTimer:setVisible(false)
 end
 
-
+--杀死敌人后跳出金币
 function HeroView:killEnmeyGold(enemyPos)
 
 	for i = 1, 3 do
@@ -111,6 +113,7 @@ function HeroView:killEnmeyGold(enemyPos)
 	end
 end
 
+--触发黄金武器
 function HeroView:activeGoldWeapon()
 	self.hero:dispatchEvent({name = Actor.STOP_EVENT})
 	local color = display.newColorLayer(cc.c4b(0, 0, 0, 180))

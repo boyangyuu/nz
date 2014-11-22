@@ -213,11 +213,10 @@ function MapView:tick(dt)
 end
 
 function MapView:removeEnemy(enemy, i)
-	-- self:popGold(enemy)
+	self:popGold(enemy)
 	table.remove(self.enemys, i)
 	enemy:removeFromParent()
 	self.killEnemyCount = self.killEnemyCount + 1
-
 end
 
 function MapView:popGold(enemy)
