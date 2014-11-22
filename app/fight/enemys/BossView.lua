@@ -36,7 +36,7 @@ function BossView:ctor(property)
     self:initBody()
 
     self:playWeak(1)
-    -- scheduler.performWithDelayGlobal(handler(self, self.playMoveLeftFire), 0.001)
+    scheduler.performWithDelayGlobal(handler(self, self.playSaoShe), 0.001)
 end
 
 --ui
@@ -176,14 +176,14 @@ function BossView:playMoveLeftFire()
 
 	--到右屏幕之前
 	local callfuncBeforeRight = function ()
-		self.armature:getAnimation():play("moverightfire" , -1, 1) 
+		self.armature:getAnimation():play("ksmoveright" , -1, 1) 
 		self:playDaoDan1()
 	end
 	local beforeRightCall = cc.CallFunc:create(callfuncBeforeRight)
-
+   
 	--到左屏幕之前
 	local callfuncBeforeLeft = function ()
-		self.armature:getAnimation():play("moveleftfire" , -1, 1)
+		self.armature:getAnimation():play("ksmoveleft" , -1, 1)
 		self:playDaoDan1()
 	end
 	local beforeLeftCall = cc.CallFunc:create(callfuncBeforeRight)
@@ -231,9 +231,24 @@ function BossView:playSaoShe()
 	self.armature:getAnimation():play("saoshe" , -1, 1)
 
 	--持续开枪 0.1
-	self.enemy:hit(self.hero)
+	local fireOffset = self.enemy:getFireOffset()
+	self:continueFire(20, fireOffset)
+	
 end
 
+function BossView:continueFire(sumTimes, fireOffset)
+	
+	local sumTimes = 5
+	local handler
+	function saosheFire()
+		if sumTimes == 0 then 
+			scheduler.unscheduleGlobal(handler)
+		end
+		self.enemy:hit(self.hero)
+		sumTimes = sumTimes - 1
+	end
+	handler = scheduler.scheduleGlobal(saosheFire, fireOffset)
+end
 
 function BossView:playDaoDan1()
 	--导弹

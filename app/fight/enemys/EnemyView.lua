@@ -10,7 +10,6 @@
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
-local Grenade = import("..Entity.Grenade")
 local EnemyView = class("EnemyView", AbstractEnemyView)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
@@ -85,7 +84,6 @@ function EnemyView:playThrow()
 	local function test( )
 		print("hello world")
 	end
-	-- self:getParent():addChild(Grenade.createGrenade(pos, cc.p(200, 0), test, true))
 	self.enemy:hit(self.hero)
 end
 
@@ -221,8 +219,8 @@ end
 function EnemyView:getEnemyArmature()
 	if self.armature then return self.armature end 
 	--armature
-    local src = "Fight/enemys/anim_enemy_001/anim_enemy_001.ExportJson"
-    local armature = getArmature("anim_enemy_001", src) 
+    local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
+    local armature = getArmature("anim_enemy_002", src) 
 	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	return armature
 end

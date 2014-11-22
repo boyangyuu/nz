@@ -40,8 +40,13 @@ function Boss:getDemageScale(rangeStr)
     assert(self.config.demageScale[rangeStr], "wave config is invalid:"..rangeStr)
     return self.config.demageScale[rangeStr]
 end
+
 function Boss:getSkillTrigger()
     return self.config.skilltrigger
+end
+
+function Boss:getFireOffset()
+    return self.config.fireOffset 
 end
 
 return Boss
