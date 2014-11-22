@@ -64,11 +64,9 @@ end
 
 --AbstractEnemyView接口
 function MissileEnemyView:playHitted(event)
-    -- print("MissileEnemyView:playHitted")
 end
 
 function MissileEnemyView:playKill(event)
-    -- print("MissileEnemyView:playKill") 
     self:setDeadDone() 
 
     --bomb动画
@@ -101,8 +99,8 @@ function MissileEnemyView:getEnemyArmature()
 end
 
 
-function MissileEnemyView:getModel(id)
-    return Enemy.new({id = id})
+function MissileEnemyView:getModel(property)
+    return Enemy.new(property)
 end
 
 

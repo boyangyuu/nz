@@ -8,23 +8,24 @@
 
 --import
 
-import(".BossConfigs")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local AbstractEnemyView = import(".AbstractEnemyView")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
+local FightConfigs = import("..fightConfigs.FightConfigs")
 local BossView = class("BossView", AbstractEnemyView)
 
 function BossView:ctor(property)
 	BossView.super.ctor(self, property) 
 
 	--config
-	self.config = getBoss(1,1)
+	self.config = FightConfigs:getBossConfig(property.configName)
+	dump(self.config, "self.config")
 
     --blood
     self:initBlood() 
 
-	--play
+	-- --play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
     --event
@@ -33,10 +34,10 @@ function BossView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
 
-    --test
     self:initBody()
 
     self:playWeak(1)
+    -- scheduler.performWithDelayGlobal(handler(self, self.playMoveLeftFire), 0.001)
 end
 
 --ui
@@ -80,7 +81,6 @@ function BossView:playFire()
 end
 
 function BossView:playHitted(event)
-	-- print("playHitted")
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)	
@@ -94,12 +94,12 @@ function BossView:playMove()  --改为onMove
 	
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
-		local action = getMoveRightAction(1)
+		local action = self.config:getMoveRightAction(1)
 		self.armature:runAction(cc.RepeatForever:create(action))	
 
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
-		local action = getMoveLeftAction(1)
+		local action = self.config:getMoveLeftAction(1)
 		self.armature:runAction(cc.RepeatForever:create(action))		
 	end	
 end
@@ -119,13 +119,13 @@ function BossView:playSkill(skillName)
 	local str =  string.sub(skillName, 1, 4)
 	print("skillName", str)
 	if skillName == "moveLeftFire" then 
-		self:play("skill", handler(self, self.playMoveLeftFire))
+		self:play("moveLeftFire", handler(self, self.playMoveLeftFire))
 	elseif skillName == "moveRightFire" then 
-		self:play("skill", handler(self, self.playMoveRightFire))
+		self:play("moveRightFire", handler(self, self.playMoveRightFire))
 	elseif skillName == "saoShe" then
-		self:play("skill", handler(self, self.playSaoShe))
+		self:play("saoShe", handler(self, self.playSaoShe))
 	elseif skillName == "daoDan" then
-		self:play("skill", handler(self, self.playDaoDan))
+		self:play("daoDan", handler(self, self.playDaoDan))
 	
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
@@ -136,17 +136,82 @@ end
 
 --skill
 function BossView:playMoveLeftFire()
-	local dis = 2 
-    local widthOffset = 100 
-    local isAble = self:checkPlace(-widthOffset)
-    if not isAble then return end
+	--自己的位置
+	local posOri = cc.p(self:getPositionX(), self:getPositionY())
+	local speed = 1000.0
+	local isLeft = true
 
-	self.armature:getAnimation():play("moveleftfire" , -1, 1)
-	local action = cc.MoveBy:create(1/60, cc.p(-dis, 0))
-    local seq = cc.Sequence:create(action)	
-    self.armature:runAction(cc.RepeatForever:create(seq))	
+	--出发
+	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+	local bound = self.armature:getBoundingBox()
+	local disOut = -(pWorld.x + bound.width / 2)
+	local time = math.abs(disOut) / speed
+	local desPos = cc.p(disOut, posOri.y)
+	local actionOut = cc.MoveBy:create(time, desPos)
 
-	self.enemy:hit(self.hero)
+	--到右屏幕
+	local disScreen = display.width + bound.width
+	time = math.abs(disScreen) / speed
+ 	desPos = cc.p(disScreen, posOri.y)
+	local actionScreen1 = cc.MoveBy:create(time, desPos)
+
+	--到左屏幕
+	local disScreen2 = -disScreen
+	time = math.abs(disScreen2) / speed
+	desPos = cc.p(disScreen2, posOri.y)
+	local actionScreen2 = cc.MoveBy:create(time, desPos)
+
+	--返回
+	local disBack = - disOut
+	desPos = cc.p(disBack, posOri.y)
+	time = math.abs(disScreen2) / speed
+	local actionBack = cc.MoveBy:create(time, desPos)
+	local seq = nil
+	
+	--出发之前
+	local callfuncBeforeOut = function ()
+		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
+		self.pauseOtherAnim = true
+	end
+	local beforeOutCall = cc.CallFunc:create(callfuncBeforeOut)
+
+	--到右屏幕之前
+	local callfuncBeforeRight = function ()
+		self.armature:getAnimation():play("moverightfire" , -1, 1) 
+		self:playDaoDan1()
+	end
+	local beforeRightCall = cc.CallFunc:create(callfuncBeforeRight)
+
+	--到左屏幕之前
+	local callfuncBeforeLeft = function ()
+		self.armature:getAnimation():play("moveleftfire" , -1, 1)
+		self:playDaoDan1()
+	end
+	local beforeLeftCall = cc.CallFunc:create(callfuncBeforeRight)
+
+	--回去之前
+	local callfuncBeforeBack = function ()
+		self.armature:getAnimation():play("moveright" , -1, 1)
+	end
+	local beforeBackCall = cc.CallFunc:create(callfuncBeforeBack)
+
+	--回去之后
+	local callfuncAfterLeft = function ()
+		self.pauseOtherAnim = false
+	end	
+	local afterLeftCall = cc.CallFunc:create(callfuncAfterLeft)
+
+	--play
+	if isLeft then 
+		seq = cc.Sequence:create(
+		beforeOutCall, actionOut,
+		beforeRightCall, actionScreen1, 
+		beforeLeftCall, actionScreen2, 
+		beforeBackCall, actionBack, afterLeftCall)	
+	else 
+		seq = cc.Sequence:create(actionBack , actionScreen2, actionScreen1, actionOut)	
+	end
+	self:runAction(seq)
 end
 
 function BossView:playMoveRightFire()
@@ -166,7 +231,28 @@ end
 function BossView:playSaoShe()
 	self.armature:getAnimation():play("saoshe" , -1, 1)
 
+	--持续开枪 0.1
 	self.enemy:hit(self.hero)
+end
+
+
+function BossView:playDaoDan1()
+	--导弹
+    local enemys = {}
+	for i=1,7 do
+		local xPos = 30 + i * 120
+		local data = {
+			placeName = "place3",
+			pos = cc.p(xPos, 10),
+			delay = 0.4 * i,
+			property = {
+					type = "missile",
+					id = 1,
+					},
+			}
+		enemys[#enemys + 1] = data
+	end
+    self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
 end
 
 function BossView:playDaoDan()
@@ -222,12 +308,12 @@ function BossView:playWeak(index)
 	anim:getAnimation():setMovementEventCallFunc(animationWeak)
 end
 
---skillEnd
 
---接口F BossView:
+--接口 BossView:
 function BossView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		-- print("animationEvent id ", movementID)
+		if self.pauseOtherAnim then return end
+		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "dead" then
 			local playCache = self:getPlayCache()
@@ -243,6 +329,7 @@ function BossView:animationEvent(armatureBack,movementType,movementID)
 end
 
 function BossView:tick(t)
+	if self.pauseOtherAnim then return end 
 	--change state
 	local randomSeed 
 	math.newrandomseed()
@@ -272,6 +359,7 @@ function BossView:checkSkill(demage)
 	local persentO = (hp + demage)
 	local persentC = hp
 	local skilltrigger = self.config.skilltrigger
+	local skilltrigger = self.enemy:getSkillTrigger()
 	for skillName,persents in pairs(skilltrigger) do
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
@@ -284,7 +372,6 @@ function BossView:checkSkill(demage)
 					self:playSkill(skillName)
 				end
 				scheduler.performWithDelayGlobal(callfuncSkill, 1)
-				return
 			end
 		end
 	end
@@ -381,8 +468,8 @@ function BossView:getRange(rectName)
 	return range, isValid
 end
 
-function BossView:getModel(id)
-	return Boss.new({id = id})
+function BossView:getModel(property)
+	return Boss.new(property)
 end
 
 return BossView
