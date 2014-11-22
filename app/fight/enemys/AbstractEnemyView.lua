@@ -13,7 +13,7 @@ end)
 
 ---- event ----
 function AbstractEnemyView:ctor(property)
-	dump(property, "AbstractEnemyView property")
+	-- dump(property, "AbstractEnemyView property")
 	--instance
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property)
@@ -168,15 +168,15 @@ end
 
 function AbstractEnemyView:play(state, handlerFunc)
 	local per = self.enemy:getHp() / self.enemy:getMaxHp()
-	print("进栈 state: "..state..", 当前血量:"..per)
+	-- print("进栈 state: "..state..", 当前血量:"..per)
 	
 	local index = #self.playCache + 1
 	local function play()
 		handlerFunc()
-		dump(self.playCache, "self.playCache")
+		-- dump(self.playCache, "self.playCache")
 		local state = self.playCache[1].state
 		table.remove(self.playCache, 1)
-		print("出栈 state:"..state)
+		-- print("出栈 state:"..state)
 	end
 	self.playCache[index] = {func = play, state = state}
 	

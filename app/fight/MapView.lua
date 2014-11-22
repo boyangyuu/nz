@@ -134,7 +134,8 @@ function MapView:updateEnemys(event)
 	for groupId, group in ipairs(wave.enemys) do
 		for i = 1, group.num do
 			--delay
-			local delay = group.delay[i] or lastTime
+			print("group time", group.time)
+			local delay = (group.delay[i] or lastTime) + group.time
 			if delay > lastTime then lastTime = delay end
 			
 			--pos
@@ -184,7 +185,8 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-
+	enemyView:setScaleX(scale:getScaleX())
+	enemyView:setScaleY(scale:getScaleY())
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
 	math.newrandomseed()
