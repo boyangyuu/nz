@@ -13,7 +13,7 @@ end)
 
 ---- event ----
 function AbstractEnemyView:ctor(property)
-	dump(property, "AbstractEnemyView property")
+	-- dump(property, "AbstractEnemyView property")
 	--instance
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property)

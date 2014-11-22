@@ -176,14 +176,14 @@ function BossView:playMoveLeftFire()
 
 	--到右屏幕之前
 	local callfuncBeforeRight = function ()
-		self.armature:getAnimation():play("moverightfire" , -1, 1) 
+		self.armature:getAnimation():play("ksmoveright" , -1, 1) 
 		self:playDaoDan1()
 	end
 	local beforeRightCall = cc.CallFunc:create(callfuncBeforeRight)
 
 	--到左屏幕之前
 	local callfuncBeforeLeft = function ()
-		self.armature:getAnimation():play("moveleftfire" , -1, 1)
+		self.armature:getAnimation():play("ksmoveleft" , -1, 1)
 		self:playDaoDan1()
 	end
 	local beforeLeftCall = cc.CallFunc:create(callfuncBeforeRight)
