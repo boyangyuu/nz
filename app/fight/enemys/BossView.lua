@@ -20,7 +20,6 @@ function BossView:ctor(property)
 
 	--config
 	self.config = FightConfigs:getBossConfig(property.configName)
-	dump(self.config, "self.config")
 
     --blood
     self:initBlood() 
