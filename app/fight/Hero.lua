@@ -60,7 +60,7 @@ function Hero:setLevelId()
 end
 
 function Hero:getLevelId()
-    return 5
+    return 2
 end
 
 function Hero:BeHurt(event)
