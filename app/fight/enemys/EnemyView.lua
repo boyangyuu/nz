@@ -201,7 +201,7 @@ end
 
 function EnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
