@@ -41,7 +41,7 @@ function getPopupTips(text)
     popupNode:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
                  popupNode:removeFromParent()
             end)}))
-    popupNode:setZOrderOnTop(true)
+    -- popupNode:setZOrderOnTop(true)
     return popupNode
 end
 

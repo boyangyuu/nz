@@ -5,6 +5,7 @@
 import("..includes.functionUtils")
 local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
+local LevelMapModel = import(".LevelMapModel")
 local HomeModel = import("..homeBar.HomeModel")
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
@@ -16,7 +17,8 @@ local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time o
 
 function LevelMapLayer:ctor()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
-    
+    self.LevelMapModel = app:getInstance(LevelMapModel)
+
     self:initData()
     self:initBgLayer()
     self:initChooseLayer()
@@ -139,10 +141,10 @@ function LevelMapLayer:refreshLevelLayer(groupId)
 
     -- seek level buttons
     local levelBtn = {}
+    local group,level = self.LevelMapModel:getConfig()
     for i = 1, self.levelAmount[groupId] do
         levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
         levelBtn[i]:setTouchEnabled(true)
-
         -- add listener
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
@@ -154,8 +156,13 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() + 5, levelBtn[i]:getPositionY())),
                     cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY())),
                     cc.CallFunc:create(function()
-                        app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i),200)end)}))
-                -- self:addChild(getPopupTips("关卡尚未开启！"), 100)
+
+                        if  group > groupId or group == groupId and level >= i  then
+                            app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i),200)
+                        else                            
+                            self:addChild(getPopupTips("关卡尚未开启！"))
+                        end
+                    end)}))
             end
         end)
     end

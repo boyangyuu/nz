@@ -120,7 +120,11 @@ function MyApp:createGameStateFile()
                                    blood = {},
                                    helper = {}, 
                                 }
-                      }
+                      },
+        currentlevel = {
+                            group = 1,
+                            level = 1,
+                        } 
            }
     GameState.save(data)
     dump(GameState.load(), "GameState.load()")
