@@ -23,8 +23,8 @@ function InlayLayer:ctor()
 end
 
 function InlayLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/InlayShop/")
-	local controlNode = cc.uiloader:load("xiangqian_main.json")
+	cc.FileUtils:getInstance():addSearchPath("res/InlayShop")
+	local controlNode = cc.uiloader:load("xiangqian.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 end
@@ -39,9 +39,9 @@ function InlayLayer:refreshInlay(event)
     self:refreshListView(event.typename)
 end
 function InlayLayer:initUI()
-    self.rootListView = cc.uiloader:seekNodeByName(self, "listView")
-    local oneForAllBtn = cc.uiloader:seekNodeByName(self, "oneForAllBtn")
-    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "goldWeaponBtn")
+    self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
+    local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
+    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
     oneForAllBtn:setTouchEnabled(true)
     goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(oneForAllBtn, function(event)
@@ -89,7 +89,7 @@ function InlayLayer:refreshListView(index)
     	local item = self.rootListView:newItem()
     	local content = InlayListCell.new(table[i])
     	item:addContent(content)
-        item:setItemSize(530, 160)
+        item:setItemSize(550, 165)
     	self.rootListView:addItem(item)
     end
     self.rootListView:reload()
