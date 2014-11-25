@@ -14,15 +14,21 @@ local Hero = class("Hero", Actor)
 --events
 
 --skill
-Hero.SKILL_ARMOURED_START_EVENT   = "SKILL_ARMOURED_START_EVENT"
-Hero.SKILL_DEFENCE_START_EVENT    = "SKILL_DEFENCE_START_EVENT"
-Hero.SKILL_DEFENCE_BEHURT_EVENT   = "SKILL_DEFENCE_BEHURT_EVENT"
-Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"
-Hero.SKILL_GOLDWEAPON_ACTIVE_EVENT= "SKILL_GOLDWEAPON_ACTIVE_EVENT"
+Hero.SKILL_ARMOURED_START_EVENT   = "SKILL_ARMOURED_START_EVENT"    --机甲开启
+
+Hero.SKILL_DEFENCE_START_EVENT    = "SKILL_DEFENCE_START_EVENT" --护盾开启
+Hero.SKILL_DEFENCE_BEHURT_EVENT   = "SKILL_DEFENCE_BEHURT_EVENT" --护盾被攻击
+Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原?
+
+Hero.SKILL_GRENADE_ARRIVE_EVENT = "SKILL_GRENADE_ARRIVE_EVENT" --扔手雷结束
+Hero.SKILL_GRENADE_START_EVENT = "SKILL_GRENADE_START_EVENT"    --扔手雷开启
+
+Hero.SKILL_GOLDWEAPON_ACTIVE_EVENT= "SKILL_GOLDWEAPON_ACTIVE_EVENT" --激活黄金武器
+
 
 --enemy
-Hero.SKILL_KILL_ENEMY_EVENT   = "SKILL_KILL_ENEMY_EVENT"
-Hero.SKILL_GRENADE_ARRIVE_EVENT = "SKILL_GRENADE_ARRIVE_EVENT"
+Hero.ENEMY_ATTACK_MUTI_EVENT      = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
+Hero.ENEMY_KILL_ENEMY_EVENT   = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人      
 
 
 function Hero:ctor(properties, events, callbacks)
@@ -32,7 +38,7 @@ function Hero:ctor(properties, events, callbacks)
     	maxHp = 100000,
     	demage = 30,
 	}
-    Hero.super.ctor(self, property)       
+    Hero.super.ctor(self, property)
     self.gun = app:getInstance(Gun)
 
     --property
@@ -65,8 +71,6 @@ end
 
 function Hero:BeHurt(event)
 
-	-- body
 end
-
 
 return Hero

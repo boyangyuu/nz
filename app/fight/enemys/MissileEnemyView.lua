@@ -7,12 +7,12 @@
 ]]
 
 import("...includes.functionUtils")
-local AbstractEnemyView = import(".AbstractEnemyView")
+local Attackable = import(".Attackable")
 local Enemy = import(".Enemy")
 local Hero = import("..Hero")
 local Actor = import("..Actor")
 
-local MissileEnemyView = class("MissileEnemyView", AbstractEnemyView)
+local MissileEnemyView = class("MissileEnemyView", Attackable)
 
 ---- event ----
 function MissileEnemyView:ctor(properties)  
@@ -62,7 +62,7 @@ function MissileEnemyView:playBomb()
 end
 
 
---AbstractEnemyView接口
+--Attackable接口
 function MissileEnemyView:playHitted(event)
 end
 

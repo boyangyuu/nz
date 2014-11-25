@@ -33,6 +33,7 @@ function MapView:ctor()
 	self.killEnemyCount = 0
 	self.isPause = false
 	self.fightConfigs = app:getInstance(FightConfigs)
+	
 	--ccs
 	self:loadCCS()
 
@@ -45,11 +46,10 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
         :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
-        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
+        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
+        :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Actor.STOP_EVENT, handler(self, self.setAllEntityActive))
-
 end
-
 
 function MapView:setAllEntityActive( event )
 	self.hero:dispatchEvent({name = "stop"})
@@ -171,7 +171,7 @@ function MapView:addEnemy(placeName, property, pos)
 
 	--place
 	local placeNode = self.places[placeName]
-	assert(placeNode, "invalid param")		
+	assert(placeNode, "no placeNode! invalid param:"..placeName)		
 	local boundPlace = placeNode:getBoundingBox()
 	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
 	boundPlace.x = pWorld.x
@@ -187,6 +187,7 @@ function MapView:addEnemy(placeName, property, pos)
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
 	enemyView:setScaleX(scale:getScaleX())
 	enemyView:setScaleY(scale:getScaleY())
+
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
 	math.newrandomseed()
@@ -225,7 +226,7 @@ function MapView:popGold(enemy)
 	local boundingbox = enemy:getCascadeBoundingBox()
 	local size = boundingbox.size
 	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
-	self.hero:dispatchEvent({name = Hero.SKILL_KILL_ENEMY_EVENT, enemyPos = pos, goldCount = self.killEnemyCount * 50})
+	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, enemyPos = pos, goldCount = self.killEnemyCount * 50})
 end
 
 --[[
@@ -248,6 +249,27 @@ function MapView:getTargetDatas()
 	return targetDatas 
 end
 
+--返回rect里包含enemy的点位置的enemys
+function MapView:getEnemysInRect(rect)
+	dump(rect, "rect")
+	local enemys = {}
+	for i,enemy in ipairs(self.enemys) do
+		if enemy then
+			local armature = enemy:getEnemyArmature()
+			local box = armature:getBoundingBox()
+			local scale = enemy:getScale()
+			local pos = armature:convertToWorldSpace(cc.p(0,0))
+			pos = cc.p(pos.x, 
+				pos.y + box.height/2 * scale)
+			-- dump(pos, "pos")
+			if cc.rectContainsPoint(rect, pos) then
+				enemys[#enemys + 1] = enemy
+			end
+		end
+	end	
+	return enemys
+end
+
 --events
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
@@ -258,12 +280,12 @@ function MapView:onHeroFire(event)
 	end
 end
 
-function MapView:onHeroThrowFire(event)
+function MapView:enemysHittedInRange(event)
 	-- target
-	for i,enemy in ipairs(self.enemys) do
-		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
-			enemy:onHitted(event.damage)
-		end
+	assert(event.destRect, "event destRect is nil")
+	local enemys = self:getEnemysInRect(event.destRect)
+	for i,enemy in ipairs(enemys) do
+		enemy:onHitted(event.damage)
 	end
 end
 

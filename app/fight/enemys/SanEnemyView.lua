@@ -8,10 +8,10 @@
 
 
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local AbstractEnemyView = import(".AbstractEnemyView")
+local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
-local SanEnemyView = class("SanEnemyView", AbstractEnemyView)  
+local SanEnemyView = class("SanEnemyView", Attackable)  
 
 
 function SanEnemyView:ctor(property)
@@ -92,7 +92,7 @@ function SanEnemyView:test()
     drawBoundingBox(self.armature, enemyNode, "red")
 end
 
---AbstractEnemyView interface
+--Attackable interface
 function SanEnemyView:playHitted(event)
     -- print("SanEnemyView:playHitted")
 end

@@ -9,11 +9,11 @@
 --import
 
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local AbstractEnemyView = import(".AbstractEnemyView")
+local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
 local FightConfigs = import("..fightConfigs.FightConfigs")
-local BossView = class("BossView", AbstractEnemyView)
+local BossView = class("BossView", Attackable)
 
 function BossView:ctor(property)
 	BossView.super.ctor(self, property) 

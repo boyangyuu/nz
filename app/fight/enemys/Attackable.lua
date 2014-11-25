@@ -5,15 +5,15 @@ local Actor = import("..Actor")
 
 
 --[[
-	attackable
+	Attackable
 ]]
-local AbstractEnemyView = class("AbstractEnemyView", function()
+local Attackable = class("Attackable", function()
     return display.newNode()
 end)
 
 ---- event ----
-function AbstractEnemyView:ctor(property)
-	-- dump(property, "AbstractEnemyView property")
+function Attackable:ctor(property)
+	-- dump(property, "Attackable property")
 	--instance
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property)
@@ -29,21 +29,13 @@ function AbstractEnemyView:ctor(property)
 
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    cc.EventProxy.new(self.hero, self):addEventListener("stop", handler(self, self.testStop))
+    cc.EventProxy.new(self.hero, self)
+    	:addEventListener("stop", handler(self, self.testStop))
+    	
     self:scheduleUpdate()  	
 end
 
---[[
-	@param rectFocus {cc.rect(20, 20)}
-	@return isHited, targetData 
-	{true, 		{
-			demageType = "head", --"head", "body"
-			demageScale = 2.0,
-			enemy = xx,
-		},}
-]]
-
-function AbstractEnemyView:testStop()
+function Attackable:testStop()
 	self.isPause = not self.isPause
 	local actionManager = cc.Director:getInstance():getActionManager()
 	local tAnimation = self.armature:getAnimation()
@@ -58,7 +50,17 @@ function AbstractEnemyView:testStop()
 	end
 end
 
-function AbstractEnemyView:getTargetData(rectFocus)
+--[[
+	@param focusNode {cc.rect(20, 20)}
+	@return isHited, targetData 
+	{true, 		{
+			demageType = "head", --"head", "body"
+			demageScale = 2.0,
+			enemy = xx,
+		},}
+]]
+
+function Attackable:getTargetData(focusNode)
 	local targetData = {}
 	local i = 0
 
@@ -66,10 +68,11 @@ function AbstractEnemyView:getTargetData(rectFocus)
 	while true do
 		i = i + 1
 		local rangeStr = "weak"..i
-		local rectEnemy, isValid = self:getRange(rangeStr)
-		if rectEnemy == nil then break end 
-		local isInRange = rectIntersectsRect(rectEnemy,
-				 rectFocus)
+		local enemyRange, isValid = self:getRange(rangeStr)
+		if enemyRange == nil then break end 
+	
+		local isInRange = self:rectIntersectsRectInWorld(focusNode,
+				 enemyRange)
 		if isInRange and isValid then 
 			local isHited = isInRange 
 			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
@@ -86,11 +89,11 @@ function AbstractEnemyView:getTargetData(rectFocus)
 		i = i + 1
 		local rangeStr = "body"..i
 		-- print("rangeStr", rangeStr)
-		local rectEnemy = self:getRange(rangeStr)
-		-- dump(rectEnemy)
-		if rectEnemy == nil then break end 
-		local isInRange = rectIntersectsRect(rectEnemy,
-				 rectFocus)
+		local enemyRange = self:getRange(rangeStr)
+		-- dump(enemyRange)
+		if enemyRange == nil then break end 	
+		local isInRange = self:rectIntersectsRectInWorld(focusNode,
+				 enemyRange)
 		if isInRange then 
 			local isHited = isInRange 
 			
@@ -102,11 +105,30 @@ function AbstractEnemyView:getTargetData(rectFocus)
 	end	
 	return false, nil
 end
+
+function Attackable:rectIntersectsRectInWorld(node, enemyRange)
+	local bound = node:getBoundingBox()
+	local enemyBound = enemyRange:getBoundingBox()	
+	enemyBound.width = enemyBound.width * self:getScale()	
+	enemyBound.height = enemyBound.height * self:getScale()		
+    
+    local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
+    bound.x = pWorld1.x
+    bound.y = pWorld1.y
+    local pWorld2 = enemyRange:convertToWorldSpace(cc.p(0,0))
+    enemyBound.x = pWorld2.x
+    enemyBound.y = pWorld2.y    
+    
+    -- dump(bound, "bound ------")
+    -- dump(enemyBound, "enemyBound -------")    
+    return cc.rectIntersectsRect(bound, enemyBound)
+end
+
 --[[
 	@param rectName {"weak1", "body1"..}
 	@return rect
 ]]
-function AbstractEnemyView:getRange(rectName)
+function Attackable:getRange(rectName)
 	assert(rectName, "invalid param")
 	local armature = self:getEnemyArmature()
 	local bone = armature:getBone(rectName)
@@ -115,32 +137,32 @@ function AbstractEnemyView:getRange(rectName)
 	return node, true
 end
 
-function AbstractEnemyView:setPlaceBound(bound)
+function Attackable:setPlaceBound(bound)
 	assert(bound, "bound is nil")
 	self.placeBound = bound 
 end
 
-function AbstractEnemyView:getPlaceBound()
+function Attackable:getPlaceBound()
 	return self.placeBound 
 end
 
-function AbstractEnemyView:getDeadDone()
+function Attackable:getDeadDone()
 	return self.deadDone or false 
 end
 
-function AbstractEnemyView:setDeadDone()	
+function Attackable:setDeadDone()	
 	self.deadDone = true
 end
 
--- function AbstractEnemyView:setWillRemove()
+-- function Attackable:setWillRemove()
 -- 	self.willRemove = true
 -- end
 
--- function AbstractEnemyView:get( ... )
+-- function Attackable:get( ... )
 -- 	-- body
 -- end
 
-function AbstractEnemyView:checkPlace(offset)
+function Attackable:checkPlace(offset)
 	local offset = offset or 0
 	--place的范围
 	local placeNode = self:getParent()
@@ -166,7 +188,7 @@ function AbstractEnemyView:checkPlace(offset)
 	return xLeftLimit < xLeft and xRight < xRightLimit 
 end
 
-function AbstractEnemyView:play(state, handlerFunc)
+function Attackable:play(state, handlerFunc)
 	local per = self.enemy:getHp() / self.enemy:getMaxHp()
 	-- print("进栈 state: "..state..", 当前血量:"..per)
 	
@@ -182,40 +204,40 @@ function AbstractEnemyView:play(state, handlerFunc)
 	
 end
 
-function AbstractEnemyView:getPlayCache()
+function Attackable:getPlayCache()
 	if self.playCache[1] == nil then 
 		return nil 
 	end
 	return self.playCache[1].func
 end
 
-function AbstractEnemyView:clearPlayCache()
+function Attackable:clearPlayCache()
 	self.playCache = {}
 end
 
-function AbstractEnemyView:getScale()
+function Attackable:getScale()
 	return self:getScaleX()
 end
 
 --接口
-function AbstractEnemyView:tick(t)
+function Attackable:tick(t)
 	assert("required method, must implement me")	
 end
 
-function AbstractEnemyView:onHitted(demage)
+function Attackable:onHitted(demage)
 	assert("required method, must implement me")
 end
 
-function AbstractEnemyView:animationEvent()
+function Attackable:animationEvent()
 	assert("required method, must implement me")	
 end
 
-function AbstractEnemyView:getEnemyArmature()
+function Attackable:getEnemyArmature()
 	assert("required method, must implement me")	
 end
 
-function AbstractEnemyView:getModel(id)
+function Attackable:getModel(id)
 	assert("required method, must implement me")	
 end
 
-return AbstractEnemyView
+return Attackable

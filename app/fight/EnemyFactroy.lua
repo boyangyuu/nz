@@ -1,10 +1,14 @@
 local EnemyFactory = class("EnemyFactory",cc.mvc.ModelBase)
 
-local EnemyView = import(".enemys.EnemyView")
+local BaseEnemyView = import(".enemys.BaseEnemyView")
 local BossView = import(".enemys.BossView")
 local MissileEnemyView = import(".enemys.MissileEnemyView")
 local SanEnemyView = import(".enemys.SanEnemyView")
 local JinEnemyView = import(".enemys.JinEnemyView")
+local BaoEnemyView = import(".enemys.BaoEnemyView")
+local CommonEnemyView = import(".enemys.CommonEnemyView")
+
+
 
 function EnemyFactory.createEnemy(property)
 
@@ -15,10 +19,12 @@ function EnemyFactory.createEnemy(property)
 		enemyView = MissileEnemyView.new(property)
 	elseif property.type == "san" then
 		enemyView = SanEnemyView.new(property)
-	elseif property.type = "jin" then
+	elseif property.type == "jin" then
 		enemyView = JinEnemyView.new(property)
+	elseif property.type == "bao" then
+		enemyView = BaoEnemyView.new(property)		
 	else
-		enemyView = EnemyView.new(property)
+		enemyView = CommonEnemyView.new(property)
 	end
 	return enemyView
 end

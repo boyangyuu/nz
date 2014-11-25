@@ -11,35 +11,40 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
-local JinEnemyView = class("JinEnemyView", BaseEnemyView)  
+local Hero = import("..Hero")
+local BaoEnemyView = class("BaoEnemyView", BaseEnemyView)  
 
-local kAttackOffset = 2.0
 local kTimeStartAhead = 2.0
 
-function JinEnemyView:ctor(property)
+function BaoEnemyView:ctor(property)
 	--instance
-	JinEnemyView.super.ctor(self, property) 
+	BaoEnemyView.super.ctor(self, property) 
+    self.hero = app:getInstance(Hero)
     self.property = property
     dump(self.property, "self.property")
     self.isAheading = false
-    self.attackHandler = nil
-    self.aheadHandler = nil
+    self.isAheaded = false
 
-    --前进
+    local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+    local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+    drawBoundingBox(self.armature, weakNode, "red") 
+    drawBoundingBox(self.armature, bodyNode, "yellow")     
+    --前进F
     local callFuncAhead = function ()
         self:play("ahead", handler(self, self.playAhead))
     end
-    self.aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    self.aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
 end
 
-function JinEnemyView:playAhead()
+
+function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1) --
     local speed = 50
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     dump(pWorld, "pWorld")
-    local desY = -20
+    local desY = -20 --屏幕位置
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
@@ -51,22 +56,10 @@ function JinEnemyView:playAhead()
     local aheadEndFunc = function ()
         print("aheadEnd")
          self.isAheading = false
+         self.isAheaded  = true
+        --自爆攻击
+        self:playKill()
 
-        --改为呼吸
-        self.armature:getAnimation():play("stand" , -1, 1) 
-        
-        --2秒一攻击
-        function attack()
-            local currentName = self.armature:getAnimation():getCurrentMovementID()
-            print("currentName", currentName)
-            if currentName == "die" then 
-                scheduler.unscheduleGlobal(self.attackHandler)
-                return
-            end
-            print("近战攻击")
-            self:play("fire", handler(self, self.playFire))
-        end
-        self.attackHandler = scheduler.scheduleGlobal(attack, kAttackOffset)
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
@@ -75,7 +68,15 @@ function JinEnemyView:playAhead()
     self:runAction(actionScale)
 end
 
-function JinEnemyView:tick(t)
+function BaoEnemyView:playKill(event)
+    --clear
+    self:clearPlayCache()
+    self.armature:stopAllActions()
+
+    self.armature:getAnimation():play("die" ,-1 , 1)
+end
+
+function BaoEnemyView:tick(t)
     --change state
     if self.isAheading then return end
 
@@ -86,35 +87,60 @@ function JinEnemyView:tick(t)
         self:play("playWalk", handler(self, self.playWalk))
         return 
     end
+
 end
 
-function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
+function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)   
     if movementType == ccs.MovementEventType.loopComplete then
+        -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if self.isAheading then 
-                self.armature:getAnimation():play("walk" , -1, 1)
+                self.armature:getAnimation():play("walk" , -1, 1) 
                 return 
             end
-
             if playCache then 
                 playCache()
             else                    
                 self:playStand()
             end
-        elseif movementID == "die" then
-            print("self:setDeadDone()") 
+        elseif movementID == "die" then 
+            if self.isAheaded then
+                --伤害hero
+                self.enemy:hit(self.hero)
+            else
+                --伤害enemys
+                print("成功摧毁")
+                local destRect = self:getBaoRect()
+                self.hero:dispatchEvent({name = Hero.ENEMY_ATTACK_MUTI_EVENT, 
+                  damage = 600,
+                  destRect = destRect})
+            end
             self:setDeadDone()
-            scheduler.unscheduleGlobal(self.aheadHandler)
-            if self.attackHandler then
-                scheduler.unscheduleGlobal(self.attackHandler)
+            if self.aheadScheduler then
+                scheduler.unscheduleGlobal(self.aheadScheduler)
             end
         end 
     end
 end
 
-function JinEnemyView:getEnemyArmature()
+function BaoEnemyView:getBaoRect()
+    local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+    local bound = self.armature:getBoundingBox() 
+    pWorld.y = pWorld.y + bound.height / 2 * self:getScale()  --获得中心位置
+    dump(pWorld, "pWorld")
+
+    --create 群伤范围和位置
+    local rangeW = 200
+    local rangeH = 300
+    local pos = cc.p(pWorld.x - rangeW / 2 ,
+                 pWorld.y - rangeH / 2)
+    local rect = cc.rect(pos.x, pos.y, rangeW, rangeH)
+    return rect
+end
+
+function BaoEnemyView:getEnemyArmature()
     if self.armature then return self.armature end 
     --armature
     local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
@@ -122,5 +148,4 @@ function JinEnemyView:getEnemyArmature()
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature
 end
-
-return JinEnemyView
+return BaoEnemyView

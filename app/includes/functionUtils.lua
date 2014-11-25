@@ -76,6 +76,7 @@ function addChildCenter(child, parent, zorder)
 end
 
 function drawBoundingBox(parent, target, color)
+    if parent == nil then parent = target:getParent() end
     local cbb = target:getBoundingBox()
     -- dump(cbb, "cbb")
     local left, bottom, width, height = cbb.x, cbb.y, cbb.width, cbb.height
@@ -87,29 +88,16 @@ function drawBoundingBox(parent, target, color)
         {left, bottom},
     }
     if type(color) == "string" then 
-        if color == "red" then color =  cc.c4f(1.0, 0.0, 0, 1.0) 
+        if color == "red" or nil then color =  cc.c4f(1.0, 0.0, 0, 1.0) 
         elseif color == "yellow" then color = cc.c4f(1.0, 1.0, 0, 1.0) 
-        elseif color == "white" then color = cc.c4f(1.0, 1.0, 0, 1.0) 
+        elseif color == "white" then color = cc.c4f(1.0, 1.0, 0, 1.0)  
+        else 
         end
     end
     local box = display.newPolygon(points, {borderColor = color})
     parent:addChild(box, 1000)
 end
 
-function rectIntersectsRect(rectNode1, rectNode2)
-    local bound1 = rectNode1:getCascadeBoundingBox()
-    local bound2 = rectNode2:getCascadeBoundingBox()
-
-    local pWorld1 = rectNode1:convertToWorldSpace(cc.p(0,0))
-    bound1.x = pWorld1.x
-    bound1.y = pWorld1.y
-    local pWorld2 = rectNode2:convertToWorldSpace(cc.p(0,0))
-    bound2.x = pWorld2.x
-    bound2.y = pWorld2.y    
-    -- dump(bound1, "bound1 ------")
-    -- dump(bound2, "bound2 -------")    
-    return cc.rectIntersectsRect(bound1, bound2)
-end
 
 ---- Data ----
 function getConfig( configFileDir )

@@ -40,9 +40,10 @@ function FightPlayer:ctor()
 
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
-    cc.EventProxy.new(self.hero, self):addEventListener(Actor.STOP_EVENT, handler(self, self.setPause))
-    cc.EventProxy.new(self.hero, self):addEventListener("changeGold", handler(self, self.changeGoldCount))
+    cc.EventProxy.new(self.hero, self)
+        :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
+        :addEventListener(Actor.STOP_EVENT, handler(self, self.setPause))
+        :addEventListener("changeGold", handler(self, self.changeGoldCount))
 
     self:scheduleUpdate()   
 end
@@ -247,16 +248,16 @@ function FightPlayer:onMutiTouchBegin(event)
         local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
 
-        isTouch = self:checkBtnChange(id, point, eventName)
+        isTouch = self:checkBtnChange(point, eventName)
         if isTouch then return true end        
 
-        isTouch = self:checkBtnArmoured(id, point, eventName)
+        isTouch = self:checkBtnArmoured(point, eventName)
         if isTouch then return true end
 
-        isTouch = self:checkbtnDefence(id, point, eventName)
+        isTouch = self:checkbtnDefence(point, eventName)
         if isTouch then return true end 
 
-        isTouch = self:checkbtnGrenade(id, point, eventName)
+        isTouch = self:checkbtnGrenade(point, eventName)
         if isTouch then return true end
 
     end
@@ -274,46 +275,45 @@ function FightPlayer:onMutiTouchEnd(event)
     end
 end
 
-function FightPlayer:checkBtnArmoured( id, point, eventName )
-    assert(id and point, "invalid params")
+function FightPlayer:checkBtnArmoured(point, eventName )
+    assert( point, "invalid params")
     local rect = self.btnArmoured:getCascadeBoundingBox()
     isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        self.touchs["armoured"] = id
         self:fitArmoured()
     end
     return isTouch
     -- self.hero:dispatchEvent({name = Actor.STOP_EVENT, isPause = true})
 end
 
-function FightPlayer:checkbtnDefence( id, point, eventName )
-    assert(id and point, "invalid params")
+function FightPlayer:checkbtnDefence(point, eventName )
     local rect = self.btnDefence:getCascadeBoundingBox()
     isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
         -- print("-----------fit defence")
-        self.touchs["defence"] = id
         self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_START_EVENT})
     end
     return isTouch
 end
 
-function FightPlayer:checkbtnGrenade(id, point, eventName)
-    assert(id and point, "invalid parames")
+function FightPlayer:checkbtnGrenade(point, eventName)
+    assert( point, "invalid parames")
     local rect = self.btnGrenade:getCascadeBoundingBox()
     isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        self.touchs["grenade"] = id
-        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(self.focusNode:getPositionX(), self.focusNode:getPositionY())})
+        local w, h = self.focusNode:getBoundingBox().width, 
+                self.focusNode:getBoundingBox().height
+        local destPos = cc.p(self.focusNode:getPositionX() + w/2, 
+            self.focusNode:getPositionY() + h/2)
+        self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_START_EVENT,throwPos = destPos})
     end
 end
 
-function FightPlayer:checkBtnChange(id,point,eventName)
-    assert(id and point , "invalid params")
+function FightPlayer:checkBtnChange(point,eventName)
+    assert( point , "invalid params")
     local rect = self.btnChange:getCascadeBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
-        self.touchs["change"] = id 
         --换枪
         self.gunView:playChange(math.random(1, 2))
     end    
