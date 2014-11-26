@@ -83,7 +83,7 @@ function InlayLayer:initUI()
 end
 
 function InlayLayer:refreshListView(index)
-    self:removeAllItems(self.rootListView)
+    removeAllItems(self.rootListView)
     local table = self.inlayModel:getConfigTable("type", index)
     for i=1,#table do
     	local item = self.rootListView:newItem()
@@ -109,12 +109,6 @@ function InlayLayer:refreshBtnIcon()
 
 end
 
-function InlayLayer:removeAllItems(listView)
-	local itemsNum_ = table.nums(listView.items_)
-    for i=1,itemsNum_ do
-        listView:removeItem(listView.items_[1],false)
-    end
-    return listView
-end
+
 
 return InlayLayer

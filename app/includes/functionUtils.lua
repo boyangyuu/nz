@@ -163,6 +163,14 @@ function setUserData(data)
     GameState.save(data)
 end
 
+function removeAllItems(listView)
+    local itemsNum_ = table.nums(listView.items_)
+    for i=1,itemsNum_ do
+        listView:removeItem(listView.items_[1],false)
+    end
+    return listView
+end
+
 function getIsTest()
     return false
 end
