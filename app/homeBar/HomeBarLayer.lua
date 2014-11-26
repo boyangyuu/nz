@@ -26,22 +26,27 @@ function HomeBarLayer:addEventProtocolListener()
 end
 
 function HomeBarLayer:loadCCS()
-    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/")
-    local rootNode = cc.uiloader:load("homeBarLayer.json")
+    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/biaotou")
+    local rootNode = cc.uiloader:load("biaotou.ExportJson")
     self:addChild(rootNode)
-    self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "homeLayer")
-    self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonLayer")
+    self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "biaotou")
+    self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonlayer")
 end
 
 function HomeBarLayer:initHomeLayer()
-    local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_setting")
-    local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_back")
-    local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_buyCoin")
-    local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_arsenal")
-    local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_inlay")
-    local btnShop = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_shop")
-    self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "homeLayer")
-
+    local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
+    local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
+    -- local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_buyCoin")
+    local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btnarsenal")
+    local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btninlay")
+    local btnStore = cc.uiloader:seekNodeByName(self.homeRootNode, "btnstore")
+    self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
+    btnBack:setTouchEnabled(true)  
+    btnArsenal:setTouchEnabled(true) 
+    btnInlay:setTouchEnabled(true)  
+    btnStore:setTouchEnabled(true)  
+    btnSetting:setTouchEnabled(true)  
+    
     btnBack:setVisible(false)
     
     addBtnEventListener(btnSetting, function(event)
@@ -65,14 +70,14 @@ function HomeBarLayer:initHomeLayer()
             self:initCommonLayer()
         end
     end)
-    addBtnEventListener(btnBuyCoin, function(event)
-        if event.name=='began' then
-            -- print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            -- print("Btn is pressed!")
-        end
-    end)
+    -- addBtnEventListener(btnBuyCoin, function(event)
+    --     if event.name=='began' then
+    --         -- print("Btn is begining!")
+    --         return true
+    --     elseif event.name=='ended' then
+    --         -- print("Btn is pressed!")
+    --     end
+    -- end)
     addBtnEventListener(btnArsenal, function(event)
         if event.name=='began' then
             -- print("Btn is begining!")
@@ -100,7 +105,7 @@ function HomeBarLayer:initHomeLayer()
             self.commonRootNode:addChild(inlayLayer)
         end
     end)
-    addBtnEventListener(btnShop, function(event)
+    addBtnEventListener(btnStore, function(event)
         if event.name=='began' then
             -- print("Btn is begining!")
             return true
