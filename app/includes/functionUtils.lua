@@ -107,15 +107,18 @@ function getConfig( configFileDir )
     local jsonStr = fileUtil:getStringFromFile(fullPath)
     local configTb = json.decode(jsonStr)
     --
-
+    assert(configTb, "config is nil , name:"..configFileDir)
     return configTb
 end
 
 -- 通过表ID获取res下json文件内容
 function getConfigByID( configFileDir, tableID )
     tableID = tonumber(tableID)
-    assert(tableID ~= "" and type(tableID) == "number", "invalid param")
+    assert(tableID ~= "" and type(tableID) == "number", 
+        "invalid tableID tableName:"..configFileDir)
+
     local configTable = getConfig(configFileDir)
+    -- dump(configTable, "configTable")
     for k,v in pairs(configTable) do
         if v["id"] == tableID then
             -- dump(v)

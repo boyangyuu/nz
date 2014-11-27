@@ -34,8 +34,12 @@ function HeroView:ctor(properties)
 		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.setShowDefence))
 		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.resumeDefence))
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT, handler(self, self.throwGrenade))
+		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.killEnemyCallBack))
-
+		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT, handler(self, self.effectPopupHead))
+		
+		:addEventListener(Hero.GUN_RELOAD_EVENT, handler(self, self.effectGunReload))
+		
 	--ui
 	self:initUI()
 end
@@ -381,7 +385,7 @@ function HeroView:screenHurtedEffect()
 	tAniamtion:play("avatarhit" , -1, 1)
     tBeHurtScreenArmature:setPosition(display.width / 2, display.height / 2)
     tAniamtion:setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movementI ) 
+    	function ( armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
@@ -391,5 +395,40 @@ function HeroView:screenHurtedEffect()
     self:addChild(tBeHurtScreenArmature)
 end
 
+function HeroView:effectPopupHead()
+	local src = "res/Fight/uiAnim/baotou/baotou.ExportJson"
+	local baotou = getArmature("baotou", src)
+	baotou:getAnimation():play("baotou" , -1, 1)
+    baotou:setPosition(display.width / 2, 150)
+    baotou:getAnimation():setMovementEventCallFunc(
+    	function ( armatureBack,movementType,movement) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+	    		armatureBack:stopAllActions()
+	    		armatureBack:removeFromParent() 
+	    	end 
+    	end
+    )
+    self:addChild(baotou, 100)
+end
+
+
+function HeroView:effectGunReload(event)
+	print("HeroView:effectGunReload()")
+	local src = "res/Fight/uiAnim/huanzidan/huanzidan.ExportJson"
+	local armature = getArmature("huanzidan", src)
+	armature:getAnimation():play("zidan" , -1, 1)
+    armature:setPosition(display.width / 2, display.height / 2)
+    armature:getAnimation():setSpeedScale(event.speedScale)
+    armature:getAnimation():setMovementEventCallFunc(
+    	function ( armatureBack,movementType,movement) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+	    		print("HeroView:effectGunReload done()")
+	    		armatureBack:stopAllActions()
+	    		armatureBack:removeFromParent()
+	    	end 
+    	end
+    )
+    self:addChild(armature, 1000)	
+end
 
 return HeroView

@@ -19,6 +19,7 @@ function Attackable:ctor(property)
 	self.enemy = self:getModel(property)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
+	self.schedulers = {}
 	self.isPause = false
 	self.playCache = {}
 
@@ -62,6 +63,7 @@ end
 
 function Attackable:getTargetData(focusNode)
 	local targetData = {}
+	targetData.demage = self.hero:getDemage()
 	local i = 0
 
 	--weak
@@ -126,15 +128,22 @@ end
 
 --[[
 	@param rectName {"weak1", "body1"..}
-	@return rect
+	@return rect, isValid[是否当前有效]
 ]]
 function Attackable:getRange(rectName)
 	assert(rectName, "invalid param")
 	local armature = self:getEnemyArmature()
 	local bone = armature:getBone(rectName)
-	if not bone then return end
+	if not bone then return nil, false end
 	local node = bone:getDisplayRenderNode() 
 	return node, true
+end
+
+function Attackable:getBodyBox()
+	local armature = self:getEnemyArmature()
+	local box = armature:getBone("body1"):getDisplayRenderNode():getBoundingBox()
+	if not box then return end
+	return box
 end
 
 function Attackable:setPlaceBound(bound)

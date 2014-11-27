@@ -226,7 +226,8 @@ function MapView:popGold(enemy)
 	local boundingbox = enemy:getCascadeBoundingBox()
 	local size = boundingbox.size
 	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
-	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, enemyPos = pos, goldCount = self.killEnemyCount * 50})
+	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
+		enemyPos = pos, goldCount = self.killEnemyCount * 50})
 end
 
 --[[
@@ -276,7 +277,9 @@ function MapView:onHeroFire(event)
 	local datas = self:getTargetDatas()
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
-		data.enemy:onHitted(event.demage * demageScale)
+		data.enemy:onHitted(data)
+
+		--todo 穿透逻辑
 	end
 end
 
@@ -285,7 +288,7 @@ function MapView:enemysHittedInRange(event)
 	assert(event.destRect, "event destRect is nil")
 	local enemys = self:getEnemysInRect(event.destRect)
 	for i,enemy in ipairs(enemys) do
-		enemy:onHitted(event.damage)
+		enemy:onHitted(data)
 	end
 end
 

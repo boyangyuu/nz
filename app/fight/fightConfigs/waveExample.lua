@@ -14,7 +14,7 @@ local waves = {
 				pos = {100, 200, 0, 170, 190, 100},
 				delay = {0.1, 0.4, 0.7, 0.9, 1.2, 1.5},
 				property = { 
-					type = "jin",
+					type = "common",
 					id = 1,
 				},
 			},		

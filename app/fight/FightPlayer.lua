@@ -26,7 +26,7 @@ function FightPlayer:ctor()
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
     self.mapView = MapView.new()
-    self.gunView = GunView.new({id = 1})
+    self.gunView = GunView.new({id = "1"})
     self.heroView = HeroView.new()
     self.gunBtnPressed = false
     self.touchs = {}
@@ -315,7 +315,7 @@ function FightPlayer:checkBtnChange(point,eventName)
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --换枪
-        self.gunView:playChange(math.random(1, 2))
+        self.hero:changeGun()
     end    
     return isTouch    
 end
@@ -386,7 +386,7 @@ function FightPlayer:tick(dt)
 end
 
 function FightPlayer:canGunShot()
-    self.gunBtnPressed = true
+    -- self.gunBtnPressed = true
     if  self.hero:canFire() and self.gunBtnPressed then 
         return true 
     end
@@ -403,13 +403,13 @@ function FightPlayer:fire()
     --gun
     if  self.gunView:canShot() then 
         self.gunView:fire()
-        self.focusView:playFire()
+        self.focusView:playFire() --todo 发命令
     end
 end
 
 function FightPlayer:onCancelledFire()
     self.gunView:stopFire()
-    self.focusView:stopFire()
+    self.focusView:stopFire() --todo 发命令
 end
 
 ----move----

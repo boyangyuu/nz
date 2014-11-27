@@ -2,19 +2,22 @@
 --[[--
 
 “enemy”的视图
-1. 根据enemyModel的状态机来更新view的动画
-2. enemy的移动范围判断
+1. 小怪基类
+2. 有基础动画逻辑 : walk stand hit die 
+3. 有血条逻辑
+4. 有弱点逻辑 爆头等
+
 ]]
 
 --import
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
+
 local BaseEnemyView = class("BaseEnemyView", Attackable)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local kWalkWidth = 20
-local kRollWidth = 100
 
 function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
@@ -29,7 +32,6 @@ function BaseEnemyView:ctor(property)
 	end
 	scheduler.performWithDelayGlobal(start, 0.000)
 	
-
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
@@ -43,16 +45,38 @@ function BaseEnemyView:initBlood()
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height/2 + 100)
+    self.blood:setPosition(0, bound.height * 0.85)
     self.armature:addChild(self.blood) 
 	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
 	self:setBlood(1.0)
 end
 
 function BaseEnemyView:setBlood(scale)
+	if scale == 0 then 
+		self.blood:setVisible(false) 
+	end
     local bloodBg = cc.uiloader:seekNodeByName(self.blood, "bloodBg")
     local oSize = bloodBg:getContentSize()
     self.bloodValueNode:setLayoutSize(oSize.width * scale, oSize.height)	
+end
+
+function BaseEnemyView:showAlert()
+	--create
+	if self.isShowAlerting then return end
+	self.isShowAlerting = true
+	local src = "res/Fight/uiAnim/tanhao/tanhao.ExportJson"
+	local armature = getArmature("tanhao", src)
+	armature:getAnimation():play("tanhao", -1, 0)
+    local function alertAnimEvent(armatureBack,movementType,movementID)
+        armature:removeFromParent()
+        self.isShowAlerting = false
+    end
+    armature:getAnimation():setMovementEventCallFunc(alertAnimEvent)
+
+    --add
+    local bound = self.armature:getBoundingBox()
+    armature:setPosition(bound.width * 0.1, bound.height* 0.85 )
+    self.armature:addChild(armature) 
 end
 
 ---- state ----
@@ -101,11 +125,22 @@ function BaseEnemyView:playKill(event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
-function BaseEnemyView:onHitted(demage)
+function BaseEnemyView:onHitted(targetData)
+	local demage 	 = targetData.demage
+	local scale  	 = targetData.demageScale
+	local demageType = targetData.demageType
 	if self.enemy:canHitted() and self:canHitted() then
-		self.enemy:decreaseHp(demage)
+		self.enemy:decreaseHp(demage * scale)
 	end
 
+	--爆头
+	if self.enemy:getHp() == 0 then 
+		if demageType == "head" then 
+			print("爆头")
+			self.hero:dispatchEvent({
+				name = self.hero.ENEMY_KILL_HEAD_EVENT})
+		end
+	end
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)

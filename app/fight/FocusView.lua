@@ -20,7 +20,7 @@ function FocusView:ctor(properties)
 	--instance
 	-- local fightConfigs = app:getInstance(FightConfigs)
 	self.hero = app:getInstance(Hero)
-	self.gun = app:getInstance(Gun)
+	self.gun = self.hero:getGun()
 
 	--focus
 	local gunId = 1   -- todo 外界传 Gun

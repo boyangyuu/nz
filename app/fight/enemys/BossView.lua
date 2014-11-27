@@ -47,11 +47,16 @@ function BossView:initBlood()
     self.blood = cc.uiloader:seekNodeByName(node, "bossBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height/2 + 150)
+    self.blood:setPosition(0, bound.height * 0.85)
     self.armature:addChild(self.blood, 100)
 end
 
 function BossView:setBlood(scale)
+	if scale == 0 then 
+		self.blood:setVisible(false)
+		return
+	end
+
     local test = 1 / 3
     local bloodHp = nil
     if scale > test * 2 then

@@ -9,26 +9,41 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Gun = class("Gun", cc.mvc.ModelBase)
 
 --config
-local kCoolDown = 0.1
-local kDemage = 20
 
 -- 定义属性
 Gun.schema = clone(cc.mvc.ModelBase.schema)
-Gun.schema["nickname"] = {"string"} -- 字符串类型，没有默认值
-Gun.schema["level"]    = {"number", 1} -- 数值类型，默认值 1
-Gun.schema["hp"]       = {"number", 1}
-
 
 function Gun:ctor(properties, events, callbacks)
     Gun.super.ctor(self, properties)
+    dump(properties, "properties")
+    self.config = getConfigByID("config/weapon_weapon.json", properties.id)
+end
+
+function Gun:getConfig()
+	assert(self.config, "self.config is nil")
+	return self.config
 end
 
 function Gun:getCooldown()
-	return kCoolDown
+	assert(self.config.coolDown, "coolDown is nil id:"..self.config.id)
+	local inlayScale = 1.0 -- 改为inlaymodel
+	return self.config.coolDown * inlayScale
+end
+
+function Gun:getBulletNum()
+	assert(self.config.bulletNum, "bulletNum is nil id:"..self.config.id)
+	local inlayScale = 1.0 -- 改为inlaymodel
+	return self.config.bulletNum * inlayScale	
 end
 
 function Gun:getDemage()
-	return kDemage
+	assert(self.config.bulletNum, "bulletNum is nil id:"..self.config.id)
+	local inlayScale = 1.0 -- 改为inlaymodel
+	return self.config.bulletNum * inlayScale
 end
+
+
+
+
 
 return Gun

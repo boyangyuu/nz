@@ -21,6 +21,7 @@ function CommonEnemyView:ctor(property)
 
     --test
     self:test()
+    self.schedulers = {}
 end
 
 ---- state ----
@@ -87,13 +88,22 @@ function CommonEnemyView:playRollRight()
     self.armature:runAction(cc.RepeatForever:create(seq))			
 end
 
+function CommonEnemyView:playAfterAlert(type,handler)
+	self:showAlert()
+	local alertAfterFunc = function ()
+		print("self:play(type, handler)")
+		self:play(type, handler)
+	end
+	self.alertAfter = scheduler.performWithDelayGlobal(alertAfterFunc, 2.0)
+	self.schedulers[#self.schedulers + 1] = self.alertAfter
+end
 
 function CommonEnemyView:test()
 	--body
-	-- local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-	-- local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-	-- drawBoundingBox(self.armature, weakNode, "red") 
-	-- drawBoundingBox(self.armature, bodyNode, "yellow") 
+	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+	drawBoundingBox(self.armature, weakNode, "red") 
+	drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
 --Attackable interface
@@ -106,7 +116,7 @@ function CommonEnemyView:tick(t)
 	assert(fireRate > 1, "invalid fireRate")
 	randomSeed = math.random(1, fireRate)
 	if randomSeed > fireRate - 1 then 
-		self:play("playFire", handler(self, self.playFire))
+		self:playAfterAlert("playFire", handler(self, self.playFire))
 		return
 	end
 
@@ -131,7 +141,11 @@ function CommonEnemyView:tick(t)
 	--throw 
 end
 
+
+
 --throw 
+
+
 
 function CommonEnemyView:canHitted()
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
@@ -158,7 +172,14 @@ function CommonEnemyView:animationEvent(armatureBack,movementType,movementID)
 			end
     	elseif movementID == "die" then 
     		self:setDeadDone()
+    		self:removeAllSchedulers()
     	end 
+	end
+end
+
+function CommonEnemyView:removeAllSchedulers()
+	for i,v in ipairs(self.schedulers) do
+		scheduler.unscheduleGlobal(v)
 	end
 end
 
