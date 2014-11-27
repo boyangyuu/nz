@@ -16,6 +16,7 @@ function InlayListCell:initCellUI(record)
     local describe2 = cc.uiloader:seekNodeByName(controlNode, "detail")
     local describe1 = cc.uiloader:seekNodeByName(controlNode, "property")
     local valueDisplay = cc.uiloader:seekNodeByName(controlNode, "valuedisplay")
+
     local goldPrice = cc.uiloader:seekNodeByName(controlNode, "goldprice")
     local ownNum = cc.uiloader:seekNodeByName(controlNode, "ownnumber")
 

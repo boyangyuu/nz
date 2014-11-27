@@ -1,6 +1,8 @@
+import("..includes.functionUtils")
+
 local StoreModel = import(".StoreModel")
-local StoreInlayCell = import(".StoreInlayCell")
-local StorePropCell = import(".StorePropCell")
+local StoreCell = import(".StoreCell")
+
 
 local StoreLayer = class("StoreLayer", function()
     return display.newLayer()
@@ -41,7 +43,7 @@ function StoreLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-
+            self:refreshListView("bank")
         end
     end)
 	 addBtnEventListener(btninlay, function(event)
@@ -55,27 +57,14 @@ end
 
 function StoreLayer:refreshListView(type)
     removeAllItems(self.listview)
-	if type == "prop" then
-	    local table = self.storeModel:getPropConfigTable()
-	    for i=1,#table do
-	    	local item = self.listview:newItem()
-	    	local content = StorePropCell.new(table[i])
-	    	item:addContent(content)
-	        item:setItemSize(735, 157)
-	    	self.listview:addItem(item)
-	    end
-	elseif type == "bank" then
-
-	elseif type == "inlay" then
-		local table = self.storeModel:getInlayConfigTable()
-	    for i=1,#table do
-	    	local item = self.listview:newItem()
-	    	local content = StoreInlayCell.new(table[i])
-	    	item:addContent(content)
-	        item:setItemSize(735, 157)
-	    	self.listview:addItem(item)
-	    end
-	end
+    local table = self.storeModel:getConfigTable(type)
+    for i=1,#table do
+    	local item = self.listview:newItem()
+    	local content = StoreCell.new({record = table[i],celltype = type})
+    	item:addContent(content)
+        item:setItemSize(735, 157)
+    	self.listview:addItem(item)
+    end
     self.listview:reload()
 end
 

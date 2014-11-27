@@ -6,16 +6,20 @@ function StoreModel:ctor(properties, events, callbacks)
 	StoreModel.super.ctor(self, properties)
 end
 
-function StoreModel:getInlayConfigTable()
-	local config = getConfig("config/items_xq.json")
-	local newTable = self:orderByGold(config)
+function StoreModel:getConfigTable(type)
+	local newTable = {}
+	if type == "prop" then
+		newTable = getConfig("config/items_fight.json")
+	elseif type == "bank" then
+		newTable = getConfig("config/items_bank.json")
+	elseif type == "inlay" then
+		 local config = getConfig("config/items_xq.json")
+		newTable = self:orderByGold(config)
+
+	end
 	return newTable
 end
 
-function StoreModel:getPropConfigTable()
-	local config = getConfig("config/items_fight.json")
-	return config
-end
 
 function StoreModel:orderByGold(configtable)
 	local gold = {}
@@ -47,6 +51,11 @@ function StoreModel:orderByGold(configtable)
 		table.insert(newTable, v)
 	end
 	return newTable
+end
+
+
+function StoreModel:buyDiamond()
+	-- body
 end
 
 return StoreModel

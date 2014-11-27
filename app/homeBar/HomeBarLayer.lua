@@ -7,7 +7,7 @@ local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
-local HomeModel = import(".HomeModel")
+local UserModel = import(".UserModel")
 local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
@@ -22,7 +22,7 @@ function HomeBarLayer:ctor()
 end
 
 function HomeBarLayer:addEventProtocolListener()
-    app:getInstance(HomeModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
+    app:getInstance(UserModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
 end
 
 function HomeBarLayer:loadCCS()

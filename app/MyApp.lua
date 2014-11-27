@@ -121,6 +121,11 @@ function MyApp:createGameStateFile()
                                    helper = {}, 
                                 }
                       },
+               prop = {
+                            lei = {num = 0},
+                            jijia = {num = 0},
+                            goldweapon = {num = 0},
+                       },
         currentlevel = {
                             group = 1,
                             level = 1,

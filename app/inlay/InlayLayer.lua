@@ -97,7 +97,6 @@ end
 
 function InlayLayer:refreshBtnIcon()
     local allInlayed = self.inlayModel:getAllInlayed()
-    dump(allInlayed)
     for k,v in pairs(self.btn) do
         self.btn[k]:removeAllChildren()
     end
