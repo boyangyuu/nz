@@ -111,6 +111,7 @@ end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
+	self.model:levelPass()
 end
 
 function LevelDetailLayer:onClickBtnGold()

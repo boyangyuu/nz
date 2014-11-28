@@ -145,7 +145,7 @@ local bosses = {
 	--第一个出场的boss
 	{
 		animName = "boss1", --图片名字
-		hp = 10000,
+		hp = 20000,
 		demage = 50,
 		fireRate = 200,
 		walkRate = 200,

@@ -112,8 +112,19 @@ function MyApp:createGameStateFile()
                       }, 
               inlay = {
                         bags = {}, 
-                    inlayed  = {}
-                      }
+                    inlayed  = {
+                                   bullet = {},
+                                   clip = {},
+                                   speed = {},
+                                   aim = {},
+                                   blood = {},
+                                   helper = {}, 
+                                }
+                      },
+        currentlevel = {
+                            group = 1,
+                            level = 1,
+                        } 
            }
     GameState.save(data)
     dump(GameState.load(), "GameState.load()")

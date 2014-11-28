@@ -116,26 +116,6 @@ local waves = {
 }
 
 
---测试 sanBing
--- waves = {
--- 	{
--- 		enemys = {  
--- 			{
--- 				time = 2,	
--- 				num = 6,
--- 				place = "place2",
--- 				pos = {100, 200, 0, 170, 190, 100},
--- 				delay = {0.1, 0.4, 0.7, 0.9, 1.2, 1.5},
--- 				property = { 
--- 					type = "san",
--- 					id = 1,
--- 					enemyId = 1,
--- 					placeName = "place2",
--- 				},
--- 			},		
--- 		},
--- 	},
--- }
 
 function waveClass:getWaves(waveIndex)
 	return waves[waveIndex] 

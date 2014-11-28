@@ -9,6 +9,9 @@ local WeaponListLayer = class("WeaponListLayer", function()
 	return display.newLayer()
 end)
 
+local kMaxBullet = 100
+local kMaxAccuracy = 100
+local kMaxSpeed = 1
 
 function WeaponListLayer:ctor()
 
@@ -35,38 +38,29 @@ end
 -- loadCCS
 function WeaponListLayer:loadCCS()
     -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb/")
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb")
     local controlNode = cc.uiloader:load("gunzb_1.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 end
 
 function WeaponListLayer:initUI()
-    self.weaponLV         = cc.uiloader:seekNodeByName(self, "ListView_49")
-    self.labelName        = cc.uiloader:seekNodeByName(self, "label_name")
-    self.labelDescribe    = cc.uiloader:seekNodeByName(self, "label_describe")
-    self.layerGun         = cc.uiloader:seekNodeByName(self, "panel_gun")
-    self.progBullet       = cc.uiloader:seekNodeByName(self, "progress_bullet")
-    self.progAccuracy     = cc.uiloader:seekNodeByName(self, "progress_accuracy")
-    self.progReload       = cc.uiloader:seekNodeByName(self, "progress_reload")
-    self.progBulletNext   = cc.uiloader:seekNodeByName(self, "progress_bulletnext")
-    self.progAccuracyNext = cc.uiloader:seekNodeByName(self, "progress_accuracynext")
-    self.progReloadNext   = cc.uiloader:seekNodeByName(self, "progress_reloadnext")
-    self.labelDamage      = cc.uiloader:seekNodeByName(self, "Label_damage")
-    self.labelPercent     = cc.uiloader:seekNodeByName(self, "Label_percent")
-    self.btnEquiped       = cc.uiloader:seekNodeByName(self, "btn_equiped")
-    self.btnEquip         = cc.uiloader:seekNodeByName(self, "btn_equip")
-    self.btnUpgrade       = cc.uiloader:seekNodeByName(self, "btn_upgrade")
-    self.btnFull          = cc.uiloader:seekNodeByName(self, "btn_full")
-    self.btnOncefull      = cc.uiloader:seekNodeByName(self, "btn_oncefull")
-    self.btnBuy           = cc.uiloader:seekNodeByName(self, "btn_buy")
-    self.labelEquiped     = cc.uiloader:seekNodeByName(self, "Label_15")
-    self.stars = {}
-    for i=1,10 do
-        local star = cc.uiloader:seekNodeByName(self, "icon_sx0"..i)
-        star:setVisible(false)
-        table.insert(self.stars,star)
-    end
+    self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
+    self.layerbutton         = cc.uiloader:seekNodeByName(self, "layerbutton")
+    self.paneldetail         = cc.uiloader:seekNodeByName(self, "paneldetail")
+
+    self.layerGun         = cc.uiloader:seekNodeByName(self, "imgweapon")
+
+    self.labelPercent     = cc.uiloader:seekNodeByName(self, "labelpercent")
+    self.btnEquiped       = cc.uiloader:seekNodeByName(self.layerbutton, "btnequiped")
+    self.btnEquip         = cc.uiloader:seekNodeByName(self.layerbutton, "btnequip")
+    self.btnUpgrade       = cc.uiloader:seekNodeByName(self.layerbutton, "btnupgrade")
+    self.btnFull          = cc.uiloader:seekNodeByName(self.layerbutton, "btnfull")
+    self.btnOncefull      = cc.uiloader:seekNodeByName(self.layerbutton, "btnoncefull")
+    self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
+    self.labelEquiped     = cc.uiloader:seekNodeByName(self, "labelequip")
+
+    
     self.weaponLV:onTouch(handler(self,self.touchListener))
     self:loadWeaponList(self.weaponLV, getConfig("config/weapon_weapon.json"))
     self.btnBuy:setTouchEnabled(true)
@@ -86,7 +80,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:strengthen(self.weaponId)
+            self:intensify(self.weaponId)
         end
     end)
     addBtnEventListener(self.btnOncefull, function(event)
@@ -142,11 +136,35 @@ end
 
 -- 通过index选择Cell  refreshComment(cellIndex)  
 function WeaponListLayer:refreshComment(index)
+    local stars = {}
+    for i=1,10 do
+        local star = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
+        star:setVisible(false)
+        table.insert(stars,star)
+    end
+
+    local labelDamage = cc.uiloader:seekNodeByName(self.paneldetail, "labeldamage")
+
+    local progBullet = cc.uiloader:seekNodeByName(self.paneldetail, "progressbullet")
+    local progAccuracy = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracy")
+    local progReload = cc.uiloader:seekNodeByName(self.paneldetail, "progressreload")
+
+    local progBulletNext   = cc.uiloader:seekNodeByName(self.paneldetail, "progressbulletnext")
+    local progAccuracyNext = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracynext")
+    local progReloadNext   = cc.uiloader:seekNodeByName(self.paneldetail, "progressreloadnext")
+
+    local progReloadMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressreloadmax")
+    local progBulletMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressbulletmax")
+    local progAccuracyMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracymax")
+
+    local labelName        = cc.uiloader:seekNodeByName(self.paneldetail, "labelname")
+    local labelDescribe    = cc.uiloader:seekNodeByName(self.paneldetail, "labeldescribe")
+
     if index == nil then index = self.selectedCellId end
     
     self.selectedCellId = index
 
-    -- 选择状态
+    -- refresh 选择状态
     local itemContent = self.weaponLV.items_[index]:getContent()
     if self.selectedContent == nil then
         self.selectedContent = itemContent
@@ -156,42 +174,65 @@ function WeaponListLayer:refreshComment(index)
     end
     itemContent:setSelected(true)
 
-    -- 详情内容
-    for k,v in pairs(self.stars) do
+    -- refresh 详情内容
+    for k,v in pairs(stars) do
             v:setVisible(false)
     end
     self.layerGun:removeAllChildren()
     self.weaponrecord = WeaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
-    self.labelName:setString(self.weaponrecord["name"])
-    self.labelDescribe:setString(self.weaponrecord["describe"])
-    local weaponImg = cc.ui.UIImage.new("WeaponList/"..self.weaponrecord["imgName"]..".png")
+    labelName:setString(self.weaponrecord["name"])
+    labelDescribe:setString(self.weaponrecord["describe"])
+    local weaponImg = cc.ui.UIImage.new("WeaponList/gunzb/"..self.weaponrecord["imgName"]..".png")
     weaponImg:setLayoutSize(430, 180)
     addChildCenter(weaponImg, self.layerGun)
-    local bulletNum,accuracy,reloadTime,demage,bulletNumNext,accuracyNext,
-    reloadTimeNext,demageNext,demageMax = self.weaponListModel:getWeaponProperity(self.weaponId)
-    self.progBullet  :setPercent(bulletNum/85*100)
-    self.progAccuracy:setPercent(accuracy/99*100)
-    self.progReload  :setPercent((1-reloadTime/4.2)*100)
-    self.progBulletNext  :setPercent(bulletNumNext/85*100)
-    self.progAccuracyNext:setPercent(accuracyNext/99*100)
-    self.progReloadNext  :setPercent((1-reloadTimeNext/4.2)*100)
-    self.labelDamage :setString(demage)
+
+    local bulletNum = self.weaponListModel:getWeaponProperity(self.weaponId).bulletNum
+    local accuracy = self.weaponListModel:getWeaponProperity(self.weaponId).accuracy
+    local reloadTime = self.weaponListModel:getWeaponProperity(self.weaponId).reloadTime
+    local demage = self.weaponListModel:getWeaponProperity(self.weaponId).demage
+
+    local bulletNumNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").bulletNum
+    local accuracyNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").accuracy
+    local reloadTimeNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").reloadTime
+    local demageNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").demage
+
+    local bulletNumMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).bulletNum
+    local accuracyMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).accuracy
+    local reloadTimeMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).reloadTime
+    local demageMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).demage
+
+
+
+    progBullet:setPercent(bulletNum/kMaxBullet*100)
+    progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
+    progReload  :setPercent((kMaxSpeed/reloadTime)*100)
+
+    progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)
+    progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
+    progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
+
+    progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
+    progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
+    progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
+
+    labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
     local x = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
     if x == 0 then
-        for k,v in pairs(self.stars) do
+        for k,v in pairs(stars) do
             v:setVisible(false)
         end
     else
-        for k,v in pairs(self.stars) do
+        for k,v in pairs(stars) do
             if k<x+1 then
                 v:setVisible(true)
             end
         end
     end
-    self.weaponListModel:getWeaponProperity(self.weaponId)
+
+    -- refresh button
     self:showButton()
 end
 ------------- 
@@ -232,8 +273,8 @@ function WeaponListLayer:buyWeapon(weaponid)
 end
 
 -- 升级事件
-function WeaponListLayer:strengthen(weaponid)
-    self.weaponListModel:strengthen(weaponid)
+function WeaponListLayer:intensify(weaponid)
+    self.weaponListModel:intensify(weaponid)
 end
 
 -- 一键满级事件

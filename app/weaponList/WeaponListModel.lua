@@ -18,6 +18,7 @@ function WeaponListModel:getWeaponRecord(index)
 	return WeaponRecord
 end
 
+--已强化等级
 function WeaponListModel:getIntenlevel(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weapons.bags) do
@@ -30,30 +31,28 @@ function WeaponListModel:getIntenlevel(weaponid)
 	return 0
 end
 
-function WeaponListModel:getWeaponProperity(weaponid)
+function WeaponListModel:getWeaponProperity(weaponid,level)
 	--bullet accuracy reload damage
 	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
 	local growTableName = record[1]["growTable"]
-	local level = self:getIntenlevel(weaponid)
-	local growtable = getConfig("config/weapon_"..growTableName..".json")
-	local intenlevelData = getRecord(growtable,"level",level)
-	local bulletNum = intenlevelData[1]["bulletNum"]
-	local accuracy = intenlevelData[1]["accuracy"]
-	local reloadTime = intenlevelData[1]["reloadTime"]
-	local demage = intenlevelData[1]["demage"]
-	local intenNextlevelData
-	if level == 10 then
-		intenNextlevelData = getRecord(growtable,"level",level)
-	else
-		intenNextlevelData = getRecord(growtable,"level",level+1)
+	if level == nil then
+		level = self:getIntenlevel(weaponid)
+	elseif level == "nextLevel" then
+		level = self:getIntenlevel(weaponid)
+		if level == 10 then
+			level = 10
+		else
+			level =self:getIntenlevel(weaponid)+1
+		end
 	end
-	local bulletNumNext = intenNextlevelData[1]["bulletNum"]
-	local accuracyNext = intenNextlevelData[1]["accuracy"]
-	local reloadTimeNext = intenNextlevelData[1]["reloadTime"]
-	local demageNext = intenNextlevelData[1]["demage"]
-	local demageMax = getRecord(growtable,"level",10)[1]["demage"]
-	return bulletNum,accuracy,reloadTime,demage,bulletNumNext,
-		   accuracyNext,reloadTimeNext,demageNext,demageMax
+	local growtable = getConfig("config/weapon_"..growTableName..".json")
+	local intenlevelData = getRecord(growtable,"level",level)[1]
+	local bulletNum = intenlevelData["bulletNum"]
+	local accuracy = intenlevelData["accuracy"]
+	local reloadTime = intenlevelData["reloadTime"]
+	local demage = intenlevelData["demage"]
+	local property = {bulletNum = bulletNum,accuracy  = accuracy,reloadTime = reloadTime,demage = demage}
+	return property
 end
 
 function WeaponListModel:buyWeapon(weaponid)
@@ -69,7 +68,7 @@ function WeaponListModel:buyWeapon(weaponid)
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 end
 
-function WeaponListModel:strengthen(weaponid)
+function WeaponListModel:intensify(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weapons.bags) do
 		for k1,v1 in pairs(v) do
@@ -104,6 +103,7 @@ function WeaponListModel:onceFull(weaponid)
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 end
 
+--isWeInBag
 function WeaponListModel:isWeaponExist(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weapons.bags) do
@@ -128,12 +128,14 @@ function WeaponListModel:isWeaponed(weaponid)
 	end
 end
 
+--isFullLevel
 function WeaponListModel:isFull(weaponid)
 	local data = getUserData()
+	local kFullLevel = 10
 	for k,v in pairs(data.weapons.bags) do
 		for k1,v1 in pairs(v) do
 			if k1 == "weaponid" and v1 == weaponid then
-				if data.weapons.bags[k].intenlevel == 10 then
+				if data.weapons.bags[k].intenlevel == kFullLevel then
 			    	return true
 				end
 			end
@@ -143,8 +145,8 @@ function WeaponListModel:isFull(weaponid)
 end
 
 
------ weaponBag
-function WeaponListModel:getGun()
+----- weaponBag 
+function WeaponListModel:getWeaponInBag()
 	local data = getUserData()
 	dump(data)
 	local twoWeapon={}
@@ -180,8 +182,5 @@ function WeaponListModel:equipBag( weaponid, index )
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 	dump(data)
 end
-
-
-
 
 return WeaponListModel
