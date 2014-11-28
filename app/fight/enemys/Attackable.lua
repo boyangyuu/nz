@@ -22,22 +22,30 @@ function Attackable:ctor(property)
 	self.schedulers = {}
 	self.isPause = false
 	self.playCache = {}
+	self.isRed = false
 
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
 	self:addChild(self.armature)
-
+    self:setScale(property.scale)
+    
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
     	:addEventListener("stop", handler(self, self.testStop))
     	
     self:scheduleUpdate()  	
+    
+    self:test()
 end
 
-function Attackable:testStop()
-	self.isPause = not self.isPause
+function Attackable:testStop(isPause)
+	if isPause then 
+		self.isPause = true 
+	else
+		self.isPause = not self.isPause
+	end
 	local actionManager = cc.Director:getInstance():getActionManager()
 	local tAnimation = self.armature:getAnimation()
 	if self.isPause then
@@ -141,7 +149,7 @@ end
 
 function Attackable:getBodyBox()
 	local armature = self:getEnemyArmature()
-	local box = armature:getBone("body1"):getDisplayRenderNode():getBoundingBox()
+	local box = armature:getBone("weak1"):getDisplayRenderNode():getBoundingBox()
 	if not box then return end
 	return box
 end
@@ -152,14 +160,17 @@ function Attackable:setPlaceBound(bound)
 end
 
 function Attackable:getPlaceBound()
-	return self.placeBound 
+	return self.placeBound
 end
 
 function Attackable:getDeadDone()
 	return self.deadDone or false 
 end
 
-function Attackable:setDeadDone()	
+function Attackable:setDeadDone()
+	if self.removeAllSchedulers then	
+		self:removeAllSchedulers()	
+	end
 	self.deadDone = true
 end
 
@@ -228,6 +239,51 @@ function Attackable:getScale()
 	return self:getScaleX()
 end
 
+function Attackable:removeAllSchedulers()
+	for i,v in ipairs(self.schedulers) do
+		scheduler.unscheduleGlobal(v)
+	end
+end
+
+function Attackable:addScheduler(scheduler)
+	self.schedulers[#self.schedulers + 1] = scheduler
+end
+
+--飘红 飘血
+function Attackable:playHittedEffect()
+	--red
+	if self.isRed then return end
+	local function callfunc()
+		if self.isRed then 
+			-- print("回复")
+			self.armature:setColor(cc.c3b(255,255,255))
+		end
+	end
+
+	local function callfuncRestore()
+		-- print("callfuncRestore")
+		self.isRed = false
+	end
+
+	-- print("变红")
+	self.isRed = true
+	self.armature:setColor(cc.c3b(255,50,5))
+	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
+	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+	self:addScheduler(sch1)
+	self:addScheduler(sch2)
+end
+
+function Attackable:test()
+    local weakNode2 = self.armature:getBone("weak2"):getDisplayRenderNode()
+    if weakNode2 then drawBoundingBox(self.armature, weakNode2, "red")  end
+    local weakNode1 = self.armature:getBone("weak1"):getDisplayRenderNode()
+    if weakNode1 then drawBoundingBox(self.armature, weakNode1, "red")  end
+    local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+    if bodyNode then drawBoundingBox(self.armature, bodyNode, "yellow")  end
+    -- drawBoundingBox(self, self.armature, "white") 
+end
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	
@@ -248,5 +304,6 @@ end
 function Attackable:getModel(id)
 	assert("required method, must implement me")	
 end
+
 
 return Attackable

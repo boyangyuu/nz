@@ -21,7 +21,6 @@ function CommonEnemyView:ctor(property)
 
     --test
     self:test()
-    self.schedulers = {}
 end
 
 ---- state ----
@@ -95,7 +94,7 @@ function CommonEnemyView:playAfterAlert(type,handler)
 		self:play(type, handler)
 	end
 	self.alertAfter = scheduler.performWithDelayGlobal(alertAfterFunc, 2.0)
-	self.schedulers[#self.schedulers + 1] = self.alertAfter
+	self:addScheduler(self.alertAfter)
 end
 
 function CommonEnemyView:test()
@@ -145,8 +144,6 @@ end
 
 --throw 
 
-
-
 function CommonEnemyView:canHitted()
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	
@@ -172,16 +169,10 @@ function CommonEnemyView:animationEvent(armatureBack,movementType,movementID)
 			end
     	elseif movementID == "die" then 
     		self:setDeadDone()
-    		self:removeAllSchedulers()
     	end 
 	end
 end
 
-function CommonEnemyView:removeAllSchedulers()
-	for i,v in ipairs(self.schedulers) do
-		scheduler.unscheduleGlobal(v)
-	end
-end
 
 function CommonEnemyView:getEnemyArmature()
 	if self.armature then return self.armature end 

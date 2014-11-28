@@ -113,6 +113,7 @@ function BossView:playKill(event)
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	self:clearWeak()
+	self:testStop(true)
 
 	--play dead
 	self.armature:getAnimation():play("dead" ,-1 , 1)
@@ -271,7 +272,7 @@ function BossView:playDaoDan1()
 			}
 		enemys[#enemys + 1] = data
 	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
+    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
 end
 
 function BossView:playDaoDan()
@@ -292,7 +293,7 @@ function BossView:playDaoDan()
 			}
 		enemys[#enemys + 1] = data
 	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
+    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
 end
 
 function BossView:clearWeak()
@@ -398,6 +399,8 @@ end
 
 local isRed = false
 function BossView:onHitted(demage)
+
+	--血量
 	if self.enemy:canHitted() then
 		self.enemy:decreaseHp(demage)
 	end
@@ -427,8 +430,10 @@ function BossView:onHitted(demage)
 	-- print("变红")
 	isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
-	scheduler.performWithDelayGlobal(callfunc, 20/60)
-	scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
+	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+	self:addScheduler(sch1)
+	self:addScheduler(sch2)
 end
 
 function BossView:initBody()

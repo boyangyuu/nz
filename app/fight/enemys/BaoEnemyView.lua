@@ -15,6 +15,9 @@ local Hero = import("..Hero")
 local BaoEnemyView = class("BaoEnemyView", BaseEnemyView)  
 
 local kTimeStartAhead = 2.0
+local kRangeW = 200
+local kRangeH = 300
+local kDemageOtherEnemyScale = 2.0
 
 function BaoEnemyView:ctor(property)
 	--instance
@@ -25,22 +28,19 @@ function BaoEnemyView:ctor(property)
     self.isAheading = false
     self.isAheaded = false
 
-    local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-    local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    drawBoundingBox(self.armature, weakNode, "red") 
-    drawBoundingBox(self.armature, bodyNode, "yellow")     
-    --前进F
+    --前进
     local callFuncAhead = function ()
         self:play("ahead", handler(self, self.playAhead))
     end
-    self.aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    self:addScheduler(aheadScheduler)
 end
 
 
 function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
-    self.armature:getAnimation():play("walk" , -1, 1) --
+    self.armature:getAnimation():play("ahead" , -1, 1) --
     local speed = 50
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     dump(pWorld, "pWorld")
@@ -68,36 +68,28 @@ function BaoEnemyView:playAhead()
     self:runAction(actionScale)
 end
 
-function BaoEnemyView:playKill(event)
-    --clear
-    self:clearPlayCache()
-    self.armature:stopAllActions()
 
-    self.armature:getAnimation():play("die" ,-1 , 1)
+function BaoEnemyView:playHitted(event)
+    local currentName = self.armature:getAnimation():getCurrentMovementID()
+    
+    --飘红
+    self:playHittedEffect()
 end
 
 function BaoEnemyView:tick(t)
     --change state
     if self.isAheading then return end
 
-    --walk
-    local walkRate = self.enemy:getWalkRate()
-    randomSeed =  math.random(1, walkRate)
-    if randomSeed > walkRate - 1 then 
-        self:play("playWalk", handler(self, self.playWalk))
-        return 
-    end
-
 end
 
-function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)   
+function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if self.isAheading then 
-                self.armature:getAnimation():play("walk" , -1, 1) 
+                self.armature:getAnimation():play("ahead" , -1, 1) 
                 return 
             end
             if playCache then 
@@ -113,14 +105,15 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
                 --伤害enemys
                 print("成功摧毁")
                 local destRect = self:getBaoRect()
+                local targetData = {demage = self.enemy:getDemage(), 
+                                    demageScale = kDemageOtherEnemyScale, 
+                                    demageType = "bao",
+                                    }
                 self.hero:dispatchEvent({name = Hero.ENEMY_ATTACK_MUTI_EVENT, 
-                  damage = 600,
+                  targetData = targetData,
                   destRect = destRect})
             end
             self:setDeadDone()
-            if self.aheadScheduler then
-                scheduler.unscheduleGlobal(self.aheadScheduler)
-            end
         end 
     end
 end
@@ -132,19 +125,17 @@ function BaoEnemyView:getBaoRect()
     dump(pWorld, "pWorld")
 
     --create 群伤范围和位置
-    local rangeW = 200
-    local rangeH = 300
-    local pos = cc.p(pWorld.x - rangeW / 2 ,
-                 pWorld.y - rangeH / 2)
-    local rect = cc.rect(pos.x, pos.y, rangeW, rangeH)
+    local pos = cc.p(pWorld.x - kRangeW / 2 ,
+                 pWorld.y - kRangeH / 2)
+    local rect = cc.rect(pos.x, pos.y, kRangeW, kRangeH)
     return rect
 end
 
 function BaoEnemyView:getEnemyArmature()
     if self.armature then return self.armature end 
     --armature
-    local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
-    local armature = getArmature("anim_enemy_002", src) 
+    local src = "Fight/enemys/zibaob/zibaob.ExportJson"
+    local armature = getArmature("zibaob", src) 
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature
 end

@@ -2,20 +2,21 @@
 local waveClass = class("waveExample", cc.mvc.ModelBase)
 
 
--- 测试 自爆兵
+-- 测试 近战兵
 local waves = {
 	{
 		enemys = {  
 
 			{
-				time = 2,	
+				time = 2,
 				num = 6,
-				place = "place3",
-				pos = {100, 200, 0, 170, 190, 100},
-				delay = {0.1, 0.4, 0.7, 0.9, 1.2, 1.5},
+				
+				pos = {100, 200, 0, 170, 340, 100},
+				delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
 				property = { 
-					type = "common",
+					type = "bao",
 					id = 1,
+					placeName = "place3",
 				},
 			},		
 		},

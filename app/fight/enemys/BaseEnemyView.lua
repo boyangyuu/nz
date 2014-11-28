@@ -23,14 +23,14 @@ function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
 
     --blood
-    self:initBlood() 
+    self:initBlood(property.bloodOffset)
 
 	--play
 	self:playStand()
-	local function start()
-		self:playStartState(property.startState)
-	end
-	scheduler.performWithDelayGlobal(start, 0.000)
+	-- local function start()
+	-- 	self:playStartState(property.startState)
+	-- end
+	-- scheduler.performWithDelayGlobal(start, 0.000)
 	
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
@@ -38,14 +38,15 @@ function BaseEnemyView:ctor(property)
 end
 
 --ui
-function BaseEnemyView:initBlood()
+function BaseEnemyView:initBlood(bloodOffset)
+	-- assert(bloodOffset , "bloodOffset is nil")
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
     local node = cc.uiloader:load("heroUI.ExportJson")    
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height * 0.85)
+    self.blood:setPosition(0, bound.height* 0.85)
     self.armature:addChild(self.blood) 
 	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
 	self:setBlood(1.0)
@@ -94,8 +95,8 @@ function BaseEnemyView:playWalk()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then isLeft = -1 end
 	local dis = 5 * isLeft * self:getScale()
-    local widthOffset = kWalkWidth * isLeft
-    local isAble = self:checkPlace(widthOffset * self:getScale())
+    local widthOffset = kWalkWidth * isLeft * self:getScale()
+    local isAble = self:checkPlace(widthOffset )
 
     if not isAble then return end
 	self.armature:getAnimation():play("walk" , -1, 1)
@@ -105,7 +106,13 @@ function BaseEnemyView:playWalk()
 end
 
 function BaseEnemyView:playHitted(event)
-	if not self.enemy:isDead()  then
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	
+	--飘红
+	self:playHittedEffect()
+
+	--不重复播放
+	if not self.enemy:isDead() and currentName ~= "hit" then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
 end
@@ -114,22 +121,24 @@ function BaseEnemyView:playKill(event)
 	--clear
 	self:clearPlayCache()
 	self.armature:stopAllActions()
-
-	--play
+	self:testStop(true)
 
 	--以防万一
 	if self and self.setDeadDone then 
-		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 0.5)
+		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 1.0)
 	end
 
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
 function BaseEnemyView:onHitted(targetData)
+	-- print("BaseEnemyView:onHitted(targetData)")
+	-- dump(targetData, "targetData")
 	local demage 	 = targetData.demage
 	local scale  	 = targetData.demageScale
 	local demageType = targetData.demageType
 	if self.enemy:canHitted() and self:canHitted() then
+		-- print("self.enemy:decreaseHp(demage * scale)")
 		self.enemy:decreaseHp(demage * scale)
 	end
 
@@ -161,6 +170,7 @@ end
 
 function BaseEnemyView:canHitted()
 	return true
+	-- assert("required method, must implement me")
 end
 
 function BaseEnemyView:animationEvent(armatureBack,movementType,movementID)
@@ -170,5 +180,6 @@ end
 function BaseEnemyView:getEnemyArmature()
 	assert("required method, must implement me")	
 end
+
 
 return BaseEnemyView

@@ -44,8 +44,8 @@ function MapView:ctor()
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
-        :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
+        :addEventListener(Hero.GUN_FIRE_EVENT, handler(self, self.onHeroFire))
+        :addEventListener(Hero.ENEMY_ADD_EVENT, handler(self, self.callfuncAddEnemys))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Actor.STOP_EVENT, handler(self, self.setAllEntityActive))
@@ -83,11 +83,12 @@ function MapView:loadCCS()
 
     local node = cc.uiloader:load(mapSrcName)
 	self.map = node
-	addChildCenter(self.map, self)	
+	-- self.map:setScale(2.0)
+	addChildCenter(self.map, self)
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self, "bg")
-
+	self.map:setScale(2.0)
 	--init enemy places
 	local index = 1
 	self.places = {}
@@ -142,9 +143,12 @@ function MapView:updateEnemys(event)
 			assert(group["pos"], "group pos"..i)
 			local pos = group["pos"][i] or 0
 
+			--zorder
+			local zorder = group.num - i
+
 			--add
 			local function addEnemyFunc()
-				self:addEnemy(group.place, group.property, pos)
+				self:addEnemy(group.property, pos, zorder)
 			end
 
 			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
@@ -156,9 +160,10 @@ end
 
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
+		local zorder = #event.enemys - i
 		local function addEnemyFunc()
-			self:addEnemy(enemyData.placeName, 
-				enemyData.property, enemyData.pos.x) --todo
+			self:addEnemy(enemyData.property, 
+			enemyData.pos.x, zorder) --todo
 		end		
 		
 		scheduler.performWithDelayGlobal(addEnemyFunc, 
@@ -166,9 +171,10 @@ function MapView:callfuncAddEnemys(event)
 	end
 end
 
-function MapView:addEnemy(placeName, property, pos)
-	assert(placeName and property, "invalid param")
-
+function MapView:addEnemy(property, pos, zorder)
+	local placeName = property.placeName
+	assert(placeName , "invalid param placeName:"..placeName )
+	assert(property , "invalid param property:" )
 	--place
 	local placeNode = self.places[placeName]
 	assert(placeNode, "no placeNode! invalid param:"..placeName)		
@@ -178,15 +184,13 @@ function MapView:addEnemy(placeName, property, pos)
 	boundPlace.y = boundPlace.y	
 	property.boundPlace = boundPlace
 
-	--enemy 改为工厂
-	local enemyView = EnemyFactroy.createEnemy(property)
-
-	self.enemys[#self.enemys + 1] = enemyView
-
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	enemyView:setScaleX(scale:getScaleX())
-	enemyView:setScaleY(scale:getScaleY())
+	property.scale = scale:getScaleX()
+
+	--enemy 改为工厂
+	local enemyView = EnemyFactroy.createEnemy(property)
+	self.enemys[#self.enemys + 1] = enemyView
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
@@ -195,19 +199,26 @@ function MapView:addEnemy(placeName, property, pos)
 	enemyView:setPosition(xPos, 0)
 	
 	--place
-	placeNode:addChild(enemyView)
+	placeNode:addChild(enemyView, zorder)
 end
 
 function MapView:getSize()
 	local bg = self.bg
-	local size = cc.size(bg:getBoundingBox().width ,
-		bg:getBoundingBox().height)
-	return size
+	local scale = bg:getScale()
+	-- print("scale", scale)
+	scale = 2.0
+	-- dump(bg:getBoundingBox(), "box")
+	-- bg:setScaleX(2.0)
+	-- bg:setScaleY(2.0)
+	-- dump(bg:getBoundingBox(), "box2")
+	local size = cc.size(bg:getBoundingBox().width * scale,
+		bg:getBoundingBox().height * scale)
+	return size 
 end
 
 --fight
 function MapView:tick(dt)
-	--检查enemy的状态
+	-- 检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
 			self:removeEnemy(enemy, i)
@@ -288,7 +299,7 @@ function MapView:enemysHittedInRange(event)
 	assert(event.destRect, "event destRect is nil")
 	local enemys = self:getEnemysInRect(event.destRect)
 	for i,enemy in ipairs(enemys) do
-		enemy:onHitted(data)
+		enemy:onHitted(event.targetData)
 	end
 end
 

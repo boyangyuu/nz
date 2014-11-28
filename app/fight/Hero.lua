@@ -29,10 +29,11 @@ Hero.SKILL_GOLDWEAPON_ACTIVE_EVENT = "SKILL_GOLDWEAPON_ACTIVE_EVENT" --激活黄
 Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
 Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人      
 Hero.ENEMY_KILL_HEAD_EVENT      = "ENEMY_KILL_HEAD_EVENT"
-
+Hero.ENEMY_ADD_EVENT      = "ENEMY_ADD_EVENT"
 --gun
 Hero.GUN_RELOAD_EVENT = "GUN_RELOAD_EVENT"             
 Hero.GUN_CHANGE_EVENT = "GUN_CHANGE_EVENT"
+Hero.GUN_FIRE_EVENT   = "GUN_FIRE_EVENT"
 
 function Hero:ctor(properties, events, callbacks)
     --instance
@@ -69,7 +70,7 @@ function Hero:setLevelId()
 end
 
 function Hero:getLevelId()
-    return 2
+    return 1
 end
 
 --枪械相关

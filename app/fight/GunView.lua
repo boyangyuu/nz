@@ -33,6 +33,7 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
+	self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT})
 	self.bulletNum = self.bulletNum - 1
 	self:playFire()
 end

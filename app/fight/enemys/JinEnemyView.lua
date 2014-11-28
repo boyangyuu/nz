@@ -24,27 +24,57 @@ function JinEnemyView:ctor(property)
     self.isAheading = false
     self.attackHandler = nil
     self.aheadHandler = nil
-
+    
     --前进
     local callFuncAhead = function ()
         self:play("ahead", handler(self, self.playAhead))
     end
-    self.aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    local aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    self:addScheduler(aheadHandler)
+    
+    --test
+    self:test()
+end
+
+function JinEnemyView:playWalk()
+    local walkSpeed = 5
+    local dis = walkSpeed * self:getScale()
+    local kWalkWidth = 20
+    local widthOffset = kWalkWidth * self:getScale()
+    local isAble = self:checkPlace(widthOffset * self:getScale())
+
+    if not isAble then return end
+    self.armature:getAnimation():play("walkright" , -1, 1)
+    local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
+    local seq = cc.Sequence:create(action)
+    self.armature:runAction(cc.RepeatForever:create(seq))   
+end
+
+function JinEnemyView:playAttack()
+    self.armature:getAnimation():play("attack1" , -1, 1)
+    self.enemy:hit(self.hero)
+end
+
+function JinEnemyView:playHitted(event)
+    if not self.enemy:isDead() then
+        print(self:playHittedEffect())
+        self:playHittedEffect()
+    end
 end
 
 function JinEnemyView:playAhead()
     --前进
     self.isAheading = true
-    self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = 50
+    self.armature:getAnimation():play("walkahead" , -1, 1) --
+    local speed = 60
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     dump(pWorld, "pWorld")
-    local desY = -20
+    local desY = -180
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
-    local scale = 1
+    local scale = 1.8
     local actionScale = cc.ScaleTo:create(time, scale)
 
     --
@@ -57,16 +87,10 @@ function JinEnemyView:playAhead()
         
         --2秒一攻击
         function attack()
-            local currentName = self.armature:getAnimation():getCurrentMovementID()
-            print("currentName", currentName)
-            if currentName == "die" then 
-                scheduler.unscheduleGlobal(self.attackHandler)
-                return
-            end
-            print("近战攻击")
-            self:play("fire", handler(self, self.playFire))
+            self:play("fire", handler(self, self.playAttack))
         end
-        self.attackHandler = scheduler.scheduleGlobal(attack, kAttackOffset)
+        local attackHandler = scheduler.scheduleGlobal(attack, kAttackOffset)
+        self:addScheduler(attackHandler)
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
@@ -94,7 +118,7 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
         if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if self.isAheading then 
-                self.armature:getAnimation():play("walk" , -1, 1)
+                self.armature:getAnimation():play("walkahead" , -1, 1)
                 return 
             end
 
@@ -105,11 +129,7 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
             end
         elseif movementID == "die" then
             print("self:setDeadDone()") 
-            self:setDeadDone()
-            scheduler.unscheduleGlobal(self.aheadHandler)
-            if self.attackHandler then
-                scheduler.unscheduleGlobal(self.attackHandler)
-            end
+            self:setDeadDone()          
         end 
     end
 end
@@ -117,10 +137,18 @@ end
 function JinEnemyView:getEnemyArmature()
     if self.armature then return self.armature end 
     --armature
-    local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
-    local armature = getArmature("anim_enemy_002", src) 
+    local src = "res/Fight/enemys/jinzhanb/jinzhanb.ExportJson"
+    local armature = getArmature("jinzhanb", src) 
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature
+end
+
+function JinEnemyView:test()
+    --body
+    local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+    local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+    drawBoundingBox(self.armature, weakNode, "red") 
+    drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
 return JinEnemyView

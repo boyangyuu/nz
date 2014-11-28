@@ -6,10 +6,11 @@ local waves = {
 			{
 				time = 3,	
 				num = 1,
-				place = "place3",
+				
 				pos = {250},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place3", 
 					type = "boss",
 					id = 1,
 				},
@@ -21,10 +22,10 @@ local waves = {
 			{
 				time = 2,
 				num = 5,
-				place = "place1",
 				delay = {0.3, 0.6},
 				pos = {10, 200, 50, 100, 90},
-				property = { 
+				property = {
+					placeName = "place1",  
 					startState = "rollright",
 					id = 1,
 				},
@@ -32,10 +33,10 @@ local waves = {
 			{
 				time = 3,
 				num = 5,
-				place = "place2",
 				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
 				pos = {10, 200, 50, 100, 90},	
-				property = { 
+				property = {
+					placeName = "place2",   
 					startState = "rollleft",
 					id = 1,
 				},
@@ -43,10 +44,10 @@ local waves = {
 			{
 				time = 2,
 				num = 5,
-				place = "place2",
 				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
 				pos = {10, 20, 50, 100, 60},					
-				property = { 
+				property = {
+					placeName = "place2",   
 					id = 1,
 				},
 			},						
@@ -57,10 +58,10 @@ local waves = {
 			{
 				time = 10,
 				num = 5,
-				place = "place1",
 				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
 				pos = {10, 20, 50, 100, 60},
-				property = { 
+				property = {
+					placeName = "place1",  
 					startState = "rollright",
 					id = 1,
 				},

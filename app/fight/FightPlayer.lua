@@ -450,7 +450,6 @@ function FightPlayer:justBgPos(node)
     local bgMap = self.mapView  
     local w, h = bgMap:getSize().width , 
         bgMap:getSize().height
-
     local xL = (w - display.width) / 2  
     local yL = (h - display.height) / 2 
     local x, y = node:getPosition()
