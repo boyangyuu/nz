@@ -88,7 +88,7 @@ function MapView:loadCCS()
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self, "bg")
-	self.map:setScale(2.0)
+	-- self.map:setScale(2.0)
 	--init enemy places
 	local index = 1
 	self.places = {}
@@ -206,7 +206,7 @@ function MapView:getSize()
 	local bg = self.bg
 	local scale = bg:getScale()
 	-- print("scale", scale)
-	scale = 2.0
+	scale = 1.0
 	-- dump(bg:getBoundingBox(), "box")
 	-- bg:setScaleX(2.0)
 	-- bg:setScaleY(2.0)
