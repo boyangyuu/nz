@@ -19,7 +19,6 @@ local FocusView = class("FocusView", function()
 end)
 
 function FocusView:ctor(properties)
-	
 	--instance
 	self.hero = app:getInstance(Hero)
 	self.gun = self.hero:getGun()

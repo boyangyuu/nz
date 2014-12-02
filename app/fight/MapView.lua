@@ -196,10 +196,10 @@ function MapView:openZoom(event)
 	local time = event.time
 	self.hero:setMapZoom(scale)
 
-	--todo 禁止触摸
+	--todo 禁止触摸 todoybyF
 	_isZooming = true
 	local function zoomEnd()
-		-- 回复触摸
+		-- 回复触摸Ftodoyby
 		_isZooming = false
 	end
 	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))

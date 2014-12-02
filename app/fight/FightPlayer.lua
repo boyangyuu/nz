@@ -30,7 +30,6 @@ function FightPlayer:ctor()
     self.heroView = HeroView.new()
     self.gunBtnPressed = false
     self.touchs = {}
-    self:setTag(521)
     self.btnsIsShow = true
     self.resumeDefenceTinkHandler = nil
     self.isPause = false
