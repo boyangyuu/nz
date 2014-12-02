@@ -100,7 +100,7 @@ function SanEnemyView:playHitted(event)
 end
 
 function SanEnemyView:playKill(event)
-    -- print("SanEnemyView:playKill") 
+    -- print("SanEnemyView:playKill")
     self:setDeadDone()
 
     --屏幕动画

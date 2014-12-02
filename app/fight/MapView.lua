@@ -16,13 +16,12 @@ local Hero = import(".Hero")
 local Actor = import(".Actor")
 local EnemyFactroy = import(".EnemyFactroy")
 
---常量
-local groupId = 1
-local levelId = 5
-
 local MapView = class("MapView", function()
     return display.newNode()
 end)
+
+_isJu = false
+_isZooming = false
 
 function MapView:ctor()
 	--instance
@@ -48,29 +47,8 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_ADD_EVENT, handler(self, self.callfuncAddEnemys))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
-        :addEventListener(Actor.STOP_EVENT, handler(self, self.setAllEntityActive))
-end
-
-function MapView:setAllEntityActive( event )
-	self.hero:dispatchEvent({name = "stop"})
-	-- local actionManager = cc.Director:getInstance():getActionManager()
-	-- self.isPause = not self.isPause
-	-- for i,enemy in ipairs(self.enemys) do
-	-- 	if enemy and not enemy:getDeadDone() then
-	-- 		if true == self.isPause then
-	-- 			enemy.armature:getAnimation():pause()
-	-- 			enemy:pause()
-	-- 			actionManager:pauseTarget(enemy)
-	-- 		end
-	-- 		if false == self.isPause then
-	-- 			-- print("enemy resume")
-	-- 			actionManager:resumeTarget(enemy)
-	-- 			enemy.armature:getAnimation():resume()
-	-- 			enemy:resume()
-
-	-- 		end
-	-- 	end
-	-- end
+        :addEventListener(Hero.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
+        :addEventListener(Hero.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
 end
 
 function MapView:loadCCS()
@@ -78,17 +56,16 @@ function MapView:loadCCS()
 	local groupId = self.hero:getGroupId()
 	local levelId = self.hero:getLevelId()
 
-	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
+	local mapSrcName = "map_"..groupId.."_"..levelId..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
     local node = cc.uiloader:load(mapSrcName)
 	self.map = node
-	-- self.map:setScale(2.0)
 	addChildCenter(self.map, self)
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self, "bg")
-	self.map:setScale(2.0)
+
 	--init enemy places
 	local index = 1
 	self.places = {}
@@ -202,22 +179,60 @@ function MapView:addEnemy(property, pos, zorder)
 	placeNode:addChild(enemyView, zorder)
 end
 
+
 function MapView:getSize()
 	local bg = self.bg
-	local scale = bg:getScale()
-	-- print("scale", scale)
-	scale = 2.0
-	-- dump(bg:getBoundingBox(), "box")
-	-- bg:setScaleX(2.0)
-	-- bg:setScaleY(2.0)
-	-- dump(bg:getBoundingBox(), "box2")
-	local size = cc.size(bg:getBoundingBox().width * scale,
-		bg:getBoundingBox().height * scale)
+	local size = cc.size(bg:getBoundingBox().width ,
+		bg:getBoundingBox().height)
 	return size 
+end
+
+function MapView:openZoom(event)
+	if _isZooming then return end
+
+	--event data
+	local destWorldPos = event.destWorldPos
+	local scale = event.scale
+	local time = event.time
+	self.hero:setMapZoom(scale)
+
+	--todo 禁止触摸
+	_isZooming = true
+	local function zoomEnd()
+		-- 回复触摸
+		_isZooming = false
+	end
+	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))
+	local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
+	local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	local action = cc.MoveBy:create(time, cc.p(offsetX, offsetY))
+	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
+	self:runAction(cc.ScaleBy:create(time, scale))	
+end
+
+function MapView:resumeZoom(event)
+	if _isZooming then return end
+	_isZooming = true
+	self.hero:setMapZoom(1.0)
+
+	local time = event.time
+	local function zoomEnd()
+		_isZooming = false
+	end
+	local w, h = display.width, display.height
+	local action = cc.MoveTo:create(time , cc.p(w * 0.5, h * 0.5))	
+	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
+	self:runAction(cc.ScaleTo:create(time , 1))
 end
 
 --fight
 function MapView:tick(dt)
+	local pos = cc.p(self.bg:getPositionX(), self.bg:getPositionY())
+	local pWorld = self.focusView:convertToWorldSpace(cc.p(0,0))
+	local pWorld2 = self:convertToWorldSpace(cc.p(0,0))
+	-- print("tick")
+	-- dump(pWorld, "pWorld")
+	-- dump(pWorld2, "pWorld2")
 	-- 检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
@@ -248,7 +263,6 @@ end
 			demageScale = 2.0,
 			enemy = xx,
 		},
-
 	}
 ]]
 function MapView:getTargetDatas()

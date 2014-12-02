@@ -34,6 +34,11 @@ Hero.ENEMY_ADD_EVENT      = "ENEMY_ADD_EVENT"
 Hero.GUN_RELOAD_EVENT = "GUN_RELOAD_EVENT"             
 Hero.GUN_CHANGE_EVENT = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT   = "GUN_FIRE_EVENT"
+Hero.GUN_SWITCH_JU_EVENT   = "GUN_SWITCH_JU_EVENT"
+
+--map
+Hero.MAP_ZOOM_OPEN_EVENT     = "MAP_ZOOM_OPEN_EVENT"
+Hero.MAP_ZOOM_RESUME_EVENT   = "MAP_ZOOM_RESUME_EVENT"
 
 function Hero:ctor(properties, events, callbacks)
     --instance
@@ -70,7 +75,7 @@ function Hero:setLevelId()
 end
 
 function Hero:getLevelId()
-    return 1
+    return 4
 end
 
 --枪械相关
@@ -100,6 +105,14 @@ end
 
 function Hero:BeHurt(event)
 
+end
+
+function Hero:setMapZoom(scale)
+    self.mapZoom = scale
+end
+
+function Hero:getMapZoom()
+    return self.mapZoom or 1.0
 end
 
 return Hero

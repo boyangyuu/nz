@@ -25,8 +25,8 @@ function HomeBarLayer:addEventProtocolListener()
 end
 
 function HomeBarLayer:loadCCS()
-    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/")
-    local rootNode = cc.uiloader:load("homeBarLayer.json")
+    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/biaotou")
+    local rootNode = cc.uiloader:load("biaotou.ExportJson")
     self:addChild(rootNode)
     self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "homeLayer")
     self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonLayer")

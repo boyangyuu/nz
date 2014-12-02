@@ -121,7 +121,7 @@ function BaseEnemyView:playKill(event)
 	--clear
 	self:clearPlayCache()
 	self.armature:stopAllActions()
-	self:testStop(true)
+	self:testStop({isPause = true})
 
 	--以防万一
 	if self and self.setDeadDone then 

@@ -56,10 +56,10 @@ function disableBtn(delayTime, node)
 end
 
 function getArmature(name, src)
+    cc.FileUtils:getInstance():addSearchPath(src)
     assert(name, "name is invalid")
     assert(src, "src is invalid")
     local manager = ccs.ArmatureDataManager:getInstance()
-    -- manager:removeArmatureFileInfo(src)
     manager:addArmatureFileInfo(src)
     local armature = ccs.Armature:create(name) 
     return armature
@@ -146,7 +146,7 @@ function getRecord( Table, PropertyName, Key )
     return recordArr
 end
 
-function getUserData(  )
+function getUserData()
     return GameData.data
 end
 

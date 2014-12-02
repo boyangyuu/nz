@@ -36,22 +36,8 @@ function JinEnemyView:ctor(property)
     self:test()
 end
 
-function JinEnemyView:playWalk()
-    local walkSpeed = 5
-    local dis = walkSpeed * self:getScale()
-    local kWalkWidth = 20
-    local widthOffset = kWalkWidth * self:getScale()
-    local isAble = self:checkPlace(widthOffset * self:getScale())
-
-    if not isAble then return end
-    self.armature:getAnimation():play("walkright" , -1, 1)
-    local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
-    local seq = cc.Sequence:create(action)
-    self.armature:runAction(cc.RepeatForever:create(seq))   
-end
-
 function JinEnemyView:playAttack()
-    self.armature:getAnimation():play("attack1" , -1, 1)
+    self.armature:getAnimation():play("attack" , -1, 1)
     self.enemy:hit(self.hero)
 end
 
@@ -65,7 +51,7 @@ end
 function JinEnemyView:playAhead()
     --前进
     self.isAheading = true
-    self.armature:getAnimation():play("walkahead" , -1, 1) --
+    self.armature:getAnimation():play("walk" , -1, 1) --
     local speed = 60
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     dump(pWorld, "pWorld")
@@ -102,14 +88,6 @@ end
 function JinEnemyView:tick(t)
     --change state
     if self.isAheading then return end
-
-    --walk
-    local walkRate = self.enemy:getWalkRate()
-    randomSeed =  math.random(1, walkRate)
-    if randomSeed > walkRate - 1 then 
-        self:play("playWalk", handler(self, self.playWalk))
-        return 
-    end
 end
 
 function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
@@ -118,7 +96,7 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
         if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if self.isAheading then 
-                self.armature:getAnimation():play("walkahead" , -1, 1)
+                self.armature:getAnimation():play("walk" , -1, 1)
                 return 
             end
 
@@ -137,8 +115,11 @@ end
 function JinEnemyView:getEnemyArmature()
     if self.armature then return self.armature end 
     --armature
-    local src = "res/Fight/enemys/jinzhanb/jinzhanb.ExportJson"
-    local armature = getArmature("jinzhanb", src) 
+    -- local src = "res/Fight/enemys/jinzhanb/jinzhanb.ExportJson"
+    -- local armature = getArmature("jinzhanb", src) 
+    -- armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+    
+    local armature = ccs.Armature:create("jinzhanb") 
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature
 end

@@ -175,10 +175,13 @@ end
 
 
 function CommonEnemyView:getEnemyArmature()
+	-- print("CommonEnemyView:getEnemyArmature()")
 	if self.armature then return self.armature end 
 	--armature
-    local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
-    local armature = getArmature("anim_enemy_002", src) 
+ --    local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
+ --    local armature = getArmature("anim_enemy_002", src) 
+	-- armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+	local armature = ccs.Armature:create("anim_enemy_002") 
 	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	return armature
 end

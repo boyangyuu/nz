@@ -150,20 +150,16 @@ end
 
 --触发黄金武器
 function HeroView:activeGoldWeapon()
-	self.hero:dispatchEvent({name = Actor.STOP_EVENT})
+	print("HeroView:activeGoldWeapon() pause")
+	self.hero:dispatchEvent({name = Actor.PAUSE_SWITCH_EVENT, isPause = true})
 	local color = display.newColorLayer(cc.c4b(0, 0, 0, 180))
 	cc.Director:getInstance():getRunningScene():addChild(color)  --todo 待优化!
-	-- self:addChild(testLayerColer)
-	-- display.newColorLayer(cc.c4b(0xfa,0xf8,0xef, 255))
-	local function test(  )
-		-- local actionManager = cc.ActionManagerEx:getInstance()
-		-- local uitest = actionManager:playActionByName("res/Fight/fightLayer/qdchuxian/qiangdi.ExportJson", "Animation0")
-		-- uitest:play()
-		self.hero:dispatchEvent({name = Actor.STOP_EVENT})
+	local function resume()
+		print("HeroView:activeGoldWeapon() resume")
+		self.hero:dispatchEvent({name = Actor.PAUSE_SWITCH_EVENT, isPause = false})
 		color:removeFromParent()
-
 	end
-	scheduler.performWithDelayGlobal(test, 5)
+	scheduler.performWithDelayGlobal(resume, 5)
 end
 
 --杀掉敌人后的回调

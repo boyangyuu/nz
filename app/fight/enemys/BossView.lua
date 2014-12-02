@@ -113,7 +113,7 @@ function BossView:playKill(event)
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	self:clearWeak()
-	self:testStop(true)
+	self:testStop({isPause = true})
 
 	--play dead
 	self.armature:getAnimation():play("dead" ,-1 , 1)

@@ -33,29 +33,31 @@ function Attackable:ctor(property)
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
-    	:addEventListener("stop", handler(self, self.testStop))
+    	:addEventListener(Actor.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
     	
     self:scheduleUpdate()  	
     
     self:test()
 end
 
-function Attackable:testStop(isPause)
-	if isPause then 
-		self.isPause = true 
-	else
-		self.isPause = not self.isPause
-	end
+function Attackable:testStop(event)
+	if self:getDeadDone() then return end
+	local isPause = event.isPause
+	print("testStop", isPause)
+	self.isPause = isPause
 	local actionManager = cc.Director:getInstance():getActionManager()
 	local tAnimation = self.armature:getAnimation()
+	if tAnimation == nil then return end
 	if self.isPause then
 		self:pause()
 		tAnimation:pause()
 		actionManager:pauseTarget(self)
+		actionManager:pauseTarget(self.armature)
 	else
 		self:resume()
 		tAnimation:resume()
 		actionManager:resumeTarget(self)
+		actionManager:resumeTarget(self.armature)
 	end
 end
 
@@ -118,9 +120,10 @@ end
 
 function Attackable:rectIntersectsRectInWorld(node, enemyRange)
 	local bound = node:getBoundingBox()
-	local enemyBound = enemyRange:getBoundingBox()	
-	enemyBound.width = enemyBound.width * self:getScale()	
-	enemyBound.height = enemyBound.height * self:getScale()		
+	local enemyBound = enemyRange:getBoundingBox()
+	local scale = self:getScale() * self.hero:getMapZoom()
+	enemyBound.width = enemyBound.width * scale
+	enemyBound.height = enemyBound.height * scale
     
     local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
     bound.x = pWorld1.x
