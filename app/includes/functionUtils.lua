@@ -8,13 +8,13 @@
 function addBtnEventListener(node, callfunc)
     assert(node, "node is invalid")
     assert(callfunc, "callfunc is invalid")
-    node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        local isAccepted = callfunc(event)
+    node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)        
         if event.name=='began' then
             node:runAction(cc.ScaleTo:create(0.05, 0.9))
         elseif event.name=='ended' then
-            node:runAction(cc.ScaleTo:create(0.05, 1))
+                node:runAction(cc.ScaleTo:create(0.05, 1))
         end
+        local isAccepted = callfunc(event)
         return isAccepted
     end)
 end

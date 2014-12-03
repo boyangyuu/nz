@@ -7,7 +7,6 @@ function PropModel:ctor(properties, events, callbacks)
 end
 
 function PropModel:getPropNum(nameid)
-	print(nameid)
 	local data = getUserData()
 	local prop = data.prop[nameid]
 	local propnum = prop.num
@@ -20,7 +19,6 @@ function PropModel:buyProp(nameid)
 	local propnum = prop.num + 5
 	data.prop[nameid].num = propnum
     setUserData(data)
-    dump(GameState.load())
 end
 
 return PropModel

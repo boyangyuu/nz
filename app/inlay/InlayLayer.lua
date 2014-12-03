@@ -7,6 +7,8 @@ local InlayLayer = class("InlayLayer", function()
 end)
 
 function InlayLayer:ctor()
+    print("inlayLayer ctor()")
+
     self.inlayModel = app:getInstance(InlayModel)
 
     cc.EventProxy.new(self.inlayModel , self)
@@ -23,10 +25,14 @@ function InlayLayer:ctor()
 end
 
 function InlayLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/InlayShop")
-	local controlNode = cc.uiloader:load("xiangqian.ExportJson")
+    cc.FileUtils:getInstance():addSearchPath("res/InlayShop")
+    local controlNode = cc.uiloader:load("xiangqian.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
+
+    display.addSpriteFrames("xiangqian0.plist", "xiangqian0.png")
+
+
 end
 
 function InlayLayer:onEnter()
@@ -54,7 +60,7 @@ function InlayLayer:initUI()
 
     addBtnEventListener(goldWeaponBtn, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
+            -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             local data = getUserData()
@@ -64,7 +70,7 @@ function InlayLayer:initUI()
                 end
             end
             setUserData(data)
-            dump(GameState.load())
+            -- dump(GameState.load())
             self:refreshBtnIcon()
         end
     end)
@@ -102,7 +108,7 @@ function InlayLayer:refreshBtnIcon()
     end
     for k,v in pairs(allInlayed) do
         local table = self.inlayModel:getConfigTable("id", v.index)
-        local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
+        local img =  display.newSprite("#"..table[1]["imgnam"]..".png")
         addChildCenter(img,self.btn[v.typename])
     end
 

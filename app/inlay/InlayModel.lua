@@ -117,7 +117,6 @@ function InlayModel:oneForAllBtn()
 	for k,v in pairs(data.inlay.bags) do
 		bags[k] = v
 	end
-	-- local allinlayed = self:getAllInlayed()
 	for k,v in pairs(bags) do
 		self:getBestInlay(v.inlayid)
 	end
@@ -127,13 +126,13 @@ end
 
 function InlayModel:getBestInlay(inlayid)
 	local allinlayed = self:getAllInlayed()
-	local bestInlay = {bullet=0,clip=0,speed=0,aim=0,blood=0,helper=0}
+	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
 	local typename = self:getInlayType(inlayid)
-	if inlayid > bestInlay[typename] then
+	if inlayid < bestInlay[typename] then
 		bestInlay[typename] = inlayid
 	end
 	for k,v in pairs(allinlayed) do
-		if v.typename == typename and bestInlay[typename] < v.index then
+		if v.typename == typename and bestInlay[typename] > v.index then
 			bestInlay[typename] = v.index
 		end
 	end

@@ -13,17 +13,18 @@ local HomeBarLayer = class("HomeBarLayer", function()
 end)
 
 function HomeBarLayer:ctor()
-    self:loadAllImg()
+    self.usermodel = app:getInstance(UserModel)
+    cc.EventProxy.new(self.usermodel , self)
+        :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
+        :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
+    self:addPlistRes("allImg0")
 
-    self:addEventProtocolListener()
     self:loadCCS()
     self:initHomeLayer()
+    self:refreshMoney()
     self:initCommonLayer()
 end
 
-function HomeBarLayer:addEventProtocolListener()
-    app:getInstance(UserModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
-end
 
 function HomeBarLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/biaotou")
@@ -32,6 +33,13 @@ function HomeBarLayer:loadCCS()
     self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "biaotou")
     self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonlayer")
 end
+
+function HomeBarLayer:refreshMoney()
+    local btnMoney = cc.uiloader:seekNodeByName(self.homeRootNode, "money")
+    btnMoney:setString( self.usermodel:getMoney())
+    local btnDiamond = cc.uiloader:seekNodeByName(self.homeRootNode, "diamond")
+    btnDiamond:setString( self.usermodel:getDiamond())
+end   
 
 function HomeBarLayer:initHomeLayer()
     local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
@@ -125,16 +133,19 @@ function HomeBarLayer:initCommonLayer()
     self.commonRootNode:addChild(levelMapRootNode)
 end
 
-function HomeBarLayer:loadAllImg()
-    self.imgRootNode = cc.uiloader:load("AllImg/allImg.json")
-    -- print(".......HomeBarLayer:loadAllImg()")
-end
-
 function HomeBarLayer:getImgByName(fileName)
     -- dump(self.imgRootNode, ".........imgRootNode")
     -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
     return file
+end
+
+function HomeBarLayer:addPlistRes(srcname)
+
+    local plist = string.format("%s.plist", srcname)
+    local name = string.format("%s.png", srcname)
+     
+    display.addSpriteFrames(plist, name)     
 end
 
 function HomeBarLayer:homeBarAction()

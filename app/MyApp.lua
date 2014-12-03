@@ -129,7 +129,9 @@ function MyApp:createGameStateFile()
         currentlevel = {
                             group = 1,
                             level = 1,
-                        } 
+                        },
+               money = 12000000,
+             diamond = 1000000,
            }
     GameState.save(data)
     dump(GameState.load(), "GameState.load()")
