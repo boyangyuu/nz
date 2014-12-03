@@ -26,8 +26,7 @@ Actor.RELIVE_EVENT        = "RELIVE_EVENT"
 Actor.HP_DECREASE_EVENT   = "HP_DECREASE_EVENT"
 Actor.HP_INCREASE_EVENT   = "HP_INCREASE_EVENT"
 Actor.ATTACK_EVENT        = "ATTACK_EVENT"
-Actor.FIRE_THROW_EVENT    = "FIRE_THROW_EVENT"
-Actor.STOP_EVENT          = "STOP_EVENT"  
+Actor.PAUSE_SWITCH_EVENT  = "PAUSE_SWITCH_EVENT"  
 
 
 -- 定义属性
@@ -60,7 +59,7 @@ function Actor:ctor(properties, events, callbacks)
         -- 从冰冻状态恢复
         {name = "thaw",   form = "frozen",  to = "idle"},
         -- 角色在正常状态和冰冻状态下都可能被杀死
-        {name = "kill",   from = {"idle", "frozen"}, to = "dead"},
+        {name = "kill",   from = {"idle", "frozen, firing"}, to = "dead"},
         -- 复活
         {name = "relive", from = "dead",    to = "idle"},
     }
@@ -194,8 +193,8 @@ function Actor:increaseHp(hp)
 end
 
 function Actor:decreaseHp(hp)
-    -- assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
-    -- assert(hp > 0, "Actor:increaseHp() - invalid hp")
+    assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
+    assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ - hp
     if newhp <= 0 then
@@ -222,7 +221,7 @@ end
 
 -- 命中目标
 function Actor:hit(enemy)
-    assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
+    assert(not enemy:isDead(), string.format("actor %s:%s is dead, can't change Hp", enemy:getId(), enemy:getNickname()))
 
     -- 简化算法：伤害 = 自己的攻击力 - 目标防御
     local damage = 0

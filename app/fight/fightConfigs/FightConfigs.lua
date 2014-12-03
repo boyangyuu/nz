@@ -9,9 +9,11 @@ local FightConfigs = class("FightConfigs", cc.mvc.ModelBase)
 
 local p = "app.fight.fightConfigs"
 
+--战斗常量
+FightConfigs.kJuRange = 3.0
+
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)
-
 end
 
 --返回当前战斗下 所有waves
@@ -23,7 +25,8 @@ function FightConfigs:getWaveConfig()
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
 	local waveFight = require(p .. str_src)
-	-- dump(waveFight, "waveFight")
+	waveFight = require(p..".waveExample") -- todotest
+	dump(waveFight, "waveFight")
 	return waveFight
 end
 

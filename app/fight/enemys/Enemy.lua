@@ -42,4 +42,8 @@ function Enemy:getDemageScale(rangeStr)
     return self.config[rangeStr]
 end
 
+function Enemy:getConfig()
+    return self.config
+end
+
 return Enemy

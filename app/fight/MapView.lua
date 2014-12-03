@@ -16,13 +16,12 @@ local Hero = import(".Hero")
 local Actor = import(".Actor")
 local EnemyFactroy = import(".EnemyFactroy")
 
---常量
-local groupId = 1
-local levelId = 5
-
 local MapView = class("MapView", function()
     return display.newNode()
 end)
+
+_isJu = false
+_isZooming = false
 
 function MapView:ctor()
 	--instance
@@ -33,6 +32,7 @@ function MapView:ctor()
 	self.killEnemyCount = 0
 	self.isPause = false
 	self.fightConfigs = app:getInstance(FightConfigs)
+	
 	--ccs
 	self:loadCCS()
 
@@ -43,34 +43,13 @@ function MapView:ctor()
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(Actor.FIRE_EVENT, handler(self, self.onHeroFire))
-        :addEventListener("ENEMY_ADD", handler(self, self.callfuncAddEnemys))
-        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.onHeroThrowFire))
-        :addEventListener(Actor.STOP_EVENT, handler(self, self.setAllEntityActive))
-
-end
-
-
-function MapView:setAllEntityActive( event )
-	self.hero:dispatchEvent({name = "stop"})
-	-- local actionManager = cc.Director:getInstance():getActionManager()
-	-- self.isPause = not self.isPause
-	-- for i,enemy in ipairs(self.enemys) do
-	-- 	if enemy and not enemy:getDeadDone() then
-	-- 		if true == self.isPause then
-	-- 			enemy.armature:getAnimation():pause()
-	-- 			enemy:pause()
-	-- 			actionManager:pauseTarget(enemy)
-	-- 		end
-	-- 		if false == self.isPause then
-	-- 			-- print("enemy resume")
-	-- 			actionManager:resumeTarget(enemy)
-	-- 			enemy.armature:getAnimation():resume()
-	-- 			enemy:resume()
-
-	-- 		end
-	-- 	end
-	-- end
+        :addEventListener(Hero.GUN_FIRE_EVENT, handler(self, self.onHeroFire))
+        :addEventListener(Hero.ENEMY_ADD_EVENT, handler(self, self.callfuncAddEnemys))
+        :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
+        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
+        :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
+        :addEventListener(Hero.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
+        :addEventListener(Hero.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
 end
 
 function MapView:loadCCS()
@@ -78,12 +57,12 @@ function MapView:loadCCS()
 	local groupId = self.hero:getGroupId()
 	local levelId = self.hero:getLevelId()
 
-	local mapSrcName = "map_"..groupId.."_"..levelId..".ExportJson"   -- todo 外界
+	local mapSrcName = "map_"..groupId.."_"..levelId..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
     local node = cc.uiloader:load(mapSrcName)
 	self.map = node
-	addChildCenter(self.map, self)	
+	addChildCenter(self.map, self)
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self, "bg")
@@ -142,9 +121,12 @@ function MapView:updateEnemys(event)
 			assert(group["pos"], "group pos"..i)
 			local pos = group["pos"][i] or 0
 
+			--zorder
+			local zorder = group.num - i
+
 			--add
 			local function addEnemyFunc()
-				self:addEnemy(group.place, group.property, pos)
+				self:addEnemy(group.property, pos, zorder)
 			end
 
 			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
@@ -156,9 +138,10 @@ end
 
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
+		local zorder = #event.enemys - i
 		local function addEnemyFunc()
-			self:addEnemy(enemyData.placeName, 
-				enemyData.property, enemyData.pos.x) --todo
+			self:addEnemy(enemyData.property, 
+			enemyData.pos.x, zorder) --todo
 		end		
 		
 		scheduler.performWithDelayGlobal(addEnemyFunc, 
@@ -166,47 +149,103 @@ function MapView:callfuncAddEnemys(event)
 	end
 end
 
-function MapView:addEnemy(placeName, property, pos)
-	assert(placeName and property, "invalid param")
+local kMissileZorder = 1000
+function MapView:callfuncAddMissile(event)
+	print("MapView:addMissile(event)")
+	local property = event.property
+	dump(property, "property")
+	local enemyView = EnemyFactroy.createEnemy(property)
+	self.enemys[#self.enemys + 1] = enemyView
+	kMissileZorder = kMissileZorder - 1
+	self:addChild(enemyView, kMissileZorder)
+end
 
+function MapView:addEnemy(property, pos, zorder)
+	local placeName = property.placeName
+	assert(placeName , "invalid param placeName:"..placeName )
+	assert(property , "invalid param property:" )
+	
 	--place
 	local placeNode = self.places[placeName]
-	assert(placeNode, "invalid param")		
+	assert(placeNode, "no placeNode! invalid param:"..placeName)		
 	local boundPlace = placeNode:getBoundingBox()
 	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
 	boundPlace.x = pWorld.x
 	boundPlace.y = boundPlace.y	
 	property.boundPlace = boundPlace
 
-	--enemy 改为工厂
-	local enemyView = EnemyFactroy.createEnemy(property)
-
-	self.enemys[#self.enemys + 1] = enemyView
-
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	enemyView:setScaleX(scale:getScaleX())
-	enemyView:setScaleY(scale:getScaleY())
+	property.scale = scale:getScaleX()
+
+	--enemy 改为工厂
+	local enemyView = EnemyFactroy.createEnemy(property)
+	self.enemys[#self.enemys + 1] = enemyView
+
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
 	math.newrandomseed()
 	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	
-	--place
-	placeNode:addChild(enemyView)
+	--add
+	placeNode:addChild(enemyView, zorder)
 end
 
 function MapView:getSize()
 	local bg = self.bg
 	local size = cc.size(bg:getBoundingBox().width ,
 		bg:getBoundingBox().height)
-	return size
+	return size 
+end
+
+function MapView:openZoom(event)
+	if _isZooming then return end
+
+	--event data
+	local destWorldPos = event.destWorldPos
+	local scale = event.scale
+	local time = event.time
+	self.hero:setMapZoom(scale)
+
+	--todo 禁止触摸 todoybyF
+	_isZooming = true
+	local function zoomEnd()
+		-- 回复触摸Ftodoyby
+		_isZooming = false
+	end
+	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))
+	local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
+	local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	local action = cc.MoveBy:create(time, cc.p(offsetX, offsetY))
+	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
+	self:runAction(cc.ScaleBy:create(time, scale))	
+end
+
+function MapView:resumeZoom(event)
+	if _isZooming then return end
+	_isZooming = true
+	self.hero:setMapZoom(1.0)
+
+	local time = event.time
+	local function zoomEnd()
+		_isZooming = false
+	end
+	local w, h = display.width, display.height
+	local action = cc.MoveTo:create(time , cc.p(w * 0.5, h * 0.5))	
+	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
+	self:runAction(cc.ScaleTo:create(time , 1))
 end
 
 --fight
 function MapView:tick(dt)
-	--检查enemy的状态
+	local pos = cc.p(self.bg:getPositionX(), self.bg:getPositionY())
+	local pWorld = self.focusView:convertToWorldSpace(cc.p(0,0))
+	local pWorld2 = self:convertToWorldSpace(cc.p(0,0))
+	-- print("tick")
+	-- dump(pWorld, "pWorld")
+	-- dump(pWorld2, "pWorld2")
+	-- 检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
 			self:removeEnemy(enemy, i)
@@ -225,7 +264,8 @@ function MapView:popGold(enemy)
 	local boundingbox = enemy:getCascadeBoundingBox()
 	local size = boundingbox.size
 	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
-	self.hero:dispatchEvent({name = Hero.SKILL_KILL_ENEMY_EVENT, enemyPos = pos, goldCount = self.killEnemyCount * 50})
+	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
+		enemyPos = pos, goldCount = self.killEnemyCount * 50})
 end
 
 --[[
@@ -235,7 +275,6 @@ end
 			demageScale = 2.0,
 			enemy = xx,
 		},
-
 	}
 ]]
 function MapView:getTargetDatas()
@@ -248,22 +287,45 @@ function MapView:getTargetDatas()
 	return targetDatas 
 end
 
+--返回rect里包含enemy的点位置的enemys
+function MapView:getEnemysInRect(rect)
+	dump(rect, "rect")
+	local enemys = {}
+	for i,enemy in ipairs(self.enemys) do
+		if enemy then
+			local armature = enemy:getEnemyArmature()
+			local box = armature:getBoundingBox()
+			local scale = enemy:getScale()
+			local pos = armature:convertToWorldSpace(cc.p(0,0))
+			pos = cc.p(pos.x, 
+				pos.y + box.height/2 * scale)
+			-- dump(pos, "pos")
+			if cc.rectContainsPoint(rect, pos) then
+				enemys[#enemys + 1] = enemy
+			end
+		end
+	end	
+	return enemys
+end
+
 --events
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
 	local datas = self:getTargetDatas()
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
-		data.enemy:onHitted(event.demage * demageScale)
+		data.enemy:onHitted(data)
+
+		--todo 穿透逻辑
 	end
 end
 
-function MapView:onHeroThrowFire(event)
+function MapView:enemysHittedInRange(event)
 	-- target
-	for i,enemy in ipairs(self.enemys) do
-		if enemy and enemy:getCascadeBoundingBox():containsPoint(event.destPos) then
-			enemy:onHitted(event.damage)
-		end
+	assert(event.destRect, "event destRect is nil")
+	local enemys = self:getEnemysInRect(event.destRect)
+	for i,enemy in ipairs(enemys) do
+		enemy:onHitted(event.targetData)
 	end
 end
 

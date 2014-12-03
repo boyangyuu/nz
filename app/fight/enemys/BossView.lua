@@ -9,11 +9,11 @@
 --import
 
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local AbstractEnemyView = import(".AbstractEnemyView")
+local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
 local FightConfigs = import("..fightConfigs.FightConfigs")
-local BossView = class("BossView", AbstractEnemyView)
+local BossView = class("BossView", Attackable)
 
 function BossView:ctor(property)
 	BossView.super.ctor(self, property) 
@@ -47,11 +47,16 @@ function BossView:initBlood()
     self.blood = cc.uiloader:seekNodeByName(node, "bossBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height/2 + 150)
+    self.blood:setPosition(0, bound.height * 0.85)
     self.armature:addChild(self.blood, 100)
 end
 
 function BossView:setBlood(scale)
+	if scale == 0 then 
+		self.blood:setVisible(false)
+		return
+	end
+
     local test = 1 / 3
     local bloodHp = nil
     if scale > test * 2 then
@@ -108,6 +113,7 @@ function BossView:playKill(event)
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	self:clearWeak()
+	self:testStop({isPause = true})
 
 	--play dead
 	self.armature:getAnimation():play("dead" ,-1 , 1)
@@ -255,18 +261,18 @@ function BossView:playDaoDan1()
     local enemys = {}
 	for i=1,7 do
 		local xPos = 30 + i * 120
-		local data = {
-			placeName = "place3",
+		local data = {	
 			pos = cc.p(xPos, 10),
 			delay = 0.4 * i,
 			property = {
+					placeName = "place3", --todoyby
 					type = "missile",
 					id = 1,
 					},
 			}
 		enemys[#enemys + 1] = data
 	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
+    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
 end
 
 function BossView:playDaoDan()
@@ -287,7 +293,7 @@ function BossView:playDaoDan()
 			}
 		enemys[#enemys + 1] = data
 	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = enemys})
+    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
 end
 
 function BossView:clearWeak()
@@ -393,6 +399,8 @@ end
 
 local isRed = false
 function BossView:onHitted(demage)
+
+	--血量
 	if self.enemy:canHitted() then
 		self.enemy:decreaseHp(demage)
 	end
@@ -422,8 +430,10 @@ function BossView:onHitted(demage)
 	-- print("变红")
 	isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
-	scheduler.performWithDelayGlobal(callfunc, 20/60)
-	scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
+	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
+	self:addScheduler(sch1)
+	self:addScheduler(sch2)
 end
 
 function BossView:initBody()
@@ -457,15 +467,6 @@ function BossView:initBody()
 
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
 	drawBoundingBox(self.armature, bodyNode, "yellow")  
-end
-
-function BossView:getEnemyArmature()
-	if self.armature then return self.armature end 
-	--armature
-    local src = "Fight/enemys/boss01/boss01.ExportJson"
-    local armature = getArmature("boss01", src) 
-	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	return armature
 end
 
 function BossView:getRange(rectName)

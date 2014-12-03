@@ -8,10 +8,10 @@
 
 
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local AbstractEnemyView = import(".AbstractEnemyView")
+local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
-local SanEnemyView = class("SanEnemyView", AbstractEnemyView)  
+local SanEnemyView = class("SanEnemyView", Attackable)  
 
 
 function SanEnemyView:ctor(property)
@@ -19,7 +19,7 @@ function SanEnemyView:ctor(property)
 	SanEnemyView.super.ctor(self, property) 
     self.isFalling = true
     self.property = property
-	dump(property, "property")
+	-- dump(property, "property")
     
     --events
     cc.EventProxy.new(self.enemy, self)
@@ -32,7 +32,6 @@ function SanEnemyView:ctor(property)
     --test
     self:test()
 
-    self.enemy:setHp(1.0)
 end
 
 
@@ -61,7 +60,7 @@ function SanEnemyView:playFall()
     self.armature:runAction(cc.RepeatForever:create(seq))
 
     --play
-    self.armature:getAnimation():play("fall" , -1, 1) 
+    self.armature:getAnimation():play("jiangluo" , -1, 1) 
 end
 
 function SanEnemyView:stopFall()
@@ -71,57 +70,69 @@ function SanEnemyView:stopFall()
     self:setDeadDone()  
 
     -- 召唤
+    dump(self.property, "self.property")
     local data = {
-        placeName = self.property.placeName,
         pos = cc.p(self:getPositionX(), self:getPlaceBound().y),
         delay = 0,
         property = {
-                id = self.property.enemyId,
+                id = self.property.id,
+                placeName = self.property.placeName,
                 },
         }
 
-    self.hero:dispatchEvent({name = "ENEMY_ADD", enemys = {data}})    
+    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = {data}})    
 end
 
 
 function SanEnemyView:test()
 	--body
+    local weak1 = self.armature:getBone("weak1"):getDisplayRenderNode()
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
     local enemyNode = self.armature:getBone("enemy"):getDisplayRenderNode()
+    drawBoundingBox(self.armature, weak1, "yellow") 
 	drawBoundingBox(self.armature, bodyNode, "yellow") 
     drawBoundingBox(self.armature, enemyNode, "red")
 end
 
---AbstractEnemyView interface
+--Attackable interface
 function SanEnemyView:playHitted(event)
     -- print("SanEnemyView:playHitted")
 end
 
 function SanEnemyView:playKill(event)
-    -- print("SanEnemyView:playKill") 
+    -- print("SanEnemyView:playKill")
     self:setDeadDone()
 
     --屏幕动画
 end
 
-function SanEnemyView:onHitted(demage)
-    if self.enemy:canHitted() then
-        self.enemy:decreaseHp(demage)
-    end    
+function SanEnemyView:onHitted(targetData)
+    local demage     = targetData.demage
+    local scale      = targetData.demageScale
+    local demageType = targetData.demageType
+    if self.enemy:canHitted() and self:canHitted() then
+        -- print("self.enemy:decreaseHp(demage * scale)")
+        self.enemy:decreaseHp(demage * scale)
+    end
+
+    --爆头
+    if self.enemy:getHp() == 0 then 
+        if demageType == "head" then 
+            print("爆头")
+            self.hero:dispatchEvent({
+                name = self.hero.ENEMY_KILL_HEAD_EVENT})
+        end
+    end   
+end
+
+function SanEnemyView:canHitted()
+    return true
 end
 
 function SanEnemyView:animationEvent(armatureBack,movementType,movementID)
 
 end
 
-function SanEnemyView:getEnemyArmature()
-    if self.armature then return self.armature end 
-    --armature
-    local src = "Fight/enemys/sanbing01/sanbing01.ExportJson"
-    local armature = getArmature("sanbing01", src) 
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    return armature
-end
 
 function SanEnemyView:getModel(property)
     return Enemy.new(property)

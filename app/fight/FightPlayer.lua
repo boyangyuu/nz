@@ -26,11 +26,10 @@ function FightPlayer:ctor()
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
     self.mapView = MapView.new()
-    self.gunView = GunView.new({id = 1})
+    self.gunView = GunView.new({id = "1"})
     self.heroView = HeroView.new()
     self.gunBtnPressed = false
     self.touchs = {}
-    self:setTag(521)
     self.btnsIsShow = true
     self.resumeDefenceTinkHandler = nil
     self.isPause = false
@@ -40,9 +39,10 @@ function FightPlayer:ctor()
 
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
-    cc.EventProxy.new(self.hero, self):addEventListener(Actor.STOP_EVENT, handler(self, self.setPause))
-    cc.EventProxy.new(self.hero, self):addEventListener("changeGold", handler(self, self.changeGoldCount))
+    cc.EventProxy.new(self.hero, self)
+        :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
+        :addEventListener(Actor.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
+        :addEventListener("changeGold", handler(self, self.changeGoldCount))
 
     self:scheduleUpdate()   
 end
@@ -69,12 +69,18 @@ function FightPlayer:changeGoldCount(event)
 end
 
 function FightPlayer:fitArmoured()
-    self:setBtnIsVisible()
+    self:setControlsVisible()
     self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_START_EVENT})
 end
 
-function FightPlayer:setBtnIsVisible()
+function FightPlayer:setControlsVisible()
+    print("FightPlayer:setControlsVisible()")
     self.btnsIsShow = not self.btnsIsShow
+    
+    --gun
+    self.layerGun:setVisible(self.btnsIsShow)
+    
+    --btn
     self.btnDefence:setVisible(self.btnsIsShow)
     self.btnArmoured:setVisible(self.btnsIsShow)
     self.btnChange:setVisible(self.btnsIsShow)
@@ -101,13 +107,15 @@ function FightPlayer:initUI()
     local layerHero = cc.uiloader:seekNodeByName(self, "layerHero")
     addChildCenter(self.heroView, layerHero)
     self.heroView:setPosition(0, 0)
-    
+
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
     addChildCenter(self.focusView, self.focusNode)
 
     --touch area
     self:initTouchArea()
+
+    self:addArmatureFile()
 end
 
 --启动盾牌恢复
@@ -220,17 +228,24 @@ function FightPlayer:initBtns()
     --btnArmoured
     self.btnArmoured = cc.uiloader:seekNodeByName(self, "btnRobot")
     self.btnArmoured:setTouchEnabled(true)
+    self.btnArmoured:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
     self.btnArmoured:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnGrenade
     self.btnGrenade = cc.uiloader:seekNodeByName(self, "btnLei")
     self.btnGrenade:setTouchEnabled(true)
     self.btnGrenade:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    
+    --btnJun
+    self.btnJun = cc.uiloader:seekNodeByName(self, "btnJun")
+    self.btnJun:setTouchEnabled(true)
+    self.btnJun:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    print("  self.btnJu ", self.btnJun)
 
     --labelGoldCount
     self.labelGoldCount = cc.uiloader:seekNodeByName(self, "labelGoldCount")
+   
 
-    self.btnArmoured:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
 end
 
 ---- touch and btn----
@@ -241,22 +256,24 @@ function FightPlayer:onMutiTouchBegin(event)
     -- dump(event, "event onMutiTouchBegin")
 
     local eventName = "begin"
-
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
         local isTouch = self:checkBtnFire(id, point, "begin")
         if isTouch then return true end
 
-        isTouch = self:checkBtnChange(id, point, eventName)
+        isTouch = self:checkBtnChange(point, eventName)
         if isTouch then return true end        
 
-        isTouch = self:checkBtnArmoured(id, point, eventName)
+        isTouch = self:checkBtnArmoured(point, eventName)
         if isTouch then return true end
 
-        isTouch = self:checkbtnDefence(id, point, eventName)
+        isTouch = self:checkbtnDefence(point, eventName)
         if isTouch then return true end 
 
-        isTouch = self:checkbtnGrenade(id, point, eventName)
+        isTouch = self:checkbtnGrenade(point, eventName)
+        if isTouch then return true end
+
+        isTouch = self:checkBtnJu(point, eventName)
         if isTouch then return true end
 
     end
@@ -274,48 +291,46 @@ function FightPlayer:onMutiTouchEnd(event)
     end
 end
 
-function FightPlayer:checkBtnArmoured( id, point, eventName )
-    assert(id and point, "invalid params")
+function FightPlayer:checkBtnArmoured(point, eventName )
+    assert( point, "invalid params")
     local rect = self.btnArmoured:getCascadeBoundingBox()
-    isTouch = cc.rectContainsPoint(rect, point)
+    local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        self.touchs["armoured"] = id
         self:fitArmoured()
     end
     return isTouch
-    -- self.hero:dispatchEvent({name = Actor.STOP_EVENT, isPause = true})
 end
 
-function FightPlayer:checkbtnDefence( id, point, eventName )
-    assert(id and point, "invalid params")
+function FightPlayer:checkbtnDefence(point, eventName )
     local rect = self.btnDefence:getCascadeBoundingBox()
-    isTouch = cc.rectContainsPoint(rect, point)
+    local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        -- print("-----------fit defence")
-        self.touchs["defence"] = id
+        print("-----------fit defence")
         self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_START_EVENT})
     end
     return isTouch
 end
 
-function FightPlayer:checkbtnGrenade(id, point, eventName)
-    assert(id and point, "invalid parames")
+function FightPlayer:checkbtnGrenade(point, eventName)
+    assert( point, "invalid parames")
     local rect = self.btnGrenade:getCascadeBoundingBox()
-    isTouch = cc.rectContainsPoint(rect, point)
+    local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        self.touchs["grenade"] = id
-        self.hero:dispatchEvent({name = Hero.FIRE_THROW_EVENT, throwPos = cc.p(self.focusNode:getPositionX(), self.focusNode:getPositionY())})
+        local w, h = self.focusNode:getBoundingBox().width, 
+                self.focusNode:getBoundingBox().height
+        local destPos = cc.p(self.focusNode:getPositionX() + w/2, 
+            self.focusNode:getPositionY() + h/2)
+        self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_START_EVENT,throwPos = destPos})
     end
 end
 
-function FightPlayer:checkBtnChange(id,point,eventName)
-    assert(id and point , "invalid params")
+function FightPlayer:checkBtnChange(point,eventName)
+    assert( point , "invalid params")
     local rect = self.btnChange:getCascadeBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
-        self.touchs["change"] = id 
         --换枪
-        self.gunView:playChange(math.random(1, 2))
+        self.hero:changeGun()
     end    
     return isTouch    
 end
@@ -329,7 +344,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     end
     assert(id and point , "invalid params")
     local isTouch
-    local rect = self.btnFire:getCascadeBoundingBox()      
+    local rect = self.btnFire:getBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         self.touchs["fire"] = id 
@@ -351,12 +366,21 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     return isTouch
 end
 
+function FightPlayer:checkBtnJu(point,eventName)
+    local rect = self.btnJun:getBoundingBox()  
+    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
+    if isTouch then 
+        --切换狙击镜
+        print("-----------switch ju")
+        self:setControlsVisible()
+        self.hero:dispatchEvent({name = Hero.GUN_SWITCH_JU_EVENT})
+    end
+    return isTouch
+end
+
 function FightPlayer:onTouchMoved(event)
 
     if self.isPause then return end
-
-    -- dump(event, "onTouchMoved")
-    -- dump(self.touchs, "self.touchs")
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
         local isBtnTouchPoint = false
@@ -371,7 +395,7 @@ function FightPlayer:onTouchMoved(event)
             self:moveFocus(offsetX, offsetY)
             
             --处理滑屏
-            self:moveBgLayer(offsetX, offsetY)    
+            self:moveBgLayer(offsetX, offsetY)
         end
     end
 end
@@ -386,7 +410,7 @@ function FightPlayer:tick(dt)
 end
 
 function FightPlayer:canGunShot()
-    self.gunBtnPressed = true
+    -- self.gunBtnPressed = true
     if  self.hero:canFire() and self.gunBtnPressed then 
         return true 
     end
@@ -403,13 +427,13 @@ function FightPlayer:fire()
     --gun
     if  self.gunView:canShot() then 
         self.gunView:fire()
-        self.focusView:playFire()
+        self.focusView:playFire() --todo 发命令
     end
 end
 
 function FightPlayer:onCancelledFire()
     self.gunView:stopFire()
-    self.focusView:stopFire()
+    self.focusView:stopFire() --todo 发命令
 end
 
 ----move----
@@ -450,7 +474,6 @@ function FightPlayer:justBgPos(node)
     local bgMap = self.mapView  
     local w, h = bgMap:getSize().width , 
         bgMap:getSize().height
-
     local xL = (w - display.width) / 2  
     local yL = (h - display.height) / 2 
     local x, y = node:getPosition()
@@ -472,21 +495,39 @@ function FightPlayer:justBgPos(node)
 end
 
 function FightPlayer:justFocusPos(node)
-    local offsetX, offsetY = node:getBoundingBox().width/2, 
-            node:getBoundingBox().height/2 
     local x, y = node:getPosition()
-    if x <= offsetX then
-    	x = offsetX
-    elseif x >= display.width - offsetX then 
-        x = display.width - offsetX
+
+    if x <= 0 then 
+        x = 0
+    end
+
+    if x >= display.width then 
+        x = display.width
     end
     
-    if y <= offsetY then 
-        y = offsetY 
-    elseif y >= display.height - offsetY then 
-        y = display.height - offsetY
+    if y <= 0 then 
+        y = 0
+    end
+    if y >= display.height then 
+        y = display.height
     end
     node:setPosition(x, y)
+end
+
+function FightPlayer:addArmatureFile()
+    --all enemys
+    local enemyImgs = {"anim_enemy_002", "jinzhanb",
+     "zibaob", "boss01", "dunbing", "sanbing01", "shoulei", "daodan"}
+
+    local function dataLoaded()
+        print(" dataLoaded()")
+    end    
+    local manager = ccs.ArmatureDataManager:getInstance()
+    for i,v in ipairs(enemyImgs) do
+        print(i,v)
+        local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
+        manager:addArmatureFileInfoAsync(src, dataLoaded)
+    end      
 end
 
 return FightPlayer

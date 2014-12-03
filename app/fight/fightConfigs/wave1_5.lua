@@ -5,20 +5,20 @@ local waves = {
 			{
 				time = 3,	
 				num = 5,
-				place = "place1",
 				pos = {10,110,210,310,410},
 				delay = {0,0.3,0.6,0.5,0.8},
-				property = { 
+				property = {
+					placeName = "place1" ,
 					id = "1",
 				},
 			},
 						{
 				time = 4,	
 				num = 3,
-				place = "place3",
 				pos = {100,200,300},
 				delay = {0,0,0},
-				property = { 
+				property = {
+					placeName = "place3" , 
 					startState = "rollleft",
 					id = 1,
 				},
@@ -26,80 +26,81 @@ local waves = {
 			{
 				time = 5,	
 				num = 3,
-				place = "place2",
+				place = "",
 				pos = {200,100,300},
 				delay = {0.3,0.3,0.3},
-				property = { 
+				property = {
+					placeName = "place2" , 
 					id = 1,
 				},
 			},		
 			{
 				time = 8,	
 				num = 1,
-				place = "place4",
 				pos = {25},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place4" ,  
 					id = 1,
 				},
 			},		
 			{
 				time = 10,	
 				num = 1,
-				place = "place5",
 				pos = {40},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place5" ,   
 					id = 1,
 				},
 			},		
 			{
 				time = 10,	
 				num = 1,
-				place = "place6",
 				pos = {30},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place6" ,    
 					id = 1,
 				},
 			},		
 			{
 				time = 10,	
 				num = 1,
-				place = "place7",
 				pos = {30},
 				delay = {0.3},
 				property = { 
+					placeName = "place7" ,  
 					id = 1,
 				},
 			},		
 			{
 				time = 13,	
 				num = 1,
-				place = "place8",
 				pos = {30},
 				delay = {0.3},
 				property = { 
 					id = 1,
+					placeName = "place8" ,  
 				},
 			},		
 			{
 				time = 13,	
 				num = 1,
-				place = "place9",
 				pos = {30},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place9" ,   
 					id = 1,
 				},
 			},		
 			{
 				time = 16,	
 				num = 1,
-				place = "place10",
 				pos = {10},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place10" ,
 					id = 1,
 				},
 			},		
@@ -111,10 +112,10 @@ local waves = {
 			{
 				time = 2,
 				num = 5,
-				place = "place1",
 				delay = {0.3, 0.6},
 				pos = {10, 200, 50, 100, 90},
 				property = { 
+					placeName = "place1" ,
 					startState = "rollright",
 					id = 1,
 				},
@@ -122,21 +123,21 @@ local waves = {
 			{
 				time = 3,
 				num = 5,
-				place = "place2",
 				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
 				pos = {10, 200, 50, 100, 90},	
 				property = { 
 					startState = "rollleft",
+					placeName = "place2" ,
 					id = 1,
 				},
 			},	
 			{
 				time = 2,
 				num = 5,
-				place = "place2",
 				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
 				pos = {10, 20, 50, 100, 60},					
 				property = { 
+					placeName = "place2" ,
 					id = 1,
 				},
 			},						
@@ -147,10 +148,10 @@ local waves = {
 			{
 				time = 10,
 				num = 5,
-				place = "place1",
 				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
 				pos = {10, 20, 50, 100, 60},
-				property = { 
+				property = {
+					placeName = "place1" , 
 					startState = "rollright",
 					id = 1,
 				},
@@ -164,10 +165,10 @@ waves = {
 			{
 				time = 3,	
 				num = 1,
-				place = "place3",
 				pos = {250},
 				delay = {0.3},
-				property = { 
+				property = {
+					placeName = "place3" ,  
 					type = "boss",
 					bossId = 1,
 					configName = "BossConfig_1",

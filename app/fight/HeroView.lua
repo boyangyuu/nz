@@ -28,18 +28,33 @@ function HeroView:ctor(properties)
 	self.killEnemyTimerHandler = nil
 
 	--注册英雄事件
-	cc.EventProxy.new(self.hero, self):addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.setShowArmoured))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.setShowDefence))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.resumeDefence))
-	cc.EventProxy.new(self.hero, self):addEventListener(Hero.SKILL_KILL_ENEMY_EVENT, handler(self, self.killEnemyCallBack))
-	cc.EventProxy.new(self.hero, self):addEventListener(Actor.FIRE_THROW_EVENT, handler(self, self.throwGrenade))
+	cc.EventProxy.new(self.hero, self)
+		:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
+		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.setShowArmoured))
+		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.setShowDefence))
+		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.resumeDefence))
+		:addEventListener(Hero.SKILL_GRENADE_START_EVENT, handler(self, self.throwGrenade))
+		
+		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.killEnemyCallBack))
+		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT, handler(self, self.effectPopupHead))
+		
+		:addEventListener(Hero.GUN_RELOAD_EVENT, handler(self, self.effectGunReload))
+		
+	--ui
+	self:initUI()
+end
 
+function HeroView:initUI()
 	self:initUiRootNode()
 	self:initHeroHpNode()
 	self:initArmouredNode()
 	self:initDefenceNode()
 	self:initKillTimerNode()
+end
+
+--获得UI.ExportJson数据
+function HeroView:initUiRootNode()
+	self.uiRootNode = cc.uiloader:load("res/Fight/fightLayer/ui/heroUI.ExportJson")
 end
 
 --初始化英雄血条
@@ -48,6 +63,45 @@ function HeroView:initHeroHpNode()
 	self.loadingBarHeroHp = cc.uiloader:seekNodeByName(self.uiRootNode, "loadingBarHeroHp")
 	self.loadingBarHeroHp:removeFromParent()
 	self:addChild(self.loadingBarHeroHp)
+end
+
+--获得装备机甲Ui节点
+function HeroView:initArmouredNode()
+	-- print("fit Armoured")
+	self.layerArmoured = cc.uiloader:seekNodeByName(self.uiRootNode, "armoured")
+	self.layerArmoured:removeFromParent()
+	self:addChild(self.layerArmoured)
+	self.layerArmoured:setVisible(false)
+end
+
+--获得盾牌Ui节点
+function HeroView:initDefenceNode()
+	self.isLaunchDefenceResume = false
+	self.defence = cc.uiloader:seekNodeByName(self.uiRootNode, "defence")
+	self.defence:removeFromParent()
+	self:addChild(self.defence)
+	self.defence:setVisible(false)
+	self.defenceHp = 100
+end
+
+--初始化连杀倒计时节点
+function HeroView:initKillTimerNode()
+    self.killEnemyTimerBg = cc.uiloader:seekNodeByName(self.uiRootNode, "killEnemyTimerBg")
+    self.killEnemyTimerBg:removeFromParent()
+    self:addChild(self.killEnemyTimerBg)
+    self.killEnemyTimerBg:setVisible(false)
+
+    self.killEnemyCountLabel = cc.uiloader:seekNodeByName(self.uiRootNode, "labelKillEnemyCount")
+    self.killEnemyCountLabel:removeFromParent()
+    self:addChild(self.killEnemyCountLabel)
+    self.killEnemyCountLabel:setVisible(false)
+
+    self.killEnemyTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
+    self:addChild(self.killEnemyTimer)
+    self.killEnemyTimer:setPosition(76, 420)
+    self.killEnemyTimer:setReverseDirection(true)
+    self.killEnemyTimer:setPercentage(100)
+    self.killEnemyTimer:setVisible(false)
 end
 
 --player血条血量改变
@@ -73,37 +127,18 @@ function HeroView:heroHpChange()
 	tempHandler = scheduler.scheduleGlobal(checkHeroHp, 0.05)
 end
 
---初始化连杀倒计时节点
-function HeroView:initKillTimerNode()
-    self.killEnemyTimerBg = cc.uiloader:seekNodeByName(self.uiRootNode, "killEnemyTimerBg")
-    self.killEnemyTimerBg:removeFromParent()
-    self:addChild(self.killEnemyTimerBg)
-    self.killEnemyTimerBg:setVisible(false)
 
-    self.killEnemyCountLabel = cc.uiloader:seekNodeByName(self.uiRootNode, "labelKillEnemyCount")
-    self.killEnemyCountLabel:removeFromParent()
-    self:addChild(self.killEnemyCountLabel)
-    self.killEnemyCountLabel:setVisible(false)
-
-    self.killEnemyTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
-    self:addChild(self.killEnemyTimer)
-    self.killEnemyTimer:setPosition(76, 420)
-    self.killEnemyTimer:setReverseDirection(true)
-    self.killEnemyTimer:setPercentage(100)
-    self.killEnemyTimer:setVisible(false)
-end
-
---杀死敌人后跳出金币
+--杀死敌人后跳出3金币
 function HeroView:killEnmeyGold(enemyPos)
-
 	for i = 1, 3 do
 		local gold = getArmature("gold1", "res/Fight/heroAnim/gold/gold1.ExportJson")
 		gold:setPosition(enemyPos.x, enemyPos.y)
 		gold:getAnimation():play("gold", -1, 1)
 		gold:runAction(cc.Sequence:create(
+			--todoxx 待优化
 			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
 			cc.DelayTime:create(0.5 - i * 0.1),
-			cc.MoveTo:create(0.5, cc.p(884, 591)),
+			cc.MoveTo:create(0.5, cc.p(884, 591)), 
 			cc.CallFunc:create(function ()
 				self.hero:dispatchEvent({name = "changeGold", goldCount = self.killEnemyCount * 50})
 				gold:removeFromParent()
@@ -115,20 +150,16 @@ end
 
 --触发黄金武器
 function HeroView:activeGoldWeapon()
-	self.hero:dispatchEvent({name = Actor.STOP_EVENT})
+	print("HeroView:activeGoldWeapon() pause")
+	self.hero:dispatchEvent({name = Actor.PAUSE_SWITCH_EVENT, isPause = true})
 	local color = display.newColorLayer(cc.c4b(0, 0, 0, 180))
-	cc.Director:getInstance():getRunningScene():addChild(color)
-	-- self:addChild(testLayerColer)
-	-- display.newColorLayer(cc.c4b(0xfa,0xf8,0xef, 255))
-	local function test(  )
-		-- local actionManager = cc.ActionManagerEx:getInstance()
-		-- local uitest = actionManager:playActionByName("res/Fight/fightLayer/qdchuxian/qiangdi.ExportJson", "Animation0")
-		-- uitest:play()
-		self.hero:dispatchEvent({name = Actor.STOP_EVENT})
+	cc.Director:getInstance():getRunningScene():addChild(color)  --todo 待优化!
+	local function resume()
+		print("HeroView:activeGoldWeapon() resume")
+		self.hero:dispatchEvent({name = Actor.PAUSE_SWITCH_EVENT, isPause = false})
 		color:removeFromParent()
-
 	end
-	scheduler.performWithDelayGlobal(test, 5)
+	scheduler.performWithDelayGlobal(resume, 5)
 end
 
 --杀掉敌人后的回调
@@ -190,6 +221,8 @@ end
 --显示/隐藏盾甲
 function HeroView:setShowDefence()
 	if false == self.isResumeDefence then
+
+		--tood 待优化 可以放在一个node里就解决了
 		local upFrame = cc.uiloader:seekNodeByName(self.defence, "upFrame")
 		local downFrame = cc.uiloader:seekNodeByName(self.defence, "downFrame")
 		local upFrameHeight = upFrame:getCascadeBoundingBox().size.height
@@ -214,31 +247,6 @@ function HeroView:setShowDefence()
 			self.defence:runAction(cc.MoveBy:create(0.5, cc.p(0, defenceHeight * 1.56)))
 		end
 	end
-end
-
-
---获得UI.ExportJson数据
-function HeroView:initUiRootNode()
-	self.uiRootNode = cc.uiloader:load("res/Fight/fightLayer/ui/heroUI.ExportJson")
-end
-
---获得装备机甲Ui节点
-function HeroView:initArmouredNode()
-	-- print("fit Armoured")
-	self.layerArmoured = cc.uiloader:seekNodeByName(self.uiRootNode, "armoured")
-	self.layerArmoured:removeFromParent()
-	self:addChild(self.layerArmoured)
-	self.layerArmoured:setVisible(false)
-end
-
---获得盾牌Ui节点
-function HeroView:initDefenceNode()
-	self.isLaunchDefenceResume = false
-	self.defence = cc.uiloader:seekNodeByName(self.uiRootNode, "defence")
-	self.defence:removeFromParent()
-	self:addChild(self.defence)
-	self.defence:setVisible(false)
-	self.defenceHp = 100
 end
 
 --盾牌受伤效果
@@ -332,7 +340,13 @@ function HeroView:throwGrenade(event)
 			cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 		 	cc.CallFunc:create(
 		 		function ()
-                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, damage = 600, destPos = event.throwPos})
+	 			    local kGrenadeW = 100.0
+		 			local destPos = event.throwPos
+					local destRect = cc.rect(destPos.x - kGrenadeW/2, 
+										destPos.y - kGrenadeW/2, 
+										kGrenadeW,kGrenadeW)
+                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
+                    	damage = 600, destPos = destPos,destRect = destRect })
 					tGrenade:removeFromParent()
 				end
 			)
@@ -367,7 +381,7 @@ function HeroView:screenHurtedEffect()
 	tAniamtion:play("avatarhit" , -1, 1)
     tBeHurtScreenArmature:setPosition(display.width / 2, display.height / 2)
     tAniamtion:setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movementI ) 
+    	function ( armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
@@ -377,5 +391,40 @@ function HeroView:screenHurtedEffect()
     self:addChild(tBeHurtScreenArmature)
 end
 
+function HeroView:effectPopupHead()
+	local src = "res/Fight/uiAnim/baotou/baotou.ExportJson"
+	local baotou = getArmature("baotou", src)
+	baotou:getAnimation():play("baotou" , -1, 1)
+    baotou:setPosition(display.width / 2, 150)
+    baotou:getAnimation():setMovementEventCallFunc(
+    	function ( armatureBack,movementType,movement) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+	    		armatureBack:stopAllActions()
+	    		armatureBack:removeFromParent() 
+	    	end 
+    	end
+    )
+    self:addChild(baotou, 100)
+end
+
+
+function HeroView:effectGunReload(event)
+	print("HeroView:effectGunReload()")
+	local src = "res/Fight/uiAnim/huanzidan/huanzidan.ExportJson"
+	local armature = getArmature("huanzidan", src)
+	armature:getAnimation():play("zidan" , -1, 1)
+    armature:setPosition(display.width / 2, display.height / 2)
+    armature:getAnimation():setSpeedScale(event.speedScale)
+    armature:getAnimation():setMovementEventCallFunc(
+    	function ( armatureBack,movementType,movement) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+	    		print("HeroView:effectGunReload done()")
+	    		armatureBack:stopAllActions()
+	    		armatureBack:removeFromParent()
+	    	end 
+    	end
+    )
+    self:addChild(armature, 1000)	
+end
 
 return HeroView

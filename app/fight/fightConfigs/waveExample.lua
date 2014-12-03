@@ -1,4 +1,55 @@
 
+local waveClass = class("waveExample", cc.mvc.ModelBase)
+
+
+-- 测试 近战兵
+local waves = {
+	{
+		enemys = {  
+
+			{
+				time = 2,
+				num = 1,
+				
+				pos = {100, 200, 0, 170, 340, 100},
+				delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
+				property = { 
+					type = "dao",
+					id = 1,
+					placeName = "place2",
+				},
+			},		
+		},
+	},
+}
+
+function waveClass:getWaves(waveIndex)
+	return waves[waveIndex] 
+end
+
+return waveClass
+
+
+-- -- 测试 近战
+-- local waves = {
+-- 	{
+-- 		enemys = {  
+
+-- 			{
+-- 				time = 2,	
+-- 				num = 6,
+-- 				place = "place3",
+-- 				pos = {100, 200, 0, 170, 190, 100},
+-- 				delay = {0.1, 0.4, 0.7, 0.9, 1.2, 1.5},
+-- 				property = { 
+-- 					type = "jin",
+-- 					id = 3,
+-- 				},
+-- 			},		
+-- 		},
+-- 	},
+-- }
+
 --伞兵例子
 -- waves = {
 -- 	{
