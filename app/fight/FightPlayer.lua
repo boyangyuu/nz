@@ -115,17 +115,7 @@ function FightPlayer:initUI()
     --touch area
     self:initTouchArea()
 
-    --all enemys
-    local function dataLoaded()
-        print(" dataLoaded()")
-    end
-
-    local src1 = "res/Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfoAsync(src1, dataLoaded)
-
-    local src = "res/Fight/enemys/jinzhanb/jinzhanb.ExportJson"
-    manager:addArmatureFileInfoAsync(src, dataLoaded)
+    self:addArmatureFile()
 end
 
 --启动盾牌恢复
@@ -522,6 +512,22 @@ function FightPlayer:justFocusPos(node)
         y = display.height
     end
     node:setPosition(x, y)
+end
+
+function FightPlayer:addArmatureFile()
+    --all enemys
+    local enemyImgs = {"anim_enemy_002", "jinzhanb",
+     "zibaob", "boss01", "dunbing", "sanbing01", "shoulei", "daodan"}
+
+    local function dataLoaded()
+        print(" dataLoaded()")
+    end    
+    local manager = ccs.ArmatureDataManager:getInstance()
+    for i,v in ipairs(enemyImgs) do
+        print(i,v)
+        local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
+        manager:addArmatureFileInfoAsync(src, dataLoaded)
+    end      
 end
 
 return FightPlayer

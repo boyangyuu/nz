@@ -15,9 +15,12 @@ local Actor = import("..Actor")
 local MissileEnemyView = class("MissileEnemyView", Attackable)
 
 ---- event ----
-function MissileEnemyView:ctor(properties)  
+function MissileEnemyView:ctor(property)  
     --instance
-    MissileEnemyView.super.ctor(self, properties)   
+    MissileEnemyView.super.ctor(self, property)   
+    self.srcPos = property.srcPos
+    self.destPos = property.destPos
+    self.srcScale = property.srcScale
 
     --events
     cc.EventProxy.new(self.enemy, self)
@@ -36,16 +39,26 @@ end
 
 function MissileEnemyView:playFire()
     -- print("issileEnemyView:playStand")
-    self.armature:getAnimation():play("fire" , -1, 1) 
+
+    --pos
+    self:setPosition(self.srcPos)
+
+    --scale
+    self:setScale(self.srcScale)
     local time = 3.0
-    local scale = 1
-    self.armature:setScale(0.20) 
-    local scaleAction = cc.ScaleTo:create(time, scale)
+    local destScale = 1
+    local scaleAction = cc.ScaleTo:create(time, destScale)
+
+    --call end
     local function callMoveEnd()
         self:playBomb()
     end
+
+    --run
+    self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
-    self.armature:runAction(seq)
+    self:runAction(seq)
+    self:runAction(cc.MoveTo:create(time, self.destPos))
 end
 
 function MissileEnemyView:playBomb()
@@ -59,6 +72,8 @@ function MissileEnemyView:playBomb()
 
     --屏幕爆炸效果
     --dispatch effect_hurted_bomb
+
+    self:setDeadDone() --todo 写在callfucn里
 end
 
 
@@ -67,16 +82,21 @@ function MissileEnemyView:playHitted(event)
 end
 
 function MissileEnemyView:playKill(event)
+    print("MissileEnemyView:playKill(event)")
     self:setDeadDone() 
 
     --bomb动画
     -- self.armature:getAnimation():play("kill" , -1, 1)      
 end
 
-function MissileEnemyView:onHitted(demage)
+function MissileEnemyView:onHitted(targetData)
+    local demage     = targetData.demage
+    local scale      = targetData.demageScale
+    local demageType = targetData.demageType
     if self.enemy:canHitted() then
-        self.enemy:decreaseHp(demage)
-    end    
+        -- print("self.enemy:decreaseHp(demage * scale)")
+        self.enemy:decreaseHp(demage * scale)
+    end
 end
 
 function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
@@ -89,19 +109,8 @@ function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function MissileEnemyView:getEnemyArmature()
-    if self.armature then return self.armature end 
-    --armature
-    local src = "Fight/enemys/daodan/daodan.ExportJson"
-    local armature = getArmature("daodan", src) 
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    return armature
-end
-
-
 function MissileEnemyView:getModel(property)
     return Enemy.new(property)
 end
-
 
 return MissileEnemyView

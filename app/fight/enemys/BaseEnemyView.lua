@@ -61,6 +61,16 @@ function BaseEnemyView:setBlood(scale)
     self.bloodValueNode:setLayoutSize(oSize.width * scale, oSize.height)	
 end
 
+function BaseEnemyView:playAfterAlert(type,handler)
+	self:showAlert()
+	local alertAfterFunc = function ()
+		print("self:play(type, handler)")
+		self:play(type, handler)
+	end
+	self.alertAfter = scheduler.performWithDelayGlobal(alertAfterFunc, 2.0)
+	self:addScheduler(self.alertAfter)
+end
+
 function BaseEnemyView:showAlert()
 	--create
 	if self.isShowAlerting then return end
@@ -176,10 +186,5 @@ end
 function BaseEnemyView:animationEvent(armatureBack,movementType,movementID)
 	assert("required method, must implement me")	
 end
-
-function BaseEnemyView:getEnemyArmature()
-	assert("required method, must implement me")	
-end
-
 
 return BaseEnemyView

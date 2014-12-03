@@ -14,9 +14,9 @@ local waves = {
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
 				property = { 
-					type = "com",
+					type = "dao",
 					id = 1,
-					placeName = "place3",
+					placeName = "place2",
 				},
 			},		
 		},

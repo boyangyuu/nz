@@ -28,7 +28,7 @@ function Attackable:ctor(property)
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
 	self:addChild(self.armature)
-    self:setScale(property.scale)
+    self:setScale(property.scale or 1.0)
     
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
@@ -158,6 +158,7 @@ function Attackable:getBodyBox()
 end
 
 function Attackable:setPlaceBound(bound)
+	if bound == nil then return end
 	assert(bound, "bound is nil")
 	self.placeBound = bound 
 end
@@ -278,13 +279,50 @@ function Attackable:playHittedEffect()
 end
 
 function Attackable:test()
-    local weakNode2 = self.armature:getBone("weak2"):getDisplayRenderNode()
-    if weakNode2 then drawBoundingBox(self.armature, weakNode2, "red")  end
-    local weakNode1 = self.armature:getBone("weak1"):getDisplayRenderNode()
-    if weakNode1 then drawBoundingBox(self.armature, weakNode1, "red")  end
-    local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    if bodyNode then drawBoundingBox(self.armature, bodyNode, "yellow")  end
+    local weakNode2 = self.armature:getBone("weak2")
+    if weakNode2 then drawBoundingBox(self.armature, weakNode2:getDisplayRenderNode(), "red")  end
+    local weakNode1 = self.armature:getBone("weak1")
+    if weakNode1 then drawBoundingBox(self.armature, weakNode1:getDisplayRenderNode(), "red")  end
+    local bodyNode = self.armature:getBone("body1")
+    if bodyNode then drawBoundingBox(self.armature, bodyNode:getDisplayRenderNode(), "yellow")  end
     -- drawBoundingBox(self, self.armature, "white") 
+end
+
+function Attackable:getEnemyArmature()
+    if self.armature then return self.armature end 
+    --armature
+    local config = self.enemy:getConfig()
+    assert(config, "config is nil")
+    local imgName = config["image"]
+    local armature = ccs.Armature:create(imgName)
+    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+    return armature		
+end
+
+function Attackable:getEnemyArmature()
+    if self.armature then return self.armature end 
+    --armature
+    local config = self.enemy:getConfig()
+    assert(config, "config is nil")
+    local imgName = config["image"]
+    local armature = ccs.Armature:create(imgName)
+    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+    return armature		
+end
+
+function Attackable:getPosInMap()
+	local world = self:convertToWorldSpace(cc.p(0,0))
+	dump(world, "world")
+
+	local map = self:getParent():getParent()
+	local worldMap = map:convertToWorldSpace(cc.p(0,0))
+
+	local posMap = cc.p(map:getPositionX(), map:getPositionY())
+	dump(worldMap, "worldMap")
+	
+	local worldInMap = self:convertToWorldSpaceAR(posMap)
+	dump(worldInMap, "worldInMap")
+	
 end
 
 --接口
@@ -297,10 +335,6 @@ function Attackable:onHitted(demage)
 end
 
 function Attackable:animationEvent()
-	assert("required method, must implement me")	
-end
-
-function Attackable:getEnemyArmature()
 	assert("required method, must implement me")	
 end
 

@@ -112,24 +112,12 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function JinEnemyView:getEnemyArmature()
-    if self.armature then return self.armature end 
-    --armature
-    -- local src = "res/Fight/enemys/jinzhanb/jinzhanb.ExportJson"
-    -- local armature = getArmature("jinzhanb", src) 
-    -- armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    
-    local armature = ccs.Armature:create("jinzhanb") 
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    return armature
-end
-
 function JinEnemyView:test()
     --body
-    local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-    local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    drawBoundingBox(self.armature, weakNode, "red") 
-    drawBoundingBox(self.armature, bodyNode, "yellow") 
+    -- local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+    -- local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+    -- drawBoundingBox(self.armature, weakNode, "red") 
+    -- drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
 return JinEnemyView

@@ -45,6 +45,7 @@ function MapView:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.GUN_FIRE_EVENT, handler(self, self.onHeroFire))
         :addEventListener(Hero.ENEMY_ADD_EVENT, handler(self, self.callfuncAddEnemys))
+        :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
@@ -148,10 +149,22 @@ function MapView:callfuncAddEnemys(event)
 	end
 end
 
+local kMissileZorder = 1000
+function MapView:callfuncAddMissile(event)
+	print("MapView:addMissile(event)")
+	local property = event.property
+	dump(property, "property")
+	local enemyView = EnemyFactroy.createEnemy(property)
+	self.enemys[#self.enemys + 1] = enemyView
+	kMissileZorder = kMissileZorder - 1
+	self:addChild(enemyView, kMissileZorder)
+end
+
 function MapView:addEnemy(property, pos, zorder)
 	local placeName = property.placeName
 	assert(placeName , "invalid param placeName:"..placeName )
 	assert(property , "invalid param property:" )
+	
 	--place
 	local placeNode = self.places[placeName]
 	assert(placeNode, "no placeNode! invalid param:"..placeName)		
@@ -175,10 +188,9 @@ function MapView:addEnemy(property, pos, zorder)
 	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	
-	--place
+	--add
 	placeNode:addChild(enemyView, zorder)
 end
-
 
 function MapView:getSize()
 	local bg = self.bg

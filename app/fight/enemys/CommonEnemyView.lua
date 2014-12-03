@@ -87,16 +87,6 @@ function CommonEnemyView:playRollRight()
     self.armature:runAction(cc.RepeatForever:create(seq))			
 end
 
-function CommonEnemyView:playAfterAlert(type,handler)
-	self:showAlert()
-	local alertAfterFunc = function ()
-		print("self:play(type, handler)")
-		self:play(type, handler)
-	end
-	self.alertAfter = scheduler.performWithDelayGlobal(alertAfterFunc, 2.0)
-	self:addScheduler(self.alertAfter)
-end
-
 function CommonEnemyView:test()
 	--body
 	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
@@ -137,7 +127,7 @@ function CommonEnemyView:tick(t)
 		return
 	end
 
-	--throw 
+	--throw
 end
 
 --throw 
@@ -170,17 +160,5 @@ function CommonEnemyView:animationEvent(armatureBack,movementType,movementID)
 	end
 end
 
-
-function CommonEnemyView:getEnemyArmature()
-	-- print("CommonEnemyView:getEnemyArmature()")
-	if self.armature then return self.armature end 
-	--armature
-	local config = self.enemy:getConfig()
-	assert(config, "config is nil")
-	local imgName = config["image"]
-	local armature = ccs.Armature:create(imgName) 
-	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	return armature
-end
 
 return CommonEnemyView

@@ -261,11 +261,11 @@ function BossView:playDaoDan1()
     local enemys = {}
 	for i=1,7 do
 		local xPos = 30 + i * 120
-		local data = {
-			placeName = "place3",
+		local data = {	
 			pos = cc.p(xPos, 10),
 			delay = 0.4 * i,
 			property = {
+					placeName = "place3", --todoyby
 					type = "missile",
 					id = 1,
 					},
@@ -467,15 +467,6 @@ function BossView:initBody()
 
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
 	drawBoundingBox(self.armature, bodyNode, "yellow")  
-end
-
-function BossView:getEnemyArmature()
-	if self.armature then return self.armature end 
-	--armature
-    local src = "Fight/enemys/boss01/boss01.ExportJson"
-    local armature = getArmature("boss01", src) 
-	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	return armature
 end
 
 function BossView:getRange(rectName)

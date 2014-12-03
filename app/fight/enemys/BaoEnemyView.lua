@@ -131,12 +131,4 @@ function BaoEnemyView:getBaoRect()
     return rect
 end
 
-function BaoEnemyView:getEnemyArmature()
-    if self.armature then return self.armature end 
-    --armature
-    local src = "Fight/enemys/zibaob/zibaob.ExportJson"
-    local armature = getArmature("zibaob", src) 
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    return armature
-end
 return BaoEnemyView

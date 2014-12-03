@@ -133,14 +133,6 @@ function SanEnemyView:animationEvent(armatureBack,movementType,movementID)
 
 end
 
-function SanEnemyView:getEnemyArmature()
-    if self.armature then return self.armature end 
-    --armature
-    local src = "Fight/enemys/sanbing01/sanbing01.ExportJson"
-    local armature = getArmature("sanbing01", src) 
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    return armature
-end
 
 function SanEnemyView:getModel(property)
     return Enemy.new(property)
