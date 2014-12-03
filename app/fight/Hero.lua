@@ -75,7 +75,8 @@ function Hero:setLevelId()
 end
 
 function Hero:getLevelId()
-    return 4
+    return 3
+
 end
 
 --枪械相关

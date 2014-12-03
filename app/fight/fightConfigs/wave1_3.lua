@@ -1,69 +1,58 @@
 local waveClass = class("wave1_3", cc.mvc.ModelBase)
 
 local waves = {
-	-- {
-	-- 	enemys = {
-	-- 		{
-	-- 			time = 3,
-	-- 			num = 7,
-	-- 			delay = {0.3,0,0.5,0.7,5,5.2,5.4},
-	-- 			pos = {0,75,150,200,50,100,150},
-	-- 			property = {
-	-- 				placeName = "place1",  
-	-- 				id = 1,
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 3,
-	-- 			num = 7,
-	-- 			delay = {0.3,0, 0.5, 0.7, 4.1,4.5,4.3},
-	-- 			pos = {100, 200, 300, 400, 150,250,350},	
-	-- 			property = {
-	-- 				placeName = "place2",   
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 4,
-	-- 			num = 2,
-	-- 			delay = {0.3, 0.6},
-	-- 			pos = {50,100},					
-	-- 			property = {
-	-- 				placeName = "place3",   
-	-- 				id = 1,
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 4,
-	-- 			num = 2,
-	-- 			delay = {0.3, 0.6},
-	-- 			pos = {150,200},					
-	-- 			property = {
-	-- 				placeName = "place4",   
-	-- 				id = 1,
-	-- 			},
-	-- 		},					
-	-- 	},
-	-- },	
+		{
+		enemys = {
+			{
+				time = 3,
+				num = 7,
+				delay = {0.3,0,0.6,0.9,5,7,6},
+				pos = {0,75,150,200,50,100,150},
+				property = {
+					placeName = "place1",  
+					id = 1,
+				},
+			},
+			{
+				time = 5,
+				num = 7,
+				delay = {0.3,0, 0.6, 0.9, 7,8,9},
+				pos = {100, 200, 300, 400, 150,250,350},	
+				property = {
+					placeName = "place2",   
+					startState = "rollright",
+					id = 1,
+				},
+			},	
+			{
+				time = 7,
+				num = 2,
+				delay = {0.3, 0.6},
+				pos = {50,100},					
+				property = {
+					placeName = "place3",   
+					id = 1,
+				},
+			},	
+			{
+				time = 9,
+				num = 2,
+				delay = {0.3, 0.6},
+				pos = {150,200},					
+				property = {
+					placeName = "place4",   
+					id = 1,
+				},
+			},					
+		},
+	},	
 	{
 		enemys = {
 			{
 				time = 3,
-				num = 1,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5,2.0},
-				pos = {0,50,100,300,350,400},
-				property = {
-					type = "common",
-					placeName = "place5",  
-					id = 2,
-				},
-			},		
-			{
-				time = 5,
 				num = 6,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5,2.0},
-				pos = {0,50,100,300,350,400},
+				delay = {0, 0.5, 1, 2, 7,8,9},
+				pos = {100,200,300,400,250,50},
 				property = {
 					type = "jin",
 					placeName = "place5",  
@@ -71,18 +60,18 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time =5,
 				num = 6,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5,2.0},
-				pos = {300,250,200,100,50},
+				delay = {0.3, 0.8, 1.3, 8, 9,10},
+				pos = {0,200,100,250,150,0},
 				property = {
 					type = "jin",
-					placeName = "place5",  
+					placeName = "place6",  
 					id = 1,
 				},
 			},
 			{
-				time = 3,
+				time = 10,
 				num = 1,
 				delay = {0.3},
 				pos = {200},
@@ -92,11 +81,11 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 13,	
 				num = 4,
 				place = "place5",
 				pos = {100, 200, 150, 250},
-				delay = {0.1, 0.4, 0.7, 0.9},
+				delay = {0.1, 2, 0.9, 3},
 				property = { 
 					type = "san",
 					id = 1,
@@ -105,10 +94,10 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 18,	
 				num = 2,
 				pos = {130, 200},
-				delay = {0.1, 0.7},
+				delay = {0.1, 1.7},
 				property = { 
 					type = "san",
 					id = 1,
@@ -123,7 +112,7 @@ local waves = {
 			{
 				time = 3,
 				num = 3,
-				delay = {0.3, 0.6, 0.9},
+				delay = {0.3, 1.3,2.3},
 				pos = {150,250,400},
 				property = {
 					type = "jin",
@@ -132,9 +121,9 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time =5,
 				num = 2,
-				delay = {0.3, 0.6},
+				delay = {0.3, 1.3},
 				pos = {200,100},
 				property = {
 					type = "jin",
@@ -143,9 +132,9 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 2,
-				delay = {0.3,0.5},
+				delay = {0.3,1.3},
 				pos = {200,100},
 				property = {
 					type = "jin",
@@ -154,7 +143,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 9,	
 				num = 2,
 				pos = {0,50},
 				delay = {0.1, 0.4},
@@ -164,10 +153,10 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 15,	
 				num = 3,
 				pos = {130, 200,300},
-				delay = {0.1, 0.7,0.4},
+				delay = {0.1, 1,2},
 				property = { 
 					type = "bao",
 					id = 1,
@@ -175,10 +164,10 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 18,	
 				num = 3,
 				pos = {130, 200,0},
-				delay = {0.1, 0.7,0.5},
+				delay = {0.1, 1,2},
 				property = { 
 					type = "bao",
 					id = 1,
@@ -186,7 +175,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 21,	
 				num = 1,
 				pos = {0},
 				delay = {0.1},
@@ -197,7 +186,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 24,	
 				num = 3,
 				pos = {300, 350,400},
 				delay = {0.1, 0.7,0.5},
@@ -213,7 +202,7 @@ local waves = {
 			{
 				time = 1,
 				num = 6,
-				delay = {0.3, 0.6, 0.9,1.2,4.0,4.5},
+				delay = {0.3, 0.6, 1,1.5,4.0,4.5},
 				pos = {150,250,400,50,100,350},
 				property = {
 					type = "san",
@@ -222,9 +211,9 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 4,
 				num = 7,
-				delay = {0.3, 0.6,0,0.9,1.2,5.0,5.5,6.0},
+				delay = {0.3, 0.6,1.5,0.9,2,5.0,5.5,6.0},
 				pos = {200,100,0,300,50,150,250},
 				property = {
 					type = "san",
@@ -233,9 +222,9 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 6,
-				delay = {0.3,0.5,0.9,6.0,6.5},
+				delay = {0.3,0.5,1,6.0,6.5},
 				pos = {50,150,250,100,200},
 				property = {
 					type = "san",

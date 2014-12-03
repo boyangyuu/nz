@@ -140,10 +140,7 @@ function CommonEnemyView:tick(t)
 	--throw 
 end
 
-
-
 --throw 
-
 function CommonEnemyView:canHitted()
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	
@@ -178,10 +175,10 @@ function CommonEnemyView:getEnemyArmature()
 	-- print("CommonEnemyView:getEnemyArmature()")
 	if self.armature then return self.armature end 
 	--armature
- --    local src = "Fight/enemys/anim_enemy_002/anim_enemy_002.ExportJson"
- --    local armature = getArmature("anim_enemy_002", src) 
-	-- armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	local armature = ccs.Armature:create("anim_enemy_002") 
+	local config = self.enemy:getConfig()
+	assert(config, "config is nil")
+	local imgName = config["image"]
+	local armature = ccs.Armature:create(imgName) 
 	armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	return armature
 end
