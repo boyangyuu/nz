@@ -516,8 +516,9 @@ end
 
 function FightPlayer:addArmatureFile()
     --all enemys
-    local enemyImgs = {"anim_enemy_002", "jinzhanb",
-     "zibaob", "boss01", "dunbing", "sanbing01", "shoulei", "daodan"}
+    local enemyImgs = 
+    {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
+    "sanbing01", "shoulei", "daodan", "zpbing"}
 
     local function dataLoaded()
         print(" dataLoaded()")

@@ -152,7 +152,7 @@ end
 
 function Attackable:getBodyBox()
 	local armature = self:getEnemyArmature()
-	local box = armature:getBone("weak1"):getDisplayRenderNode():getBoundingBox()
+	local box = armature:getBone("body1"):getDisplayRenderNode():getBoundingBox()
 	if not box then return end
 	return box
 end
@@ -284,8 +284,8 @@ function Attackable:test()
     local weakNode1 = self.armature:getBone("weak1")
     if weakNode1 then drawBoundingBox(self.armature, weakNode1:getDisplayRenderNode(), "red")  end
     local bodyNode = self.armature:getBone("body1")
+    assert(bodyNode, "bodyNode is nil , 美术没加帧")
     if bodyNode then drawBoundingBox(self.armature, bodyNode:getDisplayRenderNode(), "yellow")  end
-    -- drawBoundingBox(self, self.armature, "white") 
 end
 
 function Attackable:getEnemyArmature()
@@ -305,6 +305,8 @@ function Attackable:getEnemyArmature()
     local config = self.enemy:getConfig()
     assert(config, "config is nil")
     local imgName = config["image"]
+    assert(imgName)
+    print("imgName",imgName)
     local armature = ccs.Armature:create(imgName)
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature		
@@ -319,10 +321,11 @@ function Attackable:getPosInMap()
 
 	local posMap = cc.p(map:getPositionX(), map:getPositionY())
 	dump(worldMap, "worldMap")
-	
-	local worldInMap = self:convertToWorldSpaceAR(posMap)
+
+	local worldInMap = self:convertToWorldSpace(posMap)
 	dump(worldInMap, "worldInMap")
 	
+	return worldInMap
 end
 
 --接口

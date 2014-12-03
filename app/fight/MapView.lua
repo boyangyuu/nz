@@ -157,7 +157,7 @@ function MapView:callfuncAddMissile(event)
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 	kMissileZorder = kMissileZorder - 1
-	self:addChild(enemyView, kMissileZorder)
+	self.map:addChild(enemyView, kMissileZorder)
 end
 
 function MapView:addEnemy(property, pos, zorder)
@@ -176,8 +176,8 @@ function MapView:addEnemy(property, pos, zorder)
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	property.scale = scale:getScaleX()
-
+	property.scale = scale:getScaleX() 
+	-- property.scale = 0.5
 	--enemy 改为工厂
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView

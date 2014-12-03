@@ -45,8 +45,8 @@ function MissileEnemyView:playFire()
 
     --scale
     self:setScale(self.srcScale)
-    local time = 3.0
-    local destScale = 1
+    local time = 1.5
+    local destScale = 0.5
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
