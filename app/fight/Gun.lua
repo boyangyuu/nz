@@ -15,7 +15,7 @@ Gun.schema = clone(cc.mvc.ModelBase.schema)
 
 function Gun:ctor(properties, events, callbacks)
     Gun.super.ctor(self, properties)
-    dump(properties, "properties")
+    -- dump(properties, "properties")
     self.config = getConfigByID("config/weapon_weapon.json", properties.id)
 end
 
@@ -33,7 +33,12 @@ end
 function Gun:getBulletNum()
 	assert(self.config.bulletNum, "bulletNum is nil id:"..self.config.id)
 	local inlayScale = 1.0 -- 改为inlaymodel
-	return self.config.bulletNum * inlayScale	
+	return 4
+	-- return self.config.bulletNum * inlayScale	
+end
+
+function Gun:getReloadTime()
+	return 2.0
 end
 
 function Gun:getDemage()

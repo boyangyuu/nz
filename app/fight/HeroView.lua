@@ -11,6 +11,7 @@ local CCSUILoader = import("framework.cc.uiloader.CCSUILoader")
 local scheduler = require("framework.scheduler")
 local Actor = import(".Actor")
 local Hero = import(".Hero")
+local Guide = import("..guide.GuideModel")
 
 local HeroView = class("HeroView", function()
     return display.newNode()
@@ -20,6 +21,7 @@ function HeroView:ctor(properties)
 
 	--instance
 	self.hero = app:getInstance(Hero)
+	self.guide = app:getInstance(Guide)
 	self.crackTable = {}
 	self.behurtCount = 1
 	self.isResumeDefence = false
@@ -50,6 +52,8 @@ function HeroView:initUI()
 	self:initArmouredNode()
 	self:initDefenceNode()
 	self:initKillTimerNode()
+
+	scheduler.performWithDelayGlobal(handler(self, self.startGuide), 0.01)
 end
 
 --获得UI.ExportJson数据
@@ -425,6 +429,25 @@ function HeroView:effectGunReload(event)
     	end
     )
     self:addChild(armature, 1000)	
+end
+
+function HeroView:startGuide()
+    local isDone = self.guide:check("fight")
+    if isDone then return end
+	
+	--blood
+    local data1 = {
+        id = "fight_blood",
+        groupId = "fight",
+        touchType = "begin",
+        rect = self.loadingBarHeroHp:getBoundingBox(),
+        endfunc = function (touchEvent)
+            print("fight_blood 结束")
+        end
+    }
+    self.guide:addClickListener(data1)  
+
+    self.guide:doGuide("fight", 1) --todo改check
 end
 
 return HeroView

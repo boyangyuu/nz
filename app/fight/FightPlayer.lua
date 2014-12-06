@@ -1,12 +1,13 @@
 --import
 import("..includes.functionUtils")
-local scheduler = require("framework.scheduler")
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Hero = import(".Hero")
 local GunView = import(".GunView")
 local FocusView = import(".FocusView")
 local MapView = import(".MapView")
 local HeroView = import(".HeroView")
 local Actor = import(".Actor")
+local Guide = import("..guide.GuideModel")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
@@ -25,11 +26,11 @@ function FightPlayer:ctor()
     --instance
     self.hero = app:getInstance(Hero)
     self.focusView = app:getInstance(FocusView)
+    self.guide = app:getInstance(Guide)
     self.mapView = MapView.new()
     self.gunView = GunView.new({id = "1"})
     self.heroView = HeroView.new()
-    self.gunBtnPressed = false
-    self.touchs = {}
+    self.touchIds = {}
     self.btnsIsShow = true
     self.resumeDefenceTinkHandler = nil
     self.isPause = false
@@ -42,14 +43,12 @@ function FightPlayer:ctor()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
         :addEventListener(Actor.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
-        :addEventListener("changeGold", handler(self, self.changeGoldCount))
-
+        :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     self:scheduleUpdate()   
 end
 
 function FightPlayer:setPause()
     self.isPause = not self.isPause
-    self.gunBtnPressed = false
 end
 
 function FightPlayer:changeGoldCount(event)
@@ -71,6 +70,7 @@ end
 function FightPlayer:fitArmoured()
     self:setControlsVisible()
     self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_START_EVENT})
+
 end
 
 function FightPlayer:setControlsVisible()
@@ -116,6 +116,8 @@ function FightPlayer:initUI()
     self:initTouchArea()
 
     self:addArmatureFile()
+
+    scheduler.performWithDelayGlobal(handler(self, self.startGuide), 0.01)
 end
 
 --启动盾牌恢复
@@ -250,15 +252,14 @@ end
 
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
+     -- dump(event, "event onMutiTouchBegin")
     if self.isPause then return end
 
     --check
-    -- dump(event, "event onMutiTouchBegin")
-
     local eventName = "begin"
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point, "begin")
+        local isTouch = self:checkBtnFire(id, point, eventName)
         if isTouch then return true end
 
         isTouch = self:checkBtnChange(point, eventName)
@@ -285,9 +286,7 @@ function FightPlayer:onMutiTouchEnd(event)
     if self.isPause then return end
 
     for id,point in pairs(event.points) do
-        if id == self.touchs["fire"] then
-            self:checkBtnFire(nil, nil, "ended")
-        end
+         self:checkBtnFire(id, point, "ended")
     end
 end
 
@@ -336,34 +335,57 @@ function FightPlayer:checkBtnChange(point,eventName)
 end
 
 function FightPlayer:checkBtnFire(id,point,eventName)
-    if eventName == "ended" then
+    if (eventName == "ended" or eventName == "cancelled" or eventName == "removed") 
+        and id == self.touchIds["fire"] then
         self:onCancelledFire()
-        self.gunBtnPressed = false
-        self.touchs["fire"] = nil 
+        self.touchIds["fire"] = nil 
         return
     end
     assert(id and point , "invalid params")
     local isTouch
     local rect = self.btnFire:getBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
-    if isTouch then 
-        self.touchs["fire"] = id 
-        self.gunBtnPressed = true
-        --动画
-        if self.btnFire:getChildByTag(1) then 
-            self.btnFire:removeChildByTag(1)
-        end
-        local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
-        local armature = getArmature("effect_gun_kaiqiang", src)
-        armature:getAnimation():playWithIndex(0 , -1, 0)
-        local function animationEvent(armatureBack,movementType,movementID)
-            armature:removeFromParent()
-        end
-        armature:getAnimation():setMovementEventCallFunc(animationEvent)
-        addChildCenter(armature, self.btnFire)
-        armature:setTag(1)
+    if isTouch then
+        self.touchIds["fire"]  = id
+        self.btnFireSch =  scheduler.scheduleGlobal(handler(self, self.onBtnFire), 0.01)
     end    
     return isTouch
+end
+
+function FightPlayer:onBtnFire()
+    -- print("ightPlayer:onBtnFire()")
+    if self:canGunShot() then 
+        self:fire()
+    end
+
+    --动画
+    if self.btnArmature ~= nil then return end
+    local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
+    self.btnArmature = getArmature("effect_gun_kaiqiang", src)
+    self.btnArmature:getAnimation():playWithIndex(0 , -1, 1)
+    local function animationEvent(armatureBack,movementType,movementID)
+        if movementType == ccs.MovementEventType.loopComplete then
+
+        end
+    end
+
+    self.btnArmature:getAnimation():setMovementEventCallFunc(animationEvent)
+    addChildCenter(self.btnArmature, self.btnFire)
+end
+
+function FightPlayer:onCancelledFire()
+    print("FightPlayer:onCancelledFire()")
+    self.gunView:stopFire()
+    self.focusView:stopFire()
+    
+    --sch
+    if self.btnFireSch then
+        scheduler.unscheduleGlobal(self.btnFireSch)
+    end
+
+    --anim
+    self.btnArmature:removeFromParent()
+    self.btnArmature = nil
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
@@ -379,7 +401,8 @@ function FightPlayer:checkBtnJu(point,eventName)
 end
 
 function FightPlayer:onTouchMoved(event)
-
+    print("FightPlayer:onTouchMoved(event)")
+    -- dump(event, "onTouchMoved")
     if self.isPause then return end
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
@@ -404,14 +427,10 @@ end
 ----attack----
 function FightPlayer:tick(dt)
     --gun
-    if self:canGunShot() then 
-        self:fire()
-    end
 end
 
 function FightPlayer:canGunShot()
-    -- self.gunBtnPressed = true
-    if  self.hero:canFire() and self.gunBtnPressed then 
+    if  self.hero:canFire() then 
         return true 
     end
 
@@ -419,6 +438,7 @@ function FightPlayer:canGunShot()
 end
  
 function FightPlayer:fire()
+    -- print("FightPlayer:fire()")
     if self.isPause then return end
 
     --hero
@@ -431,20 +451,7 @@ function FightPlayer:fire()
     end
 end
 
-function FightPlayer:onCancelledFire()
-    self.gunView:stopFire()
-    self.focusView:stopFire() --todo 发命令
-end
-
 ----move----
-function FightPlayer:printTouch(event)
-    -- print("printTouch:", event.name)
-    -- for id, point in ipairs(event.points) do
-    --     local str = string.format("id: %s, x: %0.2f, y: %0.2f", point.id, point.x, point.y)
-    --     print(str)
-    -- end
-end
-
 function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
@@ -518,7 +525,7 @@ function FightPlayer:addArmatureFile()
     --all enemys
     local enemyImgs = 
     {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
-    "sanbing01", "shoulei", "daodan", "zpbing"}
+    "sanbing01", "daodan", "zpbing"}
 
     local function dataLoaded()
         print(" dataLoaded()")
@@ -530,6 +537,74 @@ function FightPlayer:addArmatureFile()
         manager:addArmatureFileInfoAsync(src, dataLoaded)
     end      
 end
+
+
+function FightPlayer:startGuide()
+    --check   
+    local isDone = self.guide:check("fight")
+    if isDone then return end
+
+    --fire
+    local data1 = {
+        id = "fight_move",
+        groupId = "fight",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onGuideFire(touchEvent)
+        end
+    }
+    self.guide:addClickListener(data1)
+    
+    --换枪
+    local data2 = {
+        id = "fight_fire02",
+        touchType = "begin",
+        groupId = "fight",
+        node = self.btnChange,
+        endfunc = function (touchEvent)
+            
+        end
+    }
+    self.guide:addClickListener(data2)  
+
+    --self.guide:addClickListener(data)
+
+    
+end
+
+local time_begin = nil
+local sch
+function FightPlayer:onGuideFire(touchEvent)
+    print("os.time()", os.time())
+    local name = touchEvent.name
+    
+    --检查长按时间
+    local function onGuideFireCheckFunc()
+        local timeNow = os.time()
+        if time_begin and (timeNow - time_begin) >=  2 then 
+            print("长按射击引导完成")
+            
+        end
+    end
+    if name == "began" then 
+        time_begin = os.time()
+        sch = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
+    end
+
+    --停止检查
+    if name == "ended" or name == "cancelled" then 
+        print("scheduler.unscheduleGlobal(sch) ")
+        scheduler.unscheduleGlobal(sch) 
+    end    
+
+    --响应事件
+    for id, point in pairs(touchEvent.points) do
+        print("name", name)
+        self:checkBtnFire(id, point,name)
+    end
+
+end
+
 
 return FightPlayer
 

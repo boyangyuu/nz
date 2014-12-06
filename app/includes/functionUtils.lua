@@ -76,7 +76,7 @@ function addChildCenter(child, parent, zorder)
 end
 
 function drawBoundingBox(parent, target, color)
-    if  isTestMode() then return end
+    -- if  not isTestMode() then return end
     if parent == nil then parent = target:getParent() end
     local cbb = target:getBoundingBox()
     -- dump(cbb, "cbb")

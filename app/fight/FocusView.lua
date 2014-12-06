@@ -45,6 +45,7 @@ function FocusView:ctor(properties)
     --event
      cc.EventProxy.new(self.hero, self)
 		 :addEventListener(Hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
+		 :addEventListener(Hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
 end
 
 function FocusView:playIdle()
@@ -74,8 +75,8 @@ function FocusView:animationEvent(armatureBack,movementType,movementID)
 end
 
 function FocusView:stopFire()
+	print("FocusView:stopFire()")
 	self:playIdle()
-	self.playIndex = "stand"
 end
 
 function FocusView:setFocusRange(size)

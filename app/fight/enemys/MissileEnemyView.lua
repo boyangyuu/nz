@@ -10,7 +10,7 @@ import("...includes.functionUtils")
 local Attackable = import(".Attackable")
 local Enemy = import(".Enemy")
 local Hero = import("..Hero")
-local Actor = import("..Actor")
+local Actor = import("..Actor")   
 
 local MissileEnemyView = class("MissileEnemyView", Attackable)
 
@@ -45,8 +45,8 @@ function MissileEnemyView:playFire()
 
     --scale
     self:setScale(self.srcScale)
-    local time = 1.5
-    local destScale = 0.5
+    local time = 2.0
+    local destScale = 0.9
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
