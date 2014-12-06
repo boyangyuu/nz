@@ -352,7 +352,7 @@ function BossView:tick(t)
 	if self.pauseOtherAnim then return end 
 	--change state
 	local randomSeed 
-	math.newrandomseed()
+	-- math.newrandomseed()
 
 	--fire
 	local fireRate = self.enemy:getFireRate()

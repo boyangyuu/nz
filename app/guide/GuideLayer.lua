@@ -78,7 +78,6 @@ function GuideLayer:onMutiTouchEnd(event)
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
-		print("点击到指定区域")
 		self:onTouchTarget(event)
 	end
 	return true
@@ -98,7 +97,7 @@ function GuideLayer:onTouchTarget(event)
 	print("endfunc excute eventname:"..event.name)
 	endfunc(event)
 
-	--config
+	--config 是否点击立即next
 	local config = self.guide:getCurConfig()
 	if config.mode == "click" then
 		self.guide:doGuideNext()

@@ -32,34 +32,34 @@ function Guide:check(groupId)
 	
 	--init
 	print(":初始化引导")
-	self:initGuide()
 
 	return false
 end
 
 function Guide:doGuideNext()
+	--next
 	self.stepIndex = self.stepIndex + 1
-	-- self.curConfig = 
-end
 
-function Guide:doGuide(groupId, index)
-	print("开始引导: groupId:"..groupId..",index:"..index)
-	--config check
-	local configGroup =  GuideConfigs.getConfig(groupId)
-	local configStep = configGroup["steps"][index]
-	local stepId = configStep.id
-	local listenData = self.datas[stepId]
-	assert(listenData, "listenData is nil, step id :"..stepId)
-
-	--set instance
-	self.stepIndex = index
-	self.curData = listenData
+	--update config
+	local configGroup =  GuideConfigs.getConfig(self.groupId)
+	local configStep = configGroup["steps"][self.stepIndex]	
 	self.curConfig = configStep
 
+	--update listenData
+	local id = configStep.id
+	local listenData = self.datas[id]	
+	self.curData = listenData
+
 	--dispatch
+	print("doGuideNext: stepIndex:"..self.stepIndex..",  stepId:"..id)
 	self:dispatchEvent({name = Guide.GUIDE_SHOW_EVENT, 
-				groupId = self.groupId})
-	--
+				groupId = self.groupId})	
+end
+
+function Guide:startGuide(groupId)
+	self.groupId = groupId
+	self.stepIndex = 0
+	self:doGuideNext()
 end
 
 function Guide:isDone(groupId)
@@ -75,14 +75,10 @@ function Guide:addClickListener(data)
 	dump(data, "data name:"..groupId)
 end
 
-function Guide:initGuide()
-	--init
-	self.stepIndex = 1
-end
 
 function Guide:finishGuide()
 	self.datas = {}
-	self.stepIndex = nil
+	self.stepIndex = 0
 	--dispatch
 end
 

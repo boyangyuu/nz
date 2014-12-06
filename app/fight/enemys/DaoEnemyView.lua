@@ -29,7 +29,7 @@ function DaoEnemyView:tick()
     --fire
     local fireRate = self.enemy:getFireRate()
     local randomSeed  
-    math.newrandomseed()
+    -- math.newrandomseed()
     assert(fireRate > 1, "invalid fireRate")
     randomSeed = math.random(1, fireRate)
     if randomSeed > fireRate - 1 then 

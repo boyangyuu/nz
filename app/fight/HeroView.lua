@@ -439,15 +439,16 @@ function HeroView:startGuide()
     local data1 = {
         id = "fight_blood",
         groupId = "fight",
-        touchType = "begin",
+        touchType = "began",
         rect = self.loadingBarHeroHp:getBoundingBox(),
         endfunc = function (touchEvent)
+	        dump(touchEvent, "touchEvent")
             print("fight_blood 结束")
         end
     }
     self.guide:addClickListener(data1)  
 
-    self.guide:doGuide("fight", 1) --todo改check
+    -- self.guide:startGuide("fight") --todo改check
 end
 
 return HeroView

@@ -82,9 +82,9 @@ function FightPlayer:setControlsVisible()
     
     --btn
     self.btnDefence:setVisible(self.btnsIsShow)
-    self.btnArmoured:setVisible(self.btnsIsShow)
+    self.btnRobot:setVisible(self.btnsIsShow)
     self.btnChange:setVisible(self.btnsIsShow)
-    self.btnGrenade:setVisible(self.btnsIsShow)
+    self.btnLei:setVisible(self.btnsIsShow)
 end
 
 function FightPlayer:initUI()
@@ -227,22 +227,22 @@ function FightPlayer:initBtns()
     self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
     self.labelDefenceResume:setVisible(false)
 
-    --btnArmoured
-    self.btnArmoured = cc.uiloader:seekNodeByName(self, "btnRobot")
-    self.btnArmoured:setTouchEnabled(true)
-    self.btnArmoured:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
-    self.btnArmoured:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    --btnRobot
+    self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
+    self.btnRobot:setTouchEnabled(true)
+    self.btnRobot:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
+    self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
-    --btnGrenade
-    self.btnGrenade = cc.uiloader:seekNodeByName(self, "btnLei")
-    self.btnGrenade:setTouchEnabled(true)
-    self.btnGrenade:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    --btnLei
+    self.btnLei = cc.uiloader:seekNodeByName(self, "btnLei")
+    self.btnLei:setTouchEnabled(true)
+    self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     
-    --btnJun
-    self.btnJun = cc.uiloader:seekNodeByName(self, "btnJun")
-    self.btnJun:setTouchEnabled(true)
-    self.btnJun:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    print("  self.btnJu ", self.btnJun)
+    --btnJu
+    self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
+    self.btnJu:setTouchEnabled(true)
+    self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    print("  self.btnJu ", self.btnJu)
 
     --labelGoldCount
     self.labelGoldCount = cc.uiloader:seekNodeByName(self, "labelGoldCount")
@@ -256,25 +256,24 @@ function FightPlayer:onMutiTouchBegin(event)
     if self.isPause then return end
 
     --check
-    local eventName = "begin"
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point, eventName)
+        local isTouch = self:checkBtnFire(id, point)
         if isTouch then return true end
 
-        isTouch = self:checkBtnChange(point, eventName)
+        isTouch = self:checkBtnChange(point)
         if isTouch then return true end        
 
-        isTouch = self:checkBtnArmoured(point, eventName)
+        isTouch = self:checkbtnRobot(point)
         if isTouch then return true end
 
-        isTouch = self:checkbtnDefence(point, eventName)
+        isTouch = self:checkbtnDefence(point)
         if isTouch then return true end 
 
-        isTouch = self:checkbtnGrenade(point, eventName)
+        isTouch = self:checkbtnLei(point)
         if isTouch then return true end
 
-        isTouch = self:checkBtnJu(point, eventName)
+        isTouch = self:checkBtnJu(point)
         if isTouch then return true end
 
     end
@@ -290,9 +289,9 @@ function FightPlayer:onMutiTouchEnd(event)
     end
 end
 
-function FightPlayer:checkBtnArmoured(point, eventName )
+function FightPlayer:checkbtnRobot(point)
     assert( point, "invalid params")
-    local rect = self.btnArmoured:getCascadeBoundingBox()
+    local rect = self.btnRobot:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
         self:fitArmoured()
@@ -300,7 +299,7 @@ function FightPlayer:checkBtnArmoured(point, eventName )
     return isTouch
 end
 
-function FightPlayer:checkbtnDefence(point, eventName )
+function FightPlayer:checkbtnDefence(point)
     local rect = self.btnDefence:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
@@ -310,9 +309,9 @@ function FightPlayer:checkbtnDefence(point, eventName )
     return isTouch
 end
 
-function FightPlayer:checkbtnGrenade(point, eventName)
+function FightPlayer:checkbtnLei(point)
     assert( point, "invalid parames")
-    local rect = self.btnGrenade:getCascadeBoundingBox()
+    local rect = self.btnLei:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
         local w, h = self.focusNode:getBoundingBox().width, 
@@ -323,7 +322,7 @@ function FightPlayer:checkbtnGrenade(point, eventName)
     end
 end
 
-function FightPlayer:checkBtnChange(point,eventName)
+function FightPlayer:checkBtnChange(point)
     assert( point , "invalid params")
     local rect = self.btnChange:getCascadeBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
@@ -335,6 +334,7 @@ function FightPlayer:checkBtnChange(point,eventName)
 end
 
 function FightPlayer:checkBtnFire(id,point,eventName)
+    if eventName == "moved" then return end
     if (eventName == "ended" or eventName == "cancelled" or eventName == "removed") 
         and id == self.touchIds["fire"] then
         self:onCancelledFire()
@@ -389,7 +389,7 @@ function FightPlayer:onCancelledFire()
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
-    local rect = self.btnJun:getBoundingBox()  
+    local rect = self.btnJu:getBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --切换狙击镜
@@ -538,38 +538,43 @@ function FightPlayer:addArmatureFile()
     end      
 end
 
-
 function FightPlayer:startGuide()
     --check   
     local isDone = self.guide:check("fight")
     if isDone then return end
 
-    --fire
-    local data1 = {
+    --move
+    self.guide:addClickListener({
         id = "fight_move",
+        touchType = "moved",
+        groupId = "fight",
+        rect = self.btnJu:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self.guide:doGuideNext()
+        end
+     })
+    
+    --换枪
+    self.guide:addClickListener({
+        id = "fight_fire",
         groupId = "fight",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             self:onGuideFire(touchEvent)
         end
-    }
-    self.guide:addClickListener(data1)
-    
-    --换枪
-    local data2 = {
-        id = "fight_fire02",
-        touchType = "begin",
+    })  
+
+    --扔雷
+    self.guide:addClickListener( {
+        id = "fight_throw",
         groupId = "fight",
-        node = self.btnChange,
+        rect = self.btnLei:getBoundingBox(),
         endfunc = function (touchEvent)
-            
+            -- self:onGuideFire(touchEvent)
         end
-    }
-    self.guide:addClickListener(data2)  
+    })      
 
     --self.guide:addClickListener(data)
-
-    
 end
 
 local time_begin = nil
@@ -583,19 +588,26 @@ function FightPlayer:onGuideFire(touchEvent)
         local timeNow = os.time()
         if time_begin and (timeNow - time_begin) >=  2 then 
             print("长按射击引导完成")
-            
+            scheduler.unscheduleGlobal(sch)
+            self:onCancelledFire()
+            self.guide:doGuideNext()
         end
     end
-    if name == "began" then 
+
+    --开始计时
+    if name == "began" then
+        print("开始计时") 
         time_begin = os.time()
         sch = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
     end
 
-    --停止检查
+    --停止计时
     if name == "ended" or name == "cancelled" then 
-        print("scheduler.unscheduleGlobal(sch) ")
-        scheduler.unscheduleGlobal(sch) 
-    end    
+        print("停止计时")
+        if sch then 
+            scheduler.unscheduleGlobal(sch)
+        end
+    end
 
     --响应事件
     for id, point in pairs(touchEvent.points) do
