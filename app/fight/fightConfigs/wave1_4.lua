@@ -4,92 +4,358 @@ local waves = {
 	{
 		enemys = {  --boss
 			{
-				time = 3,	
+				time = 3,
 				num = 1,
-				pos = {250},
-				delay = {0.3},
+				delay = {0},
+				pos = {25},
 				property = {
-					placeName = "place3" ,
-					type = "boss", -- todo 需要配置boss
-					id = 1,
-				},
-			},		
-		},
-	},
-	{
-		enemys = {
-			{
-				time = 2,
-				num = 5,
-				delay = {0.3, 0.6},
-				pos = {10, 200, 50, 100, 90},
-				property = { 
-					placeName = "place1" ,
-					startState = "rollright",
+					placeName = "place1",  
 					id = 1,
 				},
 			},
 			{
-				time = 3,
-				num = 5,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 200, 50, 100, 90},	
+				time = 7,
+				num = 1,
+				delay = {0},
+				pos = {25},
 				property = {
-					placeName = "place2" , 
-					startState = "rollleft",
+					placeName = "place2",  
+					id = 1,
+				},
+			},
+			{
+				time = 11,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place3",  
 					id = 1,
 				},
 			},	
-			{
-				time = 2,
-				num = 5,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},					
-				property = { 
-					placeName = "place2" ,
-					id = 1,
-				},
-			},						
 		},
-	},	
+	},
 	{
-		enemys = {
+		enemys = {  --boss
 			{
-				time = 10,
-				num = 5,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},
-				property = { 
-					placeName = "place1" ,
-					startState = "rollright",
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place3",  
 					id = 1,
 				},
-			},					
+			},
+			{
+				time = 7,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place1",  
+					id = 1,
+				},
+			},
+			{
+				time = 11,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place2",  
+					id = 1,
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place4",  
+					id = 1,
+				},
+			},
+			{
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place5",  
+					id = 1,
+				},
+			},
+			{
+				time = 13,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place6",  
+					id = 1,
+				},
+			},	
 		},
-	},		
+	},
+	{
+		enemys = {  --boss
+			{
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place6",  
+					id = 1,
+				},
+			},
+			{
+				time = 7,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place4",  
+					id = 1,
+				},
+			},
+			{
+				time = 11,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place5",  
+					id = 1,
+				},
+			},
+			{
+				time = 4,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place7",  
+					id = 1,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place8",  
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place9",  
+					id = 1,
+				},
+			},	
+		},
+	},
+	{
+		enemys = {  --boss
+			{
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place2",  
+					id = 1,
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place3",  
+					id = 1,
+				},
+			},
+			{
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place1",  
+					id = 1,
+				},
+			},
+			{
+				time = 4,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place8",  
+					id = 1,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place7",  
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place9",  
+					id = 1,
+				},
+			},	
+		},
+	},
+		{
+		enemys = {  --boss
+			{
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place1",  
+					id = 1,
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place4",  
+					id = 1,
+				},
+			},
+			{
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place7",  
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place10",  
+					id = 1,
+				},
+			},
+			{
+				time = 15,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place9",  
+					id = 1,
+				},
+			},
+			{
+				time = 18,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place6",  
+					id = 1,
+				},
+			},	
+		},
+	},
+	{
+		enemys = {  --boss
+			{
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place2",  
+					id = 1,
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place5",  
+					id = 1,
+				},
+			},
+			{
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place8",  
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place10",  
+					id = 1,
+				},
+			},
+			{
+				time = 15,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place7",  
+					id = 1,
+				},
+			},
+			{
+				time = 18,
+				num = 1,
+				delay = {0},
+				pos = {25},
+				property = {
+					placeName = "place4",  
+					id = 1,
+				},
+			},	
+		},
+	},
 }
-
---测试 sanBing
--- waves = {
--- 	{
--- 		enemys = {  
--- 			{
--- 				time = 2,	
--- 				num = 6,
--- 				place = "place2",
--- 				pos = {100, 200, 0, 170, 190, 100},
--- 				delay = {0.1, 0.4, 0.7, 0.9, 1.2, 1.5},
--- 				property = { 
--- 					type = "san",
--- 					id = 1,
--- 					enemyId = 1,
--- 					placeName = "place2",
--- 				},
--- 			},		
--- 		},
--- 	},
--- }
-
 function waveClass:getWaves(waveIndex)
 	return waves[waveIndex] 
 end

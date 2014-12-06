@@ -1,7 +1,7 @@
 local waveClass = class("wave1_3", cc.mvc.ModelBase)
 
 local waves = {
-		{
+	{
 		enemys = {
 			{
 				time = 3,
@@ -56,7 +56,7 @@ local waves = {
 				property = {
 					type = "jin",
 					placeName = "place5",  
-					id = 1,
+					id = 8,
 				},
 			},
 			{
@@ -67,7 +67,7 @@ local waves = {
 				property = {
 					type = "jin",
 					placeName = "place6",  
-					id = 1,
+					id = 8,
 				},
 			},
 			{

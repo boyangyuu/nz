@@ -374,7 +374,7 @@ function FightPlayer:onBtnFire()
 end
 
 function FightPlayer:onCancelledFire()
-    print("FightPlayer:onCancelledFire()")
+    -- print("FightPlayer:onCancelledFire()")
     self.gunView:stopFire()
     self.focusView:stopFire()
     
@@ -401,7 +401,7 @@ function FightPlayer:checkBtnJu(point,eventName)
 end
 
 function FightPlayer:onTouchMoved(event)
-    print("FightPlayer:onTouchMoved(event)")
+    -- print("FightPlayer:onTouchMoved(event)")
     -- dump(event, "onTouchMoved")
     if self.isPause then return end
     local  x, y, prevX, prevY 

@@ -33,8 +33,8 @@ end
 function Gun:getBulletNum()
 	assert(self.config.bulletNum, "bulletNum is nil id:"..self.config.id)
 	local inlayScale = 1.0 -- 改为inlaymodel
-	return 4
-	-- return self.config.bulletNum * inlayScale	
+	-- return 4
+	return self.config.bulletNum * inlayScale	
 end
 
 function Gun:getReloadTime()

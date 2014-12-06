@@ -177,14 +177,13 @@ function MapView:addEnemy(property, pos, zorder)
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
 	property.scale = scale:getScaleX() 
-	property.scale = 0.5
+	-- property.scale = 0.5
 	--enemy 改为工厂
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
-	math.newrandomseed()
 	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	

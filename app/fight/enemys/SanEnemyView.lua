@@ -75,7 +75,7 @@ function SanEnemyView:stopFall()
         pos = cc.p(self:getPositionX(), self:getPlaceBound().y),
         delay = 0,
         property = {
-                id = self.property.id,
+                id = self.property.enemyId,
                 placeName = self.property.placeName,
                 },
         }

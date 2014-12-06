@@ -76,7 +76,7 @@ function Hero:setLevelId()
 end
 
 function Hero:getLevelId()
-    return 2
+    return 5
 
 end
 

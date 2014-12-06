@@ -447,7 +447,7 @@ function HeroView:startGuide()
     }
     self.guide:addClickListener(data1)  
 
-    self.guide:doGuide("fight", 1) --todo改check
+    -- self.guide:doGuide("fight", 1) --todo改check
 end
 
 return HeroView
