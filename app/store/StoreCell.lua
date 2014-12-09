@@ -1,7 +1,7 @@
 local ScrollViewCell = import("..includes.ScrollViewCell")
 local StoreModel = import(".StoreModel")
 local InlayModel = import("..inlay.InlayModel")
-local PropModel = import(".PropModel")
+local PropModel = import(".propModel")
 local UserModel = import("..homeBar.UserModel")
 
 local StoreCell = class("StoreCell", ScrollViewCell)

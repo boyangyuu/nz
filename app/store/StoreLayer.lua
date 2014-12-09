@@ -36,7 +36,6 @@ function StoreLayer:initUI()
 	btnprop:setTouchEnabled(true)
 	btnbank:setTouchEnabled(true)
 	btninlay:setTouchEnabled(true)
-    btnprop.isTouchMoved_ = false
     btnprop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then                
                 return true

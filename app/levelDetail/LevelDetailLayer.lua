@@ -3,6 +3,8 @@ import("..includes.functionUtils")
 local LevelDetailModel = import(".LevelDetailModel")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local FightPlayer = import("..fight.FightPlayer")
+local WeaponListModel = import("..weaponList.WeaponListModel")
+
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
@@ -11,6 +13,7 @@ end)
 function LevelDetailLayer:ctor(index1, index2)
 	--model
 	self.model = app:getInstance(LevelDetailModel)
+	self.weaponListModel = app:getInstance(WeaponListModel)
 
 	self:loadCCS()
 	self:initUI()
@@ -28,16 +31,28 @@ function LevelDetailLayer:initUI()
 	-- seek label
 	self.labelTitle    = cc.uiloader:seekNodeByName(self, "label_title")
 	self.labelId       = cc.uiloader:seekNodeByName(self, "label_id")
-	self.labelTask     = cc.uiloader:seekNodeByName(self, "label_task")
-	self.labelEnemyNum = cc.uiloader:seekNodeByName(self, "label_total")
+	self.labeldesc     = cc.uiloader:seekNodeByName(self, "label_desc")
 	self.labelTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
+	self.labelget = cc.uiloader:seekNodeByName(self, "levelget")
+	self.panelbiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
 
 	-- seek layer for image
-	self.layerMap   = cc.uiloader:seekNodeByName(self, "layer_mapimage")
-	self.layerBibei = cc.uiloader:seekNodeByName(self, "layer_bibei")
-	self.layerGold  = cc.uiloader:seekNodeByName(self, "layer_gold")
-	self.layerJijia = cc.uiloader:seekNodeByName(self, "layer_jijia")
+	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
+	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")
 
+
+	local dansedijj = cc.uiloader:seekNodeByName(self, "dansedijj")
+	local dansejj = cc.uiloader:seekNodeByName(self, "dansejj")	
+	local dansedihw = cc.uiloader:seekNodeByName(self, "dansedihw")
+	local dansehw = cc.uiloader:seekNodeByName(self, "dansehw")
+	local danseditj = cc.uiloader:seekNodeByName(self, "danseditj")
+	local dansetj = cc.uiloader:seekNodeByName(self, "dansetj")
+	dansedijj:setColor(cc.c3b(249,0,255))
+	dansejj:setColor(cc.c3b(249,0,255))
+	dansedihw:setColor(cc.c3b(255,208,0))
+	dansehw:setColor(cc.c3b(255,208,0))
+	danseditj:setColor(cc.c3b(0,255,198))
+	dansetj:setColor(cc.c3b(0,255,198))
 	-- set touch enable
 	btnOff   :setTouchEnabled(true)
 	btnStart :setTouchEnabled(true)
@@ -111,7 +126,7 @@ end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
-	self.model:levelPass()
+	self.model:setsuipian(5)
 end
 
 function LevelDetailLayer:onClickBtnGold()
@@ -123,38 +138,45 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 ---- initData ----
-function LevelDetailLayer:initData(gropID,levelID)
-	local DataTable = self.model:getConfig(gropID,levelID)
+function LevelDetailLayer:initData(groupID,levelID)
+	local DataTable = self.model:getConfig(groupID,levelID)
 
 	--Label
 
-	self.labelTitle:setString(DataTable["guanqiaName"])
-	self.labelId:setString(DataTable["daguanqia"].."-"..DataTable["xiaoguanqia"])
-	self.labelTask:setString(DataTable["task"])
-	self.labelEnemyNum:setString("共"..DataTable["enemyNum"].."波")
-	self.labelTasktype:setString(DataTable["taskType"])
+	self.labelTitle:setString(DataTable["name"])
+	self.labelId:setString(DataTable["groupId"].."-"..DataTable["levelId"])
+	self.labeldesc:setString(DataTable["desc"])
+	self.labelTasktype:setString(DataTable["taskTypeDesc"])
+	self.labelget:setVisible(false)
+	self.panelbiaozhu:setVisible(false)
+	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(DataTable["suipianid"])
+	if DataTable["type"] == "boss" and isWeaponAlreadyTogether == false then
+		self.labelget:setVisible(true)
+		self.panelbiaozhu:setVisible(true)
+		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
+			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
+	end
 
+	local mapSrcName = "map_"..groupID.."_"..levelID..".json"   -- todo 外界
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
-	--Image
-	--map从所有map里找寻，配表内填写为地图名，待修改
-	--gun从所有gun里找寻，配表内填写为枪名，待修改
-	local mapImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["mapxiaoImg"]..".png")
-	local jijiaImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["jijia"]..".png")
-	local goldImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["gold"]..".png")
-	local weaponImg=cc.ui.UIImage.new("LevelDetail/"..DataTable["weapon"]..".png")
+    local node = cc.uiloader:load(mapSrcName)
+	local map = node
+	map:setScale(0.47, 0.48)
+	local mapimg = cc.uiloader:seekNodeByName(self, "mapimage")
+	mapimg:addChild(map)
 
-	addChildCenter(mapImg   , self.layerMap)
-	addChildCenter(jijiaImg , self.layerJijia)
-	addChildCenter(goldImg  , self.layerGold)
-	addChildCenter(weaponImg, self.layerBibei)
+	local weaponimg = display.newSprite("#icon_"..DataTable["weapon"]..".png")
+	weaponimg:setScale(0.56)
+	local bibeiimg = cc.uiloader:seekNodeByName(self, "bibeiimg")
+	addChildCenter(weaponimg, bibeiimg)
 end
 
 
 function LevelDetailLayer:loadCCS()
 	-- load control bar
-	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
-	local controlNode = cc.uiloader:load("LevelDetail.json")
-	-- controlNode:setPosition(0, 0)
+	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail/guanqiapingjia")
+	local controlNode = cc.uiloader:load("guanqiakaishi.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 end

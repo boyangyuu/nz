@@ -63,19 +63,13 @@ function InlayListCell:initCellUI(record)
 
     btnbuy:setTouchEnabled(true)
     btnload:setTouchEnabled(true)
-    btnbuy.isTouchMoved_ = false
-    btnload.isTouchMoved_ = false
     addBtnEventListener(btnbuy, function(event)
             if event.name=='began' then
                 return true
             elseif event.name == "moved" then
-                btnbuy.isTouchMoved_ = true
             elseif event.name=='ended' then
-                if btnbuy.isTouchMoved_ == false then
-                    if self.userModel:costMoney(record["goldPrice"]) then
-                        self.inlayModel:buyInlay(record["id"])
-                    end
-                end
+                -- if self.userModel:costMoney(record["goldPrice"]) then
+                    self.inlayModel:buyInlay(record["id"])
                 btnbuy.isTouchMoved_ = false
             end
         end)

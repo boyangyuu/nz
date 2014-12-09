@@ -31,6 +31,12 @@ function WeaponListModel:getIntenlevel(weaponid)
 	return 0
 end
 
+function WeaponListModel:getWeaponNameByID(weaponid)
+	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
+	local WeaponName = record[1]["name"]
+	return WeaponName
+end
+
 function WeaponListModel:getWeaponProperity(weaponid,level)
 	--bullet accuracy reload damage
 	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
@@ -55,16 +61,20 @@ function WeaponListModel:getWeaponProperity(weaponid,level)
 	return property
 end
 
-function WeaponListModel:buyWeapon(weaponid)
+function WeaponListModel:setWeapon(weaponid)
 	if self:isWeaponExist(weaponid)  then
-        print("已购买")
+        print("已拥有")
     else
     	local intensify = {weaponid = weaponid,intenlevel = 0}
 	    local data = getUserData()
 	    table.insert(data.weapons.bags, intensify)
 	    setUserData(data)
-	    dump(GameState.load())
+	    -- dump(GameState.load())
     end 
+end
+
+function WeaponListModel:buyWeapon(weaponid)
+	self:setWeapon(weaponid)
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 end
 
