@@ -110,6 +110,7 @@ function InlayModel:replaceInlayed(inlayid)
 	    setUserData(data)
 end
 
+
 function InlayModel:oneForAllBtn()
 	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
 	local data = getUserData()
