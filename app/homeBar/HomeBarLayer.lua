@@ -5,41 +5,55 @@ import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
-local HomeModel = import(".HomeModel")
+local StoreLayer = import("..store.StoreLayer")
+local UserModel = import(".UserModel")
 local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
 
 function HomeBarLayer:ctor()
-    self:loadAllImg()
+    self.usermodel = app:getInstance(UserModel)
+    cc.EventProxy.new(self.usermodel , self)
+        :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
+        :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
+    self:addPlistRes("allImg0")
 
-    self:addEventProtocolListener()
     self:loadCCS()
     self:initHomeLayer()
+    self:refreshMoney()
     self:initCommonLayer()
 end
 
-function HomeBarLayer:addEventProtocolListener()
-    app:getInstance(HomeModel):addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
-end
 
 function HomeBarLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/biaotou")
     local rootNode = cc.uiloader:load("biaotou.ExportJson")
     self:addChild(rootNode)
-    self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "homeLayer")
-    self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonLayer")
+    self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "biaotou")
+    self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonlayer")
 end
 
-function HomeBarLayer:initHomeLayer()
-    local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_setting")
-    local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_back")
-    local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_buyCoin")
-    local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_arsenal")
-    local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_inlay")
-    local btnShop = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_shop")
-    self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "homeLayer")
+function HomeBarLayer:refreshMoney()
+    local btnMoney = cc.uiloader:seekNodeByName(self.homeRootNode, "money")
+    btnMoney:setString( self.usermodel:getMoney())
+    local btnDiamond = cc.uiloader:seekNodeByName(self.homeRootNode, "diamond")
+    btnDiamond:setString( self.usermodel:getDiamond())
+end   
 
+function HomeBarLayer:initHomeLayer()
+    local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
+    local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
+    -- local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_buyCoin")
+    local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btnarsenal")
+    local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btninlay")
+    local btnStore = cc.uiloader:seekNodeByName(self.homeRootNode, "btnstore")
+    self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
+    btnBack:setTouchEnabled(true)  
+    btnArsenal:setTouchEnabled(true) 
+    btnInlay:setTouchEnabled(true)  
+    btnStore:setTouchEnabled(true)  
+    btnSetting:setTouchEnabled(true)  
+    
     btnBack:setVisible(false)
     
     addBtnEventListener(btnSetting, function(event)
@@ -63,14 +77,14 @@ function HomeBarLayer:initHomeLayer()
             self:initCommonLayer()
         end
     end)
-    addBtnEventListener(btnBuyCoin, function(event)
-        if event.name=='began' then
-            -- print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            -- print("Btn is pressed!")
-        end
-    end)
+    -- addBtnEventListener(btnBuyCoin, function(event)
+    --     if event.name=='began' then
+    --         -- print("Btn is begining!")
+    --         return true
+    --     elseif event.name=='ended' then
+    --         -- print("Btn is pressed!")
+    --     end
+    -- end)
     addBtnEventListener(btnArsenal, function(event)
         if event.name=='began' then
             -- print("Btn is begining!")
@@ -98,12 +112,17 @@ function HomeBarLayer:initHomeLayer()
             self.commonRootNode:addChild(inlayLayer)
         end
     end)
-    addBtnEventListener(btnShop, function(event)
+    addBtnEventListener(btnStore, function(event)
         if event.name=='began' then
             -- print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            -- print("Btn is pressed!")
+            btnSetting:setVisible(false)
+            btnBack:setVisible(true)
+
+            self.commonRootNode:removeAllChildren()
+            local StoreLayer = StoreLayer.new()
+            self.commonRootNode:addChild(StoreLayer)       
         end
     end)
 end
@@ -113,16 +132,19 @@ function HomeBarLayer:initCommonLayer()
     self.commonRootNode:addChild(levelMapRootNode)
 end
 
-function HomeBarLayer:loadAllImg()
-    self.imgRootNode = cc.uiloader:load("AllImg/allImg.json")
-    -- print(".......HomeBarLayer:loadAllImg()")
-end
-
 function HomeBarLayer:getImgByName(fileName)
     -- dump(self.imgRootNode, ".........imgRootNode")
     -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
     return file
+end
+
+function HomeBarLayer:addPlistRes(srcname)
+
+    local plist = string.format("%s.plist", srcname)
+    local name = string.format("%s.png", srcname)
+     
+    display.addSpriteFrames(plist, name)     
 end
 
 function HomeBarLayer:homeBarAction()

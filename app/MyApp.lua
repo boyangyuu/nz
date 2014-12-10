@@ -74,11 +74,8 @@ function MyApp:initGameState()
         return returnValue
     end, "data.txt","1234")
     if io.exists(GameState.getGameStatePath()) then
-        print("dasfadfdf")
         GameData=GameState.load()
     else
-                print("5464536146846")
-
         self:createGameStateFile()
         GameData=GameState.load()
     end
@@ -121,16 +118,26 @@ function MyApp:createGameStateFile()
                                    helper = {}, 
                         },
             },
+            prop = {
+                            lei = {num = 0},
+                            jijia = {num = 0},
+                            goldweapon = {num = 0},
+            },
+       
+            weaponsuipian = {},
+            money = 12000000,
+            diamond = 1000000,
+                      
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 5,
             },
             guide = {
                         fight = false,
             },
     }
     GameState.save(data)
-    dump(GameState.load(), "GameState.load()")
+    -- dump(GameState.load(), "GameState.load()")
 end
 
 

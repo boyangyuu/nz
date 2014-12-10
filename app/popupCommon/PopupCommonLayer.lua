@@ -32,13 +32,13 @@ function PopupCommonLayer:onExit()
 	})
 end
 
-function PopupCommonLayer:loadAllImg()
-	print("......PopupCommonLayer:loadAllImg()")
-    self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.json")
-end
+-- function PopupCommonLayer:loadAllImg()
+-- 	print("......PopupCommonLayer:loadAllImg()")
+--     self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.json")
+-- end
 
 function PopupCommonLayer:getImgByName(fileName)
-	dump(self.imgRootNode, "......self.imgRootNode")
+	-- dump(self.imgRootNode, "......self.imgRootNode")
     local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
     return file
 end

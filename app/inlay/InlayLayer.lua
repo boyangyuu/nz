@@ -7,6 +7,8 @@ local InlayLayer = class("InlayLayer", function()
 end)
 
 function InlayLayer:ctor()
+    print("inlayLayer ctor()")
+
     self.inlayModel = app:getInstance(InlayModel)
 
     cc.EventProxy.new(self.inlayModel , self)
@@ -23,10 +25,14 @@ function InlayLayer:ctor()
 end
 
 function InlayLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/InlayShop/")
-	local controlNode = cc.uiloader:load("xiangqian_main.json")
+    cc.FileUtils:getInstance():addSearchPath("res/InlayShop")
+    local controlNode = cc.uiloader:load("xiangqian.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
+
+    display.addSpriteFrames("xiangqian0.plist", "xiangqian0.png")
+
+
 end
 
 function InlayLayer:onEnter()
@@ -39,9 +45,9 @@ function InlayLayer:refreshInlay(event)
     self:refreshListView(event.typename)
 end
 function InlayLayer:initUI()
-    self.rootListView = cc.uiloader:seekNodeByName(self, "listView")
-    local oneForAllBtn = cc.uiloader:seekNodeByName(self, "oneForAllBtn")
-    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "goldWeaponBtn")
+    self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
+    local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
+    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
     oneForAllBtn:setTouchEnabled(true)
     goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(oneForAllBtn, function(event)
@@ -54,7 +60,7 @@ function InlayLayer:initUI()
 
     addBtnEventListener(goldWeaponBtn, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
+            -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             local data = getUserData()
@@ -64,7 +70,7 @@ function InlayLayer:initUI()
                 end
             end
             setUserData(data)
-            dump(GameState.load())
+            -- dump(GameState.load())
             self:refreshBtnIcon()
         end
     end)
@@ -83,13 +89,13 @@ function InlayLayer:initUI()
 end
 
 function InlayLayer:refreshListView(index)
-    self:removeAllItems(self.rootListView)
+    removeAllItems(self.rootListView)
     local table = self.inlayModel:getConfigTable("type", index)
     for i=1,#table do
     	local item = self.rootListView:newItem()
     	local content = InlayListCell.new(table[i])
     	item:addContent(content)
-        item:setItemSize(530, 160)
+        item:setItemSize(550, 165)
     	self.rootListView:addItem(item)
     end
     self.rootListView:reload()
@@ -97,24 +103,17 @@ end
 
 function InlayLayer:refreshBtnIcon()
     local allInlayed = self.inlayModel:getAllInlayed()
-    dump(allInlayed)
     for k,v in pairs(self.btn) do
         self.btn[k]:removeAllChildren()
     end
     for k,v in pairs(allInlayed) do
         local table = self.inlayModel:getConfigTable("id", v.index)
-        local img = cc.ui.UIImage.new(table[1]["imgnam"]..".png")
+        local img =  display.newSprite("#"..table[1]["imgnam"]..".png")
         addChildCenter(img,self.btn[v.typename])
     end
 
 end
 
-function InlayLayer:removeAllItems(listView)
-	local itemsNum_ = table.nums(listView.items_)
-    for i=1,itemsNum_ do
-        listView:removeItem(listView.items_[1],false)
-    end
-    return listView
-end
+
 
 return InlayLayer

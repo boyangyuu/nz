@@ -45,7 +45,7 @@ function InlayModel:buyInlay(inlayid)
 	    table.insert(data.inlay.bags, inlay)
 	end
     setUserData(data)
-    dump(GameState.load())
+    -- dump(GameState.load())
     self:refreshInfo(self:getInlayType(inlayid))
 end
 
@@ -110,34 +110,33 @@ function InlayModel:replaceInlayed(inlayid)
 	    setUserData(data)
 end
 
+
 function InlayModel:oneForAllBtn()
+	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
 	local data = getUserData()
-	local bestBullet,bestClip,bestSpeed,bestAim,bestBlood,bestHelper = 0,0,0,0,0,0
+	local allinlayed = self:getAllInlayed()
 	local bags = {}
 	for k,v in pairs(data.inlay.bags) do
 		bags[k] = v
 	end
-	-- local allinlayed = self:getAllInlayed()
 	for k,v in pairs(bags) do
-		self:getBestInlay(v.inlayid)
-	end
-	self:refreshInfo("speed")
-    dump(GameState.load())
-end
-
-function InlayModel:getBestInlay(inlayid)
-	local allinlayed = self:getAllInlayed()
-	local bestInlay = {bullet=0,clip=0,speed=0,aim=0,blood=0,helper=0}
-	local typename = self:getInlayType(inlayid)
-	if inlayid > bestInlay[typename] then
-		bestInlay[typename] = inlayid
-	end
-	for k,v in pairs(allinlayed) do
-		if v.typename == typename and bestInlay[typename] < v.index then
-			bestInlay[typename] = v.index
+		local typename = self:getInlayType(v.inlayid)
+		if v.inlayid < bestInlay[typename] then
+			bestInlay[typename] = v.inlayid
+		end
+		for k1,v1 in pairs(allinlayed) do
+			if v1.typename == typename and bestInlay[typename] > v1.index then
+				bestInlay[typename] = v1.index
+			end
 		end
 	end
-	self:equipInlay(bestInlay[typename], false)
+	for k,v in pairs(bestInlay) do
+		if v ~= 100 then
+			self:equipInlay(v, false)
+		end
+	end
+	self:refreshInfo("speed")
+	dump(bestInlay)
 end
 
 function InlayModel:isBagsExist(inlayid)
@@ -149,6 +148,32 @@ function InlayModel:isBagsExist(inlayid)
 	end
 	return false
 end
+
+function InlayModel:BestInlayInTable(table)
+	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
+	for k,v in pairs(table) do
+		local typename = self:getInlayType(v.inlayid)
+		if v.inlayid < bestInlay[typename] then
+			bestInlay[typename] = v.inlayid
+		end
+	end
+	
+	for k,v in pairs(bestInlay) do
+		if v ~= 100 then
+			dump(v)
+			self:equipInlay(v, false)
+		end
+	end
+
+end
+
+-- function InlayModel:equipInlaysInTable(table)
+-- 	local data = getUserData()
+-- 	for k,v in pairs(table) do
+-- 		self:equipInlay(v["inlayid"],false)
+-- 	end
+--     dump(GameState.load())
+-- end
 
 function InlayModel:isInlayedExist(inlayid)
 	local data = getUserData()
@@ -175,15 +200,14 @@ function InlayModel:getAllInlayed()
 	local data = getUserData()
 	local allInlayed = {}
     for k,v in pairs(data.inlay.inlayed) do
-		local inlaydata = data.inlay.inlayed[k]
-		local inlayedData = inlaydata[1]
+		local inlayedData = v[1]
 		if inlayedData ~= nil then
 			--todo
 			table.insert(allInlayed,{index = inlayedData.inlayid,typename = k})
 		end
 	end
+	dump(allInlayed)
 	return allInlayed
-
 end
 
 return InlayModel
