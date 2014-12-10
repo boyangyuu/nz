@@ -70,8 +70,8 @@ function InlayListCell:initCellUI(record)
             elseif event.name=='ended' then
                 -- if self.userModel:costMoney(record["goldPrice"]) then
                     self.inlayModel:buyInlay(record["id"])
-                btnbuy.isTouchMoved_ = false
             end
+            return false
         end)
     addBtnEventListener(btnload, function(event)
             if event.name=='began' then
