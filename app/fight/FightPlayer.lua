@@ -117,7 +117,7 @@ function FightPlayer:initUI()
 
     self:addArmatureFile()
 
-    scheduler.performWithDelayGlobal(handler(self, self.startGuide), 0.01)
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
 end
 
 --启动盾牌恢复
@@ -270,7 +270,7 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkbtnDefence(point)
         if isTouch then return true end 
 
-        isTouch = self:checkbtnLei(point)
+        isTouch = self:checkBtnLei(point)
         if isTouch then return true end
 
         isTouch = self:checkBtnJu(point)
@@ -309,7 +309,7 @@ function FightPlayer:checkbtnDefence(point)
     return isTouch
 end
 
-function FightPlayer:checkbtnLei(point)
+function FightPlayer:checkBtnLei(point)
     assert( point, "invalid parames")
     local rect = self.btnLei:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
@@ -365,7 +365,8 @@ function FightPlayer:onBtnFire()
     self.btnArmature:getAnimation():playWithIndex(0 , -1, 1)
     local function animationEvent(armatureBack,movementType,movementID)
         if movementType == ccs.MovementEventType.loopComplete then
-
+            self.btnArmature:removeFromParent()
+            self.btnArmature = nil
         end
     end
 
@@ -374,7 +375,7 @@ function FightPlayer:onBtnFire()
 end
 
 function FightPlayer:onCancelledFire()
-    print("FightPlayer:onCancelledFire()")
+    -- print("FightPlayer:onCancelledFire()")
     self.gunView:stopFire()
     self.focusView:stopFire()
     
@@ -383,9 +384,9 @@ function FightPlayer:onCancelledFire()
         scheduler.unscheduleGlobal(self.btnFireSch)
     end
 
-    --anim
-    self.btnArmature:removeFromParent()
-    self.btnArmature = nil
+    -- --anim
+    -- self.btnArmature:removeFromParent()
+    -- self.btnArmature = nil
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
@@ -401,7 +402,7 @@ function FightPlayer:checkBtnJu(point,eventName)
 end
 
 function FightPlayer:onTouchMoved(event)
-    print("FightPlayer:onTouchMoved(event)")
+    -- print("FightPlayer:onTouchMoved(event)")
     -- dump(event, "onTouchMoved")
     if self.isPause then return end
     local  x, y, prevX, prevY 
@@ -530,6 +531,7 @@ function FightPlayer:addArmatureFile()
     local function dataLoaded()
         print(" dataLoaded()")
     end    
+
     local manager = ccs.ArmatureDataManager:getInstance()
     for i,v in ipairs(enemyImgs) do
         print(i,v)
@@ -538,25 +540,42 @@ function FightPlayer:addArmatureFile()
     end      
 end
 
-function FightPlayer:startGuide()
+function FightPlayer:initGuide()
     --check   
     local isDone = self.guide:check("fight")
     if isDone then return end
 
     --move
+    local isMoveGuideUnDone = true
     self.guide:addClickListener({
         id = "fight_move",
-        touchType = "moved",
         groupId = "fight",
         rect = self.btnJu:getBoundingBox(),
         endfunc = function (touchEvent)
-            self.guide:doGuideNext()
+            if touchEvent.name == "moved" and isMoveGuideUnDone then
+                isMoveGuideUnDone = false
+                print("ight_mov self.guide:doGuideNext()")
+                self.focusNode:moveBy(1.0, 0, -40)
+                self.guide:doGuideNext()
+                self.guide:hideGuideForTime(2.0)
+            end
         end
      })
     
-    --换枪
+    --开枪1次
     self.guide:addClickListener({
-        id = "fight_fire",
+        id = "fight_fire1",
+        groupId = "fight",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self.gunView:fire()
+            self.hero:fire()
+        end
+    })  
+
+    --开枪1秒
+    self.guide:addClickListener({
+        id = "fight_fire2",
         groupId = "fight",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
@@ -570,15 +589,39 @@ function FightPlayer:startGuide()
         groupId = "fight",
         rect = self.btnLei:getBoundingBox(),
         endfunc = function (touchEvent)
-            -- self:onGuideFire(touchEvent)
+            for id, point in pairs(touchEvent.points) do
+                self:checkBtnLei(point)
+            end
         end
-    })      
+    })  
 
-    --self.guide:addClickListener(data)
+    --换枪
+    self.guide:addClickListener( {
+        id = "fight_change",
+        groupId = "fight",
+        rect = self.btnChange:getBoundingBox(),
+        endfunc = function (touchEvent)
+            for id, point in pairs(touchEvent.points) do
+                self:checkBtnChange(point)
+            end
+        end
+    })     
+
+    --结束
+    self.guide:addClickListener( {
+        id = "fight_finish",
+        groupId = "fight",
+        rect = cc.rect(0, 0, display.width, display.height),
+        endfunc = function (touchEvent)
+
+        end
+    })     
+
 end
 
 local time_begin = nil
-local sch
+local schGuideFire
+local isGuideFireBegin = false
 function FightPlayer:onGuideFire(touchEvent)
     print("os.time()", os.time())
     local name = touchEvent.name
@@ -586,26 +629,31 @@ function FightPlayer:onGuideFire(touchEvent)
     --检查长按时间
     local function onGuideFireCheckFunc()
         local timeNow = os.time()
-        if time_begin and (timeNow - time_begin) >=  2 then 
+        if time_begin and (timeNow - time_begin) >=  1.0 then 
             print("长按射击引导完成")
-            scheduler.unscheduleGlobal(sch)
+            print("time_begin:", time_begin)
+            scheduler.unscheduleGlobal(schGuideFire)
             self:onCancelledFire()
             self.guide:doGuideNext()
+            self.guide:hideGuideForTime(2.0)
         end
     end
 
     --开始计时
-    if name == "began" then
+    if name == "began"  then
         print("开始计时") 
+        isGuideFireBegin = true
         time_begin = os.time()
-        sch = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
+        schGuideFire = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
     end
 
     --停止计时
-    if name == "ended" or name == "cancelled" then 
+    if name == "ended" or name == "cancelled" then
+        if isGuideFireBegin == false then return end 
         print("停止计时")
-        if sch then 
-            scheduler.unscheduleGlobal(sch)
+        time_begin = nil
+        if schGuideFire then 
+            scheduler.unscheduleGlobal(schGuideFire)
         end
     end
 
@@ -614,9 +662,6 @@ function FightPlayer:onGuideFire(touchEvent)
         print("name", name)
         self:checkBtnFire(id, point,name)
     end
-
 end
-
-
 return FightPlayer
 

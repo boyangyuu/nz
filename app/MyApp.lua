@@ -98,8 +98,8 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 3 ,           
                                     },
-                                },
-                    weaponed = {
+                        },
+                        weaponed = {
                                 bag1 =  {
                                         intenlevel = 0,
                                         weaponid   = 2,
@@ -108,24 +108,27 @@ function MyApp:createGameStateFile()
                                         intenlevel = 0,
                                         weaponid   = 3,
                                         }
-                                }
-                      }, 
-              inlay = {
+                        },
+            }, 
+            inlay = {
                         bags = {}, 
-                    inlayed  = {
+                        inlayed  = {
                                    bullet = {},
                                    clip = {},
                                    speed = {},
                                    aim = {},
                                    blood = {},
                                    helper = {}, 
-                                }
-                      },
-        currentlevel = {
-                            group = 1,
-                            level = 1,
-                        } 
-           }
+                        },
+            },
+            currentlevel =  {
+                        group = 1,
+                        level = 1,
+            },
+            guide = {
+                        fight = false,
+            },
+    }
     GameState.save(data)
     dump(GameState.load(), "GameState.load()")
 end

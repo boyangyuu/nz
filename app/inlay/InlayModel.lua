@@ -86,7 +86,7 @@ function InlayModel:equipInlay(inlayid, Refresh)
 	end
     
     setUserData(data)
-    dump(GameState.load())
+    -- dump(GameState.load())
 end
 
 function InlayModel:replaceInlayed(inlayid)

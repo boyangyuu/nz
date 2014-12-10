@@ -43,7 +43,7 @@ end
 function Attackable:testStop(event)
 	if self:getDeadDone() then return end
 	local isPause = event.isPause
-	print("testStop", isPause)
+	-- print("testStop", isPause)
 	self.isPause = isPause
 	local actionManager = cc.Director:getInstance():getActionManager()
 	local tAnimation = self.armature:getAnimation()
@@ -205,6 +205,7 @@ function Attackable:checkPlace(offset)
 	-- dump(pWorld2, "pWorld2")
 	local scale = self:getScale()
 	local bound2  = bodyNode:getBoundingBox()
+	-- print("offset", offset)
 	local xLeft   = pWorld2.x - bound2.width/2 * scale + offset
 	local xRight  = pWorld2.x + bound2.width/2 * scale + offset
 	-- print("xLeft", xLeft)
@@ -294,19 +295,6 @@ function Attackable:getEnemyArmature()
     local config = self.enemy:getConfig()
     assert(config, "config is nil")
     local imgName = config["image"]
-    local armature = ccs.Armature:create(imgName)
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-    return armature		
-end
-
-function Attackable:getEnemyArmature()
-    if self.armature then return self.armature end 
-    --armature
-    local config = self.enemy:getConfig()
-    assert(config, "config is nil")
-    local imgName = config["image"]
-    assert(imgName)
-    print("imgName",imgName)
     local armature = ccs.Armature:create(imgName)
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature		

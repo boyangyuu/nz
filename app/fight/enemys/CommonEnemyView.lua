@@ -13,24 +13,32 @@ local BaseEnemyView = import(".BaseEnemyView")
 local CommonEnemyView = class("CommonEnemyView", BaseEnemyView)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
-local kWalkWidth = 20
-local kRollWidth = 100
+local kWalkWidth = 140
+local kRollWidth = 200
 
 function CommonEnemyView:ctor(property)
 	CommonEnemyView.super.ctor(self, property) 
 
     --test
     self:test()
+
+    local function callStart()
+    	self:playStartState(property.startState)
+    end
+    scheduler.performWithDelayGlobal(callStart, 0.01)
 end
 
 ---- state ----
 function CommonEnemyView:playStartState(state)
 	if state == "rollleft" then 
-		self:play("playRollLeft", handler(self, self.playRollLeft))
+		self:playRollLeft()
+		-- self:play("playRollLeft", handler(self, self.playRollLeft))
 	elseif state == "rollright" then
-		self:play("playRollRight", handler(self, self.playRollRight))
+		self:playRollRight()
+		-- self:play("playRollRight", handler(self, self.playRollRight))
 	else 
-		self:play("playStand", handler(self, self.playStand))
+		self:playStand()
+		-- self:play("playStand", handler(self, self.playStand))
 	end
 end
 
@@ -100,7 +108,6 @@ function CommonEnemyView:tick(t)
 	--change state
 	--fire
 	local fireRate = self.enemy:getFireRate()
-	local randomSeed  
 	-- math.newrandomseed()
 	assert(fireRate > 1, "invalid fireRate")
 	randomSeed = math.random(1, fireRate)

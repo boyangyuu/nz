@@ -4,7 +4,7 @@
 import("..includes.functionUtils")
 
 local LayerColor_BLACK = cc.c4b(0, 0, 0, 100)
-
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
 local Hero = import("..fight.Hero")
 local GuideLayer = class("GuideLayer", function()
@@ -20,18 +20,21 @@ function GuideLayer:ctor()
 	self.hero = app:getInstance(Hero)
 	--
 	self:setVisible(false)
+	self.isWaiting = false
 	--ui
+	self:loadCCS()
 
 	--event
-	cc.EventProxy.new(self.guide, self):
-		addEventListener(Guide.GUIDE_SHOW_EVENT, handler(self, self.start))
-
+	cc.EventProxy.new(self.guide, self)
+		:addEventListener(Guide.GUIDE_START_EVENT, handler(self, self.start))
+		:addEventListener(Guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
+		:addEventListener(Guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
 	--touch
     self:setTouchEnabled(true) 
-    self:setTouchCaptureEnabled(true)
+    -- self:setTouchCaptureEnabled(true)
     self:setTouchSwallowEnabled(true) 
     self:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)		
-    self:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT,handler(self, self.onTouch))
+    self:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouch))
 end
 
 function GuideLayer:onTouch(event)
@@ -84,24 +87,57 @@ function GuideLayer:onMutiTouchEnd(event)
 end
 
 function GuideLayer:onTouchTarget(event)
+	--
+	if self.isWaiting then return end
+	if event == nil then return end
+
 	--调用监听者的回调函数
 	local listenData = self.guide:getCurData()
-	if listenData.touchType then
-		if listenData.touchType ~= event.name then 
-			return 
-		end
+	local cfg = self.guide:getCurConfig()
+	-- dump(cfg, "cfg")
+	-- dump(event, "event")
+
+	--检查是否是特殊事件监听
+	if event.name ~= "began" then
+		if cfg.touchType ~= "all" then return end
 	end
 
+	--endfunc
 	local endfunc = listenData.endfunc
 	assert(endfunc, "endfunc is nil stepid is:"..listenData.id)
-	print("endfunc excute eventname:"..event.name)
-	endfunc(event)
-
-	--config 是否点击立即next
-	local config = self.guide:getCurConfig()
-	if config.mode == "click" then
+	-- print("endfunc excute eventname:"..event.name)
+	
+	--do next
+	if cfg.skipMode ~= "condition" then
+		--回调
+		endfunc(event)
+		--自动跳下一步
 		self.guide:doGuideNext()
+		--hide
+		if cfg.skipDelay then
+			self.guide:hideGuideForTime(cfg.skipDelay)
+		end
+	else
+		--回调
+		endfunc(event)
 	end
+end
+
+function GuideLayer:hideForTime(event)
+	local delay = event.delay
+	local function restoreFunc()
+		self.bg:setVisible(true)
+		self.guideNode:setVisible(true)
+		self.isWaiting = false
+	end
+
+	--hide
+	self.guideNode:setVisible(false)
+	self.bg:setVisible(false)
+	self.isWaiting = true
+
+	--restore after time
+	scheduler.performWithDelayGlobal(restoreFunc, delay)	
 end
 
 function GuideLayer:getTargetRect()
@@ -118,7 +154,20 @@ function GuideLayer:isTouchTarget(pos)
 	return b
 end
 
+function GuideLayer:loadCCS()
+	--ui
+    self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
+    self:addChild(self.guideNode, 10)
+
+    --anim
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.ExportJson")
+    manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.ExportJson")
+end
+
 function GuideLayer:refreshUI()
+	local cfg = self.guide:getCurConfig()
+
 	--clear
 	if self.bg then 
 		self.bg:removeFromParent() 
@@ -127,36 +176,83 @@ function GuideLayer:refreshUI()
 
 	--highLight
 	local rect = self:getTargetRect()
+	local size = cc.size(rect.width, rect.height)
+	dump(rect, "rect")
 	local params = {fillColor = cc.c4f(0,0,0,0), 
-			borderColor = cc.c4f(0,33,33,0), 
+			borderColor = cc.c4f(0,0,0,0), 
 			borderWidth = 5}
 	local circle = display.newRect(rect, params) --todo改为九宫格
-
-	--render
+	local opacityCfg = cfg.opacity 
 	local render = cc.RenderTexture:create(display.width, display.height)
-	local opacity = 0.6 --透明度
-	render:clear(0, 0, 0, opacity)
+	local opacity = opacityCfg or 0.5 --透明度
+	render:clear(0.1, 0.1, 0.1, opacity)
 	render:begin()
 		circle:setBlendFunc(gl.DST_ALPHA, gl.ZERO)
 		circle:visit()
 	render:endToLua()
 
-	--add
+	--add bg
 	self.bg = cc.Sprite:createWithTexture(render:getSprite():getTexture())
 	self.bg:setAnchorPoint(0.0,0.0)
 	self.bg:flipY(true)
-	self:addChild(self.bg, 100)
+	self:addChild(self.bg)
+
+	--add hand
+	if self.armature then 
+		self.armature:removeFromParent()
+		self.armature = nil
+	end
+
+	--hand cfg
+	if cfg.hand == "move" then 
+		self.armature = ccs.Armature:create("yd_zyhua")
+		self.armature:getAnimation():play("yd_zyhua" , -1, 1)
+	elseif cfg.hand == "longtouch" then
+		self.armature = ccs.Armature:create("yd_dianji")
+		self.armature:getAnimation():play("yd_changan" , -1, 1)
+	else 
+		self.armature = ccs.Armature:create("yd_dianji")
+		self.armature:getAnimation():play("yd_dianji" , -1, 1)				
+	end
+	self.armature:setPosition(rect.x + rect.width/2,
+			rect.y + rect.height/2)	
+	self.guideNode:addChild(self.armature)
+end
+
+function GuideLayer:refreshCommentUI()
+	local cfg = self.guide:getCurConfig()
+
+	--guide offset
+	local contentNode = cc.uiloader:seekNodeByName(self.guideNode, "guide")
+	local offset = cfg.contentOffset or {x = 0, y = 0}
+	local pos = cc.p(display.width/2 + offset.x, 
+				display.height/2 + offset.y)
+	dump(pos, "")
+	contentNode:setPosition(pos)
+
+	--msg
+	local label_content =  cc.uiloader:seekNodeByName(self.guideNode, "label_content")
+	local msg = cfg.msg
+	assert(msg, "msg is nil")
+	label_content:setString(msg)
+	label_content:speak(0.1)
 end
 
 function GuideLayer:start(event)
 	print("function GuideLayer:start(event)")
 	self:setVisible(true)
-
+	if self.bg then self.bg:setVisible(true) end 
+	if self.guideNode then self.guideNode:setVisible(true) end 
 	self:refreshUI()
+	self:refreshCommentUI()
 end
 
-function GuideLayer:finish()
+function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
+	--clear
+
+	--visible
+	self:setVisible(false)
 end
 
 return GuideLayer

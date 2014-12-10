@@ -53,7 +53,7 @@ function HeroView:initUI()
 	self:initDefenceNode()
 	self:initKillTimerNode()
 
-	scheduler.performWithDelayGlobal(handler(self, self.startGuide), 0.01)
+	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
 end
 
 --获得UI.ExportJson数据
@@ -431,24 +431,26 @@ function HeroView:effectGunReload(event)
     self:addChild(armature, 1000)	
 end
 
-function HeroView:startGuide()
+function HeroView:initGuide()
     local isDone = self.guide:check("fight")
     if isDone then return end
 	
+	local rect = self.loadingBarHeroHp:getBoundingBox()
+	rect.height = rect.height * 3
+	rect.y = rect.y - rect.height * 0.5
 	--blood
     local data1 = {
         id = "fight_blood",
         groupId = "fight",
-        touchType = "began",
-        rect = self.loadingBarHeroHp:getBoundingBox(),
+        rect = rect,
         endfunc = function (touchEvent)
-	        dump(touchEvent, "touchEvent")
-            print("fight_blood 结束")
+        	
         end
     }
     self.guide:addClickListener(data1)  
 
-    -- self.guide:startGuide("fight") --todo改check
+    self.guide:startGuide("fight") --todo改check
+
 end
 
 return HeroView

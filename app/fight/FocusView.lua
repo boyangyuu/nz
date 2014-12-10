@@ -67,7 +67,7 @@ end
 function FocusView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
 		if id == "fire01" then
-
+			
     	elseif id == "fire02" then
 
     	end
