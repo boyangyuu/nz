@@ -64,7 +64,6 @@ end
 function BaseEnemyView:playAfterAlert(type,handler)
 	self:showAlert()
 	local alertAfterFunc = function ()
-		print("self:play(type, handler)")
 		self:play(type, handler)
 	end
 	self.alertAfter = scheduler.performWithDelayGlobal(alertAfterFunc, 2.0)

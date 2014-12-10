@@ -153,11 +153,11 @@ local kMissileZorder = 1000
 function MapView:callfuncAddMissile(event)
 	print("MapView:addMissile(event)")
 	local property = event.property
-	dump(property, "property")
+	-- dump(property, "property")
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 	kMissileZorder = kMissileZorder - 1
-	self:addChild(enemyView, kMissileZorder)
+	self.map:addChild(enemyView, kMissileZorder)
 end
 
 function MapView:addEnemy(property, pos, zorder)
@@ -176,15 +176,14 @@ function MapView:addEnemy(property, pos, zorder)
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	property.scale = scale:getScaleX()
-
+	property.scale = scale:getScaleX() 
+	-- property.scale = 0.5
 	--enemy 改为工厂
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 
 	--pos
 	local boundEnemy = enemyView:getRange("body1"):getBoundingBox()
-	math.newrandomseed()
 	local xPos = pos or math.random(boundEnemy.width/2, boundPlace.width)
 	enemyView:setPosition(xPos, 0)
 	
@@ -312,12 +311,18 @@ end
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
 	local datas = self:getTargetDatas()
+	
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(data)
+		if "穿透" then
+			break
+		else
 
-		--todo 穿透逻辑
-	end
+		end
+	end 
+
+	
 end
 
 function MapView:enemysHittedInRange(event)

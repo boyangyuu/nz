@@ -1,7 +1,6 @@
---
--- Author: Fangzhongzheng
--- Date: 2014-10-21 14:32:57
---
+
+
+
 import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")

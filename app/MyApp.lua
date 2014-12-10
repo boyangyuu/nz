@@ -95,8 +95,8 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 3 ,           
                                     },
-                                },
-                    weaponed = {
+                        },
+                        weaponed = {
                                 bag1 =  {
                                         intenlevel = 0,
                                         weaponid   = 2,
@@ -105,32 +105,37 @@ function MyApp:createGameStateFile()
                                         intenlevel = 0,
                                         weaponid   = 3,
                                         }
-                                }
-                      }, 
-              inlay = {
+                        },
+            }, 
+            inlay = {
                         bags = {}, 
-                    inlayed  = {
+                        inlayed  = {
                                    bullet = {},
                                    clip = {},
                                    speed = {},
                                    aim = {},
                                    blood = {},
                                    helper = {}, 
-                                }
-                      },
-               prop = {
+                        },
+            },
+            prop = {
                             lei = {num = 0},
                             jijia = {num = 0},
                             goldweapon = {num = 0},
-                       },
-        currentlevel = {
-                            group = 1,
-                            level = 6,
-                        },
-       weaponsuipian = {},
-               money = 12000000,
-             diamond = 1000000,
-           }
+            },
+       
+            weaponsuipian = {},
+            money = 12000000,
+            diamond = 1000000,
+                      
+            currentlevel =  {
+                        group = 1,
+                        level = 1,
+            },
+            guide = {
+                        fight = false,
+            },
+    }
     GameState.save(data)
     -- dump(GameState.load(), "GameState.load()")
 end

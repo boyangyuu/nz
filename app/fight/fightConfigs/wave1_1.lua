@@ -13,6 +13,21 @@ local waves = {
 					startState = "",
 					id = "1",
 				},
+			},					
+		},
+	},
+	{
+		enemys = {
+			{
+				time = 2,
+				num = 1,
+				delay = {0, 0.3},
+				pos = {50, 20},
+				property = { 
+					placeName = "place1",
+					startState = "",
+					id = "1",
+				},
 			},
 			{
 				time = 7,

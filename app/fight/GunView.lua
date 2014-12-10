@@ -81,12 +81,15 @@ function GunView:playReload()
 	if self.isReloading then return end
 
 	self.isReloading = true
-	--子弹full
-	local reloadTime = 2.0
+
+	--
+
+	--回调 子弹full
+	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
 		self.isReloading = false
-		self.bulletNum = 30
+		self.bulletNum = self.gun:getBulletNum()
 	end
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
 	
