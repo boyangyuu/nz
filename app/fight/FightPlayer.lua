@@ -482,8 +482,8 @@ function FightPlayer:justBgPos(node)
     local bgMap = self.mapView  
     local w, h = bgMap:getSize().width , 
         bgMap:getSize().height
-    local xL = (w - display.width) / 2  
-    local yL = (h - display.height) / 2 
+    local xL = (w - display.width1) / 2  
+    local yL = (h - display.height1) / 2 
     local x, y = node:getPosition()
 
     --x
@@ -509,15 +509,15 @@ function FightPlayer:justFocusPos(node)
         x = 0
     end
 
-    if x >= display.width then 
-        x = display.width
+    if x >= display.width1 then 
+        x = display.width1
     end
     
     if y <= 0 then 
         y = 0
     end
-    if y >= display.height then 
-        y = display.height
+    if y >= display.height1 then 
+        y = display.height1
     end
     node:setPosition(x, y)
 end
@@ -611,7 +611,7 @@ function FightPlayer:initGuide()
     self.guide:addClickListener( {
         id = "fight_finish",
         groupId = "fight",
-        rect = cc.rect(0, 0, display.width, display.height),
+        rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
 
         end
