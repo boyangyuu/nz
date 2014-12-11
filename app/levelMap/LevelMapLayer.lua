@@ -1,6 +1,6 @@
 
 import("..includes.functionUtils")
-local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
+
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local LevelMapModel = import(".LevelMapModel")
 local UserModel = import("..homeBar.UserModel")
@@ -136,7 +136,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     self.levelBtnRootNode:setPosition(0, 0)
     self:addChild(self.levelBtnRootNode, Zorder_up)
 
-    -- seek level buttons
+    --btn
     local levelBtn = {}
     local group,level = self.LevelMapModel:getConfig()
     for i = 1, self.levelAmount[groupId] do
@@ -146,7 +146,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= i  then
-                    app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i),200)
+                    local levelId = i  
+                    ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     self:addChild(getPopupTips("关卡尚未开启！"))
                 end

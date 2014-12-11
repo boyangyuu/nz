@@ -12,7 +12,6 @@ end)
 function RootLayer:ctor()
 	--instance
 
-
     --root
     -- self.curLayer = FightPlayer.new()  --todo 战斗 homebar 等都放在commentNode上
     self.curLayer = HomeBarLayer.new()
@@ -27,22 +26,12 @@ function RootLayer:ctor()
 end
 
 function RootLayer:switchLayer(event)
-	dump(event, "event")
-	local layerId = event.layerId
-	print("layerId:", layerId)
-	local layer = layers[layerId].new()
-	assert(layer, "layer is nil id:"..layerId)
+	-- dump(event, "event")
+	local layer = event.layer
 	self:removeAllChildren()
 	self:addChild(layer)
 end
 
-function RootLayer:createLayer()
-	
-end
-
--- function RootLayer:showPopup()
-	
--- end
 
 -- function RootLayer:exitPopup()
 	
@@ -51,5 +40,6 @@ end
 function RootLayer:checkLoadLayer()
 	
 end
+
 
 return RootLayer
