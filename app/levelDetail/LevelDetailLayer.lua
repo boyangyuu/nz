@@ -108,7 +108,7 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-    app:getInstance(PopupCommonLayer):onExit()
+    ui:closePopup()
 end
 
 function LevelDetailLayer:onClickBtnStart()
@@ -172,6 +172,7 @@ function LevelDetailLayer:loadCCS()
     self.ui = controlNode
     self:addChild(controlNode)
 end
+
 function LevelDetailLayer:onExit()
 
 end
