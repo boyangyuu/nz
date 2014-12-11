@@ -112,6 +112,33 @@ function FightResultLayer:initUI()
     -- leftnumber:set
  --    label:setTouchEnabled(true)
 	-- btninlay:setTouchEnabled(true)
+	btnreplay:setTouchEnabled(true)
+	btnback:setTouchEnabled(true)
+	btnnext:setTouchEnabled(true)
+	addBtnEventListener(btnback, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+	        ui:closePopup()
+        	ui:changeLayer("HomeBarLayer",{})
+        end
+    end)
+    addBtnEventListener(btnreplay, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+	        ui:closePopup()
+        	ui:changeLayer("FightPlayer",{})
+        end
+    end)
+    addBtnEventListener(btnnext, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+			ui:closePopup()
+			ui:changeLayer("FightPlayer",{})
+        end
+    end)
     addBtnEventListener(btninlay, function(event)
         if event.name=='began' then
             return true
