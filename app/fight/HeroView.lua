@@ -44,6 +44,8 @@ function HeroView:ctor(properties)
 		
 	--ui
 	self:initUI()
+
+	self:setNodeEventEnabled(true)
 end
 
 function HeroView:initUI()
@@ -308,7 +310,7 @@ function HeroView:bloodBehurtEffect()
 
     -- tBloodAniamtion:play("blood1_01" , -1, 1)
 	tBloodAniamtion:playWithIndex(0)
-    tBloodArmature:setPosition(math.random(0, display.width), math.random(0, display.height))
+    tBloodArmature:setPosition(math.random(0, display.width1), math.random(0, display.height1))
     tBloodAniamtion:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementI ) 
 	    	if movementType == ccs.MovementEventType.complete then
@@ -383,7 +385,7 @@ function HeroView:screenHurtedEffect()
     local tAniamtion = tBeHurtScreenArmature:getAnimation()
 
 	tAniamtion:play("avatarhit" , -1, 1)
-    tBeHurtScreenArmature:setPosition(display.width / 2, display.height / 2)
+    tBeHurtScreenArmature:setAnchorPoint(0, 0)
     tAniamtion:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
@@ -399,7 +401,7 @@ function HeroView:effectPopupHead()
 	local src = "res/Fight/uiAnim/baotou/baotou.ExportJson"
 	local baotou = getArmature("baotou", src)
 	baotou:getAnimation():play("baotou" , -1, 1)
-    baotou:setPosition(display.width / 2, 150)
+    baotou:setPosition(display.width1 / 2, 150)
     baotou:getAnimation():setMovementEventCallFunc(
     	function ( armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
@@ -417,7 +419,7 @@ function HeroView:effectGunReload(event)
 	local src = "res/Fight/uiAnim/huanzidan/huanzidan.ExportJson"
 	local armature = getArmature("huanzidan", src)
 	armature:getAnimation():play("zidan" , -1, 1)
-    armature:setPosition(display.width / 2, display.height / 2)
+    armature:setPosition(display.width / 2, display.height1 / 2)
     armature:getAnimation():setSpeedScale(event.speedScale)
     armature:getAnimation():setMovementEventCallFunc(
     	function ( armatureBack,movementType,movement) 
@@ -448,9 +450,12 @@ function HeroView:initGuide()
         end
     }
     self.guide:addClickListener(data1)  
+end
 
-    self.guide:startGuide("fight") --todo改check
-
+function HeroView:onEnter()
+	-- scheduler.performWithDelayGlobal(function()
+	-- 	self.guide:startGuide("fight")
+	-- end, 0.2)
 end
 
 return HeroView
