@@ -1,7 +1,7 @@
 
 require("config")
 require("framework.init")
-
+require("app.includes.functionUtils")
 GameState = require("framework.cc.utils.GameState")
 
 local MyApp = class("MyApp", cc.mvc.AppBase)

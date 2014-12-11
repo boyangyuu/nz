@@ -1,4 +1,4 @@
-import("..includes.functionUtils")
+-- import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local FightResultModel = import(".FightResultModel")
 local InlayModel = import("..inlay.InlayModel")
@@ -107,7 +107,11 @@ function FightResultLayer:initUI()
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     local btnnext = cc.uiloader:seekNodeByName(self, "btnnext")
     local btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
-	btninlay:setTouchEnabled(true)
+    local leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
+    local label = cc.uiloader:seekNodeByName(self, "label")
+    -- leftnumber:set
+ --    label:setTouchEnabled(true)
+	-- btninlay:setTouchEnabled(true)
     addBtnEventListener(btninlay, function(event)
         if event.name=='began' then
             return true
@@ -243,6 +247,8 @@ function FightResultLayer:turnOverCard(index)
 	local ran = math.random(1, 100)
 	local record
 	if ran < 4 then
+		print(ran)
+		print("卧槽，你真翻到金的了")
 		local randomRecord = self.probaTable[#self.probaTable]
 		local randomRecordID = randomRecord["inlayid"]
 		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
