@@ -24,14 +24,14 @@ function FightResultLayer:ctor()
 end
 
 function FightResultLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail/guanqiapingjia")
+	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
 	local controlNode = cc.uiloader:load("guanqiapingjia.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 
     --anim
-    local src = "res/fightResult/anim/guangkajl/guangkajl.ExportJson"
-    local starsrc = "res/fightResult/anim/gkjs_xing/gkjs_xing.ExportJson"
+    local src = "res/FightResult/anim/guangkajl/guangkajl.ExportJson"
+    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(starsrc)

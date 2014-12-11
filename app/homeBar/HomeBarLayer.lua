@@ -26,7 +26,7 @@ end
 
 
 function HomeBarLayer:loadCCS()
-    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer/biaotou")
+    cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer")
     local rootNode = cc.uiloader:load("biaotou.ExportJson")
     self:addChild(rootNode)
     self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "biaotou")

@@ -8,13 +8,13 @@ function FightResultAnim:ctor()
 end
 
 function FightResultAnim:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/fightResult/fightResultAnim")
+	cc.FileUtils:getInstance():addSearchPath("res/FightResult/fightResultAnim")
 	local controlNode = cc.uiloader:load("fightResult.ExportJson")
     self:addChild(controlNode)
 
     local animLayer = cc.uiloader:seekNodeByName(self, "animlayer")
 
-    local src = "res/fightResult/anim/renwuwc/renwuwc.ExportJson"
+    local src = "res/FightResult/anim/renwuwc/renwuwc.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     self.armature = ccs.Armature:create("renwuwc")

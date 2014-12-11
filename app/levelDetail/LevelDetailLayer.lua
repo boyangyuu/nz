@@ -170,7 +170,7 @@ end
 
 function LevelDetailLayer:loadCCS()
 	-- load control bar
-	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail/guanqiapingjia")
+	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
 	local controlNode = cc.uiloader:load("guanqiakaishi.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
