@@ -1,9 +1,6 @@
---
--- Author: Fangzhongzheng
--- Date: 2014-10-21 14:32:57
---
+
 import("..includes.functionUtils")
-local LevelDetailLayer = import("..levelDetail.LevelDetailLayer")
+
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local LevelMapModel = import(".LevelMapModel")
 local UserModel = import("..homeBar.UserModel")
@@ -139,7 +136,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     self.levelBtnRootNode:setPosition(0, 0)
     self:addChild(self.levelBtnRootNode, Zorder_up)
 
-    -- seek level buttons
+    --btn
     local levelBtn = {}
     local group,level = self.LevelMapModel:getConfig()
     for i = 1, self.levelAmount[groupId] do
@@ -148,21 +145,12 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         -- add listener
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then
-                levelBtn[i]:runAction(transition.sequence({
-                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() + 5, levelBtn[i]:getPositionY())), 
-                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() + 5)), 
-                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() - 5, levelBtn[i]:getPositionY())),
-                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() - 5)),
-                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX() + 5, levelBtn[i]:getPositionY())),
-                    cc.MoveTo:create(0.01, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY())),
-                    cc.CallFunc:create(function()
-
-                        if  group > groupId or group == groupId and level >= i  then
-                            app:getInstance(PopupCommonLayer):showPopup(LevelDetailLayer.new(groupId, i),200)
-                        else                            
-                            self:addChild(getPopupTips("关卡尚未开启！"))
-                        end
-                    end)}))
+                if  group > groupId or group == groupId and level >= i  then
+                    local levelId = i  
+                    ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
+                else                            
+                    self:addChild(getPopupTips("关卡尚未开启！"))
+                end
             end
         end)
     end
@@ -212,7 +200,6 @@ function LevelMapLayer:panelAction()
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
-            -- reverse() is not work!
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width, 0)))
                 self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height)))
             end)}))

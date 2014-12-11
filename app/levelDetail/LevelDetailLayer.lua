@@ -3,21 +3,18 @@ local LevelDetailModel = import(".LevelDetailModel")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local WeaponListModel = import("..weaponList.WeaponListModel")
 
---todo
-local UIManager = import("..UI.UIManager")
-
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
 end)
 
-function LevelDetailLayer:ctor(index1, index2)
+function LevelDetailLayer:ctor(properties)
 	--model
 	self.model = app:getInstance(LevelDetailModel)
 	self.weaponListModel = app:getInstance(WeaponListModel)
 
 	self:loadCCS()
 	self:initUI()
-	self:initData(index1, index2)
+	self:initData(properties.groupId, properties.levelId)
 end
 
 function LevelDetailLayer:initUI()
@@ -116,7 +113,7 @@ end
 
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
-	ui:changeLayer("FightPlayer")
+	ui:changeLayer("FightPlayer", {})
 	self:onClickBtnOff()
 end
 

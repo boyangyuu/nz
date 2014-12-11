@@ -132,13 +132,6 @@ function HomeBarLayer:initCommonLayer()
     self.commonRootNode:addChild(levelMapRootNode)
 end
 
-function HomeBarLayer:getImgByName(fileName)
-    -- dump(self.imgRootNode, ".........imgRootNode")
-    -- self.imgRootNode = cc.uiloader:load("res/AllImg/allImg.ExportJson")
-    local file = cc.uiloader:seekNodeByName(self.imgRootNode, fileName)
-    return file
-end
-
 function HomeBarLayer:addPlistRes(srcname)
 
     local plist = string.format("%s.plist", srcname)
