@@ -1,6 +1,5 @@
 import("..includes.functionUtils")
 local LevelDetailModel = import(".LevelDetailModel")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local WeaponListModel = import("..weaponList.WeaponListModel")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
