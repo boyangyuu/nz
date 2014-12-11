@@ -3,12 +3,12 @@
 
 import("..includes.functionUtils")
 
-local LayerColor_BLACK = cc.c4b(0, 0, 0, 100)
+local LayerColor_BLACK = cc.c4b(255, 0, 0, 0)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
 local Hero = import("..fight.Hero")
 local GuideLayer = class("GuideLayer", function()
-	local layer = display.newLayer()
+	local layer = display.newColorLayer(LayerColor_BLACK)
 	layer:setAnchorPoint(0.5, 0.5)
 	layer:setPosition(0.0,0.0) 
     return layer
@@ -31,7 +31,6 @@ function GuideLayer:ctor()
 		:addEventListener(Guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
 	--touch
     self:setTouchEnabled(true) 
-    -- self:setTouchCaptureEnabled(true)
     self:setTouchSwallowEnabled(true) 
     self:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)		
     self:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouch))
@@ -149,7 +148,10 @@ function GuideLayer:getTargetRect()
 end
 
 function GuideLayer:isTouchTarget(pos)
+	dump(pos, "pos")
+	pos.y = pos.y - display.offset 
 	local rect = self:getTargetRect()
+	dump(rect, "rect")
 	local b = cc.rectContainsPoint(rect, pos)
 	return b
 end
@@ -178,12 +180,12 @@ function GuideLayer:refreshUI()
 	local rect = self:getTargetRect()
 	local size = cc.size(rect.width, rect.height)
 	dump(rect, "rect")
-	local params = {fillColor = cc.c4f(0,0,0,0), 
+	local params = {fillColor = cc.c4f(255,0,0,255), 
 			borderColor = cc.c4f(0,0,0,0), 
 			borderWidth = 5}
 	local circle = display.newRect(rect, params) --todo改为九宫格
 	local opacityCfg = cfg.opacity 
-	local render = cc.RenderTexture:create(display.width, display.height)
+	local render = cc.RenderTexture:create(display.width1, display.height1)
 	local opacity = opacityCfg or 0.5 --透明度
 	render:clear(0.1, 0.1, 0.1, opacity)
 	render:begin()
@@ -225,8 +227,8 @@ function GuideLayer:refreshCommentUI()
 	--guide offset
 	local contentNode = cc.uiloader:seekNodeByName(self.guideNode, "guide")
 	local offset = cfg.contentOffset or {x = 0, y = 0}
-	local pos = cc.p(display.width/2 + offset.x, 
-				display.height/2 + offset.y)
+	local pos = cc.p(display.width1/2 + offset.x, 
+				display.height1/2 + offset.y)
 	dump(pos, "")
 	contentNode:setPosition(pos)
 

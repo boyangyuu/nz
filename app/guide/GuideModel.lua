@@ -106,8 +106,6 @@ function Guide:finishGuide()
 				groupId = self.groupId})	
 end
 
-
-
 function Guide:getCurData()
 	assert(self.curData, "listendata为空 step index"..self.stepIndex)
 	return self.curData

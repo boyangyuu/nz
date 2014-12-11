@@ -314,8 +314,8 @@ function FightPlayer:checkBtnLei(point)
     local rect = self.btnLei:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        local w, h = self.focusNode:getBoundingBox().width, 
-                self.focusNode:getBoundingBox().height
+        local w, h = self.focusNode:getCascadeBoundingBox().width, 
+                self.focusNode:getCascadeBoundingBox().height
         local destPos = cc.p(self.focusNode:getPositionX() + w/2, 
             self.focusNode:getPositionY() + h/2)
         self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_START_EVENT,throwPos = destPos})
@@ -343,7 +343,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     end
     assert(id and point , "invalid params")
     local isTouch
-    local rect = self.btnFire:getBoundingBox()      
+    local rect = self.btnFire:getCascadeBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then
         self.touchIds["fire"]  = id
@@ -390,7 +390,7 @@ function FightPlayer:onCancelledFire()
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
-    local rect = self.btnJu:getBoundingBox()  
+    local rect = self.btnJu:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --切换狙击镜

@@ -1,10 +1,10 @@
 import("..includes.functionUtils")
-
 local LevelDetailModel = import(".LevelDetailModel")
 local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
-local FightPlayer = import("..fight.FightPlayer")
 local WeaponListModel = import("..weaponList.WeaponListModel")
 
+--todo
+local UIManager = import("..UI.UIManager")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
@@ -107,8 +107,6 @@ function LevelDetailLayer:initUI()
             self:onClickBtnJijia()
         end
     end)
-	
-
 end
 
 ----btn----
@@ -117,16 +115,13 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-	-- print("startbtn is clicked!")
-	local scene = display.newScene("FightScene")
-	local FightPlayer = FightPlayer.new()
-	scene:addChild(FightPlayer)
-	display.replaceScene(scene)
+	print("startbtn is clicked!")
+	ui:changeLayer("FightPlayer")
+	self:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
-	self.model:setsuipian(5)
 end
 
 function LevelDetailLayer:onClickBtnGold()
