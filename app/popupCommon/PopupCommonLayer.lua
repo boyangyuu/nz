@@ -15,6 +15,7 @@ function PopupCommonLayer:ctor(properties)
 	--event
 	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.POPUP_SHOW_EVENT, handler(self, self.showPopup))	
+		:addEventListener(ui.POPUP_CLOSE_EVENT, handler(self, self.closePopup))
 end
 
 function PopupCommonLayer:showPopup(event)
@@ -22,20 +23,24 @@ function PopupCommonLayer:showPopup(event)
 	self.layer = event.layer
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(self.layer)
-	self.layer:scale(0.25)
+	self.layer:scale(0.0)
 	self.layer:scaleTo(0.3, 1)
 end
 
-function PopupCommonLayer:onExit()
-	transition.execute(self.layer, cc.ScaleTo:create(0.3, 0.25), {
+function PopupCommonLayer:closePopup(event)
+	transition.execute(self.layer, cc.ScaleTo:create(0.3, 0.0), {
     	delay = 0,
     	easing = "In",
     	onComplete = function() 
-    		self.layer:removeSelf()  -- Must delete redundant layers
-    		self.layer = nil
-    		self:setVisible(false)
+	    	self:setVisible(false)
        end, 
 	})
+	local function removeFunc()
+		self.layer:removeSelf()  -- Must delete redundant layers
+		self.layer = nil
+	end
+	self:performWithDelay(removeFunc, 0.5)	
 end
+
 
 return PopupCommonLayer

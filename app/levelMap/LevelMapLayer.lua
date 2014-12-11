@@ -1,7 +1,6 @@
 
 import("..includes.functionUtils")
 
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local LevelMapModel = import(".LevelMapModel")
 local UserModel = import("..homeBar.UserModel")
 local LevelMapLayer = class("LevelMapLayer", function()

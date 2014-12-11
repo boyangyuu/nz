@@ -1,4 +1,3 @@
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local WeaponListModel = class("WeaponListModel", cc.mvc.ModelBase)
 
 local WeaponBag = class("WeaponBag", function()
@@ -81,7 +80,7 @@ end
 
 
 function WeaponBag:onClickBtnOff()
-    app:getInstance(PopupCommonLayer):onExit()
+    ui:closePopup()
 end
 
 return WeaponBag

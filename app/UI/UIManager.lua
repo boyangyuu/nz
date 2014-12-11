@@ -3,7 +3,7 @@ local UI = class("UIManager",cc.mvc.ModelBase)
 -- 定义事件
 UI.LAYER_CHANGE_EVENT 	= "LAYER_CHANGE_EVENT"
 UI.POPUP_SHOW_EVENT   	= "POPUP_SHOW_EVENT"
-UI.POPUP_EXIT_EVENT   	= "POPUP_EXIT_EVENT"
+UI.POPUP_CLOSE_EVENT   	= "POPUP_CLOSE_EVENT"
 
 --保存layer
 local layerClasses = {}
@@ -36,8 +36,8 @@ function UI:showPopup(layerId, properties, extra)
 		opacity = opacity})
 end
 
-function UI:exitPopupLayer(node)
-	self:dispatchEvent({name = UI.POPUP_EXIT_EVENT, layerId = layerId})
+function UI:closePopup(layerId)
+	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId})
 end
 
 function UI:createLayer(layerId, properties)

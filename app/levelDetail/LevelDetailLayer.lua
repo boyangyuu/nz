@@ -1,6 +1,5 @@
 import("..includes.functionUtils")
 local LevelDetailModel = import(".LevelDetailModel")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 local WeaponListModel = import("..weaponList.WeaponListModel")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
@@ -108,7 +107,7 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-    app:getInstance(PopupCommonLayer):onExit()
+    ui:closePopup()
 end
 
 function LevelDetailLayer:onClickBtnStart()
@@ -172,6 +171,7 @@ function LevelDetailLayer:loadCCS()
     self.ui = controlNode
     self:addChild(controlNode)
 end
+
 function LevelDetailLayer:onExit()
 
 end
