@@ -41,7 +41,6 @@ end
 
 function Fight:getLevelId()
     return self.levelId
-
 end
 
 ---- 枪械相关 ----

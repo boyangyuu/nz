@@ -11,6 +11,7 @@ layerClasses["FightPlayer"] 		 = import("..fight.FightPlayer")
 layerClasses["HomeBarLayer"]		 = import("..homeBar.HomeBarLayer")
 layerClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
 layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
+layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 

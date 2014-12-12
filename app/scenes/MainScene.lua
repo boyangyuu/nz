@@ -9,6 +9,7 @@ local MainScene = class("MainScene", function()
 end)
 
 function MainScene:ctor()
+
     local rootLayer = RootLayer.new()
     rootLayer:setPositionY(display.offset)
     self:addChild(rootLayer)
@@ -24,6 +25,7 @@ function MainScene:ctor()
     self:addChild(guideLayer, 300)
 
     --black
+
 end
 
 function MainScene:onEnter()

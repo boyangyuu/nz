@@ -17,8 +17,10 @@ function InlayListCell:initCellUI(record)
         self:addChild(panl_xuanze)
         local btnbuy = display.newScale9Sprite("#btn_g3.png",10,-36,cc.size(155,59),cc.rect(20,0,41,78))
         self:addChild(btnbuy)
+        btnbuy:setTouchEnabled(true)
         local btnload = display.newScale9Sprite("#btn_g3.png",170,-36,cc.size(155,59),cc.rect(40,0,1,78))
         self:addChild(btnload)
+        btnload:setTouchEnabled(true)
         local panelimg = display.newSprite("#"..record["imgnam"]..".png",-170,-16)
         self:addChild(panelimg)
         local jinbidi = display.newSprite("#jinbidi.png",-170,-53)
@@ -61,28 +63,20 @@ function InlayListCell:initCellUI(record)
         :addTo(self)
         ownnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
-    btnbuy:setTouchEnabled(true)
-    btnload:setTouchEnabled(true)
     addBtnEventListener(btnbuy, function(event)
             if event.name=='began' then
                 return true
-            elseif event.name == "moved" then
             elseif event.name=='ended' then
                 -- if self.userModel:costMoney(record["goldPrice"]) then
                     self.inlayModel:buyInlay(record["id"])
             end
-            return false
+            -- return false
         end)
     addBtnEventListener(btnload, function(event)
             if event.name=='began' then
                 return true
-            elseif event.name == "moved" then
-                btnload.isTouchMoved_ = true
             elseif event.name=='ended' then
-                if btnload.isTouchMoved_ == false then
-                    self.inlayModel:equipInlay(record["id"],true)
-                end
-                btnload.isTouchMoved_ = false
+                self.inlayModel:equipInlay(record["id"],true)
             end
         end)
 end

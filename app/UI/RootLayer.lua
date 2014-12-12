@@ -4,6 +4,7 @@ layers["FightPlayer"]  = import("..fight.FightPlayer")
 local HomeBarLayer = import("..homeBar.HomeBarLayer")
 local FightResultLayer = import("..fightResult.FightResultLayer")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
+local FightResultPopup = import("..fightResult.FightResultPopup")
 
 local RootLayer = class("RootLayer", function()
     return display.newColorLayer(LayerColor_BLACK)

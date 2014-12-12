@@ -20,7 +20,7 @@ end
 function StoreLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/Store")
 	local controlNode = cc.uiloader:load("shangcheng.ExportJson")
-    local cellNode = cc.uiloader:load("cellstore.ExportJson")
+    -- local cellNode = cc.uiloader:load("cellstore.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 
