@@ -531,10 +531,13 @@ end
 
 function FightPlayer:addArmatureFile()
     --all enemys
-    local enemyImgs = 
-    {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
-    "sanbing01", "daodan", "zpbing"}
+    -- local enemyImgs = 
+    -- {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
+    -- "sanbing01", "daodan", "zpbing"}
 
+    local enemyImgs = 
+    { "jinzhanb", "zibaob", "boss01", "dunbing", 
+    "sanbing01", "daodan", "zpbing"}
     local function dataLoaded()
         print(" dataLoaded()")
     end    
@@ -544,7 +547,9 @@ function FightPlayer:addArmatureFile()
         print(i,v)
         local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src, dataLoaded)
-    end      
+
+    end 
+    manager:addArmatureFileInfo("res/Fight/enemys/anim_enemy_002/anim_enemy_002.csb");       
 end
 
 function FightPlayer:initGuide()

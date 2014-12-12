@@ -245,7 +245,6 @@ function Actor:hit(enemy)
         -- 扣除目标 HP，并触发事件
         enemy:decreaseHp(damage) -- 扣除目标 Hp
     end
-
     return damage
 end
 

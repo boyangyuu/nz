@@ -43,7 +43,7 @@ Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
 --define
-local kMaxHp          = 1000
+local kMaxHp          = 10000
 
 function Hero:ctor(properties)
     --instance
@@ -51,7 +51,8 @@ function Hero:ctor(properties)
 
     --properties
     self:setMaxHp(kMaxHp)
-
+    self:setHp(kMaxHp)
+    
     --init
     self:refreshData({gunId1 = 1, gunId2 = 2}) 
 

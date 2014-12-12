@@ -27,6 +27,10 @@ function Boss:ctor(properties)
     --
 end
 
+function Boss:getConfig()
+    return self.config
+end
+
 function Boss:getFireRate()
 	return self.config["fireRate"] 
 end
