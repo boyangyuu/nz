@@ -1,4 +1,5 @@
-local waveClass = class("wave1_1", cc.mvc.ModelBase)
+local BaseWave = import(".BaseWave")
+local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
@@ -11,7 +12,7 @@ local waves = {
 				property = { 
 					placeName = "place1",
 					startState = "",
-					id = "1",
+					id = 1,
 				},
 			},					
 		},
@@ -26,7 +27,7 @@ local waves = {
 				property = { 
 					placeName = "place1",
 					startState = "",
-					id = "1",
+					id = 1,
 				},
 			},
 			{
@@ -37,7 +38,7 @@ local waves = {
 				property = { 
 					placeName = "place2",
 					startState = "",
-					id = "1",
+					id = 1,
 				},
 			},	
 			{
@@ -47,7 +48,7 @@ local waves = {
 				pos = {50},
 				property = { 
 					placeName = "place2",
-					id = "1",
+					id = 1,
 				},
 			},						
 		},
@@ -62,7 +63,7 @@ local waves = {
 				property = {
 					placeName = "place3", 
 					startState = "rollleft",
-					id = "1",
+					id = 1,
 				},
 			},	
 			{
@@ -73,7 +74,7 @@ local waves = {
 				property = { 
 					placeName = "place4", 
 					startState = "rollright",
-					id = "1",
+					id = 1,
 				},
 			},						
 		},
@@ -89,7 +90,7 @@ local waves = {
 				property = { 
 					placeName = "place5", 
 					startState = "",
-					id = "1",
+					id = 1,
 				},
 			},	
 			{
@@ -100,7 +101,7 @@ local waves = {
 				property = { 
 					placeName = "place6", 
 					startState = "",
-					id = "1",
+					id = 1,
 				},
 			},
 			{
@@ -111,7 +112,7 @@ local waves = {
 				property = { 
 					placeName = "place7", 
 					startState = "",
-					id = "1",
+					id = 1,
 				},
 			},
 			{
@@ -122,7 +123,7 @@ local waves = {
 				property = { 
 					placeName = "place8",
 					startState = "rollleft",
-					id = "1",
+					id = 1,
 				},
 			},						
 		},
@@ -130,10 +131,19 @@ local waves = {
 	},				
 }
 
+--enemy的关卡配置
+local enemys = {
+	--普通兵
+	{id=1,image="anim_enemy_002",demage=30,hp=100,walkRate=400,rollRate=400,fireRate=200,
+	weak1=2,weak2=4},
 
+	--
+}
 
-function waveClass:getWaves(waveIndex)
-	return waves[waveIndex] 
+function waveClass:ctor()
+	self.waves  = waves
+	self.enemys = enemys
+	self.bosses = bosses
 end
 
 return waveClass

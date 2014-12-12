@@ -1,8 +1,9 @@
-local waveClass = class("wave1_4", cc.mvc.ModelBase)
+local BaseWave = import(".BaseWave")
+local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {  --boss
+		enemys = { 
 			{
 				time = 3,
 				num = 1,
@@ -356,8 +357,19 @@ local waves = {
 		},
 	},
 }
-function waveClass:getWaves(waveIndex)
-	return waves[waveIndex] 
+--enemy的关卡配置
+local enemys = {
+	--普通兵
+	{id=1,image="anim_enemy_002",demage=30,hp=100,walkRate=400,rollRate=400,fireRate=200,
+	weak1=2,weak2=4},
+
+	--
+}
+
+function waveClass:ctor()
+	self.waves  = waves
+	self.enemys = enemys
+	self.bosses = bosses
 end
 
 return waveClass
