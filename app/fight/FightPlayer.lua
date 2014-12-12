@@ -35,8 +35,7 @@ function FightPlayer:ctor(properties)
     self.mapView        = MapView.new()
     self.gunView        = GunView.new({id = "1"})
     self.heroView       = HeroView.new()
-    self.touchIds       = {}
-    self.isPause        = false
+    self.touchIds       = {} --todo
 
     --ui
     self:initUI()
@@ -45,13 +44,16 @@ function FightPlayer:ctor(properties)
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
-        :addEventListener(Actor.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
+        :addEventListener(Hero.KILL_EVENT, handler(self, self.onHeroKill))
+        :addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     self:scheduleUpdate()
 end
 
-function FightPlayer:setPause()
-    self.isPause = not self.isPause
+function FightPlayer:setPause(event)
+    local isPause = event.isPause
+    local layerTouch = cc.uiloader:seekNodeByName(self, "layerTouch")
+    layerTouch:setTouchEnabled(not isPause)  
 end
 
 function FightPlayer:changeGoldCount(event)
@@ -156,6 +158,13 @@ function FightPlayer:defenceBeHurtCallBack(event)
     end
 end
 
+function FightPlayer:onHeroKill(event)
+    --todo
+    self:onCancelledFire()
+
+    --fight 
+    self.fight:setResult(false)
+end
 
 function FightPlayer:initTouchArea()
     --[[
@@ -257,7 +266,6 @@ end
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
      -- dump(event, "event onMutiTouchBegin")
-    if self.isPause then return end
 
     --check
     if event.points == nil then return false end
@@ -286,7 +294,6 @@ end
 
 function FightPlayer:onMutiTouchEnd(event)
 
-    if self.isPause then return end
 
     for id,point in pairs(event.points) do
          self:checkBtnFire(id, point, "ended")
@@ -408,7 +415,6 @@ end
 function FightPlayer:onTouchMoved(event)
     -- print("FightPlayer:onTouchMoved(event)")
     -- dump(event, "onTouchMoved")
-    if self.isPause then return end
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
         local isBtnTouchPoint = false
@@ -444,7 +450,6 @@ end
  
 function FightPlayer:fire()
     -- print("FightPlayer:fire()")
-    if self.isPause then return end
 
     --hero 控制cooldown
     self.hero:fire()
@@ -531,10 +536,13 @@ end
 
 function FightPlayer:addArmatureFile()
     --all enemys
-    local enemyImgs = 
-    {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
-    "sanbing01", "daodan", "zpbing"}
+    -- local enemyImgs = 
+    -- {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
+    -- "sanbing01", "daodan", "zpbing"}
 
+    local enemyImgs = 
+    { "jinzhanb", "zibaob", "boss01", "dunbing", 
+    "sanbing01", "daodan", "zpbing"}
     local function dataLoaded()
         print(" dataLoaded()")
     end    
@@ -544,7 +552,9 @@ function FightPlayer:addArmatureFile()
         print(i,v)
         local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src, dataLoaded)
-    end      
+
+    end 
+    manager:addArmatureFileInfo("res/Fight/enemys/anim_enemy_002/anim_enemy_002.csb");       
 end
 
 function FightPlayer:initGuide()

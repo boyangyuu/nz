@@ -144,7 +144,7 @@ local waves = {
 local bosses = {
 	--第一个出场的boss
 	{
-		animName = "boss1", --图片名字
+		image = "boss01", --图片名字
 		hp = 20000,
 		demage = 50,
 		fireRate = 200,

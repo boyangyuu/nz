@@ -398,8 +398,11 @@ function BossView:checkSkill(demage)
 end
 
 local isRed = false
-function BossView:onHitted(demage)
-
+function BossView:onHitted(targetData)
+	local demage 	 = targetData.demage
+	local scale  	 = targetData.demageScale or 1.0
+	local demageType = targetData.demageType
+	
 	--血量
 	if self.enemy:canHitted() then
 		self.enemy:decreaseHp(demage)

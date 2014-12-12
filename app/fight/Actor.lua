@@ -26,8 +26,6 @@ Actor.RELIVE_EVENT        = "RELIVE_EVENT"
 Actor.HP_DECREASE_EVENT   = "HP_DECREASE_EVENT"
 Actor.HP_INCREASE_EVENT   = "HP_INCREASE_EVENT"
 Actor.ATTACK_EVENT        = "ATTACK_EVENT"
-Actor.PAUSE_SWITCH_EVENT  = "PAUSE_SWITCH_EVENT"  
-
 
 -- 定义属性
 Actor.schema = clone(cc.mvc.ModelBase.schema)
@@ -221,8 +219,8 @@ end
 
 -- 命中目标
 function Actor:hit(enemy)
-    assert(not enemy:isDead(), string.format("actor %s:%s is dead, can't change Hp", enemy:getId(), enemy:getNickname()))
-
+    -- assert(not enemy:isDead(), string.format("actor %s:%s is dead, can't change Hp", enemy:getId(), enemy:getNickname()))
+    if enemy:isDead() then return 0.0 end
     -- 简化算法：伤害 = 自己的攻击力 - 目标防御
     local damage = 0
     
@@ -245,7 +243,6 @@ function Actor:hit(enemy)
         -- 扣除目标 HP，并触发事件
         enemy:decreaseHp(damage) -- 扣除目标 Hp
     end
-
     return damage
 end
 
