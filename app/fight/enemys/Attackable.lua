@@ -1,6 +1,7 @@
 import("...includes.functionUtils")
 local scheduler = require("framework.scheduler")
 local Hero = import("..Hero")
+local Fight = import("..Fight")
 local Actor = import("..Actor")
 
 
@@ -33,7 +34,7 @@ function Attackable:ctor(property)
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
-    	:addEventListener(Actor.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
+    	:addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
     	
     self:scheduleUpdate()  	
     

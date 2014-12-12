@@ -105,7 +105,7 @@ function BaseEnemyView:playWalk()
 	if randomSeed == 1 then isLeft = -1 end
 	local dis = 5 * isLeft * self:getScale()
     local widthOffset = kWalkWidth * isLeft * self:getScale()
-    local isAble = self:checkPlace(widthOffset )
+    local isAble = self:checkPlace(widthOffset)
 
     if not isAble then return end
 	self.armature:getAnimation():play("walk" , -1, 1)

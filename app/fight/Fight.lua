@@ -8,10 +8,12 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 --import
 local Hero          = import(".Hero")
-
+local Actor         = import(".Actor")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
+Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
+
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
@@ -31,7 +33,6 @@ function Fight:refreshData(properties)
 
     --gun
 
-
 end
 
 ---- 关卡相关 ----
@@ -49,6 +50,24 @@ function Fight:getWeaponIds()
     local id1 = data["weapons"]["weaponed"]["bag1"].weaponid
     local id2 = data["weapons"]["weaponed"]["bag2"].weaponid
     return id1, id2
+end
+
+function Fight:onHeroDie(event)
+    self:setResult(false)
+end
+
+function Fight:setResult(isWin)
+    --游戏暂停
+    print("Fight:setResult(isWin)", isWin)
+    if isWin then
+        
+    else
+        
+    end
+end
+
+function Fight:relive()
+    self.hero.fsm__:doEvent("relive") --todo
 end
 
 return Fight

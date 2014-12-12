@@ -9,9 +9,13 @@
 import("..includes.functionUtils")
 local CCSUILoader = import("framework.cc.uiloader.CCSUILoader")
 local scheduler = require("framework.scheduler")
-local Actor = import(".Actor")
-local Hero = import(".Hero")
-local Guide = import("..guide.GuideModel")
+local Actor 	= import(".Actor")
+local Hero 		= import(".Hero")
+local Fight 	= import(".Fight")
+local Guide 	= import("..guide.GuideModel")
+
+--kconfig
+local kGoldActivate = 10
 
 local HeroView = class("HeroView", function()
     return display.newNode()
@@ -144,7 +148,7 @@ function HeroView:killEnmeyGold(enemyPos)
 			--todoxx 待优化
 			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
 			cc.DelayTime:create(0.5 - i * 0.1),
-			cc.MoveTo:create(0.5, cc.p(884, 591)), 
+			cc.MoveTo:create(0.5, cc.p(884, 591)), --todo
 			cc.CallFunc:create(function ()
 				self.hero:dispatchEvent({name = "changeGold", goldCount = self.killEnemyCount * 50})
 				gold:removeFromParent()
@@ -157,12 +161,12 @@ end
 --触发黄金武器
 function HeroView:activeGoldWeapon()
 	print("HeroView:activeGoldWeapon() pause")
-	self.hero:dispatchEvent({name = Actor.PAUSE_SWITCH_EVENT, isPause = true})
+	self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = true})
 	local color = display.newColorLayer(cc.c4b(0, 0, 0, 180))
 	cc.Director:getInstance():getRunningScene():addChild(color)  --todo 待优化!
 	local function resume()
 		print("HeroView:activeGoldWeapon() resume")
-		self.hero:dispatchEvent({name = Actor.PAUSE_SWITCH_EVENT, isPause = false})
+		self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
 		color:removeFromParent()
 	end
 	scheduler.performWithDelayGlobal(resume, 5)
@@ -180,7 +184,7 @@ function HeroView:killEnemyCallBack( event )
 	self.killEnemyCountLabel:setString(strKillEnemyCount)
 
 	--触发黄金武器
-	if 10 <= self.keepKillEnemyCount then
+	if kGoldActivate <= self.keepKillEnemyCount then
 		self.keepKillEnemyCount = 0
 		self:activeGoldWeapon()
 		return
