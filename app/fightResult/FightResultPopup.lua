@@ -33,7 +33,7 @@ function FightResultPopup:animationEvent(armatureBack,movementType,movementID)
             print("cadfiguadciaudb")
             armatureBack:pause()
             -- ui:changeLayer("FightResultLayer", {})
-            ui:showPopup("FightResultLayer",{})
+            ui:showPopup("FightResultLayer",{percent = 0.2})
         end
     end
 end

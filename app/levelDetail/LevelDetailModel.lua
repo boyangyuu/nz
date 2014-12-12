@@ -26,26 +26,28 @@ function LevelDetailModel:getConfig(BigID,SmallID)
 	return nil
 end
 
-function LevelDetailModel:levelPass()
+function LevelDetailModel:levelPass(groupId,levelId)
 	local data = getUserData()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
-	local detailTable = getConfig("config/guanqia.json")
-	local recordsGroup = getRecord(detailTable,"groupId",group)
-	local maxLevelRecord = recordsGroup[#recordsGroup]
-	local maxLevel = maxLevelRecord["levelId"]
+	if groupId == group and levelId ==level then
+		local detailTable = getConfig("config/guanqia.json")
+		local recordsGroup = getRecord(detailTable,"groupId",group)
+		local maxLevelRecord = recordsGroup[#recordsGroup]
+		local maxLevel = maxLevelRecord["levelId"]
 
-    local recordsLevel = getRecord(detailTable,"groupId",1)
-    local groupNum = #recordsLevel
-	if level < maxLevel then
-		data.currentlevel.level = level + 1
-	elseif level == maxLevel and group < groupNum then
-		--todo
-		data.currentlevel.group = group + 1
-		data.currentlevel.level = 1
+	    local recordsLevel = getRecord(detailTable,"groupId",1)
+	    local groupNum = #recordsLevel
+		if level < maxLevel then
+			data.currentlevel.level = level + 1
+		elseif level == maxLevel and group < groupNum then
+			--todo
+			data.currentlevel.group = group + 1
+			data.currentlevel.level = 1
+		end
+		setUserData(data)
+		dump(GameState.load())
 	end
-	setUserData(data)
-	dump(GameState.load())
 end
 
 function LevelDetailModel:setsuipian(weaponid)

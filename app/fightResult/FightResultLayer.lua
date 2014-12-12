@@ -7,7 +7,10 @@ local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)
 
-function FightResultLayer:ctor()
+function FightResultLayer:ctor(properties)
+	local percent = properties.percent
+	self.grade = self:getGrade(percent)
+
     self.fightResultModel = app:getInstance(FightResultModel)
     self.inlayModel = app:getInstance(InlayModel)
 
@@ -18,7 +21,7 @@ function FightResultLayer:ctor()
 	self:loadCCS()
 	self:initUI()
 	
-	self:playstar(5)
+	self:playstar(self.grade)
 	-- self:showCard(self.probaTable)
 	self:playcard(self.probaTable)
 end
@@ -107,10 +110,10 @@ function FightResultLayer:initUI()
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     local btnnext = cc.uiloader:seekNodeByName(self, "btnnext")
     local btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
-    local leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
-    local label = cc.uiloader:seekNodeByName(self, "label")
-    -- leftnumber:set
- --    label:setTouchEnabled(true)
+    self.leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
+    self.label = cc.uiloader:seekNodeByName(self, "label")
+    self.leftnumber:setVisible(false)
+    self.label:setVisible(false)
 	-- btninlay:setTouchEnabled(true)
 	btnreplay:setTouchEnabled(true)
 	btnback:setTouchEnabled(true)
@@ -155,8 +158,15 @@ function FightResultLayer:initUI()
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-                	self:turnOverCard(i)
-                	-- print("self:turnOverCar")
+	            self:turnOverCard(i)
+            	if self.grade == 0 then
+				    self.leftnumber:setVisible(false)
+				    self.label:setVisible(false)
+				    self:turnLeftCard()
+        			for i=1,6 do
+        				self.card[i]:setTouchEnabled(false)
+        			end
+            	end
             end
         end)
     end
@@ -188,35 +198,29 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
     	elseif movementID == "koupai" then
     		armatureBack:getAnimation():play("xipai",-1,1)
 		elseif movementID == "xipai" then
-			    		print("caa")
-
 			-- armatureBack:pause()
 			-- self.armature:setVisible(false)
 			self.armature:removeFromParent()
 			for k,v in pairs(self.card) do
 				v:setVisible(true)
 			end
-		elseif movementID == "fanpai00" then
-
-    	end
+			self.leftnumber:setVisible(true)
+			self.label:setVisible(true)
+			self.leftnumber:setString(self.grade)
+		end
 	end
 end
 
-function FightResultLayer:star( LeftPersent )
+function FightResultLayer:getGrade(LeftPersent)
 	if LeftPersent < 0.2 then
-		-- 1
 		return 1
 	elseif LeftPersent < 0.4 then
-		-- 2
 		return 2
 	elseif LeftPersent < 0.6 then
-		-- 3
 		return 3
 	elseif LeftPersent < 0.95 then
-		-- 4
 		return 4
 	else
-		-- 5
 		return 5
 	end
 end
@@ -268,8 +272,8 @@ function FightResultLayer:showCard(showTable)
 end
 
 function FightResultLayer:turnOverCard(index)
-
-
+	self.grade = self.grade - 1
+	self.leftnumber:setString(self.grade)
 	dump(self.probaTable)
 	local ran = math.random(1, 100)
 	local record
@@ -293,7 +297,7 @@ function FightResultLayer:turnOverCard(index)
 		self.inlayModel:buyInlay(inlayrecord["id"])
 		table.remove(self.probaTable,rans)
 	end
-
+	self.card[index]:setTouchEnabled(false)
 	transition.scaleTo(self.card[index], {scaleX = 0, time = 0.2})
 	self.cardover[index]:setVisible(true)
 	self.cardover[index]:setScaleX(0)
@@ -302,6 +306,16 @@ function FightResultLayer:turnOverCard(index)
 	addChildCenter(icon, self.cardicon[index]) 
 	local sequence = transition.sequence({cc.ScaleTo:create(0.2,0,1),cc.ScaleTo:create(0.2,1,1)})
 	self.cardover[index]:runAction(sequence)
+
+end
+
+function FightResultLayer:turnLeftCard()
+	for i=1,6 do
+		if self.cardover[i]:isVisible() == false then
+			dump(i)
+			self:turnOverCard(i)
+		end
+	end
 end
 
 function FightResultLayer:quickInlay()
