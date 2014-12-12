@@ -34,7 +34,7 @@ end
 	end
 end
 
- function UserModel:costDiamond(diamond)
+function UserModel:costDiamond(diamond)
 	local data = getUserData()
 	if data.diamond >= diamond then
 		data.diamond = data.diamond - diamond 

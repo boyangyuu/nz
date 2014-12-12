@@ -12,17 +12,13 @@ end)
 function RootLayer:ctor()
 	--instance
 
-    --root
-    -- self.curLayer = FightPlayer.new()  --todo 战斗 homebar 等都放在commentNode上
+    --login
     self.curLayer = HomeBarLayer.new()
     self:addChild(self.curLayer)
 
 	--event
 	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.LAYER_CHANGE_EVENT, handler(self, self.switchLayer))
-		-- :addEventListener(UI.POPUP_SHOW_EVENT, handler(self, self.showPopup))
-		-- :addEventListener(UI.POPUP_EXIT_EVENT, handler(self, self.exitPopup))
-
 end
 
 function RootLayer:switchLayer(event)
@@ -31,11 +27,6 @@ function RootLayer:switchLayer(event)
 	self:removeAllChildren()
 	self:addChild(layer)
 end
-
-
--- function RootLayer:exitPopup()
-	
--- end
 
 function RootLayer:checkLoadLayer()
 	

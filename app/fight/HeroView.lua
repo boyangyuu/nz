@@ -351,8 +351,9 @@ function HeroView:throwGrenade(event)
 					local destRect = cc.rect(destPos.x - kGrenadeW/2, 
 										destPos.y - kGrenadeW/2, 
 										kGrenadeW,kGrenadeW)
+                    local targetData = {demage = 600, demageType = "lei"}
                     self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
-                    	damage = 600, destPos = destPos,destRect = destRect })
+                    	targetData = targetData, destPos = destPos,destRect = destRect })
 					tGrenade:removeFromParent()
 				end
 			)

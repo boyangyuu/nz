@@ -1,13 +1,15 @@
 --import
 import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local Hero = import(".Hero")
-local GunView = import(".GunView")
-local FocusView = import(".FocusView")
-local MapView = import(".MapView")
-local HeroView = import(".HeroView")
-local Actor = import(".Actor")
-local Guide = import("..guide.GuideModel")
+local Actor         = import(".Actor")
+local Guide         = import("..guide.GuideModel")
+local Hero          = import(".Hero")
+local Fight         = import(".Fight")
+
+local GunView       = import(".GunView")
+local FocusView     = import(".FocusView")
+local MapView       = import(".MapView")
+local HeroView      = import(".HeroView")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
@@ -21,19 +23,20 @@ end)
 
 --定义事件
 
-function FightPlayer:ctor()
-    
+function FightPlayer:ctor(properties)
     --instance
-    self.hero = app:getInstance(Hero)
-    self.focusView = app:getInstance(FocusView)
-    self.guide = app:getInstance(Guide)
-    self.mapView = MapView.new()
-    self.gunView = GunView.new({id = "1"})
-    self.heroView = HeroView.new()
-    self.touchIds = {}
-    self.btnsIsShow = true
-    self.resumeDefenceTinkHandler = nil
-    self.isPause = false
+    self.fight      = app:getInstance(Fight)    
+    self.fight:refreshData(properties)    
+    self.hero       = app:getInstance(Hero)
+    self.guide      = app:getInstance(Guide)
+
+    --views
+    self.focusView      = FocusView.new()
+    self.mapView        = MapView.new()
+    self.gunView        = GunView.new({id = "1"})
+    self.heroView       = HeroView.new()
+    self.touchIds       = {}
+    self.isPause        = false
 
     --ui
     self:initUI()
@@ -44,7 +47,7 @@ function FightPlayer:ctor()
         :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
         :addEventListener(Actor.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
-    self:scheduleUpdate()   
+    self:scheduleUpdate()
 end
 
 function FightPlayer:setPause()
@@ -72,19 +75,19 @@ function FightPlayer:fitArmoured()
     self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_START_EVENT})
 
 end
-
+local btnsIsShow = true
 function FightPlayer:setControlsVisible()
     print("FightPlayer:setControlsVisible()")
-    self.btnsIsShow = not self.btnsIsShow
+    btnsIsShow = not btnsIsShow
     
     --gun
-    self.layerGun:setVisible(self.btnsIsShow)
+    self.layerGun:setVisible(btnsIsShow)
     
     --btn
-    self.btnDefence:setVisible(self.btnsIsShow)
-    self.btnRobot:setVisible(self.btnsIsShow)
-    self.btnChange:setVisible(self.btnsIsShow)
-    self.btnLei:setVisible(self.btnsIsShow)
+    self.btnDefence:setVisible(btnsIsShow)
+    self.btnRobot:setVisible(btnsIsShow)
+    self.btnChange:setVisible(btnsIsShow)
+    self.btnLei:setVisible(btnsIsShow)
 end
 
 function FightPlayer:initUI()
@@ -121,6 +124,7 @@ function FightPlayer:initUI()
 end
 
 --启动盾牌恢复
+local resumeDefenceTinkHandler = nil
 function FightPlayer:launchDefenceResume()
     self.labelDefenceResume:setVisible(true)
     self:loadDefenceResumeBar()
@@ -129,7 +133,7 @@ function FightPlayer:launchDefenceResume()
         local t = self.defenceResumeLoadingBar:getPercentage()
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
-            scheduler.unscheduleGlobal(self.resumeDefenceTinkHandler)
+            scheduler.unscheduleGlobal(resumeDefenceTinkHandler)
             self.defenceResumeLoadingBar:removeFromParent()
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
@@ -140,7 +144,7 @@ function FightPlayer:launchDefenceResume()
         self.defenceResumeLoadingBar:setPercentage(t - 1)
     end
 
-    self.resumeDefenceTinkHandler = scheduler.scheduleGlobal(tick, 0.03)
+    resumeDefenceTinkHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
 --盾牌受伤回调,盾牌血条变化方法
@@ -442,13 +446,16 @@ function FightPlayer:fire()
     -- print("FightPlayer:fire()")
     if self.isPause then return end
 
-    --hero
+    --hero 控制cooldown
     self.hero:fire()
 
     --gun
     if  self.gunView:canShot() then 
         self.gunView:fire()
-        self.focusView:playFire() --todo 发命令
+        self.focusView:playFire()
+        local focusRangeNode = self.focusView:getFocusRange()
+        --todo 发命令
+        self.hero:dispatchEvent({name = Hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
 end
 

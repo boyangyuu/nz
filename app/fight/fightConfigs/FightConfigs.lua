@@ -2,7 +2,7 @@
 	读取关卡配置信息
 	读取enemy配置信息
 ]]
-local Hero = import("..Hero")
+local Fight = import("..Fight")
 
 
 local FightConfigs = class("FightConfigs", cc.mvc.ModelBase)
@@ -18,9 +18,9 @@ end
 
 --返回当前战斗下 所有waves
 function FightConfigs:getWaveConfig()
-	self.hero = app:getInstance(Hero)
-	local group = self.hero:getGroupId()
-	local level = self.hero:getLevelId()
+	self.fight = app:getInstance(Fight)
+	local group = self.fight:getGroupId()
+	local level = self.fight:getLevelId()
 	
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
@@ -35,9 +35,9 @@ end
 	@return boss的固定配置(boss分为固定配置和关卡配置)
 ]]
 function FightConfigs:getBossConfig(configName)
-	self.hero = app:getInstance(Hero)
-	local group = self.hero:getGroupId()
-	local level = self.hero:getLevelId()
+	self.fight = app:getInstance(Fight)
+	local group = self.fight:getGroupId()
+	local level = self.fight:getLevelId()
 
 	local name_lua = configName
 	local str_src = "."..name_lua

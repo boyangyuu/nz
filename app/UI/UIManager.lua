@@ -14,7 +14,6 @@ layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 
-	
 	--instance
 end
 

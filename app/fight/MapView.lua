@@ -7,14 +7,13 @@ desc：
 	2.敌人管理者
 ]]
 
-import("..includes.functionUtils")
-local FightConfigs = import(".fightConfigs.FightConfigs")
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local Timer = require("framework.cc.utils.Timer")
-local FocusView = import(".FocusView")
-local Hero = import(".Hero")
-local Actor = import(".Actor")
-local EnemyFactroy = import(".EnemyFactroy")
+local scheduler 	= require(cc.PACKAGE_NAME .. ".scheduler")
+local FightConfigs  = import(".fightConfigs.FightConfigs")
+
+local Hero 			= import(".Hero")
+local Fight         = import(".Fight")
+local Actor 		= import(".Actor")
+local EnemyFactroy	= import(".EnemyFactroy")
 
 local MapView = class("MapView", function()
     return display.newNode()
@@ -26,7 +25,7 @@ _isZooming = false
 function MapView:ctor()
 	--instance
 	self.hero = app:getInstance(Hero)
-	self.focusView = app:getInstance(FocusView)
+	self.fight = app:getInstance(Fight)
 	self.enemys = {}
 	self.waveIndex = 1
 	self.killEnemyCount = 0
@@ -54,8 +53,8 @@ end
 
 function MapView:loadCCS()
 	--map
-	local groupId = self.hero:getGroupId()
-	local levelId = self.hero:getLevelId()
+	local groupId = self.fight:getGroupId()
+	local levelId = self.fight:getLevelId()
 
 	local mapSrcName = "map_"..groupId.."_"..levelId..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
@@ -207,7 +206,7 @@ function MapView:openZoom(event)
 	local time = event.time
 	self.hero:setMapZoom(scale)
 
-	--todo 禁止触摸 todoybyF
+	--todo 禁止触摸 todoyby
 	_isZooming = true
 	local function zoomEnd()
 		-- 回复触摸Ftodoyby
@@ -238,12 +237,6 @@ end
 
 --fight
 function MapView:tick(dt)
-	local pos = cc.p(self.bg:getPositionX(), self.bg:getPositionY())
-	local pWorld = self.focusView:convertToWorldSpace(cc.p(0,0))
-	local pWorld2 = self:convertToWorldSpace(cc.p(0,0))
-	-- print("tick")
-	-- dump(pWorld, "pWorld")
-	-- dump(pWorld2, "pWorld2")
 	-- 检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
@@ -276,11 +269,10 @@ end
 		},
 	}
 ]]
-function MapView:getTargetDatas()
+function MapView:getTargetDatas(focusNode)
 	local targetDatas = {}
 	for i,enemy in ipairs(self.enemys) do
-		local rectFocus = self.focusView:getFocusRange()
-		local isHited, targetData = enemy:getTargetData(rectFocus)
+		local isHited, targetData = enemy:getTargetData(focusNode)
 		if isHited then targetDatas[#targetDatas + 1] = targetData end
 	end
 	return targetDatas 
@@ -310,7 +302,7 @@ end
 --events
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
-	local datas = self:getTargetDatas()
+	local datas = self:getTargetDatas(event.focusRangeNode)
 	
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
@@ -318,11 +310,8 @@ function MapView:onHeroFire(event)
 		if "穿透" then
 			break
 		else
-
 		end
 	end 
-
-	
 end
 
 function MapView:enemysHittedInRange(event)
@@ -330,7 +319,8 @@ function MapView:enemysHittedInRange(event)
 	assert(event.destRect, "event destRect is nil")
 	local enemys = self:getEnemysInRect(event.destRect)
 	for i,enemy in ipairs(enemys) do
-		enemy:onHitted(event.targetData)
+		local targetData = event.targetData
+		enemy:onHitted(targetData)
 	end
 end
 

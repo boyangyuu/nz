@@ -16,7 +16,7 @@ function GunView:ctor(properties)
 	--instance
 	-- dump(properties, "GunView properties")
 	self.hero = app:getInstance(Hero)
-	self.gun  = Gun.new({id = properties.id})
+	self.gun  = Gun.new({id = tostring(properties.id)})
 	self.isChanging = false
 
 	--gun armature and base
@@ -33,7 +33,6 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
-	self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT})
 	self.bulletNum = self.bulletNum - 1
 	self:playFire()
 end
@@ -83,7 +82,6 @@ function GunView:playReload()
 	self.isReloading = true
 
 	--
-
 	--回调 子弹full
 	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime
@@ -129,7 +127,7 @@ function GunView:setGun(id)
 	end
 
 	--gun
-	self.gun = Gun.new({id = id})
+	self.gun = Gun.new({id = tostring(id)})
 	local config = self.gun:getConfig()
 	-- dump(config, "config")
 	

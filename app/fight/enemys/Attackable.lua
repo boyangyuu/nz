@@ -74,6 +74,7 @@ end
 function Attackable:getTargetData(focusNode)
 	local targetData = {}
 	targetData.demage = self.hero:getDemage()
+	-- dump(targetData, "targetData")
 	local i = 0
 
 	--weak

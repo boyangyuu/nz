@@ -144,7 +144,7 @@ function BaseEnemyView:onHitted(targetData)
 	-- print("BaseEnemyView:onHitted(targetData)")
 	-- dump(targetData, "targetData")
 	local demage 	 = targetData.demage
-	local scale  	 = targetData.demageScale
+	local scale  	 = targetData.demageScale or 1.0
 	local demageType = targetData.demageType
 	if self.enemy:canHitted() and self:canHitted() then
 		-- print("self.enemy:decreaseHp(demage * scale)")

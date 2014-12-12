@@ -31,6 +31,7 @@ Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人
 Hero.ENEMY_KILL_HEAD_EVENT      = "ENEMY_KILL_HEAD_EVENT"   --爆头
 Hero.ENEMY_ADD_EVENT            = "ENEMY_ADD_EVENT"
 Hero.ENEMY_ADD_MISSILE_EVENT    = "ENEMY_ADD_MISSILE_EVENT"
+
 --gun
 Hero.GUN_RELOAD_EVENT           = "GUN_RELOAD_EVENT"             
 Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
@@ -41,43 +42,32 @@ Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
-function Hero:ctor(properties, events, callbacks)
-    --instance
-    properties = {
-    	id = "hero",
-    	maxHp = 1000000,
-        gunId1 = "1",
-        gunId2 = "2",
-	}
+--define
+local kMaxHp          = 1000
 
+function Hero:ctor(properties)
+    --instance
     Hero.super.ctor(self, properties)
 
     --properties
-    self:setMaxHp(properties.maxHp)
+    self:setMaxHp(kMaxHp)
 
+    --init
+    self:refreshData({gunId1 = 1, gunId2 = 2}) 
+
+end
+
+--data
+function Hero:refreshData(properties)
     --gun
     self.gunId1 = properties.gunId1
-    self.gunId2 = properties.gunId2  
+    self.gunId2 = properties.gunId2
+
     self.isGun1 = true 
-    self:setGun(self.gunId1)
-end
+    self:setGun(self.gunId1)  
 
----- 关卡相关 ----
-function Hero:setGroupId()
-    
-end
-
-function Hero:getGroupId()
-    return 1
-end
-
-function Hero:setLevelId()
-    
-end
-
-function Hero:getLevelId()
-    return 3
-
+    --inlay
+    --..   
 end
 
 --枪械相关
@@ -95,9 +85,8 @@ function Hero:changeGun()
 end
 
 function Hero:setGun(gunId)
-    local gun = Gun.new({id = gunId}) 
+    local gun = Gun.new({id = tostring(gunId)}) 
     self.gun = gun
-    self:setDemage(gun:getDemage())
     self:setCooldown(gun:getCooldown())
 end
 
@@ -107,6 +96,11 @@ end
 
 function Hero:BeHurt(event)
 
+end
+
+function Hero:getDemage()
+    local baseDemage = self.gun:getDemage()
+    return baseDemage
 end
 
 function Hero:setMapZoom(scale)
