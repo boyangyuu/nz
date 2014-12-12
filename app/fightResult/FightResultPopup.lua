@@ -9,12 +9,12 @@ end
 
 function FightResultPopup:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/FightResult/fightResultAnim")
-	local controlNode = cc.uiloader:load("fightResult.ExportJson")
+	local controlNode = cc.uiloader:load("fightResultSuccess.ExportJson")
     self:addChild(controlNode)
 
     local animLayer = cc.uiloader:seekNodeByName(self, "animlayer")
 
-    local src = "res/FightResult/anim/renwuwc/renwuwc.ExportJson"
+    local src = "res/FightResult/anim/renwuwc/renwuwc.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     self.armature = ccs.Armature:create("renwuwc")
@@ -30,7 +30,6 @@ function FightResultPopup:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         armatureBack:stopAllActions()
         if movementID == "renwuwc" then
-            print("cadfiguadciaudb")
             armatureBack:pause()
             -- ui:changeLayer("FightResultLayer", {})
             ui:showPopup("FightResultLayer",{percent = 0.2})

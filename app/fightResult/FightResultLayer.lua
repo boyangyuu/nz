@@ -33,8 +33,8 @@ function FightResultLayer:loadCCS()
     self:addChild(controlNode)
 
     --anim
-    local src = "res/FightResult/anim/guangkajl/guangkajl.ExportJson"
-    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.ExportJson"
+    local src = "res/FightResult/anim/guangkajl/guangkajl.csb"
+    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(starsrc)
