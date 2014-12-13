@@ -18,7 +18,7 @@ end
 
 function WeaponBag:loadCCS()
     -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/wuqiku")
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
     local controlNode = cc.uiloader:load("wuqilan.ExportJson")
     self:addChild(controlNode)
 end

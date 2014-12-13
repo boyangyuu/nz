@@ -16,7 +16,7 @@ function WeaponListCell:ctor(weaponRecord)
 end
 
 function WeaponListCell:initCellUI(weaponRecord)
-	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/wuqiku")
+	cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
 	local controlNode = cc.uiloader:load("cebiankuang.ExportJson")
 	local weaponImg = display.newSprite("#icon_"..weaponRecord["imgName"]..".png")
 	local weaponLayer = cc.uiloader:seekNodeByName(controlNode, "imgpanel")
