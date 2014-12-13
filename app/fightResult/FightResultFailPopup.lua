@@ -17,7 +17,7 @@ function FightResultFailPopup:loadCCS()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        -- ui:closePopup()
+	        ui:closePopup()
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)

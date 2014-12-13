@@ -25,8 +25,8 @@ function FightConfigs:getWaveConfig()
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
 	local waveFight = require(p .. str_src)
-	-- waveFight = require(p..".waveExample") -- todotest
-	-- dump(waveFight, "waveFight")
+	waveFight = require(p..".waveExample") -- todotest
+	dump(waveFight, "waveFight")
 	return waveFight
 end
 

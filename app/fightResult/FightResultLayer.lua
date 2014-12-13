@@ -122,7 +122,7 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        ui:closePopup()
+	        -- ui:closePopup()
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)
@@ -130,7 +130,7 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        ui:closePopup()
+	        -- ui:closePopup()
         	ui:changeLayer("FightPlayer",{})
         end
     end)
@@ -138,7 +138,7 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-			ui:closePopup()
+			-- ui:closePopup()
 			ui:changeLayer("FightPlayer",{})
         end
     end)
@@ -162,7 +162,6 @@ function FightResultLayer:initUI()
             	if self.grade == 0 then
 				    self.leftnumber:setVisible(false)
 				    self.label:setVisible(false)
-				    self:turnLeftCard()
         			for i=1,6 do
         				self.card[i]:setTouchEnabled(false)
         			end

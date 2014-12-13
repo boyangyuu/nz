@@ -60,9 +60,9 @@ function Fight:setResult(isWin)
     --游戏暂停
     print("Fight:setResult(isWin)", isWin)
     if isWin then
-        
+        ui:showPopup("FightResultPopup",{})
     else
-        
+        ui:showPopup("FightResultFailPopup",{})
     end
 end
 

@@ -1,3 +1,5 @@
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+
 local FightResultPopup = class("FightResultPopup", function()
 	return display.newLayer()
 end)
@@ -23,7 +25,10 @@ function FightResultPopup:loadCCS()
 end
 
 function FightResultPopup:playAnim()
-	self.armature:getAnimation():play("renwuwc" , -1, 1)
+    function delayplay(  )
+        self.armature:getAnimation():play("renwuwc" , -1, 1)
+    end
+    scheduler.performWithDelayGlobal(delayplay, 0.3)
 end
 
 function FightResultPopup:animationEvent(armatureBack,movementType,movementID)
@@ -31,8 +36,8 @@ function FightResultPopup:animationEvent(armatureBack,movementType,movementID)
         armatureBack:stopAllActions()
         if movementID == "renwuwc" then
             armatureBack:pause()
-            -- ui:changeLayer("FightResultLayer", {})
-            ui:showPopup("FightResultLayer",{percent = 0.2})
+            ui:closePopup()
+            ui:changeLayer("FightResultLayer",{percent = 0.9})
         end
     end
 end

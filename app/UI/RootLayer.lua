@@ -15,8 +15,8 @@ function RootLayer:ctor()
 	--instance
 
     --login
-    -- self.curLayer = HomeBarLayer.new()
-    self.curLayer = FightResultFailPopup.new()
+    self.curLayer = HomeBarLayer.new()
+    -- self.curLayer = FightResultFailPopup.new()
     self:addChild(self.curLayer)
 
 	--event
