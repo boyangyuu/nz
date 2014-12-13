@@ -92,11 +92,11 @@ function MyApp:createGameStateFile()
                         bags = {
                                     {
                                     intenlevel = 0,
-                                    weaponid   = 2,
+                                    weaponid   = 1,
                                     },
                                     {
                                     intenlevel = 0,
-                                    weaponid   = 3 ,           
+                                    weaponid   = 2 ,           
                                     },
                         },
                         weaponed = {

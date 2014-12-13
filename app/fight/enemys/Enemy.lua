@@ -8,16 +8,17 @@
 
 local Actor = import("..Actor")
 local Enemy = class("Enemy", Actor)
+local FightConfigs = import("..fightConfigs.FightConfigs")
 
 function Enemy:ctor(properties)
     --super
-    local config = getConfigByID("config/enemy.json", properties.id)
-    self.config = config    
-    assert(config, "config id is wrong id:"..properties.id)
+    -- local config = getConfigByID("config/enemy.json", properties.id)
+    local waveConfig = FightConfigs:getWaveConfig()
+    self.config = waveConfig:getEnemys(properties.id)    
     local property = {
         id = "enemy"..properties.id,
-        maxHp = config.hp,
-        demage = config.demage,
+        maxHp = self.config.hp,
+        demage = self.config.demage,
     }
     Enemy.super.ctor(self, property) 
 

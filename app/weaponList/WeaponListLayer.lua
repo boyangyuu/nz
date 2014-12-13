@@ -38,16 +38,16 @@ end
 -- loadCCS
 function WeaponListLayer:loadCCS()
     -- load control bar
-    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb")
-    local controlNode = cc.uiloader:load("gunzb_1.ExportJson")
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/wuqiku")
+    local controlNode = cc.uiloader:load("wuqiku.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
 end
 
 function WeaponListLayer:initUI()
     self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
-    self.layerbutton         = cc.uiloader:seekNodeByName(self, "layerbutton")
-    self.paneldetail         = cc.uiloader:seekNodeByName(self, "paneldetail")
+    self.layerbutton      = cc.uiloader:seekNodeByName(self, "panelbutton")
+    self.paneldetail      = cc.uiloader:seekNodeByName(self, "paneldetail")
 
     self.layerGun         = cc.uiloader:seekNodeByName(self, "imgweapon")
 
@@ -58,8 +58,10 @@ function WeaponListLayer:initUI()
     self.btnFull          = cc.uiloader:seekNodeByName(self.layerbutton, "btnfull")
     self.btnOncefull      = cc.uiloader:seekNodeByName(self.layerbutton, "btnoncefull")
     self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
-    self.labelEquiped     = cc.uiloader:seekNodeByName(self, "labelequip")
-
+    self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
+    self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
+    self.equipedone:setVisible(false)
+    self.equipedtwo:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
     self:loadWeaponList(self.weaponLV, getConfig("config/weapon_weapon.json"))
@@ -115,7 +117,7 @@ function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 			content = WeaponListCell.new(weaponRecord)
 		end
 		item:addContent(content)
-		item:setItemSize(120, 140)
+		item:setItemSize(280, 140)
 		weaponListView:addItem(item)
 	end
 	weaponListView:reload()
@@ -138,9 +140,8 @@ end
 function WeaponListLayer:refreshComment(index)
     local stars = {}
     for i=1,10 do
-        local star = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
-        star:setVisible(false)
-        table.insert(stars,star)
+        stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
+        stars[i]:setVisible(false)
     end
 
     local labelDamage = cc.uiloader:seekNodeByName(self.paneldetail, "labeldamage")
@@ -183,8 +184,8 @@ function WeaponListLayer:refreshComment(index)
     self.weaponId = self.weaponrecord["id"]
     labelName:setString(self.weaponrecord["name"])
     labelDescribe:setString(self.weaponrecord["describe"])
-    local weaponImg = cc.ui.UIImage.new("WeaponList/gunzb/"..self.weaponrecord["imgName"]..".png")
-    weaponImg:setLayoutSize(430, 180)
+    local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
+    weaponImg:setScale(1.2)
     addChildCenter(weaponImg, self.layerGun)
 
     local bulletNum = self.weaponListModel:getWeaponProperity(self.weaponId).bulletNum
@@ -256,6 +257,8 @@ function WeaponListLayer:showButton()
             self.btnUpgrade:setVisible(true)
         end
     else
+        self.btnFull:setVisible(false)
+        self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
         self.btnBuy:setVisible(true)
         self.btnEquip:setVisible(false)
@@ -263,7 +266,13 @@ function WeaponListLayer:showButton()
     if self.weaponListModel:isWeaponed(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)
         self.btnEquip:setVisible(false)
-        self.labelEquiped:setString(self.weaponListModel:isWeaponed(weaponid))    
+        if self.weaponListModel:isWeaponed(weaponid) == 1 then
+            self.equipedtwo:setVisible(false)
+            self.equipedone:setVisible(true)
+        else
+            self.equipedone:setVisible(false)
+            self.equipedtwo:setVisible(true)
+        end
     end
 end              
 
@@ -284,7 +293,9 @@ end
 
 -- 装备事件
 function WeaponListLayer:equip(weaponid)
-   app:getInstance(PopupCommonLayer):showPopup(WeaponBag.new(weaponid),0)
+    -- app:getInstance(PopupCommonLayer):showPopup(WeaponBag.new(weaponid),0)
+    ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 0})
+-- id = WeaponBag.new(weaponid),opacity = 0
 end
 
 return WeaponListLayer

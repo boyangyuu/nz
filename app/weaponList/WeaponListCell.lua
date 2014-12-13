@@ -1,6 +1,9 @@
 import("..includes.functionUtils")
 
 local ScrollViewCell = import("..includes.ScrollViewCell")
+local Color_GRAY = cc.c3b(150, 150, 150)
+local Color_YELLOW = cc.c3b(255, 195, 0)
+local Color_RED = cc.c3b(255, 0, 24)
 
 local WeaponListCell = class("listCell", ScrollViewCell)
 
@@ -13,15 +16,19 @@ function WeaponListCell:ctor(weaponRecord)
 end
 
 function WeaponListCell:initCellUI(weaponRecord)
-	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/gunzb/")
-	local controlNode = cc.uiloader:load("gunzb_2.ExportJson")
-	local weaponImg = cc.ui.UIImage.new(weaponRecord["imgName"]..".png")
-	weaponImg:setLayoutSize(250, 100)
-	local weaponLayer = cc.uiloader:seekNodeByName(controlNode, "Panel_6")
-	local weaponName = cc.uiloader:seekNodeByName(controlNode, "label_name")
-	self.weaponSelect = cc.uiloader:seekNodeByName(controlNode, "panl_gunbkhl")
-	self.weaponCover = cc.uiloader:seekNodeByName(controlNode, "panl_gundi")
-	self.weaponSelect:setVisible(false)
+	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/wuqiku")
+	local controlNode = cc.uiloader:load("cebiankuang.ExportJson")
+	local weaponImg = display.newSprite("#icon_"..weaponRecord["imgName"]..".png")
+	local weaponLayer = cc.uiloader:seekNodeByName(controlNode, "imgpanel")
+	local weaponName = cc.uiloader:seekNodeByName(controlNode, "weapon")
+	self.weaponSelect = cc.uiloader:seekNodeByName(controlNode, "select")
+	self.panlwangge = cc.uiloader:seekNodeByName(self.weaponSelect, "panlwangge")
+	self.panlwanggekuang = cc.uiloader:seekNodeByName(self.weaponSelect, "panlwanggekuang")
+	self.panlwanggekuangtiao = cc.uiloader:seekNodeByName(self.weaponSelect, "panlwanggekuangtiao")
+	self.panlwangge:setColor(Color_RED)
+	self.panlwanggekuang:setColor(Color_GRAY)
+	self.panlwanggekuangtiao:setColor(Color_RED)
+	weaponImg:setScale(0.5)
 	addChildCenter(weaponImg, weaponLayer)
 	weaponName:setString(weaponRecord["name"])	
 	controlNode:setPosition(0, 0)
@@ -29,11 +36,15 @@ function WeaponListCell:initCellUI(weaponRecord)
 end
 function WeaponListCell:setSelected(isSelected)
 	if isSelected == true then
-		self.weaponSelect:setVisible(true)
-		self.weaponCover:setVisible(false)
+				self.panlwangge:setColor(Color_YELLOW)
+		self.panlwanggekuang:setColor(Color_YELLOW)
+		self.panlwanggekuangtiao:setColor(Color_YELLOW)
+
 	else
-		self.weaponSelect:setVisible(false)
-		self.weaponCover:setVisible(true)
+				self.panlwangge:setColor(Color_RED)
+		self.panlwanggekuang:setColor(Color_GRAY)
+		self.panlwanggekuangtiao:setColor(Color_RED)
+
 	end
 	-- seekNodeByName(parent, name)
 	-- visiable

@@ -128,7 +128,7 @@ end
 
 function WeaponListModel:isWeaponed(weaponid)
 	local data = getUserData()
-	dump(data.weapons, "data.weapons")
+	-- dump(data.weapons, "data.weapons")
 	if data.weapons.weaponed.bag1.weaponid == weaponid then
 		return 1
 	elseif data.weapons.weaponed.bag2.weaponid == weaponid then
@@ -158,7 +158,7 @@ end
 ----- weaponBag 
 function WeaponListModel:getWeaponInBag()
 	local data = getUserData()
-	dump(data)
+	-- dump(data)
 	local twoWeapon={}
 	table.insert(twoWeapon,data.weapons.weaponed.bag1)
 	table.insert(twoWeapon,data.weapons.weaponed.bag2)
@@ -177,7 +177,7 @@ function WeaponListModel:equipBag( weaponid, index )
 						data.weapons.weaponed.bag2 = v
 					end
 					setUserData(data)
-					dump(data)
+					-- dump(data)
 				end
 			end
 		end
@@ -190,7 +190,7 @@ function WeaponListModel:equipBag( weaponid, index )
 		data.weapons.weaponed.bag2 = x
 	end
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
-	dump(data)
+	-- dump(data)
 end
 
 return WeaponListModel
