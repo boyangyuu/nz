@@ -160,7 +160,7 @@ function InlayModel:BestInlayInTable(table)
 	
 	for k,v in pairs(bestInlay) do
 		if v ~= 100 then
-			dump(v)
+			-- dump(v)
 			self:equipInlay(v, false)
 		end
 	end

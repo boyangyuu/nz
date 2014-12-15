@@ -1,16 +1,14 @@
-
-local waveClass = class("waveExample", cc.mvc.ModelBase)
+local BaseWave = import(".BaseWave")
+local waveClass = class("waveExample", BaseWave)
 
 
 -- 测试 近战兵
 local waves = {
 	{
 		enemys = {  
-
 			{
 				time = 2,
-				num = 1,
-				
+				num = 2,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
 				property = { 
@@ -24,9 +22,21 @@ local waves = {
 	},
 }
 
-function waveClass:getWaves(waveIndex)
-	return waves[waveIndex] 
+--enemy的关卡配置
+local enemys = {
+	--普通兵
+	{id=1,image="anim_enemy_002",demage=1,hp=100,walkRate=400,rollRate=400,fireRate=200,
+	weak1=2,weak2=4},
+
+	--
+}
+
+function waveClass:ctor()
+	self.waves  = waves
+	self.enemys = enemys
+	self.bosses = bosses
 end
+
 
 return waveClass
 
@@ -133,11 +143,3 @@ return waveClass
 
 -- 	},
 -- }
--- [{"id":1,"image":"anim_enemy_002","demage":30,"hp":100,"walkRate":400,"rollRate":400,"fireRate":200,"weak1":2,"weak2":4},
--- {"id":2,"image":"anim_enemy_002","demage":70,"hp":200,"walkRate":400,"rollRate":400,"fireRate":100,"weak1":3,"weak2":5},
--- {"id":3,"image":"zibaob","demage":120,"hp":400,"walkRate":400,"rollRate":0,"fireRate":100,"weak1":3,"weak2":5},
--- {"id":4,"image":"dunbing","demage":120,"hp":400,"walkRate":400,"rollRate":0,"fireRate":100,"weak1":3,"weak2":5},
--- {"id":5,"image":"anim_enemy_002","demage":120,"hp":400,"walkRate":400,"rollRate":0,"fireRate":400,"weak1":3,"weak2":5},
--- {"id":6,"image":"daodan","demage":120,"hp":400,"walkRate":400,"rollRate":0,"fireRate":100,"weak1":3,"weak2":5},
--- {"id":7,"image":"zpbing","demage":120,"hp":400,"walkRate":400,"rollRate":0,"fireRate":100,"weak1":3,"weak2":5},
--- {"id":8,"image":"null","demage":120,"hp":400,"walkRate":400,"rollRate":0,"fireRate":100,"weak1":3,"weak2":5},

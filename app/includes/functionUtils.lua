@@ -1,7 +1,4 @@
---
--- Author: Fangzhongzheng
--- Date: 2014-10-24 18:17:32
---
+
 
 ---- View ----
 -- add button event listener

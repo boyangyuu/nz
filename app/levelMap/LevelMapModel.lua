@@ -14,4 +14,10 @@ function LevelMapModel:getConfig()
 
 end
 
+function LevelMapModel:getNextGroupAndLevel()
+
+
+	return false --后门无关卡
+end
+
 return LevelMapModel

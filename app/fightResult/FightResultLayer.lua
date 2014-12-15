@@ -1,7 +1,8 @@
 -- import("..includes.functionUtils")
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local FightResultModel = import(".FightResultModel")
-local InlayModel = import("..inlay.InlayModel")
+local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
+local FightResultModel 	= import(".FightResultModel")
+local InlayModel 		= import("..inlay.InlayModel")
+local FightModel 		= import("..fight.Fight")
 
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
@@ -12,7 +13,8 @@ function FightResultLayer:ctor(properties)
 	self.grade = self:getGrade(percent)
 
     self.fightResultModel = app:getInstance(FightResultModel)
-    self.inlayModel = app:getInstance(InlayModel)
+    self.inlayModel 	  = app:getInstance(InlayModel)
+    self.fightModel 	  = app:getInstance(FightModel)
 
     self.quickinlay = {}
     self.probaTable = {}
@@ -24,6 +26,7 @@ function FightResultLayer:ctor(properties)
 	self:playstar(self.grade)
 	-- self:showCard(self.probaTable)
 	self:playcard(self.probaTable)
+	self:setNodeEventEnabled(true)
 end
 
 function FightResultLayer:loadCCS()
@@ -53,11 +56,10 @@ function FightResultLayer:initData()
 	table.remove(self.showTable,#self.showTable)
 end
     
+local playFanHander = nil
 function FightResultLayer:playcard(showTable)
 	--开牌 洗牌 扣牌
 	local function playanim()
-
-		
 		self.armature:getAnimation():play("kaichixu" , -1, 1)
 	end
 
@@ -86,9 +88,10 @@ function FightResultLayer:playcard(showTable)
 
 	-- self.armature:getAnimation():play("kaichixu" , -1, 1)
 
-	scheduler.performWithDelayGlobal(playanim, 2)
+	playFanHander =  scheduler.performWithDelayGlobal(playanim, 2)
 end
 
+local playStarHandler = nil
 function FightResultLayer:playstar(numStar)
 	local posXinterval = 112
 	for i=1,numStar do
@@ -101,7 +104,7 @@ function FightResultLayer:playstar(numStar)
 		    -- addChildCenter(starArmature,self.star[i])
 			starArmature:getAnimation():play("gkjs_xing" , -1, 0)
 		end
-		scheduler.performWithDelayGlobal(starcall, delay)
+		playStarHandler = scheduler.performWithDelayGlobal(starcall, delay)
 	end
 end
 
@@ -114,15 +117,18 @@ function FightResultLayer:initUI()
     self.label = cc.uiloader:seekNodeByName(self, "label")
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
+
 	-- btninlay:setTouchEnabled(true)
 	btnreplay:setTouchEnabled(true)
 	btnback:setTouchEnabled(true)
 	btnnext:setTouchEnabled(true)
+
+	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+	local nextGroup, nextLevel = self.fightModel:getNextGroupAndLevel()
 	addBtnEventListener(btnback, function(event)
         if event.name=='began' then
             return true
-        elseif event.name=='ended' then
-	        -- ui:closePopup()
+        elseif event.name=='ended' then		
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)
@@ -131,7 +137,8 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
 	        -- ui:closePopup()
-        	ui:changeLayer("FightPlayer",{})
+        	ui:changeLayer("FightPlayer",{groupId = curGroup, 
+	 			levelId = curLevel})
         end
     end)
     addBtnEventListener(btnnext, function(event)
@@ -139,7 +146,8 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
 			-- ui:closePopup()
-			ui:changeLayer("FightPlayer",{})
+			ui:changeLayer("FightPlayer",{groupId = nextGroup, 
+		 		levelId = nextLevel})
         end
     end)
     addBtnEventListener(btninlay, function(event)
@@ -273,7 +281,7 @@ end
 function FightResultLayer:turnOverCard(index)
 	self.grade = self.grade - 1
 	self.leftnumber:setString(self.grade)
-	dump(self.probaTable)
+	-- dump(self.probaTable)
 	local ran = math.random(1, 100)
 	local record
 	if ran < 4 then
@@ -320,6 +328,16 @@ end
 function FightResultLayer:quickInlay()
 	dump(self.quickinlay)
 	self.inlayModel:BestInlayInTable(self.quickinlay)
+end
+
+function FightResultLayer:onExit()
+	if playFanHander then 
+		scheduler.unscheduleGlobal(playFanHander)
+	end
+
+	if playStarHandler then 
+		scheduler.unscheduleGlobal(playStarHandler)
+	end	
 end
 
 return FightResultLayer

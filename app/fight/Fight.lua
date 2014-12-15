@@ -44,6 +44,14 @@ function Fight:getLevelId()
     return self.levelId
 end
 
+function Fight:getCurGroupAndLevel()
+    return self.groupId , self.levelId 
+end
+
+function Fight:getNextGroupAndLevel()
+    return self.groupId , self.levelId 
+end
+
 ---- 枪械相关 ----
 function Fight:getWeaponIds()
     local data = getUserData()

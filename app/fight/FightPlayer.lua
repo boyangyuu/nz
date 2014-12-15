@@ -48,6 +48,8 @@ function FightPlayer:ctor(properties)
         :addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     self:scheduleUpdate()
+    self:setNodeEventEnabled(true)
+
 end
 
 function FightPlayer:setPause(event)
@@ -56,20 +58,25 @@ function FightPlayer:setPause(event)
     layerTouch:setTouchEnabled(not isPause)  
 end
 
+local tempChangeGoldHandler = nil
+local curGold = 0
 function FightPlayer:changeGoldCount(event)
     local totolGold = event.goldCount
-    local tempChangeGoldHandler = nil
     local function changeGold()
-        local currentGold = tonumber(self.labelGoldCount:getString())
-        if currentGold < totolGold then
-            currentGold = currentGold + 1
-            self.labelGoldCount:setString(currentGold)
+        if curGold < totolGold then
+            curGold = curGold + 1
+            self.labelGold:setString(curGold)
         else
-            scheduler.unscheduleGlobal(tempChangeGoldHandler)
+            if tempChangeGoldHandler then
+                scheduler.unscheduleGlobal(tempChangeGoldHandler)
+                tempChangeGoldHandler = nil
+            end
         end
     end
-
-    tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.05)
+    if tempChangeGoldHandler then
+        scheduler.unscheduleGlobal(tempChangeGoldHandler)
+    end
+    tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.01)
 end
 
 function FightPlayer:fitArmoured()
@@ -104,6 +111,9 @@ function FightPlayer:initUI()
     self.layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
     addChildCenter(self.mapView, self.layerBg) 
 
+    --gold
+    self.labelGold = cc.uiloader:seekNodeByName(self, "labelGoldCount")
+
     --load gun 
     self.layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
     self.layerGun:addChild(self.gunView)
@@ -120,13 +130,15 @@ function FightPlayer:initUI()
     --touch area
     self:initTouchArea()
 
+    --res
     self:addArmatureFile()
 
+    --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
 end
 
 --启动盾牌恢复
-local resumeDefenceTinkHandler = nil
+local resumeDefenceHandler = nil
 function FightPlayer:launchDefenceResume()
     self.labelDefenceResume:setVisible(true)
     self:loadDefenceResumeBar()
@@ -135,7 +147,7 @@ function FightPlayer:launchDefenceResume()
         local t = self.defenceResumeLoadingBar:getPercentage()
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
-            scheduler.unscheduleGlobal(resumeDefenceTinkHandler)
+            scheduler.unscheduleGlobal(resumeDefenceHandler)
             self.defenceResumeLoadingBar:removeFromParent()
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
@@ -146,7 +158,7 @@ function FightPlayer:launchDefenceResume()
         self.defenceResumeLoadingBar:setPercentage(t - 1)
     end
 
-    resumeDefenceTinkHandler = scheduler.scheduleGlobal(tick, 0.03)
+    resumeDefenceHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
 --盾牌受伤回调,盾牌血条变化方法
@@ -189,7 +201,6 @@ function FightPlayer:initTouchArea()
         end
         return true
     end) 
-    -- drawBoundingBox(self, layerTouch, cc.c4f(0, 1.0, 0, 1.0))
 
     -- btn
     self:initBtns()
@@ -212,10 +223,6 @@ function FightPlayer:initBtns()
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     self.btnFire:setTouchEnabled(true)  
     self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    --test
-    --gl.ONE, gl.ZERO
-    --gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA
-    -- self.btnFire:setBlendFunc(gl.ONE, gl.ZERO)
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
@@ -243,8 +250,7 @@ function FightPlayer:initBtns()
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
     self.btnRobot:setTouchEnabled(true)
-    -- self.btnRobot:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
-    -- self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnLei
     self.btnLei = cc.uiloader:seekNodeByName(self, "btnLei")
@@ -255,12 +261,6 @@ function FightPlayer:initBtns()
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
     self.btnJu:setTouchEnabled(true)
     self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-    print("  self.btnJu ", self.btnJu)
-
-    --labelGoldCount
-    self.labelGoldCount = cc.uiloader:seekNodeByName(self, "labelGoldCount")
-   
-
 end
 
 ---- touch and btn----
@@ -674,5 +674,19 @@ function FightPlayer:onGuideFire(touchEvent)
         self:checkBtnFire(id, point,name)
     end
 end
+
+function FightPlayer:onEnter()
+    
+end
+
+function FightPlayer:onExit()
+    if tempChangeGoldHandler then 
+        scheduler.unscheduleGlobal(tempChangeGoldHandler)
+    end
+    if resumeDefenceHandler then 
+        scheduler.unscheduleGlobal(resumeDefenceHandler)
+    end
+end
+
 return FightPlayer
 
