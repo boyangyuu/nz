@@ -41,11 +41,15 @@ function GunView:playFire()
 	--枪火
 	self.jqk:setVisible(true)
 	self.jqk:getAnimation():play("fire" , -1, 0)
+	self.jqkzd:setVisible(true)
+	self.jqkzd:getAnimation():play("fire" , -1, 0)
+
 	self.armature:getAnimation():play("fire" , -1, 0)
 end
 
 function GunView:stopFire()
 	self.jqk:setVisible(false)
+	self.jqkzd:setVisible(false)
 end
 
 function GunView:playChange(event)
@@ -150,13 +154,20 @@ function GunView:setGun(id)
     armature:getBone("gun"):changeDisplayWithIndex(1, true)
 	self:addChild(armature)
 
-    --枪火
+    --枪火 todo放在fp里
     local effectJqkName = config.jqkName --机枪口特效
-    local srcJqk =  "Fight/jqkAnim/"..effectJqkName.."/"..effectJqkName..".ExportJson"
+    local srcJqk =  "Fight/jqkAnim/"..effectJqkName.."/"..effectJqkName..".csb"
     self.jqk = getArmature(effectJqkName, srcJqk)
     self.jqk:setVisible(false)
    	self.jqk:setPosition(cc.p(-120,180))
     armature:addChild(self.jqk , -1)
+
+    --枪火遮挡 
+    local srcJqkzd = "res/Fight/jqkAnim/qkzd/qkzd.csb"
+    self.jqkzd = getArmature("qkzd", srcJqkzd)
+    self.jqkzd:setVisible(false)
+   	self.jqkzd:setPosition(cc.p(-120,180))
+    armature:addChild(self.jqkzd , 1)
 end
 
 return GunView

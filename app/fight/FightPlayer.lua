@@ -243,8 +243,8 @@ function FightPlayer:initBtns()
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
     self.btnRobot:setTouchEnabled(true)
-    self.btnRobot:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
-    self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnRobot:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
+    -- self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnLei
     self.btnLei = cc.uiloader:seekNodeByName(self, "btnLei")
@@ -536,12 +536,8 @@ end
 
 function FightPlayer:addArmatureFile()
     --all enemys
-    -- local enemyImgs = 
-    -- {"anim_enemy_002", "jinzhanb", "zibaob", "boss01", "dunbing", 
-    -- "sanbing01", "daodan", "zpbing"}
-
     local enemyImgs = 
-    { "jinzhanb", "zibaob", "boss01", "dunbing", 
+    {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
     "sanbing01", "daodan", "zpbing"}
     local function dataLoaded()
         print(" dataLoaded()")
@@ -550,11 +546,9 @@ function FightPlayer:addArmatureFile()
     local manager = ccs.ArmatureDataManager:getInstance()
     for i,v in ipairs(enemyImgs) do
         print(i,v)
-        local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
+        local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, dataLoaded)
-
-    end 
-    manager:addArmatureFileInfo("res/Fight/enemys/anim_enemy_002/anim_enemy_002.csb");       
+    end        
 end
 
 function FightPlayer:initGuide()
