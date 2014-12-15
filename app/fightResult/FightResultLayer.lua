@@ -16,9 +16,15 @@ function FightResultLayer:ctor(properties)
     self.inlayModel 	  = app:getInstance(InlayModel)
     self.fightModel 	  = app:getInstance(FightModel)
 
+    self.cardover = {}
+    self.cardtouch = {}
+    self.cardicon = {}
+    self.cardlabel = {}
+    self.star = {}
     self.quickinlay = {}
     self.probaTable = {}
     self.showTable = {}
+    
     self:initData()
 	self:loadCCS()
 	self:initUI()
@@ -177,11 +183,7 @@ function FightResultLayer:initUI()
             end
         end)
     end
-    self.cardover = {}
-    self.cardtouch = {}
-    self.cardicon = {}
-    self.cardlabel = {}
-    self.star = {}
+
     for i=1,6 do
     	self.cardover[i] = cc.uiloader:seekNodeByName(self, "cardover"..i)
     	self.cardicon[i] = cc.uiloader:seekNodeByName(self, "icon"..i)
@@ -319,7 +321,7 @@ end
 function FightResultLayer:turnLeftCard()
 	for i=1,6 do
 		if self.cardover[i]:isVisible() == false then
-			dump(i)
+			-- dump(i)
 			self:turnOverCard(i)
 		end
 	end

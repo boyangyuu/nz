@@ -106,6 +106,7 @@ function InlayLayer:refreshBtnIcon()
     for k,v in pairs(self.btn) do
         self.btn[k]:removeAllChildren()
     end
+    dump(allInlayed, "allInlayed")
     for k,v in pairs(allInlayed) do
         local table = self.inlayModel:getConfigTable("id", v.index)
         local img =  display.newSprite("#"..table[1]["imgnam"]..".png")

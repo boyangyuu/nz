@@ -249,6 +249,7 @@ end
 function Attackable:removeAllSchedulers()
 	for i,v in ipairs(self.schedulers) do
 		scheduler.unscheduleGlobal(v)
+		v = nil
 	end
 end
 

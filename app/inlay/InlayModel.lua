@@ -73,7 +73,9 @@ function InlayModel:equipInlay(inlayid, Refresh)
 		-- case 3 不存在
 			else
 				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum - 1
-				table.insert(data.inlay.inlayed[self:getInlayType(inlayid)],{inlayid = inlayid})
+				local inlayedData = {id = inlayid}
+				local typeName = self:getInlayType(inlayid)
+				table.insert(data.inlay.inlayed[typeName], inlayedData)
 				if data.inlay.bags[k].ownednum == 0 then
 					table.remove(data.inlay.bags,k)
 				end
@@ -206,7 +208,6 @@ function InlayModel:getAllInlayed()
 			table.insert(allInlayed,{index = inlayedData.inlayid,typename = k})
 		end
 	end
-	dump(allInlayed)
 	return allInlayed
 end
 

@@ -13,8 +13,8 @@ local HeroView      = import(".HeroView")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
-    scaleMoveFocus = 1.3,
-    scaleMoveGun = 1.3, 
+    scaleMoveFocus = 2.3,
+    scaleMoveGun = 2.3, 
 }
 
 local FightPlayer = class("FightPlayer", function ()

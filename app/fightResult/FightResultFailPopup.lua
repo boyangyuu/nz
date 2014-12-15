@@ -31,7 +31,7 @@ function FightResultFailPopup:loadCCS()
 end
 
 function FightResultFailPopup:revive()
-
+    
 end
 
 return FightResultFailPopup

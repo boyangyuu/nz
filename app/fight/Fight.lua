@@ -48,10 +48,6 @@ function Fight:getCurGroupAndLevel()
     return self.groupId , self.levelId 
 end
 
-function Fight:getNextGroupAndLevel()
-    return self.groupId , self.levelId 
-end
-
 ---- 枪械相关 ----
 function Fight:getWeaponIds()
     local data = getUserData()
@@ -73,6 +69,7 @@ function Fight:setResult(isWin)
         ui:showPopup("FightResultFailPopup",{})
     end
 end
+
 
 function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo

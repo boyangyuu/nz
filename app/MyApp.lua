@@ -113,7 +113,7 @@ function MyApp:createGameStateFile()
             inlay = {
                         bags = {}, 
                         inlayed  = {
-                                   bullet = {},
+                                   bullet = {},     -- {id = 1 }
                                    clip = {},
                                    speed = {},
                                    aim = {},

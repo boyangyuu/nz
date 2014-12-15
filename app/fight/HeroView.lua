@@ -232,7 +232,6 @@ function HeroView:resumeDefence( event )
 	self.isResumeDefence = event.isResumeDefence
 end
 
-
 --显示/隐藏盾甲
 function HeroView:setShowDefence()
 	if false == self.isResumeDefence then

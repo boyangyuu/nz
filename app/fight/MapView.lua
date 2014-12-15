@@ -49,6 +49,8 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
         :addEventListener(Hero.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
+
+	self:setNodeEventEnabled(true)
 end
 
 function MapView:loadCCS()
@@ -328,5 +330,15 @@ end
 function MapView:onHeroPlaneFire(event)
 	
 end
+function MapView:onExit() 
+	if self.checkEnemysEmptyHandler then
+		scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+	end
+	if self.checkWaveHandler then
+		scheduler.unscheduleGlobal(self.checkWaveHandler)
+	end	
+	
+end
+
 
 return MapView
