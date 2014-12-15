@@ -16,12 +16,11 @@ function HomeBarLayer:ctor()
     cc.EventProxy.new(self.usermodel , self)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
-    self:addPlistRes("allImg0")
-
+    
     self:loadCCS()
     self:initHomeLayer()
     self:refreshMoney()
-    self:initCommonLayer()
+    self:refreshCommonLayer("levelMapLayer")
 end
 
 
@@ -53,9 +52,18 @@ function HomeBarLayer:initHomeLayer()
     btnInlay:setTouchEnabled(true)  
     btnStore:setTouchEnabled(true)  
     btnSetting:setTouchEnabled(true)  
-    
     btnBack:setVisible(false)
-    
+
+    self.commonlayers = {}
+    self.commonlayers["WeaponListLayer"] = WeaponListLayer.new()
+    self.commonlayers["inlayLayer"] = InlayLayer.new()
+    self.commonlayers["StoreLayer"] = StoreLayer.new()
+    self.commonlayers["levelMapLayer"] = LevelMapLayer.new()
+    for k,v in pairs(self.commonlayers) do
+        v:setVisible(false)
+        self.commonRootNode:addChild(v)
+    end
+
     addBtnEventListener(btnSetting, function(event)
         if event.name=='began' then
             -- print("settingBtn is begining!")
@@ -73,8 +81,9 @@ function HomeBarLayer:initHomeLayer()
             btnBack:setVisible(false)
             btnSetting:setVisible(true)
 
-            self.commonRootNode:removeAllChildren()
-            self:initCommonLayer()
+            -- self.commonRootNode:removeAllChildren()
+            self:refreshCommonLayer("levelMapLayer")
+
         end
     end)
     -- addBtnEventListener(btnBuyCoin, function(event)
@@ -93,9 +102,8 @@ function HomeBarLayer:initHomeLayer()
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
 
-            self.commonRootNode:removeAllChildren()
-            local WeaponListLayer = WeaponListLayer.new()
-            self.commonRootNode:addChild(WeaponListLayer)
+            self:refreshCommonLayer("WeaponListLayer")
+
             -- print("Btn is pressed!")
         end
     end)
@@ -106,10 +114,8 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
+            self:refreshCommonLayer("inlayLayer")
 
-            self.commonRootNode:removeAllChildren()
-            local inlayLayer = InlayLayer.new()
-            self.commonRootNode:addChild(inlayLayer)
         end
     end)
     addBtnEventListener(btnStore, function(event)
@@ -119,17 +125,20 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
+            self:refreshCommonLayer("StoreLayer")
 
-            self.commonRootNode:removeAllChildren()
-            local StoreLayer = StoreLayer.new()
-            self.commonRootNode:addChild(StoreLayer)       
         end
     end)
 end
 
-function HomeBarLayer:initCommonLayer()
-    local levelMapRootNode = LevelMapLayer.new()
-    self.commonRootNode:addChild(levelMapRootNode)
+function HomeBarLayer:refreshCommonLayer(layer)
+    for k,v in pairs(self.commonlayers) do
+        if k == layer then
+            v:setVisible(true)
+        else
+            v:setVisible(false)
+        end
+    end
 end
 
 function HomeBarLayer:addPlistRes(srcname)

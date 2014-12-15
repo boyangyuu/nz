@@ -11,13 +11,16 @@ local WeaponListCell = class("listCell", ScrollViewCell)
 --     return display.newScene("listCell")
 -- end)
 
-function WeaponListCell:ctor(weaponRecord)
-	self:initCellUI(weaponRecord)
+function WeaponListCell:ctor(properties)
+	-- local weaponRecord = properties.weaponRecord
+	self:initCellUI(properties)
 end
 
-function WeaponListCell:initCellUI(weaponRecord)
+function WeaponListCell:initCellUI(properties)
+	local weaponRecord = properties.weaponRecord
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
-	local controlNode = cc.uiloader:load("cebiankuang.ExportJson")
+    local controlNode = cc.uiloader:load("cebiankuang.ExportJson")
+
 	local weaponImg = display.newSprite("#icon_"..weaponRecord["imgName"]..".png")
 	local weaponLayer = cc.uiloader:seekNodeByName(controlNode, "imgpanel")
 	local weaponName = cc.uiloader:seekNodeByName(controlNode, "weapon")

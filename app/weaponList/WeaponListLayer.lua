@@ -31,6 +31,7 @@ function WeaponListLayer:ctor()
 	self:initUI()
 
     -- 点开页面默认选择某个武器
+    print("self:refreshComment(self.selectedCellId)")
       self:refreshComment(self.selectedCellId)
     
 end
@@ -60,11 +61,38 @@ function WeaponListLayer:initUI()
     self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
+
+    self.stars = {}
+    for i=1,10 do
+        self.stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
+        self.stars[i]:setVisible(false)
+    end
+
+    self.labelDamage = cc.uiloader:seekNodeByName(self.paneldetail, "labeldamage")
+
+    self.progBullet = cc.uiloader:seekNodeByName(self.paneldetail, "progressbullet")
+    self.progAccuracy = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracy")
+    self.progReload = cc.uiloader:seekNodeByName(self.paneldetail, "progressreload")
+
+    self.progBulletNext   = cc.uiloader:seekNodeByName(self.paneldetail, "progressbulletnext")
+    self.progAccuracyNext = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracynext")
+    self.progReloadNext   = cc.uiloader:seekNodeByName(self.paneldetail, "progressreloadnext")
+
+    self.progReloadMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressreloadmax")
+    self.progBulletMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressbulletmax")
+    self.progAccuracyMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracymax")
+
+    self.labelName        = cc.uiloader:seekNodeByName(self.paneldetail, "labelname")
+    self.labelDescribe    = cc.uiloader:seekNodeByName(self.paneldetail, "labeldescribe")
+
+
+
     self.equipedone:setVisible(false)
     self.equipedtwo:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    self:loadWeaponList(self.weaponLV, getConfig("config/weapon_weapon.json"))
+    local configTab = getConfig("config/weapon_weapon.json")
+    self:loadWeaponList(self.weaponLV, configTab)
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
@@ -114,7 +142,7 @@ function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 		-- local item
 		local content
 		if weaponTable[i] then
-			content = WeaponListCell.new(weaponRecord)
+			content = WeaponListCell.new({weaponRecord = weaponRecord})
 		end
 		item:addContent(content)
 		item:setItemSize(280, 140)
@@ -138,28 +166,6 @@ end
 
 -- 通过index选择Cell  refreshComment(cellIndex)  
 function WeaponListLayer:refreshComment(index)
-    local stars = {}
-    for i=1,10 do
-        stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
-        stars[i]:setVisible(false)
-    end
-
-    local labelDamage = cc.uiloader:seekNodeByName(self.paneldetail, "labeldamage")
-
-    local progBullet = cc.uiloader:seekNodeByName(self.paneldetail, "progressbullet")
-    local progAccuracy = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracy")
-    local progReload = cc.uiloader:seekNodeByName(self.paneldetail, "progressreload")
-
-    local progBulletNext   = cc.uiloader:seekNodeByName(self.paneldetail, "progressbulletnext")
-    local progAccuracyNext = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracynext")
-    local progReloadNext   = cc.uiloader:seekNodeByName(self.paneldetail, "progressreloadnext")
-
-    local progReloadMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressreloadmax")
-    local progBulletMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressbulletmax")
-    local progAccuracyMax   = cc.uiloader:seekNodeByName(self.paneldetail, "progressaccuracymax")
-
-    local labelName        = cc.uiloader:seekNodeByName(self.paneldetail, "labelname")
-    local labelDescribe    = cc.uiloader:seekNodeByName(self.paneldetail, "labeldescribe")
 
     if index == nil then index = self.selectedCellId end
     
@@ -176,57 +182,61 @@ function WeaponListLayer:refreshComment(index)
     itemContent:setSelected(true)
 
     -- refresh 详情内容
-    for k,v in pairs(stars) do
+    for k,v in pairs(self.stars) do
             v:setVisible(false)
     end
     self.layerGun:removeAllChildren()
     self.weaponrecord = WeaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
-    labelName:setString(self.weaponrecord["name"])
-    labelDescribe:setString(self.weaponrecord["describe"])
+    self.labelName:setString(self.weaponrecord["name"])
+    self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
     weaponImg:setScale(1.2)
     addChildCenter(weaponImg, self.layerGun)
 
-    local bulletNum = self.weaponListModel:getWeaponProperity(self.weaponId).bulletNum
-    local accuracy = self.weaponListModel:getWeaponProperity(self.weaponId).accuracy
-    local reloadTime = self.weaponListModel:getWeaponProperity(self.weaponId).reloadTime
-    local demage = self.weaponListModel:getWeaponProperity(self.weaponId).demage
+    local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
+    local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")
+    local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,10)
 
-    local bulletNumNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").bulletNum
-    local accuracyNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").accuracy
-    local reloadTimeNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").reloadTime
-    local demageNext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel").demage
+    local bulletNum = weaponproperity.bulletNum
+    local accuracy = weaponproperity.accuracy
+    local reloadTime = weaponproperity.reloadTime
+    local demage = weaponproperity.demage
 
-    local bulletNumMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).bulletNum
-    local accuracyMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).accuracy
-    local reloadTimeMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).reloadTime
-    local demageMax = self.weaponListModel:getWeaponProperity(self.weaponId,10).demage
+    local bulletNumNext = weaponproperitynext.bulletNum
+    local accuracyNext = weaponproperitynext.accuracy
+    local reloadTimeNext = weaponproperitynext.reloadTime
+    local demageNext = weaponproperitynext.demage
+
+    local bulletNumMax = weaponproperitymax.bulletNum
+    local accuracyMax = weaponproperitymax.accuracy
+    local reloadTimeMax = weaponproperitymax.reloadTime
+    local demageMax = weaponproperitymax.demage
 
 
 
-    progBullet:setPercent(bulletNum/kMaxBullet*100)
-    progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
-    progReload  :setPercent((kMaxSpeed/reloadTime)*100)
+    self.progBullet:setPercent(bulletNum/kMaxBullet*100)
+    self.progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
+    self.progReload  :setPercent((kMaxSpeed/reloadTime)*100)
 
-    progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)
-    progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
-    progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
+    self.progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)
+    self.progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
+    self.progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
 
-    progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
-    progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
-    progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
+    self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
+    self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
+    self.progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
 
-    labelDamage :setString(demage)
+    self.labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
     local x = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
     if x == 0 then
-        for k,v in pairs(stars) do
+        for k,v in pairs(self.stars) do
             v:setVisible(false)
         end
     else
-        for k,v in pairs(stars) do
+        for k,v in pairs(self.stars) do
             if k<x+1 then
                 v:setVisible(true)
             end
