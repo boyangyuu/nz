@@ -17,7 +17,7 @@ end
 function LevelMapModel:getNextGroupAndLevel()
 
 
-	return false --后门无关卡
+	return false --后面无关卡
 end
 
 return LevelMapModel

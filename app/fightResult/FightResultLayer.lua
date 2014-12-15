@@ -24,7 +24,6 @@ function FightResultLayer:ctor(properties)
 	self:initUI()
 	
 	self:playstar(self.grade)
-	-- self:showCard(self.probaTable)
 	self:playcard(self.probaTable)
 	self:setNodeEventEnabled(true)
 end
@@ -109,30 +108,30 @@ function FightResultLayer:playstar(numStar)
 end
 
 function FightResultLayer:initUI()
-    local btnreplay = cc.uiloader:seekNodeByName(self, "btnreplay")
-    local btnback = cc.uiloader:seekNodeByName(self, "btnback")
-    local btnnext = cc.uiloader:seekNodeByName(self, "btnnext")
-    local btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
+    self.btnreplay = cc.uiloader:seekNodeByName(self, "btnreplay")
+    self.btnback = cc.uiloader:seekNodeByName(self, "btnback")
+    self.btnnext = cc.uiloader:seekNodeByName(self, "btnnext")
+    self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
     self.leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
     self.label = cc.uiloader:seekNodeByName(self, "label")
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
 
-	-- btninlay:setTouchEnabled(true)
-	btnreplay:setTouchEnabled(true)
-	btnback:setTouchEnabled(true)
-	btnnext:setTouchEnabled(true)
+	self.btninlay:setTouchEnabled(false)
+	self.btnreplay:setTouchEnabled(false)
+	self.btnback:setTouchEnabled(false)
+	self.btnnext:setTouchEnabled(false)
 
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	local nextGroup, nextLevel = self.fightModel:getNextGroupAndLevel()
-	addBtnEventListener(btnback, function(event)
+	addBtnEventListener(self.btnback, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then		
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)
-    addBtnEventListener(btnreplay, function(event)
+    addBtnEventListener(self.btnreplay, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -141,7 +140,7 @@ function FightResultLayer:initUI()
 	 			levelId = curLevel})
         end
     end)
-    addBtnEventListener(btnnext, function(event)
+    addBtnEventListener(self.btnnext, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -150,7 +149,7 @@ function FightResultLayer:initUI()
 		 		levelId = nextLevel})
         end
     end)
-    addBtnEventListener(btninlay, function(event)
+    addBtnEventListener(self.btninlay, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -214,6 +213,11 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
 			self.leftnumber:setVisible(true)
 			self.label:setVisible(true)
 			self.leftnumber:setString(self.grade)
+			self.btnreplay:setTouchEnabled(true)
+			self.btnback:setTouchEnabled(true)
+			self.btnnext:setTouchEnabled(true)
+			self.btninlay:setTouchEnabled(true)
+
 		end
 	end
 end
@@ -264,20 +268,6 @@ function FightResultLayer:getinlayfall()
     return probaTable
 end
 
-function FightResultLayer:showCard(showTable)
-
-	for k,v in pairs(showTable) do
-		local randomRecordID = v.inlayid
-		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
-
-
-		self.cardover[k]:setVisible(true)
-		self.cardlabel[k]:setString(inlayrecord["describe2"])
-		local icon = display.newSprite("#"..inlayrecord["imgnam"]..".png")
-		addChildCenter(icon, self.cardicon[k]) 
-	end
-end
-
 function FightResultLayer:turnOverCard(index)
 	self.grade = self.grade - 1
 	self.leftnumber:setString(self.grade)
@@ -287,22 +277,10 @@ function FightResultLayer:turnOverCard(index)
 	if ran < 4 then
 		print(ran)
 		print("卧槽，你真翻到金的了")
-		local randomRecord = self.probaTable[#self.probaTable]
-		local randomRecordID = randomRecord["inlayid"]
-		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
-		record = inlayrecord
-		table.insert(self.quickinlay, {inlayid = inlayrecord["id"]})
-		self.inlayModel:buyInlay(inlayrecord["id"])
-		table.remove(self.probaTable,#self.probaTable)
+		record = self:getRanRecord(#self.probaTable)
 	else
-		local rans = math.random(1, #self.probaTable-1)
-		local randomRecord = self.probaTable[rans]
-		local randomRecordID = randomRecord["inlayid"]
-		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
-		record = inlayrecord
-		table.insert(self.quickinlay, {inlayid = inlayrecord["id"]})
-		self.inlayModel:buyInlay(inlayrecord["id"])
-		table.remove(self.probaTable,rans)
+		local ran = math.random(1, #self.probaTable-1)
+		record = self:getRanRecord(ran)
 	end
 	self.card[index]:setTouchEnabled(false)
 	transition.scaleTo(self.card[index], {scaleX = 0, time = 0.2})
@@ -314,6 +292,17 @@ function FightResultLayer:turnOverCard(index)
 	local sequence = transition.sequence({cc.ScaleTo:create(0.2,0,1),cc.ScaleTo:create(0.2,1,1)})
 	self.cardover[index]:runAction(sequence)
 
+end
+
+function FightResultLayer:getRanRecord( ran )
+	local randomRecord = self.probaTable[ran]
+	local randomRecordID = randomRecord["inlayid"]
+	local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
+	record = inlayrecord
+	table.insert(self.quickinlay, {inlayid = inlayrecord["id"]})
+	self.inlayModel:buyInlay(inlayrecord["id"])
+	table.remove(self.probaTable,ran)
+	return record
 end
 
 function FightResultLayer:turnLeftCard()
