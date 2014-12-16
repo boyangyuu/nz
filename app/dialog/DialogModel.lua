@@ -9,16 +9,11 @@ end
 
 function Dialog:check(groupId,levelId,appear)
 	print(" Dialog:check"..groupId.."-"..levelId..","..appear)
-	local config = DialogConfigs.getConfig(groupId,levelId)
-	if config ~= nil then
-		for k,v in pairs(config) do
-			if v.appear == appear then
-				return true
-			end
-		end
-		config[]
+	local config = DialogConfigs.getConfig(groupId,levelId,appear)
+	if config = nil then
+		return false
 	end
-	return false
+	return true
 end
 
 return Dialog

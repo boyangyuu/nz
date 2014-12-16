@@ -5,7 +5,7 @@ local DialogLayer = class("DialogLayer", function()
     return display.newLayer()
 end)
 
-function DialogLayer:ctor()
+function DialogLayer:ctor(properties)
 	
 end
 
@@ -15,8 +15,8 @@ function DialogLayer:loadCCS()
     self:addChild(self.dialogNode, 10)
 end
 
-function DialogLayer:refreshUI()
-	DialogConfigs.getConfig(groupId,levelId)
+function DialogLayer:refreshUI(groupId,levelId,appear)
+	DialogConfigs.getConfig(groupId,levelId,appear)
 end
 
 return DialogLayer
