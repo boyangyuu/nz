@@ -193,4 +193,13 @@ function WeaponListModel:equipBag( weaponid, index )
 	-- dump(data)
 end
 
+-- return已装备包内的武器属性
+function WeaponListModel:getFightWeaponValue(bagIndex)
+	local data = getUserData()
+	local weapon = data.weapons.weaponed[bagIndex]
+	local weaponid = weapon[weaponid]
+	local WeaponValue = self:getWeaponProperity(weaponid)
+	return weaponValue
+end
+
 return WeaponListModel
