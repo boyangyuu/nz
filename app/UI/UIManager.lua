@@ -8,12 +8,13 @@ UI.POPUP_CLOSE_EVENT   	= "POPUP_CLOSE_EVENT"
 --保存layer
 local layerClasses = {}
 layerClasses["FightPlayer"] 		 = import("..fight.FightPlayer")
-layerClasses["WeaponBag"] 		 = import("..weaponList.WeaponBag")
+layerClasses["WeaponBag"] 		 	 = import("..weaponList.WeaponBag")
 layerClasses["HomeBarLayer"]		 = import("..homeBar.HomeBarLayer")
 layerClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
 layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
 layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
-layerClasses["FightResultFailPopup"] 	 = import("..fightResult.FightResultFailPopup")
+layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
+layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 
@@ -28,14 +29,16 @@ end
 
 function UI:showPopup(layerId, properties, extra)
 	local opacity 
+	local anim
 	if extra then 
 		opacity = extra.opacity
+		anim = extra.anim
 	end
 
 	local layer = self:createLayer(layerId, properties)
 	
 	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layer = layer, 
-		opacity = opacity})
+		opacity = opacity, anim = anim})
 end
 
 function UI:closePopup(layerId)

@@ -49,6 +49,8 @@ function FightPlayer:ctor(properties)
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     self:scheduleUpdate()
     self:setNodeEventEnabled(true)
+    
+    ui:showPopup("DialogLayer",{},{anim = false})
 
 end
 

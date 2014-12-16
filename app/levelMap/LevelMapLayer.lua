@@ -146,7 +146,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= i  then
                     local levelId = i  
-                    ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
+                    -- ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
+                    ui:showPopup("DialogLayer",{},{anim = false,opacity = 0})
                 else                            
                     self:addChild(getPopupTips("关卡尚未开启！"))
                 end
