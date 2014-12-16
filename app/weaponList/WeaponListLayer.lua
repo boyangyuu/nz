@@ -3,7 +3,6 @@ import("..includes.functionUtils")
 local WeaponListCell = import(".WeaponListCell")
 local WeaponListModel = import(".WeaponListModel")
 local WeaponBag = import(".WeaponBag")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 
 local WeaponListLayer = class("WeaponListLayer", function()
 	return display.newLayer()
@@ -303,9 +302,8 @@ end
 
 -- 装备事件
 function WeaponListLayer:equip(weaponid)
-    -- app:getInstance(PopupCommonLayer):showPopup(WeaponBag.new(weaponid),0)
     ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 0})
--- id = WeaponBag.new(weaponid),opacity = 0
+
 end
 
 return WeaponListLayer

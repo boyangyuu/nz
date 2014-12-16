@@ -55,17 +55,16 @@ function Hero:ctor(properties)
     Hero.super.ctor(self, properties)
     self.fightInlay = app:getInstance(FightInlay)
     --init
-    self:refreshData({gunId1 = 1, gunId2 = 2}) 
+    self:refreshData() 
 end
 
 --data
 function Hero:refreshData(properties)
     --gun
-    self.gunId1 = properties.gunId1
-    self.gunId2 = properties.gunId2
 
-    self.isGun1 = true 
-    self:setGun(self.gunId1)  
+    self.isGun1 = true
+    local bagIndex = "bag1" 
+    self:setGun(bagIndex)
 
     --hp
     self:refreshHp()
@@ -77,19 +76,19 @@ end
 --枪械相关
 function Hero:changeGun()
     self.isGun1 = not self.isGun1
-    local destGunId = nil
+    local bagIndex = nil
     if self.isGun1 then 
-        destGunId = self.gunId1
+        bagIndex = "bag1"
     else
-        destGunId = self.gunId2
+        bagIndex = "bag2"
     end
-    print("destGunId", destGunId)
-    self:setGun(destGunId)
-    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, gunId = destGunId})
+    print("gun bagIndex", bagIndex)
+    self:setGun(bagIndex)
+    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
 end
 
-function Hero:setGun(gunId)
-    local gun = Gun.new({id = tostring(gunId)}) 
+function Hero:setGun(bagIndex)
+    local gun = Gun.new({bagIndex = bagIndex}) 
     self.gun = gun
     self:setCooldown(gun:getCooldown())
 end

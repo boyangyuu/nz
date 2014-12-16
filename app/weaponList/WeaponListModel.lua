@@ -195,10 +195,13 @@ end
 
 -- return已装备包内的武器属性
 function WeaponListModel:getFightWeaponValue(bagIndex)
+	assert(bagIndex, "bagIndex is nil")
 	local data = getUserData()
 	local weapon = data.weapons.weaponed[bagIndex]
-	local weaponid = weapon[weaponid]
-	local WeaponValue = self:getWeaponProperity(weaponid)
+	local id = weapon["weaponid"]
+	assert(id, "id is nil bagIndex is invalid:"..bagIndex)
+	local WeaponValue = self:getWeaponProperity(id)
+	dump(weaponValue, "weaponValue")
 	return weaponValue
 end
 

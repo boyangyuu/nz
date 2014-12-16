@@ -63,7 +63,7 @@ function GunView:playChange(event)
 	end
 
 	local function callFuncChange()
-		self:setGun(event.gunId)
+		self:setGun(event.bagIndex)
 
 	end 
 	local function callFuncFinishChange()

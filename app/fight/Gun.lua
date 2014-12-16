@@ -5,23 +5,27 @@
 ]]
 
 --includes
-local FightInlay = import(".FightInlay")
+local FightInlay  = import(".FightInlay")
+local WeaponModel = import("..weaponList.WeaponListModel")
 
 local Gun = class("Gun", cc.mvc.ModelBase)
-
 
 function Gun:ctor(properties)
     Gun.super.ctor(self, properties)
     -- dump(properties, "properties")
 
     --instance
-    self.inlay = app:getInstance(FightInlay)
+    self.inlay 		= app:getInstance(FightInlay)
+    self.weaponModel = app:getInstance(WeaponModel)
 
-    self.config = getConfigByID("config/weapon_weapon.json", properties.id)
+    self.bagIndex = properties.bagIndex
+    self.config = self:getConfig()
 end
 
 function Gun:getConfig()
-	assert(self.config, "self.config is nil")
+	-- self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
+	self.config = self.weaponModel:getFightWeaponValue("bag1")
+	dump(self.config, "self.config gun")
 	return self.config
 end
 
@@ -53,5 +57,6 @@ function Gun:getDemage()
 	local baseValue = self.config.demage
 	return baseValue
 end
+
 
 return Gun

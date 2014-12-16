@@ -1,6 +1,6 @@
 
 local GuideLayer = import("..guide.GuideLayer")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
+local PopupRootLayer = import("..UI.PopupRootLayer")
 local RootLayer = import("..UI.RootLayer")
 
 
@@ -15,9 +15,9 @@ function MainScene:ctor()
     self:addChild(rootLayer)
 
     --popup
-	local popupCommonLayer = app:getInstance(PopupCommonLayer)
-    popupCommonLayer:setPositionY(display.offset)
-    self:addChild(popupCommonLayer, 200)
+	local popupRootLayer = PopupRootLayer.new()
+    popupRootLayer:setPositionY(display.offset)
+    self:addChild(popupRootLayer, 200)
 
     --guide
     local guideLayer = GuideLayer:new()
