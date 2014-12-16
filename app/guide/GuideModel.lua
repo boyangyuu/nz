@@ -80,7 +80,7 @@ function Guide:addClickListener(data)
 	local id = data.id
 	self.datas[id] = data
 
-	dump(data, "data name:"..groupId)
+	-- dump(data, "data name:"..groupId)
 end
 
 function Guide:hideGuideForTime(delay)
@@ -114,11 +114,6 @@ end
 function Guide:getCurConfig()
 	assert(self.curConfig, "guideconfigs为空 step index"..self.stepIndex)
 	return self.curConfig
-end
-
-function Guide:getBtn()
-	dump(self["fight"], "node")
-	return self["fight"]
 end
 
 return Guide

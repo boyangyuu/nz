@@ -125,20 +125,13 @@ end
     return: 镶嵌id
 ]]
 function Hero:getInlayedValue(type)
-    --id 
-    -- local data        = getUserData()
-    -- local inlayedData = data.inlay.inlayed[type]
-    -- dump(inlayedData, "inlayData")
-    -- assert(inlayedData, "inlayedData is nil, type is invalid:"..type)
-    -- local inlayedId   = inlayedData.id
-
-    -- if inlayedId == nil then return false end
-    -- local value = getRecordByKey("config/items_xq.json", "valueProgram", inlayedId)
-    -- print("value", value)
-    -- return value
-    if type == "helper" then 
-        return 0.03
-    end
+    --id
+    local inlays = self.inlayModel:getAllInlayed()
+    local inlayId  = inlays[type]
+    if inlayId == nil then return nil,false end
+    local value = getRecordByKey("config/items_xq.json", "valueProgram", inlayedId)
+    print("value", value)
+    return value, true
 end 
 
 return Hero

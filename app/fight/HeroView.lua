@@ -388,7 +388,6 @@ function HeroView:onThrowGrenade(event)
 			)
 		)
 	)
-
 end
 
 function HeroView:updateHp(event)
@@ -398,7 +397,8 @@ function HeroView:updateHp(event)
 	end
 
 	--inlay
-	local hpInlayValue = self.hero:getInlayedValue("helper") 
+	local hpInlayValue, isInlayed = self.hero:getInlayedValue("helper") 
+	if not isInlayed then return end
 	
 	local function updateHpFunc()
 		print("updateHpFunc()")
@@ -501,8 +501,5 @@ function HeroView:onExit()
 	end
 end
 
-function HeroView:tick(dt)
-	
-end
 
 return HeroView
