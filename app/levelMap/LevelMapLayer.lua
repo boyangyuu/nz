@@ -27,13 +27,12 @@ function LevelMapLayer:initData()
     self.preIndex = 0
 
     --config
-    local config = getConfig("config/guanqia.json")
-    local recordsLevel = getRecord(config,"levelId",1)
+    local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
     self.groupNum = #recordsLevel
 
     self.levelAmount = {}
     for i = 1, self.groupNum do
-        local recordsGroup = getRecord(config,"groupId",i)
+        local recordsGroup = getRecordByKey("config/guanqia.json","groupId",i)
         self.levelAmount[i] = #recordsGroup
         -- print("self.groupNum =",  self.groupNum, 
         --     "self.levelAmount["..i.."] = ", self.levelAmount[i])

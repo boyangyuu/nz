@@ -257,7 +257,7 @@ function FightResultLayer:getinlayfall()
 	end
 
 	local rans = math.random(100)
-	local table = getRecord(config,"type","special")
+	local table = getRecordByKey("config/inlayfall.json","type","special")
 	local totals = 0
 	for k,v in pairs(table) do
 		totals = totals + v["probability"]

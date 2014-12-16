@@ -23,20 +23,19 @@ function Gun:ctor(properties)
 end
 
 function Gun:getConfig()
-	-- self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
-	self.config = self.weaponModel:getFightWeaponValue("bag1")
+	self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
 	dump(self.config, "self.config gun")
 	return self.config
 end
 
 function Gun:getCooldown()
-	assert(self.config.coolDown, "coolDown is nil id:"..self.config.id)
+	assert(self.config.coolDown, "coolDown is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.coolDown
 	return  baseValue
 end
 
 function Gun:getBulletNum()
-	assert(self.config.bulletNum, "bulletNum is nil id:"..self.config.id)
+	assert(self.config.bulletNum, "bulletNum is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.bulletNum
 	local value = 0.0
     local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
@@ -49,11 +48,12 @@ function Gun:getBulletNum()
 end
 
 function Gun:getReloadTime()
-	return 2.0
+	local baseValue = self.config.reloadTime
+	return baseValue
 end
 
 function Gun:getDemage()
-	assert(self.config.demage, "elf.config.demage nil id:"..self.config.id)
+	assert(self.config.demage, "elf.config.demage nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.demage
 	return baseValue
 end

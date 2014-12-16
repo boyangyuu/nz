@@ -13,8 +13,7 @@ function LevelDetailModel:ctor(properties)
 end
 
 function LevelDetailModel:getConfig(BigID,SmallID)
-	local config = getConfig("config/guanqia.json")
-	local records = getRecord(config,"groupId",BigID)
+	local records = getRecordByKey("config/guanqia.json","groupId",BigID)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
 			if k1 == "levelId" and v1==SmallID then
@@ -32,11 +31,11 @@ function LevelDetailModel:levelPass(groupId,levelId)
 	local level = data.currentlevel.level
 	if groupId == group and levelId ==level then
 		local detailTable = getConfig("config/guanqia.json")
-		local recordsGroup = getRecord(detailTable,"groupId",group)
+		local recordsGroup = getRecordByKey("config/guanqia.json","groupId",group)
 		local maxLevelRecord = recordsGroup[#recordsGroup]
 		local maxLevel = maxLevelRecord["levelId"]
 
-	    local recordsLevel = getRecord(detailTable,"groupId",1)
+	    local recordsLevel = getRecordByKey("config/guanqia.json","groupId",1)
 	    local groupNum = #recordsLevel
 		if level < maxLevel then
 			data.currentlevel.level = level + 1

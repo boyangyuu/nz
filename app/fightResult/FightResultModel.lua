@@ -7,8 +7,7 @@ function FightResultModel:ctor(properties)
 end
 
 function FightResultModel:getInlayrecordByID(inlayid)
-	local config = getConfig("config/items_xq.json")
-	local record = getRecord(config, "id", inlayid)[1]
+	local record = getRecordByKey("config/items_xq.json", "id", inlayid)[1]
 	return record
 end
 

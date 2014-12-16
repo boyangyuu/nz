@@ -32,14 +32,14 @@ function WeaponListModel:getIntenlevel(weaponid)
 end
 
 function WeaponListModel:getWeaponNameByID(weaponid)
-	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
+	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
 	local WeaponName = record[1]["name"]
 	return WeaponName
 end
 
 function WeaponListModel:getWeaponProperity(weaponid,level)
 	--bullet accuracy reload damage
-	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
+	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
 	local growTableName = record[1]["growTable"]
 	if level == nil then
 		level = self:getIntenlevel(weaponid)
@@ -51,8 +51,8 @@ function WeaponListModel:getWeaponProperity(weaponid,level)
 			level =self:getIntenlevel(weaponid)+1
 		end
 	end
-	local growtable = getConfig("config/weapon_"..growTableName..".json")
-	local intenlevelData = getRecord(growtable,"level",level)[1]
+	local growtableStr = "config/weapon_"..growTableName..".json"
+	local intenlevelData = getRecordByKey(growtableStr,"level",level)[1]
 	local bulletNum = intenlevelData["bulletNum"]
 	local accuracy = intenlevelData["accuracy"]
 	local reloadTime = intenlevelData["reloadTime"]
@@ -126,6 +126,11 @@ function WeaponListModel:isWeaponExist(weaponid)
 	return false
 end
 
+
+--todo getWeaponStatus
+--[[
+	return 1(in bag1), 2(in bag2), 3(not in bag)
+]]
 function WeaponListModel:isWeaponed(weaponid)
 	local data = getUserData()
 	-- dump(data.weapons, "data.weapons")
@@ -193,15 +198,20 @@ function WeaponListModel:equipBag( weaponid, index )
 	-- dump(data)
 end
 
--- return已装备包内的武器属性
 function WeaponListModel:getFightWeaponValue(bagIndex)
 	assert(bagIndex, "bagIndex is nil")
 	local data = getUserData()
 	local weapon = data.weapons.weaponed[bagIndex]
 	local id = weapon["weaponid"]
 	assert(id, "id is nil bagIndex is invalid:"..bagIndex)
-	local WeaponValue = self:getWeaponProperity(id)
-	dump(weaponValue, "weaponValue")
+	local weaponValue = self:getWeaponProperity(id)
+	-- dump(weaponValue, "weaponValue")
+
+	--cooldown
+	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
+	weaponValue.cooldown = 
+	--range
+
 	return weaponValue
 end
 

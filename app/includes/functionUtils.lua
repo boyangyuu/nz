@@ -127,23 +127,10 @@ function getConfigByID( configFileDir, tableID )
     return nil
 end
 
--- 通过某列属性(PropertyName)查找在表(Table)中对应的(key)的记录
--- 并返回多条记录在数组中(recordArr)
-function getRecord( table, PropertyName, Key )
-    assert(table ~= "" and type(table) == "table", "invalid param")
-    assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
-    -- assert(Key ~= "" and type(Key) == "string", "invalid param")
-    local recordArr={}
-    for k,v in pairs(table) do
-        for k1,v1 in pairs(v) do
-            if k1 == PropertyName and v1 == Key then
-                recordArr[#recordArr + 1] = v
-            end
-        end
-    end
-    return recordArr
-end
-
+--[[
+   @param 某列属性(PropertyName)查找在表(Table)中对应的(key)的记录
+   @return 返回多条记录在数组中(recordArr)
+]]
 function getRecordByKey(tableName, propertyName, key)
     local table = getConfig(tableName) 
     assert(propertyName ~= "" and type(propertyName) == "string", "invalid param")
