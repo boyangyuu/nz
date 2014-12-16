@@ -64,10 +64,8 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             local data = getUserData()
-            for k,v in pairs(data.inlay.inlayed) do
-                for i=1,#data.inlay.inlayed[k] do
-                    table.remove(data.inlay.inlayed[k],1)
-                end
+            for i=1,#data.inlay.inlayed do
+                table.remove(data.inlay.inlayed,1)
             end
             setUserData(data)
             -- dump(GameState.load())
@@ -108,9 +106,9 @@ function InlayLayer:refreshBtnIcon()
     end
     dump(allInlayed, "allInlayed")
     for k,v in pairs(allInlayed) do
-        local table = self.inlayModel:getConfigTable("id", v.index)
+        local table = self.inlayModel:getConfigTable("id", v)
         local img =  display.newSprite("#"..table[1]["imgnam"]..".png")
-        addChildCenter(img,self.btn[v.typename])
+        addChildCenter(img,self.btn[k])
     end
 
 end
