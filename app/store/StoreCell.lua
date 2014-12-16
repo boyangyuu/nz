@@ -113,7 +113,7 @@ function StoreCell:initCellUI(parameter)
         buynumber:setVisible(false)
         icon_jibi:setVisible(true)
 
-        local Img = display.newSprite("#"..record["imgnam"]..".png",-250,0)
+        local Img = display.newSprite("#"..record["imgname"]..".png",-250,0)
         Img:setScale(1.2)
         self:addChild(Img)
         detail:setString(record["describe2"])
