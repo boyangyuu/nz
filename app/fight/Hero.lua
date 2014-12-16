@@ -14,12 +14,14 @@ local Hero          = class("Hero", Actor)
 
 --events
 
+--inlay
+Hero.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
+
 --skill
 Hero.SKILL_ARMOURED_START_EVENT   = "SKILL_ARMOURED_START_EVENT"    --机甲开启
-
 Hero.SKILL_DEFENCE_START_EVENT    = "SKILL_DEFENCE_START_EVENT" --护盾开启
 Hero.SKILL_DEFENCE_BEHURT_EVENT   = "SKILL_DEFENCE_BEHURT_EVENT" --护盾被攻击
-Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原?
+Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原
 
 Hero.SKILL_GRENADE_ARRIVE_EVENT   = "SKILL_GRENADE_ARRIVE_EVENT" --扔手雷结束
 Hero.SKILL_GRENADE_START_EVENT    = "SKILL_GRENADE_START_EVENT"    --扔手雷开启
@@ -53,7 +55,6 @@ function Hero:ctor(properties)
 
     --init
     self:refreshData({gunId1 = 1, gunId2 = 2}) 
-
 end
 
 --data
@@ -124,7 +125,6 @@ end
     return: 镶嵌id
 ]]
 function Hero:getInlayedValue(type)
-    return 100
     --id 
     -- local data        = getUserData()
     -- local inlayedData = data.inlay.inlayed[type]
@@ -136,6 +136,9 @@ function Hero:getInlayedValue(type)
     -- local value = getRecordByKey("config/items_xq.json", "valueProgram", inlayedId)
     -- print("value", value)
     -- return value
+    if type == "helper" then 
+        return 0.03
+    end
 end 
 
 return Hero

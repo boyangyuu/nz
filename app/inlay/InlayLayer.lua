@@ -31,8 +31,6 @@ function InlayLayer:loadCCS()
     self:addChild(controlNode)
 
     display.addSpriteFrames("xiangqian0.plist", "xiangqian0.png")
-
-
 end
 
 function InlayLayer:onEnter()
@@ -114,7 +112,5 @@ function InlayLayer:refreshBtnIcon()
     end
 
 end
-
-
 
 return InlayLayer

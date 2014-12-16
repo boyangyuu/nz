@@ -34,11 +34,15 @@ function HeroView:ctor(properties)
 
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self)
-		:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.beHurtEffect))
-		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.setShowArmoured))
-		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.setShowDefence))
-		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.resumeDefence))
-		:addEventListener(Hero.SKILL_GRENADE_START_EVENT, handler(self, self.throwGrenade))
+		:addEventListener(Actor.HP_INCREASE_EVENT, handler(self, self.onHeroHpChange))
+		:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.onHurtEffect))
+
+		:addEventListener(Hero.INLAY_UPDATE_EVENT, handler(self, self.updateHp))
+		
+		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.onShowArmoured))
+		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.onShowDefence))
+		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.onResumeDefence))
+		:addEventListener(Hero.SKILL_GRENADE_START_EVENT, handler(self, self.onThrowGrenade))
 		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.killEnemyCallBack))
 		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT, handler(self, self.effectPopupHead))
@@ -48,6 +52,8 @@ function HeroView:ctor(properties)
 	--ui
 	self:initUI()
 
+	--
+	self:updateHp()
 	self:setNodeEventEnabled(true)
 end
 
@@ -68,7 +74,6 @@ end
 
 --初始化英雄血条
 function HeroView:initHeroHpNode()
-
 	self.loadingBarHeroHp = cc.uiloader:seekNodeByName(self.uiRootNode, "loadingBarHeroHp")
 	self.loadingBarHeroHp:removeFromParent()
 	self:addChild(self.loadingBarHeroHp)
@@ -113,8 +118,9 @@ function HeroView:initKillTimerNode()
     self.killEnemyTimer:setVisible(false)
 end
 
---player血条血量改变
-function HeroView:heroHpChange()
+--player血条血量改变 onh
+
+function HeroView:onHeroHpChange(event)
 	   local per = self.hero:getHp() / self.hero:getMaxHp() * 100
 	   self.loadingBarHeroHp:setPercent(per)
 	-- local per1 = self.hero:getHp() / self.hero:getMaxHp() * 100
@@ -175,13 +181,12 @@ end
 
 --杀掉敌人后的回调
 local percent = 100
-local killEnemyTimerHandler = nil
 function HeroView:killEnemyCallBack( event )
-
+	local killEnemyTimerHandler = self.killEnemyTimerHandler
 	self.killEnemyCountLabel:setVisible(true)
-	self.killEnemyTimerBg:setVisible(true)
+	self.killEnemyTimerBg	:setVisible(true)
 	self:killEnmeyGold(event.enemyPos)
-	self.killCntKeep = self.killCntKeep + 1
+	self.killCntKeep  = self.killCntKeep + 1
 	self.killCntTotal = self.killCntTotal + 1
 	local strKillEnemyCount = string.format("X %d", self.killCntKeep)
 	self.killEnemyCountLabel:setString(strKillEnemyCount)
@@ -218,8 +223,8 @@ function HeroView:killEnemyCallBack( event )
     killEnemyTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
---是否显示机甲
-function HeroView:setShowArmoured()
+--显示/隐藏机甲
+function HeroView:onShowArmoured(event)
 	if false == self.layerArmoured:isVisible() then
 		self.layerArmoured:setVisible(true)
 	else
@@ -228,12 +233,12 @@ function HeroView:setShowArmoured()
 end
 
 --盾牌恢复完成的回调
-function HeroView:resumeDefence( event )
+function HeroView:onResumeDefence(event)
 	self.isResumeDefence = event.isResumeDefence
 end
 
 --显示/隐藏盾甲
-function HeroView:setShowDefence()
+function HeroView:onShowDefence(event)
 	if false == self.isResumeDefence then
 
 		--tood 待优化 可以放在一个node里就解决了
@@ -243,7 +248,7 @@ function HeroView:setShowDefence()
 		local downFrameHeight = downFrame:getCascadeBoundingBox().size.height
 		local defenceHeight = downFrameHeight + upFrameHeight;
 
-		if true == self.defence:isVisible() then
+		if self.defence:isVisible() then
 			self.defence:runAction( 
 				cc.Sequence:create( 
 					cc.MoveBy:create(0.5, cc.p(0, -defenceHeight)), 
@@ -291,11 +296,10 @@ function HeroView:defenceBehurtEffect(event)
 	self.defenceHp = self.defenceHp - 10
 	local tCurrentHp = 100 - self.defenceHp
 	if 100 <= tCurrentHp then
-		self:setShowDefence()
+		self:onShowDefence()
 		for k, v in pairs(self.crackTable) do
 			v:removeFromParent()
 		end
-		-- self.beHurtEffect = 1
 		self.crackTable = {}
 		self.isResumeDefence = true
 		self.defenceHp = 100
@@ -330,19 +334,19 @@ function HeroView:bloodBehurtEffect()
     self:addChild(tBloodArmature)
 end
 
-function HeroView:beHurtEffect(event)
+function HeroView:onHurtEffect(event)
 
 	self:screenHurtedEffect()
 	if true == self.defence:isVisible() then
 		if false == self.isLaunchDefenceResume then self:defenceBehurtEffect() end
 	else
 	 	self:bloodBehurtEffect()
-		self:heroHpChange()
+		self:onHeroHpChange(event)
 	end
 end
 
 --手雷
-function HeroView:throwGrenade(event)
+function HeroView:onThrowGrenade(event)
 
 	local tGrenade = getArmature("shoulei", "res/Fight/heroAnim/shoulei/shoulei.ExportJson")
 	self:addChild(tGrenade)
@@ -385,6 +389,23 @@ function HeroView:throwGrenade(event)
 		)
 	)
 
+end
+
+function HeroView:updateHp(event)
+	if self.hpUpdateHandler then 
+		scheduler.unscheduleGlobal(self.hpUpdateHandler)
+		self.hpUpdateHandler = nil
+	end
+
+	--inlay
+	local hpInlayValue = self.hero:getInlayedValue("helper") 
+	
+	local function updateHpFunc()
+		print("updateHpFunc()")
+		local maxHp = self.hero:getMaxHp()
+		self.hero:increaseHp(hpInlayValue * maxHp)
+	end
+	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
 end
 
 --英雄受到伤害时,屏幕闪红效果
@@ -470,9 +491,18 @@ end
 function HeroView:onExit()
 	print("function HeroView:onExit()")
 
-	if killEnemyTimerHandler then 
-		scheduler.unscheduleGlobal(killEnemyTimerHandler)
-		killEnemyTimerHandler = nil
+	if self.killEnemyTimerHandler then 
+		scheduler.unscheduleGlobal(self.killEnemyTimerHandler)
+		self.killEnemyTimerHandler = nil
+	end
+	if self.hpUpdateHandler then
+		scheduler.unscheduleGlobal(self.hpUpdateHandler)
+		self.hpUpdateHandler = nil
 	end
 end
+
+function HeroView:tick(dt)
+	
+end
+
 return HeroView

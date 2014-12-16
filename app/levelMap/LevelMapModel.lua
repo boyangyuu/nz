@@ -14,7 +14,7 @@ function LevelMapModel:getConfig()
 
 end
 
-<<<<<<< HEAD
+
 function LevelMapModel:getNextGroupAndLevel(gid, lid)
 
 	return false --后面无关卡
