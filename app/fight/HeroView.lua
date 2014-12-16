@@ -12,6 +12,7 @@ local scheduler = require("framework.scheduler")
 local Actor 	= import(".Actor")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
+local FightInlay= import(".FightInlay")
 local Guide 	= import("..guide.GuideModel")
 
 --kconfig
@@ -24,8 +25,10 @@ end)
 function HeroView:ctor(properties)
 
 	--instance
-	self.hero = app:getInstance(Hero)
-	self.guide = app:getInstance(Guide)
+	self.hero 	= app:getInstance(Hero)
+	self.guide 	= app:getInstance(Guide)
+	self.inlay 	= app:getInstance(FightInlay)
+
 	self.crackTable = {}
 	self.behurtCount = 1
 	self.isResumeDefence = false
@@ -398,7 +401,7 @@ function HeroView:updateHp(event)
 
 	--inlay
 	local value = 0.0
-	local scale, isInlayed = self.hero:getInlayedValue("helper") 
+	local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 	if isInlayed then 
 		local maxHp = self.hero:getMaxHp()
 		value =  maxHp * scale
@@ -407,7 +410,7 @@ function HeroView:updateHp(event)
 	end
 	
 	local function updateHpFunc()
-		print("updateHpFunc()")
+		-- print("updateHpFunc()")
 		local maxHp = self.hero:getMaxHp()
 		self.hero:increaseHp(value)
 	end

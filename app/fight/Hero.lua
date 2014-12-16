@@ -9,7 +9,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 --import
 local Actor         = import(".Actor")
 local Gun           = import(".Gun")
-local InlayModel    = import("..Inlay.InlayModel")
+local FightInlay    = import(".FightInlay")
 local Hero          = class("Hero", Actor)
 
 --events
@@ -53,8 +53,7 @@ local kMaxHp          = 100
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-    self.inlayModel = app:getInstance(InlayModel) 
-
+    self.fightInlay = app:getInstance(FightInlay)
     --init
     self:refreshData({gunId1 = 1, gunId2 = 2}) 
 end
@@ -102,7 +101,7 @@ end
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
     local value = 0
-    local scale, isInlayed = self:getInlayedValue("bullet")
+    local scale, isInlayed = self.fightInlay:getInlayedValue("bullet")
     if isInlayed then
         value = baseDemage + baseDemage * scale
     else
@@ -113,7 +112,7 @@ end
 
 function Hero:refreshHp()
     local valueHp = 0.0 
-    local value, isInlayed = self:getInlayedValue("blood")
+    local value, isInlayed = self.fightInlay:getInlayedValue("blood")
     if isInlayed then 
         valueHp = kMaxHp + kMaxHp * value
     else
@@ -131,21 +130,5 @@ function Hero:getMapZoom()
     return self.mapZoom or 1.0
 end
 
---[[
-    @param type：aim blood bullet clip helper speed 
-    return: 镶嵌id
-]]
-function Hero:getInlayedValue(type)
-    --id
-    local inlays = self.inlayModel:getAllInlayed()
-    -- dump(inlays, "inlays")
-    -- print("type", type)
-    local inlayedId  = inlays[type]
-    if inlayedId == nil then return nil,false end
-    local record = getRecordByKey("config/items_xq.json", "id", inlayedId)
-    local value = record[1].valueProgram
-    print("Hero:getInlayedValue value:", value)
-    return value, true
-end 
 
 return Hero

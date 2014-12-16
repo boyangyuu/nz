@@ -15,7 +15,7 @@ GameData={}
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
-    self:initGameState()
+    self:initGameState()    
 end
 
 function MyApp:run()
