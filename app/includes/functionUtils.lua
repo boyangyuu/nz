@@ -148,15 +148,16 @@ function getRecordByKey(tableName, propertyName, key)
     local table = getConfig(tableName) 
     assert(propertyName ~= "" and type(propertyName) == "string", "invalid param")
     assert(key ~= "", "key is invalid param")
-    key = tostring(key)
+    -- key = tostring(key)
     local recordArr={}
-    for k,v in pairs(Table) do
+    for k,v in pairs(table) do
         for k1,v1 in pairs(v) do
             if k1 == propertyName and v1 == key then
                 recordArr[#recordArr + 1] = v
             end
         end
     end
+    dump(recordArr, "recordArr")
     return recordArr
 end
 

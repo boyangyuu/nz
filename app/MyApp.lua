@@ -37,10 +37,10 @@ function MyApp:isObjectExists(id)
     return self.objects_[id] ~= nil
 end
 
-function MyApp:getInstance(cls, id)
+function MyApp:getInstance(cls)
     local modelObj  
     assert(cls, "cls is nil"..tostring(cls))
-    local idStr = id or cls.__cname
+    local idStr = cls.__cname
     if not self:isObjectExists(idStr) then
         modelObj = cls.new(
             {

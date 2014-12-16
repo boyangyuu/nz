@@ -26,7 +26,7 @@ Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原
 Hero.SKILL_GRENADE_ARRIVE_EVENT   = "SKILL_GRENADE_ARRIVE_EVENT" --扔手雷结束
 Hero.SKILL_GRENADE_START_EVENT    = "SKILL_GRENADE_START_EVENT"    --扔手雷开启
 
-Hero.SKILL_GOLDWEAPON_ACTIVE_EVENT = "SKILL_GOLDWEAPON_ACTIVE_EVENT" --激活黄金武器
+Hero.SKILL_GOLDWEAPON_ACTIVE_EVENT = "SKILL_GOLDWEAPON_ACTIVE_EVENT" --激活黄金武器（同时刷新血量上限）
 
 --enemy
 Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
@@ -45,8 +45,10 @@ Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
+
+
 --define
-local kMaxHp          = 10
+local kMaxHp          = 100
 
 function Hero:ctor(properties)
     --instance
@@ -67,7 +69,7 @@ function Hero:refreshData(properties)
     self:setGun(self.gunId1)  
 
     --hp
-    self:initHp()
+    self:refreshHp()
 
     --inlay
     --..   
@@ -99,18 +101,27 @@ end
 
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
-    -- local scale = self:getInlayedValue()
-    return baseDemage
+    local value = 0
+    local scale, isInlayed = self:getInlayedValue("bullet")
+    if isInlayed then
+        value = baseDemage + baseDemage * scale
+    else
+        value = baseDemage
+    end
+    return value
 end
 
-function Hero:initHp()
-    local baseHp = kMaxHp
-    local scale = self:getInlayedValue("blood")
-    local valueHp = baseHp 
+function Hero:refreshHp()
+    local valueHp = 0.0 
+    local value, isInlayed = self:getInlayedValue("blood")
+    if isInlayed then 
+        valueHp = kMaxHp + kMaxHp * value
+    else
+        valueHp = kMaxHp
+    end
     self:setMaxHp(valueHp)
     self:setHp(valueHp)
 end
-
 
 function Hero:setMapZoom(scale)
     self.mapZoom = scale
@@ -121,24 +132,20 @@ function Hero:getMapZoom()
 end
 
 --[[
-    param:  type：aim blood bullet clip helper speed 
+    @param type：aim blood bullet clip helper speed 
     return: 镶嵌id
 ]]
 function Hero:getInlayedValue(type)
-    --id 
-    -- local data        = getUserData()
-    -- local inlayedData = data.inlay.inlayed[type]
-    -- dump(inlayedData, "inlayData")
-    -- assert(inlayedData, "inlayedData is nil, type is invalid:"..type)
-    -- local inlayedId   = inlayedData.id
-
-    -- if inlayedId == nil then return false end
-    -- local value = getRecordByKey("config/items_xq.json", "valueProgram", inlayedId)
-    -- print("value", value)
-    -- return value
-    if type == "helper" then 
-        return 0.03
-    end
+    --id
+    local inlays = self.inlayModel:getAllInlayed()
+    -- dump(inlays, "inlays")
+    -- print("type", type)
+    local inlayedId  = inlays[type]
+    if inlayedId == nil then return nil,false end
+    local record = getRecordByKey("config/items_xq.json", "id", inlayedId)
+    local value = record[1].valueProgram
+    print("Hero:getInlayedValue value:", value)
+    return value, true
 end 
 
 return Hero

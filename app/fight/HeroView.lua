@@ -388,7 +388,6 @@ function HeroView:onThrowGrenade(event)
 			)
 		)
 	)
-
 end
 
 function HeroView:updateHp(event)
@@ -398,12 +397,19 @@ function HeroView:updateHp(event)
 	end
 
 	--inlay
-	local hpInlayValue = self.hero:getInlayedValue("helper") 
+	local value = 0.0
+	local scale, isInlayed = self.hero:getInlayedValue("helper") 
+	if isInlayed then 
+		local maxHp = self.hero:getMaxHp()
+		value =  maxHp * scale
+	else 
+		value = 0.0
+	end
 	
 	local function updateHpFunc()
 		print("updateHpFunc()")
 		local maxHp = self.hero:getMaxHp()
-		self.hero:increaseHp(hpInlayValue * maxHp)
+		self.hero:increaseHp(value)
 	end
 	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
 end
@@ -417,7 +423,7 @@ function HeroView:screenHurtedEffect()
 	tAniamtion:play("avatarhit" , -1, 1)
     tBeHurtScreenArmature:setAnchorPoint(0, 0)
     tAniamtion:setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movement) 
+    	function (armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
@@ -501,8 +507,5 @@ function HeroView:onExit()
 	end
 end
 
-function HeroView:tick(dt)
-	
-end
 
 return HeroView

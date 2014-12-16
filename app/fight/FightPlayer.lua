@@ -136,7 +136,7 @@ function FightPlayer:initUI()
     self:addArmatureFile()
 
     --guide
-    scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
 end
 
 --启动盾牌恢复

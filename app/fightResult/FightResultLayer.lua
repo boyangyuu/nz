@@ -129,7 +129,7 @@ function FightResultLayer:initUI()
 	self.btnnext:setTouchEnabled(false)
 
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-	local nextGroup, nextLevel = self.fightModel:getNextGroupAndLevel()
+	-- local nextGroup, nextLevel = self.fightModel:getNextGroupAndLevel()
 	addBtnEventListener(self.btnback, function(event)
         if event.name=='began' then
             return true
@@ -151,8 +151,8 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
 			-- ui:closePopup()
-			ui:changeLayer("FightPlayer",{groupId = nextGroup, 
-		 		levelId = nextLevel})
+			-- ui:changeLayer("FightPlayer",{groupId = nextGroup, 
+		 -- 		levelId = nextLevel})
         end
     end)
     addBtnEventListener(self.btninlay, function(event)
