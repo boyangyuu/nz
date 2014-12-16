@@ -105,7 +105,7 @@ function InlayLayer:refreshBtnIcon()
     dump(allInlayed, "allInlayed")
     for k,v in pairs(allInlayed) do
         local table = self.inlayModel:getConfigTable("id", v)
-        local img =  display.newSprite("#"..table[1]["imgnam"]..".png")
+        local img =  display.newSprite("#"..table[1]["imgname"]..".png")
         addChildCenter(img,self.btn[k])
     end
 
