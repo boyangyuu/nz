@@ -79,7 +79,7 @@ function FightResultLayer:playcard(showTable)
 		local randomRecordID = v.inlayid
 		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
 		
-		local skin = ccs.Skin:createWithSpriteFrameName(inlayrecord["imgnam"]..".png")
+		local skin = ccs.Skin:createWithSpriteFrameName(inlayrecord["imgname"]..".png")
 	    self.armature:getBone("icon00"..k):addDisplay(skin, 1)
 	    self.armature:getBone("icon00"..k):changeDisplayWithIndex(1, true)
 
@@ -289,7 +289,7 @@ function FightResultLayer:turnOverCard(index)
 	self.cardover[index]:setVisible(true)
 	self.cardover[index]:setScaleX(0)
 	self.cardlabel[index]:setString(record["describe2"])
-	local icon = display.newSprite("#"..record["imgnam"]..".png")
+	local icon = display.newSprite("#"..record["imgname"]..".png")
 	addChildCenter(icon, self.cardicon[index]) 
 	local sequence = transition.sequence({cc.ScaleTo:create(0.2,0,1),cc.ScaleTo:create(0.2,1,1)})
 	self.cardover[index]:runAction(sequence)
