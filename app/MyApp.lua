@@ -111,14 +111,15 @@ function MyApp:createGameStateFile()
                         },
             }, 
             inlay = {
-                        bags = {}, 
+                        bags = {}, --{inlayid = 1,ownednum = 1}
                         inlayed  = {
-                                   bullet = {},
-                                   clip = {},
-                                   speed = {},
-                                   aim = {},
-                                   blood = {},
-                                   helper = {}, 
+                                        --存id bullet = 1,
+                                    bullet = nil,
+                                    clip = nil,
+                                    speed = nil,
+                                    aim = nil,
+                                    blood = nil,
+                                    helper = nil,
                         },
             },
             prop = {

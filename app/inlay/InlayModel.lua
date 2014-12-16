@@ -73,7 +73,9 @@ function InlayModel:equipInlay(inlayid, Refresh)
 		-- case 3 不存在
 			else
 				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum - 1
-				table.insert(data.inlay.inlayed[self:getInlayType(inlayid)],{inlayid = inlayid})
+				local typeName = self:getInlayType(inlayid)
+				local inlayed = data.inlay.inlayed
+				inlayed[typeName] = inlayid
 				if data.inlay.bags[k].ownednum == 0 then
 					table.remove(data.inlay.bags,k)
 				end
@@ -93,21 +95,19 @@ function InlayModel:replaceInlayed(inlayid)
 	local data = getUserData()
 	local strType = self:getInlayType(inlayid)
 	local inlaydata = data.inlay.inlayed[strType]
-	local inlayedData = inlaydata[1]
 
-	if self:isBagsExist(inlayedData.inlayid) then
+	if self:isBagsExist(inlaydata) then
 		for k1,v1 in pairs(data.inlay.bags) do
-			if v1.inlayid == inlayedData.inlayid then
+			if v1.inlayid == inlaydata then
 				data.inlay.bags[k1].ownednum = data.inlay.bags[k1].ownednum + 1
 			end
 		end
 	else
-		local inlay = {inlayid = inlayedData.inlayid, ownednum = 1}
+		local inlay = {inlayid = inlaydata, ownednum = 1}
 	    table.insert(data.inlay.bags, inlay)
 	end
-	table.remove(inlaydata,1)
-	table.insert(inlaydata,{inlayid = inlayid})
-	    setUserData(data)
+	data.inlay.inlayed[strType] = inlayid
+    setUserData(data)
 end
 
 
@@ -125,8 +125,8 @@ function InlayModel:oneForAllBtn()
 			bestInlay[typename] = v.inlayid
 		end
 		for k1,v1 in pairs(allinlayed) do
-			if v1.typename == typename and bestInlay[typename] > v1.index then
-				bestInlay[typename] = v1.index
+			if k1 == typename and bestInlay[typename] > v1 then
+				bestInlay[typename] = v1
 			end
 		end
 	end
@@ -160,30 +160,21 @@ function InlayModel:BestInlayInTable(table)
 	
 	for k,v in pairs(bestInlay) do
 		if v ~= 100 then
-			dump(v)
+			-- dump(v)
 			self:equipInlay(v, false)
 		end
 	end
 
 end
 
--- function InlayModel:equipInlaysInTable(table)
--- 	local data = getUserData()
--- 	for k,v in pairs(table) do
--- 		self:equipInlay(v["inlayid"],false)
--- 	end
---     dump(GameState.load())
--- end
-
 function InlayModel:isInlayedExist(inlayid)
 	local data = getUserData()
 	local strType = self:getInlayType(inlayid)
 	local inlaydata = data.inlay.inlayed[strType]
-	local inlayedData = inlaydata[1]
-	if inlayedData == nil then
+	if inlaydata == nil then
 		-- 没有装备
 		return 0
-	elseif inlayedData.inlayid ~= inlayid then
+	elseif inlaydata ~= inlayid then
 		-- 装备过同类型
 		return 1
 	else
@@ -200,13 +191,8 @@ function InlayModel:getAllInlayed()
 	local data = getUserData()
 	local allInlayed = {}
     for k,v in pairs(data.inlay.inlayed) do
-		local inlayedData = v[1]
-		if inlayedData ~= nil then
-			--todo
-			table.insert(allInlayed,{index = inlayedData.inlayid,typename = k})
-		end
+    	allInlayed[k] = v
 	end
-	dump(allInlayed)
 	return allInlayed
 end
 

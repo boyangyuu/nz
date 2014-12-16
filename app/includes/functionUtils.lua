@@ -1,7 +1,4 @@
---
--- Author: Fangzhongzheng
--- Date: 2014-10-24 18:17:32
---
+
 
 ---- View ----
 -- add button event listener
@@ -130,16 +127,32 @@ function getConfigByID( configFileDir, tableID )
     return nil
 end
 
--- 通过某列属性(PropertyName)查找在表(Table)中对应的(Key)的记录
+-- 通过某列属性(PropertyName)查找在表(Table)中对应的(key)的记录
 -- 并返回多条记录在数组中(recordArr)
-function getRecord( Table, PropertyName, Key )
-    assert(Table ~= "" and type(Table) == "table", "invalid param")
+function getRecord( table, PropertyName, Key )
+    assert(table ~= "" and type(table) == "table", "invalid param")
     assert(PropertyName ~= "" and type(PropertyName) == "string", "invalid param")
     -- assert(Key ~= "" and type(Key) == "string", "invalid param")
     local recordArr={}
-    for k,v in pairs(Table) do
+    for k,v in pairs(table) do
         for k1,v1 in pairs(v) do
             if k1 == PropertyName and v1 == Key then
+                recordArr[#recordArr + 1] = v
+            end
+        end
+    end
+    return recordArr
+end
+
+function getRecordByKey(tableName, propertyName, key)
+    local table = getConfig(tableName) 
+    assert(propertyName ~= "" and type(propertyName) == "string", "invalid param")
+    assert(key ~= "", "key is invalid param")
+    key = tostring(key)
+    local recordArr={}
+    for k,v in pairs(Table) do
+        for k1,v1 in pairs(v) do
+            if k1 == propertyName and v1 == key then
                 recordArr[#recordArr + 1] = v
             end
         end

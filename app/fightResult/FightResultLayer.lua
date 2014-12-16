@@ -1,7 +1,8 @@
 -- import("..includes.functionUtils")
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local FightResultModel = import(".FightResultModel")
-local InlayModel = import("..inlay.InlayModel")
+local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
+local FightResultModel 	= import(".FightResultModel")
+local InlayModel 		= import("..inlay.InlayModel")
+local FightModel 		= import("..fight.Fight")
 
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
@@ -12,18 +13,25 @@ function FightResultLayer:ctor(properties)
 	self.grade = self:getGrade(percent)
 
     self.fightResultModel = app:getInstance(FightResultModel)
-    self.inlayModel = app:getInstance(InlayModel)
+    self.inlayModel 	  = app:getInstance(InlayModel)
+    self.fightModel 	  = app:getInstance(FightModel)
 
+    self.cardover = {}
+    self.cardtouch = {}
+    self.cardicon = {}
+    self.cardlabel = {}
+    self.star = {}
     self.quickinlay = {}
     self.probaTable = {}
     self.showTable = {}
+    
     self:initData()
 	self:loadCCS()
 	self:initUI()
 	
 	self:playstar(self.grade)
-	-- self:showCard(self.probaTable)
 	self:playcard(self.probaTable)
+	self:setNodeEventEnabled(true)
 end
 
 function FightResultLayer:loadCCS()
@@ -53,11 +61,10 @@ function FightResultLayer:initData()
 	table.remove(self.showTable,#self.showTable)
 end
     
+local playFanHander = nil
 function FightResultLayer:playcard(showTable)
 	--开牌 洗牌 扣牌
 	local function playanim()
-
-		
 		self.armature:getAnimation():play("kaichixu" , -1, 1)
 	end
 
@@ -86,9 +93,10 @@ function FightResultLayer:playcard(showTable)
 
 	-- self.armature:getAnimation():play("kaichixu" , -1, 1)
 
-	scheduler.performWithDelayGlobal(playanim, 2)
+	playFanHander =  scheduler.performWithDelayGlobal(playanim, 2)
 end
 
+local playStarHandler = nil
 function FightResultLayer:playstar(numStar)
 	local posXinterval = 112
 	for i=1,numStar do
@@ -101,48 +109,53 @@ function FightResultLayer:playstar(numStar)
 		    -- addChildCenter(starArmature,self.star[i])
 			starArmature:getAnimation():play("gkjs_xing" , -1, 0)
 		end
-		scheduler.performWithDelayGlobal(starcall, delay)
+		playStarHandler = scheduler.performWithDelayGlobal(starcall, delay)
 	end
 end
 
 function FightResultLayer:initUI()
-    local btnreplay = cc.uiloader:seekNodeByName(self, "btnreplay")
-    local btnback = cc.uiloader:seekNodeByName(self, "btnback")
-    local btnnext = cc.uiloader:seekNodeByName(self, "btnnext")
-    local btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
+    self.btnreplay = cc.uiloader:seekNodeByName(self, "btnreplay")
+    self.btnback = cc.uiloader:seekNodeByName(self, "btnback")
+    self.btnnext = cc.uiloader:seekNodeByName(self, "btnnext")
+    self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
     self.leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
     self.label = cc.uiloader:seekNodeByName(self, "label")
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
-	-- btninlay:setTouchEnabled(true)
-	btnreplay:setTouchEnabled(true)
-	btnback:setTouchEnabled(true)
-	btnnext:setTouchEnabled(true)
-	addBtnEventListener(btnback, function(event)
+
+	self.btninlay:setTouchEnabled(false)
+	self.btnreplay:setTouchEnabled(false)
+	self.btnback:setTouchEnabled(false)
+	self.btnnext:setTouchEnabled(false)
+
+	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+	local nextGroup, nextLevel = self.fightModel:getNextGroupAndLevel()
+	addBtnEventListener(self.btnback, function(event)
         if event.name=='began' then
             return true
-        elseif event.name=='ended' then
-	        -- ui:closePopup()
+        elseif event.name=='ended' then		
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)
-    addBtnEventListener(btnreplay, function(event)
+    addBtnEventListener(self.btnreplay, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
 	        -- ui:closePopup()
-        	ui:changeLayer("FightPlayer",{})
+        	ui:changeLayer("FightPlayer",{groupId = curGroup, 
+	 			levelId = curLevel})
         end
     end)
-    addBtnEventListener(btnnext, function(event)
+    addBtnEventListener(self.btnnext, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
 			-- ui:closePopup()
-			ui:changeLayer("FightPlayer",{})
+			ui:changeLayer("FightPlayer",{groupId = nextGroup, 
+		 		levelId = nextLevel})
         end
     end)
-    addBtnEventListener(btninlay, function(event)
+    addBtnEventListener(self.btninlay, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -169,11 +182,7 @@ function FightResultLayer:initUI()
             end
         end)
     end
-    self.cardover = {}
-    self.cardtouch = {}
-    self.cardicon = {}
-    self.cardlabel = {}
-    self.star = {}
+
     for i=1,6 do
     	self.cardover[i] = cc.uiloader:seekNodeByName(self, "cardover"..i)
     	self.cardicon[i] = cc.uiloader:seekNodeByName(self, "icon"..i)
@@ -206,6 +215,11 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
 			self.leftnumber:setVisible(true)
 			self.label:setVisible(true)
 			self.leftnumber:setString(self.grade)
+			self.btnreplay:setTouchEnabled(true)
+			self.btnback:setTouchEnabled(true)
+			self.btnnext:setTouchEnabled(true)
+			self.btninlay:setTouchEnabled(true)
+
 		end
 	end
 end
@@ -256,45 +270,19 @@ function FightResultLayer:getinlayfall()
     return probaTable
 end
 
-function FightResultLayer:showCard(showTable)
-
-	for k,v in pairs(showTable) do
-		local randomRecordID = v.inlayid
-		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
-
-
-		self.cardover[k]:setVisible(true)
-		self.cardlabel[k]:setString(inlayrecord["describe2"])
-		local icon = display.newSprite("#"..inlayrecord["imgnam"]..".png")
-		addChildCenter(icon, self.cardicon[k]) 
-	end
-end
-
 function FightResultLayer:turnOverCard(index)
 	self.grade = self.grade - 1
 	self.leftnumber:setString(self.grade)
-	dump(self.probaTable)
+	-- dump(self.probaTable)
 	local ran = math.random(1, 100)
 	local record
 	if ran < 4 then
 		print(ran)
 		print("卧槽，你真翻到金的了")
-		local randomRecord = self.probaTable[#self.probaTable]
-		local randomRecordID = randomRecord["inlayid"]
-		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
-		record = inlayrecord
-		table.insert(self.quickinlay, {inlayid = inlayrecord["id"]})
-		self.inlayModel:buyInlay(inlayrecord["id"])
-		table.remove(self.probaTable,#self.probaTable)
+		record = self:getRanRecord(#self.probaTable)
 	else
-		local rans = math.random(1, #self.probaTable-1)
-		local randomRecord = self.probaTable[rans]
-		local randomRecordID = randomRecord["inlayid"]
-		local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
-		record = inlayrecord
-		table.insert(self.quickinlay, {inlayid = inlayrecord["id"]})
-		self.inlayModel:buyInlay(inlayrecord["id"])
-		table.remove(self.probaTable,rans)
+		local ran = math.random(1, #self.probaTable-1)
+		record = self:getRanRecord(ran)
 	end
 	self.card[index]:setTouchEnabled(false)
 	transition.scaleTo(self.card[index], {scaleX = 0, time = 0.2})
@@ -308,10 +296,21 @@ function FightResultLayer:turnOverCard(index)
 
 end
 
+function FightResultLayer:getRanRecord( ran )
+	local randomRecord = self.probaTable[ran]
+	local randomRecordID = randomRecord["inlayid"]
+	local inlayrecord = self.fightResultModel:getInlayrecordByID(randomRecordID)
+	record = inlayrecord
+	table.insert(self.quickinlay, {inlayid = inlayrecord["id"]})
+	self.inlayModel:buyInlay(inlayrecord["id"])
+	table.remove(self.probaTable,ran)
+	return record
+end
+
 function FightResultLayer:turnLeftCard()
 	for i=1,6 do
 		if self.cardover[i]:isVisible() == false then
-			dump(i)
+			-- dump(i)
 			self:turnOverCard(i)
 		end
 	end
@@ -320,6 +319,16 @@ end
 function FightResultLayer:quickInlay()
 	dump(self.quickinlay)
 	self.inlayModel:BestInlayInTable(self.quickinlay)
+end
+
+function FightResultLayer:onExit()
+	if playFanHander then 
+		scheduler.unscheduleGlobal(playFanHander)
+	end
+
+	if playStarHandler then 
+		scheduler.unscheduleGlobal(playStarHandler)
+	end	
 end
 
 return FightResultLayer

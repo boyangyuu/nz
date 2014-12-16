@@ -7,18 +7,21 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 ]]
 
 --import
-local Actor = import(".Actor")
-local Gun = import(".Gun")
-local Hero = class("Hero", Actor)
+local Actor         = import(".Actor")
+local Gun           = import(".Gun")
+local InlayModel    = import("..Inlay.InlayModel")
+local Hero          = class("Hero", Actor)
 
 --events
 
+--inlay
+Hero.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
+
 --skill
 Hero.SKILL_ARMOURED_START_EVENT   = "SKILL_ARMOURED_START_EVENT"    --机甲开启
-
 Hero.SKILL_DEFENCE_START_EVENT    = "SKILL_DEFENCE_START_EVENT" --护盾开启
 Hero.SKILL_DEFENCE_BEHURT_EVENT   = "SKILL_DEFENCE_BEHURT_EVENT" --护盾被攻击
-Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原?
+Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原
 
 Hero.SKILL_GRENADE_ARRIVE_EVENT   = "SKILL_GRENADE_ARRIVE_EVENT" --扔手雷结束
 Hero.SKILL_GRENADE_START_EVENT    = "SKILL_GRENADE_START_EVENT"    --扔手雷开启
@@ -43,19 +46,15 @@ Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
 --define
-local kMaxHp          = 100
+local kMaxHp          = 10
 
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-
-    --properties
-    self:setMaxHp(kMaxHp)
-    self:setHp(kMaxHp)
+    self.inlayModel = app:getInstance(InlayModel) 
 
     --init
     self:refreshData({gunId1 = 1, gunId2 = 2}) 
-
 end
 
 --data
@@ -66,6 +65,9 @@ function Hero:refreshData(properties)
 
     self.isGun1 = true 
     self:setGun(self.gunId1)  
+
+    --hp
+    self:initHp()
 
     --inlay
     --..   
@@ -97,8 +99,18 @@ end
 
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
+    -- local scale = self:getInlayedValue()
     return baseDemage
 end
+
+function Hero:initHp()
+    local baseHp = kMaxHp
+    local scale = self:getInlayedValue("blood")
+    local valueHp = baseHp 
+    self:setMaxHp(valueHp)
+    self:setHp(valueHp)
+end
+
 
 function Hero:setMapZoom(scale)
     self.mapZoom = scale
@@ -107,5 +119,26 @@ end
 function Hero:getMapZoom()
     return self.mapZoom or 1.0
 end
+
+--[[
+    param:  type：aim blood bullet clip helper speed 
+    return: 镶嵌id
+]]
+function Hero:getInlayedValue(type)
+    --id 
+    -- local data        = getUserData()
+    -- local inlayedData = data.inlay.inlayed[type]
+    -- dump(inlayedData, "inlayData")
+    -- assert(inlayedData, "inlayedData is nil, type is invalid:"..type)
+    -- local inlayedId   = inlayedData.id
+
+    -- if inlayedId == nil then return false end
+    -- local value = getRecordByKey("config/items_xq.json", "valueProgram", inlayedId)
+    -- print("value", value)
+    -- return value
+    if type == "helper" then 
+        return 0.03
+    end
+end 
 
 return Hero
