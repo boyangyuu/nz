@@ -110,7 +110,8 @@ function InlayModel:replaceInlayed(inlayid)
 end
 
 function InlayModel:equipAllInlays()
-	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
+	local bestInlay = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
+	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	local data = getUserData()
 	local allinlayed = self:getAllInlayed()
 	local bags = {}
@@ -118,35 +119,62 @@ function InlayModel:equipAllInlays()
 		bags[k] = v
 	end
 	for k,v in pairs(bags) do
+		local priority = self:getInlayPriority(v.inlayid)
 		local typename = self:getInlayType(v.inlayid)
-		if v.inlayid < bestInlay[typename] then
-			bestInlay[typename] = v.inlayid
+		if priority > bestInlay[typename] then
+			bestInlay[typename] = priority
 		end
 		for k1,v1 in pairs(allinlayed) do
-			if k1 == typename and bestInlay[typename] > v1 then
-				bestInlay[typename] = v1
+			local inlayedPriority = self:getInlayPriority(v1)
+			if k1 == typename and bestInlay[typename] < inlayedPriority then
+				bestInlay[typename] = inlayedPriority
 			end
 		end
 	end
+
 	for k,v in pairs(bestInlay) do
+		local typeTable = self:getConfigTable("type", k)
+	    for k1,v1 in pairs(typeTable) do
+	        for k2,v2 in pairs(v1) do
+	            if k2 == "property" and v2 == bestInlay[k] then
+	                bestInlayId[k] = v1["id"]
+	            end
+	        end
+	    end
+	end
+
+	for k,v in pairs(bestInlayId) do
 		if v ~= 100 then
 			self:equipInlay(v, false)
 		end
 	end
 	self:refreshInfo("speed")
-	-- dump(bestInlay)
 end
 
 function InlayModel:equipAllBestInlays(table)
-	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
+	local bestInlay = {bullet=0,clip=0,speed=0,crit=0,blood=0,helper=0}	
+	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	for k,v in pairs(table) do
+		local priority = self:getInlayPriority(v.inlayid)
 		local typename = self:getInlayType(v.inlayid)
-		if v.inlayid < bestInlay[typename] then
-			bestInlay[typename] = v.inlayid
+		if priority > bestInlay[typename] then
+			bestInlay[typename] = priority
 		end
 	end
 	
 	for k,v in pairs(bestInlay) do
+	local typeTable = self:getConfigTable("type", k)
+	    for k1,v1 in pairs(typeTable) do
+	        for k2,v2 in pairs(v1) do
+	            if k2 == "property" and v2 == bestInlay[k] then
+	                bestInlayId[k] = v1["id"]
+	            end
+	        end
+	    end
+	end
+	dump(bestInlayId)
+
+	for k,v in pairs(bestInlayId) do
 		if v ~= 100 then
 			-- dump(v)
 			self:equipInlay(v, false)
@@ -182,6 +210,10 @@ end
 
 function InlayModel:getInlayType(inlayid)
 	return self:getConfigTable("id", inlayid)[1]["type"]
+end
+
+function InlayModel:getInlayPriority(inlayid)
+	return self:getConfigTable("id", inlayid)[1]["property"]
 end
 
 function InlayModel:getAllInlayed()
