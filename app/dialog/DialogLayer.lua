@@ -7,12 +7,16 @@ local DialogLayer = class("DialogLayer", function()
 end)
 
 function DialogLayer:ctor(properties)
+	dump(properties)
+	self.groupid = properties.groupid
+	self.levelid = properties.levelid
+	self.appear = properties.appear
 	self:loadCCS()
 	self:initUI()
 	self.index = 1
     self.DialogModel = app:getInstance(DialogModel)
 
-	self:refreshUI(1, "level"..3, "forward", self.index)
+	self:refreshUI(self.groupid, "level"..self.levelid, self.appear)
 end
 
 function DialogLayer:loadCCS()
@@ -25,26 +29,29 @@ function DialogLayer:initUI()
 	self.msglabel = cc.uiloader:seekNodeByName(self, "msg")
 	self.left = cc.uiloader:seekNodeByName(self, "roleleft")
 	self.right = cc.uiloader:seekNodeByName(self, "roleright")
-	local panldialog = cc.uiloader:seekNodeByName(self, "panldialog")
+	local panldialog = cc.uiloader:seekNodeByName(self, "tappanl")
 	panldialog:setTouchEnabled(true)
 	panldialog:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            local num = self.DialogModel:getDialogNum(1, "level"..3, "forward")
+            local num = self.DialogModel:getDialogNum(self.groupid, "level"..self.levelid, self.appear)
             if self.index > num then
 	           	ui:closePopup()
             else
-	            self:refreshUI(1, "level"..3, "forward", self.index)
+	            self:refreshUI(self.groupid, "level"..self.levelid, self.appear)
 	        end
         end
     end)
 end
 
-function DialogLayer:refreshUI(groupId,levelId,appear,index)
+function DialogLayer:refreshUI(groupId,levelId,appear)
+	dump(groupId)
+	dump(levelId)
+	dump(appear)
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	dump(configs)
-	local sentence = configs[index]
+	local sentence = configs[self.index]
 	local role = sentence["role"]
 	local msg = sentence["msg"]
 	local imgname = sentence["imgname"]
@@ -60,8 +67,6 @@ function DialogLayer:refreshUI(groupId,levelId,appear,index)
 	self.msglabel:setString(msg)
 	self.msglabel:speak(0.1)
 	self.index = self.index + 1
-	dump(self.index)
-
 end
 
 return DialogLayer

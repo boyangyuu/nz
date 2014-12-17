@@ -16,7 +16,7 @@ configs[1]  = {
 			{role = "杰",imgname = "role_jie", msg = "成功抵达位置，但是敌人有埋伏。我们被包围了。", pos = "left"},
 			{role = "萝莉",imgname = "role_luoli", msg = "队长，敌人越来越多了，申请动用“黄金武器”！", pos = "right"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。申请许可，全员立刻换装黄金武器！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "哈哈!黄金武器，这个给力！老虎不发威你当我是哈喽kitty！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "哈哈！黄金武器，这个给力！老虎不发威你当我是哈喽kitty ！", pos = "left"},
 		},	
 	},
 	level3 = {
