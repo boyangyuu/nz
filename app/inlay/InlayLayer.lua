@@ -15,7 +15,7 @@ function InlayLayer:ctor()
         :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
 
 	self.btn = {}
-    self.typeId = {"speed", "aim", "clip", "bullet", 
+    self.typeId = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
 
 	self:loadCCS()

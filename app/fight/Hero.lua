@@ -132,7 +132,7 @@ function Hero:getMapZoom()
 end
 
 --[[
-    @param type：aim blood bullet clip helper speed 
+    @param type：crit blood bullet clip helper speed 
     return: 镶嵌id
 ]]
 function Hero:getInlayedValue(type)

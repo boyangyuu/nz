@@ -1,5 +1,6 @@
 
 local DialogConfigs = import(".DialogConfigs")
+local DialogModel = import(".DialogModel")
 
 local DialogLayer = class("DialogLayer", function()
     return display.newLayer()
@@ -9,6 +10,7 @@ function DialogLayer:ctor(properties)
 	self:loadCCS()
 	self:initUI()
 	self.index = 1
+    self.DialogModel = app:getInstance(DialogModel)
 
 	self:refreshUI(1, "level"..1, "forward", self.index)
 end
@@ -27,7 +29,12 @@ function DialogLayer:initUI()
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-           self:refreshUI(1, "level"..1, "forward", self.index)
+            local num = self.DialogModel:getDialogNum(1, "level"..1, "forward")
+            if self.index > num then
+	           	ui:closePopup()
+            else
+	            self:refreshUI(1, "level"..1, "forward", self.index)
+	        end
         end
     end)
 end
@@ -39,10 +46,11 @@ function DialogLayer:refreshUI(groupId,levelId,appear,index)
 	local role = sentence["role"]
 	local msg = sentence["msg"]
 	local pos = sentence["pos"]
-	dump(msg)
 	self.msglabel:setString(msg)
 	self.msglabel:speak(0.1)
 	self.index = self.index + 1
+	dump(self.index)
+
 end
 
 return DialogLayer

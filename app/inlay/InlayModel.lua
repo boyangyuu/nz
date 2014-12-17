@@ -112,7 +112,7 @@ end
 
 
 function InlayModel:oneForAllBtn()
-	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
+	local bestInlay = {bullet=100,clip=100,speed=100,crit=100,blood=100,helper=100}
 	local data = getUserData()
 	local allinlayed = self:getAllInlayed()
 	local bags = {}
@@ -150,7 +150,7 @@ function InlayModel:isBagsExist(inlayid)
 end
 
 function InlayModel:BestInlayInTable(table)
-	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
+	local bestInlay = {bullet=100,clip=100,speed=100,crit=100,blood=100,helper=100}
 	for k,v in pairs(table) do
 		local typename = self:getInlayType(v.inlayid)
 		if v.inlayid < bestInlay[typename] then
