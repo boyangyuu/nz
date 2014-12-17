@@ -32,7 +32,7 @@ function FightResultLayer:ctor(properties)
 	self:initUI()
 	
 	self:playstar(self.grade)
-	self:playcard(self.probaTable)
+	self:playcard(self.showTable)
 	self:setNodeEventEnabled(true)
 end
 
@@ -58,9 +58,10 @@ function FightResultLayer:initData()
 	for k,v in pairs(self.probaTable) do
 		self.showTable[k] = v
 	end
-	local ran = math.random(#self.showTable)
-	table.insert(self.showTable,ran,self.showTable[#self.showTable])
+	-- local ran = math.random(#self.showTable)
+	table.insert(self.showTable,3,self.showTable[#self.showTable])
 	table.remove(self.showTable,#self.showTable)
+	dump(self.showTable)
 end
     
 local playFanHander = nil
