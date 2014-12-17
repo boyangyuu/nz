@@ -14,7 +14,7 @@ function WeaponListModel:ctor(properties, events, callbacks)
 end
 
 function WeaponListModel:getWeaponRecord(index)
-	local WeaponRecord = getConfigByID("config/weapon_weapon.json", index)
+	local WeaponRecord = getRecordByID("config/weapon_weapon.json", index)
 	return WeaponRecord
 end
 
@@ -204,14 +204,12 @@ function WeaponListModel:getFightWeaponValue(bagIndex)
 	local weapon = data.weapons.weaponed[bagIndex]
 	local id = weapon["weaponid"]
 	assert(id, "id is nil bagIndex is invalid:"..bagIndex)
-	local weaponValue = self:getWeaponProperity(id)
-	-- dump(weaponValue, "weaponValue")
+	local weaponValue = self:getWeaponProperity(id) 
 
 	--cooldown
-	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
-	weaponValue.cooldown = 
-	--range
-
+	local record = getRecordByKey("config/weapon_weapon.json", "id", id)
+	record = record[1]
+	table.merge(weaponValue, record)
 	return weaponValue
 end
 

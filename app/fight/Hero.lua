@@ -49,6 +49,7 @@ Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
 --define
 local kMaxHp          = 100
+local kCritScale      = 3.0
 
 function Hero:ctor(properties)
     --instance
@@ -100,12 +101,22 @@ end
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
     local value = 0
+
+    --inlay
     local scale, isInlayed = self.fightInlay:getInlayedValue("bullet")
     if isInlayed then
         value = baseDemage + baseDemage * scale
     else
         value = baseDemage
     end
+
+    --crit
+    local critNum = self.gun:getCritPercent() * 100
+    print("critNum:", critNum)
+    if critNum > math.random(0, 100) then 
+        value = value * kCritScale
+    end
+
     return value
 end
 

@@ -33,7 +33,7 @@ function FightInlay:getInlayedValue(type)
     -- print("type", type)
     local inlayedId  = inlays[type]
     if inlayedId == nil then return nil,false end
-    local record = getRecordByKey("config/items_xq.json", "id", inlayedId)
+    local record = getRecordByID("config/items_xq.json", inlayedId)
     local value = record[1].valueProgram
     print("FightInlay:getInlayedValue value:", value)
     return value, true

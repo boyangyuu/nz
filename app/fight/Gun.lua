@@ -29,8 +29,9 @@ function Gun:getConfig()
 end
 
 function Gun:getCooldown()
-	assert(self.config.coolDown, "coolDown is nil bagIndex:"..self.bagIndex)
+	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.coolDown
+
 	return  baseValue
 end
 
@@ -49,11 +50,29 @@ end
 
 function Gun:getReloadTime()
 	local baseValue = self.config.reloadTime
-	return baseValue
+	local value = 0.0 
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("speed")
+    if isInlayed then
+        value = baseValue - baseValue * inlayValue
+    else
+        value = baseValue
+    end		
+	return value
+end
+
+function Gun:getCritPercent()
+	local value
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
+    if isInlayed then
+        value = 0.00 + inlayValue
+    else
+        value = 0.00
+    end		
+	return value	
 end
 
 function Gun:getDemage()
-	assert(self.config.demage, "elf.config.demage nil bagIndex:"..self.bagIndex)
+	assert(self.config.demage, "self.config.demage nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.demage
 	return baseValue
 end

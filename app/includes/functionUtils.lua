@@ -110,10 +110,10 @@ function getConfig( configFileDir )
 end
 
 -- 通过表ID获取res下json文件内容
-function getConfigByID( configFileDir, tableID )
+function getRecordByID( configFileDir, tableID)
     tableID = tonumber(tableID)
     assert(tableID ~= "" and type(tableID) == "number", 
-        "invalid tableID tableName:"..configFileDir)
+        "invalid tableID configFileDir:"..configFileDir)
 
     local configTable = getConfig(configFileDir)
     -- dump(configTable, "configTable")
@@ -131,8 +131,8 @@ end
    @param 某列属性(PropertyName)查找在表(Table)中对应的(key)的记录
    @return 返回多条记录在数组中(recordArr)
 ]]
-function getRecordByKey(tableName, propertyName, key)
-    local table = getConfig(tableName) 
+function getRecordByKey(configFileDir, propertyName, key)
+    local table = getConfig(configFileDir) 
     assert(propertyName ~= "" and type(propertyName) == "string", "invalid param")
     assert(key ~= "", "key is invalid param")
     -- key = tostring(key)
@@ -144,7 +144,6 @@ function getRecordByKey(tableName, propertyName, key)
             end
         end
     end
-    dump(recordArr, "recordArr")
     return recordArr
 end
 

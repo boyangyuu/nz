@@ -75,7 +75,7 @@ function FocusView:animationEvent(armatureBack,movementType,movementID)
 end
 
 function FocusView:stopFire()
-	print("FocusView:stopFire()")
+	-- print("FocusView:stopFire()")
 	self:playIdle()
 end
 
