@@ -17,6 +17,8 @@ function FightResultLayer:ctor(properties)
     self.fightModel 	  = app:getInstance(FightModel)
 
     self.cardover = {}
+    self.cardgold = {}
+    self.cardnormal = {}
     self.cardtouch = {}
     self.cardicon = {}
     self.cardlabel = {}
@@ -184,6 +186,8 @@ function FightResultLayer:initUI()
     end
 
     for i=1,6 do
+    	self.cardgold[i] = cc.uiloader:seekNodeByName(self, "cardgold"..i)
+    	self.cardnormal[i] = cc.uiloader:seekNodeByName(self, "cardnormal"..i)
     	self.cardover[i] = cc.uiloader:seekNodeByName(self, "cardover"..i)
     	self.cardicon[i] = cc.uiloader:seekNodeByName(self, "icon"..i)
     	self.cardlabel[i] = cc.uiloader:seekNodeByName(self, "labelcard"..i)
@@ -287,6 +291,17 @@ function FightResultLayer:turnOverCard(index)
 	self.card[index]:setTouchEnabled(false)
 	transition.scaleTo(self.card[index], {scaleX = 0, time = 0.2})
 	self.cardover[index]:setVisible(true)
+
+
+	if record["property"] == "gold" then
+		self.cardnormal[index]:setVisible(false)
+		self.cardgold[index]:setVisible(true)		
+	else
+		dump(record["property"])
+		self.cardgold[index]:setVisible(false)
+		self.cardnormal[index]:setVisible(true)
+	end
+
 	self.cardover[index]:setScaleX(0)
 	self.cardlabel[index]:setString(record["describe2"])
 	local icon = display.newSprite("#"..record["imgname"]..".png")
