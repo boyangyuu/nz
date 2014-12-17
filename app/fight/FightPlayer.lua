@@ -51,8 +51,6 @@ function FightPlayer:ctor(properties)
     self:scheduleUpdate()
     self:setNodeEventEnabled(true)
     
-    ui:showPopup("DialogLayer",{},{anim = false})
-
 end
 
 function FightPlayer:setPause(event)

@@ -30,22 +30,29 @@ function LevelDetailModel:levelPass(groupId,levelId)
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
 	if groupId == group and levelId ==level then
-		local detailTable = getConfig("config/guanqia.json")
-		local recordsGroup = getRecordByKey("config/guanqia.json","groupId",group)
-		local maxLevelRecord = recordsGroup[#recordsGroup]
-		local maxLevel = maxLevelRecord["levelId"]
+		if LevelMapModel:getNextGroupAndLevel(group, level) == false then
+			print("通关")
+		else
+			local nextgroup,nextlevel = LevelMapModel:getNextGroupAndLevel(group, level)
+			data.currentlevel.group = nextgroup
+			data.currentlevel.level = nextlevel
+	-- 	local detailTable = getConfig("config/guanqia.json")
+	-- 	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",group)
+	-- 	local maxLevelRecord = recordsGroup[#recordsGroup]
+	-- 	local maxLevel = maxLevelRecord["levelId"]
 
-	    local recordsLevel = getRecordByKey("config/guanqia.json","groupId",1)
-	    local groupNum = #recordsLevel
-		if level < maxLevel then
-			data.currentlevel.level = level + 1
-		elseif level == maxLevel and group < groupNum then
-			--todo
-			data.currentlevel.group = group + 1
-			data.currentlevel.level = 1
+	--     local recordsLevel = getRecordByKey("config/guanqia.json","groupId",1)
+	--     local groupNum = #recordsLevel
+	-- 	if level < maxLevel then
+	-- 		data.currentlevel.level = level + 1
+	-- 	elseif level == maxLevel and group < groupNum then
+	-- 		--todo
+	-- 		data.currentlevel.group = group + 1
+	-- 		data.currentlevel.level = 1
+	-- 	end
+			setUserData(data)
+			dump(GameState.load())
 		end
-		setUserData(data)
-		dump(GameState.load())
 	end
 end
 
