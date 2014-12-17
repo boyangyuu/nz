@@ -19,7 +19,7 @@ local Guide 	= import("..guide.GuideModel")
 local kGoldActivate = 1
 
 local HeroView = class("HeroView", function()
-    return display.newNode()
+    return display.newLayer()
 end)
 
 function HeroView:ctor(properties)
@@ -37,21 +37,19 @@ function HeroView:ctor(properties)
 
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self)
-		:addEventListener(Actor.HP_INCREASE_EVENT, handler(self, self.onHeroHpChange))
-		:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.onHurtEffect))
+		:addEventListener(Actor.HP_INCREASE_EVENT			, handler(self, self.onHeroHpChange))
+		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 
-		:addEventListener(Hero.INLAY_UPDATE_EVENT, handler(self, self.updateHp))
-		
-		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT, handler(self, self.onShowArmoured))
-		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT, handler(self, self.onShowDefence))
-		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT, handler(self, self.onResumeDefence))
-		:addEventListener(Hero.SKILL_GRENADE_START_EVENT, handler(self, self.onThrowGrenade))
-		
-		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.killEnemyCallBack))
-		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT, handler(self, self.effectPopupHead))
-		
-		:addEventListener(Hero.GUN_RELOAD_EVENT, handler(self, self.effectGunReload))
-		
+		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT	, handler(self, self.onShowArmoured))
+		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT	, handler(self, self.onShowDefence))
+		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT	, handler(self, self.onResumeDefence))
+		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
+		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))
+		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT		, handler(self, self.effectPopupHead))		
+		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
+	
+	cc.EventProxy.new(self.inlay, self)
+		:addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
 	--ui
 	self:initUI()
 
@@ -121,8 +119,7 @@ function HeroView:initKillTimerNode()
     self.killTimer:setVisible(false)
 end
 
---player血条血量改变 onh
-
+--player血条血量改变 
 function HeroView:onHeroHpChange(event)
 	   local per = self.hero:getHp() / self.hero:getMaxHp() * 100
 	   self.loadingBarHeroHp:setPercent(per)
@@ -170,17 +167,22 @@ function HeroView:killEnmeyGold(enemyPos)
 end
 
 --触发黄金武器
-function HeroView:activeGoldWeapon()
-	print("HeroView:activeGoldWeapon() pause")
+function HeroView:onActiveGold(event)
+	print("HeroView:onActiveGold(event)")
 	self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = true})
 	local armature = ccs.Armature:create("hjwq")
-	self:addChild(armature)
-	local function resume()
-		print("HeroView:activeGoldWeapon() resume")
-		self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
-		armature:removeFromParent()
-	end
-	scheduler.performWithDelayGlobal(resume, 1.0)
+	addChildCenter(armature, self)
+    local anim = armature:getAnimation()
+	anim:playWithIndex(0)
+    anim:setMovementEventCallFunc(
+    	function ( armatureBack,movementType,movementId ) 
+	    	if movementType == ccs.MovementEventType.complete then
+				print("HeroView:activeGold() resume")
+				self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
+				armature:removeFromParent()
+	    	end 
+    	end
+    )
 end
 
 --杀掉敌人后的回调
@@ -197,7 +199,7 @@ function HeroView:killEnemyCallBack( event )
 	--触发黄金武器
 	if kGoldActivate <= self.killCntKeep then
 		self.killCntKeep = 0
-		self:activeGoldWeapon()
+		self.hero:activeGold()
 		return
 	end
 
@@ -396,24 +398,22 @@ function HeroView:updateHp(event)
 		self.hpUpdateHandler = nil
 	end
 
-	--inlay
-	local value = 0.0
-	local scale, isInlayed = self.inlay:getInlayedValue("helper") 
-	if isInlayed then 
-		local maxHp = self.hero:getMaxHp()
-		value =  maxHp * scale
-	else 
-		value = 0.0
-		return
-	end
-	
 	local function updateHpFunc()
-		-- print("updateHpFunc()")
+		print("updateHpFunc()")
+		--inlay
+		local value = 0.0
+		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 		local maxHp = self.hero:getMaxHp()
+		if isInlayed then 
+			value =  maxHp * scale
+		else 
+			value = 0.0
+		end
 		if self.hero:isDead() then 
 			scheduler.unscheduleGlobal(self.hpUpdateHandler)
 			return
 		end
+		if value == 0 then return end
 		self.hero:increaseHp(value)
 	end
 	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
@@ -448,7 +448,7 @@ function HeroView:effectPopupHead()
 	    	end 
     	end
     )
-    self:addChild(baotou, 100)
+    self:addChild(baotou)
 end
 
 
@@ -467,7 +467,7 @@ function HeroView:effectGunReload(event)
 	    	end 
     	end
     )
-    self:addChild(armature, 1000)	
+    self:addChild(armature)	
 end
 
 function HeroView:initGuide()

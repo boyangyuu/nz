@@ -48,7 +48,7 @@ function InlayModel:buyInlay(inlayid)
     self:refreshInfo(self:getInlayType(inlayid))
 end
 
-function InlayModel:equipInlay(inlayid, Refresh)
+function InlayModel:equipInlay(inlayid, isRefresh)
 	local data = getUserData()
 	-- dump(data.inlay.bags)
 	for k,v in pairs(data.inlay.bags) do
@@ -82,7 +82,7 @@ function InlayModel:equipInlay(inlayid, Refresh)
 		end
 	end
 
-	if Refresh then
+	if isRefresh then
 		self:refreshInfo(self:getInlayType(inlayid))
 	end
     
@@ -109,8 +109,7 @@ function InlayModel:replaceInlayed(inlayid)
     setUserData(data)
 end
 
-
-function InlayModel:oneForAllBtn()
+function InlayModel:equipAllInlays()
 	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
 	local data = getUserData()
 	local allinlayed = self:getAllInlayed()
@@ -135,20 +134,10 @@ function InlayModel:oneForAllBtn()
 		end
 	end
 	self:refreshInfo("speed")
-	dump(bestInlay)
+	-- dump(bestInlay)
 end
 
-function InlayModel:isBagsExist(inlayid)
-	local data = getUserData()
-	for k,v in pairs(data.inlay.bags) do
-		if v.inlayid == inlayid then
-			return true
-		end
-	end
-	return false
-end
-
-function InlayModel:BestInlayInTable(table)
+function InlayModel:equipAllBestInlays(table)
 	local bestInlay = {bullet=100,clip=100,speed=100,aim=100,blood=100,helper=100}
 	for k,v in pairs(table) do
 		local typename = self:getInlayType(v.inlayid)
@@ -163,7 +152,16 @@ function InlayModel:BestInlayInTable(table)
 			self:equipInlay(v, false)
 		end
 	end
+end
 
+function InlayModel:isBagsExist(inlayid)
+	local data = getUserData()
+	for k,v in pairs(data.inlay.bags) do
+		if v.inlayid == inlayid then
+			return true
+		end
+	end
+	return false
 end
 
 function InlayModel:isInlayedExist(inlayid)

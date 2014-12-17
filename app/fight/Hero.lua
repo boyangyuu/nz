@@ -14,9 +14,6 @@ local Hero          = class("Hero", Actor)
 
 --events
 
---inlay
-Hero.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
-
 --skill
 Hero.SKILL_ARMOURED_START_EVENT   = "SKILL_ARMOURED_START_EVENT"    --机甲开启
 Hero.SKILL_DEFENCE_START_EVENT    = "SKILL_DEFENCE_START_EVENT" --护盾开启
@@ -25,8 +22,6 @@ Hero.SKILL_DEFENCE_RESUME_EVENT   = "SKILL_DEFENCE_RESUME_EVENT"  --护盾还原
 
 Hero.SKILL_GRENADE_ARRIVE_EVENT   = "SKILL_GRENADE_ARRIVE_EVENT" --扔手雷结束
 Hero.SKILL_GRENADE_START_EVENT    = "SKILL_GRENADE_START_EVENT"    --扔手雷开启
-
-Hero.SKILL_GOLDWEAPON_ACTIVE_EVENT = "SKILL_GOLDWEAPON_ACTIVE_EVENT" --激活黄金武器（同时刷新血量上限）
 
 --enemy
 Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
@@ -45,8 +40,6 @@ Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
-
-
 --define
 local kMaxHp          = 100
 local kCritScale      = 3.0
@@ -61,7 +54,7 @@ function Hero:ctor(properties)
     self:setGun("bag1")
 
     --hp
-    self:initHp()
+    self:refreshHp()
 end
 
 --枪械相关
@@ -110,7 +103,7 @@ function Hero:getDemage()
     return value
 end
 
-function Hero:initHp()
+function Hero:refreshHp()
     local valueHp = 0.0 
     local value, isInlayed = self.fightInlay:getInlayedValue("blood")
     if isInlayed then 
@@ -120,6 +113,24 @@ function Hero:initHp()
     end
     self:setMaxHp(valueHp)
     self:setHp(valueHp)
+end
+
+function Hero:activeGold()
+    --fightInlay change
+    self.fightInlay:activeGold()
+
+    --hp
+    self:refreshHp()
+
+end
+
+function Hero:activeGoldEnd()
+    --fightInlay change
+    self.fightInlay:activeGoldEnd()
+
+    --hp
+    self:refreshHp()
+
 end
 
 function Hero:setMapZoom(scale)

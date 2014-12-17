@@ -694,6 +694,9 @@ function FightPlayer:onExit()
     if resumeDefenceHandler then 
         scheduler.unscheduleGlobal(resumeDefenceHandler)
     end
+    if self.btnFireSch then
+        scheduler.unscheduleGlobal(self.btnFireSch)
+    end
 end
 
 return FightPlayer

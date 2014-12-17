@@ -318,7 +318,7 @@ end
 
 function FightResultLayer:quickInlay()
 	dump(self.quickinlay)
-	self.inlayModel:BestInlayInTable(self.quickinlay)
+	self.inlayModel:equipAllBestInlays(self.quickinlay)
 end
 
 function FightResultLayer:onExit()

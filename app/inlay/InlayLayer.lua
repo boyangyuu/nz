@@ -52,7 +52,7 @@ function InlayLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.inlayModel:oneForAllBtn()
+            self.inlayModel:equipAllInlays()
         end
     end)
 
