@@ -15,16 +15,20 @@ function Gun:ctor(properties)
     -- dump(properties, "properties")
 
     --instance
-    self.inlay 		= app:getInstance(FightInlay)
+    self.inlay 		 = app:getInstance(FightInlay)
     self.weaponModel = app:getInstance(WeaponModel)
 
     self.bagIndex = properties.bagIndex
-    self.config = self:getConfig()
+	self:setConfig()
+end
+
+function Gun:setConfig()
+	self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
+	dump(self.config, "self.config gun")
 end
 
 function Gun:getConfig()
-	self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
-	dump(self.config, "self.config gun")
+	assert(self.config, "self.config is nil"..self.bagIndex)
 	return self.config
 end
 

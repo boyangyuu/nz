@@ -55,6 +55,12 @@ function MyApp:getInstance(cls)
     return modelObj
 end
 
+function MyApp:deleteInstance(cls)
+    local idStr = cls.__cname
+    self.objects_[idStr] = nil
+    print("self:removeObject(idStr)", idStr)
+end
+
 function MyApp:initGameState()
     -- init GameState
     GameState.init(function(param)

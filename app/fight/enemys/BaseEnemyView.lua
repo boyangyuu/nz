@@ -74,8 +74,7 @@ function BaseEnemyView:showAlert()
 	--create
 	if self.isShowAlerting then return end
 	self.isShowAlerting = true
-	local src = "res/Fight/uiAnim/tanhao/tanhao.ExportJson"
-	local armature = getArmature("tanhao", src)
+	local armature = ccs.Armature:create("tanhao")
 	armature:getAnimation():play("tanhao", -1, 0)
     local function alertAnimEvent(armatureBack,movementType,movementID)
         armature:removeFromParent()

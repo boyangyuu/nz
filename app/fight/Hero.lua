@@ -55,23 +55,13 @@ function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
     self.fightInlay = app:getInstance(FightInlay)
+    
     --init
-    self:refreshData() 
-end
-
---data
-function Hero:refreshData(properties)
-    --gun
-
     self.isGun1 = true
-    local bagIndex = "bag1" 
-    self:setGun(bagIndex)
+    self:setGun("bag1")
 
     --hp
-    self:refreshHp()
-
-    --inlay
-    --..   
+    self:initHp()
 end
 
 --枪械相关
@@ -83,7 +73,7 @@ function Hero:changeGun()
     else
         bagIndex = "bag2"
     end
-    print("gun bagIndex", bagIndex)
+    print("change gun bagIndex", bagIndex)
     self:setGun(bagIndex)
     self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
 end
@@ -112,7 +102,7 @@ function Hero:getDemage()
 
     --crit
     local critNum = self.gun:getCritPercent() * 100
-    print("critNum:", critNum)
+    -- print("critNum:", critNum)
     if critNum > math.random(0, 100) then 
         value = value * kCritScale
     end
@@ -120,7 +110,7 @@ function Hero:getDemage()
     return value
 end
 
-function Hero:refreshHp()
+function Hero:initHp()
     local valueHp = 0.0 
     local value, isInlayed = self.fightInlay:getInlayedValue("blood")
     if isInlayed then 

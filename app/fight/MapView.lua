@@ -87,7 +87,7 @@ end
 function MapView:checkWave()
 	local function checkEnemysEmpty()
 		if #self.enemys == 0 then 
-			-- print("第"..self.waveIndex.."波怪物消灭完毕")
+			print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 			self:updateEnemys()
 			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
@@ -105,8 +105,8 @@ function MapView:updateEnemys(event)
 
 	if wave == nil then 
 		print("赢了")
-		self.fight:setResult(true)
 		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		self.fight:setResult(true)
 		return
 	end
 

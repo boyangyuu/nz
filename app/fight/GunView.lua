@@ -12,7 +12,7 @@ local GunView = class("GunView", function()
     return display.newNode()
 end)
 
-function GunView:ctor(properties)
+function GunView:ctor()
 	--instance
 	-- dump(properties, "GunView properties")
 	self.hero = app:getInstance(Hero)

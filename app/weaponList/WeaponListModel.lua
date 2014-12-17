@@ -67,7 +67,6 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 	local reloadTime = intenlevelData["reloadTime"]
 	local demage = intenlevelData["demage"]
 	local property = {bulletNum = bulletNum,accuracy  = accuracy,reloadTime = reloadTime,demage = demage}
-	dump(property)
 	return property
 end
 
@@ -219,10 +218,10 @@ function WeaponListModel:getFightWeaponValue(bagIndex)
 	assert(id, "id is nil bagIndex is invalid:"..bagIndex)
 
 	local weaponValue = self:getWeaponProperity(id) 
-
+	assert(weaponValue, "weaponValue is nil id :"..id)
 	--cooldown
 	local record = getRecordByID("config/weapon_weapon.json", id)
-	record = record[1]
+	assert(record, "record is nil id:"..id)
 	table.merge(weaponValue, record)
 	return weaponValue
 end
