@@ -194,7 +194,7 @@ function WeaponListLayer:refreshComment(index)
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
     local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")
-    local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,10)
+    local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,"maxLevel")
 
     local bulletNum = weaponproperity.bulletNum
     local accuracy = weaponproperity.accuracy
@@ -271,10 +271,10 @@ function WeaponListLayer:showButton()
         self.btnBuy:setVisible(true)
         self.btnEquip:setVisible(false)
     end
-    if self.weaponListModel:isWeaponed(weaponid) ~= 0 then
+    if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)
         self.btnEquip:setVisible(false)
-        if self.weaponListModel:isWeaponed(weaponid) == 1 then
+        if self.weaponListModel:getWeaponStatus(weaponid) == 1 then
             self.equipedtwo:setVisible(false)
             self.equipedone:setVisible(true)
         else

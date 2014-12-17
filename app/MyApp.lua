@@ -117,7 +117,7 @@ function MyApp:createGameStateFile()
                                     bullet = nil,
                                     clip = nil,
                                     speed = nil,
-                                    aim = nil,
+                                    crit = nil,
                                     blood = nil,
                                     helper = nil,
                         },

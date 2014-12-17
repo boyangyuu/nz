@@ -23,7 +23,7 @@ function FightInlay:ctor(properties)
 end
 
 --[[
-    @param type：aim blood bullet clip helper speed 
+    @param type: crit blood bullet clip helper speed 
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
