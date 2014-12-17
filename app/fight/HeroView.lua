@@ -12,10 +12,11 @@ local scheduler = require("framework.scheduler")
 local Actor 	= import(".Actor")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
+local FightInlay= import(".FightInlay")
 local Guide 	= import("..guide.GuideModel")
 
 --kconfig
-local kGoldActivate = 10
+local kGoldActivate = 1
 
 local HeroView = class("HeroView", function()
     return display.newNode()
@@ -24,9 +25,11 @@ end)
 function HeroView:ctor(properties)
 
 	--instance
-	self.hero = app:getInstance(Hero)
-	self.guide = app:getInstance(Guide)
-	self.crackTable = {}
+	self.hero 	= app:getInstance(Hero)
+	self.guide 	= app:getInstance(Guide)
+	self.inlay 	= app:getInstance(FightInlay)
+
+	self.crackSprites = {}
 	self.behurtCount = 1
 	self.isResumeDefence = false
 	self.killCntKeep = 0
@@ -100,22 +103,22 @@ end
 
 --初始化连杀倒计时节点
 function HeroView:initKillTimerNode()
-    self.killEnemyTimerBg = cc.uiloader:seekNodeByName(self.uiRootNode, "killEnemyTimerBg")
-    self.killEnemyTimerBg:removeFromParent()
-    self:addChild(self.killEnemyTimerBg)
-    self.killEnemyTimerBg:setVisible(false)
+    self.killTimerBg = cc.uiloader:seekNodeByName(self.uiRootNode, "killTimerBg")
+    self.killTimerBg:removeFromParent()
+    self:addChild(self.killTimerBg)
+    self.killTimerBg:setVisible(false)
 
-    self.killEnemyCountLabel = cc.uiloader:seekNodeByName(self.uiRootNode, "labelKillEnemyCount")
-    self.killEnemyCountLabel:removeFromParent()
-    self:addChild(self.killEnemyCountLabel)
-    self.killEnemyCountLabel:setVisible(false)
+    self.killLabel = cc.uiloader:seekNodeByName(self.uiRootNode, "labelKillEnemyCount")
+    self.killLabel:removeFromParent()
+    self:addChild(self.killLabel)
+    self.killLabel:setVisible(false)
 
-    self.killEnemyTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
-    self:addChild(self.killEnemyTimer)
-    self.killEnemyTimer:setPosition(76, 420)
-    self.killEnemyTimer:setReverseDirection(true)
-    self.killEnemyTimer:setPercentage(100)
-    self.killEnemyTimer:setVisible(false)
+    self.killTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
+    self:addChild(self.killTimer)
+    self.killTimer:setPosition(76, 420)
+    self.killTimer:setReverseDirection(true)
+    self.killTimer:setPercentage(100)
+    self.killTimer:setVisible(false)
 end
 
 --player血条血量改变 onh
@@ -146,22 +149,23 @@ end
 --杀死敌人后跳出3金币
 function HeroView:killEnmeyGold(enemyPos)
 	for i = 1, 3 do
-		local gold = getArmature("gold1", "res/Fight/heroAnim/gold/gold1.ExportJson")
-		gold:setPosition(enemyPos.x, enemyPos.y)
-		gold:getAnimation():play("gold", -1, 1)
-		gold:runAction(cc.Sequence:create(
-			--todoxx 待优化
+		local armature = ccs.Armature:create("gold")
+		armature:setPosition(enemyPos.x, enemyPos.y)
+		armature:getAnimation():play("Animation1", -1, 1)
+		armature:runAction(cc.Sequence:create(
+			--todo 待优化
 			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
 			cc.DelayTime:create(0.5 - i * 0.1),
 			cc.MoveTo:create(0.5, cc.p(884, 591)), --todo
 			cc.CallFunc:create(function ()
 				if i == 1 then
-					self.hero:dispatchEvent({name = "changeGold", goldCount = self.killCntTotal * 50})
+					self.hero:dispatchEvent({name = "changeGold", 
+						goldCount = self.killCntTotal * 50})
 				end
-				gold:removeFromParent()
+				armature:removeFromParent()
 			end)
 		))
-		self:addChild(gold)
+		self:addChild(armature)
 	end
 end
 
@@ -169,27 +173,26 @@ end
 function HeroView:activeGoldWeapon()
 	print("HeroView:activeGoldWeapon() pause")
 	self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = true})
-	local color = display.newColorLayer(cc.c4b(0, 0, 0, 180))
-	cc.Director:getInstance():getRunningScene():addChild(color)  --todo 待优化!
+	local armature = ccs.Armature:create("hjwq")
+	self:addChild(armature)
 	local function resume()
 		print("HeroView:activeGoldWeapon() resume")
 		self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
-		color:removeFromParent()
+		armature:removeFromParent()
 	end
-	scheduler.performWithDelayGlobal(resume, 5)
+	scheduler.performWithDelayGlobal(resume, 1.0)
 end
 
 --杀掉敌人后的回调
 local percent = 100
 function HeroView:killEnemyCallBack( event )
-	local killEnemyTimerHandler = self.killEnemyTimerHandler
-	self.killEnemyCountLabel:setVisible(true)
-	self.killEnemyTimerBg	:setVisible(true)
+	self.killLabel:setVisible(true)
+	self.killTimerBg	:setVisible(true)
 	self:killEnmeyGold(event.enemyPos)
 	self.killCntKeep  = self.killCntKeep + 1
 	self.killCntTotal = self.killCntTotal + 1
 	local strKillEnemyCount = string.format("X %d", self.killCntKeep)
-	self.killEnemyCountLabel:setString(strKillEnemyCount)
+	self.killLabel:setString(strKillEnemyCount)
 
 	--触发黄金武器
 	if kGoldActivate <= self.killCntKeep then
@@ -199,28 +202,28 @@ function HeroView:killEnemyCallBack( event )
 	end
 
 	-- body
-	self.killEnemyTimer:setVisible(true)
-	self.killEnemyTimer:setPercentage(100)
+	self.killTimer:setVisible(true)
+	self.killTimer:setPercentage(100)
 	percent = 100
 
 	--如果发生连杀,在第二次倒计时的时候将上次倒计时的进度条关闭
-	if killEnemyTimerHandler then 
-		scheduler.unscheduleGlobal(killEnemyTimerHandler)
-		killEnemyTimerHandler = nil
+	if self.killTimerHandler then 
+		scheduler.unscheduleGlobal(self.killTimerHandler)
+		self.killTimerHandler = nil
 	end
 
     local function tick(dt)
         if 0 == percent then
-        	scheduler.unscheduleGlobal(killEnemyTimerHandler)
+        	scheduler.unscheduleGlobal(self.killTimerHandler)
         	self.killCntKeep = 0
-    		self.killEnemyCountLabel:setVisible(false)
-			self.killEnemyTimerBg:setVisible(false)
+    		self.killLabel:setVisible(false)
+			self.killTimerBg:setVisible(false)
         end
-        self.killEnemyTimer:setPercentage(percent - 1)
+        self.killTimer:setPercentage(percent - 1)
         percent = percent - 1
     end
 
-    killEnemyTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
+    self.killTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
 --显示/隐藏机甲
@@ -278,29 +281,29 @@ function HeroView:defenceBehurtEffect(event)
 	self.defence:runAction(cc.Sequence:create(tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
 
 	--defence behurted crack effect
-	local tCrackEffect = display.newSprite("#hit_boli.png")
-	local tCrackSize = tCrackEffect:getCascadeBoundingBox().size
-	local tDefenceFrameSize = cc.uiloader:seekNodeByName(self.defence, "upFrame"):getCascadeBoundingBox().size
-	tCrackEffect:setPosition(
-		math.random(-tDefenceFrameSize.width / 2 + tCrackSize.width / 2,
-		 tDefenceFrameSize.width / 2 - tCrackSize.width / 2), 
-		math.random(-tDefenceFrameSize.height / 2 + tCrackSize.height / 2 + 30,
-		 tDefenceFrameSize.height / 2 - tCrackSize.height / 2)
+	local crackSprite = display.newSprite("#hit_boli.png")
+	local crackSize = crackSprite:getCascadeBoundingBox().size
+	local bgSize = cc.uiloader:seekNodeByName(self.defence, "upFrame"):getCascadeBoundingBox().size
+	crackSprite:setPosition(
+		math.random(-bgSize.width / 2 + crackSize.width / 2,
+		 bgSize.width / 2 - crackSize.width / 2), 
+		math.random(-bgSize.height / 2 + crackSize.height / 2 + 30,
+		 bgSize.height / 2 - crackSize.height / 2)
 	)
 
-	self.defence:addChild(tCrackEffect)
+	self.defence:addChild(crackSprite)
 
-	self.crackTable[self.behurtCount] = tCrackEffect
+	self.crackSprites[self.behurtCount] = crackSprite
 	self.behurtCount = self.behurtCount + 1
 
 	self.defenceHp = self.defenceHp - 10
 	local tCurrentHp = 100 - self.defenceHp
 	if 100 <= tCurrentHp then
 		self:onShowDefence()
-		for k, v in pairs(self.crackTable) do
+		for k, v in pairs(self.crackSprites) do
 			v:removeFromParent()
 		end
-		self.crackTable = {}
+		self.crackSprites = {}
 		self.isResumeDefence = true
 		self.defenceHp = 100
 	end
@@ -308,22 +311,18 @@ function HeroView:defenceBehurtEffect(event)
 end
 
 function HeroView:bloodBehurtEffect()
-
-	local tRandomBlood = nil
+	local strAnim = nil
 	if 1 >= math.random(0, 3) then 
-		tRandomBlood = "blood1"
+		strAnim = "blood1"
 	else
-		tRandomBlood = "blood2"
+		strAnim = "blood2"
 	end
 
-    --hero behurt blood effect
-    local tBloodArmature = getArmature(tRandomBlood, "res/Fight/heroAnim/" .. tRandomBlood .. "/" .. tRandomBlood .. ".ExportJson")
-    local tBloodAniamtion = tBloodArmature:getAnimation()
-
-    -- tBloodAniamtion:play("blood1_01" , -1, 1)
-	tBloodAniamtion:playWithIndex(0)
-    tBloodArmature:setPosition(math.random(0, display.width1), math.random(0, display.height1))
-    tBloodAniamtion:setMovementEventCallFunc(
+    local armature = ccs.Armature:create(strAnim)
+    local anim = armature:getAnimation()
+	anim:playWithIndex(0)
+    armature:setPosition(math.random(0, display.width1), math.random(0, display.height1))
+    anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementI ) 
 	    	if movementType == ccs.MovementEventType.complete then
 	    		armatureBack:stopAllActions()
@@ -331,7 +330,7 @@ function HeroView:bloodBehurtEffect()
 	    	end 
     	end
     )
-    self:addChild(tBloodArmature)
+    self:addChild(armature)
 end
 
 function HeroView:onHurtEffect(event)
@@ -348,46 +347,47 @@ end
 --手雷
 function HeroView:onThrowGrenade(event)
 
-	local tGrenade = getArmature("shoulei", "res/Fight/heroAnim/shoulei/shoulei.ExportJson")
-	self:addChild(tGrenade)
-	tGrenade:setPosition(display.width / 2, 0)
-	tGrenade:setScale(2.0)
-	tGrenade:getAnimation():play("lei", -1, 1)
-	tGrenade:runAction(
-		cc.Sequence:create(
-			cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
-		 	cc.CallFunc:create(
-		 		function ()
-	 			    local kGrenadeW = 100.0
-		 			local destPos = event.throwPos
-					local destRect = cc.rect(destPos.x - kGrenadeW/2, 
-										destPos.y - kGrenadeW/2, 
-										kGrenadeW,kGrenadeW)
-                    local targetData = {demage = 600, demageType = "lei"}
-                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
-                    	targetData = targetData, destPos = destPos,destRect = destRect })
-					tGrenade:removeFromParent()
-				end
-			)
-		)
-	)
+	local armature =ccs.Armature:create("shoulei")
+	self:addChild(armature)
+	armature:setPosition(display.width / 2, 0)
+	armature:setScale(2.0)
+	armature:getAnimation():play("lei", -1, 1)
+	
+	--destrect
+    local kGrenadeW = 100.0
+	local destPos = event.throwPos
+	local destRect = cc.rect(destPos.x - kGrenadeW/2, 
+						destPos.y - kGrenadeW/2, 
+						kGrenadeW,kGrenadeW)
+	
+	--lei
+	local seq =  cc.Sequence:create(
+					cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
+				 	cc.CallFunc:create(
+				 		function ()
+		                    local targetData = {demage = 600, demageType = "lei"}
+		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
+		                    	targetData = targetData, destPos = destPos,destRect = destRect })
+							armature:removeFromParent()
+						end
+					)
+				 )
+	armature:runAction(seq)
 
-	-- shadow effect
+	-- shadow
 	local shadow = display.newSprite("#btn_dun03.png")
 	shadow:setOpacity(100)
 	shadow:setSkewY(70)
 	shadow:setPosition(display.width / 2, 0)
 	self:addChild(shadow)
-	shadow:runAction( 
-		cc.Sequence:create(
-			cc.MoveTo:create(1, cc.p(event.throwPos)),
-			cc.CallFunc:create(
-				function () 
-					shadow:removeFromParent()
-			 	end
-			)
-		)
-	)
+	local seq2 = cc.Sequence:create(
+					cc.MoveTo:create(1, cc.p(event.throwPos)),
+					cc.CallFunc:create(
+						function () 
+							shadow:removeFromParent()
+					 	end
+					))
+	shadow:runAction(seq2)
 end
 
 function HeroView:updateHp(event)
@@ -398,17 +398,22 @@ function HeroView:updateHp(event)
 
 	--inlay
 	local value = 0.0
-	local scale, isInlayed = self.hero:getInlayedValue("helper") 
+	local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 	if isInlayed then 
 		local maxHp = self.hero:getMaxHp()
 		value =  maxHp * scale
 	else 
 		value = 0.0
+		return
 	end
 	
 	local function updateHpFunc()
-		print("updateHpFunc()")
+		-- print("updateHpFunc()")
 		local maxHp = self.hero:getMaxHp()
+		if self.hero:isDead() then 
+			scheduler.unscheduleGlobal(self.hpUpdateHandler)
+			return
+		end
 		self.hero:increaseHp(value)
 	end
 	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
@@ -416,13 +421,11 @@ end
 
 --英雄受到伤害时,屏幕闪红效果
 function HeroView:screenHurtedEffect()
-
-	local tBeHurtScreenArmature = getArmature("avatarhit", "res/Fight/heroAnim/avatarhit/avatarhit.ExportJson")
-    local tAniamtion = tBeHurtScreenArmature:getAnimation()
-
-	tAniamtion:play("avatarhit" , -1, 1)
-    tBeHurtScreenArmature:setAnchorPoint(0, 0)
-    tAniamtion:setMovementEventCallFunc(
+	local armature = ccs.Armature:create("avatarhit")
+    local ani = armature:getAnimation()
+	ani:play("avatarhit" , -1, 1)
+    armature:setAnchorPoint(0, 0)
+    ani:setMovementEventCallFunc(
     	function (armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
 	    		armatureBack:stopAllActions()
@@ -430,12 +433,11 @@ function HeroView:screenHurtedEffect()
 	    	end 
     	end
     )
-    self:addChild(tBeHurtScreenArmature)
+    self:addChild(armature)
 end
 
 function HeroView:effectPopupHead()
-	local src = "res/Fight/uiAnim/baotou/baotou.ExportJson"
-	local baotou = getArmature("baotou", src)
+	local baotou = ccs.Armature:create("baotou")
 	baotou:getAnimation():play("baotou" , -1, 1)
     baotou:setPosition(display.width1 / 2, 150)
     baotou:getAnimation():setMovementEventCallFunc(
@@ -452,8 +454,7 @@ end
 
 function HeroView:effectGunReload(event)
 	print("HeroView:effectGunReload()")
-	local src = "res/Fight/uiAnim/huanzidan/huanzidan.ExportJson"
-	local armature = getArmature("huanzidan", src)
+	local armature = ccs.Armature:create("huanzidan")
 	armature:getAnimation():play("zidan" , -1, 1)
     armature:setPosition(display.width / 2, display.height1 / 2)
     armature:getAnimation():setSpeedScale(event.speedScale)
@@ -497,9 +498,9 @@ end
 function HeroView:onExit()
 	print("function HeroView:onExit()")
 
-	if self.killEnemyTimerHandler then 
-		scheduler.unscheduleGlobal(self.killEnemyTimerHandler)
-		self.killEnemyTimerHandler = nil
+	if self.killTimerHandler then 
+		scheduler.unscheduleGlobal(self.killTimerHandler)
+		self.killTimerHandler = nil
 	end
 	if self.hpUpdateHandler then
 		scheduler.unscheduleGlobal(self.hpUpdateHandler)

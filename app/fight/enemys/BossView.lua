@@ -450,10 +450,9 @@ function BossView:initBody()
 		
 		--node
 		local weakNode = bone:getDisplayRenderNode()
-		local srcName = "Fight/uiAnim/ruodiangj/ruodiangj.ExportJson"
-		
+
 		--anim
-		local animWeak = getArmature("ruodiangj", srcName)
+		local animWeak = ccs.Armature:create("ruodiangj")
 		animWeak:getAnimation():play("idle" , -1, 1)
 		local cbb = weakNode:getCascadeBoundingBox()
 		animWeak:setPosition(cbb.origin.x + cbb.size.width/2,

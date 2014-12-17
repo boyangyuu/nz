@@ -1,44 +1,49 @@
- 
---[[--
+ --[[--
 
 “枪”的实体
 
 ]]
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
-
+--includes
+local FightInlay  = import(".FightInlay")
+local WeaponModel = import("..weaponList.WeaponListModel")
 
 local Gun = class("Gun", cc.mvc.ModelBase)
-
---config
-
--- 定义属性
-Gun.schema = clone(cc.mvc.ModelBase.schema)
 
 function Gun:ctor(properties)
     Gun.super.ctor(self, properties)
     -- dump(properties, "properties")
 
-    self.config = getConfigByID("config/weapon_weapon.json", properties.id)
+    --instance
+    self.inlay 		 = app:getInstance(FightInlay)
+    self.weaponModel = app:getInstance(WeaponModel)
+
+    self.bagIndex = properties.bagIndex
+	self:setConfig()
+end
+
+function Gun:setConfig()
+	self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
+	dump(self.config, "self.config gun")
 end
 
 function Gun:getConfig()
-	assert(self.config, "self.config is nil")
+	assert(self.config, "self.config is nil"..self.bagIndex)
 	return self.config
 end
 
 function Gun:getCooldown()
-	assert(self.config.coolDown, "coolDown is nil id:"..self.config.id)
+	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.coolDown
+
 	return  baseValue
 end
 
 function Gun:getBulletNum()
-	assert(self.config.bulletNum, "bulletNum is nil id:"..self.config.id)
+	assert(self.config.bulletNum, "bulletNum is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.bulletNum
 	local value = 0.0
-    local inlayValue, isInlayed = self.hero:getInlayedValue("clip")
+    local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
     if isInlayed then
         value = baseValue + inlayValue
     else
@@ -48,13 +53,33 @@ function Gun:getBulletNum()
 end
 
 function Gun:getReloadTime()
-	return 2.0
+	local baseValue = self.config.reloadTime
+	local value = 0.0 
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("speed")
+    if isInlayed then
+        value = baseValue - baseValue * inlayValue
+    else
+        value = baseValue
+    end		
+	return value
+end
+
+function Gun:getCritPercent()
+	local value
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
+    if isInlayed then
+        value = 0.00 + inlayValue
+    else
+        value = 0.00
+    end		
+	return value	
 end
 
 function Gun:getDemage()
-	assert(self.config.demage, "bulletNum is nil id:"..self.config.id)
-	local inlayScale = 1.0 -- 改为inlaymodel
-	return self.config.demage * inlayScale
+	assert(self.config.demage, "self.config.demage nil bagIndex:"..self.bagIndex)
+	local baseValue = self.config.demage
+	return baseValue
 end
+
 
 return Gun

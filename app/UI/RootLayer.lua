@@ -28,6 +28,7 @@ function RootLayer:switchLayer(event)
 	-- dump(event, "event")
 	local layer = event.layer
 	self:removeAllChildren()
+	
 	self:addChild(layer)
 end
 

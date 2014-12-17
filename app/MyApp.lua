@@ -15,7 +15,7 @@ GameData={}
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
-    self:initGameState()
+    self:initGameState()    
 end
 
 function MyApp:run()
@@ -53,6 +53,12 @@ function MyApp:getInstance(cls)
         modelObj = self:getObject(idStr)
     end  
     return modelObj
+end
+
+function MyApp:deleteInstance(cls)
+    local idStr = cls.__cname
+    self.objects_[idStr] = nil
+    print("self:removeObject(idStr)", idStr)
 end
 
 function MyApp:initGameState()

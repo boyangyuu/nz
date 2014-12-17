@@ -9,7 +9,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 --import
 local Actor         = import(".Actor")
 local Gun           = import(".Gun")
-local InlayModel    = import("..Inlay.InlayModel")
+local FightInlay    = import(".FightInlay")
 local Hero          = class("Hero", Actor)
 
 --events
@@ -49,48 +49,37 @@ Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
 --define
 local kMaxHp          = 100
+local kCritScale      = 3.0
 
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-    self.inlayModel = app:getInstance(InlayModel) 
-
+    self.fightInlay = app:getInstance(FightInlay)
+    
     --init
-    self:refreshData({gunId1 = 1, gunId2 = 2}) 
-end
-
---data
-function Hero:refreshData(properties)
-    --gun
-    self.gunId1 = properties.gunId1
-    self.gunId2 = properties.gunId2
-
-    self.isGun1 = true 
-    self:setGun(self.gunId1)  
+    self.isGun1 = true
+    self:setGun("bag1")
 
     --hp
-    self:refreshHp()
-
-    --inlay
-    --..   
+    self:initHp()
 end
 
 --枪械相关
 function Hero:changeGun()
     self.isGun1 = not self.isGun1
-    local destGunId = nil
+    local bagIndex = nil
     if self.isGun1 then 
-        destGunId = self.gunId1
+        bagIndex = "bag1"
     else
-        destGunId = self.gunId2
+        bagIndex = "bag2"
     end
-    print("destGunId", destGunId)
-    self:setGun(destGunId)
-    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, gunId = destGunId})
+    print("change gun bagIndex", bagIndex)
+    self:setGun(bagIndex)
+    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
 end
 
-function Hero:setGun(gunId)
-    local gun = Gun.new({id = tostring(gunId)}) 
+function Hero:setGun(bagIndex)
+    local gun = Gun.new({bagIndex = bagIndex}) 
     self.gun = gun
     self:setCooldown(gun:getCooldown())
 end
@@ -102,18 +91,28 @@ end
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
     local value = 0
-    local scale, isInlayed = self:getInlayedValue("bullet")
+
+    --inlay
+    local scale, isInlayed = self.fightInlay:getInlayedValue("bullet")
     if isInlayed then
         value = baseDemage + baseDemage * scale
     else
         value = baseDemage
     end
+
+    --crit
+    local critNum = self.gun:getCritPercent() * 100
+    -- print("critNum:", critNum)
+    if critNum > math.random(0, 100) then 
+        value = value * kCritScale
+    end
+
     return value
 end
 
-function Hero:refreshHp()
+function Hero:initHp()
     local valueHp = 0.0 
-    local value, isInlayed = self:getInlayedValue("blood")
+    local value, isInlayed = self.fightInlay:getInlayedValue("blood")
     if isInlayed then 
         valueHp = kMaxHp + kMaxHp * value
     else

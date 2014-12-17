@@ -27,13 +27,12 @@ function LevelMapLayer:initData()
     self.preIndex = 0
 
     --config
-    local config = getConfig("config/guanqia.json")
-    local recordsLevel = getRecord(config,"levelId",1)
+    local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
     self.groupNum = #recordsLevel
 
     self.levelAmount = {}
     for i = 1, self.groupNum do
-        local recordsGroup = getRecord(config,"groupId",i)
+        local recordsGroup = getRecordByKey("config/guanqia.json","groupId",i)
         self.levelAmount[i] = #recordsGroup
         -- print("self.groupNum =",  self.groupNum, 
         --     "self.levelAmount["..i.."] = ", self.levelAmount[i])
@@ -146,9 +145,9 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= i  then
                     local levelId = i  
-                    -- ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
+                    ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                     dump(groupId)
-                    ui:showPopup("DialogLayer",{groupid = groupId,levelid = levelId,appear = "forward"},{anim = false,opacity = 0})
+                    -- ui:showPopup("DialogLayer",{groupid = groupId,levelid = levelId,appear = "forward"},{anim = false,opacity = 0})
                 else                            
                     self:addChild(getPopupTips("关卡尚未开启！"))
                 end

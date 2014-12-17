@@ -3,7 +3,6 @@ import("..includes.functionUtils")
 local WeaponListCell = import(".WeaponListCell")
 local WeaponListModel = import(".WeaponListModel")
 local WeaponBag = import(".WeaponBag")
-local PopupCommonLayer = import("..popupCommon.PopupCommonLayer")
 
 local WeaponListLayer = class("WeaponListLayer", function()
 	return display.newLayer()
@@ -136,7 +135,6 @@ end
 -- 初始化ListView
 function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	for i=1, #weaponTable do
-		-- local weaponRecord = getConfigByID("config/weapon_weapon.json", i)
 		local weaponRecord = self.weaponListModel:getWeaponRecord(i)
         local item = weaponListView:newItem()
 		-- local item
@@ -196,7 +194,7 @@ function WeaponListLayer:refreshComment(index)
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
     local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")
-    local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,10)
+    local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,"maxLevel")
 
     local bulletNum = weaponproperity.bulletNum
     local accuracy = weaponproperity.accuracy
@@ -273,10 +271,10 @@ function WeaponListLayer:showButton()
         self.btnBuy:setVisible(true)
         self.btnEquip:setVisible(false)
     end
-    if self.weaponListModel:isWeaponed(weaponid) ~= 0 then
+    if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)
         self.btnEquip:setVisible(false)
-        if self.weaponListModel:isWeaponed(weaponid) == 1 then
+        if self.weaponListModel:getWeaponStatus(weaponid) == 1 then
             self.equipedtwo:setVisible(false)
             self.equipedone:setVisible(true)
         else
@@ -303,9 +301,8 @@ end
 
 -- 装备事件
 function WeaponListLayer:equip(weaponid)
-    -- app:getInstance(PopupCommonLayer):showPopup(WeaponBag.new(weaponid),0)
     ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 0})
--- id = WeaponBag.new(weaponid),opacity = 0
+
 end
 
 return WeaponListLayer

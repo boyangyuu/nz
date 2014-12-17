@@ -12,7 +12,6 @@ local FightConfigs = import("..fightConfigs.FightConfigs")
 
 function Enemy:ctor(properties)
     --super
-    -- local config = getConfigByID("config/enemy.json", properties.id)
     local waveConfig = FightConfigs:getWaveConfig()
     self.config = waveConfig:getEnemys(properties.id)    
     local property = {

@@ -12,15 +12,15 @@ local GunView = class("GunView", function()
     return display.newNode()
 end)
 
-function GunView:ctor(properties)
+function GunView:ctor()
 	--instance
 	-- dump(properties, "GunView properties")
 	self.hero = app:getInstance(Hero)
-	self.gun  = Gun.new({id = tostring(properties.id)})
+	
 	self.isChanging = false
 
 	--gun armature and base
-	self:setGun(properties.id)
+	self:setGun()
 
 	--event
 	cc.EventProxy.new(self.hero, self)
@@ -63,7 +63,7 @@ function GunView:playChange(event)
 	end
 
 	local function callFuncChange()
-		self:setGun(event.gunId)
+		self:setGun()
 
 	end 
 	local function callFuncFinishChange()
@@ -122,7 +122,8 @@ function GunView:setBulletNum(num)
 end
 
 --hero层 发送换枪
-function GunView:setGun(id)
+function GunView:setGun()
+	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
 		self.armature:removeFromParent() 
@@ -131,7 +132,6 @@ function GunView:setGun(id)
 	end
 
 	--gun
-	self.gun = Gun.new({id = tostring(id)})
 	local config = self.gun:getConfig()
 	-- dump(config, "config")
 	

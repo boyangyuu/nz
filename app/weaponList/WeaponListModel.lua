@@ -14,7 +14,7 @@ function WeaponListModel:ctor(properties, events, callbacks)
 end
 
 function WeaponListModel:getWeaponRecord(index)
-	local WeaponRecord = getConfigByID("config/weapon_weapon.json", index)
+	local WeaponRecord = getRecordByID("config/weapon_weapon.json", index)
 	return WeaponRecord
 end
 
@@ -32,27 +32,36 @@ function WeaponListModel:getIntenlevel(weaponid)
 end
 
 function WeaponListModel:getWeaponNameByID(weaponid)
-	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
+	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
 	local WeaponName = record[1]["name"]
 	return WeaponName
 end
 
-function WeaponListModel:getWeaponProperity(weaponid,level)
+--[[
+	@param : weaponid
+	@param : levelParam ("nextLevel" or "maxLevel" or nil)
+	
+	@return: {bulletNum = 100,accuracy  = 100,reloadTime = 100,demage = 100 }
+]]
+function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 	--bullet accuracy reload damage
-	local record = getRecord(getConfig("config/weapon_weapon.json"), "id", weaponid)
+	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
 	local growTableName = record[1]["growTable"]
-	if level == nil then
+	local level
+	if levelParam == nil then
 		level = self:getIntenlevel(weaponid)
-	elseif level == "nextLevel" then
+	elseif levelParam == "nextLevel" then
 		level = self:getIntenlevel(weaponid)
 		if level == 10 then
 			level = 10
 		else
 			level =self:getIntenlevel(weaponid)+1
 		end
+	elseif levelParam == "maxLevel" then
+		level = 10
 	end
-	local growtable = getConfig("config/weapon_"..growTableName..".json")
-	local intenlevelData = getRecord(growtable,"level",level)[1]
+	local growtableStr = "config/weapon_"..growTableName..".json"
+	local intenlevelData = getRecordByKey(growtableStr,"level",level)[1]
 	local bulletNum = intenlevelData["bulletNum"]
 	local accuracy = intenlevelData["accuracy"]
 	local reloadTime = intenlevelData["reloadTime"]
@@ -126,7 +135,11 @@ function WeaponListModel:isWeaponExist(weaponid)
 	return false
 end
 
-function WeaponListModel:isWeaponed(weaponid)
+
+--[[
+	return 1(in bag1), 2(in bag2), 3(not in bag)
+]]
+function WeaponListModel:getWeaponStatus(weaponid)
 	local data = getUserData()
 	-- dump(data.weapons, "data.weapons")
 	if data.weapons.weaponed.bag1.weaponid == weaponid then
@@ -167,7 +180,7 @@ end
 
 function WeaponListModel:equipBag( weaponid, index )
 	local data = getUserData()
-	if self:isWeaponed(weaponid) == 0 then
+	if self:getWeaponStatus(weaponid) == 0 then
 		for k,v in pairs(data.weapons.bags) do
 			for k1,v1 in pairs(v) do
 				if k1 == "weaponid" and v1 == weaponid then
@@ -181,7 +194,7 @@ function WeaponListModel:equipBag( weaponid, index )
 				end
 			end
 		end
-	elseif self:isWeaponed(weaponid) == index then
+	elseif self:getWeaponStatus(weaponid) == index then
 		print("已装备包1")
 	else
 		local x = nil
@@ -193,12 +206,23 @@ function WeaponListModel:equipBag( weaponid, index )
 	-- dump(data)
 end
 
--- return已装备包内的武器属性
+--[[
+	@param : 
+	@return: {demage = 100, }
+]]
 function WeaponListModel:getFightWeaponValue(bagIndex)
+	assert(bagIndex, "bagIndex is nil")
 	local data = getUserData()
 	local weapon = data.weapons.weaponed[bagIndex]
-	local weaponid = weapon[weaponid]
-	local WeaponValue = self:getWeaponProperity(weaponid)
+	local id = weapon["weaponid"]
+	assert(id, "id is nil bagIndex is invalid:"..bagIndex)
+
+	local weaponValue = self:getWeaponProperity(id) 
+	assert(weaponValue, "weaponValue is nil id :"..id)
+	--cooldown
+	local record = getRecordByID("config/weapon_weapon.json", id)
+	assert(record, "record is nil id:"..id)
+	table.merge(weaponValue, record)
 	return weaponValue
 end
 

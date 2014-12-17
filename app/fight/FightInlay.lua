@@ -1,0 +1,42 @@
+--[[--
+
+“FightInlay”的实体
+
+]]
+
+--import
+
+local InlayModel   	= import("..inlay.InlayModel")
+
+
+local FightInlay          = class("FightInlay", cc.mvc.ModelBase)
+--events
+
+--inlay
+FightInlay.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
+
+function FightInlay:ctor(properties)
+    --instance
+    FightInlay.super.ctor(self, properties)
+    self.inlayModel = app:getInstance(InlayModel) 
+
+end
+
+--[[
+    @param type: crit blood bullet clip helper speed 
+    return: value, isInlayed
+]]
+function FightInlay:getInlayedValue(type)
+    --id
+    local inlays = self.inlayModel:getAllInlayed()
+    -- dump(inlays, "inlays")
+    -- print("type", type)
+    local inlayedId  = inlays[type]
+    if inlayedId == nil then return nil,false end
+    local record = getRecordByID("config/items_xq.json", inlayedId)
+    local value = record.valueProgram
+    -- print("FightInlay:getInlayedValue value:", value)
+    return value, true
+end 
+
+return FightInlay

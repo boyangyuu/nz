@@ -37,14 +37,15 @@ function WeaponListCell:initCellUI(properties)
 	controlNode:setPosition(0, 0)
     self:addChild(controlNode)
 end
+
 function WeaponListCell:setSelected(isSelected)
 	if isSelected == true then
-				self.panlwangge:setColor(Color_YELLOW)
+		self.panlwangge:setColor(Color_YELLOW)
 		self.panlwanggekuang:setColor(Color_YELLOW)
 		self.panlwanggekuangtiao:setColor(Color_YELLOW)
 
 	else
-				self.panlwangge:setColor(Color_RED)
+		self.panlwangge:setColor(Color_RED)
 		self.panlwanggekuang:setColor(Color_GRAY)
 		self.panlwanggekuangtiao:setColor(Color_RED)
 

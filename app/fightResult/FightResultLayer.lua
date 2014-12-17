@@ -17,6 +17,8 @@ function FightResultLayer:ctor(properties)
     self.fightModel 	  = app:getInstance(FightModel)
 
     self.cardover = {}
+    self.cardgold = {}
+    self.cardnormal = {}
     self.cardtouch = {}
     self.cardicon = {}
     self.cardlabel = {}
@@ -30,7 +32,7 @@ function FightResultLayer:ctor(properties)
 	self:initUI()
 	
 	self:playstar(self.grade)
-	self:playcard(self.probaTable)
+	self:playcard(self.showTable)
 	self:setNodeEventEnabled(true)
 end
 
@@ -56,9 +58,10 @@ function FightResultLayer:initData()
 	for k,v in pairs(self.probaTable) do
 		self.showTable[k] = v
 	end
-	local ran = math.random(#self.showTable)
-	table.insert(self.showTable,ran,self.showTable[#self.showTable])
+	-- local ran = math.random(#self.showTable)
+	table.insert(self.showTable,3,self.showTable[#self.showTable])
 	table.remove(self.showTable,#self.showTable)
+	dump(self.showTable)
 end
     
 local playFanHander = nil
@@ -184,6 +187,8 @@ function FightResultLayer:initUI()
     end
 
     for i=1,6 do
+    	self.cardgold[i] = cc.uiloader:seekNodeByName(self, "cardgold"..i)
+    	self.cardnormal[i] = cc.uiloader:seekNodeByName(self, "cardnormal"..i)
     	self.cardover[i] = cc.uiloader:seekNodeByName(self, "cardover"..i)
     	self.cardicon[i] = cc.uiloader:seekNodeByName(self, "icon"..i)
     	self.cardlabel[i] = cc.uiloader:seekNodeByName(self, "labelcard"..i)
@@ -257,7 +262,7 @@ function FightResultLayer:getinlayfall()
 	end
 
 	local rans = math.random(100)
-	local table = getRecord(config,"type","special")
+	local table = getRecordByKey("config/inlayfall.json","type","special")
 	local totals = 0
 	for k,v in pairs(table) do
 		totals = totals + v["probability"]
@@ -287,6 +292,17 @@ function FightResultLayer:turnOverCard(index)
 	self.card[index]:setTouchEnabled(false)
 	transition.scaleTo(self.card[index], {scaleX = 0, time = 0.2})
 	self.cardover[index]:setVisible(true)
+
+
+	if record["property"] == "gold" then
+		self.cardnormal[index]:setVisible(false)
+		self.cardgold[index]:setVisible(true)		
+	else
+		dump(record["property"])
+		self.cardgold[index]:setVisible(false)
+		self.cardnormal[index]:setVisible(true)
+	end
+
 	self.cardover[index]:setScaleX(0)
 	self.cardlabel[index]:setString(record["describe2"])
 	local icon = display.newSprite("#"..record["imgname"]..".png")

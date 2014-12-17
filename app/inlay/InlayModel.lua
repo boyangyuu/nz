@@ -9,8 +9,7 @@ end
 
 function InlayModel:getConfigTable(propertyName, index)
 	assert(propertyName and index, "invalid param")
-	local config = getConfig("config/items_xq.json")
-	local records = getRecord(config, propertyName, index) or {}
+	local records = getRecordByKey("config/items_xq.json", propertyName, index) or {}
 	return records
 end
 
