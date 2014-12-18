@@ -14,6 +14,7 @@ end)
 function RootLayer:ctor()
 	--instance
 display.addSpriteFrames("allImg0.plist", "allImg0.png")
+display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
     --login
     self.curLayer = HomeBarLayer.new()
     -- self.curLayer = FightResultFailPopup.new()
