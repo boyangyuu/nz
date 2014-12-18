@@ -20,7 +20,7 @@ function GunView:ctor()
 	self.isChanging = false
 
 	--gun armature and base
-	self:setGun()
+	self:refreshGun()
 
 	--event
 	cc.EventProxy.new(self.hero, self)
@@ -33,7 +33,7 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
-	self.bulletNum = self.bulletNum - 1
+	self.curBulletNum = self.curBulletNum - 1
 	self:playFire()
 end
 
@@ -63,7 +63,7 @@ function GunView:playChange(event)
 	end
 
 	local function callFuncChange()
-		self:setGun()
+		self:refreshGun()
 
 	end 
 	local function callFuncFinishChange()
@@ -90,8 +90,8 @@ function GunView:playReload()
 	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
-		self.isReloading = false
-		self.bulletNum = self.gun:getBulletNum()
+		self.isReloading = false 
+		self.curBulletNum = self.gun:getBulletNum()
 	end
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
 	
@@ -103,7 +103,7 @@ end
 
 function GunView:canShot() 
 	--bullets
-	if self.bulletNum <= 0 then 
+	if self.curBulletNum <= 0 then 
 		self:stopFire()
 		self:playReload()
 		return false 
@@ -117,12 +117,12 @@ function GunView:setCoolDown(time)
 	self.hero:setCooldown(time)
 end
 
-function GunView:setBulletNum(num)
-	self.bulletNum = num
+function GunView:setCurBulletNum(num)
+	self.curBulletNum = num
 end
 
 --hero层 发送换枪
-function GunView:setGun()
+function GunView:refreshGun()
 	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
@@ -136,7 +136,7 @@ function GunView:setGun()
 	-- dump(config, "config")
 	
 	--子弹数目
-	self:setBulletNum(self.gun:getBulletNum())
+	self:setCurBulletNum(self.gun:getBulletNum())
 
 	--armature
 	local effectName = config.effectName --动作特效
