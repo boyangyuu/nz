@@ -225,4 +225,19 @@ function InlayModel:getAllInlayed()
 	return allInlayed
 end
 
+--[[
+	
+]]
+function InlayModel:getGoldByType( typeName )
+	local records = self:getConfigTable("type", typeName)
+	for k,v in pairs(records) do
+		for k1,v1 in pairs(v) do
+			if k1 == "property" and v1 == 4 then
+				return v
+			end
+		end
+	end
+	return false
+end
+
 return InlayModel
