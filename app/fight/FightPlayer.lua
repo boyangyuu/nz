@@ -131,9 +131,6 @@ function FightPlayer:initUI()
     --touch area
     self:initTouchArea()
 
-    --res
-    self:addArmatureFile()
-
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
 end
@@ -535,29 +532,7 @@ function FightPlayer:justFocusPos(node)
     node:setPosition(x, y)
 end
 
-function FightPlayer:addArmatureFile()
-    --all enemys
-    local enemyImgs = 
-    {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
-        "sanbing01", "daodan", "zpbing"}
-    local function dataLoaded(percent)
-        print(" dataLoaded() percent:"..percent)
-    end    
 
-    local manager = ccs.ArmatureDataManager:getInstance()
-    for i,v in ipairs(enemyImgs) do
-        local src = "res/Fight/enemys/"..v.."/"..v..".csb"
-        manager:addArmatureFileInfoAsync(src, dataLoaded)
-    end
-
-    --all uiAnims
-    local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
-        "avatarhit", "blood1", "blood2", "gold", "shoulei"}
-    for i,v in ipairs(uiImgs) do
-        local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
-        manager:addArmatureFileInfoAsync(src, dataLoaded)
-    end
-end
 
 function FightPlayer:initGuide()
     --check   

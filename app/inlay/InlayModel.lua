@@ -252,7 +252,8 @@ function InlayModel:getGoldByType( typeName )
 	local records = self:getConfigTable("type", typeName)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
-			if k1 == "property" and v1 == 4 then
+			local kGoldPriority = 4
+			if k1 == "property" and v1 == kGoldPriority then
 				return v
 			end
 		end

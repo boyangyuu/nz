@@ -399,7 +399,7 @@ function HeroView:updateHp(event)
 	end
 
 	local function updateHpFunc()
-		print("updateHpFunc()")
+		-- print("updateHpFunc()")
 		--inlay
 		local value = 0.0
 		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
@@ -490,6 +490,7 @@ function HeroView:initGuide()
 end
 
 function HeroView:onEnter()
+	self.inlay:checkNativeGold()
 	-- scheduler.performWithDelayGlobal(function()
 	-- 	self.guide:startGuide("fight")
 	-- end, 0.2)

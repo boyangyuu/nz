@@ -116,7 +116,10 @@ function Hero:refreshHp()
 end
 
 function Hero:activeGold()
-    --fightInlay change
+    --check
+    if self.fightInlay:getIsNativeGold() then return end
+
+    --active
     self.fightInlay:activeGold()
 
     --hp
@@ -125,7 +128,10 @@ function Hero:activeGold()
 end
 
 function Hero:activeGoldEnd()
-    --fightInlay change
+    --check
+    if self.fightInlay:getIsNativeGold() then return end    
+    
+    --active
     self.fightInlay:activeGoldEnd()
 
     --hp
