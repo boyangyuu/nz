@@ -13,14 +13,17 @@ function RootLayer:ctor()
     self:addResHome()
     self:addResFight()
 
-    --login
-    self.curLayer = HomeBarLayer.new()
-    -- self.curLayer = FightResultFailPopup.new()
-    self:addChild(self.curLayer)
+    --loading
+    --todo
 
 	--event
 	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.LAYER_CHANGE_EVENT, handler(self, self.switchLayer))
+end
+
+function RootLayer:initLoginLayer()
+    self.curLayer = HomeBarLayer.new()
+    self:addChild(self.curLayer)    
 end
 
 function RootLayer:switchLayer(event)
@@ -42,8 +45,6 @@ function RootLayer:addResHome()
     --armature
 end
 
-
-
 function RootLayer:addResFight()
     --sprite
     display.addSpriteFrames("allImg0.plist", "allImg0.png")
@@ -52,19 +53,36 @@ function RootLayer:addResFight()
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
         "sanbing01", "daodan", "zpbing"}
-    local function dataLoaded(percent)
-        print(" dataLoaded() percent:"..percent)
-    end    
+ 
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
-        manager:addArmatureFileInfoAsync(src, dataLoaded)
+        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
     end
 
     local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
         "avatarhit", "blood1", "blood2", "gold", "shoulei"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
-        manager:addArmatureFileInfoAsync(src, dataLoaded)
+        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    end
+
+    local jqkImgs = {"effect_gun_jqk", "qkzd"}
+    for i,v in ipairs(jqkImgs) do
+        local src = "res/Fight/jqkAnim/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    end 
+
+    local gunImgs = {"anim_ak"}
+    for i,v in ipairs(gunImgs) do
+        local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    end    
+end
+
+function RootLayer:dataLoaded(percent)
+    print(" dataLoaded() percent:"..percent)
+    if percent == 1 then 
+        self:initLoginLayer()
     end
 end
 

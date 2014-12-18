@@ -140,31 +140,28 @@ function GunView:refreshGun()
 
 	--armature
 	local effectName = config.effectName --动作特效
-	local path = "Fight/gunsAnim/"..effectName .."/"
-    local src = path..effectName..".ExportJson"
-    local armature = getArmature(effectName, src) 
-	self.armature = armature
+	effectName = "anim_ak"
+	self.armature = ccs.Armature:create(effectName)
 	self:playIdle()	
-
-	--换肤
-	local srcSkin = config.displayImage  -- 图片
-	print("srcSkin", srcSkin)
-    local skin = ccs.Skin:createWithSpriteFrameName(srcSkin)
-    armature:getBone("gun"):addDisplay(skin, 1)
-    armature:getBone("gun"):changeDisplayWithIndex(1, true)
 	self:addChild(armature)
 
+	--isGold
+	-- local srcSkin = config.displayImage  -- 图片
+	-- print("srcSkin", srcSkin)
+ --    local skin = ccs.Skin:createWithSpriteFrameName(srcSkin)
+ --    armature:getBone("gun"):addDisplay(skin, 1)
+ --    armature:getBone("gun"):changeDisplayWithIndex(1, true)
+	
     --枪火 todo放在fp里
     local effectJqkName = config.jqkName --机枪口特效
-    local srcJqk =  "Fight/jqkAnim/"..effectJqkName.."/"..effectJqkName..".csb"
-    self.jqk = getArmature(effectJqkName, srcJqk)
+    effectJqkName = "effect_gun_jqk"  
+    self.jqk = ccs.Armature:create(effectJqkName)
     self.jqk:setVisible(false)
    	self.jqk:setPosition(cc.p(-120,180))
     armature:addChild(self.jqk , -1)
 
     --枪火遮挡 
-    local srcJqkzd = "res/Fight/jqkAnim/qkzd/qkzd.csb"
-    self.jqkzd = getArmature("qkzd", srcJqkzd)
+    self.jqkzd = ccs.Armature:create("qkzd")
     self.jqkzd:setVisible(false)
    	self.jqkzd:setPosition(cc.p(-120,180))
     armature:addChild(self.jqkzd , 1)
