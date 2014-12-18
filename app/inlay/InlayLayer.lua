@@ -61,13 +61,8 @@ function InlayLayer:initUI()
             -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local data = getUserData()
-            for i=1,#data.inlay.inlayed do
-                table.remove(data.inlay.inlayed,1)
-            end
-            setUserData(data)
-            -- dump(GameState.load())
-            self:refreshBtnIcon()
+            dump(self.inlayModel:isGetAllGold())
+            -- self:refreshBtnIcon()
         end
     end)
 

@@ -208,6 +208,26 @@ function InlayModel:isInlayedExist(inlayid)
 	end
 end
 
+function InlayModel:isGetAllGold()
+	local allInlayed = self:getAllInlayed()
+	local x = 0
+	for k,v in pairs(allInlayed) do
+		x = x + 1
+	end
+	dump(allInlayed)
+	print(x)
+	if x ~= 6 then
+		return false
+	end
+	for k,v in pairs(allInlayed) do
+		local Priority = self:getInlayPriority(v)
+		if Priority ~= 4 then
+			return false
+		end
+	end
+	return true	
+end
+
 function InlayModel:getInlayType(inlayid)
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end
@@ -226,7 +246,7 @@ function InlayModel:getAllInlayed()
 end
 
 --[[
-	
+	@return {id = 1, ... }
 ]]
 function InlayModel:getGoldByType( typeName )
 	local records = self:getConfigTable("type", typeName)
@@ -239,6 +259,14 @@ function InlayModel:getGoldByType( typeName )
 		end
 	end
 	return false
+end
+
+function InlayModel:removeAllInlay()
+	local data = getUserData()
+	data.inlay.inlayed = {}
+
+	setUserData(data)
+	
 end
 
 return InlayModel
