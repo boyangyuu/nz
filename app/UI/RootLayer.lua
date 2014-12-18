@@ -41,7 +41,7 @@ end
 function RootLayer:addResHome()
     --sprite
     display.addSpriteFrames("allImg0.plist", "allImg0.png")
-
+    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
     --armature
 end
 

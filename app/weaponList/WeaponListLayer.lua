@@ -189,7 +189,6 @@ function WeaponListLayer:refreshComment(index)
     self.labelName:setString(self.weaponrecord["name"])
     self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
-    weaponImg:setScale(1.2)
     addChildCenter(weaponImg, self.layerGun)
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
