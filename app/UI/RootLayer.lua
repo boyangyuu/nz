@@ -10,9 +10,9 @@ function RootLayer:ctor()
 	--instance
 	
 	--add res
-	self:addArmatureFile()
-	self:addSpriteFrames()
-	
+    self:addResHome()
+    self:addResFight()
+
     --login
     self.curLayer = HomeBarLayer.new()
     -- self.curLayer = FightResultFailPopup.new()
@@ -35,26 +35,31 @@ function RootLayer:checkLoadLayer()
 	
 end
 
-function RootLayer:addSpriteFrames()
-	display.addSpriteFrames("allImg0.plist", "allImg0.png")
+function RootLayer:addResHome()
+    --sprite
+    display.addSpriteFrames("allImg0.plist", "allImg0.png")
+
+    --armature
 end
 
-function RootLayer:addArmatureFile()
-    --all enemys
-    local enemyImgs = 
-    {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
+
+
+function RootLayer:addResFight()
+    --sprite
+    display.addSpriteFrames("allImg0.plist", "allImg0.png")
+
+    --armature
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
         "sanbing01", "daodan", "zpbing"}
     local function dataLoaded(percent)
         print(" dataLoaded() percent:"..percent)
     end    
-
-    local manager = ccs.ArmatureDataManager:getInstance()
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, dataLoaded)
     end
 
-    --all uiAnims
     local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
         "avatarhit", "blood1", "blood2", "gold", "shoulei"}
     for i,v in ipairs(uiImgs) do

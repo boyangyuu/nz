@@ -19,41 +19,41 @@ function FightInlay:ctor(properties)
     --instance
     FightInlay.super.ctor(self, properties)
     self.inlayModel = app:getInstance(InlayModel) 
-    
+
     self:checkNativeGold()
 end
 
 function FightInlay:checkNativeGold()
     local isNativeGold = self:getIsNativeGold()
-    self:setIsGold(isNativeGold)
+    self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
         self:activeGold()
     end
 end
 
 function FightInlay:activeGold()
-    self:setIsGold(true)   
+    self:setIsActiveGold(true)   
     print("FightInlay:activeGold()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
 end
 
 function FightInlay:activeGoldEnd()
-    self:setIsGold(false)
+    self:setIsActiveGold(false)
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_END_EVENT})
 end
 
-function FightInlay:setIsGold(isGold_)
-    self.isGold = isGold_
+function FightInlay:setIsActiveGold(IsActiveGold_)
+    self.IsActiveGold = IsActiveGold_
 end
 
-function FightInlay:getIsGold()
-    return self.isGold
+function FightInlay:getIsActiveGold()
+    return self.IsActiveGold
 end
 
 function FightInlay:getIsNativeGold()
-    return true
+    return self.inlayModel:isGetAllGold()
 end
 
 --[[
@@ -63,7 +63,7 @@ end
 function FightInlay:getInlayedValue(type)
     -- print("FightInlay:getInlayedValue type", type)
     local record = nil
-    if self:getIsGold() then 
+    if self:getIsActiveGold() then 
         -- print("gold inlay~~~~~")
         record = self.inlayModel:getGoldByType(type)
         assert(record, "record is nil type:"..type)

@@ -214,8 +214,8 @@ function InlayModel:isGetAllGold()
 	for k,v in pairs(allInlayed) do
 		x = x + 1
 	end
-	dump(allInlayed)
-	print(x)
+	-- dump(allInlayed)
+	-- print(x)
 	if x ~= 6 then
 		return false
 	end
