@@ -9,7 +9,8 @@ local Fight         = import(".Fight")
 local GunView       = import(".GunView")
 local FocusView     = import(".FocusView")
 local MapView       = import(".MapView")
-local HeroView      = import(".HeroView")
+local HeroLayer      = import(".HeroLayer")
+local InfoLayer      = import(".InfoLayer")
 
 local KFightConfig = {
     scaleMoveBg = 0.3, 
@@ -35,7 +36,8 @@ function FightPlayer:ctor(properties)
     self.focusView      = FocusView.new()
     self.mapView        = MapView.new()
     self.gunView        = GunView.new()
-    self.heroView       = HeroView.new()
+    self.heroLayer      = HeroLayer.new()
+    self.infoLayer      = InfoLayer.new() 
     self.touchIds       = {} --todo
 
     --ui
@@ -119,10 +121,15 @@ function FightPlayer:initUI()
     self.layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
     self.layerGun:addChild(self.gunView)
 
-    --load heroView
+    --load HeroLayer
     local layerHero = cc.uiloader:seekNodeByName(self, "layerHero")
-    addChildCenter(self.heroView, layerHero)
-    self.heroView:setPosition(0, 0)
+    addChildCenter(self.heroLayer, layerHero)
+    self.heroLayer:setPosition(0, 0)
+
+    --load layerGunInfo
+    local layerGunInfo = cc.uiloader:seekNodeByName(self, "layerGunInfo")
+    addChildCenter(self.infoLayer, layerGunInfo)
+    self.infoLayer:setPosition(0, 0)
 
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
@@ -259,6 +266,11 @@ function FightPlayer:initBtns()
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
     self.btnJu:setTouchEnabled(true)
     self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+
+    --btnGold
+    self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
+    self.btnGold:setTouchEnabled(true)
+    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
 end
 
 ---- touch and btn----
@@ -286,6 +298,8 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkBtnJu(point)
         if isTouch then return true end
 
+        isTouch = self:checkBtnGold(point)
+        if isTouch then return true end
     end
     return false
 end
@@ -409,6 +423,17 @@ function FightPlayer:checkBtnJu(point,eventName)
     end
     return isTouch
 end
+
+function FightPlayer:checkBtnGold(point, eventName)
+    local rect = self.btnGold:getCascadeBoundingBox()  
+    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
+    if isTouch then 
+        print("点击黄金枪 购买")
+        self.hero:activeGold()
+    end
+    return isTouch    
+end
+
 
 function FightPlayer:onTouchMoved(event)
     -- print("FightPlayer:onTouchMoved(event)")
