@@ -15,7 +15,7 @@ local waves = {
 					type = "co",
 					id = 1,
 					-- enemyId = 1,
-					placeName = "place7",
+					placeName = "place1",
 				},
 			},		
 		},

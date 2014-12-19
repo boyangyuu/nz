@@ -24,6 +24,7 @@ end
 
 function RootLayer:initLoginLayer()
     self.curLayer = HomeBarLayer.new()
+    self:removeAllChildren()
     self:addChild(self.curLayer)    
     
     self:addResFight()    
@@ -63,19 +64,20 @@ function RootLayer:addResFight()
     end
 
     local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
-        "avatarhit", "blood1", "blood2", "gold", "shoulei"}
+        "avatarhit", "blood1", "blood2", "gold", "shoulei", "danke"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end
 
-    local jqkImgs = {"effect_gun_jqk", "qkzd"}
+    local jqkImgs = {"effect_gun_jqk", "qkzd"} 
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end 
 
-    local gunImgs = {"anim_ak"}
+    local gunImgs = {"anim_ak", "anim_jfzc", "anim_lmd", "anim_m4", "anim_m134",
+        "anim_mp5", "anim_rpg", "anim_sy"}
     for i,v in ipairs(gunImgs) do
         local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

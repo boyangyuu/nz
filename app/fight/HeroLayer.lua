@@ -6,8 +6,6 @@
 ]]
 
 --import
-import("..includes.functionUtils")
-local CCSUILoader = import("framework.cc.uiloader.CCSUILoader")
 local scheduler = require("framework.scheduler")
 local Actor 	= import(".Actor")
 local Hero 		= import(".Hero")
@@ -18,11 +16,11 @@ local Guide 	= import("..guide.GuideModel")
 --kconfig
 local kGoldActivate = 1
 
-local HeroView = class("HeroView", function()
+local HeroLayer = class("HeroLayer", function()
     return display.newLayer()
 end)
 
-function HeroView:ctor(properties)
+function HeroLayer:ctor(properties)
 
 	--instance
 	self.hero 	= app:getInstance(Hero)
@@ -58,7 +56,7 @@ function HeroView:ctor(properties)
 	self:setNodeEventEnabled(true)
 end
 
-function HeroView:initUI()
+function HeroLayer:initUI()
 	self:initUiRootNode()
 	self:initHeroHpNode()
 	self:initArmouredNode()
@@ -69,19 +67,19 @@ function HeroView:initUI()
 end
 
 --获得UI.ExportJson数据
-function HeroView:initUiRootNode()
+function HeroLayer:initUiRootNode()
 	self.uiRootNode = cc.uiloader:load("res/Fight/fightLayer/ui/heroUI.ExportJson")
 end
 
 --初始化英雄血条
-function HeroView:initHeroHpNode()
+function HeroLayer:initHeroHpNode()
 	self.loadingBarHeroHp = cc.uiloader:seekNodeByName(self.uiRootNode, "loadingBarHeroHp")
 	self.loadingBarHeroHp:removeFromParent()
 	self:addChild(self.loadingBarHeroHp)
 end
 
 --获得装备机甲Ui节点
-function HeroView:initArmouredNode()
+function HeroLayer:initArmouredNode()
 	-- print("fit Armoured")
 	self.layerArmoured = cc.uiloader:seekNodeByName(self.uiRootNode, "armoured")
 	self.layerArmoured:removeFromParent()
@@ -90,7 +88,7 @@ function HeroView:initArmouredNode()
 end
 
 --获得盾牌Ui节点
-function HeroView:initDefenceNode()
+function HeroLayer:initDefenceNode()
 	self.isLaunchDefenceResume = false
 	self.defence = cc.uiloader:seekNodeByName(self.uiRootNode, "defence")
 	self.defence:removeFromParent()
@@ -100,7 +98,7 @@ function HeroView:initDefenceNode()
 end
 
 --初始化连杀倒计时节点
-function HeroView:initKillTimerNode()
+function HeroLayer:initKillTimerNode()
     self.killTimerBg = cc.uiloader:seekNodeByName(self.uiRootNode, "killTimerBg")
     self.killTimerBg:removeFromParent()
     self:addChild(self.killTimerBg)
@@ -120,7 +118,7 @@ function HeroView:initKillTimerNode()
 end
 
 --player血条血量改变 
-function HeroView:onHeroHpChange(event)
+function HeroLayer:onHeroHpChange(event)
 	   local per = self.hero:getHp() / self.hero:getMaxHp() * 100
 	   self.loadingBarHeroHp:setPercent(per)
 	-- local per1 = self.hero:getHp() / self.hero:getMaxHp() * 100
@@ -144,7 +142,7 @@ function HeroView:onHeroHpChange(event)
 end
 
 --杀死敌人后跳出3金币
-function HeroView:killEnmeyGold(enemyPos)
+function HeroLayer:killEnmeyGold(enemyPos)
 	for i = 1, 3 do
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)
@@ -167,8 +165,8 @@ function HeroView:killEnmeyGold(enemyPos)
 end
 
 --触发黄金武器
-function HeroView:onActiveGold(event)
-	print("HeroView:onActiveGold(event)")
+function HeroLayer:onActiveGold(event)
+	print("HeroLayer:onActiveGold(event)")
 	self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = true})
 	local armature = ccs.Armature:create("hjwq")
 	addChildCenter(armature, self)
@@ -177,7 +175,7 @@ function HeroView:onActiveGold(event)
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementId ) 
 	    	if movementType == ccs.MovementEventType.complete then
-				print("HeroView:activeGold() resume")
+				print("HeroLayer:activeGold() resume")
 				self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
 				armature:removeFromParent()
 	    	end 
@@ -187,7 +185,7 @@ end
 
 --杀掉敌人后的回调
 local percent = 100
-function HeroView:killEnemyCallBack( event )
+function HeroLayer:killEnemyCallBack( event )
 	self.killLabel:setVisible(true)
 	self.killTimerBg	:setVisible(true)
 	self:killEnmeyGold(event.enemyPos)
@@ -229,7 +227,7 @@ function HeroView:killEnemyCallBack( event )
 end
 
 --显示/隐藏机甲
-function HeroView:onShowArmoured(event)
+function HeroLayer:onShowArmoured(event)
 	if false == self.layerArmoured:isVisible() then
 		self.layerArmoured:setVisible(true)
 	else
@@ -238,12 +236,12 @@ function HeroView:onShowArmoured(event)
 end
 
 --盾牌恢复完成的回调
-function HeroView:onResumeDefence(event)
+function HeroLayer:onResumeDefence(event)
 	self.isResumeDefence = event.isResumeDefence
 end
 
 --显示/隐藏盾甲
-function HeroView:onShowDefence(event)
+function HeroLayer:onShowDefence(event)
 	if false == self.isResumeDefence then
 
 		--tood 待优化 可以放在一个node里就解决了
@@ -274,7 +272,7 @@ function HeroView:onShowDefence(event)
 end
 
 --盾牌受伤效果
-function HeroView:defenceBehurtEffect(event)
+function HeroLayer:defenceBehurtEffect(event)
 
 	if self.isResumeDefence then return end
 
@@ -312,7 +310,7 @@ function HeroView:defenceBehurtEffect(event)
 	self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, damage = tCurrentHp})
 end
 
-function HeroView:bloodBehurtEffect()
+function HeroLayer:bloodBehurtEffect()
 	local strAnim = nil
 	if 1 >= math.random(0, 3) then 
 		strAnim = "blood1"
@@ -335,7 +333,7 @@ function HeroView:bloodBehurtEffect()
     self:addChild(armature)
 end
 
-function HeroView:onHurtEffect(event)
+function HeroLayer:onHurtEffect(event)
 
 	self:screenHurtedEffect()
 	if true == self.defence:isVisible() then
@@ -347,7 +345,7 @@ function HeroView:onHurtEffect(event)
 end
 
 --手雷
-function HeroView:onThrowGrenade(event)
+function HeroLayer:onThrowGrenade(event)
 
 	local armature =ccs.Armature:create("shoulei")
 	self:addChild(armature)
@@ -392,7 +390,7 @@ function HeroView:onThrowGrenade(event)
 	shadow:runAction(seq2)
 end
 
-function HeroView:updateHp(event)
+function HeroLayer:updateHp(event)
 	if self.hpUpdateHandler then 
 		scheduler.unscheduleGlobal(self.hpUpdateHandler)
 		self.hpUpdateHandler = nil
@@ -420,7 +418,7 @@ function HeroView:updateHp(event)
 end
 
 --英雄受到伤害时,屏幕闪红效果
-function HeroView:screenHurtedEffect()
+function HeroLayer:screenHurtedEffect()
 	local armature = ccs.Armature:create("avatarhit")
     local ani = armature:getAnimation()
 	ani:play("avatarhit" , -1, 1)
@@ -436,7 +434,7 @@ function HeroView:screenHurtedEffect()
     self:addChild(armature)
 end
 
-function HeroView:effectPopupHead()
+function HeroLayer:effectPopupHead()
 	local baotou = ccs.Armature:create("baotou")
 	baotou:getAnimation():play("baotou" , -1, 1)
     baotou:setPosition(display.width1 / 2, 150)
@@ -452,8 +450,8 @@ function HeroView:effectPopupHead()
 end
 
 
-function HeroView:effectGunReload(event)
-	print("HeroView:effectGunReload()")
+function HeroLayer:effectGunReload(event)
+	print("HeroLayer:effectGunReload()")
 	local armature = ccs.Armature:create("huanzidan")
 	armature:getAnimation():play("zidan" , -1, 1)
     armature:setPosition(display.width / 2, display.height1 / 2)
@@ -461,7 +459,7 @@ function HeroView:effectGunReload(event)
     armature:getAnimation():setMovementEventCallFunc(
     	function ( armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		print("HeroView:effectGunReload done()")
+	    		print("HeroLayer:effectGunReload done()")
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent()
 	    	end 
@@ -470,7 +468,7 @@ function HeroView:effectGunReload(event)
     self:addChild(armature)	
 end
 
-function HeroView:initGuide()
+function HeroLayer:initGuide()
     local isDone = self.guide:check("fight")
     if isDone then return end
 	
@@ -489,15 +487,15 @@ function HeroView:initGuide()
     self.guide:addClickListener(data1)  
 end
 
-function HeroView:onEnter()
+function HeroLayer:onEnter()
 	self.inlay:checkNativeGold()
 	-- scheduler.performWithDelayGlobal(function()
 	-- 	self.guide:startGuide("fight")
 	-- end, 0.2)
 end
 
-function HeroView:onExit()
-	print("function HeroView:onExit()")
+function HeroLayer:onExit()
+	print("function HeroLayer:onExit()")
 
 	if self.killTimerHandler then 
 		scheduler.unscheduleGlobal(self.killTimerHandler)
@@ -510,4 +508,4 @@ function HeroView:onExit()
 end
 
 
-return HeroView
+return HeroLayer
