@@ -11,7 +11,8 @@ function RootLayer:ctor()
 	
 	--add res
     self:addResHome()
-    self:addResFight()
+    self:initLoginLayer()
+
 
     --loading
     --todo
@@ -24,6 +25,8 @@ end
 function RootLayer:initLoginLayer()
     self.curLayer = HomeBarLayer.new()
     self:addChild(self.curLayer)    
+    
+    self:addResFight()    
 end
 
 function RootLayer:switchLayer(event)
@@ -82,7 +85,7 @@ end
 function RootLayer:dataLoaded(percent)
     print(" dataLoaded() percent:"..percent)
     if percent == 1 then 
-        self:initLoginLayer()
+        
     end
 end
 
