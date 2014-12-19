@@ -36,11 +36,13 @@ end
 function InlayLayer:onEnter()
     self:refreshBtnIcon()
     self:refreshListView("speed")
+    self:refreshAvatar()
 end
 
 function InlayLayer:refreshInlay(event)
     self:refreshBtnIcon()
     self:refreshListView(event.typename)
+    self:refreshAvatar()
 end
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
@@ -90,6 +92,14 @@ function InlayLayer:refreshListView(index)
     	self.rootListView:addItem(item)
     end
     self.rootListView:reload()
+end
+
+function InlayLayer:refreshAvatar()
+    if self.inlayModel:isGetAllGold() then
+        print("InlayLayer:refreshAvatar()")
+    else
+        print("takeoff")
+    end
 end
 
 function InlayLayer:refreshBtnIcon()

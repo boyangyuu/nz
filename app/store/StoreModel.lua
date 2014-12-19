@@ -27,7 +27,7 @@ function StoreModel:orderByGold(configtable)
 	-- local bronze = {}
 	-- local general = {}
 	for k,v in pairs(configtable) do
-		if v["property"] == "gold" then
+		if v["property"] == 4 then
 			table.insert(gold, v)
 		-- elseif v["property"] == "silver" then
 		-- 	table.insert(silver, v)

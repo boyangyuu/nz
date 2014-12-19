@@ -7,9 +7,10 @@ function addBtnEventListener(node, callfunc)
     assert(callfunc, "callfunc is invalid")
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)        
         if event.name=='began' then
-            node:runAction(cc.ScaleTo:create(0.05, 0.9))
+            -- node:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
+            node:runAction(cc.ScaleTo:create(0.05, 1.1))
         elseif event.name=='ended' then
-                node:runAction(cc.ScaleTo:create(0.05, 1))
+                node:runAction(cc.ScaleTo:create(0.1, 1))
         end
         local isAccepted = callfunc(event)
         return isAccepted

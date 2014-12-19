@@ -67,8 +67,9 @@ function InlayListCell:initCellUI(record)
             if event.name=='began' then
                 return true
             elseif event.name=='ended' then
-                -- if self.userModel:costMoney(record["goldPrice"]) then
+                if self.userModel:costMoney(record["goldPrice"]) then
                     self.inlayModel:buyInlay(record["id"])
+                end
             end
             -- return false
         end)
