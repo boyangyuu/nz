@@ -163,8 +163,8 @@ function GuideLayer:loadCCS()
 
     --anim
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.ExportJson")
-    manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.ExportJson")
+    manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
+    manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
 end
 
 function GuideLayer:refreshUI()

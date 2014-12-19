@@ -137,7 +137,6 @@ function Hero:activeGoldEnd()
 
     --hp
     self:refreshHp()
-
 end
 
 function Hero:setMapZoom(scale)

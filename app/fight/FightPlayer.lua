@@ -326,7 +326,7 @@ function FightPlayer:checkbtnDefence(point)
     local rect = self.btnDefence:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        print("-----------fit defence")
+        print("SKILL_DEFENCE_START_EVENT")
         self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_START_EVENT})
     end
     return isTouch

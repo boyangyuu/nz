@@ -164,8 +164,8 @@ function GunView:refreshGun()
 	self:setGoldGun(isGold)
 
     --枪火 todo放在fp里
-    local effectJqkName = config.jqkName --机枪口特效
-    self.jqk = ccs.Armature:create(effectJqkName)
+    local jqkName = config.jqkName --机枪口特效
+    self.jqk = ccs.Armature:create(jqkName)
     self.jqk:setVisible(false)
     local boneQk = armature:getBone("qk")
     local posBone = boneQk:convertToWorldSpace(cc.p(0, 0))
@@ -173,7 +173,6 @@ function GunView:refreshGun()
 	local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
     self.jqk:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqk, -1)
-
 
     --枪火遮挡 
     self.jqkzd = ccs.Armature:create("qkzd")
