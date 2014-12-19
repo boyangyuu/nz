@@ -9,6 +9,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 --import
 local Hero          = import(".Hero")
 local Actor         = import(".Actor")
+local FightInlay         = import(".FightInlay")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
@@ -20,13 +21,15 @@ function Fight:ctor(properties)
 end
 
 function Fight:refreshData(properties)
-    --inatance
-    self.hero = app:getInstance(Hero) 
+    --init inatance
+    app:deleteInstance(Hero)
+    app:deleteInstance(FightInlay)    
+    self.hero = app:getInstance(Hero)  --todo改为refreash Instance
+    self.inlay = app:getInstance(FightInlay)
 
     --关卡
     self.groupId = properties.groupId
     self.levelId = properties.levelId
-
 end
 
 ---- 关卡相关 ----
@@ -59,7 +62,7 @@ function Fight:relive()
 end
 
 function Fight:clearFightData()
-    app:deleteInstance(Hero)
+
 end
 
 return Fight

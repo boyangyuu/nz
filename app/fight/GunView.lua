@@ -5,9 +5,15 @@
 
 ]]
 import("..includes.functionUtils")
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local Hero = import(".Hero")
-local Gun  = import(".Gun")
+local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
+local Hero 		 = import(".Hero")
+local Gun  		 = import(".Gun")
+local FightInlay = import(".FightInlay")
+
+--events
+FightInlay.INLAY_GOLD_BEGIN_EVENT       = "INLAY_GOLD_BEGIN_EVENT" --激活黄金武器（同时刷新血量上限）
+FightInlay.INLAY_GOLD_END_EVENT         = "INLAY_GOLD_END_EVENT"
+
 local GunView = class("GunView", function()
     return display.newNode()
 end)
@@ -16,16 +22,19 @@ function GunView:ctor()
 	--instance
 	-- dump(properties, "GunView properties")
 	self.hero = app:getInstance(Hero)
-	
+	self.inlay = app:getInstance(FightInlay)
 	self.isChanging = false
 
 	--gun armature and base
-	self:setGun()
+	-- self:refreshGun()
+	scheduler.performWithDelayGlobal( handler(self, self.refreshGun), 1.0)  
 
 	--event
 	cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
-
+	cc.EventProxy.new(self.inlay, self)
+        :addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.onActiveGold))
+        :addEventListener(FightInlay.INLAY_GOLD_END_EVENT,	 handler(self, self.onActiveGoldEnd))
 end
 
 function GunView:playIdle()
@@ -33,23 +42,26 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
-	self.bulletNum = self.bulletNum - 1
+	local num = self.curBulletNum - 1
+	self:setCurBulletNum(num)
 	self:playFire()
 end
 
 function GunView:playFire()
 	--枪火
-	self.jqk:setVisible(true)
-	self.jqk:getAnimation():play("fire" , -1, 0)
-	self.jqkzd:setVisible(true)
+	self.jqk   :setVisible(true)
+	self.jqkzd :setVisible(true)
+	self.dk    :setVisible(true)
+	self.jqk:getAnimation()	 :play("fire" , -1, 0)
 	self.jqkzd:getAnimation():play("fire" , -1, 0)
-
+	self.dk:getAnimation()	 :play("danke", -1, 0)
 	self.armature:getAnimation():play("fire" , -1, 0)
 end
 
 function GunView:stopFire()
-	self.jqk:setVisible(false)
+	self.jqk  :setVisible(false)
 	self.jqkzd:setVisible(false)
+	self.dk   :setVisible(false)
 end
 
 function GunView:playChange(event)
@@ -57,13 +69,13 @@ function GunView:playChange(event)
 	print("GunView:playChange(event)")
 	local disy = 150
 	local actionDown = cc.MoveBy:create(0.2, cc.p(0.0, -disy))
-	local actionUp = cc.MoveBy:create(0.2, cc.p(0.0, disy))
+	local actionUp 	 = cc.MoveBy:create(0.2, cc.p(0.0, disy))
 	local function callFuncBeginChange()
 		self.isChanging = true
 	end
 
 	local function callFuncChange()
-		self:setGun()
+		self:refreshGun()
 
 	end 
 	local function callFuncFinishChange()
@@ -90,8 +102,8 @@ function GunView:playReload()
 	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
-		self.isReloading = false
-		self.bulletNum = self.gun:getBulletNum()
+		self.isReloading = false 
+		self.curBulletNum = self.gun:getBulletNum()
 	end
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
 	
@@ -103,7 +115,7 @@ end
 
 function GunView:canShot() 
 	--bullets
-	if self.bulletNum <= 0 then 
+	if self.curBulletNum <= 0 then 
 		self:stopFire()
 		self:playReload()
 		return false 
@@ -117,57 +129,102 @@ function GunView:setCoolDown(time)
 	self.hero:setCooldown(time)
 end
 
-function GunView:setBulletNum(num)
-	self.bulletNum = num
+function GunView:setCurBulletNum(num)
+	self.curBulletNum = num
+	--dispatch
+	self.hero:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = num})
 end
 
 --hero层 发送换枪
-function GunView:setGun()
+function GunView:refreshGun()
 	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
 		self.armature:removeFromParent() 
-		self.armature = nil
-		self.jqk = nil
 	end
 
 	--gun
 	local config = self.gun:getConfig()
-	-- dump(config, "config")
+	dump(config, "config")
 	
 	--子弹数目
-	self:setBulletNum(self.gun:getBulletNum())
+	self:setCurBulletNum(self.gun:getBulletNum())
 
 	--armature
-	local effectName = config.effectName --动作特效
-	local path = "Fight/gunsAnim/"..effectName .."/"
-    local src = path..effectName..".ExportJson"
-    local armature = getArmature(effectName, src) 
+	local animName = config.animName --动作特效
+	local armature = ccs.Armature:create(animName)
 	self.armature = armature
 	self:playIdle()	
-
-	--换肤
-	local srcSkin = config.displayImage  -- 图片
-	print("srcSkin", srcSkin)
-    local skin = ccs.Skin:createWithSpriteFrameName(srcSkin)
-    armature:getBone("gun"):addDisplay(skin, 1)
-    armature:getBone("gun"):changeDisplayWithIndex(1, true)
 	self:addChild(armature)
 
+	--isGold
+	local isNativeGold = self.inlay:getIsNativeGold()
+	if isNativeGold then self:onActiveGold() end	
+	local isGold = self.isGolding
+	self:setGoldGun(isGold)
+
     --枪火 todo放在fp里
-    local effectJqkName = config.jqkName --机枪口特效
-    local srcJqk =  "Fight/jqkAnim/"..effectJqkName.."/"..effectJqkName..".csb"
-    self.jqk = getArmature(effectJqkName, srcJqk)
+    local jqkName = config.jqkName --机枪口特效
+    self.jqk = ccs.Armature:create(jqkName)
     self.jqk:setVisible(false)
-   	self.jqk:setPosition(cc.p(-120,180))
-    armature:addChild(self.jqk , -1)
+    local boneQk = armature:getBone("qk")
+    local posBone = boneQk:convertToWorldSpace(cc.p(0, 0))
+    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
+	local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+    self.jqk:setPosition(destpos.x, destpos.y)
+    armature:addChild(self.jqk, -1)
 
     --枪火遮挡 
-    local srcJqkzd = "res/Fight/jqkAnim/qkzd/qkzd.csb"
-    self.jqkzd = getArmature("qkzd", srcJqkzd)
+    self.jqkzd = ccs.Armature:create("qkzd")
     self.jqkzd:setVisible(false)
-   	self.jqkzd:setPosition(cc.p(-120,180))
+   	self.jqkzd:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqkzd , 1)
+
+    --蛋壳
+    self:addDanke()
+
+    -- drawBoundingBox(self, armature, "red")
+end
+
+function GunView:addDanke()
+	self.dk = ccs.Armature:create("danke")
+
+	--todo
+
+	--special check
+	local config = self.gun:getConfig()
+	local animName = config["animName"]	
+	local armature = self.armature
+    local boneDk = armature:getBone("dk")
+    local posBone = boneDk:convertToWorldSpace(cc.p(0, 0))
+    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
+    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+    self.dk:setVisible(false)
+   	self.dk:setPosition(destpos.x, destpos.y)
+    armature:addChild(self.dk , 3)	
+end
+
+function GunView:setGoldGun(isGold)
+	local skinIndex = isGold and 1 or 0
+	self.armature:getBone("gun"):changeDisplayWithIndex(skinIndex, true) 
+	local boneIndex = 1
+	while(true) do
+		local boneStr = "gun"..boneIndex
+		local bone = self.armature:getBone(boneStr)
+		if bone == nil then break end
+		bone:changeDisplayWithIndex(skinIndex, true)
+		boneIndex = boneIndex + 1
+	end
+end
+
+function GunView:onActiveGold(event)
+	self.isGolding = true
+	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
+end
+
+function GunView:onActiveGoldEnd(event)
+	self.isGolding = false
+	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
 end
 
 return GunView

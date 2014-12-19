@@ -298,7 +298,7 @@ function FightResultLayer:turnOverCard(index)
 		self.cardnormal[index]:setVisible(false)
 		self.cardgold[index]:setVisible(true)		
 	else
-		dump(record["property"])
+		-- dump(record["property"])
 		self.cardgold[index]:setVisible(false)
 		self.cardnormal[index]:setVisible(true)
 	end
@@ -334,7 +334,7 @@ end
 
 function FightResultLayer:quickInlay()
 	dump(self.quickinlay)
-	self.inlayModel:BestInlayInTable(self.quickinlay)
+	self.inlayModel:equipAllBestInlays(self.quickinlay)
 end
 
 function FightResultLayer:onExit()

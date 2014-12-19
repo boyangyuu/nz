@@ -36,11 +36,13 @@ end
 function InlayLayer:onEnter()
     self:refreshBtnIcon()
     self:refreshListView("speed")
+    self:refreshAvatar()
 end
 
 function InlayLayer:refreshInlay(event)
     self:refreshBtnIcon()
     self:refreshListView(event.typename)
+    self:refreshAvatar()
 end
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
@@ -52,7 +54,7 @@ function InlayLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.inlayModel:oneForAllBtn()
+            self.inlayModel:equipAllInlays()
         end
     end)
 
@@ -61,13 +63,8 @@ function InlayLayer:initUI()
             -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local data = getUserData()
-            for i=1,#data.inlay.inlayed do
-                table.remove(data.inlay.inlayed,1)
-            end
-            setUserData(data)
-            -- dump(GameState.load())
-            self:refreshBtnIcon()
+            dump(self.inlayModel:isGetAllGold())
+            -- self:refreshBtnIcon()
         end
     end)
 
@@ -95,6 +92,14 @@ function InlayLayer:refreshListView(index)
     	self.rootListView:addItem(item)
     end
     self.rootListView:reload()
+end
+
+function InlayLayer:refreshAvatar()
+    if self.inlayModel:isGetAllGold() then
+        print("InlayLayer:refreshAvatar()")
+    else
+        print("takeoff")
+    end
 end
 
 function InlayLayer:refreshBtnIcon()

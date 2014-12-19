@@ -39,16 +39,11 @@ function StoreLayer:initUI()
     btnprop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then                
                 return true
-            elseif event.name == "moved" then
-                btnprop.isTouchMoved_ = true
             elseif event.name=='ended' then
-                if btnprop.isTouchMoved_ == false then
-                    self:refreshListView("prop")
-                    btnprop:setLocalZOrder(100)
-                    btnbank:setLocalZOrder(-100) 
-                    btninlay:setLocalZOrder(-100) 
-                end   
-                btnprop.isTouchMoved_ = false 
+                self:refreshListView("prop")
+                btnprop:setLocalZOrder(100)
+                btnbank:setLocalZOrder(-100) 
+                btninlay:setLocalZOrder(-100) 
             end
         end)
      btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)

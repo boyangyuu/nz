@@ -45,7 +45,18 @@ function WeaponListLayer:loadCCS()
 end
 
 function WeaponListLayer:initUI()
-    self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
+        self.weaponLV = cc.ui.UIListView.new {
+        -- bgColor = cc.c4b(200, 200, 200, 120),
+        -- bg = "sunset.png",
+        bgScale9 = true,
+        viewRect = cc.rect(20, 44, 292, 477),
+        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL,
+        scrollbarImgV = "bar.png"
+    }
+        :onTouch(handler(self, self.touchListener))
+        :addTo(self)
+
+    -- self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
     self.layerbutton      = cc.uiloader:seekNodeByName(self, "panelbutton")
     self.paneldetail      = cc.uiloader:seekNodeByName(self, "paneldetail")
 
@@ -149,8 +160,13 @@ function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	weaponListView:reload()
 end
 
+function WeaponListLayer:moveItemToCenter(index)
+
+end
+
 -- ListView 点击事件
 function WeaponListLayer:touchListener(event)
+    dump(event)
     if "clicked" == event.name then
      self:refreshComment(event.itemPos)
     end
@@ -169,16 +185,6 @@ function WeaponListLayer:refreshComment(index)
     
     self.selectedCellId = index
 
-    -- refresh 选择状态
-    local itemContent = self.weaponLV.items_[index]:getContent()
-    if self.selectedContent == nil then
-        self.selectedContent = itemContent
-    else
-        self.selectedContent:setSelected(false)
-        self.selectedContent = itemContent
-    end
-    itemContent:setSelected(true)
-
     -- refresh 详情内容
     for k,v in pairs(self.stars) do
             v:setVisible(false)
@@ -189,7 +195,6 @@ function WeaponListLayer:refreshComment(index)
     self.labelName:setString(self.weaponrecord["name"])
     self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
-    weaponImg:setScale(1.2)
     addChildCenter(weaponImg, self.layerGun)
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
@@ -240,6 +245,19 @@ function WeaponListLayer:refreshComment(index)
             end
         end
     end
+
+    -- refresh 选择状态
+    local itemContent = self.weaponLV.items_[index]:getContent()
+    if self.selectedContent == nil then
+        self.selectedContent = itemContent
+    else
+        self.selectedContent:setSelected(false)
+        self.selectedContent = itemContent
+    end
+
+    self.selectedContent:setOwned(self.weaponId)
+
+    itemContent:setSelected(true)
 
     -- refresh button
     self:showButton()

@@ -5,21 +5,55 @@
 ]]
 
 --import
-
 local InlayModel   	= import("..inlay.InlayModel")
 
 
 local FightInlay          = class("FightInlay", cc.mvc.ModelBase)
---events
 
---inlay
+--events
 FightInlay.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
+FightInlay.INLAY_GOLD_BEGIN_EVENT       = "INLAY_GOLD_BEGIN_EVENT" --激活黄金武器（同时刷新血量上限）
+FightInlay.INLAY_GOLD_END_EVENT         = "INLAY_GOLD_END_EVENT"
 
 function FightInlay:ctor(properties)
     --instance
     FightInlay.super.ctor(self, properties)
     self.inlayModel = app:getInstance(InlayModel) 
 
+    self:checkNativeGold()
+end
+
+function FightInlay:checkNativeGold()
+    local isNativeGold = self:getIsNativeGold()
+    self:setIsActiveGold(isNativeGold)
+    if isNativeGold then 
+        self:activeGold()
+    end
+end
+
+function FightInlay:activeGold()
+    self:setIsActiveGold(true)   
+    print("FightInlay:activeGold()") 
+    --dispatch
+    self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
+end
+
+function FightInlay:activeGoldEnd()
+    self:setIsActiveGold(false)
+    --dispatch
+    self:dispatchEvent({name = FightInlay.INLAY_GOLD_END_EVENT})
+end
+
+function FightInlay:setIsActiveGold(IsActiveGold_)
+    self.IsActiveGold = IsActiveGold_
+end
+
+function FightInlay:getIsActiveGold()
+    return self.IsActiveGold
+end
+
+function FightInlay:getIsNativeGold()
+    return self.inlayModel:isGetAllGold()
 end
 
 --[[
@@ -27,13 +61,18 @@ end
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
-    --id
-    local inlays = self.inlayModel:getAllInlayed()
-    -- dump(inlays, "inlays")
-    -- print("type", type)
-    local inlayedId  = inlays[type]
-    if inlayedId == nil then return nil,false end
-    local record = getRecordByID("config/items_xq.json", inlayedId)
+    -- print("FightInlay:getInlayedValue type", type)
+    local record = nil
+    if self:getIsActiveGold() then 
+        -- print("gold inlay~~~~~")
+        record = self.inlayModel:getGoldByType(type)
+        assert(record, "record is nil type:"..type)
+    else
+        local inlays = self.inlayModel:getAllInlayed()
+        local inlayedId  = inlays[type]
+        if inlayedId == nil then return nil,false end
+        record = getRecordByID("config/items_xq.json", inlayedId)
+    end
     local value = record.valueProgram
     -- print("FightInlay:getInlayedValue value:", value)
     return value, true
