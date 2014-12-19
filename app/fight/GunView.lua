@@ -9,10 +9,13 @@ local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
 local Hero 		 = import(".Hero")
 local Gun  		 = import(".Gun")
 local FightInlay = import(".FightInlay")
+local Defence   = import(".defence") 
 
 --events
 FightInlay.INLAY_GOLD_BEGIN_EVENT       = "INLAY_GOLD_BEGIN_EVENT" --激活黄金武器（同时刷新血量上限）
 FightInlay.INLAY_GOLD_END_EVENT         = "INLAY_GOLD_END_EVENT"
+
+
 
 local GunView = class("GunView", function()
     return display.newNode()
@@ -23,6 +26,7 @@ function GunView:ctor()
 	-- dump(properties, "GunView properties")
 	self.hero = app:getInstance(Hero)
 	self.inlay = app:getInstance(FightInlay)
+	self.defence = app:getInstance(Defence)
 	self.isChanging = false
 
 	--gun armature and base
@@ -32,6 +36,10 @@ function GunView:ctor()
 	--event
 	cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
+	
+	cc.EventProxy.new(self.defence, self)	
+		:addEventListener(Defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onDefenseSwitch))
+	
 	cc.EventProxy.new(self.inlay, self)
         :addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.onActiveGold))
         :addEventListener(FightInlay.INLAY_GOLD_END_EVENT,	 handler(self, self.onActiveGoldEnd))
@@ -215,6 +223,22 @@ function GunView:setGoldGun(isGold)
 		bone:changeDisplayWithIndex(skinIndex, true)
 		boneIndex = boneIndex + 1
 	end
+end
+
+function GunView:onDefenseSwitch(event)
+	if event.isDefend then 
+		self:onHideGun()
+	else
+		self:onShowGun()
+	end
+end
+
+function GunView:onHideGun()
+	self:setVisible(false)
+end
+
+function GunView:onShowGun()
+	self:setVisible(true)
 end
 
 function GunView:onActiveGold(event)

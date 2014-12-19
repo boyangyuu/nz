@@ -5,6 +5,7 @@ local Actor         = import(".Actor")
 local Guide         = import("..guide.GuideModel")
 local Hero          = import(".Hero")
 local Fight         = import(".Fight")
+local Defence       = import(".defence") 
 
 local GunView       = import(".GunView")
 local FocusView     = import(".FocusView")
@@ -30,7 +31,7 @@ function FightPlayer:ctor(properties)
     self.fight:refreshData(properties) 
     self.hero       = app:getInstance(Hero)
     self.guide      = app:getInstance(Guide)
-     
+    self.defence    = app:getInstance(Defence)
 
     --views
     self.focusView      = FocusView.new()
@@ -46,7 +47,7 @@ function FightPlayer:ctor(properties)
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.defenceBeHurtCallBack))
+        :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(Hero.KILL_EVENT, handler(self, self.onHeroKill))
         :addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
@@ -144,34 +145,36 @@ end
 
 --启动盾牌恢复
 local resumeDefenceHandler = nil
-function FightPlayer:launchDefenceResume()
+function FightPlayer:startDefenceResume()
     self.labelDefenceResume:setVisible(true)
     self:loadDefenceResumeBar()
 
+    local kResumeValue = 1  --每次恢复点数
     local function tick(dt)
         local t = self.defenceResumeLoadingBar:getPercentage()
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
+            print("盾牌恢复成功")
             scheduler.unscheduleGlobal(resumeDefenceHandler)
             self.defenceResumeLoadingBar:removeFromParent()
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
-            self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_RESUME_EVENT, isResumeDefence = false})
+            self.defence:dispatchEvent({name = Defence.DEFENCE_RESUME_EVENT})
             return
         end
-        self.labelDefenceResume:setString(t1 - 1)
-        self.defenceResumeLoadingBar:setPercentage(t - 1)
+        self.labelDefenceResume:setString(t1 - kResumeValue)
+        self.defenceResumeLoadingBar:setPercentage(t - kResumeValue)
     end
 
     resumeDefenceHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
---盾牌受伤回调,盾牌血条变化方法
-function FightPlayer:defenceBeHurtCallBack(event)
-    self.loadingBarDefenceHp:setPercent(event.damage)
-    if 100 <= event.damage then
+function FightPlayer:onDefenceBeHurt(event)
+    local percent = event.hurtedPercent * 100
+    self.loadingBarDefenceHp:setPercent(percent)
+    if 100 <= percent then
         self.loadingBarDefenceHp:setPercent(0)
-        self:launchDefenceResume()
+        self:startDefenceResume()
     end
 end
 
@@ -326,8 +329,7 @@ function FightPlayer:checkbtnDefence(point)
     local rect = self.btnDefence:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        print("SKILL_DEFENCE_START_EVENT")
-        self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_START_EVENT})
+        self.defence:switchStatus()
     end
     return isTouch
 end

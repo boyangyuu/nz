@@ -12,9 +12,11 @@ local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
 local FightInlay= import(".FightInlay")
 local Guide 	= import("..guide.GuideModel")
+local Defence   = import(".defence") 
 
 --kconfig
 local kGoldActivate = 1
+local kRemainSumTimes = 2
 
 local HeroLayer = class("HeroLayer", function()
     return display.newLayer()
@@ -26,12 +28,7 @@ function HeroLayer:ctor(properties)
 	self.hero 	= app:getInstance(Hero)
 	self.guide 	= app:getInstance(Guide)
 	self.inlay 	= app:getInstance(FightInlay)
-
-	self.crackSprites = {}
-	self.behurtCount = 1
-	self.isDefenceAble = false
-	self.killCntKeep = 0
-	self.killCntTotal = 0
+	self.defence = app:getInstance(Defence)
 
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self)
@@ -39,8 +36,7 @@ function HeroLayer:ctor(properties)
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 
 		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT	, handler(self, self.onShowArmoured))
-		:addEventListener(Hero.SKILL_DEFENCE_START_EVENT	, handler(self, self.onShowDefence))
-		:addEventListener(Hero.SKILL_DEFENCE_RESUME_EVENT	, handler(self, self.onResumeDefence))
+
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))
 		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT		, handler(self, self.effectPopupHead))		
@@ -48,6 +44,10 @@ function HeroLayer:ctor(properties)
 	
 	cc.EventProxy.new(self.inlay, self)
 		:addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
+	
+	cc.EventProxy.new(self.defence, self)
+		:addEventListener(Defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onShowDefence))
+		:addEventListener(Defence.DEFENCE_RESUME_EVENT	, handler(self, self.onResumeDefence))
 	--ui
 	self:initUI()
 
@@ -72,7 +72,12 @@ function HeroLayer:initData()
 
 	--defence
 	self.isDefenceAble = true
+	self.crackSprites = {}
+	self.behurtCount = 1
+
 	--killtimer
+	self.killCntKeep = 0
+	self.killCntTotal = 0
 
 	--hp
 	self:updateHp()
@@ -87,18 +92,28 @@ end
 --初始化英雄血条
 function HeroLayer:initHeroHpNode()
 	self.hp = cc.uiloader:seekNodeByName(self.ui, "hp")
-	self.robot = cc.uiloader:seekNodeByName(self.ui, "robot")
+	self.robotNode = cc.uiloader:seekNodeByName(self.ui, "robot")
 
 
-	self.robot:setVisible(false)	
+	self.robotNode:setVisible(false)	
 end
 
 --获得盾牌Ui节点
+local defenceHeight = 0 --todo
 function HeroLayer:initDefenceNode()
 	self.isLaunchDefenceResume = false
-	self.defence = cc.uiloader:seekNodeByName(self.ui, "defence")
-	self.defence:setVisible(false)
-	self.defenceHp = 100
+	self.defenceNode = cc.uiloader:seekNodeByName(self.ui, "defence")
+	self.defenceNode:setVisible(false)
+	
+	local upFrame = cc.uiloader:seekNodeByName(self.defenceNode, "upFrame")
+	local downFrame = cc.uiloader:seekNodeByName(self.defenceNode, "downFrame")
+	local upFrameHeight = upFrame:getCascadeBoundingBox().size.height
+	local downFrameHeight = downFrame:getCascadeBoundingBox().size.height
+	defenceHeight = downFrameHeight + upFrameHeight
+
+	self.remainTimes = kRemainSumTimes
+
+
 end
 
 --初始化连杀倒计时节点
@@ -166,7 +181,7 @@ end
 
 --触发黄金武器
 function HeroLayer:onActiveGold(event)
-	print("HeroLayer:onActiveGold(event)")
+	-- print("HeroLayer:onActiveGold(event)")
 	self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = true})
 	local armature = ccs.Armature:create("hjwq")
 	addChildCenter(armature, self)
@@ -175,7 +190,7 @@ function HeroLayer:onActiveGold(event)
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementId ) 
 	    	if movementType == ccs.MovementEventType.complete then
-				print("HeroLayer:activeGold() resume")
+				-- print("HeroLayer:activeGold() resume")
 				self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
 				armature:removeFromParent()
 	    	end 
@@ -228,62 +243,68 @@ end
 
 --显示/隐藏机甲
 function HeroLayer:onShowArmoured(event)
-	if false == self.robot:isVisible() then
-		self.robot:setVisible(true)
+	if false == self.robotNode:isVisible() then
+		self.robotNode:setVisible(true)
 	else
-		self.robot:setVisible(false)
+		self.robotNode:setVisible(false)
 	end
 end
 
 --盾牌恢复完成的回调
 function HeroLayer:onResumeDefence(event)
-	self.isDefenceAble = event.isDefenceAble
+	self.isDefenceAble = true
 end
 
 --显示/隐藏盾甲
 function HeroLayer:onShowDefence(event)
-	print("self.isDefenceAble", self.isDefenceAble)
+	-- print("onShowDefence", self.isDefenceAble)
 	if self.isDefenceAble == false then return end 
 
-	--tood 待优化 可以放在一个node里就解决了
-	local upFrame = cc.uiloader:seekNodeByName(self.defence, "upFrame")
-	local downFrame = cc.uiloader:seekNodeByName(self.defence, "downFrame")
-	local upFrameHeight = upFrame:getCascadeBoundingBox().size.height
-	local downFrameHeight = downFrame:getCascadeBoundingBox().size.height
-	local defenceHeight = downFrameHeight + upFrameHeight;
-
-	if self.defence:isVisible() then
-		self.defence:runAction( 
-			cc.Sequence:create( 
-				cc.MoveBy:create(0.5, cc.p(0, -defenceHeight)), 
-				cc.CallFunc:create(
-					function ()
-						self.defence:setVisible(false)
-						self.defence:setPositionY(-defenceHeight)
-					end
-				)
-			)
-		)
+	local isDefend = event.isDefend
+	if isDefend then
+		print("self:showDefence()")
+		self:showDefence()
 	else
-		self.defence:setPositionY(-defenceHeight)
-		self.defence:setVisible(true)
-		self.defence:runAction(cc.MoveBy:create(0.5, cc.p(0, defenceHeight * 1.56)))
+		print("self:hideDefence()")
+		self:hideDefence()
 	end
 end
 
+function HeroLayer:hideDefence()
+	self.defenceNode:runAction( 
+		cc.Sequence:create( 
+			cc.MoveBy:create(0.5, cc.p(0, -defenceHeight)), 
+			cc.CallFunc:create(
+				function ()
+					self.defenceNode:setVisible(false)
+					self.defence:setIsDefending(false)
+					self.defenceNode:setPositionY(-defenceHeight)
+				end
+			)
+		)
+	)	
+end
+
+function HeroLayer:showDefence()
+	self.defenceNode:setPositionY(-defenceHeight)
+	self.defenceNode:setVisible(true)
+	self.defenceNode:runAction(cc.MoveBy:create(0.5, cc.p(0, defenceHeight * 1.56)))
+end
+
+
 --盾牌受伤效果
 function HeroLayer:defenceBehurtEffect(event)
-	print("self.isDefenceAble", self.isDefenceAble)
-	if self.isDefenceAble then return end --todo??
+	-- print("oLayer:defenceBehurtEf self.isDefenceAble", self.isDefenceAble)
+	if not self.isDefenceAble then return end --todo??
 
 	--defence behurted action effect
 	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
-	self.defence:runAction(cc.Sequence:create(tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
+	self.defenceNode:runAction(cc.Sequence:create(tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
 
 	--defence behurted crack effect
 	local crackSprite = display.newSprite("#hit_boli.png")
 	local crackSize = crackSprite:getCascadeBoundingBox().size
-	local bgSize = cc.uiloader:seekNodeByName(self.defence, "upFrame"):getCascadeBoundingBox().size
+	local bgSize = cc.uiloader:seekNodeByName(self.defenceNode, "upFrame"):getCascadeBoundingBox().size
 	crackSprite:setPosition(
 		math.random(-bgSize.width / 2 + crackSize.width / 2,
 		 bgSize.width / 2 - crackSize.width / 2), 
@@ -291,23 +312,26 @@ function HeroLayer:defenceBehurtEffect(event)
 		 bgSize.height / 2 - crackSize.height / 2)
 	)
 
-	self.defence:addChild(crackSprite)
+	self.defenceNode:addChild(crackSprite)
 
 	self.crackSprites[self.behurtCount] = crackSprite
 	self.behurtCount = self.behurtCount + 1
+	self.remainTimes = self.remainTimes - 1
+	local hurtedTimes = kRemainSumTimes - self.remainTimes
+	if kRemainSumTimes <= hurtedTimes then
+		--取消防御
+		self.defence:switchStatus()
 
-	self.defenceHp = self.defenceHp - 10
-	local tCurrentHp = 100 - self.defenceHp
-	if 100 <= tCurrentHp then
-		self:onShowDefence()
+		--remove
 		for k, v in pairs(self.crackSprites) do
 			v:removeFromParent()
 		end
 		self.crackSprites = {}
-		self.isDefenceAble = true
-		self.defenceHp = 100
+		self.isDefenceAble = false
+		self.remainTimes = kRemainSumTimes
 	end
-	self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, damage = tCurrentHp})
+	local hurtedPercent = hurtedTimes / kRemainSumTimes
+	self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, hurtedPercent = hurtedPercent})
 end
 
 function HeroLayer:bloodBehurtEffect()
@@ -334,10 +358,11 @@ function HeroLayer:bloodBehurtEffect()
 end
 
 function HeroLayer:onHurtEffect(event)
-
 	self:screenHurtedEffect()
-	if true == self.defence:isVisible() then 
-		if false == self.isLaunchDefenceResume then self:defenceBehurtEffect() end
+	if true == self.defenceNode:isVisible() then 
+		if false == self.isLaunchDefenceResume then 
+			self:defenceBehurtEffect() 
+		end
 	else
 	 	self:bloodBehurtEffect()
 		self:onHeroHpChange(event)
@@ -451,7 +476,7 @@ end
 
 
 function HeroLayer:effectGunReload(event)
-	print("HeroLayer:effectGunReload()")
+	-- print("HeroLayer:effectGunReload()")
 	local armature = ccs.Armature:create("huanzidan")
 	armature:getAnimation():play("zidan" , -1, 1)
     armature:setPosition(display.width / 2, display.height1 / 2)
@@ -459,7 +484,7 @@ function HeroLayer:effectGunReload(event)
     armature:getAnimation():setMovementEventCallFunc(
     	function ( armatureBack,movementType,movement) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		print("HeroLayer:effectGunReload done()")
+	    		-- print("HeroLayer:effectGunReload done()")
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent()
 	    	end 

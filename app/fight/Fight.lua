@@ -9,12 +9,12 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 --import
 local Hero          = import(".Hero")
 local Actor         = import(".Actor")
-local FightInlay         = import(".FightInlay")
+local FightInlay    = import(".FightInlay")
+local Defence       = import(".Defence")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
 Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
-
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
@@ -23,7 +23,8 @@ end
 function Fight:refreshData(properties)
     --init inatance
     app:deleteInstance(Hero)
-    app:deleteInstance(FightInlay)    
+    app:deleteInstance(FightInlay)  
+    app:deleteInstance(Defence)  
     self.hero = app:getInstance(Hero)  --todo改为refreash Instance
     self.inlay = app:getInstance(FightInlay)
 
