@@ -48,6 +48,7 @@ configs[1]  = {
 }
 
 function DialogConfigs.getConfig(groupId,levelId,appear)
+	dump(levelId)
 	assert(configs[groupId][levelId] , "configs is nil groupId: "..groupId )
 	return configs[groupId][levelId][appear]
 end

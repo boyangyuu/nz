@@ -1,22 +1,28 @@
 
 local DialogConfigs = import(".DialogConfigs")
-local DialogModel = import(".DialogModel")
+local Fight         = import("..fight.Fight")
+local Dialog 		= import(".DialogModel")
 
 local DialogLayer = class("DialogLayer", function()
     return display.newLayer()
 end)
 
-function DialogLayer:ctor(properties)
-	dump(properties)
-	self.groupid = properties.groupid
-	self.levelid = properties.levelid
-	self.appear = properties.appear
+function DialogLayer:ctor()
 	self:loadCCS()
 	self:initUI()
 	self.index = 1
-    self.DialogModel = app:getInstance(DialogModel)
+    self.dialog = app:getInstance(Dialog)
+    self.fight  = app:getInstance(Fight)   
+    -- self.appear = ""
+	-- get Group Level
+    self.groupID = self.fight:getGroupId()
+    self.levelID = self.fight:getLevelId()
 
-	self:refreshUI(self.groupid, "level"..self.levelid, self.appear)
+	--event
+	cc.EventProxy.new(self.dialog, self)
+		:addEventListener(Dialog.DIALOG_FINISH_EVENT, handler(self, self.finish))
+		:addEventListener(Dialog.DIALOG_START_EVENT, handler(self, self.start))
+
 end
 
 function DialogLayer:loadCCS()
@@ -35,20 +41,26 @@ function DialogLayer:initUI()
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            local num = self.DialogModel:getDialogNum(self.groupid, "level"..self.levelid, self.appear)
-            if self.index > num then
-	           	ui:closePopup()
+            if self.index > self.num then
+	           	self.dialog:finishDialog()
             else
-	            self:refreshUI(self.groupid, "level"..self.levelid, self.appear)
+	            self:refreshUI(self.groupID, "level"..self.levelID, self.appear)
 	        end
         end
     end)
 end
 
+-- local appear
+function DialogLayer:start(event)
+
+	self.appear = event.appear
+
+	self.num = self.dialog:getDialogNum(self.groupID, "level"..self.levelID, self.appear)
+
+	self:refreshUI(self.groupID, "level"..self.levelID, self.appear)
+end
+
 function DialogLayer:refreshUI(groupId,levelId,appear)
-	dump(groupId)
-	dump(levelId)
-	dump(appear)
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	dump(configs)
 	local sentence = configs[self.index]
@@ -65,8 +77,13 @@ function DialogLayer:refreshUI(groupId,levelId,appear)
 		addChildCenter(roleimg, self.right)
 	end
 	self.msglabel:setString(msg)
-	self.msglabel:speak(0.1)
+	-- self.msglabel:speak(0.1)
 	self.index = self.index + 1
+end
+
+function DialogLayer:finish()
+	--visible
+	self:setVisible(false)
 end
 
 return DialogLayer

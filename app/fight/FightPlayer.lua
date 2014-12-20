@@ -3,6 +3,8 @@ import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor         = import(".Actor")
 local Guide         = import("..guide.GuideModel")
+local DialogLayer   = import("..dialog.DialogLayer")
+local Dialog        = import("..dialog.DialogModel")
 local Hero          = import(".Hero")
 local Fight         = import(".Fight")
 
@@ -30,6 +32,7 @@ function FightPlayer:ctor(properties)
     self.fight:refreshData(properties) 
     self.hero       = app:getInstance(Hero)
     self.guide      = app:getInstance(Guide)
+    self.dialog     = app:getInstance(Dialog)
      
 
     --views
@@ -140,6 +143,8 @@ function FightPlayer:initUI()
 
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
+
+    self:initDialog()
 end
 
 --启动盾牌恢复
@@ -557,7 +562,23 @@ function FightPlayer:justFocusPos(node)
     node:setPosition(x, y)
 end
 
+function FightPlayer:initDialog()
 
+    local dialogLayer = DialogLayer:new()
+    -- dialogLayer:setPositionY(display.offset)
+    self:addChild(dialogLayer, 600)
+
+    local groupID = self.fight:getGroupId()
+    local levelID = self.fight:getLevelId()
+    local isExist = self.dialog:check(groupID,"level"..levelID,"forward")
+    dump(isExist)
+    if isExist then
+        self.dialog:startDialog("forward")
+    end
+
+
+
+end
 
 function FightPlayer:initGuide()
     --check   
@@ -684,7 +705,7 @@ function FightPlayer:onGuideFire(touchEvent)
 end
 
 function FightPlayer:onEnter()
-    
+
 end
 
 function FightPlayer:onExit()
