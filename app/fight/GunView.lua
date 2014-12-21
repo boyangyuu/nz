@@ -30,8 +30,8 @@ function GunView:ctor()
 	self.isChanging = false
 
 	--gun armature and base
-	-- self:refreshGun()
-	scheduler.performWithDelayGlobal( handler(self, self.refreshGun), 1.0)  
+	self:refreshGun()
+	-- scheduler.performWithDelayGlobal( handler(self, self.refreshGun), 1.0)  
 
 	--event
 	cc.EventProxy.new(self.hero, self)
@@ -73,7 +73,7 @@ function GunView:stopFire()
 end
 
 function GunView:playChange(event)
-	-- if self.isChanging then return end
+	if self.isChanging then return end
 	print("GunView:playChange(event)")
 	local disy = 150
 	local actionDown = cc.MoveBy:create(0.2, cc.p(0.0, -disy))
@@ -145,6 +145,7 @@ end
 
 --hero层 发送换枪
 function GunView:refreshGun()
+	print("refreshGun")
 	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
@@ -167,7 +168,6 @@ function GunView:refreshGun()
 
 	--isGold
 	local isNativeGold = self.inlay:getIsNativeGold()
-	if isNativeGold then self:onActiveGold() end	
 	local isGold = self.isGolding
 	self:setGoldGun(isGold)
 
@@ -242,6 +242,7 @@ function GunView:onShowGun()
 end
 
 function GunView:onActiveGold(event)
+	print("GunView:onActiveGold(event)")
 	self.isGolding = true
 	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
 end

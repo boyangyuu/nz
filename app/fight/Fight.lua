@@ -28,9 +28,7 @@ end
 
 function Fight:refreshData(properties)
     --init inatance
-    app:deleteInstance(Hero)
-    app:deleteInstance(FightInlay)  
-    app:deleteInstance(Defence)  
+
     self.hero = app:getInstance(Hero)  --todo改为refreash Instance
     self.inlay = app:getInstance(FightInlay)
 
@@ -69,7 +67,9 @@ function Fight:relive()
 end
 
 function Fight:clearFightData()
-
+    app:deleteInstance(Hero)
+    app:deleteInstance(FightInlay)  
+    app:deleteInstance(Defence)  
 end
 
 return Fight
