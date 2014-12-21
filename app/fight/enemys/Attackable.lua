@@ -306,16 +306,16 @@ end
 
 function Attackable:getPosInMap()
 	local world = self:convertToWorldSpace(cc.p(0,0))
-	dump(world, "world")
+	-- dump(world, "world")
 
 	local map = self:getParent():getParent()
 	local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
 	local posMap = cc.p(map:getPositionX(), map:getPositionY())
-	dump(worldMap, "worldMap")
+	-- dump(worldMap, "worldMap")
 
 	local worldInMap = self:convertToWorldSpace(posMap)
-	dump(worldInMap, "worldInMap")
+	-- dump(worldInMap, "worldInMap")
 	
 	return worldInMap
 end

@@ -24,6 +24,7 @@ function FightInlay:ctor(properties)
 end
 
 function FightInlay:checkNativeGold()
+    print("FightInlay:checkNativeGold()")
     local isNativeGold = self:getIsNativeGold()
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
