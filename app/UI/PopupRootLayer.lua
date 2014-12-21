@@ -24,7 +24,11 @@ function PopupRootLayer:showPopup(event)
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(self.layer)
 	self.layer:scale(0.0)
-	self.layer:scaleTo(0.3, 1)
+	if event.anim == false then
+		self.layer:scale(1)
+	else
+		self.layer:scaleTo(0.3, 1)
+	end
 end
 
 function PopupRootLayer:closePopup(event)

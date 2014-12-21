@@ -109,6 +109,7 @@ function InlayModel:replaceInlayed(inlayid)
     setUserData(data)
 end
 
+
 function InlayModel:equipAllInlays()
 	local bestInlay = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}

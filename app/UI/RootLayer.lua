@@ -8,7 +8,7 @@ end)
 
 function RootLayer:ctor()
 	--instance
-	
+
 	--add res
     self:addResHome()
     self:initLoginLayer()

@@ -150,5 +150,21 @@ function Hero:getMapZoom()
     return self.mapZoom or 1.0
 end
 
+--[[
+    @param type：crit blood bullet clip helper speed 
+    return: 镶嵌id
+]]
+function Hero:getInlayedValue(type)
+    --id
+    local inlays = self.inlayModel:getAllInlayed()
+    -- dump(inlays, "inlays")
+    -- print("type", type)
+    local inlayedId  = inlays[type]
+    if inlayedId == nil then return nil,false end
+    local record = getRecordByKey("config/items_xq.json", "id", inlayedId)
+    local value = record[1].valueProgram
+    print("Hero:getInlayedValue value:", value)
+    return value, true
+end 
 
 return Hero

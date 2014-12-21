@@ -141,14 +141,6 @@ function HomeBarLayer:refreshCommonLayer(layer)
     end
 end
 
-function HomeBarLayer:addPlistRes(srcname)
-
-    local plist = string.format("%s.plist", srcname)
-    local name = string.format("%s.png", srcname)
-     
-    display.addSpriteFrames(plist, name)     
-end
-
 function HomeBarLayer:homeBarAction()
     local changeTime = 0.2
     local smallTime, bigTime = 0.7, 0.7

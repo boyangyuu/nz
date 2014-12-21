@@ -153,7 +153,7 @@ function GunView:refreshGun()
 
 	--gun
 	local config = self.gun:getConfig()
-	dump(config, "config")
+	-- dump(config, "config")
 	
 	--子弹数目
 	self:setCurBulletNum(self.gun:getBulletNum())
