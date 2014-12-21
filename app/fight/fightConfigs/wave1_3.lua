@@ -198,6 +198,7 @@ local waves = {
 			},						
 		},
 	},	
+	-- 金币
 	{
 		enemys = {
 			{
@@ -243,17 +244,17 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=30,hp=100,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="anim_enemy_002",demage=3,hp=100,walkRate=400,rollRate=400,fireRate=200,
 		weak1=2,weak2=4},
 	--近战兵
-	{id=2,image="jinzhanb",demage=120,hp=400,walkRate=400,rollRate=0,fireRate=100,
+	{id=2,image="jinzhanb",demage=5,hp=400,walkRate=400,rollRate=0,fireRate=100,
 		weak1=3,weak2=5},
 	--伞兵
-	{id=3,image="sanbing01",demage=120,hp=1,walkRate=400,rollRate=0,
+	{id=3,image="sanbing01",demage=3,hp=1,walkRate=400,rollRate=0,
 		fireRate=100,weak1=3,weak2=5},
 
 	--自爆兵
-	{id=4,image="zibaob",demage=120,hp=1,walkRate=400,rollRate=0,
+	{id=4,image="zibaob",demage=20,hp=1,walkRate=400,rollRate=0,
 		fireRate=100,weak1=3,weak2=5},	
 }
 

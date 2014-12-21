@@ -15,7 +15,7 @@ local Guide 	= import("..guide.GuideModel")
 local Defence   = import(".defence") 
 
 --kconfig
-local kGoldActivate = 10
+local kGoldActivate = 20
 local kRemainSumTimes = 2
 local kLeiDemage = 600.0
 local kLeiW = 100.0
