@@ -2,106 +2,106 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	-- {
-	-- 	enemys = { 
-	-- 		{
-	-- 			time = 3,	
-	-- 			num = 4,
-	-- 			pos = {-50,50,150,250},
-	-- 			delay = {0,0.5,0.6,1},
-	-- 			property = { 
-	-- 				placeName = "place1",
-	-- 				startState = "rollright",
-	-- 				id = 1,
-	-- 			},
-	-- 		},
-	-- 					{
-	-- 			time = 4,	
-	-- 			num = 3,
-	-- 			pos = {100,200,300},
-	-- 			delay = {0,1,2},
-	-- 			property = { 
-	-- 				placeName = "place2",
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 			},
-	-- 		},		
-	-- 		{
-	-- 			time = 5,	
-	-- 			num = 3,
-	-- 			pos = {200,400,300},
-	-- 			delay = {1,2,3},
-	-- 			property = {
-	-- 				placeName = "place3", 
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 			},
-	-- 		},		
-	-- 	},
-	-- },
-	-- {
-	-- 	enemys = {
-	-- 		{
-	-- 			time = 3,
-	-- 			num = 2,
-	-- 			delay = {0.3, 0.6},
-	-- 			pos = {300,150},
-	-- 			property = {
-	-- 				placeName = "place4",
-	-- 				type = "jin",
-	-- 				id = 2,
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 4,
-	-- 			num = 2,
-	-- 			delay = {0.3, 0.6},
-	-- 			pos = {250,400},	
-	-- 			property = { 
-	-- 				placeName = "place5", 
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 5,
-	-- 			num = 2,
-	-- 			delay = {0.3, 0.6},
-	-- 			pos = {200,100},					
-	-- 			property = {
-	-- 				placeName = "place6",  
-	-- 				type = "san",
-	-- 				id = 3,
-	-- 				enemyId = 1,
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 8,	
-	-- 			num = 2,
-	-- 			pos = {100, 300},
-	-- 			delay = {1, 2},
-	-- 			property = { 
-	-- 				type = "san",
-	-- 				id = 3,
-	-- 				enemyId = 1,
-	-- 				placeName = "place1",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 9,	
-	-- 			num = 2,
-	-- 			pos = {100, 250},
-	-- 			delay = {0.5, 1.5},
-	-- 			property = { 
-	-- 				type = "san",
-	-- 				id = 3,
-	-- 				enemyId = 1,
-	-- 				placeName = "place2",
-	-- 			},
-	-- 		},									
-	-- 	},
+	{
+		enemys = { 
+			{
+				time = 3,	
+				num = 4,
+				pos = {-50,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+						{
+				time = 4,	
+				num = 3,
+				pos = {100,200,300},
+				delay = {0,1,2},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,
+				},
+			},		
+			{
+				time = 5,	
+				num = 3,
+				pos = {200,400,300},
+				delay = {1,2,3},
+				property = {
+					placeName = "place3", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},		
+		},
+	},
+	{
+		enemys = {
+			{
+				time = 3,
+				num = 2,
+				delay = {0.3, 0.6},
+				pos = {300,150},
+				property = {
+					placeName = "place4",
+					type = "jin",
+					id = 2,
+				},
+			},
+			{
+				time = 4,
+				num = 2,
+				delay = {0.3, 0.6},
+				pos = {250,400},	
+				property = { 
+					placeName = "place5", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},	
+			{
+				time = 5,
+				num = 2,
+				delay = {0.3, 0.6},
+				pos = {200,100},					
+				property = {
+					placeName = "place6",  
+					type = "san",
+					id = 3,
+					enemyId = 1,
+				},
+			},	
+			{
+				time = 8,	
+				num = 2,
+				pos = {100, 300},
+				delay = {1, 2},
+				property = { 
+					type = "san",
+					id = 3,
+					enemyId = 1,
+					placeName = "place1",
+				},
+			},
+			{
+				time = 9,	
+				num = 2,
+				pos = {100, 250},
+				delay = {0.5, 1.5},
+				property = { 
+					type = "san",
+					id = 3,
+					enemyId = 1,
+					placeName = "place2",
+				},
+			},									
+		},
 
-	-- },	
+	},	
 	{
 		enemys = {  --boss
 			{
