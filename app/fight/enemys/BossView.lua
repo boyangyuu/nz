@@ -297,7 +297,6 @@ function BossView:clearWeak()
 		anim:setVisible(false)
 		weakData.valid = false
 	end
-
 end
 
 function BossView:playWeak(index)

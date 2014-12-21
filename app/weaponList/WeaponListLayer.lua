@@ -8,7 +8,7 @@ local WeaponListLayer = class("WeaponListLayer", function()
 	return display.newLayer()
 end)
 
-local kMaxBullet = 100
+local kMaxBullet = 200
 local kMaxAccuracy = 100
 local kMaxSpeed = 1
 

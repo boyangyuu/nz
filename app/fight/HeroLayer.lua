@@ -539,9 +539,9 @@ end
 
 function HeroLayer:onEnter()
 	self.inlay:checkNativeGold()
-	-- scheduler.performWithDelayGlobal(function()
-	-- 	self.guide:startGuide("fight")
-	-- end, 0.2)
+	scheduler.performWithDelayGlobal(function()
+		self.guide:startGuide("fight")
+	end, 0.2)
 end
 
 function HeroLayer:onExit()
