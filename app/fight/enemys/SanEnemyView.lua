@@ -88,9 +88,9 @@ function SanEnemyView:test()
     local weak1 = self.armature:getBone("weak1"):getDisplayRenderNode()
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
     local enemyNode = self.armature:getBone("enemy"):getDisplayRenderNode()
-    drawBoundingBox(self.armature, weak1, "yellow") 
+    drawBoundingBox(self.armature, weak1, "red") 
 	drawBoundingBox(self.armature, bodyNode, "yellow") 
-    drawBoundingBox(self.armature, enemyNode, "red")
+    drawBoundingBox(self.armature, enemyNode, "yellow")
 end
 
 --Attackable interface

@@ -13,9 +13,9 @@ local FightConfigs = import("..fightConfigs.FightConfigs")
 function Boss:ctor(properties)
     --super
     dump(properties, "properties")
-    local index = properties.index
+    local id = properties.id
     local waveConfig = FightConfigs:getWaveConfig()
-    self.config = waveConfig:getBoss(index)
+    self.config = waveConfig:getBoss(id)
     dump(self.config, " Boss config")
     local property = {
         id = "boss",
