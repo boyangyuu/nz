@@ -283,7 +283,7 @@ end
 
 --返回rect里包含enemy的点位置的enemys
 function MapView:getEnemysInRect(rect)
-	dump(rect, "rect")
+	-- dump(rect, "rect") 
 	local enemys = {}
 	for i,enemy in ipairs(self.enemys) do
 		if enemy then
@@ -291,10 +291,13 @@ function MapView:getEnemysInRect(rect)
 			local box = armature:getBoundingBox()
 			local scale = enemy:getScale()
 			local pos = armature:convertToWorldSpace(cc.p(0,0))
-			pos = cc.p(pos.x, 
-				pos.y + box.height/2 * scale)
+			pos = cc.p(pos.x - box.width/2 * scale, pos.y)  --pos 为左下角
 			-- dump(pos, "pos")
-			if cc.rectContainsPoint(rect, pos) then
+			local enemyRect = cc.rect(pos.x, pos.y, 
+				box.width * scale, box.height * scale)   --有scale问题
+			-- dump(enemyRect, "enemyRect") 
+			if cc.rectIntersectsRect(rect, enemyRect) then
+			-- if cc.rectContainsPoint(rect, pos) then
 				enemys[#enemys + 1] = enemy
 			end
 		end
@@ -311,7 +314,7 @@ function MapView:onHeroFire(event)
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(data)
 		if "穿透" then
-			break
+			-- break  --todoyby 改为谁的zorder在前面 就打谁！！
 		else
 		end
 	end 

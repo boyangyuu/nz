@@ -12,9 +12,9 @@ local waves = {
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
 				property = { 
-					type = "co",
+					type = "dao",
 					id = 1,
-					-- enemyId = 1,
+					enemyId = 2,
 					placeName = "place1",
 				},
 			},		
@@ -25,9 +25,10 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=10,hp=1000,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="zpbing",demage=10,hp=1000,walkRate=400,rollRate=400,fireRate=200,
 	weak1=2,weak2=4},
-
+	{id=2,image="daodan",demage=100,hp=10,walkRate=400,rollRate=400,fireRate=200,
+	weak1=2,weak2=4},
 	--
 }
 

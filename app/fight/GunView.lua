@@ -61,7 +61,7 @@ function GunView:playFire()
 	self.jqkzd :setVisible(true)
 	self.dk    :setVisible(true)
 	self.jqk:getAnimation()	 :play("fire" , -1, 0)
-	self.jqkzd:getAnimation():play("fire" , -1, 0)
+	self.jqkzd:getAnimation():play("qkzd" , -1, 0)
 	self.dk:getAnimation()	 :play("danke", -1, 0)
 	self.armature:getAnimation():play("fire" , -1, 0)
 end

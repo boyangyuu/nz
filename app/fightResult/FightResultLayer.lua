@@ -294,7 +294,7 @@ function FightResultLayer:turnOverCard(index)
 	self.cardover[index]:setVisible(true)
 
 
-	if record["property"] == "gold" then
+	if record["property"] == 4 then
 		self.cardnormal[index]:setVisible(false)
 		self.cardgold[index]:setVisible(true)		
 	else

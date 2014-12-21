@@ -64,13 +64,14 @@ function RootLayer:addResFight()
     end
 
     local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
-        "avatarhit", "blood1", "blood2", "gold", "shoulei", "danke"}
+        "avatarhit", "blood1", "blood2", "gold", "shoulei", "danke", 
+        "baozhasl_y", "beizha_sl", "jijia"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end
 
-    local jqkImgs = {"effect_gun_jqk", "qkzd"} 
+    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk"} 
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

@@ -18,7 +18,8 @@ local DaoEnemyView = class("DaoEnemyView", BaseEnemyView)
 function DaoEnemyView:ctor(property)
     --instance
     DaoEnemyView.super.ctor(self, property) 
-    
+    self.property = property
+
     --events
     cc.EventProxy.new(self.enemy, self)
         :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
@@ -55,7 +56,7 @@ function DaoEnemyView:playFire()
         srcPos = srcPos,
         srcScale = self:getScale() * 0.3,
         type = "missile",
-        id = 6,
+        id = self.property["enemyId"],
     }
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = Hero.ENEMY_ADD_MISSILE_EVENT, property = property})

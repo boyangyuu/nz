@@ -65,15 +65,14 @@ function MissileEnemyView:playBomb()
     -- print("MissileEnemyView:playBomb")
 
     --bomb动画
-    -- self.armature:getAnimation():play("bomb" , -1, 1)  
+    self.armature:getAnimation():play("die" , -1, 1)  
 
     --demage
     self.enemy:hit(self.hero)   
 
     --屏幕爆炸效果
-    --dispatch effect_hurted_bomb
+    self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT})
 
-    self:setDeadDone() --todo 写在callfucn里
 end
 
 
@@ -83,10 +82,9 @@ end
 
 function MissileEnemyView:playKill(event)
     print("MissileEnemyView:playKill(event)")
-    self:setDeadDone() 
 
     --bomb动画
-    -- self.armature:getAnimation():play("kill" , -1, 1)      
+    self.armature:getAnimation():play("die" , -1, 1)      
 end
 
 function MissileEnemyView:onHitted(targetData)
@@ -94,7 +92,7 @@ function MissileEnemyView:onHitted(targetData)
     local scale      = targetData.demageScale
     local demageType = targetData.demageType
     if self.enemy:canHitted() then
-        -- print("self.enemy:decreaseHp(demage * scale)")
+        print("self.enemy:decreaseHp(demage * scale)")
         self.enemy:decreaseHp(demage * scale)
     end
 end
@@ -102,9 +100,14 @@ end
 function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
-        local playCache = self:getPlayCache()
-        if playCache then 
-            playCache()
+
+        if movementID ~= "die" then
+            local playCache = self:getPlayCache()
+            if playCache then 
+                playCache()
+            end
+        elseif movementID == "die" then
+             self:setDeadDone()
         end
     end
 end

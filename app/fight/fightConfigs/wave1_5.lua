@@ -191,6 +191,7 @@ local waves = {
 					placeName = "place8" , 
 					type = "dao",
 					id = 5,
+					enemyId = 6,
 				},
 			},
 			{
@@ -202,6 +203,7 @@ local waves = {
 					placeName = "place9" , 
 					type = "dao",
 					id = 5,
+					enemyId = 6,
 				},
 			},
 			{
@@ -224,6 +226,7 @@ local waves = {
 					placeName = "place4" , 
 					type = "dao",
 					id = 5,
+					enemyId = 6,
 				},
 			},
 			{
@@ -235,6 +238,7 @@ local waves = {
 					placeName = "place3" , 
 					type = "dao",
 					id = 5,
+					enemyId = 6,
 				},
 			},	
 			{
@@ -270,8 +274,11 @@ local enemys = {
 		fireRate=100,weak1=3,weak2=5},	
 
 	--导弹兵
-	{id=5,image="zpbing",demage=20,hp=100,walkRate=400,rollRate=0,
-		fireRate=200,weak1=3,weak2=5},			
+	{id=5,image="zpbing",demage=0,hp=100,walkRate=400,rollRate=0,
+		fireRate=200,weak1=3,weak2=5},		
+
+	--导弹
+	{id=6,image="daodan",demage=20,hp=100,weak1=3,weak2=5},					
 }
 
 function waveClass:ctor()

@@ -40,7 +40,7 @@ function FightPlayer:ctor(properties)
     self.heroLayer      = HeroLayer.new()
     self.infoLayer      = InfoLayer.new() 
     self.touchIds       = {} --todo
-
+    self.isControlVisible = true
     --ui
     self:initUI()
 
@@ -49,8 +49,17 @@ function FightPlayer:ctor(properties)
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(Hero.KILL_EVENT, handler(self, self.onHeroKill))
-        :addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
+    
+    cc.EventProxy.new(self.fight, self)
+        :addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
+        :addEventListener(Fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
+        :addEventListener(Fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
+        :addEventListener(Fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
+        :addEventListener(Fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
+    cc.EventProxy.new(self.defence, self)
+        :addEventListener(Defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
+    
     self:scheduleUpdate()
     self:setNodeEventEnabled(true)
 
@@ -83,24 +92,33 @@ function FightPlayer:changeGoldCount(event)
     tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.01)
 end
 
-function FightPlayer:fitArmoured()
-    self:setControlsVisible()
-    self.hero:dispatchEvent({name = Hero.SKILL_ARMOURED_START_EVENT})
-
+function FightPlayer:onClickRobot()
+    self:hideControl()
+    self.hero:dispatchEvent({name = Hero.SKILL_ROBOT_START_EVENT})
 end
-local btnsIsShow = true
-function FightPlayer:setControlsVisible()
-    print("FightPlayer:setControlsVisible()")
-    btnsIsShow = not btnsIsShow
-    
+
+function FightPlayer:showControl(event)
+    self.isControlVisible = true
     --gun
-    self.layerGun:setVisible(btnsIsShow)
+    self.layerGun:setVisible(true)
     
     --btn
-    self.btnDefence:setVisible(btnsIsShow)
-    self.btnRobot:setVisible(btnsIsShow)
-    self.btnChange:setVisible(btnsIsShow)
-    self.btnLei:setVisible(btnsIsShow)
+    self.btnDefence:setVisible(true)
+    self.btnRobot:setVisible(true)
+    self.btnChange:setVisible(true)
+    self.btnLei:setVisible(true)
+end
+
+function FightPlayer:hideControl(event)
+    self.isControlVisible = false
+    --gun
+    self.layerGun:setVisible(false)
+    
+    --btn
+    self.btnDefence:setVisible(false)
+    self.btnRobot:setVisible(false)
+    self.btnChange:setVisible(false)
+    self.btnLei:setVisible(false)
 end
 
 function FightPlayer:initUI()
@@ -145,7 +163,7 @@ end
 
 --启动盾牌恢复
 local resumeDefenceHandler = nil
-function FightPlayer:startDefenceResume()
+function FightPlayer:startDefenceResume(event)
     self.labelDefenceResume:setVisible(true)
     self:loadDefenceResumeBar()
 
@@ -159,7 +177,8 @@ function FightPlayer:startDefenceResume()
             self.defenceResumeLoadingBar:removeFromParent()
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
-            self.defence:dispatchEvent({name = Defence.DEFENCE_RESUME_EVENT})
+            self.defence:setIsAble(true)
+            
             return
         end
         self.labelDefenceResume:setString(t1 - kResumeValue)
@@ -174,7 +193,8 @@ function FightPlayer:onDefenceBeHurt(event)
     self.loadingBarDefenceHp:setPercent(percent)
     if 100 <= percent then
         self.loadingBarDefenceHp:setPercent(0)
-        self:startDefenceResume()
+        self.defence:setIsAble(false)
+        -- self:startDefenceResume()
     end
 end
 
@@ -308,8 +328,6 @@ function FightPlayer:onMutiTouchBegin(event)
 end
 
 function FightPlayer:onMutiTouchEnd(event)
-
-
     for id,point in pairs(event.points) do
          self:checkBtnFire(id, point, "ended")
     end
@@ -320,7 +338,7 @@ function FightPlayer:checkbtnRobot(point)
     local rect = self.btnRobot:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
-        self:fitArmoured()
+        self:onClickRobot()
     end
     return isTouch
 end
@@ -341,8 +359,8 @@ function FightPlayer:checkBtnLei(point)
     if isTouch then
         local w, h = self.focusNode:getCascadeBoundingBox().width, 
                 self.focusNode:getCascadeBoundingBox().height
-        local destPos = cc.p(self.focusNode:getPositionX() + w/2, 
-            self.focusNode:getPositionY() + h/2)
+        local destPos = cc.p(self.focusNode:getPositionX(), 
+            self.focusNode:getPositionY())
         self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_START_EVENT,throwPos = destPos})
     end
 end
@@ -420,7 +438,11 @@ function FightPlayer:checkBtnJu(point,eventName)
     if isTouch then 
         --切换狙击镜
         print("-----------switch ju")
-        self:setControlsVisible()
+        if self.isControlVisible then 
+            self:hideControl()
+        else
+            self:showControl()
+        end
         self.hero:dispatchEvent({name = Hero.GUN_SWITCH_JU_EVENT})
     end
     return isTouch
@@ -690,6 +712,18 @@ function FightPlayer:onEnter()
 end
 
 function FightPlayer:onExit()
+    self:removeAllSchs()
+end
+
+function FightPlayer:onResultFail()
+    self:removeAllSchs()
+end
+
+function FightPlayer:onResultWin()
+    self:removeAllSchs()
+end
+
+function FightPlayer:removeAllSchs()
     if tempChangeGoldHandler then 
         scheduler.unscheduleGlobal(tempChangeGoldHandler)
     end

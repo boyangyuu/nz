@@ -13,8 +13,14 @@ local FightInlay    = import(".FightInlay")
 local Defence       = import(".Defence")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
+
+
 --events
 Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
+Fight.CONTROL_HIDE_EVENT = "CONTROL_HIDE_EVENT"
+Fight.CONTROL_SHOW_EVENT = "CONTROL_SHOW_EVENT"
+Fight.RESULT_WIN_EVENT   = "RESULT_WIN_EVENT"
+Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)

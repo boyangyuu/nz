@@ -15,8 +15,10 @@ local Guide 	= import("..guide.GuideModel")
 local Defence   = import(".defence") 
 
 --kconfig
-local kGoldActivate = 1
+local kGoldActivate = 10
 local kRemainSumTimes = 2
+local kLeiDemage = 600.0
+local kLeiW = 100.0
 
 local HeroLayer = class("HeroLayer", function()
     return display.newLayer()
@@ -34,8 +36,8 @@ function HeroLayer:ctor(properties)
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Actor.HP_INCREASE_EVENT			, handler(self, self.onHeroHpChange))
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
-
-		:addEventListener(Hero.SKILL_ARMOURED_START_EVENT	, handler(self, self.onShowArmoured))
+		:addEventListener(Hero.EFFECT_HURT_BOMB_EVENT		, handler(self, self.onHurtBombEffect))		
+		:addEventListener(Hero.SKILL_ROBOT_START_EVENT		, handler(self, self.onShowRobot))
 
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))
@@ -46,7 +48,7 @@ function HeroLayer:ctor(properties)
 		:addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
 	
 	cc.EventProxy.new(self.defence, self)
-		:addEventListener(Defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onShowDefence))
+		:addEventListener(Defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onSwitchDefence))
 		:addEventListener(Defence.DEFENCE_RESUME_EVENT	, handler(self, self.onResumeDefence))
 	--ui
 	self:initUI()
@@ -241,13 +243,15 @@ function HeroLayer:killEnemyCallBack( event )
     self.killTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
---显示/隐藏机甲
-function HeroLayer:onShowArmoured(event)
-	if false == self.robotNode:isVisible() then
-		self.robotNode:setVisible(true)
-	else
-		self.robotNode:setVisible(false)
-	end
+--开启机甲
+function HeroLayer:onShowRobot(event)
+	--armature
+	local armature = ccs.Armature:create("jijia")
+	armature:setPosition(display.width/2 , display.height1/2)
+	self:addChild(armature)
+	local anim = armature:getAnimation()
+	anim:play("jijia", -1 ,0)
+	-- self.robotNode:setVisible(true)
 end
 
 --盾牌恢复完成的回调
@@ -255,8 +259,8 @@ function HeroLayer:onResumeDefence(event)
 	self.isDefenceAble = true
 end
 
---显示/隐藏盾甲
-function HeroLayer:onShowDefence(event)
+--切换盾甲
+function HeroLayer:onSwitchDefence(event)
 	-- print("onShowDefence", self.isDefenceAble)
 	if self.isDefenceAble == false then return end 
 
@@ -369,34 +373,55 @@ function HeroLayer:onHurtEffect(event)
 	end
 end
 
+function HeroLayer:onHurtBombEffect()
+	print("HeroLayer:onHurtBombEffect()")
+	--svn\UI\ccs\Anim\effect\beizha_sl
+end
+
 --手雷
 function HeroLayer:onThrowGrenade(event)
 
-	local armature =ccs.Armature:create("shoulei")
+	local armature = ccs.Armature:create("shoulei")
 	self:addChild(armature)
 	armature:setPosition(display.width / 2, 0)
 	armature:setScale(2.0)
 	armature:getAnimation():play("lei", -1, 1)
 	
 	--destrect
-    local kGrenadeW = 100.0
 	local destPos = event.throwPos
-	local destRect = cc.rect(destPos.x - kGrenadeW/2, 
-						destPos.y - kGrenadeW/2, 
-						kGrenadeW,kGrenadeW)
-	
+	-- dump(destPos, "destPos")
+	local destRect = cc.rect(destPos.x, 
+						destPos.y ,
+						kLeiW,kLeiW)
+	destRect.x = destPos.x - kLeiW / 2
+	destRect.y = destPos.y - kLeiW / 2
+	-- dump(destRect, "destRect")
 	--lei
+	local function playThrowBomb()
+		local armature = ccs.Armature:create("baozhasl_y")
+		armature:setPosition(destPos.x, destPos.y)
+		self:addChild(armature)
+		print("playThrowBomb")
+		armature:getAnimation():playWithIndex(0)
+		armature:getAnimation():setMovementEventCallFunc(
+	    	function (armatureBack,movementType,movementId) 
+		    	if movementType == ccs.MovementEventType.loopComplete then
+					armature:removeFromParent()
+		    	end 
+	    	end)
+	end
+
 	local seq =  cc.Sequence:create(
 					cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 				 	cc.CallFunc:create(
 				 		function ()
-		                    local targetData = {demage = 600, demageType = "lei"}
+		                    local targetData = {demage = kLeiDemage, demageType = "lei"}
 		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
 		                    	targetData = targetData, destPos = destPos,destRect = destRect })
 							armature:removeFromParent()
-						end
-					)
-				 )
+							playThrowBomb()
+						end)
+					 )
 	armature:runAction(seq)
 
 	-- shadow

@@ -18,6 +18,7 @@ function Attackable:ctor(property)
 	--instance
     self.hero = app:getInstance(Hero)	
 	self.enemy = self:getModel(property)
+	self.fight = app:getInstance(Fight)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
@@ -33,7 +34,7 @@ function Attackable:ctor(property)
     
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
-    cc.EventProxy.new(self.hero, self)
+    cc.EventProxy.new(self.fight, self)
     	:addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
     	
     self:scheduleUpdate()  	
