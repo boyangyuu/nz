@@ -19,12 +19,16 @@ function BossView:ctor(property)
 	BossView.super.ctor(self, property) 
 
 	--config
-	self.config = FightConfigs:getBossConfig(property.configName)
-
+	self.property = property
+	dump(property, "property")
+	local index = property.id
+	local waveConfig = FightConfigs:getWaveConfig()
+	self.config  = waveConfig:getBoss(index)
+	dump(self.config, "self.config")
     --blood
-    self:initBlood() 
+    self:initBlood()
 
-	-- --play
+	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
     --event
@@ -98,12 +102,12 @@ function BossView:playMove()  --改为onMove
 	
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
-		local action = self.config:getMoveRightAction(1)
+		local action = self.config:getMoveRightAction()
 		self.armature:runAction(cc.RepeatForever:create(action))	
 
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
-		local action = self.config:getMoveLeftAction(1)
+		local action = self.config:getMoveLeftAction()
 		self.armature:runAction(cc.RepeatForever:create(action))		
 	end	
 end
@@ -257,43 +261,33 @@ function BossView:continueFire(sumTimes, fireOffset)
 end
 
 function BossView:playDaoDan1()
+	local posInMap = self:getPosInMap()
 	--导弹
     local enemys = {}
 	for i=1,7 do
 		local xPos = 30 + i * 120
-		local data = {	
-			pos = cc.p(xPos, 10),
-			delay = 0.4 * i,
-			property = {
-					placeName = "place3", --todoyby
-					type = "missile",
-					id = 1,
-					},
-			}
-		enemys[#enemys + 1] = data
+		local delay = 0.4 * i
+		local srcPos = cc.p(xPos, posInMap.y)
+		local property = {
+			srcPos = srcPos,	
+			destPos = srcPos,
+			type = "missile",
+			srcScale = self:getScale() * 0.3, --导弹view用
+			id = self.property["enemyId"], 
+		}
+		local function callfuncAddDao()
+			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
+				property = property})
+		end
+		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
+	    self:addScheduler(sch)    
 	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
+   
 end
 
 function BossView:playDaoDan()
 	self.armature:getAnimation():play("daodan", -1, 1)
-
-	--导弹
-    local enemys = {}
-	for i=1,7 do
-		local xPos = 30 + i * 120
-		local data = {
-			placeName = "place3",
-			pos = cc.p(xPos, 10),
-			delay = 0.4 * i,
-			property = {
-					type = "missile",
-					id = 1,
-					},
-			}
-		enemys[#enemys + 1] = data
-	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
+	self:playDaoDan1()
 end
 
 function BossView:clearWeak()
@@ -352,7 +346,6 @@ function BossView:tick(t)
 	if self.pauseOtherAnim then return end 
 	--change state
 	local randomSeed 
-	-- math.newrandomseed()
 
 	--fire
 	local fireRate = self.enemy:getFireRate()

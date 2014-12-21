@@ -110,9 +110,8 @@ local waves = {
 				property = { 
 					type = "boss",
 					placeName = "place7",
-					bossId = 1,
-					configName = "BossConfig_1",
-					index = 1, 
+					enemyId = 4, 
+					id = 1,
 				},
 			},		
 		},
@@ -124,13 +123,17 @@ local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=2,hp=100,walkRate=400,rollRate=400,fireRate=400,
 	weak1=2,weak2=4},
+
 	--近战兵
 	{id=2,image="jinzhanb",demage=5,hp=400,walkRate=400,rollRate=0,fireRate=100,
 		weak1=3,weak2=5},
+
 	--伞兵
 	{id=3,image="sanbing01",demage=1,hp=1,walkRate=400,rollRate=0,
 		fireRate=300,weak1=3,weak2=5},
-	--
+
+	--导弹
+	{id=4,image="daodan",demage=20,hp=100,weak1=3,weak2=5},					
 }
 
 --boss的关卡配置
@@ -165,6 +168,23 @@ local bosses = {
 				0.30,
 			},							
 		},
+		getMoveLeftAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
+			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
+			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
+			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+
+		getMoveRightAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
+			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
+			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
+			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
 	},
 }
 
