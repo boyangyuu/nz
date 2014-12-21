@@ -155,10 +155,11 @@ local kMissileZorder = 1000
 function MapView:callfuncAddMissile(event)
 	print("MapView:addMissile(event)")
 	local property = event.property
+	kMissileZorder = kMissileZorder - 1
 	-- dump(property, "property")
 	local enemyView = EnemyFactroy.createEnemy(property)
+	enemyView:setPosition(property.srcPos)
 	self.enemys[#self.enemys + 1] = enemyView
-	kMissileZorder = kMissileZorder - 1
 	self.map:addChild(enemyView, kMissileZorder)
 end
 

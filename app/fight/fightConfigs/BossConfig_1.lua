@@ -24,12 +24,5 @@ function BossConfig:getMoveRightAction(scale)
 	return cc.Sequence:create(move1, move2, move3, move4, move5)
 end
 
-function BossConfig:getMoveLeftFireAction(scale)
-	
-end
-
-function BossConfig:getMoveRightFireAction(scale)
-	
-end
 
 return BossConfig

@@ -113,9 +113,8 @@ local waves = {
 				property = { 
 					type = "boss",
 					placeName = "place7",
-					bossId = 1,
-					configName = "BossConfig_1",
-					index = 1, 
+					enemyId = 4, 
+					id = 1,
 				},
 			},		
 		},
@@ -135,7 +134,10 @@ local enemys = {
 	--伞兵
 	{id=3,image="sanbing01",demage=2,hp=360,walkRate=400,rollRate=100,
 		fireRate=300,weak1=5,weak2=5},
-	--
+
+	--导弹
+	{id=4,image="daodan",demage=20,hp=100,weak1=3,weak2=5},					
+
 }
 
 	--boss的关卡配置
