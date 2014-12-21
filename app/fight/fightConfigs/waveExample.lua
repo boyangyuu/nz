@@ -27,7 +27,7 @@ local enemys = {
 	--普通兵
 	{id=1,image="zpbing",demage=10,hp=1000,walkRate=400,rollRate=400,fireRate=200,
 	weak1=2,weak2=4},
-	{id=2,image="daodan",demage=100,hp=10,walkRate=400,rollRate=400,fireRate=200,
+	{id=2,image="daodan",demage=30,hp=10,walkRate=400,rollRate=400,fireRate=200,
 	weak1=2,weak2=4},
 	--
 }
