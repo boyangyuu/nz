@@ -47,7 +47,8 @@ local waves = {
 				delay = {0.3, 0.6},
 				pos = {300,150},
 				property = {
-					placeName = "place4",  
+					placeName = "place4",
+					type = "jin",
 					id = 2,
 				},
 			},
@@ -69,7 +70,9 @@ local waves = {
 				pos = {200,100},					
 				property = {
 					placeName = "place6",  
+					type = "san",
 					id = 3,
+					enemyId = 1,
 				},
 			},	
 			{
@@ -122,24 +125,26 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=100,walkRate=400,rollRate=400,fireRate=400,
-	weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=2,hp=360,walkRate=400,rollRate=400,fireRate=400,
+	weak1=5,weak2=4},
+
 	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=400,walkRate=400,rollRate=0,fireRate=100,
-		weak1=3,weak2=5},
+	{id=2,image="jinzhanb",demage=5,hp=720,walkRate=400,rollRate=100,fireRate=100,
+		weak1=2,weak2=2},
+
 	--伞兵
-	{id=3,image="sanbing01",demage=1,hp=1,walkRate=400,rollRate=0,
-		fireRate=300,weak1=3,weak2=5},
+	{id=3,image="sanbing01",demage=2,hp=360,walkRate=400,rollRate=100,
+		fireRate=300,weak1=5,weak2=5},
 	--
 }
 
---boss的关卡配置
+	--boss的关卡配置
 local bosses = {
 	--第一个出场的boss
 	{
 		image = "boss01", --图片名字
 		hp = 10000,
-		demage = 1,
+		demage = 3,
 		fireRate = 400,
 		walkRate = 200,
 		fireOffset = 0.2,
@@ -153,7 +158,7 @@ local bosses = {
 				0.65, 0.30,
 			},
 			daoDan = {
-				0.90, 0.60, 0.50, 0.40,
+				0.90, 0.70, 0.50, 0.30,
 			},
 			saoShe = {
 				0.65, 0.55,
@@ -165,8 +170,26 @@ local bosses = {
 				0.30,
 			},							
 		},
+		getMoveLeftAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
+			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
+			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
+			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+
+		getMoveRightAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
+			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
+			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
+			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
 	},
 }
+
 
 function waveClass:ctor()
 	self.waves  = waves
