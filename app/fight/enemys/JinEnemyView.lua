@@ -9,8 +9,6 @@
 
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
-local Actor = import("..Actor")
-local Enemy = import(".Enemy")
 local JinEnemyView = class("JinEnemyView", BaseEnemyView)  
 
 local kAttackOffset = 2.0

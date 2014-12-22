@@ -110,8 +110,4 @@ function DaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function DaoEnemyView:getModel(property)
-    return Enemy.new(property)
-end
-
 return DaoEnemyView

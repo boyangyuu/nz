@@ -6,26 +6,24 @@
 local ModelManager = class("ModelManager", cc.mvc.ModelBase)
 local modelClasses = {}
 modelClasses["UserModel"]         = import("..homeBar.UserModel")
--- modelClasses["FightPlayer"]          = import("..fight.FightPlayer")
--- modelClasses["WeaponBag"]            = import("..weaponList.WeaponBag")
--- modelClasses["HomeBarLayer"]         = import("..homeBar.HomeBarLayer")
--- modelClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
--- modelClasses["LevelDetailLayer"]     = import("..levelDetail.LevelDetailLayer")
--- modelClasses["FightResultPopup"]     = import("..fightResult.FightResultPopup")
--- modelClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
 modelClasses["DialogModel"]          = import("..dialog.DialogModel")
-modelClasses["Fight"]                = import("..fight.Fight")
-modelClasses["InlayModel"] = import("..inlay.InlayModel")
 modelClasses["LevelMapModel"] = import("..levelMap.LevelMapModel")
 modelClasses["FightResultModel"] = import("..fightResult.FightResultModel")
 modelClasses["LevelDetailModel"]= import("..levelDetail.LevelDetailModel")
-modelClasses["WeaponListModel"] = import("..weaponList.WeaponListModel")
 modelClasses["propModel"] = import("..store.propModel")
 modelClasses["StoreModel"] = import("..store.StoreModel")
-modelClasses["Guide"] = import("..guide.GuideModel")
-modelClasses["Hero"] = import("..fight.Hero")
+
+--fight
+modelClasses["Fight"]               = import("..fight.Fight")
+modelClasses["FightInlay"]               = import("..fight.FightInlay")
+modelClasses["Hero"]               = import("..fight.Hero")
+modelClasses["Defence"]               = import("..fight.Defence")
+modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
+modelClasses["InlayModel"]        = import("..inlay.InlayModel")
+modelClasses["WeaponListModel"]        = import("..weaponList.WeaponListModel")
+modelClasses["Guide"]       = import("..guide.GuideModel")
 function ModelManager:ctor()
-    ModelManager.super.ctor(self)
+    ModelManager.super.ctor(self) 
     self.objects_ = {}
 end
 
@@ -43,7 +41,7 @@ end
 function ModelManager:setObject(id, object)
     assert(self.objects_[id] == nil, string.format("ModelManager:setObject() - id \"%s\" already exists", id))
     self.objects_[id] = object
-    dump(self.objects_, "self.objects_")
+    -- dump(self.objects_, "self.objects_")
 end
 
 function ModelManager:getObject(id)
@@ -62,7 +60,7 @@ function ModelManager:getInstance(clsName)
 
     local modelObj 
     if not self:isObjectExists(clsName) then
-        modelObj = classModel.new()
+        modelObj = classModel.new({id = classModel.__cname})
         self:setObject(clsName, modelObj)
     else
         modelObj = self:getObject(clsName)
@@ -72,7 +70,7 @@ end
 
 function ModelManager:deleteInstance(clsName)
     self.objects_[clsName] = nil
-    print("self:removeObject(idStr)", clsName)
+    print("self:removeObject(clsName)", clsName)
 end
 
 return ModelManager

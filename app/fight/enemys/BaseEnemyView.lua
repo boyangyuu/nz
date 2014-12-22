@@ -13,7 +13,6 @@
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
-
 local BaseEnemyView = class("BaseEnemyView", Attackable)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 

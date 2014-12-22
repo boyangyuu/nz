@@ -27,10 +27,10 @@ end)
 function HeroLayer:ctor(properties)
 
 	--instance
-	self.hero 	= app:getInstance(Hero)
-	self.guide 	= app:getInstance(Guide)
-	self.inlay 	= app:getInstance(FightInlay)
-	self.defence = app:getInstance(Defence)
+	self.hero 	= md:getInstance("Hero")
+	self.guide 	= md:getInstance("Guide")
+	self.inlay 	= md:getInstance("FightInlay")
+	self.defence = md:getInstance("Defence")
 
 	--注册英雄事件
 	cc.EventProxy.new(self.hero, self)

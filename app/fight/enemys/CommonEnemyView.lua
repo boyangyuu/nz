@@ -32,13 +32,10 @@ end
 function CommonEnemyView:playStartState(state)
 	if state == "rollleft" then 
 		self:playRollLeft()
-		-- self:play("playRollLeft", handler(self, self.playRollLeft))
 	elseif state == "rollright" then
-		self:playRollRight()
-		-- self:play("playRollRight", handler(self, self.playRollRight))
+		self:playRollRight()	
 	else 
 		self:playStand()
-		-- self:play("playStand", handler(self, self.playStand))
 	end
 end
 

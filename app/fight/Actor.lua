@@ -191,7 +191,7 @@ function Actor:increaseHp(hp)
 end
 
 function Actor:decreaseHp(hp)
-    assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
+    assert(not self:isDead(), string.format("actor is dead, can't change Hp"))
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ - hp

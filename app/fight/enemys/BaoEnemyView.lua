@@ -6,14 +6,9 @@
 2. ..
 ]]
 
-
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
-local Actor = import("..Actor")
-local Enemy = import(".Enemy")
-local Hero = import("..Hero")
 local BaoEnemyView = class("BaoEnemyView", BaseEnemyView)  
-
 local kTimeStartAhead = 2.0
 local kRangeW = 200
 local kRangeH = 300
@@ -22,7 +17,7 @@ local kDemageOtherEnemyScale = 2.0
 function BaoEnemyView:ctor(property)
 	--instance
 	BaoEnemyView.super.ctor(self, property) 
-    self.hero = app:getInstance(Hero)
+    self.hero = md:getInstance("Hero")
     self.property = property
     dump(self.property, "self.property")
     self.isAheading = false

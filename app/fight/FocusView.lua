@@ -9,7 +9,6 @@
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
 local FightConfigs = import(".fightConfigs.FightConfigs")
-local Hero = import(".Hero")
 local Gun = import(".Gun")
 
 local FocusView = class("FocusView", function()
@@ -20,7 +19,7 @@ end)
 
 function FocusView:ctor(properties)
 	--instance
-	self.hero = app:getInstance(Hero)
+	self.hero = md:getInstance("Hero")
 	self.gun = self.hero:getGun()
 	self.isJu = false
 
@@ -44,8 +43,8 @@ function FocusView:ctor(properties)
 
     --event
      cc.EventProxy.new(self.hero, self)
-		 :addEventListener(Hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
-		 :addEventListener(Hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
+		 :addEventListener(self.hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
+		 :addEventListener(self.hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
 end
 
 function FocusView:playIdle()

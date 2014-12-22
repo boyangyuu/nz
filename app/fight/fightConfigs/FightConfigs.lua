@@ -2,7 +2,6 @@
 	读取关卡配置信息
 	读取enemy配置信息
 ]]
-local Fight = import("..Fight")
 
 
 local FightConfigs = class("FightConfigs", cc.mvc.ModelBase)
@@ -18,7 +17,7 @@ end
 
 --返回当前战斗下 所有waves
 function FightConfigs:getWaveConfig()
-	self.fight = app:getInstance(Fight)
+	self.fight = md:getInstance("Fight")
 	local group = self.fight:getGroupId()
 	local level = self.fight:getLevelId()
 	
@@ -34,7 +33,7 @@ end
 	@return boss的固定配置(boss分为固定配置和关卡配置)
 ]]
 function FightConfigs:getBossConfig(configName)
-	self.fight = app:getInstance(Fight)
+	self.fight = md:getInstance("Fight")
 	local group = self.fight:getGroupId()
 	local level = self.fight:getLevelId()
 
