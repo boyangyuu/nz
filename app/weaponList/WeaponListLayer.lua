@@ -49,18 +49,7 @@ function WeaponListLayer:loadCCS()
 end
 
 function WeaponListLayer:initUI()
-        self.weaponLV = cc.ui.UIListView.new {
-        -- bgColor = cc.c4b(200, 200, 200, 120),
-        -- bg = "sunset.png",
-        bgScale9 = true,
-        viewRect = cc.rect(20, 44, 292, 477),
-        direction = cc.ui.UIScrollView.DIRECTION_VERTICAL,
-        scrollbarImgV = "bar.png"
-    }
-        :onTouch(handler(self, self.touchListener))
-        :addTo(self)
-
-    -- self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
+    self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
     self.layerbutton      = cc.uiloader:seekNodeByName(self, "panelbutton")
     self.paneldetail      = cc.uiloader:seekNodeByName(self, "paneldetail")
 

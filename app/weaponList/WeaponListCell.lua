@@ -7,10 +7,6 @@ local Color_RED = cc.c3b(255, 0, 24)
 
 local WeaponListCell = class("listCell", ScrollViewCell)
 
--- local listCell = class("listCell", function()
---     return display.newScene("listCell")
--- end)
-
 function WeaponListCell:ctor(properties)
 	-- local weaponRecord = properties.weaponRecord
     self.weaponListModel = md:getInstance("WeaponListModel")
