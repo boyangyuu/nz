@@ -1,7 +1,5 @@
 
 local DialogConfigs = import(".DialogConfigs")
-local Fight         = import("..fight.Fight")
-local Dialog 		= import(".DialogModel")
 
 local DialogLayer = class("DialogLayer", function()
     return display.newLayer()
@@ -11,8 +9,8 @@ function DialogLayer:ctor()
 	self:loadCCS()
 	self:initUI()
 	self.index = 1
-    self.dialog = app:getInstance(Dialog)
-    self.fight  = app:getInstance(Fight)   
+    self.dialog = md:getInstance("DialogModel")
+    self.fight  = md:getInstance("Fight")   
     -- self.appear = ""
 	-- get Group Level
     self.groupID = self.fight:getGroupId()
@@ -20,8 +18,8 @@ function DialogLayer:ctor()
 
 	--event
 	cc.EventProxy.new(self.dialog, self)
-		:addEventListener(Dialog.DIALOG_FINISH_EVENT, handler(self, self.finish))
-		:addEventListener(Dialog.DIALOG_START_EVENT, handler(self, self.start))
+		:addEventListener(self.dialog.DIALOG_FINISH_EVENT, handler(self, self.finish))
+		:addEventListener(self.dialog.DIALOG_START_EVENT, handler(self, self.start))
 
 end
 

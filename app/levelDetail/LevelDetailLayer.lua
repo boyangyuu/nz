@@ -1,6 +1,4 @@
 import("..includes.functionUtils")
-local LevelDetailModel = import(".LevelDetailModel")
-local WeaponListModel = import("..weaponList.WeaponListModel")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
@@ -8,8 +6,8 @@ end)
 
 function LevelDetailLayer:ctor(properties)
 	--instance
-	self.model = app:getInstance(LevelDetailModel)
-	self.weaponListModel = app:getInstance(WeaponListModel)
+	self.model = md:getInstance("LevelDetailModel")
+	self.weaponListModel = md:getInstance("WeaponListModel")
 	self.groupId = properties.groupId
 	print("self.groupId,", self.groupId)
 	self.levelId = properties.levelId
@@ -40,7 +38,13 @@ function LevelDetailLayer:loadCCS()
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
 	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")    
-	self.panlEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")    
+	self.panlEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")   
+
+	-- seek already image
+	self.alreadybibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
+	self.alreadygold   = cc.uiloader:seekNodeByName(self, "alreadygold")
+	self.alreadyjijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
+
 end
 
 function LevelDetailLayer:initUI()
@@ -205,14 +209,17 @@ end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
+	self.alreadybibei:setVisible(true)
 end
 
 function LevelDetailLayer:onClickBtnGold()
 	print("goldbtn is clicked!")
+	self.alreadygold:setVisible(true)
 end
 
 function LevelDetailLayer:onClickBtnJijia()
 	print("jijiabtn is clicked!")
+	self.alreadyjijia:setVisible(true)
 end
 
 ---- initData ----

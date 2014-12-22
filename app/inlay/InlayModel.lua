@@ -209,9 +209,14 @@ function InlayModel:isInlayedExist(inlayid)
 	end
 end
 
-function InlayModel:setAllGold()
-	local goldtable = self:getConfigTable("property", 4)
-end
+-- function InlayModel:setAllGold()
+-- 	local goldtable = self:getConfigTable("property", 4)
+
+-- 	if self:isGetAllGold() then
+-- 		print("已拥有6个黄金")
+-- 	else
+		
+-- end
 
 function InlayModel:isGetAllGold()
 	local allInlayed = self:getAllInlayed()

@@ -1,12 +1,10 @@
 local ScrollViewCell = import("..includes.ScrollViewCell")
-local InlayModel = import(".InlayModel")
-local UserModel = import("..homeBar.UserModel")
 
 local InlayListCell = class("InlayListCell", ScrollViewCell)
 
 function InlayListCell:ctor(record)
-    self.inlayModel = app:getInstance(InlayModel)
-    self.userModel = app:getInstance(UserModel)
+    self.inlayModel = md:getInstance("InlayModel")
+    self.userModel = md:getInstance("UserModel")
 
 	self:initCellUI(record)
 end

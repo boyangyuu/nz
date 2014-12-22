@@ -6,7 +6,6 @@ import("..includes.functionUtils")
 local LayerColor_BLACK = cc.c4b(255, 0, 0, 0)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
-local Hero = import("..fight.Hero")
 local GuideLayer = class("GuideLayer", function()
 	local layer = display.newColorLayer(LayerColor_BLACK)
 	layer:setAnchorPoint(0.5, 0.5)
@@ -18,6 +17,7 @@ function GuideLayer:ctor()
 	--instance
 	self.guide = md:getInstance("Guide")
 	self.hero = md:getInstance("Hero")
+
 	--
 	self:setVisible(false)
 	self.isWaiting = false
@@ -26,9 +26,9 @@ function GuideLayer:ctor()
 
 	--event
 	cc.EventProxy.new(self.guide, self)
-		:addEventListener(Guide.GUIDE_START_EVENT, handler(self, self.start))
-		:addEventListener(Guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
-		:addEventListener(Guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
+		:addEventListener(self.guide.GUIDE_START_EVENT, handler(self, self.start))
+		:addEventListener(self.guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
+		:addEventListener(self.guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
 	--touch
     self:setTouchEnabled(true) 
     self:setTouchSwallowEnabled(true) 

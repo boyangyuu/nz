@@ -5,15 +5,20 @@
 
 local ModelManager = class("ModelManager", cc.mvc.ModelBase)
 local modelClasses = {}
+modelClasses["UserModel"]         = import("..homeBar.UserModel")
+modelClasses["DialogModel"]          = import("..dialog.DialogModel")
+modelClasses["LevelMapModel"] = import("..levelMap.LevelMapModel")
+modelClasses["FightResultModel"] = import("..fightResult.FightResultModel")
+modelClasses["LevelDetailModel"]= import("..levelDetail.LevelDetailModel")
+modelClasses["propModel"] = import("..store.propModel")
+modelClasses["StoreModel"] = import("..store.StoreModel")
+
 --fight
-modelClasses["UserModel"]           = import("..homeBar.UserModel")
 modelClasses["Fight"]               = import("..fight.Fight")
 modelClasses["FightInlay"]               = import("..fight.FightInlay")
 modelClasses["Hero"]               = import("..fight.Hero")
 modelClasses["Defence"]               = import("..fight.Defence")
 modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
-
---inlay
 modelClasses["InlayModel"]        = import("..inlay.InlayModel")
 modelClasses["WeaponListModel"]        = import("..weaponList.WeaponListModel")
 modelClasses["Guide"]       = import("..guide.GuideModel")
@@ -49,7 +54,7 @@ function ModelManager:isObjectExists(id)
 end
 
 function ModelManager:getInstance(clsName)
-    local classModel = modelClasses[clsName]
+       local classModel = modelClasses[clsName]
     assert(classModel, "classModel is not in modelmanager: clsName"
         ..clsName) 
 

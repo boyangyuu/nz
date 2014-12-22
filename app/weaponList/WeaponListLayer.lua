@@ -1,7 +1,6 @@
 import("..includes.functionUtils")
 
 local WeaponListCell = import(".WeaponListCell")
-local WeaponListModel = import(".WeaponListModel")
 local WeaponBag = import(".WeaponBag")
 
 local WeaponListLayer = class("WeaponListLayer", function()
@@ -18,11 +17,11 @@ function WeaponListLayer:ctor()
     self.selectedContent = nil
     self.selectedCellId  = 3
     self.weaponId = nil
-    self.weaponListModel = app:getInstance(WeaponListModel)
+    self.weaponListModel = md:getInstance("WeaponListModel")
     
     --events
     cc.EventProxy.new(self.weaponListModel, self)
-        :addEventListener(WeaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
+        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
     
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
@@ -207,7 +206,7 @@ function WeaponListLayer:refreshComment(index)
             v:setVisible(false)
     end
     self.layerGun:removeAllChildren()
-    self.weaponrecord = WeaponListModel:getWeaponRecord(index)
+    self.weaponrecord = self.weaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
     self.labelName:setString(self.weaponrecord["name"])
     self.labelDescribe:setString(self.weaponrecord["describe"])

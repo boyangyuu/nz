@@ -1,9 +1,5 @@
 -- import("..includes.functionUtils")
 local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
-local FightResultModel 	= import(".FightResultModel")
-local InlayModel 		= import("..inlay.InlayModel")
-local FightModel 		= import("..fight.Fight")
-local LevelMapModel     = import("..levelMap.LevelMapModel")
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)
@@ -12,10 +8,10 @@ function FightResultLayer:ctor(properties)
 	local percent = properties.percent
 	self.grade = self:getGrade(percent)
 
-    self.fightResultModel = app:getInstance(FightResultModel)
-    self.inlayModel 	  = app:getInstance(InlayModel)
-    self.fightModel 	  = app:getInstance(FightModel)
-    self.levelMapModel    = app:getInstance(LevelMapModel)
+    self.fightResultModel = md:getInstance("FightResultModel")
+    self.inlayModel 	  = md:getInstance("InlayModel")
+    self.fightModel 	  = md:getInstance("Fight")
+    self.levelMapModel    = md:getInstance("LevelMapModel")
 
     self.cardover = {}
     self.cardgold = {}

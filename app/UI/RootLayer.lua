@@ -12,8 +12,8 @@ function RootLayer:ctor()
 
 	--add res
     self:addResHome()
-    self:addResFight()    
-    
+    -- self:addResFight()    
+    self:initLoginLayer()
 
 
     --loading
@@ -25,13 +25,10 @@ function RootLayer:ctor()
 end
 
 function RootLayer:initLoginLayer()
-    -- self.curLayer = HomeBarLayer.new()
-    -- self:removeAllChildren()
-    -- self:addChild(self.curLayer)
-    self.curLayer = FightPlayer.new()
+    self.curLayer = HomeBarLayer.new()
     self:removeAllChildren()
-    self:addChild(self.curLayer)        
-    -- self:addResFight()    
+    self:addChild(self.curLayer)      
+    self:addResFight()    
 end
 
 function RootLayer:switchLayer(event)
@@ -92,7 +89,7 @@ end
 function RootLayer:dataLoaded(percent)
     print(" dataLoaded() percent:"..percent)
     if percent == 1 then 
-        self:initLoginLayer()
+        -- self:initLoginLayer()
     end
 end
 
