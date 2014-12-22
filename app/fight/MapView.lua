@@ -61,12 +61,11 @@ function MapView:loadCCS()
 	local mapSrcName = "map_"..groupId.."_"..levelId..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
-    local node = cc.uiloader:load(mapSrcName)
-	self.map = node
+	self.map = cc.uiloader:load(mapSrcName)
 	addChildCenter(self.map, self)
 
 	--bg
-	self.bg = cc.uiloader:seekNodeByName(self, "bg")
+	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
 
 	--init enemy places
 	local index = 1
@@ -74,7 +73,7 @@ function MapView:loadCCS()
     while true do
     	local name_ = "place_" .. index
     	local name = "place" .. index
-    	local placeNode_ =  cc.uiloader:seekNodeByName(self, name_)
+    	local placeNode_ =  cc.uiloader:seekNodeByName(self.map, name_)
     	local placeNode = cc.uiloader:seekNodeByName(placeNode_, name)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 

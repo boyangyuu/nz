@@ -3,7 +3,7 @@ require("config")
 require("framework.init")
 require("app.includes.functionUtils")
 local UI = require("app.UI.UIManager")
-
+local MD = require("app.Model.ModelManager")  
 
 GameState = require("framework.cc.utils.GameState")
 
@@ -13,6 +13,7 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 GameData={}
 isTest = false
 ui = UI.new()
+md = MD.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -25,43 +26,43 @@ function MyApp:run()
     self:enterScene("MainScene")
 end
 
-function MyApp:setObject(id, object)
-    assert(self.objects_[id] == nil, string.format("MyApp:setObject() - id \"%s\" already exists", id))
-    self.objects_[id] = object
-end
+-- function MyApp:setObject(id, object)
+--     assert(self.objects_[id] == nil, string.format("MyApp:setObject() - id \"%s\" already exists", id))
+--     self.objects_[id] = object
+-- end
 
-function MyApp:getObject(id)
-    assert(self.objects_[id] ~= nil, string.format("MyApp:getObject() - id \"%s\" not exists", id))
-    return self.objects_[id]
-end
+-- function MyApp:getObject(id)
+--     assert(self.objects_[id] ~= nil, string.format("MyApp:getObject() - id \"%s\" not exists", id))
+--     return self.objects_[id]
+-- end
 
-function MyApp:isObjectExists(id)
-    return self.objects_[id] ~= nil
-end
+-- function MyApp:isObjectExists(id)
+--     return self.objects_[id] ~= nil
+-- end
 
-function MyApp:getInstance(cls)
-    local modelObj  
-    assert(cls, "cls is nil"..tostring(cls))
-    local idStr = cls.__cname
-    if not self:isObjectExists(idStr) then
-        modelObj = cls.new(
-            {
-                id = idStr,
-            })
-        self:setObject(idStr, modelObj)
-        -- print("MyApp create model id is:", idStr)
-    else
-        -- print("MyApp get model id is:", idStr)
-        modelObj = self:getObject(idStr)
-    end  
-    return modelObj
-end
+-- function MyApp:getInstance(cls)
+--     local modelObj  
+--     assert(cls, "cls is nil"..tostring(cls))
+--     local idStr = cls.__cname
+--     if not self:isObjectExists(idStr) then
+--         modelObj = cls.new(
+--             {
+--                 id = idStr,
+--             })
+--         self:setObject(idStr, modelObj)
+--         -- print("MyApp create model id is:", idStr)
+--     else
+--         -- print("MyApp get model id is:", idStr)
+--         modelObj = self:getObject(idStr)
+--     end  
+--     return modelObj
+-- end
 
-function MyApp:deleteInstance(cls)
-    local idStr = cls.__cname
-    self.objects_[idStr] = nil
-    print("self:removeObject(idStr)", idStr)
-end
+-- function MyApp:deleteInstance(cls)
+--     local idStr = cls.__cname
+--     self.objects_[idStr] = nil
+--     print("self:removeObject(idStr)", idStr)
+-- end
 
 function MyApp:initGameState()
     -- init GameState
