@@ -18,6 +18,8 @@ function LevelDetailLayer:ctor(properties)
 	--ui
 	self:loadCCS()
 	self:initUI()
+
+
 end
 
 function LevelDetailLayer:loadCCS()

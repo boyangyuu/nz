@@ -3,6 +3,7 @@ import("..includes.functionUtils")
 
 local LevelMapModel = import(".LevelMapModel")
 local UserModel = import("..homeBar.UserModel")
+local FightResultModel = import("..fightResult.FightResultModel")
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
@@ -14,11 +15,15 @@ local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time o
 function LevelMapLayer:ctor()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     self.LevelMapModel = app:getInstance(LevelMapModel)
-
+    self.FightResultModel = app:getInstance(FightResultModel)
     self:initData()
     self:initBgLayer()
     self:initChooseLayer()
     self:refreshLevelLayer(self.index)
+
+    cc.EventProxy.new(self.FightResultModel, self)
+        :addEventListener("POPUP_LEVELDETAIL", handler(self, self.PopupLevelDetail))
+
 end
 
 function LevelMapLayer:initData()
@@ -146,14 +151,18 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 if  group > groupId or group == groupId and level >= i  then
                     local levelId = i  
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
-                    dump(groupId)
-                    -- ui:showPopup("DialogLayer",{groupid = groupId,levelid = levelId,appear = "forward"},{anim = false,opacity = 0})
                 else                            
                     self:addChild(getPopupTips("关卡尚未开启！"))
                 end
             end
         end)
     end
+end
+
+function LevelMapLayer:PopupLevelDetail(event)
+    groupId = event.gid
+    levelId = event.lid
+    ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
 end
 
 function LevelMapLayer:bgAction()    

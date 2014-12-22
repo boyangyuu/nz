@@ -157,8 +157,10 @@ function FightResultLayer:initUI()
 	        	self.btnnext:setVisible(false)
 	        else
 		        local nextgroup,nextlevel = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
-				ui:changeLayer("FightPlayer",{groupId = nextgroup, 
-			 		levelId = nextlevel})
+		        ui:changeLayer("HomeBarLayer",{})
+		        self.fightResultModel:popupleveldetail(nextgroup,nextlevel)
+				-- ui:changeLayer("FightPlayer",{groupId = nextgroup, 
+			 -- 		levelId = nextlevel})
 	        end
         end
     end)
