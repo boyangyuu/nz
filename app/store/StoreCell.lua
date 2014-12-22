@@ -123,31 +123,25 @@ function StoreCell:initCellUI(parameter)
         price:setString(record["goldPrice"])
         ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
     end
-    btnbuy.isTouchMoved_ = false
     addBtnEventListener(btnbuy, function(event)
         if event.name=='began' then
             -- print("btnBuy is begining!")
             return true
-        elseif event.name == "moved" then
-            btnbuy.isTouchMoved_ = true
         elseif event.name=='ended' then
             -- print("btnBuy is pressed!")
-            if btnbuy.isTouchMoved_ == false then
-                if type == "prop" then
-                    if self.userModel:costDiamond(record["price"]) then
-                        self.propModel:buyProp(record["nameid"])
-                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
-                    end
-                elseif type == "bank" then
+            if type == "prop" then
+                if self.userModel:costDiamond(record["price"]) then
+                    self.propModel:buyProp(record["nameid"])
+                    ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+                end
+            elseif type == "bank" then
 
-                elseif type == "inlay" then
-                    if self.userModel:costMoney(record["goldPrice"]) then
-                        self.inlayModel:buyInlay(record["id"])
-                        ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
-                    end
+            elseif type == "inlay" then
+                if self.userModel:costMoney(record["goldPrice"]) then
+                    self.inlayModel:buyInlay(record["id"])
+                    ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
                 end
             end
-            btnbuy.isTouchMoved_ = false
         end
     end)
 end
