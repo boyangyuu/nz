@@ -132,23 +132,23 @@ function LevelDetailLayer:initMapUI()
 end
 
 function LevelDetailLayer:initBtns()
-	local btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
-	local btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
-	local btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
-	local btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
-	local btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
+	self.btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
+	self.btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
+	self.btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
+	self.btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
+	self.btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
 
 	-- set touch enable
-	btnOff   :setTouchEnabled(true)
-	btnStart :setTouchEnabled(true)
-	btnBibei :setTouchEnabled(true)
-	btnGold  :setTouchEnabled(true)
-	btnJijia :setTouchEnabled(true)
+	self.btnOff   :setTouchEnabled(true)
+	self.btnStart :setTouchEnabled(true)
+	self.btnBibei :setTouchEnabled(true)
+	self.btnGold  :setTouchEnabled(true)
+	self.btnJijia :setTouchEnabled(true)
 
 
 	------ on btn clicked
 	--offbtn
-	addBtnEventListener(btnOff, function(event)
+	addBtnEventListener(self.btnOff, function(event)
         if event.name=='began' then
             -- print("offbtn is begining!")
             return true
@@ -157,7 +157,7 @@ function LevelDetailLayer:initBtns()
         end
     end)
     --startbtn
-    addBtnEventListener(btnStart, function(event)
+    addBtnEventListener(self.btnStart, function(event)
         if event.name=='began' then
             -- print("startbtn is begining!")
             return true
@@ -166,7 +166,7 @@ function LevelDetailLayer:initBtns()
         end
     end)
     --bibei
-    addBtnEventListener(btnBibei, function(event)
+    addBtnEventListener(self.btnBibei, function(event)
         if event.name=='began' then
             -- print("bibeibtn is begining!")
             return true
@@ -175,7 +175,7 @@ function LevelDetailLayer:initBtns()
         end
     end)
     --gold
-    addBtnEventListener(btnGold, function(event)
+    addBtnEventListener(self.btnGold, function(event)
         if event.name=='began' then
             -- print("btngold is begining!")
             return true
@@ -184,7 +184,7 @@ function LevelDetailLayer:initBtns()
         end
     end)
     --jijia
-    addBtnEventListener(btnJijia, function(event)
+    addBtnEventListener(self.btnJijia, function(event)
         if event.name=='began' then
             -- print("btnJijia is begining!")
             return true
@@ -210,16 +210,19 @@ end
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
 	self.alreadybibei:setVisible(true)
+	self.btnBibei:setVisible(false)
 end
 
 function LevelDetailLayer:onClickBtnGold()
 	print("goldbtn is clicked!")
 	self.alreadygold:setVisible(true)
+	self.btnGold:setVisible(false)
 end
 
 function LevelDetailLayer:onClickBtnJijia()
 	print("jijiabtn is clicked!")
 	self.alreadyjijia:setVisible(true)
+	self.btnJijia:setVisible(false)
 end
 
 ---- initData ----
