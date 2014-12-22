@@ -9,7 +9,7 @@ local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
 local Hero 		 = import(".Hero")
 local Gun  		 = import(".Gun")
 local FightInlay = import(".FightInlay")
-local Defence   = import(".defence") 
+local Defence   = import(".Defence") 
 
 --events
 FightInlay.INLAY_GOLD_BEGIN_EVENT       = "INLAY_GOLD_BEGIN_EVENT" --激活黄金武器（同时刷新血量上限）

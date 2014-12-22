@@ -12,7 +12,7 @@ local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
 local FightInlay= import(".FightInlay")
 local Guide 	= import("..guide.GuideModel")
-local Defence   = import(".defence") 
+local Defence   = import(".Defence") 
 
 --kconfig
 local kGoldActivate = 20

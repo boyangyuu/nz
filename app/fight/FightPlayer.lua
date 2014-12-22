@@ -7,7 +7,7 @@ local DialogLayer   = import("..dialog.DialogLayer")
 local Dialog        = import("..dialog.DialogModel")
 local Hero          = import(".Hero")
 local Fight         = import(".Fight")
-local Defence       = import(".defence") 
+local Defence       = import(".Defence") 
 
 local GunView       = import(".GunView")
 local FocusView     = import(".FocusView")
@@ -293,6 +293,7 @@ function FightPlayer:initBtns()
     
     --btnJu
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
+    self.btnJu:setVisible(false)
     self.btnJu:setTouchEnabled(true)
     self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
@@ -439,6 +440,7 @@ function FightPlayer:onCancelledFire()
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
+    -- if self.btnJu:getVisible() == false then return end 
     local rect = self.btnJu:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 

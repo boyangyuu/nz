@@ -75,10 +75,15 @@ function MapView:loadCCS()
     	local name = "place" .. index 
     	local placeNode = cc.uiloader:seekNodeByName(self, name)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
+
     	if scaleNode then scaleNode:setVisible(false) end
         if placeNode == nil then
             break
         end
+        if isTest == false then 
+        	-- local colorNode = cc.uiloader:seekNodeByName()
+	        -- colorNode:setVisible(false)
+	    end
         self.places[name] = placeNode
         index = index + 1
     end
