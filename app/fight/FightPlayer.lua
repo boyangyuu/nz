@@ -319,8 +319,8 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkBtnLei(point)
         if isTouch then return true end
 
-        isTouch = self:checkBtnJu(point)
-        if isTouch then return true end
+        -- isTouch = self:checkBtnJu(point)
+        -- if isTouch then return true end
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
