@@ -5,35 +5,38 @@
 
 local ModelManager = class("ModelManager", cc.mvc.ModelBase)
 local modelClasses = {}
-modelClasses["UserModel"]         = import("..homeBar.UserModel")
--- modelClasses["FightPlayer"]          = import("..fight.FightPlayer")
--- modelClasses["WeaponBag"]            = import("..weaponList.WeaponBag")
--- modelClasses["HomeBarLayer"]         = import("..homeBar.HomeBarLayer")
--- modelClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
--- modelClasses["LevelDetailLayer"]     = import("..levelDetail.LevelDetailLayer")
--- modelClasses["FightResultPopup"]     = import("..fightResult.FightResultPopup")
--- modelClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
--- modelClasses["DialogLayer"]          = import("..dialog.DialogLayer")
+--fight
+modelClasses["UserModel"]           = import("..homeBar.UserModel")
+modelClasses["Fight"]               = import("..fight.Fight")
+modelClasses["FightInlay"]               = import("..fight.FightInlay")
+modelClasses["Hero"]               = import("..fight.Hero")
+modelClasses["Defence"]               = import("..fight.Defence")
+modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
 
-
+--inlay
+modelClasses["InlayModel"]        = import("..inlay.InlayModel")
+modelClasses["WeaponListModel"]        = import("..weaponList.WeaponListModel")
+modelClasses["Guide"]       = import("..guide.GuideModel")
 function ModelManager:ctor()
+    ModelManager.super.ctor(self) 
     self.objects_ = {}
-    self:loadAllModels()
 end
 
 function ModelManager:loadAllModels()
     print("ModelManager:loadAllModels()")
     for i, v in pairs(modelClasses) do
-        assert(not self:isObjectExists(i) , "already added model")
-        local modelObj = v.new()
-        self:setObject(i, modelObj)
+        print("instancename:", i)
+        if not self:isObjectExists(i) then 
+            local modelObj = v.new()
+            self:setObject(i, modelObj)
+        end
     end
 end
 
 function ModelManager:setObject(id, object)
     assert(self.objects_[id] == nil, string.format("ModelManager:setObject() - id \"%s\" already exists", id))
     self.objects_[id] = object
-    dump(self.objects_, "self.objects_")
+    -- dump(self.objects_, "self.objects_")
 end
 
 function ModelManager:getObject(id)
@@ -50,15 +53,19 @@ function ModelManager:getInstance(clsName)
     assert(classModel, "classModel is not in modelmanager: clsName"
         ..clsName) 
 
-    assert(clsName, "clsName is nil"..tostring(clsName))
-    print("ModelManager get model id is:", clsName)
-    local modelObj = self:getObject(clsName)
+    local modelObj 
+    if not self:isObjectExists(clsName) then
+        modelObj = classModel.new({id = classModel.__cname})
+        self:setObject(clsName, modelObj)
+    else
+        modelObj = self:getObject(clsName)
+    end  
     return modelObj
 end
 
 function ModelManager:deleteInstance(clsName)
     self.objects_[clsName] = nil
-    print("self:removeObject(idStr)", clsName)
+    print("self:removeObject(clsName)", clsName)
 end
 
 return ModelManager

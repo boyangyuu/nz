@@ -1,9 +1,5 @@
-import("...includes.functionUtils")
-local scheduler = require("framework.scheduler")
-local Hero = import("..Hero")
-local Fight = import("..Fight")
-local Actor = import("..Actor")
 
+local scheduler = require("framework.scheduler")
 
 --[[
 	Attackable
@@ -16,9 +12,9 @@ end)
 function Attackable:ctor(property)
 	-- dump(property, "Attackable property")
 	--instance
-    self.hero = app:getInstance(Hero)	
+    self.hero = md:getInstance("Hero")	
 	self.enemy = self:getModel(property)
-	self.fight = app:getInstance(Fight)
+	self.fight = md:getInstance("Fight")
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
@@ -35,7 +31,7 @@ function Attackable:ctor(property)
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.fight, self)
-    	:addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
+    	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
     	
     self:scheduleUpdate()  	
     

@@ -4,7 +4,6 @@
 local scheduler = require("framework.scheduler")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
-local WeaponModel = import("..weaponList.WeaponListModel")
 
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
@@ -12,8 +11,8 @@ end)
 
 function InfoLayer:ctor()
 	--instance
-	self.hero 	= app:getInstance(Hero)
-	self.weaponModel = app:getInstance(WeaponModel)
+	self.hero 	= md:getInstance("Hero")
+	self.weaponModel = md:getInstance("WeaponListModel")
 
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Hero.GUN_CHANGE_EVENT		, handler(self, self.onRefreshGun))

@@ -16,8 +16,8 @@ end)
 
 function GuideLayer:ctor()
 	--instance
-	self.guide = app:getInstance(Guide)
-	self.hero = app:getInstance(Hero)
+	self.guide = md:getInstance("Guide")
+	self.hero = md:getInstance("Hero")
 	--
 	self:setVisible(false)
 	self.isWaiting = false

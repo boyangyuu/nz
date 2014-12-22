@@ -5,8 +5,6 @@
 ]]
 
 --includes
-local FightInlay  = import(".FightInlay")
-local WeaponModel = import("..weaponList.WeaponListModel")
 
 local Gun = class("Gun", cc.mvc.ModelBase)
 
@@ -15,8 +13,8 @@ function Gun:ctor(properties)
     -- dump(properties, "properties")
 
     --instance
-    self.inlay 		 = app:getInstance(FightInlay)
-    self.weaponModel = app:getInstance(WeaponModel)
+    self.inlay 		 = md:getInstance("FightInlay")
+    self.weaponModel = md:getInstance("WeaponListModel")
 
     self.bagIndex = properties.bagIndex
 	self:setConfig()

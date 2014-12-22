@@ -5,7 +5,6 @@
 ]]
 
 --import
-local InlayModel   	= import("..inlay.InlayModel")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local FightInlay          = class("FightInlay", cc.mvc.ModelBase)
@@ -21,7 +20,7 @@ local kGoldTime = 5.0
 function FightInlay:ctor(properties)
     --instance
     FightInlay.super.ctor(self, properties)
-    self.inlayModel = app:getInstance(InlayModel) 
+    self.inlayModel = md:getInstance("InlayModel") 
 
     self:checkNativeGold()
 end

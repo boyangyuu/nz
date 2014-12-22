@@ -1,5 +1,6 @@
 
 local HomeBarLayer = import("..homeBar.HomeBarLayer")
+local FightPlayer = import("..fight.FightPlayer")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
 
 local RootLayer = class("RootLayer", function()
@@ -11,7 +12,8 @@ function RootLayer:ctor()
 
 	--add res
     self:addResHome()
-    self:initLoginLayer()
+    self:addResFight()    
+    
 
 
     --loading
@@ -23,11 +25,13 @@ function RootLayer:ctor()
 end
 
 function RootLayer:initLoginLayer()
-    self.curLayer = HomeBarLayer.new()
+    -- self.curLayer = HomeBarLayer.new()
+    -- self:removeAllChildren()
+    -- self:addChild(self.curLayer)
+    self.curLayer = FightPlayer.new()
     self:removeAllChildren()
-    self:addChild(self.curLayer)    
-    
-    self:addResFight()    
+    self:addChild(self.curLayer)        
+    -- self:addResFight()    
 end
 
 function RootLayer:switchLayer(event)
@@ -88,7 +92,7 @@ end
 function RootLayer:dataLoaded(percent)
     print(" dataLoaded() percent:"..percent)
     if percent == 1 then 
-        
+        self:initLoginLayer()
     end
 end
 

@@ -23,7 +23,8 @@ end
 
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
-    self:enterScene("MainScene")
+    md:loadAllModels()
+    self:enterScene("MainScene")   
 end
 
 -- function MyApp:setObject(id, object)

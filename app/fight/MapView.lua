@@ -24,13 +24,13 @@ _isZooming = false
 
 function MapView:ctor()
 	--instance
-	self.hero = app:getInstance(Hero)
-	self.fight = app:getInstance(Fight)
+	self.hero = md:getInstance("Hero")
+	self.fight = md:getInstance("Fight")
 	self.enemys = {}
 	self.waveIndex = 1
 	self.killEnemyCount = 0
 	self.isPause = false
-	self.fightConfigs = app:getInstance(FightConfigs)
+	self.fightConfigs = md:getInstance("FightConfigs")
 	
 	--ccs
 	self:loadCCS()

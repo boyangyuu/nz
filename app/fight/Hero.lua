@@ -9,7 +9,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 --import
 local Actor         = import(".Actor")
 local Gun           = import(".Gun")
-local FightInlay    = import(".FightInlay")
 local Hero          = class("Hero", Actor)
 
 --events
@@ -54,7 +53,7 @@ local kCritScale      = 3.0
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-    self.fightInlay = app:getInstance(FightInlay)
+    self.fightInlay = md:getInstance("FightInlay")
     
     --init
     self.isGun1 = true

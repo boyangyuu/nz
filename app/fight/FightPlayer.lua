@@ -1,13 +1,7 @@
 --import
 import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local Actor         = import(".Actor")
-local Guide         = import("..guide.GuideModel")
 local DialogLayer   = import("..dialog.DialogLayer")
-local Dialog        = import("..dialog.DialogModel")
-local Hero          = import(".Hero")
-local Fight         = import(".Fight")
-local Defence       = import(".Defence") 
 
 local GunView       = import(".GunView")
 local FocusView     = import(".FocusView")
@@ -29,12 +23,14 @@ end)
 
 function FightPlayer:ctor(properties)
     --instance
-    self.fight      = app:getInstance(Fight)   
+    self.fight      = md:getInstance("Fight")
+    print("??????")
+    local properties = {groupId = 1, levelId = 1}
     self.fight:refreshData(properties) 
-    self.hero       = app:getInstance(Hero)
-    self.guide      = app:getInstance(Guide)
+    self.hero       = md:getInstance("Hero")
+    self.guide      = md:getInstance("Guide")
 
-    self.defence    = app:getInstance(Defence)
+    self.defence    = md:getInstance("Defence")
 
 
     --views
@@ -51,18 +47,18 @@ function FightPlayer:ctor(properties)
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(Hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.onDefenceBeHurt))
-        :addEventListener(Hero.KILL_EVENT, handler(self, self.onHeroKill))
+        :addEventListener(self.hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.onDefenceBeHurt))
+        :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     
     cc.EventProxy.new(self.fight, self)
-        :addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
-        :addEventListener(Fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
-        :addEventListener(Fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
-        :addEventListener(Fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
-        :addEventListener(Fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
+        :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
+        :addEventListener(self.fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
+        :addEventListener(self.fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
+        :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
+        :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
     cc.EventProxy.new(self.defence, self)
-        :addEventListener(Defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
+        :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
     
     self:scheduleUpdate()
     self:setNodeEventEnabled(true)
@@ -98,7 +94,7 @@ end
 
 function FightPlayer:onClickRobot()
     self:hideControl()
-    self.hero:dispatchEvent({name = Hero.SKILL_ROBOT_START_EVENT})
+    self.hero:dispatchEvent({name = self.hero.SKILL_ROBOT_START_EVENT})
 end
 
 function FightPlayer:showControl(event)
@@ -368,7 +364,7 @@ function FightPlayer:checkBtnLei(point)
                 self.focusNode:getCascadeBoundingBox().height
         local destPos = cc.p(self.focusNode:getPositionX(), 
             self.focusNode:getPositionY())
-        self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_START_EVENT,throwPos = destPos})
+        self.hero:dispatchEvent({name = self.hero.SKILL_GRENADE_START_EVENT,throwPos = destPos})
     end
 end
 
@@ -451,7 +447,7 @@ function FightPlayer:checkBtnJu(point,eventName)
         else
             self:showControl()
         end
-        self.hero:dispatchEvent({name = Hero.GUN_SWITCH_JU_EVENT})
+        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
     end
     return isTouch
 end
@@ -515,7 +511,7 @@ function FightPlayer:fire()
         self.focusView:playFire()
         local focusRangeNode = self.focusView:getFocusRange()
         --todo 发命令
-        self.hero:dispatchEvent({name = Hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
+        self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
 end
 

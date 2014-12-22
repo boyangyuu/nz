@@ -6,7 +6,6 @@
 ]]
 import("..includes.functionUtils")
 local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
-local Hero 		 = import(".Hero")
 
 --events
 
@@ -17,7 +16,7 @@ end)
 function DefenceView:ctor()
 	--instance
 	-- dump(properties, "DefenceView properties")
-	self.hero = app:getInstance(Hero)
+	self.hero = md:getInstance(Hero)
 
 	--event
 	-- cc.EventProxy.new(self.hero, self)
