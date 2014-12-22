@@ -42,6 +42,11 @@ function WeaponListLayer:loadCCS()
     local controlNode = cc.uiloader:load("wuqiku.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
+
+    -- anim
+    local src = "res/WeaponList/btbuyanim/bt_goumai.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
 end
 
 function WeaponListLayer:initUI()
@@ -139,6 +144,19 @@ function WeaponListLayer:initUI()
             self:equip(self.weaponId)
         end
     end)
+
+    --anim
+    local armature = ccs.Armature:create("bt_goumai")
+    local oncearmature = ccs.Armature:create("bt_goumai")
+    armature:setAnchorPoint(0,0)
+    armature:setPosition(0,6)
+    oncearmature:setAnchorPoint(0,0)
+    oncearmature:setPosition(0,6)
+    self.btnBuy:addChild(armature)
+    self.btnOncefull:addChild(oncearmature)
+    armature:getAnimation():play("Animation1" , -1, 1)
+    oncearmature:getAnimation():play("Animation1" , -1, 1)
+
 end
 
 

@@ -209,6 +209,10 @@ function InlayModel:isInlayedExist(inlayid)
 	end
 end
 
+function InlayModel:setAllGold()
+	local goldtable = self:getConfigTable("property", 4)
+end
+
 function InlayModel:isGetAllGold()
 	local allInlayed = self:getAllInlayed()
 	local x = 0
