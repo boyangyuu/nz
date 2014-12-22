@@ -177,9 +177,6 @@ function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	weaponListView:reload()
 end
 
-function WeaponListLayer:moveItemToCenter(index)
-
-end
 
 -- ListView 点击事件
 function WeaponListLayer:touchListener(event)
