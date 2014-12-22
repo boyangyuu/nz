@@ -42,11 +42,11 @@ function BaseEnemyView:initBlood(bloodOffset)
 	-- assert(bloodOffset , "bloodOffset is nil")
     --add blood
     cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("heroUI.ExportJson")    
+    local node = cc.uiloader:load("enemyUI.ExportJson")  --todo待优化  
     self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
     self.blood:removeFromParent()
     local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height* 0.85)
+    self.blood:setPosition(0, bound.height* 1.1)
     self.armature:addChild(self.blood) 
 	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
 	self:setBlood(1.0)
@@ -84,7 +84,7 @@ function BaseEnemyView:showAlert()
 
     --add
     local bound = self.armature:getBoundingBox()
-    armature:setPosition(bound.width * 0.1, bound.height* 0.85 )
+    armature:setPosition(bound.width * 0.4, bound.height* 1.1 )
     self.armature:addChild(armature) 
 end
 
