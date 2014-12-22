@@ -48,6 +48,8 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
+    self.goldgun = cc.uiloader:seekNodeByName(self, "d")
+    self.goldgun:setVisible(false)
     oneForAllBtn:setTouchEnabled(true)
     goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(oneForAllBtn, function(event)
@@ -96,9 +98,10 @@ end
 
 function InlayLayer:refreshAvatar()
     if self.inlayModel:isGetAllGold() then
-        print("InlayLayer:refreshAvatar()")
+        self.goldgun:setVisible(true)
     else
         print("takeoff")
+        self.goldgun:setVisible(false)
     end
 end
 
