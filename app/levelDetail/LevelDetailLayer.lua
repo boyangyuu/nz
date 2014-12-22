@@ -96,8 +96,6 @@ function LevelDetailLayer:initUI()
 end
 
 function LevelDetailLayer:initMapUI()
-	print(self.groupId)
-	print(self.levelId)
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
 	local mapSrcName = "map_"..self.groupId.."_"..self.levelId..".json"   -- todo 外界
@@ -112,7 +110,7 @@ function LevelDetailLayer:initMapUI()
 	--clear
 	local index = 1
     while true do
-    	local name_ = "place_" .. index
+    	local name = "place_" .. index
     	local placeNode = cc.uiloader:seekNodeByName(map, name)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
     	--clear scaleNode
@@ -123,7 +121,6 @@ function LevelDetailLayer:initMapUI()
 
         --clear colorNode
     	local colorNode = cc.uiloader:seekNodeByName(placeNode, "color")
-    	print("test")
         colorNode:setVisible(false)
 
         index = index + 1
