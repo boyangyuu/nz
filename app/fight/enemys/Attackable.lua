@@ -281,7 +281,7 @@ end
 
 function Attackable:test()
     local weakNode2 = self.armature:getBone("weak2")
-    assert(weakNode2, "weakNode2 is nil , 美术没加帧")
+    -- assert(weakNode2, "weakNode2 is nil , 美术没加帧")
     if weakNode2 then drawBoundingBox(self.armature, weakNode2:getDisplayRenderNode(), "red")  end
     local weakNode1 = self.armature:getBone("weak1")
     if weakNode1 then drawBoundingBox(self.armature, weakNode1:getDisplayRenderNode(), "red")  end

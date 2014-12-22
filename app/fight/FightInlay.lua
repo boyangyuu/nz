@@ -30,7 +30,8 @@ function FightInlay:checkNativeGold()
     local isNativeGold = self:getIsNativeGold()
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
-        self:activeGoldForever()
+        -- self:activeGoldForever()
+         self:activeGold()
     end
 end
 

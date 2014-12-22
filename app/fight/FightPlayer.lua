@@ -24,8 +24,6 @@ end)
 function FightPlayer:ctor(properties)
     --instance
     self.fight      = md:getInstance("Fight")
-    print("??????")
-    local properties = {groupId = 1, levelId = 1}
     self.fight:refreshData(properties) 
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
@@ -457,7 +455,8 @@ function FightPlayer:checkBtnGold(point, eventName)
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         print("点击黄金枪 购买")
-        self.hero:activeGoldForever()
+        -- self.hero:activeGoldForever()
+        self.hero:activeGold()
     end
     return isTouch    
 end
