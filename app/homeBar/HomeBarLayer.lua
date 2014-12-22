@@ -72,28 +72,16 @@ function HomeBarLayer:initHomeLayer()
             -- print("settingBtn is pressed!")
         end
     end)
-    btnBack:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+    addBtnEventListener(btnBack, function(event)
         if event.name=='began' then
-            btnBack:runAction(cc.ScaleTo:create(0.05, 0.4524, 0.9))
             return true
         elseif event.name=='ended' then
             btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
             btnBack:setVisible(false)
             btnSetting:setVisible(true)
-
-            -- self.commonRootNode:removeAllChildren()
             self:refreshCommonLayer("levelMapLayer")
-
         end
     end)
-    -- addBtnEventListener(btnBuyCoin, function(event)
-    --     if event.name=='began' then
-    --         -- print("Btn is begining!")
-    --         return true
-    --     elseif event.name=='ended' then
-    --         -- print("Btn is pressed!")
-    --     end
-    -- end)
     addBtnEventListener(btnArsenal, function(event)
         if event.name=='began' then
             -- print("Btn is begining!")
