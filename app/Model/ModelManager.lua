@@ -13,20 +13,30 @@ modelClasses["UserModel"]         = import("..homeBar.UserModel")
 -- modelClasses["LevelDetailLayer"]     = import("..levelDetail.LevelDetailLayer")
 -- modelClasses["FightResultPopup"]     = import("..fightResult.FightResultPopup")
 -- modelClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
--- modelClasses["DialogLayer"]          = import("..dialog.DialogLayer")
-
-
+modelClasses["DialogModel"]          = import("..dialog.DialogModel")
+modelClasses["Fight"]                = import("..fight.Fight")
+modelClasses["InlayModel"] = import("..inlay.InlayModel")
+modelClasses["LevelMapModel"] = import("..levelMap.LevelMapModel")
+modelClasses["FightResultModel"] = import("..fightResult.FightResultModel")
+modelClasses["LevelDetailModel"]= import("..levelDetail.LevelDetailModel")
+modelClasses["WeaponListModel"] = import("..weaponList.WeaponListModel")
+modelClasses["propModel"] = import("..store.propModel")
+modelClasses["StoreModel"] = import("..store.StoreModel")
+modelClasses["Guide"] = import("..guide.GuideModel")
+modelClasses["Hero"] = import("..fight.Hero")
 function ModelManager:ctor()
+    ModelManager.super.ctor(self)
     self.objects_ = {}
-    self:loadAllModels()
 end
 
 function ModelManager:loadAllModels()
     print("ModelManager:loadAllModels()")
     for i, v in pairs(modelClasses) do
-        assert(not self:isObjectExists(i) , "already added model")
-        local modelObj = v.new()
-        self:setObject(i, modelObj)
+        print("instancename:", i)
+        if not self:isObjectExists(i) then 
+            local modelObj = v.new()
+            self:setObject(i, modelObj)
+        end
     end
 end
 
@@ -46,13 +56,17 @@ function ModelManager:isObjectExists(id)
 end
 
 function ModelManager:getInstance(clsName)
-    local classModel = modelClasses[clsName]
+       local classModel = modelClasses[clsName]
     assert(classModel, "classModel is not in modelmanager: clsName"
         ..clsName) 
 
-    assert(clsName, "clsName is nil"..tostring(clsName))
-    print("ModelManager get model id is:", clsName)
-    local modelObj = self:getObject(clsName)
+    local modelObj 
+    if not self:isObjectExists(clsName) then
+        modelObj = classModel.new()
+        self:setObject(clsName, modelObj)
+    else
+        modelObj = self:getObject(clsName)
+    end  
     return modelObj
 end
 

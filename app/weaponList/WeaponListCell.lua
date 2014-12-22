@@ -1,5 +1,4 @@
 import("..includes.functionUtils")
-local WeaponListModel = import(".WeaponListModel")
 
 local ScrollViewCell = import("..includes.ScrollViewCell")
 local Color_GRAY = cc.c3b(150, 150, 150)
@@ -14,7 +13,7 @@ local WeaponListCell = class("listCell", ScrollViewCell)
 
 function WeaponListCell:ctor(properties)
 	-- local weaponRecord = properties.weaponRecord
-    self.weaponListModel = app:getInstance(WeaponListModel)
+    self.weaponListModel = md:getInstance("WeaponListModel")
     self.id = properties.weaponRecord["id"]
 	self:initCellUI(properties)
 end

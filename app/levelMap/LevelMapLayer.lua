@@ -1,9 +1,6 @@
 
 import("..includes.functionUtils")
 
-local LevelMapModel = import(".LevelMapModel")
-local UserModel = import("..homeBar.UserModel")
-local FightResultModel = import("..fightResult.FightResultModel")
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
@@ -14,8 +11,9 @@ local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time o
 
 function LevelMapLayer:ctor()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
-    self.LevelMapModel = app:getInstance(LevelMapModel)
-    self.FightResultModel = app:getInstance(FightResultModel)
+    self.LevelMapModel = md:getInstance("LevelMapModel")
+    self.FightResultModel = md:getInstance("FightResultModel")
+    self.UserModel = md:getInstance("UserModel")
     self:initData()
     self:initBgLayer()
     self:initChooseLayer()
@@ -86,7 +84,7 @@ function LevelMapLayer:initChooseLayer()
             end
             self:bgAction()
             self:panelAction()
-            app:getInstance(UserModel):panelAction()
+            self.UserModel:panelAction()
         end
     end)
     addBtnEventListener(self.btnPre, function(event)
@@ -104,7 +102,7 @@ function LevelMapLayer:initChooseLayer()
             end
             self:bgAction()
             self:panelAction()
-            app:getInstance(UserModel):panelAction()
+            self.UserModel:panelAction()
         end
     end)
      addBtnEventListener(btnSale, function(event)

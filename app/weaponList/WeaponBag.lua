@@ -1,4 +1,3 @@
-local WeaponListModel = import(".WeaponListModel")
 
 local Color_GRAY = cc.c3b(150, 150, 150)
 local Color_YELLOW = cc.c3b(255, 195, 0)
@@ -10,7 +9,7 @@ end)
 function WeaponBag:ctor(properties)
     self.weaponid = properties.weaponid
     self.weaponed = nil
-    self.weaponListModel = app:getInstance(WeaponListModel)
+    self.weaponListModel = md:getInstance("WeaponListModel")
 	self:loadCCS()
 	self:initUI()
     self:refreshData()

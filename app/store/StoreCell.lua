@@ -1,15 +1,11 @@
 local ScrollViewCell = import("..includes.ScrollViewCell")
-local StoreModel = import(".StoreModel")
-local InlayModel = import("..inlay.InlayModel")
-local PropModel = import(".propModel")
-local UserModel = import("..homeBar.UserModel")
 
 local StoreCell = class("StoreCell", ScrollViewCell)
 
 function StoreCell:ctor(parameter)
-    self.inlayModel = app:getInstance(InlayModel)
-    self.propModel = app:getInstance(PropModel)
-    self.userModel = app:getInstance(UserModel)
+    self.inlayModel = md:getInstance("InlayModel")
+    self.propModel = md:getInstance("propModel")
+    self.userModel = md:getInstance("UserModel")
 	self:initCellUI(parameter)
 end
 

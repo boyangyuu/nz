@@ -1,6 +1,5 @@
 
 local InlayListCell = import(".InlayListCell")
-local InlayModel = import(".InlayModel")
 
 local InlayLayer = class("InlayLayer", function()
     return display.newLayer()
@@ -9,7 +8,7 @@ end)
 function InlayLayer:ctor()
     print("inlayLayer ctor()")
 
-    self.inlayModel = app:getInstance(InlayModel)
+    self.inlayModel = md:getInstance("InlayModel")
 
     cc.EventProxy.new(self.inlayModel , self)
         :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))

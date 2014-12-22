@@ -1,6 +1,5 @@
 import("..includes.functionUtils")
 
-local StoreModel = import(".StoreModel")
 local StoreCell = import(".StoreCell")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
@@ -10,7 +9,7 @@ local StoreLayer = class("StoreLayer", function()
 end)
 
 function StoreLayer:ctor()
-    self.storeModel = app:getInstance(StoreModel)
+    self.storeModel = md:getInstance("StoreModel")
 
 	self:loadCCS()
 	self:initUI()
