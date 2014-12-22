@@ -40,6 +40,7 @@ function LevelDetailLayer:loadCCS()
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
 	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")    
+	self.panlEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")    
 end
 
 function LevelDetailLayer:initUI()
@@ -77,21 +78,56 @@ function LevelDetailLayer:initUI()
 		self.panelbiaozhu:setVisible(true)
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
 			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
+
+		local armature = ccs.Armature:create(DataTable["enemyPlay"])
+		armature:setScale(0.8)
+		addChildCenter(armature, self.panlEnemy)
+		armature:getAnimation():play("stand" , -1, 1)
+
 	end
 
-	local mapSrcName = "map_"..groupID.."_"..levelID..".json"   -- todo 外界
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
-
-    local node = cc.uiloader:load(mapSrcName)
-	local map = node
-	map:setScale(0.47, 0.48)
-	local mapimg = cc.uiloader:seekNodeByName(self, "mapimage")
-	mapimg:addChild(map)
+	self:initMapUI()
 
 	local weaponimg = display.newSprite("#icon_"..DataTable["weapon"]..".png")
 	weaponimg:setScale(0.4)
 	local bibeiimg = cc.uiloader:seekNodeByName(self, "bibeiimg")
-	addChildCenter(weaponimg, bibeiimg)    
+	addChildCenter(weaponimg, bibeiimg) 
+
+end
+
+function LevelDetailLayer:initMapUI()
+	print(self.groupId)
+	print(self.levelId)
+    cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
+
+	local mapSrcName = "map_"..self.groupId.."_"..self.levelId..".json"   -- todo 外界
+
+	local map = cc.uiloader:load(mapSrcName)
+	map:setScale(0.47, 0.48)
+
+	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
+	mapNode:addChild(map)
+
+
+	--clear
+	local index = 1
+    while true do
+    	local name_ = "place_" .. index
+    	local placeNode = cc.uiloader:seekNodeByName(map, name)
+    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
+    	--clear scaleNode
+    	if scaleNode then scaleNode:setVisible(false) end
+        if placeNode == nil then
+            break
+        end
+
+        --clear colorNode
+    	local colorNode = cc.uiloader:seekNodeByName(placeNode, "color")
+    	print("test")
+        colorNode:setVisible(false)
+
+        index = index + 1
+    end
 end
 
 function LevelDetailLayer:initBtns()

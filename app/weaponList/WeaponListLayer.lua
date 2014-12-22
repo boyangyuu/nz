@@ -184,7 +184,6 @@ end
 
 -- ListView 点击事件
 function WeaponListLayer:touchListener(event)
-    dump(event)
     if "clicked" == event.name then
      self:refreshComment(event.itemPos)
     end
