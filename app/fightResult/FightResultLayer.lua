@@ -3,7 +3,7 @@ local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
 local FightResultModel 	= import(".FightResultModel")
 local InlayModel 		= import("..inlay.InlayModel")
 local FightModel 		= import("..fight.Fight")
-
+local LevelMapModel     = import("..levelMap.LevelMapModel")
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)
@@ -15,6 +15,7 @@ function FightResultLayer:ctor(properties)
     self.fightResultModel = app:getInstance(FightResultModel)
     self.inlayModel 	  = app:getInstance(InlayModel)
     self.fightModel 	  = app:getInstance(FightModel)
+    self.levelMapModel    = app:getInstance(LevelMapModel)
 
     self.cardover = {}
     self.cardgold = {}
@@ -144,7 +145,6 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        -- ui:closePopup()
         	ui:changeLayer("FightPlayer",{groupId = curGroup, 
 	 			levelId = curLevel})
         end
@@ -153,9 +153,13 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-			-- ui:closePopup()
-			-- ui:changeLayer("FightPlayer",{groupId = nextGroup, 
-		 -- 		levelId = nextLevel})
+	        if self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel) == false then
+	        	self.btnnext:setVisible(false)
+	        else
+		        local nextgroup,nextlevel = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+				ui:changeLayer("FightPlayer",{groupId = nextgroup, 
+			 		levelId = nextlevel})
+	        end
         end
     end)
     addBtnEventListener(self.btninlay, function(event)

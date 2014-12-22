@@ -18,12 +18,12 @@ end
 function LevelMapModel:getNextGroupAndLevel(gid, lid)
 	local levelid
 	local groupid
-	local detailTable = getConfig("config/guanqia.json")
-	local recordsGroup = getRecord(detailTable,"groupId",gid)
+	-- local detailTable = getConfig("config/guanqia.json")
+	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
 	local maxLevelRecord = recordsGroup[#recordsGroup]
 	local maxLevel = maxLevelRecord["levelId"]
 
-    local recordsLevel = getRecord(detailTable,"groupId",1)
+    local recordsLevel = getRecordByKey("config/guanqia.json","groupId",1)
     local groupNum = #recordsLevel
 	if lid < maxLevel then
 		levelid = levelid + 1
