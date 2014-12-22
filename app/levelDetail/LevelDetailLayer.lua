@@ -87,7 +87,7 @@ function LevelDetailLayer:initUI()
 	mapimg:addChild(map)
 
 	local weaponimg = display.newSprite("#icon_"..DataTable["weapon"]..".png")
-	weaponimg:setScale(0.56)
+	weaponimg:setScale(0.4)
 	local bibeiimg = cc.uiloader:seekNodeByName(self, "bibeiimg")
 	addChildCenter(weaponimg, bibeiimg)    
 end
