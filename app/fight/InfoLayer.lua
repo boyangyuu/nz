@@ -57,10 +57,10 @@ function InfoLayer:onRefreshBullet(event)
 	assert(num, "num is nil") 
 
 	self.labelBulletNum:setString(num)
-	self.labelBulletNum:setScale(0.5)
-	self.labelBulletNum:runAction(cc.Sequence:create(
-		cc.ScaleBy:create(0.02, 1.3), 
-		cc.ScaleTo:create(0.02, 1.0)))
+	-- self.labelBulletNum:setScale(0.5)
+	-- self.labelBulletNum:runAction(cc.Sequence:create(
+	-- 	cc.ScaleBy:create(0.02, 1.3), 
+	-- 	cc.ScaleTo:create(0.02, 1.0)))
 end
 
 return InfoLayer
