@@ -461,7 +461,7 @@ function FightPlayer:checkBtnGold(point, eventName)
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         print("点击黄金枪 购买")
-        self.hero:activeGold()
+        self.hero:activeGoldForever()
     end
     return isTouch    
 end

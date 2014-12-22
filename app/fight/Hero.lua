@@ -44,6 +44,9 @@ Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
+--hp
+Hero.BASE_HP_REFRESH_EVENT  = "BASE_HP_REFRESH_EVENT"
+
 --define
 local kMaxHp          = 100
 local kCritScale      = 3.0
@@ -129,6 +132,10 @@ function Hero:activeGold()
     --hp
     self:refreshHp()
 
+end
+
+function Hero:activeGoldForever()
+    
 end
 
 function Hero:activeGoldEnd()

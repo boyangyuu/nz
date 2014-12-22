@@ -3,14 +3,16 @@ require("config")
 require("framework.init")
 require("app.includes.functionUtils")
 local UI = require("app.UI.UIManager")
-ui = UI.new()
-isTest = false
+
+
 GameState = require("framework.cc.utils.GameState")
 
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
+isTest = false
+ui = UI.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)

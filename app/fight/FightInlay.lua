@@ -6,7 +6,7 @@
 
 --import
 local InlayModel   	= import("..inlay.InlayModel")
-
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local FightInlay          = class("FightInlay", cc.mvc.ModelBase)
 
@@ -14,6 +14,9 @@ local FightInlay          = class("FightInlay", cc.mvc.ModelBase)
 FightInlay.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
 FightInlay.INLAY_GOLD_BEGIN_EVENT       = "INLAY_GOLD_BEGIN_EVENT" --激活黄金武器（同时刷新血量上限）
 FightInlay.INLAY_GOLD_END_EVENT         = "INLAY_GOLD_END_EVENT"
+
+--constanst
+local kGoldTime = 5.0
 
 function FightInlay:ctor(properties)
     --instance
@@ -28,8 +31,15 @@ function FightInlay:checkNativeGold()
     local isNativeGold = self:getIsNativeGold()
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
-        self:activeGold()
+        self:activeGoldForever()
     end
+end
+
+function FightInlay:activeGoldForever()
+    self:setIsActiveGold(true)   
+    print("FightInlay:activeGold()") 
+    --dispatch
+    self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
 end
 
 function FightInlay:activeGold()
@@ -37,6 +47,13 @@ function FightInlay:activeGold()
     print("FightInlay:activeGold()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
+
+    --delay
+    self:delayCallGoldEnd(kGoldTime)
+end
+
+function FightInlay:delayCallGoldEnd(delay)
+    scheduler.performWithDelayGlobal(handler(self, self.activeGoldEnd), delay)
 end
 
 function FightInlay:activeGoldEnd()

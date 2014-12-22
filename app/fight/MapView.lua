@@ -72,8 +72,10 @@ function MapView:loadCCS()
 	local index = 1
 	self.places = {}
     while true do
-    	local name = "place" .. index 
-    	local placeNode = cc.uiloader:seekNodeByName(self, name)
+    	local name_ = "place_" .. index
+    	local name = "place" .. index
+    	local placeNode_ =  cc.uiloader:seekNodeByName(self, name_)
+    	local placeNode = cc.uiloader:seekNodeByName(placeNode_, name)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 
     	if scaleNode then scaleNode:setVisible(false) end
@@ -81,8 +83,9 @@ function MapView:loadCCS()
             break
         end
         if isTest == false then 
-        	-- local colorNode = cc.uiloader:seekNodeByName()
-	        -- colorNode:setVisible(false)
+        	local colorNode = cc.uiloader:seekNodeByName(placeNode_, "color")
+        	print("test")
+	        colorNode:setVisible(false)
 	    end
         self.places[name] = placeNode
         index = index + 1

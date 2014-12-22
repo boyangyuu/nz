@@ -16,7 +16,7 @@ local Defence   = import(".Defence")
 
 --kconfig
 local kGoldActivate = 20
-local kRemainSumTimes = 2
+local kRemainSumTimes = 4
 local kLeiDemage = 600.0
 local kLeiW = 100.0
 
@@ -95,8 +95,6 @@ end
 function HeroLayer:initHeroHpNode()
 	self.hp = cc.uiloader:seekNodeByName(self.ui, "hp")
 	self.robotNode = cc.uiloader:seekNodeByName(self.ui, "robot")
-
-
 	self.robotNode:setVisible(false)	
 end
 
@@ -168,7 +166,7 @@ function HeroLayer:killEnmeyGold(enemyPos)
 			--todo 待优化
 			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
 			cc.DelayTime:create(0.5 - i * 0.1),
-			cc.MoveTo:create(0.5, cc.p(884, 591)), --todo
+			cc.MoveTo:create(0.5, cc.p(664, 604)),
 			cc.CallFunc:create(function ()
 				if i == 1 then
 					self.hero:dispatchEvent({name = "changeGold", 
