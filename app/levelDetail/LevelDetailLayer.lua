@@ -142,7 +142,7 @@ function LevelDetailLayer:initMapUI()
     end
 end
 
-function rootLayer()
+function LevelDetailLayer:initBtns()
 	self.btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
 	self.btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
 	self.btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
