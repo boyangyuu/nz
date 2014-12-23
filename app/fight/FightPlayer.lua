@@ -158,7 +158,7 @@ function FightPlayer:initUI()
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
 
-    self:initDialog()
+    -- self:initDialog()
 end
 
 --启动盾牌恢复

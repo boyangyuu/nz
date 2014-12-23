@@ -8,6 +8,7 @@ function LevelDetailLayer:ctor(properties)
 	--instance
 	self.model = md:getInstance("LevelDetailModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
+	self.inlayModel = md:getInstance("InlayModel")
 	self.groupId = properties.groupId
 	print("self.groupId,", self.groupId)
 	self.levelId = properties.levelId
@@ -45,6 +46,10 @@ function LevelDetailLayer:loadCCS()
 	self.alreadygold   = cc.uiloader:seekNodeByName(self, "alreadygold")
 	self.alreadyjijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
 
+    -- anim
+    local src = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
 end
 
 function LevelDetailLayer:initUI()
@@ -107,8 +112,6 @@ function LevelDetailLayer:initMapUI()
 	local map = cc.uiloader:load(mapSrcName)
 	local mapimg = cc.uiloader:seekNodeByName(map, "bg")
 
-	-- map:setScale(0.47, 0.48)
-
 	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
 	local mapPanlSize = mapNode:getContentSize()
 	print(mapPanlSize.width,mapPanlSize.height)
@@ -139,7 +142,7 @@ function LevelDetailLayer:initMapUI()
     end
 end
 
-function LevelDetailLayer:initBtns()
+function rootLayer()
 	self.btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
 	self.btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
 	self.btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
@@ -153,7 +156,19 @@ function LevelDetailLayer:initBtns()
 	self.btnGold  :setTouchEnabled(true)
 	self.btnJijia :setTouchEnabled(true)
 
+    --anim
+    local goldarmature = ccs.Armature:create("bt_yjzb")
+    local jijiaarmature = ccs.Armature:create("bt_yjzb")
+    addChildCenter(goldarmature, self.btnGold)
+    addChildCenter(jijiaarmature, self.btnJijia)
+    goldarmature:getAnimation():play("Animation1" , -1, 1)
+    jijiaarmature:getAnimation():play("Animation1" , -1, 1)
 
+
+	if self.inlayModel:isGetAllGold() then
+		self.alreadygold:setVisible(true)
+		self.btnGold:setVisible(false)
+	end
 	------ on btn clicked
 	--offbtn
 	addBtnEventListener(self.btnOff, function(event)
@@ -223,6 +238,7 @@ end
 
 function LevelDetailLayer:onClickBtnGold()
 	print("goldbtn is clicked!")
+	self.inlayModel:equipGoldInlays(true)
 	self.alreadygold:setVisible(true)
 	self.btnGold:setVisible(false)
 end
