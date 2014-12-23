@@ -5,7 +5,7 @@
 
 ]]
 
---import
+--import model
 local scheduler = require("framework.scheduler")
 local Actor 	= import(".Actor")
 local Hero 		= import(".Hero")
@@ -13,6 +13,9 @@ local Fight 	= import(".Fight")
 local FightInlay= import(".FightInlay")
 local Guide 	= import("..guide.GuideModel")
 local Defence   = import(".Defence") 
+
+--import view
+local DefenceView = import(".DefenceView")
 
 --kconfig
 local kGoldActivate = 20
@@ -32,7 +35,7 @@ function HeroLayer:ctor(properties)
 	self.inlay 	= md:getInstance("FightInlay")
 	self.defence = md:getInstance("Defence")
 
-	--注册英雄事件
+	--events
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Actor.HP_INCREASE_EVENT			, handler(self, self.onHeroHpChange))
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
@@ -47,9 +50,7 @@ function HeroLayer:ctor(properties)
 	cc.EventProxy.new(self.inlay, self)
 		:addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
 	
-	cc.EventProxy.new(self.defence, self)
-		:addEventListener(Defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onSwitchDefence))
-		:addEventListener(Defence.DEFENCE_RESUME_EVENT	, handler(self, self.onResumeDefence))
+
 	--ui
 	self:initUI()
 
@@ -58,15 +59,23 @@ function HeroLayer:ctor(properties)
 	
 	self:setTouchEnabled(false) 
 	self:setNodeEventEnabled(true)
+
+	--test
+
+
+	--guide
+	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
 end
 
 function HeroLayer:initUI()
 	self:loadCCS()
 	self:initHeroHpNode()
-	self:initDefenceNode()
 	self:initKillTimerNode()
-
-	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
+	-- self:initDefenceNode()
+	--defence
+	local defenceNode = cc.uiloader:seekNodeByName(self.ui, "defenceNode")
+	local defenceView = DefenceView.new()
+	defenceNode:addChild(defenceView)
 end
 
 function HeroLayer:initData()
@@ -99,22 +108,20 @@ function HeroLayer:initHeroHpNode()
 end
 
 --获得盾牌Ui节点
-local defenceHeight = 0 --todo
-function HeroLayer:initDefenceNode()
-	self.isLaunchDefenceResume = false
-	self.defenceNode = cc.uiloader:seekNodeByName(self.ui, "defence")
-	self.defenceNode:setVisible(false)
+-- local defenceHeight = 0 --todo
+-- function HeroLayer:initDefenceNode()
+-- 	self.isLaunchDefenceResume = false
+-- 	self.defenceNode = cc.uiloader:seekNodeByName(self.ui, "defence")
+-- 	self.defenceNode:setVisible(false)
 	
-	local upFrame = cc.uiloader:seekNodeByName(self.defenceNode, "upFrame")
-	local downFrame = cc.uiloader:seekNodeByName(self.defenceNode, "downFrame")
-	local upFrameHeight = upFrame:getCascadeBoundingBox().size.height
-	local downFrameHeight = downFrame:getCascadeBoundingBox().size.height
-	defenceHeight = downFrameHeight + upFrameHeight
+-- 	local upFrame = cc.uiloader:seekNodeByName(self.defenceNode, "upFrame")
+-- 	local downFrame = cc.uiloader:seekNodeByName(self.defenceNode, "downFrame")
+-- 	local upFrameHeight = upFrame:getCascadeBoundingBox().size.height
+-- 	local downFrameHeight = downFrame:getCascadeBoundingBox().size.height
+-- 	defenceHeight = downFrameHeight + upFrameHeight
 
-	self.remainTimes = kRemainSumTimes
-
-
-end
+-- 	self.remainTimes = kRemainSumTimes
+-- end
 
 --初始化连杀倒计时节点
 function HeroLayer:initKillTimerNode()
@@ -252,89 +259,89 @@ function HeroLayer:onShowRobot(event)
 	-- self.robotNode:setVisible(true)
 end
 
---盾牌恢复完成的回调
-function HeroLayer:onResumeDefence(event)
-	self.isDefenceAble = true
-end
+-- --盾牌恢复完成的回调
+-- function HeroLayer:onResumeDefence(event)
+-- 	self.isDefenceAble = true
+-- end
 
---切换盾甲
-function HeroLayer:onSwitchDefence(event)
-	-- print("onShowDefence", self.isDefenceAble)
-	if self.isDefenceAble == false then return end 
+-- --切换盾甲
+-- function HeroLayer:onSwitchDefence(event)
+-- 	-- print("onShowDefence", self.isDefenceAble)
+-- 	if self.isDefenceAble == false then return end 
 
-	local isDefend = event.isDefend
-	if isDefend then
-		print("self:showDefence()")
-		self:showDefence()
-	else
-		print("self:hideDefence()")
-		self:hideDefence()
-	end
-end
+-- 	local isDefend = event.isDefend
+-- 	if isDefend then
+-- 		print("self:showDefence()")
+-- 		self:showDefence()
+-- 	else
+-- 		print("self:hideDefence()")
+-- 		self:hideDefence()
+-- 	end
+-- end
 
-function HeroLayer:hideDefence()
-	self.defenceNode:runAction( 
-		cc.Sequence:create( 
-			cc.MoveBy:create(0.5, cc.p(0, -defenceHeight)), 
-			cc.CallFunc:create(
-				function ()
-					self.defenceNode:setVisible(false)
-					self.defence:setIsDefending(false)
-					self.defenceNode:setPositionY(-defenceHeight)
-				end
-			)
-		)
-	)	
-end
+-- function HeroLayer:hideDefence()
+-- 	self.defenceNode:runAction( 
+-- 		cc.Sequence:create( 
+-- 			cc.MoveBy:create(0.5, cc.p(0, -defenceHeight)), 
+-- 			cc.CallFunc:create(
+-- 				function ()
+-- 					self.defenceNode:setVisible(false)
+-- 					self.defence:setIsDefending(false)
+-- 					self.defenceNode:setPositionY(-defenceHeight)
+-- 				end
+-- 			)
+-- 		)
+-- 	)	
+-- end
 
-function HeroLayer:showDefence()
-	self.defenceNode:setPositionY(-defenceHeight)
-	self.defenceNode:setVisible(true)
-	self.defenceNode:runAction(cc.MoveBy:create(0.5, cc.p(0, defenceHeight * 1.56)))
-end
+-- function HeroLayer:showDefence()
+-- 	self.defenceNode:setPositionY(-defenceHeight)
+-- 	self.defenceNode:setVisible(true)
+-- 	self.defenceNode:runAction(cc.MoveBy:create(0.5, cc.p(0, defenceHeight * 1.56)))
+-- end
 
 
---盾牌受伤效果
-function HeroLayer:defenceBehurtEffect(event)
-	-- print("oLayer:defenceBehurtEf self.isDefenceAble", self.isDefenceAble)
-	if not self.isDefenceAble then return end --todo??
+-- --盾牌受伤效果
+-- function HeroLayer:defenceBehurtEffect(event)
+-- 	-- print("oLayer:defenceBehurtEf self.isDefenceAble", self.isDefenceAble)
+-- 	if not self.isDefenceAble then return end --todo??
 
-	--defence behurted action effect
-	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
-	self.defenceNode:runAction(cc.Sequence:create(tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
+-- 	--defence behurted action effect
+-- 	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
+-- 	self.defenceNode:runAction(cc.Sequence:create(tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
 
-	--defence behurted crack effect
-	local crackSprite = display.newSprite("#hit_boli.png")
-	local crackSize = crackSprite:getCascadeBoundingBox().size
-	local bgSize = cc.uiloader:seekNodeByName(self.defenceNode, "upFrame"):getCascadeBoundingBox().size
-	crackSprite:setPosition(
-		math.random(-bgSize.width / 2 + crackSize.width / 2,
-		 bgSize.width / 2 - crackSize.width / 2), 
-		math.random(-bgSize.height / 2 + crackSize.height / 2 + 30,
-		 bgSize.height / 2 - crackSize.height / 2)
-	)
+-- 	--defence behurted crack effect
+-- 	local crackSprite = display.newSprite("#hit_boli.png")
+-- 	local crackSize = crackSprite:getCascadeBoundingBox().size
+-- 	local bgSize = cc.uiloader:seekNodeByName(self.defenceNode, "upFrame"):getCascadeBoundingBox().size
+-- 	crackSprite:setPosition(
+-- 		math.random(-bgSize.width / 2 + crackSize.width / 2,
+-- 		 bgSize.width / 2 - crackSize.width / 2), 
+-- 		math.random(-bgSize.height / 2 + crackSize.height / 2 + 30,
+-- 		 bgSize.height / 2 - crackSize.height / 2)
+-- 	)
 
-	self.defenceNode:addChild(crackSprite)
+-- 	self.defenceNode:addChild(crackSprite)
 
-	self.crackSprites[self.behurtCount] = crackSprite
-	self.behurtCount = self.behurtCount + 1
-	self.remainTimes = self.remainTimes - 1
-	local hurtedTimes = kRemainSumTimes - self.remainTimes
-	if kRemainSumTimes <= hurtedTimes then
-		--取消防御
-		self.defence:switchStatus()
+-- 	self.crackSprites[self.behurtCount] = crackSprite
+-- 	self.behurtCount = self.behurtCount + 1
+-- 	self.remainTimes = self.remainTimes - 1
+-- 	local hurtedTimes = kRemainSumTimes - self.remainTimes
+-- 	if kRemainSumTimes <= hurtedTimes then
+-- 		--取消防御
+-- 		self.defence:switchStatus()
 
-		--remove
-		for k, v in pairs(self.crackSprites) do
-			v:removeFromParent()
-		end
-		self.crackSprites = {}
-		self.isDefenceAble = false
-		self.remainTimes = kRemainSumTimes
-	end
-	local hurtedPercent = hurtedTimes / kRemainSumTimes
-	self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, hurtedPercent = hurtedPercent})
-end
+-- 		--remove
+-- 		for k, v in pairs(self.crackSprites) do
+-- 			v:removeFromParent()
+-- 		end
+-- 		self.crackSprites = {}
+-- 		self.isDefenceAble = false
+-- 		self.remainTimes = kRemainSumTimes
+-- 	end
+-- 	local hurtedPercent = hurtedTimes / kRemainSumTimes
+-- 	self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, hurtedPercent = hurtedPercent})
+-- end
 
 function HeroLayer:bloodBehurtEffect()
 	local strAnim = nil
@@ -361,14 +368,8 @@ end
 
 function HeroLayer:onHurtEffect(event)
 	self:screenHurtedEffect()
-	if true == self.defenceNode:isVisible() then 
-		if false == self.isLaunchDefenceResume then 
-			self:defenceBehurtEffect() 
-		end
-	else
-	 	self:bloodBehurtEffect()
-		self:onHeroHpChange(event)
-	end
+ 	self:bloodBehurtEffect()
+	self:onHeroHpChange(event)
 end
 
 function HeroLayer:onHurtBombEffect()

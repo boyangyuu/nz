@@ -4,6 +4,7 @@ require("framework.init")
 require("app.includes.functionUtils")
 local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")  
+local Define = require("app.Define")  
 
 GameState = require("framework.cc.utils.GameState")
 
@@ -11,9 +12,10 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
-isTest = false
-ui = UI.new()
-md = MD.new()
+isTest  = false
+ui      = UI.new()
+md      = MD.new()
+define  = Define.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)

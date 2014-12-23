@@ -45,7 +45,7 @@ function FightPlayer:ctor(properties)
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(self.hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.onDefenceBeHurt))
+        
         :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     
@@ -55,7 +55,9 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
         :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
+    
     cc.EventProxy.new(self.defence, self)
+        :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
     
     self:scheduleUpdate()
@@ -114,7 +116,6 @@ function FightPlayer:hideControl(event)
     
     --btn
     self.btnDefence:setVisible(false)
-    self.btnRobot:setVisible(false)
     self.btnChange:setVisible(false)
     self.btnLei:setVisible(false)
 end
@@ -165,6 +166,7 @@ end
 local resumeDefenceHandler = nil
 function FightPlayer:startDefenceResume(event)
     self.labelDefenceResume:setVisible(true)
+    self.loadingBarDefenceHp:setPercent(0)
     self:loadDefenceResumeBar()
 
     local kResumeValue = 1  --每次恢复点数
@@ -189,13 +191,9 @@ function FightPlayer:startDefenceResume(event)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
-    local percent = event.hurtedPercent * 100
+    local percent = event.percent * 100
+    print("percent,", percent)
     self.loadingBarDefenceHp:setPercent(percent)
-    if 100 <= percent then
-        self.loadingBarDefenceHp:setPercent(0)
-        self.defence:setIsAble(false)
-        -- self:startDefenceResume()
-    end
 end
 
 function FightPlayer:onHeroKill(event)
