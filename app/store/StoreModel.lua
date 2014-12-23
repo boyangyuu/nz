@@ -4,6 +4,7 @@ local StoreModel = class("StoreModel", cc.mvc.ModelBase)
 
 function StoreModel:ctor(properties, events, callbacks)
 	StoreModel.super.ctor(self, properties)
+
 end
 
 function StoreModel:getConfigTable(type)
@@ -51,6 +52,10 @@ function StoreModel:orderByGold(configtable)
 	-- 	table.insert(newTable, v)
 	-- end
 	return newTable
+end
+
+function StoreModel:refreshInfo(typename)
+	self:dispatchEvent({name = "REFRESH_STORE_EVENT",typename = typename})
 end
 
 

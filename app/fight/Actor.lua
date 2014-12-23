@@ -199,13 +199,13 @@ function Actor:decreaseHp(hp)
         newhp = 0
     end
 
-    if newhp < self.hp_ then
+    -- if newhp < self.hp_ then
         self.hp_ = newhp
         self:dispatchEvent({name = Actor.HP_DECREASE_EVENT})
         if newhp == 0 then
             self.fsm__:doEvent("kill")
         end
-    end
+    -- end
 
     return self
 end
