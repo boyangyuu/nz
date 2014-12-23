@@ -105,10 +105,18 @@ function LevelDetailLayer:initMapUI()
 	local mapSrcName = "map_"..self.groupId.."_"..self.levelId..".json"   -- todo 外界
 
 	local map = cc.uiloader:load(mapSrcName)
-	map:setScale(0.47, 0.48)
+	local mapimg = cc.uiloader:seekNodeByName(map, "bg")
+
+	-- map:setScale(0.47, 0.48)
 
 	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
-	mapNode:addChild(map)
+	local mapPanlSize = mapNode:getContentSize()
+	print(mapPanlSize.width,mapPanlSize.height)
+	local mapImgSize = mapimg:getBoundingBox()
+	print(mapImgSize.width,mapImgSize.height)
+	map:setScale(mapPanlSize.width/mapImgSize.width,mapPanlSize.height/mapImgSize.height)
+	map:setAnchorPoint(0.5,0.5)
+	addChildCenter(map, mapNode)
 
 
 	--clear
