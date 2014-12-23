@@ -130,33 +130,6 @@ function Hero:decreaseHp(hp)
     end
 end
 
-function Hero:activeGold()
-    --check
-    if self.fightInlay:getIsNativeGold() then return end
-
-    --active
-    self.fightInlay:activeGold()
-
-    --hp
-    self:refreshHp()
-
-end
-
-function Hero:activeGoldForever()
-    
-end
-
-function Hero:activeGoldEnd()
-    --check
-    if self.fightInlay:getIsNativeGold() then return end    
-    
-    --active
-    self.fightInlay:activeGoldEnd()
-
-    --hp
-    self:refreshHp()
-end
-
 function Hero:setMapZoom(scale)
     self.mapZoom = scale
 end

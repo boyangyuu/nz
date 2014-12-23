@@ -7,7 +7,7 @@
 --import
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
-local FightInlay          = class("FightInlay", cc.mvc.ModelBase)
+local FightInlay  = class("FightInlay", cc.mvc.ModelBase)
 
 --events
 FightInlay.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
@@ -30,19 +30,26 @@ function FightInlay:checkNativeGold()
     local isNativeGold = self:getIsNativeGold()
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
-        -- self:activeGoldForever()
-         self:activeGold()
+        self:activeGoldForever()
     end
 end
 
 function FightInlay:activeGoldForever()
-    self:setIsActiveGold(true)   
+    self:setIsActiveGold(true)
     print("FightInlay:activeGold()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
+
+    --hero
+    local hero = md:getInstance("Hero")
+    hero:refreshHp()  
+
+    --inlay
+    self:setIsNativeGold(true)  
 end
 
 function FightInlay:activeGold()
+    if self:getIsNativeGold() then return end
     self:setIsActiveGold(true)   
     print("FightInlay:activeGold()") 
     --dispatch
@@ -71,7 +78,11 @@ function FightInlay:getIsActiveGold()
 end
 
 function FightInlay:getIsNativeGold()
-    return self.inlayModel:isGetAllGold()
+    return self.inlayModel:isGetAllGold() or self.isNativeGold
+end
+
+function FightInlay:setIsNativeGold(isNativeGold_)
+    self.isNativeGold = isNativeGold_
 end
 
 --[[
@@ -79,10 +90,8 @@ end
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
-    -- print("FightInlay:getInlayedValue type", type)
     local record = nil
     if self:getIsActiveGold() then 
-        -- print("gold inlay~~~~~")
         record = self.inlayModel:getGoldByType(type)
         assert(record, "record is nil type:"..type)
     else
@@ -92,7 +101,6 @@ function FightInlay:getInlayedValue(type)
         record = getRecordByID("config/items_xq.json", inlayedId)
     end
     local value = record.valueProgram
-    -- print("FightInlay:getInlayedValue value:", value)
     return value, true
 end 
 

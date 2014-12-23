@@ -27,9 +27,8 @@ function FightPlayer:ctor(properties)
     self.fight:refreshData(properties) 
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
-
     self.defence    = md:getInstance("Defence")
-
+    self.inlay      = md:getInstance("FightInlay")
 
     --views
     self.focusView      = FocusView.new()
@@ -166,17 +165,21 @@ end
 local resumeDefenceHandler = nil
 function FightPlayer:startDefenceResume(event)
     self.labelDefenceResume:setVisible(true)
-    self.loadingBarDefenceHp:setPercent(0)
-    self:loadDefenceResumeBar()
+    
+    --受伤
+    self.defenceDemage:setPercent(0)
+
+    --恢复
+    self.defenceBar:setVisible(true)
 
     local kResumeValue = 1  --每次恢复点数
     local function tick(dt)
-        local t = self.defenceResumeLoadingBar:getPercentage()
+        local t = self.defenceBar:getPercentage()
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
             print("盾牌恢复成功")
             scheduler.unscheduleGlobal(resumeDefenceHandler)
-            self.defenceResumeLoadingBar:removeFromParent()
+            self.defenceBar:setVisible(false)
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
             self.defence:setIsAble(true)
@@ -184,7 +187,7 @@ function FightPlayer:startDefenceResume(event)
             return
         end
         self.labelDefenceResume:setString(t1 - kResumeValue)
-        self.defenceResumeLoadingBar:setPercentage(t - kResumeValue)
+        self.defenceBar:setPercentage(t - kResumeValue)
     end
 
     resumeDefenceHandler = scheduler.scheduleGlobal(tick, 0.03)
@@ -192,8 +195,8 @@ end
 
 function FightPlayer:onDefenceBeHurt(event)
     local percent = event.percent * 100
-    print("percent,", percent)
-    self.loadingBarDefenceHp:setPercent(percent)
+    -- print("percent,", percent)
+    self.defenceDemage:setPercent(percent)
 end
 
 function FightPlayer:onHeroKill(event)
@@ -232,17 +235,25 @@ function FightPlayer:initTouchArea()
     self:initBtns()
 end
 
---加载defenceResume bar 控件
-function FightPlayer:loadDefenceResumeBar()
-    self.defenceResumeLoadingBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
-    self:addChild(self.defenceResumeLoadingBar)
-    self.defenceResumeLoadingBar:setOpacity(130)
-    self.defenceResumeLoadingBar:setPosition(1052, 370)
-    self.defenceResumeLoadingBar:setReverseDirection(true)
-    self.defenceResumeLoadingBar:setScale(2)
-    self.defenceResumeLoadingBar:setPercentage(100)
-end
+function FightPlayer:initDefence()
+    --受伤
+    --defence demage self.defenceDemage
+    self.defenceDemage = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
+    self.defenceDemage:setDirection(2)
+    
+    --恢复
+    self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
+    self.labelDefenceResume:setVisible(false)
 
+    self.defenceBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+    self.btnDefence:addChild(self.defenceBar)
+    self.defenceBar:setOpacity(130)
+    self.defenceBar:setAnchorPoint(0.0,0.0)
+    self.defenceBar:setReverseDirection(true)
+    self.defenceBar:setScale(2)
+    self.defenceBar:setPercentage(100)
+    self.defenceBar:setVisible(false)
+end
 
 function FightPlayer:initBtns()
     --btnfire   
@@ -261,17 +272,7 @@ function FightPlayer:initBtns()
     self.btnDefence = cc.uiloader:seekNodeByName(self, "btnDun")
     self.btnDefence:setTouchEnabled(true)
     self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-
-    --loadingBarDefenceHp
-    self.loadingBarDefenceHp = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
-    self.loadingBarDefenceHp:removeFromParent()
-    self.loadingBarDefenceHp:setDirection(2)
-    self:addChild(self.loadingBarDefenceHp)
-    self.loadingBarDefenceHp:setPosition(1052, 373) --todo yanxin
-
-    --labelDefenceHp
-    self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
-    self.labelDefenceResume:setVisible(false)
+    self:initDefence()
 
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
@@ -425,10 +426,6 @@ function FightPlayer:onCancelledFire()
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
     end
-
-    -- --anim
-    -- self.btnArmature:removeFromParent()
-    -- self.btnArmature = nil
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
@@ -453,12 +450,10 @@ function FightPlayer:checkBtnGold(point, eventName)
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         print("点击黄金枪 购买")
-        -- self.hero:activeGoldForever()
-        self.hero:activeGold()
+        self.inlay:activeGoldForever()
     end
     return isTouch    
 end
-
 
 function FightPlayer:onTouchMoved(event)
     -- print("FightPlayer:onTouchMoved(event)")
@@ -481,7 +476,6 @@ function FightPlayer:onTouchMoved(event)
         end
     end
 end
-
 
 ----attack----
 function FightPlayer:tick(dt)

@@ -49,14 +49,12 @@ end
 function DefenceView:onResumeDefence(event)
 end
 -- 
---切换盾甲
+
 function DefenceView:onSwitchDefence(event)
 	local isDefend = event.isDefend
 	if isDefend then
-		print("self:showDefence()")
 		self:showDefence()
 	else
-		print("self:hideDefence()")
 		self:hideDefence()
 	end
 end
@@ -87,23 +85,6 @@ function DefenceView:defenceBehurtEffect(event)
 	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
 	self.ui:runAction(cc.Sequence:create(tMove, tMove:reverse(),
 		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
-
-
-	-- local hurtedTimes = kRemainSumTimes - self.remainTimes
-	-- if kRemainSumTimes <= hurtedTimes then
-	-- 	--取消防御
-	-- 	self.defence:switchStatus()
-
-	-- 	--remove
-	-- 	for k, v in pairs(self.crackSprites) do
-	-- 		v:removeFromParent()
-	-- 	end
-	-- 	self.crackSprites = {}
-	-- 	self.isDefenceAble = false
-	-- 	self.remainTimes = kRemainSumTimes
-	-- end
-	-- local hurtedPercent = hurtedTimes / kRemainSumTimes
-	-- self.hero:dispatchEvent({name = Hero.SKILL_DEFENCE_BEHURT_EVENT, hurtedPercent = hurtedPercent})
 end
 
 
@@ -112,7 +93,6 @@ function DefenceView:addCrack(event)
 	for i=1,event.num do
 		local crackSprite = display.newSprite("#hit_boli.png")
 		local crackSize = crackSprite:getBoundingBox()
-		dump(crackSize, "crackSize")
 		local bgSize = self.crackRange:getContentSize()
 		crackSprite:setPosition(
 			math.random(crackSize.width / 2,
