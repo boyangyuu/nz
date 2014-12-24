@@ -44,7 +44,7 @@ Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
 Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
 --hp
-Hero.BASE_HP_REFRESH_EVENT  = "BASE_HP_REFRESH_EVENT"
+Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
 --define
 local kMaxHp          = 100
@@ -121,31 +121,13 @@ function Hero:refreshHp()
     self:setHp(valueHp)
 end
 
-function Hero:activeGold()
-    --check
-    if self.fightInlay:getIsNativeGold() then return end
-
-    --active
-    self.fightInlay:activeGold()
-
-    --hp
-    self:refreshHp()
-
-end
-
-function Hero:activeGoldForever()
-    
-end
-
-function Hero:activeGoldEnd()
-    --check
-    if self.fightInlay:getIsNativeGold() then return end    
-    
-    --active
-    self.fightInlay:activeGoldEnd()
-
-    --hp
-    self:refreshHp()
+function Hero:decreaseHp(hp)
+    local defence = md:getInstance("Defence")
+    if defence:getIsDefending() then 
+        defence:onHitted(hp)
+    else
+        Hero.super.decreaseHp(self, hp)
+    end
 end
 
 function Hero:setMapZoom(scale)

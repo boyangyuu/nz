@@ -19,12 +19,21 @@ function InfoLayer:ctor()
 		:addEventListener(Hero.GUN_BULLET_EVENT 	, handler(self, self.onRefreshBullet))	
 
 	self:loadCCS()
+	self:initUI()
 end
 
 function InfoLayer:loadCCS()
 	self.root = cc.uiloader:load("res/Fight/fightLayer/ui/infoUI.ExportJson")
 	self:addChild(self.root)
-	
+
+	self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/heroBlood.ExportJson")
+	self:addChild(self.blood)
+	local blood1 = cc.uiloader:seekNodeByName(self.blood, "progressBar1")
+	blood1:setPercent(100.0)
+	blood1:setScale(10.0)	
+end
+
+function InfoLayer:initUI()
 	self:initGun()
 	self:initBullet()
 end
@@ -48,19 +57,16 @@ function InfoLayer:onRefreshGun(event)
 	local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 	icon:setScaleX(0.05)
 	icon:setScaleY(0.05)
-	icon:scaleTo(0.30, 0.20)
+	icon:scaleTo(0.30, 0.30)
 	addChildCenter(icon, self.gunDisplay)
 end
 
 function InfoLayer:onRefreshBullet(event)
 	local num = event.num
 	assert(num, "num is nil") 
-
 	self.labelBulletNum:setString(num)
-	-- self.labelBulletNum:setScale(0.5)
-	-- self.labelBulletNum:runAction(cc.Sequence:create(
-	-- 	cc.ScaleBy:create(0.02, 1.3), 
-	-- 	cc.ScaleTo:create(0.02, 1.0)))
 end
+
+
 
 return InfoLayer
