@@ -27,6 +27,8 @@ function FightPlayer:ctor(properties)
     self.fight:refreshData(properties) 
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
+    self.dialog     = md:getInstance("DialogModel")
+
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
 
@@ -576,23 +578,23 @@ function FightPlayer:justFocusPos(node)
     node:setPosition(x, y)
 end
 
--- function FightPlayer:initDialog()
+function FightPlayer:initDialog()
 
---     local dialogLayer = DialogLayer:new()
---     -- dialogLayer:setPositionY(display.offset)
---     self:addChild(dialogLayer, 600)
+    local dialogLayer = DialogLayer:new()
+    -- dialogLayer:setPositionY(display.offset)
+    self:addChild(dialogLayer, 600)
 
---     local groupID = self.fight:getGroupId()
---     local levelID = self.fight:getLevelId()
---     local isExist = self.dialog:check(groupID,"level"..levelID,"forward")
---     dump(isExist)
---     if isExist then
---         self.dialog:startDialog("forward")
---     end
+    local groupID = self.fight:getGroupId()
+    local levelID = self.fight:getLevelId()
+    local isExist = self.dialog:check(groupID,"level"..levelID,"forward")
+    dump(isExist)
+    if isExist then
+        self.dialog:startDialog("forward")
+    end
 
 
 
--- end
+end
 
 function FightPlayer:initGuide()
     --check   

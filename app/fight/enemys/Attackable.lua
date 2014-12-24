@@ -33,7 +33,8 @@ function Attackable:ctor(property)
     cc.EventProxy.new(self.fight, self)
     	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
     	
-    self:scheduleUpdate()  	
+    self:scheduleUpdate()  
+    self:setNodeEventEnabled(true)	
     
     self:test()
 end
@@ -332,6 +333,10 @@ end
 
 function Attackable:getModel(id)
 	assert("required method, must implement me")	
+end
+
+function Attackable:onExit()
+	self:removeAllSchedulers()
 end
 
 

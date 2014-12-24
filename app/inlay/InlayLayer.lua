@@ -64,8 +64,7 @@ function InlayLayer:initUI()
             -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            dump(self.inlayModel:isGetAllGold())
-            -- self:refreshBtnIcon()
+            self.inlayModel:equipGoldInlays(true)
         end
     end)
 

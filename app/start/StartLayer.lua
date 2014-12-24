@@ -9,7 +9,7 @@ end
 
 function StartLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/zhucaidan")
-    local controlNode = cc.uiloader:load("zhucaidan_1.json")
+    local controlNode = cc.uiloader:load("zhucaidan_1.ExportJson")
     self:addChild(controlNode)
 end
 
@@ -26,7 +26,7 @@ function StartLayer:initUI()
     end)
 end
 
-function MainMenuLayer:beginGame()
+function StartLayer:beginGame()
 	ui:changeLayer("LoadingLayer",{})
 end
 
