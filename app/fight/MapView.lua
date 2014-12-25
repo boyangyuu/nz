@@ -19,7 +19,6 @@ local MapView = class("MapView", function()
     return display.newNode()
 end)
 
-_isJu = false
 _isZooming = false
 
 function MapView:ctor()
@@ -187,7 +186,7 @@ function MapView:addEnemy(property, pos, zorder)
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
 	property.scale = scale:getScaleX() 
-	-- property.scale = 0.5
+	-- property.scale = 1.0
 	--enemy 改为工厂
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
@@ -316,16 +315,38 @@ end
 --events
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
-	local datas = self:getTargetDatas(event.focusRangeNode)
-	
+	local focusRangeNode = event.focusRangeNode
+	local datas = self:getTargetDatas(focusRangeNode)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(data)
+		self:playEffectShooted()
 		if "穿透" then
 			-- break  --todoyby 改为谁的zorder在前面 就打谁！！
 		else
+
 		end
-	end 
+	end
+	local pWorld1 = focusRangeNode:convertToWorldSpace(cc.p(0,0))
+	local box = focusRangeNode:getBoundingBox()
+	local posx,posy = pWorld1.x + box.width/2, pWorld1.y + box.height/2
+	if #datas == 0 then 
+		self:playEffectUnShooted(cc.p(posx, posy))
+	else
+		self:playEffectShooted(cc.p(posx, posy))
+	end
+	
+end
+
+function MapView:playEffectShooted(pos)
+	-- local armature = 
+	-- local posx,posy = box.x + box.width/2, box.y + box.height/2
+
+	-- -- self:
+end
+
+function MapView:playEffectUnShooted(pos)
+	print("function MapView:playEffectUnShooted()")
 end
 
 function MapView:enemysHittedInRange(event)
@@ -341,6 +362,7 @@ end
 function MapView:onHeroPlaneFire(event)
 	
 end
+
 function MapView:onExit() 
 	if self.checkEnemysEmptyHandler then
 		scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)

@@ -37,6 +37,7 @@ function GuideLayer:ctor()
 end
 
 function GuideLayer:onTouch(event)
+	if not self.isGuiding then return false end
     if event.name == "began" or event.name == "added" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
@@ -158,6 +159,9 @@ end
 
 function GuideLayer:loadCCS()
 	--ui
+	if self.guideNode then 
+		self.guideNode:removeFromParent() 
+	end
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
@@ -243,6 +247,8 @@ end
 function GuideLayer:start(event)
 	print("function GuideLayer:start(event)")
 	self:setVisible(true)
+	self:setTouchEnabled(true)
+	self.isGuiding = true
 	if self.bg then self.bg:setVisible(true) end 
 	if self.guideNode then self.guideNode:setVisible(true) end 
 	self:refreshUI()
@@ -252,7 +258,9 @@ end
 function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
 	--clear
-
+	self:loadCCS()
+	self:setTouchEnabled(false)
+	self.isGuiding = false
 	--visible
 	self:setVisible(false)
 end

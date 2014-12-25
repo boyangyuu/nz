@@ -13,8 +13,8 @@ function RootLayer:ctor()
 
 	--add res
     self:addResHome()
-    -- self:addResFight()    
-    self:initLoginLayer()
+    self:addResFight()    
+    -- self:initLoginLayer()
 
 
     --loading
@@ -26,10 +26,10 @@ function RootLayer:ctor()
 end
 
 function RootLayer:initLoginLayer()
-    self.curLayer = main.new()
+    self.curLayer = HomeBarLayer.new()
     self:removeAllChildren()
     self:addChild(self.curLayer)      
-    self:addResFight()    
+    -- self:addResFight()    
 end
 
 function RootLayer:switchLayer(event)
@@ -67,7 +67,10 @@ function RootLayer:addResFight()
 
     local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
         "avatarhit", "blood1", "blood2", "gold", "shoulei", "danke", 
-        "baozhasl_y", "beizha_sl", "jijia"}
+        "baozhasl_y", "beizha_sl", "jijia", "xuetiao", "baozha4",
+            --命中特效
+        
+        }
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
@@ -85,13 +88,12 @@ function RootLayer:addResFight()
         local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end    
-
 end
 
 function RootLayer:dataLoaded(percent)
     print(" dataLoaded() percent:"..percent)
     if percent == 1 then 
-        -- self:initLoginLayer()
+        self:initLoginLayer()
     end
 end
 

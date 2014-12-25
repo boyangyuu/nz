@@ -22,42 +22,59 @@ function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
 
     --blood
-    self:initBlood(property.bloodOffset)
+    -- self:initBlood(property.bloodOffset)
 
 	--play
 	self:playStand()
-	-- local function start()
-	-- 	self:playStartState(property.startState)
-	-- end
-	-- scheduler.performWithDelayGlobal(start, 0.000)
 	
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
+    self:setNodeEventEnabled(true)
 end
 
 --ui
-function BaseEnemyView:initBlood(bloodOffset)
-	-- assert(bloodOffset , "bloodOffset is nil")
-    --add blood
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("enemyUI.ExportJson")  --todo待优化  
-    self.blood = cc.uiloader:seekNodeByName(node, "enemyBlood")
-    self.blood:removeFromParent()
-    local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height* 1.1)
-    self.armature:addChild(self.blood) 
-	self.bloodValueNode = cc.uiloader:seekNodeByName(self.blood , "blood")
-	self:setBlood(1.0)
+function BaseEnemyView:onEnter()
+	self:initBlood()
 end
 
-function BaseEnemyView:setBlood(scale)
-	if scale == 0 then 
-		self.blood:setVisible(false) 
+function BaseEnemyView:initBlood()
+    --add blood
+    local node = cc.uiloader:load("res/Fight/fightLayer/fightBlood/enemyBlood.ExportJson")    
+    self.blood = node
+    local bound = self.armature:getBoundingBox()
+    
+    --pos
+    local boneBlood = self.armature:getBone("blood")
+    local posBone = boneBlood:convertToWorldSpace(cc.p(0, 0))
+    local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+    self.blood:setPosition(destpos.x, destpos.y)
+    self.armature:addChild(self.blood)
+    
+    --set
+    self:setBlood(100)
+    self.blood:setVisible(false)
+endF
+
+function BaseEnemyView:setBlood(per)
+	-- --value
+	local bloodUp 	= cc.uiloader:seekNodeByName(self.blood, "bloodUp")
+	local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
+	bloodUp:setScaleX(per/100)
+	transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})
+
+	--visible
+	if self.bloodAction then 
+		transition.removeAction(self.bloodAction)
+		self.bloodAction = nil
 	end
-    local bloodBg = cc.uiloader:seekNodeByName(self.blood, "bloodBg")
-    local oSize = bloodBg:getContentSize()
-    self.bloodValueNode:setLayoutSize(oSize.width * scale, oSize.height)	
+	self.blood:setVisible(true)
+	local function hide()
+		self.blood:setVisible(false)
+	end
+	self.bloodAction = self.blood:performWithDelay(hide, 1.0)
+
 end
 
 function BaseEnemyView:playAfterAlert(type,handler)
@@ -132,7 +149,7 @@ function BaseEnemyView:playKill(event)
 
 	--以防万一
 	if self and self.setDeadDone then 
-		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 1.0)
+		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
 	end
 
 	self.armature:getAnimation():play("die" ,-1 , 1)
@@ -157,9 +174,11 @@ function BaseEnemyView:onHitted(targetData)
 				name = self.hero.ENEMY_KILL_HEAD_EVENT})
 		end
 	end
+
+	--hp
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
-	self:setBlood(hp/maxHp)
+	self:setBlood(hp/maxHp * 100)
 end
 
 function BaseEnemyView:getModel(property)

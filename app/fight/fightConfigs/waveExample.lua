@@ -6,18 +6,27 @@ local waveClass = class("waveExample", BaseWave)
 local waves = {
 	{
 		enemys = {  
+			-- {
+			-- 	time = 2,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
+			-- 	property = { 
+			-- 		type = "bao",
+			-- 		id = 4,
+			-- 		placeName = "place1",
+			-- 	},
+			-- },		
 			{
 				time = 2,
 				num = 6,
 				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
+				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
 				property = { 
-					-- type = "dao",
 					id = 1,
-					enemyId = 2,
 					placeName = "place1",
 				},
-			},		
+			},				
 		},
 	},
 }
@@ -25,10 +34,18 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=1000,walkRate=400,rollRate=400,fireRate=200,
-	weak1=2,weak2=4},
-	{id=2,image="daodan",demage=1,hp=10,walkRate=400,rollRate=400,fireRate=200,
-	weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=3,hp=100,walkRate=400,rollRate=400,fireRate=200,
+		weak1=2,weak2=4},
+	--近战兵
+	{id=2,image="jinzhanb",demage=5,hp=400,walkRate=400,rollRate=0,fireRate=100,
+		weak1=3,weak2=5},
+	--伞兵
+	{id=3,image="sanbing01",demage=3,hp=1,walkRate=400,rollRate=0,
+		fireRate=100,weak1=3,weak2=5},
+
+	--自爆兵
+	{id=4,image="zibaob",demage=2,hp=200,walkRate=400,rollRate=0,
+		fireRate=100,weak1=3,weak2=5},	
 	--
 }
 

@@ -36,7 +36,7 @@ function HeroLayer:ctor(properties)
 
 	--events
 	cc.EventProxy.new(self.hero, self)
-		:addEventListener(Actor.HP_INCREASE_EVENT			, handler(self, self.onHeroHpChange))
+
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 		:addEventListener(Hero.EFFECT_HURT_BOMB_EVENT		, handler(self, self.onHurtBombEffect))		
 		:addEventListener(Hero.SKILL_ROBOT_START_EVENT		, handler(self, self.onShowRobot))
@@ -55,8 +55,7 @@ function HeroLayer:ctor(properties)
 	self:setTouchEnabled(false) 
 	self:setNodeEventEnabled(true)
 	--test
-	--guide
-	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
+
 end
 
 function HeroLayer:loadCCS()
@@ -106,31 +105,6 @@ function HeroLayer:initKillTimerNode()
     self.killTimer:setAnchorPoint(0.0,0.0)
     self.killTimer:setPercentage(100)
     self.killTimer:setVisible(false)
-end
-
---player血条血量改变 
-function HeroLayer:onHeroHpChange(event)
-	   local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	   self.hp:setPercent(per)
-	   
-	-- local per1 = self.hero:getHp() / self.hero:getMaxHp() * 100
-	-- local t1 = self.hp:getPercent()
-	-- local tempHandler = nil
-
-	-- local function checkHeroHp( dt )
-	-- 	if t1 < per1 then
-	-- 		scheduler.unscheduleGlobal(tempHandler)
-	-- 		return
-	-- 	end
-
-	-- 	t1 = t1 - 0.4
-	-- 	if t1 > 0 then
-	-- 		self.hp:setPercent(t1)
-	-- 	else
-	-- 		scheduler.unscheduleGlobal(tempHandler)
-	-- 	end
-	-- end
-	-- tempHandler = scheduler.scheduleGlobal(checkHeroHp, 0.05)
 end
 
 --杀死敌人后跳出3金币
@@ -256,7 +230,6 @@ end
 function HeroLayer:onHurtEffect(event)
 	self:screenHurtedEffect()
  	self:bloodBehurtEffect()
-	self:onHeroHpChange(event)
 end
 
 function HeroLayer:onHurtBombEffect()
@@ -404,31 +377,6 @@ function HeroLayer:effectGunReload(event)
     self:addChild(armature)	
 end
 
-function HeroLayer:initGuide()
-    local isDone = self.guide:check("fight")
-    if isDone then return end
-	
-	local rect = self.hp:getBoundingBox()
-	rect.height = rect.height * 3
-	rect.y = rect.y - rect.height * 0.5
-	--blood
-    local data1 = {
-        id = "fight_blood",
-        groupId = "fight",
-        rect = rect,
-        endfunc = function (touchEvent)
-        	
-        end
-    }
-    self.guide:addClickListener(data1)  
-end
-
-function HeroLayer:onEnter()
-	self.inlay:checkNativeGold()
-	scheduler.performWithDelayGlobal(function()
-		self.guide:startGuide("fight")
-	end, 0.2)
-end
 
 function HeroLayer:onExit()
 	print("function HeroLayer:onExit()")
@@ -443,5 +391,8 @@ function HeroLayer:onExit()
 	end
 end
 
+function HeroLayer:onEnter()
+	self.inlay:checkNativeGold()
+end
 
 return HeroLayer
