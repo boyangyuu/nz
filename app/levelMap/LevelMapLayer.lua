@@ -14,6 +14,7 @@ function LevelMapLayer:ctor()
     self.LevelMapModel = md:getInstance("LevelMapModel")
     self.FightResultModel = md:getInstance("FightResultModel")
     self.UserModel = md:getInstance("UserModel")
+    self.LevelDetailModel = md:getInstance("LevelDetailModel")
     self:initData()
     self:initBgLayer()
     self:initChooseLayer()
@@ -52,7 +53,7 @@ function LevelMapLayer:initBgLayer()
 end
 
 function LevelMapLayer:initChooseLayer()
-    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.json")
+    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.ExportJson")
     self:addChild(self.chooseRootNode, Zorder_up)
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
@@ -61,7 +62,7 @@ function LevelMapLayer:initChooseLayer()
     local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
     local btnGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gift")
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "level")
-    self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "Panel_right")
+    self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
 
     self.levelNum:addChild(display.newSprite("chooseLevel/1.png", 
@@ -133,7 +134,7 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
-    self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".json")
+    self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".ExportJson")
     self.levelBtnRootNode:setPosition(0, 0)
     self:addChild(self.levelBtnRootNode, Zorder_up)
 
@@ -143,6 +144,30 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     for i = 1, self.levelAmount[groupId] do
         levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
         levelBtn[i]:setTouchEnabled(true)
+        local record = self.LevelDetailModel:getConfig(group,level)
+        if  group > groupId  and level > i  then
+
+        elseif group == groupId and level == i then
+            local type = record["type"]
+
+            local armature = ccs.Armature:create("gktb")
+            armature:setScale(0.8)
+            addChildCenter(armature, levelBtn[i])
+
+            if type == "boss" or type == "juji" then
+                        armature:getAnimation():play("dizuohong" , -1, 1)
+
+            elseif type == "jinbi" then
+                        armature:getAnimation():play("dizuohuang" , -1, 1)
+
+            elseif type == "putong" then
+                        armature:getAnimation():play("dizuolan" , -1, 1)
+
+            end
+        else                            
+            levelBtn[i]:setColor(cc.c3b(120, 120, 120))
+            -- levelBtn[i]:setShaderProgram
+        end
         -- add listener
         addBtnEventListener(levelBtn[i], function(event)
             if event.name=='began' then

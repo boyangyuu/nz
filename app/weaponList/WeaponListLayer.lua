@@ -237,6 +237,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
 
     self.progBullet:setPercent(bulletNum/kMaxBullet*100)
     self.progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
+    -- self.progAccuracy:setBreath()
     self.progReload  :setPercent((kMaxSpeed/reloadTime)*100)
 
     self.progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)

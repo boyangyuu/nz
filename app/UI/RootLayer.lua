@@ -86,6 +86,9 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end    
 
+    -- local src = "res/LevelMap/gktb/gktb.csb"
+    -- manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+
 end
 
 function RootLayer:dataLoaded(percent)

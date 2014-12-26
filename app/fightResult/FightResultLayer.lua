@@ -13,6 +13,7 @@ function FightResultLayer:ctor(properties)
     self.fightModel 	  = md:getInstance("Fight")
     self.levelMapModel    = md:getInstance("LevelMapModel")
 
+    self.isgold = false
     self.cardover = {}
     self.cardgold = {}
     self.cardnormal = {}
@@ -20,6 +21,7 @@ function FightResultLayer:ctor(properties)
     self.cardicon = {}
     self.cardlabel = {}
     self.star = {}
+    
     self.quickinlay = {}
     self.probaTable = {}
     self.showTable = {}
@@ -58,7 +60,7 @@ function FightResultLayer:initData()
 	-- local ran = math.random(#self.showTable)
 	table.insert(self.showTable,3,self.showTable[#self.showTable])
 	table.remove(self.showTable,#self.showTable)
-	dump(self.showTable)
+	-- dump(self.showTable)
 end
     
 local playFanHander = nil
@@ -227,6 +229,13 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
 			self.btnnext:setTouchEnabled(true)
 			self.btninlay:setTouchEnabled(true)
 
+			local ran = math.random(1, 100)
+			print(ran.."sidgiudhciuwgiuvgcwiub")
+			if ran < 99 then
+				self.isgold = true
+				-- self.goldpos = math.random(1, 6)
+				-- print(self.goldpos.."abcdefg")
+			end
 		end
 	end
 end
@@ -256,7 +265,7 @@ function FightResultLayer:getinlayfall()
 		local total = 0
 		for k,v in pairs(config) do
 			total = total + v["probability"]
-			if total > ran then
+			if total >= ran then
 				table.insert(probaTable,{inlayid = v["inlayid"]})
 				break
 			end
@@ -268,12 +277,12 @@ function FightResultLayer:getinlayfall()
 	local totals = 0
 	for k,v in pairs(table) do
 		totals = totals + v["probability"]
-		if totals > rans then
+		if totals >= rans then
 			probaTable[6]={inlayid = v["inlayid"]}
 			break
 		end
 	end
-	-- dump(probaTable)
+	dump(probaTable)
     return probaTable
 end
 
@@ -281,11 +290,11 @@ function FightResultLayer:turnOverCard(index)
 	self.grade = self.grade - 1
 	self.leftnumber:setString(self.grade)
 	-- dump(self.probaTable)
-	local ran = math.random(1, 100)
+	local ran = math.random(1, self.grade+1)
 	local record
-	if ran < 4 then
-		print(ran)
-		print("卧槽，你真翻到金的了")
+	print("金的"..ran.."区间1~"..self.grade+1)
+	if ran == 1 and self.isgold == true then
+		
 		record = self:getRanRecord(#self.probaTable)
 	else
 		local ran = math.random(1, #self.probaTable-1)
@@ -335,7 +344,7 @@ function FightResultLayer:turnLeftCard()
 end
 
 function FightResultLayer:quickInlay()
-	dump(self.quickinlay)
+	-- dump(self.quickinlay)
 	self.inlayModel:equipAllBestInlays(self.quickinlay)
 end
 
