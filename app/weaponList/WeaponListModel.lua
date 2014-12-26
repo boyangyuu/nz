@@ -1,4 +1,5 @@
 import("..includes.functionUtils")
+
 --[[--
 
 “武器库”类
@@ -84,7 +85,7 @@ end
 
 function WeaponListModel:buyWeapon(weaponid)
 	self:setWeapon(weaponid)
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
 end
 
 function WeaponListModel:intensify(weaponid)
@@ -102,15 +103,17 @@ function WeaponListModel:intensify(weaponid)
 			end
 		end
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star = true})
 end
 
 function WeaponListModel:onceFull(weaponid)
 	local data = getUserData()
+	local intenlevel
 	for k,v in pairs(data.weapons.bags) do
 		for k1,v1 in pairs(v) do
 			if k1 == "weaponid" and v1 == weaponid then
 				if data.weapons.bags[k].intenlevel < 10 then
+					intenlevel = data.weapons.bags[k].intenlevel
 					data.weapons.bags[k].intenlevel = 10
 					setUserData(data)
 				else
@@ -119,7 +122,7 @@ function WeaponListModel:onceFull(weaponid)
 			end
 		end
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star = true,intenlevel = intenlevel})
 end
 
 --isWeInBag
@@ -202,7 +205,7 @@ function WeaponListModel:equipBag( weaponid, index )
 		data.weapons.weaponed.bag1 = data.weapons.weaponed.bag2
 		data.weapons.weaponed.bag2 = x
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
 	-- dump(data)
 end
 

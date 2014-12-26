@@ -1,4 +1,5 @@
 import("..includes.functionUtils")
+local scheduler          = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local WeaponListCell = import(".WeaponListCell")
 local WeaponBag = import(".WeaponBag")
@@ -44,8 +45,11 @@ function WeaponListLayer:loadCCS()
 
     -- anim
     local src = "res/WeaponList/btbuyanim/bt_goumai.csb"
+    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
+    manager:addArmatureFileInfo(starsrc)
+
 end
 
 function WeaponListLayer:initUI()
@@ -69,6 +73,11 @@ function WeaponListLayer:initUI()
     for i=1,10 do
         self.stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
         self.stars[i]:setVisible(false)
+    end
+
+    self.panlStars = {}
+    for i=1,10 do
+        self.panlStars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "Panel_x_"..i)
     end
 
     self.labelDamage = cc.uiloader:seekNodeByName(self.paneldetail, "labeldamage")
@@ -176,12 +185,18 @@ end
 
 function WeaponListLayer:refresh(event)
     -- dump(event, "WeaponListLayer:refresh(event)")
-    self:refreshComment(self.selectedCellId)
+    self:refreshComment(self.selectedCellId,event.star,event.intenlevel)
     self:showButton(event)
 end
 
 -- 通过index选择Cell  refreshComment(cellIndex)  
-function WeaponListLayer:refreshComment(index)
+function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
+    for k,v in pairs(self.panlStars) do
+        if self.starArmature then
+            v:removeAllChildren()
+        end
+    end
+
 
     if index == nil then index = self.selectedCellId end
     
@@ -241,6 +256,29 @@ function WeaponListLayer:refreshComment(index)
             v:setVisible(false)
         end
     else
+        
+        if refreshStar then
+            local isoncefull
+            if intenlevel then
+                isoncefull = 10
+                x = intenlevel+1
+            else
+                isoncefull = x
+            end
+            local a = 0
+            for i=x,isoncefull do
+                local delay = a * 0.1
+                a = a + 1
+                function delayStar( )
+                    self.starArmature = ccs.Armature:create("gkjs_xing")
+                    self.starArmature:setPosition(19.5,19)
+                    self.starArmature:setScale(0.448,0.452)
+                    self.panlStars[i]:addChild(self.starArmature)
+                    self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
+                end
+                scheduler.performWithDelayGlobal(delayStar, delay)
+            end
+        end 
         for k,v in pairs(self.stars) do
             if k<x+1 then
                 v:setVisible(true)
