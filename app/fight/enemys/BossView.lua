@@ -46,13 +46,18 @@ end
 --ui
 function BossView:initBlood()
     --add blood
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("enemyUI.ExportJson")
-    self.blood = cc.uiloader:seekNodeByName(node, "bossBlood")
-    self.blood:removeFromParent()
-    local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height * 0.85)
-    self.armature:addChild(self.blood, 100)
+	self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/bossBlood.ExportJson")    
+    
+    --pos
+    local boneBlood = self.armature:getBone("blood")
+    local posBone = boneBlood:convertToWorldSpace(cc.p(0, 0))
+    local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+    self.blood:setPosition(destpos.x, destpos.y)
+    self.armature:addChild(self.blood)
+    
+    --value
+    self:setBlood(1.0)
 end
 
 function BossView:setBlood(scale)
@@ -61,22 +66,48 @@ function BossView:setBlood(scale)
 		return
 	end
 
-    local test = 1 / 3
-    local bloodHp = nil
-    if scale > test * 2 then
-    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood1")
-    	test = 100 - (1 - scale) * 3 * 100
-    elseif scale > test and scale <= test * 2 then
-    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood2")
-    	cc.uiloader:seekNodeByName(self.blood, "bossBlood1"):setPercent(0)
-    	test = 100 - (test * 2 - scale) * 3 * 100
+    local bloodUp, bloodDown = nil, nil
+    local newScale = nil
+
+    --visible
+    local node1 = cc.uiloader:seekNodeByName(self.blood, "blood1")
+    local node2 = cc.uiloader:seekNodeByName(self.blood, "blood2")
+    local node3 = cc.uiloader:seekNodeByName(self.blood, "blood3")
+    node1:setVisible(true)
+    node2:setVisible(true)
+    node3:setVisible(true)
+    -- 0.66 - 1
+    if scale > 0.66 then
+    	local node = node1
+    	node1:setVisible(true)
+    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
+    	newScale   = (scale - 0.66) / 0.33
+    	node3:setVisible(false)
+    	
+    -- 0.33 - 0.66
+    elseif scale > 0.33 and scale <= 0.66 then
+    	local node = node2
+    	node2:setVisible(true)
+    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
+    	newScale   = (scale - 0.33) / 0.3
+	    node1:setVisible(false)
+    	
+    -- 0 - 0.33
     else
-    	cc.uiloader:seekNodeByName(self.blood, "bossBlood2"):setPercent(0)
-    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood3")
-    	test = scale * 3 * 100
+    	local node = node3
+    	node3:setVisible(true)
+    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
+    	newScale   = scale / 0.33
+		node1:setVisible(false)
+	    node2:setVisible(false)
     end
-    
-    bloodHp:setPercent(test)
+
+    local newPer = newScale * 100
+    bloodUp:setPercent(newPer)
+    bloodDown:setPercentWithDelay(newPer, 0.1)
 end
 
 function BossView:playStand()
@@ -92,6 +123,7 @@ function BossView:playHitted(event)
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)	
+	-- self:playBombEffect(2)
 end
 
 function BossView:playMove()  --改为onMove
@@ -119,8 +151,21 @@ function BossView:playKill(event)
 	self:clearWeak()
 	self:testStop({isPause = true})
 
+	
 	--play dead
-	self.armature:getAnimation():play("dead" ,-1 , 1)
+	self.armature:getAnimation():play("die" ,-1 , 1)
+
+	--bomb
+	self:playBombEffects()
+end
+
+function BossView:playBombEffects()
+	for i=1,32 do
+		local sch = scheduler.performWithDelayGlobal(
+			handler(self, self.playBombEffect), i * 0.1)
+		self:addScheduler(sch)
+	end
+	-- scheduler.performWithDelayGlobal(handler(self,self.setDeadDone), 1.0)
 end
 
 function BossView:playSkill(skillName)
@@ -328,15 +373,15 @@ function BossView:animationEvent(armatureBack,movementType,movementID)
 		if self.pauseOtherAnim then return end
 		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
-		if movementID ~= "dead" then
+		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
 			if playCache then 
 				playCache()
 			else 					
 				self:playStand()
 			end
-    	elseif movementID == "dead" then 
-    		self:setDeadDone()
+    	elseif movementID == "die" then 
+    		self:setDeadDone(true)
     	end 
 	end
 end

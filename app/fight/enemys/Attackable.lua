@@ -13,8 +13,8 @@ function Attackable:ctor(property)
 	-- dump(property, "Attackable property")
 	--instance
     self.hero = md:getInstance("Hero")	
+    self.fight = md:getInstance("Fight")
 	self.enemy = self:getModel(property)
-	self.fight = md:getInstance("Fight")
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
@@ -178,14 +178,6 @@ function Attackable:setDeadDone()
 	self.deadDone = true
 end
 
--- function Attackable:setWillRemove()
--- 	self.willRemove = true
--- end
-
--- function Attackable:get( ... )
--- 	-- body
--- end
-
 function Attackable:checkPlace(offset)
 	local offset = offset or 0
 	--place的范围
@@ -278,6 +270,24 @@ function Attackable:playHittedEffect()
 	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
 	self:addScheduler(sch1)
 	self:addScheduler(sch2)
+end
+
+function Attackable:playBombEffect()
+	local bone = self.armature:getBone("bomb")
+	assert(bone, "bomb bone is nil")
+	local box = bone:getDisplayRenderNode():getBoundingBox()
+	-- local box = self.armature:getBoundingBox()
+	local bomb = ccs.Armature:create("baozha4")
+	bomb:setAnchorPoint(0.5,0.5)
+	-- dump(box, "box")
+	local bombBox = bomb:getBoundingBox()
+	-- dump(bombBox, "bombBox")
+	bomb:setPosition(
+		math.random(-box.width/2, box.width/2 ), 
+		math.random(0, box.height ))
+
+	self.armature:addChild(bomb, 100)
+	bomb:getAnimation():play("baozha4", -1, 0)
 end
 
 function Attackable:test()

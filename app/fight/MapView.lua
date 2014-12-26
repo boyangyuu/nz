@@ -14,23 +14,25 @@ local Hero 			= import(".Hero")
 local Fight         = import(".Fight")
 local Actor 		= import(".Actor")
 local EnemyFactroy	= import(".EnemyFactroy")
+local MapAnimView  	= import(".MapAnimView")
 
 local MapView = class("MapView", function()
     return display.newNode()
 end)
 
-_isJu = false
 _isZooming = false
-
+local kMissileZorder = 100
+local kEffectZorder = 101
 function MapView:ctor()
 	--instance
-	self.hero = md:getInstance("Hero")
-	self.fight = md:getInstance("Fight")
-	self.enemys = {}
-	self.waveIndex = 1
+	self.hero 			= md:getInstance("Hero")
+	self.fight			= md:getInstance("Fight")
+	self.map 			= md:getInstance("Map")
+	self.fightConfigs 	= md:getInstance("FightConfigs")
+	self.enemys 		= {}
+	self.waveIndex 		= 1
 	self.killEnemyCount = 0
-	self.isPause = false
-	self.fightConfigs = md:getInstance("FightConfigs")
+	self.isPause 		= false
 	
 	--ccs
 	self:loadCCS()
@@ -47,8 +49,10 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
-        :addEventListener(Hero.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
-        :addEventListener(Hero.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
+    
+    -- cc.EventProxy.new(self.map, self)
+    --     :addEventListener(self.map.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
+    --     :addEventListener(self.map.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
 
 	self:setNodeEventEnabled(true)
 end
@@ -63,6 +67,10 @@ function MapView:loadCCS()
 
 	self.map = cc.uiloader:load(mapSrcName)
 	addChildCenter(self.map, self)
+
+	--effect self.mapAnim
+	self.mapAnim = MapAnimView.new()
+	self.map:addChild(self.mapAnim, kEffectZorder)
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
@@ -145,31 +153,6 @@ function MapView:updateEnemys(event)
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:callfuncAddEnemys(event)
-	for i,enemyData in ipairs(event.enemys) do
-		local zorder = #event.enemys - i
-		local function addEnemyFunc()
-			self:addEnemy(enemyData.property, 
-			enemyData.pos.x, zorder) --todo
-		end		
-		
-		scheduler.performWithDelayGlobal(addEnemyFunc, 
-			enemyData.delay)
-	end
-end
-
-local kMissileZorder = 1000
-function MapView:callfuncAddMissile(event)
-	print("MapView:addMissile(event)")
-	local property = event.property
-	kMissileZorder = kMissileZorder - 1
-	-- dump(property, "property")
-	local enemyView = EnemyFactroy.createEnemy(property)
-	enemyView:setPosition(property.srcPos)
-	self.enemys[#self.enemys + 1] = enemyView
-	self.map:addChild(enemyView, kMissileZorder)
-end
-
 function MapView:addEnemy(property, pos, zorder)
 	local placeName = property.placeName
 	assert(placeName , "invalid param placeName:"..placeName )
@@ -187,8 +170,6 @@ function MapView:addEnemy(property, pos, zorder)
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
 	property.scale = scale:getScaleX() 
-	-- property.scale = 0.5
-	--enemy 改为工厂
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 
@@ -313,19 +294,57 @@ function MapView:getEnemysInRect(rect)
 	return enemys
 end
 
+
+
 --events
+function MapView:callfuncAddEnemys(event)
+	for i,enemyData in ipairs(event.enemys) do
+		local zorder = #event.enemys - i
+		local function addEnemyFunc()
+			self:addEnemy(enemyData.property, 
+			enemyData.pos.x, zorder) --todo
+		end		
+		
+		scheduler.performWithDelayGlobal(addEnemyFunc, 
+			enemyData.delay)
+	end
+end
+
+function MapView:callfuncAddMissile(event)
+	print("MapView:addMissile(event)")
+	local property = event.property
+	kMissileZorder = kMissileZorder - 1
+	-- dump(property, "property")
+	local enemyView = EnemyFactroy.createEnemy(property)
+	enemyView:setPosition(property.srcPos)
+	self.enemys[#self.enemys + 1] = enemyView
+	self.map:addChild(enemyView, kMissileZorder)
+end
+
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
-	local datas = self:getTargetDatas(event.focusRangeNode)
-	
+	local focusRangeNode = event.focusRangeNode
+	local datas = self:getTargetDatas(focusRangeNode)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
 		data.enemy:onHitted(data)
 		if "穿透" then
+			--getGlobalZOrder
 			-- break  --todoyby 改为谁的zorder在前面 就打谁！！
 		else
+
 		end
-	end 
+	end
+
+	--pos
+	local pWorld1 = focusRangeNode:convertToWorldSpace(cc.p(0,0))
+	local box = focusRangeNode:getBoundingBox()
+	pWorld1.x, pWorld1.y = pWorld1.x + box.width/2, pWorld1.y + box.height/2
+
+	--effect
+	local isHitted = not #datas == 0
+	self.mapAnim:playEffectShooted({isHitted = isHitted, 
+		pWorld= pWorld1})
 end
 
 function MapView:enemysHittedInRange(event)
@@ -341,6 +360,7 @@ end
 function MapView:onHeroPlaneFire(event)
 	
 end
+
 function MapView:onExit() 
 	if self.checkEnemysEmptyHandler then
 		scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)

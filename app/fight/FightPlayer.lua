@@ -94,8 +94,8 @@ function FightPlayer:changeGoldCount(event)
 end
 
 function FightPlayer:onClickRobot()
-    self:hideControl()
-    self.hero:dispatchEvent({name = self.hero.SKILL_ROBOT_START_EVENT})
+    local robot = md:getInstance("Robot")
+    robot:startRobot()
 end
 
 function FightPlayer:showControl(event)
@@ -129,9 +129,9 @@ function FightPlayer:initUI()
     self.ui = node
     self:addChild(node)
 
-    --load map
-    self.layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    addChildCenter(self.mapView, self.layerBg) 
+    --load map layerMap
+    self.layerMap = cc.uiloader:seekNodeByName(self, "layerMap")
+    addChildCenter(self.mapView, self.layerMap) 
 
     --gold
     self.labelGold = cc.uiloader:seekNodeByName(self, "labelGoldCount")
@@ -520,12 +520,12 @@ function FightPlayer:moveFocus(offsetX, offsetY)
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
-    local layerBg = self.layerBg
-    local xOri, yOri = layerBg:getPosition()
+    local layerMap = self.layerMap
+    local xOri, yOri = layerMap:getPosition()
     local scale = KFightConfig.scaleMoveBg
-    layerBg:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
-    local x, y = layerBg:getPosition()
-    self:justBgPos(layerBg)
+    layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
+    local x, y = layerMap:getPosition()
+    self:justBgPos(layerMap)
 end
 
 function FightPlayer:moveGun(x) 
@@ -534,7 +534,7 @@ function FightPlayer:moveGun(x)
 end
 
 function FightPlayer:justBgPos(node)
-    local layerBg = self.layerBg
+    local layerMap = self.layerMap
     local bgMap = self.mapView  
     local w, h = bgMap:getSize().width , 
         bgMap:getSize().height

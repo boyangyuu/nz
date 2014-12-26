@@ -10,13 +10,10 @@ local scheduler = require("framework.scheduler")
 local Actor 	= import(".Actor")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
-local FightInlay= import(".FightInlay")
-local Guide 	= import("..guide.GuideModel")
-local Defence   = import(".Defence") 
 
 --import view
-local DefenceView = import(".DefenceView")
-
+local DefenceView = import(".skills.DefenceView")
+local RobotView = import(".skills.RobotView")
 --kconfig
 local kRemainSumTimes = 4
 local kLeiDemage = 600.0
@@ -36,10 +33,10 @@ function HeroLayer:ctor(properties)
 
 	--events
 	cc.EventProxy.new(self.hero, self)
-		:addEventListener(Actor.HP_INCREASE_EVENT			, handler(self, self.onHeroHpChange))
+
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 		:addEventListener(Hero.EFFECT_HURT_BOMB_EVENT		, handler(self, self.onHurtBombEffect))		
-		:addEventListener(Hero.SKILL_ROBOT_START_EVENT		, handler(self, self.onShowRobot))
+		-- :addEventListener(Hero.SKILL_ROBOT_START_EVENT		, handler(self, self.onShowRobot))
 
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))
@@ -47,7 +44,7 @@ function HeroLayer:ctor(properties)
 		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
 	
 	cc.EventProxy.new(self.inlay, self)
-		:addEventListener(FightInlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
+		:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
 	self:loadCCS()
 	self:initUI()
 	self:initData()
@@ -55,8 +52,7 @@ function HeroLayer:ctor(properties)
 	self:setTouchEnabled(false) 
 	self:setNodeEventEnabled(true)
 	--test
-	--guide
-	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
+
 end
 
 function HeroLayer:loadCCS()
@@ -65,14 +61,18 @@ function HeroLayer:loadCCS()
 end
 
 function HeroLayer:initUI()
-	
-	self:initHeroHpNode()
+
 	self:initKillTimerNode()
 
 	--defence
 	local defenceNode = cc.uiloader:seekNodeByName(self.ui, "defenceNode")
 	local defenceView = DefenceView.new()
 	defenceNode:addChild(defenceView)
+
+	--robot
+	local robotNode = cc.uiloader:seekNodeByName(self.ui, "robotNode")
+	local robotView = RobotView.new()
+	robotNode:addChild(robotView)	
 end
 
 function HeroLayer:initData()
@@ -84,13 +84,6 @@ function HeroLayer:initData()
 
 	--hp
 	self:updateHp()
-end
-
-function HeroLayer:initHeroHpNode()
-	self.hp = cc.uiloader:seekNodeByName(self.ui, "hp")
-
-	self.robotNode = cc.uiloader:seekNodeByName(self.ui, "robot")
-	self.robotNode:setVisible(false)	
 end
 
 function HeroLayer:initKillTimerNode()
@@ -106,31 +99,6 @@ function HeroLayer:initKillTimerNode()
     self.killTimer:setAnchorPoint(0.0,0.0)
     self.killTimer:setPercentage(100)
     self.killTimer:setVisible(false)
-end
-
---player血条血量改变 
-function HeroLayer:onHeroHpChange(event)
-	   local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	   self.hp:setPercent(per)
-	   
-	-- local per1 = self.hero:getHp() / self.hero:getMaxHp() * 100
-	-- local t1 = self.hp:getPercent()
-	-- local tempHandler = nil
-
-	-- local function checkHeroHp( dt )
-	-- 	if t1 < per1 then
-	-- 		scheduler.unscheduleGlobal(tempHandler)
-	-- 		return
-	-- 	end
-
-	-- 	t1 = t1 - 0.4
-	-- 	if t1 > 0 then
-	-- 		self.hp:setPercent(t1)
-	-- 	else
-	-- 		scheduler.unscheduleGlobal(tempHandler)
-	-- 	end
-	-- end
-	-- tempHandler = scheduler.scheduleGlobal(checkHeroHp, 0.05)
 end
 
 --杀死敌人后跳出3金币
@@ -218,18 +186,6 @@ function HeroLayer:killEnemyCallBack( event )
     self.killTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
 end
 
---开启机甲
-function HeroLayer:onShowRobot(event)
-	--armature
-	local armature = ccs.Armature:create("jijia")
-	armature:setPosition(display.width/2 , display.height1/2)
-	self:addChild(armature)
-	local anim = armature:getAnimation()
-	anim:play("jijia", -1 ,0)
-	-- self.robotNode:setVisible(true)
-end
-
-
 function HeroLayer:bloodBehurtEffect()
 	local strAnim = nil
 	if 1 >= math.random(0, 3) then 
@@ -256,7 +212,6 @@ end
 function HeroLayer:onHurtEffect(event)
 	self:screenHurtedEffect()
  	self:bloodBehurtEffect()
-	self:onHeroHpChange(event)
 end
 
 function HeroLayer:onHurtBombEffect()
@@ -273,28 +228,17 @@ function HeroLayer:onThrowGrenade(event)
 	armature:setScale(2.0)
 	armature:getAnimation():play("lei", -1, 1)
 	
-	--destrect
+	--destRect
 	local destPos = event.throwPos
-	-- dump(destPos, "destPos")
-	local destRect = cc.rect(destPos.x, 
-						destPos.y ,
+	local destRect = cc.rect(destPos.x, destPos.y ,
 						kLeiW,kLeiW)
 	destRect.x = destPos.x - kLeiW / 2
 	destRect.y = destPos.y - kLeiW / 2
-	-- dump(destRect, "destRect")
 	--lei
-	local function playThrowBomb()
-		local armature = ccs.Armature:create("baozhasl_y")
-		armature:setPosition(destPos.x, destPos.y)
-		self:addChild(armature)
-		print("playThrowBomb")
-		armature:getAnimation():playWithIndex(0)
-		armature:getAnimation():setMovementEventCallFunc(
-	    	function (armatureBack,movementType,movementId) 
-		    	if movementType == ccs.MovementEventType.loopComplete then
-					armature:removeFromParent()
-		    	end 
-	    	end)
+	local function playBombEffect()
+		local map = md:getInstance("Map")
+		map:dispatchEvent({name = map.EFFECT_LEI_BOMB_EVENT,
+			pWorld = destRect})
 	end
 
 	local seq =  cc.Sequence:create(
@@ -305,7 +249,7 @@ function HeroLayer:onThrowGrenade(event)
 		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
 		                    	targetData = targetData, destPos = destPos,destRect = destRect })
 							armature:removeFromParent()
-							playThrowBomb()
+							playBombEffect()
 						end)
 					 )
 	armature:runAction(seq)
@@ -404,31 +348,6 @@ function HeroLayer:effectGunReload(event)
     self:addChild(armature)	
 end
 
-function HeroLayer:initGuide()
-    local isDone = self.guide:check("fight")
-    if isDone then return end
-	
-	local rect = self.hp:getBoundingBox()
-	rect.height = rect.height * 3
-	rect.y = rect.y - rect.height * 0.5
-	--blood
-    local data1 = {
-        id = "fight_blood",
-        groupId = "fight",
-        rect = rect,
-        endfunc = function (touchEvent)
-        	
-        end
-    }
-    self.guide:addClickListener(data1)  
-end
-
-function HeroLayer:onEnter()
-	self.inlay:checkNativeGold()
-	scheduler.performWithDelayGlobal(function()
-		self.guide:startGuide("fight")
-	end, 0.2)
-end
 
 function HeroLayer:onExit()
 	print("function HeroLayer:onExit()")
@@ -443,5 +362,8 @@ function HeroLayer:onExit()
 	end
 end
 
+function HeroLayer:onEnter()
+	self.inlay:checkNativeGold()
+end
 
 return HeroLayer
