@@ -7,9 +7,9 @@ end
 
 function BaseWave:getEnemys(id)
 	id = tonumber(id)
-	dump(self.enemys, "self.enemys")
+	-- dump(self.enemys, "self.enemys")
 	assert(self.enemys[id], "config in wave is nil! id is: "..id)
-	dump(self.enemys[id], "self.enemys[id]")
+	-- dump(self.enemys[id], "self.enemys[id]")
 	return self.enemys[id]
 end
 

@@ -39,9 +39,8 @@ Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 
---map
-Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
-Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
+-- --map
+--   Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
 
 --hp
 Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
@@ -137,22 +136,5 @@ end
 function Hero:getMapZoom()
     return self.mapZoom or 1.0
 end
-
---[[
-    @param type：crit blood bullet clip helper speed 
-    return: 镶嵌id
-]]
-function Hero:getInlayedValue(type)
-    --id
-    local inlays = self.inlayModel:getAllInlayed()
-    -- dump(inlays, "inlays")
-    -- print("type", type)
-    local inlayedId  = inlays[type]
-    if inlayedId == nil then return nil,false end
-    local record = getRecordByKey("config/items_xq.json", "id", inlayedId)
-    local value = record[1].valueProgram
-    print("Hero:getInlayedValue value:", value)
-    return value, true
-end 
 
 return Hero

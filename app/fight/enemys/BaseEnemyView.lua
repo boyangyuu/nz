@@ -20,10 +20,7 @@ local kWalkWidth = 20
 
 function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
-
-    --blood
-    -- self:initBlood(property.bloodOffset)
-
+	
 	--play
 	self:playStand()
 	
@@ -36,6 +33,7 @@ end
 --ui
 function BaseEnemyView:onEnter()
 	self:initBlood()
+
 end
 
 function BaseEnemyView:initBlood()
@@ -55,7 +53,7 @@ function BaseEnemyView:initBlood()
     --set
     self:setBlood(100)
     self.blood:setVisible(false)
-endF
+end
 
 function BaseEnemyView:setBlood(per)
 	-- --value

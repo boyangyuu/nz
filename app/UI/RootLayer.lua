@@ -53,8 +53,8 @@ end
 
 function RootLayer:addResFight()
     --sprite
+    display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
     display.addSpriteFrames("allImg0.plist", "allImg0.png")
-
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
@@ -65,12 +65,20 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
     end
 
-    local uiImgs = {"baotou", "hjwq", "huanzidan", "ruodiangj", "tanhao",
-        "avatarhit", "blood1", "blood2", "gold", "shoulei", "danke", 
-        "baozhasl_y", "beizha_sl", "jijia", "xuetiao", "baozha4",
-            --命中特效
-        
-        }
+    local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia"}
+    for i,v in ipairs(heroImgs) do
+        local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    end
+
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz", }
+    for i,v in ipairs(mapImgs) do
+        local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    end
+
+    local uiImgs = {"baotou", "huanzidan", "ruodiangj", "tanhao",
+        "gold", "shoulei", "danke", "baozhasl_y", "beizha_sl", "xuetiao", "baozha4",}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
