@@ -399,11 +399,21 @@ end
 
 function FightPlayer:onBtnFire()
     -- print("ightPlayer:onBtnFire()")
-    if self:canGunShot() then 
-        self:fire()
-    end
 
-    --动画
+    --check robot
+    local robot = md:getInstance("Robot")
+    local isRobot = robot:getIsRoboting()
+    if  isRobot then
+        if robot:isCoolDownDone() then
+            self:robotFire()
+        end
+    else
+        if self:isCoolDownDone() then 
+            self:fire()
+        end        
+    end 
+
+    --btn armature
     if self.btnArmature ~= nil then return end
     local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
     self.btnArmature = getArmature("effect_gun_kaiqiang", src)
@@ -421,9 +431,17 @@ end
 
 function FightPlayer:onCancelledFire()
     -- print("FightPlayer:onCancelledFire()")
-    self.gunView:stopFire()
+    local robot = md:getInstance("Robot")
+    local isRobot = robot:getIsRoboting()
+    if  isRobot then 
+        robot:stopFire()
+    else
+        self.gunView:stopFire()
+        
+    end
+
     self.focusView:stopFire()
-    
+
     --sch
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
@@ -484,7 +502,7 @@ function FightPlayer:tick(dt)
     --gun
 end
 
-function FightPlayer:canGunShot()
+function FightPlayer:isCoolDownDone()
     if  self.hero:canFire() then 
         return true 
     end
@@ -494,18 +512,27 @@ end
  
 function FightPlayer:fire()
     -- print("FightPlayer:fire()")
+    local focusRangeNode = self.focusView:getFocusRange()
 
     --hero 控制cooldown
     self.hero:fire()
 
     --gun
-    if  self.gunView:canShot() then 
+    if  self.gunView:canShot() then  --todo
         self.gunView:fire()
         self.focusView:playFire()
-        local focusRangeNode = self.focusView:getFocusRange()
+        
         --todo 发命令
         self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
+end
+ 
+function FightPlayer:robotFire()
+    local robot = md:getInstance("Robot")
+    if not robot:isCoolDownDone() then return end
+    robot:fire()
+    local focusRangeNode = self.focusView:getFocusRange()
+    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
 end
 
 ----move----
@@ -739,12 +766,15 @@ end
 function FightPlayer:removeAllSchs()
     if tempChangeGoldHandler then 
         scheduler.unscheduleGlobal(tempChangeGoldHandler)
+        tempChangeGoldHandler = nil
     end
     if resumeDefenceHandler then 
         scheduler.unscheduleGlobal(resumeDefenceHandler)
+        resumeDefenceHandler= nil
     end
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
+        self.btnFireSch = nil
     end
 end
 

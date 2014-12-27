@@ -11,15 +11,20 @@ end)
 
 function InfoLayer:ctor()
 	--instance
-	self.hero 	= md:getInstance("Hero")
-	self.weaponModel = md:getInstance("WeaponListModel")
-	self.guide 	= md:getInstance("Guide")
+	self.hero 			= md:getInstance("Hero")
+	self.weaponModel 	= md:getInstance("WeaponListModel")
+	self.guide 			= md:getInstance("Guide")
+	self.fight  		= md:getInstance("Fight")
 
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Hero.GUN_CHANGE_EVENT		, handler(self, self.onRefreshGun))
 		:addEventListener(Hero.GUN_BULLET_EVENT 	, handler(self, self.onRefreshBullet))	
 		:addEventListener(Hero.HP_INCREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.HP_DECREASE_EVENT	, handler(self, self.onHeroHpChange))
+	cc.EventProxy.new(self.fight, self)
+		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
+		:addEventListener(self.fight.INFO_SHOW_EVENT, handler(self, self.onShow))
+		
 	self:loadCCS()
 	self:initUI()
 	self:initGuide()
@@ -92,7 +97,14 @@ function InfoLayer:onHeroHpChange(event)
 	    scheduler.performWithDelayGlobal(handler(self, self.rejustBloodAnim), 0.3)
     end		
     self.bloodAnim:getAnimation():play("xuetiao_s" , -1, 1)	
+end
 
+function InfoLayer:onShow(event)
+	self:setVisible(true)
+end
+
+function InfoLayer:onHide(event)
+	self:setVisible(false)
 end
 
 function InfoLayer:rejustBloodAnim()

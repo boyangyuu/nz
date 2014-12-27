@@ -32,9 +32,10 @@ function MapAnimView:playEffectShooted(event)
 	local animName = nil
 	local inlay = md:getInstance("FightInlay") 
 	local isGold = inlay:getIsActiveGold()
+	local isRobot = md:getInstance("Robot"):getIsRoboting()
 
 	--animName
-	if isGold then 
+	if isGold or isRobot then 
 		animName = "hjqmz"
 	elseif ishitted then
 		animName = "zdmz_pt" 
