@@ -6,8 +6,8 @@ local waves = {
 		enemys = { 
 			{
 				time = 3,	
-				num = 4,
-				pos = {-50,50,150,250},
+				num = 3,
+				pos = {50,150,250},
 				delay = {0,0.5,0.6,1},
 				property = { 
 					placeName = "place1",
@@ -15,7 +15,7 @@ local waves = {
 					id = 1,
 				},
 			},
-						{
+			{
 				time = 4,	
 				num = 3,
 				pos = {100,200,300},
@@ -36,7 +36,8 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},		
+			},	
+
 		},
 	},
 	{
@@ -98,9 +99,38 @@ local waves = {
 					enemyId = 1,
 					placeName = "place2",
 				},
-			},									
+			},	
+			{
+				time = 10,	
+				num = 4,
+				pos = {0,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place6",
+					id = 1,
+				},
+			},
+			{
+				time = 11,	
+				num = 4,
+				pos = {0,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place2",
+					id = 1,
+				},
+			},
+			{
+				time = 12,	
+				num = 4,
+				pos = {0,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place4",
+					id = 1,
+				},
+			},
 		},
-
 	},	
 	{
 		enemys = {  --boss
@@ -124,19 +154,19 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=360,walkRate=400,rollRate=400,fireRate=400,
-	weak1=5,weak2=4},
+	{id=1,image="anim_enemy_002",demage=2,hp=340,walkRate=400,rollRate=400,fireRate=400,
+	weak1=4,weak2=4},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=720,walkRate=400,rollRate=100,fireRate=100,
+	{id=2,image="jinzhanb",demage=4,hp=1080,walkRate=400,rollRate=100,fireRate=100,
 		weak1=2,weak2=2},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=2,hp=360,walkRate=400,rollRate=100,
-		fireRate=300,weak1=5,weak2=5},
+	{id=3,image="sanbing01",demage=2,hp=340,walkRate=400,rollRate=100,
+		fireRate=300,weak1=4,weak2=5},
 
 	--导弹
-	{id=4,image="daodan",demage=20,hp=100,weak1=3,weak2=5},					
+	{id=4,image="daodan",demage=10,hp=100,weak1=1,weak2=1},					
 
 }
 
@@ -145,7 +175,7 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "boss01", --图片名字
-		hp = 10000,
+		hp = 15000,
 		demage = 3,
 		fireRate = 400,
 		walkRate = 200,
@@ -154,16 +184,16 @@ local bosses = {
 		
 		skilltrigger = {   --技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.70,
+				0.95, 0.75,0.45,0.
 			},
 			moveRightFire = {
-				0.65, 0.30,
+				0.85, 0.65,0.35,
 			},
 			daoDan = {
 				-- 0.90, 0.70, 0.50, 0.30,
 			},
 			saoShe = {
-				0.65, 0.55,
+				0.6, 0.5,
 			},
 			weak2 = {
 				0.70,

@@ -20,7 +20,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 7,
+				time = 3,
 				num = 2,
 				delay ={0, 0.3},
 				pos = {10,100},		
@@ -31,7 +31,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 7,
+				time = 5,
 				num = 1,
 				delay = {0.5},
 				pos = {50},
@@ -99,7 +99,7 @@ local waves = {
 				delay = {0.1},
 				pos = {20},
 				property = { 
-					placeName = "place7", 
+					placeName = "place4", 
 					startState = "",
 					id = 1,
 				},
@@ -110,13 +110,47 @@ local waves = {
 				delay = {0, 0.3},
 				pos = {100, 150},
 				property = { 
-					placeName = "place8",
+					placeName = "place3",
 					startState = "rollleft",
 					id = 1,
 				},
 			},						
 		},
-
+	},	
+	{
+		enemys = {
+			{
+				time = 3,
+				num = 3,
+				delay = {0, 0.3,0.6},
+				pos = {0,100,160},
+				property = { 
+					placeName = "place5", 
+					id = 1,
+				},
+			},	
+			{
+				time = 4,
+				num = 3,
+				delay = {0, 0.3,0.6},
+				pos = {0,90,60},
+				property = { 
+					placeName = "place6", 
+					startState = "",
+					id = 1,
+				},
+			},
+			{
+				time = 5,
+				num = 2,
+				delay = {0.3,0.6},
+				pos = {20,60},
+				property = { 
+					placeName = "place2", 
+					id = 1,
+				},
+			},
+		},
 	},				
 }
 
