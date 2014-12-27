@@ -20,31 +20,49 @@ end)
 function FocusView:ctor(properties)
 	--instance
 	self.hero = md:getInstance("Hero")
-	self.gun = self.hero:getGun()
+	
 	self.isJu = false
 
-	--focus
-	local gunId = 1   -- todo 外界传 Gun
-	local focusId = gunId + 11
-    local src = "Fight/focusAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
-    self.armature = getArmature("anim_zunxin_sq", src) 
-    self.armature:setAnchorPoint(0.5,0.5)
-	
-    --都配在武器表里 
-	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
-	self:addChild(self.armature) 
-	self:playIdle()
-	local range = FightConfigs:getFocusRange() --todo 不要 fightConfigs 需要根据枪表来设置
-	self:setFocusRange(cc.size(range, range))
-	self.playIndex = "stand"
-
-    -- test
-    self:test()
+	self:refreshFocus()
 
     --event
      cc.EventProxy.new(self.hero, self)
 		 :addEventListener(self.hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
 		 :addEventListener(self.hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
+		 :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.refreshFocus))
+end
+
+function FocusView:refreshFocus(event)
+	--clear
+	print("function FocusView:refreshFocus(event)")
+	if self.armature then
+		self.armature:removeFromParent()
+	end
+
+	if self.focusRange then 
+		self.focusRange:removeFromParent()
+	end
+
+	--data
+	self.playIndex = "stand"
+	local gun = self.hero:getGun()
+
+	--armature
+	local config =  gun:getConfig()
+	-- dump(config, "self FocusView config")
+	-- local animName = config.focusName
+    local src = "Fight/focusAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
+    self.armature = getArmature("anim_zunxin_sq", src) 
+    self.armature:setAnchorPoint(0.5,0.5)
+	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+	self:addChild(self.armature)
+
+	--range
+	local range = FightConfigs:getFocusRange() 
+	self:setFocusRange(cc.size(config.rangeHigh, 
+		config.rangeWidth))
+	
+	self:playIdle()
 end
 
 function FocusView:playIdle()
@@ -79,20 +97,16 @@ function FocusView:stopFire()
 end
 
 function FocusView:setFocusRange(size)
-	if self.focusRange then 
-		self.focusRange:removeFromParent()
-	end
+
     self.focusRange = display.newScale9Sprite()
     self.focusRange:setContentSize(size)
     addChildCenter(self.focusRange, self)
+
+    drawBoundingBox(nil, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 
 function FocusView:getFocusRange()
 	return self.focusRange
-end
-
-function FocusView:test()
-    drawBoundingBox(self, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 
 --狙击
@@ -132,6 +146,9 @@ end
 
 function FocusView:removeJu()
 	print("FocusView:removeJu()")
+	if self.focusRange then 
+		self.focusRange:removeFromParent()
+	end
 
 	--zoom
 	local time = 0.1

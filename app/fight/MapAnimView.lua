@@ -14,7 +14,6 @@ end)
 
 function MapAnimView:ctor()
 	local map = md:getInstance("Map")
-	dump(map, "map")
 	cc.EventProxy.new(map, self)
 		:addEventListener(map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
 end

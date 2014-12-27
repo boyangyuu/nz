@@ -17,7 +17,6 @@ function LevelDetailModel:getConfig(BigID,SmallID)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
 			if k1 == "levelId" and v1==SmallID then
-				dump(v)
 				return v
 			end
 		end	
@@ -51,7 +50,7 @@ function LevelDetailModel:levelPass(groupId,levelId)
 	-- 		data.currentlevel.level = 1
 	-- 	end
 			setUserData(data)
-			dump(GameState.load())
+			-- dump(GameState.load())
 		end
 	end
 end

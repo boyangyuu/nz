@@ -15,26 +15,42 @@ function Dialog:check(groupId,levelId,appear)
 	print(" Dialog:check"..groupId.."-"..levelId..","..appear)
 	local config = DialogConfigs.getConfig(groupId,levelId,appear)
 	if config == nil then
-		return false
+		self:finishDialog(appear)
 	end
+	-- return true
+	dump(config, "config")
+	self.appearType = appear
+	assert(self.appearType, "appearType is nil")
+	self:startDialog()
 	return true
 end
 
-function Dialog:getDialogNum(groupId,levelId,appear)
-	dump(appear)
+function Dialog:getType()
+	return self.appearType
+end
+
+function Dialog:getDialogNum()
+	local fight  = md:getInstance("Fight") 	
+	local groupId = fight:getGroupId()
+	local levelId = "level"..fight:getLevelId()
+	local appear  = self:getType() 
+
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
-	dump(configs)
+	-- dump(configs)
 	return #configs
 end
 
 function Dialog:finishDialog()
 	--dispatch
 	self:dispatchEvent({name = Dialog.DIALOG_FINISH_EVENT})
+	local fight = md:getInstance("Fight")
+	fight:onFinishDialog(self.appearType)
 end
 
-function Dialog:startDialog(appear)
+function Dialog:startDialog()
 	--dispatch
-	self:dispatchEvent({name = Dialog.DIALOG_START_EVENT,appear = appear})
+	print("function Dialog:startDialog(appear)")
+	self:dispatchEvent({name = Dialog.DIALOG_START_EVENT})
 end
 
 return Dialog
