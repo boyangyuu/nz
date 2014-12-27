@@ -13,8 +13,8 @@ function RootLayer:ctor()
 
 	--add res
     self:addResHome()
-    self:addResFight()    
-    -- self:initLoginLayer()
+    -- self:addResFight()    
+    self:initLoginLayer()
 
 
     --loading
@@ -29,7 +29,7 @@ function RootLayer:initLoginLayer()
     self.curLayer = HomeBarLayer.new()
     self:removeAllChildren()
     self:addChild(self.curLayer)      
-    -- self:addResFight()    
+    self:addResFight()    
 end
 
 function RootLayer:switchLayer(event)
@@ -96,12 +96,16 @@ function RootLayer:addResFight()
         local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end    
+
+    -- local src = "res/LevelMap/gktb/gktb.csb"
+    -- manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+
 end
 
 function RootLayer:dataLoaded(percent)
     print(" dataLoaded() percent:"..percent)
     if percent == 1 then 
-        self:initLoginLayer()
+        -- self:initLoginLayer()
     end
 end
 
