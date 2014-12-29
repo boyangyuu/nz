@@ -26,7 +26,7 @@ function RootLayer:ctor()
 end
 
 function RootLayer:initLoginLayer()
-    self.curLayer = HomeBarLayer.new()
+    self.curLayer = main.new()
     self:removeAllChildren()
     self:addChild(self.curLayer)      
     self:addResFight()    
@@ -46,15 +46,21 @@ end
 
 function RootLayer:addResHome()
     --sprite
+    cc.FileUtils:getInstance():addSearchPath("res/public")
     display.addSpriteFrames("allImg0.plist", "allImg0.png")
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
     --armature
+
+    --sound
+    local startMusic = "res/Start/start.ogg"
+    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    audio.preloadMusic(startMusic)
+    -- audio.preloadMusic(homeBarMusic)
 end
 
 function RootLayer:addResFight()
     --sprite
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
-    display.addSpriteFrames("allImg0.plist", "allImg0.png")
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
@@ -97,8 +103,8 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end    
 
-    -- local src = "res/LevelMap/gktb/gktb.csb"
-    -- manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    local src = "res/LevelMap/gktb/gktb.csb"
+    manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
 
 end
 

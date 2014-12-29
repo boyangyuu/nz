@@ -17,12 +17,19 @@ function HomeBarLayer:ctor()
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
+    -- self:playSound()
     self:loadCCS()
     self:initHomeLayer()
     self:refreshMoney()
     self:refreshCommonLayer("levelMapLayer")
+    self:setNodeEventEnabled(true)
+
 end
 
+function HomeBarLayer:playSound()
+    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    audio.playMusic(homeBarMusic,true)
+end
 
 function HomeBarLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer")
@@ -151,6 +158,14 @@ function HomeBarLayer:homeBarAction()
         cc.CallFunc:create(function()
             self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
         end)}))
+end
+
+function HomeBarLayer:onEnter()
+    self:playSound()
+end
+
+function HomeBarLayer:onExit()
+
 end
 
 return HomeBarLayer

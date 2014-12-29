@@ -140,32 +140,41 @@ function LevelMapLayer:refreshLevelLayer(groupId)
 
     --btn
     local levelBtn = {}
+    local levelDian = {}
+    local panelBtn = {}
     local group,level = self.LevelMapModel:getConfig()
     for i = 1, self.levelAmount[groupId] do
         levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
+        levelDian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..i)
+        panelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..i)
         levelBtn[i]:setTouchEnabled(true)
         local record = self.LevelDetailModel:getConfig(group,level)
-        if  group > groupId  and level > i  then
+        if  group > groupId or group == groupId and level > i  then
 
         elseif group == groupId and level == i then
-            local type = record["type"]
+            levelDian[i]:setVisible(false)
+            -- while true do
+            local action = transition.sequence({
+            cc.MoveTo:create(0.5, cc.p(levelBtn[i]:getPositionX() , levelBtn[i]:getPositionY()+ 15)), 
+            cc.MoveTo:create(0.5, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() - 15))})
+            levelBtn[i]:runAction(cc.RepeatForever:create(action))
 
+            -- end
+            local type = record["type"]
             local armature = ccs.Armature:create("gktb")
             armature:setScale(0.8)
-            addChildCenter(armature, levelBtn[i])
-
+            armature:setPosition(panelBtn[i]:getContentSize().width/2,20)
+            panelBtn[i]:addChild(armature)
             if type == "boss" or type == "juji" then
-                        armature:getAnimation():play("dizuohong" , -1, 1)
-
+                armature:getAnimation():play("dizuohong" , -1, 1)
             elseif type == "jinbi" then
-                        armature:getAnimation():play("dizuohuang" , -1, 1)
-
+                armature:getAnimation():play("dizuohuang" , -1, 1)
             elseif type == "putong" then
-                        armature:getAnimation():play("dizuolan" , -1, 1)
-
+                armature:getAnimation():play("dizuolan" , -1, 1)
             end
         else                            
-            levelBtn[i]:setColor(cc.c3b(120, 120, 120))
+            levelBtn[i]:setColor(cc.c3b(80, 80, 80))
+            levelDian[i]:setColor(cc.c3b(80, 80, 80))
             -- levelBtn[i]:setShaderProgram
         end
         -- add listener

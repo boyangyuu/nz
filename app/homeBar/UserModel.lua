@@ -4,6 +4,7 @@ local UserModel = class("UserModel", cc.mvc.ModelBase)
 
 function UserModel:ctor(properties)
 	UserModel.super.ctor(self, properties)
+	self.LevelMapModel = md:getInstance("LevelMapModel")
 	self:addComponent("components.behavior.EventProtocol"):exportMethods()
 end
 
@@ -58,5 +59,23 @@ end
 	data.money = data.money + money
 	setUserData(data)
 end
+
+function UserModel:levelPass(groupId,levelId)
+	local data = getUserData()
+	local group = data.currentlevel.group
+	local level = data.currentlevel.level
+	if groupId == group and levelId ==level then
+		if self.LevelMapModel:getNextGroupAndLevel(group, level) == false then
+			print("通关")
+		else
+			local nextgroup,nextlevel = self.LevelMapModel:getNextGroupAndLevel(group, level)
+			data.currentlevel.group = nextgroup
+			data.currentlevel.level = nextlevel
+			setUserData(data)
+			dump(GameState.load())
+		end
+	end
+end
+
 
 return UserModel

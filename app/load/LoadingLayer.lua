@@ -7,6 +7,8 @@ function LoadingLayer:ctor()
 	self:loadCCS()
 	self:initUI()
 	self:changeHomeLayer()
+    self:setNodeEventEnabled(true)
+
 end
 
 function LoadingLayer:loadCCS()
@@ -43,6 +45,12 @@ function LoadingLayer:changeHomeLayer()
 		ui:changeLayer("HomeBarLayer", {})
 	end
 	scheduler.performWithDelayGlobal(delayShow, 3)
+end
+
+function LoadingLayer:onExit()
+    audio.stopMusic()
+    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    audio.preloadMusic(homeBarMusic)
 end
 
 return LoadingLayer

@@ -26,7 +26,7 @@ function Fight:refreshData(properties)
     self.hero = md:getInstance("Hero")  --todo改为refreash Instance
     self.inlay = md:getInstance("FightInlay")
     self.inlayModel = md:getInstance("InlayModel")
-
+    self.userModel = md:getInstance("UserModel")
 
     --关卡
     self.groupId = properties.groupId
@@ -50,6 +50,7 @@ function Fight:setResult(isWin)
     --游戏暂停
     print("Fight:setResult(isWin)", isWin)
     if isWin then
+        self.userModel:levelPass(self.groupId,self.levelId)
         self.inlayModel:removeAllInlay()
         ui:showPopup("FightResultPopup",{},{anim = false})
     else
