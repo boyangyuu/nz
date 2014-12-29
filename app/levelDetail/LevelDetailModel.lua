@@ -17,14 +17,12 @@ function LevelDetailModel:getConfig(BigID,SmallID)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
 			if k1 == "levelId" and v1==SmallID then
-				dump(v)
 				return v
 			end
 		end	
 	end
 	return nil
 end
-
 
 function LevelDetailModel:setsuipian(weaponid)
 	-- local data = getUserData()

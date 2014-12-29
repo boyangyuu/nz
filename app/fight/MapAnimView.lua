@@ -14,7 +14,6 @@ end)
 
 function MapAnimView:ctor()
 	local map = md:getInstance("Map")
-	dump(map, "map")
 	cc.EventProxy.new(map, self)
 		:addEventListener(map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
 end
@@ -32,9 +31,10 @@ function MapAnimView:playEffectShooted(event)
 	local animName = nil
 	local inlay = md:getInstance("FightInlay") 
 	local isGold = inlay:getIsActiveGold()
+	local isRobot = md:getInstance("Robot"):getIsRoboting()
 
 	--animName
-	if isGold then 
+	if isGold or isRobot then 
 		animName = "hjqmz"
 	elseif ishitted then
 		animName = "zdmz_pt" 

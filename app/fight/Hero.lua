@@ -90,6 +90,11 @@ function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
     local value = 0
 
+    local robot   = md:getInstance("Robot")
+    if robot:getIsRoboting() then
+        return robot:getDemage()    
+    end
+    
     --inlay
     local scale, isInlayed = self.fightInlay:getInlayedValue("bullet")
     if isInlayed then
@@ -122,8 +127,11 @@ end
 
 function Hero:decreaseHp(hp)
     local defence = md:getInstance("Defence")
+    local robot   = md:getInstance("Robot")
     if defence:getIsDefending() then 
         defence:onHitted(hp)
+    elseif robot:getIsRoboting() then
+        robot:onHitted()
     else
         Hero.super.decreaseHp(self, hp)
     end

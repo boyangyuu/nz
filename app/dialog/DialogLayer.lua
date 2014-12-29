@@ -6,21 +6,16 @@ local DialogLayer = class("DialogLayer", function()
 end)
 
 function DialogLayer:ctor()
-	self:loadCCS()
-	self:initUI()
-	self.index = 1
     self.dialog = md:getInstance("DialogModel")
-    self.fight  = md:getInstance("Fight")   
-    -- self.appear = ""
-	-- get Group Level
-    self.groupID = self.fight:getGroupId()
-    self.levelID = self.fight:getLevelId()
+	self.index = 1
 
 	--event
 	cc.EventProxy.new(self.dialog, self)
 		:addEventListener(self.dialog.DIALOG_FINISH_EVENT, handler(self, self.finish))
 		:addEventListener(self.dialog.DIALOG_START_EVENT, handler(self, self.start))
-
+	
+	self:loadCCS()
+	self:initUI()
 end
 
 function DialogLayer:loadCCS()
@@ -40,25 +35,33 @@ function DialogLayer:initUI()
             return true
         elseif event.name=='ended' then
             if self.index > self.num then
-	           	self.dialog:finishDialog()
+            	self:finishDialog()
             else
-	            self:refreshUI(self.groupID, "level"..self.levelID, self.appear)
+	            self:refreshUI()
 	        end
         end
     end)
 end
 
--- local appear
 function DialogLayer:start(event)
+	print("function DialogLayer:start(event)")
 
-	self.appear = event.appear
+	self.num = self.dialog:getDialogNum()
 
-	self.num = self.dialog:getDialogNum(self.groupID, "level"..self.levelID, self.appear)
-
-	self:refreshUI(self.groupID, "level"..self.levelID, self.appear)
+	self:refreshUI()
 end
 
-function DialogLayer:refreshUI(groupId,levelId,appear)
+function DialogLayer:finishDialog()
+	self.dialog:finishDialog()
+end
+
+
+function DialogLayer:refreshUI()
+	local fight  = md:getInstance("Fight") 	
+	local groupId = fight:getGroupId()
+	local levelId = "level"..fight:getLevelId()
+	local appear  = self.dialog:getType() 
+
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	dump(configs)
 	local sentence = configs[self.index]

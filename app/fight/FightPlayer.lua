@@ -157,10 +157,15 @@ function FightPlayer:initUI()
     --touch area
     self:initTouchArea()
 
+    --dialogy
+    local dialogLayer = DialogLayer.new()
+    local layerDialog = cc.uiloader:seekNodeByName(self, "layerDialog") 
+    print("!!!!!!!!!!!!!!!!!!!!! layerDialog = cc.uiload!!!!!!!!!!!!!!!!!!!!!!!")
+    dump(layerDialog, "layerDialog")
+    layerDialog:addChild(dialogLayer)
+
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
-
-    -- self:initDialog()
 end
 
 --启动盾牌恢复
@@ -336,7 +341,7 @@ function FightPlayer:onMutiTouchEnd(event)
 end
 
 function FightPlayer:checkbtnRobot(point)
-    assert( point, "invalid params")
+    if not self.btnRobot:isVisible() then return end
     local rect = self.btnRobot:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
@@ -346,6 +351,7 @@ function FightPlayer:checkbtnRobot(point)
 end
 
 function FightPlayer:checkbtnDefence(point)
+    if not self.btnDefence:isVisible() then return end
     local rect = self.btnDefence:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
@@ -355,7 +361,7 @@ function FightPlayer:checkbtnDefence(point)
 end
 
 function FightPlayer:checkBtnLei(point)
-    assert( point, "invalid parames")
+    if not self.btnLei:isVisible() then return end    
     local rect = self.btnLei:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
@@ -369,6 +375,7 @@ end
 
 function FightPlayer:checkBtnChange(point)
     assert( point , "invalid params")
+    if not self.btnChange:isVisible() then return end
     local rect = self.btnChange:getCascadeBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
@@ -398,15 +405,21 @@ function FightPlayer:checkBtnFire(id,point,eventName)
 end
 
 function FightPlayer:onBtnFire()
-    -- print("ightPlayer:onBtnFire()")
-    if self:canGunShot() then 
-        self:fire()
-    end
+    local robot = md:getInstance("Robot")
+    local isRobot = robot:getIsRoboting()
+    if  isRobot then
+        if robot:isCoolDownDone() then
+            self:robotFire()
+        end
+    else
+        if self:isCoolDownDone() then 
+            self:fire()
+        end        
+    end 
 
-    --动画
+    --btn armature
     if self.btnArmature ~= nil then return end
-    local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
-    self.btnArmature = getArmature("effect_gun_kaiqiang", src)
+    self.btnArmature = ccs.Armature:create("effect_gun_kaiqiang")
     self.btnArmature:getAnimation():playWithIndex(0 , -1, 1)
     local function animationEvent(armatureBack,movementType,movementID)
         if movementType == ccs.MovementEventType.loopComplete then
@@ -421,9 +434,16 @@ end
 
 function FightPlayer:onCancelledFire()
     -- print("FightPlayer:onCancelledFire()")
-    self.gunView:stopFire()
+    local robot = md:getInstance("Robot")
+    local isRobot = robot:getIsRoboting()
+    if  isRobot then 
+        robot:stopFire()
+    else
+        self.gunView:stopFire()
+    end
+
     self.focusView:stopFire()
-    
+
     --sch
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
@@ -431,7 +451,7 @@ function FightPlayer:onCancelledFire()
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
-    -- if self.btnJu:getVisible() == false then return end 
+    if self.btnJu:isVisible() == false then return end 
     local rect = self.btnJu:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
@@ -448,6 +468,7 @@ function FightPlayer:checkBtnJu(point,eventName)
 end
 
 function FightPlayer:checkBtnGold(point, eventName)
+    if self.btnGold:isVisible() == false then return end 
     local rect = self.btnGold:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
@@ -458,8 +479,6 @@ function FightPlayer:checkBtnGold(point, eventName)
 end
 
 function FightPlayer:onTouchMoved(event)
-    -- print("FightPlayer:onTouchMoved(event)")
-    -- dump(event, "onTouchMoved")
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
         local isBtnTouchPoint = false
@@ -470,6 +489,7 @@ function FightPlayer:onTouchMoved(event)
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
             local offsetX = x - prevX 
             local offsetY = y - prevY
+            
             --处理瞄准
             self:moveFocus(offsetX, offsetY)
             
@@ -484,7 +504,7 @@ function FightPlayer:tick(dt)
     --gun
 end
 
-function FightPlayer:canGunShot()
+function FightPlayer:isCoolDownDone()
     if  self.hero:canFire() then 
         return true 
     end
@@ -494,18 +514,27 @@ end
  
 function FightPlayer:fire()
     -- print("FightPlayer:fire()")
+    local focusRangeNode = self.focusView:getFocusRange()
 
     --hero 控制cooldown
     self.hero:fire()
 
     --gun
-    if  self.gunView:canShot() then 
+    if  self.gunView:canShot() then  --todo
         self.gunView:fire()
         self.focusView:playFire()
-        local focusRangeNode = self.focusView:getFocusRange()
+        
         --todo 发命令
         self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
+end
+ 
+function FightPlayer:robotFire()
+    local robot = md:getInstance("Robot")
+    if not robot:isCoolDownDone() then return end
+    robot:fire()
+    local focusRangeNode = self.focusView:getFocusRange()
+    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
 end
 
 ----move----
@@ -576,24 +605,6 @@ function FightPlayer:justFocusPos(node)
         y = display.height1
     end
     node:setPosition(x, y)
-end
-
-function FightPlayer:initDialog()
-
-    local dialogLayer = DialogLayer:new()
-    -- dialogLayer:setPositionY(display.offset)
-    self:addChild(dialogLayer, 600)
-
-    local groupID = self.fight:getGroupId()
-    local levelID = self.fight:getLevelId()
-    local isExist = self.dialog:check(groupID,"level"..levelID,"forward")
-    dump(isExist)
-    if isExist then
-        self.dialog:startDialog("forward")
-    end
-
-
-
 end
 
 function FightPlayer:initGuide()
@@ -739,12 +750,15 @@ end
 function FightPlayer:removeAllSchs()
     if tempChangeGoldHandler then 
         scheduler.unscheduleGlobal(tempChangeGoldHandler)
+        tempChangeGoldHandler = nil
     end
     if resumeDefenceHandler then 
         scheduler.unscheduleGlobal(resumeDefenceHandler)
+        resumeDefenceHandler= nil
     end
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
+        self.btnFireSch = nil
     end
 end
 

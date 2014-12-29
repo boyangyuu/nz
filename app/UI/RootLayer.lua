@@ -49,8 +49,9 @@ function RootLayer:addResHome()
     cc.FileUtils:getInstance():addSearchPath("res/public")
     display.addSpriteFrames("allImg0.plist", "allImg0.png")
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
+    
     --armature
-
+    
     --sound
     local startMusic = "res/Start/start.ogg"
     -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
@@ -84,7 +85,8 @@ function RootLayer:addResFight()
     end
 
     local uiImgs = {"baotou", "huanzidan", "ruodiangj", "tanhao",
-        "gold", "shoulei", "danke", "baozhasl_y", "beizha_sl", "xuetiao", "baozha4",}
+        "gold", "shoulei", "danke", "baozhasl_y", "beizha_sl", "xuetiao", "baozha4",
+        "effect_gun_kaiqiang"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

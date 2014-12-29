@@ -37,9 +37,6 @@ function MapView:ctor()
 	--ccs
 	self:loadCCS()
 
-	--enemys
-	self:updateEnemys()
-
 	-- event
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     self:scheduleUpdate()
@@ -49,7 +46,9 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
-    
+     cc.EventProxy.new(self.fight, self)   
+        :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
+
     -- cc.EventProxy.new(self.map, self)
     --     :addEventListener(self.map.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
     --     :addEventListener(self.map.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
@@ -99,20 +98,11 @@ function MapView:loadCCS()
     end
 end
 
-function MapView:checkWave()
-	local function checkEnemysEmpty()
-		if #self.enemys == 0 then 
-			print("第"..self.waveIndex.."波怪物消灭完毕")
-			self.waveIndex = self.waveIndex + 1
-			self:updateEnemys()
-			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-		end
-	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
+function MapView:startFight(event)
+	self:updateEnemys()
 end
 
---enemy
-function MapView:updateEnemys(event)
+function MapView:updateEnemys()
 	--wave config
 	local waveConfig = self.fightConfigs:getWaveConfig(groupId, levelId)
 	local wave = waveConfig:getWaves(self.waveIndex)
@@ -151,6 +141,18 @@ function MapView:updateEnemys(event)
 	end
 	--check next wave
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+end
+
+function MapView:checkWave()
+	local function checkEnemysEmpty()
+		if #self.enemys == 0 then 
+			print("第"..self.waveIndex.."波怪物消灭完毕")
+			self.waveIndex = self.waveIndex + 1
+			self:updateEnemys()
+			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+		end
+	end
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
 end
 
 function MapView:addEnemy(property, pos, zorder)
