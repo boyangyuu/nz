@@ -92,9 +92,15 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end
 
-    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk"} 
+    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk", "syqk"} 
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    end 
+
+    local focusImgs = {"anim_zunxin_sq",} 
+    for i,v in ipairs(focusImgs) do
+        local src = "res/Fight/focusAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end 
 

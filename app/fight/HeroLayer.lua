@@ -363,7 +363,7 @@ function HeroLayer:onExit()
 end
 
 function HeroLayer:onEnter()
-	self.inlay:checkNativeGold()
+	-- self.inlay:checkNativeGold()
 end
 
 return HeroLayer

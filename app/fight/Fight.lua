@@ -29,22 +29,25 @@ function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
 end
 
-function Fight:refreshData(properties)
-    --init inatance
-
-    self.hero       = md:getInstance("Hero")  --todo改为refreash Instance
-    self.inlay      = md:getInstance("FightInlay")
-    self.inlayModel = md:getInstance("InlayModel")
-    self.userModel = md:getInstance("UserModel")
-
+function Fight:beginFight(properties)
     --关卡
     self.groupId = properties.groupId
     self.levelId = properties.levelId
 
     --dialog
-    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)
+    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
 end
 
+function Fight:refreshData()
+    print("function Fight:refreshData()")
+   
+    --init inatance
+    self.hero       = md:getInstance("Hero")  --todo改为refreash Instance
+    self.inlay      = md:getInstance("FightInlay")
+    self.inlay:checkNativeGold()
+    self.inlayModel = md:getInstance("InlayModel")
+    self.userModel  = md:getInstance("UserModel")
+end
 
 function Fight:willStartFight()
     self:checkDialog("forward")
@@ -54,24 +57,39 @@ function Fight:willEndFight()
     self:checkDialog("after")
 end
 
+function Fight:startFight()
+   -- print{"function Fight:startFight()"}
+   self:refreshData()
+   self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
+end
+
+function Fight:endFight()
+    -- print("function Fight:endFight()")
+    self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
+    ui:showPopup("FightResultPopup",{},{anim = false})
+
+    --clear
+    self:clearFightData()
+end
+
+function Fight:onWin()
+    self.userModel:levelPass(self.groupId,self.levelId)
+    self:willEndFight()    
+end
+
+function Fight:onFail()
+    ui:showPopup("FightResultFailPopup",{},{anim = false})
+
+    --clear
+    self:clearFightData()    
+end
+
 function Fight:checkDialog(appearType)
     local dialog = md:getInstance("DialogModel")
     dialog:check(appearType)
 end
 
-function Fight:startFight()
-   print{"function Fight:startFight()"}
-   self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-end
-
-function Fight:endFight()
-    print("function Fight:endFight()")
-    self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
-    ui:showPopup("FightResultPopup",{},{anim = false})
-end
-
 function Fight:onFinishDialog(appearType)
-    print("function Fight:onFinishDialog(appearType)")
     if appearType == "forward" then
         self:startFight()
     elseif appearType == "after" then
@@ -96,21 +114,6 @@ function Fight:getCurGroupAndLevel()
     return self.groupId , self.levelId 
 end
 
-function Fight:setResult(isWin)
-    --游戏暂停
-    print("Fight:setResult(isWin)", isWin)
-    if isWin then
-        self.userModel:levelPass(self.groupId,self.levelId)
-        self.inlayModel:removeAllInlay()
-        self:willEndFight()
-    else
-        self.inlayModel:removeAllInlay()
-        ui:showPopup("FightResultFailPopup",{},{anim = false})
-    end
-
-    self:clearFightData()
-end
-
 function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo
 end
@@ -119,6 +122,7 @@ function Fight:clearFightData()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")  
+    self.inlayModel:removeAllInlay()
 end
 
 return Fight

@@ -26,10 +26,14 @@ function FocusView:ctor(properties)
 	self:refreshFocus()
 
     --event
-     cc.EventProxy.new(self.hero, self)
+    cc.EventProxy.new(self.hero, self)
 		 :addEventListener(self.hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
 		 :addEventListener(self.hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
 		 :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.refreshFocus))
+	
+	local inlay = md:getInstance("FightInlay")
+	cc.EventProxy.new(inlay, self)
+		:addEventListener(inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.refreshFocus))
 end
 
 function FocusView:refreshFocus(event)
@@ -49,18 +53,19 @@ function FocusView:refreshFocus(event)
 
 	--armature
 	local config =  gun:getConfig()
-	-- dump(config, "self FocusView config")
-	-- local animName = config.focusName
-    local src = "Fight/focusAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
-    self.armature = getArmature("anim_zunxin_sq", src) 
+	dump(config, "self FocusView config")
+	local focusName = config.focusName
+    self.armature = ccs.Armature:create(focusName) 
     self.armature:setAnchorPoint(0.5,0.5)
 	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(self.armature)
 
 	--range
-	local range = FightConfigs:getFocusRange() 
-	self:setFocusRange(cc.size(config.rangeHigh, 
-		config.rangeWidth))
+	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
+	local scale  = isGold and config.goldRangeScale or 1.0
+	local h = config.rangeHigh *scale
+	local w = config.rangeWidth*scale
+	self:setFocusRange(cc.size(h, w))
 	
 	self:playIdle()
 end
