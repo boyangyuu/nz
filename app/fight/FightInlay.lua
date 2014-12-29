@@ -22,12 +22,13 @@ function FightInlay:ctor(properties)
     FightInlay.super.ctor(self, properties)
     self.inlayModel = md:getInstance("InlayModel") 
 
-    self:checkNativeGold()
+    -- self:checkNativeGold()
 end
 
 function FightInlay:checkNativeGold()
     print("FightInlay:checkNativeGold()")
     local isNativeGold = self:getIsNativeGold()
+    print("isNativeGold", isNativeGold)
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
         self:activeGoldForever()
@@ -36,7 +37,7 @@ end
 
 function FightInlay:activeGoldForever()
     self:setIsActiveGold(true)
-    print("FightInlay:activeGold()") 
+    print("FightInlay:activeGoldForever()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
 

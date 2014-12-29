@@ -145,13 +145,12 @@ function BossView:playMove()  --改为onMove
 end
 
 function BossView:playKill(event)
-	--clear
+	--clear TODO
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	self:clearWeak()
 	self:testStop({isPause = true})
 
-	
 	--play dead
 	self.armature:getAnimation():play("die" ,-1 , 1)
 
@@ -165,7 +164,6 @@ function BossView:playBombEffects()
 			handler(self, self.playBombEffect), i * 0.1)
 		self:addScheduler(sch)
 	end
-	-- scheduler.performWithDelayGlobal(handler(self,self.setDeadDone), 1.0)
 end
 
 function BossView:playSkill(skillName)
@@ -370,7 +368,10 @@ end
 --接口 BossView:
 function BossView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if self.pauseOtherAnim then return end
+		if self.pauseOtherAnim and movementID ~= "die" then 
+			return 
+		end
+		
 		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then

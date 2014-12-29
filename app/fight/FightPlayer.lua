@@ -24,7 +24,7 @@ end)
 function FightPlayer:ctor(properties)
     --instance
     self.fight      = md:getInstance("Fight")
-    self.fight:refreshData(properties) 
+    self.fight:beginFight(properties)
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
@@ -160,8 +160,6 @@ function FightPlayer:initUI()
     --dialogy
     local dialogLayer = DialogLayer.new()
     local layerDialog = cc.uiloader:seekNodeByName(self, "layerDialog") 
-    print("!!!!!!!!!!!!!!!!!!!!! layerDialog = cc.uiload!!!!!!!!!!!!!!!!!!!!!!!")
-    dump(layerDialog, "layerDialog")
     layerDialog:addChild(dialogLayer)
 
     --guide
@@ -211,7 +209,7 @@ function FightPlayer:onHeroKill(event)
     self:onCancelledFire()
 
     --fight 
-    self.fight:setResult(false)
+    self.fight:onFail()
 end
 
 function FightPlayer:initTouchArea()

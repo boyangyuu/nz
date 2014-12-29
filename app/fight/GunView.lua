@@ -164,6 +164,7 @@ function GunView:refreshGun()
 
     --枪火 todo放在fp里
     local jqkName = config.jqkName --机枪口特效
+    dump(config, "config")
     self.jqk = ccs.Armature:create(jqkName)
     self.jqk:setVisible(false)
     local boneQk = armature:getBone("qk")
@@ -181,8 +182,6 @@ function GunView:refreshGun()
 
     --蛋壳
     self:addDanke()
-
-    -- drawBoundingBox(self, armature, "red")
 end
 
 function GunView:addDanke()
