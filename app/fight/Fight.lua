@@ -42,19 +42,21 @@ function Fight:refreshData(properties)
     self.levelId = properties.levelId
 
     --dialog
-    scheduler.performWithDelayGlobal(handler(self, self.checkStartFight), 0.4)
+    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)
 end
 
 
-function Fight:checkStartFight()
-    self:checkDialog()
+function Fight:willStartFight()
+    self:checkDialog("forward")
 end
 
-function Fight:checkDialog()
-    local groupID = self:getGroupId()
-    local levelID = self:getLevelId()
+function Fight:willEndFight()
+    self:checkDialog("after")
+end
+
+function Fight:checkDialog(appearType)
     local dialog = md:getInstance("DialogModel")
-    dialog:check(groupID,"level"..levelID,"forward")    
+    dialog:check(appearType)
 end
 
 function Fight:startFight()
@@ -62,7 +64,14 @@ function Fight:startFight()
    self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
 end
 
+function Fight:endFight()
+    print("function Fight:endFight()")
+    self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
+    ui:showPopup("FightResultPopup",{},{anim = false})
+end
+
 function Fight:onFinishDialog(appearType)
+    print("function Fight:onFinishDialog(appearType)")
     if appearType == "forward" then
         self:startFight()
     elseif appearType == "after" then
@@ -93,7 +102,7 @@ function Fight:setResult(isWin)
     if isWin then
         self.userModel:levelPass(self.groupId,self.levelId)
         self.inlayModel:removeAllInlay()
-        ui:showPopup("FightResultPopup",{},{anim = false})
+        self:willEndFight()
     else
         self.inlayModel:removeAllInlay()
         ui:showPopup("FightResultFailPopup",{},{anim = false})

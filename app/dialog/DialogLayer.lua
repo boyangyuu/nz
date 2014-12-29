@@ -25,6 +25,8 @@ function DialogLayer:loadCCS()
 end
 
 function DialogLayer:initUI()
+	self:setVisible(false)
+
 	self.msglabel = cc.uiloader:seekNodeByName(self, "msg")
 	self.left = cc.uiloader:seekNodeByName(self, "roleleft")
 	self.right = cc.uiloader:seekNodeByName(self, "roleright")
@@ -44,6 +46,7 @@ function DialogLayer:initUI()
 end
 
 function DialogLayer:start(event)
+	self:setVisible(true)
 	print("function DialogLayer:start(event)")
 
 	self.num = self.dialog:getDialogNum()
@@ -53,6 +56,9 @@ end
 
 function DialogLayer:finishDialog()
 	self.dialog:finishDialog()
+
+	--clear
+	self.index = 1
 end
 
 
@@ -83,7 +89,7 @@ function DialogLayer:refreshUI()
 	self.index = self.index + 1
 end
 
-function DialogLayer:finish()
+function DialogLayer:finish(event)
 	--visible
 	self:setVisible(false)
 end
