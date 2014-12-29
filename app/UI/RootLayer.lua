@@ -26,7 +26,7 @@ function RootLayer:ctor()
 end
 
 function RootLayer:initLoginLayer()
-    self.curLayer = HomeBarLayer.new()
+    self.curLayer = main.new()
     self:removeAllChildren()
     self:addChild(self.curLayer)      
     self:addResFight()    
@@ -51,15 +51,17 @@ function RootLayer:addResHome()
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
     
     --armature
-    local manager = ccs.ArmatureDataManager:getInstance()
-    local src = "res/LevelMap/gktb/gktb.csb"
-    manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    
+    --sound
+    local startMusic = "res/Start/start.ogg"
+    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    audio.preloadMusic(startMusic)
+    -- audio.preloadMusic(homeBarMusic)
 end
 
 function RootLayer:addResFight()
     --sprite
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
-    display.addSpriteFrames("allImg0.plist", "allImg0.png")
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
@@ -101,7 +103,11 @@ function RootLayer:addResFight()
     for i,v in ipairs(gunImgs) do
         local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-    end
+    end    
+
+    local src = "res/LevelMap/gktb/gktb.csb"
+    manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+
 end
 
 function RootLayer:dataLoaded(percent)

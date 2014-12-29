@@ -3,8 +3,14 @@ local StartLayer = class("StartLayer", function()
 end)
 
 function StartLayer:ctor()
+    self:playSound()
 	self:loadCCS()
 	self:initUI()
+end
+
+function StartLayer:playSound(  )
+    local startMusic = "res/Start/start.ogg"
+    audio.playMusic(startMusic,true)
 end
 
 function StartLayer:loadCCS()
