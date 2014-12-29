@@ -76,7 +76,6 @@ function HomeBarLayer:initHomeLayer()
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-        print("csdvwd")
             self.storeModel:refreshInfo("bank")
             btnSetting:setVisible(false)
             btnBack:setVisible(true)

@@ -38,8 +38,6 @@ function LevelMapLayer:initData()
     for i = 1, self.groupNum do
         local recordsGroup = getRecordByKey("config/guanqia.json","groupId",i)
         self.levelAmount[i] = #recordsGroup
-        -- print("self.groupNum =",  self.groupNum, 
-        --     "self.levelAmount["..i.."] = ", self.levelAmount[i])
     end
 end
 
