@@ -12,20 +12,17 @@ function Dialog:ctor(properties)
 end
 
 function Dialog:check(groupId,levelId,appear)
+	self.appearType = appear
 	print(" Dialog:check"..groupId.."-"..levelId..","..appear)
 	local config = DialogConfigs.getConfig(groupId,levelId,appear)
 	if config == nil then
-		self:finishDialog(appear)
+		self:finishDialog()
 	end
-	-- return true
-	dump(config, "config")
-	self.appearType = appear
 	assert(self.appearType, "appearType is nil")
 	self:startDialog()
-	return true
 end
 
-function Dialog:getType()
+function Dialog:getAppearType()
 	return self.appearType
 end
 
@@ -33,10 +30,9 @@ function Dialog:getDialogNum()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
 	local levelId = "level"..fight:getLevelId()
-	local appear  = self:getType() 
+	local appear  = self:getAppearType() 
 
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
-	-- dump(configs)
 	return #configs
 end
 

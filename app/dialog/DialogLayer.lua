@@ -60,7 +60,7 @@ function DialogLayer:refreshUI()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
 	local levelId = "level"..fight:getLevelId()
-	local appear  = self.dialog:getType() 
+	local appear  = self.dialog:getAppearType() 
 
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	dump(configs)
