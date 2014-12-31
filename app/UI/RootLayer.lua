@@ -1,6 +1,5 @@
 
 local HomeBarLayer = import("..homeBar.HomeBarLayer")
-local FightPlayer = import("..fight.FightPlayer")
 local main = import("..start.StartLayer")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
 

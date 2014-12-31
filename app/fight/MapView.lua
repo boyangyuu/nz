@@ -22,6 +22,7 @@ end)
 
 _isZooming = false
 local kMissileZorder = 100
+local kMissilePlaceIndex = 100
 local kEffectZorder = 101
 function MapView:ctor()
 	--instance
@@ -31,7 +32,6 @@ function MapView:ctor()
 	self.fightConfigs 	= md:getInstance("FightConfigs")
 	self.enemys 		= {}
 	self.waveIndex 		= 1
-	self.killEnemyCount = 0
 	self.isPause 		= false
 	
 	--ccs
@@ -157,21 +157,27 @@ end
 
 function MapView:addEnemy(property, pos, zorder)
 	local placeName = property.placeName
-	assert(placeName , "invalid param placeName:"..placeName )
+	assert(placeName , "invalid param placeName:"..placeName)
 	assert(property , "invalid param property:" )
 	
 	--place
-	local placeNode = self.places[placeName]
+	local substr 		= string.sub(placeName,6,-1)
+	local placeIndex 	= 	tonumber(substr)
+	local placeNode 	= self.places[placeName]
 	assert(placeNode, "no placeNode! invalid param:"..placeName)		
-	local boundPlace = placeNode:getBoundingBox()
-	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
-	boundPlace.x = pWorld.x
-	boundPlace.y = boundPlace.y	
+	local boundPlace 	= placeNode:getBoundingBox()
+	local pWorld 		= placeNode:convertToWorldSpace(cc.p(0,0))
+	boundPlace.x 		= pWorld.x
+	boundPlace.y 		= boundPlace.y	
 	property.boundPlace = boundPlace
+	property.placeIndex = placeIndex
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
+	assert(scale, "scale is nil wave index"..self.waveIndex)
 	property.scale = scale:getScaleX() 
+	
+	--create
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 
@@ -234,24 +240,25 @@ function MapView:tick(dt)
 	-- 检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
-			self:removeEnemy(enemy, i)
+			--pop gold
+			local boundingbox = enemy:getCascadeBoundingBox()
+			local size = boundingbox.size
+			local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+			self:doKillAward(pos)
+			--remove
+			table.remove(self.enemys, i)
+			enemy:removeFromParent()
+		elseif enemy and enemy:getWillRemoved() then
+			--remove
+			table.remove(self.enemys, i)
+			enemy:removeFromParent()
 		end
 	end
-end
 
-function MapView:removeEnemy(enemy, i)
-	self:popGold(enemy)
-	table.remove(self.enemys, i)
-	enemy:removeFromParent()
-	self.killEnemyCount = self.killEnemyCount + 1
 end
-
-function MapView:popGold(enemy)
-	local boundingbox = enemy:getCascadeBoundingBox()
-	local size = boundingbox.size
-	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+function MapView:doKillAward(pos)
 	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-		enemyPos = pos, goldCount = self.killEnemyCount * 50})
+		enemyPos = pos})
 end
 
 --[[
@@ -315,6 +322,7 @@ end
 function MapView:callfuncAddMissile(event)
 	print("MapView:addMissile(event)")
 	local property = event.property
+	property.placeIndex = kMissilePlaceIndex
 	kMissileZorder = kMissileZorder - 1
 	-- dump(property, "property")
 	local enemyView = EnemyFactroy.createEnemy(property)
@@ -327,15 +335,15 @@ function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
 	local focusRangeNode = event.focusRangeNode
 	local datas = self:getTargetDatas(focusRangeNode)
-	for i,data in ipairs(datas) do
-		local demageScale = data.demageScale or 1.0
-		data.enemy:onHitted(data)
-		if "穿透" then
-			--getGlobalZOrder
-			-- break  --todoyby 改为谁的zorder在前面 就打谁！！
-		else
 
-		end
+	--isThrough
+	local gun = self.hero:getGun()
+	local isThrough = gun:isFireThrough()
+	local datas = self:getTargetDatas(focusRangeNode)
+	if isThrough then
+		self:mutiFire(datas)
+	else
+		self:singleFire(datas)
 	end
 
 	--pos
@@ -344,9 +352,43 @@ function MapView:onHeroFire(event)
 	pWorld1.x, pWorld1.y = pWorld1.x + box.width/2, pWorld1.y + box.height/2
 
 	--effect
-	local isHitted = not #datas == 0
+	local isHitted = not (#datas == 0)
+	print("isHitted", isHitted)
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld= pWorld1})
+end
+
+function MapView:mutiFire(datas)
+	for i,data in ipairs(datas) do
+		local demageScale = data.demageScale or 1.0
+		local enemy = data.enemy
+		enemy:onHitted(data)
+	end
+end
+
+function MapView:singleFire(datas)
+	local selectedData  = nil
+	local maxPlaceIndex = -1
+	local maxZorder 	= -1
+	for i,data in ipairs(datas) do
+		local enemy = data.enemy
+		local zo  = enemy:getLocalZOrder()
+		local pi  = enemy:getPlaceIndex()
+		print("placeIndex: "..pi.." zorder: "..zo)
+		if pi >= maxPlaceIndex then
+			if zo >= maxZorder then 
+				selectedData = data
+				maxZorder    = zo
+				maxPlaceIndex= pi 
+			end
+		end	 
+	end
+
+	--hitted
+	if selectedData == nil then return end
+	local demageScale = selectedData.demageScale or 1.0
+	local enemy = selectedData.enemy
+	enemy:onHitted(selectedData)	
 end
 
 function MapView:enemysHittedInRange(event)

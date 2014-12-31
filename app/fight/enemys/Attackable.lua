@@ -27,6 +27,7 @@ function Attackable:ctor(property)
 	assert(self.armature)
 	self:addChild(self.armature)
     self:setScale(property.scale or 1.0)
+    self:setPlaceIndex(property.placeIndex)
     
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
@@ -178,6 +179,17 @@ function Attackable:setDeadDone()
 	self.deadDone = true
 end
 
+function Attackable:getWillRemoved()
+	return self.willRemoved or false 
+end
+
+function Attackable:setWillRemoved()
+	if self.removeAllSchedulers then	
+		self:removeAllSchedulers()	
+	end
+	self.willRemoved = true
+end
+
 function Attackable:checkPlace(offset)
 	local offset = offset or 0
 	--place的范围
@@ -253,7 +265,7 @@ function Attackable:playHittedEffect()
 	if self.isRed then return end
 	local function callfunc()
 		if self.isRed then 
-			-- print("回复")
+			print("回复")
 			self.armature:setColor(cc.c3b(255,255,255))
 		end
 	end
@@ -263,7 +275,7 @@ function Attackable:playHittedEffect()
 		self.isRed = false
 	end
 
-	-- print("变红")
+	print("变红")
 	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
 	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
@@ -328,12 +340,20 @@ function Attackable:getPosInMap()
 	return worldInMap
 end
 
+function Attackable:setPlaceIndex(index_)
+	self.placeIndex = index_
+end
+
+function Attackable:getPlaceIndex()
+	return self.placeIndex
+end
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	
 end
 
-function Attackable:onHitted(demage)
+function Attackable:onHitted(targetData)
 	assert("required method, must implement me")
 end
 

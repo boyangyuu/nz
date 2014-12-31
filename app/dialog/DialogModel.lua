@@ -44,7 +44,7 @@ end
 
 function Dialog:finishDialog()
 	--dispatch
-	print("function Dialog:finishDialog()")
+	-- print("function Dialog:finishDialog()")
 	self:dispatchEvent({name = Dialog.DIALOG_FINISH_EVENT})
 	local fight = md:getInstance("Fight")
 	fight:onFinishDialog(self.appearType)
@@ -52,7 +52,7 @@ end
 
 function Dialog:startDialog()
 	--dispatch
-	print("function Dialog:startDialog(appear)")
+	-- print("function Dialog:startDialog(appear)")
 	self:dispatchEvent({name = Dialog.DIALOG_START_EVENT})
 end
 

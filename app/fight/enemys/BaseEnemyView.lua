@@ -89,17 +89,27 @@ function BaseEnemyView:showAlert()
 	if self.isShowAlerting then return end
 	self.isShowAlerting = true
 	local armature = ccs.Armature:create("tanhao")
+
+
+    --add
+    local bone = self.armature:getBone("alert")
+    local posBone =  bone:convertToWorldSpace(cc.p(0.0,0.0))
+    -- dump(posBone, "posBone")
+    
+    -- local destPos = self.armature:convertToNodeSpace(posBone)
+    -- armature:setAnchorPoint(cc.p(0.0,0.0))
+    local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    local destPos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)    
+    armature:setPosition(destPos)
+    self.armature:addChild(armature) 
+
+    --play
 	armature:getAnimation():play("tanhao", -1, 0)
     local function alertAnimEvent(armatureBack,movementType,movementID)
         armature:removeFromParent()
         self.isShowAlerting = false
     end
-    armature:getAnimation():setMovementEventCallFunc(alertAnimEvent)
-
-    --add
-    local bound = self.armature:getBoundingBox()
-    armature:setPosition(bound.width * 0.4, bound.height* 1.1 )
-    self.armature:addChild(armature) 
+    armature:getAnimation():setMovementEventCallFunc(alertAnimEvent)    
 end
 
 ---- state ----
@@ -129,7 +139,7 @@ end
 
 function BaseEnemyView:playHitted(event)
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	
+	print("function BaseEnemyView:playHitted(event)")
 	--飘红
 	self:playHittedEffect()
 

@@ -27,7 +27,6 @@ end
 
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
-    md:loadAllModels()
     self:enterScene("MainScene")
 end
 
@@ -97,9 +96,9 @@ function MyApp:createGameStateFile()
                         },
             },
             prop = {
-                            lei = {num = 0},
-                            jijia = {num = 0},
-                            goldweapon = {num = 0},
+                        lei = {num = 0},
+                        jijia = {num = 0},
+                        goldweapon = {num = 0},
             },
        
             weaponsuipian = {},
@@ -112,6 +111,9 @@ function MyApp:createGameStateFile()
             },
             guide = {
                         fight = false,
+            },
+            fight = {
+                        isPreferBag1 = true,
             },
     }
     GameState.save(data)

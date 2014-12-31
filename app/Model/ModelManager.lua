@@ -5,6 +5,7 @@
 
 local ModelManager = class("ModelManager", cc.mvc.ModelBase)
 local modelClasses = {}
+local needCreateClasses = {}
 
 --home
 modelClasses["UserModel"]           = import("..homeBar.UserModel")
@@ -29,20 +30,13 @@ modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs"
 --guide
 modelClasses["Guide"]               = import("..guide.GuideModel")
 
+--need create
+needCreateClasses["Hero"] = true
+needCreateClasses["FightInlay"] = true
+
 function ModelManager:ctor()
     ModelManager.super.ctor(self) 
     self.objects_ = {}
-end
-
-function ModelManager:loadAllModels()
-    -- print("ModelManager:loadAllModels()")
-    for i, v in pairs(modelClasses) do
-        -- print("instancename:", i)
-        if not self:isObjectExists(i) then 
-            local modelObj = v.new()
-            self:setObject(i, modelObj)
-        end
-    end
 end
 
 function ModelManager:setObject(id, object)
@@ -61,18 +55,29 @@ function ModelManager:isObjectExists(id)
 end
 
 function ModelManager:getInstance(clsName)
-       local classModel = modelClasses[clsName]
+    -- print("ModelManager:getInstanc", clsName)
+    local classModel = modelClasses[clsName]
     assert(classModel, "classModel is not in modelmanager: clsName"
         ..clsName) 
 
     local modelObj 
     if not self:isObjectExists(clsName) then
-        modelObj = classModel.new({id = classModel.__cname})
-        self:setObject(clsName, modelObj)
+        local allowAutoCreate = needCreateClasses[clsName] == nil
+        assert(allowAutoCreate, "不允许私自创建的类："..clsName)
+        modelObj = self:createInstance(clsName)
     else
         modelObj = self:getObject(clsName)
     end  
     return modelObj
+end
+
+function ModelManager:createInstance(clsName)
+
+    print("create clsName"..clsName)
+    local classModel = modelClasses[clsName]
+    local modelObj = classModel.new({id = classModel.__cname})
+    self:setObject(clsName, modelObj)
+    return modelObj    
 end
 
 function ModelManager:deleteInstance(clsName)

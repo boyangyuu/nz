@@ -28,9 +28,6 @@ function MissileEnemyView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill)) 
 
     self:playFire() 
-
-    --test
-    self.enemy:setHp(1.0)
 end
 
 function MissileEnemyView:tick()
@@ -89,8 +86,8 @@ end
 
 function MissileEnemyView:onHitted(targetData)
     local demage     = targetData.demage
-    local scale      = targetData.demageScale
-    local demageType = targetData.demageType
+    local scale      = targetData.demageScale or 1.0
+    local demageType = targetData.demageType or "body"
     if self.enemy:canHitted() then
         print("self.enemy:decreaseHp(demage * scale)")
         self.enemy:decreaseHp(demage * scale)
@@ -107,7 +104,7 @@ function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
                 playCache()
             end
         elseif movementID == "die" then
-             self:setDeadDone()
+             self:setWillRemoved()
         end
     end
 end

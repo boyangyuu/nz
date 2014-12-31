@@ -103,6 +103,9 @@ end
 
 --杀死敌人后跳出3金币
 function HeroLayer:killEnmeyGold(enemyPos)
+	local awardValue = define.kKillEnemyAwardGold 
+	local goldCount = self.killCntTotal * awardValue
+
 	for i = 1, 3 do
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)
@@ -115,7 +118,7 @@ function HeroLayer:killEnmeyGold(enemyPos)
 			cc.CallFunc:create(function ()
 				if i == 1 then
 					self.hero:dispatchEvent({name = "changeGold", 
-						goldCount = self.killCntTotal * 50})
+						goldCount = goldCount})
 				end
 				armature:removeFromParent()
 			end)
@@ -145,12 +148,20 @@ end
 
 --杀掉敌人后的回调
 local percent = 100
-function HeroLayer:killEnemyCallBack( event )
+function HeroLayer:killEnemyCallBack(event)
+	--is already gold
+	local inlay = md:getInstance("FightInlay")
+	local isGold = inlay:getIsActiveGold()
+	if isGold then return end
+
+	--连杀
 	self.killLabel:setVisible(true)
 	self.killTimerBg	:setVisible(true)
-	self:killEnmeyGold(event.enemyPos)
 	self.killCntKeep  = self.killCntKeep + 1
 	self.killCntTotal = self.killCntTotal + 1
+
+	--award
+	self:killEnmeyGold(event.enemyPos)
 	local strKillEnemyCount = string.format("X %d", self.killCntKeep)
 	self.killLabel:setString(strKillEnemyCount)
 
