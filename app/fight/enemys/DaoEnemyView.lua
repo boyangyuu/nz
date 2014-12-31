@@ -44,12 +44,10 @@ function DaoEnemyView:playFire()
     self.armature:getAnimation():play("fire" , -1, 1) 
 
     print("发射")
-    local posMap = self:getPosInMap()
-    local srcPos = posMap
+    local boneDao = self.armature:getBone("dao1")
+    local posBone = boneDao:convertToWorldSpace(cc.p(0, 0))
+    local srcPos = posBone
 
-    --todo 位置相关
-    srcPos.y = srcPos.y + self:getBodyBox().height * 0.6 * self:getScale()
-    srcPos.x = srcPos.x - self:getBodyBox().width * 0.3 * self:getScale()
     local property = {
         srcPos = srcPos,
         srcScale = self:getScale() * 0.3,

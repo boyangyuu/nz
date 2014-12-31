@@ -50,6 +50,7 @@ end
 function InfoLayer:initUI()
 	self:initGun()
 	self:initBullet()
+	-- self:initBtns()
 end
 
 function InfoLayer:initGun()

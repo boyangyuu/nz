@@ -13,9 +13,11 @@ layerClasses["WeaponBag"] 		     = import("..weaponList.WeaponBag")
 layerClasses["HomeBarLayer"]		 = import("..homeBar.HomeBarLayer")
 layerClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
 layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
+layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
+
+--popup
 layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
-layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
 
 
 function UI:ctor(properties)

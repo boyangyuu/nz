@@ -15,14 +15,15 @@ function Gun:ctor(properties)
     --instance
     self.inlay 		 = md:getInstance("FightInlay")
     self.weaponModel = md:getInstance("WeaponListModel")
-
     self.bagIndex = properties.bagIndex
 	self:setConfig()
+	self.curBulletNum = self:getBulletNum()
 end
+
 
 function Gun:setConfig()
 	self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
-	dump(self.config, "self.config gun")
+	-- dump(self.config, "self.config gun")
 end
 
 function Gun:getConfig()
@@ -37,6 +38,21 @@ function Gun:getCooldown()
 	return  baseValue
 end
 
+function Gun:setFullBulletNum()
+	local fullNum = self:getBulletNum()
+	self:setCurBulletNum(fullNum)
+end
+
+function Gun:setCurBulletNum(num)
+	self.curBulletNum  = num
+	local hero = md:getInstance("Hero")
+	hero:dispatchEvent({name = hero.GUN_BULLET_EVENT, num = num})	
+end
+
+function Gun:getCurBulletNum()
+	return self.curBulletNum 
+end
+
 function Gun:getBulletNum()
 	assert(self.config.bulletNum, "bulletNum is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.bulletNum
@@ -48,6 +64,16 @@ function Gun:getBulletNum()
         value = baseValue
     end	
 	return value
+end
+
+function Gun:isFireThrough()
+	local type = self.config["type"]
+	assert(type, "type is nil")
+	if type == "pz" or type == "rpg" then 
+		return true
+	else
+		return false
+	end
 end
 
 function Gun:getReloadTime()

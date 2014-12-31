@@ -23,7 +23,9 @@ end)
 
 function FightPlayer:ctor(properties)
     --instance
+    print("FightPlayer:ctor(properties)")
     self.fight      = md:getInstance("Fight")
+    self.fight:refreshData()
     self.fight:beginFight(properties)
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
@@ -298,7 +300,8 @@ function FightPlayer:initBtns()
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
     self.btnGold:setTouchEnabled(true)
-    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
+    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)  
+
 end
 
 ---- touch and btn----
@@ -328,13 +331,14 @@ function FightPlayer:onMutiTouchBegin(event)
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
+      
     end
     return false
 end
 
 function FightPlayer:onMutiTouchEnd(event)
     for id,point in pairs(event.points) do
-         self:checkBtnFire(id, point, "ended")
+         self:checkBtnFire(id, point, event.name)
     end
 end
 
@@ -374,7 +378,7 @@ end
 function FightPlayer:checkBtnChange(point)
     assert( point , "invalid params")
     if not self.btnChange:isVisible() then return end
-    local rect = self.btnChange:getCascadeBoundingBox()      
+    local rect = self.btnChange:getBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --换枪
@@ -384,21 +388,17 @@ function FightPlayer:checkBtnChange(point)
 end
 
 function FightPlayer:checkBtnFire(id,point,eventName)
-    if eventName == "moved" then return end
-    if (eventName == "ended" or eventName == "cancelled" or eventName == "removed") 
-        and id == self.touchIds["fire"] then
+    local isTouch = false
+    if eventName == "moved" then return false end
+    if (eventName == "ended" or eventName == "cancelled" or eventName == "removed") then
         self:onCancelledFire()
-        self.touchIds["fire"] = nil 
-        return
-    end
-    assert(id and point , "invalid params")
-    local isTouch
-    local rect = self.btnFire:getCascadeBoundingBox()      
-    isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
-    if isTouch then
-        self.touchIds["fire"]  = id
-        self.btnFireSch =  scheduler.scheduleGlobal(handler(self, self.onBtnFire), 0.01)
-    end    
+    else
+        local rect = self.btnFire:getBoundingBox()      
+        isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))
+        if isTouch then
+            self.btnFireSch =  scheduler.scheduleGlobal(handler(self, self.onBtnFire), 0.01)
+        end   
+    end 
     return isTouch
 end
 
@@ -445,6 +445,7 @@ function FightPlayer:onCancelledFire()
     --sch
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
+        self.btnFireSch = nil
     end
 end
 

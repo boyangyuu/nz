@@ -52,14 +52,21 @@ local kCritScale      = 3.0
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-    self.fightInlay = md:getInstance("FightInlay")
+    self.fightInlay = md:createInstance("FightInlay")
     
     --init
+    self.bags = {}
     self.isGun1 = true
+    print("function Hero:ctor(properties)")
+    self:initGuns()
     self:setGun("bag1")
 
     --hp
     self:refreshHp()
+end
+
+function Hero:initData()
+    
 end
 
 --枪械相关
@@ -74,16 +81,42 @@ function Hero:changeGun()
     print("change gun bagIndex", bagIndex)
     self:setGun(bagIndex)
     self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
+
+    local bulletNum = self.gun:getCurBulletNum()
+    self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})
+end
+
+function Hero:isPreferBag1()
+    local data = getUserData()
+    return data["fight"].isPreferBag1
+end
+
+function Hero:setPreferBagIndex(bagIndex)
+    local isPreferBag1 =  bagIndex == "bag1"
+    local data = getUserData()
+    data["fight"].isPreferBag1 =  isPreferBag1 
+    setUserData(data)
 end
 
 function Hero:setGun(bagIndex)
-    local gun = Gun.new({bagIndex = bagIndex}) 
-    self.gun = gun
-    self:setCooldown(gun:getCooldown())
+    self.gun = self.bags[bagIndex]
+    self:setCooldown(self.gun:getCooldown())
+
+    --prefer
+    self:setPreferBagIndex(bagIndex)
+end
+
+function Hero:initGuns()
+    self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
+    self.bags["bag2"] = Gun.new({bagIndex = "bag2"})
 end
 
 function Hero:getGun()
     return self.gun
+end
+
+function Hero:getFightInlay()
+    return self.fightInlay
 end
 
 function Hero:getDemage()

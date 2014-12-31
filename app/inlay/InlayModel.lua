@@ -54,7 +54,6 @@ function InlayModel:buyInlay(inlayid,isRefresh,buyNum)
 	    table.insert(data.inlay.bags, inlay)
 	end
     setUserData(data)
-    -- dump(GameState.load())
     if isRefresh == nil then isRefresh = true end
 	if isRefresh == true then
 		self:refreshInfo(self:getInlayType(inlayid))

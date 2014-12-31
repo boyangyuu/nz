@@ -43,11 +43,14 @@ function Fight:refreshData()
     print("function Fight:refreshData()")
    
     --init inatance
-    self.hero       = md:getInstance("Hero")  --todo改为refreash Instance
-    self.inlay      = md:getInstance("FightInlay")
-    self.inlay:checkNativeGold()
-    self.inlayModel = md:getInstance("InlayModel")
+    self:cleanModels()
+
     self.userModel  = md:getInstance("UserModel")
+    self.inlayModel = md:getInstance("InlayModel")
+    print("fight self.hero init")
+    self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
+    self.inlay = self.hero:getFightInlay()
+    self.inlay:checkNativeGold()
 end
 
 function Fight:willStartFight()
@@ -59,8 +62,6 @@ function Fight:willEndFight()
 end
 
 function Fight:startFight()
-   -- print{"function Fight:startFight()"}
-   self:refreshData()
    self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
 end
 
@@ -69,14 +70,15 @@ function Fight:endFight()
     self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
     ui:showPopup("FightResultPopup",{},{anim = false})
 
-    --clear
-    self:clearFightData()
 end
 
 function Fight:onWin()
     self.userModel:levelPass(self.groupId,self.levelId)
-    self:willEndFight() 
-    cc.UMAnalytics:finishLevel(self.levelInfo)       
+
+    -- cc.UMAnalytics:finishLevel(self.levelInfo)       
+    self:willEndFight()  
+    self:clearFightData()  
+
 end
 
 function Fight:onFail()
@@ -84,7 +86,7 @@ function Fight:onFail()
 
     --clear
     self:clearFightData() 
-    cc.UMAnalytics:failLevel(self.levelInfo)   
+    -- cc.UMAnalytics:failLevel(self.levelInfo)   
 end
 
 function Fight:checkDialog(appearType)
@@ -122,10 +124,13 @@ function Fight:relive()
 end
 
 function Fight:clearFightData()
+    self.inlayModel:removeAllInlay()
+end
+
+function Fight:cleanModels()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")  
-    self.inlayModel:removeAllInlay()
 end
 
 return Fight

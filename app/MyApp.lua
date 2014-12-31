@@ -13,11 +13,11 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 isTest  = false
-isTest  = true
+-- isTest  = true
 ui      = UI.new()
 md      = MD.new()
 define  = Define.new()
-umSDK   = cc.UMAnalytics
+-- umSDK   = cc.UMAnalytics
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -27,7 +27,6 @@ end
 
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
-    md:loadAllModels()
     self:enterScene("MainScene")
 end
 
@@ -97,9 +96,9 @@ function MyApp:createGameStateFile()
                         },
             },
             prop = {
-                            lei = {num = 0},
-                            jijia = {num = 0},
-                            goldweapon = {num = 0},
+                        lei = {num = 0},
+                        jijia = {num = 0},
+                        goldweapon = {num = 0},
             },
        
             weaponsuipian = {},
@@ -108,7 +107,7 @@ function MyApp:createGameStateFile()
                       
             currentlevel =  {
                         group = 1,
-                        level = 6,
+                        level = 1,
             },
             guide = {
                         fight = false,

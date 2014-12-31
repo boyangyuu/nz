@@ -19,7 +19,7 @@ function MapAnimView:ctor()
 end
 
 function MapAnimView:getScaleByPos(pos)
-	local offsetScale = math.abs(pos.y - display.height/2) / display.height/2
+	local offsetScale = (math.abs(pos.y - display.height/2)) / (display.height/2)
 	local scale = 0.3 + 0.7 * offsetScale
 	return scale
 end
@@ -27,24 +27,48 @@ end
 --event
 function MapAnimView:playEffectShooted(event)
 	local pWorld = event.pWorld
-	local ishitted = event.ishitted
+	local isHitted = event.isHitted
 	local animName = nil
 	local inlay = md:getInstance("FightInlay") 
+
+	--robot gold or special gun
 	local isGold = inlay:getIsActiveGold()
 	local isRobot = md:getInstance("Robot"):getIsRoboting()
+	local hero    = md:getInstance("Hero")
+	local gunCfg  = hero:getGun():getConfig()
+	local isRpg   = gunCfg["type"] == "rpg"
+	local isPz    = gunCfg["type"] == "pz"
 
 	--animName
-	if isGold or isRobot then 
+	if isGold or isRobot or isRpg then 
 		animName = "hjqmz"
-	elseif ishitted then
+	elseif isHitted then
 		animName = "zdmz_pt" 
 	else
 		animName = "zdmz_di"
 	end
-
+	print("animName"..animName)
 	--pos
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	assert(animName, "animName is nil type"..animName)
+	if self.isShootAniming then return end
+	self.isShootAniming = true
+
+	--one or many
+	if isPz then 
+		for i=1,6 do
+			local rx = math.random(-70, 70)
+			local ry = math.random(-40, 40)
+			local destPos = cc.p(pos.x + rx, pos.y + ry)
+			self:addShootedArmature(animName, destPos)
+		end
+	else
+		self:addShootedArmature(animName, pos)
+	end
+end
+
+function MapAnimView:addShootedArmature(animName, pos)
+	print("function MapAnimView:addShootedArmature(animName, pos)")
 	local armature = ccs.Armature:create(animName)
 	assert(armature, "armature os mil animName:"..animName)
 	self:addChild(armature)
@@ -56,7 +80,9 @@ function MapAnimView:playEffectShooted(event)
 	armature:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
     	    	if movementType == ccs.MovementEventType.loopComplete then
-    	    		armatureBack:removeFromParent()
+    	    		armature:removeFromParent()
+    	    		armature = nil
+    	    		self.isShootAniming = false
     	    	end
 	    	end)
 	armature:getAnimation():playWithIndex(0 , -1, 1)

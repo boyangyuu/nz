@@ -53,7 +53,7 @@ function FocusView:refreshFocus(event)
 
 	--armature
 	local config =  gun:getConfig()
-	dump(config, "self FocusView config")
+	-- dump(config, "self FocusView config")
 	local focusName = config.focusName
     self.armature = ccs.Armature:create(focusName) 
     self.armature:setAnchorPoint(0.5,0.5)
@@ -63,9 +63,9 @@ function FocusView:refreshFocus(event)
 	--range
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale  = isGold and config.goldRangeScale or 1.0
-	local h = config.rangeHigh *scale
-	local w = config.rangeWidth*scale
-	self:setFocusRange(cc.size(h, w))
+	local h = config.rangeHigh * scale
+	local w = config.rangeWidth * scale
+	self:setFocusRange(cc.size(w, h))
 	
 	self:playIdle()
 end

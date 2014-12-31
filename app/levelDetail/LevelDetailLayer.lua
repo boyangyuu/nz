@@ -240,7 +240,7 @@ function LevelDetailLayer:onClickBtnStart()
 		levelId = self.levelId})
 	self:onClickBtnOff()
 	local levelInfo = self.groupId.."-"..self.levelId
-	cc.UMAnalytics:startLevel(levelInfo)
+	-- cc.UMAnalytics:startLevel(levelInfo)
 end
 
 function LevelDetailLayer:onClickBtnBibei()

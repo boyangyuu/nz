@@ -41,8 +41,8 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
-	local num = self.curBulletNum - 1
-	self:setCurBulletNum(num)
+	local num = self.gun:getCurBulletNum() - 1
+	self.gun:setCurBulletNum(num)
 	self:playFire()
 end
 
@@ -65,6 +65,11 @@ end
 
 function GunView:playChange(event)
 	if self.isChanging then return end
+	
+	--clear
+	self:onShowGun() --for security
+	self:setPosition(cc.p(0.0,0.0))
+
 	print("GunView:playChange(event)")
 	local disy = 150
 	local actionDown = cc.MoveBy:create(0.2, cc.p(0.0, -disy))
@@ -102,7 +107,7 @@ function GunView:playReload()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
 		self.isReloading = false 
-		self.curBulletNum = self.gun:getBulletNum()
+		self.gun:setFullBulletNum()
 	end
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
 	
@@ -114,7 +119,7 @@ end
 
 function GunView:canShot() 
 	--bullets
-	if self.curBulletNum <= 0 then 
+	if self.gun:getCurBulletNum() <= 0 then 
 		self:stopFire()
 		self:playReload()
 		return false 
@@ -128,15 +133,11 @@ function GunView:setCoolDown(time)
 	self.hero:setCooldown(time)
 end
 
-function GunView:setCurBulletNum(num)
-	self.curBulletNum = num
-	--dispatch
-	self.hero:dispatchEvent({name = self.hero.GUN_BULLET_EVENT, num = num})
-end
-
 --hero层 发送换枪
 function GunView:refreshGun()
-	print("refreshGun")
+	
+	
+	-- print("refreshGun")
 	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
@@ -147,9 +148,6 @@ function GunView:refreshGun()
 	local config = self.gun:getConfig()
 	-- dump(config, "config")
 	
-	--子弹数目
-	self:setCurBulletNum(self.gun:getBulletNum())
-
 	--armature
 	local animName = config.animName --动作特效
 	local armature = ccs.Armature:create(animName)
@@ -164,7 +162,6 @@ function GunView:refreshGun()
 
     --枪火 todo放在fp里
     local jqkName = config.jqkName --机枪口特效
-    dump(config, "config")
     self.jqk = ccs.Armature:create(jqkName)
     self.jqk:setVisible(false)
     local boneQk = armature:getBone("qk")
