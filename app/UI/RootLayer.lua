@@ -110,8 +110,11 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end    
 
-    local src = "res/LevelMap/gktb/gktb.csb"
-    manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
+    local dizuosrc = "res/LevelMap/gktb/gktb.csb"
+    manager:addArmatureFileInfoAsync(dizuosrc,  handler(self, self.dataLoaded))
+
+    local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
+    manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
 
 end
 

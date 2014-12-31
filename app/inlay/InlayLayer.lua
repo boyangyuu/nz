@@ -47,6 +47,14 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
+
+            -- local armature = ccs.Armature:create("xqan_hjwq")
+            -- armature:setPosition(panelBtn[i]:getContentSize().width/2,20)
+            -- addChildCenter(armature, goldWeaponBtn, zorder)
+            -- goldWeaponBtn:addChild(armature)
+            -- armature:getAnimation():play("Animation1" , -1, 1)
+
+
     self.goldgun = cc.uiloader:seekNodeByName(self, "d")
     self.goldgun:setVisible(false)
     oneForAllBtn:setTouchEnabled(true)

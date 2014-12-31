@@ -96,8 +96,8 @@ function LevelDetailLayer:initUI()
 	end
 
 	self:initMapUI()
-
-	local weaponimg = display.newSprite("#icon_"..DataTable["weapon"]..".png")
+	self.recomWeapon = self.weaponListModel:getWeaponRecord(DataTable["weapon"])
+	local weaponimg = display.newSprite("#icon_"..self.recomWeapon["imgName"]..".png")
 	weaponimg:setScale(0.4)
 	local bibeiimg = cc.uiloader:seekNodeByName(self, "bibeiimg")
 	addChildCenter(weaponimg, bibeiimg) 
@@ -232,6 +232,7 @@ end
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
+
 	self.alreadybibei:setVisible(true)
 	self.btnBibei:setVisible(false)
 end
