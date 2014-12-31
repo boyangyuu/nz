@@ -72,7 +72,7 @@ function UserModel:levelPass(groupId,levelId)
 			data.currentlevel.group = nextgroup
 			data.currentlevel.level = nextlevel
 			setUserData(data)
-			dump(GameState.load())
+			-- dump(GameState.load())
 		end
 	end
 end

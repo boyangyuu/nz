@@ -69,7 +69,6 @@ function DialogLayer:refreshUI()
 	local appear  = self.dialog:getAppearType() 
 
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
-	dump(configs)
 	local sentence = configs[self.index]
 	local role = sentence["role"]
 	local msg = sentence["msg"]

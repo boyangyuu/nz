@@ -13,12 +13,14 @@ function PropModel:getPropNum(nameid)
 	return propnum
 end
 
-function PropModel:buyProp(nameid)
+function PropModel:buyProp(nameid,buyNum)
 	local data = getUserData()
 	local prop = data.prop[nameid]
-	local propnum = prop.num + 5
+	local propnum = prop.num + buyNum
 	data.prop[nameid].num = propnum
     setUserData(data)
 end
+
+
 
 return PropModel

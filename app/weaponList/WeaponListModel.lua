@@ -138,6 +138,13 @@ function WeaponListModel:isWeaponExist(weaponid)
 	return false
 end
 
+function WeaponListModel:isRecomWeaponed(weaponid)
+	if self:getWeaponStatus(weaponid) == 1 then
+		return true
+	else
+		return false
+	end
+end
 
 --[[
 	return 1(in bag1), 2(in bag2), 3(not in bag)
@@ -205,6 +212,7 @@ function WeaponListModel:equipBag( weaponid, index )
 		data.weapons.weaponed.bag1 = data.weapons.weaponed.bag2
 		data.weapons.weaponed.bag2 = x
 	end
+
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
 	-- dump(data)
 end

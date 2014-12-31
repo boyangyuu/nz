@@ -16,7 +16,7 @@ function WeaponListLayer:ctor()
 
     -- instance
     self.selectedContent = nil
-    self.selectedCellId  = 3
+    self.selectedCellId  = 4
     self.weaponId = nil
     self.weaponListModel = md:getInstance("WeaponListModel")
     
@@ -213,6 +213,11 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
     addChildCenter(weaponImg, self.layerGun)
+    local imageName = self.weaponrecord["imgName"]
+    local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
+    if weaponSpc then
+        self.layerGun:addChild(weaponSpc)
+    end
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
     local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")

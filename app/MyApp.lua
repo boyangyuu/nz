@@ -113,6 +113,9 @@ function MyApp:createGameStateFile()
             guide = {
                         fight = false,
             },
+            fight = {
+                        isPreferBag1 = true,
+            },
     }
     GameState.save(data)
     -- dump(GameState.load(), "GameState.load()")

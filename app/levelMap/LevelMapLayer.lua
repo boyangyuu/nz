@@ -59,13 +59,21 @@ function LevelMapLayer:initChooseLayer()
     local btnSale = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_sale")
     local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
     local btnGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gift")
-    self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "level")
+    self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
 
-    self.levelNum:addChild(display.newSprite("chooseLevel/1.png", 
-    self.levelNum:getContentSize().width/2, self.levelNum:getContentSize().height/2), Zorder_up)
+    self.levelNum:setString(self.index)
 
+    local actionPre = transition.sequence({
+    cc.MoveTo:create(0.5, cc.p(self.btnPre:getPositionX()-10 , self.btnPre:getPositionY())), 
+    cc.MoveTo:create(0.5, cc.p(self.btnPre:getPositionX()+10, self.btnPre:getPositionY()))})
+    self.btnPre:runAction(cc.RepeatForever:create(actionPre))
+
+    local actionNext = transition.sequence({
+    cc.MoveTo:create(0.5, cc.p(self.btnNext:getPositionX()+10 , self.btnNext:getPositionY())), 
+    cc.MoveTo:create(0.5, cc.p(self.btnNext:getPositionX()-10, self.btnNext:getPositionY()))})
+    self.btnNext:runAction(cc.RepeatForever:create(actionNext))
 
     -- add listener (attention: this isnot button, so we add node event listener)
     addBtnEventListener(self.btnNext, function(event)
@@ -153,8 +161,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             levelDian[i]:setVisible(false)
             -- while true do
             local action = transition.sequence({
-            cc.MoveTo:create(0.5, cc.p(levelBtn[i]:getPositionX() , levelBtn[i]:getPositionY()+ 15)), 
-            cc.MoveTo:create(0.5, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() - 15))})
+            cc.MoveTo:create(0.625, cc.p(levelBtn[i]:getPositionX() , levelBtn[i]:getPositionY()+ 15)), 
+            cc.MoveTo:create(0.625, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() - 15))})
             levelBtn[i]:runAction(cc.RepeatForever:create(action))
 
             -- end
@@ -227,8 +235,7 @@ function LevelMapLayer:bgAction()
         cc.CallFunc:create(function()
                 self.btnNext:setTouchEnabled(true)
                 self.btnPre:setTouchEnabled(true)
-                self.levelNum:removeAllChildren()
-                self.levelNum:addChild(display.newSprite("chooseLevel/"..self.index..".png", 60, 25), 2)
+                self.levelNum:setString(self.index)
                 self:refreshLevelLayer(self.index)
             end)}))
 end

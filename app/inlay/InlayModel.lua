@@ -30,19 +30,23 @@ function InlayModel:refreshInfo(typename)
 	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = typename})
 end
 
-function InlayModel:buyGoldsInlay()
+function InlayModel:buyGoldsInlay(buynumber)
 	local goldtable = self:getConfigTable("property", 4)
 	for k,v in pairs(goldtable) do
-		self:buyInlay(v["id"],false)
+		self:buyInlay(v["id"],false,buynumber)
 	end
 end
 
-function InlayModel:buyInlay(inlayid,isRefresh)
+function InlayModel:buyInlay(inlayid,isRefresh,buyNum)
  	local data = getUserData()
 	if self:isBagsExist(inlayid)  then
 		for k,v in pairs(data.inlay.bags) do
 			if v.inlayid == inlayid then
-				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
+				if buyNum == nil then
+					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
+				else
+					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + buyNum					
+				end
 			end
 		end
 	else

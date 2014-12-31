@@ -282,7 +282,7 @@ function FightResultLayer:getinlayfall()
 			break
 		end
 	end
-	dump(probaTable)
+	-- dump(probaTable)
     return probaTable
 end
 

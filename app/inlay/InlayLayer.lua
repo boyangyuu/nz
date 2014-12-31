@@ -64,6 +64,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipAllInlays()
+            md:getInstance("StoreModel"):setGoldWeaponNum()
         end
     end)
 
@@ -73,6 +74,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipGoldInlays(true)
+            md:getInstance("StoreModel"):setGoldWeaponNum()
         end
     end)
 

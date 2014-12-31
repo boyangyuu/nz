@@ -16,7 +16,7 @@ function StoreLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-    self:refreshListView("inlay")
+    self:refreshListView("prop")
 end
 
 function StoreLayer:loadCCS()
@@ -87,5 +87,6 @@ function StoreLayer:refreshListView(type)
     end
     self.listview:reload()    
 end
+
 
 return StoreLayer

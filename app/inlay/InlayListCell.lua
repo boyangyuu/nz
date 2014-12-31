@@ -68,6 +68,7 @@ function InlayListCell:initCellUI(record)
                 if self.userModel:costMoney(record["goldPrice"]) then
                     self.inlayModel:buyInlay(record["id"])
                 end
+                md:getInstance("StoreModel"):setGoldWeaponNum()
             end
             -- return false
         end)
