@@ -42,14 +42,7 @@ function LevelMapLayer:initData()
 end
 
 function LevelMapLayer:initBgLayer()
--- bg starting animation
-    -- local bg = display.newSprite("levelMap_bg.png")
-    -- self:addChild(bg, Zorder_bg)
-    -- bg:setAnchorPoint(cc.p(0, 0))
-    -- self.bgRootNode = bg
-    -- self.bgRootNode:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
-   
-
+-- bg starting animation   
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
     addChildCenter(self.armature, self)
@@ -194,8 +187,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 armature:getAnimation():play("dizuolan" , -1, 1)
             end
         else                            
-            -- levelBtn[i]:setColor(cc.c3b(80, 80, 80))
-            -- levelDian[i]:setColor(cc.c3b(80, 80, 80))
+            levelBtn[i]:setColor(cc.c3b(80, 80, 80))
+            levelDian[i]:setColor(cc.c3b(80, 80, 80))
             -- levelBtn[i]:setShaderProgram
         end
         -- add listener
@@ -222,41 +215,12 @@ function LevelMapLayer:PopupLevelDetail(event)
 end
 
 function LevelMapLayer:bgAction()    
-    -- -- switching animation
-    -- if self.index == 1 then
-    --     self.x, self.y = 0, 0
-    -- elseif self.index == 2 then
-    --     self.x, self.y = -display.width*(amplifyTimes - 1), 0
-    -- elseif self.index == 3 then
-    --     self.x, self.y = -display.width*(amplifyTimes - 1), -display.height*(amplifyTimes - 1)
-    -- elseif self.index == 4 then
-    --     self.x, self.y = 0, -display.height*(amplifyTimes - 1)
-    -- end
-
-    -- local scaleToSmall = cc.ScaleTo:create(smallTime, 1)
-    -- local scaleToBig = cc.ScaleTo:create(bigTime, amplifyTimes)
-    -- local moveToOrigin = cc.MoveTo:create(smallTime, cc.p(0, 0))
-    -- local delay = cc.DelayTime:create(smallTime)
-    -- local moveTo = cc.MoveTo:create(bigTime, cc.p(self.x, self.y))
-
-    -- self.bgRootNode:runAction(cc.EaseIn:create(scaleToSmall, 1))   -- Native C++
-    -- self.bgRootNode:runAction(transition.newEasing(moveToOrigin, "In", 1))  -- quick package
-    -- self.bgRootNode:runAction(cc.Sequence:create({delay, cc.EaseIn:create(scaleToBig, 2.5)}))  -- Native C++
-    -- self.bgRootNode:runAction(cc.Sequence:create({delay, cc.EaseIn:create(moveTo, 2.5)}))  -- Native C++
-
     -- To make button disabled for a while
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
     self.animName = self.preIndex.."_"..self.index
     self.armature:getAnimation():play(self.animName , -1, 0)
-    -- self.btnNext:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
-    --     cc.CallFunc:create(function()
-    --             self.btnNext:setTouchEnabled(true)
-    --             self.btnPre:setTouchEnabled(true)
-    --             self.levelNum:setString(self.index)
-    --             self:refreshLevelLayer(self.index)
-    --         end)}))
 end
 
 function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)

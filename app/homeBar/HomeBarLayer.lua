@@ -87,7 +87,6 @@ function HomeBarLayer:initHomeLayer()
 
     addBtnEventListener(btnSetting, function(event)
         if event.name=='began' then
-            -- print("settingBtn is begining!")
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
