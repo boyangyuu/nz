@@ -71,7 +71,10 @@ function AnimLayer:waveStart(event)
 end
 
 function AnimLayer:bossIntro(event)
-    
+    self:refreshLayer()
+    cc.FileUtils:getInstance():addSearchPath("res/CommonPopup/animLayer")
+    local controlNode = cc.uiloader:load("animLayer_2.ExportJson")
+    self:addChild(controlNode)
 end
 
 return AnimLayer

@@ -22,8 +22,8 @@ function AnimModel:waveStart(waveNum)
 end
 
 --boss简介
-function AnimModel:bossIntro()
-	self:dispatchEvent({name = AnimModel.BOSSINTRO_ANIM_EVENT})
+function AnimModel:bossIntro(bossId)
+	self:dispatchEvent({name = AnimModel.BOSSINTRO_ANIM_EVENT,bossId = bossId})
 end
 
 return AnimModel

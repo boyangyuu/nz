@@ -2,7 +2,7 @@ local commonPopup = class("commonPopup",function()
 	return display.newLayer()
 end)
 --[[
-	style1:一个确定按钮，一个关闭按钮，title，content
+	style1:一个确定按钮，一个关闭按钮，content
 		ui:showPopup("commonPopup",
 			 {type = "style1",content = "必须装备狙击枪"},
 			 {opacity = 0})
@@ -10,9 +10,9 @@ end)
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "本关还没开启"},
 			 {opacity = 0})
-	style3:俩按钮，确定取消，title，content
+	style3:俩按钮，确定取消，content
 		ui:showPopup("commonPopup",
-			 {type = "style3", title = "提示",content = "必须装备狙击枪"},
+			 {type = "style3", content = "必须装备狙击枪"},
 			 {opacity = 0})
 ]]
 function commonPopup:ctor(properties)
@@ -75,9 +75,7 @@ function commonPopup:initUI(properties)
 	    -- popupNode:setZOrderOnTop(true)
 
 	elseif typeName == "style3" then
-		local title = cc.uiloader:seekNodeByName(self, "title")
 		local content = cc.uiloader:seekNodeByName(self, "content")
-		title:setString(properties.title)
 		content:setString(properties.content)
 	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
 	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
