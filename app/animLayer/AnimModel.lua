@@ -3,7 +3,7 @@ local AnimModel = class("AnimModel", cc.mvc.ModelBase)
 AnimModel.START_ANIM_EVENT = "START_ANIM_EVENT"
 AnimModel.BOSSSHOW_ANIM_EVENT = "BOSSSHOW_ANIM_EVENT"
 AnimModel.WAVESTART_ANIM_EVENT = "WAVESTART_ANIM_EVENT"
-AnimModel.BOSSINTRO_ANIM_EVENT = "BOSSINTRO_ANIM_EVENT"
+AnimModel.ENEMYINTRO_ANIM_EVENT = "ENEMYINTRO_ANIM_EVENT"
 
 function AnimModel:ctor(properties)
 	AnimModel.super.ctor(self, properties)
@@ -22,8 +22,8 @@ function AnimModel:waveStart(waveNum)
 end
 
 --boss简介
-function AnimModel:bossIntro(bossId)
-	self:dispatchEvent({name = AnimModel.BOSSINTRO_ANIM_EVENT,bossId = bossId})
+function AnimModel:enemyIntro(bossId)
+	self:dispatchEvent({name = AnimModel.ENEMYINTRO_ANIM_EVENT,enemyId = enemyId})
 end
 
 return AnimModel

@@ -1,4 +1,4 @@
-
+local EnemyDescConfig = import(".EnemyDescConfig")
 local AnimLayer = class("AnimLayer", function()
 	return display.newLayer()
 end)
@@ -10,7 +10,7 @@ function AnimLayer:ctor()
         :addEventListener(self.animModel.START_ANIM_EVENT, handler(self, self.start))
         :addEventListener(self.animModel.BOSSSHOW_ANIM_EVENT, handler(self, self.bossShow))
         :addEventListener(self.animModel.WAVESTART_ANIM_EVENT, handler(self, self.waveStart))
-        :addEventListener(self.animModel.BOSSINTRO_ANIM_EVENT, handler(self, self.bossIntro))
+        :addEventListener(self.animModel.ENEMYINTRO_ANIM_EVENT, handler(self, self.enemyIntro))
 
 	self:loadCCS()
 end
@@ -70,11 +70,17 @@ function AnimLayer:waveStart(event)
     armature:getAnimation():play(self.animName , -1, 1)
 end
 
-function AnimLayer:bossIntro(event)
+function AnimLayer:enemyIntro(event)
     self:refreshLayer()
     cc.FileUtils:getInstance():addSearchPath("res/CommonPopup/animLayer")
     local controlNode = cc.uiloader:load("animLayer_2.ExportJson")
     self:addChild(controlNode)
+    local enemyID = event.enemyId
+    self:initEnemyIntro(enemyID)
+end
+
+function AnimLayer:initEnemyIntro(enemyID)
+
 end
 
 return AnimLayer
