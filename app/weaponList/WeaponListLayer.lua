@@ -16,14 +16,17 @@ function WeaponListLayer:ctor()
 
     -- instance
     self.selectedContent = nil
-    self.selectedCellId  = 3
+    self.selectedCellId  = 4
     self.weaponId = nil
     self.weaponListModel = md:getInstance("WeaponListModel")
+    self.commonPopModel = md:getInstance("commonPopModel")
     
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
-    
+     cc.EventProxy.new(self.commonPopModel, self)
+       :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.intensify))
+       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
@@ -68,6 +71,7 @@ function WeaponListLayer:initUI()
     self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
+    self.upgradecost      = cc.uiloader:seekNodeByName(self, "upgradecost")
 
     self.stars = {}
     for i=1,10 do
@@ -109,6 +113,7 @@ function WeaponListLayer:initUI()
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
     self.btnEquip:setTouchEnabled(true)
+    self.btnEquiped:setTouchEnabled(true)
     addBtnEventListener(self.btnBuy, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
@@ -122,7 +127,11 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:intensify(self.weaponId)
+            ui:showPopup("commonPopup",
+             {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级2星"},
+             {opacity = 155})
+
+            -- self:intensify(self.weaponId)
         end
     end)
     addBtnEventListener(self.btnOncefull, function(event)
@@ -134,6 +143,14 @@ function WeaponListLayer:initUI()
         end
     end)
     addBtnEventListener(self.btnEquip, function(event)
+        if event.name=='began' then
+            print("offbtn is begining!")
+            return true
+        elseif event.name=='ended' then
+            self:equip(self.weaponId)
+        end
+    end)
+    addBtnEventListener(self.btnEquiped, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
             return true
@@ -213,6 +230,11 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
     addChildCenter(weaponImg, self.layerGun)
+    local imageName = self.weaponrecord["imgName"]
+    local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
+    if weaponSpc then
+        self.layerGun:addChild(weaponSpc)
+    end
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
     local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")
@@ -233,7 +255,8 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     local reloadTimeMax = weaponproperitymax.reloadTime
     local demageMax = weaponproperitymax.demage
 
-
+    self.costupgrade = weaponproperitynext.upgradecost
+    self.upgradecost:setString(self.costupgrade)
 
     self.progBullet:setPercent(bulletNum/kMaxBullet*100)
     self.progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
@@ -349,8 +372,13 @@ function WeaponListLayer:buyWeapon(weaponid)
 end
 
 -- 升级事件
-function WeaponListLayer:intensify(weaponid)
-    self.weaponListModel:intensify(weaponid)
+function WeaponListLayer:intensify(event)
+    ui:closePopup()
+    self.weaponListModel:intensify(self.weaponId)
+end
+
+function WeaponListLayer:closePopup()
+    ui:closePopup()
 end
 
 -- 一键满级事件
@@ -360,7 +388,7 @@ end
 
 -- 装备事件
 function WeaponListLayer:equip(weaponid)
-    ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 0})
+    ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 150})
 
 end
 

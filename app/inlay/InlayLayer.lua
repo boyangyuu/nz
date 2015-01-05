@@ -48,11 +48,9 @@ function InlayLayer:initUI()
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
 
-            -- local armature = ccs.Armature:create("xqan_hjwq")
-            -- armature:setPosition(panelBtn[i]:getContentSize().width/2,20)
-            -- addChildCenter(armature, goldWeaponBtn, zorder)
-            -- goldWeaponBtn:addChild(armature)
-            -- armature:getAnimation():play("Animation1" , -1, 1)
+    local armature = ccs.Armature:create("xqan_hjwq")
+    addChildCenter(armature, goldWeaponBtn)
+    armature:getAnimation():play("Animation1" , -1, 1)
 
 
     self.goldgun = cc.uiloader:seekNodeByName(self, "d")
@@ -64,6 +62,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipAllInlays()
+            md:getInstance("StoreModel"):setGoldWeaponNum()
         end
     end)
 
@@ -73,6 +72,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipGoldInlays(true)
+            md:getInstance("StoreModel"):setGoldWeaponNum()
         end
     end)
 

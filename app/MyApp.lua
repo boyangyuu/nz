@@ -13,11 +13,11 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 isTest  = false
-isTest  = true
+-- isTest  = true
 ui      = UI.new()
 md      = MD.new()
 define  = Define.new()
-umSDK   = cc.UMAnalytics
+-- umSDK   = cc.UMAnalytics
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -75,6 +75,7 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 6 ,           
                                     },                                    
+
                         },
                         weaponed = {
                                 bag1 =  {
@@ -112,7 +113,7 @@ function MyApp:createGameStateFile()
                       
             currentlevel =  {
                         group = 1,
-                        level = 6,
+                        level = 1,
             },
             guide = {
                         fight = false,

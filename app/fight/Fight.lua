@@ -34,6 +34,7 @@ function Fight:beginFight(properties)
     --关卡
     self.groupId = properties.groupId
     self.levelId = properties.levelId
+    self.levelInfo = self.groupId.."-"..self.levelId
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
@@ -78,15 +79,19 @@ end
 
 function Fight:onWin()
     self.userModel:levelPass(self.groupId,self.levelId)
+
+    -- cc.UMAnalytics:finishLevel(self.levelInfo)       
     self:willEndFight()  
     self:clearFightData()  
+
 end
 
 function Fight:onFail()
     ui:showPopup("FightResultFailPopup",{},{anim = false})
 
     --clear
-    self:clearFightData()    
+    self:clearFightData() 
+    -- cc.UMAnalytics:failLevel(self.levelInfo)   
 end
 
 function Fight:checkDialog(appearType)

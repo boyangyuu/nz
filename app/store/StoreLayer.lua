@@ -16,7 +16,7 @@ function StoreLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-    self:refreshListView("inlay")
+    self:refreshListView("prop")
 end
 
 function StoreLayer:loadCCS()
@@ -49,7 +49,7 @@ function StoreLayer:initUI()
             end
         end)
      btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then                
+        if event.name=='began' then 
             return true
         elseif event.name=='ended' then
             self:refreshListView("bank")
@@ -87,5 +87,6 @@ function StoreLayer:refreshListView(type)
     end
     self.listview:reload()    
 end
+
 
 return StoreLayer

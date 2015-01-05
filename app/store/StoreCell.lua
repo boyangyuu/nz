@@ -127,8 +127,15 @@ function StoreCell:initCellUI(parameter)
             -- print("btnBuy is pressed!")
             if type == "prop" then
                 if self.userModel:costDiamond(record["price"]) then
-                    self.propModel:buyProp(record["nameid"])
+                    if record["nameid"] == "goldweapon" then
+                        self.inlayModel:buyGoldsInlay(record["buynum"])
+                        md:getInstance("StoreModel"):setGoldWeaponNum()
+                        self.inlayModel:refreshInfo("speed")
+                    else
+                        self.propModel:buyProp(record["nameid"],record["buynum"])
+                    end
                     ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+
                 end
             elseif type == "bank" then
 

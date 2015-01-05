@@ -117,12 +117,25 @@ function RootLayer:addResFight()
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
     manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
 
+    --dd
+    local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
+    manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
+    
+    local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
+    manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
+
+    local rwkssrc = "res/public/Anim/renwuks/renwuks.csb"
+    manager:addArmatureFileInfoAsync(rwkssrc,  handler(self, self.dataLoaded))
+
+    local drlxsrc = "res/public/Anim/direnlx/direnlx.csb"
+    manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
+
     self:addResFightMusic()
 end
 
 function RootLayer:addResFightMusic()
     -- local names = {}
-    -- audio
+
 end
 
 function RootLayer:dataLoaded(percent)

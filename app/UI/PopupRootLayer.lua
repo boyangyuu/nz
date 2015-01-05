@@ -37,13 +37,15 @@ function PopupRootLayer:closePopup(event)
     	easing = "In",
     	onComplete = function() 
 	    	self:setVisible(false)
+	    	self.layer:removeSelf()
+	    	self.layer = nil
        end, 
 	})
-	local function removeFunc()
-		self.layer:removeSelf()  -- Must delete redundant layers
-		self.layer = nil
-	end
-	self:performWithDelay(removeFunc, 0.5)	
+	-- local function removeFunc()
+	-- 	self.layer:removeSelf()  -- Must delete redundant layers
+	-- 	self.layer = nil
+	-- end
+	-- self:performWithDelay(removeFunc, 0.5)	
 end
 
 
