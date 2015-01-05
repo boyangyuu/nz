@@ -116,6 +116,21 @@ function RootLayer:addResFight()
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
     manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
 
+    local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
+    manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
+    
+    local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
+    manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
+
+    local rwkssrc = "res/public/Anim/renwuks/renwuks.csb"
+    manager:addArmatureFileInfoAsync(rwkssrc,  handler(self, self.dataLoaded))
+
+    local drlxsrc = "res/public/Anim/direnlx/direnlx.csb"
+    manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
+
+    -- local leidasrc = "res/LevelMap/leida/leida.csb"
+    -- manager:addArmatureFileInfoAsync(leidasrc,  handler(self, self.dataLoaded))
+
 end
 
 function RootLayer:dataLoaded(percent)

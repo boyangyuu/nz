@@ -17,32 +17,6 @@ function addBtnEventListener(node, callfunc)
     end)
 end
 
---[[
-    example:self:addChild(getPopupTips("关卡尚未开启！"))
-]]
-function getPopupTips(text)
-    assert(text, "fileName is invalid")
-
-    -- load .ExportJson
-    local popupNode = cc.uiloader:load("res/CommonPopup/commonPopup.json")
-    local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
-    labelTip:setString(text)
-    popupNode:setTouchEnabled(true)
-    popupNode:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then
-            popupNode:removeFromParent()
-            return true
-        end
-    end)
-
-    -- auto remove popup windows after 2 secs.
-    popupNode:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
-                 popupNode:removeFromParent()
-            end)}))
-    -- popupNode:setZOrderOnTop(true)
-    return popupNode
-end
-
 -- Cooldown the button
 function disableBtn(delayTime, node)
     assert(delayTime, "delayTime is invalid")

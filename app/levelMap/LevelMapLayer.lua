@@ -43,11 +43,26 @@ end
 
 function LevelMapLayer:initBgLayer()
 -- bg starting animation
-    local bg = display.newSprite("levelMap_bg.png")
-    self:addChild(bg, Zorder_bg)
-    bg:setAnchorPoint(cc.p(0, 0))
-    self.bgRootNode = bg
-    self.bgRootNode:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
+    -- local bg = display.newSprite("levelMap_bg.png")
+    -- self:addChild(bg, Zorder_bg)
+    -- bg:setAnchorPoint(cc.p(0, 0))
+    -- self.bgRootNode = bg
+    -- self.bgRootNode:runAction(cc.ScaleTo:create(0.6, 1.8))  -- Starting action
+   
+
+    self.armature = ccs.Armature:create("shijiemap")
+    self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+    addChildCenter(self.armature, self)
+    self.armature:getAnimation():play("0_1" , -1, 0)
+
+    -- self.ldarmature = ccs.Armature:create("leida")
+    -- self.ldarmature:setScale(4)
+    -- self.ldarmature:getAnimation():setSpeedScale(0.3)
+    -- self:addChild(self.ldarmature)
+    -- -- addChildCenter(self.ldarmature, self)
+    -- self.ldarmature:getAnimation():play("leida" , -1, 1)
+
+
 end
 
 function LevelMapLayer:initChooseLayer()
@@ -179,8 +194,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 armature:getAnimation():play("dizuolan" , -1, 1)
             end
         else                            
-            levelBtn[i]:setColor(cc.c3b(80, 80, 80))
-            levelDian[i]:setColor(cc.c3b(80, 80, 80))
+            -- levelBtn[i]:setColor(cc.c3b(80, 80, 80))
+            -- levelDian[i]:setColor(cc.c3b(80, 80, 80))
             -- levelBtn[i]:setShaderProgram
         end
         -- add listener
@@ -190,7 +205,10 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     local levelId = i  
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
-                    self:addChild(getPopupTips("关卡尚未开启！"))
+                    -- self:addChild(getPopupTips("关卡尚未开启！"))
+                    ui:showPopup("commonPopup",
+                     {type = "style2", content = "本关还没开启"},
+                     { opacity = 0})
                 end
             end
         end)
@@ -204,40 +222,53 @@ function LevelMapLayer:PopupLevelDetail(event)
 end
 
 function LevelMapLayer:bgAction()    
-    -- switching animation
-    if self.index == 1 then
-        self.x, self.y = 0, 0
-    elseif self.index == 2 then
-        self.x, self.y = -display.width*(amplifyTimes - 1), 0
-    elseif self.index == 3 then
-        self.x, self.y = -display.width*(amplifyTimes - 1), -display.height*(amplifyTimes - 1)
-    elseif self.index == 4 then
-        self.x, self.y = 0, -display.height*(amplifyTimes - 1)
-    end
+    -- -- switching animation
+    -- if self.index == 1 then
+    --     self.x, self.y = 0, 0
+    -- elseif self.index == 2 then
+    --     self.x, self.y = -display.width*(amplifyTimes - 1), 0
+    -- elseif self.index == 3 then
+    --     self.x, self.y = -display.width*(amplifyTimes - 1), -display.height*(amplifyTimes - 1)
+    -- elseif self.index == 4 then
+    --     self.x, self.y = 0, -display.height*(amplifyTimes - 1)
+    -- end
 
-    local scaleToSmall = cc.ScaleTo:create(smallTime, 1)
-    local scaleToBig = cc.ScaleTo:create(bigTime, amplifyTimes)
-    local moveToOrigin = cc.MoveTo:create(smallTime, cc.p(0, 0))
-    local delay = cc.DelayTime:create(smallTime)
-    local moveTo = cc.MoveTo:create(bigTime, cc.p(self.x, self.y))
+    -- local scaleToSmall = cc.ScaleTo:create(smallTime, 1)
+    -- local scaleToBig = cc.ScaleTo:create(bigTime, amplifyTimes)
+    -- local moveToOrigin = cc.MoveTo:create(smallTime, cc.p(0, 0))
+    -- local delay = cc.DelayTime:create(smallTime)
+    -- local moveTo = cc.MoveTo:create(bigTime, cc.p(self.x, self.y))
 
-    self.bgRootNode:runAction(cc.EaseIn:create(scaleToSmall, 1))   -- Native C++
-    self.bgRootNode:runAction(transition.newEasing(moveToOrigin, "In", 1))  -- quick package
-    self.bgRootNode:runAction(cc.Sequence:create({delay, cc.EaseIn:create(scaleToBig, 2.5)}))  -- Native C++
-    self.bgRootNode:runAction(cc.Sequence:create({delay, cc.EaseIn:create(moveTo, 2.5)}))  -- Native C++
+    -- self.bgRootNode:runAction(cc.EaseIn:create(scaleToSmall, 1))   -- Native C++
+    -- self.bgRootNode:runAction(transition.newEasing(moveToOrigin, "In", 1))  -- quick package
+    -- self.bgRootNode:runAction(cc.Sequence:create({delay, cc.EaseIn:create(scaleToBig, 2.5)}))  -- Native C++
+    -- self.bgRootNode:runAction(cc.Sequence:create({delay, cc.EaseIn:create(moveTo, 2.5)}))  -- Native C++
 
     -- To make button disabled for a while
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
+    self.animName = self.preIndex.."_"..self.index
+    self.armature:getAnimation():play(self.animName , -1, 0)
+    -- self.btnNext:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
+    --     cc.CallFunc:create(function()
+    --             self.btnNext:setTouchEnabled(true)
+    --             self.btnPre:setTouchEnabled(true)
+    --             self.levelNum:setString(self.index)
+    --             self:refreshLevelLayer(self.index)
+    --         end)}))
+end
 
-    self.btnNext:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
-        cc.CallFunc:create(function()
-                self.btnNext:setTouchEnabled(true)
-                self.btnPre:setTouchEnabled(true)
-                self.levelNum:setString(self.index)
-                self:refreshLevelLayer(self.index)
-            end)}))
+function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
+    if movementType == ccs.MovementEventType.complete then
+        armatureBack:stopAllActions()
+        if movementID == self.animName then
+            self.btnNext:setTouchEnabled(true)
+            self.btnPre:setTouchEnabled(true)
+            self.levelNum:setString(self.index)
+            self:refreshLevelLayer(self.index)
+        end
+    end
 end
 
 function LevelMapLayer:panelAction()

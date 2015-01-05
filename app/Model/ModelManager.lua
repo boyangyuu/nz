@@ -17,7 +17,7 @@ modelClasses["propModel"]           = import("..store.propModel")
 modelClasses["StoreModel"]          = import("..store.StoreModel")
 modelClasses["InlayModel"]          = import("..inlay.InlayModel")
 modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
-
+modelClasses["commonPopModel"]      = import("..commonPopup.commonPopModel")
 --fight
 modelClasses["Fight"]               = import("..fight.Fight")
 modelClasses["FightInlay"]          = import("..fight.FightInlay")
@@ -26,6 +26,7 @@ modelClasses["Map"]                 = import("..fight.Map")
 modelClasses["Defence"]             = import("..fight.skills.Defence")
 modelClasses["Robot"]               = import("..fight.skills.Robot")
 modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
+modelClasses["AnimModel"]           = import("..animLayer.AnimModel")
 
 --guide
 modelClasses["Guide"]               = import("..guide.GuideModel")

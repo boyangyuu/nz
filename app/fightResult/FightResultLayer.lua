@@ -12,7 +12,8 @@ function FightResultLayer:ctor(properties)
     self.inlayModel 	  = md:getInstance("InlayModel")
     self.fightModel 	  = md:getInstance("Fight")
     self.levelMapModel    = md:getInstance("LevelMapModel")
-
+    self.levelDetailModel = md:getInstance("LevelDetailModel")
+	self.weaponListModel  = md:getInstance("WeaponListModel")
     self.isgold = false
     self.cardover = {}
     self.cardgold = {}
@@ -122,6 +123,9 @@ function FightResultLayer:initUI()
     self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
     self.leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
     self.label = cc.uiloader:seekNodeByName(self, "label")
+    self.panlsuipian = cc.uiloader:seekNodeByName(self, "panlsuipian")
+    self.labelsuipian = cc.uiloader:seekNodeByName(self, "infoguanqia")
+    
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
 
@@ -202,6 +206,17 @@ function FightResultLayer:initUI()
     	self.star[i] = cc.uiloader:seekNodeByName(self, "panelstar"..i)
 	end
 	self.panelcard = cc.uiloader:seekNodeByName(self, "panelcard")
+
+	local curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
+	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(curRecord["suipianid"])
+	if curRecord["type"] == "boss" and isWeaponAlreadyTogether == false then
+	    self.levelDetailModel:setsuipian(curRecord["suipianid"])
+		self.panlsuipian:setVisible(true)
+		local name = self.weaponListModel:getWeaponNameByID(curRecord["suipianid"])
+		self.labelsuipian:setString("Boss关卡固定掉落"..name.."零件1个")
+	else
+		self.panlsuipian:setVisible(false)
+	end
 end
 
 function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
@@ -231,7 +246,7 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
 
 			local ran = math.random(1, 100)
 			print(ran.."sidgiudhciuwgiuvgcwiub")
-			if ran < 99 then
+			if ran < 5 then
 				self.isgold = true
 				-- self.goldpos = math.random(1, 6)
 				-- print(self.goldpos.."abcdefg")

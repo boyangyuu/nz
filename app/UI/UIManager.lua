@@ -18,6 +18,7 @@ layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
 --popup
 layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
+layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 
 
 function UI:ctor(properties)

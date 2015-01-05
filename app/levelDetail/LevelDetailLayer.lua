@@ -246,13 +246,14 @@ end
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
 	if self.weaponListModel:isWeaponExist(self.recomWeaponId) then
-		self.weaponListModel:equipBag(self.recomWeaponId,1)
+		if self.DataTable["type"] == "juji" then
+		else
+			self.weaponListModel:equipBag(self.recomWeaponId,1)
+		end
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
-
 	else
 		print("弹板购买")
-
 	end
 end
 

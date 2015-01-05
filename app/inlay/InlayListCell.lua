@@ -55,8 +55,9 @@ function InlayListCell:initCellUI(record)
             UILabelType = 2, text = record["describe1"].." "..record["valueDisplay"], size = 28})
         :align(display.CENTER, 0, 16)
         :addTo(self)
+        local num = self.inlayModel:getInlayNum(record["id"])
         local ownnumber = cc.ui.UILabel.new({
-            UILabelType = 2, text = self.inlayModel:getInlayNum(record["id"]), size = 25})
+            UILabelType = 2, text = num, size = 25})
         :align(display.CENTER, 220, 48)
         :addTo(self)
         ownnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -66,7 +67,9 @@ function InlayListCell:initCellUI(record)
                 return true
             elseif event.name=='ended' then
                 if self.userModel:costMoney(record["goldPrice"]) then
-                    self.inlayModel:buyInlay(record["id"])
+                    num = num + 1
+                    ownnumber:setString(num)
+                    self.inlayModel:buyInlay(record["id"],false)
                 end
                 md:getInstance("StoreModel"):setGoldWeaponNum()
             end
@@ -80,6 +83,5 @@ function InlayListCell:initCellUI(record)
             end
         end)
 end
-
 
 return InlayListCell

@@ -67,7 +67,9 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 	local accuracy = intenlevelData["accuracy"]
 	local reloadTime = intenlevelData["reloadTime"]
 	local demage = intenlevelData["demage"]
-	local property = {bulletNum = bulletNum,accuracy  = accuracy,reloadTime = reloadTime,demage = demage}
+	local upgradecost = intenlevelData["cost"]
+	local property = {bulletNum = bulletNum,accuracy  = accuracy,reloadTime = reloadTime,
+		demage = demage,upgradecost = upgradecost}
 	return property
 end
 

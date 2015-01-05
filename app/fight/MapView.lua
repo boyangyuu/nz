@@ -353,7 +353,7 @@ function MapView:onHeroFire(event)
 
 	--effect
 	local isHitted = not (#datas == 0)
-	print("isHitted", isHitted)
+	-- print("isHitted", isHitted)
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld= pWorld1})
 end
@@ -374,7 +374,7 @@ function MapView:singleFire(datas)
 		local enemy = data.enemy
 		local zo  = enemy:getLocalZOrder()
 		local pi  = enemy:getPlaceIndex()
-		print("placeIndex: "..pi.." zorder: "..zo)
+		-- print("placeIndex: "..pi.." zorder: "..zo)
 		if pi >= maxPlaceIndex then
 			if zo >= maxZorder then 
 				selectedData = data

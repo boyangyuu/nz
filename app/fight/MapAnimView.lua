@@ -47,12 +47,12 @@ function MapAnimView:playEffectShooted(event)
 	else
 		animName = "zdmz_di"
 	end
-	print("animName"..animName)
+	-- print("animName"..animName)
 	--pos
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	assert(animName, "animName is nil type"..animName)
-	if self.isShootAniming then return end
-	self.isShootAniming = true
+	-- if self.isShootAniming then return end
+	-- self.isShootAniming = true
 
 	--one or many
 	if isPz then 
