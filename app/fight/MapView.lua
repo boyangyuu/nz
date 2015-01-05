@@ -21,14 +21,14 @@ local MapView = class("MapView", function()
 end)
 
 _isZooming = false
-local kMissileZorder = 100
+local kMissileZorder = 10000
 local kMissilePlaceIndex = 100
 local kEffectZorder = 101
 function MapView:ctor()
 	--instance
 	self.hero 			= md:getInstance("Hero")
 	self.fight			= md:getInstance("Fight")
-	self.map 			= md:getInstance("Map")
+	local map 			= md:getInstance("Map")
 	self.fightConfigs 	= md:getInstance("FightConfigs")
 	self.enemys 		= {}
 	self.waveIndex 		= 1
@@ -46,13 +46,14 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
-     cc.EventProxy.new(self.fight, self)   
+    
+    cc.EventProxy.new(self.fight, self)   
         :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
 
-    -- cc.EventProxy.new(self.map, self)
-    --     :addEventListener(self.map.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
-    --     :addEventListener(self.map.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
-
+	cc.EventProxy.new(map, self)
+		:addEventListener(map.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
+        :addEventListener(map.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
+        :addEventListener(map.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
 	self:setNodeEventEnabled(true)
 end
 
@@ -70,6 +71,10 @@ function MapView:loadCCS()
 	--effect self.mapAnim
 	self.mapAnim = MapAnimView.new()
 	self.map:addChild(self.mapAnim, kEffectZorder)
+
+	--missile view
+	-- self.missileView = display.newNode()
+	-- self.map:addChild
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
@@ -320,13 +325,16 @@ function MapView:callfuncAddEnemys(event)
 end
 
 function MapView:callfuncAddMissile(event)
-	print("MapView:addMissile(event)")
 	local property = event.property
 	property.placeIndex = kMissilePlaceIndex
 	kMissileZorder = kMissileZorder - 1
 	-- dump(property, "property")
 	local enemyView = EnemyFactroy.createEnemy(property)
-	enemyView:setPosition(property.srcPos)
+	local pWorld = property.srcPos
+	-- dump(pWorld, "pWorld")
+	local pos = self.map:convertToNodeSpace(pWorld)
+	-- dump(pos,"pos")
+	enemyView:setPosition(pos)
 	self.enemys[#self.enemys + 1] = enemyView
 	self.map:addChild(enemyView, kMissileZorder)
 end
@@ -353,7 +361,7 @@ function MapView:onHeroFire(event)
 
 	--effect
 	local isHitted = not (#datas == 0)
-	print("isHitted", isHitted)
+	-- print("isHitted", isHitted)
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld= pWorld1})
 end
@@ -374,7 +382,7 @@ function MapView:singleFire(datas)
 		local enemy = data.enemy
 		local zo  = enemy:getLocalZOrder()
 		local pi  = enemy:getPlaceIndex()
-		print("placeIndex: "..pi.." zorder: "..zo)
+		-- print("placeIndex: "..pi.." zorder: "..zo)
 		if pi >= maxPlaceIndex then
 			if zo >= maxZorder then 
 				selectedData = data
@@ -388,6 +396,7 @@ function MapView:singleFire(datas)
 	if selectedData == nil then return end
 	local demageScale = selectedData.demageScale or 1.0
 	local enemy = selectedData.enemy
+	
 	enemy:onHitted(selectedData)	
 end
 
@@ -403,6 +412,13 @@ end
 
 function MapView:onHeroPlaneFire(event)
 	
+end
+
+function MapView:playEffectShaked(event)
+	print("function MapView:playEffectShaked(event)")
+	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
+	self:runAction(cc.Sequence:create(tMove, tMove:reverse(),
+		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
 end
 
 function MapView:onExit() 

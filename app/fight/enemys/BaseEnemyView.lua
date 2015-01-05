@@ -33,7 +33,6 @@ end
 --ui
 function BaseEnemyView:onEnter()
 	self:initBlood()
-
 end
 
 function BaseEnemyView:initBlood()

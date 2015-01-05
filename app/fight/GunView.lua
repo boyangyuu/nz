@@ -17,7 +17,6 @@ function GunView:ctor()
 	-- dump(properties, "GunView properties")
 	self.hero = md:getInstance("Hero")
 	self.inlay = md:getInstance("FightInlay")
-	self.defence = md:getInstance("Defence")
 	self.isChanging = false
 
 	--gun armature and base
@@ -27,10 +26,10 @@ function GunView:ctor()
 	--event
 	cc.EventProxy.new(self.hero, self)
         :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
-	
-	cc.EventProxy.new(self.defence, self)	
-		:addEventListener(self.defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onDefenseSwitch))
-	
+
+	cc.EventProxy.new(self.hero, self)
+        :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
+
 	cc.EventProxy.new(self.inlay, self)
         :addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.onActiveGold))
         :addEventListener(self.inlay.INLAY_GOLD_END_EVENT,	 handler(self, self.onActiveGoldEnd))
@@ -67,7 +66,6 @@ function GunView:playChange(event)
 	if self.isChanging then return end
 	
 	--clear
-	self:onShowGun() --for security
 	self:setPosition(cc.p(0.0,0.0))
 
 	print("GunView:playChange(event)")
@@ -212,21 +210,6 @@ function GunView:setGoldGun(isGold)
 	end
 end
 
-function GunView:onDefenseSwitch(event)
-	if event.isDefend then 
-		self:onHideGun()
-	else
-		self:onShowGun()
-	end
-end
-
-function GunView:onHideGun()
-	self:setVisible(false)
-end
-
-function GunView:onShowGun()
-	self:setVisible(true)
-end
 
 function GunView:onActiveGold(event)
 	print("GunView:onActiveGold(event)")

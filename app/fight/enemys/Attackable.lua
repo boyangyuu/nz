@@ -27,6 +27,7 @@ function Attackable:ctor(property)
 	assert(self.armature)
 	self:addChild(self.armature)
     self:setScale(property.scale or 1.0)
+    self:setScalePro(property.scale or 1.0)
     self:setPlaceIndex(property.placeIndex)
     
     --events
@@ -72,33 +73,34 @@ end
 ]]
 
 function Attackable:getTargetData(focusNode)
-	local targetData = {}
-	targetData.demage = self.hero:getDemage()
-	-- dump(targetData, "targetData")
-	local i = 0
 
-	--weak
-	while true do
-		i = i + 1
-		local rangeStr = "weak"..i
-		local enemyRange, isValid = self:getRange(rangeStr)
-		if enemyRange == nil then break end 
-	
-		local isInRange = self:rectIntersectsRectInWorld(focusNode,
-				 enemyRange)
-		if isInRange and isValid then 
-			local isHited = isInRange 
-			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
-			-- print("targetData.demageScale", targetData.demageScale)
-			targetData.demageType = "head"
-			targetData.enemy = self
-			return isHited,  targetData
+	local isHitedWeak, targetDataWeak = self:checkWeak(focusNode)
+	local isHitedBody, targetDataBody = self:checkBody(focusNode)
+	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
+
+	if self.attackType == "weak" or isGold then
+		if isHitedWeak then
+			return true, targetDataWeak 
+		elseif isHitedBody then 
+			return true, targetDataBody
 		end
-	end
+	else
+		if isHitedBody then
+			return true, targetDataBody
+		elseif isHitedWeak then 
+			return true, targetDataWeak
+		end
+	end		
+	return false, nil
+end
 
+function Attackable:checkBody(focusNode)
 	--body
-	i = 0
+	local targetData = {}
+	targetData.demage = self.hero:getDemage()		
+	local i = 0
 	while true do
+	
 		i = i + 1
 		local rangeStr = "body"..i
 		-- print("rangeStr", rangeStr)
@@ -109,9 +111,34 @@ function Attackable:getTargetData(focusNode)
 				 enemyRange)
 		if isInRange then 
 			local isHited = isInRange 
-			
 			targetData.demageScale = 1.0
 			targetData.demageType = "body"
+			targetData.enemy = self
+			return isHited,  targetData
+		end
+	end		
+	return false, nil
+end
+
+function Attackable:checkWeak(focusNode)
+	--weak
+	local i = 0
+	local targetData = {}
+	targetData.demage = self.hero:getDemage()	
+	while true do
+		
+		i = i + 1
+		local rangeStr = "weak"..i
+		local enemyRange, isValid = self:getRange(rangeStr)
+		if enemyRange == nil then break end 
+	
+		local isInRange = self:rectIntersectsRectInWorld(focusNode,
+				 enemyRange)
+		if isInRange and isValid then 
+			local isHited = isInRange 
+			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
+			print("targetData.demageScale", targetData.demageScale)
+			targetData.demageType = "head"
 			targetData.enemy = self
 			return isHited,  targetData
 		end
@@ -244,8 +271,16 @@ function Attackable:clearPlayCache()
 	self.playCache = {}
 end
 
+function Attackable:setScalePro(scale_)
+	self.myScale = scale_
+end
+
 function Attackable:getScale()
-	return self:getScaleX()
+	return self.myScale
+end
+
+function Attackable:getScalePro()
+	return self.myScale
 end
 
 function Attackable:removeAllSchedulers()

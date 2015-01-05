@@ -18,6 +18,7 @@ Fight.FIGHT_PAUSE_EVENT  = "FIGHT_PAUSE_EVENT"
 
 Fight.CONTROL_HIDE_EVENT = "CONTROL_HIDE_EVENT"
 Fight.CONTROL_SHOW_EVENT = "CONTROL_SHOW_EVENT"
+Fight.CONTROL_SET_EVENT  = "CONTROL_SET_EVENT"
 
 Fight.INFO_HIDE_EVENT = "INFO_HIDE_EVENT"
 Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
@@ -48,8 +49,8 @@ function Fight:refreshData()
     self.inlayModel = md:getInstance("InlayModel")
     print("fight self.hero init")
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
+    self.map        = md:createInstance("Map")
     self.inlay = self.hero:getFightInlay()
-    self.inlay:checkNativeGold()
 end
 
 function Fight:willStartFight()
@@ -62,6 +63,10 @@ end
 
 function Fight:startFight()
    self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
+   self.inlay:checkNativeGold()
+
+   --check ju
+   self:checkJuContorlType()
 end
 
 function Fight:endFight()
@@ -113,6 +118,22 @@ end
 function Fight:getCurGroupAndLevel()
     return self.groupId , self.levelId 
 end
+
+function Fight:checkJuContorlType()
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju == false then return end
+    local comps = {btnJu = true, btnChange =  false, btnRobot = false,
+    btnLei = false}
+    self:setCompsVisible(comps)
+end
+
+function Fight:setCompsVisible(componentVisibles)
+    self:dispatchEvent({name = Fight.CONTROL_SET_EVENT, 
+        comps = componentVisibles})
+end
+
+---- 关卡相关end ----
 
 function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo

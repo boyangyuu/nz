@@ -203,7 +203,7 @@ function Actor:decreaseHp(hp)
         self.hp_ = newhp
         self:dispatchEvent({name = Actor.HP_DECREASE_EVENT})
         if newhp == 0 then
-            self.fsm__:doEvent("kill")
+            self.fsm__:doEventForce("kill")
         end
     -- end
 
@@ -218,7 +218,7 @@ function Actor:fire()
 end
 
 -- 命中目标
-function Actor:hit(enemy)
+function Actor:hit(enemy, destDemage)
     -- assert(not enemy:isDead(), string.format("actor %s:%s is dead, can't change Hp", enemy:getId(), enemy:getNickname()))
     if enemy:isDead() then return 0.0 end
     -- 简化算法：伤害 = 自己的攻击力 - 目标防御
@@ -238,6 +238,7 @@ function Actor:hit(enemy)
     -- print("demage", demage)
     -- print("enemy.hp_)", enemy.hp_)
     -- 触发事件，damage <= 0 可以视为 miss
+    damage = destDemage or damage
     self:dispatchEvent({name = Actor.ATTACK_EVENT, enemy = enemy, damage = damage})
     if damage > 0 then
         -- 扣除目标 HP，并触发事件

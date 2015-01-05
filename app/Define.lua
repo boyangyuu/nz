@@ -19,6 +19,9 @@ Define.kRobotTime			 	= 10.0   --机甲持续时间
 Define.kBaoRangeW 				= 200	--手雷范围
 Define.kBaoRangeH 				= 200	--手雷范围
 
+--盾牌
+Define.cdTimes 					= 10.0   --十秒恢复完毕
+
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
 

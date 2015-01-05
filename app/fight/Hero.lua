@@ -39,9 +39,6 @@ Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 
--- --map
---   Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
-
 --hp
 Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
@@ -56,10 +53,7 @@ function Hero:ctor(properties)
     
     --init
     self.bags = {}
-    self.isGun1 = true
-    print("function Hero:ctor(properties)")
     self:initGuns()
-    self:setGun("bag1")
 
     --hp
     self:refreshHp()
@@ -109,6 +103,23 @@ end
 function Hero:initGuns()
     self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
     self.bags["bag2"] = Gun.new({bagIndex = "bag2"})
+
+    --ju
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isJuLevel = levelModel:isJujiFight()
+    if isJuLevel then 
+        self.bags["bag1"] = Gun.new({bagIndex = "bagJu"}) 
+        self.bags["bag2"] = Gun.new({bagIndex = "bagJu"})
+    end
+
+    self.isGun1 = self:isPreferBag1()
+    local bagIndex = nil
+    if self.isGun1 then 
+        bagIndex = "bag1"
+    else
+        bagIndex = "bag2"
+    end    
+    self:setGun(bagIndex)    
 end
 
 function Hero:getGun()

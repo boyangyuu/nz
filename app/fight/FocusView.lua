@@ -20,9 +20,7 @@ end)
 function FocusView:ctor(properties)
 	--instance
 	self.hero = md:getInstance("Hero")
-	
-	self.isJu = false
-
+	self.map = md:getInstance("Map")
 	self:refreshFocus()
 
     --event
@@ -116,8 +114,9 @@ end
 
 --狙击
 function FocusView:switchJu(event)
-	self.isJu = not self.isJu
-	if self.isJu then 
+	self.map:changeJuStatus()
+	local isJu = self.map:getIsJu()
+	if isJu then 
 		self:addJu()
 	else
 		self:removeJu()
@@ -131,7 +130,8 @@ function FocusView:addJu()
 	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
 	local scale = FightConfigs.kJuRange
 	local time = 0.1
-	self.hero:dispatchEvent({name = Hero.MAP_ZOOM_OPEN_EVENT,
+	local map = md:getInstance("Map")
+	map:dispatchEvent({name = map.MAP_ZOOM_OPEN_EVENT,
 		 destWorldPos = destWorldPos,
 		 scale = scale, 
 		 time = time})
@@ -146,18 +146,15 @@ function FocusView:addJu()
 	--hide
 	self.armature:setVisible(false)
 	self:setFocusRange(cc.size(5.0 , 5.0))
-	self:test()
 end
 
 function FocusView:removeJu()
 	print("FocusView:removeJu()")
-	if self.focusRange then 
-		self.focusRange:removeFromParent()
-	end
 
 	--zoom
 	local time = 0.1
-	self.hero:dispatchEvent({name = Hero.MAP_ZOOM_RESUME_EVENT,
+	local map = md:getInstance("Map")
+	map:dispatchEvent({name = map.MAP_ZOOM_RESUME_EVENT,
 		 time = time})
 	
 	--remove ju	

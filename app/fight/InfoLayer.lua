@@ -60,15 +60,14 @@ end
 
 function InfoLayer:initBullet()
 	self.labelBulletNum = cc.uiloader:seekNodeByName(self.root, "labelBulletNum")	
-	local record = self.weaponModel:getFightWeaponValue("bag1")
+	local gun = self.hero:getGun()
 	self.labelBulletNum:setAnchorPoint(cc.p(0.5, 0.5))
-	self:onRefreshBullet({num = record["bulletNum"]})
+	self:onRefreshBullet({num = gun:getBulletNum()})
 end
 
 function InfoLayer:onRefreshGun(event)
 	self.gunDisplay:removeAllChildren()
-	local bagIndex = event.bagIndex
-	local record = self.weaponModel:getFightWeaponValue(bagIndex)
+	local record = self.hero:getGun():getConfig()
 	local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 	icon:setScaleX(0.05)
 	icon:setScaleY(0.05)

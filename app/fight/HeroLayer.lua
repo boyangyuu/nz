@@ -14,6 +14,7 @@ local Fight 	= import(".Fight")
 --import view
 local DefenceView = import(".skills.DefenceView")
 local RobotView = import(".skills.RobotView")
+local HeroAnimView = import(".HeroAnimView")
 --kconfig
 local kRemainSumTimes = 4
 local kLeiDemage = 600.0
@@ -30,14 +31,11 @@ function HeroLayer:ctor(properties)
 	self.guide 	= md:getInstance("Guide")
 	self.inlay 	= md:getInstance("FightInlay")
 	self.defence = md:getInstance("Defence")
-
+	self.keepKillPercent = 100
 	--events
 	cc.EventProxy.new(self.hero, self)
 
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
-		:addEventListener(Hero.EFFECT_HURT_BOMB_EVENT		, handler(self, self.onHurtBombEffect))		
-		-- :addEventListener(Hero.SKILL_ROBOT_START_EVENT		, handler(self, self.onShowRobot))
-
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))
 		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT		, handler(self, self.effectPopupHead))		
@@ -72,7 +70,12 @@ function HeroLayer:initUI()
 	--robot
 	local robotNode = cc.uiloader:seekNodeByName(self.ui, "robotNode")
 	local robotView = RobotView.new()
-	robotNode:addChild(robotView)	
+	robotNode:addChild(robotView)
+
+	--anim
+	local heroAnimNode = cc.uiloader:seekNodeByName(self.ui, "heroAnim")
+	local heroAnimView = HeroAnimView.new()
+	heroAnimNode:addChild(heroAnimView)	
 end
 
 function HeroLayer:initData()
@@ -147,21 +150,26 @@ function HeroLayer:onActiveGold(event)
 end
 
 --杀掉敌人后的回调
-local percent = 100
+
 function HeroLayer:killEnemyCallBack(event)
 	--is already gold
 	local inlay = md:getInstance("FightInlay")
 	local isGold = inlay:getIsActiveGold()
-	if isGold then return end
+	
+	--总杀
+	self.killCntTotal = self.killCntTotal + 1
+	self:killEnmeyGold(event.enemyPos)
+	
+	if not isGold then 
+		self:killEnemyKeep()
+	end
+end
 
+function HeroLayer:killEnemyKeep()
 	--连杀
 	self.killLabel:setVisible(true)
 	self.killTimerBg	:setVisible(true)
-	self.killCntKeep  = self.killCntKeep + 1
-	self.killCntTotal = self.killCntTotal + 1
-
-	--award
-	self:killEnmeyGold(event.enemyPos)
+	self.killCntKeep  = self.killCntKeep + 1	
 	local strKillEnemyCount = string.format("X %d", self.killCntKeep)
 	self.killLabel:setString(strKillEnemyCount)
 
@@ -173,6 +181,7 @@ function HeroLayer:killEnemyCallBack(event)
 	end
 
 	-- body
+	local percent = self.keepKillPercent
 	self.killTimer:setVisible(true)
 	self.killTimer:setPercentage(100)
 	percent = 100
@@ -194,7 +203,7 @@ function HeroLayer:killEnemyCallBack(event)
         percent = percent - 1
     end
 
-    self.killTimerHandler = scheduler.scheduleGlobal(tick, 0.03)
+    self.killTimerHandler = scheduler.scheduleGlobal(tick, 0.03)	
 end
 
 function HeroLayer:bloodBehurtEffect()
@@ -225,10 +234,7 @@ function HeroLayer:onHurtEffect(event)
  	self:bloodBehurtEffect()
 end
 
-function HeroLayer:onHurtBombEffect()
-	print("HeroLayer:onHurtBombEffect()")
-	--svn\UI\ccs\Anim\effect\beizha_sl
-end
+
 
 --手雷
 function HeroLayer:onThrowGrenade(event)
@@ -237,7 +243,7 @@ function HeroLayer:onThrowGrenade(event)
 	self:addChild(armature)
 	armature:setPosition(display.width / 2, 0)
 	armature:setScale(2.0)
-	armature:getAnimation():play("lei", -1, 1)
+	armature:getAnimation():play("fire", -1, 1)
 	
 	--destRect
 	local destPos = event.throwPos
@@ -245,6 +251,7 @@ function HeroLayer:onThrowGrenade(event)
 						kLeiW,kLeiW)
 	destRect.x = destPos.x - kLeiW / 2
 	destRect.y = destPos.y - kLeiW / 2
+	
 	--lei
 	local function playBombEffect()
 		local map = md:getInstance("Map")
@@ -292,6 +299,7 @@ function HeroLayer:updateHp(event)
 		--inlay
 		local value = 0.0
 		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
+		print("scale", scale)
 		local maxHp = self.hero:getMaxHp()
 		if isInlayed then 
 			value =  maxHp * scale

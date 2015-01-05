@@ -167,7 +167,7 @@ local waves = {
 			{
 				time = 18,	
 				num = 3,
-				pos = {130, 200,0},
+				pos = {130, 200, 0},
 				delay = {0.1, 1,2},
 				property = { 
 					type = "jin",

@@ -164,6 +164,16 @@ function removeAllItems(listView)
     return listView
 end
 
-function getIsTest()
-    return false
+function addBtnEffect(btn)
+    local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+    btn:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC) 
+    btn:scaleTo(0.05, 1.1)
+    local sch
+    local function restore()
+        btn:setBlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+        btn:scaleTo(0.05, 1)
+        scheduler.unscheduleGlobal(sch)
+    end
+    
+    sch = scheduler.performWithDelayGlobal(restore, 0.1)   
 end

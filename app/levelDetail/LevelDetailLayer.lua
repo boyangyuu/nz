@@ -71,8 +71,6 @@ function LevelDetailLayer:initUI()
 	dansetj:setColor(cc.c3b(0,255,198))
 
     --content
-	local groupID = self.groupId
-	local levelID = self.levelId
 	local DataTable = self.DataTable
 
 	self.labelTitle:setString(DataTable["name"])
@@ -225,10 +223,12 @@ end
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
 	print("self.groupId,", self.groupId)
+	self.model:setCurGroupAndLevel(self.groupId,self.levelId)
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
 	self:onClickBtnOff()
 end
+
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
@@ -252,9 +252,9 @@ end
 
 ---- initData ----
 function LevelDetailLayer:initData()
-	local groupID = self.groupId
-	local levelID = self.levelId
-	self.DataTable = self.model:getConfig(groupID,levelID)
+	local groupId = self.groupId
+	local levelId = self.levelId
+	self.DataTable = self.model:getConfig(groupId,levelId)
 end
 
 return LevelDetailLayer
