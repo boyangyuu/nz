@@ -24,6 +24,28 @@ function LevelDetailModel:getConfig(BigID,SmallID)
 	return nil
 end
 
+function LevelDetailModel:setCurGroupAndLevel(gid, lid)
+	print("gid"..gid)
+	self.curGroupId = gid
+	self.curLevelId = lid
+end
+
+function LevelDetailModel:getCurGroupAndLevel()
+	return self.curGroupId, self.curLevelId
+end
+
+function LevelDetailModel:getCurLevelType()
+    local record = self:getConfig(self.curGroupId, self.curLevelId)
+    assert(record, "")
+    local type = record["type"]
+    assert(type, "")
+    return type	
+end
+
+function LevelDetailModel:isJujiFight()
+    return self:getCurLevelType() == "juji"
+end
+
 function LevelDetailModel:setsuipian(weaponid)
 	local data = getUserData()
 	if self.weaponListModel:isWeaponExist(weaponid) then

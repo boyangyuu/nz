@@ -34,6 +34,7 @@ modelClasses["Guide"]               = import("..guide.GuideModel")
 --need create
 needCreateClasses["Hero"] = true
 needCreateClasses["FightInlay"] = true
+needCreateClasses["Map"] = true
 
 function ModelManager:ctor()
     ModelManager.super.ctor(self) 
@@ -75,6 +76,9 @@ end
 function ModelManager:createInstance(clsName)
 
     print("create clsName"..clsName)
+    -- clear
+    self.objects_[clsName] = nil
+
     local classModel = modelClasses[clsName]
     local modelObj = classModel.new({id = classModel.__cname})
     self:setObject(clsName, modelObj)

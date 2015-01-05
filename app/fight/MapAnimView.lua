@@ -1,7 +1,7 @@
 
 --[[--
 
-“枪”的视图
+“地图效果”的视图
 
 ]]
 local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
@@ -51,8 +51,9 @@ function MapAnimView:playEffectShooted(event)
 	--pos
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	assert(animName, "animName is nil type"..animName)
-	-- if self.isShootAniming then return end
-	-- self.isShootAniming = true
+
+	if self.isShootAniming and animName == "zdmz_pt" then return end
+	self.isShootAniming = true
 
 	--one or many
 	if isPz then 
@@ -68,7 +69,7 @@ function MapAnimView:playEffectShooted(event)
 end
 
 function MapAnimView:addShootedArmature(animName, pos)
-	print("function MapAnimView:addShootedArmature(animName, pos)")
+	-- print("function MapAnimView:addShootedArmature(animName, pos)")
 	local armature = ccs.Armature:create(animName)
 	assert(armature, "armature os mil animName:"..animName)
 	self:addChild(armature)

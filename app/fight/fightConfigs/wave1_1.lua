@@ -20,7 +20,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 7,
+				time = 0,
 				num = 2,
 				delay ={0, 0.3},
 				pos = {10,100},		

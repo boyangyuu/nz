@@ -64,27 +64,28 @@ function RootLayer:addResFight()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
-        "sanbing01", "daodan", "zpbing"}
+        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei"}
  
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
     end
 
-    local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia"}
+    local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
+        "beizha_sl", "bls", "btqpg"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz", }
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz",}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end
 
     local uiImgs = {"baotou", "huanzidan", "ruodiangj", "tanhao",
-        "gold", "shoulei", "danke", "baozhasl_y", "beizha_sl", "xuetiao", "baozha4",
+        "gold", "danke", "baozhasl_y", "xuetiao", "baozha4",
         "effect_gun_kaiqiang"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
@@ -116,6 +117,7 @@ function RootLayer:addResFight()
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
     manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
 
+    --dd
     local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
     manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
     
@@ -128,8 +130,11 @@ function RootLayer:addResFight()
     local drlxsrc = "res/public/Anim/direnlx/direnlx.csb"
     manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
 
-    -- local leidasrc = "res/LevelMap/leida/leida.csb"
-    -- manager:addArmatureFileInfoAsync(leidasrc,  handler(self, self.dataLoaded))
+    self:addResFightMusic()
+end
+
+function RootLayer:addResFightMusic()
+    -- local names = {}
 
 end
 

@@ -4,6 +4,8 @@
 
 ]]
 
+--events
+
 --includes
 
 local Gun = class("Gun", cc.mvc.ModelBase)

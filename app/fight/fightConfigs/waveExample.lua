@@ -5,33 +5,37 @@ local waveClass = class("waveExample", BaseWave)
 -- 测试 近战兵
 local waves = {
 	{
-		enemys = {  
-			-- {
-			-- 	time = 2,
-			-- 	num = 6,
-			-- 	pos = {100, 200, 0, 170, 340, 100},
-			-- 	delay = {0.1, 0.4, 1.7, 0.9, 3.2, 1.5},
-			-- 	property = { 
-			-- 		id = 1,
-			-- 		placeName = "place1",
-			-- 	},
-			-- },		
+		enemys = {  	
 			{
 				time = 1,
-				num = 1,
+				num = 3,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
 				property = { 
-					id = 6,
+					id = 8,
 					type = "dao",
-					placeName = "place1",
-					enemyId = 7,
+					placeName = "place4",
+					missileId = 9,
+					missileType = "lei",
 				},
-			},				
+			},	
+			{
+				time = 2,
+				num = 3,
+				pos = {100, 200, 0, 170, 340, 100},
+				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
+				property = { 
+					id = 1,
+					placeName = "place3",
+
+				},
+			},							
 		},
 	},
 }
+--[[
 
+]]
 --enemy的关卡配置
 local enemys = {
 	--普通兵
@@ -39,7 +43,7 @@ local enemys = {
 		weak1=2,weak2=4},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=400,walkRate=400,rollRate=0,fireRate=100,
+	{id=2,image="jinzhanb",demage=20,hp=400,walkRate=400,rollRate=0,fireRate=100,
 		weak1=3,weak2=5},
 
 	--伞兵
@@ -55,10 +59,18 @@ local enemys = {
 		fireRate=100,weak1=3,weak2=5},			
 
 	--导弹兵
-	{id=6,image="zpbing",demage=0,hp=100,walkRate=400,rollRate=0,
+	{id=6,image="zpbing",demage=0,hp=1000,walkRate=400,rollRate=0,
 		fireRate=200,weak1=3,weak2=5},		
+		
 	--导弹
-	{id=7,image="daodan",demage=100,hp=100,weak1=3,weak2=5},			
+	{id=7,image="daodan",demage=10,hp=100, weak1=3,weak2=5},		
+
+	--手雷兵
+	{id=8,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=100,
+		fireRate=200,weak1=3,weak2=5},	
+
+	--手雷
+	{id=9,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},				
 }
 
 function waveClass:ctor()

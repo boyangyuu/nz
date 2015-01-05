@@ -27,14 +27,14 @@ end
 
 function Defence:setIsAble(isAble)
 	self.isAble = isAble
-	if isAble then 
+	self:setIsDefending(isAble)
+	if isAble then
+		self:refreshHp()
 		self:dispatchEvent({name = Defence.DEFENCE_RESUME_EVENT})
 	else
+		self:clearData()
 		self:dispatchEvent({name = Defence.DEFENCE_BROKEN_EVENT})
 	end
-
-	--hp
-	self:refreshHp()
 end
 
 function Defence:getIsAble()
@@ -75,6 +75,10 @@ function Defence:decreseHp(demage)
 		end
 		self.hp = curHp
 	end
+end
+
+function Defence:clearData()
+	self.hp = 0
 end
 
 function Defence:onHitted(demage)
