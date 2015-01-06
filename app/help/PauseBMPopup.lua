@@ -36,7 +36,6 @@ function PauseBMPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			cc.ColorUtil:isHighLighted(homeBackBtn, false)
-			-- ui:closePopupAndChangeLayer("PauseBMPopup")
 			ui:closePopup("PauseBMPopup")
 			ui:changeLayer("HomeBarLayer", {})
 			print("homeBackBtn is pressed!")

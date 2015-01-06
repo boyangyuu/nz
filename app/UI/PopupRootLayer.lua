@@ -20,6 +20,11 @@ end
 
 function PopupRootLayer:showPopup(event)
 	self:setVisible(true)
+
+	if self.layer and self.layer:getParent() then 
+		self.layer:removeSelf()
+		self.layer = nil
+	end
 	self.layer = event.layer
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(self.layer)
@@ -41,11 +46,6 @@ function PopupRootLayer:closePopup(event)
 	    	self.layer = nil
        end, 
 	})
-	-- local function removeFunc()
-	-- 	self.layer:removeSelf()  -- Must delete redundant layers
-	-- 	self.layer = nil
-	-- end
-	-- self:performWithDelay(removeFunc, 0.5)	
 end
 
 

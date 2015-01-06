@@ -28,7 +28,9 @@ function InfoLayer:ctor()
 	self:loadCCS()
 	self:initUI()
 	self:initGuide()
+	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
+	self:setTouchSwallowEnabled(false) 
 	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
 end
 
@@ -69,10 +71,12 @@ function InfoLayer:initBtns()
 	local btnStop = cc.uiloader:seekNodeByName(self.root, "btnStop")
 	btnStop:setTouchEnabled(true)
 	btnStop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            if event.name=='began' then             
-                
-            elseif event.name=='ended' then
-            	ui:showPopup("PauseBMPopup")
+            if event.name =='began' then                
+                cc.ColorUtil:isHighLighted(btnStop, true)
+                return true
+            elseif event.name =='ended' then
+            	cc.ColorUtil:isHighLighted(btnStop, false)
+            	ui:showPopup("PauseFLPopup")
             end
         end)
 end
