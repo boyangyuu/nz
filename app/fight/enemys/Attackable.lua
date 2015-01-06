@@ -132,7 +132,7 @@ function Attackable:checkWeak(focusNode)
 		i = i + 1
 		local rangeStr = "weak"..i
 		local enemyRange, isValid = self:getRange(rangeStr)
-		dump(enemyRange, "weak"..i)
+		-- dump(enemyRange, "weak"..i)
 		if enemyRange == nil then break end 
 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
@@ -163,8 +163,8 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
     enemyBound.x = pWorld2.x
     enemyBound.y = pWorld2.y    
     
-    dump(bound, "bound ------")
-    dump(enemyBound, "enemyBound -------")    
+    -- dump(bound, "bound ------")
+    -- dump(enemyBound, "enemyBound -------")    
     self:test()
     return cc.rectIntersectsRect(bound, enemyBound)
 end

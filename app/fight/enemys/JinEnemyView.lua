@@ -55,9 +55,9 @@ function JinEnemyView:playAhead()
     self.armature:getAnimation():play("walk" , -1, 1) --
     local speed = 60
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-    dump(pWorld, "pWorld")
+    -- dump(pWorld, "pWorld")
     local desY = -180
-    local desY = -0
+    -- local desY = -0
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
