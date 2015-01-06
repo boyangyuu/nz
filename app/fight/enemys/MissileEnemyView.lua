@@ -37,7 +37,7 @@ end
 function MissileEnemyView:playFire()
     local missileType = self.property["missileType"] or "daodan"
     
-    if missileType == "daodan" then 
+    if missileType == "daodan" or missileType == "tie" then 
         self:playDaoDanFire()
     elseif missileType == "lei" then
         self:playLeiFire()
@@ -90,10 +90,14 @@ function MissileEnemyView:playLeiFire()
 end
 
 function MissileEnemyView:playBomb()
-
+    local missileType = self.property["missileType"]
+    
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)  
-    self:playBombEffect()
+    if missileType == "tie" or missileType == "lei" then
+        self:playBombEffect()
+    end
+    
     --demage
     self.enemy:hit(self.hero)   
 

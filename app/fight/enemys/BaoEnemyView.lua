@@ -24,8 +24,8 @@ function BaoEnemyView:ctor(property)
     local callFuncAhead = function ()
         self:play("run", handler(self, self.playAhead))
     end
-    -- local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
-    -- self:addScheduler(aheadScheduler)
+    local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    self:addScheduler(aheadScheduler)
 end
 
 

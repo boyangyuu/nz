@@ -48,6 +48,7 @@ function ChongBossView:playTieQiu()
 		local delay = kDelayAnim
 		local property = {
 			type = "missile",
+			missileType = "tie",
 			srcScale = self:getScale(), --导弹view用
 			animName = "bls",
 			destScale = 3.0,
