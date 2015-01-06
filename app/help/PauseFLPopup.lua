@@ -4,7 +4,7 @@ local PauseFLPopup = class("PauseFLPopup", function( )
 	return display.newLayer()
 end)
 
-function PauseFLPopup:ctor(  )
+function PauseFLPopup:ctor()
 	self:loadCCS()
 	self:initButtons()
 end

@@ -7,10 +7,11 @@ function addBtnEventListener(node, callfunc)
     assert(callfunc, "callfunc is invalid")
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)        
         if event.name=='began' then
-            -- node:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
+            cc.ColorUtil:isHighLighted(node, true)
             node:runAction(cc.ScaleTo:create(0.05, 1.1))
         elseif event.name=='ended' then
-                node:runAction(cc.ScaleTo:create(0.1, 1))
+            cc.ColorUtil:isHighLighted(node, false)        
+            node:runAction(cc.ScaleTo:create(0.1, 1))
         end
         local isAccepted = callfunc(event)
         return isAccepted

@@ -19,10 +19,8 @@ function PauseBMPopup:initButtons()
 	gameContinueBtn:setTouchEnabled(true)
 	addBtnEventListener(gameContinueBtn, function( event )
 		if event.name == 'began' then
-			cc.ColorUtil:isHighLighted(gameContinueBtn, true)
 			return true
 		elseif event.name == 'ended' then 
-			cc.ColorUtil:isHighLighted(gameContinueBtn, false)
 			ui:closePopup("PauseBMPopup")
 			assert("gameContinue is pressed!")
 		end
@@ -32,10 +30,8 @@ function PauseBMPopup:initButtons()
 	homeBackBtn:setTouchEnabled(true)
 	addBtnEventListener(homeBackBtn, function( event )
 		if event.name == 'began' then
-			cc.ColorUtil:isHighLighted(homeBackBtn, true)
 			return true
 		elseif event.name == 'ended' then
-			cc.ColorUtil:isHighLighted(homeBackBtn, false)
 			ui:closePopup("PauseBMPopup")
 			ui:changeLayer("StartLayer", {})
 			print("homeBackBtn is pressed!")
@@ -46,10 +42,8 @@ function PauseBMPopup:initButtons()
 	musicClosedBtn:setTouchEnabled(true)
 	addBtnEventListener(musicClosedBtn, function( event )
 		if event.name == 'began' then
-			cc.ColorUtil:isHighLighted(musicClosedBtn, true)
 			return true
 		elseif event.name == 'ended' then 
-			cc.ColorUtil:isHighLighted(musicClosedBtn, false)
 			audio:pauseMusic()
 			audio:pauseAllSounds()
 			print("musicClosedBtn is pressed!")
@@ -60,10 +54,8 @@ function PauseBMPopup:initButtons()
 	closeBtn:setTouchEnabled(true)
 	addBtnEventListener(closeBtn, function( event )
 		if event.name == 'began' then
-			cc.ColorUtil:isHighLighted(closeBtn, true)
 			return true
 		elseif event.name == 'ended' then
-			cc.ColorUtil:isHighLighted(closeBtn, false)
 			ui:closePopup("PauseBMPopup")
 		end
 	end)
