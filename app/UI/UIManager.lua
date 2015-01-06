@@ -20,6 +20,9 @@ layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 
+layerClasses["AboutPopup"]           = import("..start.AboutPopup")
+layerClasses["PauseBMPopup"]         = import("..help.PauseBMPopup")
+
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 

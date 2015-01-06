@@ -67,11 +67,12 @@ end
 
 function InfoLayer:initBtns()
 	local btnStop = cc.uiloader:seekNodeByName(self.root, "btnStop")
+	btnStop:setTouchEnabled(true)
 	btnStop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            if event.name=='began' then                
+            if event.name=='began' then             
                 
             elseif event.name=='ended' then
-
+            	ui:showPopup("PauseBMPopup")
             end
         end)
 end

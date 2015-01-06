@@ -30,6 +30,15 @@ function StartLayer:initUI()
         	self:beginGame()
         end
     end)
+    local btnAbout = cc.uiloader:seekNodeByName(self, "beginbtn_2")
+    btnAbout:setTouchEnabled(true)
+    addBtnEventListener(btnAbout, function( event )
+        if event.name == 'began' then
+            return true
+        elseif event.name == 'ended' then
+            ui:showPopup("AboutPopup")
+        end
+    end)
 end
 
 function StartLayer:beginGame()
