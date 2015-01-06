@@ -14,6 +14,7 @@ layerClasses["HomeBarLayer"]		 = import("..homeBar.HomeBarLayer")
 layerClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
 layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
 layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
+layerClasses["StartLayer"]           = import("..start.StartLayer")
 
 --popup
 layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
