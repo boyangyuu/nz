@@ -3,7 +3,7 @@ local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
-local AnimLayer = import("..animLayer.AnimLayer")
+local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -90,9 +90,9 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            local layer = AnimLayer:new()
+            local layer = FightDescLayer:new()
             self:addChild(layer)
-            md:getInstance("AnimModel"):bossIntro()
+            md:getInstance("FightDescModel"):bossIntro()
         end
     end)
     addBtnEventListener(btnBack, function(event)

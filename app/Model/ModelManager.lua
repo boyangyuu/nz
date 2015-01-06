@@ -26,7 +26,7 @@ modelClasses["Map"]                 = import("..fight.Map")
 modelClasses["Defence"]             = import("..fight.skills.Defence")
 modelClasses["Robot"]               = import("..fight.skills.Robot")
 modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
-modelClasses["AnimModel"]           = import("..animLayer.AnimModel")
+modelClasses["FightDescModel"]      = import("..fight.fightDesc.FightDescModel")
 
 --guide
 modelClasses["Guide"]               = import("..guide.GuideModel")
