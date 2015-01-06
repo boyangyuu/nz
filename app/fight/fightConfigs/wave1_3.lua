@@ -159,7 +159,7 @@ local waves = {
 				pos = {130, 200,300},
 				delay = {0.1, 1,2},
 				property = { 
-					type = "jin",
+					type = "bao",
 					id = 4,
 					placeName = "place5",
 				},
@@ -170,7 +170,7 @@ local waves = {
 				pos = {130, 200, 0},
 				delay = {0.1, 1,2},
 				property = { 
-					type = "jin",
+					type = "bao",
 					id = 4,
 					placeName = "place6",
 				},
@@ -181,7 +181,7 @@ local waves = {
 				pos = {0},
 				delay = {0.1},
 				property = { 
-					type = "jin",
+					type = "bao",
 					id = 4,
 					placeName = "place4",
 				},
