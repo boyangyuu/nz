@@ -92,7 +92,8 @@ function HomeBarLayer:initHomeLayer()
             print("settingBtn is pressed!")
             local layer = FightDescLayer:new()
             self:addChild(layer)
-            md:getInstance("FightDescModel"):bossIntro()
+            md:getInstance("FightDescModel"):bossShow()
+            -- md:getInstance("FightDescModel"):enemyIntro("boss02")
         end
     end)
     addBtnEventListener(btnBack, function(event)
@@ -112,7 +113,6 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
-
             self:refreshCommonLayer("WeaponListLayer")
 
             -- print("Btn is pressed!")
@@ -137,7 +137,6 @@ function HomeBarLayer:initHomeLayer()
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
-
         end
     end)
 end
