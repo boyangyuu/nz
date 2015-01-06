@@ -27,7 +27,6 @@ function Attackable:ctor(property)
 	assert(self.armature)
 	self:addChild(self.armature)
     self:setScale(property.scale or 1.0)
-    self:setScalePro(property.scale or 1.0)
     self:setPlaceIndex(property.placeIndex)
     
     --events
@@ -38,7 +37,7 @@ function Attackable:ctor(property)
     self:scheduleUpdate()  
     self:setNodeEventEnabled(true)	
     
-    self:test()
+    -- self:test()
 end
 
 function Attackable:testStop(event)
@@ -80,12 +79,14 @@ function Attackable:getTargetData(focusNode)
 
 	if self.attackType == "weak" or isGold then
 		if isHitedWeak then
+			print("isHitedWeak")
 			return true, targetDataWeak 
 		elseif isHitedBody then 
 			return true, targetDataBody
 		end
 	else
 		if isHitedBody then
+			print("isHitedBody")
 			return true, targetDataBody
 		elseif isHitedWeak then 
 			return true, targetDataWeak
@@ -103,12 +104,13 @@ function Attackable:checkBody(focusNode)
 	
 		i = i + 1
 		local rangeStr = "body"..i
-		-- print("rangeStr", rangeStr)
+		print("rangeStr", rangeStr)
 		local enemyRange = self:getRange(rangeStr)
-		-- dump(enemyRange)
+		dump(enemyRange, "body"..i)
 		if enemyRange == nil then break end 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
 				 enemyRange)
+		print(isInRange, "isInRange")
 		if isInRange then 
 			local isHited = isInRange 
 			targetData.demageScale = 1.0
@@ -130,6 +132,7 @@ function Attackable:checkWeak(focusNode)
 		i = i + 1
 		local rangeStr = "weak"..i
 		local enemyRange, isValid = self:getRange(rangeStr)
+		dump(enemyRange, "weak"..i)
 		if enemyRange == nil then break end 
 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
@@ -160,8 +163,9 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
     enemyBound.x = pWorld2.x
     enemyBound.y = pWorld2.y    
     
-    -- dump(bound, "bound ------")
-    -- dump(enemyBound, "enemyBound -------")    
+    dump(bound, "bound ------")
+    dump(enemyBound, "enemyBound -------")    
+    self:test()
     return cc.rectIntersectsRect(bound, enemyBound)
 end
 
@@ -271,16 +275,8 @@ function Attackable:clearPlayCache()
 	self.playCache = {}
 end
 
-function Attackable:setScalePro(scale_)
-	self.myScale = scale_
-end
-
 function Attackable:getScale()
-	return self.myScale
-end
-
-function Attackable:getScalePro()
-	return self.myScale
+	return self:getScaleX()
 end
 
 function Attackable:removeAllSchedulers()

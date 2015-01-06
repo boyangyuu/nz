@@ -347,7 +347,6 @@ function MapView:onHeroFire(event)
 	--isThrough
 	local gun = self.hero:getGun()
 	local isThrough = gun:isFireThrough()
-	local datas = self:getTargetDatas(focusRangeNode)
 	if isThrough then
 		self:mutiFire(datas)
 	else

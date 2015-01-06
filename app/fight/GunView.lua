@@ -48,7 +48,7 @@ end
 function GunView:playFire()
 	--枪火
 	self.jqk   :setVisible(true)
-	self.jqkzd :setVisible(true)
+	-- self.jqkzd :setVisible(true)
 	self.dk    :setVisible(true)
 	self.jqk:getAnimation()	 :play("fire" , -1, 0)
 	self.jqkzd:getAnimation():play("qkzd" , -1, 0)

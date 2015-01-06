@@ -8,28 +8,16 @@ local waves = {
 		enemys = {  	
 			{
 				time = 1,
-				num = 3,
+				num = 1,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
 				property = { 
-					id = 8,
-					type = "dao",
+					id = 2,
+					type = "jin",
 					placeName = "place4",
-					missileId = 9,
-					missileType = "lei",
 				},
 			},	
-			{
-				time = 2,
-				num = 3,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
-				property = { 
-					id = 1,
-					placeName = "place3",
-
-				},
-			},							
+						
 		},
 	},
 }

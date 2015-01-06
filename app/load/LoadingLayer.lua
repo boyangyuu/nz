@@ -44,7 +44,7 @@ function LoadingLayer:changeHomeLayer()
 	function delayShow()
 		ui:changeLayer("HomeBarLayer", {})
 	end
-    local delay = 0.01 and isTest or 3.0
+    local delay = 3.0
 	scheduler.performWithDelayGlobal(delayShow, delay)
 end
 

@@ -31,7 +31,7 @@ function JinEnemyView:ctor(property)
     self:addScheduler(aheadHandler)
     
     --test
-    self:test()
+    -- self:test()
 end
 
 function JinEnemyView:playAttack()
@@ -57,6 +57,7 @@ function JinEnemyView:playAhead()
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     dump(pWorld, "pWorld")
     local desY = -180
+    local desY = -0
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
@@ -113,12 +114,12 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function JinEnemyView:test()
-    --body
-    -- local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-    -- local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    -- drawBoundingBox(self.armature, weakNode, "red") 
-    -- drawBoundingBox(self.armature, bodyNode, "yellow") 
-end
+-- function JinEnemyView:test()
+--     --body
+--     local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+--     local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+--     drawBoundingBox(self.armature, weakNode, "red") 
+--     drawBoundingBox(self.armature, bodyNode, "yellow") 
+-- end
 
 return JinEnemyView
