@@ -25,6 +25,9 @@ Define.cdTimes 					= 10.0   --十秒恢复完毕
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
 
+--狙击枪
+Define.kJuRange 				= 4.0
+
 function Define:ctor()
     Define.super.ctor(self) 
 end

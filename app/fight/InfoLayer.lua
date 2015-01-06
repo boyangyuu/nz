@@ -50,7 +50,7 @@ end
 function InfoLayer:initUI()
 	self:initGun()
 	self:initBullet()
-	-- self:initBtns()
+	self:initBtns()
 end
 
 function InfoLayer:initGun()
@@ -63,6 +63,17 @@ function InfoLayer:initBullet()
 	local gun = self.hero:getGun()
 	self.labelBulletNum:setAnchorPoint(cc.p(0.5, 0.5))
 	self:onRefreshBullet({num = gun:getBulletNum()})
+end
+
+function InfoLayer:initBtns()
+	local btnStop = cc.uiloader:seekNodeByName(self.root, "btnStop")
+	btnStop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+            if event.name=='began' then                
+                
+            elseif event.name=='ended' then
+
+            end
+        end)
 end
 
 function InfoLayer:onRefreshGun(event)

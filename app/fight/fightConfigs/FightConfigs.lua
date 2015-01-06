@@ -9,7 +9,6 @@ local FightConfigs = class("FightConfigs", cc.mvc.ModelBase)
 local p = "app.fight.fightConfigs"
 
 --战斗常量
-FightConfigs.kJuRange = 3.0
 
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)
@@ -24,7 +23,7 @@ function FightConfigs:getWaveConfig()
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
 	local waveFight = require(p .. str_src).new()
-	-- waveFight = require(p..".waveExample").new()
+	waveFight = require(p..".waveExample").new()
 	return waveFight
 end
 

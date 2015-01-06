@@ -128,7 +128,7 @@ function FocusView:addJu()
 
 	--zoom
 	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
-	local scale = FightConfigs.kJuRange
+	local scale = define.kJuRange
 	local time = 0.1
 	local map = md:getInstance("Map")
 	map:dispatchEvent({name = map.MAP_ZOOM_OPEN_EVENT,

@@ -566,10 +566,12 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
-    focusNode:setPosition(xOri + offsetX*scale, yOri + offsetY*scale)
+    offsetX = xOri + offsetX*scale
+    offsetY = yOri + offsetY*scale
+    focusNode:setPosition(offsetX, offsetY)
     self:justFocusPos(focusNode)
     local x, y = focusNode:getPosition()
-    self:moveGun(x)
+    self:moveGun(x - xOri,y - yOri)
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
@@ -581,9 +583,10 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     self:justBgPos(layerMap)
 end
 
-function FightPlayer:moveGun(x) 
+function FightPlayer:moveGun(offsetX, offsetY)
     local layerGun = self.layerGun
-    layerGun:setPositionX(x)   --todo 需要改为美术资源提供
+    local xOri, yOri = layerGun:getPosition()
+    layerGun:setPositionX(offsetX + xOri)
 end
 
 function FightPlayer:justBgPos(node)
