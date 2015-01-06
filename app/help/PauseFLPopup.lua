@@ -10,7 +10,7 @@ function PauseFLPopup:ctor()
 end
 
 function PauseFLPopup:loadCCS()
-	local pauseNode = cc.uiloader:load("res/bangzhu/zhandouzhanting.ExportJson")
+	local pauseNode = cc.uiloader:load("res/help/bangzhu/zhandouzhanting.ExportJson")
 	self:addChild(pauseNode)
 end
 

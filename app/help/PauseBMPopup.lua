@@ -10,7 +10,7 @@ function PauseBMPopup:ctor()
 end
 
 function PauseBMPopup:loadCCS()
-	local pauseBMNode = cc.uiloader:load("res/bangzhu/dadituzhanting.ExportJson")
+	local pauseBMNode = cc.uiloader:load("res/help/bangzhu/dadituzhanting.ExportJson")
 	self:addChild(pauseBMNode) 
 end
 

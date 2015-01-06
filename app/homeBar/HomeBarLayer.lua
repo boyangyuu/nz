@@ -90,17 +90,11 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-<<<<<<< HEAD
+            ui:showPopup("PauseBMPopup")
             -- local layer = FightDescLayer:new()
             -- self:addChild(layer)
-            -- md:getInstance("FightDescModel"):bossIntro()
-            ui:showPopup("PauseBMPopup")
-=======
-            local layer = FightDescLayer:new()
-            self:addChild(layer)
-            md:getInstance("FightDescModel"):bossShow()
+            -- md:getInstance("FightDescModel"):bossShow()
             -- md:getInstance("FightDescModel"):enemyIntro("boss02")
->>>>>>> 52a7658f3ab2d56c7fa61eaaf0dfb0d9a9435980
         end
     end)
     addBtnEventListener(btnBack, function(event)

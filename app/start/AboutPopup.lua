@@ -11,7 +11,7 @@ function AboutPopup:ctor()
 end
 
 function AboutPopup:loadCCS()
-	local aboutNode = cc.uiloader:load("res/bangzhu/guangyu.ExportJson")
+	local aboutNode = cc.uiloader:load("res/help/bangzhu/guangyu.ExportJson")
 	aboutNode:setPosition(display.cx/5, display.cy/5)
 	self:addChild(aboutNode)
 end
