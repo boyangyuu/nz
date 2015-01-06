@@ -72,10 +72,6 @@ function MapView:loadCCS()
 	self.mapAnim = MapAnimView.new()
 	self.map:addChild(self.mapAnim, kEffectZorder)
 
-	--missile view
-	-- self.missileView = display.newNode()
-	-- self.map:addChild
-
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
 
@@ -95,7 +91,6 @@ function MapView:loadCCS()
         end
         if isTest == false then 
         	local colorNode = cc.uiloader:seekNodeByName(placeNode_, "color")
-        	print("test")
 	        colorNode:setVisible(false)
 	    end
         self.places[name] = placeNode
@@ -120,8 +115,13 @@ function MapView:updateEnemys()
 		return
 	end
 
+	--wave提示
+	local fightDescModel = md:getInstance("FightDescModel")
+	fightDescModel:waveStart(self.waveIndex)
+
+	--addEnemys
 	local lastTime = 0
-	local waveDelay = 2.0
+	local waveAnimDelay = 2.0
 	for groupId, group in ipairs(wave.enemys) do
 		for i = 1, group.num do
 			--delay
@@ -141,7 +141,7 @@ function MapView:updateEnemys()
 				self:addEnemy(group.property, pos, zorder)
 			end
 
-			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
+			scheduler.performWithDelayGlobal(addEnemyFunc, delay + waveAnimDelay)
 		end
 	end
 	--check next wave

@@ -2,7 +2,7 @@
 import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local DialogLayer   = import("..dialog.DialogLayer")
-
+local FightDescLayer = import(".fightDesc.FightDescLayer")
 local GunView       = import(".GunView")
 local FocusView     = import(".FocusView")
 local MapView       = import(".MapView")
@@ -174,6 +174,11 @@ function FightPlayer:initUI()
     local dialogLayer = DialogLayer.new()
     local layerDialog = cc.uiloader:seekNodeByName(self, "layerDialog") 
     layerDialog:addChild(dialogLayer)
+
+    --dialogy
+    local fightDescLayer = FightDescLayer.new()
+    local layerDialog = cc.uiloader:seekNodeByName(self, "layerDialog") 
+    layerDialog:addChild(fightDescLayer)
 
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
