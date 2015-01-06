@@ -48,18 +48,23 @@ end
 function GunView:playFire()
 	--枪火
 	self.jqk   :setVisible(true)
-	-- self.jqkzd :setVisible(true)
+	self.jqkzd :setVisible(true)
 	self.dk    :setVisible(true)
 	self.jqk:getAnimation()	 :play("fire" , -1, 0)
 	self.jqkzd:getAnimation():play("qkzd" , -1, 0)
 	self.dk:getAnimation()	 :play("danke", -1, 0)
 	self.armature:getAnimation():play("fire" , -1, 0)
+
+	--music
+	local soundName = "res/Fight/music/leibz.wav"
+	audio.playMusic(soundName,false)
 end
 
 function GunView:stopFire()
 	self.jqk  :setVisible(false)
 	self.jqkzd:setVisible(false)
 	self.dk   :setVisible(false)
+	self:playIdle()
 end
 
 function GunView:playChange(event)
