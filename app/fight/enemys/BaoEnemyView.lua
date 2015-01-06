@@ -32,7 +32,7 @@ end
 function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
-    self.armature:getAnimation():play("run" , -1, 1) --
+    self.armature:getAnimation():play("walk" , -1, 1) --
     local speed = 50
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     -- dump(pWorld, "pWorld")
@@ -94,7 +94,7 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
         if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if self.isAheading then 
-                self.armature:getAnimation():play("run" , -1, 1) 
+                self.armature:getAnimation():play("walk" , -1, 1) 
                 return 
             end
             if playCache then 
