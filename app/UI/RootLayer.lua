@@ -130,6 +130,9 @@ function RootLayer:addResFight()
     local drlxsrc = "res/public/Anim/direnlx/direnlx.csb"
     manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
 
+    local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.csb"
+    manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
+
     self:addResFightMusic()
 end
 

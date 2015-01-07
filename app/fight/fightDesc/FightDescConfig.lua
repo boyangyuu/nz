@@ -2,7 +2,7 @@ local EnemyDescConfig = class("EnemyDescConfig", cc.mvc.ModelBase)
 
 local configs = {}
 
-configs["boss01"] = {
+configs["boss02"] = {
 	title = "BOSS信息！",
 	name = "毁灭者",
 	spc = "技能：",
@@ -12,7 +12,7 @@ configs["boss01"] = {
 	playanim = "stand",
 }
 
-configs["boss02"] = {
+configs["boss01"] = {
 	title = "BOSS信息！",
 	name = "黑暗金刚",
 	spc = "技能：",

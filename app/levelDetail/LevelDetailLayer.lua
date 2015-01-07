@@ -84,13 +84,14 @@ function LevelDetailLayer:initUI()
 		self.panelbiaozhu:setVisible(true)
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
 			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
-
+	end
+	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
 		armature:setScale(0.8)
 		addChildCenter(armature, self.panlEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
-
 	end
+
 
 	self:initMapUI()
 	self.recomWeaponId = DataTable["weapon"]

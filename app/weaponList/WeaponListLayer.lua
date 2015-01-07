@@ -72,7 +72,8 @@ function WeaponListLayer:initUI()
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
     self.upgradecost      = cc.uiloader:seekNodeByName(self, "upgradecost")
-
+    self.damagepluse      = cc.uiloader:seekNodeByName(self, "damagepluse")
+    
     self.stars = {}
     for i=1,10 do
         self.stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
@@ -267,6 +268,10 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
     self.progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
 
+    self.progBulletNext:setBreath()
+    self.progAccuracyNext:setBreath()
+    self.progReloadNext:setBreath()
+
     self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
     self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
     self.progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
@@ -274,41 +279,8 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
-    local x = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
-    if x == 0 then
-        for k,v in pairs(self.stars) do
-            v:setVisible(false)
-        end
-    else
-        
-        if refreshStar then
-            local isoncefull
-            if intenlevel then
-                isoncefull = 10
-                x = intenlevel+1
-            else
-                isoncefull = x
-            end
-            local a = 0
-            for i=x,isoncefull do
-                local delay = a * 0.1
-                a = a + 1
-                function delayStar( )
-                    self.starArmature = ccs.Armature:create("gkjs_xing")
-                    self.starArmature:setPosition(19.5,19)
-                    self.starArmature:setScale(0.448,0.452)
-                    self.panlStars[i]:addChild(self.starArmature)
-                    self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
-                end
-                scheduler.performWithDelayGlobal(delayStar, delay)
-            end
-        end 
-        for k,v in pairs(self.stars) do
-            if k<x+1 then
-                v:setVisible(true)
-            end
-        end
-    end
+    self.damagepluse:setString("+"..demageNext-demage)
+    self:playstar(refreshStar,intenlevel)
 
     -- refresh 选择状态
     local itemContent = self.weaponLV.items_[index]:getContent()
@@ -327,12 +299,50 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self:showButton()
 end
 ------------- 
+function WeaponListLayer:playstar(refreshStar,intenlevel)
+    local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
+    if curLevel == 0 then
+        for k,v in pairs(self.stars) do
+            v:setVisible(false)
+        end
+    else
+        if refreshStar then
+            local toLevel
+            if intenlevel then
+                toLevel = 10
+                curLevel = intenlevel+1
+            else
+                toLevel = curLevel
+            end
+            local ind = 0
+            for i=curLevel,toLevel do
+                local delay = ind * 0.1
+                ind = ind + 1
+                function delayStar( )
+                    self.starArmature = ccs.Armature:create("gkjs_xing")
+                    self.starArmature:setPosition(19.5,19)
+                    self.starArmature:setScale(0.448,0.452)
+                    self.panlStars[i]:addChild(self.starArmature)
+                    self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
+                end
+                scheduler.performWithDelayGlobal(delayStar, delay)
+            end
+        end 
+        for k,v in pairs(self.stars) do
+            if k<curLevel+1 then
+                v:setVisible(true)
+            end
+        end
+    end
+end
+
 
 -- 从数据获取当前weapon装备状态判断显示button
 function WeaponListLayer:showButton()
     local weaponid = self.weaponId
     self.btnEquiped:setVisible(false)
     self.labelPercent:setVisible(true)
+    self.damagepluse:setVisible(true)
     if self.weaponListModel:isWeaponExist(weaponid) then
         self.btnBuy:setVisible(false)
         self.btnEquip:setVisible(true)
@@ -341,6 +351,7 @@ function WeaponListLayer:showButton()
             self.btnOncefull:setVisible(false)
             self.btnUpgrade:setVisible(false)
             self.labelPercent:setVisible(false)
+            self.damagepluse:setVisible(false)
         else
             self.btnFull:setVisible(false)
             self.btnOncefull:setVisible(true)
@@ -374,7 +385,11 @@ end
 -- 升级事件
 function WeaponListLayer:intensify(event)
     ui:closePopup()
-    self.weaponListModel:intensify(self.weaponId)
+    function delayplaystar( )
+        self.weaponListModel:intensify(self.weaponId)
+    end
+    scheduler.performWithDelayGlobal(delayplaystar, 0.4)
+
 end
 
 function WeaponListLayer:closePopup()

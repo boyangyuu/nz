@@ -14,12 +14,19 @@ layerClasses["HomeBarLayer"]		 = import("..homeBar.HomeBarLayer")
 layerClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
 layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
 layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
+layerClasses["StartLayer"]           = import("..start.StartLayer")
 
 --popup
 layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 
+-- 关于Popup
+layerClasses["AboutPopup"]           = import("..start.AboutPopup")
+-- 地图暂停Popup
+layerClasses["PauseBMPopup"]         = import("..help.PauseBMPopup")
+-- 战斗暂停Popup
+layerClasses["PauseFLPopup"]         = import("..help.PauseFLPopup")
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 
