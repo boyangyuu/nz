@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	--[[{
+	{
 		enemys = { 
 			{
 				time = 3,	
@@ -38,7 +38,7 @@ local waves = {
 				},
 			},		
 		},
-	},	--]]
+	},	
 	{
 		enemys = {
 			{
