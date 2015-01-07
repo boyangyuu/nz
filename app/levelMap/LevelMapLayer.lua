@@ -191,7 +191,6 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             cc.ColorUtil:setGray(levelDian[i])                 
             -- levelBtn[i]:setColor(cc.c3b(80, 80, 80))
             -- levelDian[i]:setColor(cc.c3b(80, 80, 80))
-            -- levelBtn[i]:setShaderProgram
         end
         -- add listener
         addBtnEventListener(levelBtn[i], function(event)

@@ -39,7 +39,7 @@ function InlayLayer:onEnter()
 end
 
 function InlayLayer:refreshInlay(event)
-    self:refreshBtnIcon()
+    self:refreshBtnIcon(event)
     self:refreshListView(event.typename)
     self:refreshAvatar()
 end
@@ -47,7 +47,9 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
-
+    
+    self.iconarm = ccs.Armature:create("xqtb")
+    self.avatarm = ccs.Armature:create("xqan_hjwqbs")
     local armature = ccs.Armature:create("xqan_hjwq")
     addChildCenter(armature, goldWeaponBtn)
     armature:getAnimation():play("Animation1" , -1, 1)
@@ -83,6 +85,16 @@ function InlayLayer:initUI()
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
+                -- local selectarm = ccs.Armature:create("xqtb")
+                -- selectarm:getAnimation():setMovementEventCallFunc(
+                --     function ( armatureBack,movementType,movementId ) 
+                --         if movementType == ccs.MovementEventType.complete then
+                --             armatureBack:removeSelf()
+                --         end
+                --     end)
+                -- addChildCenter(selectarm, self.btn[v])
+                -- selectarm:getAnimation():play("xqtb" , -1, 1)
+
                 self:refreshListView(v)    
             end
         end)
@@ -111,7 +123,7 @@ function InlayLayer:refreshAvatar()
     end
 end
 
-function InlayLayer:refreshBtnIcon()
+function InlayLayer:refreshBtnIcon(event)
     local allInlayed = self.inlayModel:getAllInlayed()
     for k,v in pairs(self.btn) do
         self.btn[k]:removeAllChildren()
@@ -122,6 +134,36 @@ function InlayLayer:refreshBtnIcon()
         local img =  display.newSprite("#"..table[1]["imgname"]..".png")
         addChildCenter(img,self.btn[k])
     end
+
+    if event then    
+        if event.isall then
+            for k,v in pairs(allInlayed) do
+                local equiparm = ccs.Armature:create("xqzb")
+                equiparm:getAnimation():setMovementEventCallFunc(
+                    function ( armatureBack,movementType,movementId ) 
+                        if movementType == ccs.MovementEventType.complete then
+                            armatureBack:removeSelf()
+                        end
+                    end)
+                addChildCenter(equiparm, self.btn[k])
+                equiparm:getAnimation():play("Animation1" , -1, 0)
+            end
+            return
+        elseif event.typename then
+            local equiparm = ccs.Armature:create("xqzb")
+            equiparm:getAnimation():setMovementEventCallFunc(
+                function ( armatureBack,movementType,movementId ) 
+                    if movementType == ccs.MovementEventType.complete then
+                        armatureBack:removeSelf()
+                    end
+                end)
+            addChildCenter(equiparm, self.btn[event.typename])
+            equiparm:getAnimation():play("Animation1" , -1, 0)
+
+        end
+    end
+
+    
 
 end
 

@@ -169,8 +169,7 @@ function InlayModel:equipAllInlays(isRefresh)
 	end
 	if isRefresh == nil then isRefresh = true end
 	if isRefresh == true then
-		self:refreshInfo("speed")
-		print(self:refreshInfo("speed"))
+	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = "speed",isall = true})
 	end
 end
 
