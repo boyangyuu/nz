@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+	--[[{
 		enemys = { 
 			{
 				time = 3,	
@@ -101,7 +101,7 @@ local waves = {
 			},									
 		},
 
-	},	
+	},	--]]
 	{
 		enemys = {  --boss
 			{
@@ -156,16 +156,16 @@ local bosses = {
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.70,
+				0.95, 0.20,
 			},
 			moveRightFire = {
-				0.65, 0.30,
+				0.65, 0.40,
 			},
 			chongfeng = {
-				0.5, 0.10,
+				0.99, 0.98,0.20
 			},
 			tieqiu = {
-				0.99, 0.50
+				0.30, 0.60
 			},
 			weak2 = {
 				0.50,

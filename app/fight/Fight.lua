@@ -128,8 +128,7 @@ function Fight:checkJuContorlType()
     local levelModel = md:getInstance("LevelDetailModel")
     local isju = levelModel:isJujiFight()
     if isju == false then return end
-    local comps = {btnJu = true, btnChange =  false, btnRobot = false,
-    btnLei = false}
+    local comps = {btnJu = true, btnChange =  false,}
     self:setCompsVisible(comps)
 end
 

@@ -108,7 +108,7 @@ end
 function HeroLayer:killEnmeyGold(enemyPos)
 	local awardValue = define.kKillEnemyAwardGold 
 	local goldCount = self.killCntTotal * awardValue
-
+	print("goldCount", goldCount)
 	for i = 1, 3 do
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)

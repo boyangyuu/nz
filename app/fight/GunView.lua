@@ -57,7 +57,7 @@ function GunView:playFire()
 
 	--music
 	local soundName = "res/Fight/music/leibz.wav"
-	audio.playMusic(soundName,false)
+	-- audio.playMusic(soundName,false)
 end
 
 function GunView:stopFire()

@@ -13,7 +13,6 @@ end)
 
 function RobotView:ctor()
 	--instance
-	self.hero 	 = md:getInstance("Hero")
 	self.robot 	 = md:getInstance("Robot")
 
 	--event
@@ -24,36 +23,30 @@ function RobotView:ctor()
 		:addEventListener(Robot.ROBOT_STOPFIRE_EVENT, handler(self, self.stopFire))
 		:addEventListener(Robot.ROBOT_BEHURTED_EVENT, handler(self, self.RobotBehurtEffect))
 
- 	self:initData()
- 	self:initUI()
+ 	self:clearUI()
 end
 
-function RobotView:initData()
-
-end
-
-function RobotView:initUI()
+function RobotView:clearUI()
 	--armature
+	if self.armature then 
+		self.armature:removeSelf()
+	end
 	self.armature = ccs.Armature:create("jijia")
 	self:addChild(self.armature)
 	self.armature:getAnimation():setMovementEventCallFunc(
 		handler(self, self.animationEvent))
-	self:setVisible(false)	
+	self:setVisible(false)
 end
 
 function RobotView:hideRobot(event)
-	self:setVisible(false)
-
-
-	-- self.armature:getAnimation():play("jijia", -1, 1) --reverse
+	self.armature:getAnimation():play("jijia_shou", -1, 1) --reverse
 end
 
 function RobotView:showRobot(event)
 	print("function RobotView:showRobot()")
+	self:clearUI()
 	self:setVisible(true)
 	self.armature:getAnimation():play("jijia", -1, 1)
-
-
 end
 
 function RobotView:RobotBehurtEffect(event)
@@ -72,17 +65,19 @@ function RobotView:playFire(event)
 end
 
 function RobotView:stopFire(event)
+	print("function RobotView:stopFire(event)")
 	self:playStand()
 end
 
 function RobotView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if movementID ~= "jijia_fire" then
+		print("movementID"..movementID)
+    	if movementID == "jijia_shou" then
+			self:clearUI()
+		elseif movementID ~= "jijia_fire" then
 			print("self.armature:getAnimation():play")
-			self:playStand()
-    	else  
-
-    	end 
+			self:playStand() 
+		end 
 	end
 end
 

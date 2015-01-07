@@ -14,6 +14,8 @@ Define.kBaoDemageOtherEnemys 	= 10  --自爆兵伤害值
 Define.kRobotCoolDownTime 		= 0.08   --robot 冷却时间
 Define.kRobotDemage			 	= 220    --机甲伤害
 Define.kRobotTime			 	= 10.0   --机甲持续时间
+Define.kRobotRangeH				= 40.0   -- 机甲范围
+Define.kRobotRangeW				= 80.0   --机甲范围
 
 --手雷
 Define.kBaoRangeW 				= 200	--手雷范围

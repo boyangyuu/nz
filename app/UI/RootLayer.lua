@@ -98,7 +98,7 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end 
 
-    local focusImgs = {"anim_zunxin_sq",} 
+    local focusImgs = {"anim_zunxin_sq", "jijia_zx"} 
     for i,v in ipairs(focusImgs) do
         local src = "res/Fight/focusAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

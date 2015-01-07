@@ -47,6 +47,8 @@ function Robot:fire()
 end
 
 function Robot:stopFire()
+	if self.isRoboting == false then return end
+	print("function Robot:stopFire()")
 	self:dispatchEvent({name = Robot.ROBOT_STOPFIRE_EVENT})
 end
 
@@ -69,8 +71,7 @@ function Robot:startRobot()
 
 	--visible
 	local fight = md:getInstance("Fight")
-	local btns = {"btn"}
-	fight:dispatchEvent({name = fight.CONTROL_HIDE_EVENT, btns = btns})
+	fight:dispatchEvent({name = fight.CONTROL_HIDE_EVENT})
 	fight:dispatchEvent({name = fight.INFO_HIDE_EVENT})
 
 	--show robot
