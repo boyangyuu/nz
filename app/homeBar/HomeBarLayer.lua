@@ -90,6 +90,7 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
+            ui:showPopup("PauseBMPopup")
         end
     end)
     addBtnEventListener(btnBack, function(event)
