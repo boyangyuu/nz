@@ -34,6 +34,13 @@ function FightPlayer:ctor(properties)
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
 
+    --datas
+    self.curGold    = 0
+    self.tempChangeGoldHandler = nil
+    self.resumeDefenceHandler = nil
+    self.btnFireSch = nil
+    self.touchFireId = nil
+
     --views
     self.focusView      = FocusView.new()
     self.mapView        = MapView.new()
@@ -76,25 +83,24 @@ function FightPlayer:setPause(event)
     layerTouch:setTouchEnabled(not isPause)  
 end
 
-local tempChangeGoldHandler = nil
-local curGold = 0
 function FightPlayer:changeGoldCount(event)
     local totolGold = event.goldCount
+
     local function changeGold()
-        if curGold < totolGold then
-            curGold = curGold + 1
-            self.labelGold:setString(curGold)
+        if self.curGold < totolGold then
+            self.curGold = self.curGold + 1
+            self.labelGold:setString(self.curGold)
         else
-            if tempChangeGoldHandler then
-                scheduler.unscheduleGlobal(tempChangeGoldHandler)
-                tempChangeGoldHandler = nil
+            if self.tempChangeGoldHandler then
+                scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
+                self.tempChangeGoldHandler = nil
             end
         end
     end
-    if tempChangeGoldHandler then
-        scheduler.unscheduleGlobal(tempChangeGoldHandler)
+    if self.tempChangeGoldHandler then
+        scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
     end
-    tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.01)
+    self.tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.01)
 end
 
 function FightPlayer:onClickRobot()
@@ -122,6 +128,7 @@ function FightPlayer:hideControl(event)
     --btn
     self.btnDefence:setVisible(false)
     self.btnChange:setVisible(false)
+    self.btnRobot:setVisible(false)
     self.btnLei:setVisible(false)
 end
 
@@ -185,7 +192,6 @@ function FightPlayer:initUI()
 end
 
 --启动盾牌恢复
-local resumeDefenceHandler = nil
 function FightPlayer:startDefenceResume(event)
     print("function FightPlayer:startDefenceResume(event)")
     self.labelDefenceResume:setVisible(true)
@@ -202,7 +208,7 @@ function FightPlayer:startDefenceResume(event)
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
             print("盾牌恢复成功")
-            scheduler.unscheduleGlobal(resumeDefenceHandler)
+            scheduler.unscheduleGlobal(self.resumeDefenceHandler)
             self.defenceBar:setVisible(false)
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
@@ -215,7 +221,7 @@ function FightPlayer:startDefenceResume(event)
     end
     local cdTimes = define.cdTimes
     local percentTimes = cdTimes/100
-    resumeDefenceHandler = scheduler.scheduleGlobal(tick, percentTimes)
+    self.resumeDefenceHandler = scheduler.scheduleGlobal(tick, percentTimes)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
@@ -327,7 +333,8 @@ function FightPlayer:onMutiTouchBegin(event)
     --check
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point)
+        local eventName = event.name 
+        local isTouch = self:checkBtnFire(id, point, eventName)
         if isTouch then return true end
 
         isTouch = self:checkBtnChange(point)
@@ -408,17 +415,30 @@ function FightPlayer:checkBtnChange(point)
 end
 
 function FightPlayer:checkBtnFire(id,point,eventName)
-    local isTouch = false
     if eventName == "moved" then return false end
-    if (eventName == "ended" or eventName == "cancelled" or eventName == "removed") then
-        self:onCancelledFire()
-    else
-        local rect = self.btnFire:getBoundingBox()      
-        isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))
-        if isTouch then
-            self.btnFireSch =  scheduler.scheduleGlobal(handler(self, self.onBtnFire), 0.05)
-        end   
-    end 
+    -- print("eventName:"..eventName.."  id:"..id)
+    local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
+    local rect = self.btnFire:getBoundingBox()      
+    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
+    
+    --in touch
+    if isTouch  then
+        if self.touchFireId == nil and 
+            (eventName == "added" or eventName == "began") then
+            self.touchFireId = id
+            print("self.touchFireId set "..id) 
+        end
+        if self.touchFireId == id and not isend then
+            self.btnFireSch =  scheduler.scheduleGlobal(
+                handler(self, self.onBtnFire), 0.05)
+        end
+    end
+   
+    -- not in touch
+    if self.touchFireId == id and isend then
+        self.touchFireId = nil
+        self:onCancelledFire()     
+    end          
     return isTouch
 end
 
@@ -451,10 +471,11 @@ function FightPlayer:onBtnFire()
 end
 
 function FightPlayer:onCancelledFire()
-    -- print("FightPlayer:onCancelledFire()")
+    print("FightPlayer:onCancelledFire()")
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
-    if  isRobot then 
+    if  isRobot then
+        print("robot:stopFire()") 
         robot:stopFire()
     else
         self.gunView:stopFire()
@@ -557,6 +578,7 @@ function FightPlayer:robotFire()
     local robot = md:getInstance("Robot")
     if not robot:isCoolDownDone() then return end
     robot:fire()
+    self.focusView:playFire()
     local focusRangeNode = self.focusView:getFocusRange()
     self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
 end
@@ -775,13 +797,14 @@ function FightPlayer:onResultWin()
 end
 
 function FightPlayer:removeAllSchs()
-    if tempChangeGoldHandler then 
-        scheduler.unscheduleGlobal(tempChangeGoldHandler)
-        tempChangeGoldHandler = nil
+    print("function FightPlayer:removeAllSchs()")
+    if self.tempChangeGoldHandler then 
+        scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
+        self.tempChangeGoldHandler = nil
     end
-    if resumeDefenceHandler then 
-        scheduler.unscheduleGlobal(resumeDefenceHandler)
-        resumeDefenceHandler= nil
+    if self.resumeDefenceHandler then 
+        scheduler.unscheduleGlobal(self.resumeDefenceHandler)
+        self.resumeDefenceHandler= nil
     end
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)

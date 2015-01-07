@@ -13,6 +13,7 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.enemyIntro))
 
 	self:loadCCS()
+    self:setTouchSwallowEnabled(false) 
 end
 
 function FightDescLayer:loadCCS()

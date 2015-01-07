@@ -57,7 +57,7 @@ function GunView:playFire()
 
 	--music
 	local soundName = "res/Fight/music/leibz.wav"
-	audio.playMusic(soundName,false)
+	-- audio.playMusic(soundName,false)
 end
 
 function GunView:stopFire()
@@ -149,7 +149,7 @@ function GunView:refreshGun()
 
 	--gun
 	local config = self.gun:getConfig()
-	-- dump(config, "config")
+	dump(config, "config")
 	
 	--armature
 	local animName = config.animName --动作特效
@@ -174,8 +174,9 @@ function GunView:refreshGun()
     self.jqk:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqk, -1)
 
-    --枪火遮挡 
-    self.jqkzd = ccs.Armature:create("qkzd")
+    --枪火遮挡
+
+    self.jqkzd = ccs.Armature:create(config.jqkzdName)
     self.jqkzd:setVisible(false)
    	self.jqkzd:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqkzd , 1)

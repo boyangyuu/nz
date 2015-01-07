@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+	--[[{
 		enemys = { 
 			{
 				time = 3,	
@@ -38,7 +38,7 @@ local waves = {
 				},
 			},		
 		},
-	},
+	},	--]]
 	{
 		enemys = {
 			{
@@ -101,14 +101,16 @@ local waves = {
 			},									
 		},
 
-	},	
-	{
+	},
+	{	
+		waveType = "boss",
 		enemys = {  --boss
 			{
+				descId = "boss02",
 				time = 3,	
 				num = 1,
 				pos = {250},
-				delay = {0.3},
+				delay = {4.0},
 				property = { 
 					type = "chongBoss",
 					placeName = "place7",
@@ -147,25 +149,25 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "boss02", --图片名字
-		hp = 10000,
+		hp = 20000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 400,
 		walkRate = 200,
 		chongfengDemage = 20,  --冲锋造成伤害
-		demageScale = {weak1 = 2, weak2 = 3},	--弱点伤害倍数
+		demageScale = {weak1 = 4, weak2 = 5},	--弱点伤害倍数
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.70,
+				0.95, 0.20,
 			},
 			moveRightFire = {
-				0.65, 0.30,
+				0.65, 0.40,
 			},
 			chongfeng = {
-				0.5, 0.10,
+				0.80, 0.50,0.20
 			},
 			tieqiu = {
-				0.99, 0.50
+				0.990, 0.60
 			},
 			weak2 = {
 				0.50,
