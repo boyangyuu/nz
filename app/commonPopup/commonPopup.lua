@@ -69,10 +69,8 @@ function commonPopup:initUI(properties)
 
 	    -- auto remove popup windows after 2 secs.
 	    self:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
-	                 -- self:removeFromParent()
-	                ui:closePopup()
-	            end)}))
-	    -- popupNode:setZOrderOnTop(true)
+            ui:closePopup()
+        end)}))
 
 	elseif typeName == "style3" then
 		local content = cc.uiloader:seekNodeByName(self, "content")
