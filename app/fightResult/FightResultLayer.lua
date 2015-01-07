@@ -14,6 +14,12 @@ function FightResultLayer:ctor(properties)
     self.levelMapModel    = md:getInstance("LevelMapModel")
     self.levelDetailModel = md:getInstance("LevelDetailModel")
 	self.weaponListModel  = md:getInstance("WeaponListModel")
+    self.commonPopModel = md:getInstance("commonPopModel")
+    self.userModel = md:getInstance("UserModel")
+	 cc.EventProxy.new(self.commonPopModel, self)
+       :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.turnLeftCard))
+       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
+
     self.isgold = false
     self.cardover = {}
     self.cardgold = {}
@@ -170,6 +176,9 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
+        ui:showPopup("commonPopup",
+			 {type = "style2", content = "已经快速镶嵌"},
+			 {opacity = 155})
         	self:quickInlay()
         end
     end)
@@ -186,6 +195,14 @@ function FightResultLayer:initUI()
             	if self.grade == 0 then
 				    self.leftnumber:setVisible(false)
 				    self.label:setVisible(false)
+
+				    function delaypopup()
+					    ui:showPopup("commonPopup",
+						 {type = "style1",content = "是否花费10颗钻石翻开剩余卡牌"},
+						 {opacity = 155})
+				    end
+					scheduler.performWithDelayGlobal(delaypopup, 1)
+
         			for i=1,6 do
         				self.card[i]:setTouchEnabled(false)
         			end
@@ -350,11 +367,17 @@ function FightResultLayer:getRanRecord( ran )
 end
 
 function FightResultLayer:turnLeftCard()
-	for i=1,6 do
-		if self.cardover[i]:isVisible() == false then
-			-- dump(i)
-			self:turnOverCard(i)
+	ui:closePopup()
+	if self.userModel:costDiamond(10) then
+		function delayturnleft()
+			for i=1,6 do
+				if self.cardover[i]:isVisible() == false then
+					-- dump(i)
+					self:turnOverCard(i)
+				end
+			end
 		end
+		scheduler.performWithDelayGlobal(delayturnleft, 0.3)
 	end
 end
 

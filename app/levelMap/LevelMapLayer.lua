@@ -186,9 +186,11 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             elseif type == "putong" then
                 armature:getAnimation():play("dizuolan" , -1, 1)
             end
-        else                            
-            levelBtn[i]:setColor(cc.c3b(80, 80, 80))
-            levelDian[i]:setColor(cc.c3b(80, 80, 80))
+        else           
+            cc.ColorUtil:setGray(levelBtn[i])                 
+            cc.ColorUtil:setGray(levelDian[i])                 
+            -- levelBtn[i]:setColor(cc.c3b(80, 80, 80))
+            -- levelDian[i]:setColor(cc.c3b(80, 80, 80))
             -- levelBtn[i]:setShaderProgram
         end
         -- add listener

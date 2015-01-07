@@ -67,6 +67,10 @@ function FightDescLayer:enemyIntro(event)
             return true
         end
     end)
+    self:runAction(transition.sequence({cc.DelayTime:create(3), cc.CallFunc:create(function()
+        self:setVisible(false)
+    end)}))
+
 end
 
 function FightDescLayer:initEnemyIntro(enemyID)
