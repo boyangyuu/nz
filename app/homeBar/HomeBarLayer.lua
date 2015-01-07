@@ -90,10 +90,6 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            local layer = FightDescLayer:new()
-            self:addChild(layer)
-            md:getInstance("FightDescModel"):bossShow()
-            -- md:getInstance("FightDescModel"):enemyIntro("boss02")
         end
     end)
     addBtnEventListener(btnBack, function(event)

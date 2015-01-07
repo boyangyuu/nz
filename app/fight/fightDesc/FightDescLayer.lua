@@ -22,18 +22,10 @@ function FightDescLayer:loadCCS()
     self.animPanl = cc.uiloader:seekNodeByName(self, "animPanl")
 end
 
-function FightDescLayer:playAnim(animName)
-    self.armature:getAnimation():play(self.animName , -1, 1)
-end
-
 function FightDescLayer:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
-        armatureBack:stopAllActions()
-        -- if movementID == self.animName then
-            armatureBack:pause()
             self.animPanl:removeAllChildren()
             self:setVisible(false)
-        -- end
     end
 end
 
@@ -42,12 +34,10 @@ function FightDescLayer:start(event)
     local armature = ccs.Armature:create("renwuks")
     armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
     addChildCenter(armature, self.animPanl)
-    -- self:playAnim("renwuks")
     armature:getAnimation():play("renwuks" , -1, 1)
 end
 
 function FightDescLayer:bossShow(event)
-    print("function FightDescLayer:bossShow(event)")
     self:setVisible(true)
     local armature = ccs.Armature:create("qiangdicx")
     armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
