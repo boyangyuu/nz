@@ -107,7 +107,7 @@ function WeaponListLayer:initUI()
     self.equipedone:setVisible(false)
     self.equipedtwo:setVisible(false)
     
-    -- self.weaponLV:onTouch(handler(self,self.touchListener))
+    self.weaponLV:onTouch(handler(self,self.touchListener))
     local configTab = getConfig("config/weapon_weapon.json")
     self:loadWeaponList(self.weaponLV, configTab)
     self.btnBuy:setTouchEnabled(true)

@@ -37,8 +37,7 @@ function HeroLayer:ctor(properties)
 
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
-		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))
-		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT		, handler(self, self.effectPopupHead))		
+		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))	
 		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
 	
 	cc.EventProxy.new(self.inlay, self)
@@ -331,22 +330,6 @@ function HeroLayer:screenHurtedEffect()
     )
     self:addChild(armature)
 end
-
-function HeroLayer:effectPopupHead()
-	local baotou = ccs.Armature:create("baotou")
-	baotou:getAnimation():play("baotou" , -1, 1)
-    baotou:setPosition(display.width1 / 2, 150)
-    baotou:getAnimation():setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movement) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		armatureBack:stopAllActions()
-	    		armatureBack:removeFromParent() 
-	    	end 
-    	end
-    )
-    self:addChild(baotou)
-end
-
 
 function HeroLayer:effectGunReload(event)
 	-- print("HeroLayer:effectGunReload()")

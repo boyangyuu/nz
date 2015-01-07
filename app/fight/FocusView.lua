@@ -88,7 +88,9 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
-	if self.playIndex == "stand" then 
+	print("function FocusView:playFire()")
+	if self.playIndex == "stand" then
+		print("	if self.playIndex  then") 
 		self.armature:getAnimation():play("fire01" , -1, 1) 
 		self.playIndex = "fire01"
 	elseif self.playIndex == "fire01" or self.playIndex == "fire02" then 
@@ -100,16 +102,17 @@ end
 
 function FocusView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if id == "fire01" then
-			
-    	elseif id == "fire02" then
-
-    	end
+  		local playIndex = self.playIndex
+  		if movementID == "fire01" then 
+  			self:playIdle()
+  		else 
+  			self.armature:getAnimation():play(playIndex , -1, 1) 
+		end
 	end
 end
 
 function FocusView:stopFire()
-	self:playIdle()
+	self.playIndex = "stand"
 end
 
 function FocusView:setFocusRange(size)

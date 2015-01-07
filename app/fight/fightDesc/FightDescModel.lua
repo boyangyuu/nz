@@ -22,7 +22,7 @@ function FightDescModel:waveStart(waveNum) -- startWave
 end
 
 --boss简介
-function FightDescModel:enemyIntro(enemyId) -- showEnemyIntro
+function FightDescModel:showEnemyIntro(enemyId) -- showEnemyIntro
 	self:dispatchEvent({name = FightDescModel.ENEMYINTRO_ANIM_EVENT,enemyId = enemyId})
 end
 
