@@ -280,6 +280,12 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
     self.damagepluse:setString("+"..demageNext-demage)
+    local action = transition.sequence({
+        cc.FadeOut:create(1),
+        cc.FadeIn:create(1),})
+    self.damagepluse:runAction(cc.RepeatForever:create(action))
+
+
     self:playstar(refreshStar,intenlevel)
 
     -- refresh 选择状态
