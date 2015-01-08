@@ -1,9 +1,5 @@
-import("...includes.functionUtils")
-local scheduler = require("framework.scheduler")
-local Hero = import("..Hero")
-local Fight = import("..Fight")
-local Actor = import("..Actor")
 
+local scheduler = require("framework.scheduler")
 
 --[[
 	Attackable
@@ -16,9 +12,9 @@ end)
 function Attackable:ctor(property)
 	-- dump(property, "Attackable property")
 	--instance
-    self.hero = app:getInstance(Hero)	
+    self.hero = md:getInstance("Hero")	
+    self.fight = md:getInstance("Fight")
 	self.enemy = self:getModel(property)
-	self.fight = app:getInstance(Fight)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
@@ -31,15 +27,17 @@ function Attackable:ctor(property)
 	assert(self.armature)
 	self:addChild(self.armature)
     self:setScale(property.scale or 1.0)
+    self:setPlaceIndex(property.placeIndex)
     
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.fight, self)
-    	:addEventListener(Fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
+    	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
     	
-    self:scheduleUpdate()  	
+    self:scheduleUpdate()  
+    self:setNodeEventEnabled(true)	
     
-    self:test()
+    -- self:test()
 end
 
 function Attackable:testStop(event)
@@ -74,16 +72,67 @@ end
 ]]
 
 function Attackable:getTargetData(focusNode)
-	local targetData = {}
-	targetData.demage = self.hero:getDemage()
-	-- dump(targetData, "targetData")
-	local i = 0
 
-	--weak
+	local isHitedWeak, targetDataWeak = self:checkWeak(focusNode)
+	local isHitedBody, targetDataBody = self:checkBody(focusNode)
+	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
+
+	if self.attackType == "weak" or isGold then
+		if isHitedWeak then
+			print("isHitedWeak")
+			return true, targetDataWeak 
+		elseif isHitedBody then 
+			return true, targetDataBody
+		end
+	else
+		if isHitedBody then
+			print("isHitedBody")
+			return true, targetDataBody
+		elseif isHitedWeak then 
+			return true, targetDataWeak
+		end
+	end		
+	return false, nil
+end
+
+function Attackable:checkBody(focusNode)
+	--body
+	local targetData = {}
+	targetData.demage = self.hero:getDemage()		
+	local i = 0
 	while true do
+	
+		i = i + 1
+		local rangeStr = "body"..i
+		-- print("rangeStr", rangeStr)
+		local enemyRange = self:getRange(rangeStr)
+		-- dump(enemyRange, "body"..i)
+		if enemyRange == nil then break end 	
+		local isInRange = self:rectIntersectsRectInWorld(focusNode,
+				 enemyRange)
+		-- print(isInRange, "isInRange")
+		if isInRange then 
+			local isHited = isInRange 
+			targetData.demageScale = 1.0
+			targetData.demageType = "body"
+			targetData.enemy = self
+			return isHited,  targetData
+		end
+	end		
+	return false, nil
+end
+
+function Attackable:checkWeak(focusNode)
+	--weak
+	local i = 0
+	local targetData = {}
+	targetData.demage = self.hero:getDemage()	
+	while true do
+		
 		i = i + 1
 		local rangeStr = "weak"..i
 		local enemyRange, isValid = self:getRange(rangeStr)
+		-- dump(enemyRange, "weak"..i)
 		if enemyRange == nil then break end 
 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
@@ -91,29 +140,8 @@ function Attackable:getTargetData(focusNode)
 		if isInRange and isValid then 
 			local isHited = isInRange 
 			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
-			-- print("targetData.demageScale", targetData.demageScale)
+			print("targetData.demageScale", targetData.demageScale)
 			targetData.demageType = "head"
-			targetData.enemy = self
-			return isHited,  targetData
-		end
-	end
-
-	--body
-	i = 0
-	while true do
-		i = i + 1
-		local rangeStr = "body"..i
-		-- print("rangeStr", rangeStr)
-		local enemyRange = self:getRange(rangeStr)
-		-- dump(enemyRange)
-		if enemyRange == nil then break end 	
-		local isInRange = self:rectIntersectsRectInWorld(focusNode,
-				 enemyRange)
-		if isInRange then 
-			local isHited = isInRange 
-			
-			targetData.demageScale = 1.0
-			targetData.demageType = "body"
 			targetData.enemy = self
 			return isHited,  targetData
 		end
@@ -137,6 +165,7 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
     
     -- dump(bound, "bound ------")
     -- dump(enemyBound, "enemyBound -------")    
+    self:test()
     return cc.rectIntersectsRect(bound, enemyBound)
 end
 
@@ -181,13 +210,16 @@ function Attackable:setDeadDone()
 	self.deadDone = true
 end
 
--- function Attackable:setWillRemove()
--- 	self.willRemove = true
--- end
+function Attackable:getWillRemoved()
+	return self.willRemoved or false 
+end
 
--- function Attackable:get( ... )
--- 	-- body
--- end
+function Attackable:setWillRemoved()
+	if self.removeAllSchedulers then	
+		self:removeAllSchedulers()	
+	end
+	self.willRemoved = true
+end
 
 function Attackable:checkPlace(offset)
 	local offset = offset or 0
@@ -264,7 +296,7 @@ function Attackable:playHittedEffect()
 	if self.isRed then return end
 	local function callfunc()
 		if self.isRed then 
-			-- print("回复")
+			print("回复")
 			self.armature:setColor(cc.c3b(255,255,255))
 		end
 	end
@@ -274,7 +306,7 @@ function Attackable:playHittedEffect()
 		self.isRed = false
 	end
 
-	-- print("变红")
+	print("变红")
 	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
 	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
@@ -283,8 +315,27 @@ function Attackable:playHittedEffect()
 	self:addScheduler(sch2)
 end
 
+function Attackable:playBombEffect()
+	local bone = self.armature:getBone("bomb")
+	assert(bone, "bomb bone is nil")
+	local box = bone:getDisplayRenderNode():getBoundingBox()
+	-- local box = self.armature:getBoundingBox()
+	local bomb = ccs.Armature:create("baozha4")
+	bomb:setAnchorPoint(0.5,0.5)
+	-- dump(box, "box")
+	local bombBox = bomb:getBoundingBox()
+	-- dump(bombBox, "bombBox")
+	bomb:setPosition(
+		math.random(-box.width/2, box.width/2 ), 
+		math.random(0, box.height ))
+
+	self.armature:addChild(bomb, 100)
+	bomb:getAnimation():play("baozha4", -1, 0)
+end
+
 function Attackable:test()
     local weakNode2 = self.armature:getBone("weak2")
+    -- assert(weakNode2, "weakNode2 is nil , 美术没加帧")
     if weakNode2 then drawBoundingBox(self.armature, weakNode2:getDisplayRenderNode(), "red")  end
     local weakNode1 = self.armature:getBone("weak1")
     if weakNode1 then drawBoundingBox(self.armature, weakNode1:getDisplayRenderNode(), "red")  end
@@ -320,12 +371,20 @@ function Attackable:getPosInMap()
 	return worldInMap
 end
 
+function Attackable:setPlaceIndex(index_)
+	self.placeIndex = index_
+end
+
+function Attackable:getPlaceIndex()
+	return self.placeIndex
+end
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	
 end
 
-function Attackable:onHitted(demage)
+function Attackable:onHitted(targetData)
 	assert("required method, must implement me")
 end
 
@@ -335,6 +394,10 @@ end
 
 function Attackable:getModel(id)
 	assert("required method, must implement me")	
+end
+
+function Attackable:onExit()
+	self:removeAllSchedulers()
 end
 
 

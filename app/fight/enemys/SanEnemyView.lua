@@ -67,7 +67,7 @@ function SanEnemyView:stopFall()
 	--stop action
 	self.armature:stopAllActions()
     self.armature:removeFromParent()
-    self:setDeadDone()  
+    self:setWillRemoved()  
 
     -- 召唤
     dump(self.property, "self.property")
@@ -88,9 +88,9 @@ function SanEnemyView:test()
     local weak1 = self.armature:getBone("weak1"):getDisplayRenderNode()
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
     local enemyNode = self.armature:getBone("enemy"):getDisplayRenderNode()
-    drawBoundingBox(self.armature, weak1, "yellow") 
+    drawBoundingBox(self.armature, weak1, "red") 
 	drawBoundingBox(self.armature, bodyNode, "yellow") 
-    drawBoundingBox(self.armature, enemyNode, "red")
+    drawBoundingBox(self.armature, enemyNode, "yellow")
 end
 
 --Attackable interface
@@ -106,9 +106,9 @@ function SanEnemyView:playKill(event)
 end
 
 function SanEnemyView:onHitted(targetData)
-    local demage     = targetData.demage
-    local scale      = targetData.demageScale
-    local demageType = targetData.demageType
+    local demage     = targetData.demage 
+    local scale      = targetData.demageScale or 1.0
+    local demageType = targetData.demageType or "body"
     if self.enemy:canHitted() and self:canHitted() then
         -- print("self.enemy:decreaseHp(demage * scale)")
         self.enemy:decreaseHp(demage * scale)

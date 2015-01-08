@@ -11,30 +11,49 @@ function Dialog:ctor(properties)
 	Dialog.super.ctor(self, properties)
 end
 
-function Dialog:check(groupId,levelId,appear)
-	print(" Dialog:check"..groupId.."-"..levelId..","..appear)
+local is = true
+function Dialog:check(appear)
+	assert(appear, "appearType is nil")
+	self.appearType = appear
+	local fight  = md:getInstance("Fight") 	
+	local groupId = fight:getGroupId()
+	local levelId = "level"..fight:getLevelId()
 	local config = DialogConfigs.getConfig(groupId,levelId,appear)
+	-- dump(config, "config")
 	if config == nil then
-		return false
+		self:finishDialog()
+	else
+		self:startDialog()
 	end
-	return true
 end
 
-function Dialog:getDialogNum(groupId,levelId,appear)
-	dump(appear)
+function Dialog:getAppearType()
+	return self.appearType
+end
+
+function Dialog:getDialogNum()
+	local fight  = md:getInstance("Fight") 	
+	local groupId = fight:getGroupId()
+	local levelId = "level"..fight:getLevelId()
+	local appear  = self:getAppearType() 
+
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
-	dump(configs)
+	assert(configs, "configs is nil")
 	return #configs
 end
 
 function Dialog:finishDialog()
 	--dispatch
+	-- print("function Dialog:finishDialog()")
 	self:dispatchEvent({name = Dialog.DIALOG_FINISH_EVENT})
+	local fight = md:getInstance("Fight")
+	fight:onFinishDialog(self.appearType)
 end
 
-function Dialog:startDialog(appear)
+function Dialog:startDialog()
 	--dispatch
-	self:dispatchEvent({name = Dialog.DIALOG_START_EVENT,appear = appear})
+	-- print("function Dialog:startDialog(appear)")
+	self:dispatchEvent({name = Dialog.DIALOG_START_EVENT})
 end
 
 return Dialog

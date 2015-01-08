@@ -9,7 +9,6 @@
 import("..includes.functionUtils")
 local scheduler = require("framework.scheduler")
 local FightConfigs = import(".fightConfigs.FightConfigs")
-local Hero = import(".Hero")
 local Gun = import(".Gun")
 
 local FocusView = class("FocusView", function()
@@ -20,32 +19,67 @@ end)
 
 function FocusView:ctor(properties)
 	--instance
-	self.hero = app:getInstance(Hero)
-	self.gun = self.hero:getGun()
-	self.isJu = false
-
-	--focus
-	local gunId = 1   -- todo 外界传 Gun
-	local focusId = gunId + 11
-    local src = "Fight/focusAnim/anim_zunxin_sq/anim_zunxin_sq.ExportJson"
-    self.armature = getArmature("anim_zunxin_sq", src) 
-    self.armature:setAnchorPoint(0.5,0.5)
-	
-    --都配在武器表里 
-	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
-	self:addChild(self.armature) 
-	self:playIdle()
-	local range = FightConfigs:getFocusRange() --todo 不要 fightConfigs 需要根据枪表来设置
-	self:setFocusRange(cc.size(range, range))
-	self.playIndex = "stand"
-
-    -- test
-    self:test()
+	self.hero = md:getInstance("Hero")
+	self.map = md:getInstance("Map")
+	self:refreshFocus()
 
     --event
-     cc.EventProxy.new(self.hero, self)
-		 :addEventListener(Hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
-		 :addEventListener(Hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
+    cc.EventProxy.new(self.hero, self)
+		 :addEventListener(self.hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
+		 :addEventListener(self.hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
+		 :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.refreshFocus))
+
+	local robot = md:getInstance("Robot")
+	cc.EventProxy.new(robot, self)
+		:addEventListener(robot.ROBOT_START_EVENT	, handler(self, self.onShowRobot))
+		:addEventListener(robot.ROBOT_ENDTIME_EVENT	, handler(self, self.onHideRobot))
+
+	local inlay = md:getInstance("FightInlay")
+	cc.EventProxy.new(inlay, self)
+		:addEventListener(inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.refreshFocus))
+end
+
+function FocusView:refreshFocus(event)
+	--clear
+	event = event or {}
+	print("function FocusView:refreshFocus(event)")
+	if self.armature then
+		self.armature:removeFromParent()
+	end
+
+	--data
+	self.playIndex = "stand"
+	local gun = self.hero:getGun()
+
+	--armature
+	local config =  gun:getConfig()
+	local focusName = event.focusName or config.focusName
+    self.armature = ccs.Armature:create(focusName) 
+    self.armature:setAnchorPoint(0.5,0.5)
+	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+	self:addChild(self.armature)
+	--range
+
+	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
+	local scale  = isGold and config.goldRangeScale or 1.0
+	local rangeHigh = event.rangeHigh or config.rangeHigh
+	local rangeWidth = event.rangeWidth or config.rangeWidth
+	local h = rangeHigh * scale
+	local w = rangeWidth * scale
+	self:setFocusRange(cc.size(w, h))
+	
+	self:playIdle()
+end
+
+function FocusView:onShowRobot(event)
+	local eventData = {focusName = "jijia_zx",
+				rangeWidth = define.kRobotRangeW,
+				rangeHigh = define.kRobotRangeH	}
+	self:refreshFocus(eventData)
+end
+
+function FocusView:onHideRobot(event)
+	self:refreshFocus()
 end
 
 function FocusView:playIdle()
@@ -54,7 +88,9 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
-	if self.playIndex == "stand" then 
+	print("function FocusView:playFire()")
+	if self.playIndex == "stand" then
+		print("	if self.playIndex  then") 
 		self.armature:getAnimation():play("fire01" , -1, 1) 
 		self.playIndex = "fire01"
 	elseif self.playIndex == "fire01" or self.playIndex == "fire02" then 
@@ -66,40 +102,40 @@ end
 
 function FocusView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if id == "fire01" then
-			
-    	elseif id == "fire02" then
-
-    	end
+  		local playIndex = self.playIndex
+  		if movementID == "fire01" then 
+  			self:playIdle()
+  		else 
+  			self.armature:getAnimation():play(playIndex , -1, 1) 
+		end
 	end
 end
 
 function FocusView:stopFire()
-	-- print("FocusView:stopFire()")
-	self:playIdle()
+	self.playIndex = "stand"
 end
 
 function FocusView:setFocusRange(size)
 	if self.focusRange then 
 		self.focusRange:removeFromParent()
 	end
+
     self.focusRange = display.newScale9Sprite()
     self.focusRange:setContentSize(size)
     addChildCenter(self.focusRange, self)
+
+    drawBoundingBox(nil, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 
 function FocusView:getFocusRange()
 	return self.focusRange
 end
 
-function FocusView:test()
-    drawBoundingBox(self, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
-end
-
 --狙击
 function FocusView:switchJu(event)
-	self.isJu = not self.isJu
-	if self.isJu then 
+	self.map:changeJuStatus()
+	local isJu = self.map:getIsJu()
+	if isJu then 
 		self:addJu()
 	else
 		self:removeJu()
@@ -111,9 +147,10 @@ function FocusView:addJu()
 
 	--zoom
 	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
-	local scale = FightConfigs.kJuRange
+	local scale = define.kJuRange
 	local time = 0.1
-	self.hero:dispatchEvent({name = Hero.MAP_ZOOM_OPEN_EVENT,
+	local map = md:getInstance("Map")
+	map:dispatchEvent({name = map.MAP_ZOOM_OPEN_EVENT,
 		 destWorldPos = destWorldPos,
 		 scale = scale, 
 		 time = time})
@@ -127,8 +164,6 @@ function FocusView:addJu()
 
 	--hide
 	self.armature:setVisible(false)
-	self:setFocusRange(cc.size(5.0 , 5.0))
-	self:test()
 end
 
 function FocusView:removeJu()
@@ -136,7 +171,8 @@ function FocusView:removeJu()
 
 	--zoom
 	local time = 0.1
-	self.hero:dispatchEvent({name = Hero.MAP_ZOOM_RESUME_EVENT,
+	local map = md:getInstance("Map")
+	map:dispatchEvent({name = map.MAP_ZOOM_RESUME_EVENT,
 		 time = time})
 	
 	--remove ju	

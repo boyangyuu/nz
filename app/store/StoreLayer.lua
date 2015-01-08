@@ -1,6 +1,5 @@
 import("..includes.functionUtils")
 
-local StoreModel = import(".StoreModel")
 local StoreCell = import(".StoreCell")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
@@ -10,11 +9,14 @@ local StoreLayer = class("StoreLayer", function()
 end)
 
 function StoreLayer:ctor()
-    self.storeModel = app:getInstance(StoreModel)
+    self.storeModel = md:getInstance("StoreModel")
+    
+    cc.EventProxy.new(self.storeModel , self)
+        :addEventListener("REFRESH_STORE_EVENT", handler(self, self.refresh))
 
 	self:loadCCS()
 	self:initUI()
-        self:refreshListView("inlay")
+    self:refreshListView("prop")
 end
 
 function StoreLayer:loadCCS()
@@ -47,25 +49,30 @@ function StoreLayer:initUI()
             end
         end)
      btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            if event.name=='began' then                
-                return true
-            elseif event.name=='ended' then
-                self:refreshListView("bank")
-                btnprop:setLocalZOrder(-100)
-                btnbank:setLocalZOrder(100) 
-                btninlay:setLocalZOrder(-100)     
-            end
-        end)
+        if event.name=='began' then 
+            return true
+        elseif event.name=='ended' then
+            self:refreshListView("bank")
+            btnprop:setLocalZOrder(-100)
+            btnbank:setLocalZOrder(100) 
+            btninlay:setLocalZOrder(-100)     
+        end
+    end)
      btninlay:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            if event.name=='began' then                
-                return true
-            elseif event.name=='ended' then
-                self:refreshListView("inlay")  
-                btnprop:setLocalZOrder(-100)
-                btnbank:setLocalZOrder(-100) 
-                btninlay:setLocalZOrder(100)   
-            end
-        end)
+        if event.name=='began' then                
+            return true
+        elseif event.name=='ended' then
+            self:refreshListView("inlay")  
+            btnprop:setLocalZOrder(-100)
+            btnbank:setLocalZOrder(-100) 
+            btninlay:setLocalZOrder(100)   
+        end
+    end)
+end
+
+function StoreLayer:refresh(event)
+    local type = event.typename
+    self:refreshListView(type)
 end
 
 function StoreLayer:refreshListView(type)
@@ -80,5 +87,6 @@ function StoreLayer:refreshListView(type)
     end
     self.listview:reload()    
 end
+
 
 return StoreLayer

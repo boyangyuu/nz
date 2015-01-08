@@ -14,29 +14,28 @@ local Hero 			= import(".Hero")
 local Fight         = import(".Fight")
 local Actor 		= import(".Actor")
 local EnemyFactroy	= import(".EnemyFactroy")
+local MapAnimView  	= import(".MapAnimView")
 
 local MapView = class("MapView", function()
     return display.newNode()
 end)
 
-_isJu = false
 _isZooming = false
-
+local kMissileZorder = 10000
+local kMissilePlaceIndex = 100
+local kEffectZorder = 101
 function MapView:ctor()
 	--instance
-	self.hero = app:getInstance(Hero)
-	self.fight = app:getInstance(Fight)
-	self.enemys = {}
-	self.waveIndex = 1
-	self.killEnemyCount = 0
-	self.isPause = false
-	self.fightConfigs = app:getInstance(FightConfigs)
-	
+	self.hero 			= md:getInstance("Hero")
+	self.fight			= md:getInstance("Fight")
+	local map 			= md:getInstance("Map")
+	self.fightConfigs 	= md:getInstance("FightConfigs")
+	self.enemys 		= {}
+	self.waveIndex 		= 1
+	self.isPause 		= false
+	self.fightDescModel = md:getInstance("FightDescModel")
 	--ccs
 	self:loadCCS()
-
-	--enemys
-	self:updateEnemys()
 
 	-- event
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
@@ -47,9 +46,14 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
         :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
-        :addEventListener(Hero.MAP_ZOOM_OPEN_EVENT, handler(self, self.openZoom))
-        :addEventListener(Hero.MAP_ZOOM_RESUME_EVENT, handler(self, self.resumeZoom))
+    
+    cc.EventProxy.new(self.fight, self)   
+        :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
 
+	cc.EventProxy.new(map, self)
+		:addEventListener(map.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
+        :addEventListener(map.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
+        :addEventListener(map.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
 	self:setNodeEventEnabled(true)
 end
 
@@ -61,43 +65,46 @@ function MapView:loadCCS()
 	local mapSrcName = "map_"..groupId.."_"..levelId..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
-    local node = cc.uiloader:load(mapSrcName)
-	self.map = node
+	self.map = cc.uiloader:load(mapSrcName)
 	addChildCenter(self.map, self)
 
+	--effect self.mapAnim
+	self.mapAnim = MapAnimView.new()
+	self.map:addChild(self.mapAnim, kEffectZorder)
+
 	--bg
-	self.bg = cc.uiloader:seekNodeByName(self, "bg")
+	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
 
 	--init enemy places
 	local index = 1
 	self.places = {}
     while true do
-    	local name = "place" .. index 
-    	local placeNode = cc.uiloader:seekNodeByName(self, name)
+    	local name_ = "place_" .. index
+    	local name = "place" .. index
+    	local placeNode_ =  cc.uiloader:seekNodeByName(self.map, name_)
+    	local placeNode = cc.uiloader:seekNodeByName(placeNode_, name)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
+
     	if scaleNode then scaleNode:setVisible(false) end
         if placeNode == nil then
             break
         end
+        if isTest == false then 
+        	local colorNode = cc.uiloader:seekNodeByName(placeNode_, "color")
+	        colorNode:setVisible(false)
+	    end
         self.places[name] = placeNode
         index = index + 1
     end
 end
 
-function MapView:checkWave()
-	local function checkEnemysEmpty()
-		if #self.enemys == 0 then 
-			print("第"..self.waveIndex.."波怪物消灭完毕")
-			self.waveIndex = self.waveIndex + 1
-			self:updateEnemys()
-			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-		end
-	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
+function MapView:startFight(event)
+	self.fightDescModel:start()
+	scheduler.performWithDelayGlobal(
+		handler(self, self.updateEnemys), 2.0)
 end
 
---enemy
-function MapView:updateEnemys(event)
+function MapView:updateEnemys()
 	--wave config
 	local waveConfig = self.fightConfigs:getWaveConfig(groupId, levelId)
 	local wave = waveConfig:getWaves(self.waveIndex)
@@ -106,14 +113,25 @@ function MapView:updateEnemys(event)
 	if wave == nil then 
 		print("赢了")
 		scheduler.unscheduleGlobal(self.checkWaveHandler)
-		self.fight:setResult(true)
+		self.fight:onWin()
 		return
 	end
 
+	--wave提示
+	if wave.waveType == "boss" then 
+		self.fightDescModel:bossShow()
+	else 
+		self.fightDescModel:waveStart(self.waveIndex)
+	end
+
+	--addEnemys
 	local lastTime = 0
-	local waveDelay = 2.0
 	for groupId, group in ipairs(wave.enemys) do
+
 		for i = 1, group.num do
+			--desc
+			self:showEnemyIntro(group.descId)
+
 			--delay
 			print("group time", group.time)
 			local delay = (group.delay[i] or lastTime) + group.time
@@ -138,49 +156,52 @@ function MapView:updateEnemys(event)
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:callfuncAddEnemys(event)
-	for i,enemyData in ipairs(event.enemys) do
-		local zorder = #event.enemys - i
-		local function addEnemyFunc()
-			self:addEnemy(enemyData.property, 
-			enemyData.pos.x, zorder) --todo
-		end		
-		
-		scheduler.performWithDelayGlobal(addEnemyFunc, 
-			enemyData.delay)
+function MapView:showEnemyIntro(descId)
+	local function callfuncShow()
+		print("descId", descId)
+		if descId then 
+			self.fightDescModel:showEnemyIntro(descId)
+		end				
 	end
+	scheduler.performWithDelayGlobal(callfuncShow, 2.0)
 end
 
-local kMissileZorder = 1000
-function MapView:callfuncAddMissile(event)
-	print("MapView:addMissile(event)")
-	local property = event.property
-	-- dump(property, "property")
-	local enemyView = EnemyFactroy.createEnemy(property)
-	self.enemys[#self.enemys + 1] = enemyView
-	kMissileZorder = kMissileZorder - 1
-	self.map:addChild(enemyView, kMissileZorder)
+function MapView:checkWave()
+	local function checkEnemysEmpty()
+		if #self.enemys == 0 then 
+			print("第"..self.waveIndex.."波怪物消灭完毕")
+			self.waveIndex = self.waveIndex + 1
+
+			self:updateEnemys()
+			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+		end
+	end
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 1.0)
 end
 
 function MapView:addEnemy(property, pos, zorder)
 	local placeName = property.placeName
-	assert(placeName , "invalid param placeName:"..placeName )
+	assert(placeName , "invalid param placeName:"..placeName)
 	assert(property , "invalid param property:" )
 	
 	--place
-	local placeNode = self.places[placeName]
+	local substr 		= string.sub(placeName,6,-1)
+	local placeIndex 	= 	tonumber(substr)
+	local placeNode 	= self.places[placeName]
 	assert(placeNode, "no placeNode! invalid param:"..placeName)		
-	local boundPlace = placeNode:getBoundingBox()
-	local pWorld = placeNode:convertToWorldSpace(cc.p(0,0))
-	boundPlace.x = pWorld.x
-	boundPlace.y = boundPlace.y	
+	local boundPlace 	= placeNode:getBoundingBox()
+	local pWorld 		= placeNode:convertToWorldSpace(cc.p(0,0))
+	boundPlace.x 		= pWorld.x
+	boundPlace.y 		= boundPlace.y	
 	property.boundPlace = boundPlace
+	property.placeIndex = placeIndex
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
+	assert(scale, "scale is nil wave index"..self.waveIndex)
 	property.scale = scale:getScaleX() 
-	-- property.scale = 0.5
-	--enemy 改为工厂
+	
+	--create
 	local enemyView = EnemyFactroy.createEnemy(property)
 	self.enemys[#self.enemys + 1] = enemyView
 
@@ -243,24 +264,25 @@ function MapView:tick(dt)
 	-- 检查enemy的状态
 	for i,enemy in ipairs(self.enemys) do
 		if enemy and enemy:getDeadDone() then
-			self:removeEnemy(enemy, i)
+			--pop gold
+			local boundingbox = enemy:getCascadeBoundingBox()
+			local size = boundingbox.size
+			local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+			self:doKillAward(pos)
+			--remove
+			table.remove(self.enemys, i)
+			enemy:removeFromParent()
+		elseif enemy and enemy:getWillRemoved() then
+			--remove
+			table.remove(self.enemys, i)
+			enemy:removeFromParent()
 		end
 	end
-end
 
-function MapView:removeEnemy(enemy, i)
-	self:popGold(enemy)
-	table.remove(self.enemys, i)
-	enemy:removeFromParent()
-	self.killEnemyCount = self.killEnemyCount + 1
 end
-
-function MapView:popGold(enemy)
-	local boundingbox = enemy:getCascadeBoundingBox()
-	local size = boundingbox.size
-	local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
+function MapView:doKillAward(pos)
 	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-		enemyPos = pos, goldCount = self.killEnemyCount * 50})
+		enemyPos = pos})
 end
 
 --[[
@@ -305,19 +327,95 @@ function MapView:getEnemysInRect(rect)
 	return enemys
 end
 
+
+
 --events
+function MapView:callfuncAddEnemys(event)
+	for i,enemyData in ipairs(event.enemys) do
+		local zorder = #event.enemys - i
+		local function addEnemyFunc()
+			self:addEnemy(enemyData.property, 
+			enemyData.pos.x, zorder) --todo
+		end		
+		
+		scheduler.performWithDelayGlobal(addEnemyFunc, 
+			enemyData.delay)
+	end
+end
+
+function MapView:callfuncAddMissile(event)
+	local property = event.property
+	property.placeIndex = kMissilePlaceIndex
+	kMissileZorder = kMissileZorder - 1
+	-- dump(property, "property")
+	local enemyView = EnemyFactroy.createEnemy(property)
+	local pWorld = property.srcPos
+	-- dump(pWorld, "pWorld")
+	local pos = self.map:convertToNodeSpace(pWorld)
+	-- dump(pos,"pos")
+	enemyView:setPosition(pos)
+	self.enemys[#self.enemys + 1] = enemyView
+	self.map:addChild(enemyView, kMissileZorder)
+end
+
 function MapView:onHeroFire(event)
 	-- dump(event, " MapView onHeroFire event")
-	local datas = self:getTargetDatas(event.focusRangeNode)
-	
+	local focusRangeNode = event.focusRangeNode
+	local datas = self:getTargetDatas(focusRangeNode)
+
+	--isThrough
+	local gun = self.hero:getGun()
+	local isThrough = gun:isFireThrough()
+	if isThrough then
+		self:mutiFire(datas)
+	else
+		self:singleFire(datas)
+	end
+
+	--pos
+	local pWorld1 = focusRangeNode:convertToWorldSpace(cc.p(0,0))
+	local box = focusRangeNode:getBoundingBox()
+	pWorld1.x, pWorld1.y = pWorld1.x + box.width/2, pWorld1.y + box.height/2
+
+	--effect
+	local isHitted = not (#datas == 0)
+	-- print("isHitted", isHitted)
+	self.mapAnim:playEffectShooted({isHitted = isHitted, 
+		pWorld= pWorld1})
+end
+
+function MapView:mutiFire(datas)
 	for i,data in ipairs(datas) do
 		local demageScale = data.demageScale or 1.0
-		data.enemy:onHitted(data)
-		if "穿透" then
-			-- break  --todoyby 改为谁的zorder在前面 就打谁！！
-		else
-		end
-	end 
+		local enemy = data.enemy
+		enemy:onHitted(data)
+	end
+end
+
+function MapView:singleFire(datas)
+	local selectedData  = nil
+	local maxPlaceIndex = -1
+	local maxZorder 	= -1
+	for i,data in ipairs(datas) do
+		local enemy = data.enemy
+		local zo  = enemy:getLocalZOrder()
+		local pi  = enemy:getPlaceIndex()
+		-- print("placeIndex: "..pi.." zorder: "..zo)
+		if pi >= maxPlaceIndex then
+			if zo >= maxZorder then 
+				selectedData = data
+				maxZorder    = zo
+				maxPlaceIndex= pi 
+			end
+		end	 
+	end
+
+	--hitted
+	if selectedData == nil then return end
+	local demageScale = selectedData.demageScale or 1.0
+	local enemy = selectedData.enemy
+	
+	enemy:onHitted(selectedData)	
 end
 
 function MapView:enemysHittedInRange(event)
@@ -333,6 +431,14 @@ end
 function MapView:onHeroPlaneFire(event)
 	
 end
+
+function MapView:playEffectShaked(event)
+	print("function MapView:playEffectShaked(event)")
+	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
+	self:runAction(cc.Sequence:create(tMove, tMove:reverse(),
+		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
+end
+
 function MapView:onExit() 
 	if self.checkEnemysEmptyHandler then
 		scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)

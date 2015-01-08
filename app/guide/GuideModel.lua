@@ -28,7 +28,7 @@ function Guide:ctor(properties)
 end
 
 function Guide:check(groupId)
-	print(" Guide:check"..groupId)
+	-- print(" Guide:check"..groupId)
 	if self:isDone(groupId) then return true end
 	return false
 end
@@ -54,7 +54,7 @@ function Guide:doGuideNext()
 	self.curData = listenData
 
 	--dispatch
-	print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
+	-- print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
 	self:dispatchEvent({name = Guide.GUIDE_START_EVENT, 
 				groupId = self.groupId})	
 end
@@ -70,7 +70,7 @@ function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
 	local isDone = data.guide[groupId] 
-	isDone = false
+	isDone = true
 	return isDone
 end
 

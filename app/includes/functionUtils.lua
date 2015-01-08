@@ -7,40 +7,15 @@ function addBtnEventListener(node, callfunc)
     assert(callfunc, "callfunc is invalid")
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)        
         if event.name=='began' then
-            -- node:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)
+            -- cc.ColorUtil:isHighLighted(node, true)
             node:runAction(cc.ScaleTo:create(0.05, 1.1))
         elseif event.name=='ended' then
-                node:runAction(cc.ScaleTo:create(0.1, 1))
+            -- cc.ColorUtil:isHighLighted(node, false)        
+            node:runAction(cc.ScaleTo:create(0.1, 1))
         end
         local isAccepted = callfunc(event)
         return isAccepted
     end)
-end
-
---[[
-    example:self:addChild(getPopupTips("关卡尚未开启！"))
-]]
-function getPopupTips(text)
-    assert(text, "fileName is invalid")
-
-    -- load .ExportJson
-    local popupNode = cc.uiloader:load("res/CommonPopup/commonPopup.json")
-    local labelTip = cc.uiloader:seekNodeByName(popupNode, "Label_tip")
-    labelTip:setString(text)
-    popupNode:setTouchEnabled(true)
-    popupNode:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then
-            popupNode:removeFromParent()
-            return true
-        end
-    end)
-
-    -- auto remove popup windows after 2 secs.
-    popupNode:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
-                 popupNode:removeFromParent()
-            end)}))
-    -- popupNode:setZOrderOnTop(true)
-    return popupNode
 end
 
 -- Cooldown the button
@@ -74,7 +49,7 @@ function addChildCenter(child, parent, zorder)
 end
 
 function drawBoundingBox(parent, target, color)
-    -- if  not isTestMode() then return end
+    if  not isTest then return end
     if parent == nil then parent = target:getParent() end
     local cbb = target:getBoundingBox()
     -- dump(cbb, "cbb")
@@ -164,6 +139,16 @@ function removeAllItems(listView)
     return listView
 end
 
-function getIsTest()
-    return false
+function addBtnEffect(btn)
+    local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+    btn:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC) 
+    btn:scaleTo(0.05, 1.1)
+    local sch
+    local function restore()
+        btn:setBlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+        btn:scaleTo(0.05, 1)
+        scheduler.unscheduleGlobal(sch)
+    end
+    
+    sch = scheduler.performWithDelayGlobal(restore, 0.1)   
 end

@@ -13,18 +13,24 @@ local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
 local FightConfigs = import("..fightConfigs.FightConfigs")
-local BossView = class("BossView", Attackable)
+local BaseBossView = class("BaseBossView", Attackable)
 
-function BossView:ctor(property)
-	BossView.super.ctor(self, property) 
+function BaseBossView:ctor(property)
+	BaseBossView.super.ctor(self, property) 
 
 	--config
-	self.config = FightConfigs:getBossConfig(property.configName)
-
+	self.property = property
+	self.attackType = "weak"
+	-- dump(property, "property")
+	local index = property.id
+	local waveConfig = FightConfigs:getWaveConfig()
+	self.config  = waveConfig:getBoss(index)
+	-- dump(self.config, "self.config")
+    
     --blood
-    self:initBlood() 
+    self:initBlood()
 
-	-- --play
+	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
     --event
@@ -36,61 +42,93 @@ function BossView:ctor(property)
     self:initBody()
 
     self:playWeak(1)
-    scheduler.performWithDelayGlobal(handler(self, self.playSaoShe), 0.001)
 end
 
 --ui
-function BossView:initBlood()
+function BaseBossView:initBlood()
     --add blood
-    cc.FileUtils:getInstance():addSearchPath("res/Fight/fightLayer/ui")
-    local node = cc.uiloader:load("heroUI.ExportJson")
-    self.blood = cc.uiloader:seekNodeByName(node, "bossBlood")
-    self.blood:removeFromParent()
-    local bound = self.armature:getBoundingBox()
-    self.blood:setPosition(0, bound.height * 0.85)
-    self.armature:addChild(self.blood, 100)
+	self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/bossBlood.ExportJson")    
+    
+    --pos
+    local boneBlood = self.armature:getBone("blood")
+    local posBone = boneBlood:convertToWorldSpace(cc.p(0, 0))
+    local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+    self.blood:setPosition(destpos.x, destpos.y)
+    self.armature:addChild(self.blood)
+    
+    --value
+    self:setBlood(1.0)
 end
 
-function BossView:setBlood(scale)
+function BaseBossView:setBlood(scale)
 	if scale == 0 then 
 		self.blood:setVisible(false)
 		return
 	end
 
-    local test = 1 / 3
-    local bloodHp = nil
-    if scale > test * 2 then
-    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood1")
-    	test = 100 - (1 - scale) * 3 * 100
-    elseif scale > test and scale <= test * 2 then
-    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood2")
-    	cc.uiloader:seekNodeByName(self.blood, "bossBlood1"):setPercent(0)
-    	test = 100 - (test * 2 - scale) * 3 * 100
+    local bloodUp, bloodDown = nil, nil
+    local newScale = nil
+
+    --visible
+    local node1 = cc.uiloader:seekNodeByName(self.blood, "blood1")
+    local node2 = cc.uiloader:seekNodeByName(self.blood, "blood2")
+    local node3 = cc.uiloader:seekNodeByName(self.blood, "blood3")
+    node1:setVisible(true)
+    node2:setVisible(true)
+    node3:setVisible(true)
+    -- 0.66 - 1
+    if scale > 0.66 then
+    	local node = node1
+    	node1:setVisible(true)
+    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
+    	newScale   = (scale - 0.66) / 0.33
+    	node3:setVisible(false)
+    	
+    -- 0.33 - 0.66
+    elseif scale > 0.33 and scale <= 0.66 then
+    	local node = node2
+    	node2:setVisible(true)
+    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
+    	newScale   = (scale - 0.33) / 0.3
+	    node1:setVisible(false)
+    	
+    -- 0 - 0.33
     else
-    	cc.uiloader:seekNodeByName(self.blood, "bossBlood2"):setPercent(0)
-    	bloodHp = cc.uiloader:seekNodeByName(self.blood, "bossBlood3")
-    	test = scale * 3 * 100
+    	local node = node3
+    	node3:setVisible(true)
+    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
+    	newScale   = scale / 0.33
+		node1:setVisible(false)
+	    node2:setVisible(false)
     end
-    
-    bloodHp:setPercent(test)
+
+    -- local newPer = newScale * 100
+    -- bloodUp:setPercent(newPer)
+    bloodUp:setScaleX(newScale)
+    transition.scaleTo(bloodDown, {scaleX = newScale, time = 0.1})
 end
 
-function BossView:playStand()
+function BaseBossView:playStand()
 	self.armature:getAnimation():play("stand" , -1, 1)  
 end
 
-function BossView:playFire()
+function BaseBossView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
 	self.enemy:hit(self.hero)	
 end
 
-function BossView:playHitted(event)
+function BaseBossView:playHitted(event)
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)	
+	-- self:playBombEffect(2)
 end
 
-function BossView:playMove()  --改为onMove
+function BaseBossView:playMove()  --改为onMove
 	local isLeft = math.random(1, 2)
 	local limitDis = 100
 	local direction = isLeft == 1 and 1 or -1
@@ -98,40 +136,54 @@ function BossView:playMove()  --改为onMove
 	
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
-		local action = self.config:getMoveRightAction(1)
+		local action = self.config:getMoveRightAction()
 		self.armature:runAction(cc.RepeatForever:create(action))	
 
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
-		local action = self.config:getMoveLeftAction(1)
+		local action = self.config:getMoveLeftAction()
 		self.armature:runAction(cc.RepeatForever:create(action))		
 	end	
 end
 
-function BossView:playKill(event)
-	--clear
+function BaseBossView:playKill(event)
+	--clear TODO
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	self:clearWeak()
 	self:testStop({isPause = true})
 
 	--play dead
-	self.armature:getAnimation():play("dead" ,-1 , 1)
+	self.armature:getAnimation():play("die" ,-1 , 1)
+
+	--bomb
+	self:playBombEffects()
 end
 
-function BossView:playSkill(skillName)
-	-- print("BossView:playSkill: "..skillName)
+function BaseBossView:playBombEffects()
+	for i=1,32 do
+		local sch = scheduler.performWithDelayGlobal(
+			handler(self, self.playBombEffect), i * 0.1)
+		self:addScheduler(sch)
+	end
+end
+
+function BaseBossView:playSkill(skillName)
+	-- print("BaseBossView:playSkill: "..skillName)
 	local str =  string.sub(skillName, 1, 4)
 	print("skillName", str)
 	if skillName == "moveLeftFire" then 
-		self:play("moveLeftFire", handler(self, self.playMoveLeftFire))
+		self:play("moveLeftFire", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
-		self:play("moveRightFire", handler(self, self.playMoveRightFire))
+		self:play("moveRightFire", handler(self, self.playMoveRightDaoFire))
 	elseif skillName == "saoShe" then
 		self:play("saoShe", handler(self, self.playSaoShe))
 	elseif skillName == "daoDan" then
 		self:play("daoDan", handler(self, self.playDaoDan))
-	
+	elseif skillName == "chongfeng" then
+		self:play("chongfeng", handler(self, self.playChongfeng))
+	elseif skillName == "tieqiu" then
+		self:play("tieqiu", handler(self, self.playTieQiu))
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
 		-- print("index", index)
@@ -140,12 +192,17 @@ function BossView:playSkill(skillName)
 end
 
 --skill
-function BossView:playMoveLeftFire()
-	--自己的位置
+function BaseBossView:playMoveLeftDaoFire()
+	self:platMoveDaoFireAction(true)
+end
+
+function BaseBossView:playMoveRightDaoFire()
+	self:platMoveDaoFireAction(false)
+end
+
+function BaseBossView:platMoveDaoFireAction(isLeft)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
-	local isLeft = true
-
 	--出发
 	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
 	local bound = self.armature:getBoundingBox()
@@ -211,15 +268,21 @@ function BossView:playMoveLeftFire()
 		seq = cc.Sequence:create(
 		beforeOutCall, actionOut,
 		beforeRightCall, actionScreen1, 
+		cc.DelayTime:create(2.0),
 		beforeLeftCall, actionScreen2, 
 		beforeBackCall, actionBack, afterLeftCall)	
 	else 
-		seq = cc.Sequence:create(actionBack , actionScreen2, actionScreen1, actionOut)	
+		seq = cc.Sequence:create(
+		beforeOutCall, actionBack,
+		beforeRightCall, actionScreen2, 
+		cc.DelayTime:create(2.0),
+		beforeLeftCall, actionScreen1, 
+		beforeBackCall, actionOut, afterLeftCall)	
 	end
 	self:runAction(seq)
 end
 
-function BossView:playMoveRightFire()
+function BaseBossView:playMoveRightFire()
 	local dis = 2 
     local widthOffset = 100 
     local isAble = self:checkPlace(widthOffset)
@@ -233,19 +296,19 @@ function BossView:playMoveRightFire()
 	self.enemy:hit(self.hero)
 end
 
-function BossView:playSaoShe()
+function BaseBossView:playSaoShe()
 	self.armature:getAnimation():play("saoshe" , -1, 1)
 
 	--持续开枪 0.1
-	local fireOffset = self.enemy:getFireOffset()
-	self:continueFire(20, fireOffset)
+	local fireOffset = self.config["saoFireOffset"]
+	local fireTimes = self.config["saoFireTimes"]
+	self:continueFire(fireTimes, fireOffset)
 	
 end
 
-function BossView:continueFire(sumTimes, fireOffset)
-	
-	local sumTimes = 5
-	local handler
+function BaseBossView:continueFire(sumTimes, fireOffset)
+	local handler = nil
+	local sumTimes = sumTimes
 	function saosheFire()
 		if sumTimes == 0 then 
 			scheduler.unscheduleGlobal(handler)
@@ -256,57 +319,103 @@ function BossView:continueFire(sumTimes, fireOffset)
 	handler = scheduler.scheduleGlobal(saosheFire, fireOffset)
 end
 
-function BossView:playDaoDan1()
+function BaseBossView:playDaoDan1()
+	--todo 改为bone
 	--导弹
-    local enemys = {}
 	for i=1,7 do
-		local xPos = 30 + i * 120
-		local data = {	
-			pos = cc.p(xPos, 10),
-			delay = 0.4 * i,
-			property = {
-					placeName = "place3", --todoyby
-					type = "missile",
-					id = 1,
-					},
-			}
-		enemys[#enemys + 1] = data
+		local delay = 0.1 + 0.15 * i
+		local property = {
+			type = "missile",
+			srcScale = self:getScale() * 0.3, --导弹view用
+			id = self.property["enemyId"], 
+		}
+		local function callfuncAddDao()
+			local boneName = "dao2"
+			local bone = self.armature:getBone(boneName):getDisplayRenderNode()
+			local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))
+			property.srcPos = srcPos
+			property.destPos = srcPos
+			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
+				property = property})
+		end
+		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
+	    self:addScheduler(sch)    
 	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
+   
 end
 
-function BossView:playDaoDan()
+function BaseBossView:playDaoDan()
 	self.armature:getAnimation():play("daodan", -1, 1)
 
+	local kDelayAnim = 0.6 		-- 导弹动画播放0.6s 再发导弹
 	--导弹
-    local enemys = {}
-	for i=1,7 do
-		local xPos = 30 + i * 120
-		local data = {
-			placeName = "place3",
-			pos = cc.p(xPos, 10),
-			delay = 0.4 * i,
-			property = {
-					type = "missile",
-					id = 1,
-					},
-			}
-		enemys[#enemys + 1] = data
-	end
-    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = enemys})
+	for i=1,2 do
+		local boneName = "dao"..i
+		local bone = self.armature:getBone(boneName):getDisplayRenderNode()
+		local delay = kDelayAnim
+		local property = {
+			type = "missile",
+			srcScale = self:getScale() * 0.3, --导弹view用
+			id = self.property["enemyId"], 
+		}
+		local function callfuncAddDao()
+			local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))
+			property.srcPos = srcPos
+			property.destPos = srcPos			
+			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
+				property = property})
+		end
+		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
+	    self:addScheduler(sch)    
+	end	
 end
 
-function BossView:clearWeak()
+function BaseBossView:playChongfeng()
+	self.armature:getAnimation():play("chongfeng", -1, 1)
+    --前进
+    self.isAheading = true
+    local speed = 400
+    local desY = -180
+    local scale = 2.0
+
+    local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+    -- dump(pWorld, "pWorld")
+    local posOri = cc.p(self:getPositionX(), self:getPositionY())
+    
+    local distanceY = desY - pWorld.y
+    local time = math.abs(distanceY) /speed
+    local desPos = cc.p(0, distanceY)
+    local actionAhead = cc.MoveBy:create(time, desPos)
+    local actionScale = cc.ScaleBy:create(time, scale)
+
+    --
+    local aheadEndFunc = function ()
+        -- print("aheadEnd")
+        self.isAheading = false
+        local destDemage = self.property["chongfengDemage"]
+        self.enemy:hit(self.hero, destDemage)
+        self:setPosition(posOri)
+        self:scaleBy(0.01, 1/scale)
+        local map = md:getInstance("Map")
+        map:playEffect("shake")
+    end
+    local afterAhead = cc.CallFunc:create(aheadEndFunc)
+    local seq = cc.Sequence:create(actionAhead, afterAhead)
+    self:runAction(seq)
+
+    self:runAction(actionScale)	
+end
+
+function BaseBossView:clearWeak()
 	--clear weaks
 	for i,weakData in pairs(self.weakNode) do
 		local anim = weakData["anim"]
 		anim:setVisible(false)
 		weakData.valid = false
 	end
-
 end
 
-function BossView:playWeak(index)
+function BaseBossView:playWeak(index)
 	self:clearWeak()
 
 	--play
@@ -329,57 +438,60 @@ function BossView:playWeak(index)
 end
 
 
---接口 BossView:
-function BossView:animationEvent(armatureBack,movementType,movementID)
+--接口 BaseBossView:
+function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if self.pauseOtherAnim then return end
+		if self.pauseOtherAnim and movementID ~= "die" then 
+			return 
+		end		
 		print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
-		if movementID ~= "dead" then
+		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
+            if self.isAheading then 
+                print("禁止")
+                return
+            end			
 			if playCache then 
 				playCache()
 			else 					
 				self:playStand()
 			end
-    	elseif movementID == "dead" then 
-    		self:setDeadDone()
+    	elseif movementID == "die" then 
+    		self:setDeadDone(true)
     	end 
 	end
 end
 
-function BossView:tick(t)
+function BaseBossView:tick(t)
 	if self.pauseOtherAnim then return end 
 	--change state
 	local randomSeed 
-	-- math.newrandomseed()
 
 	--fire
-	local fireRate = self.enemy:getFireRate()
-	
-	randomSeed = math.random(1, fireRate)
-	if randomSeed > fireRate - 1 then 
+	local fireRate = self.config["fireRate"]
+	randomSeed = math.random(1, fireRate )
+	if randomSeed > fireRate - 1 and fireRate~=0 then 
 		self:play("fire", handler(self, self.playFire))
 		return
 	end
 
 	--move
-	local moveRate = self.enemy:getMoveRate()
+	local moveRate = self.config["walkRate"]
 	randomSeed =  math.random(1, moveRate)
-	if randomSeed > moveRate - 1 then 
+	if randomSeed > moveRate - 1 and fireRate~=0 then 
 		self:play("move", handler(self, self.playMove))
 		return 
 	end
 end
 
-function BossView:checkSkill(demage)
+function BaseBossView:checkSkill(demage)
 	if not demage then demage = 0 end 
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	local persentO = (hp + demage)
 	local persentC = hp
-	local skilltrigger = self.config.skilltrigger
-	local skilltrigger = self.enemy:getSkillTrigger()
+	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
@@ -398,14 +510,16 @@ function BossView:checkSkill(demage)
 end
 
 local isRed = false
-function BossView:onHitted(targetData)
+function BaseBossView:onHitted(targetData)
 	local demage 	 = targetData.demage
-	local scale  	 = targetData.demageScale or 1.0
+	local scale  	 = targetData.demageScale
+	local destDemage = demage * scale
+	assert(scale, "")
 	local demageType = targetData.demageType
 	
 	--血量
 	if self.enemy:canHitted() then
-		self.enemy:decreaseHp(demage)
+		self.enemy:decreaseHp(destDemage)
 	end
 
 	local maxHp = self.enemy:getMaxHp()
@@ -414,7 +528,7 @@ function BossView:onHitted(targetData)
 	self:setBlood(persent)
 
 	--血量触发技能
-	self:checkSkill(demage)
+	self:checkSkill(destDemage)
 	
 	--red
 	if isRed then return end
@@ -439,7 +553,7 @@ function BossView:onHitted(targetData)
 	self:addScheduler(sch2)
 end
 
-function BossView:initBody()
+function BaseBossView:initBody()
 	--body
 	self.weakNode = {}
 	local index = 1
@@ -471,9 +585,9 @@ function BossView:initBody()
 	drawBoundingBox(self.armature, bodyNode, "yellow")  
 end
 
-function BossView:getRange(rectName)
+function BaseBossView:getRange(rectName)
 	-- print("rectName", rectName)
-	local range, isValid = BossView.super.getRange(self, rectName)
+	local range, isValid = BaseBossView.super.getRange(self, rectName)
 	if range == nil then return nil, false end
 	local str =  string.sub(rectName, 1, 4)
 	if str == "weak" then 
@@ -485,8 +599,8 @@ function BossView:getRange(rectName)
 	return range, isValid
 end
 
-function BossView:getModel(property)
+function BaseBossView:getModel(property)
 	return Boss.new(property)
 end
 
-return BossView
+return BaseBossView

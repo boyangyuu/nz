@@ -6,23 +6,15 @@
 2. ..
 ]]
 
-
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
-local Actor = import("..Actor")
-local Enemy = import(".Enemy")
-local Hero = import("..Hero")
 local BaoEnemyView = class("BaoEnemyView", BaseEnemyView)  
-
 local kTimeStartAhead = 2.0
-local kRangeW = 200
-local kRangeH = 300
-local kDemageOtherEnemyScale = 2.0
 
 function BaoEnemyView:ctor(property)
 	--instance
 	BaoEnemyView.super.ctor(self, property) 
-    self.hero = app:getInstance(Hero)
+    self.hero = md:getInstance("Hero")
     self.property = property
     dump(self.property, "self.property")
     self.isAheading = false
@@ -30,7 +22,7 @@ function BaoEnemyView:ctor(property)
 
     --前进
     local callFuncAhead = function ()
-        self:play("ahead", handler(self, self.playAhead))
+        self:play("walk", handler(self, self.playAhead))
     end
     local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
     self:addScheduler(aheadScheduler)
@@ -40,10 +32,10 @@ end
 function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
-    self.armature:getAnimation():play("ahead" , -1, 1) --
+    self.armature:getAnimation():play("walk" , -1, 1) --
     local speed = 50
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-    dump(pWorld, "pWorld")
+    -- dump(pWorld, "pWorld")
     local desY = -20 --屏幕位置
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
@@ -59,7 +51,6 @@ function BaoEnemyView:playAhead()
          self.isAheaded  = true
         --自爆攻击
         self:playKill()
-
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
@@ -68,6 +59,21 @@ function BaoEnemyView:playAhead()
     self:runAction(actionScale)
 end
 
+function BaoEnemyView:playKill(event)
+    self:playBombEffects()
+    BaoEnemyView.super.playKill(self,event)
+end
+
+function BaoEnemyView:playBombEffects()
+    for i=1,6 do
+        local sch  = scheduler.performWithDelayGlobal(
+            handler(self, self.playBombEffect), i * 0.1)
+        local sch1 = scheduler.performWithDelayGlobal(
+            handler(self, self.demageOthers), i * 0.1)
+        self:addScheduler(sch)
+        self:addScheduler(sch1)
+    end
+end
 
 function BaoEnemyView:playHitted(event)
     local currentName = self.armature:getAnimation():getCurrentMovementID()
@@ -79,7 +85,6 @@ end
 function BaoEnemyView:tick(t)
     --change state
     if self.isAheading then return end
-
 end
 
 function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
@@ -89,7 +94,7 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
         if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if self.isAheading then 
-                self.armature:getAnimation():play("ahead" , -1, 1) 
+                self.armature:getAnimation():play("walk" , -1, 1) 
                 return 
             end
             if playCache then 
@@ -98,36 +103,40 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
                 self:playStand()
             end
         elseif movementID == "die" then 
-            if self.isAheaded then
-                --伤害hero
-                self.enemy:hit(self.hero)
-            else
-                --伤害enemys
-                print("成功摧毁")
-                local destRect = self:getBaoRect()
-                local targetData = {demage = self.enemy:getDemage(), 
-                                    demageScale = kDemageOtherEnemyScale, 
-                                    demageType = "bao",
-                                    }
-                self.hero:dispatchEvent({name = Hero.ENEMY_ATTACK_MUTI_EVENT, 
-                  targetData = targetData,
-                  destRect = destRect})
-            end
             self:setDeadDone()
         end 
     end
+end
+
+function BaoEnemyView:demageOthers()
+    if self.isAheaded then
+        --伤害hero
+        self.enemy:hit(self.hero)
+    else
+        --伤害enemys
+        print("成功摧毁")
+        local destRect = self:getBaoRect()
+        local targetData = {demage = define.kBaoDemageOtherEnemys, 
+                            demageScale = 1, 
+                            demageType = "bao",
+                            }
+        self.hero:dispatchEvent({name = self.hero.ENEMY_ATTACK_MUTI_EVENT, 
+          targetData = targetData,destRect = destRect}) 
+    end   
 end
 
 function BaoEnemyView:getBaoRect()
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     local bound = self.armature:getBoundingBox() 
     pWorld.y = pWorld.y + bound.height / 2 * self:getScale()  --获得中心位置
-    dump(pWorld, "pWorld")
+    -- dump(pWorld, "pWorld")
 
     --create 群伤范围和位置
-    local pos = cc.p(pWorld.x - kRangeW / 2 ,
-                 pWorld.y - kRangeH / 2)
-    local rect = cc.rect(pos.x, pos.y, kRangeW, kRangeH)
+    local rangeW = define.kBaoRangeW * self:getScale()
+    local rangeH = define.kBaoRangeH * self:getScale()
+    local pos = cc.p(pWorld.x - rangeW / 2 ,
+                 pWorld.y - rangeH / 2)
+    local rect = cc.rect(pos.x, pos.y, rangeW, rangeH)
     return rect
 end
 

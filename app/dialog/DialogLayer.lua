@@ -1,28 +1,21 @@
 
 local DialogConfigs = import(".DialogConfigs")
-local Fight         = import("..fight.Fight")
-local Dialog 		= import(".DialogModel")
 
 local DialogLayer = class("DialogLayer", function()
     return display.newLayer()
 end)
 
 function DialogLayer:ctor()
-	self:loadCCS()
-	self:initUI()
+    self.dialog = md:getInstance("DialogModel")
 	self.index = 1
-    self.dialog = app:getInstance(Dialog)
-    self.fight  = app:getInstance(Fight)   
-    -- self.appear = ""
-	-- get Group Level
-    self.groupID = self.fight:getGroupId()
-    self.levelID = self.fight:getLevelId()
 
 	--event
 	cc.EventProxy.new(self.dialog, self)
-		:addEventListener(Dialog.DIALOG_FINISH_EVENT, handler(self, self.finish))
-		:addEventListener(Dialog.DIALOG_START_EVENT, handler(self, self.start))
-
+		:addEventListener(self.dialog.DIALOG_FINISH_EVENT, handler(self, self.finish))
+		:addEventListener(self.dialog.DIALOG_START_EVENT, handler(self, self.start))
+	
+	self:loadCCS()
+	self:initUI()
 end
 
 function DialogLayer:loadCCS()
@@ -32,6 +25,8 @@ function DialogLayer:loadCCS()
 end
 
 function DialogLayer:initUI()
+	self:setVisible(false)
+
 	self.msglabel = cc.uiloader:seekNodeByName(self, "msg")
 	self.left = cc.uiloader:seekNodeByName(self, "roleleft")
 	self.right = cc.uiloader:seekNodeByName(self, "roleright")
@@ -42,33 +37,45 @@ function DialogLayer:initUI()
             return true
         elseif event.name=='ended' then
             if self.index > self.num then
-	           	self.dialog:finishDialog()
+            	self:finishDialog()
             else
-	            self:refreshUI(self.groupID, "level"..self.levelID, self.appear)
+	            self:refreshUI()
 	        end
         end
     end)
 end
 
--- local appear
 function DialogLayer:start(event)
+	self:setVisible(true)
+	print("function DialogLayer:start(event)")
 
-	self.appear = event.appear
+	self.num = self.dialog:getDialogNum()
 
-	self.num = self.dialog:getDialogNum(self.groupID, "level"..self.levelID, self.appear)
-
-	self:refreshUI(self.groupID, "level"..self.levelID, self.appear)
+	self:refreshUI()
 end
 
-function DialogLayer:refreshUI(groupId,levelId,appear)
+function DialogLayer:finishDialog()
+	self.dialog:finishDialog()
+
+	--clear
+	self.index = 1
+end
+
+
+function DialogLayer:refreshUI()
+	local fight  = md:getInstance("Fight") 	
+	local groupId = fight:getGroupId()
+	local levelId = "level"..fight:getLevelId()
+	local appear  = self.dialog:getAppearType() 
+
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
-	dump(configs)
 	local sentence = configs[self.index]
 	local role = sentence["role"]
 	local msg = sentence["msg"]
 	local imgname = sentence["imgname"]
 	local pos = sentence["pos"]
 	local roleimg = display.newSprite("#"..imgname..".png")
+	roleimg:setScale(1.33)
 	self.left:removeAllChildren()
 	self.right:removeAllChildren()
 	if pos == "left" then
@@ -81,7 +88,7 @@ function DialogLayer:refreshUI(groupId,levelId,appear)
 	self.index = self.index + 1
 end
 
-function DialogLayer:finish()
+function DialogLayer:finish(event)
 	--visible
 	self:setVisible(false)
 end

@@ -1,15 +1,11 @@
 local ScrollViewCell = import("..includes.ScrollViewCell")
-local StoreModel = import(".StoreModel")
-local InlayModel = import("..inlay.InlayModel")
-local PropModel = import(".propModel")
-local UserModel = import("..homeBar.UserModel")
 
 local StoreCell = class("StoreCell", ScrollViewCell)
 
 function StoreCell:ctor(parameter)
-    self.inlayModel = app:getInstance(InlayModel)
-    self.propModel = app:getInstance(PropModel)
-    self.userModel = app:getInstance(UserModel)
+    self.inlayModel = md:getInstance("InlayModel")
+    self.propModel = md:getInstance("propModel")
+    self.userModel = md:getInstance("UserModel")
 	self:initCellUI(parameter)
 end
 
@@ -123,31 +119,32 @@ function StoreCell:initCellUI(parameter)
         price:setString(record["goldPrice"])
         ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
     end
-    btnbuy.isTouchMoved_ = false
     addBtnEventListener(btnbuy, function(event)
         if event.name=='began' then
             -- print("btnBuy is begining!")
             return true
-        elseif event.name == "moved" then
-            btnbuy.isTouchMoved_ = true
         elseif event.name=='ended' then
             -- print("btnBuy is pressed!")
-            if btnbuy.isTouchMoved_ == false then
-                if type == "prop" then
-                    if self.userModel:costDiamond(record["price"]) then
-                        self.propModel:buyProp(record["nameid"])
-                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+            if type == "prop" then
+                if self.userModel:costDiamond(record["price"]) then
+                    if record["nameid"] == "goldweapon" then
+                        self.inlayModel:buyGoldsInlay(record["buynum"])
+                        md:getInstance("StoreModel"):setGoldWeaponNum()
+                        self.inlayModel:refreshInfo("speed")
+                    else
+                        self.propModel:buyProp(record["nameid"],record["buynum"])
                     end
-                elseif type == "bank" then
+                    ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
 
-                elseif type == "inlay" then
-                    if self.userModel:costMoney(record["goldPrice"]) then
-                        self.inlayModel:buyInlay(record["id"])
-                        ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
-                    end
+                end
+            elseif type == "bank" then
+
+            elseif type == "inlay" then
+                if self.userModel:costMoney(record["goldPrice"]) then
+                    self.inlayModel:buyInlay(record["id"])
+                    ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
                 end
             end
-            btnbuy.isTouchMoved_ = false
         end
     end)
 end

@@ -6,7 +6,6 @@ import("..includes.functionUtils")
 local LayerColor_BLACK = cc.c4b(255, 0, 0, 0)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
-local Hero = import("..fight.Hero")
 local GuideLayer = class("GuideLayer", function()
 	local layer = display.newColorLayer(LayerColor_BLACK)
 	layer:setAnchorPoint(0.5, 0.5)
@@ -16,8 +15,8 @@ end)
 
 function GuideLayer:ctor()
 	--instance
-	self.guide = app:getInstance(Guide)
-	self.hero = app:getInstance(Hero)
+	self.guide = md:getInstance("Guide")
+
 	--
 	self:setVisible(false)
 	self.isWaiting = false
@@ -26,9 +25,9 @@ function GuideLayer:ctor()
 
 	--event
 	cc.EventProxy.new(self.guide, self)
-		:addEventListener(Guide.GUIDE_START_EVENT, handler(self, self.start))
-		:addEventListener(Guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
-		:addEventListener(Guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
+		:addEventListener(self.guide.GUIDE_START_EVENT, handler(self, self.start))
+		:addEventListener(self.guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
+		:addEventListener(self.guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
 	--touch
     self:setTouchEnabled(true) 
     self:setTouchSwallowEnabled(true) 
@@ -37,6 +36,7 @@ function GuideLayer:ctor()
 end
 
 function GuideLayer:onTouch(event)
+	if not self.isGuiding then return false end
     if event.name == "began" or event.name == "added" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
@@ -158,6 +158,9 @@ end
 
 function GuideLayer:loadCCS()
 	--ui
+	if self.guideNode then 
+		self.guideNode:removeFromParent() 
+	end
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
@@ -243,6 +246,8 @@ end
 function GuideLayer:start(event)
 	print("function GuideLayer:start(event)")
 	self:setVisible(true)
+	self:setTouchEnabled(true)
+	self.isGuiding = true
 	if self.bg then self.bg:setVisible(true) end 
 	if self.guideNode then self.guideNode:setVisible(true) end 
 	self:refreshUI()
@@ -252,7 +257,9 @@ end
 function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
 	--clear
-
+	self:loadCCS()
+	self:setTouchEnabled(false)
+	self.isGuiding = false
 	--visible
 	self:setVisible(false)
 end

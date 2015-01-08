@@ -1,6 +1,5 @@
 
 local InlayListCell = import(".InlayListCell")
-local InlayModel = import(".InlayModel")
 
 local InlayLayer = class("InlayLayer", function()
     return display.newLayer()
@@ -9,7 +8,7 @@ end)
 function InlayLayer:ctor()
     print("inlayLayer ctor()")
 
-    self.inlayModel = app:getInstance(InlayModel)
+    self.inlayModel = md:getInstance("InlayModel")
 
     cc.EventProxy.new(self.inlayModel , self)
         :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
@@ -48,6 +47,14 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
+
+    local armature = ccs.Armature:create("xqan_hjwq")
+    addChildCenter(armature, goldWeaponBtn)
+    armature:getAnimation():play("Animation1" , -1, 1)
+
+
+    self.goldgun = cc.uiloader:seekNodeByName(self, "d")
+    self.goldgun:setVisible(false)
     oneForAllBtn:setTouchEnabled(true)
     goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(oneForAllBtn, function(event)
@@ -55,6 +62,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipAllInlays()
+            md:getInstance("StoreModel"):setGoldWeaponNum()
         end
     end)
 
@@ -63,8 +71,8 @@ function InlayLayer:initUI()
             -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            dump(self.inlayModel:isGetAllGold())
-            -- self:refreshBtnIcon()
+            self.inlayModel:equipGoldInlays(true)
+            md:getInstance("StoreModel"):setGoldWeaponNum()
         end
     end)
 
@@ -96,9 +104,10 @@ end
 
 function InlayLayer:refreshAvatar()
     if self.inlayModel:isGetAllGold() then
-        print("InlayLayer:refreshAvatar()")
+        self.goldgun:setVisible(true)
     else
         print("takeoff")
+        self.goldgun:setVisible(false)
     end
 end
 

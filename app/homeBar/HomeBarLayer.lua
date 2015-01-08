@@ -1,28 +1,36 @@
-
-
-
 import("..includes.functionUtils")
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
-local UserModel = import(".UserModel")
+local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
+
+
 local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
 
 function HomeBarLayer:ctor()
-    self.usermodel = app:getInstance(UserModel)
+    self.usermodel = md:getInstance("UserModel")
+    self.storeModel = md:getInstance("StoreModel")
+
     cc.EventProxy.new(self.usermodel , self)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
+    -- self:playSound()
     self:loadCCS()
     self:initHomeLayer()
     self:refreshMoney()
     self:refreshCommonLayer("levelMapLayer")
+    self:setNodeEventEnabled(true)
+
 end
 
+function HomeBarLayer:playSound()
+    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    audio.playMusic(homeBarMusic,true)
+end
 
 function HomeBarLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer")
@@ -42,7 +50,7 @@ end
 function HomeBarLayer:initHomeLayer()
     local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
     local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
-    -- local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "btn_buyCoin")
+    local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "panelmoney")
     local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btnarsenal")
     local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btninlay")
     local btnStore = cc.uiloader:seekNodeByName(self.homeRootNode, "btnstore")
@@ -53,6 +61,7 @@ function HomeBarLayer:initHomeLayer()
     btnStore:setTouchEnabled(true)  
     btnSetting:setTouchEnabled(true)  
     btnBack:setVisible(false)
+    btnBuyCoin:setTouchEnabled(true)
 
     self.commonlayers = {}
     self.commonlayers["WeaponListLayer"] = WeaponListLayer.new()
@@ -64,36 +73,36 @@ function HomeBarLayer:initHomeLayer()
         self.commonRootNode:addChild(v)
     end
 
-    addBtnEventListener(btnSetting, function(event)
-        if event.name=='began' then
-            -- print("settingBtn is begining!")
+    btnBuyCoin:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            -- print("settingBtn is pressed!")
+            self.storeModel:refreshInfo("bank")
+            btnSetting:setVisible(false)
+            btnBack:setVisible(true)
+            self:refreshCommonLayer("StoreLayer")
         end
     end)
-    btnBack:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+
+
+    addBtnEventListener(btnSetting, function(event)
         if event.name=='began' then
-            btnBack:runAction(cc.ScaleTo:create(0.05, 0.4524, 0.9))
+            return true
+        elseif event.name=='ended' then
+            print("settingBtn is pressed!")
+            ui:showPopup("PauseBMPopup")
+        end
+    end)
+    addBtnEventListener(btnBack, function(event)
+        if event.name=='began' then
             return true
         elseif event.name=='ended' then
             btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
             btnBack:setVisible(false)
             btnSetting:setVisible(true)
-
-            -- self.commonRootNode:removeAllChildren()
             self:refreshCommonLayer("levelMapLayer")
-
         end
     end)
-    -- addBtnEventListener(btnBuyCoin, function(event)
-    --     if event.name=='began' then
-    --         -- print("Btn is begining!")
-    --         return true
-    --     elseif event.name=='ended' then
-    --         -- print("Btn is pressed!")
-    --     end
-    -- end)
     addBtnEventListener(btnArsenal, function(event)
         if event.name=='began' then
             -- print("Btn is begining!")
@@ -101,7 +110,6 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
-
             self:refreshCommonLayer("WeaponListLayer")
 
             -- print("Btn is pressed!")
@@ -126,7 +134,6 @@ function HomeBarLayer:initHomeLayer()
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
-
         end
     end)
 end
@@ -149,6 +156,14 @@ function HomeBarLayer:homeBarAction()
         cc.CallFunc:create(function()
             self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
         end)}))
+end
+
+function HomeBarLayer:onEnter()
+    self:playSound()
+end
+
+function HomeBarLayer:onExit()
+
 end
 
 return HomeBarLayer

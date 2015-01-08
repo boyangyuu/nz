@@ -174,7 +174,7 @@ function Actor:setFullHp()
 end
 
 function Actor:increaseHp(hp)
-    assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
+    assert(not self:isDead(), string.format("actor %s is dead, can't change Hp",  self:getNickname()))
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ + hp
@@ -191,7 +191,7 @@ function Actor:increaseHp(hp)
 end
 
 function Actor:decreaseHp(hp)
-    assert(not self:isDead(), string.format("actor %s:%s is dead, can't change Hp", self:getId(), self:getNickname()))
+    assert(not self:isDead(), string.format("actor is dead, can't change Hp"))
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ - hp
@@ -199,13 +199,13 @@ function Actor:decreaseHp(hp)
         newhp = 0
     end
 
-    if newhp < self.hp_ then
+    -- if newhp < self.hp_ then
         self.hp_ = newhp
         self:dispatchEvent({name = Actor.HP_DECREASE_EVENT})
         if newhp == 0 then
-            self.fsm__:doEvent("kill")
+            self.fsm__:doEventForce("kill")
         end
-    end
+    -- end
 
     return self
 end
@@ -218,7 +218,7 @@ function Actor:fire()
 end
 
 -- 命中目标
-function Actor:hit(enemy)
+function Actor:hit(enemy, destDemage)
     -- assert(not enemy:isDead(), string.format("actor %s:%s is dead, can't change Hp", enemy:getId(), enemy:getNickname()))
     if enemy:isDead() then return 0.0 end
     -- 简化算法：伤害 = 自己的攻击力 - 目标防御
@@ -238,6 +238,7 @@ function Actor:hit(enemy)
     -- print("demage", demage)
     -- print("enemy.hp_)", enemy.hp_)
     -- 触发事件，damage <= 0 可以视为 miss
+    damage = destDemage or damage
     self:dispatchEvent({name = Actor.ATTACK_EVENT, enemy = enemy, damage = damage})
     if damage > 0 then
         -- 扣除目标 HP，并触发事件

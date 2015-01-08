@@ -7,18 +7,22 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 ]]
 
 --import
-local Hero          = import(".Hero")
-local Actor         = import(".Actor")
-local FightInlay    = import(".FightInlay")
-local Defence       = import(".Defence")
 local Fight = class("Fight", cc.mvc.ModelBase)
-
-
 
 --events
 Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
+
+Fight.FIGHT_START_EVENT  = "FIGHT_START_EVENT"
+Fight.FIGHT_END_EVENT    = "FIGHT_END_EVENT"
+Fight.FIGHT_PAUSE_EVENT  = "FIGHT_PAUSE_EVENT"
+
 Fight.CONTROL_HIDE_EVENT = "CONTROL_HIDE_EVENT"
 Fight.CONTROL_SHOW_EVENT = "CONTROL_SHOW_EVENT"
+Fight.CONTROL_SET_EVENT  = "CONTROL_SET_EVENT"
+
+Fight.INFO_HIDE_EVENT = "INFO_HIDE_EVENT"
+Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
+
 Fight.RESULT_WIN_EVENT   = "RESULT_WIN_EVENT"
 Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
@@ -26,15 +30,85 @@ function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
 end
 
-function Fight:refreshData(properties)
-    --init inatance
-
-    self.hero = app:getInstance(Hero)  --todo改为refreash Instance
-    self.inlay = app:getInstance(FightInlay)
-
+function Fight:beginFight(properties)
     --关卡
     self.groupId = properties.groupId
     self.levelId = properties.levelId
+    self.levelInfo = self.groupId.."-"..self.levelId
+
+    --dialog
+    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
+end
+
+function Fight:refreshData()
+    print("function Fight:refreshData()")
+   
+    --init inatance
+    self:cleanModels()
+
+    self.userModel  = md:getInstance("UserModel")
+    self.inlayModel = md:getInstance("InlayModel")
+    print("fight self.hero init")
+    self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
+    self.map        = md:createInstance("Map")
+    self.inlay = self.hero:getFightInlay()
+end
+
+function Fight:willStartFight()
+    self:checkDialog("forward")
+end
+
+function Fight:willEndFight()
+    self:checkDialog("after")
+end
+
+function Fight:startFight()
+   self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
+   self.inlay:checkNativeGold()
+
+   --check ju
+   self:checkJuContorlType()
+end
+
+function Fight:endFight()
+    -- print("function Fight:endFight()")
+    self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
+    ui:showPopup("FightResultPopup",{},{anim = false})
+
+end
+
+function Fight:onWin()
+    self.userModel:levelPass(self.groupId,self.levelId)
+
+    -- cc.UMAnalytics:finishLevel(self.levelInfo)       
+    self:willEndFight()  
+    self:clearFightData()  
+
+end
+
+function Fight:onFail()
+    ui:showPopup("FightResultFailPopup",{},{anim = false})
+
+    --clear
+    self:clearFightData() 
+    -- cc.UMAnalytics:failLevel(self.levelInfo)   
+end
+
+function Fight:checkDialog(appearType)
+    local dialog = md:getInstance("DialogModel")
+    dialog:check(appearType)
+end
+
+function Fight:onFinishDialog(appearType)
+    if appearType == "forward" then
+        self:startFight()
+    elseif appearType == "after" then
+        self:endFight()
+    elseif appearType == "middle" then
+        --
+    else 
+        assert(true, "invalid appearType :"..appearType)
+    end
 end
 
 ---- 关卡相关 ----
@@ -50,26 +124,33 @@ function Fight:getCurGroupAndLevel()
     return self.groupId , self.levelId 
 end
 
-function Fight:setResult(isWin)
-    --游戏暂停
-    print("Fight:setResult(isWin)", isWin)
-    if isWin then
-        ui:showPopup("FightResultPopup",{},{anim = false})
-    else
-        ui:showPopup("FightResultFailPopup",{},{anim = false})
-    end
-
-    self:clearFightData()
+function Fight:checkJuContorlType()
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju == false then return end
+    local comps = {btnJu = true, btnChange =  false,}
+    self:setCompsVisible(comps)
 end
+
+function Fight:setCompsVisible(componentVisibles)
+    self:dispatchEvent({name = Fight.CONTROL_SET_EVENT, 
+        comps = componentVisibles})
+end
+
+---- 关卡相关end ----
 
 function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo
 end
 
 function Fight:clearFightData()
-    app:deleteInstance(Hero)
-    app:deleteInstance(FightInlay)  
-    app:deleteInstance(Defence)  
+    self.inlayModel:removeAllInlay()
+end
+
+function Fight:cleanModels()
+    md:deleteInstance("Hero")
+    md:deleteInstance("FightInlay")  
+    md:deleteInstance("Defence")  
 end
 
 return Fight

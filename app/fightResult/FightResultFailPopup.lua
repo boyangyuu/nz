@@ -3,15 +3,21 @@ local FightResultFailPopup = class("FightResultFailPopup", function()
 end)
 
 function FightResultFailPopup:ctor()
-	self:loadCCS()
+	self:initUI()
 end
 
-function FightResultFailPopup:loadCCS()
+function FightResultFailPopup:initUI()
+    --loadCCS
 	cc.FileUtils:getInstance():addSearchPath("res/FightResult/fightResultAnim")
 	local controlNode = cc.uiloader:load("fightResultFail.ExportJson")
     self:addChild(controlNode)
-    local btnrevive = cc.uiloader:seekNodeByName(self, "btnrevive")
+
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
+    local btnrevive = cc.uiloader:seekNodeByName(self, "btnrevive")
+    local rolepanel = cc.uiloader:seekNodeByName(self, "role")
+    local roleimg = display.newSprite("#role_anqi.png")
+    roleimg:scale(1.33)
+    addChildCenter(roleimg, rolepanel)
     btnback:setTouchEnabled(true)
     addBtnEventListener(btnback, function(event)
         if event.name=='began' then

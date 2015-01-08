@@ -20,18 +20,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 2,
-				num = 1,
-				delay = {0, 0.3},
-				pos = {50, 20},
-				property = { 
-					placeName = "place1",
-					startState = "",
-					id = 1,
-				},
-			},
-			{
-				time = 7,
+				time = 0,
 				num = 2,
 				delay ={0, 0.3},
 				pos = {10,100},		
@@ -42,7 +31,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 8,
+				time = 7,
 				num = 1,
 				delay = {0.5},
 				pos = {50},
@@ -134,8 +123,8 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=100,walkRate=400,rollRate=400,fireRate=200,
-	weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=1,hp=170,walkRate=400,rollRate=400,fireRate=200,
+	weak1=5,weak2=4},
 
 	--
 }

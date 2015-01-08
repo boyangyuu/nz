@@ -1,0 +1,14 @@
+diff a/app/weaponList/WeaponListLayer.lua b/app/weaponList/WeaponListLayer.lua	(rejected hunks)
+@@ -42,6 +42,12 @@
+     local controlNode = cc.uiloader:load("wuqiku.ExportJson")
+     self.ui = controlNode
+     self:addChild(controlNode)
++
++    -- anim
++    local src = "res/WeaponList/btbuyanim/bt_goumai.csb"
++    local manager = ccs.ArmatureDataManager:getInstance()
++    manager:addArmatureFileInfo(src)
++
+ end
+ 
+ function WeaponListLayer:initUI()

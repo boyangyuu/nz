@@ -9,7 +9,7 @@ local WeaponListModel = import("..weaponList.WeaponListModel")
 local LevelDetailModel = class("LevelDetailModel", cc.mvc.ModelBase)
 
 function LevelDetailModel:ctor(properties)
-	self.weaponListModel = app:getInstance(WeaponListModel)
+	self.weaponListModel = md:getInstance("WeaponListModel")
 end
 
 function LevelDetailModel:getConfig(BigID,SmallID)
@@ -17,7 +17,6 @@ function LevelDetailModel:getConfig(BigID,SmallID)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
 			if k1 == "levelId" and v1==SmallID then
-				dump(v)
 				return v
 			end
 		end	
@@ -25,35 +24,26 @@ function LevelDetailModel:getConfig(BigID,SmallID)
 	return nil
 end
 
-function LevelDetailModel:levelPass(groupId,levelId)
-	local data = getUserData()
-	local group = data.currentlevel.group
-	local level = data.currentlevel.level
-	if groupId == group and levelId ==level then
-		if LevelMapModel:getNextGroupAndLevel(group, level) == false then
-			print("通关")
-		else
-			local nextgroup,nextlevel = LevelMapModel:getNextGroupAndLevel(group, level)
-			data.currentlevel.group = nextgroup
-			data.currentlevel.level = nextlevel
-	-- 	local detailTable = getConfig("config/guanqia.json")
-	-- 	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",group)
-	-- 	local maxLevelRecord = recordsGroup[#recordsGroup]
-	-- 	local maxLevel = maxLevelRecord["levelId"]
+function LevelDetailModel:setCurGroupAndLevel(gid, lid)
+	print("gid"..gid)
+	self.curGroupId = gid
+	self.curLevelId = lid
+end
 
-	--     local recordsLevel = getRecordByKey("config/guanqia.json","groupId",1)
-	--     local groupNum = #recordsLevel
-	-- 	if level < maxLevel then
-	-- 		data.currentlevel.level = level + 1
-	-- 	elseif level == maxLevel and group < groupNum then
-	-- 		--todo
-	-- 		data.currentlevel.group = group + 1
-	-- 		data.currentlevel.level = 1
-	-- 	end
-			setUserData(data)
-			dump(GameState.load())
-		end
-	end
+function LevelDetailModel:getCurGroupAndLevel()
+	return self.curGroupId, self.curLevelId
+end
+
+function LevelDetailModel:getCurLevelType()
+    local record = self:getConfig(self.curGroupId, self.curLevelId)
+    assert(record, "")
+    local type = record["type"]
+    assert(type, "")
+    return type	
+end
+
+function LevelDetailModel:isJujiFight()
+    return self:getCurLevelType() == "juji"
 end
 
 function LevelDetailModel:setsuipian(weaponid)
