@@ -48,15 +48,10 @@ function WeaponListLayer:loadCCS()
 
     -- anim
     local src = "res/WeaponList/btbuyanim/bt_goumai.csb"
-<<<<<<< HEAD
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)
-=======
     local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(starsrc)
->>>>>>> 76342813eff4db707e9e69c675d0adc7e4078bd0
 
 end
 
@@ -156,12 +151,7 @@ function WeaponListLayer:initUI()
             self:equip(self.weaponId)
         end
     end)
-<<<<<<< HEAD
 
-    --anim
-     local armature = ccs.Armature:create("bt_goumai")
-     local oncearmature = ccs.Armature:create("bt_goumai")
-=======
     addBtnEventListener(self.btnEquiped, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
@@ -174,23 +164,17 @@ function WeaponListLayer:initUI()
     --anim
     local armature = ccs.Armature:create("bt_goumai")
     local oncearmature = ccs.Armature:create("bt_goumai")
->>>>>>> 76342813eff4db707e9e69c675d0adc7e4078bd0
+
     armature:setAnchorPoint(0,0)
     armature:setPosition(0,6)
     oncearmature:setAnchorPoint(0,0)
     oncearmature:setPosition(0,6)
-<<<<<<< HEAD
-     self.btnBuy:addChild(armature)
-     self.btnOncefull:addChild(oncearmature)
-     armature:getAnimation():play("Animation1" , -1, 1)
-     oncearmature:getAnimation():play("Animation1" , -1, 1)
-=======
+
     self.btnBuy:addChild(armature)
     self.btnOncefull:addChild(oncearmature)
     armature:getAnimation():play("Animation1" , -1, 1)
     oncearmature:getAnimation():play("Animation1" , -1, 1)
 
->>>>>>> 76342813eff4db707e9e69c675d0adc7e4078bd0
 end
 
 
