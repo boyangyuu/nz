@@ -152,6 +152,7 @@ function WeaponListLayer:initUI()
             self:equip(self.weaponId)
         end
     end)
+
     addBtnEventListener(self.btnEquiped, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
@@ -265,9 +266,9 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
     self.progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
 
-    self.progBulletNext:setBreath()
-    self.progAccuracyNext:setBreath()
-    self.progReloadNext:setBreath()
+    -- self.progBulletNext:setBreath()
+    -- self.progAccuracyNext:setBreath()
+    -- self.progReloadNext:setBreath()
 
     self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
     self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
