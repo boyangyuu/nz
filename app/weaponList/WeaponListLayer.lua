@@ -16,7 +16,7 @@ function WeaponListLayer:ctor()
 
     -- instance
     self.selectedContent = nil
-    self.selectedCellId  = 4
+    self.selectedCellId  = 1
     self.weaponId = nil
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.commonPopModel = md:getInstance("commonPopModel")
@@ -24,9 +24,9 @@ function WeaponListLayer:ctor()
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
-     cc.EventProxy.new(self.commonPopModel, self)
-       :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.intensify))
-       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
+     -- cc.EventProxy.new(self.commonPopModel, self)
+     --   :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.intensify))
+     --   :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
@@ -128,11 +128,12 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            ui:showPopup("commonPopup",
-             {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级2星"},
-             {opacity = 155})
+            local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
+            -- ui:showPopup("commonPopup",
+            --  {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级到"..nextlevel.."星"},
+            --  {opacity = 155})
 
-            -- self:intensify(self.weaponId)
+            self:intensify(self.weaponId)
         end
     end)
     addBtnEventListener(self.btnOncefull, function(event)
@@ -164,16 +165,10 @@ function WeaponListLayer:initUI()
     --anim
     local armature = ccs.Armature:create("bt_goumai")
     local oncearmature = ccs.Armature:create("bt_goumai")
-
-    armature:setAnchorPoint(0,0)
-    armature:setPosition(0,6)
-    oncearmature:setAnchorPoint(0,0)
-    oncearmature:setPosition(0,6)
-
-    self.btnBuy:addChild(armature)
-    self.btnOncefull:addChild(oncearmature)
-    armature:getAnimation():play("Animation1" , -1, 1)
-    oncearmature:getAnimation():play("Animation1" , -1, 1)
+    addChildCenter(armature, self.btnBuy)
+    addChildCenter(oncearmature, self.btnOncefull)
+    armature:getAnimation():play("yjmj" , -1, 1)
+    oncearmature:getAnimation():play("yjmj" , -1, 1)
 
 end
 
@@ -393,17 +388,17 @@ end
 
 -- 升级事件
 function WeaponListLayer:intensify(event)
-    ui:closePopup()
-    function delayplaystar( )
+    -- ui:closePopup()
+    -- function delayplaystar( )
         self.weaponListModel:intensify(self.weaponId)
-    end
-    scheduler.performWithDelayGlobal(delayplaystar, 0.4)
+    -- end
+    -- scheduler.performWithDelayGlobal(delayplaystar, 0.4)
 
 end
 
-function WeaponListLayer:closePopup()
-    ui:closePopup()
-end
+-- function WeaponListLayer:closePopup()
+--     ui:closePopup()
+-- end
 
 -- 一键满级事件
 function WeaponListLayer:onceFull(weaponid)

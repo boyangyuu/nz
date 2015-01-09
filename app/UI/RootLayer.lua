@@ -80,7 +80,17 @@ function RootLayer:addResHome()
 
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
     manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
+    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
+    manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
 
+    local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.csb"
+    manager:addArmatureFileInfoAsync(hjwqbssrc,  handler(self, self.dataLoaded))
+
+    local xqtbsrc = "res/InlayShop/xqtb/xqtb.csb"
+    manager:addArmatureFileInfoAsync(xqtbsrc,  handler(self, self.dataLoaded))
+
+    local xqzbsrc = "res/InlayShop/xqzb/xqzb.csb"
+    manager:addArmatureFileInfoAsync(xqzbsrc,  handler(self, self.dataLoaded))
     --sound
     local startMusic = "res/Start/start.ogg"
     audio.preloadMusic(startMusic)
@@ -155,6 +165,7 @@ function RootLayer:addResFight()
 
     local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.csb"
     manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
+
 
     local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
     manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))

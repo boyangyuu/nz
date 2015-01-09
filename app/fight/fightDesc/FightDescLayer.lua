@@ -31,6 +31,7 @@ function FightDescLayer:start(event)
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
+                self:setVisible(false)
             end
         end)
     addChildCenter(armature, self.animPanl)
@@ -45,6 +46,7 @@ function FightDescLayer:bossShow(event)
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
+                self:setVisible(false)
             end
         end)
     addChildCenter(armature, self.animPanl)
@@ -59,6 +61,7 @@ function FightDescLayer:waveStart(event)
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
+                self:setVisible(false)
             end
         end)
     addChildCenter(armature, self.animPanl)
@@ -74,6 +77,7 @@ function FightDescLayer:enemyIntro(event)
     self:initEnemyIntro(enemyID)
     self:runAction(transition.sequence({cc.DelayTime:create(3), cc.CallFunc:create(function()
         controlNode:removeFromParent()
+        self:setVisible(false)
     end)}))
 
 end
