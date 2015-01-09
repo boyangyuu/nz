@@ -75,5 +75,13 @@ function UI:getLayerCls(layerId)
 	return cls
 end
 
+function UI:showLoad()
+	self:dispatchEvent({name = UI.LOAD_SHOW_EVENT})
+end
+
+function UI:hideLoad()
+	self:dispatchEvent({name = UI.LOAD_HIDE_EVENT})
+end
+
 return UI
 

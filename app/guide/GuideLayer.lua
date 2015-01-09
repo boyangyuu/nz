@@ -20,6 +20,7 @@ function GuideLayer:ctor()
 	--
 	self:setVisible(false)
 	self.isWaiting = false
+	
 	--ui
 	self:loadCCS()
 

@@ -2,7 +2,7 @@
 local GuideLayer = import("..guide.GuideLayer")
 local PopupRootLayer = import("..UI.PopupRootLayer")
 local RootLayer = import("..UI.RootLayer")
-
+local LoadingLayer = import("..UI.LoadingLayer")
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
@@ -24,8 +24,13 @@ function MainScene:ctor()
     guideLayer:setPositionY(display.offset)
     self:addChild(guideLayer, 300)
 
+    --loading
+    local loadLayer = LoadingLayer.new()
+    loadLayer:setPositionY(display.offset)
+    self:addChild(loadLayer, 400)
+    
     --black
-
+    
 end
 
 function MainScene:onEnter()

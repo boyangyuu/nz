@@ -29,6 +29,10 @@ function Map:setCurWaveConfig()
 	self.curWaveCfg = waveConfig
 end
 
+function Map:getCurWaveConfig()
+	return self.curWaveCfg 
+end
+
 function Map:setIsJu(isJu_)
 	self.isJu = isJu_
 end
@@ -53,13 +57,11 @@ function Map:playEffect(name)
 	end
 end
 
-function Map:getCurWaveConfig()
-	return self.curWaveCfg 
-end
-
-
 function Map:isMoveMap()
-	self.curWaveCfg:getIsMoveMap()
+	local fightConfigs  = md:getInstance("FightConfigs")
+	local waveConfig = fightConfigs:getWaveConfig()
+	-- dump(waveConfig, "waveConfig")
+	return waveConfig:getIsMoveMap()
 end
 
 return Map

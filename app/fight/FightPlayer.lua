@@ -604,6 +604,7 @@ end
 function FightPlayer:moveBgLayer(offsetX, offsetY)
     local map = md:getInstance("Map")
     local isMove = map:isMoveMap()
+    print("isMove", isMove)
     if not isMove then return end    
 
     local layerMap = self.layerMap

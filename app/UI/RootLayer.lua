@@ -1,7 +1,6 @@
 
 
 local StartLayer = import("..start.StartLayer")
-local LoadingLayer = import("..load.LoadingLayer")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
 
@@ -46,12 +45,7 @@ end
 
 function RootLayer:showLoadLayer(type)
     print("function RootLayer:showLoadLayer(type)")
-    if self.loadLayer then 
-        self.loadLayer:removeSelf()
-        self.loadLayer = nil 
-    end
-    self.loadLayer = LoadingLayer.new()
-    self:addChild(self.loadLayer, 10000)
+    ui:showLoad()
 
     --clear
     self.isadded = false
@@ -189,10 +183,8 @@ end
 
 function RootLayer:removeLoadDelay()
     local function callfunc ()
-        if self.loadLayer then 
-            self.loadLayer:removeSelf()
-            self.loadLayer = nil 
-        end        
+        ui:hideLoad()   
+        print("ui:hideLoad()")   
     end
 
     local function callfuncAdd()

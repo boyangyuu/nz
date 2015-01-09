@@ -165,7 +165,7 @@ local enemys = {
 
 local mapId = "map_1_1"
 
-local isMoveMap = false
+local isMoveMap = true
 
 function waveClass:ctor()
 	self.waves  = waves
