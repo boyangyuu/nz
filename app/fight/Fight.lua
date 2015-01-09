@@ -30,19 +30,20 @@ function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
 end
 
-function Fight:beginFight(properties)
+function Fight:beginFight()
     --关卡
-    self.groupId = properties.groupId
-    self.levelId = properties.levelId
-    self.levelInfo = self.groupId.."-"..self.levelId
+
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
 end
 
-function Fight:refreshData()
+function Fight:refreshData(properties)
     print("function Fight:refreshData()")
-   
+
+    self.groupId = properties.groupId
+    self.levelId = properties.levelId   
+
     --init inatance
     self:cleanModels()
 
@@ -80,7 +81,8 @@ end
 function Fight:onWin()
     self.userModel:levelPass(self.groupId,self.levelId)
 
-    -- cc.UMAnalytics:finishLevel(self.levelInfo)       
+    -- local levelInfo = self.groupId.."-"..self.levelId    
+    -- cc.UMAnalytics:finishLevel(levelInfo)       
     self:willEndFight()  
     self:clearFightData()  
 
@@ -91,7 +93,8 @@ function Fight:onFail()
 
     --clear
     self:clearFightData() 
-    -- cc.UMAnalytics:failLevel(self.levelInfo)   
+    -- local levelInfo = self.groupId.."-"..self.levelId  
+    -- cc.UMAnalytics:failLevel(levelInfo)   
 end
 
 function Fight:checkDialog(appearType)

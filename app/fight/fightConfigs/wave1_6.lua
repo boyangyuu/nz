@@ -344,10 +344,12 @@ local bosses = {
 	},
 }
 
+local mapId = "map_1_6"
+
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
+	self.mapId  = mapId
 end
-
 return waveClass

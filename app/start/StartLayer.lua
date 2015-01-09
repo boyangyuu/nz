@@ -8,7 +8,7 @@ function StartLayer:ctor()
 	self:initUI()
 end
 
-function StartLayer:playSound(  )
+function StartLayer:playSound()
     local startMusic = "res/Start/start.ogg"
     audio.playMusic(startMusic,true)
 end
@@ -42,7 +42,7 @@ function StartLayer:initUI()
 end
 
 function StartLayer:beginGame()
-	ui:changeLayer("LoadingLayer",{})
+	ui:changeLayer("HomeBarLayer",{})
 end
 
 return StartLayer

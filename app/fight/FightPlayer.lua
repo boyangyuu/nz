@@ -25,8 +25,8 @@ function FightPlayer:ctor(properties)
     --instance
     print("FightPlayer:ctor(properties)")
     self.fight      = md:getInstance("Fight")
-    self.fight:refreshData()
-    self.fight:beginFight(properties)
+    self.fight:refreshData(properties)
+    self.fight:beginFight()
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
@@ -116,8 +116,13 @@ function FightPlayer:showControl(event)
     --btn
     self.btnDefence:setVisible(true)
     self.btnRobot:setVisible(true)
+
     self.btnChange:setVisible(true)
     self.btnLei:setVisible(true)
+
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju then self.btnChange:setVisible(false) end    
 end
 
 function FightPlayer:hideControl(event)
@@ -597,6 +602,10 @@ function FightPlayer:moveFocus(offsetX, offsetY)
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
+    local map = md:getInstance("Map")
+    local isMove = map:isMoveMap()
+    if not isMove then return end    
+
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
     local scale = KFightConfig.scaleMoveBg

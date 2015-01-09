@@ -8,7 +8,6 @@ desc：
 ]]
 
 local scheduler 	= require(cc.PACKAGE_NAME .. ".scheduler")
-local FightConfigs  = import(".fightConfigs.FightConfigs")
 
 local Hero 			= import(".Hero")
 local Fight         = import(".Fight")
@@ -28,8 +27,7 @@ function MapView:ctor()
 	--instance
 	self.hero 			= md:getInstance("Hero")
 	self.fight			= md:getInstance("Fight")
-	local map 			= md:getInstance("Map")
-	self.fightConfigs 	= md:getInstance("FightConfigs")
+	self.mapModel 		= md:getInstance("Map")
 	self.enemys 		= {}
 	self.waveIndex 		= 1
 	self.isPause 		= false
@@ -50,19 +48,20 @@ function MapView:ctor()
     cc.EventProxy.new(self.fight, self)   
         :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
 
-	cc.EventProxy.new(map, self)
-		:addEventListener(map.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
-        :addEventListener(map.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
-        :addEventListener(map.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
+	cc.EventProxy.new(self.mapModel, self)
+		:addEventListener(self.mapModel.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
+        :addEventListener(self.mapModel.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
+        :addEventListener(self.mapModel.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
 	self:setNodeEventEnabled(true)
 end
 
 function MapView:loadCCS()
 	--map
-	local groupId = self.fight:getGroupId()
-	local levelId = self.fight:getLevelId()
 
-	local mapSrcName = "map_"..groupId.."_"..levelId..".json"   -- todo 外界
+	local waveConfig = self.mapModel:getCurWaveConfig()
+	dump(waveConfig, "waveConfig")
+	local mapName = waveConfig:getMapId()
+	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
 	self.map = cc.uiloader:load(mapSrcName)
@@ -106,7 +105,7 @@ end
 
 function MapView:updateEnemys()
 	--wave config
-	local waveConfig = self.fightConfigs:getWaveConfig(groupId, levelId)
+	local waveConfig = self.mapModel:getCurWaveConfig()
 	local wave = waveConfig:getWaves(self.waveIndex)
 	-- dump(wave, "wave")
 

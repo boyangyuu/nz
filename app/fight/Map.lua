@@ -1,13 +1,12 @@
  --[[--
 
-“枪”的实体
+“map”的实体
 
 ]]
 
 --includes
 
 local Map = class("Map", cc.mvc.ModelBase)
-
 --events
 Map.EFFECT_LEI_BOMB_EVENT = "EFFECT_LEI_BOMB_EVENT"
 Map.EFFECT_SHAKE_EVENT 	  = "EFFECT_SHAKE_EVENT"
@@ -20,6 +19,14 @@ Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
 function Map:ctor()
     Map.super.ctor(self)
     self.isJu = false
+    self:setCurWaveConfig()
+end
+
+function Map:setCurWaveConfig()
+	local fightConfigs  = md:getInstance("FightConfigs")
+	local fight = md:getInstance("Fight")
+	local waveConfig = fightConfigs:getWaveConfig()
+	self.curWaveCfg = waveConfig
 end
 
 function Map:setIsJu(isJu_)
@@ -44,6 +51,15 @@ function Map:playEffect(name)
 	else
 
 	end
+end
+
+function Map:getCurWaveConfig()
+	return self.curWaveCfg 
+end
+
+
+function Map:isMoveMap()
+	self.curWaveCfg:getIsMoveMap()
 end
 
 return Map

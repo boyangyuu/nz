@@ -72,10 +72,10 @@ function InfoLayer:initBtns()
 	btnStop:setTouchEnabled(true)
 	btnStop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name =='began' then                
-                cc.ColorUtil:isHighLighted(btnStop, true)
+                -- cc.ColorUtil:isHighLighted(btnStop, true)
                 return true
             elseif event.name =='ended' then
-            	cc.ColorUtil:isHighLighted(btnStop, false)
+            	-- cc.ColorUtil:isHighLighted(btnStop, false)
             	ui:showPopup("PauseFLPopup")
             end
         end)

@@ -6,7 +6,7 @@ end)
 function LoadingLayer:ctor()
 	self:loadCCS()
 	self:initUI()
-	self:changeHomeLayer()
+	-- self:changeHomeLayer()
     self:setNodeEventEnabled(true)
 
 end
@@ -36,22 +36,6 @@ function LoadingLayer:initUI( )
     quanarmature:setAnchorPoint(0.5,0.5)
     addChildCenter(quanarmature, quan)
     quanarmature:getAnimation():play("loading_z")
-
-
-end
-
-function LoadingLayer:changeHomeLayer()
-	function delayShow()
-		ui:changeLayer("HomeBarLayer", {})
-	end
-    local delay = 3.0
-	scheduler.performWithDelayGlobal(delayShow, delay)
-end
-
-function LoadingLayer:onExit()
-    audio.stopMusic()
-    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
-    audio.preloadMusic(homeBarMusic)
 end
 
 return LoadingLayer

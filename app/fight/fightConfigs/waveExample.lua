@@ -8,7 +8,7 @@ local waves = {
 		enemys = {  	
 			{
 				time = 1,
-				num = 6,
+				num = 1,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
 				property = { 

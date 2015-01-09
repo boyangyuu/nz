@@ -25,7 +25,9 @@ function PopupRootLayer:showPopup(event)
 		self.layer:removeSelf()
 		self.layer = nil
 	end
-	self.layer = event.layer
+	local cls = event.layerCls
+	local pro = event.properties
+	self.layer = cls.new(pro)
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(self.layer)
 	self.layer:scale(0.0)

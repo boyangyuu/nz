@@ -262,7 +262,7 @@ function HeroLayer:onThrowGrenade(event)
 					cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 				 	cc.CallFunc:create(
 				 		function ()
-		                    local targetData = {demage = kLeiDemage, demageType = "lei"}
+		                    local targetData = {demage = kLeiDemage, demageType = "lei", scale = 1.0}
 		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
 		                    	targetData = targetData, destPos = destPos,destRect = destRect })
 							armature:removeFromParent()
