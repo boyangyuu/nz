@@ -151,6 +151,7 @@ function WeaponListLayer:initUI()
             self:equip(self.weaponId)
         end
     end)
+
     addBtnEventListener(self.btnEquiped, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
@@ -163,10 +164,12 @@ function WeaponListLayer:initUI()
     --anim
     local armature = ccs.Armature:create("bt_goumai")
     local oncearmature = ccs.Armature:create("bt_goumai")
+
     armature:setAnchorPoint(0,0)
     armature:setPosition(0,6)
     oncearmature:setAnchorPoint(0,0)
     oncearmature:setPosition(0,6)
+
     self.btnBuy:addChild(armature)
     self.btnOncefull:addChild(oncearmature)
     armature:getAnimation():play("Animation1" , -1, 1)
@@ -268,9 +271,9 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
     self.progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
 
-    self.progBulletNext:setBreath()
-    self.progAccuracyNext:setBreath()
-    self.progReloadNext:setBreath()
+    -- self.progBulletNext:setBreath()
+    -- self.progAccuracyNext:setBreath()
+    -- self.progReloadNext:setBreath()
 
     self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
     self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)

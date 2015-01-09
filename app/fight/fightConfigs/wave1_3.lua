@@ -52,7 +52,7 @@ local waves = {
 			{
 				time = 3,
 				num = 6,
-				delay = {0, 0.5, 1, 2, 7,8,9},
+				delay = {0.5, 1, 2, 7,8,9},
 				pos = {100,200,300,400,250,50},
 				property = {
 					type = "jin",
@@ -64,7 +64,7 @@ local waves = {
 				time =5,
 				num = 6,
 				delay = {0.3, 0.8, 1.3, 8, 9,10},
-				pos = {0,200,100,250,150,0},
+				pos = {0,200,100,250,150,50},
 				property = {
 					type = "jin",
 					placeName = "place6",  
@@ -91,7 +91,7 @@ local waves = {
 					type = "san",
 					id = 3,
 					enemyId = 1,
-					placeName = "place5",
+					placeName = "place2",
 				},
 			},
 			{
@@ -103,7 +103,7 @@ local waves = {
 					type = "san",
 					id = 3,
 					enemyId = 1,
-					placeName = "place6",
+					placeName = "place1",
 				},
 			},						
 		},
@@ -112,9 +112,9 @@ local waves = {
 		enemys = {
 			{
 				time = 3,
-				num = 3,
-				delay = {0.3, 1.3,2.3},
-				pos = {150,250,400},
+				num = 2,
+				delay = {0.3, 1.3},
+				pos = {150,250},
 				property = {
 					type = "jin",
 					placeName = "place5",  
@@ -244,18 +244,18 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=100,walkRate=400,rollRate=400,fireRate=200,
-		weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=3,hp=510,walkRate=400,rollRate=400,fireRate=200,
+		weak1=3,weak2=3},
 	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=400,walkRate=400,rollRate=0,fireRate=100,
-		weak1=3,weak2=5},
+	{id=2,image="jinzhanb",demage=5,hp=1300,walkRate=400,rollRate=0,fireRate=100,
+		weak1=2,weak2=2},
 	--伞兵
-	{id=3,image="sanbing01",demage=3,hp=1,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5},
+	{id=3,image="sanbing01",demage=3,hp=200,walkRate=400,rollRate=0,
+		fireRate=100,weak1=1,weak2=1},
 
 	--自爆兵
-	{id=4,image="zibaob",demage=20,hp=1,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5},	
+	{id=4,image="zibaob",demage=20,hp=500,walkRate=400,rollRate=0,
+		fireRate=100,weak1=1,weak2=1},	
 }
 
 local mapId = "map_1_3"
