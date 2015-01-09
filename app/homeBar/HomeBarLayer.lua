@@ -90,7 +90,7 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            ui:showPopup("PauseBMPopup")
+            ui:showPopup("MapPopup")
             -- local layer = FightDescLayer:new()
             -- self:addChild(layer)
             -- md:getInstance("FightDescModel"):bossShow()

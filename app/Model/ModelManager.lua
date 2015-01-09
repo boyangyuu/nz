@@ -31,6 +31,9 @@ modelClasses["FightDescModel"]      = import("..fight.fightDesc.FightDescModel")
 --guide
 modelClasses["Guide"]               = import("..guide.GuideModel")
 
+--debug
+modelClasses["DebugModel"]          = import("..debug.DebugModel")
+
 --need create
 needCreateClasses["Hero"] = true
 needCreateClasses["FightInlay"] = true

@@ -76,7 +76,7 @@ function InfoLayer:initBtns()
                 return true
             elseif event.name =='ended' then
             	cc.ColorUtil:isHighLighted(btnStop, false)
-            	ui:showPopup("PauseFLPopup")
+            	ui:showPopup("FightPopup")
             end
         end)
 end

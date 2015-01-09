@@ -1,27 +1,27 @@
 
 
-local PauseBMPopup = class("PauseBMPopup",function()
+local MapPopup = class("MapPopup",function()
 	return display.newLayer()
 end)
 
-function PauseBMPopup:ctor()
+function MapPopup:ctor()
 	self:loadCCS()
 	self:initButtons()
 end
 
-function PauseBMPopup:loadCCS()
+function MapPopup:loadCCS()
 	local pauseBMNode = cc.uiloader:load("res/help/bangzhu/dadituzhanting.ExportJson")
 	self:addChild(pauseBMNode) 
 end
 
-function PauseBMPopup:initButtons()
+function MapPopup:initButtons()
 	local gameContinueBtn = cc.uiloader:seekNodeByName(self, "Panel_GameContinue")
 	gameContinueBtn:setTouchEnabled(true)
 	addBtnEventListener(gameContinueBtn, function( event )
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then 
-			ui:closePopup("PauseBMPopup")
+			ui:closePopup("MapPopup")
 			assert("gameContinue is pressed!")
 		end
 	end)
@@ -32,7 +32,7 @@ function PauseBMPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("PauseBMPopup")
+			ui:closePopup("MapPopup")
 			ui:changeLayer("StartLayer", {})
 			print("homeBackBtn is pressed!")
 		end
@@ -56,9 +56,9 @@ function PauseBMPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("PauseBMPopup")
+			ui:closePopup("MapPopup")
 		end
 	end)
 end
 
-return PauseBMPopup
+return MapPopup

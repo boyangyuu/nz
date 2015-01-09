@@ -2,7 +2,7 @@
 local GuideLayer = import("..guide.GuideLayer")
 local PopupRootLayer = import("..UI.PopupRootLayer")
 local RootLayer = import("..UI.RootLayer")
-
+local DebugLayer = import("..debug.DebugLayer")
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
@@ -24,7 +24,10 @@ function MainScene:ctor()
     guideLayer:setPositionY(display.offset)
     self:addChild(guideLayer, 300)
 
-    --black
+    --debug
+    local debugLayer = DebugLayer.new()
+    debugLayer:setPositionY(display.offset)
+    self:addChild(debugLayer, 400)
 
 end
 

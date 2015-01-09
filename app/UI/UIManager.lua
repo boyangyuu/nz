@@ -24,9 +24,10 @@ layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 -- 关于Popup
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 -- 地图暂停Popup
-layerClasses["PauseBMPopup"]         = import("..help.PauseBMPopup")
+layerClasses["MapPopup"]             = import("..help.MapPopup")
 -- 战斗暂停Popup
-layerClasses["PauseFLPopup"]         = import("..help.PauseFLPopup")
+layerClasses["FightPopup"]           = import("..help.FightPopup")
+
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 
