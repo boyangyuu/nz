@@ -8,12 +8,14 @@ local waves = {
 		enemys = {  	
 			{
 				time = 1,
-				num = 1,
+				num = 6,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
 				property = { 
-					id = 1,
-					placeName = "place4",
+					id = 3,
+					enemyId = 1,
+					type = "san",
+					placeName = "place4",					
 				},
 			},	
 						
@@ -60,10 +62,16 @@ local enemys = {
 	{id=9,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},				
 }
 
+local mapId = "map_1_1"
+
+local isMoveMap = true
+
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
+	self.mapId  = mapId
+	self.isMoveMap = isMoveMap
 end
 
 
