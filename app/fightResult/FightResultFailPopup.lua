@@ -18,7 +18,9 @@ function FightResultFailPopup:initUI()
     local roleimg = display.newSprite("#role_anqi.png")
 
     local armature = ccs.Armature:create("ydfh")
-    addChildCenter(armature, btnrevive)
+    armature:setPosition(180,60)
+    btnrevive:addChild(armature)
+    -- addChildCenter(armature, btnrevive)
     armature:getAnimation():play("ydfh" , -1, 1)
 
     roleimg:scale(1.33)

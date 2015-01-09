@@ -118,6 +118,10 @@ function FightPlayer:showControl(event)
     self.btnRobot:setVisible(true)
     self.btnChange:setVisible(true)
     self.btnLei:setVisible(true)
+
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju then self.btnChange:setVisible(false) end    
 end
 
 function FightPlayer:hideControl(event)

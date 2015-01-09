@@ -87,7 +87,7 @@ function LevelDetailLayer:initUI()
 	end
 	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
-		armature:setScale(0.8)
+		armature:setScale(DataTable["scale"])
 		addChildCenter(armature, self.panlEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
 	end
@@ -163,8 +163,8 @@ function LevelDetailLayer:initBtns()
     local jijiaarmature = ccs.Armature:create("bt_yjzb")
     addChildCenter(goldarmature, self.btnGold)
     addChildCenter(jijiaarmature, self.btnJijia)
-    goldarmature:getAnimation():play("Animation1" , -1, 1)
-    jijiaarmature:getAnimation():play("Animation1" , -1, 1)
+    goldarmature:getAnimation():play("yjzb" , -1, 1)
+    jijiaarmature:getAnimation():play("yjzb" , -1, 1)
 
 	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
 		self.alreadybibei:setVisible(true)

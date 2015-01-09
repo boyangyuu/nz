@@ -13,7 +13,10 @@ function InlayLayer:ctor()
     cc.EventProxy.new(self.inlayModel , self)
         :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
 
+   self.selectarm = nil
+
 	self.btn = {}
+    self.icon = {}
     self.typeId = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
 
@@ -33,7 +36,7 @@ function InlayLayer:loadCCS()
 end
 
 function InlayLayer:onEnter()
-    self:refreshBtnIcon()
+    self:refreshBtnIcon({typename = "speed"})
     self:refreshListView("speed")
     self:refreshAvatar()
 end
@@ -43,6 +46,7 @@ function InlayLayer:refreshInlay(event)
     self:refreshListView(event.typename)
     self:refreshAvatar()
 end
+
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
@@ -80,20 +84,12 @@ function InlayLayer:initUI()
 
     for k,v in pairs(self.typeId) do
         self.btn[v] = cc.uiloader:seekNodeByName(self, "panel"..v)
+        self.icon[v] = cc.uiloader:seekNodeByName(self, "icon"..v)
         self.btn[v]:setTouchEnabled(true)
         self.btn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-                -- local selectarm = ccs.Armature:create("xqtb")
-                -- selectarm:getAnimation():setMovementEventCallFunc(
-                --     function ( armatureBack,movementType,movementId ) 
-                --         if movementType == ccs.MovementEventType.complete then
-                --             armatureBack:removeSelf()
-                --         end
-                --     end)
-                -- addChildCenter(selectarm, self.btn[v])
-                -- selectarm:getAnimation():play("xqtb" , -1, 1)
 
                 self:refreshListView(v)    
             end
@@ -102,6 +98,11 @@ function InlayLayer:initUI()
 end
 
 function InlayLayer:refreshListView(index)
+    if self.selectarm then
+        self.selectarm:removeFromParent()
+        self.selectarm = nil
+    end
+
     removeAllItems(self.rootListView)
     local table = self.inlayModel:getConfigTable("type", index)
     for i=1,#table do
@@ -112,13 +113,30 @@ function InlayLayer:refreshListView(index)
     	self.rootListView:addItem(item)
     end
     self.rootListView:reload()
+
+
+    self.selectarm = ccs.Armature:create("xqtb")
+    addChildCenter(self.selectarm, self.icon[index])
+    self.selectarm:getAnimation():play("xqtb" , -1, 1)
+
 end
 
 function InlayLayer:refreshAvatar()
+    self.goldgun:setVisible(true)
+    local goldarm = ccs.Armature:create("xqan_hjwqbs")
     if self.inlayModel:isGetAllGold() then
-        self.goldgun:setVisible(true)
+        goldarm:getAnimation():setMovementEventCallFunc(
+            function ( armatureBack,movementType,movementId ) 
+                if movementType == ccs.MovementEventType.complete then
+                    goldarm:getAnimation():play("xqan_chixu" , -1, 1)
+                end
+            end)
+        addChildCenter(goldarm, self.goldgun)
+        goldarm:getAnimation():play("xqan_hjwqbs" , -1, 0)
+
     else
         print("takeoff")
+        goldarm:removeFromParent()
         self.goldgun:setVisible(false)
     end
 end
@@ -159,12 +177,8 @@ function InlayLayer:refreshBtnIcon(event)
                 end)
             addChildCenter(equiparm, self.btn[event.typename])
             equiparm:getAnimation():play("Animation1" , -1, 0)
-
         end
     end
-
-    
-
 end
 
 return InlayLayer

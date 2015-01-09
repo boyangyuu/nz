@@ -65,13 +65,22 @@ end
 function InlayModel:equipInlay(inlayid, isRefresh)
 	local data = getUserData()
 	-- dump(data.inlay.bags)
+	if self:isInlayedExist(inlayid) == 2 then
+		return
+	end
+	if self:isBagsExist(inlayid) == false then
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "您还未拥有此镶嵌，请购买"},
+			 {opacity = 150})
+
+		return
+	end
 	for k,v in pairs(data.inlay.bags) do
 		if v.inlayid == inlayid and data.inlay.bags[k].ownednum > 0 then
 			print("equipInlay", self:isInlayedExist(inlayid))
 		-- case 1 已经装备过相同的
 			if self:isInlayedExist(inlayid) == 2 then
-				print("已经装备过了")
-
+				return
 		-- case 2 有相同type的，但是不同的inlay
 			elseif self:isInlayedExist(inlayid) == 1 then
 				-- 1、bags数量-1
@@ -161,9 +170,8 @@ function InlayModel:equipAllInlays(isRefresh)
 	        end
 	    end
 	end
-
 	for k,v in pairs(bestInlayId) do
-		if v ~= 100 then
+		if v ~= 0 then
 			self:equipInlay(v, false)
 		end
 	end
@@ -197,7 +205,7 @@ function InlayModel:equipAllBestInlays(table)
 	dump(bestInlayId)
 
 	for k,v in pairs(bestInlayId) do
-		if v ~= 100 then
+		if v ~= 0 then
 			-- dump(v)
 			self:equipInlay(v, false)
 		end
