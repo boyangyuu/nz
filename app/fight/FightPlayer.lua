@@ -2,7 +2,7 @@
 import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local DialogLayer   = import("..dialog.DialogLayer")
-
+local FightDescLayer = import(".fightDesc.FightDescLayer")
 local GunView       = import(".GunView")
 local FocusView     = import(".FocusView")
 local MapView       = import(".MapView")
@@ -10,7 +10,7 @@ local HeroLayer      = import(".HeroLayer")
 local InfoLayer      = import(".InfoLayer")
 
 local KFightConfig = {
-    scaleMoveBg = 0.3, 
+    scaleMoveBg = 1.0, 
     scaleMoveFocus = 2.3,
     scaleMoveGun = 2.3, 
 }
@@ -23,13 +23,23 @@ end)
 
 function FightPlayer:ctor(properties)
     --instance
+    print("FightPlayer:ctor(properties)")
     self.fight      = md:getInstance("Fight")
-    self.fight:refreshData(properties) 
+    self.fight:refreshData()
+    self.fight:beginFight(properties)
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
-    self.defence    = md:getInstance("Defence")
 
+    self.defence    = md:getInstance("Defence")
+    self.inlay      = md:getInstance("FightInlay")
+
+    --datas
+    self.curGold    = 0
+    self.tempChangeGoldHandler = nil
+    self.resumeDefenceHandler = nil
+    self.btnFireSch = nil
+    self.touchFireId = nil
 
     --views
     self.focusView      = FocusView.new()
@@ -45,7 +55,7 @@ function FightPlayer:ctor(properties)
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.hero, self)
-        :addEventListener(self.hero.SKILL_DEFENCE_BEHURT_EVENT, handler(self, self.onDefenceBeHurt))
+        
         :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
         :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
     
@@ -53,9 +63,13 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener(self.fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
         :addEventListener(self.fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
+        :addEventListener(self.fight.CONTROL_SET_EVENT,  handler(self, self.setComponentVisible))
         :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
+
+    
     cc.EventProxy.new(self.defence, self)
+        :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
     
     self:scheduleUpdate()
@@ -69,30 +83,29 @@ function FightPlayer:setPause(event)
     layerTouch:setTouchEnabled(not isPause)  
 end
 
-local tempChangeGoldHandler = nil
-local curGold = 0
 function FightPlayer:changeGoldCount(event)
     local totolGold = event.goldCount
+
     local function changeGold()
-        if curGold < totolGold then
-            curGold = curGold + 1
-            self.labelGold:setString(curGold)
+        if self.curGold < totolGold then
+            self.curGold = self.curGold + 1
+            self.labelGold:setString(self.curGold)
         else
-            if tempChangeGoldHandler then
-                scheduler.unscheduleGlobal(tempChangeGoldHandler)
-                tempChangeGoldHandler = nil
+            if self.tempChangeGoldHandler then
+                scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
+                self.tempChangeGoldHandler = nil
             end
         end
     end
-    if tempChangeGoldHandler then
-        scheduler.unscheduleGlobal(tempChangeGoldHandler)
+    if self.tempChangeGoldHandler then
+        scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
     end
-    tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.01)
+    self.tempChangeGoldHandler = scheduler.scheduleGlobal(changeGold, 0.01)
 end
 
 function FightPlayer:onClickRobot()
-    self:hideControl()
-    self.hero:dispatchEvent({name = self.hero.SKILL_ROBOT_START_EVENT})
+    local robot = md:getInstance("Robot")
+    robot:startRobot()
 end
 
 function FightPlayer:showControl(event)
@@ -114,9 +127,18 @@ function FightPlayer:hideControl(event)
     
     --btn
     self.btnDefence:setVisible(false)
-    self.btnRobot:setVisible(false)
     self.btnChange:setVisible(false)
+    self.btnRobot:setVisible(false)
     self.btnLei:setVisible(false)
+end
+
+function FightPlayer:setComponentVisible(event)
+    local comps = event.comps
+    dump(comps, "comps")
+    for i,v in pairs(comps) do
+        self[i]:setVisible(v)
+        print(i,v)
+    end
 end
 
 function FightPlayer:initUI()
@@ -127,9 +149,9 @@ function FightPlayer:initUI()
     self.ui = node
     self:addChild(node)
 
-    --load map
-    self.layerBg = cc.uiloader:seekNodeByName(self, "layerBg")
-    addChildCenter(self.mapView, self.layerBg) 
+    --load map layerMap
+    self.layerMap = cc.uiloader:seekNodeByName(self, "layerMap")
+    addChildCenter(self.mapView, self.layerMap) 
 
     --gold
     self.labelGold = cc.uiloader:seekNodeByName(self, "labelGoldCount")
@@ -155,26 +177,39 @@ function FightPlayer:initUI()
     --touch area
     self:initTouchArea()
 
+    --dialogy
+    local dialogLayer = DialogLayer.new()
+    local layerDialog = cc.uiloader:seekNodeByName(self, "layerDialog") 
+    layerDialog:addChild(dialogLayer)
+
+    --dialogy
+    local fightDescLayer = FightDescLayer.new()
+    local layerDialog = cc.uiloader:seekNodeByName(self, "layerDialog") 
+    layerDialog:addChild(fightDescLayer)
+
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
-
-    self:initDialog()
 end
 
 --启动盾牌恢复
-local resumeDefenceHandler = nil
 function FightPlayer:startDefenceResume(event)
+    print("function FightPlayer:startDefenceResume(event)")
     self.labelDefenceResume:setVisible(true)
-    self:loadDefenceResumeBar()
+    
+    --受伤
+    self.defenceDemage:setPercent(0)
+
+    --恢复
+    self.defenceBar:setVisible(true)
 
     local kResumeValue = 1  --每次恢复点数
     local function tick(dt)
-        local t = self.defenceResumeLoadingBar:getPercentage()
+        local t = self.defenceBar:getPercentage()
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
             print("盾牌恢复成功")
-            scheduler.unscheduleGlobal(resumeDefenceHandler)
-            self.defenceResumeLoadingBar:removeFromParent()
+            scheduler.unscheduleGlobal(self.resumeDefenceHandler)
+            self.defenceBar:setVisible(false)
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
             self.defence:setIsAble(true)
@@ -182,20 +217,17 @@ function FightPlayer:startDefenceResume(event)
             return
         end
         self.labelDefenceResume:setString(t1 - kResumeValue)
-        self.defenceResumeLoadingBar:setPercentage(t - kResumeValue)
+        self.defenceBar:setPercentage(t - kResumeValue)
     end
-
-    resumeDefenceHandler = scheduler.scheduleGlobal(tick, 0.03)
+    local cdTimes = define.cdTimes
+    local percentTimes = cdTimes/100
+    self.resumeDefenceHandler = scheduler.scheduleGlobal(tick, percentTimes)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
-    local percent = event.hurtedPercent * 100
-    self.loadingBarDefenceHp:setPercent(percent)
-    if 100 <= percent then
-        self.loadingBarDefenceHp:setPercent(0)
-        self.defence:setIsAble(false)
-        -- self:startDefenceResume()
-    end
+    local percent = event.percent * 100
+    -- print("percent,", percent)
+    self.defenceDemage:setPercent(percent)
 end
 
 function FightPlayer:onHeroKill(event)
@@ -203,7 +235,7 @@ function FightPlayer:onHeroKill(event)
     self:onCancelledFire()
 
     --fight 
-    self.fight:setResult(false)
+    self.fight:onFail()
 end
 
 function FightPlayer:initTouchArea()
@@ -234,17 +266,24 @@ function FightPlayer:initTouchArea()
     self:initBtns()
 end
 
---加载defenceResume bar 控件
-function FightPlayer:loadDefenceResumeBar()
-    self.defenceResumeLoadingBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
-    self:addChild(self.defenceResumeLoadingBar)
-    self.defenceResumeLoadingBar:setOpacity(130)
-    self.defenceResumeLoadingBar:setPosition(1052, 370)
-    self.defenceResumeLoadingBar:setReverseDirection(true)
-    self.defenceResumeLoadingBar:setScale(2)
-    self.defenceResumeLoadingBar:setPercentage(100)
-end
+function FightPlayer:initDefence()
+    --受伤
+    --defence demage self.defenceDemage
+    self.defenceDemage = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
+    
+    --恢复
+    self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
+    self.labelDefenceResume:setVisible(false)
 
+    self.defenceBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+    self.btnDefence:addChild(self.defenceBar)
+    self.defenceBar:setOpacity(130)
+    self.defenceBar:setAnchorPoint(0.0,0.0)
+    self.defenceBar:setReverseDirection(true)
+    self.defenceBar:setScale(2)
+    self.defenceBar:setPercentage(100)
+    self.defenceBar:setVisible(false)
+end
 
 function FightPlayer:initBtns()
     --btnfire   
@@ -255,25 +294,14 @@ function FightPlayer:initBtns()
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
     self.btnChange:setTouchEnabled(true)
-    -- self.btnChange:setBlendFunc(cc.BLEND_SRC, cc.BLEND_SRC)  
-    -- -- self.btnChange:setBlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+    
     self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnDefence
     self.btnDefence = cc.uiloader:seekNodeByName(self, "btnDun")
     self.btnDefence:setTouchEnabled(true)
     self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
-
-    --loadingBarDefenceHp
-    self.loadingBarDefenceHp = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
-    self.loadingBarDefenceHp:removeFromParent()
-    self.loadingBarDefenceHp:setDirection(2)
-    self:addChild(self.loadingBarDefenceHp)
-    self.loadingBarDefenceHp:setPosition(1052, 373) --todo yanxin
-
-    --labelDefenceHp
-    self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
-    self.labelDefenceResume:setVisible(false)
+    self:initDefence()
 
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
@@ -294,7 +322,8 @@ function FightPlayer:initBtns()
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
     self.btnGold:setTouchEnabled(true)
-    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)    
+    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)  
+
 end
 
 ---- touch and btn----
@@ -304,7 +333,8 @@ function FightPlayer:onMutiTouchBegin(event)
     --check
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
-        local isTouch = self:checkBtnFire(id, point)
+        local eventName = event.name 
+        local isTouch = self:checkBtnFire(id, point, eventName)
         if isTouch then return true end
 
         isTouch = self:checkBtnChange(point)
@@ -319,45 +349,50 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkBtnLei(point)
         if isTouch then return true end
 
-        -- isTouch = self:checkBtnJu(point)
-        -- if isTouch then return true end
+        isTouch = self:checkBtnJu(point)
+        if isTouch then return true end
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
+      
     end
     return false
 end
 
 function FightPlayer:onMutiTouchEnd(event)
     for id,point in pairs(event.points) do
-         self:checkBtnFire(id, point, "ended")
+         self:checkBtnFire(id, point, event.name)
     end
 end
 
 function FightPlayer:checkbtnRobot(point)
-    assert( point, "invalid params")
+    if not self.btnRobot:isVisible() then return end
     local rect = self.btnRobot:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
+        addBtnEffect(self.btnRobot)
         self:onClickRobot()
     end
     return isTouch
 end
 
 function FightPlayer:checkbtnDefence(point)
+    if not self.btnDefence:isVisible() then return end
     local rect = self.btnDefence:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
+        addBtnEffect(self.btnDefence)
         self.defence:switchStatus()
     end
     return isTouch
 end
 
 function FightPlayer:checkBtnLei(point)
-    assert( point, "invalid parames")
+    if not self.btnLei:isVisible() then return end    
     local rect = self.btnLei:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
     if isTouch then
+        addBtnEffect(self.btnLei)
         local w, h = self.focusNode:getCascadeBoundingBox().width, 
                 self.focusNode:getCascadeBoundingBox().height
         local destPos = cc.p(self.focusNode:getPositionX(), 
@@ -368,44 +403,61 @@ end
 
 function FightPlayer:checkBtnChange(point)
     assert( point , "invalid params")
-    local rect = self.btnChange:getCascadeBoundingBox()      
+    if not self.btnChange:isVisible() then return end
+    local rect = self.btnChange:getBoundingBox()      
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --换枪
+        addBtnEffect(self.btnChange)
         self.hero:changeGun()
     end    
     return isTouch    
 end
 
 function FightPlayer:checkBtnFire(id,point,eventName)
-    if eventName == "moved" then return end
-    if (eventName == "ended" or eventName == "cancelled" or eventName == "removed") 
-        and id == self.touchIds["fire"] then
-        self:onCancelledFire()
-        self.touchIds["fire"] = nil 
-        return
+    if eventName == "moved" then return false end
+    -- print("eventName:"..eventName.."  id:"..id)
+    local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
+    local rect = self.btnFire:getBoundingBox()      
+    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
+    
+    --in touch
+    if isTouch  then
+        if self.touchFireId == nil and 
+            (eventName == "added" or eventName == "began") then
+            self.touchFireId = id
+            print("self.touchFireId set "..id) 
+        end
+        if self.touchFireId == id and not isend then
+            self.btnFireSch =  scheduler.scheduleGlobal(
+                handler(self, self.onBtnFire), 0.05)
+        end
     end
-    assert(id and point , "invalid params")
-    local isTouch
-    local rect = self.btnFire:getCascadeBoundingBox()      
-    isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
-    if isTouch then
-        self.touchIds["fire"]  = id
-        self.btnFireSch =  scheduler.scheduleGlobal(handler(self, self.onBtnFire), 0.01)
-    end    
+   
+    -- not in touch
+    if self.touchFireId == id and isend then
+        self.touchFireId = nil
+        self:onCancelledFire()     
+    end          
     return isTouch
 end
 
 function FightPlayer:onBtnFire()
-    -- print("ightPlayer:onBtnFire()")
-    if self:canGunShot() then 
-        self:fire()
-    end
+    local robot = md:getInstance("Robot")
+    local isRobot = robot:getIsRoboting()
+    if  isRobot then
+        if robot:isCoolDownDone() then
+            self:robotFire()
+        end
+    else
+        if self:isCoolDownDone() then 
+            self:fire()
+        end        
+    end 
 
-    --动画
+    --btn armature
     if self.btnArmature ~= nil then return end
-    local src = "Fight/fightLayer/effect_gun_kaiqiang/effect_gun_kaiqiang.ExportJson"
-    self.btnArmature = getArmature("effect_gun_kaiqiang", src)
+    self.btnArmature = ccs.Armature:create("effect_gun_kaiqiang")
     self.btnArmature:getAnimation():playWithIndex(0 , -1, 1)
     local function animationEvent(armatureBack,movementType,movementID)
         if movementType == ccs.MovementEventType.loopComplete then
@@ -419,52 +471,51 @@ function FightPlayer:onBtnFire()
 end
 
 function FightPlayer:onCancelledFire()
-    -- print("FightPlayer:onCancelledFire()")
-    self.gunView:stopFire()
+    print("FightPlayer:onCancelledFire()")
+    local robot = md:getInstance("Robot")
+    local isRobot = robot:getIsRoboting()
+    if  isRobot then
+        print("robot:stopFire()") 
+        robot:stopFire()
+    else
+        self.gunView:stopFire()
+    end
+
     self.focusView:stopFire()
-    
+
     --sch
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
+        self.btnFireSch = nil
     end
-
-    -- --anim
-    -- self.btnArmature:removeFromParent()
-    -- self.btnArmature = nil
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
-    -- if self.btnJu:getVisible() == false then return end 
+    if self.btnJu:isVisible() == false then return end 
     local rect = self.btnJu:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --切换狙击镜
         print("-----------switch ju")
-        if self.isControlVisible then 
-            self:hideControl()
-        else
-            self:showControl()
-        end
+        addBtnEffect(self.btnJu)
         self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
     end
     return isTouch
 end
 
 function FightPlayer:checkBtnGold(point, eventName)
+    if self.btnGold:isVisible() == false then return end 
     local rect = self.btnGold:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         print("点击黄金枪 购买")
-        -- self.hero:activeGoldForever()
-        self.hero:activeGold()
+        addBtnEffect(self.btnGold)
+        self.inlay:activeGoldForever()
     end
     return isTouch    
 end
 
-
 function FightPlayer:onTouchMoved(event)
-    -- print("FightPlayer:onTouchMoved(event)")
-    -- dump(event, "onTouchMoved")
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
         local isBtnTouchPoint = false
@@ -475,6 +526,7 @@ function FightPlayer:onTouchMoved(event)
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
             local offsetX = x - prevX 
             local offsetY = y - prevY
+            
             --处理瞄准
             self:moveFocus(offsetX, offsetY)
             
@@ -484,13 +536,12 @@ function FightPlayer:onTouchMoved(event)
     end
 end
 
-
 ----attack----
 function FightPlayer:tick(dt)
     --gun
 end
 
-function FightPlayer:canGunShot()
+function FightPlayer:isCoolDownDone()
     if  self.hero:canFire() then 
         return true 
     end
@@ -500,18 +551,36 @@ end
  
 function FightPlayer:fire()
     -- print("FightPlayer:fire()")
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isJuLevel = levelModel:isJujiFight()
+    local map = md:getInstance("Map")
+    local isJu = map:getIsJu()
+    if isJuLevel and not isJu then
+        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
+        return 
+    end
+    local focusRangeNode = self.focusView:getFocusRange()
 
     --hero 控制cooldown
     self.hero:fire()
 
     --gun
-    if  self.gunView:canShot() then 
+    if  self.gunView:canShot() then  --todo
         self.gunView:fire()
         self.focusView:playFire()
-        local focusRangeNode = self.focusView:getFocusRange()
+        
         --todo 发命令
         self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
+end
+ 
+function FightPlayer:robotFire()
+    local robot = md:getInstance("Robot")
+    if not robot:isCoolDownDone() then return end
+    robot:fire()
+    self.focusView:playFire()
+    local focusRangeNode = self.focusView:getFocusRange()
+    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
 end
 
 ----move----
@@ -519,28 +588,31 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
-    focusNode:setPosition(xOri + offsetX*scale, yOri + offsetY*scale)
+    offsetX = xOri + offsetX*scale
+    offsetY = yOri + offsetY*scale
+    focusNode:setPosition(offsetX, offsetY)
     self:justFocusPos(focusNode)
     local x, y = focusNode:getPosition()
-    self:moveGun(x)
+    self:moveGun(x - xOri,y - yOri)
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
-    local layerBg = self.layerBg
-    local xOri, yOri = layerBg:getPosition()
+    local layerMap = self.layerMap
+    local xOri, yOri = layerMap:getPosition()
     local scale = KFightConfig.scaleMoveBg
-    layerBg:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
-    local x, y = layerBg:getPosition()
-    self:justBgPos(layerBg)
+    layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
+    local x, y = layerMap:getPosition()
+    self:justBgPos(layerMap)
 end
 
-function FightPlayer:moveGun(x) 
+function FightPlayer:moveGun(offsetX, offsetY)
     local layerGun = self.layerGun
-    layerGun:setPositionX(x + 280)   --todo 需要改为美术资源提供
+    local xOri, yOri = layerGun:getPosition()
+    layerGun:setPositionX(offsetX + xOri)
 end
 
 function FightPlayer:justBgPos(node)
-    local layerBg = self.layerBg
+    local layerMap = self.layerMap
     local bgMap = self.mapView  
     local w, h = bgMap:getSize().width , 
         bgMap:getSize().height
@@ -582,24 +654,6 @@ function FightPlayer:justFocusPos(node)
         y = display.height1
     end
     node:setPosition(x, y)
-end
-
-function FightPlayer:initDialog()
-
-    local dialogLayer = DialogLayer:new()
-    -- dialogLayer:setPositionY(display.offset)
-    self:addChild(dialogLayer, 600)
-
-    local groupID = self.fight:getGroupId()
-    local levelID = self.fight:getLevelId()
-    local isExist = self.dialog:check(groupID,"level"..levelID,"forward")
-    dump(isExist)
-    if isExist then
-        self.dialog:startDialog("forward")
-    end
-
-
-
 end
 
 function FightPlayer:initGuide()
@@ -743,14 +797,18 @@ function FightPlayer:onResultWin()
 end
 
 function FightPlayer:removeAllSchs()
-    if tempChangeGoldHandler then 
-        scheduler.unscheduleGlobal(tempChangeGoldHandler)
+    print("function FightPlayer:removeAllSchs()")
+    if self.tempChangeGoldHandler then 
+        scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
+        self.tempChangeGoldHandler = nil
     end
-    if resumeDefenceHandler then 
-        scheduler.unscheduleGlobal(resumeDefenceHandler)
+    if self.resumeDefenceHandler then 
+        scheduler.unscheduleGlobal(self.resumeDefenceHandler)
+        self.resumeDefenceHandler= nil
     end
     if self.btnFireSch then
         scheduler.unscheduleGlobal(self.btnFireSch)
+        self.btnFireSch = nil
     end
 end
 

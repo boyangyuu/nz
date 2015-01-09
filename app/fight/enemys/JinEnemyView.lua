@@ -18,7 +18,7 @@ function JinEnemyView:ctor(property)
 	--instance
 	JinEnemyView.super.ctor(self, property) 
     self.property = property
-    dump(self.property, "self.property")
+    -- dump(self.property, "self.property")
     self.isAheading = false
     self.attackHandler = nil
     self.aheadHandler = nil
@@ -31,18 +31,21 @@ function JinEnemyView:ctor(property)
     self:addScheduler(aheadHandler)
     
     --test
-    self:test()
+    -- self:test()
 end
 
 function JinEnemyView:playAttack()
+
     self.armature:getAnimation():play("attack" , -1, 1)
     self.enemy:hit(self.hero)
 end
 
 function JinEnemyView:playHitted(event)
-    if not self.enemy:isDead() then
-        print(self:playHittedEffect())
+    if self.isAheading then
+        -- print(self:playHittedEffect())
         self:playHittedEffect()
+    else
+        JinEnemyView.super.playHitted(self, event)
     end
 end
 
@@ -52,8 +55,9 @@ function JinEnemyView:playAhead()
     self.armature:getAnimation():play("walk" , -1, 1) --
     local speed = 60
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-    dump(pWorld, "pWorld")
+    -- dump(pWorld, "pWorld")
     local desY = -180
+    -- local desY = -0
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
@@ -63,7 +67,7 @@ function JinEnemyView:playAhead()
 
     --
     local aheadEndFunc = function ()
-        print("aheadEnd")
+        -- print("aheadEnd")
          self.isAheading = false
 
         --改为呼吸
@@ -71,7 +75,7 @@ function JinEnemyView:playAhead()
         
         --2秒一攻击
         function attack()
-            self:play("fire", handler(self, self.playAttack))
+            self:playAfterAlert("fire", handler(self, self.playAttack))
         end
         local attackHandler = scheduler.scheduleGlobal(attack, kAttackOffset)
         self:addScheduler(attackHandler)
@@ -104,18 +108,18 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
                 self:playStand()
             end
         elseif movementID == "die" then
-            print("self:setDeadDone()") 
+            -- print("self:setDeadDone()") 
             self:setDeadDone()          
         end 
     end
 end
 
-function JinEnemyView:test()
-    --body
-    -- local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-    -- local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    -- drawBoundingBox(self.armature, weakNode, "red") 
-    -- drawBoundingBox(self.armature, bodyNode, "yellow") 
-end
+-- function JinEnemyView:test()
+--     --body
+--     local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
+--     local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
+--     drawBoundingBox(self.armature, weakNode, "red") 
+--     drawBoundingBox(self.armature, bodyNode, "yellow") 
+-- end
 
 return JinEnemyView

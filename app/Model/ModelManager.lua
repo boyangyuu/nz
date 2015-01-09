@@ -5,37 +5,40 @@
 
 local ModelManager = class("ModelManager", cc.mvc.ModelBase)
 local modelClasses = {}
-modelClasses["UserModel"]         = import("..homeBar.UserModel")
-modelClasses["DialogModel"]          = import("..dialog.DialogModel")
-modelClasses["LevelMapModel"] = import("..levelMap.LevelMapModel")
-modelClasses["FightResultModel"] = import("..fightResult.FightResultModel")
-modelClasses["LevelDetailModel"]= import("..levelDetail.LevelDetailModel")
-modelClasses["propModel"] = import("..store.propModel")
-modelClasses["StoreModel"] = import("..store.StoreModel")
+local needCreateClasses = {}
 
+--home
+modelClasses["UserModel"]           = import("..homeBar.UserModel")
+modelClasses["DialogModel"]         = import("..dialog.DialogModel")
+modelClasses["LevelMapModel"]       = import("..levelMap.LevelMapModel")
+modelClasses["FightResultModel"]    = import("..fightResult.FightResultModel")
+modelClasses["LevelDetailModel"]    = import("..levelDetail.LevelDetailModel")
+modelClasses["propModel"]           = import("..store.propModel")
+modelClasses["StoreModel"]          = import("..store.StoreModel")
+modelClasses["InlayModel"]          = import("..inlay.InlayModel")
+modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
+modelClasses["commonPopModel"]      = import("..commonPopup.commonPopModel")
 --fight
 modelClasses["Fight"]               = import("..fight.Fight")
-modelClasses["FightInlay"]               = import("..fight.FightInlay")
-modelClasses["Hero"]               = import("..fight.Hero")
-modelClasses["Defence"]               = import("..fight.Defence")
+modelClasses["FightInlay"]          = import("..fight.FightInlay")
+modelClasses["Hero"]                = import("..fight.Hero")
+modelClasses["Map"]                 = import("..fight.Map")
+modelClasses["Defence"]             = import("..fight.skills.Defence")
+modelClasses["Robot"]               = import("..fight.skills.Robot")
 modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
-modelClasses["InlayModel"]        = import("..inlay.InlayModel")
-modelClasses["WeaponListModel"]        = import("..weaponList.WeaponListModel")
-modelClasses["Guide"]       = import("..guide.GuideModel")
+modelClasses["FightDescModel"]      = import("..fight.fightDesc.FightDescModel")
+
+--guide
+modelClasses["Guide"]               = import("..guide.GuideModel")
+
+--need create
+needCreateClasses["Hero"] = true
+needCreateClasses["FightInlay"] = true
+needCreateClasses["Map"] = true
+
 function ModelManager:ctor()
     ModelManager.super.ctor(self) 
     self.objects_ = {}
-end
-
-function ModelManager:loadAllModels()
-    print("ModelManager:loadAllModels()")
-    for i, v in pairs(modelClasses) do
-        print("instancename:", i)
-        if not self:isObjectExists(i) then 
-            local modelObj = v.new()
-            self:setObject(i, modelObj)
-        end
-    end
 end
 
 function ModelManager:setObject(id, object)
@@ -54,23 +57,37 @@ function ModelManager:isObjectExists(id)
 end
 
 function ModelManager:getInstance(clsName)
-       local classModel = modelClasses[clsName]
+    -- print("ModelManager:getInstanc", clsName)
+    local classModel = modelClasses[clsName]
     assert(classModel, "classModel is not in modelmanager: clsName"
         ..clsName) 
 
     local modelObj 
     if not self:isObjectExists(clsName) then
-        modelObj = classModel.new({id = classModel.__cname})
-        self:setObject(clsName, modelObj)
+        local allowAutoCreate = needCreateClasses[clsName] == nil
+        assert(allowAutoCreate, "不允许私自创建的类："..clsName)
+        modelObj = self:createInstance(clsName)
     else
         modelObj = self:getObject(clsName)
     end  
     return modelObj
 end
 
+function ModelManager:createInstance(clsName)
+
+    print("create clsName"..clsName)
+    -- clear
+    self.objects_[clsName] = nil
+
+    local classModel = modelClasses[clsName]
+    local modelObj = classModel.new({id = classModel.__cname})
+    self:setObject(clsName, modelObj)
+    return modelObj    
+end
+
 function ModelManager:deleteInstance(clsName)
     self.objects_[clsName] = nil
-    print("self:removeObject(clsName)", clsName)
+    -- print("self:removeObject(clsName)", clsName)
 end
 
 return ModelManager

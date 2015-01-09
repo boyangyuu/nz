@@ -12,7 +12,15 @@ function FightResultLayer:ctor(properties)
     self.inlayModel 	  = md:getInstance("InlayModel")
     self.fightModel 	  = md:getInstance("Fight")
     self.levelMapModel    = md:getInstance("LevelMapModel")
+    self.levelDetailModel = md:getInstance("LevelDetailModel")
+	self.weaponListModel  = md:getInstance("WeaponListModel")
+    self.commonPopModel = md:getInstance("commonPopModel")
+    self.userModel = md:getInstance("UserModel")
+	 cc.EventProxy.new(self.commonPopModel, self)
+       :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.turnLeftCard))
+       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
 
+    self.isgold = false
     self.cardover = {}
     self.cardgold = {}
     self.cardnormal = {}
@@ -20,6 +28,7 @@ function FightResultLayer:ctor(properties)
     self.cardicon = {}
     self.cardlabel = {}
     self.star = {}
+    
     self.quickinlay = {}
     self.probaTable = {}
     self.showTable = {}
@@ -58,7 +67,7 @@ function FightResultLayer:initData()
 	-- local ran = math.random(#self.showTable)
 	table.insert(self.showTable,3,self.showTable[#self.showTable])
 	table.remove(self.showTable,#self.showTable)
-	dump(self.showTable)
+	-- dump(self.showTable)
 end
     
 local playFanHander = nil
@@ -120,6 +129,9 @@ function FightResultLayer:initUI()
     self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
     self.leftnumber = cc.uiloader:seekNodeByName(self, "leftnumber")
     self.label = cc.uiloader:seekNodeByName(self, "label")
+    self.panlsuipian = cc.uiloader:seekNodeByName(self, "panlsuipian")
+    self.labelsuipian = cc.uiloader:seekNodeByName(self, "infoguanqia")
+    
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
 
@@ -164,6 +176,9 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
+        ui:showPopup("commonPopup",
+			 {type = "style2", content = "已经快速镶嵌"},
+			 {opacity = 155})
         	self:quickInlay()
         end
     end)
@@ -180,6 +195,14 @@ function FightResultLayer:initUI()
             	if self.grade == 0 then
 				    self.leftnumber:setVisible(false)
 				    self.label:setVisible(false)
+
+				    function delaypopup()
+					    ui:showPopup("commonPopup",
+						 {type = "style1",content = "是否花费10颗钻石翻开剩余卡牌"},
+						 {opacity = 155})
+				    end
+					scheduler.performWithDelayGlobal(delaypopup, 1)
+
         			for i=1,6 do
         				self.card[i]:setTouchEnabled(false)
         			end
@@ -200,6 +223,17 @@ function FightResultLayer:initUI()
     	self.star[i] = cc.uiloader:seekNodeByName(self, "panelstar"..i)
 	end
 	self.panelcard = cc.uiloader:seekNodeByName(self, "panelcard")
+
+	local curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
+	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(curRecord["suipianid"])
+	if curRecord["type"] == "boss" and isWeaponAlreadyTogether == false then
+	    self.levelDetailModel:setsuipian(curRecord["suipianid"])
+		self.panlsuipian:setVisible(true)
+		local name = self.weaponListModel:getWeaponNameByID(curRecord["suipianid"])
+		self.labelsuipian:setString("Boss关卡固定掉落"..name.."零件1个")
+	else
+		self.panlsuipian:setVisible(false)
+	end
 end
 
 function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
@@ -227,6 +261,13 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
 			self.btnnext:setTouchEnabled(true)
 			self.btninlay:setTouchEnabled(true)
 
+			local ran = math.random(1, 100)
+			print(ran.."sidgiudhciuwgiuvgcwiub")
+			if ran < 5 then
+				self.isgold = true
+				-- self.goldpos = math.random(1, 6)
+				-- print(self.goldpos.."abcdefg")
+			end
 		end
 	end
 end
@@ -256,7 +297,7 @@ function FightResultLayer:getinlayfall()
 		local total = 0
 		for k,v in pairs(config) do
 			total = total + v["probability"]
-			if total > ran then
+			if total >= ran then
 				table.insert(probaTable,{inlayid = v["inlayid"]})
 				break
 			end
@@ -268,7 +309,7 @@ function FightResultLayer:getinlayfall()
 	local totals = 0
 	for k,v in pairs(table) do
 		totals = totals + v["probability"]
-		if totals > rans then
+		if totals >= rans then
 			probaTable[6]={inlayid = v["inlayid"]}
 			break
 		end
@@ -281,11 +322,11 @@ function FightResultLayer:turnOverCard(index)
 	self.grade = self.grade - 1
 	self.leftnumber:setString(self.grade)
 	-- dump(self.probaTable)
-	local ran = math.random(1, 100)
+	local ran = math.random(1, self.grade+1)
 	local record
-	if ran < 4 then
-		print(ran)
-		print("卧槽，你真翻到金的了")
+	print("金的"..ran.."区间1~"..self.grade+1)
+	if ran == 1 and self.isgold == true then
+		
 		record = self:getRanRecord(#self.probaTable)
 	else
 		local ran = math.random(1, #self.probaTable-1)
@@ -326,16 +367,22 @@ function FightResultLayer:getRanRecord( ran )
 end
 
 function FightResultLayer:turnLeftCard()
-	for i=1,6 do
-		if self.cardover[i]:isVisible() == false then
-			-- dump(i)
-			self:turnOverCard(i)
+	ui:closePopup()
+	if self.userModel:costDiamond(10) then
+		function delayturnleft()
+			for i=1,6 do
+				if self.cardover[i]:isVisible() == false then
+					-- dump(i)
+					self:turnOverCard(i)
+				end
+			end
 		end
+		scheduler.performWithDelayGlobal(delayturnleft, 0.3)
 	end
 end
 
 function FightResultLayer:quickInlay()
-	dump(self.quickinlay)
+	-- dump(self.quickinlay)
 	self.inlayModel:equipAllBestInlays(self.quickinlay)
 end
 

@@ -6,8 +6,10 @@ end)
 
 function LevelDetailLayer:ctor(properties)
 	--instance
-	self.model = md:getInstance("LevelDetailModel")
+	self.model 			 = md:getInstance("LevelDetailModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
+	self.inlayModel 	 = md:getInstance("InlayModel")
+	self.propModel       = md:getInstance("propModel")
 	self.groupId = properties.groupId
 	print("self.groupId,", self.groupId)
 	self.levelId = properties.levelId
@@ -45,12 +47,14 @@ function LevelDetailLayer:loadCCS()
 	self.alreadygold   = cc.uiloader:seekNodeByName(self, "alreadygold")
 	self.alreadyjijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
 
+    -- anim
+    local src = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
 end
 
 function LevelDetailLayer:initUI()
-	-- init btn
-	self:initBtns()
-
+	
     --三个推荐
 	local dansedijj = cc.uiloader:seekNodeByName(self, "dansedijj")
 	local dansejj = cc.uiloader:seekNodeByName(self, "dansejj")	
@@ -66,8 +70,6 @@ function LevelDetailLayer:initUI()
 	dansetj:setColor(cc.c3b(0,255,198))
 
     --content
-	local groupID = self.groupId
-	local levelID = self.levelId
 	local DataTable = self.DataTable
 
 	self.labelTitle:setString(DataTable["name"])
@@ -82,20 +84,25 @@ function LevelDetailLayer:initUI()
 		self.panelbiaozhu:setVisible(true)
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
 			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
-
+	end
+	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
 		armature:setScale(0.8)
 		addChildCenter(armature, self.panlEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
-
 	end
 
-	self:initMapUI()
 
-	local weaponimg = display.newSprite("#icon_"..DataTable["weapon"]..".png")
+	self:initMapUI()
+	self.recomWeaponId = DataTable["weapon"]
+	local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local weaponimg = display.newSprite("#icon_"..recomWeapon["imgName"]..".png")
 	weaponimg:setScale(0.4)
 	local bibeiimg = cc.uiloader:seekNodeByName(self, "bibeiimg")
 	addChildCenter(weaponimg, bibeiimg) 
+
+	-- init btn
+	self:initBtns()
 
 end
 
@@ -106,8 +113,6 @@ function LevelDetailLayer:initMapUI()
 
 	local map = cc.uiloader:load(mapSrcName)
 	local mapimg = cc.uiloader:seekNodeByName(map, "bg")
-
-	-- map:setScale(0.47, 0.48)
 
 	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
 	local mapPanlSize = mapNode:getContentSize()
@@ -153,6 +158,26 @@ function LevelDetailLayer:initBtns()
 	self.btnGold  :setTouchEnabled(true)
 	self.btnJijia :setTouchEnabled(true)
 
+    --anim
+    local goldarmature = ccs.Armature:create("bt_yjzb")
+    local jijiaarmature = ccs.Armature:create("bt_yjzb")
+    addChildCenter(goldarmature, self.btnGold)
+    addChildCenter(jijiaarmature, self.btnJijia)
+    goldarmature:getAnimation():play("Animation1" , -1, 1)
+    jijiaarmature:getAnimation():play("Animation1" , -1, 1)
+
+	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
+		self.alreadybibei:setVisible(true)
+		self.btnBibei:setVisible(false)
+	end
+	if self.inlayModel:isGetAllGold() then
+		self.alreadygold:setVisible(true)
+		self.btnGold:setVisible(false)
+	end
+	if self.propModel:getPropNum("jijia") > 0 then
+		self.alreadyjijia:setVisible(true)
+		self.btnJijia:setVisible(false)
+	end
 
 	------ on btn clicked
 	--offbtn
@@ -210,34 +235,48 @@ end
 function LevelDetailLayer:onClickBtnStart()
 	print("startbtn is clicked!")
 	print("self.groupId,", self.groupId)
+	self.model:setCurGroupAndLevel(self.groupId,self.levelId)
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
 	self:onClickBtnOff()
+	local levelInfo = self.groupId.."-"..self.levelId
+	-- cc.UMAnalytics:startLevel(levelInfo)
 end
+
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
-	self.alreadybibei:setVisible(true)
-	self.btnBibei:setVisible(false)
+	if self.weaponListModel:isWeaponExist(self.recomWeaponId) then
+		if self.DataTable["type"] == "juji" then
+		else
+			self.weaponListModel:equipBag(self.recomWeaponId,1)
+		end
+		self.alreadybibei:setVisible(true)
+		self.btnBibei:setVisible(false)
+	else
+		print("弹板购买")
+	end
 end
 
 function LevelDetailLayer:onClickBtnGold()
 	print("goldbtn is clicked!")
+	self.inlayModel:equipGoldInlays(true)
 	self.alreadygold:setVisible(true)
 	self.btnGold:setVisible(false)
 end
 
 function LevelDetailLayer:onClickBtnJijia()
 	print("jijiabtn is clicked!")
+	self.propModel:buyProp("jijia",1)
 	self.alreadyjijia:setVisible(true)
 	self.btnJijia:setVisible(false)
 end
 
 ---- initData ----
 function LevelDetailLayer:initData()
-	local groupID = self.groupId
-	local levelID = self.levelId
-	self.DataTable = self.model:getConfig(groupID,levelID)
+	local groupId = self.groupId
+	local levelId = self.levelId
+	self.DataTable = self.model:getConfig(groupId,levelId)
 end
 
 return LevelDetailLayer

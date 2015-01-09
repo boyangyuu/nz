@@ -1,19 +1,57 @@
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local LoadingLayer = class("LoadingLayer", function()
 	return display.newLayer()
 end)
 
 function LoadingLayer:ctor()
 	self:loadCCS()
+	self:initUI()
+	self:changeHomeLayer()
+    self:setNodeEventEnabled(true)
+
 end
 
 function LoadingLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/loading")
-    local controlNode = cc.uiloader:load("loading_1.json")
+	cc.FileUtils:getInstance():addSearchPath("res/Loading/loading")
+    local controlNode = cc.uiloader:load("loading_1.ExportJson")
     self:addChild(controlNode)
 end
 
+function LoadingLayer:initUI( )
+	local main = cc.uiloader:seekNodeByName(self, "main")
+	local quan = cc.uiloader:seekNodeByName(self, "quan")
+	local src = "res/Loading/loading_bjmap/loading_bjmap.csb"
+	local yuansrc = "res/Loading/loading_yuan/loading_yuan.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+    manager:addArmatureFileInfo(yuansrc)
+
+    --anim
+    local maparmature = ccs.Armature:create("loading_bjmap")
+    maparmature:setAnchorPoint(0,0)
+    maparmature:setPosition(0,30)
+    main:addChild(maparmature)
+    maparmature:getAnimation():play("loading_bjmap")
+    local quanarmature = ccs.Armature:create("loading_yuan")
+    quanarmature:setAnchorPoint(0.5,0.5)
+    addChildCenter(quanarmature, quan)
+    quanarmature:getAnimation():play("loading_z")
+
+
+end
+
 function LoadingLayer:changeHomeLayer()
-	ui:changeLayer("HomeBarLayer", {})
+	function delayShow()
+		ui:changeLayer("HomeBarLayer", {})
+	end
+    local delay = 3.0
+	scheduler.performWithDelayGlobal(delayShow, delay)
+end
+
+function LoadingLayer:onExit()
+    audio.stopMusic()
+    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    audio.preloadMusic(homeBarMusic)
 end
 
 return LoadingLayer

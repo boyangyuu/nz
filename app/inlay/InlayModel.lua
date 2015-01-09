@@ -30,13 +30,23 @@ function InlayModel:refreshInfo(typename)
 	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = typename})
 end
 
+function InlayModel:buyGoldsInlay(buynumber)
+	local goldtable = self:getConfigTable("property", 4)
+	for k,v in pairs(goldtable) do
+		self:buyInlay(v["id"],false,buynumber)
+	end
+end
 
-function InlayModel:buyInlay(inlayid)
+function InlayModel:buyInlay(inlayid,isRefresh,buyNum)
  	local data = getUserData()
 	if self:isBagsExist(inlayid)  then
 		for k,v in pairs(data.inlay.bags) do
 			if v.inlayid == inlayid then
-				data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
+				if buyNum == nil then
+					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
+				else
+					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + buyNum					
+				end
 			end
 		end
 	else
@@ -44,8 +54,12 @@ function InlayModel:buyInlay(inlayid)
 	    table.insert(data.inlay.bags, inlay)
 	end
     setUserData(data)
-    -- dump(GameState.load())
-    self:refreshInfo(self:getInlayType(inlayid))
+    if isRefresh == nil then isRefresh = true end
+	if isRefresh == true then
+		self:refreshInfo(self:getInlayType(inlayid))
+		print("self:refreshInfo(self:getInlayType(inlayid))")
+	end
+    
 end
 
 function InlayModel:equipInlay(inlayid, isRefresh)
@@ -109,8 +123,12 @@ function InlayModel:replaceInlayed(inlayid)
     setUserData(data)
 end
 
+function InlayModel:equipGoldInlays(isRefresh)
+	self:buyGoldsInlay()
+	self:equipAllInlays(isRefresh)
+end
 
-function InlayModel:equipAllInlays()
+function InlayModel:equipAllInlays(isRefresh)
 	local bestInlay = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	local data = getUserData()
@@ -149,7 +167,11 @@ function InlayModel:equipAllInlays()
 			self:equipInlay(v, false)
 		end
 	end
-	self:refreshInfo("speed")
+	if isRefresh == nil then isRefresh = true end
+	if isRefresh == true then
+		self:refreshInfo("speed")
+		print(self:refreshInfo("speed"))
+	end
 end
 
 function InlayModel:equipAllBestInlays(table)
@@ -208,15 +230,6 @@ function InlayModel:isInlayedExist(inlayid)
 		return 2
 	end
 end
-
--- function InlayModel:setAllGold()
--- 	local goldtable = self:getConfigTable("property", 4)
-
--- 	if self:isGetAllGold() then
--- 		print("已拥有6个黄金")
--- 	else
-		
--- end
 
 function InlayModel:isGetAllGold()
 	local allInlayed = self:getAllInlayed()

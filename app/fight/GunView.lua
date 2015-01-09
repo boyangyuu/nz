@@ -17,7 +17,6 @@ function GunView:ctor()
 	-- dump(properties, "GunView properties")
 	self.hero = md:getInstance("Hero")
 	self.inlay = md:getInstance("FightInlay")
-	self.defence = md:getInstance("Defence")
 	self.isChanging = false
 
 	--gun armature and base
@@ -27,10 +26,10 @@ function GunView:ctor()
 	--event
 	cc.EventProxy.new(self.hero, self)
         :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
-	
-	cc.EventProxy.new(self.defence, self)	
-		:addEventListener(self.defence.DEFENCE_SWITCH_EVENT	, handler(self, self.onDefenseSwitch))
-	
+
+	cc.EventProxy.new(self.hero, self)
+        :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
+
 	cc.EventProxy.new(self.inlay, self)
         :addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.onActiveGold))
         :addEventListener(self.inlay.INLAY_GOLD_END_EVENT,	 handler(self, self.onActiveGoldEnd))
@@ -41,8 +40,8 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
-	local num = self.curBulletNum - 1
-	self:setCurBulletNum(num)
+	local num = self.gun:getCurBulletNum() - 1
+	self.gun:setCurBulletNum(num)
 	self:playFire()
 end
 
@@ -55,16 +54,25 @@ function GunView:playFire()
 	self.jqkzd:getAnimation():play("qkzd" , -1, 0)
 	self.dk:getAnimation()	 :play("danke", -1, 0)
 	self.armature:getAnimation():play("fire" , -1, 0)
+
+	--music
+	local soundName = "res/Fight/music/leibz.wav"
+	-- audio.playMusic(soundName,false)
 end
 
 function GunView:stopFire()
 	self.jqk  :setVisible(false)
 	self.jqkzd:setVisible(false)
 	self.dk   :setVisible(false)
+	self:playIdle()
 end
 
 function GunView:playChange(event)
 	if self.isChanging then return end
+	
+	--clear
+	self:setPosition(cc.p(0.0,0.0))
+
 	print("GunView:playChange(event)")
 	local disy = 150
 	local actionDown = cc.MoveBy:create(0.2, cc.p(0.0, -disy))
@@ -102,7 +110,7 @@ function GunView:playReload()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
 		self.isReloading = false 
-		self.curBulletNum = self.gun:getBulletNum()
+		self.gun:setFullBulletNum()
 	end
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
 	
@@ -114,7 +122,7 @@ end
 
 function GunView:canShot() 
 	--bullets
-	if self.curBulletNum <= 0 then 
+	if self.gun:getCurBulletNum() <= 0 then 
 		self:stopFire()
 		self:playReload()
 		return false 
@@ -128,15 +136,11 @@ function GunView:setCoolDown(time)
 	self.hero:setCooldown(time)
 end
 
-function GunView:setCurBulletNum(num)
-	self.curBulletNum = num
-	--dispatch
-	self.hero:dispatchEvent({name = self.hero.GUN_BULLET_EVENT, num = num})
-end
-
 --hero层 发送换枪
 function GunView:refreshGun()
-	print("refreshGun")
+	
+	
+	-- print("refreshGun")
 	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
@@ -145,11 +149,8 @@ function GunView:refreshGun()
 
 	--gun
 	local config = self.gun:getConfig()
-	-- dump(config, "config")
+	dump(config, "config")
 	
-	--子弹数目
-	self:setCurBulletNum(self.gun:getBulletNum())
-
 	--armature
 	local animName = config.animName --动作特效
 	local armature = ccs.Armature:create(animName)
@@ -173,16 +174,15 @@ function GunView:refreshGun()
     self.jqk:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqk, -1)
 
-    --枪火遮挡 
-    self.jqkzd = ccs.Armature:create("qkzd")
+    --枪火遮挡
+
+    self.jqkzd = ccs.Armature:create(config.jqkzdName)
     self.jqkzd:setVisible(false)
    	self.jqkzd:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqkzd , 1)
 
     --蛋壳
     self:addDanke()
-
-    -- drawBoundingBox(self, armature, "red")
 end
 
 function GunView:addDanke()
@@ -216,21 +216,6 @@ function GunView:setGoldGun(isGold)
 	end
 end
 
-function GunView:onDefenseSwitch(event)
-	if event.isDefend then 
-		self:onHideGun()
-	else
-		self:onShowGun()
-	end
-end
-
-function GunView:onHideGun()
-	self:setVisible(false)
-end
-
-function GunView:onShowGun()
-	self:setVisible(true)
-end
 
 function GunView:onActiveGold(event)
 	print("GunView:onActiveGold(event)")

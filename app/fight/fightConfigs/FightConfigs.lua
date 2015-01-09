@@ -9,7 +9,6 @@ local FightConfigs = class("FightConfigs", cc.mvc.ModelBase)
 local p = "app.fight.fightConfigs"
 
 --战斗常量
-FightConfigs.kJuRange = 3.0
 
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)
@@ -40,7 +39,7 @@ function FightConfigs:getBossConfig(configName)
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
 	local config = require(p..str_src)
-	dump(config, "getBossConfig")	
+	-- dump(config, "getBossConfig")	
 	return config
 end
 

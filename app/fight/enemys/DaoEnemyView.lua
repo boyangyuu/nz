@@ -44,29 +44,28 @@ function DaoEnemyView:playFire()
     self.armature:getAnimation():play("fire" , -1, 1) 
 
     print("发射")
-    local posMap = self:getPosInMap()
-    local srcPos = posMap
-
-    --todo 位置相关
-    srcPos.y = srcPos.y + self:getBodyBox().height * 0.6 * self:getScale()
-    srcPos.x = srcPos.x - self:getBodyBox().width * 0.3 * self:getScale()
+    local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
+    local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
+    -- pWorldBone = self.armature:convertToWorldSpace(cc.p(0,0))
     local property = {
-        srcPos = srcPos,
+        srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,
-        destPos = srcPos,
+        destPos = pWorldBone,
         type = "missile",
-        id = self.property["enemyId"],
+        id = self.property["missileId"],
+        missileType = self.property["missileType"],
     }
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = Hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
     local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
     self:addScheduler(sch)    
-   
 end
 
 --Attackable interface
 function DaoEnemyView:playHitted(event)
+    self.armature:getAnimation():play("hit" , -1, 1) 
+
     --飘红
     self:playHittedEffect()
 end

@@ -39,12 +39,8 @@ Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 
---map
-Hero.MAP_ZOOM_OPEN_EVENT        = "MAP_ZOOM_OPEN_EVENT"
-Hero.MAP_ZOOM_RESUME_EVENT      = "MAP_ZOOM_RESUME_EVENT"
-
 --hp
-Hero.BASE_HP_REFRESH_EVENT  = "BASE_HP_REFRESH_EVENT"
+Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
 --define
 local kMaxHp          = 100
@@ -53,14 +49,18 @@ local kCritScale      = 3.0
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-    self.fightInlay = md:getInstance("FightInlay")
+    self.fightInlay = md:createInstance("FightInlay")
     
     --init
-    self.isGun1 = true
-    self:setGun("bag1")
+    self.bags = {}
+    self:initGuns()
 
     --hp
     self:refreshHp()
+end
+
+function Hero:initData()
+    
 end
 
 --枪械相关
@@ -75,22 +75,70 @@ function Hero:changeGun()
     print("change gun bagIndex", bagIndex)
     self:setGun(bagIndex)
     self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
+
+    local bulletNum = self.gun:getCurBulletNum()
+    self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})
+end
+
+function Hero:isPreferBag1()
+    local data = getUserData()
+    return data["fight"].isPreferBag1
+end
+
+function Hero:setPreferBagIndex(bagIndex)
+    local isPreferBag1 =  bagIndex == "bag1"
+    local data = getUserData()
+    data["fight"].isPreferBag1 =  isPreferBag1 
+    setUserData(data)
 end
 
 function Hero:setGun(bagIndex)
-    local gun = Gun.new({bagIndex = bagIndex}) 
-    self.gun = gun
-    self:setCooldown(gun:getCooldown())
+    self.gun = self.bags[bagIndex]
+    self:setCooldown(self.gun:getCooldown())
+
+    --prefer
+    self:setPreferBagIndex(bagIndex)
+end
+
+function Hero:initGuns()
+    self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
+    self.bags["bag2"] = Gun.new({bagIndex = "bag2"})
+
+    --ju
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isJuLevel = levelModel:isJujiFight()
+    if isJuLevel then 
+        self.bags["bag1"] = Gun.new({bagIndex = "bagJu"}) 
+        self.bags["bag2"] = Gun.new({bagIndex = "bagJu"})
+    end
+
+    self.isGun1 = self:isPreferBag1()
+    local bagIndex = nil
+    if self.isGun1 then 
+        bagIndex = "bag1"
+    else
+        bagIndex = "bag2"
+    end    
+    self:setGun(bagIndex)    
 end
 
 function Hero:getGun()
     return self.gun
 end
 
+function Hero:getFightInlay()
+    return self.fightInlay
+end
+
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
     local value = 0
 
+    local robot   = md:getInstance("Robot")
+    if robot:getIsRoboting() then
+        return robot:getDemage()    
+    end
+    
     --inlay
     local scale, isInlayed = self.fightInlay:getInlayedValue("bullet")
     if isInlayed then
@@ -121,31 +169,16 @@ function Hero:refreshHp()
     self:setHp(valueHp)
 end
 
-function Hero:activeGold()
-    --check
-    if self.fightInlay:getIsNativeGold() then return end
-
-    --active
-    self.fightInlay:activeGold()
-
-    --hp
-    self:refreshHp()
-
-end
-
-function Hero:activeGoldForever()
-    
-end
-
-function Hero:activeGoldEnd()
-    --check
-    if self.fightInlay:getIsNativeGold() then return end    
-    
-    --active
-    self.fightInlay:activeGoldEnd()
-
-    --hp
-    self:refreshHp()
+function Hero:decreaseHp(hp)
+    local defence = md:getInstance("Defence")
+    local robot   = md:getInstance("Robot")
+    if defence:getIsDefending() then 
+        defence:onHitted(hp)
+    elseif robot:getIsRoboting() then
+        robot:onHitted()
+    else
+        Hero.super.decreaseHp(self, hp)
+    end
 end
 
 function Hero:setMapZoom(scale)
@@ -155,22 +188,5 @@ end
 function Hero:getMapZoom()
     return self.mapZoom or 1.0
 end
-
---[[
-    @param type：crit blood bullet clip helper speed 
-    return: 镶嵌id
-]]
-function Hero:getInlayedValue(type)
-    --id
-    local inlays = self.inlayModel:getAllInlayed()
-    -- dump(inlays, "inlays")
-    -- print("type", type)
-    local inlayedId  = inlays[type]
-    if inlayedId == nil then return nil,false end
-    local record = getRecordByKey("config/items_xq.json", "id", inlayedId)
-    local value = record[1].valueProgram
-    print("Hero:getInlayedValue value:", value)
-    return value, true
-end 
 
 return Hero

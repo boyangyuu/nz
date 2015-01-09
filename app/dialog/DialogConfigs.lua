@@ -48,9 +48,12 @@ configs[1]  = {
 }
 
 function DialogConfigs.getConfig(groupId,levelId,appear)
-	dump(levelId)
-	assert(configs[groupId][levelId] , "configs is nil groupId: "..groupId )
-	return configs[groupId][levelId][appear]
+	local gid = configs[groupId]
+	if gid == nil then return nil end
+	local lid = gid[levelId]
+	if lid == nil then return nil end
+	local dialogTable = lid[appear]
+	return dialogTable
 end
 
 return DialogConfigs

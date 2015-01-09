@@ -4,6 +4,7 @@ require("framework.init")
 require("app.includes.functionUtils")
 local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")  
+local Define = require("app.Define")  
 
 GameState = require("framework.cc.utils.GameState")
 
@@ -11,9 +12,12 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
-isTest = false
-ui = UI.new()
-md = MD.new()
+isTest  = false
+isTest  = true
+ui      = UI.new()
+md      = MD.new()
+define  = Define.new()
+-- umSDK   = cc.UMAnalytics
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -23,47 +27,8 @@ end
 
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
-    md:loadAllModels()
     self:enterScene("MainScene")
 end
-
--- function MyApp:setObject(id, object)
---     assert(self.objects_[id] == nil, string.format("MyApp:setObject() - id \"%s\" already exists", id))
---     self.objects_[id] = object
--- end
-
--- function MyApp:getObject(id)
---     assert(self.objects_[id] ~= nil, string.format("MyApp:getObject() - id \"%s\" not exists", id))
---     return self.objects_[id]
--- end
-
--- function MyApp:isObjectExists(id)
---     return self.objects_[id] ~= nil
--- end
-
--- function MyApp:getInstance(cls)
---     local modelObj  
---     assert(cls, "cls is nil"..tostring(cls))
---     local idStr = cls.__cname
---     if not self:isObjectExists(idStr) then
---         modelObj = cls.new(
---             {
---                 id = idStr,
---             })
---         self:setObject(idStr, modelObj)
---         -- print("MyApp create model id is:", idStr)
---     else
---         -- print("MyApp get model id is:", idStr)
---         modelObj = self:getObject(idStr)
---     end  
---     return modelObj
--- end
-
--- function MyApp:deleteInstance(cls)
---     local idStr = cls.__cname
---     self.objects_[idStr] = nil
---     print("self:removeObject(idStr)", idStr)
--- end
 
 function MyApp:initGameState()
     -- init GameState
@@ -79,10 +44,8 @@ function MyApp:initGameState()
                 returnValue={data=param.values}
             elseif param.name=="load" then
                 local str=crypto.decryptXXTEA(param.values.data, "abcd")
-                -- returnValue=json.decode(str)
                 returnValue=param.values
             end
-            -- returnValue=param.values
         end
         return returnValue
     end, "data.txt","1234")
@@ -108,16 +71,22 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 2 ,           
                                     },
+                                    {
+                                    intenlevel = 0,
+                                    weaponid   = 6 ,           
+                                    },                                    
+
                         },
                         weaponed = {
                                 bag1 =  {
-                                        intenlevel = 0,
                                         weaponid   = 1,
                                         },
                                 bag2 =  {
-                                        intenlevel = 0,
                                         weaponid   = 2,
-                                        }
+                                        },
+                                bagJu = {
+                                        weaponid    = 6,
+                                        },
                         },
             }, 
             inlay = {
@@ -133,9 +102,9 @@ function MyApp:createGameStateFile()
                         },
             },
             prop = {
-                            lei = {num = 0},
-                            jijia = {num = 0},
-                            goldweapon = {num = 0},
+                        lei = {num = 0},
+                        jijia = {num = 0},
+                        goldweapon = {num = 0},
             },
        
             weaponsuipian = {},
@@ -144,10 +113,13 @@ function MyApp:createGameStateFile()
                       
             currentlevel =  {
                         group = 1,
-                        level = 6,
+                        level = 1,
             },
             guide = {
                         fight = false,
+            },
+            fight = {
+                        isPreferBag1 = true,
             },
     }
     GameState.save(data)

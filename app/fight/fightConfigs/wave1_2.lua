@@ -39,7 +39,7 @@ local waves = {
 			},	
 
 		},
-	},
+	},	
 	{
 		enemys = {
 			{
@@ -131,19 +131,23 @@ local waves = {
 				},
 			},
 		},
-	},	
-	{
+
+
+	},
+	{	
+		waveType = "boss",
 		enemys = {  --boss
 			{
+				descId = "boss02",
 				time = 3,	
 				num = 1,
-				
 				pos = {250},
-				delay = {0.3},
+				delay = {4.0},
 				property = { 
-					type = "boss",
+					type = "chongBoss",
 					placeName = "place7",
 					enemyId = 4, 
+					qiuId = 5,
 					id = 1,
 				},
 			},		
@@ -165,41 +169,41 @@ local enemys = {
 	{id=3,image="sanbing01",demage=2,hp=340,walkRate=400,rollRate=100,
 		fireRate=300,weak1=4,weak2=5},
 
-	--导弹
-	{id=4,image="daodan",demage=10,hp=100,weak1=1,weak2=1},					
 
+	{id=4,image="daodan",demage=20,hp=100,weak1=3,weak2=5},	
+
+	--铁球
+	{id=5,image="tieqiu",demage=30,hp=100,weak1=3,weak2=5},		
 }
 
 	--boss的关卡配置
 local bosses = {
 	--第一个出场的boss
 	{
-		image = "boss01", --图片名字
-		hp = 15000,
-		demage = 3,
+
+		image = "boss02", --图片名字
+		hp = 20000,
+		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 400,
 		walkRate = 200,
-		fireOffset = 0.2,
-		demageScale = {weak1 = 2, weak2 = 3, weak3 = 3},
+		chongfengDemage = 20,  --冲锋造成伤害
+		demageScale = {weak1 = 4, weak2 = 5},	--弱点伤害倍数
 		
-		skilltrigger = {   --技能触发(可以同时)
+		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.75,0.45,0.
+				0.95, 0.20,
 			},
 			moveRightFire = {
-				0.85, 0.65,0.35,
+				0.65, 0.40,
 			},
-			daoDan = {
-				-- 0.90, 0.70, 0.50, 0.30,
+			chongfeng = {
+				0.80, 0.50,0.20
 			},
-			saoShe = {
-				0.6, 0.5,
+			tieqiu = {
+				0.990, 0.60
 			},
 			weak2 = {
-				0.70,
-			},	
-			weak3 = {
-				0.30,
+				0.50,
 			},							
 		},
 		getMoveLeftAction = function ()

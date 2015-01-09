@@ -155,7 +155,7 @@ local waves = {
 					placeName = "place1" ,
 					type = "dao",
 					id = 5,
-					enemyId = 6,
+					missileId = 6,
 				},
 			},						
 		},
@@ -194,7 +194,7 @@ local waves = {
 					placeName = "place1" , 
 					type = "dao",
 					id = 5,
-					enemyId = 6,
+					missileId = 6,
 				},
 			},
 			{
@@ -206,7 +206,7 @@ local waves = {
 					placeName = "place2" , 
 					type = "dao",
 					id = 5,
-					enemyId = 6,
+					missileId = 6,
 				},
 			},
 			{
@@ -229,7 +229,7 @@ local waves = {
 					placeName = "place4" , 
 					type = "dao",
 					id = 5,
-					enemyId = 6,
+					missileId = 6,
 				},
 			},
 			{
@@ -241,12 +241,31 @@ local waves = {
 					placeName = "place3" , 
 					type = "dao",
 					id = 5,
-					enemyId = 6,
+					missileId = 6,
 				},
 			},	
 		},
-	},		
+	},	
+	{
+		enemys = {  --boss
+			{
+				time = 3,	
+				num = 1,
+				pos = {250},
+				delay = {0.3},
+				property = { 
+					type = "boss",
+					placeName = "place5",
+					enemyId = 6, 
+					id = 1,
+				},
+			},
+		},
+	},	
 }
+
+
+
 
 --enemy的关卡配置
 local enemys = {
@@ -270,6 +289,59 @@ local enemys = {
 
 	--导弹
 	{id=6,image="daodan",demage=20,hp=300,weak1=1,weak2=1},					
+}
+
+--boss的关卡配置
+local bosses = {
+	--第一个出场的boss
+	{
+		image = "boss01", --图片名字
+		hp = 10000,
+		demage = 3,
+		fireRate = 400,
+		walkRate = 200,
+		saoFireOffset = 0.4, 		--扫射时间间隔
+		saoFireTimes = 10, 			--扫射次数
+		demageScale = {weak1 = 2, weak2 = 3, weak3 = 3},	--弱点伤害倍数
+		
+		skilltrigger = {   			--技能触发(可以同时)
+			moveLeftFire = {
+				0.95, 0.50,
+			},
+			moveRightFire = {
+				0.85, 0.30,
+			},
+			daoDan = {
+				0.80, 0.70, 0.50, 0.20,
+			},
+			saoShe = {
+				0.65, 0.55,
+			},
+			weak2 = {
+				0.70,
+			},	
+			weak3 = {
+				0.30,
+			},							
+		},
+		getMoveLeftAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
+			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
+			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
+			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+
+		getMoveRightAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
+			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
+			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
+			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+	},
 }
 
 function waveClass:ctor()
