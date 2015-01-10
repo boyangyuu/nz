@@ -80,6 +80,7 @@ function InlayListCell:initCellUI(record)
                 return true
             elseif event.name=='ended' then
                 self.inlayModel:equipInlay(record["id"],true)
+                self:movePosition()
             end
         end)
 end

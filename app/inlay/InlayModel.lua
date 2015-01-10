@@ -4,12 +4,29 @@ local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
 function InlayModel:ctor(properties, events, callbacks)
 	InlayModel.super.ctor(self, properties)
+	self:initConfigTable()
 	self:addComponent("components.behavior.EventProtocol"):exportMethods()
+end
+
+function InlayModel:initConfigTable()
+	self.config = getConfig("config/items_xq.json")
+end
+
+function InlayModel:getRecordByKey(table, propertyName, key)
+    local recordArr={}
+    for k,v in pairs(table) do
+        for k1,v1 in pairs(v) do
+            if k1 == propertyName and v1 == key then
+                recordArr[#recordArr + 1] = v
+            end
+        end
+    end
+    return recordArr
 end
 
 function InlayModel:getConfigTable(propertyName, index)
 	assert(propertyName and index, "invalid param")
-	local records = getRecordByKey("config/items_xq.json", propertyName, index) or {}
+	local records = self:getRecordByKey(self.config, propertyName, index) or {}
 	return records
 end
 

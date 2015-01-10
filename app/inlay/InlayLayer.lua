@@ -1,4 +1,4 @@
-
+local scheduler = require("framework.scheduler")
 local InlayListCell = import(".InlayListCell")
 
 local InlayLayer = class("InlayLayer", function()
@@ -6,7 +6,6 @@ local InlayLayer = class("InlayLayer", function()
 end)
 
 function InlayLayer:ctor()
-    print("inlayLayer ctor()")
 
     self.inlayModel = md:getInstance("InlayModel")
 
@@ -51,9 +50,8 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
-    
+
     self.iconarm = ccs.Armature:create("xqtb")
-    self.avatarm = ccs.Armature:create("xqan_hjwqbs")
     local armature = ccs.Armature:create("xqan_hjwq")
     addChildCenter(armature, goldWeaponBtn)
     armature:getAnimation():play("Animation1" , -1, 1)
@@ -102,18 +100,17 @@ function InlayLayer:refreshListView(index)
         self.selectarm:removeFromParent()
         self.selectarm = nil
     end
-
+    
     removeAllItems(self.rootListView)
     local table = self.inlayModel:getConfigTable("type", index)
     for i=1,#table do
-    	local item = self.rootListView:newItem()
-    	local content = InlayListCell.new(table[i])
-    	item:addContent(content)
+        local item = self.rootListView:newItem()
+        local content = InlayListCell.new(table[i])
+        item:addContent(content)
         item:setItemSize(550, 165)
-    	self.rootListView:addItem(item)
+        self.rootListView:addItem(item)
     end
     self.rootListView:reload()
-
 
     self.selectarm = ccs.Armature:create("xqtb")
     addChildCenter(self.selectarm, self.icon[index])
@@ -125,6 +122,7 @@ function InlayLayer:refreshAvatar()
     self.goldgun:setVisible(true)
     local goldarm = ccs.Armature:create("xqan_hjwqbs")
     if self.inlayModel:isGetAllGold() then
+        self.goldgun:removeAllChildren()
         goldarm:getAnimation():setMovementEventCallFunc(
             function ( armatureBack,movementType,movementId ) 
                 if movementType == ccs.MovementEventType.complete then
@@ -136,7 +134,7 @@ function InlayLayer:refreshAvatar()
 
     else
         print("takeoff")
-        goldarm:removeFromParent()
+        self.goldgun:removeAllChildren()
         self.goldgun:setVisible(false)
     end
 end
