@@ -58,10 +58,8 @@ function Map:playEffect(name)
 end
 
 function Map:isMoveMap()
-	local fightConfigs  = md:getInstance("FightConfigs")
-	local waveConfig = fightConfigs:getWaveConfig()
 	-- dump(waveConfig, "waveConfig")
-	return waveConfig:getIsMoveMap()
+	return self.curWaveCfg:getIsMoveMap()
 end
 
 return Map

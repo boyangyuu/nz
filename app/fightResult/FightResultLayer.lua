@@ -177,7 +177,7 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
         ui:showPopup("commonPopup",
-			 {type = "style2", content = "已经快速镶嵌"},
+			 {type = "style2", content = "镶嵌成功"},
 			 {opacity = 155})
         	self:quickInlay()
         end
@@ -205,10 +205,6 @@ function FightResultLayer:initUI()
 				    ui:showPopup("commonPopup",
 					 {type = "style1",content = "是否花费10颗钻石翻开剩余卡牌"},
 					 {opacity = 155})
-
-        			for i=1,6 do
-        				self.card[i]:setTouchEnabled(false)
-        			end
             	end
             end
         end)
