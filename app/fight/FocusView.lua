@@ -88,7 +88,6 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
-	print("function FocusView:playFire()")
 	if self.playIndex == "stand" then
 		print("	if self.playIndex  then") 
 		self.armature:getAnimation():play("fire01" , -1, 1) 
