@@ -57,9 +57,10 @@ function StoreCell:initCellUI(parameter)
     detail:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
     local icon_yuan = cc.ui.UILabel.new({
-        UILabelType = 2, text = "元", size = 20})
-    :align(display.CENTER, 116 , 29)
+        UILabelType = 2, text = "元", size = 25})
+    :align(display.CENTER, 100 , 32)
     :addTo(btnbuy)
+    icon_yuan:enableOutline(cc.c4b(0, 0, 0,255), 2)
     icon_yuan:setVisible(false)
     local  price= cc.ui.UILabel.new({
         UILabelType = 2, text = "50000", size = 28})
@@ -98,6 +99,7 @@ function StoreCell:initCellUI(parameter)
         UILabelType = 2, text = "+20%", size = 32})
             :align(display.CENTER, 78, 58)
             :addTo(discount)
+        discountlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 
         detail:setString(record["name"])
         buynumber:setString("X "..record["number"])

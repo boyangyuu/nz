@@ -32,6 +32,7 @@ function InlayListCell:initCellUI(record)
             UILabelType = 2, text = "购买", size = 30})
         :align(display.CENTER, 78, 30)
         :addTo(btnbuy)
+        buy:enableOutline(cc.c4b(0, 0, 0,255), 2)
         local already = cc.ui.UILabel.new({
             UILabelType = 2, text = "已拥有:", size = 25})
         :align(display.CENTER, 150, 48)
@@ -47,10 +48,11 @@ function InlayListCell:initCellUI(record)
         :align(display.CENTER, -180, 48)
         :addTo(self)
         detail:enableOutline(cc.c4b(0, 0, 0,255), 2)
-        local buy = cc.ui.UILabel.new({
+        local equip = cc.ui.UILabel.new({
             UILabelType = 2, text = "装备", size = 30})
         :align(display.CENTER, 78, 30)
         :addTo(btnload)
+        equip:enableOutline(cc.c4b(0, 0, 0,255), 2)
         local property = cc.ui.UILabel.new({
             UILabelType = 2, text = record["describe1"].." "..record["valueDisplay"], size = 28})
         :align(display.CENTER, 0, 16)
@@ -80,7 +82,6 @@ function InlayListCell:initCellUI(record)
                 return true
             elseif event.name=='ended' then
                 self.inlayModel:equipInlay(record["id"],true)
-                self:movePosition()
             end
         end)
 end
