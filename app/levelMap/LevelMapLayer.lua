@@ -71,6 +71,11 @@ function LevelMapLayer:initChooseLayer()
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
 
+
+        self.btnNext:setTouchEnabled(false)
+        self.btnPre:setTouchEnabled(false)
+
+
     self.levelNum:setString(self.index)
 
     local actionPre = transition.sequence({
@@ -187,8 +192,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 armature:getAnimation():play("dizuolan" , -1, 1)
             end
         else           
-            cc.ColorUtil:setGray(levelBtn[i])                 
-            cc.ColorUtil:setGray(levelDian[i])                 
+            -- cc.ColorUtil:setGray(levelBtn[i])                 
+            -- cc.ColorUtil:setGray(levelDian[i])                 
             -- levelBtn[i]:setColor(cc.c3b(80, 80, 80))
             -- levelDian[i]:setColor(cc.c3b(80, 80, 80))
         end
