@@ -16,7 +16,7 @@ function StoreLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-    self:refreshListView("prop")
+    self:setSelect("prop")
 end
 
 function StoreLayer:loadCCS()
@@ -32,40 +32,31 @@ end
 
 function StoreLayer:initUI()
 	self.listview = cc.uiloader:seekNodeByName(self, "listview")
-	local btnprop = cc.uiloader:seekNodeByName(self, "btnprop")
-	local btnbank = cc.uiloader:seekNodeByName(self, "btnbank")
-	local btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
-	btnprop:setTouchEnabled(true)
-	btnbank:setTouchEnabled(true)
-	btninlay:setTouchEnabled(true)
-    btnprop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+	self.btnprop = cc.uiloader:seekNodeByName(self, "btnprop")
+	self.btnbank = cc.uiloader:seekNodeByName(self, "btnbank")
+	self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
+	self.btnprop:setTouchEnabled(true)
+	self.btnbank:setTouchEnabled(true)
+	self.btninlay:setTouchEnabled(true)
+    self.btnprop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-                self:refreshListView("prop")
-                btnprop:setLocalZOrder(100)
-                btnbank:setLocalZOrder(-100) 
-                btninlay:setLocalZOrder(-100) 
+                self:setSelect("prop")
             end
         end)
-     btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+     self.btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then 
             return true
         elseif event.name=='ended' then
-            self:refreshListView("bank")
-            btnprop:setLocalZOrder(-100)
-            btnbank:setLocalZOrder(100) 
-            btninlay:setLocalZOrder(-100)     
+            self:setSelect("bank")
         end
     end)
-     btninlay:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+     self.btninlay:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            self:refreshListView("inlay")  
-            btnprop:setLocalZOrder(-100)
-            btnbank:setLocalZOrder(-100) 
-            btninlay:setLocalZOrder(100)   
+            self:setSelect("inlay")
         end
     end)
 end
@@ -88,5 +79,18 @@ function StoreLayer:refreshListView(type)
     self.listview:reload()    
 end
 
+function StoreLayer:setSelect(type)
+    self:refreshListView(type)
+    self.btnprop:setColor(cc.c3b(80, 80, 80))
+    self.btnbank:setColor(cc.c3b(80, 80, 80))
+    self.btninlay:setColor(cc.c3b(80, 80, 80))
+    if type == "inlay" then
+        self.btninlay:setColor(cc.c3b(255, 255, 255))
+    elseif type == "bank" then
+        self.btnbank:setColor(cc.c3b(255, 255, 255))
+    elseif type == "prop" then
+        self.btnprop:setColor(cc.c3b(255, 255, 255))
+    end
+end
 
 return StoreLayer

@@ -131,7 +131,12 @@ function FightResultLayer:initUI()
     self.label = cc.uiloader:seekNodeByName(self, "label")
     self.panlsuipian = cc.uiloader:seekNodeByName(self, "panlsuipian")
     self.labelsuipian = cc.uiloader:seekNodeByName(self, "infoguanqia")
-    
+    self.inlayquick = cc.uiloader:seekNodeByName(self, "quickinlay")
+    self.leftnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.label:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.labelsuipian:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.inlayquick:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
 

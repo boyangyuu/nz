@@ -50,6 +50,8 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
+    local yijianxiangqian = cc.uiloader:seekNodeByName(self, "yijianxiangqian")
+    yijianxiangqian:enableOutline(cc.c4b(140, 49, 2,255), 2)
 
     self.iconarm = ccs.Armature:create("xqtb")
     local armature = ccs.Armature:create("xqan_hjwq")
