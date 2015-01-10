@@ -370,7 +370,7 @@ function MapView:onHeroFire(event)
 	else
 		self:singleFire(datas)
 	end
-
+--[[
 	--pos
 	local pWorld1 = focusRangeNode:convertToWorldSpace(cc.p(0,0))
 	local box = focusRangeNode:getBoundingBox()
@@ -381,6 +381,7 @@ function MapView:onHeroFire(event)
 	-- print("isHitted", isHitted)
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld= pWorld1})
+		]]
 end
 
 function MapView:mutiFire(datas)
@@ -433,7 +434,7 @@ end
 
 function MapView:playEffectShaked(event)
 	print("function MapView:playEffectShaked(event)")
-	local tMove = cc.MoveBy:create(0.05, cc.p(-18, -20))
+	local tMove = cc.MoveBy:create(0.07, cc.p(-36, -40))
 	self:runAction(cc.Sequence:create(tMove, tMove:reverse(),
 		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
 end

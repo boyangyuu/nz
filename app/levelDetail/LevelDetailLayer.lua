@@ -93,7 +93,7 @@ function LevelDetailLayer:initUI()
 	end
 
 
-	self:initMapUI()
+	self:initMapUI(DataTable["mapImg"])
 	self.recomWeaponId = DataTable["weapon"]
 	local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local weaponimg = display.newSprite("#icon_"..recomWeapon["imgName"]..".png")
@@ -106,10 +106,10 @@ function LevelDetailLayer:initUI()
 
 end
 
-function LevelDetailLayer:initMapUI()
+function LevelDetailLayer:initMapUI(mapName)
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
-	local mapSrcName = "map_"..self.groupId.."_"..self.levelId..".json"   -- todo 外界
+	local mapSrcName = mapName..".json"   -- todo 外界
 
 	local map = cc.uiloader:load(mapSrcName)
 	local mapimg = cc.uiloader:seekNodeByName(map, "bg")

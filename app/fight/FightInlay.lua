@@ -91,6 +91,7 @@ end
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
+    -- return 0,true
     local record = nil
     if self:getIsActiveGold() then 
         record = self.inlayModel:getGoldByType(type)

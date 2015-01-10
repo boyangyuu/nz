@@ -20,7 +20,8 @@ function WeaponListLayer:ctor()
     self.weaponId = nil
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.commonPopModel = md:getInstance("commonPopModel")
-    
+    self.userModel = md:getInstance("UserModel")
+
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
@@ -72,6 +73,7 @@ function WeaponListLayer:initUI()
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
     self.upgradecost      = cc.uiloader:seekNodeByName(self, "upgradecost")
+    self.buycost      = cc.uiloader:seekNodeByName(self, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self, "damagepluse")
     
     self.stars = {}
@@ -120,7 +122,9 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:buyWeapon(self.weaponId)
+            if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+                self:buyWeapon(self.weaponId)
+            end
         end
     end)
     addBtnEventListener(self.btnUpgrade, function(event)
@@ -132,8 +136,9 @@ function WeaponListLayer:initUI()
             -- ui:showPopup("commonPopup",
             --  {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级到"..nextlevel.."星"},
             --  {opacity = 155})
-
-            self:intensify(self.weaponId)
+            if self.userModel:costMoney(self.costupgrade) then
+                self:intensify(self.weaponId)
+            end
         end
     end)
     addBtnEventListener(self.btnOncefull, function(event)
@@ -226,6 +231,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.weaponrecord = self.weaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
     self.labelName:setString(self.weaponrecord["name"])
+    self.buycost:setString(self.weaponrecord["cost"])
     self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
     addChildCenter(weaponImg, self.layerGun)
@@ -273,7 +279,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
     self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
     self.progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
-
+    self.labelDamage:setScale(0.7)
     self.labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
@@ -348,6 +354,10 @@ function WeaponListLayer:showButton()
     self.labelPercent:setVisible(true)
     self.damagepluse:setVisible(true)
     if self.weaponListModel:isWeaponExist(weaponid) then
+            self.progBulletNext:setVisible(true)
+        self.progAccuracyNext:setVisible(true)
+        self.progReloadNext:setVisible(true)
+
         self.btnBuy:setVisible(false)
         self.btnEquip:setVisible(true)
         if self.weaponListModel:isFull(weaponid) then
@@ -362,6 +372,11 @@ function WeaponListLayer:showButton()
             self.btnUpgrade:setVisible(true)
         end
     else
+        self.progBulletNext:setVisible(false)
+        self.progAccuracyNext:setVisible(false)
+        self.progReloadNext:setVisible(false)
+        self.damagepluse:setVisible(false)
+        self.labelPercent:setVisible(false)
         self.btnFull:setVisible(false)
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)

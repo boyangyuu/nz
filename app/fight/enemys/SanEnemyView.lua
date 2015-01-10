@@ -70,7 +70,7 @@ function SanEnemyView:stopFall()
     self:setWillRemoved()  
 
     -- 召唤
-    dump(self.property, "self.property")
+    -- dump(self.property, "self.property")
     local data = {
         pos = cc.p(self:getPositionX(), self:getPlaceBound().y),
         delay = 0,

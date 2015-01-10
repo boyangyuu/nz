@@ -25,7 +25,7 @@ function RootLayer:initLoginLayer()
 end
 
 function RootLayer:switchLayer(event)
-	dump(event, "event")
+	-- dump(event, "event")
     --clear
     self.curLayer:removeSelf()
 
@@ -71,7 +71,15 @@ function RootLayer:addResHome()
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
     
     --armature
-     local manager = ccs.ArmatureDataManager:getInstance()
+    local manager = ccs.ArmatureDataManager:getInstance()
+
+    local bossImgs = {"boss01","boss02",}
+ 
+    for i,v in ipairs(bossImgs) do
+        local src = "res/Fight/enemys/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+    end
+
     local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
     manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
 

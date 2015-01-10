@@ -32,8 +32,8 @@ function LoadingLayer:initUI()
     --anim
     self.maparmature = ccs.Armature:create("loading_bjmap")
     self.maparmature :setAnchorPoint(0,0)
-    self.maparmature :setPosition(0,30)
     main:addChild(self.maparmature )
+    -- addChildCenter(self.maparmature , main)
     
     self.quanarmature = ccs.Armature:create("loading_yuan")
     self.quanarmature:setAnchorPoint(0.5,0.5)

@@ -131,7 +131,7 @@ function CommonEnemyView:tick(t)
 		return
 	end
 
-	--throw
+	-- throw
 end
 
 --throw 
