@@ -71,11 +71,6 @@ function LevelMapLayer:initChooseLayer()
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
 
-
-        self.btnNext:setTouchEnabled(false)
-        self.btnPre:setTouchEnabled(false)
-
-
     self.levelNum:setString(self.index)
 
     local actionPre = transition.sequence({
