@@ -91,19 +91,19 @@ end
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
-    return 0,true
-    -- local record = nil
-    -- if self:getIsActiveGold() then 
-    --     record = self.inlayModel:getGoldByType(type)
-    --     assert(record, "record is nil type:"..type)
-    -- else
-    --     local inlays = self.inlayModel:getAllInlayed()
-    --     local inlayedId  = inlays[type]
-    --     if inlayedId == nil then return nil,false end
-    --     record = getRecordByID("config/items_xq.json", inlayedId)
-    -- end
-    -- local value = record.valueProgram
-    -- return value, true
+    -- return 0,true
+    local record = nil
+    if self:getIsActiveGold() then 
+        record = self.inlayModel:getGoldByType(type)
+        assert(record, "record is nil type:"..type)
+    else
+        local inlays = self.inlayModel:getAllInlayed()
+        local inlayedId  = inlays[type]
+        if inlayedId == nil then return nil,false end
+        record = getRecordByID("config/items_xq.json", inlayedId)
+    end
+    local value = record.valueProgram
+    return value, true
 end 
 
 return FightInlay
