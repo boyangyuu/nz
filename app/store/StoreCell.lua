@@ -99,6 +99,7 @@ function StoreCell:initCellUI(parameter)
         UILabelType = 2, text = "+20%", size = 32})
             :align(display.CENTER, 78, 58)
             :addTo(discount)
+        discountlabel:enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
         discountlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 
         detail:setString(record["name"])

@@ -187,10 +187,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 armature:getAnimation():play("dizuolan" , -1, 1)
             end
         else           
-            -- cc.ColorUtil:setGray(levelBtn[i])                 
-            -- cc.ColorUtil:setGray(levelDian[i])                 
-            -- levelBtn[i]:setColor(cc.c3b(80, 80, 80))
-            -- levelDian[i]:setColor(cc.c3b(80, 80, 80))
+            cc.ColorUtil:setGray(levelBtn[i])                 
+            cc.ColorUtil:setGray(levelDian[i])                 
         end
         -- add listener
         addBtnEventListener(levelBtn[i], function(event)

@@ -72,6 +72,9 @@ function InlayListCell:initCellUI(record)
                     num = num + 1
                     ownnumber:setString(num)
                     self.inlayModel:buyInlay(record["id"],false)
+                    if device.platform == "android" then
+                        cc.UMAnalytics:buy("prop_1", 2, 50)   
+                    end 
                 end
                 md:getInstance("StoreModel"):setGoldWeaponNum()
             end
