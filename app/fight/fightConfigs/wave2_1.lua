@@ -8,7 +8,7 @@ local waves = {
 				time = 3,	
 				num = 4,
 				pos = {0,50,150,250},
-				delay = {0,0.5,0.6,1},
+				delay = {0,2,4,6},
 				property = { 
 					placeName = "place1",
 					startState = "rollright",
@@ -19,11 +19,13 @@ local waves = {
 				time = 4,	
 				num = 4,
 				pos = {0,100,200,300},
-				delay = {0,1,2,3},
+				delay = {0,2,4,6},
 				property = { 
 					placeName = "place2",
-					startState = "rollleft",
-					id = 1,
+					id = 4,
+					type = "dao",
+					missileId = 5,
+					missileType = "lei",
 				},
 			},		
 			{
@@ -45,7 +47,7 @@ local waves = {
 			{
 				time = 3,
 				num = 3,
-				delay = {0,0.3, 0.6},
+				delay = {0,2,4},
 				pos = {0,300,150},
 				property = {
 					placeName = "place4",
@@ -56,7 +58,7 @@ local waves = {
 			{
 				time = 4,
 				num = 3,
-				delay = {0,0.3, 0.6},
+				delay = {0,2, 4},
 				pos = {0,250,400},	
 				property = { 
 					placeName = "place5", 
@@ -67,7 +69,7 @@ local waves = {
 			{
 				time = 5,
 				num = 3,
-				delay = {0,0.3, 0.6},
+				delay = {0,2,4},
 				pos = {0,200,100},					
 				property = {
 					placeName = "place6",  
@@ -80,7 +82,7 @@ local waves = {
 				time = 8,	
 				num = 3,
 				pos = {0,100, 300},
-				delay = {0,1, 2},
+				delay = {0,2, 4},
 				property = { 
 					type = "san",
 					id = 3,
@@ -92,7 +94,7 @@ local waves = {
 				time = 9,	
 				num = 3,
 				pos = {0,100, 250},
-				delay = {0,0.5, 1.5},
+				delay = {0,2,4},
 				property = { 
 					type = "san",
 					id = 3,
@@ -104,7 +106,7 @@ local waves = {
 				time = 10,	
 				num = 5,
 				pos = {0,50,150,250,100},
-				delay = {0,0.5,0.6,1,2},
+				delay = {0,1,2,3,4},
 				property = { 
 					placeName = "place6",
 					id = 1,
@@ -114,7 +116,7 @@ local waves = {
 				time = 11,	
 				num = 5,
 				pos = {0,50,150,250,100},
-				delay = {0,0.5,0.6,1,2},
+				delay = {0,1,2,3,4},
 				property = { 
 					placeName = "place2",
 					id = 1,
@@ -124,7 +126,7 @@ local waves = {
 				time = 12,	
 				num = 5,
 				pos = {0,50,150,250,100},
-				delay = {0,0.5,0.6,1,2},
+				delay = {0,1,2,3,4},
 				property = { 
 					placeName = "place4",
 					id = 1,
@@ -151,7 +153,11 @@ local enemys = {
 	{id=3,image="sanbing01",demage=2,hp=340,walkRate=400,rollRate=100,
 		fireRate=300,weak1=4,weak2=5},
 
+	--手雷兵
+	{id=4,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=100,fireRate=400,weak1=3,weak2=5},	
 	
+	--手雷
+	{id=5,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},
 }
 
 
