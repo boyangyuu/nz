@@ -131,6 +131,7 @@ function Hero:getFightInlay()
 end
 
 function Hero:getDemage()
+    --todo yby 解决卡顿！！
     local baseDemage = self.gun:getDemage()
     local value = 0
 

@@ -25,7 +25,7 @@ function RootLayer:initLoginLayer()
 end
 
 function RootLayer:switchLayer(event)
-	dump(event, "event")
+	-- dump(event, "event")
     --clear
     self.curLayer:removeSelf()
 

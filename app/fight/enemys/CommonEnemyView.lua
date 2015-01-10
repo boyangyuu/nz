@@ -102,34 +102,34 @@ end
 
 --Attackable interface
 function CommonEnemyView:tick(t)
-	--change state
-	--fire
-	local fireRate = self.enemy:getFireRate()
-	-- math.newrandomseed()
-	assert(fireRate > 1, "invalid fireRate")
-	randomSeed = math.random(1, fireRate)
-	if randomSeed > fireRate - 1 then 
-		self:playAfterAlert("playFire", handler(self, self.playFire))
-		return
-	end
+	-- --change state
+	-- --fire
+	-- local fireRate = self.enemy:getFireRate()
+	-- -- math.newrandomseed()
+	-- assert(fireRate > 1, "invalid fireRate")
+	-- randomSeed = math.random(1, fireRate)
+	-- if randomSeed > fireRate - 1 then 
+	-- 	self:playAfterAlert("playFire", handler(self, self.playFire))
+	-- 	return
+	-- end
 
-	--walk
-	local walkRate = self.enemy:getWalkRate()
-	assert(walkRate > 1, "invalid walkRate")
-	randomSeed =  math.random(1, walkRate)
-	if randomSeed > walkRate - 1 then 
-		self:play("playWalk", handler(self, self.playWalk))
-		return 
-	end
+	-- --walk
+	-- local walkRate = self.enemy:getWalkRate()
+	-- assert(walkRate > 1, "invalid walkRate")
+	-- randomSeed =  math.random(1, walkRate)
+	-- if randomSeed > walkRate - 1 then 
+	-- 	self:play("playWalk", handler(self, self.playWalk))
+	-- 	return 
+	-- end
 
-	--roll
-	local rollRate = self.enemy:getRollRate()
-	assert(rollRate > 1, "invalid rollRate")
-	randomSeed =  math.random(1, rollRate)
-	if randomSeed > rollRate - 1 then 
-		self:playRoll()
-		return
-	end
+	-- --roll
+	-- local rollRate = self.enemy:getRollRate()
+	-- assert(rollRate > 1, "invalid rollRate")
+	-- randomSeed =  math.random(1, rollRate)
+	-- if randomSeed > rollRate - 1 then 
+	-- 	self:playRoll()
+	-- 	return
+	-- end
 
 	--throw
 end
