@@ -77,7 +77,7 @@ local waves = {
 					placeName = "place4",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -103,7 +103,7 @@ local waves = {
 		},
 	},
 	{
-		enemys = {  --boss
+		enemys = {  
 			{
 				time = 3,
 				num = 1,
@@ -135,15 +135,16 @@ local waves = {
 				},
 			},
 			{
+				descId = "zpbing",  --简介
 				time = 4,
 				num = 1,
-				delay = {0},
+				delay = {3.0},
 				pos = {25},
 				property = {
 					placeName = "place7",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -209,7 +210,7 @@ local waves = {
 					placeName = "place8",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -265,7 +266,7 @@ local waves = {
 					placeName = "place7",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -311,7 +312,7 @@ local waves = {
 					placeName = "place2",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -343,7 +344,7 @@ local waves = {
 					placeName = "place10",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -365,7 +366,7 @@ local waves = {
 					placeName = "place4",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},	
 		},
@@ -385,11 +386,15 @@ local enemys = {
 	{id=3,image="daodan",demage=8,hp=100,weak1=3,weak2=5},
 	--
 }
+local mapId = "map_1_4"
 
+local isMoveMap = true
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
+	self.mapId  = mapId
+	self.isMoveMap = isMoveMap
 end
 
 return waveClass

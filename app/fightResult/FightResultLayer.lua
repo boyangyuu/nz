@@ -1,4 +1,3 @@
--- import("..includes.functionUtils")
 local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
@@ -18,7 +17,7 @@ function FightResultLayer:ctor(properties)
     self.userModel = md:getInstance("UserModel")
 	 cc.EventProxy.new(self.commonPopModel, self)
        :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.turnLeftCard))
-       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
+       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.close))
 
     self.isgold = false
     self.cardover = {}
@@ -64,10 +63,8 @@ function FightResultLayer:initData()
 	for k,v in pairs(self.probaTable) do
 		self.showTable[k] = v
 	end
-	-- local ran = math.random(#self.showTable)
 	table.insert(self.showTable,3,self.showTable[#self.showTable])
 	table.remove(self.showTable,#self.showTable)
-	-- dump(self.showTable)
 end
     
 local playFanHander = nil
@@ -79,8 +76,6 @@ function FightResultLayer:playcard(showTable)
 
 	self.armature = ccs.Armature:create("guangkajl")	
     self.armature:setAnchorPoint(0.5,0.5)
-    -- self.armature:setPosition(display.cx,display.cy-40)
-    -- self.panelcard:addChild(self.armature)
     addChildCenter(self.armature, self.panelcard)
 	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))	
 	
@@ -100,8 +95,6 @@ function FightResultLayer:playcard(showTable)
 	    self.armature:getBone("label00"..k):changeDisplayWithIndex(0, true)
 	end
 
-	-- self.armature:getAnimation():play("kaichixu" , -1, 1)
-
 	playFanHander =  scheduler.performWithDelayGlobal(playanim, 2)
 end
 
@@ -112,10 +105,8 @@ function FightResultLayer:playstar(numStar)
 		local delay = i * 0.5
 		local function starcall()
 		    local starArmature = ccs.Armature:create("gkjs_xing")
-		    -- starArmature:setAnchorPoint(0,0)
 		    starArmature:setPosition(43.5,42)
 		    self.star[i]:addChild(starArmature)
-		    -- addChildCenter(starArmature,self.star[i])
 			starArmature:getAnimation():play("gkjs_xing" , -1, 0)
 		end
 		playStarHandler = scheduler.performWithDelayGlobal(starcall, delay)
@@ -131,7 +122,12 @@ function FightResultLayer:initUI()
     self.label = cc.uiloader:seekNodeByName(self, "label")
     self.panlsuipian = cc.uiloader:seekNodeByName(self, "panlsuipian")
     self.labelsuipian = cc.uiloader:seekNodeByName(self, "infoguanqia")
-    
+    self.inlayquick = cc.uiloader:seekNodeByName(self, "quickinlay")
+    self.leftnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.label:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.labelsuipian:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.inlayquick:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	
     self.leftnumber:setVisible(false)
     self.label:setVisible(false)
 
@@ -141,7 +137,6 @@ function FightResultLayer:initUI()
 	self.btnnext:setTouchEnabled(false)
 
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-	-- local nextGroup, nextLevel = self.fightModel:getNextGroupAndLevel()
 	addBtnEventListener(self.btnback, function(event)
         if event.name=='began' then
             return true
@@ -167,8 +162,6 @@ function FightResultLayer:initUI()
 		        local nextgroup,nextlevel = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
 		        ui:changeLayer("HomeBarLayer",{})
 		        self.fightResultModel:popupleveldetail(nextgroup,nextlevel)
-				-- ui:changeLayer("FightPlayer",{groupId = nextgroup, 
-			 -- 		levelId = nextlevel})
 	        end
         end
     end)
@@ -177,7 +170,7 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
         ui:showPopup("commonPopup",
-			 {type = "style2", content = "已经快速镶嵌"},
+			 {type = "style2", content = "镶嵌成功"},
 			 {opacity = 155})
         	self:quickInlay()
         end
@@ -191,21 +184,20 @@ function FightResultLayer:initUI()
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-	            self:turnOverCard(i)
-            	if self.grade == 0 then
+            dump(self.grade)
+	            if self.grade > 1 then
+		            self:turnOverCard(i)
+		        elseif self.grade == 1 then
+		            self:turnOverCard(i)
+				    self.leftnumber:setVisible(false)
+				    self.label:setVisible(false)
+        		elseif self.grade < 1 then
 				    self.leftnumber:setVisible(false)
 				    self.label:setVisible(false)
 
-				    function delaypopup()
-					    ui:showPopup("commonPopup",
-						 {type = "style1",content = "是否花费10颗钻石翻开剩余卡牌"},
-						 {opacity = 155})
-				    end
-					scheduler.performWithDelayGlobal(delaypopup, 1)
-
-        			for i=1,6 do
-        				self.card[i]:setTouchEnabled(false)
-        			end
+				    ui:showPopup("commonPopup",
+					 {type = "style1",content = "是否花费10颗钻石翻开剩余卡牌"},
+					 {opacity = 155})
             	end
             end
         end)
@@ -247,8 +239,6 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
     	elseif movementID == "koupai" then
     		armatureBack:getAnimation():play("xipai",-1,1)
 		elseif movementID == "xipai" then
-			-- armatureBack:pause()
-			-- self.armature:setVisible(false)
 			self.armature:removeFromParent()
 			for k,v in pairs(self.card) do
 				v:setVisible(true)
@@ -262,11 +252,8 @@ function FightResultLayer:animationEvent(armatureBack,movementType,movementID)
 			self.btninlay:setTouchEnabled(true)
 
 			local ran = math.random(1, 100)
-			print(ran.."sidgiudhciuwgiuvgcwiub")
 			if ran < 5 then
 				self.isgold = true
-				-- self.goldpos = math.random(1, 6)
-				-- print(self.goldpos.."abcdefg")
 			end
 		end
 	end
@@ -314,14 +301,12 @@ function FightResultLayer:getinlayfall()
 			break
 		end
 	end
-	-- dump(probaTable)
     return probaTable
 end
 
 function FightResultLayer:turnOverCard(index)
 	self.grade = self.grade - 1
 	self.leftnumber:setString(self.grade)
-	-- dump(self.probaTable)
 	local ran = math.random(1, self.grade+1)
 	local record
 	print("金的"..ran.."区间1~"..self.grade+1)
@@ -341,7 +326,6 @@ function FightResultLayer:turnOverCard(index)
 		self.cardnormal[index]:setVisible(false)
 		self.cardgold[index]:setVisible(true)		
 	else
-		-- dump(record["property"])
 		self.cardgold[index]:setVisible(false)
 		self.cardnormal[index]:setVisible(true)
 	end
@@ -372,7 +356,6 @@ function FightResultLayer:turnLeftCard()
 		function delayturnleft()
 			for i=1,6 do
 				if self.cardover[i]:isVisible() == false then
-					-- dump(i)
 					self:turnOverCard(i)
 				end
 			end
@@ -381,8 +364,11 @@ function FightResultLayer:turnLeftCard()
 	end
 end
 
+function FightResultLayer:close( )
+	ui:closePopup()
+end
+
 function FightResultLayer:quickInlay()
-	-- dump(self.quickinlay)
 	self.inlayModel:equipAllBestInlays(self.quickinlay)
 end
 

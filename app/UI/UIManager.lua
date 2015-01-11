@@ -4,10 +4,12 @@ local UI = class("UIManager",cc.mvc.ModelBase)
 UI.LAYER_CHANGE_EVENT 	= "LAYER_CHANGE_EVENT"
 UI.POPUP_SHOW_EVENT   	= "POPUP_SHOW_EVENT"
 UI.POPUP_CLOSE_EVENT   	= "POPUP_CLOSE_EVENT"
+UI.LOAD_SHOW_EVENT 		= "LOAD_SHOW_EVENT"
+UI.LOAD_HIDE_EVENT 		= "LOAD_HIDE_EVENT"
 
 --保存layer
 local layerClasses = {}
-layerClasses["LoadingLayer"] 		 = import("..load.LoadingLayer")
+-- layerClasses["LoadingLayer"] 		 = import("..load.LoadingLayer")
 layerClasses["FightPlayer"] 		 = import("..fight.FightPlayer")
 layerClasses["WeaponBag"] 		     = import("..weaponList.WeaponBag")
 layerClasses["HomeBarLayer"]		 = import("..homeBar.HomeBarLayer")
@@ -40,8 +42,17 @@ end
 
 function UI:changeLayer(layerId, properties)
 	print("function UI:changeLayer(layerId)")
-	local layer = self:createLayer(layerId, properties)
-	self:dispatchEvent({name = UI.LAYER_CHANGE_EVENT, layer = layer})
+	local loadingType = nil
+	if layerId ==  "FightPlayer" then 
+		loadingType = "fight" 
+	elseif layerId == "HomeBarLayer" then 
+		loadingType = "home"
+	else
+		loadingType = nil
+	end
+	local layerCls = self:getLayerCls(layerId)
+	self:dispatchEvent({name = UI.LAYER_CHANGE_EVENT, layerCls = layerCls,
+		 loadingType = loadingType, properties = properties})
 end
 
 function UI:showPopup(layerId, properties, extra)
@@ -52,20 +63,29 @@ function UI:showPopup(layerId, properties, extra)
 		anim = extra.anim
 	end
 
-	local layer = self:createLayer(layerId, properties)
+	local layerCls = self:getLayerCls(layerId)
 	
-	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layer = layer, 
-		opacity = opacity, anim = anim})
+	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
+		opacity = opacity, anim = anim, 
+		properties = properties})
 end
 
 function UI:closePopup(layerId)
 	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId})
 end
 
-function UI:createLayer(layerId, properties)
+function UI:getLayerCls(layerId)
 	local cls = layerClasses[layerId]
 	assert(cls, "cls is nil cls id:"..layerId)
-	return cls.new(properties)
+	return cls
+end
+
+function UI:showLoad()
+	self:dispatchEvent({name = UI.LOAD_SHOW_EVENT})
+end
+
+function UI:hideLoad()
+	self:dispatchEvent({name = UI.LOAD_HIDE_EVENT})
 end
 
 return UI

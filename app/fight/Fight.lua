@@ -30,19 +30,20 @@ function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
 end
 
-function Fight:beginFight(properties)
+function Fight:beginFight()
     --关卡
-    self.groupId = properties.groupId
-    self.levelId = properties.levelId
-    self.levelInfo = self.groupId.."-"..self.levelId
+
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
 end
 
-function Fight:refreshData()
+function Fight:refreshData(properties)
     print("function Fight:refreshData()")
-   
+
+    self.groupId = properties.groupId
+    self.levelId = properties.levelId   
+
     --init inatance
     self:cleanModels()
 
@@ -52,6 +53,8 @@ function Fight:refreshData()
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.inlay = self.hero:getFightInlay()
+
+    self.goldValue = 0.0
 end
 
 function Fight:willStartFight()
@@ -80,7 +83,12 @@ end
 function Fight:onWin()
     self.userModel:levelPass(self.groupId,self.levelId)
 
-    -- cc.UMAnalytics:finishLevel(self.levelInfo)       
+    
+    self:setFightResult()
+    local levelInfo = self.groupId.."-"..self.levelId    
+    if device.platform == "android" then
+        cc.UMAnalytics:finishLevel(levelInfo)   
+    end    
     self:willEndFight()  
     self:clearFightData()  
 
@@ -91,7 +99,10 @@ function Fight:onFail()
 
     --clear
     self:clearFightData() 
-    -- cc.UMAnalytics:failLevel(self.levelInfo)   
+    local levelInfo = self.groupId.."-"..self.levelId  
+    if device.platform == "android" then
+        cc.UMAnalytics:failLevel(levelInfo)
+    end   
 end
 
 function Fight:checkDialog(appearType)
@@ -151,6 +162,25 @@ function Fight:cleanModels()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")  
+end
+
+function Fight:setGoldValue(goldValue_)
+    self.goldValue = goldValue_
+end
+
+function Fight:getGoldValue()
+    return self.goldValue
+end
+
+function Fight:setFightResult()
+    local hpPercent = self.hero:getHp() / self.hero:getMaxHp()
+    self.fightResult = {}
+    self.fightResult["goldNum"]   = self.goldValue
+    self.fightResult["hpPercent"] = hpPercent
+end
+
+function Fight:getFightResult()
+    return self.fightResult
 end
 
 return Fight

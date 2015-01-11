@@ -25,8 +25,8 @@ function FightPlayer:ctor(properties)
     --instance
     print("FightPlayer:ctor(properties)")
     self.fight      = md:getInstance("Fight")
-    self.fight:refreshData()
-    self.fight:beginFight(properties)
+    self.fight:refreshData(properties)
+    self.fight:beginFight()
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
@@ -57,7 +57,7 @@ function FightPlayer:ctor(properties)
     cc.EventProxy.new(self.hero, self)
         
         :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
-        :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
+        :addEventListener(self.hero.AWARD_GOLD_INCREASE_EVENT, handler(self, self.changeGoldCount)) 
     
     cc.EventProxy.new(self.fight, self)
         :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
@@ -84,10 +84,13 @@ function FightPlayer:setPause(event)
 end
 
 function FightPlayer:changeGoldCount(event)
-    local totolGold = event.goldCount
+    local lastTotalGold =  self.fight:getGoldValue() 
+    local totalGold = event.value + lastTotalGold
+    self.fight:setGoldValue(totalGold)
 
     local function changeGold()
-        if self.curGold < totolGold then
+        local totalGold = self.fight:getGoldValue()
+        if self.curGold < totalGold then
             self.curGold = self.curGold + 1
             self.labelGold:setString(self.curGold)
         else
@@ -116,8 +119,13 @@ function FightPlayer:showControl(event)
     --btn
     self.btnDefence:setVisible(true)
     self.btnRobot:setVisible(true)
+
     self.btnChange:setVisible(true)
     self.btnLei:setVisible(true)
+
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju then self.btnChange:setVisible(false) end    
 end
 
 function FightPlayer:hideControl(event)
@@ -597,6 +605,11 @@ function FightPlayer:moveFocus(offsetX, offsetY)
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
+    local map = md:getInstance("Map")
+    local isMove = map:isMoveMap()
+    -- print("isMove", isMove)
+    if not isMove then return end    
+
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
     local scale = KFightConfig.scaleMoveBg

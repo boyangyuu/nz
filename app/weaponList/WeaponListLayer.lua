@@ -16,17 +16,18 @@ function WeaponListLayer:ctor()
 
     -- instance
     self.selectedContent = nil
-    self.selectedCellId  = 4
+    self.selectedCellId  = 1
     self.weaponId = nil
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.commonPopModel = md:getInstance("commonPopModel")
-    
+    self.userModel = md:getInstance("UserModel")
+
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
-     cc.EventProxy.new(self.commonPopModel, self)
-       :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.intensify))
-       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
+     -- cc.EventProxy.new(self.commonPopModel, self)
+     --   :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.intensify))
+     --   :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
@@ -72,8 +73,31 @@ function WeaponListLayer:initUI()
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
     self.upgradecost      = cc.uiloader:seekNodeByName(self, "upgradecost")
+    self.buycost      = cc.uiloader:seekNodeByName(self, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self, "damagepluse")
-    
+
+    local shanghai = cc.uiloader:seekNodeByName(self, "shanghai")
+    local jingzhun = cc.uiloader:seekNodeByName(self, "jingzhun")
+    local huandan = cc.uiloader:seekNodeByName(self, "huandan")
+    local danjia = cc.uiloader:seekNodeByName(self, "danjia")
+    local zhuangbei = cc.uiloader:seekNodeByName(self, "zhuangbei")
+    local yimanji = cc.uiloader:seekNodeByName(self, "yimanji")
+    local shengji = cc.uiloader:seekNodeByName(self, "shengji")
+    local goumai = cc.uiloader:seekNodeByName(self, "goumai")
+    local yijianmanji = cc.uiloader:seekNodeByName(self, "yijianmanji")
+    self.buycost:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.upgradecost:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.damagepluse:enableOutline(cc.c4b(0, 255, 79,255), 2)
+    self.damagepluse:setColor(cc.c3b(0, 255, 79))
+    yijianmanji:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    shanghai:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    jingzhun:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    huandan:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    danjia:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    zhuangbei:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    yimanji:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    shengji:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    goumai:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.stars = {}
     for i=1,10 do
         self.stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
@@ -120,7 +144,9 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:buyWeapon(self.weaponId)
+            if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+                self:buyWeapon(self.weaponId)
+            end
         end
     end)
     addBtnEventListener(self.btnUpgrade, function(event)
@@ -128,11 +154,13 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            ui:showPopup("commonPopup",
-             {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级2星"},
-             {opacity = 155})
-
-            -- self:intensify(self.weaponId)
+            local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
+            -- ui:showPopup("commonPopup",
+            --  {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级到"..nextlevel.."星"},
+            --  {opacity = 155})
+            if self.userModel:costMoney(self.costupgrade) then
+                self:intensify(self.weaponId)
+            end
         end
     end)
     addBtnEventListener(self.btnOncefull, function(event)
@@ -151,6 +179,7 @@ function WeaponListLayer:initUI()
             self:equip(self.weaponId)
         end
     end)
+
     addBtnEventListener(self.btnEquiped, function(event)
         if event.name=='began' then
             print("offbtn is begining!")
@@ -163,14 +192,10 @@ function WeaponListLayer:initUI()
     --anim
     local armature = ccs.Armature:create("bt_goumai")
     local oncearmature = ccs.Armature:create("bt_goumai")
-    armature:setAnchorPoint(0,0)
-    armature:setPosition(0,6)
-    oncearmature:setAnchorPoint(0,0)
-    oncearmature:setPosition(0,6)
-    self.btnBuy:addChild(armature)
-    self.btnOncefull:addChild(oncearmature)
-    armature:getAnimation():play("Animation1" , -1, 1)
-    oncearmature:getAnimation():play("Animation1" , -1, 1)
+    addChildCenter(armature, self.btnBuy)
+    addChildCenter(oncearmature, self.btnOncefull)
+    armature:getAnimation():play("yjmj" , -1, 1)
+    oncearmature:getAnimation():play("yjmj" , -1, 1)
 
 end
 
@@ -228,6 +253,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.weaponrecord = self.weaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
     self.labelName:setString(self.weaponrecord["name"])
+    self.buycost:setString(self.weaponrecord["cost"])
     self.labelDescribe:setString(self.weaponrecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
     addChildCenter(weaponImg, self.layerGun)
@@ -261,7 +287,6 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
 
     self.progBullet:setPercent(bulletNum/kMaxBullet*100)
     self.progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
-    -- self.progAccuracy:setBreath()
     self.progReload  :setPercent((kMaxSpeed/reloadTime)*100)
 
     self.progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)
@@ -275,7 +300,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
     self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
     self.progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
-
+    self.labelDamage:setScale(0.7)
     self.labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
     self.labelPercent:setString(num.."%")
@@ -350,6 +375,10 @@ function WeaponListLayer:showButton()
     self.labelPercent:setVisible(true)
     self.damagepluse:setVisible(true)
     if self.weaponListModel:isWeaponExist(weaponid) then
+            self.progBulletNext:setVisible(true)
+        self.progAccuracyNext:setVisible(true)
+        self.progReloadNext:setVisible(true)
+
         self.btnBuy:setVisible(false)
         self.btnEquip:setVisible(true)
         if self.weaponListModel:isFull(weaponid) then
@@ -364,6 +393,11 @@ function WeaponListLayer:showButton()
             self.btnUpgrade:setVisible(true)
         end
     else
+        self.progBulletNext:setVisible(false)
+        self.progAccuracyNext:setVisible(false)
+        self.progReloadNext:setVisible(false)
+        self.damagepluse:setVisible(false)
+        self.labelPercent:setVisible(false)
         self.btnFull:setVisible(false)
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
@@ -390,17 +424,17 @@ end
 
 -- 升级事件
 function WeaponListLayer:intensify(event)
-    ui:closePopup()
-    function delayplaystar( )
+    -- ui:closePopup()
+    -- function delayplaystar( )
         self.weaponListModel:intensify(self.weaponId)
-    end
-    scheduler.performWithDelayGlobal(delayplaystar, 0.4)
+    -- end
+    -- scheduler.performWithDelayGlobal(delayplaystar, 0.4)
 
 end
 
-function WeaponListLayer:closePopup()
-    ui:closePopup()
-end
+-- function WeaponListLayer:closePopup()
+--     ui:closePopup()
+-- end
 
 -- 一键满级事件
 function WeaponListLayer:onceFull(weaponid)

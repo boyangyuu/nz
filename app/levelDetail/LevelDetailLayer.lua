@@ -36,7 +36,18 @@ function LevelDetailLayer:loadCCS()
 	self.labelTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
 	self.labelget = cc.uiloader:seekNodeByName(self, "levelget")
 	self.panelbiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
-
+	self.target    = cc.uiloader:seekNodeByName(self, "target")
+	self.yijiana    = cc.uiloader:seekNodeByName(self, "yijiana")
+	self.yijianb    = cc.uiloader:seekNodeByName(self, "yijianb")
+	self.yijianc    = cc.uiloader:seekNodeByName(self, "yijianc")
+	self.startlabel    = cc.uiloader:seekNodeByName(self, "startlabel")
+	self.yijiana:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.yijianb:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.yijianc:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.labelTitle:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.labelId:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.target:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.startlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
 	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")    
@@ -87,13 +98,13 @@ function LevelDetailLayer:initUI()
 	end
 	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
-		armature:setScale(0.8)
+		armature:setScale(DataTable["scale"])
 		addChildCenter(armature, self.panlEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
 	end
 
 
-	self:initMapUI()
+	self:initMapUI(DataTable["mapImg"])
 	self.recomWeaponId = DataTable["weapon"]
 	local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local weaponimg = display.newSprite("#icon_"..recomWeapon["imgName"]..".png")
@@ -106,10 +117,10 @@ function LevelDetailLayer:initUI()
 
 end
 
-function LevelDetailLayer:initMapUI()
+function LevelDetailLayer:initMapUI(mapName)
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
-	local mapSrcName = "map_"..self.groupId.."_"..self.levelId..".json"   -- todo 外界
+	local mapSrcName = mapName..".json"   -- todo 外界
 
 	local map = cc.uiloader:load(mapSrcName)
 	local mapimg = cc.uiloader:seekNodeByName(map, "bg")
@@ -146,7 +157,7 @@ end
 
 function LevelDetailLayer:initBtns()
 	self.btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
-	self.btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
+	self.btnStart = cc.uiloader:seekNodeByName(self, "btnbegin")
 	self.btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
 	self.btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
 	self.btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
@@ -163,8 +174,8 @@ function LevelDetailLayer:initBtns()
     local jijiaarmature = ccs.Armature:create("bt_yjzb")
     addChildCenter(goldarmature, self.btnGold)
     addChildCenter(jijiaarmature, self.btnJijia)
-    goldarmature:getAnimation():play("Animation1" , -1, 1)
-    jijiaarmature:getAnimation():play("Animation1" , -1, 1)
+    goldarmature:getAnimation():play("yjzb" , -1, 1)
+    jijiaarmature:getAnimation():play("yjzb" , -1, 1)
 
 	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
 		self.alreadybibei:setVisible(true)
@@ -240,7 +251,9 @@ function LevelDetailLayer:onClickBtnStart()
 		levelId = self.levelId})
 	self:onClickBtnOff()
 	local levelInfo = self.groupId.."-"..self.levelId
-	-- cc.UMAnalytics:startLevel(levelInfo)
+	if device.platform == "android" then
+		cc.UMAnalytics:startLevel(levelInfo)
+	end
 end
 
 

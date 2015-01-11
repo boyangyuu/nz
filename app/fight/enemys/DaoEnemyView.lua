@@ -47,6 +47,7 @@ function DaoEnemyView:playFire()
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     -- pWorldBone = self.armature:convertToWorldSpace(cc.p(0,0))
+    dump(self.property, "self.property")
     local property = {
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,
@@ -72,7 +73,7 @@ end
 
 function DaoEnemyView:onHitted(targetData)
     local demage     = targetData.demage
-    local scale      = targetData.demageScale
+    local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType
     if self.enemy:canHitted() and self:canHitted() then
         self.enemy:decreaseHp(demage * scale)

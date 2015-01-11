@@ -18,4 +18,12 @@ function BaseWave:getBoss(id)
 	assert(self.bosses[id], "config in wave is nil! id is: "..id)
 	return self.bosses[id] 
 end
+
+function BaseWave:getMapId()
+	return self.mapId
+end
+
+function BaseWave:getIsMoveMap()
+	return self.isMoveMap
+end
 return BaseWave

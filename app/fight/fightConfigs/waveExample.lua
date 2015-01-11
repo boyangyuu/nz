@@ -10,12 +10,76 @@ local waves = {
 				time = 1,
 				num = 6,
 				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
+				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
-					id = 1,
+					id = 10,
+					-- enemyId = 1,
+					type = "jinbi",
 					placeName = "place4",
+					jinbiType = "1",					
+				},
+			},		
+			{
+				time = 3,
+				num = 6,
+				pos = {100, 200, 0, 170, 140, 100},
+				delay = {0.1, 0.2,0.3, 0.1, 0.5, 0.1},
+				property = { 
+					id = 10,
+					-- enemyId = 1,
+					type = "jinbi",
+					placeName = "place2",
+					jinbiType = "1",				
 				},
 			},	
+			-- {
+			-- 	time = 1,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 3,
+			-- 		enemyId = 1,
+			-- 		type = "san",
+			-- 		placeName = "place4",					
+			-- 	},
+			-- },	
+			-- {
+			-- 	time = 1,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 3,
+			-- 		enemyId = 1,
+			-- 		type = "san",
+			-- 		placeName = "place4",					
+			-- 	},
+			-- },		
+			-- {
+			-- 	time = 1,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 3,
+			-- 		enemyId = 1,
+			-- 		type = "san",
+			-- 		placeName = "place4",					
+			-- 	},
+			-- },		
+			-- {
+			-- 	time = 1,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.1, 0.1,0.1, 0.1, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 3,
+			-- 		enemyId = 1,
+			-- 		type = "san",
+			-- 		placeName = "place4",					
+			-- 	},
+			-- },																																
 						
 		},
 	},
@@ -26,7 +90,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=100,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="anim_enemy_002",demage=3,hp=1,walkRate=400,rollRate=400,fireRate=200,
 		weak1=2,weak2=4},
 
 	--近战兵
@@ -57,13 +121,22 @@ local enemys = {
 		fireRate=200,weak1=3,weak2=5},	
 
 	--手雷
-	{id=9,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},				
+	{id=9,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},	
+
+	--金币兵
+	{id=10,image="jinbib",demage=10,hp=1,weak1=3,award = 100},					
 }
+
+local mapId = "map_1_1"
+
+local isMoveMap = true
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
+	self.mapId  = mapId
+	self.isMoveMap = isMoveMap
 end
 
 

@@ -42,6 +42,8 @@ Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 --hp
 Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
+Hero.AWARD_GOLD_INCREASE_EVENT      = "AWARD_GOLD_INCREASE_EVENT"
+
 --define
 local kMaxHp          = 100
 local kCritScale      = 3.0
@@ -131,6 +133,7 @@ function Hero:getFightInlay()
 end
 
 function Hero:getDemage()
+    --todo yby 解决卡顿！！
     local baseDemage = self.gun:getDemage()
     local value = 0
 

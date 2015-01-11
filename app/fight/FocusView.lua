@@ -42,7 +42,7 @@ end
 function FocusView:refreshFocus(event)
 	--clear
 	event = event or {}
-	print("function FocusView:refreshFocus(event)")
+	-- print("function FocusView:refreshFocus(event)")
 	if self.armature then
 		self.armature:removeFromParent()
 	end
@@ -88,9 +88,8 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
-	print("function FocusView:playFire()")
 	if self.playIndex == "stand" then
-		print("	if self.playIndex  then") 
+		-- print("	if self.playIndex  then") 
 		self.armature:getAnimation():play("fire01" , -1, 1) 
 		self.playIndex = "fire01"
 	elseif self.playIndex == "fire01" or self.playIndex == "fire02" then 

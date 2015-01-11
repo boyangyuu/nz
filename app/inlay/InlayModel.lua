@@ -4,12 +4,29 @@ local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
 function InlayModel:ctor(properties, events, callbacks)
 	InlayModel.super.ctor(self, properties)
+	self:initConfigTable()
 	self:addComponent("components.behavior.EventProtocol"):exportMethods()
+end
+
+function InlayModel:initConfigTable()
+	self.config = getConfig("config/items_xq.json")
+end
+
+function InlayModel:getRecordByKey(table, propertyName, key)
+    local recordArr={}
+    for k,v in pairs(table) do
+        for k1,v1 in pairs(v) do
+            if k1 == propertyName and v1 == key then
+                recordArr[#recordArr + 1] = v
+            end
+        end
+    end
+    return recordArr
 end
 
 function InlayModel:getConfigTable(propertyName, index)
 	assert(propertyName and index, "invalid param")
-	local records = getRecordByKey("config/items_xq.json", propertyName, index) or {}
+	local records = self:getRecordByKey(self.config, propertyName, index) or {}
 	return records
 end
 
@@ -65,13 +82,22 @@ end
 function InlayModel:equipInlay(inlayid, isRefresh)
 	local data = getUserData()
 	-- dump(data.inlay.bags)
+	if self:isInlayedExist(inlayid) == 2 then
+		return
+	end
+	if self:isBagsExist(inlayid) == false then
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "您还未拥有此镶嵌，请购买"},
+			 {opacity = 150})
+
+		return
+	end
 	for k,v in pairs(data.inlay.bags) do
 		if v.inlayid == inlayid and data.inlay.bags[k].ownednum > 0 then
 			print("equipInlay", self:isInlayedExist(inlayid))
 		-- case 1 已经装备过相同的
 			if self:isInlayedExist(inlayid) == 2 then
-				print("已经装备过了")
-
+				return
 		-- case 2 有相同type的，但是不同的inlay
 			elseif self:isInlayedExist(inlayid) == 1 then
 				-- 1、bags数量-1
@@ -161,16 +187,14 @@ function InlayModel:equipAllInlays(isRefresh)
 	        end
 	    end
 	end
-
 	for k,v in pairs(bestInlayId) do
-		if v ~= 100 then
+		if v ~= 0 then
 			self:equipInlay(v, false)
 		end
 	end
 	if isRefresh == nil then isRefresh = true end
 	if isRefresh == true then
-		self:refreshInfo("speed")
-		print(self:refreshInfo("speed"))
+	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = "speed",isall = true})
 	end
 end
 
@@ -198,7 +222,7 @@ function InlayModel:equipAllBestInlays(table)
 	dump(bestInlayId)
 
 	for k,v in pairs(bestInlayId) do
-		if v ~= 100 then
+		if v ~= 0 then
 			-- dump(v)
 			self:equipInlay(v, false)
 		end

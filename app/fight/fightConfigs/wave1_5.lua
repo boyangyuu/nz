@@ -15,10 +15,11 @@ local waves = {
 				},
 			},
 			{
+				descId = "dunbing", --简介
 				time = 2,	
 				num = 1,
 				pos = {230},
-				delay = {0.6},
+				delay = {2.6},
 				property = {
 					placeName = "place13" ,
 					type = "jin",
@@ -39,7 +40,6 @@ local waves = {
 			{
 				time = 9,	
 				num = 3,
-				place = "",
 				pos = {200,120,100},
 				delay = {0.3,0.6,0.7},
 				property = {
@@ -64,7 +64,10 @@ local waves = {
 				delay = {0.3},
 				property = {
 					placeName = "place5" ,   
-					id = 1,
+					id = 7,
+					type = "dao",
+					missileId = 8,
+					missileType = "lei",
 				},
 			},		
 			{
@@ -74,7 +77,10 @@ local waves = {
 				delay = {0.3},
 				property = {
 					placeName = "place6" ,    
-					id = 1,
+					id = 7,
+					type = "dao",
+					missileId = 8,
+					missileType = "lei",
 				},
 			},		
 			{
@@ -84,7 +90,10 @@ local waves = {
 				delay = {0.3},
 				property = { 
 					placeName = "place7" ,  
-					id = 1,
+					id = 7,
+					type = "dao",
+					missileId = 8,
+					missileType = "lei",
 				},
 			},		
 			{
@@ -93,7 +102,9 @@ local waves = {
 				pos = {30},
 				delay = {0.3},
 				property = { 
-					id = 1,
+					id = 5,
+					type = "dao",
+					missileId = 6,
 					placeName = "place8" ,  
 				},
 			},		
@@ -104,14 +115,16 @@ local waves = {
 				delay = {0.3},
 				property = {
 					placeName = "place9" ,   
-					id = 1,
+					id = 5,
+					type = "dao",
+					missileId = 6,
 				},
 			},		
 			{
 				time = 16,	
-				num = 1,
+				num = 2,
 				pos = {10},
-				delay = {0.3},
+				delay = {0.3,3},
 				property = {
 					type = "san",
 					enemyId = 1,
@@ -262,7 +275,7 @@ local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=5,hp=680,walkRate=400,rollRate=400,fireRate=300,
 		weak1=2,weak2=2},
-	--近战兵
+	--盾兵
 	{id=2,image="dunbing",demage=5,hp=2000,walkRate=400,rollRate=0,fireRate=300,
 		weak1=1,weak2=1},
 	--伞兵
@@ -278,13 +291,23 @@ local enemys = {
 		fireRate=200,weak1=2,weak2=2},		
 
 	--导弹
-	{id=6,image="daodan",demage=20,hp=200,weak1=1,weak2=1},					
+	{id=6,image="daodan",demage=20,hp=200,weak1=1,weak2=1},	
+
+	--手雷兵
+	{id=7,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=100,fireRate=200,weak1=3,weak2=5},	
+	--手雷
+	{id=8,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},					
 }
+
+local mapId = "map_1_5"
+local isMoveMap = false
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
+	self.mapId  = mapId
+	self.isMoveMap = isMoveMap
 end
 
 return waveClass

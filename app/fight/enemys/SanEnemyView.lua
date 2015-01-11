@@ -54,8 +54,8 @@ function SanEnemyView:playFall()
 	self.armature:setPositionY(display.height)
 	
     --action
-	local speed = -2
-	local action = cc.MoveBy:create(1/60, cc.p(0, speed))
+	local speed = -2 * 60
+	local action = cc.MoveBy:create(1, cc.p(0, speed))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))
 
@@ -70,7 +70,7 @@ function SanEnemyView:stopFall()
     self:setWillRemoved()  
 
     -- 召唤
-    dump(self.property, "self.property")
+    -- dump(self.property, "self.property")
     local data = {
         pos = cc.p(self:getPositionX(), self:getPlaceBound().y),
         delay = 0,

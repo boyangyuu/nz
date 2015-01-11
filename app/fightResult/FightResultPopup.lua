@@ -37,7 +37,7 @@ function FightResultPopup:animationEvent(armatureBack,movementType,movementID)
         if movementID == "renwuwc" then
             armatureBack:pause()
             ui:closePopup()
-            ui:changeLayer("FightResultLayer",{percent = 0.2})
+            ui:changeLayer("FightResultLayer",{percent = 0.4})
         end
     end
 end

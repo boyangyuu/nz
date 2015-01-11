@@ -154,10 +154,11 @@ local waves = {
 				},
 			},
 			{
+				descId = "zibaob",  --简介
 				time = 15,	
 				num = 3,
 				pos = {130, 200,300},
-				delay = {0.1, 1,2},
+				delay = {3.1, 4, 5},
 				property = { 
 					type = "bao",
 					id = 4,
@@ -258,10 +259,15 @@ local enemys = {
 		fireRate=100,weak1=1,weak2=1},	
 }
 
+local mapId = "map_1_3"
+local isMoveMap = true
+
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
+	self.mapId  = mapId
+	self.isMoveMap = isMoveMap
 end
 
 return waveClass

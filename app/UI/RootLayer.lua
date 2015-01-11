@@ -1,6 +1,7 @@
 
-local HomeBarLayer = import("..homeBar.HomeBarLayer")
-local main = import("..start.StartLayer")
+
+local StartLayer = import("..start.StartLayer")
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
 
 local RootLayer = class("RootLayer", function()
@@ -10,14 +11,8 @@ end)
 function RootLayer:ctor()
 	--instance
 
-	--add res
-    self:addResHome()
-    -- self:addResFight()    
+	--add res 
     self:initLoginLayer()
-
-
-    --loading
-    --todo
 
 	--event
 	cc.EventProxy.new(ui, self)
@@ -25,50 +20,112 @@ function RootLayer:ctor()
 end
 
 function RootLayer:initLoginLayer()
-    self.curLayer = main.new()
-    self:removeAllChildren()
+    self.curLayer = StartLayer.new()
     self:addChild(self.curLayer)      
-    self:addResFight()    
 end
 
 function RootLayer:switchLayer(event)
 	-- dump(event, "event")
-	local layer = event.layer
-	self:removeAllChildren()
+    --clear
+    self.curLayer:removeSelf()
 
-	self:addChild(layer)
+    --add
+    local loadingType = event.loadingType
+    local layerCls   = event.layerCls
+    local properties = event.properties
+    if loadingType == "fight" or loadingType == "home" then 
+        self.waitLayerCls        = layerCls
+        self.waitLayerProperties = properties
+        self:showLoadLayer(loadingType)
+    else
+    	self.curLayer = layerCls.new(properties)
+    	self:addChild(self.curLayer)
+    end
 end
 
-function RootLayer:checkLoadLayer()
-	
+function RootLayer:showLoadLayer(type)
+    print("function RootLayer:showLoadLayer(type)")
+    ui:showLoad()
+
+    --clear
+    self.isadded = false
+    self:clearCache()
+
+    --addcache
+    if type == "home" then 
+        self:addResHome()
+    elseif type == "fight" then
+        self:addResFight()
+    end
+end
+
+function RootLayer:clearCache()
+    -- display.removeUnusedSpriteFrames()
 end
 
 function RootLayer:addResHome()
     --sprite
+    print("function RootLayer:addResHome()")
     cc.FileUtils:getInstance():addSearchPath("res/public")
     display.addSpriteFrames("allImg0.plist", "allImg0.png")
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
     
     --armature
-    
+    local manager = ccs.ArmatureDataManager:getInstance()
+
+    local bossImgs = {"boss01","boss02",}
+ 
+    for i,v in ipairs(bossImgs) do
+        local src = "res/Fight/enemys/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+    end
+
+    local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
+    manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
+
+    local dizuosrc = "res/LevelMap/gktb/gktb.csb"
+    manager:addArmatureFileInfoAsync(dizuosrc,  handler(self, self.dataLoaded))
+
+    local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
+    manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
+    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
+    manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
+
+    local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.csb"
+    manager:addArmatureFileInfoAsync(hjwqbssrc,  handler(self, self.dataLoaded))
+
+    local xqtbsrc = "res/InlayShop/xqtb/xqtb.csb"
+    manager:addArmatureFileInfoAsync(xqtbsrc,  handler(self, self.dataLoaded))
+
+    local xqzbsrc = "res/InlayShop/xqzb/xqzb.csb"
+    manager:addArmatureFileInfoAsync(xqzbsrc,  handler(self, self.dataLoaded))
     --sound
     local startMusic = "res/Start/start.ogg"
-    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
     audio.preloadMusic(startMusic)
+    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
     -- audio.preloadMusic(homeBarMusic)
+
+
 end
 
 function RootLayer:addResFight()
+    print("function RootLayer:addResFight()")
     --sprite
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
+    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
+    
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
-        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei"}
+        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "jinbib"}
  
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+        -- local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        -- local png   = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        -- display.addSpriteFrames(plist, png)
+        -- self:add
     end
 
     local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
@@ -111,19 +168,7 @@ function RootLayer:addResFight()
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
     end    
 
-    local dizuosrc = "res/LevelMap/gktb/gktb.csb"
-    manager:addArmatureFileInfoAsync(dizuosrc,  handler(self, self.dataLoaded))
-
-    local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
-    manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
-
-    --dd
-    local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
-    manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
-    
-    local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
-    manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
-
+    --todo
     local rwkssrc = "res/public/Anim/renwuks/renwuks.csb"
     manager:addArmatureFileInfoAsync(rwkssrc,  handler(self, self.dataLoaded))
 
@@ -133,7 +178,17 @@ function RootLayer:addResFight()
     local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.csb"
     manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
 
+
+    local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
+    manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
+   
+
+   --music
     self:addResFightMusic()
+end
+
+function RootLayer:addSpriteFrames()
+    
 end
 
 function RootLayer:addResFightMusic()
@@ -143,9 +198,29 @@ end
 
 function RootLayer:dataLoaded(percent)
     print(" dataLoaded() percent:"..percent)
-    if percent == 1 then 
-        -- self:initLoginLayer()
+    if percent == 1 then
+        if self.isadded then return end
+
+        --clear load
+        self:removeLoadDelay()
+        --add dest layer
+         self.isadded = true 
     end
+end
+
+function RootLayer:removeLoadDelay()
+    local function callfunc ()
+        ui:hideLoad()   
+        print("ui:hideLoad()")   
+    end
+
+    local function callfuncAdd()
+        local p = self.waitLayerProperties
+        self.curLayer = self.waitLayerCls.new(p)
+        self:addChild(self.curLayer)
+    end
+    scheduler.performWithDelayGlobal(callfunc, 2.5)
+    scheduler.performWithDelayGlobal(callfuncAdd, 2.0)
 end
 
 return RootLayer
