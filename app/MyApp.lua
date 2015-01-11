@@ -112,7 +112,7 @@ function MyApp:createGameStateFile()
             diamond = 1000000,
                       
             currentlevel =  {
-                        group = 1,
+                        group = 2,
                         level = 1,
             },
             guide = {

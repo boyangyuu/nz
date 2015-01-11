@@ -77,7 +77,7 @@ local waves = {
 					placeName = "place4",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -144,7 +144,7 @@ local waves = {
 					placeName = "place7",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -210,7 +210,7 @@ local waves = {
 					placeName = "place8",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -266,7 +266,7 @@ local waves = {
 					placeName = "place7",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -312,7 +312,7 @@ local waves = {
 					placeName = "place2",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -344,7 +344,7 @@ local waves = {
 					placeName = "place10",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},
 			{
@@ -366,7 +366,7 @@ local waves = {
 					placeName = "place4",  
 					type = "dao",
 					id = 2,
-					enemyId = 3,
+					missileId = 3,
 				},
 			},	
 		},

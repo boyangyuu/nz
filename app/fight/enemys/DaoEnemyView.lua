@@ -47,6 +47,7 @@ function DaoEnemyView:playFire()
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     -- pWorldBone = self.armature:convertToWorldSpace(cc.p(0,0))
+    dump(self.property, "self.property")
     local property = {
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,

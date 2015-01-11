@@ -36,7 +36,18 @@ function LevelDetailLayer:loadCCS()
 	self.labelTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
 	self.labelget = cc.uiloader:seekNodeByName(self, "levelget")
 	self.panelbiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
-
+	self.target    = cc.uiloader:seekNodeByName(self, "target")
+	self.yijiana    = cc.uiloader:seekNodeByName(self, "yijiana")
+	self.yijianb    = cc.uiloader:seekNodeByName(self, "yijianb")
+	self.yijianc    = cc.uiloader:seekNodeByName(self, "yijianc")
+	self.startlabel    = cc.uiloader:seekNodeByName(self, "startlabel")
+	self.yijiana:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.yijianb:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.yijianc:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.labelTitle:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.labelId:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.target:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	self.startlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
 	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")    
@@ -146,7 +157,7 @@ end
 
 function LevelDetailLayer:initBtns()
 	self.btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
-	self.btnStart = cc.uiloader:seekNodeByName(self, "btn_start")
+	self.btnStart = cc.uiloader:seekNodeByName(self, "btnbegin")
 	self.btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
 	self.btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
 	self.btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
@@ -240,7 +251,9 @@ function LevelDetailLayer:onClickBtnStart()
 		levelId = self.levelId})
 	self:onClickBtnOff()
 	local levelInfo = self.groupId.."-"..self.levelId
-	-- cc.UMAnalytics:startLevel(levelInfo)
+	if device.platform == "android" then
+		cc.UMAnalytics:startLevel(levelInfo)
+	end
 end
 
 

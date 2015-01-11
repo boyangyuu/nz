@@ -37,7 +37,7 @@ function Attackable:ctor(property)
     self:scheduleUpdate()  
     self:setNodeEventEnabled(true)	
     
-    -- self:test()
+    self:test()
 end
 
 function Attackable:testStop(event)
@@ -165,7 +165,7 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
     
     -- dump(bound, "bound ------")
     -- dump(enemyBound, "enemyBound -------")    
-    self:test()
+    -- self:test()
     return cc.rectIntersectsRect(bound, enemyBound)
 end
 

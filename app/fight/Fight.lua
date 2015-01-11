@@ -81,9 +81,12 @@ end
 function Fight:onWin()
     self.userModel:levelPass(self.groupId,self.levelId)
 
-    -- local levelInfo = self.groupId.."-"..self.levelId    
-    -- cc.UMAnalytics:finishLevel(levelInfo)       
+    
     self:setFightResult()
+    local levelInfo = self.groupId.."-"..self.levelId    
+    if device.platform == "android" then
+        cc.UMAnalytics:finishLevel(levelInfo)   
+    end    
     self:willEndFight()  
     self:clearFightData()  
 
@@ -94,8 +97,10 @@ function Fight:onFail()
 
     --clear
     self:clearFightData() 
-    -- local levelInfo = self.groupId.."-"..self.levelId  
-    -- cc.UMAnalytics:failLevel(levelInfo)   
+    local levelInfo = self.groupId.."-"..self.levelId  
+    if device.platform == "android" then
+        cc.UMAnalytics:failLevel(levelInfo)
+    end   
 end
 
 function Fight:checkDialog(appearType)
