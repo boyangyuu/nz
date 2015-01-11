@@ -7,6 +7,7 @@ Define.kHeroBaseHp 				= 100.0  --
 
 --黄金武器
 Define.kGoldActivate 			= 15    --黄金武器激活
+Define.kGoldTime 				= 10    --黄金武器激活时间
 
 --机甲
 Define.kRobotCoolDownTime 		= 0.08   --robot 冷却时间
@@ -25,6 +26,9 @@ Define.cdTimes 					= 10.0   --十秒恢复完毕
 
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
+Define.kGoldCoinValue			= 3.33		--单个金币值为3
+
+
 
 --狙击枪
 Define.kJuRange 				= 4.0

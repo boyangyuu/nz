@@ -28,7 +28,6 @@ function MainScene:ctor()
     guideLayer:setPositionY(display.offset)
     self:addChild(guideLayer, 300)
 
-
     --debug
     local debugLayer = DebugLayer.new()
     debugLayer:setPositionY(display.offset)

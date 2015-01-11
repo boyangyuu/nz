@@ -126,11 +126,9 @@ function MapView:updateEnemys()
 	--addEnemys
 	local lastTime = 0
 	for groupId, group in ipairs(wave.enemys) do
-
+		--desc
+		self:showEnemyIntro(group.descId)
 		for i = 1, group.num do
-			--desc
-			self:showEnemyIntro(group.descId)
-
 			--delay
 			print("group time", group.time)
 			local delay = (group.delay[i] or lastTime) + group.time
