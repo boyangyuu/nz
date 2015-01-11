@@ -53,6 +53,8 @@ function Fight:refreshData(properties)
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.inlay = self.hero:getFightInlay()
+
+    self.goldValue = 0.0
 end
 
 function Fight:willStartFight()

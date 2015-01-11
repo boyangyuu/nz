@@ -3,7 +3,7 @@
 local Define = class("Define", cc.mvc.ModelBase)
 
 --hero
-Define.kHeroBaseHp 				= 100.0   
+Define.kHeroBaseHp 				= 100.0  --
 
 --黄金武器
 Define.kGoldActivate 			= 15    --黄金武器激活

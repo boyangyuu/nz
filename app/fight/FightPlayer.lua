@@ -84,7 +84,8 @@ function FightPlayer:setPause(event)
 end
 
 function FightPlayer:changeGoldCount(event)
-    local totalGold = event.value + self.totalGold 
+    local lastTotalGold =  self.fight:getGoldValue() 
+    local totalGold = event.value + lastTotalGold
     self.fight:setGoldValue(totalGold)
 
     local function changeGold()

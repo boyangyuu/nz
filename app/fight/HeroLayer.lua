@@ -109,12 +109,13 @@ function HeroLayer:killEnmeyGold(event)
 	local enemyPos = event.enemyPos
 	local value = event.award 
 	-- print("value", value)
+
 	for i = 1, 3 do
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)
 		armature:getAnimation():play("gold", -1, 1)
 		armature:runAction(cc.Sequence:create(
-			--todo 待优化
+			
 			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
 			cc.DelayTime:create(0.5 - i * 0.1),
 			cc.MoveTo:create(0.5, cc.p(664, 604)),
