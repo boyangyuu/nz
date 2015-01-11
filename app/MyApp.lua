@@ -1,4 +1,4 @@
-
+require("config")
 
 require("framework.init")
 require("app.includes.functionUtils")
