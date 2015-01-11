@@ -41,7 +41,7 @@ function DebugLayer:showError(event)
 	:onButtonRelease(function( event )
 		event.target:setScale(btnScale)
 	end)
-	:onButtonClicked(function(  )
+	:onButtonClicked(function()
 		self:close()
 	end)
 end
