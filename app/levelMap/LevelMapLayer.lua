@@ -158,7 +158,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local panelBtn = {}
     local group,level = self.LevelMapModel:getConfig()
     for i = 1, self.levelAmount[groupId] do
-        levelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
+        levelBtn[i]  = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
         levelDian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..i)
         panelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..i)
         levelBtn[i]:setTouchEnabled(true)
@@ -166,6 +166,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         if  group > groupId or group == groupId and level > i  then
 
         elseif group == groupId and level == i then
+            print("....i")
             levelDian[i]:setVisible(false)
             -- while true do
             local action = transition.sequence({
@@ -178,7 +179,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             local armature = ccs.Armature:create("gktb")
             armature:setScale(0.8)
             armature:setPosition(panelBtn[i]:getContentSize().width/2,20)
-            panelBtn[i]:addChild(armature)
+            panelBtn[level]:addChild(armature)
             if type == "boss" or type == "juji" then
                 armature:getAnimation():play("dizuohong" , -1, 1)
             elseif type == "jinbi" then

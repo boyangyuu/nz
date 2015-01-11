@@ -309,11 +309,16 @@ function InlayModel:getGoldByType( typeName )
 end
 
 function InlayModel:removeAllInlay()
+	if device.platform == "android" then
+		local allInlayed = self:getAllInlayed()
+		for k,v in pairs(allInlayed) do
+			local useInfo = self:getInlayType(v).."_"..self:getInlayPriority(v)
+			cc.UMAnalytics:use(useInfo, 1,0)
+		end
+	end
 	local data = getUserData()
 	data.inlay.inlayed = {}
-
 	setUserData(data)
-	
 end
 
 return InlayModel

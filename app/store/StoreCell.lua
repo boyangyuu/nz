@@ -137,8 +137,10 @@ function StoreCell:initCellUI(parameter)
                     else
                         self.propModel:buyProp(record["nameid"],record["buynum"])
                     end
+                    if device.platform == "android" then
+                        cc.UMAnalytics:buy(record["nameid"], 1, record["price"])   
+                    end 
                     ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
-
                 end
             elseif type == "bank" then
 
@@ -147,6 +149,11 @@ function StoreCell:initCellUI(parameter)
                     self.inlayModel:buyInlay(record["id"])
                     ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
                 end
+                if device.platform == "android" then
+                    local buyInfo = record["type"].."_"..record["property"]
+                    cc.UMAnalytics:buy(buyInfo, 1, record["goldPrice"])   
+                end 
+
             end
         end
     end)
