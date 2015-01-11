@@ -57,7 +57,7 @@ function FightPlayer:ctor(properties)
     cc.EventProxy.new(self.hero, self)
         
         :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
-        :addEventListener("changeGold", handler(self, self.changeGoldCount)) 
+        :addEventListener(self.hero.AWARD_GOLD_INCREASE_EVENT, handler(self, self.changeGoldCount)) 
     
     cc.EventProxy.new(self.fight, self)
         :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
@@ -84,10 +84,12 @@ function FightPlayer:setPause(event)
 end
 
 function FightPlayer:changeGoldCount(event)
-    local totolGold = event.goldCount
+    local totalGold = event.value + self.totalGold 
+    self.fight:setGoldValue(totalGold)
 
     local function changeGold()
-        if self.curGold < totolGold then
+        local totalGold = self.fight:getGoldValue()
+        if self.curGold < totalGold then
             self.curGold = self.curGold + 1
             self.labelGold:setString(self.curGold)
         else

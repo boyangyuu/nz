@@ -267,7 +267,9 @@ function MapView:tick(dt)
 			local boundingbox = enemy:getCascadeBoundingBox()
 			local size = boundingbox.size
 			local pos = cc.p(boundingbox.x + size.width / 2, boundingbox.y + size.height / 4)
-			self:doKillAward(pos)
+			local enemyModel = enemy:getEnemyModel()
+			local award = enemyModel:getAward()
+			self:doKillAward(pos, award)
 			--remove
 			table.remove(self.enemys, i)
 			enemy:removeFromParent()
@@ -279,9 +281,9 @@ function MapView:tick(dt)
 	end
 
 end
-function MapView:doKillAward(pos)
+function MapView:doKillAward(pos, award)
 	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-		enemyPos = pos})
+		enemyPos = pos, award = award})
 end
 
 --[[
@@ -370,7 +372,7 @@ function MapView:onHeroFire(event)
 	else
 		self:singleFire(datas)
 	end
---[[
+
 	--pos
 	local pWorld1 = focusRangeNode:convertToWorldSpace(cc.p(0,0))
 	local box = focusRangeNode:getBoundingBox()
@@ -381,7 +383,6 @@ function MapView:onHeroFire(event)
 	-- print("isHitted", isHitted)
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld= pWorld1})
-		]]
 end
 
 function MapView:mutiFire(datas)

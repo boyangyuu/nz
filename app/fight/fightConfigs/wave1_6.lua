@@ -249,6 +249,7 @@ local waves = {
 	{
 		enemys = {  --boss
 			{
+				descId = "boss02",  --简介
 				time = 3,	
 				num = 1,
 				pos = {250},

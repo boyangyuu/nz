@@ -46,4 +46,8 @@ function Enemy:getConfig()
     return self.config
 end
 
+function Enemy:getAward()
+    return self.config["award"] or define.kKillEnemyAwardGold
+end
+
 return Enemy

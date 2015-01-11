@@ -15,10 +15,11 @@ local waves = {
 				},
 			},
 			{
+				descId = "dunbing", --简介
 				time = 2,	
 				num = 1,
 				pos = {230},
-				delay = {0.6},
+				delay = {2.6},
 				property = {
 					placeName = "place13" ,
 					type = "jin",

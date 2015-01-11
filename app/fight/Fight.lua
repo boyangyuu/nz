@@ -83,6 +83,7 @@ function Fight:onWin()
 
     -- local levelInfo = self.groupId.."-"..self.levelId    
     -- cc.UMAnalytics:finishLevel(levelInfo)       
+    self:setFightResult()
     self:willEndFight()  
     self:clearFightData()  
 
@@ -154,6 +155,25 @@ function Fight:cleanModels()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")  
+end
+
+function Fight:setGoldValue(goldValue_)
+    self.goldValue = goldValue_
+end
+
+function Fight:getGoldValue()
+    return self.goldValue
+end
+
+function Fight:setFightResult()
+    local hpPercent = self.hero:getHp() / self.hero:getMaxHp()
+    self.fightResult = {}
+    self.fightResult["goldNum"]   = self.goldValue
+    self.fightResult["hpPercent"] = hpPercent
+end
+
+function Fight:getFightResult()
+    return self.fightResult
 end
 
 return Fight

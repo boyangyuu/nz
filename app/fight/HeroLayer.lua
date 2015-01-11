@@ -38,6 +38,7 @@ function HeroLayer:ctor(properties)
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))	
+		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnmeyGold))		
 		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
 	
 	cc.EventProxy.new(self.inlay, self)
@@ -104,10 +105,10 @@ function HeroLayer:initKillTimerNode()
 end
 
 --杀死敌人后跳出3金币
-function HeroLayer:killEnmeyGold(enemyPos)
-	local awardValue = define.kKillEnemyAwardGold 
-	local goldCount = self.killCntTotal * awardValue
-	print("goldCount", goldCount)
+function HeroLayer:killEnmeyGold(event)
+	local enemyPos = event.enemyPos
+	local value = event.award 
+	-- print("value", value)
 	for i = 1, 3 do
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)
@@ -119,8 +120,8 @@ function HeroLayer:killEnmeyGold(enemyPos)
 			cc.MoveTo:create(0.5, cc.p(664, 604)),
 			cc.CallFunc:create(function ()
 				if i == 1 then
-					self.hero:dispatchEvent({name = "changeGold", 
-						goldCount = goldCount})
+					self.hero:dispatchEvent({name = self.hero.AWARD_GOLD_INCREASE_EVENT, 
+						value = value})
 				end
 				armature:removeFromParent()
 			end)
@@ -157,7 +158,6 @@ function HeroLayer:killEnemyCallBack(event)
 	
 	--总杀
 	self.killCntTotal = self.killCntTotal + 1
-	self:killEnmeyGold(event.enemyPos)
 	
 	if not isGold then 
 		self:killEnemyKeep()
@@ -262,7 +262,7 @@ function HeroLayer:onThrowGrenade(event)
 					cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 				 	cc.CallFunc:create(
 				 		function ()
-		                    local targetData = {demage = kLeiDemage, demageType = "lei", scale = 1.0}
+		                    local targetData = {demage = kLeiDemage, demageType = "lei", demageScale = 1.0}
 		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
 		                    	targetData = targetData, destPos = destPos,destRect = destRect })
 							armature:removeFromParent()

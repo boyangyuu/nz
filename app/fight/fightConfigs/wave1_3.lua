@@ -154,10 +154,11 @@ local waves = {
 				},
 			},
 			{
+				descId = "zibaob",  --简介
 				time = 15,	
 				num = 3,
 				pos = {130, 200,300},
-				delay = {0.1, 1,2},
+				delay = {3.1, 4, 5},
 				property = { 
 					type = "bao",
 					id = 4,
