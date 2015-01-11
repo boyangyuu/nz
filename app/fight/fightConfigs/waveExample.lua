@@ -8,30 +8,28 @@ local waves = {
 		enemys = {  	
 			{
 				time = 1,
+				descId = "boss01",
 				num = 6,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
 					id = 10,
-					-- enemyId = 1,
 					type = "jinbi",
-					placeName = "place4",
-					jinbiType = "1",					
+					placeName = "place1",	
+					speed = 2.0,			
 				},
 			},		
-			{
-				time = 3,
-				num = 6,
-				pos = {100, 200, 0, 170, 140, 100},
-				delay = {0.1, 0.2,0.3, 0.1, 0.5, 0.1},
-				property = { 
-					id = 10,
-					-- enemyId = 1,
-					type = "jinbi",
-					placeName = "place2",
-					jinbiType = "1",				
-				},
-			},	
+			-- {
+			-- 	time = 3,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 140, 100},
+			-- 	delay = {0.1, 0.2,0.3, 0.1, 0.5, 0.1},
+			-- 	property = { 
+			-- 		id = 1,
+			-- 		-- enemyId = 1,
+			-- 		placeName = "place2",				
+			-- 	},
+			-- },	
 			-- {
 			-- 	time = 1,
 			-- 	num = 6,
@@ -124,7 +122,7 @@ local enemys = {
 	{id=9,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},	
 
 	--金币兵
-	{id=10,image="jinbib",demage=10,hp=1,weak1=3,award = 100},					
+	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},					
 }
 
 local mapId = "map_1_1"

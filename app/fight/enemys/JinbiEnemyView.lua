@@ -20,6 +20,7 @@ function JinbiEnemyView:ctor(property)
     self.isFlying = true
     self.property = property
     
+
     --events
     cc.EventProxy.new(self.enemy, self)
         :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
@@ -48,18 +49,18 @@ function JinbiEnemyView:playFly()
 	--start
 	
     --action
-	local speed = 5 * 60
+    local scale = self.property["speed"]
+	local speed = scale * 60
 	local action = cc.MoveBy:create(1, cc.p(0, speed))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))
 
     --play
-    self.armature:getAnimation():play("stand" , -1, 1) 
+    self.armature:getAnimation():play("fly" , -1, 1) 
 end
 
 function JinbiEnemyView:stopFly()
-	--stop action
-    self:setWillRemoved()  
+    self:setWillRemoved()
 end
 
 function JinbiEnemyView:test()
@@ -70,17 +71,15 @@ function JinbiEnemyView:test()
 	drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
---Attackable interface
-function JinbiEnemyView:playHitted(event)
-    -- print("JinbiEnemyView:playHitted")
-end
-
 function JinbiEnemyView:playKill(event)
-    -- print("JinbiEnemyView:playKill")
-    self:setDeadDone()
+    self.armature:getAnimation():play("die" , -1, 1)
     self.hero:dispatchEvent({
                 name = self.hero.ENEMY_KILL_HEAD_EVENT})
     --屏幕动画
+end
+
+function JinbiEnemyView:playHitted(event)
+    
 end
 
 function JinbiEnemyView:onHitted(targetData)
@@ -93,7 +92,11 @@ function JinbiEnemyView:onHitted(targetData)
 end
 
 function JinbiEnemyView:animationEvent(armatureBack,movementType,movementID)
+    if movementID ~= "die" then
 
+    elseif movementID == "die" then 
+        self:setDeadDone()
+    end 
 end
 
 function JinbiEnemyView:getModel(property)

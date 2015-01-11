@@ -14,8 +14,6 @@ FightInlay.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
 FightInlay.INLAY_GOLD_BEGIN_EVENT       = "INLAY_GOLD_BEGIN_EVENT" --激活黄金武器（同时刷新血量上限）
 FightInlay.INLAY_GOLD_END_EVENT         = "INLAY_GOLD_END_EVENT"
 
---constanst
-local kGoldTime = 5.0
 
 function FightInlay:ctor(properties)
     --instance
@@ -57,6 +55,7 @@ function FightInlay:activeGold()
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
 
     --delay
+    local kGoldTime = define.kGoldTime
     self:delayCallGoldEnd(kGoldTime)
 end
 
@@ -65,6 +64,7 @@ function FightInlay:delayCallGoldEnd(delay)
 end
 
 function FightInlay:activeGoldEnd()
+    if self:getIsNativeGold() then return end
     self:setIsActiveGold(false)
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_END_EVENT})

@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+--[[	{
 		enemys = {
 			{
 				time = 3,
@@ -198,7 +198,7 @@ local waves = {
 				},
 			},						
 		},
-	},	
+	},	--]]
 	-- 金币
 	{
 		enemys = {
@@ -208,10 +208,10 @@ local waves = {
 				delay = {0.3, 0.6, 1,1.5,4.0,4.5},
 				pos = {150,250,400,50,100,350},
 				property = {
-					type = "san",
+					type = "jinbi",
 					placeName = "place5",  
-					id = 3,
-					enemyId = 1,
+					speed = 1.0,
+					id = 7,
 				},
 			},
 			{
@@ -220,10 +220,10 @@ local waves = {
 				delay = {0.3, 0.6,1.5,0.9,2,5.0,5.5,6.0},
 				pos = {200,100,0,300,50,150,250},
 				property = {
-					type = "san",
+					type = "jinbi",
 					placeName = "place7",  
-					id = 3,
-					enemyId = 1,
+					speed = 2.0,
+					id = 6,
 				},
 			},
 			{
@@ -232,12 +232,48 @@ local waves = {
 				delay = {0.3,0.5,1,6.0,6.5},
 				pos = {50,150,250,100,200},
 				property = {
-					type = "san",
-					placeName = "place6",  
-					id = 3,
-					enemyId = 1,
+					type = "jinbi",
+					placeName = "place6", 
+					speed = 3.0, 
+					id = 5,
 				},
 			},
+			{
+				time = 1,
+				num = 6,
+				delay = {0.3, 0.6, 1,1.5,4.0,4.5},
+				pos = {150,250,400,50,100,350},
+				property = {
+					type = "jinbi",
+					placeName = "place5",  
+					speed = 4.0,
+					id = 5,
+				},
+			},
+			{
+				time = 4,
+				num = 7,
+				delay = {0.3, 0.6,1.5,0.9,2,5.0,5.5,6.0},
+				pos = {200,100,0,300,50,150,250},
+				property = {
+					type = "jinbi",
+					placeName = "place7",  
+					speed = 5.0,
+					id = 6,
+				},
+			},
+			{
+				time = 7,
+				num = 6,
+				delay = {0.3,0.5,1,6.0,6.5},
+				pos = {50,150,250,100,200},
+				property = {
+					type = "jinbi",
+					placeName = "place6", 
+					speed = 2.0, 
+					id = 7,
+				},
+			},			
 		},
 	},	
 }
@@ -250,6 +286,7 @@ local enemys = {
 	--近战兵
 	{id=2,image="jinzhanb",demage=5,hp=1300,walkRate=400,rollRate=0,fireRate=100,
 		weak1=2,weak2=2},
+
 	--伞兵
 	{id=3,image="sanbing01",demage=3,hp=200,walkRate=400,rollRate=0,
 		fireRate=100,weak1=1,weak2=1},
@@ -257,6 +294,15 @@ local enemys = {
 	--自爆兵
 	{id=4,image="zibaob",demage=20,hp=500,walkRate=400,rollRate=0,
 		fireRate=100,weak1=1,weak2=1},	
+
+	--金币兵
+	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 100},	
+
+	--金币兵
+	{id=6,image="qiqiu02",demage=10,hp=1,weak1=3,award = 40},	
+
+	--金币兵
+	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 20},	
 }
 
 local mapId = "map_1_3"
