@@ -4,6 +4,7 @@ local PopupRootLayer = import("..UI.PopupRootLayer")
 local RootLayer = import("..UI.RootLayer")
 
 local DebugLayer = import("..debug.DebugLayer")
+
 local LoadingLayer = import("..UI.LoadingLayer")
 
 
@@ -31,6 +32,7 @@ function MainScene:ctor()
     local debugLayer = DebugLayer.new()
     debugLayer:setPositionY(display.offset)
     self:addChild(debugLayer, 500)
+
 
     --loading
     local loadLayer = LoadingLayer.new()

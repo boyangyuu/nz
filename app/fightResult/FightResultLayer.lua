@@ -4,9 +4,6 @@ local FightResultLayer = class("FightResultLayer", function()
 end)
 
 function FightResultLayer:ctor(properties)
-	local percent = properties.percent
-	self.grade = self:getGrade(percent)
-
     self.fightResultModel = md:getInstance("FightResultModel")
     self.inlayModel 	  = md:getInstance("InlayModel")
     self.fightModel 	  = md:getInstance("Fight")
@@ -31,7 +28,11 @@ function FightResultLayer:ctor(properties)
     self.quickinlay = {}
     self.probaTable = {}
     self.showTable = {}
-    
+
+    local fightResult = self.fightModel:getFightResult()
+    self.grade = self:getGrade(fightResult["hpPercent"])
+    self.userModel:addMoney(fightResult["goldNum"])
+
     self:initData()
 	self:loadCCS()
 	self:initUI()
@@ -351,6 +352,10 @@ function FightResultLayer:getRanRecord( ran )
 end
 
 function FightResultLayer:turnLeftCard()
+    if device.platform == "android" then
+        cc.UMAnalytics:buy("fanpai", 1, 10)   
+    end 
+
 	ui:closePopup()
 	if self.userModel:costDiamond(10) then
 		function delayturnleft()
