@@ -317,7 +317,7 @@ function HeroLayer:updateHp(event)
 			value = 0.0
 		end
 		if self.hero:isDead() then 
-			scheduler.unscheduleGlobal(self.hpUpdateHandler)
+			
 			return
 		end
 		if value == 0 then return end

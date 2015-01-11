@@ -151,6 +151,8 @@ end
 
 function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo
+    self.inlay:checkNativeGold()
+    -- self.inlay:activeGoldForever()
 end
 
 function Fight:clearFightData()

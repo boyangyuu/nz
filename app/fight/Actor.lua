@@ -283,13 +283,13 @@ function Actor:onThaw_(event)
 end
 
 function Actor:onKill_(event)
-    -- printf("actor %s:%s dead", self:getId(), self.nickname_)
+    printf("actor %s:%s dead", self:getId(), self.nickname_)
     self.hp_ = 0
     self:dispatchEvent({name = Actor.KILL_EVENT})
 end
 
 function Actor:onRelive_(event)
-    -- printf("actor %s:%s relive", self:getId(), self.nickname_)
+    printf("actor %s:%s relive", self:getId(), self.nickname_)
     self:setFullHp()
     self:dispatchEvent({name = Actor.RELIVE_EVENT})
 end

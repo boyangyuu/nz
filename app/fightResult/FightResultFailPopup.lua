@@ -34,17 +34,25 @@ function FightResultFailPopup:initUI()
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)
+    btnrevive:setTouchEnabled(true)
     addBtnEventListener(btnrevive, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-        	self:revive()
+        	self:relive()
         end
     end)
 end
 
-function FightResultFailPopup:revive()
+function FightResultFailPopup:relive()
+    local fight = md:getInstance("Fight")
+   
+    --黄武
+    local inlay = md:getInstance("InlayModel")
+    inlay:equipGoldInlays(false)
     
+    fight:relive()
+    ui:closePopup()
 end
 
 return FightResultFailPopup
