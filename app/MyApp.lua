@@ -1,10 +1,10 @@
 
-require("config")
+
 require("framework.init")
 require("app.includes.functionUtils")
 local UI = require("app.UI.UIManager")
-local MD = require("app.Model.ModelManager")  
-local Define = require("app.Define")  
+local MD = require("app.Model.ModelManager")
+local Define = require("app.Define")
 
 GameState = require("framework.cc.utils.GameState")
 
@@ -24,6 +24,7 @@ function MyApp:ctor()
     self.objects_ = {}
     self:initGameState()    
 end
+
 
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
@@ -126,5 +127,10 @@ function MyApp:createGameStateFile()
     -- dump(GameState.load(), "GameState.load()")
 end
 
+function MyApp:showError(debugInfo)
+    print("function MyApp:showError(debugInfo)")
+    local debug = md:getInstance("DebugModel")
+    debug:showPopup(debugInfo)
+end
 
 return MyApp

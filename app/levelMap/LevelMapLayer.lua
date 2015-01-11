@@ -65,8 +65,8 @@ function LevelMapLayer:initChooseLayer()
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
     self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
     local btnSale = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_sale")
-    local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
-    local btnGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gift")
+    local btnGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
+    local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gift")
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
@@ -128,20 +128,25 @@ function LevelMapLayer:initChooseLayer()
             print("Btn is pressed!")
         end
     end)
+
+    btnTask:setTouchEnabled(true)
     addBtnEventListener(btnTask, function(event)
         if event.name=='began' then
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             print("Btn is pressed!")
+
         end
     end)
+    btnGift:setTouchEnabled(true)
     addBtnEventListener(btnGift, function(event)
         if event.name=='began' then
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             print("Btn is pressed!")
+            ui:showPopup("GiftBagPopup",{popupName = "novicesBag"})
         end
     end)
 
