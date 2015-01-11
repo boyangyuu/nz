@@ -53,6 +53,8 @@ function Fight:refreshData(properties)
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.inlay = self.hero:getFightInlay()
+
+    self.goldValue = 0.0
 end
 
 function Fight:willStartFight()
@@ -81,6 +83,8 @@ end
 function Fight:onWin()
     self.userModel:levelPass(self.groupId,self.levelId)
 
+    
+    self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    
     if device.platform == "android" then
         cc.UMAnalytics:finishLevel(levelInfo)   
@@ -158,6 +162,25 @@ function Fight:cleanModels()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")  
+end
+
+function Fight:setGoldValue(goldValue_)
+    self.goldValue = goldValue_
+end
+
+function Fight:getGoldValue()
+    return self.goldValue
+end
+
+function Fight:setFightResult()
+    local hpPercent = self.hero:getHp() / self.hero:getMaxHp()
+    self.fightResult = {}
+    self.fightResult["goldNum"]   = self.goldValue
+    self.fightResult["hpPercent"] = hpPercent
+end
+
+function Fight:getFightResult()
+    return self.fightResult
 end
 
 return Fight

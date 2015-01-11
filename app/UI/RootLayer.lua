@@ -117,11 +117,15 @@ function RootLayer:addResFight()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
-        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei"}
+        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "jinbib"}
  
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+        -- local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        -- local png   = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        -- display.addSpriteFrames(plist, png)
+        -- self:add
     end
 
     local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
@@ -181,6 +185,10 @@ function RootLayer:addResFight()
 
    --music
     self:addResFightMusic()
+end
+
+function RootLayer:addSpriteFrames()
+    
 end
 
 function RootLayer:addResFightMusic()

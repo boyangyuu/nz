@@ -379,6 +379,10 @@ function Attackable:getPlaceIndex()
 	return self.placeIndex
 end
 
+function Attackable:getEnemyModel()
+	return self.enemy
+end
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	

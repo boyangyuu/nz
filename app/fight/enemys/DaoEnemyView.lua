@@ -73,7 +73,7 @@ end
 
 function DaoEnemyView:onHitted(targetData)
     local demage     = targetData.demage
-    local scale      = targetData.demageScale
+    local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType
     if self.enemy:canHitted() and self:canHitted() then
         self.enemy:decreaseHp(demage * scale)

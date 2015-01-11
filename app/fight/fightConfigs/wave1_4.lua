@@ -103,7 +103,7 @@ local waves = {
 		},
 	},
 	{
-		enemys = {  --boss
+		enemys = {  
 			{
 				time = 3,
 				num = 1,
@@ -135,9 +135,10 @@ local waves = {
 				},
 			},
 			{
+				descId = "zpbing",  --简介
 				time = 4,
 				num = 1,
-				delay = {0},
+				delay = {3.0},
 				pos = {25},
 				property = {
 					placeName = "place7",  

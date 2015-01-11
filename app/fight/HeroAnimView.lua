@@ -38,6 +38,7 @@ function HeroAnimView:playHurtedBomb(event)
 end
 
 function HeroAnimView:playKillHead(event)
+	print("function HeroAnimView:playKillHead(event)")
 	local baotou = ccs.Armature:create("baotou")
 	baotou:getAnimation():play("baotou" , -1, 1)
     baotou:getAnimation():setMovementEventCallFunc(
