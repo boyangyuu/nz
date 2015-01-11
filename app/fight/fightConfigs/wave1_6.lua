@@ -270,25 +270,25 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=200,walkRate=400,rollRate=400,fireRate=300,
-		weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=6,hp=850,walkRate=400,rollRate=400,fireRate=300,
+		weak1=2,weak2=2},
 	--近战兵
 	{id=2,image="jinzhanb",demage=5,hp=2000,walkRate=400,rollRate=0,fireRate=300,
-		weak1=3,weak2=5},
+		weak1=2,weak2=2},
 	--伞兵
-	{id=3,image="sanbing01",demage=1,hp=1,walkRate=400,rollRate=0,
-		fireRate=300,weak1=3,weak2=5},
+	{id=3,image="sanbing01",demage=1,hp=400,walkRate=400,rollRate=0,
+		fireRate=300,weak1=1,weak2=1},
 
 	--自爆兵
-	{id=4,image="zibaob",demage=10,hp=100,walkRate=400,rollRate=0,
+	{id=4,image="zibaob",demage=15,hp=1500,walkRate=400,rollRate=0,
 		fireRate=100,weak1=3,weak2=5},	
 
 	--导弹兵
-	{id=5,image="zpbing",demage=0,hp=100,walkRate=400,rollRate=0,
-		fireRate=200,weak1=3,weak2=5},		
+	{id=5,image="zpbing",demage=0,hp=1500,walkRate=400,rollRate=0,
+		fireRate=200,weak1=2,weak2=2},		
 
 	--导弹
-	{id=6,image="daodan",demage=20,hp=100,weak1=3,weak2=5},					
+	{id=6,image="daodan",demage=20,hp=300,weak1=1,weak2=1},					
 }
 
 --boss的关卡配置
@@ -306,13 +306,13 @@ local bosses = {
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.70,
+				0.95, 0.50,
 			},
 			moveRightFire = {
-				0.65, 0.30,
+				0.85, 0.30,
 			},
 			daoDan = {
-				0.99, 0.70, 0.50, 0.30,
+				0.80, 0.70, 0.50, 0.20,
 			},
 			saoShe = {
 				0.65, 0.55,

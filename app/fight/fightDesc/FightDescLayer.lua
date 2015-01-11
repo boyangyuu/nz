@@ -13,6 +13,7 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.enemyIntro))
 
 	self:loadCCS()
+    self:setTouchSwallowEnabled(false) 
 end
 
 function FightDescLayer:loadCCS()
@@ -22,35 +23,30 @@ function FightDescLayer:loadCCS()
     self.animPanl = cc.uiloader:seekNodeByName(self, "animPanl")
 end
 
-function FightDescLayer:playAnim(animName)
-    self.armature:getAnimation():play(self.animName , -1, 1)
-end
-
-function FightDescLayer:animationEvent(armatureBack,movementType,movementID)
-    if movementType == ccs.MovementEventType.loopComplete then
-        armatureBack:stopAllActions()
-        -- if movementID == self.animName then
-            armatureBack:pause()
-            self.animPanl:removeAllChildren()
-            self:setVisible(false)
-        -- end
-    end
-end
-
 function FightDescLayer:start(event)
     self:setVisible(true)
     local armature = ccs.Armature:create("renwuks")
-    armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+    armature:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movementId ) 
+            if movementType == ccs.MovementEventType.loopComplete then
+                armature:removeFromParent()
+                armature = nil
+            end
+        end)
     addChildCenter(armature, self.animPanl)
-    -- self:playAnim("renwuks")
     armature:getAnimation():play("renwuks" , -1, 1)
 end
 
 function FightDescLayer:bossShow(event)
-    print("function FightDescLayer:bossShow(event)")
     self:setVisible(true)
     local armature = ccs.Armature:create("qiangdicx")
-    armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+    armature:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movementId ) 
+            if movementType == ccs.MovementEventType.loopComplete then
+                armature:removeFromParent()
+                armature = nil
+            end
+        end)
     addChildCenter(armature, self.animPanl)
     armature:getAnimation():play("qiangdicx" , -1, 1)
 end
@@ -58,7 +54,13 @@ end
 function FightDescLayer:waveStart(event)
     self:setVisible(true)
     armature = ccs.Armature:create("direnlx")
-    armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+    armature:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movementId ) 
+            if movementType == ccs.MovementEventType.loopComplete then
+                armature:removeFromParent()
+                armature = nil
+            end
+        end)
     addChildCenter(armature, self.animPanl)
     local animName = "direnlx"..event.waveNum
     armature:getAnimation():play(animName , -1, 1)
@@ -70,13 +72,10 @@ function FightDescLayer:enemyIntro(event)
     self:addChild(controlNode)
     local enemyID = event.enemyId
     self:initEnemyIntro(enemyID)
-    controlNode:setTouchEnabled(true)
-    controlNode:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then
-            self:setVisible(false)
-            return true
-        end
-    end)
+    self:runAction(transition.sequence({cc.DelayTime:create(3), cc.CallFunc:create(function()
+        controlNode:removeFromParent()
+    end)}))
+
 end
 
 function FightDescLayer:initEnemyIntro(enemyID)

@@ -6,8 +6,8 @@ local waves = {
 		enemys = { 
 			{
 				time = 3,	
-				num = 4,
-				pos = {-50,50,150,250},
+				num = 3,
+				pos = {50,150,250},
 				delay = {0,0.5,0.6,1},
 				property = { 
 					placeName = "place1",
@@ -15,7 +15,7 @@ local waves = {
 					id = 1,
 				},
 			},
-						{
+			{
 				time = 4,	
 				num = 3,
 				pos = {100,200,300},
@@ -36,9 +36,10 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},		
+			},	
+
 		},
-	},
+	},	
 	{
 		enemys = {
 			{
@@ -98,17 +99,50 @@ local waves = {
 					enemyId = 1,
 					placeName = "place2",
 				},
-			},									
+			},	
+			{
+				time = 10,	
+				num = 4,
+				pos = {0,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place6",
+					id = 1,
+				},
+			},
+			{
+				time = 11,	
+				num = 4,
+				pos = {0,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place2",
+					id = 1,
+				},
+			},
+			{
+				time = 12,	
+				num = 4,
+				pos = {0,50,150,250},
+				delay = {0,0.5,0.6,1},
+				property = { 
+					placeName = "place4",
+					id = 1,
+				},
+			},
 		},
 
-	},	
-	{
+
+	},
+	{	
+		waveType = "boss",
 		enemys = {  --boss
 			{
+				descId = "boss02",
 				time = 3,	
 				num = 1,
 				pos = {250},
-				delay = {0.3},
+				delay = {4.0},
 				property = { 
 					type = "chongBoss",
 					placeName = "place7",
@@ -124,18 +158,18 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=360,walkRate=400,rollRate=400,fireRate=400,
-	weak1=5,weak2=4},
+	{id=1,image="anim_enemy_002",demage=2,hp=340,walkRate=400,rollRate=400,fireRate=400,
+	weak1=4,weak2=4},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=720,walkRate=400,rollRate=100,fireRate=100,
+	{id=2,image="jinzhanb",demage=4,hp=1080,walkRate=400,rollRate=100,fireRate=100,
 		weak1=2,weak2=2},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=2,hp=360,walkRate=400,rollRate=100,
-		fireRate=300,weak1=5,weak2=5},
+	{id=3,image="sanbing01",demage=2,hp=340,walkRate=400,rollRate=100,
+		fireRate=300,weak1=4,weak2=5},
 
-	--导弹
+
 	{id=4,image="daodan",demage=20,hp=100,weak1=3,weak2=5},	
 
 	--铁球
@@ -146,26 +180,27 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
+
 		image = "boss02", --图片名字
-		hp = 10000,
+		hp = 20000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 400,
 		walkRate = 200,
 		chongfengDemage = 20,  --冲锋造成伤害
-		demageScale = {weak1 = 2, weak2 = 3},	--弱点伤害倍数
+		demageScale = {weak1 = 4, weak2 = 5},	--弱点伤害倍数
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.70,
+				0.95, 0.20,
 			},
 			moveRightFire = {
-				0.65, 0.30,
+				0.65, 0.40,
 			},
 			chongfeng = {
-				0.5, 0.10,
+				0.80, 0.50,0.20
 			},
 			tieqiu = {
-				0.99, 0.50
+				0.990, 0.60
 			},
 			weak2 = {
 				0.50,

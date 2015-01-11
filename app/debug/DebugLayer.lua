@@ -11,10 +11,10 @@ function DebugLayer:ctor()
 	cc.EventProxy.new(self.debugModel, self)
 		:addEventListener(self.debugModel.DEBUG_SHOW_EVENT, handler(self, self.showError))
 		:addEventListener(self.debugModel.DEBUG_CLOSE_EVENT, handler(self, self.closeError))
-	self:loadCSS()	
+	self:loadCCS()	
 end
 
-function DebugLayer:loadCSS()
+function DebugLayer:loadCCS()
 	local debugNode = cc.uiloader:load("res/Debug/debugLayerpro/DebugLayer.ExportJson")
 	self.debugNode = debugNode
 	self:addChild(self.debugNode)

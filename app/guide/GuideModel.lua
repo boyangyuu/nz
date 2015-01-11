@@ -70,7 +70,7 @@ function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
 	local isDone = data.guide[groupId] 
-	-- isDone = false
+	isDone = true
 	return isDone
 end
 

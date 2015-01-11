@@ -28,6 +28,10 @@ layerClasses["MapPopup"]             = import("..help.MapPopup")
 -- 战斗暂停Popup
 layerClasses["FightPopup"]           = import("..help.FightPopup")
 
+-- giftBag
+layerClasses["GiftBagPopup"]      = import("..giftBag.GiftBagPopup")
+
+
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 

@@ -106,9 +106,10 @@ function BaseBossView:setBlood(scale)
 	    node2:setVisible(false)
     end
 
-    local newPer = newScale * 100
-    bloodUp:setPercent(newPer)
-    bloodDown:setPercentWithDelay(newPer, 0.1)
+    -- local newPer = newScale * 100
+    -- bloodUp:setPercent(newPer)
+    bloodUp:setScaleX(newScale)
+    transition.scaleTo(bloodDown, {scaleX = newScale, time = 0.1})
 end
 
 function BaseBossView:playStand()
@@ -374,15 +375,17 @@ function BaseBossView:playChongfeng()
     --前进
     self.isAheading = true
     local speed = 400
+    local desY = -180
+    local scale = 2.0
+
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     -- dump(pWorld, "pWorld")
     local posOri = cc.p(self:getPositionX(), self:getPositionY())
-    local desY = -180
+    
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
-    local scale = 2.0
     local actionScale = cc.ScaleBy:create(time, scale)
 
     --
@@ -392,7 +395,7 @@ function BaseBossView:playChongfeng()
         local destDemage = self.property["chongfengDemage"]
         self.enemy:hit(self.hero, destDemage)
         self:setPosition(posOri)
-        self:scaleBy(0.01,0.5)
+        self:scaleBy(0.01, 1/scale)
         local map = md:getInstance("Map")
         map:playEffect("shake")
     end

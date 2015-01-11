@@ -75,7 +75,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place4",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},
 			{
@@ -139,7 +141,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place7",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},
 			{
@@ -203,7 +207,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place8",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},
 			{
@@ -257,7 +263,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place7",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},
 			{
@@ -301,7 +309,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place2",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},
 			{
@@ -331,7 +341,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place10",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},
 			{
@@ -351,7 +363,9 @@ local waves = {
 				pos = {25},
 				property = {
 					placeName = "place4",  
-					id = 1,
+					type = "dao",
+					id = 2,
+					enemyId = 3,
 				},
 			},	
 		},
@@ -360,9 +374,15 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=5,hp=460,walkRate=400,rollRate=400,fireRate=200,
-	weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=4,hp=1150,walkRate=400,rollRate=400,fireRate=200,
+	weak1=5,weak2=4},
 
+	--导弹兵
+	{id=2,image="zpbing",demage=0,hp=1150,walkRate=400,rollRate=0,
+		fireRate=200,weak1=5,weak2=5},		
+
+	--导弹
+	{id=3,image="daodan",demage=8,hp=100,weak1=3,weak2=5},
 	--
 }
 

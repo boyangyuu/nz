@@ -92,8 +92,10 @@ end
 function MissileEnemyView:playBomb()
     local missileType = self.property["missileType"]
     
-    --bomb动画
+    --kill
     self.armature:getAnimation():play("die" , -1, 1)  
+    
+    --bomb动画
     if missileType == "tie" or missileType == "lei" then
         self:playBombEffect()
     end
@@ -120,7 +122,11 @@ function MissileEnemyView:playKill(event)
 
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
-    self:playBombEffect()      
+    
+    local missileType = self.property["missileType"]
+    if missileType == "tie" or missileType == "lei" then
+        self:playBombEffect()
+    end     
 end
 
 function MissileEnemyView:onHitted(targetData)

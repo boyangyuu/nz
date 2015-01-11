@@ -28,7 +28,12 @@ function FocusView:ctor(properties)
 		 :addEventListener(self.hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
 		 :addEventListener(self.hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
 		 :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.refreshFocus))
-	
+
+	local robot = md:getInstance("Robot")
+	cc.EventProxy.new(robot, self)
+		:addEventListener(robot.ROBOT_START_EVENT	, handler(self, self.onShowRobot))
+		:addEventListener(robot.ROBOT_ENDTIME_EVENT	, handler(self, self.onHideRobot))
+
 	local inlay = md:getInstance("FightInlay")
 	cc.EventProxy.new(inlay, self)
 		:addEventListener(inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.refreshFocus))
@@ -36,13 +41,10 @@ end
 
 function FocusView:refreshFocus(event)
 	--clear
+	event = event or {}
 	print("function FocusView:refreshFocus(event)")
 	if self.armature then
 		self.armature:removeFromParent()
-	end
-
-	if self.focusRange then 
-		self.focusRange:removeFromParent()
 	end
 
 	--data
@@ -51,21 +53,33 @@ function FocusView:refreshFocus(event)
 
 	--armature
 	local config =  gun:getConfig()
-	-- dump(config, "self FocusView config")
-	local focusName = config.focusName
+	local focusName = event.focusName or config.focusName
     self.armature = ccs.Armature:create(focusName) 
     self.armature:setAnchorPoint(0.5,0.5)
 	self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 	self:addChild(self.armature)
-
 	--range
+
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale  = isGold and config.goldRangeScale or 1.0
-	local h = config.rangeHigh * scale
-	local w = config.rangeWidth * scale
+	local rangeHigh = event.rangeHigh or config.rangeHigh
+	local rangeWidth = event.rangeWidth or config.rangeWidth
+	local h = rangeHigh * scale
+	local w = rangeWidth * scale
 	self:setFocusRange(cc.size(w, h))
 	
 	self:playIdle()
+end
+
+function FocusView:onShowRobot(event)
+	local eventData = {focusName = "jijia_zx",
+				rangeWidth = define.kRobotRangeW,
+				rangeHigh = define.kRobotRangeH	}
+	self:refreshFocus(eventData)
+end
+
+function FocusView:onHideRobot(event)
+	self:refreshFocus()
 end
 
 function FocusView:playIdle()
@@ -74,7 +88,9 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
-	if self.playIndex == "stand" then 
+	print("function FocusView:playFire()")
+	if self.playIndex == "stand" then
+		print("	if self.playIndex  then") 
 		self.armature:getAnimation():play("fire01" , -1, 1) 
 		self.playIndex = "fire01"
 	elseif self.playIndex == "fire01" or self.playIndex == "fire02" then 
@@ -86,20 +102,23 @@ end
 
 function FocusView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		if id == "fire01" then
-			
-    	elseif id == "fire02" then
-
-    	end
+  		local playIndex = self.playIndex
+  		if movementID == "fire01" then 
+  			self:playIdle()
+  		else 
+  			self.armature:getAnimation():play(playIndex , -1, 1) 
+		end
 	end
 end
 
 function FocusView:stopFire()
-	-- print("FocusView:stopFire()")
-	self:playIdle()
+	self.playIndex = "stand"
 end
 
 function FocusView:setFocusRange(size)
+	if self.focusRange then 
+		self.focusRange:removeFromParent()
+	end
 
     self.focusRange = display.newScale9Sprite()
     self.focusRange:setContentSize(size)
@@ -145,7 +164,6 @@ function FocusView:addJu()
 
 	--hide
 	self.armature:setVisible(false)
-	self:setFocusRange(cc.size(5.0 , 5.0))
 end
 
 function FocusView:removeJu()

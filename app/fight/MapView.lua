@@ -33,7 +33,7 @@ function MapView:ctor()
 	self.enemys 		= {}
 	self.waveIndex 		= 1
 	self.isPause 		= false
-	
+	self.fightDescModel = md:getInstance("FightDescModel")
 	--ccs
 	self:loadCCS()
 
@@ -99,7 +99,9 @@ function MapView:loadCCS()
 end
 
 function MapView:startFight(event)
-	self:updateEnemys()
+	self.fightDescModel:start()
+	scheduler.performWithDelayGlobal(
+		handler(self, self.updateEnemys), 2.0)
 end
 
 function MapView:updateEnemys()
@@ -116,14 +118,20 @@ function MapView:updateEnemys()
 	end
 
 	--wave提示
-	local fightDescModel = md:getInstance("FightDescModel")
-	fightDescModel:waveStart(self.waveIndex)
+	if wave.waveType == "boss" then 
+		self.fightDescModel:bossShow()
+	else 
+		self.fightDescModel:waveStart(self.waveIndex)
+	end
 
 	--addEnemys
 	local lastTime = 0
-	local waveAnimDelay = 2.0
 	for groupId, group in ipairs(wave.enemys) do
+
 		for i = 1, group.num do
+			--desc
+			self:showEnemyIntro(group.descId)
+
 			--delay
 			print("group time", group.time)
 			local delay = (group.delay[i] or lastTime) + group.time
@@ -141,11 +149,21 @@ function MapView:updateEnemys()
 				self:addEnemy(group.property, pos, zorder)
 			end
 
-			scheduler.performWithDelayGlobal(addEnemyFunc, delay + waveAnimDelay)
+			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
 	end
 	--check next wave
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+end
+
+function MapView:showEnemyIntro(descId)
+	local function callfuncShow()
+		print("descId", descId)
+		if descId then 
+			self.fightDescModel:showEnemyIntro(descId)
+		end				
+	end
+	scheduler.performWithDelayGlobal(callfuncShow, 2.0)
 end
 
 function MapView:checkWave()
@@ -153,11 +171,12 @@ function MapView:checkWave()
 		if #self.enemys == 0 then 
 			print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
+
 			self:updateEnemys()
 			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
 		end
 	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 0.1)
+	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 1.0)
 end
 
 function MapView:addEnemy(property, pos, zorder)

@@ -85,12 +85,12 @@ function LevelDetailLayer:initUI()
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
 			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
 	end
-	
+	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
 		armature:setScale(0.8)
 		addChildCenter(armature, self.panlEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
-
+	end
 
 
 	self:initMapUI()
@@ -255,6 +255,7 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.btnBibei:setVisible(false)
 	else
 		print("弹板购买")
+		ui:showPopup("GiftBagPopup",{popupName = "weaponGiftBag"})
 	end
 end
 
@@ -263,6 +264,7 @@ function LevelDetailLayer:onClickBtnGold()
 	self.inlayModel:equipGoldInlays(true)
 	self.alreadygold:setVisible(true)
 	self.btnGold:setVisible(false)
+	ui:showPopup("GiftBagPopup",{popupName = "goldWeapon"})
 end
 
 function LevelDetailLayer:onClickBtnJijia()
@@ -270,6 +272,7 @@ function LevelDetailLayer:onClickBtnJijia()
 	self.propModel:buyProp("jijia",1)
 	self.alreadyjijia:setVisible(true)
 	self.btnJijia:setVisible(false)
+	ui:showPopup("GiftBagPopup",{popupName = "armedMecha"})
 end
 
 ---- initData ----
