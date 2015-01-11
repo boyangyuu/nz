@@ -108,17 +108,28 @@ end
 function HeroLayer:killEnmeyGold(event)
 	local enemyPos = event.enemyPos
 	local value = event.award 
+	local baseValue = define.kGoldCoinValue
 	-- print("value", value)
-
-	for i = 1, 3 do
+	local num = math.floor(value / baseValue)
+	
+	local isMany = num > 3
+	local w = isMany and 10 or 24
+	local d = 0.1
+	for i = 1, num do
+		local direct = i % 2 == 1 and -1 or 1
+		local xIndex = (num + i * direct) 
+		xIndex = isMany and math.floor(xIndex / 4) or xIndex
+		local delay = xIndex * d
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)
 		armature:getAnimation():play("gold", -1, 1)
 		armature:runAction(cc.Sequence:create(
-			
-			cc.JumpBy:create(0.7, cc.p(i * 12, 0), 80, 1),
-			cc.DelayTime:create(0.5 - i * 0.1),
-			cc.MoveTo:create(0.5, cc.p(664, 604)),
+		
+			cc.JumpBy:create(0.4, cc.p(i * w * direct, 0), 80, 1),
+			cc.DelayTime:create(delay),
+			cc.Spawn:create(
+				cc.MoveTo:create(0.4, cc.p(664, 604)),
+				cc.ScaleTo:create(0.4, 0.5)),
 			cc.CallFunc:create(function ()
 				if i == 1 then
 					self.hero:dispatchEvent({name = self.hero.AWARD_GOLD_INCREASE_EVENT, 

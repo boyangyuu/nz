@@ -39,4 +39,8 @@ function Boss:getConfig()
     return self.config
 end
 
+function Boss:getAward()
+    return self.config["award"] or define.kKillEnemyAwardGold
+end
+
 return Boss
