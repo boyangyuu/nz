@@ -49,7 +49,6 @@ function Fight:refreshData(properties)
 
     self.userModel  = md:getInstance("UserModel")
     self.inlayModel = md:getInstance("InlayModel")
-    print("fight self.hero init")
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.inlay = self.hero:getFightInlay()
