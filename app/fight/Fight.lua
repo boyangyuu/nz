@@ -54,6 +54,7 @@ function Fight:refreshData(properties)
     self.inlay = self.hero:getFightInlay()
 
     self.goldValue = 0.0
+    self.result = nil
 end
 
 function Fight:willStartFight()
@@ -80,6 +81,8 @@ function Fight:endFight()
 end
 
 function Fight:onWin()
+    if self.result then return end
+    self.result = "win" 
     self.userModel:levelPass(self.groupId,self.levelId)
 
     
@@ -94,6 +97,8 @@ function Fight:onWin()
 end
 
 function Fight:onFail()
+    if self.result then return end
+    self.result = "fail"     
     ui:showPopup("FightResultFailPopup",{},{anim = false})
 
     --clear
@@ -103,6 +108,8 @@ function Fight:onFail()
         cc.UMAnalytics:failLevel(levelInfo)
     end   
 end
+
+
 
 function Fight:checkDialog(appearType)
     local dialog = md:getInstance("DialogModel")
@@ -152,6 +159,7 @@ end
 function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo
     self.inlay:checkNativeGold()
+    self.result = nil
     -- self.inlay:activeGoldForever()
 end
 
