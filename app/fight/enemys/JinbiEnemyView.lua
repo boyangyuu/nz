@@ -73,6 +73,8 @@ end
 
 function JinbiEnemyView:playKill(event)
     self.armature:getAnimation():play("die" , -1, 1)
+    print("JinbiEnemyView elsplayKill") 
+    self.isFlying  = false
     self.hero:dispatchEvent({
                 name = self.hero.ENEMY_KILL_HEAD_EVENT})
     --屏幕动画
@@ -92,11 +94,14 @@ function JinbiEnemyView:onHitted(targetData)
 end
 
 function JinbiEnemyView:animationEvent(armatureBack,movementType,movementID)
-    if movementID ~= "die" then
+    if movementType == ccs.MovementEventType.loopComplete then
+        if movementID ~= "die" then
 
-    elseif movementID == "die" then 
-        self:setDeadDone()
-    end 
+        elseif movementID == "die" then
+            print("elseif movementID == die then") 
+            self:setDeadDone()
+        end 
+    end
 end
 
 function JinbiEnemyView:getModel(property)
