@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
---[[	{
+	{
 		enemys = {
 			{
 				time = 3,
@@ -198,7 +198,7 @@ local waves = {
 				},
 			},						
 		},
-	},	--]]
+	},	
 	-- 金币
 	{
 		enemys = {
@@ -276,6 +276,82 @@ local waves = {
 			},			
 		},
 	},	
+	{
+		enemys = {
+			{
+				time = 1,
+				num = 6,
+				delay = {0.3, 0.6, 1,1.5,2.0,2.5},
+				pos = {150,250,400,50,100,350},
+				property = {
+					type = "jinbi",
+					placeName = "place5",  
+					speed = 2.0,
+					id = 7,
+				},
+			},
+			{
+				time = 4,
+				num = 7,
+				delay = {0.3, 0.6,1.5,0.9,2,2.0,2.5},
+				pos = {200,100,0,300,50,150,250},
+				property = {
+					type = "jinbi",
+					placeName = "place7",  
+					speed = 3.0,
+					id = 6,
+				},
+			},
+			{
+				time = 7,
+				num = 6,
+				delay = {0.3,0.5,1,2.0,2.5, 2.6},
+				pos = {50,150,250,100,200, 80},
+				property = {
+					type = "jinbi",
+					placeName = "place6", 
+					speed = 4.0, 
+					id = 5,
+				},
+			},
+			{
+				time = 1,
+				num = 6,
+				delay = {0.3, 0.6, 1,1.5,2.0,2.5},
+				pos = {150,250,400,50,100,350},
+				property = {
+					type = "jinbi",
+					placeName = "place5",  
+					speed = 4.0,
+					id = 5,
+				},
+			},
+			{
+				time = 4,
+				num = 7,
+				delay = {0.3, 0.6, 1.5, 0.9, 2, 3.0, 3.5},
+				pos = {200, 100, 0, 300, 50, 150, 250},
+				property = {
+					type = "jinbi",
+					placeName = "place7",  
+					speed = 3.0,
+					id = 6,
+				},
+			},
+			{
+				time = 2,
+				num = 5,
+				delay = {0.3, 0.5, 1, 1.0, 1.5},
+				pos = {50, 150, 250, 100, 200},
+				property = {
+					type = "jinbi",
+					placeName = "place6", 
+					speed = 2.0, 
+					id = 7,
+				},
+			},			
+		},
+	},		
 }
 
 --enemy的关卡配置
