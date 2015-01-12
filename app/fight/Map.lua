@@ -57,8 +57,8 @@ function Map:playEffect(name)
 	end
 end
 
-function Map:isMoveMap()
-	return self.curWaveCfg:getIsMoveMap()
+function Map:isNotMoveMap()
+	return self.curWaveCfg:isNotMoveMap()
 end
 
 return Map

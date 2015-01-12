@@ -158,6 +158,9 @@ function BaseBossView:playKill(event)
 
 	--bomb
 	self:playBombEffects()
+	local hero = md:getInstance("Hero")
+	hero:dispatchEvent({name = hero.ENEMY_KILL_BOSS_EVENT})
+	--
 end
 
 function BaseBossView:playBombEffects()

@@ -18,6 +18,8 @@ function HeroAnimView:ctor()
 		:addEventListener(Hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb))	
 		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
+		:addEventListener(Hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
+
 end
 
 function HeroAnimView:playHurtedBomb(event)
@@ -64,6 +66,20 @@ function HeroAnimView:playWindEffect(event)
     	end
     )
     self:addChild(armature) 
+end
+
+function HeroAnimView:playEffectBling(event)
+	local armature = ccs.Armature:create("bossdies")
+	armature:getAnimation():play("shan" , -1, 1)
+    -- armature:getAnimation():setMovementEventCallFunc(
+    -- 	function ( armatureBack,movementType,movement) 
+	   --  	if movementType == ccs.MovementEventType.loopComplete then
+	   --  		armatureBack:stopAllActions()
+	   --  		armatureBack:removeFromParent() 
+	   --  	end 
+    -- 	end
+    -- )
+    self:addChild(armature) 	
 end
 
 return HeroAnimView

@@ -23,7 +23,7 @@ function BaseWave:getMapId()
 	return self.mapId
 end
 
-function BaseWave:getIsMoveMap()
-	return self.isMoveMap
+function BaseWave:getIsNotMoveMap()
+	return self.isNotMoveMap or false
 end
 return BaseWave

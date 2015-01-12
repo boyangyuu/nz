@@ -33,7 +33,6 @@ function MainScene:ctor()
     debugLayer:setPositionY(display.offset)
     self:addChild(debugLayer, 500)
 
-
     --loading
     local loadLayer = LoadingLayer.new()
     loadLayer:setPositionY(display.offset)

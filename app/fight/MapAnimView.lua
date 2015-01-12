@@ -16,6 +16,7 @@ function MapAnimView:ctor()
 	local map = md:getInstance("Map")
 	cc.EventProxy.new(map, self)
 		:addEventListener(map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
+
 end
 
 function MapAnimView:getScaleByPos(pos)
