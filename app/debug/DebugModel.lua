@@ -12,7 +12,9 @@ end
 function DebugModel:showPopup(debugInfo)
 	print("function DebugModel:showPopup(debugInfo)")
 	-- layer:showError()
-	self:dispatchEvent({name = DebugModel.DEBUG_SHOW_EVENT,debugInfo = debugInfo})
+	if isDebug then 
+		self:dispatchEvent({name = DebugModel.DEBUG_SHOW_EVENT,debugInfo = debugInfo})
+	end
 end
 
 function DebugModel:closePopup()
