@@ -4,6 +4,7 @@ require("framework.init")
 require("app.includes.functionUtils")
 local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
+local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 
 GameState = require("framework.cc.utils.GameState")
@@ -16,6 +17,7 @@ isTest  = false
 -- isTest  = true
 ui      = UI.new()
 md      = MD.new()
+um      = UM.new()
 define  = Define.new()
 -- umSDK   = cc.UMAnalytics
 

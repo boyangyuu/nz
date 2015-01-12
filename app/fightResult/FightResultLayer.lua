@@ -356,7 +356,7 @@ function FightResultLayer:turnLeftCard()
         cc.UMAnalytics:buy("fanpai", 1, 10)   
     end 
 
-	ui:closePopup()
+	ui:closePopup("commonPopup")
 	if self.userModel:costDiamond(10) then
 		function delayturnleft()
 			for i=1,6 do
@@ -370,7 +370,7 @@ function FightResultLayer:turnLeftCard()
 end
 
 function FightResultLayer:close( )
-	ui:closePopup()
+	ui:closePopup("commonPopup")
 end
 
 function FightResultLayer:quickInlay()

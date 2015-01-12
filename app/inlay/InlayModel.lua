@@ -12,21 +12,9 @@ function InlayModel:initConfigTable()
 	self.config = getConfig("config/items_xq.json")
 end
 
-function InlayModel:getRecordByKey(table, propertyName, key)
-    local recordArr={}
-    for k,v in pairs(table) do
-        for k1,v1 in pairs(v) do
-            if k1 == propertyName and v1 == key then
-                recordArr[#recordArr + 1] = v
-            end
-        end
-    end
-    return recordArr
-end
-
 function InlayModel:getConfigTable(propertyName, index)
 	assert(propertyName and index, "invalid param")
-	local records = self:getRecordByKey(self.config, propertyName, index) or {}
+	local records = getRecordFromTable(self.config, propertyName, index) or {}
 	return records
 end
 
@@ -164,13 +152,16 @@ function InlayModel:equipAllInlays(isRefresh)
 		bags[k] = v
 	end
 	for k,v in pairs(bags) do
-		local priority = self:getInlayPriority(v.inlayid)
+		-- local priority = self:getInlayPriority(v.inlayid)
+		local priority = self:getInlayRecord(v.inlayid)["property"]
 		local typename = self:getInlayType(v.inlayid)
 		if priority > bestInlay[typename] then
 			bestInlay[typename] = priority
 		end
 		for k1,v1 in pairs(allinlayed) do
-			local inlayedPriority = self:getInlayPriority(v1)
+			-- local inlayedPriority = self:getInlayPriority(v1)
+					local inlayedPriority = self:getInlayRecord(v1)["property"]
+
 			if k1 == typename and bestInlay[typename] < inlayedPriority then
 				bestInlay[typename] = inlayedPriority
 			end
@@ -202,7 +193,9 @@ function InlayModel:equipAllBestInlays(table)
 	local bestInlay = {bullet=0,clip=0,speed=0,crit=0,blood=0,helper=0}	
 	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	for k,v in pairs(table) do
-		local priority = self:getInlayPriority(v.inlayid)
+		-- local priority = self:getInlayPriority(v.inlayid)
+				local priority = self:getInlayRecord(v.inlayid)["property"]
+
 		local typename = self:getInlayType(v.inlayid)
 		if priority > bestInlay[typename] then
 			bestInlay[typename] = priority
@@ -267,7 +260,8 @@ function InlayModel:isGetAllGold()
 		return false
 	end
 	for k,v in pairs(allInlayed) do
-		local Priority = self:getInlayPriority(v)
+		-- local Priority = self:getInlayPriority(v)
+		local Priority = self:getInlayRecord(v)["property"]
 		if Priority ~= 4 then
 			return false
 		end
@@ -279,8 +273,12 @@ function InlayModel:getInlayType(inlayid)
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end
 
-function InlayModel:getInlayPriority(inlayid)
-	return self:getConfigTable("id", inlayid)[1]["property"]
+-- function InlayModel:getInlayPriority(inlayid)
+-- 	return self:getConfigTable("id", inlayid)[1]["property"]
+-- end
+
+function InlayModel:getInlayRecord(inlayid)
+	return self:getConfigTable("id", inlayid)[1]
 end
 
 function InlayModel:getAllInlayed()
@@ -312,7 +310,7 @@ function InlayModel:removeAllInlay()
 	if device.platform == "android" then
 		local allInlayed = self:getAllInlayed()
 		for k,v in pairs(allInlayed) do
-			local useInfo = self:getInlayType(v).."_"..self:getInlayPriority(v)
+			local useInfo = self:getInlayType(v).."_"..self:getInlayRecord(v)["property"]
 			cc.UMAnalytics:use(useInfo, 1,0)
 		end
 	end

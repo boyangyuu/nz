@@ -63,7 +63,7 @@ end
 
 function StoreLayer:refresh(event)
     local type = event.typename
-    self:refreshListView(type)
+    self:setSelect(type)
 end
 
 function StoreLayer:refreshListView(type)

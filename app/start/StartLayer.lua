@@ -20,7 +20,9 @@ function StartLayer:loadCCS()
 end
 
 function StartLayer:initUI()
-	local btnBegin = cc.uiloader:seekNodeByName(self, "beginbtn")
+    local btnBegin = cc.uiloader:seekNodeByName(self, "beginbtn")
+    local gifticon = cc.uiloader:seekNodeByName(self, "gifticon")
+    gifticon:setColor(cc.c3b(255, 45, 49))
     btnBegin:setTouchEnabled(true)
     addBtnEventListener(btnBegin, function(event)
         if event.name == 'began' then

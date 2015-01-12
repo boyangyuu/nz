@@ -30,7 +30,7 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        ui:closePopup()
+	        ui:closePopup("FightResultFailPopup")
         	ui:changeLayer("HomeBarLayer",{})
         end
     end)
@@ -52,7 +52,7 @@ function FightResultFailPopup:relive()
     inlay:equipGoldInlays(false)
     
     fight:relive()
-    ui:closePopup()
+    ui:closePopup("FightResultFailPopup")
 end
 
 return FightResultFailPopup

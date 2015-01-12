@@ -240,7 +240,7 @@ end
 
 ----btn----
 function LevelDetailLayer:onClickBtnOff()
-    ui:closePopup()
+    ui:closePopup("LevelDetailLayer")
 end
 
 function LevelDetailLayer:onClickBtnStart()
