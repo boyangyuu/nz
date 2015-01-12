@@ -459,7 +459,8 @@ function FightPlayer:onBtnFire()
         end
     else
         if self:isCoolDownDone() then 
-            self:fire()
+            
+            self:checkFire()
         end        
     end 
 
@@ -480,15 +481,26 @@ end
 
 function FightPlayer:onCancelledFire()
     print("FightPlayer:onCancelledFire()")
-    local robot = md:getInstance("Robot")
-    local isRobot = robot:getIsRoboting()
+
+    --robot ju
+    local robot         = md:getInstance("Robot")
+    local isRobot       = robot:getIsRoboting()
+    local map           = md:getInstance("Map")
+    local isJu          = map:getIsJu()
+    local isJuAble      = map:getIsJuAble()
+    local levelModel    = md:getInstance("LevelDetailModel")
+    local isJuLevel     = levelModel:isJujiFight()
+
     if  isRobot then
         print("robot:stopFire()") 
         robot:stopFire()
+    elseif isJuLevel and isJuAble then
+        print("GUN_SWITCH_JU_EVENT")
+        if isJu then self:fire() end
+        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
     else
         self.gunView:stopFire()
     end
-
     self.focusView:stopFire()
 
     --sch
@@ -557,16 +569,26 @@ function FightPlayer:isCoolDownDone()
     return false
 end
  
-function FightPlayer:fire()
-    -- print("FightPlayer:fire()")
+function FightPlayer:checkFire()
+    print("FightPlayer:fire()")
     local levelModel = md:getInstance("LevelDetailModel")
     local isJuLevel = levelModel:isJujiFight()
-    local map = md:getInstance("Map")
-    local isJu = map:getIsJu()
-    if isJuLevel and not isJu then
-        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
-        return 
+    if isJuLevel then 
+        return
     end
+    self:fire()
+end
+ 
+function FightPlayer:robotFire()
+    local robot = md:getInstance("Robot")
+    if not robot:isCoolDownDone() then return end
+    robot:fire()
+    self.focusView:playFire()
+    local focusRangeNode = self.focusView:getFocusRange()
+    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
+end
+
+function FightPlayer:fire()
     local focusRangeNode = self.focusView:getFocusRange()
 
     --hero 控制cooldown
@@ -580,15 +602,6 @@ function FightPlayer:fire()
         --todo 发命令
         self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
-end
- 
-function FightPlayer:robotFire()
-    local robot = md:getInstance("Robot")
-    if not robot:isCoolDownDone() then return end
-    robot:fire()
-    self.focusView:playFire()
-    local focusRangeNode = self.focusView:getFocusRange()
-    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
 end
 
 ----move----
@@ -606,9 +619,9 @@ end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
     local map = md:getInstance("Map")
-    local isMove = map:isMoveMap()
-    -- print("isMove", isMove)
-    if not isMove then return end    
+    local isNotMove = map:isNotMoveMap()
+    print("isMove", isNotMove)
+    if isNotMove then return end    
 
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()

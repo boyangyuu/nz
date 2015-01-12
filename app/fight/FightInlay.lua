@@ -100,7 +100,7 @@ function FightInlay:getInlayedValue(type)
         local inlays = self.inlayModel:getAllInlayed()
         local inlayedId  = inlays[type]
         if inlayedId == nil then return nil,false end
-        record = getRecordByID("config/items_xq.json", inlayedId)
+        record = self.inlayModel:getInlayRecord(inlayedId)
     end
     local value = record.valueProgram
     return value, true

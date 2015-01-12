@@ -28,17 +28,16 @@ function MainScene:ctor()
     guideLayer:setPositionY(display.offset)
     self:addChild(guideLayer, 300)
 
+    --loading
+    local loadLayer = LoadingLayer.new()
+    loadLayer:setPositionY(display.offset)
+    self:addChild(loadLayer, 400)
+
     --debug
     local debugLayer = DebugLayer.new()
     debugLayer:setPositionY(display.offset)
     self:addChild(debugLayer, 500)
 
-
-    --loading
-    local loadLayer = LoadingLayer.new()
-    loadLayer:setPositionY(display.offset)
-    self:addChild(loadLayer, 400)
-    
     --black
     local LayerColor = cc.c4b(0, 0, 0, 255)
     cc.LayerColor:create(LayerColor)
@@ -54,9 +53,11 @@ function MainScene:ctor()
 end
 
 function MainScene:onEnter()
+
 end
 
 function MainScene:onExit()
+
 end
 
 return MainScene

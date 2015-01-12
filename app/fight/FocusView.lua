@@ -132,8 +132,8 @@ end
 
 --狙击
 function FocusView:switchJu(event)
-	self.map:changeJuStatus()
-	local isJu = self.map:getIsJu()
+
+	local isJu = not self.map:getIsJu()
 	if isJu then 
 		self:addJu()
 	else
@@ -163,11 +163,35 @@ function FocusView:addJu()
 
 	--hide
 	self.armature:setVisible(false)
+
+	self.map:changeJuStatus()	
 end
 
 function FocusView:removeJu()
 	print("FocusView:removeJu()")
+	--
+	local map = md:getInstance("Map")
+	map:setIsJuAble(false)
+	--anim
+	local time1 = 0.15
+	local time2 = 0.4
+	local scale = 1.3
+	local moveAction1 = cc.ScaleBy:create(time1, scale)
+	local moveAction2 = cc.ScaleBy:create(time2, 1/scale)	
+	local callfunc = cc.CallFunc:create(handler(self,self.removeJuEnd))
 
+	self.juNode:runAction(cc.Sequence:create(moveAction1, moveAction2, 
+		cc.DelayTime:create(0.4), callfunc))
+
+	--map 下移
+	local map = md:getInstance("Map")
+	map:dispatchEvent({name = map.EFFECT_JUSHAKE_EVENT, time1 = time1, time2 = time2}) 
+
+end
+
+function FocusView:removeJuEnd()
+	local map = md:getInstance("Map")
+	map:setIsJuAble(true)
 	--zoom
 	local time = 0.1
 	local map = md:getInstance("Map")
@@ -180,6 +204,9 @@ function FocusView:removeJu()
 
 	--hide
 	self.armature:setVisible(true)
+
+	self.map:changeJuStatus()
 end
+
 
 return FocusView

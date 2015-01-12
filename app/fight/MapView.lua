@@ -52,6 +52,8 @@ function MapView:ctor()
 		:addEventListener(self.mapModel.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
         :addEventListener(self.mapModel.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
         :addEventListener(self.mapModel.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
+        :addEventListener(self.mapModel.EFFECT_JUSHAKE_EVENT	, handler(self, self.playEffectJuShaked))
+		
 	self:setNodeEventEnabled(true)
 end
 
@@ -61,6 +63,10 @@ function MapView:loadCCS()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	dump(waveConfig, "waveConfig")
 	local mapName = waveConfig:getMapId()
+	local level, group = self.fight:getCurGroupAndLevel()
+	if level == 1 and group == 1 then 
+		mapName = "map_1_7"
+	end	
 	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
@@ -436,6 +442,18 @@ function MapView:playEffectShaked(event)
 	local tMove = cc.MoveBy:create(0.07, cc.p(-36, -40))
 	self:runAction(cc.Sequence:create(tMove, tMove:reverse(),
 		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
+end
+
+function MapView:playEffectJuShaked(event)
+	print("function MapView:playEffectJu(event)")
+	local x = 100
+	local y = 300
+	local tMove = cc.MoveBy:create(event.time1, cc.p(-x, -y))
+	-- local action1    = transition.newEasing(tMove, "in", time)
+
+	local tMove1 = cc.MoveBy:create(event.time2, cc.p(x, y))
+	-- local action1    = transition.newEasing(tMove, "in", time)	
+	self:runAction(cc.Sequence:create(tMove, tMove1))
 end
 
 function MapView:onExit() 

@@ -388,13 +388,12 @@ local enemys = {
 }
 local mapId = "map_1_4"
 
-local isMoveMap = true
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.isMoveMap = isMoveMap
+
 end
 
 return waveClass

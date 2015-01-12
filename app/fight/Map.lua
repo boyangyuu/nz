@@ -10,15 +10,15 @@ local Map = class("Map", cc.mvc.ModelBase)
 --events
 Map.EFFECT_LEI_BOMB_EVENT = "EFFECT_LEI_BOMB_EVENT"
 Map.EFFECT_SHAKE_EVENT 	  = "EFFECT_SHAKE_EVENT"
+Map.EFFECT_JUSHAKE_EVENT 	  = "EFFECT_JUSHAKE_EVENT"
 
 Map.MAP_ZOOM_OPEN_EVENT   = "MAP_ZOOM_OPEN_EVENT"
 Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
 
-
-
 function Map:ctor()
     Map.super.ctor(self)
     self.isJu = false
+    self.isJuAble = true
     self:setCurWaveConfig()
 end
 
@@ -41,6 +41,14 @@ function Map:getIsJu()
 	return self.isJu
 end
 
+function Map:setIsJuAble(able)
+	self.isJuAble = able
+end
+
+function Map:getIsJuAble()
+	return self.isJuAble
+end
+
 function Map:changeJuStatus()
 	self.isJu = not self.isJu
 	local fight = md:getInstance("Fight")
@@ -57,8 +65,9 @@ function Map:playEffect(name)
 	end
 end
 
-function Map:isMoveMap()
-	return self.curWaveCfg:getIsMoveMap()
+function Map:isNotMoveMap()
+	local notmove = self.curWaveCfg:getIsNotMoveMap()
+	return notmove
 end
 
 return Map
