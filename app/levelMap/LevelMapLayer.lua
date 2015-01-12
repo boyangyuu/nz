@@ -166,7 +166,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         levelBtn[i]  = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
         levelDian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..i)
         panelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..i)
-        levelBtn[i]:setTouchEnabled(true)
+        panelBtn[i]:setTouchEnabled(true)
         local record = self.LevelDetailModel:getConfig(group,level)
         if  group > groupId or group == groupId and level > i  then
 
@@ -199,7 +199,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             end                
         end
         -- add listener
-        addBtnEventListener(levelBtn[i], function(event)
+        addBtnEventListener(panelBtn[i], function(event)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= i  then
                     local levelId = i  

@@ -172,10 +172,13 @@ function LevelDetailLayer:initBtns()
     --anim
     local goldarmature = ccs.Armature:create("bt_yjzb")
     local jijiaarmature = ccs.Armature:create("bt_yjzb")
+    local bibeiarmature = ccs.Armature:create("bt_yjzb")
     addChildCenter(goldarmature, self.btnGold)
     addChildCenter(jijiaarmature, self.btnJijia)
+    addChildCenter(bibeiarmature, self.btnBibei)
     goldarmature:getAnimation():play("yjzb" , -1, 1)
     jijiaarmature:getAnimation():play("yjzb" , -1, 1)
+    bibeiarmature:getAnimation():play("yjzb" , -1, 1)
 
 	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
 		self.alreadybibei:setVisible(true)
