@@ -1,4 +1,4 @@
-
+require("config")
 
 require("framework.init")
 require("app.includes.functionUtils")
@@ -113,7 +113,7 @@ function MyApp:createGameStateFile()
             diamond = 1000000,
                       
             currentlevel =  {
-                        group = 2,
+                        group = 1,
                         level = 1,
             },
             guide = {

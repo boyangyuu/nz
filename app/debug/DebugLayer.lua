@@ -15,7 +15,7 @@ function DebugLayer:ctor()
 end
 
 function DebugLayer:loadCCS()
-	local debugNode = cc.uiloader:load("res/Debug/debugLayerpro/DebugLayer.ExportJson")
+	local debugNode = cc.uiloader:load("res/Debug/DebugLayerpro/DebugLayer.ExportJson")
 	self.debugNode = debugNode
 	self:addChild(self.debugNode)
 end
