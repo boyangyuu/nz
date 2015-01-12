@@ -30,7 +30,6 @@ function PopupRootLayer:showPopup(event)
 	local pro = event.properties
 	local layer = cls.new(pro)
 	self.layers[str] = layer
-	dump(self.layers)
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(layer)
 	layer:scale(0.0)
@@ -48,8 +47,6 @@ function PopupRootLayer:closePopup(event)
     	onComplete = function() 
 	    	self.layers[event.layerId]:removeSelf()
 	    	self.layers[event.layerId] = nil
-	    	print("#self.layers)", #self.layers)
-	    	dump(self.layers)
 	    	if table.nums(self.layers) == 0 then
 	    		self:setVisible(false)
 	    	end
