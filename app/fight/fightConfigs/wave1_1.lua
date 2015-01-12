@@ -38,8 +38,10 @@ local waves = {
 				property = { 
 					placeName = "place2",
 					id = 2,
+					startState = "",
 					type = "dao",
 					missileId = 3,
+					missileType = "lei",
 				},
 			},						
 		},
@@ -53,7 +55,7 @@ local waves = {
 				pos = {100,120},
 				property = {
 					placeName = "place3", 
-					startState = "rollleft",
+					startState = "rollright",
 					id = 1,
 				},
 			},	
@@ -159,9 +161,9 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=170,walkRate=400,rollRate=400,fireRate=200,weak1=5,weak2=4},
+	{id=1,image="anim_enemy_002",demage=1,hp=170,walkRate=100,rollRate=100,fireRate=200,weak1=5,weak2=4},
 	--手雷兵
-	{id=2,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=100,fireRate=200,weak1=3,weak2=5},	
+	{id=2,image="shouleib",demage=10,hp=100,walkRate=100,rollRate=100,fireRate=50,weak1=3,weak2=5},	
 	--手雷
 	{id=3,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},				
 }

@@ -182,7 +182,7 @@ local bosses = {
 	{
 
 		image = "boss02", --图片名字
-		hp = 20000,
+		hp = 100000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 400,
 		walkRate = 200,

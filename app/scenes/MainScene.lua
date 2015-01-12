@@ -28,24 +28,26 @@ function MainScene:ctor()
     guideLayer:setPositionY(display.offset)
     self:addChild(guideLayer, 300)
 
+    --loading
+    local loadLayer = LoadingLayer.new()
+    loadLayer:setPositionY(display.offset)
+    self:addChild(loadLayer, 400)
+
     --debug
     local debugLayer = DebugLayer.new()
     debugLayer:setPositionY(display.offset)
     self:addChild(debugLayer, 500)
 
-    --loading
-    local loadLayer = LoadingLayer.new()
-    loadLayer:setPositionY(display.offset)
-    self:addChild(loadLayer, 400)
-    
     --black
 
 end
 
 function MainScene:onEnter()
+
 end
 
 function MainScene:onExit()
+
 end
 
 return MainScene

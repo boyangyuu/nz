@@ -273,6 +273,7 @@ local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=6,hp=850,walkRate=400,rollRate=400,fireRate=300,
 		weak1=2,weak2=2},
+	
 	--近战兵
 	{id=2,image="jinzhanb",demage=5,hp=2000,walkRate=400,rollRate=0,fireRate=300,
 		weak1=2,weak2=2},
