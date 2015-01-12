@@ -106,7 +106,7 @@ end
 
 
 function WeaponBag:onClickBtnOff()
-    ui:closePopup()
+    ui:closePopup("WeaponBag")
 end
 
 return WeaponBag

@@ -11,7 +11,7 @@ end)
 
 function PopupRootLayer:ctor(properties)
 	self:setVisible(false)
-
+	self.layers = {}
 	--event
 	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.POPUP_SHOW_EVENT, handler(self, self.showPopup))	
@@ -21,31 +21,38 @@ end
 function PopupRootLayer:showPopup(event)
 	self:setVisible(true)
 
-	if self.layer and self.layer:getParent() then 
-		self.layer:removeSelf()
-		self.layer = nil
-	end
+	-- if self.layer and self.layer:getParent() then 
+	-- 	self.layer:removeSelf()
+	-- 	self.layer = nil
+	-- end
 	local cls = event.layerCls
+	local str = cls.__cname
 	local pro = event.properties
-	self.layer = cls.new(pro)
+	local layer = cls.new(pro)
+	self.layers[str] = layer
+	dump(self.layers)
 	self:setOpacity(event.opacity or kOpacity)
-	self:addChild(self.layer)
-	self.layer:scale(0.0)
+	self:addChild(layer)
+	layer:scale(0.0)
 	if event.anim == false then
-		self.layer:scale(1)
+		layer:scale(1)
 	else
-		self.layer:scaleTo(0.3, 1)
+		layer:scaleTo(0.3, 1)
 	end
 end
 
 function PopupRootLayer:closePopup(event)
-	transition.execute(self.layer, cc.ScaleTo:create(0.3, 0.0), {
+	transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
     	delay = 0,
     	easing = "In",
     	onComplete = function() 
-	    	self:setVisible(false)
-	    	self.layer:removeSelf()
-	    	self.layer = nil
+	    	self.layers[event.layerId]:removeSelf()
+	    	self.layers[event.layerId] = nil
+	    	print("#self.layers)", #self.layers)
+	    	dump(self.layers)
+	    	if table.nums(self.layers) == 0 then
+	    		self:setVisible(false)
+	    	end
        end, 
 	})
 end

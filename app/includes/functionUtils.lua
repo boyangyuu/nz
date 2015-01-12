@@ -123,6 +123,20 @@ function getRecordByKey(configFileDir, propertyName, key)
     return recordArr
 end
 
+function getRecordFromTable(table, propertyName, key)
+    assert(propertyName ~= "" and type(propertyName) == "string", "invalid param")
+    assert(key ~= "", "key is invalid param")
+    local recordArr={}
+    for k,v in pairs(table) do
+        for k1,v1 in pairs(v) do
+            if k1 == propertyName and v1 == key then
+                recordArr[#recordArr + 1] = v
+            end
+        end
+    end
+    return recordArr
+end
+
 function getUserData()
     return GameData.data
 end

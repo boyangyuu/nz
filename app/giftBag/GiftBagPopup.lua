@@ -36,17 +36,17 @@ local configs = {
 	}
 }
 
-local NovicesBagPopup = class("NovicesBagPopup", function()
+local GiftBagPopup = class("GiftBagPopup", function()
 	return display.newLayer()
 end)
 
-function NovicesBagPopup:ctor(properties)
+function GiftBagPopup:ctor(properties)
 	print(properties.popupName)
 	self:loadCCS(properties)
 	self:initButtons()
 end
 
-function NovicesBagPopup:loadCCS(properties)
+function GiftBagPopup:loadCCS(properties)
 	local temp = properties.popupName
 	if temp and type(temp) == "string" then
 		local title = configs[temp]
@@ -56,7 +56,7 @@ function NovicesBagPopup:loadCCS(properties)
 	end
 end
 
-function NovicesBagPopup:initButtons()
+function GiftBagPopup:initButtons()
 	local receiveBtn = cc.uiloader:seekNodeByName(self, "btn_Receive")
 	receiveBtn:setTouchEnabled(true)
 	addBtnEventListener(receiveBtn, function( event )
@@ -89,4 +89,4 @@ function NovicesBagPopup:initButtons()
 	end
 end
 
-return NovicesBagPopup
+return GiftBagPopup

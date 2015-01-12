@@ -39,7 +39,17 @@ function MainScene:ctor()
     self:addChild(debugLayer, 500)
 
     --black
-
+    local LayerColor = cc.c4b(0, 0, 0, 255)
+    cc.LayerColor:create(LayerColor)
+            :size(display.width, display.offset)
+            :pos(0, 0)
+            :addTo(self,600)
+            :setTouchEnabled(false)
+    cc.LayerColor:create(LayerColor)
+            :size(display.width, display.offset)
+            :pos(0, display.offset+640)
+            :addTo(self,600)
+            :setTouchEnabled(false)
 end
 
 function MainScene:onEnter()

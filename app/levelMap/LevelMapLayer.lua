@@ -205,7 +205,6 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     local levelId = i  
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
-                    -- self:addChild(getPopupTips("关卡尚未开启！"))
                     ui:showPopup("commonPopup",
                      {type = "style2", content = "本关还没开启"},
                      { opacity = 0})
@@ -244,12 +243,12 @@ end
 
 function LevelMapLayer:panelAction()
     local changeTime = 0.2
-    self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width, 0)))
-    self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height)))
+    self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
+    self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
-                self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width, 0)))
-                self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height)))
+                self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
+                self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height+5)))
             end)}))
 end
 
