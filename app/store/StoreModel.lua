@@ -4,17 +4,23 @@ local StoreModel = class("StoreModel", cc.mvc.ModelBase)
 
 function StoreModel:ctor(properties, events, callbacks)
 	StoreModel.super.ctor(self, properties)
+	self:initConfigTable()
+end
 
+function StoreModel:initConfigTable()
+	self.xqconfig = getConfig("config/items_xq.json")
+	self.bankconfig = getConfig("config/items_bank.json")
+	self.fightconfig = getConfig("config/items_fight.json")
 end
 
 function StoreModel:getConfigTable(type)
 	local newTable = {}
 	if type == "prop" then
-		newTable = getConfig("config/items_fight.json")
+		newTable = self.fightconfig
 	elseif type == "bank" then
-		newTable = getConfig("config/items_bank.json")
+		newTable = self.bankconfig
 	elseif type == "inlay" then
-		 local config = getConfig("config/items_xq.json")
+		 local config = self.xqconfig
 		newTable = self:orderByGold(config)
 
 	end
@@ -22,7 +28,7 @@ function StoreModel:getConfigTable(type)
 end
 
 function StoreModel:setGoldWeaponNum()
-	local config = getConfig("config/items_xq.json")
+	local config = self.xqconfig
 	local newTable = self:orderByGold(config)
 	local InlayModel = md:getInstance("InlayModel")
 	local goldNum = InlayModel:getInlayNum(newTable[1]["id"])
