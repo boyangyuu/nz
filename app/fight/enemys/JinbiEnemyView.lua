@@ -18,7 +18,6 @@ function JinbiEnemyView:ctor(property)
 	--instance
 	JinbiEnemyView.super.ctor(self, property) 
     self.isFlying = true
-    self.property = property
     
 
     --events

@@ -98,10 +98,15 @@ end
 
 function Hero:setGun(bagIndex)
     self.gun = self.bags[bagIndex]
-    self:setCooldown(self.gun:getCooldown())
+    print("function Hero:setGun(bagIndex)")
 
     --prefer
     self:setPreferBagIndex(bagIndex)
+end
+
+
+function Hero:getCooldown()
+    return self.gun:getCooldown()
 end
 
 function Hero:initGuns()

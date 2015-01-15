@@ -113,7 +113,10 @@ function RootLayer:addResFight()
     --sprite
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
-    
+    -- local cb = function(plist, image)
+    -- -- do something
+    -- end
+    -- display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)    
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 

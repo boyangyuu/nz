@@ -8,15 +8,24 @@ local waves = {
 		enemys = {  	
 			{
 				time = 1,
-				descId = "boss01",
-				num = 6,
+				num = 3,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
 					id = 1,
-					placeName = "place1",			
+					placeName = "place9",			
 				},
 			},		
+			{
+				time = 2,
+				num = 2,
+				pos = {100, 200, 0, 170, 340, 100},
+				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+				property = { 
+					id = 1,
+					placeName = "place6",			
+				},
+			},				
 			-- {
 			-- 	time = 3,
 			-- 	num = 6,
@@ -86,7 +95,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=30,hp=10000,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="anim_enemy_002",demage=3,hp=50,walkRate=400,rollRate=400,fireRate=200,
 		weak1=2,weak2=4},
 
 	--近战兵

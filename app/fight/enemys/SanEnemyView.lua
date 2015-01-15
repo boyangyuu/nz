@@ -18,7 +18,6 @@ function SanEnemyView:ctor(property)
 	--instance
 	SanEnemyView.super.ctor(self, property) 
     self.isFalling = true
-    self.property = property
 	-- dump(property, "property")
     
     --events

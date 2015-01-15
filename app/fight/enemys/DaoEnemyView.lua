@@ -18,7 +18,6 @@ local DaoEnemyView = class("DaoEnemyView", BaseEnemyView)
 function DaoEnemyView:ctor(property)
     --instance
     DaoEnemyView.super.ctor(self, property) 
-    self.property = property
 
     --events
     cc.EventProxy.new(self.enemy, self)
@@ -77,16 +76,15 @@ function DaoEnemyView:onHitted(targetData)
     local demageType = targetData.demageType
     if self.enemy:canHitted() and self:canHitted() then
         self.enemy:decreaseHp(demage * scale)
+        --爆头
+        if self.enemy:getHp() == 0 then 
+            if demageType == "head" then 
+                print("爆头")
+                self.hero:dispatchEvent({
+                    name = self.hero.ENEMY_KILL_HEAD_EVENT})
+            end
+        end          
     end
-
-    --爆头
-    if self.enemy:getHp() == 0 then 
-        if demageType == "head" then 
-            print("爆头")
-            self.hero:dispatchEvent({
-                name = self.hero.ENEMY_KILL_HEAD_EVENT})
-        end
-    end   
 end
 
 function DaoEnemyView:canHitted()

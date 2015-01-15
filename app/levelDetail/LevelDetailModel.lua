@@ -48,6 +48,7 @@ function LevelDetailModel:getCurLevelType()
 end
 
 function LevelDetailModel:isJujiFight()
+	-- return false
     return self:getCurLevelType() == "juji"
 end
 

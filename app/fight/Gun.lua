@@ -36,8 +36,10 @@ end
 function Gun:getCooldown()
 	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.coolDown
-
-	return  baseValue
+	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
+	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
+	local value = scale * baseValue
+	return  value
 end
 
 function Gun:setFullBulletNum()
@@ -69,9 +71,12 @@ function Gun:getBulletNum()
 end
 
 function Gun:isFireThrough()
+	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local type = self.config["type"]
 	assert(type, "type is nil")
 	if type == "pz" or type == "rpg" then 
+		return true
+	elseif isGold then 
 		return true
 	else
 		return false

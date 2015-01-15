@@ -19,7 +19,6 @@ function BaseBossView:ctor(property)
 	BaseBossView.super.ctor(self, property) 
 
 	--config
-	self.property = property
 	self.attackType = "weak"
 	-- dump(property, "property")
 	local index = property.id

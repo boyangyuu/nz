@@ -13,7 +13,7 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
-isTest  = false
+isTest  = true
 isDebug = false
 -- isTest  = true
 ui      = UI.new()
