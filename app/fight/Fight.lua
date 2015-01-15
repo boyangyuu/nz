@@ -53,6 +53,8 @@ function Fight:refreshData(properties)
     self.map        = md:createInstance("Map")
     self.inlay = self.hero:getFightInlay()
 
+    local levelModel = md:getInstance("LevelDetailModel")
+    self.isJujiFight = levelModel:isJujiFight()
     self.goldValue = 0.0
     self.result = nil
 end
@@ -138,9 +140,7 @@ function Fight:getCurGroupAndLevel()
 end
 
 function Fight:checkJuContorlType()
-    local levelModel = md:getInstance("LevelDetailModel")
-    local isju = levelModel:isJujiFight()
-    if isju == false then return end
+    if self.isJujiFight == false then return end
     local comps = {btnJu = false, btnChange =  false,}
     self:setCompsVisible(comps)
 end
