@@ -61,11 +61,15 @@ function FocusView:refreshFocus(event)
 	--range
 
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
-	local scale  = isGold and config.goldRangeScale or 1.0
+
 	local rangeHigh = event.rangeHigh or config.rangeHigh
 	local rangeWidth = event.rangeWidth or config.rangeWidth
-	local h = rangeHigh * scale
-	local w = rangeWidth * scale
+
+	local h, w 
+	if isGold then 
+		h = config["goldWidth"]
+		w = config["goldHeight"]
+	end
 	self:setFocusRange(cc.size(w, h))
 	
 	self:playIdle()

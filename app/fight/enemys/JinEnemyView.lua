@@ -17,7 +17,6 @@ local kTimeStartAhead = 2.0
 function JinEnemyView:ctor(property)
 	--instance
 	JinEnemyView.super.ctor(self, property) 
-    self.property = property
     -- dump(self.property, "self.property")
     self.isAheading = false
     self.attackHandler = nil

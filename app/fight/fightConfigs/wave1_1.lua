@@ -171,13 +171,18 @@ local enemys = {
 
 local mapId = "map_1_1"
 
-local isNotMoveMap = true
+local isNotMoveMap = true  		--此关不能移动 
+
+local limit = 10   				--此关敌人上限
+local enemyDelay = 1            --怪物补位延迟时间 
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.limit  = limit
+	self.enemyDelay = enemyDelay
 	self.isNotMoveMap = isNotMoveMap
 end
 

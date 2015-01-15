@@ -15,6 +15,8 @@ function Attackable:ctor(property)
     self.hero = md:getInstance("Hero")	
     self.fight = md:getInstance("Fight")
 	self.enemy = self:getModel(property)
+	self.property = property
+
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
@@ -27,7 +29,6 @@ function Attackable:ctor(property)
 	assert(self.armature)
 	self:addChild(self.armature)
     self:setScale(property.scale or 1.0)
-    self:setPlaceIndex(property.placeIndex)
     
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
@@ -371,12 +372,8 @@ function Attackable:getPosInMap()
 	return worldInMap
 end
 
-function Attackable:setPlaceIndex(index_)
-	self.placeIndex = index_
-end
-
-function Attackable:getPlaceIndex()
-	return self.placeIndex
+function Attackable:getPlaceZOrder()
+	return self.property.placeZOrder
 end
 
 function Attackable:getEnemyModel()
