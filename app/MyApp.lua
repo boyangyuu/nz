@@ -20,7 +20,6 @@ ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
 define  = Define.new()
--- umSDK   = cc.UMAnalytics
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -112,12 +111,12 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
-            money = 12000000,
-            diamond = 1000000,
+            money = 1000000,
+            diamond = 0,
                       
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 6,
             },
             guide = {
                         fight = false,

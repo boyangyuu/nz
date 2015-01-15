@@ -352,10 +352,8 @@ function FightResultLayer:getRanRecord( ran )
 end
 
 function FightResultLayer:turnLeftCard()
-    if device.platform == "android" then
-        cc.UMAnalytics:buy("fanpai", 1, 10)   
-    end 
-
+    um:buy("fanpai", 1, 10)   
+    
 	ui:closePopup("commonPopup")
 	if self.userModel:costDiamond(10) then
 		function delayturnleft()

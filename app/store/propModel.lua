@@ -27,10 +27,7 @@ function PropModel:costProp(nameid,costNum)
 	local propnum = prop.num - costNum
 	data.prop[nameid].num = propnum
 	setUserData(data)
-    if device.platform == "android" then
-        cc.UMAnalytics:use(nameid, costNum, 0)   
-    end 
-
+    um:use(nameid, costNum, 0)   
 end
 
 

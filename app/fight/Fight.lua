@@ -88,9 +88,7 @@ function Fight:onWin()
     
     self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    
-    if device.platform == "android" then
-        cc.UMAnalytics:finishLevel(levelInfo)   
-    end    
+    um:finishLevel(levelInfo)
     self:willEndFight()  
     self:clearFightData()  
 
@@ -104,9 +102,7 @@ function Fight:onFail()
     --clear
     self:clearFightData() 
     local levelInfo = self.groupId.."-"..self.levelId  
-    if device.platform == "android" then
-        cc.UMAnalytics:failLevel(levelInfo)
-    end   
+    um:failLevel(levelInfo)
 end
 
 
