@@ -52,6 +52,7 @@ end
 	local data = getUserData()
 	data.diamond = data.diamond + diamond
 	setUserData(data)
+	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 end
 
  function UserModel:addMoney(money)
