@@ -146,7 +146,6 @@ function LevelMapLayer:initChooseLayer()
             return true
         elseif event.name=='ended' then
             print("Btn is pressed!")
-            ui:showPopup("GiftBagPopup",{popupName = "novicesBag"})
         end
     end)
 

@@ -6,7 +6,7 @@ local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
-
+local IAPsdk = require("app.SDK.IAPsdk")
 GameState = require("framework.cc.utils.GameState")
 
 local MyApp = class("MyApp", cc.mvc.AppBase)
@@ -21,6 +21,7 @@ md      = MD.new()
 um      = UM.new()
 define  = Define.new()
 -- umSDK   = cc.UMAnalytics
+iap = IAPsdk.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -117,13 +118,22 @@ function MyApp:createGameStateFile()
                       
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 5,
             },
             guide = {
                         fight = false,
             },
             fight = {
                         isPreferBag1 = true,
+            },
+
+            -- 礼包购买状态
+            giftBag = { --buy
+                            weaponGiftBag = 
+                            {
+                                isBuyed = false;
+                            }
+                            
             },
     }
     GameState.save(data)
@@ -135,5 +145,17 @@ function MyApp:showError(debugInfo)
     local debug = md:getInstance("DebugModel")
     debug:showPopup(debugInfo)
 end
+
+function MyApp:setTelecomOperator()
+    local telecomOperator = nil
+    if device.platform == 'android' then
+        local result,telecomOperator = luaj.callStaticMethod("com.anqu.djd", "getTelecomName")
+        return telecomOperator
+    end
+    return telecomOperator
+end
+
+-- 电信运营商
+telecomOperator = MyApp:setTelecomOperator()
 
 return MyApp
