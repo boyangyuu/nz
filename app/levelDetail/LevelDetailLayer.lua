@@ -74,17 +74,15 @@ function LevelDetailLayer:initUI()
 	local danseditj = cc.uiloader:seekNodeByName(self, "danseditj")
 	local dansetj = cc.uiloader:seekNodeByName(self, "dansetj")
 	dansedijj:setColor(cc.c3b(249,0,255))
-	dansejj:setColor(cc.c3b(249,0,255))
 	dansedihw:setColor(cc.c3b(255,208,0))
-	dansehw:setColor(cc.c3b(255,208,0))
 	danseditj:setColor(cc.c3b(0,255,198))
-	dansetj:setColor(cc.c3b(0,255,198))
 
     --content
 	local DataTable = self.DataTable
 
 	self.labelTitle:setString(DataTable["name"])
 	self.labelId:setString(DataTable["groupId"].."-"..DataTable["levelId"])
+	self.target:setString(DataTable["taskDesc"])
 	self.labeldesc:setString(DataTable["desc"])
 	self.labelTasktype:setString(DataTable["taskTypeDesc"])
 	self.labelget:setVisible(false)
@@ -254,9 +252,7 @@ function LevelDetailLayer:onClickBtnStart()
 		levelId = self.levelId})
 	self:onClickBtnOff()
 	local levelInfo = self.groupId.."-"..self.levelId
-	if device.platform == "android" then
-		cc.UMAnalytics:startLevel(levelInfo)
-	end
+	um:startLevel(levelInfo)
 end
 
 

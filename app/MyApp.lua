@@ -13,14 +13,14 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
-isTest  = false
+isTest  = true
 isDebug = false
 -- isTest  = true
 ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
 define  = Define.new()
--- umSDK   = cc.UMAnalytics
+
 iap = IAPsdk.new()
 
 function MyApp:ctor()
@@ -113,12 +113,13 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
-            money = 12000000,
-            diamond = 1000000,
+            money = 1000000,
+            diamond = 0,
                       
             currentlevel =  {
                         group = 1,
-                        level = 5,
+
+                        level = 6,
             },
             guide = {
                         fight = false,

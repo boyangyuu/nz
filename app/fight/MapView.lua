@@ -21,7 +21,7 @@ end)
 
 _isZooming = false
 local kMissileZorder = 10000
-local kMissilePlaceIndex = 100
+local kMissilePlaceZOrder = 100
 local kEffectZorder = 101
 function MapView:ctor()
 	--instance
@@ -29,6 +29,7 @@ function MapView:ctor()
 	self.fight			= md:getInstance("Fight")
 	self.mapModel 		= md:getInstance("Map")
 	self.enemys 		= {}
+	self.cacheEnemys    = {}
 	self.waveIndex 		= 1
 	self.isPause 		= false
 	self.fightDescModel = md:getInstance("FightDescModel")
@@ -64,9 +65,9 @@ function MapView:loadCCS()
 	dump(waveConfig, "waveConfig")
 	local mapName = waveConfig:getMapId()
 	local level, group = self.fight:getCurGroupAndLevel()
-	-- if level == 1 and group == 1 then 
-	-- 	mapName = "map_1_7"
-	-- end	
+	if level == 1 and group == 1 then 
+		mapName = "map_1_7"
+	end	
 	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
@@ -80,27 +81,47 @@ function MapView:loadCCS()
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
 
+	self:loadPlaces()
+end
+
+function MapView:loadPlaces()
 	--init enemy places
 	local index = 1
 	self.places = {}
     while true do
-    	local name_ = "place_" .. index
     	local name = "place" .. index
-    	local placeNode_ =  cc.uiloader:seekNodeByName(self.map, name_)
-    	local placeNode = cc.uiloader:seekNodeByName(placeNode_, name)
+    	local placeNode = cc.uiloader:seekNodeByName(self.map, name)
+        if placeNode == nil then
+            break
+        end		
+		placeZOrder = placeNode:getLocalZOrder()
+		print("placeZOrder", placeZOrder)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 
     	if scaleNode then scaleNode:setVisible(false) end
-        if placeNode == nil then
-            break
-        end
+
         if isTest == false then 
-        	local colorNode = cc.uiloader:seekNodeByName(placeNode_, "color")
+        	local colorNode = cc.uiloader:seekNodeByName(placeNode, "color")
 	        colorNode:setVisible(false)
 	    end
         self.places[name] = placeNode
         index = index + 1
     end
+
+    --init enemy cover
+    self.covers = {}
+	local index = 1
+    while true do
+
+    	local name = "cover" .. index
+    	local coverNode = cc.uiloader:seekNodeByName(self.map, name)
+        if coverNode == nil then
+            break
+        end
+        self.covers[index] = coverNode
+		if isTest then coverNode:setColor(cc.c3b(30,230,45)) end
+        index = index + 1
+    end    	
 end
 
 function MapView:startFight(event)
@@ -149,7 +170,8 @@ function MapView:updateEnemys()
 
 			--add
 			local function addEnemyFunc()
-				self:addEnemy(group.property, pos, zorder)
+				-- self:addEnemy(group.property, pos, zorder)
+				self:cacheEnemy(group.property, pos, zorder)
 			end
 
 			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
@@ -183,21 +205,23 @@ function MapView:checkWave()
 end
 
 function MapView:addEnemy(property, pos, zorder)
+	--check limit
+
+
 	local placeName = property.placeName
 	assert(placeName , "invalid param placeName:"..placeName)
 	assert(property , "invalid param property:" )
 	
 	--place
-	local substr 		= string.sub(placeName,6,-1)
-	local placeIndex 	= 	tonumber(substr)
 	local placeNode 	= self.places[placeName]
+	placeZOrder = placeNode:getLocalZOrder()
 	assert(placeNode, "no placeNode! invalid param:"..placeName)		
 	local boundPlace 	= placeNode:getBoundingBox()
 	local pWorld 		= placeNode:convertToWorldSpace(cc.p(0,0))
 	boundPlace.x 		= pWorld.x
 	boundPlace.y 		= boundPlace.y	
 	property.boundPlace = boundPlace
-	property.placeIndex = placeIndex
+	property.placeZOrder = placeZOrder
 
 	--scale
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
@@ -215,6 +239,24 @@ function MapView:addEnemy(property, pos, zorder)
 	
 	--add
 	placeNode:addChild(enemyView, zorder)
+end
+
+function MapView:checkNumLimit()
+	local waveConfig = self.mapModel:getCurWaveConfig()
+	local limit 	 = waveConfig:getEnemyNumLimit()
+	local delay      = waveConfig:getEnemyDelay()
+	if #self.enemys > limit then return end
+
+	local cacheData = self.cacheEnemys[1]
+	if cacheData == nil then return end
+
+	table.remove(self.cacheEnemys, 1)
+	self:addEnemy(cacheData.property, cacheData.pos, cacheData.zorder)
+end
+
+function MapView:cacheEnemy(property, pos, zorder)
+	self.cacheEnemys[#self.cacheEnemys + 1] = {property = property,
+								pos = pos, zorder = zorder}
 end
 
 function MapView:getSize()
@@ -284,6 +326,9 @@ function MapView:tick(dt)
 		end
 	end
 
+	--检查cache
+	self:checkNumLimit()
+
 end
 function MapView:doKillAward(pos, award)
 	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
@@ -302,10 +347,39 @@ end
 function MapView:getTargetDatas(focusNode)
 	local targetDatas = {}
 	for i,enemy in ipairs(self.enemys) do
-		local isHited, targetData = enemy:getTargetData(focusNode)
-		if isHited then targetDatas[#targetDatas + 1] = targetData end
+		local isCovered = self:isCovered(enemy, focusNode)
+		if not isCovered then 
+			local isHited, targetData = enemy:getTargetData(focusNode)
+			if isHited then targetDatas[#targetDatas + 1] = targetData end
+		end
 	end
 	return targetDatas 
+end
+
+function MapView:isCovered(enemy, focusNode)
+	local focusBox = focusNode:getBoundingBox()
+    local pFocus = focusNode:convertToWorldSpace(cc.p(0,0))
+    focusBox.x = pFocus.x
+    focusBox.y = pFocus.y
+    -- dump(focusBox, "focusNodeBox")
+
+	for i,cover in ipairs(self.covers) do
+		--focus
+		local coverBox = cover:getBoundingBox()
+
+	    local pCover = cover:convertToWorldSpace(cc.p(0,0))
+	    coverBox.x = pCover.x
+	    coverBox.y = pCover.y
+	    -- dump(coverBox, "coverBox")
+	    --
+		local isCovered = cc.rectIntersectsRect(focusBox, coverBox)
+		if isCovered then 
+			local placeZ = enemy:getPlaceZOrder()
+			local coverZ = cover:getLocalZOrder()
+			if placeZ < coverZ then return true end
+		end
+	end
+	return false
 end
 
 --返回rect里包含enemy的点位置的enemys
@@ -332,15 +406,14 @@ function MapView:getEnemysInRect(rect)
 	return enemys
 end
 
-
-
 --events
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
 		local zorder = #event.enemys - i
 		local function addEnemyFunc()
 			self:addEnemy(enemyData.property, 
-			enemyData.pos.x, zorder) --todo
+			enemyData.pos.x, zorder)
+			-- self:cacheEnemy() --todo
 		end		
 		
 		scheduler.performWithDelayGlobal(addEnemyFunc, 
@@ -350,7 +423,7 @@ end
 
 function MapView:callfuncAddMissile(event)
 	local property = event.property
-	property.placeIndex = kMissilePlaceIndex
+	property.placeZOrder = kMissilePlaceZOrder
 	kMissileZorder = kMissileZorder - 1
 	-- dump(property, "property")
 	local enemyView = EnemyFactroy.createEnemy(property)
@@ -399,18 +472,18 @@ end
 
 function MapView:singleFire(datas)
 	local selectedData  = nil
-	local maxPlaceIndex = -1
+	local maxPlaceZOrder = -1
 	local maxZorder 	= -1
 	for i,data in ipairs(datas) do
 		local enemy = data.enemy
 		local zo  = enemy:getLocalZOrder()
-		local pi  = enemy:getPlaceIndex()
-		-- print("placeIndex: "..pi.." zorder: "..zo)
-		if pi >= maxPlaceIndex then
+		local pi  = enemy:getPlaceZOrder()
+		-- print("placeZOrder: "..pi.." zorder: "..zo)
+		if pi >= maxPlaceZOrder then
 			if zo >= maxZorder then 
 				selectedData = data
 				maxZorder    = zo
-				maxPlaceIndex= pi 
+				maxPlaceZOrder= pi 
 			end
 		end	 
 	end

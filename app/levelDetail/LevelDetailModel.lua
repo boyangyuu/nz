@@ -9,11 +9,16 @@ local WeaponListModel = import("..weaponList.WeaponListModel")
 local LevelDetailModel = class("LevelDetailModel", cc.mvc.ModelBase)
 
 function LevelDetailModel:ctor(properties)
+	self:initConfigTable()
 	self.weaponListModel = md:getInstance("WeaponListModel")
 end
 
+function LevelDetailModel:initConfigTable()
+	self.config = getConfig("config/guanqia.json")
+end
+
 function LevelDetailModel:getConfig(BigID,SmallID)
-	local records = getRecordByKey("config/guanqia.json","groupId",BigID)
+	local records = getRecordFromTable(self.config,"groupId",BigID)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
 			if k1 == "levelId" and v1==SmallID then
@@ -43,6 +48,7 @@ function LevelDetailModel:getCurLevelType()
 end
 
 function LevelDetailModel:isJujiFight()
+	-- return false
     return self:getCurLevelType() == "juji"
 end
 

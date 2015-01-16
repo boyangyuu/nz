@@ -15,8 +15,6 @@ function BaoEnemyView:ctor(property)
 	--instance
 	BaoEnemyView.super.ctor(self, property) 
     self.hero = md:getInstance("Hero")
-    self.property = property
-    dump(self.property, "self.property")
     self.isAheading = false
     self.isAheaded = false
 

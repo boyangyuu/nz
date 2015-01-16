@@ -81,6 +81,7 @@ function getConfig( configFileDir )
     local jsonStr = fileUtil:getStringFromFile(fullPath)
     local configTb = json.decode(jsonStr)
     --
+    print("function getConfig( configFileDir )")
     assert(configTb, "config is nil , name:"..configFileDir)
     return configTb
 end

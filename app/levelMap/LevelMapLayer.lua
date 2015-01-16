@@ -71,6 +71,13 @@ function LevelMapLayer:initChooseLayer()
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
 
+    local xstj = cc.uiloader:seekNodeByName(self.chooseRootNode, "xianshitejia")
+    local czlb = cc.uiloader:seekNodeByName(self.chooseRootNode, "chaozhilibao")
+    local mrrw = cc.uiloader:seekNodeByName(self.chooseRootNode, "meirirenwu")
+    xstj:enableOutline(cc.c4b(18, 130, 20,255), 2)
+    czlb:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    mrrw:enableOutline(cc.c4b(0, 0, 0,255), 2)
+
     self.levelNum:setString(self.index)
 
     local actionPre = transition.sequence({

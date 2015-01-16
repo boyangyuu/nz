@@ -311,7 +311,7 @@ function InlayModel:removeAllInlay()
 		local allInlayed = self:getAllInlayed()
 		for k,v in pairs(allInlayed) do
 			local useInfo = self:getInlayType(v).."_"..self:getInlayRecord(v)["property"]
-			cc.UMAnalytics:use(useInfo, 1,0)
+			um:use(useInfo, 1,0)
 		end
 	end
 	local data = getUserData()
