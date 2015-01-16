@@ -149,6 +149,7 @@ display.size               = {width = winSize.width, height = winSize.height}
 display.width              = display.size.width
 display.height             = display.size.height
 
+--------
 --modified by yby
 display.width1             = 1136
 display.height1            = 640
