@@ -132,7 +132,7 @@ function MyApp:createGameStateFile()
             giftBag = { --buy
                             weaponGiftBag = 
                             {
-                                isBuyed = false;
+                                isBuyed = false,
                             }
                             
             },
@@ -146,17 +146,5 @@ function MyApp:showError(debugInfo)
     local debug = md:getInstance("DebugModel")
     debug:showPopup(debugInfo)
 end
-
-function MyApp:setTelecomOperator()
-    local telecomOperator = nil
-    if device.platform == 'android' then
-        local result,telecomOperator = luaj.callStaticMethod("com.anqu.djd", "getTelecomName")
-        return telecomOperator
-    end
-    return telecomOperator
-end
-
--- 电信运营商
-telecomOperator = MyApp:setTelecomOperator()
 
 return MyApp

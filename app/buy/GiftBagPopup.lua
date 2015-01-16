@@ -31,9 +31,15 @@ function GiftBagPopup:initButtons()
 			ui:closePopup("GiftBagPopup")
 
 			-- self.param.callBackSuccess()
-			local buy = md:getInstance("BuyModel")
+			-- local buy = md:getInstance("BuyModel")
 			-- buy:buy("novicesBag", {})
-			buy:buy_goldGiftBag()
+			-- buy:buy_goldGiftBag()
+			print("popupName:",self.param.popupName)
+			iap:pay(self.param.popupName,function()
+				print("购买成功!")
+			end, function()
+				print("购买失败")
+			end)
 
 			print("receiveBtn is pressed!")
 		end
@@ -47,7 +53,7 @@ function GiftBagPopup:initButtons()
 		elseif event.name == 'ended' then
 			ui:closePopup("GiftBagPopup")
 			-- self:removeSelf()
-			self.param.callBackFail()
+			-- self.param.callBackFail()
 			
 			print("btnClose is pressed!")
 		end
