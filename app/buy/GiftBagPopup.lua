@@ -1,6 +1,6 @@
 
 
-local BuyConfigs = import(".buyConfigs")
+local BuyConfigs = import(".BuyConfigs")
 
 local GiftBagPopup = class("GiftBagPopup", function()
 	return display.newLayer()

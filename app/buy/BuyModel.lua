@@ -3,7 +3,7 @@
 “购买”的实体
 
 ]]
-local BuyConfigs = import(".buyConfigs")
+local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 
 -- 定义事件
