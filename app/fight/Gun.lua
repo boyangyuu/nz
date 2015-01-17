@@ -19,7 +19,6 @@ function Gun:ctor(properties)
     self.weaponModel = md:getInstance("WeaponListModel")
     self.bagIndex = properties.bagIndex
 	self:setConfig()
-	self.curBulletNum = self:getBulletNum()
 end
 
 function Gun:setConfig()
@@ -62,7 +61,7 @@ function Gun:getBulletNum()
 	local value = 0.0
     local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
     if isInlayed then
-        value = baseValue + inlayValue
+        value = baseValue + baseValue * inlayValue
     else
         value = baseValue
     end	
