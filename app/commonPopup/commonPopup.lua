@@ -103,21 +103,17 @@ end
 function commonPopup:onClickCofirm()
 	local func =  self.properties.callfuncCofirm
 	if func ~= nil then 
-		func()
-		ui:closePopup("commonPopup")		
-	else 
-		ui:closePopup("commonPopup")
+		func()		
 	end
+	ui:closePopup("commonPopup")
 end
 
 function commonPopup:onClickClose()
 	local func =  self.properties.callfuncClose
 	if func ~= nil then 
 		func()
-		ui:closePopup("commonPopup")		
-	else 
-		ui:closePopup("commonPopup")
 	end	
+	ui:closePopup("commonPopup")	
 end
 
 return commonPopup
