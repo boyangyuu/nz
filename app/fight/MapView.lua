@@ -148,8 +148,10 @@ function MapView:updateEnemys()
 
 	--addEnemys
 	local lastTime = 0
+	local numSum = 0
 	for groupId, group in ipairs(wave.enemys) do
 		--desc
+		print("groupId"..groupId)
 		self:showEnemyIntro(group.descId)
 		for i = 1, group.num do
 			--delay
@@ -162,7 +164,7 @@ function MapView:updateEnemys()
 			local pos = group["pos"][i] or 0
 
 			--zorder
-			local zorder = group.num - i
+			local zorder = group.num - i + numSum
 
 			--add
 			local function addEnemyFunc()
@@ -172,6 +174,7 @@ function MapView:updateEnemys()
 
 			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
+		numSum = numSum + group.num
 	end
 	--check next wave
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)

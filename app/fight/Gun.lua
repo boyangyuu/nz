@@ -19,6 +19,7 @@ function Gun:ctor(properties)
     self.weaponModel = md:getInstance("WeaponListModel")
     self.bagIndex = properties.bagIndex
 	self:setConfig()
+	self.curBulletNum = self:getBulletNum()
 end
 
 function Gun:setConfig()
