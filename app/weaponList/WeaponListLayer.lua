@@ -21,7 +21,6 @@ function WeaponListLayer:ctor()
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.commonPopModel = md:getInstance("commonPopModel")
     self.userModel = md:getInstance("UserModel")
-
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
@@ -144,9 +143,19 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            ui:showPopup("commonPopup",
-             {type = "style3", title = "提示",content = "是否花费60钻石升级购买该武器"},
-             {opacity = 155})
+
+            if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+                -- self:buyWeapon(self.weaponId)
+
+                ui:showPopup("commonPopup",
+                 {type = "style3", title = "提示",content = "是否花费60钻石升级购买该武器"},
+                 {opacity = 155})
+            else
+                local buy = md:getInstance("BuyModel")
+                buy:buy("weaponGiftBag", {weaponId = self.weaponId})
+            end
+
+            
 
             -- if self.userModel:costDiamond(self.weaponrecord["cost"]) then
             --     self:buyWeapon(self.weaponId)
@@ -172,7 +181,14 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:onceFull(self.weaponId)
+            -- self:onceFull(self.weaponId)
+            -- todo 改为buymodel
+            -- local data = getUserData()
+            -- if not data.giftBag.weaponGiftBag then
+            --     ui:showPopup("GiftBagPopup",{popupName = "weaponGiftBag",callBack = function()
+            --     self:onceFull(self.weaponId)
+            --     end})
+            -- end
         end
     end)
     addBtnEventListener(self.btnEquip, function(event)

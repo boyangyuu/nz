@@ -31,7 +31,7 @@ layerClasses["MapPopup"]             = import("..help.MapPopup")
 layerClasses["FightPopup"]           = import("..help.FightPopup")
 
 -- giftBag
-layerClasses["GiftBagPopup"]      = import("..giftBag.GiftBagPopup")
+layerClasses["GiftBagPopup"]      = import("..buy.GiftBagPopup")
 
 
 

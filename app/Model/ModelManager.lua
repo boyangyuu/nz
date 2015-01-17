@@ -18,6 +18,7 @@ modelClasses["StoreModel"]          = import("..store.StoreModel")
 modelClasses["InlayModel"]          = import("..inlay.InlayModel")
 modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
 modelClasses["commonPopModel"]      = import("..commonPopup.commonPopModel")
+
 --fight
 modelClasses["Fight"]               = import("..fight.Fight")
 modelClasses["FightInlay"]          = import("..fight.FightInlay")
@@ -33,6 +34,9 @@ modelClasses["Guide"]               = import("..guide.GuideModel")
 
 --debug
 modelClasses["DebugModel"]          = import("..debug.DebugModel")
+
+--buy
+modelClasses["BuyModel"]          = import("..buy.BuyModel")
 
 --need create
 needCreateClasses["Hero"] = true

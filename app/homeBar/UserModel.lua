@@ -59,6 +59,7 @@ end
 	local data = getUserData()
 	data.money = data.money + money
 	setUserData(data)
+	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 end
 
 function UserModel:levelPass(groupId,levelId)

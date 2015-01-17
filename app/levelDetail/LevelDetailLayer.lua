@@ -267,7 +267,6 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.btnBibei:setVisible(false)
 	else
 		print("弹板购买")
-		ui:showPopup("GiftBagPopup",{popupName = "weaponGiftBag"})
 	end
 end
 
@@ -276,7 +275,6 @@ function LevelDetailLayer:onClickBtnGold()
 	self.inlayModel:equipGoldInlays(true)
 	self.alreadygold:setVisible(true)
 	self.btnGold:setVisible(false)
-	ui:showPopup("GiftBagPopup",{popupName = "goldWeapon"})
 end
 
 function LevelDetailLayer:onClickBtnJijia()
@@ -284,7 +282,6 @@ function LevelDetailLayer:onClickBtnJijia()
 	self.propModel:buyProp("jijia",1)
 	self.alreadyjijia:setVisible(true)
 	self.btnJijia:setVisible(false)
-	ui:showPopup("GiftBagPopup",{popupName = "armedMecha"})
 end
 
 ---- initData ----
