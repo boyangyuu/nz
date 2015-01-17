@@ -7,6 +7,7 @@ end)
 function FightPopup:ctor()
 	self:loadCCS()
 	self:initButtons()
+	self:setNodeEventEnabled(true)
 end
 
 function FightPopup:loadCCS()
@@ -22,7 +23,7 @@ function FightPopup:initButtons()
 		if event.name == 'began' then 
 			return true
 		elseif event.name == 'ended' then 
-			ui:closePopup("FightPopup")
+			self:close()
 		end
 	end)
 
@@ -33,7 +34,7 @@ function FightPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("FightPopup")
+			self:close()
 			ui:changeLayer("HomeBarLayer")
 		end
 	end)
@@ -63,9 +64,21 @@ function FightPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("FightPopup")
+
+			self:close()
 		end
 	end)
+end
+
+function FightPopup:onEnter()
+	local fight = md:getInstance("Fight")
+	fight:pauseFight(true)
+end
+
+function FightPopup:close()
+	local fight = md:getInstance("Fight")
+	fight:pauseFight(false)
+	ui:closePopup("FightPopup")
 end
 
 return FightPopup

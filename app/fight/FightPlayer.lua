@@ -620,7 +620,6 @@ end
 function FightPlayer:moveBgLayer(offsetX, offsetY)
     local map = md:getInstance("Map")
     local isNotMove = map:isNotMoveMap()
-    print("isMove", isNotMove)
     if isNotMove then return end    
 
     local layerMap = self.layerMap
@@ -807,7 +806,7 @@ function FightPlayer:onGuideFire(touchEvent)
 end
 
 function FightPlayer:onEnter()
-
+    
 end
 
 function FightPlayer:onExit()

@@ -20,7 +20,6 @@ function Attackable:ctor(property)
 	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
-	self.isPause = false
 	self.playCache = {}
 	self.isRed = false
 
@@ -33,7 +32,7 @@ function Attackable:ctor(property)
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.fight, self)
-    	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.testStop))
+    	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
     	
     self:scheduleUpdate()  
     self:setNodeEventEnabled(true)	
@@ -41,15 +40,13 @@ function Attackable:ctor(property)
     self:test()
 end
 
-function Attackable:testStop(event)
+function Attackable:setPause(event)
 	if self:getDeadDone() then return end
 	local isPause = event.isPause
-	-- print("testStop", isPause)
-	self.isPause = isPause
 	local actionManager = cc.Director:getInstance():getActionManager()
 	local tAnimation = self.armature:getAnimation()
 	if tAnimation == nil then return end
-	if self.isPause then
+	if isPause then
 		self:pause()
 		tAnimation:pause()
 		actionManager:pauseTarget(self)
@@ -336,7 +333,6 @@ end
 
 function Attackable:test()
     local weakNode2 = self.armature:getBone("weak2")
-    -- assert(weakNode2, "weakNode2 is nil , 美术没加帧")
     if weakNode2 then drawBoundingBox(self.armature, weakNode2:getDisplayRenderNode(), "red")  end
     local weakNode1 = self.armature:getBone("weak1")
     if weakNode1 then drawBoundingBox(self.armature, weakNode1:getDisplayRenderNode(), "red")  end
@@ -395,6 +391,16 @@ end
 
 function Attackable:getModel(id)
 	assert("required method, must implement me")	
+end
+
+function Attackable:onEnter()
+	local fight = md:getInstance("Fight")
+	local isPause = fight:isPauseFight()
+	    -- print("function Fight:isPauseFight()"..isPause)
+	if isPause then 
+		print("		self:setPause(true) ")
+		self:setPause({isPause = true}) 
+	end
 end
 
 function Attackable:onExit()

@@ -75,32 +75,33 @@ function BaseBossView:setBlood(scale)
     local node3 = cc.uiloader:seekNodeByName(self.blood, "blood3")
     node1:setVisible(true)
     node2:setVisible(true)
-    node3:setVisible(true)
-    -- 0.66 - 1
-    if scale > 0.66 then
+    node3:setVisible(true) 
+    
+    -- 0.75 - 1
+    if scale > 0.75 then
     	local node = node1
     	node1:setVisible(true)
     	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
     	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = (scale - 0.66) / 0.33
+    	newScale   = (scale - 0.75) / (1 - 0.75)
     	node3:setVisible(false)
     	
-    -- 0.33 - 0.66
-    elseif scale > 0.33 and scale <= 0.66 then
+    -- 0.40 - 0.75
+    elseif scale > 0.40 and scale <= 0.75 then
     	local node = node2
     	node2:setVisible(true)
     	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
     	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = (scale - 0.33) / 0.3
+    	newScale   = (scale - 0.40) / (0.75 - 0.40)
 	    node1:setVisible(false)
     	
-    -- 0 - 0.33
+    -- 0 - 0.40
     else
     	local node = node3
     	node3:setVisible(true)
     	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
     	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = scale / 0.33
+    	newScale   = scale / 0.40
 		node1:setVisible(false)
 	    node2:setVisible(false)
     end
@@ -150,7 +151,7 @@ function BaseBossView:playKill(event)
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	self:clearWeak()
-	self:testStop({isPause = true})
+	self:setPause({isPause = true})
 
 	--play dead
 	self.armature:getAnimation():play("die" ,-1 , 1)
@@ -159,7 +160,9 @@ function BaseBossView:playKill(event)
 	self:playBombEffects()
 	local hero = md:getInstance("Hero")
 	hero:dispatchEvent({name = hero.ENEMY_KILL_BOSS_EVENT})
-	--
+	
+	--blood
+	self.blood:setVisible(false)
 end
 
 function BaseBossView:playBombEffects()

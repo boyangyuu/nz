@@ -47,6 +47,7 @@ end
 
 --盾牌恢复完成的回调
 function DefenceView:onResumeDefence(event)
+	
 end
 -- 
 

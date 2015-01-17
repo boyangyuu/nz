@@ -182,12 +182,12 @@ local bosses = {
 	{
 
 		image = "boss02", --图片名字
-		hp = 200000,
+		hp = 50000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 400,
 		walkRate = 200,
 		chongfengDemage = 20,  --冲锋造成伤害
-		demageScale = {weak1 = 4, weak2 = 5},	--弱点伤害倍数
+		demageScale = {weak1 = 2, weak2 = 2},	--弱点伤害倍数
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {

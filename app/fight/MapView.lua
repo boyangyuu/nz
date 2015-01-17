@@ -119,7 +119,7 @@ function MapView:loadPlaces()
             break
         end
         self.covers[index] = coverNode
-		if isTest then coverNode:setColor(cc.c3b(30,230,45)) end
+		if isTest then coverNode:setColor(cc.c3b(255, 195, 0)) end
         index = index + 1
     end    	
 end
@@ -205,9 +205,6 @@ function MapView:checkWave()
 end
 
 function MapView:addEnemy(property, pos, zorder)
-	--check limit
-
-
 	local placeName = property.placeName
 	assert(placeName , "invalid param placeName:"..placeName)
 	assert(property , "invalid param property:" )
@@ -357,6 +354,11 @@ function MapView:getTargetDatas(focusNode)
 end
 
 function MapView:isCovered(enemy, focusNode)
+	--isThrough
+	local gun = self.hero:getGun()
+	local isThrough = gun:isFireThrough()
+	if isThrough then return false end	
+
 	local focusBox = focusNode:getBoundingBox()
     local pFocus = focusNode:convertToWorldSpace(cc.p(0,0))
     focusBox.x = pFocus.x
