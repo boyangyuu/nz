@@ -24,6 +24,8 @@ function Boss:ctor(properties)
     }
     Boss.super.ctor(self, property)
 
+    self.isFireCd = false
+    self.isWalkCd = false
     --
 end
 
@@ -37,6 +39,36 @@ end
 
 function Boss:getConfig()
     return self.config
+end
+
+function Boss:getFireRate()
+    return self.config["fireRate"], not self.isFireCd
+end
+
+function Boss:beginFireCd()
+    self.isFireCd = true
+    assert(self.config["fireCd"] , "config fireCd is nil")
+    local fireCd = self.config["fireCd"] or 3.0
+
+    local function resumeCd()
+        self.isFireCd = false
+    end
+    scheduler.performWithDelayGlobal(resumeCd, fireCd)
+end
+
+function Boss:getWalkRate()
+    return self.config["walkRate"], not self.isWalkCd
+end
+
+function Boss:beginWalkCd()
+    self.isWalkCd = true
+    assert(self.config["walkCd"] , "config walkCd is nil")
+    local walkCd = self.config["walkCd"] or 3.0
+
+    local function resumeCd()
+        self.isWalkCd = false
+    end
+    scheduler.performWithDelayGlobal(resumeCd, walkCd)
 end
 
 function Boss:getAward()

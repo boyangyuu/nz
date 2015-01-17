@@ -64,10 +64,6 @@ function MapView:loadCCS()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	dump(waveConfig, "waveConfig")
 	local mapName = waveConfig:getMapId()
-	local level, group = self.fight:getCurGroupAndLevel()
-	if level == 1 and group == 1 then 
-		mapName = "map_1_7"
-	end	
 	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 

@@ -474,19 +474,26 @@ function BaseBossView:tick(t)
 	local randomSeed 
 
 	--fire
-	local fireRate = self.config["fireRate"]
-	randomSeed = math.random(1, fireRate )
-	if randomSeed > fireRate - 1 and fireRate~=0 then 
-		self:play("fire", handler(self, self.playFire))
-		return
+	local fireRate, isAble = self.enemy:getFireRate()
+	assert(fireRate > 1, "invalid fireRate")
+	if isAble then 
+		randomSeed = math.random(1, fireRate)
+		if randomSeed > fireRate - 1 then 
+			self:playAfterAlert("playFire", handler(self, self.playFire))
+			self.enemy:beginFireCd()
+		end
 	end
 
-	--move
-	local moveRate = self.config["walkRate"]
-	randomSeed =  math.random(1, moveRate)
-	if randomSeed > moveRate - 1 and fireRate~=0 then 
-		self:play("move", handler(self, self.playMove))
-		return 
+	--walk
+	local walkRate, isAble = self.enemy:getWalkRate()
+	assert(walkRate > 1, "invalid walkRate")
+
+	if isAble then
+		randomSeed =  math.random(1, walkRate)
+		if randomSeed > walkRate - 1 then 
+			self:play("playWalk", handler(self, self.playMove))
+			self.enemy:beginWalkCd()
+		end
 	end
 end
 
