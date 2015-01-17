@@ -273,7 +273,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=5,hp=680,walkRate=400,rollRate=400,fireRate=300,
+	{id=1,image="anim_enemy_002",demage=5,hp=680,walkRate=200,rollRate=300,fireRate=400,
 		weak1=2,weak2=2},
 	--盾兵
 	{id=2,image="dunbing",demage=5,hp=2000,walkRate=400,rollRate=0,fireRate=300,

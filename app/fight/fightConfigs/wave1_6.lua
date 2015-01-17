@@ -243,7 +243,8 @@ local waves = {
 					id = 5,
 					missileId = 6,
 				},
-			},	
+			},
+
 		},
 	},	
 	{
@@ -271,7 +272,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=6,hp=850,walkRate=400,rollRate=400,fireRate=300,
+	{id=1,image="anim_enemy_002",demage=6,hp=850,walkRate=200,rollRate=300,fireRate=400,
 		weak1=2,weak2=2},
 	
 	--近战兵
@@ -298,29 +299,29 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "boss01", --图片名字
-		hp = 10000,
+		hp = 150000,
 		demage = 3,
 		fireRate = 400,
 		walkRate = 200,
 		saoFireOffset = 0.4, 		--扫射时间间隔
 		saoFireTimes = 10, 			--扫射次数
-		demageScale = {weak1 = 2, weak2 = 3, weak3 = 3},	--弱点伤害倍数
+		demageScale = {weak1 = 2, weak2 = 2, weak3 = 3},	--弱点伤害倍数
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.50,
+				0.65, 0.35,
 			},
 			moveRightFire = {
-				0.85, 0.30,
+				0.55, 0.25,
 			},
 			daoDan = {
-				0.80, 0.70, 0.50, 0.20,
+				0.80, 0.61, 0.40, 0.20,
 			},
 			saoShe = {
-				0.65, 0.55,
+				0.95,0.70, 0.45,
 			},
 			weak2 = {
-				0.70,
+				0.60,
 			},	
 			weak3 = {
 				0.30,
