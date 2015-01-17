@@ -479,7 +479,7 @@ function BaseBossView:tick(t)
 	if isAble then 
 		randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
-			self:playAfterAlert("playFire", handler(self, self.playFire))
+			self:play("playFire", handler(self, self.playFire))
 			self.enemy:beginFireCd()
 		end
 	end

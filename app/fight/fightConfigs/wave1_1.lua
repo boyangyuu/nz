@@ -49,7 +49,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 1,
+				time = 3,
 				num = 2,
 				delay = {0, 0.3},
 				pos = {100,120},
@@ -60,7 +60,7 @@ local waves = {
 				},
 			},
 			{
-				time = 1,
+				time = 2,
 				num = 1,
 				delay = {0.5},
 				pos = {50},
@@ -74,7 +74,7 @@ local waves = {
 				},
 			},						
 			{
-				time = 3,
+				time = 1,
 				num = 3,
 				delay = {0, 0.4, 0.8},
 				pos = {0, 50, 100},
@@ -85,7 +85,7 @@ local waves = {
 				},
 			},
 			{
-				time = 1,
+				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {50},
@@ -127,11 +127,12 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=170,walkRate=100,rollRate=100,fireRate=200,weak1=5,weak2=4},
+	{id=1,image="anim_enemy_002",demage=1,hp=170,walkRate=200,rollRate=200,fireRate=100,fireCd=5,
+	weak1=5,weak2=4},
 	--手雷兵
-	{id=2,image="shouleib",demage=10,hp=100,walkRate=100,rollRate=100,fireRate=50,weak1=3,weak2=5},	
+	{id=2,image="shouleib",demage=1,hp=170,walkRate=200,rollRate=200,fireRate=200,fireCd=5,weak1=3,weak2=5},	
 	--手雷
-	{id=3,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},				
+	{id=3,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},				
 }
 
 

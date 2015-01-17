@@ -65,12 +65,11 @@ function FocusView:refreshFocus(event)
 	local rangeHigh = event.rangeHigh or config.rangeHigh
 	local rangeWidth = event.rangeWidth or config.rangeWidth
 
-	local h, w 
 	if isGold then 
-		h = config["goldWidth"]
-		w = config["goldHeight"]
+		rangeHigh = config["goldHeight"]
+		rangeWidth = config["goldWidth"]
 	end
-	self:setFocusRange(cc.size(w, h))
+	self:setFocusRange(cc.size(rangeWidth, rangeHigh))
 	
 	self:playIdle()
 end
@@ -127,6 +126,7 @@ function FocusView:setFocusRange(size)
     self.focusRange:setContentSize(size)
     addChildCenter(self.focusRange, self)
 
+    dump(size, "function FocusView:setFocusRange(size)")
     drawBoundingBox(nil, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 

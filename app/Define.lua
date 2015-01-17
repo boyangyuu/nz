@@ -32,6 +32,9 @@ Define.kGoldCoinValue			= 3.33		--单个金币值为3
 --购买相关
 Define.kBuyFullHpTime 			= 0.11  -- 10%血  
 
+--手打黄武
+--子弹
+
 
 --狙击枪
 Define.kJuRange 				= 4.0

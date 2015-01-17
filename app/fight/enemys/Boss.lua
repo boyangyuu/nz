@@ -1,4 +1,4 @@
--- local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 -- --[[--
 --[[--
@@ -47,7 +47,7 @@ end
 
 function Boss:beginFireCd()
     self.isFireCd = true
-    assert(self.config["fireCd"] , "config fireCd is nil")
+    -- assert(self.config["fireCd"] , "config fireCd is nil")
     local fireCd = self.config["fireCd"] or 3.0
 
     local function resumeCd()
@@ -62,10 +62,11 @@ end
 
 function Boss:beginWalkCd()
     self.isWalkCd = true
-    assert(self.config["walkCd"] , "config walkCd is nil")
+    -- assert(self.config["walkCd"] , "config walkCd is nil")
     local walkCd = self.config["walkCd"] or 3.0
 
     local function resumeCd()
+        print("    local function resumeCd()")
         self.isWalkCd = false
     end
     scheduler.performWithDelayGlobal(resumeCd, walkCd)
