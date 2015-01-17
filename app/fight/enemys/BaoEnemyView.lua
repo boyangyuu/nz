@@ -31,7 +31,7 @@ function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = 50
+    local speed = 100
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     -- dump(pWorld, "pWorld")
     local desY = -20 --屏幕位置

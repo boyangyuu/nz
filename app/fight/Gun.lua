@@ -62,7 +62,7 @@ function Gun:getBulletNum()
 	local value = 0.0
     local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
     if isInlayed then
-        value = baseValue + inlayValue
+        value = baseValue + baseValue * inlayValue
     else
         value = baseValue
     end	
