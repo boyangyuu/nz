@@ -5,7 +5,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 2,
+				time = 1,
 				num = 1,
 				delay = {0, 0.3},
 				pos = {50, 20},
@@ -20,7 +20,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 0,
+				time = 1,
 				num = 2,
 				delay ={0, 0.3},
 				pos = {10,100},		
@@ -31,7 +31,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 3,
+				time = 1,
 				num = 1,
 				delay = {0.5},
 				pos = {50},
@@ -49,18 +49,32 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 3,
+				time = 1,
 				num = 2,
 				delay = {0, 0.3},
 				pos = {100,120},
 				property = {
 					placeName = "place3", 
-					startState = "rollright",
+					startState = "rollleft",
 					id = 1,
 				},
-			},	
+			},
 			{
-				time = 8,
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {50},
+				property = { 
+					placeName = "place5",
+					id = 2,
+					startState = "",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},						
+			{
+				time = 3,
 				num = 3,
 				delay = {0, 0.4, 0.8},
 				pos = {0, 50, 100},
@@ -69,88 +83,40 @@ local waves = {
 					startState = "rollright",
 					id = 1,
 				},
-			},						
-		},
-
-	},
-	{
-		enemys = {
+			},
 			{
-				time = 3,
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {50},
+				property = { 
+					placeName = "place6",
+					id = 2,
+					startState = "",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},						
+			{
+				time = 5,
 				num = 2,
 				delay = {0, 0.1},
 				pos = {0,100},
 				property = { 
 					placeName = "place5", 
-					startState = "",
+					startState = "rollright",
 					id = 1,
 				},
 			},	
 			{
-				time = 4,
+				time = 7,
 				num = 2,
 				delay = {0, 0.1},
 				pos = {20,90},
 				property = { 
 					placeName = "place6", 
 					startState = "",
-					id = 1,
-				},
-			},
-			{
-				time = 5,
-				num = 1,
-				delay = {0.1},
-				pos = {20},
-				property = { 
-					placeName = "place4", 
-					startState = "",
-					id = 1,
-				},
-			},
-			{
-				time = 6,
-				num = 2,
-				delay = {0, 0.3},
-				pos = {100, 150},
-				property = { 
-					placeName = "place3",
-					startState = "rollleft",
-					id = 1,
-				},
-			},						
-		},
-	},	
-	{
-		enemys = {
-			{
-				time = 3,
-				num = 3,
-				delay = {0, 0.3,0.6},
-				pos = {0,100,160},
-				property = { 
-					placeName = "place5", 
-					id = 1,
-				},
-			},	
-			{
-				time = 4,
-				num = 3,
-				delay = {0, 0.3,0.6},
-				pos = {0,90,60},
-				property = { 
-					placeName = "place6", 
-					startState = "",
-					id = 1,
-				},
-			},
-			{
-				time = 5,
-				num = 2,
-				delay = {0.3,0.6},
-				pos = {20,60},
-				property = { 
-					placeName = "place2", 
 					id = 1,
 				},
 			},
@@ -173,7 +139,7 @@ local mapId = "map_1_1"
 
 local isNotMoveMap = true  		--此关不能移动 
 
-local limit = 10   				--此关敌人上限
+local limit = 6   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
