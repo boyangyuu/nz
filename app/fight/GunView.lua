@@ -227,6 +227,7 @@ end
 function GunView:onActiveGold(event)
 	print("GunView:onActiveGold(event)")
 	self.isGolding = true
+	self.gun:setFullBulletNum()
 	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
 end
 

@@ -52,13 +52,12 @@ function JinEnemyView:playAhead()
     --前进
     self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = 60
+    local speed = self.property["speed"] or 90.0
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-    -- dump(pWorld, "pWorld")
     local desY = -180
     -- local desY = -0
     local distanceY = desY - pWorld.y
-    local time = math.abs(distanceY) /speed
+    local time = math.abs(distanceY) / speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
     local scale = 1.8
