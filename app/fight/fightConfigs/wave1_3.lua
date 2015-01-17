@@ -358,7 +358,7 @@ local waves = {
 local enemys = {
 
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=510,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="anim_enemy_002",demage=3,hp=510,walkRate=200,rollRate=300,fireRate=400,
 		weak1=3,weak2=3},
 
 	--近战兵

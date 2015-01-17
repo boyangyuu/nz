@@ -158,7 +158,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=340,walkRate=400,rollRate=400,fireRate=400,
+	{id=1,image="anim_enemy_002",demage=2,hp=340,walkRate=200,rollRate=300,fireRate=400,
 	weak1=4,weak2=4},
 
 	--近战兵
@@ -170,10 +170,10 @@ local enemys = {
 		fireRate=300,weak1=4,weak2=5},
 
 
-	{id=4,image="daodan",demage=20,hp=100,weak1=3,weak2=5},	
+	{id=4,image="daodan",demage=10,hp=100,weak1=3,weak2=5},	
 
 	--铁球
-	{id=5,image="tieqiu",demage=30,hp=100,weak1=3,weak2=5},		
+	{id=5,image="tieqiu",demage=20,hp=100,weak1=3,weak2=5},		
 }
 
 	--boss的关卡配置
@@ -182,28 +182,28 @@ local bosses = {
 	{
 
 		image = "boss02", --图片名字
-		hp = 50000,
+		hp = 80000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 400,
 		walkRate = 200,
 		chongfengDemage = 20,  --冲锋造成伤害
-		demageScale = {weak1 = 2, weak2 = 2},	--弱点伤害倍数
+		demageScale = {weak1 = 2, weak2 = 3},	--弱点伤害倍数
 		
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
-				0.95, 0.20,
+				0.60,
 			},
 			moveRightFire = {
-				0.65, 0.40,
+				0.30,
 			},
 			chongfeng = {
-				0.80, 0.50,0.20
+				0.85, 0.65,0.45,0.35
 			},
 			tieqiu = {
-				0.990, 0.60
+				0.99, 0.69,0.39
 			},
 			weak2 = {
-				0.50,
+				0.40,
 			},							
 		},
 		getMoveLeftAction = function ()
