@@ -176,7 +176,7 @@ function Actor:setFullHp()
 end
 
 function Actor:increaseHp(hp)
-    assert(not self:isDead(), string.format("actor %s is dead, can't change Hp",  self:getNickname()))
+    assert(not self:isDead(),"actor s is dead, can't change Hp".. self:getNickname())
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ + hp
@@ -192,7 +192,7 @@ function Actor:increaseHp(hp)
 end
 
 function Actor:decreaseHp(hp)
-    assert(not self:isDead(), string.format("actor is dead, can't change Hp"))
+    assert(not self:isDead(), "actor is dead, can't change Hp")
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
     print("Actor:decreaseHp:", hp)
     local newhp = self.hp_ - hp
@@ -284,13 +284,13 @@ function Actor:onThaw_(event)
 end
 
 function Actor:onKill_(event)
-    printf("actor %s:%s dead", self:getId(), self.nickname_)
+    -- printf("actor %s:%s dead", self:getId(), self.nickname_)
     self.hp_ = 0
     self:dispatchEvent({name = Actor.KILL_EVENT})
 end
 
 function Actor:onRelive_(event)
-    printf("actor %s:%s relive", self:getId(), self.nickname_)
+    -- printf("actor %s:%s relive", self:getId(), self.nickname_)
     self:setFullHp()
     self:dispatchEvent({name = Actor.RELIVE_EVENT})
 end

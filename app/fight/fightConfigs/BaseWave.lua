@@ -31,8 +31,5 @@ function BaseWave:getEnemyNumLimit()
 	return self.limit or 10
 end
 
-function BaseWave:getEnemyDelay()
-	return self.enemyDelay or 1.0
-end
 
 return BaseWave

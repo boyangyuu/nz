@@ -241,7 +241,6 @@ end
 function MapView:checkNumLimit()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	local limit 	 = waveConfig:getEnemyNumLimit()
-	local delay      = waveConfig:getEnemyDelay()
 	if #self.enemys > limit then return end
 
 	local cacheData = self.cacheEnemys[1]
