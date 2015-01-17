@@ -27,14 +27,14 @@ end
 
 function DaoEnemyView:tick()
     --fire
-    local fireRate = self.enemy:getFireRate()
-    local randomSeed  
-    -- math.newrandomseed()
+    local fireRate, isAble = self.enemy:getFireRate()
     assert(fireRate > 1, "invalid fireRate")
-    randomSeed = math.random(1, fireRate)
-    if randomSeed > fireRate - 1 then 
-        self:playAfterAlert("playFire", handler(self, self.playFire))
-        return
+    if isAble then 
+        randomSeed = math.random(1, fireRate)
+        if randomSeed > fireRate - 1 then 
+            self:playAfterAlert("playFire", handler(self, self.playFire))
+            self.enemy:beginFireCd()
+        end
     end
 end
 
