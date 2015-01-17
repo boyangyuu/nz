@@ -2,16 +2,12 @@ local BuyConfigs = class("BuyConfigs", cc.mvc.ModelBase)
 
 local dir = "res/GiftBag/GiftBag/GiftBag_"
 local configs = {
-	armedMecha     = {				--机甲
-			ccsPath = dir.."ArmedMecha.json",
-			isGift = true,
-	},
 	changshuang    = {				--畅爽
 			ccsPath = dir.."ChangShuang.json",
 			isGift = true,
 	},
 	goldGiftBag    = {				--土豪金
-			ccsPath = dir.."goldGiftBag.json",
+			ccsPath = dir.."GoldGiftBag.json",
 			isGift = true,
 	},
 	novicesBag     = {              --新手礼包
@@ -22,8 +18,16 @@ local configs = {
 			ccsPath = dir.."WeaponGiftBag.json",
 			isGift = true,
 	},
-	timeGiftBag= {           --武器大礼包
-			ccsPath = dir.."timeGiftBag.json",
+	timeGiftBag= {           	  --限时大礼包
+			ccsPath = dir.."TimeGiftBag.json",
+			isGift = true,
+	},
+	loginGiftBag   = {			  --每日登陆
+			ccsPath = dir.."LoginGiftBag.json",
+			isGift = true;
+	},
+	armedMecha     = {				--机甲
+			ccsPath = dir.."ArmedMecha.json",
 			isGift = true,
 	},
 	handGrenade    = {             --手雷
@@ -36,27 +40,15 @@ local configs = {
 	},
 	goldWeapon     = {				--金武
 			-- ccsPath = dir.."GoldWeapon.json",
-			isGift = true,
+			isGift = false,
 	},
 	onceFull       = {
 			isGift = false,
 	},
-	resurrection   = {
+	resurrection   = {        --fuhuo
 			isGift = false,
 	},
-	stone1         = {
-			isGift = false,
-	},
-	stone2         = {
-			isGift = false,
-	},
-	stone3         = {
-			isGift = false,
-	},
-	stone4         = {
-			isGift = false,
-	},
-	stone5         = {
+	stone          = {
 			isGift = false,
 	}
 
@@ -83,6 +75,7 @@ local configs = {
 
 
 function BuyConfigs.getConfig(name)
+	dump(name, "name")
 	assert(configs[name], "invalid name :"..name)
 	return configs[name]
 end

@@ -6,6 +6,7 @@ local sig = "(Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
 	self:initConfigs()
+	self.buyModel = md:getInstance("BuyModel")
 end
 
 function IAPsdk:setTelecomOperator()
@@ -24,11 +25,11 @@ local telecomOperator = IAPsdk:setTelecomOperator()
 function IAPsdk:initConfigs()
 	self.config = {}
 	local config = self.config
-	assert(telecomOperator, "telecomOperator:")
+	-- assert(telecomOperator, "telecomOperator:")
 	if telecomOperator == "mobile" then
 		--礼包
 		config["novicesBag"]       = "30000883682301"		--新手礼包
-		config["weaponGiftBag"]    = "30000883682303"		--武器到礼包
+		config["weaponGiftBag"]    = "30000883682302"		--武器到礼包
 		config["goldGiftBag"]      = "30000883682303"		--土豪金礼包
 		config["timeGiftBag"]      = "30000883682304"		--限时特价
 		config["changshuang"]      = "30000883682305"		--畅爽礼包
@@ -58,27 +59,24 @@ end
 
 ]]
 
-function IAPsdk:pay(name, callSucess, callFail)
-	local args = {self.config[name], callSucess, callFail}
+function IAPsdk:pay(name)
+	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	dump(self.config,"self.config")
-	print(name)
-	print(self.config[name])
 	dump(args,"args:")
 	if device.platform == 'android' then
 		luaj.callStaticMethod(className, "pay", args, sig)
 	end
-	-- local args = {"30000883682315", 
-	-- 				function( param )
-	-- 					print(param)
-	-- 				end, 
-	-- 				function( param )
-	-- 					print(param)
-	-- 				end
-	-- 			}
-	-- if device.platform == 'android' then
-	-- 	luaj.callStaticMethod(className, "pay", args, sig)
-	-- end
 end
 
+function IAPsdk:callbackSuccess( result )
+	-- body
+	self.buyModel:payDone(result)
+end
+
+function IAPsdk:callbackFaild(result)
+
+	self.buyModel:deneyPay()
+
+end
 return IAPsdk
 

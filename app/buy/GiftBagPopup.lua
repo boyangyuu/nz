@@ -8,6 +8,9 @@ end)
 
 function GiftBagPopup:ctor(properties)
 	print(properties.popupName)
+	--instance
+	self.buyModel = md:getInstance("BuyModel")
+
 	self.param = properties
 	self:loadCCS()
 	self:initButtons()
@@ -29,17 +32,11 @@ function GiftBagPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			ui:closePopup("GiftBagPopup")
-
-			-- self.param.callBackSuccess()
-			-- local buy = md:getInstance("BuyModel")
-			-- buy:buy("novicesBag", {})
-			-- buy:buy_goldGiftBag()
 			print("popupName:",self.param.popupName)
-			iap:pay(self.param.popupName,function()
-				print("购买成功!")
-			end, function()
-				print("购买失败")
-			end)
+			local configName = self.param.popupName
+			iap:pay(configName)
+
+			-- self.buyModel:payDone()
 
 			print("receiveBtn is pressed!")
 		end
@@ -52,9 +49,7 @@ function GiftBagPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			ui:closePopup("GiftBagPopup")
-			-- self:removeSelf()
-			-- self.param.callBackFail()
-			
+			self.buyModel:deneyPay()
 			print("btnClose is pressed!")
 		end
 	end)
@@ -66,6 +61,5 @@ function GiftBagPopup:initButtons()
 		end
 	end
 end
-
 
 return GiftBagPopup
