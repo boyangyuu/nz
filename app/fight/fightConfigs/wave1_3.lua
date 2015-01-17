@@ -6,25 +6,37 @@ local waves = {
 		enemys = {
 			{
 				time = 3,
-				num = 7,
+				num = 3,
 				delay = {0.3,0,0.6,0.9,5,7,6},
 				pos = {0,75,150,200,50,100,150},
 				property = {
+					type = "jin",
+					placeName = "place7",  
+					id = 2,
+				},
+			},
+			{
+				time = 4,
+				num = 2,
+				delay = {0.3,0,0.6,0.9,5,7,6},
+				pos = {75,150,200,50,100,150},
+				property = {
+					type = "jin",
 					placeName = "place1",  
-					id = 1,
+					id = 2,
 				},
 			},
 			{
 				time = 5,
-				num = 7,
-				delay = {0.3,0, 0.6, 0.9, 7,8,9},
-				pos = {100, 200, 300, 400, 150,250,350},	
+				num = 2,
+				delay = {0.3,0,0.6,0.9,5,7,6},
+				pos = {300,400,50,100,150},
 				property = {
-					placeName = "place2",   
-					startState = "rollright",
-					id = 1,
+					type = "jin",
+					placeName = "place2",  
+					id = 2,
 				},
-			},	
+			},
 			{
 				time = 7,
 				num = 2,
@@ -32,17 +44,25 @@ local waves = {
 				pos = {50,100},					
 				property = {
 					placeName = "place3",   
-					id = 1,
+					id = 8,
+					startState = "",
+					type = "dao",
+					missileId = 9,
+					missileType = "lei",
 				},
 			},	
 			{
 				time = 9,
-				num = 2,
+				num = 1,
 				delay = {0.3, 0.6},
 				pos = {150,200},					
 				property = {
 					placeName = "place4",   
-					id = 1,
+					id = 8,
+					startState = "",
+					type = "dao",
+					missileId = 9,
+					missileType = "lei",
 				},
 			},					
 		},
@@ -56,7 +76,7 @@ local waves = {
 				pos = {100,200,300,400,250,50},
 				property = {
 					type = "jin",
-					placeName = "place5",  
+					placeName = "place7",  
 					id = 2,
 				},
 			},
@@ -67,7 +87,7 @@ local waves = {
 				pos = {0,200,100,250,150,50},
 				property = {
 					type = "jin",
-					placeName = "place6",  
+					placeName = "place7",  
 					id = 2,
 				},
 			},
@@ -117,7 +137,7 @@ local waves = {
 				pos = {150,250},
 				property = {
 					type = "jin",
-					placeName = "place5",  
+					placeName = "place7",  
 					id = 2,
 				},
 			},
@@ -139,7 +159,7 @@ local waves = {
 				pos = {200,100},
 				property = {
 					type = "jin",
-					placeName = "place6",  
+					placeName = "place7",  
 					id = 2,
 				},
 			},
@@ -162,7 +182,7 @@ local waves = {
 				property = { 
 					type = "bao",
 					id = 4,
-					placeName = "place5",
+					placeName = "place4",
 				},
 			},
 			{
@@ -173,7 +193,7 @@ local waves = {
 				property = { 
 					type = "bao",
 					id = 4,
-					placeName = "place6",
+					placeName = "place4",
 				},
 			},
 			{
@@ -358,11 +378,11 @@ local waves = {
 local enemys = {
 
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=510,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="anim_enemy_002",demage=3,hp=510,walkRate=200,rollRate=300,fireRate=400,
 		weak1=3,weak2=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=1300,walkRate=400,rollRate=0,fireRate=100,
+	{id=2,image="jinzhanb",demage=3,hp=600,walkRate=400,rollRate=0,fireRate=100,
 		weak1=2,weak2=2},
 
 	--伞兵
@@ -370,7 +390,7 @@ local enemys = {
 		fireRate=100,weak1=1,weak2=1},
 
 	--自爆兵
-	{id=4,image="zibaob",demage=20,hp=500,walkRate=400,rollRate=0,
+	{id=4,image="zibaob",demage=10,hp=400,walkRate=400,rollRate=0,
 		fireRate=100,weak1=1,weak2=1},	
 
 	--金币兵
@@ -380,7 +400,11 @@ local enemys = {
 	{id=6,image="qiqiu02",demage=10,hp=1,weak1=3,award = 40},	
 
 	--金币兵
-	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 20},	
+	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 20},
+	--手雷兵
+	{id=8,image="shouleib",demage=2,hp=340,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
+	--手雷
+	{id=9,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},		
 }
 
 local mapId = "map_1_3"

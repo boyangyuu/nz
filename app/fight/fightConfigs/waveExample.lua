@@ -7,7 +7,7 @@ local waves = {
 	{
 		enemys = {  	
 			{
-				time = 1,
+				time = 2,
 				num = 3,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
@@ -89,14 +89,14 @@ local waves = {
 		},
 	},
 }
---[[
 
-]]
+
+
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=50,walkRate=400,rollRate=400,fireRate=200,
-		weak1=2,weak2=4},
+	{id=1,image="anim_enemy_002",demage=30,hp=50,walkRate=400,rollRate=400,fireRate=200,
+		weak1=2,weak2=4, fireCd=30.0},
 
 	--近战兵
 	{id=2,image="jinzhanb",demage=20,hp=400,walkRate=400,rollRate=0,fireRate=100,
@@ -132,9 +132,11 @@ local enemys = {
 	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},					
 }
 
-local mapId = "map_1_1"
+local mapId = "map_1_7"
 
-local isMoveMap = true
+local isNotMoveMap = true  		--此关不能移动 
+
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves

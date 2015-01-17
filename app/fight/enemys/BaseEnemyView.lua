@@ -32,6 +32,7 @@ end
 
 --ui
 function BaseEnemyView:onEnter()
+	BaseEnemyView.super.onEnter(self)
 	self:initBlood()
 end
 
@@ -55,6 +56,11 @@ function BaseEnemyView:initBlood()
 end
 
 function BaseEnemyView:setBlood(per)
+	if per == 0 then 
+		self.blood:setVisible(false) 
+		return
+	end
+
 	-- --value
 	local bloodUp 	= cc.uiloader:seekNodeByName(self.blood, "bloodUp")
 	local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
@@ -152,8 +158,9 @@ function BaseEnemyView:playKill(event)
 	--clear
 	self:clearPlayCache()
 	self.armature:stopAllActions()
-	self:testStop({isPause = true})
+	self:setPause({isPause = true})
 
+	
 	--以防万一
 	if self and self.setDeadDone then 
 		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)

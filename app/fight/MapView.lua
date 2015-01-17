@@ -64,10 +64,6 @@ function MapView:loadCCS()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	dump(waveConfig, "waveConfig")
 	local mapName = waveConfig:getMapId()
-	local level, group = self.fight:getCurGroupAndLevel()
-	if level == 1 and group == 1 then 
-		mapName = "map_1_7"
-	end	
 	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
@@ -119,7 +115,7 @@ function MapView:loadPlaces()
             break
         end
         self.covers[index] = coverNode
-		if isTest then coverNode:setColor(cc.c3b(30,230,45)) end
+		if isTest then coverNode:setColor(cc.c3b(255, 195, 0)) end
         index = index + 1
     end    	
 end
@@ -152,8 +148,10 @@ function MapView:updateEnemys()
 
 	--addEnemys
 	local lastTime = 0
+	local numSum = 0
 	for groupId, group in ipairs(wave.enemys) do
 		--desc
+		print("groupId"..groupId)
 		self:showEnemyIntro(group.descId)
 		for i = 1, group.num do
 			--delay
@@ -166,7 +164,7 @@ function MapView:updateEnemys()
 			local pos = group["pos"][i] or 0
 
 			--zorder
-			local zorder = group.num - i
+			local zorder = group.num - i + numSum
 
 			--add
 			local function addEnemyFunc()
@@ -176,6 +174,7 @@ function MapView:updateEnemys()
 
 			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
+		numSum = numSum + group.num
 	end
 	--check next wave
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
@@ -205,9 +204,6 @@ function MapView:checkWave()
 end
 
 function MapView:addEnemy(property, pos, zorder)
-	--check limit
-
-
 	local placeName = property.placeName
 	assert(placeName , "invalid param placeName:"..placeName)
 	assert(property , "invalid param property:" )
@@ -244,7 +240,6 @@ end
 function MapView:checkNumLimit()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	local limit 	 = waveConfig:getEnemyNumLimit()
-	local delay      = waveConfig:getEnemyDelay()
 	if #self.enemys > limit then return end
 
 	local cacheData = self.cacheEnemys[1]
@@ -357,6 +352,11 @@ function MapView:getTargetDatas(focusNode)
 end
 
 function MapView:isCovered(enemy, focusNode)
+	--isThrough
+	local gun = self.hero:getGun()
+	local isThrough = gun:isFireThrough()
+	if isThrough then return false end	
+
 	local focusBox = focusNode:getBoundingBox()
     local pFocus = focusNode:convertToWorldSpace(cc.p(0,0))
     focusBox.x = pFocus.x

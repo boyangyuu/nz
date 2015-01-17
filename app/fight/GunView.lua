@@ -18,7 +18,7 @@ function GunView:ctor()
 	self.hero = md:getInstance("Hero")
 	self.inlay = md:getInstance("FightInlay")
 	self.isChanging = false
-
+	self.isFiring = false
 	--gun armature and base
 	self:refreshGun()
 	-- scheduler.performWithDelayGlobal( handler(self, self.refreshGun), 1.0)  
@@ -36,6 +36,7 @@ function GunView:ctor()
 end
 
 function GunView:playIdle()
+	--等动画播放完 todo
 	self.armature:getAnimation():play("stand" , -1, 1) 
 end
 
@@ -46,14 +47,19 @@ function GunView:fire()
 end
 
 function GunView:playFire()
+
+	if self.isFiring == true then return end 	
+	self.isFiring = true
+	print("function GunView:playFire()")
 	--枪火
 	self.jqk   :setVisible(true)
 	self.jqkzd :setVisible(true)
 	self.dk    :setVisible(true)
-	self.jqk:getAnimation()	 :play("fire" , -1, 0)
-	self.jqkzd:getAnimation():play("qkzd" , -1, 0)
-	self.dk:getAnimation()	 :play("danke", -1, 0)
-	self.armature:getAnimation():play("fire" , -1, 0)
+	self.jqk:getAnimation()	 :play("fire" , -1, 1)
+	self.jqkzd:getAnimation():play("qkzd" , -1, 1)
+	self.dk:getAnimation()	 :play("danke", -1, 1)
+	-- local name = self.armature:getAnimation():getCurrentMovementID()
+	self.armature:getAnimation():play("fire" , -1, 1)	
 
 	--music
 	local soundName = "res/Fight/music/leibz.wav"
@@ -61,6 +67,7 @@ function GunView:playFire()
 end
 
 function GunView:stopFire()
+	self.isFiring = false
 	self.jqk  :setVisible(false)
 	self.jqkzd:setVisible(false)
 	self.dk   :setVisible(false)
@@ -100,16 +107,16 @@ function GunView:playChange(event)
 end
 
 function GunView:playReload()
-	if self.isReloading then return end
+	if self.hero:getIsReloading() then return end
 
-	self.isReloading = true
+	self.hero:setIsReloading(true)
 
 	--
 	--回调 子弹full
 	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
-		self.isReloading = false 
+		self.hero:setIsReloading(false)
 		self.gun:setFullBulletNum()
 	end
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
@@ -175,11 +182,11 @@ function GunView:refreshGun()
     armature:addChild(self.jqk, -1)
 
     --枪火遮挡
-
     self.jqkzd = ccs.Armature:create(config.jqkzdName)
     self.jqkzd:setVisible(false)
    	self.jqkzd:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqkzd , 1)
+    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 
     --蛋壳
     self:addDanke()
@@ -220,12 +227,20 @@ end
 function GunView:onActiveGold(event)
 	print("GunView:onActiveGold(event)")
 	self.isGolding = true
+	self.gun:setFullBulletNum()
 	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
 end
 
 function GunView:onActiveGoldEnd(event)
 	self.isGolding = false
 	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
+end
+
+function GunView:animationEvent(armatureBack,movementType,movementID)
+	if movementType == ccs.MovementEventType.loopComplete then
+		print("animationEvent id ", movementID)
+		armatureBack:stopAllActions()
+	end
 end
 
 return GunView

@@ -24,9 +24,6 @@ function WeaponListLayer:ctor()
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
-     cc.EventProxy.new(self.commonPopModel, self)
-       :addEventListener(self.commonPopModel.BTN_CLICK_TRUE, handler(self, self.buyWeapon))
-       :addEventListener(self.commonPopModel.BTN_CLICK_FALSE, handler(self, self.closePopup))
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
@@ -145,11 +142,12 @@ function WeaponListLayer:initUI()
         elseif event.name=='ended' then
 
             if self.userModel:costDiamond(self.weaponrecord["cost"]) then
-                -- self:buyWeapon(self.weaponId)
-
                 ui:showPopup("commonPopup",
-                 {type = "style3", title = "提示",content = "是否花费60钻石升级购买该武器"},
-                 {opacity = 155})
+                    {type = "style3", content = "是否花费60钻石升级购买该武器？",
+                     callfuncCofirm =  handler(self, self.buyWeapon),
+                     callfuncClose  =  handler(self, self.closePopup)},
+                     { opacity = 155})
+
             else
                 local buy = md:getInstance("BuyModel")
                 buy:buy("weaponGiftBag", {weaponId = self.weaponId})

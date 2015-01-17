@@ -21,7 +21,7 @@ md      = MD.new()
 um      = UM.new()
 define  = Define.new()
 
-iap = IAPsdk.new()
+-- iap = IAPsdk.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)

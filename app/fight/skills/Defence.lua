@@ -20,9 +20,9 @@ function Defence:ctor()
     --instance
     self.isDefending = false
     self.isAble = true
-	self:refreshHp()
     --event
 
+    self:refreshHp()
 end
 
 function Defence:setIsAble(isAble)
@@ -50,9 +50,11 @@ function Defence:setIsDefending(isDefending_)
 end
 
 function Defence:refreshHp()
+	print("function Defence:refreshHp()")
 	local hero = md:getInstance("Hero")
 	self.maxHp = hero:getMaxHp()
 	self.hp = hero:getMaxHp()
+	print("function Defence:refreshHp() self.hp"..self.hp)
 end
 
 function Defence:decreseHp(demage)
@@ -60,6 +62,7 @@ function Defence:decreseHp(demage)
 	print("Defence:decreseHp(demage)", demage)
 	assert(self.hp > 0, "Defence is dead")
 	local curHp = self.hp - demage
+	local hpOffset = self.maxHp / 10
 	if curHp <= 0 then 
 		self:setIsAble(false)
 		return
@@ -67,8 +70,8 @@ function Defence:decreseHp(demage)
 		local demageSum = self.maxHp - curHp
 		local demagePercent = demageSum / self.maxHp
 		self:dispatchEvent({name = Defence.DEFENCE_BEHURTED_EVENT, percent = demagePercent})
-		local cur   = math.ceil (curHp / 10)
-		local last  = math.ceil(self.hp / 10) 
+		local cur   = math.ceil (curHp / hpOffset)
+		local last  = math.ceil(self.hp / hpOffset) 
 		if cur ~= last then 
 			self:dispatchEvent({name = Defence.DEFENCE_CRACK_EVENT,
 				 num = last - cur})
@@ -79,6 +82,7 @@ end
 
 function Defence:clearData()
 	self.hp = 0
+	self.maxHp = 0
 end
 
 function Defence:onHitted(demage)

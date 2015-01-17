@@ -99,8 +99,9 @@ end
 
 function InfoLayer:onHeroHpChange(event)
 	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	-- print("per", per)
-	-- print("event.name", event.name)
+	print("self.hero:getMaxHp()", self.hero:getMaxHp())
+	print("self.hero:getHp()", self.hero:getHp())
+	print("event.name", event.name)
 	local blood1 = cc.uiloader:seekNodeByName(self.blood, "progressBar1") 
 	local blood2 = cc.uiloader:seekNodeByName(self.blood, "progressBar2")
 	if event.name == "HP_DECREASE_EVENT" then 

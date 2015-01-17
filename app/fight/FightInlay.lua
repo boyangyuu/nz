@@ -19,8 +19,8 @@ function FightInlay:ctor(properties)
     --instance
     FightInlay.super.ctor(self, properties)
     self.inlayModel = md:getInstance("InlayModel") 
-
-    -- self:checkNativeGold()
+    self.isNativeGold = false
+    self.IsActiveGold = false
 end
 
 function FightInlay:checkNativeGold()
@@ -41,7 +41,6 @@ function FightInlay:activeGoldForever()
 
     --hero
     local hero = md:getInstance("Hero")
-    hero:refreshHp()  
 
     --inlay
     self:setIsNativeGold(true)  
@@ -53,10 +52,13 @@ function FightInlay:activeGold()
     print("FightInlay:activeGold()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
-
+    
     --delay
     local kGoldTime = define.kGoldTime
     self:delayCallGoldEnd(kGoldTime)
+
+    --
+
 end
 
 function FightInlay:delayCallGoldEnd(delay)
@@ -71,7 +73,10 @@ function FightInlay:activeGoldEnd()
 end
 
 function FightInlay:setIsActiveGold(IsActiveGold_)
-    self.IsActiveGold = IsActiveGold_
+    self.IsActiveGold = IsActiveGold_ 
+    print("function FightInlay:setIsActiveGold",IsActiveGold_)
+    local hero = md:getInstance("Hero")
+    hero:setFullHp()
 end
 
 function FightInlay:getIsActiveGold()
@@ -84,6 +89,8 @@ end
 
 function FightInlay:setIsNativeGold(isNativeGold_)
     self.isNativeGold = isNativeGold_
+    local hero = md:getInstance("Hero")
+    hero:setFullHp()    
 end
 
 --[[
@@ -93,7 +100,10 @@ end
 function FightInlay:getInlayedValue(type)
     -- return 0,true
     local record = nil
-    if self:getIsActiveGold() then 
+    local isGoldForbid = type == "blood" or type == "helper" or type == "bullet"
+    local isGoldType = (not isGoldForbid and self:getIsActiveGold() ) 
+                    or self:getIsNativeGold()
+    if isGoldType then 
         record = self.inlayModel:getGoldByType(type)
         assert(record, "record is nil type:"..type)
     else

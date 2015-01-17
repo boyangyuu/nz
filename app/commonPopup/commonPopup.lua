@@ -1,6 +1,7 @@
 local commonPopup = class("commonPopup",function()
 	return display.newLayer()
 end)
+
 --[[
 	style1:一个确定按钮，一个关闭按钮，content
 		ui:showPopup("commonPopup",
@@ -18,7 +19,7 @@ end)
 function commonPopup:ctor(properties)
 	self.commonPopModel = md:getInstance("commonPopModel")
 
-
+	self.properties = properties
 	local typeName = properties.type
 	self:loadCCS(typeName)
 	self:initUI(properties)
@@ -45,14 +46,15 @@ function commonPopup:initUI(properties)
 	        if event.name=='began' then
 	            return true
 	        elseif event.name=='ended' then		
-		        self.commonPopModel:btnClickTrue()
+		        self:onClickCofirm()
+
 	        end
 	    end)
     	addBtnEventListener(btnfalse, function(event)
 	        if event.name=='began' then
 	            return true
 	        elseif event.name=='ended' then		
-		        self.commonPopModel:btnClickFalse()
+		        self:onClickClose()
 	        end
 	    end)
 
@@ -83,18 +85,35 @@ function commonPopup:initUI(properties)
 	        if event.name=='began' then
 	            return true
 	        elseif event.name=='ended' then		
-		        self.commonPopModel:btnClickTrue()
+		        self:onClickCofirm()
 	        end
 	    end)
     	addBtnEventListener(btnfalse, function(event)
 	        if event.name=='began' then
 	            return true
 	        elseif event.name=='ended' then		
-		        self.commonPopModel:btnClickFalse()
+
+		     self:onClickClose()
 	        end
 	    end)
 
 	end
+end
+
+function commonPopup:onClickCofirm()
+	local func =  self.properties.callfuncCofirm
+	if func ~= nil then 
+		func()		
+	end
+	ui:closePopup("commonPopup")
+end
+
+function commonPopup:onClickClose()
+	local func =  self.properties.callfuncClose
+	if func ~= nil then 
+		func()
+	end	
+	ui:closePopup("commonPopup")	
 end
 
 return commonPopup
