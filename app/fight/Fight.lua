@@ -14,7 +14,6 @@ Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
 
 Fight.FIGHT_START_EVENT  = "FIGHT_START_EVENT"
 Fight.FIGHT_END_EVENT    = "FIGHT_END_EVENT"
-Fight.FIGHT_PAUSE_EVENT  = "FIGHT_PAUSE_EVENT"
 
 Fight.CONTROL_HIDE_EVENT = "CONTROL_HIDE_EVENT"
 Fight.CONTROL_SHOW_EVENT = "CONTROL_SHOW_EVENT"
@@ -57,6 +56,7 @@ function Fight:refreshData(properties)
     self.isJujiFight = levelModel:isJujiFight()
     self.goldValue = 0.0
     self.result = nil
+    self.isPause = false
 end
 
 function Fight:willStartFight()
@@ -107,7 +107,15 @@ function Fight:onFail()
     um:failLevel(levelInfo)
 end
 
+function Fight:pauseFight(isPause)
+    self.isPause = isPause
+    self:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, 
+        isPause = self.isPause})
+end
 
+function Fight:isPauseFight()
+    return self.isPause
+end
 
 function Fight:checkDialog(appearType)
     local dialog = md:getInstance("DialogModel")

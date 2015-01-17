@@ -20,15 +20,14 @@ end
 
 function PopupRootLayer:showPopup(event)
 	self:setVisible(true)
-
-	-- if self.layer and self.layer:getParent() then 
-	-- 	self.layer:removeSelf()
-	-- 	self.layer = nil
-	-- end
 	local cls = event.layerCls
 	local str = cls.__cname
 	local pro = event.properties
 	local layer = cls.new(pro)
+	if self.layers[str] ~= nil then 	
+		self.layers[str]:removeSelf()
+		self.layers[str] = nil
+	end
 	self.layers[str] = layer
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(layer)

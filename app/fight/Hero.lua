@@ -46,21 +46,16 @@ Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
 Hero.AWARD_GOLD_INCREASE_EVENT      = "AWARD_GOLD_INCREASE_EVENT"
 
---define
-local kMaxHp          = 100
-local kCritScale      = 3.0
 
 function Hero:ctor(properties)
     --instance
-    Hero.super.ctor(self, properties)
     self.fightInlay = md:createInstance("FightInlay")
+    Hero.super.ctor(self, properties)
     
     --init
     self.bags = {}
     self:initGuns()
-
-    --hp
-    self:refreshHp()
+    self.isReloading = false
 end
 
 function Hero:initData()
@@ -108,6 +103,21 @@ end
 function Hero:getCooldown()
     return self.gun:getCooldown()
 end
+
+function Hero:canFire()
+    local isCanFire = Hero.super.canFire(self)
+    local isCanGunFire = not self:getIsReloading()
+    return isCanFire and isCanGunFire
+end
+
+function Hero:getIsReloading()
+    return self.isReloading 
+end
+
+function Hero:setIsReloading(isReloading)
+    self.isReloading = isReloading
+end
+
 
 function Hero:initGuns()
     self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
@@ -161,22 +171,23 @@ function Hero:getDemage()
     local critNum = self.gun:getCritPercent() * 100
     -- print("critNum:", critNum)
     if critNum > math.random(0, 100) then 
-        value = value * kCritScale
+        value = value * define.kHeroCritScale
     end
 
     return value
 end
 
-function Hero:refreshHp()
-    local valueHp = 0.0 
+function Hero:getMaxHp()
+    local kMaxHp = define.kHeroBaseHp 
+    local baseMaxHp = Hero.super.getMaxHp(self)
+    local valueMaxHp = 0.0
     local value, isInlayed = self.fightInlay:getInlayedValue("blood")
     if isInlayed then 
-        valueHp = kMaxHp + kMaxHp * value
+        valueMaxHp = kMaxHp + kMaxHp * value
     else
-        valueHp = kMaxHp
+        valueMaxHp = kMaxHp
     end
-    self:setMaxHp(valueHp)
-    self:setHp(valueHp)
+    return valueMaxHp
 end
 
 function Hero:decreaseHp(hp)
@@ -186,9 +197,50 @@ function Hero:decreaseHp(hp)
         defence:onHitted(hp)
     elseif robot:getIsRoboting() then
         robot:onHitted()
+    elseif self:isHelpHp() then
+        self:helpFullHp()
     else
         Hero.super.decreaseHp(self, hp)
     end
+end
+
+function Hero:isHelpHp()
+    local defence   = md:getInstance("Defence")
+    local isDefenceAble =  defence:getIsAble() and 
+                not defence:getIsDefending()
+    local maxhp = self:getMaxHp()
+    local hp = self:getHp()
+    local isLessHp =  (hp / maxhp) < define.kBuyFullHpTime   
+    return isDefenceAble and isLessHp 
+end
+
+--如果有盾 则 return true
+function Hero:helpFullHp()
+    --暂停
+    local fight = md:getInstance("Fight")
+    fight:pauseFight(true)
+    ui:showPopup("commonPopup",
+        {type = "style3", content = "是否立即回复生命？",
+             callfuncCofirm =  handler(self, self.onBuyFullHp),
+             callfuncClose  =  handler(self, self.onDenyFullHp)},
+         { opacity = 0})        
+end
+
+function Hero:onBuyFullHp()
+    print("立即回复生命 function Hero:onBuyFullHp()")
+    local fight = md:getInstance("Fight")
+    fight:pauseFight(false)
+
+    self:setFullHp()
+end
+
+function Hero:onDenyFullHp()
+    print("立即回复生命 function Hero:onDenyFullHp()")
+    local fight = md:getInstance("Fight")
+    fight:pauseFight(false)
+
+    local defence   = md:getInstance("Defence")
+    defence:startDefence()    
 end
 
 function Hero:setMapZoom(scale)

@@ -144,8 +144,6 @@ end
 
 --触发黄金武器
 function HeroLayer:onActiveGold(event)
-	-- print("HeroLayer:onActiveGold(event)")
-	self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = true})
 	local armature = ccs.Armature:create("hjwq")
 	addChildCenter(armature, self)
     local anim = armature:getAnimation()
@@ -153,8 +151,6 @@ function HeroLayer:onActiveGold(event)
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementId ) 
 	    	if movementType == ccs.MovementEventType.complete then
-				-- print("HeroLayer:activeGold() resume")
-				self.hero:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, isPause = false})
 				armature:removeFromParent()
 	    	end 
     	end
@@ -162,7 +158,6 @@ function HeroLayer:onActiveGold(event)
 end
 
 --杀掉敌人后的回调
-
 function HeroLayer:killEnemyCallBack(event)
 	--is already gold
 	local inlay = md:getInstance("FightInlay")
