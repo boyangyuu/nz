@@ -21,7 +21,7 @@ md      = MD.new()
 um      = UM.new()
 define  = Define.new()
 
-iap = IAPsdk.new()
+-- iap = IAPsdk.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -132,7 +132,7 @@ function MyApp:createGameStateFile()
             giftBag = { --buy
                             weaponGiftBag = 
                             {
-                                isBuyed = false;
+                                isBuyed = false,
                             }
                             
             },
@@ -147,16 +147,16 @@ function MyApp:showError(debugInfo)
     debug:showPopup(debugInfo)
 end
 
-function MyApp:setTelecomOperator()
-    local telecomOperator = nil
-    if device.platform == 'android' then
-        local result,telecomOperator = luaj.callStaticMethod("com.anqu.djd", "getTelecomName")
-        return telecomOperator
-    end
-    return telecomOperator
-end
+-- function MyApp:setTelecomOperator()
+--     local telecomOperator = nil
+--     if device.platform == 'android' then
+--         local result,telecomOperator = luaj.callStaticMethod("com.anqu.djd", "getTelecomName")
+--         return telecomOperator
+--     end
+--     return telecomOperator
+-- end
 
 -- 电信运营商
-telecomOperator = MyApp:setTelecomOperator()
+-- telecomOperator = MyApp:setTelecomOperator()
 
 return MyApp
