@@ -33,7 +33,7 @@ function FightPlayer:ctor(properties)
 
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
-
+    self.fightProp  = md:getInstance("FightProp")
     --datas
     self.curGold    = 0
     self.tempChangeGoldHandler = nil
@@ -67,7 +67,9 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
 
-    
+    cc.EventProxy.new(self.fightProp, self)
+        :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
+
     cc.EventProxy.new(self.defence, self)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
@@ -293,7 +295,7 @@ function FightPlayer:initDefence()
 end
 
 function FightPlayer:initBtns()
-    local fightProp = md:getInstance("FightProp")
+
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     self.btnFire:setTouchEnabled(true)  
@@ -315,7 +317,7 @@ function FightPlayer:initBtns()
     self.btnRobot:setTouchEnabled(true)
     self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_jijiaNum = cc.uiloader:seekNodeByName(self, "label_jijiaNum")
-    local num = fightProp:getRobotNum()
+    local num = self.fightProp:getRobotNum()
     self.label_jijiaNum:setString(num) 
     
     --btnLei
@@ -323,7 +325,7 @@ function FightPlayer:initBtns()
     self.btnLei:setTouchEnabled(true)
     self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_leiNum = cc.uiloader:seekNodeByName(self, "label_shouleiNum")
-    local num = fightProp:getLeiNum()
+    local num = self.fightProp:getLeiNum()
     self.label_leiNum:setString(num)     
     --btnJu
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
@@ -385,14 +387,11 @@ function FightPlayer:checkbtnRobot(point)
         addBtnEffect(self.btnRobot)
 
         --cost
-        local fightProp = md:getInstance("FightProp")
         local function callfunc()
-            local num = fightProp:getRobotNum()
-            self.label_jijiaNum:setString(num)
             local robot = md:getInstance("Robot")
             robot:startRobot()
         end        
-        fightProp:costRobot(callfunc)
+        self.fightProp:costRobot(callfunc)
     end
     return isTouch
 end
@@ -409,18 +408,21 @@ function FightPlayer:checkBtnLei(point)
         local destPos = cc.p(self.focusNode:getPositionX(), 
             self.focusNode:getPositionY())
 
-
         --cost
-        local fightProp = md:getInstance("FightProp")
         local function callfunc()
-            local num = fightProp:getLeiNum()
-            self.label_jijiaNum:setString(num)
             self.hero:dispatchEvent({name = self.hero.SKILL_GRENADE_START_EVENT,
                 throwPos = destPos})
         end        
-        fightProp:costRobot(callfunc)
-        
+        self.fightProp:costLei(callfunc)
     end
+end
+
+function FightPlayer:refreshPropData(event)
+    local fightProp = md:getInstance("FightProp")
+    local numjijia = fightProp:getRobotNum()
+    self.label_jijiaNum:setString(numjijia)
+    local numlei   = fightProp:getLeiNum()
+    self.label_leiNum:setString(numlei)
 end
 
 function FightPlayer:checkbtnDefence(point)

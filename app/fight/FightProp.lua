@@ -10,8 +10,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local FightProp  = class("FightProp", cc.mvc.ModelBase)
 
 --events
--- FightProp.INLAY_UPDATE_EVENT           = "INLAY_UPDATE_EVENT"
-
+FightProp.PROP_UPDATE_EVENT           = "PROP_UPDATE_EVENT"
 
 function FightProp:ctor(properties)
     --instance
@@ -27,9 +26,9 @@ function FightProp:costRobot(callfuncSuccess)
 		callfuncSuccess()
 	else
 		--buy
-		local buyData = {payDoneFunc = callfuncSuccess}
 		self.buyModel:buy("goldGiftBag", buyData)
 	end
+	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
 end
 
 function FightProp:getRobotNum()
@@ -43,10 +42,9 @@ function FightProp:costLei(callfuncSuccess)
 		self.propModel:costProp("lei",1) 
 		callfuncSuccess()
 	else
-		--buy
-		local buyData = {payDoneFunc = callfuncSuccess}
 		self.buyModel:buy("goldGiftBag", buyData)
 	end
+	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
 end
 
 function FightProp:getLeiNum()
