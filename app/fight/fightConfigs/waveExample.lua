@@ -12,8 +12,9 @@ local waves = {
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
-					id = 1,
-					placeName = "place9",			
+					id = 2,
+					type = "jin",
+					placeName = "place1",			
 				},
 			},		
 			{
@@ -22,8 +23,9 @@ local waves = {
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
-					id = 1,
-					placeName = "place6",			
+					id = 4,
+					type = "bao",
+					placeName = "place2",			
 				},
 			},				
 			-- {
@@ -132,7 +134,7 @@ local enemys = {
 	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},					
 }
 
-local mapId = "map_1_7"
+local mapId = "map_1_2"
 
 local isNotMoveMap = true  		--此关不能移动 
 

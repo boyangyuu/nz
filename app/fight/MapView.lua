@@ -70,13 +70,16 @@ function MapView:loadCCS()
 	self.map = cc.uiloader:load(mapSrcName)
 	addChildCenter(self.map, self)
 
+
+
 	--effect self.mapAnim
 	self.mapAnim = MapAnimView.new()
 	self.map:addChild(self.mapAnim, kEffectZorder)
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
-
+	local box = self.bg:getBoundingBox()
+	dump(box, "box")
 	self:loadPlaces()
 end
 

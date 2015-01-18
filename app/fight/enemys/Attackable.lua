@@ -357,15 +357,18 @@ function Attackable:getPosInMap()
 	-- dump(world, "world")
 
 	local map = self:getParent():getParent()
-	local worldMap = map:convertToWorldSpace(cc.p(0,0))
+	local box 	= map:getBoundingBox()
+	dump(box, "box")
+	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
-	local posMap = cc.p(map:getPositionX(), map:getPositionY())
-	-- dump(worldMap, "worldMap")
+	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
+	-- -- dump(worldMap, "worldMap")
 
-	local worldInMap = self:convertToWorldSpace(posMap)
-	-- dump(worldInMap, "worldInMap")
+	-- local worldInMap = self:convertToWorldSpace(posMap)
+	-- -- dump(worldInMap, "worldInMap")
 	
-	return worldInMap
+	local worldMap = map:convertToNodeSpace(cc.p(world.x, world.y))	
+	return worldMap
 end
 
 function Attackable:getPlaceZOrder()
