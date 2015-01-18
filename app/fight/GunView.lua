@@ -238,7 +238,7 @@ end
 
 function GunView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 	end
 end

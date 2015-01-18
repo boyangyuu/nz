@@ -134,10 +134,9 @@ function MissileEnemyView:onHitted(targetData)
     local demage     = targetData.demage
     local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType or "body"
-    if self.enemy:canHitted() then
-        print("self.enemy:decreaseHp(demage * scale)")
-        self.enemy:decreaseHp(demage * scale)
-    end
+    if self.enemy:canHitted() then return end
+    print("self.enemy:decreaseHp(demage * scale)")
+    self.enemy:decreaseHp(demage * scale)
 end
 
 function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)

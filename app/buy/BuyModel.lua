@@ -17,10 +17,15 @@ function BuyModel:ctor(properties)
 end
 
 --
+function BuyModel:clearData()
+    self.curId = nil
+    self.curBuydata =  nil
+end
+
 function BuyModel:buy(configid, buydata)
+	self:clearData()
     self.curId = configid
     self.curBuydata =  buydata
-
 	local config  = BuyConfigs.getConfig(configid)
 	local isGift = config.isGift --todo
 
@@ -30,13 +35,16 @@ function BuyModel:buy(configid, buydata)
     	--mm
     	iap:pay(configName)
     end
-
 end
 
 function BuyModel:payDone(result)
 	print("function BuyModel:payDone():"..self.curId)
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuydata)
+	local payDoneFunc = self.curBuydata.payDoneFunc
+	if payDoneFunc then payDoneFunc() end
+
+
 end
 
 function BuyModel:deneyPay()

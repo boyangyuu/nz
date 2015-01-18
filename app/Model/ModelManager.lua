@@ -22,6 +22,7 @@ modelClasses["commonPopModel"]      = import("..commonPopup.commonPopModel")
 --fight
 modelClasses["Fight"]               = import("..fight.Fight")
 modelClasses["FightInlay"]          = import("..fight.FightInlay")
+modelClasses["FightProp"]           = import("..fight.FightProp")
 modelClasses["Hero"]                = import("..fight.Hero")
 modelClasses["Map"]                 = import("..fight.Map")
 modelClasses["Defence"]             = import("..fight.skills.Defence")
