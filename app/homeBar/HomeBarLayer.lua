@@ -121,7 +121,7 @@ function HomeBarLayer:initHomeLayer()
             if not isBuyed then 
                 print(isBuyed)
                 local buy = md:getInstance("BuyModel")
-                buy:buy("weaponGiftBag", {isAll = true})
+                buy:buy("weaponGiftBag", {})
             end
            
 
@@ -147,6 +147,10 @@ function HomeBarLayer:initHomeLayer()
             btnSetting:setVisible(false)
             btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
+
+            local buy = md:getInstance("BuyModel")
+            buy:buy("goldGiftBag", { isAll = true})
+
         end
     end)
 end
