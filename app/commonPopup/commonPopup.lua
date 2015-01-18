@@ -60,9 +60,10 @@ function commonPopup:initUI(properties)
 
 	elseif typeName == "style2" then
 	    local labelTip = cc.uiloader:seekNodeByName(self, "Label_tip")
+	    local panl_style2 = cc.uiloader:seekNodeByName(self, "panl_style2")
 	    labelTip:setString(properties.content)
-	    self:setTouchEnabled(true)
-	    self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+	    panl_style2:setTouchEnabled(true)
+	    panl_style2:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
 	        if event.name=='began' then
 	            ui:closePopup("commonPopup")
 	            return true

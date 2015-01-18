@@ -492,22 +492,35 @@ end
 -- @see LayerColor
 
 -- end --
+function display.newLayer()
+    local layer
 
+    if false then
+        layer = display.newNode()
+        layer:setContentSize(display.width, display.height)
+        layer:setTouchEnabled(true)
+    else
+        layer = cc.Layer:create()
+         layer:setContentSize(display.width, display.height)
+    end
+
+    return layer
+end
 function display.newColorLayer(color)
     local node
 
-    if cc.bPlugin_ then
-        node = display.newNode()
-        local layer = cc.LayerColor:create(color)
-        node:addChild(layer)
-        node:setTouchEnabled(true)
-        node:setTouchSwallowEnabled(true)
+    -- if cc.bPlugin_ then
+    --     node = display.newNode()
+    --     local layer = cc.LayerColor:create(color)
+    --     node:addChild(layer)
+    --     node:setTouchEnabled(true)
+    --     node:setTouchSwallowEnabled(true)
 
-        node.setContentSize = layer.setContentSize
-        node.getContentSize = layer.getContentSize
-    else
+    --     node.setContentSize = layer.setContentSize
+    --     node.getContentSize = layer.getContentSize
+    -- else
         node = cc.LayerColor:create(color)
-    end
+    -- end
 
     return node
 end

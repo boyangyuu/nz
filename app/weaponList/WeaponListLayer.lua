@@ -171,6 +171,17 @@ function WeaponListLayer:initUI()
             --  {opacity = 155})
             if self.userModel:costMoney(self.costupgrade) then
                 self:intensify(self.weaponId)
+                local armature = ccs.Armature:create("wqsj")
+                addChildCenter(armature, self.layerGun)
+                armature:getAnimation():setMovementEventCallFunc(
+                function ( armatureBack,movementType,movement) 
+                    if movementType == ccs.MovementEventType.complete then
+                        armatureBack:stopAllActions()
+                        armatureBack:removeFromParent() 
+                    end 
+                end)
+                armature:getAnimation():play("wqsj" , -1, 0)
+
             end
         end
     end)
@@ -179,7 +190,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            -- self:onceFull(self.weaponId)
+            self:onceFull(self.weaponId)
             -- todo 改为buymodel
             -- local data = getUserData()
             -- if not data.giftBag.weaponGiftBag then

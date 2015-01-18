@@ -27,17 +27,23 @@ function WeaponBag:initUI()
     local btnOff   = cc.uiloader:seekNodeByName(self, "guanbi")
     self.weapon1   = cc.uiloader:seekNodeByName(self, "panelweapon1")
     self.weapon2   = cc.uiloader:seekNodeByName(self, "panelweapon2")
+    self.weapon3   = cc.uiloader:seekNodeByName(self, "panelweapon3")
 	
     self.panlwangge1   = cc.uiloader:seekNodeByName(self, "panlwangge1")
     self.panlwangge2   = cc.uiloader:seekNodeByName(self, "panlwangge2")
+    self.panlwangge3   = cc.uiloader:seekNodeByName(self, "panlwangge3")
     self.panlwanggekuang1   = cc.uiloader:seekNodeByName(self, "panlwanggekuang1")
     self.panlwanggekuang2   = cc.uiloader:seekNodeByName(self, "panlwanggekuang2")
+    self.panlwanggekuang3   = cc.uiloader:seekNodeByName(self, "panlwanggekuang3")
     self.panlwangge1:setColor(Color_GRAY)
     self.panlwangge2:setColor(Color_GRAY)
+    self.panlwangge3:setColor(Color_GRAY)
     self.panlwanggekuang1:setColor(Color_GRAY)
     self.panlwanggekuang2:setColor(Color_GRAY)
+    self.panlwanggekuang3:setColor(Color_GRAY)
     self.weapon1:setTouchEnabled(true)
     self.weapon2:setTouchEnabled(true)
+    self.weapon3:setTouchEnabled(true)
 	btnOff      :setTouchEnabled(true)
 
 	addBtnEventListener(btnOff, function(event)
@@ -74,6 +80,19 @@ function WeaponBag:initUI()
         dump(data.weapons.weaponed, "data.weapons")
 
     end)
+    self.weapon3:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        if event.name=='began' then
+            print("began")
+            return true
+        elseif event.name=='ended' then
+            print("ended")
+            self.weaponListModel:equipBag(self.weaponid,2)
+            self:refreshData("bag2")
+        end
+            local data = getUserData()
+        dump(data.weapons.weaponed, "data.weapons")
+
+    end)
 end
 -- self.weaponListModel:equip(weaponrecord)
 function WeaponBag:refreshData(bag)
@@ -91,6 +110,7 @@ function WeaponBag:refreshData(bag)
     self.weaponed = self.weaponListModel:getWeaponInBag()
     self.weapon1:removeAllChildren()
     self.weapon2:removeAllChildren()
+    self.weapon3:removeAllChildren()
 
     local img1rec = getRecordByKey("config/weapon_weapon.json", "id", self.weaponed[1]["weaponid"])
     local img2rec = getRecordByKey("config/weapon_weapon.json", "id", self.weaponed[2]["weaponid"])

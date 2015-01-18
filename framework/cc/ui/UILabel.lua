@@ -60,6 +60,33 @@ UILabel.LABEL_TYPE_TTF 					= 2
 
 -- end --
 
+function UILabel:speak(speed)
+
+    if speed == nil then speed = 0.1 end
+    local str = self:getString()
+    -- print("str", str)
+    local length = string.len(str)
+    local index = 0
+    
+    local function changeString()
+        -- print("str", str)
+        if index < length then
+            index = index + 3
+            local substr = string.sub(str,1,index)
+            -- print("substr:".. substr.."index"..index)
+            self:setString(substr)
+        else
+            transition.removeAction(self.speakAction)
+        end
+    end
+    
+    --clear
+    self:setString("")
+    transition.removeAction(self.speakAction)
+    self.speakAction = nil
+    self.speakAction = self:schedule(changeString, speed)
+end
+
 function UILabel:ctor(options)
     makeUIControl_(self)
     self:setLayoutSizePolicy(display.FIXED_SIZE, display.FIXED_SIZE)

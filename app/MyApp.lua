@@ -90,8 +90,8 @@ function MyApp:createGameStateFile()
                                 bag2 =  {
                                         weaponid   = 2,
                                         },
-                                bagJu = {
-                                        weaponid    = 6,
+                                bag3 = {
+                                        weaponid   = 6,
                                         },
                         },
             }, 
