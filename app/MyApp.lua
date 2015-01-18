@@ -30,7 +30,6 @@ function MyApp:ctor()
     self:initGameState()    
 end
 
-
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")

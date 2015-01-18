@@ -136,7 +136,7 @@ local enemys = {
 }
 
 
-local mapId = "map_1_1"
+local mapId = "map_1_7"
 
 local isNotMoveMap = true  		--此关不能移动 
 
