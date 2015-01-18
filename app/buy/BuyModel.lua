@@ -95,13 +95,13 @@ function BuyModel:buy_goldGiftBag( buydata )
 	--黄武*1
 	InlayModel:buyGoldsInlay(15)
     InlayModel:refreshInfo("speed")
+
 	--机甲*1
 	propModel:buyProp("jijia",15)
 	--手雷*10
 	propModel:buyProp("lei",30)
 	StoreModel:setGoldWeaponNum()
 	
-	--todo yby 满血
 end
 
 function BuyModel:buy_changshuang( buydata )
