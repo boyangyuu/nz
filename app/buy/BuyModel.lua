@@ -44,7 +44,6 @@ function BuyModel:payDone(result)
 	local payDoneFunc = self.curBuydata.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
 
-
 end
 
 function BuyModel:deneyPay()

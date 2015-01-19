@@ -19,6 +19,10 @@ function FightProp:ctor(properties)
     self.buyModel  = md:getInstance("BuyModel")
 end
 
+function FightProp:refreshData()
+	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
+end
+
 function FightProp:costRobot(callfuncSuccess)
 	local num = self.propModel:getPropNum("jijia")
 	if num >= 1 then 
@@ -26,7 +30,11 @@ function FightProp:costRobot(callfuncSuccess)
 		callfuncSuccess()
 	else
 		--buy
-		self.buyModel:buy("goldGiftBag", buyData)
+		local function deneyBuyFunc()
+			self.buyModel:buy("armedMecha", {payDoneFunc = handler(self, refreshData)})
+		end 
+		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, refreshData),
+						deneyBuyFunc = deneyBuyFunc})
 	end
 	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
 end
@@ -42,7 +50,11 @@ function FightProp:costLei(callfuncSuccess)
 		self.propModel:costProp("lei",1) 
 		callfuncSuccess()
 	else
-		self.buyModel:buy("goldGiftBag", buyData)
+		local function deneyBuyFunc()
+			self.buyModel:buy("handGrenade", {payDoneFunc = handler(self, refreshData)})
+		end 		
+		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, refreshData),
+						deneyBuyFunc = deneyBuyFunc})
 	end
 	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
 end
