@@ -72,7 +72,14 @@ function StoreCell:initCellUI(parameter)
     self:addChild(redline)
     redline:setVisible(false)
 
+
+
     if type == "prop" then
+        local armature = ccs.Armature:create("guang")
+        armature:setPosition(-240,0)
+        self:addChild(armature)
+        armature:getAnimation():play("guangtx" , -1, 1)
+
         icon_zuanshi:setVisible(true)
         local Img = display.newSprite("#"..record["imgname"]..".png",-230,0)
         self:addChild(Img)
@@ -83,6 +90,11 @@ function StoreCell:initCellUI(parameter)
         ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
 
     elseif type == "bank" then
+        local armature = ccs.Armature:create("guang")
+        armature:setPosition(-240,0)
+        self:addChild(armature)
+        armature:getAnimation():play("guangtx" , -1, 1)
+
         ownnumber:setVisible(false)
         already:setVisible(false)
         icon_yuan:setVisible(true)
@@ -109,6 +121,11 @@ function StoreCell:initCellUI(parameter)
         price:setString(record["price"])
 
     elseif type == "inlay" then
+        local armature = ccs.Armature:create("guang")
+        armature:setPosition(-250,0)
+        self:addChild(armature)
+        armature:getAnimation():play("guangtx" , -1, 1)
+
         buynumber:setVisible(false)
         icon_jibi:setVisible(true)
 

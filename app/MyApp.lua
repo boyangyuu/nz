@@ -30,7 +30,6 @@ function MyApp:ctor()
     self:initGameState()    
 end
 
-
 function MyApp:run()
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
@@ -90,8 +89,8 @@ function MyApp:createGameStateFile()
                                 bag2 =  {
                                         weaponid   = 2,
                                         },
-                                bagJu = {
-                                        weaponid    = 6,
+                                bag3 = {
+                                        weaponid   = 6,
                                         },
                         },
             }, 

@@ -88,22 +88,26 @@ function MapView:loadPlaces()
 	local index = 1
 	self.places = {}
     while true do
+        if index == 20 then
+            break
+        end
+
     	local name = "place" .. index
     	local placeNode = cc.uiloader:seekNodeByName(self.map, name)
-        if placeNode == nil then
-            break
-        end		
-		placeZOrder = placeNode:getLocalZOrder()
-		print("placeZOrder", placeZOrder)
-    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 
-    	if scaleNode then scaleNode:setVisible(false) end
+        if placeNode then 		
+			placeZOrder = placeNode:getLocalZOrder()
+			print("placeZOrder", placeZOrder)
+	    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 
-        if isTest == false then 
-        	local colorNode = cc.uiloader:seekNodeByName(placeNode, "color")
-	        colorNode:setVisible(false)
+	    	if scaleNode then scaleNode:setVisible(false) end
+
+	        if isTest == false then 
+	        	local colorNode = cc.uiloader:seekNodeByName(placeNode, "color")
+		        colorNode:setVisible(false)
+		    end
+	        self.places[name] = placeNode
 	    end
-        self.places[name] = placeNode
         index = index + 1
     end
 
@@ -111,14 +115,13 @@ function MapView:loadPlaces()
     self.covers = {}
 	local index = 1
     while true do
-
+    	if index == 20 then break end
     	local name = "cover" .. index
     	local coverNode = cc.uiloader:seekNodeByName(self.map, name)
-        if coverNode == nil then
-            break
-        end
-        self.covers[index] = coverNode
-		if isTest then coverNode:setColor(cc.c3b(255, 195, 0)) end
+	    if coverNode then
+	        self.covers[index] = coverNode
+			if isTest then coverNode:setColor(cc.c3b(255, 195, 0)) end
+		end
         index = index + 1
     end    	
 end

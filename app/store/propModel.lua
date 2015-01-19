@@ -16,6 +16,7 @@ end
 function PropModel:buyProp(nameid,buyNum)
 	local data = getUserData()
 	local prop = data.prop[nameid]
+	assert(prop, "prop is nil invalid nameid:"..nameid)	
 	local propnum = prop.num + buyNum
 	data.prop[nameid].num = propnum
     setUserData(data)
@@ -24,6 +25,7 @@ end
 function PropModel:costProp(nameid,costNum)
 	local data = getUserData()
 	local prop = data.prop[nameid]
+	assert(prop, "prop is nil invalid nameid:"..nameid)
 	local propnum = prop.num - costNum
 	data.prop[nameid].num = propnum
 	setUserData(data)
