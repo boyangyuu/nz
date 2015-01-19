@@ -108,24 +108,18 @@ function SanEnemyView:onHitted(targetData)
     local demage     = targetData.demage 
     local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType or "body"
-    if self.enemy:canHitted() and self:canHitted() then
-        -- print("self.enemy:decreaseHp(demage * scale)")
-        self.enemy:decreaseHp(demage * scale)
-    end
+    if not self.enemy:canHitted()  then return end
+    self.enemy:decreaseHp(demage * scale)
 
     --爆头
     if self.enemy:getHp() == 0 then 
         if demageType == "head" then 
-            print("爆头")
             self.hero:dispatchEvent({
                 name = self.hero.ENEMY_KILL_HEAD_EVENT})
         end
-    end   
+    end          
 end
 
-function SanEnemyView:canHitted()
-    return true
-end
 
 function SanEnemyView:animationEvent(armatureBack,movementType,movementID)
 

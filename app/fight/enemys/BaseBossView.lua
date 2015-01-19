@@ -449,7 +449,7 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 		if self.pauseOtherAnim and movementID ~= "die" then 
 			return 
 		end		
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then
 			local playCache = self:getPlayCache()

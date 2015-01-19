@@ -72,7 +72,6 @@ function Enemy:beginRollCd()
     scheduler.performWithDelayGlobal(resumeCd, rollCd)
 end
 
-
 function Enemy:getDemageScale(rangeStr)
     -- print(rangeStr, "rangeStr")
     return self.config[rangeStr]
