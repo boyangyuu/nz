@@ -6,261 +6,250 @@ local waves = {
 		enemys = { 
 			{
 				time = 1,	
-				num = 3,
-				pos = {50,150,250},
-				delay = {0,0.5,0.6,1},
+				num = 4,
+				pos = {200,250,300,350,},
+				delay = {0,0.5,0.8,1,},
 				property = { 
-					placeName = "place5",
+					placeName = "place1",
 					startState = "rollright",
 					id = 1,
 				},
 			},
 			{
-				time = 4,
-				num = 3,
-				delay = {0.5,10,15},
-				pos = {0,50,100},
+				time = 2,
+				num = 1,
+				delay = {0.5},
+				pos = {800},
 				property = { 
-					placeName = "place3",
+					placeName = "place1",
 					id = 6,
-					startState = "",
+					startState = "rollleft",
 					type = "dao",
 					missileId = 7,
 					missileType = "lei",
 				},
 			},
+			{
+				time = 2,
+				num = 1,
+				delay = {0.5},
+				pos = {250},
+				property = { 
+					placeName = "place1",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 1,	
+				num = 2,
+				pos = {250,350},
+				delay = {1,1.5,1.8},
+				property = { 
+					placeName = "place3",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+
+			{
+				time = 3,	
+				num = 3,
+				pos = {800,750,700},
+				delay = {0,0.6,0.8},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+
+						-- 以上是第一波第一批
+			
 			{
 				time = 5,	
 				num = 3,
-				pos = {100,200,300},
-				delay = {0,1,2},
+				pos = {250,350,300},
+				delay = {1,1.5,1.8},
 				property = { 
-					placeName = "place8",
-					startState = "rollleft",
+					placeName = "place1",
+					startState = "rollright",
 					id = 1,
-				},
-			},
-			{
-				time = 8,
-				num = 3,
-				delay = {0.5,10,15},
-				pos = {0,50,100},
-				property = { 
-					placeName = "place5",
-					id = 6,
-					startState = "",
-					type = "dao",
-					missileId = 7,
-					missileType = "lei",
 				},
 			},		
 			{
-				time = 11,	
+				time = 8,	
 				num = 3,
-				pos = {200,400,300},
-				delay = {1,2,3},
+				pos = {800,750,700},
+				delay = {0,0.6,0.8},
 				property = {
-					placeName = "place5", 
+					placeName = "place4", 
 					startState = "rollleft",
 					id = 1,
 				},
 			},
 			{
-				time = 12,
-				num = 3,
-				delay = {0.5,10,15},
-				pos = {0,50,100},
+				time = 7,
+				num = 2,
+				delay = {0.2,0},
+				pos = {250,900},
 				property = { 
 					placeName = "place3",
 					id = 6,
-					startState = "",
+					startState = "rollright",
 					type = "dao",
 					missileId = 7,
 					missileType = "lei",
 				},
 			},	
 			{
-				time = 15,	
-				num = 3,
-				pos = {200,400,300},
-				delay = {1,2,3},
-				property = {
-					placeName = "place5", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 18,
-				num = 3,
-				delay = {0.5,10,15},
-				pos = {0,50,100},
-				property = { 
-					placeName = "place8",
-					id = 6,
-					startState = "",
-					type = "dao",
-					missileId = 7,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 21,	
-				num = 3,
-				pos = {50,250,200},
-				delay = {1,2,3},
+				time = 9,	
+				num = 2,
+				pos = {900,950},
+				delay = {0,0.6},
 				property = {
 					placeName = "place3", 
 					startState = "rollleft",
 					id = 1,
 				},
 			},
+
+									-- 以上是第一波第二批
+
 			{
-				time = 24,
+				time = 5,	
 				num = 3,
-				delay = {0.5,10,15},
-				pos = {0,50,100},
+				pos = {250,350,300},
+				delay = {1,1.5,1.8},
 				property = { 
-					placeName = "place5",
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
+				},
+			},		
+			{
+				time = 8,	
+				num = 3,
+				pos = {800,750,700},
+				delay = {0,0.6,0.8},
+				property = {
+					placeName = "place4", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 7,
+				num = 2,
+				delay = {0.2,0},
+				pos = {250,900},
+				property = { 
+					placeName = "place3",
 					id = 6,
-					startState = "",
+					startState = "rollright",
 					type = "dao",
 					missileId = 7,
 					missileType = "lei",
+				},
+			},	
+			{
+				time = 9,	
+				num = 2,
+				pos = {900,950},
+				delay = {0,0.6},
+				property = {
+					placeName = "place3", 
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 		},
 	},	
 	{
-		enemys = {
+		enemys = {                                           
+		                                                                -- 第二波
 			{
-				time = 2,
+				time = 1,
 				num = 3,
-				delay = {0.3, 0.6,1},
-				pos = {300,150,0},
-				property = {
-					placeName = "place8",
-					type = "san",
-					id = 3,
-					enemyId = 1,
+				delay = {0, 0.6, 0.8},
+				pos = {200,250,300,},	
+				property = { 
+					placeName = "place1", 
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
-				time = 4,
-				num = 2,
-				delay = {0.3, 0.6},
-				pos = {250,400},	
+				time = 1.5,
+				num = 3,
+				delay = {0, 0.3, 0.7},
+				pos = {800,850,900},	
 				property = { 
-					placeName = "place5", 
+					placeName = "place1", 
 					startState = "rollleft",
 					id = 1,
 				},
 			},	
 			{
-				time = 5,
-				num = 2,
-				delay = {0.3, 0.6},
-				pos = {200,100},					
-				property = {
-					placeName = "place3",  
-					type = "san",
-					id = 3,
-					enemyId = 1,
-				},
-			},	
-			{
-				time = 8,	
-				num = 2,
-				pos = {100, 300},
-				delay = {1, 2},
-				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
-					placeName = "place8",
-				},
-			},
-			{
-				time = 9,	
-				num = 2,
-				pos = {100, 250},
-				delay = {0.5, 1.5},
-				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
-					placeName = "place3",
-				},
-			},	
-			{
-				time = 10,	
-				num = 4,
-				pos = {0,50,150,250},
-				delay = {0,0.5,0.6,1},
-				property = { 
-					placeName = "place3",
-					id = 1,
-				},
-			},
-			{
-				time = 11,	
-				num = 4,
-				pos = {0,50,150,250},
-				delay = {0,0.5,0.6,1},
-				property = { 
-					placeName = "place3",
-					id = 1,
-				},
-			},
-			{
-				time = 15,
-				num = 2,
-				delay = {0.3, 0.6},
-				pos = {200,100},					
-				property = {
-					placeName = "place5",  
-					type = "san",
-					id = 3,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 12,	
-				num = 4,
-				pos = {0,50,150,250},
-				delay = {0,0.5,0.6,1},
-				property = { 
-					placeName = "place3",
-					id = 1,
-				},
-			},
-			{
-				time = 5,
-				num = 2,
-				delay = {0.3, 0.6},
-				pos = {200,100},					
-				property = {
-					placeName = "place8",  
-					type = "san",
-					id = 3,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 4,
+				time = 3,
 				num = 3,
-				delay = {0.3, 0.6},
-				pos = {250,400,0},	
+				delay = {0.2,0.3, 0.6},
+				pos = {500,550,700},					
+				property = {
+					placeName = "place2",  
+					type = "san",
+					id = 3,
+					enemyId = 1,
+				},
+			},	
+			{
+				time = 1.2,	
+				num = 1,
+				pos = {300},
+				delay = {0.5},
 				property = { 
-					placeName = "place8", 
-					startState = "rollleft",
-					id = 1,
+					placeName = "place1",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
 			},
+
+			                                                        -- 第二波第一批
+			{
+				time = 4,	
+				num = 8,
+				pos = {300,350,400,450,550,600,700,850},
+				delay = {0,0.5,1,1.4,1.8,0.5,0.7,1},
+				property = { 
+					type = "san",
+					id = 3,
+					enemyId = 1,
+					placeName = "place2",
+				},
+			},	
+			{
+				time = 5,	
+				num = 2,
+				pos = {350,700},
+				delay = {0.3,0.7},
+				property = { 
+					type = "san",
+					id = 3,
+					enemyId = 1,
+					placeName = "place3",
+				},
+			},
+			                                                           -- 第二波第二批
 		},
 
-
 	},
+
 	{	
 		waveType = "boss",
 		enemys = {  --boss
@@ -268,11 +257,11 @@ local waves = {
 				descId = "boss02",
 				time = 3,	
 				num = 1,
-				pos = {250},
+				pos = {500},
 				delay = {4.0},
 				property = { 
 					type = "chongBoss",
-					placeName = "place7",
+					placeName = "place8",
 					enemyId = 4, 
 					qiuId = 5,
 					id = 1,
@@ -285,14 +274,14 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=340,walkRate=200,rollRate=300,fireRate=100,fireCd=5,weak1=4,weak2=4},
+	{id=1,image="anim_enemy_002",demage=2,hp=190,walkRate=200,rollRate=300,fireRate=100,fireCd=5,weak1=4,weak2=4},
 
 	--近战兵
 	{id=2,image="jinzhanb",demage=4,hp=1080,walkRate=400,rollRate=100,fireRate=100,
 		weak1=2,weak2=2},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=2,hp=340,walkRate=400,rollRate=100,
+	{id=3,image="sanbing01",demage=2,hp=190,walkRate=400,rollRate=100,
 		fireRate=300,weak1=4,weak2=5},
 
 
@@ -301,7 +290,7 @@ local enemys = {
 	--铁球
 	{id=5,image="tieqiu",demage=20,hp=100,weak1=3,weak2=5},	
 	--手雷兵
-	{id=6,image="shouleib",demage=2,hp=340,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
+	{id=6,image="shouleib",demage=2,hp=160,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
 	--手雷
 	{id=7,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},	
 }
@@ -314,25 +303,25 @@ local bosses = {
 		image = "boss02", --图片名字
 		hp = 80000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 400,
-		fireCd = 6,
-		walkRate = 200,
-		walkCd = 1,
-		chongfengDemage = 20,  --冲锋造成伤害
+		fireRate = 400,               --普攻伤害
+		fireCd = 6,                     --普攻cd
+		walkRate = 120,                    --移动频率
+		walkCd = 1,                         --移动cd
+		chongfengDemage = 20,                --冲锋造成伤害
 		demageScale = {weak1 = 3, weak2 = 2},	--弱点伤害倍数
 		
-		skilltrigger = {   			--技能触发(可以同时)
+		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.70,0.33,
+				0.75,0.6,
 			},
 			moveRightFire = {
-				0.50,0.13,
+				0.33,0.15,
 			},
 			chongfeng = {
-				0.85, 0.65,0.45,0.35,15,
+				0.88, 0.85, 0.82, 0.80,0.45,0.35,15,
 			},
 			tieqiu = {
-				0.99, 0.96, 0.93,  0.90,0.69,0.39,
+				0.99, 0.97, 0.94, 0.90,0.7,0.3,0.2
 			},
 			weak2 = {
 				0.40,
