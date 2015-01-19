@@ -73,7 +73,8 @@ function FightProp:costGoldWeapon()
 end
 
 function FightProp:startGoldWeapon()
-	self.inlay:activeGoldForever()
+	local inlay = md:getInstance("FightInlay")
+	inlay:activeGoldForever()
 end
 
 return FightProp
