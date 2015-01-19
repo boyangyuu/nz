@@ -27,11 +27,9 @@ local configs = {
 			isGift = true;
 	},
 	armedMecha     = {				--机甲
-			ccsPath = dir.."ArmedMecha.json",
-			isGift = true,
+			isGift = false,
 	},
 	handGrenade    = {             --手雷
-			-- ccsPath = dir.."HandGrenade.json",
 			isGift = false,
 	},
 	unlockWeapon   = {            --解锁武器
