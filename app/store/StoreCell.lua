@@ -47,7 +47,7 @@ function StoreCell:initCellUI(parameter)
     already:enableOutline(cc.c4b(0, 0, 0,255), 2)
     local ownnumber = cc.ui.UILabel.new({
         UILabelType = 2, text = "60", size = 31})
-    :align(display.CENTER, 326, 48)
+    :align(cc.ui.TEXT_ALIGN_CENTER, 332, 48)
     :addTo(self)
     ownnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
     local detail = cc.ui.UILabel.new({
@@ -129,34 +129,40 @@ function StoreCell:initCellUI(parameter)
         price:setString(record["goldPrice"])
         ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
     end
+
     addBtnEventListener(btnbuy, function(event)
         if event.name=='began' then
             -- print("btnBuy is begining!")
             return true
         elseif event.name=='ended' then
             -- print("btnBuy is pressed!")
-            if type == "prop" then
-                if self.userModel:costDiamond(record["price"]) then
-                    if record["nameid"] == "goldweapon" then
-                        self.inlayModel:buyGoldsInlay(record["buynum"])
-                        md:getInstance("StoreModel"):setGoldWeaponNum()
-                        self.inlayModel:refreshInfo("speed")
-                    else
-                        self.propModel:buyProp(record["nameid"],record["buynum"])
+            if tonumber(ownnumber:getString())<100 then
+                if type == "prop" then
+                    if self.userModel:costDiamond(record["price"]) then
+                        if record["nameid"] == "goldweapon" then
+                            self.inlayModel:buyGoldsInlay(record["buynum"])
+                            md:getInstance("StoreModel"):setGoldWeaponNum()
+                            self.inlayModel:refreshInfo("speed")
+                        else
+                            self.propModel:buyProp(record["nameid"],record["buynum"])
+                        end
+                        um:buy(record["nameid"], 1, record["price"])   
+                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
                     end
-                    um:buy(record["nameid"], 1, record["price"])   
-                    ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+                elseif type == "bank" then
+                    self.userModel:buyDiamond(record["number"])
+                elseif type == "inlay" then
+                    if self.userModel:costMoney(record["goldPrice"]) then
+                        self.inlayModel:buyInlay(record["id"])
+                        ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
+                    end
+                    local buyInfo = record["type"].."_"..record["property"]
+                    um:buy(buyInfo, 1, record["goldPrice"])   
                 end
-            elseif type == "bank" then
-                self.userModel:buyDiamond(record["number"])
-            elseif type == "inlay" then
-                if self.userModel:costMoney(record["goldPrice"]) then
-                    self.inlayModel:buyInlay(record["id"])
-                    ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
-                end
-                local buyInfo = record["type"].."_"..record["property"]
-                um:buy(buyInfo, 1, record["goldPrice"])   
-
+            else
+                ui:showPopup("commonPopup",
+                 {type = "style2", content = "最多只能购买99个喔"},
+                 {opacity = 0})
             end
         end
     end)
