@@ -28,6 +28,11 @@ function BaseEnemyView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
     self:setNodeEventEnabled(true)
+
+    local function callStart()
+    	self:playStartState(property.startState)
+    end
+    scheduler.performWithDelayGlobal(callStart, 0.01)    
 end
 
 --ui
@@ -199,12 +204,9 @@ function BaseEnemyView:getModel(property)
 end
 
 --BaseEnemyView interface
+--not required
 function BaseEnemyView:playStartState(state)
-	assert("required method, must implement me")	
-end
-
-function BaseEnemyView:tick(t)
-	assert("required method, must implement me")	
+	-- assert("required method, must implement me")
 end
 
 function BaseEnemyView:canHitted()
@@ -212,6 +214,10 @@ function BaseEnemyView:canHitted()
 	-- assert("required method, must implement me")
 end
 
+--required
+function BaseEnemyView:tick(t)
+	assert("required method, must implement me")	
+end
 function BaseEnemyView:animationEvent(armatureBack,movementType,movementID)
 	assert("required method, must implement me")	
 end

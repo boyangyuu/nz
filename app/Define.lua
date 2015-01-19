@@ -8,14 +8,22 @@ Define.kHeroCritScale 			= 3.0  --
 
 --小兵 
 Define.kEnemyWalkSpeed 			= 5.0
-Define.kEnemyWalkWidth 			= 140
-Define.kEnemyRollSpeed 			= 12.0	 
-Define.kEnemyRollWidth 			= 280 
+Define.kEnemyWalkWidth 			= 140	 --移动距离
+Define.kEnemyRollSpeed 			= 12.0	 --滚动速度 每帧率
+Define.kEnemyRollWidth 			= 280    --滚动距离
+
+--导弹
+Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 
+Define.kMissileLeiTime				= 1.8    --手雷 
+
+--人质
+Define.kRenzhiSpeed				= 300.0    --人质跑动速度 像素/s
+Define.kRenzhiRunTime			= 1.2
 
 
 --黄金武器
 Define.kGoldActivate 			= 15    --黄金武器激活
-Define.kGoldTime 				= 6    --黄金武器激活时间
+Define.kGoldTime 				= 6     --黄金武器激活时间
 
 --机甲
 Define.kRobotCoolDownTime 		= 0.08   --robot 冷却时间

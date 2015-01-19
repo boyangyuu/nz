@@ -204,11 +204,15 @@ function Actor:decreaseHp(hp)
         self.hp_ = newhp
         self:dispatchEvent({name = Actor.HP_DECREASE_EVENT})
         if newhp == 0 then
-            self.fsm__:doEventForce("kill")
+            self:doKill()
         end
     -- end
 
     return self
+end
+
+function Actor:doKill()
+    self.fsm__:doEventForce("kill")
 end
 
 -- 开火

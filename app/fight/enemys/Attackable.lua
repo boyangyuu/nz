@@ -260,7 +260,6 @@ function Attackable:play(state, handlerFunc)
 		-- print("出栈 state:"..state)
 	end
 	self.playCache[index] = {func = play, state = state}
-	
 end
 
 function Attackable:getPlayCache()
@@ -374,6 +373,10 @@ end
 
 function Attackable:getPlaceZOrder()
 	return self.property.placeZOrder
+end
+
+function Attackable:getEnemyType()
+	return self.property.type
 end
 
 function Attackable:getEnemyModel()

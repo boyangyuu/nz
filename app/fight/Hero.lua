@@ -58,9 +58,6 @@ function Hero:ctor(properties)
     self.isReloading = false
 end
 
-function Hero:initData()
-    
-end
 
 --枪械相关
 function Hero:changeGun()
@@ -145,6 +142,8 @@ function Hero:getGun()
     return self.gun
 end
 
+
+--镶嵌相关
 function Hero:getFightInlay()
     return self.fightInlay
 end
@@ -177,6 +176,12 @@ function Hero:getDemage()
     return value
 end
 
+--hp相关
+function Hero:doRelive()
+    self.fsm__:doEvent("relive") --todo
+    
+end
+
 function Hero:getMaxHp()
     local kMaxHp = define.kHeroBaseHp 
     local baseMaxHp = Hero.super.getMaxHp(self)
@@ -205,11 +210,15 @@ function Hero:decreaseHp(hp)
 end
 
 function Hero:isHelpHp()
+    if self:isDead() then return false end
+
     local defence   = md:getInstance("Defence")
     local isDefenceAble =  defence:getIsAble() and 
                 not defence:getIsDefending()
     local maxhp = self:getMaxHp()
     local hp = self:getHp()
+    
+
     local isLessHp =  (hp / maxhp) < define.kBuyFullHpTime   
     return isDefenceAble and isLessHp 
 end
@@ -217,6 +226,7 @@ end
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
+    print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
     fight:pauseFight(true)
     ui:showPopup("commonPopup",
@@ -243,6 +253,8 @@ function Hero:onDenyFullHp()
     defence:startDefence()    
 end
 
+
+--map
 function Hero:setMapZoom(scale)
     self.mapZoom = scale
 end

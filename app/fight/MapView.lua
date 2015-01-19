@@ -198,7 +198,8 @@ end
 
 function MapView:checkWave()
 	local function checkEnemysEmpty()
-		if #self.enemys == 0 then 
+		local leftnum = self:getLeftEnemyNum()
+		if leftnum == 0 then 
 			print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 
@@ -207,6 +208,17 @@ function MapView:checkWave()
 		end
 	end
 	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 1.0)
+end
+
+function MapView:getLeftEnemyNum()
+	local num = 0
+	for i,enemyView in ipairs(self.enemys) do
+		local type = enemyView:getEnemyType()
+		if type ~= "dao" and type ~= "renzhi" then 
+			num = num + 1
+		end
+	end
+	return num
 end
 
 function MapView:addEnemy(property, pos, zorder)
@@ -246,7 +258,8 @@ end
 function MapView:checkNumLimit()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	local limit 	 = waveConfig:getEnemyNumLimit()
-	if #self.enemys > limit then return end
+	local num = self:getLeftEnemyNum()
+	if num >= limit then return end
 
 	local cacheData = self.cacheEnemys[1]
 	if cacheData == nil then return end

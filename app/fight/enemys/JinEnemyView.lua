@@ -28,9 +28,7 @@ function JinEnemyView:ctor(property)
     end
     local aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
     self:addScheduler(aheadHandler)
-    
-    --test
-    -- self:test()
+
 end
 
 function JinEnemyView:playAttack()
@@ -111,13 +109,5 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
         end 
     end
 end
-
--- function JinEnemyView:test()
---     --body
---     local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
---     local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
---     drawBoundingBox(self.armature, weakNode, "red") 
---     drawBoundingBox(self.armature, bodyNode, "yellow") 
--- end
 
 return JinEnemyView
