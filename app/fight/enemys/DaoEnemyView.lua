@@ -36,6 +36,30 @@ function DaoEnemyView:tick()
             self.enemy:beginFireCd()
         end
     end
+
+    --walk
+    local walkRate, isAble = self.enemy:getWalkRate()
+    assert(walkRate > 1, "invalid walkRate")
+
+    if isAble then
+        randomSeed =  math.random(1, walkRate)
+        if randomSeed > walkRate - 1 then 
+            self:play("playWalk", handler(self, self.playWalk))
+            self.enemy:beginWalkCd()
+        end
+    end
+
+    --roll
+    local rollRate, isAble = self.enemy:getRollRate()
+    assert(rollRate > 1, "invalid rollRate")
+
+    if isAble then 
+        randomSeed =  math.random(1, rollRate)
+        if randomSeed > rollRate - 1 then 
+            self:playRoll()
+            self.enemy:beginRollCd()
+        end
+    end    
 end
 
 function DaoEnemyView:playFire()
@@ -60,6 +84,38 @@ function DaoEnemyView:playFire()
     end
     local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
     self:addScheduler(sch)    
+end
+
+function DaoEnemyView:playRoll()
+    local randomSeed = math.random(1, 2)
+    local canRoll = self.property["missileType"] == "lei"
+    if not canRoll then return end
+    
+    if randomSeed == 1 then 
+        self:play("playRollLeft", handler(self, self.playRollLeft))
+    else
+        self:play("playRollRight", handler(self, self.playRollRight))
+    end
+end
+
+function DaoEnemyView:playRollLeft()
+    if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then return end
+    self.armature:getAnimation():play("rollleft" , -1, 1) 
+    local speed = define.kEnemyRollSpeed  * self:getScale() 
+
+    local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
+    local seq = cc.Sequence:create(action)  
+    self.armature:runAction(cc.RepeatForever:create(seq))   
+end
+
+function DaoEnemyView:playRollRight()
+    if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then return end
+    self.armature:getAnimation():play("rollright" , -1, 1) 
+    local speed = define.kEnemyRollSpeed  * self:getScale() 
+
+    local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
+    local seq = cc.Sequence:create(action)  
+    self.armature:runAction(cc.RepeatForever:create(seq))           
 end
 
 --Attackable interface
