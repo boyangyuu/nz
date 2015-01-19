@@ -88,6 +88,7 @@ function RootLayer:addResHome()
 
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
     manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
+
     local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
     manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
 
@@ -99,6 +100,13 @@ function RootLayer:addResHome()
 
     local xqzbsrc = "res/InlayShop/xqzb/xqzb.csb"
     manager:addArmatureFileInfoAsync(xqzbsrc,  handler(self, self.dataLoaded))
+
+    local wqsjsrc = "res/WeaponList/wqsj/wqsj.csb"
+    manager:addArmatureFileInfoAsync(wqsjsrc,  handler(self, self.dataLoaded))
+
+    local guangsrc = "res/Store/guang/guang.csb"
+    manager:addArmatureFileInfoAsync(guangsrc,  handler(self, self.dataLoaded))
+
     --sound
     local startMusic = "res/Start/start.ogg"
     audio.preloadMusic(startMusic)

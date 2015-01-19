@@ -68,6 +68,7 @@ function WeaponListLayer:initUI()
     self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
+    self.equipedju       = cc.uiloader:seekNodeByName(self, "bag3")
     self.upgradecost      = cc.uiloader:seekNodeByName(self, "upgradecost")
     self.buycost      = cc.uiloader:seekNodeByName(self, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self, "damagepluse")
@@ -122,8 +123,6 @@ function WeaponListLayer:initUI()
     self.labelName        = cc.uiloader:seekNodeByName(self.paneldetail, "labelname")
     self.labelDescribe    = cc.uiloader:seekNodeByName(self.paneldetail, "labeldescribe")
 
-
-
     self.equipedone:setVisible(false)
     self.equipedtwo:setVisible(false)
     
@@ -171,6 +170,17 @@ function WeaponListLayer:initUI()
             --  {opacity = 155})
             if self.userModel:costMoney(self.costupgrade) then
                 self:intensify(self.weaponId)
+                local armature = ccs.Armature:create("wqsj")
+                addChildCenter(armature, self.layerGun)
+                armature:getAnimation():setMovementEventCallFunc(
+                function ( armatureBack,movementType,movement) 
+                    if movementType == ccs.MovementEventType.complete then
+                        armatureBack:stopAllActions()
+                        armatureBack:removeFromParent() 
+                    end 
+                end)
+                armature:getAnimation():play("wqsj" , -1, 0)
+
             end
         end
     end)
@@ -179,7 +189,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            -- self:onceFull(self.weaponId)
+            self:onceFull(self.weaponId)
             -- todo 改为buymodel
             -- local data = getUserData()
             -- if not data.giftBag.weaponGiftBag then
@@ -425,12 +435,19 @@ function WeaponListLayer:showButton()
     if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)
         self.btnEquip:setVisible(false)
-        if self.weaponListModel:getWeaponStatus(weaponid) == 1 then
+        local status = self.weaponListModel:getWeaponStatus(weaponid)
+        if status == 1 then
+            self.equipedju:setVisible(false)
             self.equipedtwo:setVisible(false)
             self.equipedone:setVisible(true)
-        else
+        elseif status == 2 then
+            self.equipedju:setVisible(false)
             self.equipedone:setVisible(false)
             self.equipedtwo:setVisible(true)
+        elseif status == 3 then
+            self.equipedju:setVisible(true)
+            self.equipedone:setVisible(false)
+            self.equipedtwo:setVisible(false)
         end
     end
 end              
