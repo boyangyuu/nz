@@ -37,7 +37,6 @@ local configs = {
 			isGift = false,
 	},
 	goldWeapon     = {				--金武
-			-- ccsPath = dir.."GoldWeapon.json",
 			isGift = false,
 	},
 	onceFull       = {
