@@ -72,6 +72,13 @@ function StoreCell:initCellUI(parameter)
     self:addChild(redline)
     redline:setVisible(false)
 
+    -- local armature = ccs.Armature:create("guang")
+    -- armature:setPosition(-240,0)
+    -- armature:setScale(1.2)
+    -- self:addChild(armature)
+    -- armature:getAnimation():play("guangtx" , -1, 1)
+    -- dump(armature:getContentSize())
+
     if type == "prop" then
         icon_zuanshi:setVisible(true)
         local Img = display.newSprite("#"..record["imgname"]..".png",-230,0)

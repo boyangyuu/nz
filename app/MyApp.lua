@@ -13,16 +13,21 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
-isTest  = true
+--平时
+-- isTest  = true
+-- isDebug = false
+
+--打包
 isTest  = false
-isDebug = false
+isDebug = true
+
 -- isTest  = true
 ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
 define  = Define.new()
 
--- iap = IAPsdk.new()
+iap = IAPsdk.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -89,8 +94,8 @@ function MyApp:createGameStateFile()
                                 bag2 =  {
                                         weaponid   = 2,
                                         },
-                                bagJu = {
-                                        weaponid    = 6,
+                                bag3 = {
+                                        weaponid   = 6,
                                         },
                         },
             }, 

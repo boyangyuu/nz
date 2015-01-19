@@ -149,7 +149,7 @@ function WeaponListModel:isRecomWeaponed(weaponid)
 end
 
 --[[
-	return 1(in bag1), 2(in bag2), 3(not in bag)
+	return 1(in bag1), 2(in bag2), 3(in bag3), 0(not in bag)
 ]]
 function WeaponListModel:getWeaponStatus(weaponid)
 	local data = getUserData()
@@ -158,6 +158,8 @@ function WeaponListModel:getWeaponStatus(weaponid)
 		return 1
 	elseif data.weapons.weaponed.bag2.weaponid == weaponid then
 		return 2
+	elseif data.weapons.weaponed.bag3.weaponid == weaponid then
+		return 3
 	else
 		return 0
 	end
@@ -184,10 +186,11 @@ end
 function WeaponListModel:getWeaponInBag()
 	local data = getUserData()
 	-- dump(data)
-	local twoWeapon={}
-	table.insert(twoWeapon,data.weapons.weaponed.bag1)
-	table.insert(twoWeapon,data.weapons.weaponed.bag2)
-	return twoWeapon
+	local threeWeapon={}
+	table.insert(threeWeapon,data.weapons.weaponed.bag1)
+	table.insert(threeWeapon,data.weapons.weaponed.bag2)
+	table.insert(threeWeapon,data.weapons.weaponed.bag3)
+	return threeWeapon
 end
 
 function WeaponListModel:equipBag( weaponid, index )
@@ -198,8 +201,10 @@ function WeaponListModel:equipBag( weaponid, index )
 				if k1 == "weaponid" and v1 == weaponid then
 					if index == 1 then
 						data.weapons.weaponed.bag1 = v
-					else
+					elseif index == 2 then
 						data.weapons.weaponed.bag2 = v
+					elseif index == 3 then
+						data.weapons.weaponed.bag3 = v
 					end
 					setUserData(data)
 					-- dump(data)

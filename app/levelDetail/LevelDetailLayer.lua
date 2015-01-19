@@ -136,7 +136,7 @@ function LevelDetailLayer:initMapUI(mapName)
 	--clear
 	local index = 1
     while true do
-    	local name = "place_" .. index
+    	local name = "place" .. index
     	local placeNode = cc.uiloader:seekNodeByName(map, name)
     	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
     	--clear scaleNode

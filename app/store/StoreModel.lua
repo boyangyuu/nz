@@ -22,7 +22,6 @@ function StoreModel:getConfigTable(type)
 	elseif type == "inlay" then
 		 local config = self.xqconfig
 		newTable = self:orderByGold(config)
-
 	end
 	return newTable
 end
@@ -57,7 +56,7 @@ function StoreModel:orderByGold(configtable)
 	end
 	local newTable = {}
 	for k,v in pairs(gold) do
-		table.insert(newTable, v)
+		table.insert(newTable,v)
 	end
 	return newTable
 end
