@@ -63,4 +63,17 @@ function FightProp:getLeiNum()
 	local num = self.propModel:getPropNum("lei")
 	return num
 end
+
+function FightProp:costGoldWeapon()
+	local function deneyBuyFunc()
+		self.buyModel:buy("goldWeapon", {payDoneFunc = handler(self, startGoldWeapon)})
+	end 		
+	self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, startGoldWeapon),
+					deneyBuyFunc = deneyBuyFunc})	
+end
+
+function FightProp:startGoldWeapon()
+	self.inlay:activeGoldForever()
+end
+
 return FightProp

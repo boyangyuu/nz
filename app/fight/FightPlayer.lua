@@ -379,6 +379,31 @@ function FightPlayer:onMutiTouchEnd(event)
     end
 end
 
+function FightPlayer:checkBtnJu(point,eventName)
+    if self.btnJu:isVisible() == false then return end 
+    local rect = self.btnJu:getCascadeBoundingBox()  
+    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
+    if isTouch then 
+        --切换狙击镜
+        print("-----------switch ju")
+        addBtnEffect(self.btnJu)
+        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
+    end
+    return isTouch
+end
+
+function FightPlayer:checkBtnGold(point, eventName)
+    if self.btnGold:isVisible() == false then return end 
+    local rect = self.btnGold:getCascadeBoundingBox()  
+    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
+    if isTouch then 
+        -- print("点击黄金枪 购买")
+        addBtnEffect(self.btnGold)
+        self.fightProp:costGoldWeapon()
+    end
+    return isTouch    
+end
+
 function FightPlayer:checkbtnRobot(point)
     if not self.btnRobot:isVisible() then return end
     local rect = self.btnRobot:getCascadeBoundingBox()
@@ -537,30 +562,6 @@ function FightPlayer:onCancelledFire()
     end
 end
 
-function FightPlayer:checkBtnJu(point,eventName)
-    if self.btnJu:isVisible() == false then return end 
-    local rect = self.btnJu:getCascadeBoundingBox()  
-    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
-    if isTouch then 
-        --切换狙击镜
-        print("-----------switch ju")
-        addBtnEffect(self.btnJu)
-        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
-    end
-    return isTouch
-end
-
-function FightPlayer:checkBtnGold(point, eventName)
-    if self.btnGold:isVisible() == false then return end 
-    local rect = self.btnGold:getCascadeBoundingBox()  
-    local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
-    if isTouch then 
-        -- print("点击黄金枪 购买")
-        addBtnEffect(self.btnGold)
-        self.inlay:activeGoldForever()
-    end
-    return isTouch    
-end
 
 function FightPlayer:onTouchMoved(event)
     local  x, y, prevX, prevY 
