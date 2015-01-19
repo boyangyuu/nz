@@ -39,12 +39,15 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-        	self:relive()
+            local fightProp = md:getInstance("FightProp")
+        	self:payDone()
         end
     end)
 end
 
-function FightResultFailPopup:relive()
+
+
+function FightResultFailPopup:payDone()
     local fight = md:getInstance("Fight")
    
     --黄武

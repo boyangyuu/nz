@@ -58,7 +58,7 @@ function Enemy:beginWalkCd()
 end
 
 function Enemy:getRollRate()
-	return self.config["rollRate"]
+	return self.config["rollRate"], not self.isRollCd
 end
 
 function Enemy:beginRollCd()

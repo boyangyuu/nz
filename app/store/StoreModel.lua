@@ -54,7 +54,11 @@ function StoreModel:orderByGold(configtable)
 			table.insert(gold, v)
 		end
 	end
-	return gold
+	local newTable = {}
+	for k,v in pairs(gold) do
+		table.insert(newTable,v)
+	end
+	return newTable
 end
 
 function StoreModel:equipedRobot()

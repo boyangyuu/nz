@@ -6,28 +6,41 @@ local waveClass = class("waveExample", BaseWave)
 local waves = {
 	{
 		enemys = {  	
-			{
-				time = 2,
-				num = 3,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 2,
-					type = "jin",
-					placeName = "place1",			
-				},
-			},		
+			-- {
+			-- 	time = 2,
+			-- 	num = 5,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 1,
+			-- 		placeName = "place5",			
+			-- 	},
+			-- },		
 			{
 				time = 2,
 				num = 2,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
-					id = 4,
-					type = "bao",
-					placeName = "place2",			
+					id = 6,
+					type = "dao",
+					placeName = "place5",	
+					missileId = 7,
 				},
-			},				
+			},		
+			{
+				time = 2,
+				num = 4,
+				pos = {100, 200, 0, 170, 340, 100},
+				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+				property = { 
+					id = 8,
+					type = "dao",
+					placeName = "place5",	
+					missileId = 9,
+					missileType = "lei",					
+				},
+			},						
 			-- {
 			-- 	time = 3,
 			-- 	num = 6,
@@ -97,44 +110,44 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=30,hp=50,walkRate=400,rollRate=400,fireRate=200,
-		weak1=2,weak2=4, fireCd=30.0},
+	{id=1,image="anim_enemy_002",demage=1,hp=50,walkRate=4,rollRate=4,walkCd = 1.0, rollCd = 1.5, fireRate=200,
+		weak1=2 ,fireCd=30.0},
 
 	--近战兵
 	{id=2,image="jinzhanb",demage=20,hp=400,walkRate=400,rollRate=0,fireRate=100,
-		weak1=3,weak2=5},
+		weak1=3},
 
 	--伞兵
 	{id=3,image="sanbing01",demage=3,hp=1,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5},
+		fireRate=100,weak1=3},
 
 	--自爆兵
 	{id=4,image="zibaob",demage=2,hp=200,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5},	
+		fireRate=100,weak1=3},	
 
 	--盾兵
 	{id=5,image="dunbing",demage=2,hp=200,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5},			
+		fireRate=100,weak1=3},			
 
 	--导弹兵
-	{id=6,image="zpbing",demage=0,hp=1000,walkRate=400,rollRate=0,
-		fireRate=200,weak1=3,weak2=5},		
+	{id=6,image="zpbing",demage=0,hp=1000,walkRate=4,rollRate=4,walkCd = 1.0, rollCd = 1.5, fireRate=200,
+		weak1=2, fireCd=30.0},		
 		
 	--导弹
-	{id=7,image="daodan",demage=10,hp=100, weak1=3,weak2=5},		
+	{id=7,image="daodan",demage=10,hp=100, weak1=3},		
 
 	--手雷兵
-	{id=8,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=100,
-		fireRate=200,weak1=3,weak2=5},	
+	{id=8,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=10, rollCd = 1.5,
+		fireRate=200,weak1=3},	
 
 	--手雷
-	{id=9,image="shoulei",demage=10,hp=1,weak1=3,weak2=5},	
+	{id=9,image="shoulei",demage=10,hp=1,weak1=3},	
 
 	--金币兵
 	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},					
 }
 
-local mapId = "map_1_2"
+local mapId = "map_1_7"
 
 local isNotMoveMap = true  		--此关不能移动 
 

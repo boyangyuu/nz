@@ -443,11 +443,14 @@ function FightPlayer:checkBtnLei(point)
 end
 
 function FightPlayer:refreshPropData(event)
+    print("function FightPlayer:refreshPropData(event)")
     local fightProp = md:getInstance("FightProp")
     local numjijia = fightProp:getRobotNum()
     self.label_jijiaNum:setString(numjijia)
     local numlei   = fightProp:getLeiNum()
+    print("numjijia:"..numjijia.."numlei:"..numlei)
     self.label_leiNum:setString(numlei)
+
 end
 
 function FightPlayer:checkbtnDefence(point)

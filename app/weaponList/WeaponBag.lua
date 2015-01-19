@@ -55,6 +55,15 @@ function WeaponBag:initUI()
 
         end
     end)
+
+    local record = self.weaponListModel:getWeaponRecord(self.weaponid)
+    local type = record["type"]
+    if type == "ju" then
+        self.weapon1:setTouchEnabled(false)
+        self.weapon2:setTouchEnabled(false)
+    else
+        self.weapon3:setTouchEnabled(false)
+    end
     self.weapon1:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then
             print("began")
@@ -86,10 +95,10 @@ function WeaponBag:initUI()
             return true
         elseif event.name=='ended' then
             print("ended")
-            self.weaponListModel:equipBag(self.weaponid,2)
-            self:refreshData("bag2")
+            self.weaponListModel:equipBag(self.weaponid,3)
+            self:refreshData("bag3")
         end
-            local data = getUserData()
+        local data = getUserData()
         dump(data.weapons.weaponed, "data.weapons")
 
     end)
@@ -101,11 +110,24 @@ function WeaponBag:refreshData(bag)
         self.panlwanggekuang1:setColor(Color_YELLOW)
         self.panlwangge2:setColor(Color_GRAY)
         self.panlwanggekuang2:setColor(Color_GRAY)
+        self.panlwangge3:setColor(Color_GRAY)
+        self.panlwanggekuang3:setColor(Color_GRAY)
     elseif bag == "bag2" then
         self.panlwangge2:setColor(Color_YELLOW)
         self.panlwanggekuang2:setColor(Color_YELLOW)
         self.panlwangge1:setColor(Color_GRAY)
         self.panlwanggekuang1:setColor(Color_GRAY)
+        self.panlwangge3:setColor(Color_GRAY)
+        self.panlwanggekuang3:setColor(Color_GRAY)
+
+    elseif bag == "bag3" then
+        self.panlwangge1:setColor(Color_GRAY)
+        self.panlwanggekuang1:setColor(Color_GRAY)
+        self.panlwangge2:setColor(Color_GRAY)
+        self.panlwanggekuang2:setColor(Color_GRAY)
+        self.panlwangge3:setColor(Color_YELLOW)
+        self.panlwanggekuang3:setColor(Color_YELLOW)
+
     end
     self.weaponed = self.weaponListModel:getWeaponInBag()
     self.weapon1:removeAllChildren()
@@ -118,9 +140,14 @@ function WeaponBag:refreshData(bag)
     local img2 = display.newSprite("#icon_"..img2rec[1]["imgName"]..".png")
     img1:setScale(0.35)
     img2:setScale(0.35)
-
     addChildCenter(img1, self.weapon1)
     addChildCenter(img2, self.weapon2)
+    if table.nums(self.weaponed) == 3 then
+        local img3rec = getRecordByKey("config/weapon_weapon.json", "id", self.weaponed[3]["weaponid"])
+        local img3 = display.newSprite("#icon_"..img3rec[1]["imgName"]..".png")
+        img3:setScale(0.35)
+        addChildCenter(img3, self.weapon3)
+    end
 end
 
 

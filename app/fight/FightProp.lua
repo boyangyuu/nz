@@ -20,6 +20,7 @@ function FightProp:ctor(properties)
 end
 
 function FightProp:refreshData()
+	print("function FightProp:refreshData()")
 	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
 end
 
@@ -31,12 +32,12 @@ function FightProp:costRobot(callfuncSuccess)
 	else
 		--buy
 		local function deneyBuyFunc()
-			self.buyModel:buy("armedMecha", {payDoneFunc = handler(self, refreshData)})
+			self.buyModel:buy("armedMecha", {payDoneFunc = handler(self, self.refreshData)})
 		end 
-		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, refreshData),
+		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 						deneyBuyFunc = deneyBuyFunc})
 	end
-	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
+	self:refreshData()
 end
 
 function FightProp:getRobotNum()
@@ -51,12 +52,12 @@ function FightProp:costLei(callfuncSuccess)
 		callfuncSuccess()
 	else
 		local function deneyBuyFunc()
-			self.buyModel:buy("handGrenade", {payDoneFunc = handler(self, refreshData)})
+			self.buyModel:buy("handGrenade", {payDoneFunc = handler(self, self.refreshData)})
 		end 		
-		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, refreshData),
+		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 						deneyBuyFunc = deneyBuyFunc})
 	end
-	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
+	self:refreshData()
 end
 
 function FightProp:getLeiNum()
@@ -66,15 +67,25 @@ end
 
 function FightProp:costGoldWeapon()
 	local function deneyBuyFunc()
-		self.buyModel:buy("goldWeapon", {payDoneFunc = handler(self, startGoldWeapon)})
+		self.buyModel:buy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon)})
 	end 		
-	self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, startGoldWeapon),
+	self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
 					deneyBuyFunc = deneyBuyFunc})	
+end
+
+function FightProp:getGoldNum()
+	local num
+	return num 
 end
 
 function FightProp:startGoldWeapon()
 	local inlay = md:getInstance("FightInlay")
 	inlay:activeGoldForever()
 end
+
+function FightProp:costReliveBag()
+	
+end
+
 
 return FightProp

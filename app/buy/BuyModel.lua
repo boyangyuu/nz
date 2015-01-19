@@ -33,7 +33,7 @@ function BuyModel:buy(configid, buydata)
         ui:showPopup("GiftBagPopup",{popupName = configid})
     else
     	--mm
-    	iap:pay(configName)
+    	iap:pay(configid)
     end
 end
 
@@ -41,6 +41,7 @@ function BuyModel:payDone(result)
 	print("function BuyModel:payDone():"..self.curId)
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuydata)
+	dump(self.curBuydata, "self.curBuydata")
 	local payDoneFunc = self.curBuydata.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
 
@@ -56,7 +57,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	print("BuyModel:buy_weaponGiftBag(buydata)")
 	local weaponList = md:getInstance("WeaponListModel")
 	local weaponId = buydata.weaponId
-	dump(buydata, "buydata")
+	-- dump(buydata, "buydata")
 	for i = 3, 8 do
 		if i ~= 6 then 
 			weaponList:setWeapon(i)
