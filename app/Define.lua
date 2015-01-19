@@ -6,6 +6,13 @@ local Define = class("Define", cc.mvc.ModelBase)
 Define.kHeroBaseHp 				= 100.0  --
 Define.kHeroCritScale 			= 3.0  --
 
+--小兵 
+Define.kEnemyWalkSpeed 			= 5.0
+Define.kEnemyWalkWidth 			= 140
+Define.kEnemyRollSpeed 			= 12.0	 
+Define.kEnemyRollWidth 			= 280 
+
+
 --黄金武器
 Define.kGoldActivate 			= 15    --黄金武器激活
 Define.kGoldTime 				= 6    --黄金武器激活时间

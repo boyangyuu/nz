@@ -8,26 +8,25 @@ local waves = {
 		enemys = {  	
 			{
 				time = 2,
-				num = 3,
+				num = 5,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
-					id = 2,
-					type = "jin",
-					placeName = "place1",			
+					id = 1,
+					placeName = "place5",			
 				},
 			},		
-			{
-				time = 2,
-				num = 2,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 4,
-					type = "bao",
-					placeName = "place2",			
-				},
-			},				
+			-- {
+			-- 	time = 2,
+			-- 	num = 2,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 4,
+			-- 		type = "bao",
+			-- 		placeName = "place2",			
+			-- 	},
+			-- },				
 			-- {
 			-- 	time = 3,
 			-- 	num = 6,
@@ -97,7 +96,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=30,hp=50,walkRate=400,rollRate=400,fireRate=200,
+	{id=1,image="anim_enemy_002",demage=1,hp=50,walkRate=4,rollRate=4,walkCd = 1.0, rollCd = 1.5, fireRate=200,
 		weak1=2,weak2=4, fireCd=30.0},
 
 	--近战兵
@@ -134,7 +133,7 @@ local enemys = {
 	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},					
 }
 
-local mapId = "map_1_2"
+local mapId = "map_1_7"
 
 local isNotMoveMap = true  		--此关不能移动 
 

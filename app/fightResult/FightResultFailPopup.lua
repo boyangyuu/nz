@@ -40,7 +40,6 @@ function FightResultFailPopup:initUI()
             return true
         elseif event.name=='ended' then
             local fightProp = md:getInstance("FightProp")
-            fightProp
         	self:payDone()
         end
     end)

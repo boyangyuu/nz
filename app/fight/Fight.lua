@@ -87,22 +87,25 @@ function Fight:onWin()
     self.result = "win" 
     self.userModel:levelPass(self.groupId,self.levelId)
 
-    
     self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    
     um:finishLevel(levelInfo)
     self:willEndFight()  
     self:clearFightData()  
-
 end
 
 function Fight:onFail()
     if self.result then return end
-    self.result = "fail"     
+    self.result = "fail"   
+    local fightProp = md:getInstance("FightProp")
+    fightProp:costReliveBag()
+
     ui:showPopup("FightResultFailPopup",{},{anim = false})
 
     --clear
     self:clearFightData() 
+
+    --todo 改在返回大地图
     local levelInfo = self.groupId.."-"..self.levelId  
     um:failLevel(levelInfo)
 end
@@ -164,7 +167,6 @@ function Fight:relive()
     self.hero.fsm__:doEvent("relive") --todo
     self.inlay:checkNativeGold()
     self.result = nil
-    -- self.inlay:activeGoldForever()
 end
 
 function Fight:clearFightData()

@@ -13,9 +13,6 @@ local BaseEnemyView = import(".BaseEnemyView")
 local CommonEnemyView = class("CommonEnemyView", BaseEnemyView)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
-local kWalkWidth = 140
-local kRollWidth = 200
-
 function CommonEnemyView:ctor(property)
 	CommonEnemyView.super.ctor(self, property) 
 
@@ -52,13 +49,13 @@ function CommonEnemyView:playWalk()
 	local isLeft = 1
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then isLeft = -1 end
-	local dis = 5 * isLeft * self:getScale()
-    local widthOffset = kWalkWidth * isLeft
+	local speed = define.kEnemyWalkSpeed  * isLeft * self:getScale()
+    local widthOffset = define.kEnemyWalkWidth  * isLeft
     local isAble = self:checkPlace(widthOffset * self:getScale())
 
     if not isAble then return end
 	self.armature:getAnimation():play("walk" , -1, 1)
-	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
+	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))	
 end
@@ -73,21 +70,23 @@ function CommonEnemyView:playRoll()
 end
 
 function CommonEnemyView:playRollLeft()
-	if not self:checkPlace(-kRollWidth * self:getScale()) then return end
+	print("function CommonEnemyView:playRollLeft()")
+	if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then return end
 	self.armature:getAnimation():play("rollleft" , -1, 1) 
-	local dis = 8 * self:getScale() 
+	local speed = define.kEnemyRollSpeed  * self:getScale() 
 
-	local action = cc.MoveBy:create(1/60, cc.p(-dis, 0))
+	local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))	
 end
 
 function CommonEnemyView:playRollRight()
-	if not self:checkPlace(kRollWidth * self:getScale()) then return end
+	print("function CommonEnemyView:playRollRight()")	
+	if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then return end
 	self.armature:getAnimation():play("rollright" , -1, 1) 
-	local dis = 8 * self:getScale() 
+	local speed = define.kEnemyRollSpeed  * self:getScale() 
 
-	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
+	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))			
 end

@@ -73,9 +73,19 @@ function FightProp:costGoldWeapon()
 					deneyBuyFunc = deneyBuyFunc})	
 end
 
+function FightProp:getGoldNum()
+	local num
+	return num 
+end
+
 function FightProp:startGoldWeapon()
 	local inlay = md:getInstance("FightInlay")
 	inlay:activeGoldForever()
 end
+
+function FightProp:costReliveBag()
+	
+end
+
 
 return FightProp

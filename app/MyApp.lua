@@ -14,11 +14,11 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 --平时
--- isTest  = true
+isTest  = true
 -- isDebug = false
 
 --打包
-isTest  = false
+-- isTest  = false
 isDebug = true
 
 -- isTest  = true
