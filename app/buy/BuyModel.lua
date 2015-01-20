@@ -57,7 +57,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	print("BuyModel:buy_weaponGiftBag(buydata)")
 	local weaponList = md:getInstance("WeaponListModel")
 	local weaponId = buydata.weaponId
-	dump(buydata, "buydata")
+	-- dump(buydata, "buydata")
 	for i = 3, 8 do
 		if i ~= 6 then 
 			weaponList:setWeapon(i)

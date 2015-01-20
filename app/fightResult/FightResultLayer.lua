@@ -222,6 +222,9 @@ function FightResultLayer:getinlayfall()
 	-- 狙击
 	
 	local isExist = self.weaponListModel:isWeaponExist(6)
+	dump(self.isDone == false)
+	dump(curRecord["type"] == "boss")
+	dump(isExist == false)
     if self.isDone == false and curRecord["type"] == "boss" and isExist == false then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
@@ -281,6 +284,7 @@ function FightResultLayer:getinlayfall()
 			self.inlayModel:buyInlay(v["id"])
 		elseif v["falltype"] == "gun" then
 			self.weaponListModel:setWeapon(v["id"])
+			self.weaponListModel:equipBag(v["id"], 3)
 			ui:showPopup("commonPopup",
 				 {type = "style2", content = "获得雷明顿！"},
 				 {opacity = 155})
@@ -335,6 +339,7 @@ function FightResultLayer:turnLeftCard()
 				table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
 			elseif v["falltype"] == "gun" then
 				self.weaponListModel:setWeapon(v["id"])
+				self.weaponListModel:equipBag(v["id"],3)
 				function delaypopgun()
 					ui:showPopup("commonPopup",
 						 {type = "style2", content = "获得雷明顿！"},

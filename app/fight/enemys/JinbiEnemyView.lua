@@ -27,7 +27,6 @@ function JinbiEnemyView:ctor(property)
 
     --
     self:playFly()
-    -- self:test()
 end
 
 function JinbiEnemyView:tick()
@@ -62,13 +61,6 @@ function JinbiEnemyView:stopFly()
     self:setWillRemoved()
 end
 
-function JinbiEnemyView:test()
-	--body
-    -- local weak1 = self.armature:getBone("weak1"):getDisplayRenderNode()
-	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    -- drawBoundingBox(self.armature, weak1, "red") 
-	drawBoundingBox(self.armature, bodyNode, "yellow") 
-end
 
 function JinbiEnemyView:playKill(event)
     self.armature:getAnimation():play("die" , -1, 1)

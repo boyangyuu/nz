@@ -237,6 +237,7 @@ function Attackable:checkPlace(offset)
 	local pWorld2 = self.armature:convertToWorldSpace(cc.p(0,0))
 	-- dump(pWorld2, "pWorld2")
 	local scale = self:getScale()
+	-- print("scale", scale)
 	local bound2  = bodyNode:getBoundingBox()
 	-- print("offset", offset)
 	local xLeft   = pWorld2.x - bound2.width/2 * scale + offset
@@ -259,7 +260,6 @@ function Attackable:play(state, handlerFunc)
 		-- print("出栈 state:"..state)
 	end
 	self.playCache[index] = {func = play, state = state}
-	
 end
 
 function Attackable:getPlayCache()
@@ -373,6 +373,10 @@ end
 
 function Attackable:getPlaceZOrder()
 	return self.property.placeZOrder
+end
+
+function Attackable:getEnemyType()
+	return self.property.type
 end
 
 function Attackable:getEnemyModel()

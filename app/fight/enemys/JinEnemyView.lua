@@ -28,9 +28,7 @@ function JinEnemyView:ctor(property)
     end
     local aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
     self:addScheduler(aheadHandler)
-    
-    --test
-    -- self:test()
+
 end
 
 function JinEnemyView:playAttack()
@@ -52,11 +50,12 @@ function JinEnemyView:playAhead()
     --前进
     self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = self.property["speed"] or 80.0
+    local configEnemy = self.enemy:getConfig()
+    local speed = configEnemy["speed"] or define.kJinEnemyWalkSpeed 
     -- local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     -- local desY = -180
     local pWorldMap = self:getPosInMap()
-    local distanceY = -pWorldMap.y - 180
+    local distanceY = -pWorldMap.y + define.kJinEnemyWalkPos
     local time = math.abs(distanceY) / speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
@@ -111,13 +110,5 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
         end 
     end
 end
-
--- function JinEnemyView:test()
---     --body
---     local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
---     local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
---     drawBoundingBox(self.armature, weakNode, "red") 
---     drawBoundingBox(self.armature, bodyNode, "yellow") 
--- end
 
 return JinEnemyView

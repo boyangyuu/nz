@@ -28,6 +28,11 @@ function BaseEnemyView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
     self:setNodeEventEnabled(true)
+
+    local function callStart()
+    	self:playStartState(property.startState)
+    end
+    scheduler.performWithDelayGlobal(callStart, 0.01)    
 end
 
 --ui
@@ -131,13 +136,13 @@ function BaseEnemyView:playWalk()
 	local isLeft = 1
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then isLeft = -1 end
-	local dis = 5 * isLeft * self:getScale()
-    local widthOffset = kWalkWidth * isLeft * self:getScale()
+	local speed = define.kEnemyWalkSpeed * isLeft * self:getScale()
+    local widthOffset = define.kEnemyWalkWidth * isLeft * self:getScale()
     local isAble = self:checkPlace(widthOffset)
 
     if not isAble then return end
 	self.armature:getAnimation():play("walk" , -1, 1)
-	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
+	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))	
 end
@@ -199,12 +204,9 @@ function BaseEnemyView:getModel(property)
 end
 
 --BaseEnemyView interface
+--not required
 function BaseEnemyView:playStartState(state)
-	assert("required method, must implement me")	
-end
-
-function BaseEnemyView:tick(t)
-	assert("required method, must implement me")	
+	-- assert("required method, must implement me")
 end
 
 function BaseEnemyView:canHitted()
@@ -212,6 +214,10 @@ function BaseEnemyView:canHitted()
 	-- assert("required method, must implement me")
 end
 
+--required
+function BaseEnemyView:tick(t)
+	assert("required method, must implement me")	
+end
 function BaseEnemyView:animationEvent(armatureBack,movementType,movementID)
 	assert("required method, must implement me")	
 end

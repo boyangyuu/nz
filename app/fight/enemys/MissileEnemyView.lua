@@ -22,6 +22,7 @@ function MissileEnemyView:ctor(property)
     self.destPos = property.destPos
     self.srcScale = property.srcScale
     self.property = property
+
     --events
     cc.EventProxy.new(self.enemy, self)
         :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
@@ -50,7 +51,7 @@ end
 function MissileEnemyView:playDaoDanFire()
     --scale
     self:setScale(self.srcScale)
-    local time = 2.0
+    local time = define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
@@ -73,7 +74,7 @@ function MissileEnemyView:playLeiFire()
     self.armature:getAnimation():play("fire" , -1, 1)  
     local srcPos = self.property["srcPos"]
     local destPos = cc.p(srcPos.x - 90, 20)
-    local jumpTime = 1.8
+    local jumpTime = define.kMissileLeiTime
     local jumpH = 300.0
     local moveAction = cc.JumpTo:create(jumpTime, destPos, jumpH, 1)
     local action = transition.newEasing(moveAction,"in", jumpTime)   

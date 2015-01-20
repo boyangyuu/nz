@@ -191,6 +191,17 @@ function WeaponListLayer:initUI()
             return true
         elseif event.name=='ended' then
             self:onceFull(self.weaponId)
+            local armature = ccs.Armature:create("wqsj")
+                addChildCenter(armature, self.layerGun)
+                armature:getAnimation():setMovementEventCallFunc(
+                function ( armatureBack,movementType,movement) 
+                    if movementType == ccs.MovementEventType.complete then
+                        armatureBack:stopAllActions()
+                        armatureBack:removeFromParent() 
+                    end 
+                end)
+                armature:getAnimation():play("wqsj" , -1, 0)
+
             -- todo 改为buymodel
             -- local data = getUserData()
             -- if not data.giftBag.weaponGiftBag then

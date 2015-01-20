@@ -57,6 +57,7 @@ function Fight:refreshData(properties)
     self.goldValue = 0.0
     self.result = nil
     self.isPause = false
+    self.killRenzhiNum  = 0
 end
 
 function Fight:willStartFight()
@@ -87,22 +88,25 @@ function Fight:onWin()
     self.result = "win" 
     self.userModel:levelPass(self.groupId,self.levelId)
 
-    
     self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    
     um:finishLevel(levelInfo)
     self:willEndFight()  
     self:clearFightData()  
-
 end
 
 function Fight:onFail()
     if self.result then return end
-    self.result = "fail"     
+    self.result = "fail"   
+    local fightProp = md:getInstance("FightProp")
+    fightProp:costReliveBag()
+
     ui:showPopup("FightResultFailPopup",{},{anim = false})
 
     --clear
     self:clearFightData() 
+
+    --todo 改在返回大地图
     local levelInfo = self.groupId.."-"..self.levelId  
     um:failLevel(levelInfo)
 end
@@ -159,12 +163,22 @@ function Fight:setCompsVisible(componentVisibles)
 end
 
 ---- 关卡相关end ----
+function Fight:addKillRenzhiNum()
+    self.killRenzhiNum = self.killRenzhiNum + 1
+
+    local fightConfigs  = md:getInstance("FightConfigs")
+    local waveConfig    = fightConfigs:getWaveConfig()
+    local limit         = waveConfig:getRenzhiLimit()
+    if self.killRenzhiNum >= limit then
+        self.hero:doKill()
+    end
+end
 
 function Fight:relive()
-    self.hero.fsm__:doEvent("relive") --todo
+    self.hero:doRelive()
     self.inlay:checkNativeGold()
+    self.killRenzhiNum = 0
     self.result = nil
-    -- self.inlay:activeGoldForever()
 end
 
 function Fight:clearFightData()

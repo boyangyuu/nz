@@ -117,7 +117,7 @@ local mapId = "map_1_7"
 
 local isNotMoveMap = true  		--此关不能移动 
 
-local limit = 9   				--此关敌人上限
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
