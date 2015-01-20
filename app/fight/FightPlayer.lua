@@ -669,11 +669,18 @@ end
 
 function FightPlayer:justBgPos(node)
     local layerMap = self.layerMap
-    local bgMap = self.mapView  
-    local w, h = bgMap:getSize().width , 
-        bgMap:getSize().height
+    local bgMap = self.mapView
+    local box = bgMap:getBoundingBox()
+    -- dump(box, "box")
+    -- print("bgMap pos", )  
+    local w, h = bgMap:getBgSize().width , 
+        bgMap:getBgSize().height
+    -- print("w", w)
+    -- print("h", h)
+    local offset = bgMap:getBgOffset()
     local xL = (w - display.width1) / 2  
-    local yL = (h - display.height1) / 2 
+    local yL1 = -(h - display.height1 + offset.y * 2) / 2 
+    local yL2 = (h - display.height1 - offset.y * 2) / 2 
     local x, y = node:getPosition()
 
     --x
@@ -684,10 +691,10 @@ function FightPlayer:justBgPos(node)
     end
 
     --y
-    if y <= -yL  then
-        y = -yL
-    elseif y >=  yL  then 
-        y = yL
+    if y <= yL1  then  --上限
+        y = yL1
+    elseif y >=  yL2  then  --下限
+        y = yL2
     end    
     node:setPosition(x, y)    
 end

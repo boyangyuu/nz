@@ -1,15 +1,16 @@
 local EnemyFactory = class("EnemyFactory",cc.mvc.ModelBase)
 
 local MissileEnemyView = import(".enemys.MissileEnemyView")
-local SanEnemyView = import(".enemys.SanEnemyView")
-local JinEnemyView = import(".enemys.JinEnemyView")
-local BaoEnemyView = import(".enemys.BaoEnemyView")
-local DaoEnemyView = import(".enemys.DaoEnemyView")
-local CommonEnemyView = import(".enemys.CommonEnemyView")
-local JinbiEnemyView = import(".enemys.JinbiEnemyView")
+local SanEnemyView 		= import(".enemys.SanEnemyView")
+local JinEnemyView 		= import(".enemys.JinEnemyView")
+local BaoEnemyView 		= import(".enemys.BaoEnemyView")
+local DaoEnemyView 		= import(".enemys.DaoEnemyView")
+local CommonEnemyView	= import(".enemys.CommonEnemyView")
+local JinbiEnemyView  	= import(".enemys.JinbiEnemyView")
+local RenzhiEnemyView 	= import(".enemys.RenzhiEnemyView")
 
-local BaseBossView = import(".enemys.BaseBossView")
-local ChongBossView = import(".enemys.ChongBossView")
+local BaseBossView 		= import(".enemys.BaseBossView")
+local ChongBossView 	= import(".enemys.ChongBossView")
 
 function EnemyFactory.createEnemy(property)
 	assert(property, "property is nil")
@@ -33,7 +34,9 @@ function EnemyFactory.createEnemy(property)
 	elseif property.type == "dao" then
 		enemyView = DaoEnemyView.new(property)	
 	elseif property.type == "jinbi" then
-		enemyView = JinbiEnemyView.new(property)					
+		enemyView = JinbiEnemyView.new(property)
+	elseif property.type == "renzhi" then
+		enemyView = RenzhiEnemyView.new(property)							
 	else
 		enemyView = CommonEnemyView.new(property)
 	end

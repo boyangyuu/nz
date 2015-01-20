@@ -6,41 +6,40 @@ local waveClass = class("waveExample", BaseWave)
 local waves = {
 	{
 		enemys = {  	
+			{
+				time = 2,
+				num = 1,
+				pos = {100, 200, 0, 170, 340, 100},
+				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+				property = { 
+					id = 1,
+					placeName = "place5",			
+				},
+			},		
 			-- {
 			-- 	time = 2,
-			-- 	num = 5,
+			-- 	num = 2,
 			-- 	pos = {100, 200, 0, 170, 340, 100},
 			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 			-- 	property = { 
-			-- 		id = 1,
-			-- 		placeName = "place5",			
+			-- 		id = 11,
+			-- 		type = "renzhi",
+			-- 		placeName = "place5",
 			-- 	},
 			-- },		
-			{
-				time = 2,
-				num = 2,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 6,
-					type = "dao",
-					placeName = "place5",	
-					missileId = 7,
-				},
-			},		
-			{
-				time = 2,
-				num = 4,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 8,
-					type = "dao",
-					placeName = "place5",	
-					missileId = 9,
-					missileType = "lei",					
-				},
-			},						
+			-- {
+			-- 	time = 5,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 8,
+			-- 		type = "dao",
+			-- 		placeName = "place5",	
+			-- 		missileId = 9,
+			-- 		missileType = "lei",					
+			-- 	},
+			-- },						
 			-- {
 			-- 	time = 3,
 			-- 	num = 6,
@@ -144,23 +143,27 @@ local enemys = {
 	{id=9,image="shoulei",demage=10,hp=1,weak1=3},	
 
 	--金币兵
-	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},					
+	{id=10,image="qiqiu01",demage=10,hp=1,weak1=3,award = 60},	
+
+	--人质
+	{id=11,image="hs",demage=0,hp=300,walkRate=100,walkCd = 1.0,
+		weak1=3,award = 60},							
 }
 
-local mapId = "map_1_7"
+local mapId = "map_1_3"
 
 local isNotMoveMap = true  		--此关不能移动 
 
-local limit = 10   				--此关敌人上限
-
+local limit = 6   				--此关敌人上限
+ 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.isMoveMap = isMoveMap
+	self.renzhiLimit = 2   		--杀死人质上限
 end
-
 
 return waveClass
 

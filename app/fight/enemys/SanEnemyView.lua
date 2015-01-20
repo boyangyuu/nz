@@ -28,9 +28,6 @@ function SanEnemyView:ctor(property)
     --
     self:playFall() 
 
-    --test
-    self:test()
-
 end
 
 
@@ -79,17 +76,6 @@ function SanEnemyView:stopFall()
                 },
         }
     self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = {data}})    
-end
-
-
-function SanEnemyView:test()
-	--body
-    local weak1 = self.armature:getBone("weak1"):getDisplayRenderNode()
-	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-    local enemyNode = self.armature:getBone("enemy"):getDisplayRenderNode()
-    drawBoundingBox(self.armature, weak1, "red") 
-	drawBoundingBox(self.armature, bodyNode, "yellow") 
-    drawBoundingBox(self.armature, enemyNode, "yellow")
 end
 
 --Attackable interface

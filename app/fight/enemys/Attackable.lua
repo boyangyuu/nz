@@ -228,22 +228,22 @@ function Attackable:checkPlace(offset)
 	
 	local xLeftLimit  = pWorld1.x  
 	local xRightLimit = pWorld1.x + bound1.width
-	dump(pWorld1, "pWorld1")
-	print("xLeftLimit", xLeftLimit)
-	print("xRightLimit", xRightLimit)
+	-- dump(pWorld1, "pWorld1")
+	-- print("xLeftLimit", xLeftLimit)
+	-- print("xRightLimit", xRightLimit)
 
 	--我的范围
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
 	local pWorld2 = self.armature:convertToWorldSpace(cc.p(0,0))
-	dump(pWorld2, "pWorld2")
+	-- dump(pWorld2, "pWorld2")
 	local scale = self:getScale()
-	print("scale", scale)
+	-- print("scale", scale)
 	local bound2  = bodyNode:getBoundingBox()
-	print("offset", offset)
+	-- print("offset", offset)
 	local xLeft   = pWorld2.x - bound2.width/2 * scale + offset
 	local xRight  = pWorld2.x + bound2.width/2 * scale + offset
-	print("xLeft", xLeft)
-	print("xRight", xRight)	
+	-- print("xLeft", xLeft)
+	-- print("xRight", xRight)	
 	return xLeftLimit < xLeft and xRight < xRightLimit 
 end
 
@@ -260,7 +260,6 @@ function Attackable:play(state, handlerFunc)
 		-- print("出栈 state:"..state)
 	end
 	self.playCache[index] = {func = play, state = state}
-	
 end
 
 function Attackable:getPlayCache()
@@ -374,6 +373,10 @@ end
 
 function Attackable:getPlaceZOrder()
 	return self.property.placeZOrder
+end
+
+function Attackable:getEnemyType()
+	return self.property.type
 end
 
 function Attackable:getEnemyModel()

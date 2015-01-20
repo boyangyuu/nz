@@ -15,14 +15,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 function CommonEnemyView:ctor(property)
 	CommonEnemyView.super.ctor(self, property) 
-
-    --test
-    self:test()
-
-    local function callStart()
-    	self:playStartState(property.startState)
-    end
-    scheduler.performWithDelayGlobal(callStart, 0.01)
 end
 
 ---- state ----
@@ -39,9 +31,6 @@ end
 function CommonEnemyView:playThrow()
 	self.armature:getAnimation():play("throw", -1, 1)
 	local pos = cc.p(self:getPositionX(), self:getPositionY() + 220)
-	local function test( )
-		print("hello world")
-	end
 	self.enemy:hit(self.hero)
 end
 
@@ -72,14 +61,6 @@ function CommonEnemyView:playRollRight()
 	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))			
-end
-
-function CommonEnemyView:test()
-	--body
-	local weakNode = self.armature:getBone("weak1"):getDisplayRenderNode()
-	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
-	drawBoundingBox(self.armature, weakNode, "red") 
-	drawBoundingBox(self.armature, bodyNode, "yellow") 
 end
 
 --Attackable interface
