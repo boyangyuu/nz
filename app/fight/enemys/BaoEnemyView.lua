@@ -31,9 +31,9 @@ function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = self.property["speed"] or 100.0
+    local speed = self.property["speed"] or define.kBaoEnemyWalkSpeed 
     local pWorldMap = self:getPosInMap()
-    local distanceY = -pWorldMap.y - 180
+    local distanceY = -pWorldMap.y + define.kJinEnemyWalkPos
 
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)

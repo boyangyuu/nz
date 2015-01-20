@@ -8,7 +8,7 @@ local waves = {
 		enemys = {  	
 			{
 				time = 2,
-				num = 5,
+				num = 1,
 				pos = {100, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 				property = { 
@@ -16,30 +16,30 @@ local waves = {
 					placeName = "place5",			
 				},
 			},		
-			{
-				time = 2,
-				num = 2,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 11,
-					type = "renzhi",
-					placeName = "place5",
-				},
-			},		
-			{
-				time = 5,
-				num = 6,
-				pos = {100, 200, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 8,
-					type = "dao",
-					placeName = "place5",	
-					missileId = 9,
-					missileType = "lei",					
-				},
-			},						
+			-- {
+			-- 	time = 2,
+			-- 	num = 2,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 11,
+			-- 		type = "renzhi",
+			-- 		placeName = "place5",
+			-- 	},
+			-- },		
+			-- {
+			-- 	time = 5,
+			-- 	num = 6,
+			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 8,
+			-- 		type = "dao",
+			-- 		placeName = "place5",	
+			-- 		missileId = 9,
+			-- 		missileType = "lei",					
+			-- 	},
+			-- },						
 			-- {
 			-- 	time = 3,
 			-- 	num = 6,
@@ -150,7 +150,7 @@ local enemys = {
 		weak1=3,award = 60},							
 }
 
-local mapId = "map_1_2"
+local mapId = "map_1_3"
 
 local isNotMoveMap = true  		--此关不能移动 
 

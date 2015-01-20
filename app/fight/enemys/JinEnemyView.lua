@@ -50,11 +50,11 @@ function JinEnemyView:playAhead()
     --前进
     self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = self.property["speed"] or 80.0
+    local speed = self.property["speed"] or define.kJinEnemyWalkSpeed 
     -- local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     -- local desY = -180
     local pWorldMap = self:getPosInMap()
-    local distanceY = -pWorldMap.y - 180
+    local distanceY = -pWorldMap.y + define.kJinEnemyWalkPos
     local time = math.abs(distanceY) / speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)

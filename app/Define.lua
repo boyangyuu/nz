@@ -6,11 +6,16 @@ local Define = class("Define", cc.mvc.ModelBase)
 Define.kHeroBaseHp 				= 100.0  --
 Define.kHeroCritScale 			= 3.0  --
 
---小兵 
+--手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 5.0
 Define.kEnemyWalkWidth 			= 140	 --移动距离
 Define.kEnemyRollSpeed 			= 12.0	 --滚动速度 每帧率
 Define.kEnemyRollWidth 			= 280    --滚动距离
+
+--近战兵
+Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
+Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素
+Define.kBaoEnemyWalkSpeed 		=  100.0 	--自爆兵 每秒前进像素
 
 --导弹
 Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 

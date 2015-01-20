@@ -273,11 +273,17 @@ function MapView:cacheEnemy(property, pos, zorder)
 								pos = pos, zorder = zorder}
 end
 
-function MapView:getSize()
+function MapView:getBgSize()
 	local bg = self.bg
 	local size = cc.size(bg:getBoundingBox().width ,
 		bg:getBoundingBox().height)
 	return size 
+end
+
+function MapView:getBgOffset()
+	local pos = cc.p(self.bg:getPositionX() - 1136/2, 
+		self.bg:getPositionY() - 640/2)
+	return pos
 end
 
 function MapView:openZoom(event)
