@@ -15,7 +15,7 @@ local waves = {
 					id = 1,
 				},
 			},
-			{
+			--[[{
 				time = 4,
 				num = 3,
 				delay = {0.5,10,15},
@@ -128,10 +128,10 @@ local waves = {
 					missileId = 7,
 					missileType = "lei",
 				},
-			},
+			},--]]
 		},
 	},	
-	{
+--[[	{
 		enemys = {
 			{
 				time = 2,
@@ -279,7 +279,7 @@ local waves = {
 				},
 			},		
 		},
-	},
+	},--]]
 }
 
 --enemy的关卡配置

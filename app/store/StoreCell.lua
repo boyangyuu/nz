@@ -142,12 +142,12 @@ function StoreCell:initCellUI(parameter)
                         if record["nameid"] == "goldweapon" then
                             self.inlayModel:buyGoldsInlay(record["buynum"])
                             md:getInstance("StoreModel"):setGoldWeaponNum()
-                            self.inlayModel:refreshInfo("speed")
+                            md:getInstance("InlayModel"):refreshInfo("speed")
                         else
                             self.propModel:buyProp(record["nameid"],record["buynum"])
                         end
                         um:buy(record["nameid"], 1, record["price"])   
-                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+                        ownnumber:setString(md:getInstance("propModel"):getPropNum(record["nameid"]))
                     end
                 elseif type == "bank" then
                     self.userModel:buyDiamond(record["number"])
