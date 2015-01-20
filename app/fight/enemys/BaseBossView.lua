@@ -515,7 +515,7 @@ function BaseBossView:checkSkill(demage)
 				local function callfuncSkill()
 					self:playSkill(skillName)
 				end
-				scheduler.performWithDelayGlobal(callfuncSkill, 1)
+				scheduler.performWithDelayGlobal(callfuncSkill, 0.01)
 			end
 		end
 	end

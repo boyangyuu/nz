@@ -18,7 +18,7 @@ isTest  = true
 -- isDebug = false
 
 --打包
--- isTest  = false
+isTest  = false
 isDebug = true
 
 -- isTest  = true

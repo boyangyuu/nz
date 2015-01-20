@@ -5,21 +5,21 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 3,
-				num = 3,
-				delay = {0.3,1,2,0.9,5,7,6},
-				pos = {0,75,150,200,50,100,150},
+				time = 1,
+				num = 1,
+				delay = {0,},
+				pos = {100,},
 				property = {
 					type = "jin",
-					placeName = "place7",  
-					id = 2,
+					placeName = "place1",  
+					id = 10,
 				},
 			},
 			{
-				time = 4,
-				num = 2,
-				delay = {0,1,0.6,0.9,5,7,6},
-				pos = {75,150,200,50,100,150},
+				time = 1,
+				num = 3,
+				delay = {0.4,0.8,1},
+				pos = {200,300,400},
 				property = {
 					type = "jin",
 					placeName = "place1",  
@@ -27,21 +27,21 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
-				num = 2,
-				delay = {0.3,2,0.6,0.9,5,7,6},
-				pos = {300,400,50,100,150},
+				time = 3,
+				num = 3,
+				delay = {0.3,2,0.6,},
+				pos = {80,160,240},
 				property = {
 					type = "jin",
-					placeName = "place2",  
+					placeName = "place4",  
 					id = 2,
 				},
 			},
 			{
 				time = 7,
-				num = 2,
-				delay = {0.3, 0.6},
-				pos = {50,100},					
+				num = 1,
+				delay = {0.3,},
+				pos = {50,},					
 				property = {
 					placeName = "place3",   
 					id = 8,
@@ -345,11 +345,11 @@ local waves = {
 local enemys = {
 
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=510,walkRate=200,rollRate=300,fireRate=400,
+	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=200,rollRate=300,fireRate=400,
 		weak1=3,weak2=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=600,walkRate=400,rollRate=0,fireRate=100,
+	{id=2,image="jinzhanb",demage=3,hp=190,walkRate=400,rollRate=0,fireRate=100,
 		weak1=2,weak2=2},
 
 	--伞兵
@@ -360,30 +360,34 @@ local enemys = {
 	{id=4,image="zibaob",demage=10,hp=400,walkRate=400,rollRate=0,
 		fireRate=100,weak1=1,weak2=1},	
 
-	--金币兵
+	--金币黄气球
 	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 30},	
 
-	--金币兵
+	--金币蓝气球
 	{id=6,image="qiqiu02",demage=10,hp=1,weak1=3,award = 15},	
 
-	--金币兵
+	--金币绿气球
 	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 9},
 	--手雷兵
 	{id=8,image="shouleib",demage=2,hp=340,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
 	--手雷
 	{id=9,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},
 	-- 盾兵
-	{id=10,image="dunbing",demage=5,hp=2000,walkRate=400,rollRate=0,fireRate=300,
+	{id=10,image="dunbing",demage=5,hp=380,walkRate=400,rollRate=0,fireRate=300,
 		weak1=1,weak2=1},		
 }
 
 local mapId = "map_1_3"
+local limit = 9   				--此关敌人上限
+
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.limit  = limit
 end
+
 
 return waveClass

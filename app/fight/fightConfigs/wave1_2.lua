@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+	--[[{
 		enemys = { 
 			{
 				time = 1,	
@@ -132,9 +132,9 @@ local waves = {
 			},		
 			{
 				time = 8,	
-				num = 3,
-				pos = {800,750,700},
-				delay = {0,0.6,0.8},
+				num = 2,
+				pos = {1000,750},
+				delay = {0,0.8},
 				property = {
 					placeName = "place4", 
 					startState = "rollleft",
@@ -157,15 +157,16 @@ local waves = {
 			},	
 			{
 				time = 9,	
-				num = 2,
-				pos = {900,950},
-				delay = {0,0.6},
+				num = 3,
+				pos = {900,940,980},
+				delay = {0,0.6,0.8},
 				property = {
-					placeName = "place3", 
+					placeName = "place2", 
 					startState = "rollleft",
 					id = 1,
 				},
 			},
+		                                     	-- 以上是第一波第三批
 		},
 	},	
 	{
@@ -220,9 +221,9 @@ local waves = {
 				},
 			},
 
-			                                                        -- 第二波第一批
+			                                          -- 以上是第二波第一批
 			{
-				time = 4,	
+				time = 6,	
 				num = 8,
 				pos = {300,350,400,450,550,600,700,850},
 				delay = {0,0.5,1,1.4,1.8,0.5,0.7,1},
@@ -234,7 +235,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 5,	
+				time = 7,	
 				num = 2,
 				pos = {350,700},
 				delay = {0.3,0.7},
@@ -245,10 +246,61 @@ local waves = {
 					placeName = "place3",
 				},
 			},
-			                                                           -- 第二波第二批
+			
+                                              -- 以上是第二波第二批
+			{
+				time = 10,
+				num = 3,
+				delay = {0, 0.6, 0.8},
+				pos = {200,250,300,},	
+				property = { 
+					placeName = "place1", 
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 11,
+				num = 3,
+				delay = {0, 0.3, 0.7},
+				pos = {800,850,900},	
+				property = { 
+					placeName = "place1", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},	
+			{
+				time = 12,
+				num = 3,
+				delay = {0.2,0.3, 0.6},
+				pos = {500,550,700},					
+				property = {
+					placeName = "place2",  
+					type = "san",
+					id = 3,
+					enemyId = 1,
+				},
+			},	
+			{
+				time = 13,	
+				num = 1,
+				pos = {300},
+				delay = {0.5},
+				property = { 
+					placeName = "place1",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},
+ 			                                       -- 以上是第二波第三批     
+
 		},
 
-	},
+	},]]
 
 	{	
 		waveType = "boss",
@@ -257,8 +309,8 @@ local waves = {
 				descId = "boss02",
 				time = 3,	
 				num = 1,
-				pos = {500},
-				delay = {4.0},
+				pos = {300},
+				delay = {0},
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
@@ -303,29 +355,29 @@ local bosses = {
 		image = "boss02", --图片名字
 		hp = 80000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 400,               --普攻伤害
-		fireCd = 6,                     --普攻cd
-		walkRate = 120,                    --移动频率
+		fireRate = 240,               --普攻频率
+		fireCd = 4,                     --普攻cd
+		walkRate = 30,                    --移动频率
 		walkCd = 1,                         --移动cd
 		chongfengDemage = 20,                --冲锋造成伤害
-		demageScale = {weak1 = 3, weak2 = 2},	--弱点伤害倍数
+		demageScale = {weak1 = 2, weak2 = 1.2},	--弱点伤害倍数
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.75,0.6,
+				0.90,0.60,0.30,0.10,
 			},
 			moveRightFire = {
-				0.33,0.15,
+				0.80,0.50, 0.20,0.05,
 			},
 			chongfeng = {
-				0.88, 0.85, 0.82, 0.80,0.45,0.35,15,
+				0.95, 0.75,0.65,0.45,0.25,
 			},
 			tieqiu = {
-				0.99, 0.97, 0.94, 0.90,0.7,0.3,0.2
+				0.98, 0.85, 0.70,0.55,0.40,0.35,0.15,
 			},
-			weak2 = {
-				0.40,
-			},							
+			weak2 = {                               --技能触发(可以同时)
+				0.40,                         
+			},						
 		},
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
@@ -348,13 +400,14 @@ local bosses = {
 }
 
 local mapId = "map_1_2"
-local limit = 9   				--此关敌人上限
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.limit  = limit
 end
 
 return waveClass
