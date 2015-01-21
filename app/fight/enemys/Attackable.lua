@@ -77,14 +77,14 @@ function Attackable:getTargetData(focusNode)
 
 	if self.attackType == "weak" or isGold then
 		if isHitedWeak then
-			print("isHitedWeak")
+			-- print("isHitedWeak")
 			return true, targetDataWeak 
 		elseif isHitedBody then 
 			return true, targetDataBody
 		end
 	else
 		if isHitedBody then
-			print("isHitedBody")
+			-- print("isHitedBody")
 			return true, targetDataBody
 		elseif isHitedWeak then 
 			return true, targetDataWeak

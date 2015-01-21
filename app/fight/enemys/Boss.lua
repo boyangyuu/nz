@@ -66,10 +66,28 @@ function Boss:beginWalkCd()
     local walkCd = self.config["walkCd"] or 3.0
 
     local function resumeCd()
-        print("    local function resumeCd()")
+        -- print("    local function resumeCd()")
         self.isWalkCd = false
     end
     scheduler.performWithDelayGlobal(resumeCd, walkCd)
+end
+
+
+function Boss:getDemage()
+    local baseDemage = self.config.demage
+    local scale = self:getDemageScale()
+    print("baseDemage", baseDemage)
+    print("scale", scale)
+    return baseDemage * scale
+end
+
+function Boss:setDemageScale(scale)
+    print("function Boss:setDemageScale(scale)", scale)
+    self.demageScale = scale
+end
+
+function Boss:getDemageScale()
+    return self.demageScale or 1.0
 end
 
 function Boss:getAward()

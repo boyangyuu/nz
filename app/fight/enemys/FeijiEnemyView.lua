@@ -70,24 +70,20 @@ function FeijiEnemyView:tick()
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
 	assert(walkRate > 1, "invalid walkRate")
-
 	if isAble then
 		randomSeed =  math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
 			self:play("playRun", handler(self, self.playWalk))
-			self.enemy:beginWalkCd()
 		end
 	end
 
 	--roll
 	local rollRate, isAble = self.enemy:getRollRate()
 	assert(rollRate > 1, "invalid rollRate")
-
 	if isAble then 
 		randomSeed =  math.random(1, rollRate)
 		if randomSeed > rollRate - 1 then 
 			self:play("playRun", handler(self, self.playRun))
-			self.enemy:beginRollCd()
 		end
 	end
 end
@@ -161,6 +157,7 @@ function FeijiEnemyView:playRunLeft()
     self.armature:runAction(action)	
 
     self:restoreStand(time)
+	self.enemy:beginRollCd()
 end
 
 function FeijiEnemyView:playRunRight()
@@ -176,7 +173,8 @@ function FeijiEnemyView:playRunRight()
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(action)	
 
-    self:restoreStand(time)			
+    self:restoreStand(time)		
+	self.enemy:beginRollCd()	
 end
 
 function FeijiEnemyView:playWalk()
@@ -201,6 +199,7 @@ function FeijiEnemyView:playWalkLeft()
     self.armature:runAction(action)	
 
     self:restoreStand(time)
+	self.enemy:beginWalkCd()    
 end
 
 function FeijiEnemyView:playWalkRight()
@@ -216,7 +215,8 @@ function FeijiEnemyView:playWalkRight()
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(action)	
 
-    self:restoreStand(time)			
+    self:restoreStand(time)		
+	self.enemy:beginWalkCd()    	
 end
 
 function FeijiEnemyView:playFire()
@@ -251,7 +251,7 @@ function FeijiEnemyView:playFire()
 	    self:addScheduler(sch)  
 
 	end
-	
+
 end
 
 function FeijiEnemyView:restoreStand(delay)

@@ -23,6 +23,7 @@ function ChongBossView:playFire()
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
 			id = self.property["enemyId"], 
+			demageScale = self.enemy:getDemageScale(),
 			offset = offsetPoses[i],
 		}
 		local function callfuncAddDao()
@@ -50,6 +51,7 @@ function ChongBossView:playTieQiu()
 			type = "missile",
 			missileType = "tie",
 			srcScale = self:getScale(), --导弹view用
+			demageScale = self.enemy:getDemageScale(),
 			animName = "bls",
 			destScale = 3.0,
 			id = self.property["qiuId"], 

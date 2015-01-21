@@ -69,7 +69,7 @@ function MissileEnemyView:playDaoDanFire()
 end
 
 function MissileEnemyView:playLeiFire()
-    print("lei")
+    -- print("lei")
     
     self.armature:getAnimation():play("fire" , -1, 1)  
     local srcPos = self.property["srcPos"]
@@ -119,7 +119,7 @@ function MissileEnemyView:playHitted(event)
 end
 
 function MissileEnemyView:playKill(event)
-    print("MissileEnemyView:playKill(event)")
+    -- print("MissileEnemyView:playKill(event)")
 
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
@@ -131,12 +131,11 @@ function MissileEnemyView:playKill(event)
 end
 
 function MissileEnemyView:onHitted(targetData)
-    print("function MissileEnemyView:onHitted(targetData)")
+    -- print("function MissileEnemyView:onHitted(targetData)")
     local demage     = targetData.demage
     local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType or "body"
     if self.enemy:canHitted() then return end
-    print("self.enemy:decreaseHp(demage * scale)")
     self.enemy:decreaseHp(demage * scale)
 end
 

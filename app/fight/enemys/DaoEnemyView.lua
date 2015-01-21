@@ -25,6 +25,17 @@ function DaoEnemyView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill)) 
 end
 
+---- state ----
+function DaoEnemyView:playStartState(state)
+    if state == "rollleft" then 
+        self:playRollLeft()
+    elseif state == "rollright" then
+        self:playRollRight()    
+    else 
+        self:playStand()
+    end
+end
+
 function DaoEnemyView:tick()
     --fire
     local fireRate, isAble = self.enemy:getFireRate()
@@ -57,7 +68,6 @@ function DaoEnemyView:tick()
         randomSeed =  math.random(1, rollRate)
         if randomSeed > rollRate - 1 then 
             self:playRoll()
-            self.enemy:beginRollCd()
         end
     end    
 end
@@ -106,6 +116,7 @@ function DaoEnemyView:playRollLeft()
     local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
     local seq = cc.Sequence:create(action)  
     self.armature:runAction(cc.RepeatForever:create(seq))   
+    self.enemy:beginRollCd()    
 end
 
 function DaoEnemyView:playRollRight()
@@ -115,7 +126,8 @@ function DaoEnemyView:playRollRight()
 
     local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)  
-    self.armature:runAction(cc.RepeatForever:create(seq))           
+    self.armature:runAction(cc.RepeatForever:create(seq))  
+    self.enemy:beginRollCd()             
 end
 
 --Attackable interface

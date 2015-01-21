@@ -147,6 +147,7 @@ function BaseEnemyView:playWalk()
 	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))	
+    self.enemy:beginWalkCd()
 end
 
 function BaseEnemyView:playHitted(event)

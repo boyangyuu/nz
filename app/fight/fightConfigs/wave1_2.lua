@@ -380,8 +380,17 @@ local bosses = {
 			},
 			weak2 = {                               --技能触发(可以同时)
 				0.40,                         
+			},	
+			demage12 = {
+				0.99,
+			},	
+			demage200 = {
+				0.10,
 			},						
 		},
+
+
+
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
 			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))

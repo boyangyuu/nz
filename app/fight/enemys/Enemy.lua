@@ -15,7 +15,7 @@ function Enemy:ctor(properties)
     local waveConfig = FightConfigs:getWaveConfig()
     self.config = waveConfig:getEnemys(properties.id)  
 
-    local demageScale = self.properties["demageScale"] or 1.0
+    local demageScale = properties["demageScale"] or 1.0
     self:setDemageScale(demageScale)
 
     local property = {
@@ -24,7 +24,7 @@ function Enemy:ctor(properties)
     }
     Enemy.super.ctor(self, property) 
 
-    --
+    
     self.isFireCd = false
     self.isWalkCd = false
     self.isRollCd = false    
@@ -33,6 +33,8 @@ end
 function Enemy:getDemage()
     local baseDemage = self.config.demage
     local scale = self:getDemageScale()
+    print("baseDemage", baseDemage)
+    print("scale", scale)
     return baseDemage * scale
 end
 
