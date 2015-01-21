@@ -11,6 +11,7 @@ end
 
 function StoreCell:initCellUI(parameter)
 
+
 	local record = parameter.record
 	local type = parameter.celltype
     local panl_xuanze = display.newScale9Sprite("#panl_xuanze.png",3,0,cc.size(735,157),cc.rect(169,0,1,1))
@@ -19,15 +20,28 @@ function StoreCell:initCellUI(parameter)
     jinbidi:setScale(2, 1.5)
     self:addChild(jinbidi)
 
-    local btnbuy = display.newScale9Sprite("#btn_g3.png",270,-30,cc.size(155,59),cc.rect(20,0,41,78))
-    self:addChild(btnbuy)
-    btnbuy:setTouchEnabled(true)
+    -- local btnbuy = display.newScale9Sprite("#btn_g3.png",270,-30,cc.size(155,59),cc.rect(20,0,41,78))
+    -- self:addChild(btnbuy)
+    -- btnbuy:setTouchEnabled(true)
 
-    local icon_zuanshi = display.newSprite("#icon_zuanshi.png",116,29)
+    local btnbuy = cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})
+            :setButtonSize(155, 59)
+            :onButtonPressed(function(event)
+                event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+            end)
+            :onButtonRelease(function(event)
+                event.target:runAction(cc.ScaleTo:create(0.1, 1))
+            end)
+            
+            :pos(270,-30)
+            :addTo(self)
+
+
+    local icon_zuanshi = display.newSprite("#icon_zuanshi.png",41,1)
     icon_zuanshi:setScale(0.7)
     btnbuy:addChild(icon_zuanshi)
     icon_zuanshi:setVisible(false)
-    local icon_jibi = display.newSprite("#icon_jibi.png",116,29)
+    local icon_jibi = display.newSprite("#icon_jibi.png",41,1)
     icon_jibi:setScale(0.8)
     btnbuy:addChild(icon_jibi)
     icon_jibi:setVisible(false)
@@ -58,13 +72,13 @@ function StoreCell:initCellUI(parameter)
 
     local icon_yuan = cc.ui.UILabel.new({
         UILabelType = 2, text = "元", size = 25})
-    :align(display.CENTER, 100 , 32)
+    :align(display.CENTER, 25 , 4)
     :addTo(btnbuy)
     icon_yuan:enableOutline(cc.c4b(0, 0, 0,255), 2)
     icon_yuan:setVisible(false)
     local  price= cc.ui.UILabel.new({
         UILabelType = 2, text = "50000", size = 28})
-    :align(display.CENTER, 59, 31)
+    :align(display.CENTER, -16, 3)
     :addTo(btnbuy)
     price:enableOutline(cc.c4b(0, 0, 0,255), 2)
     local redline = display.newScale9Sprite("#honggang.png",0,-23,cc.size(160,9),cc.rect(12,0,1,1))
@@ -78,6 +92,7 @@ function StoreCell:initCellUI(parameter)
     -- self:addChild(armature)
     -- armature:getAnimation():play("guangtx" , -1, 1)
     -- dump(armature:getContentSize())
+
 
     if type == "prop" then
         icon_zuanshi:setVisible(true)
@@ -130,12 +145,7 @@ function StoreCell:initCellUI(parameter)
         ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
     end
 
-    addBtnEventListener(btnbuy, function(event)
-        if event.name=='began' then
-            -- print("btnBuy is begining!")
-            return true
-        elseif event.name=='ended' then
-            -- print("btnBuy is pressed!")
+    btnbuy:onButtonClicked(function()
             if tonumber(ownnumber:getString())<100 then
                 if type == "prop" then
                     if self.userModel:costDiamond(record["price"]) then
@@ -164,8 +174,7 @@ function StoreCell:initCellUI(parameter)
                  {type = "style2", content = "最多只能购买99个喔"},
                  {opacity = 0})
             end
-        end
-    end)
+        end)
 end
 
 return StoreCell

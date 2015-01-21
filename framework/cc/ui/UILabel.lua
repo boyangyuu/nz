@@ -60,6 +60,13 @@ UILabel.LABEL_TYPE_TTF 					= 2
 
 -- end --
 
+function UILabel:ctor(options)
+    makeUIControl_(self)
+    self:setLayoutSizePolicy(display.FIXED_SIZE, display.FIXED_SIZE)
+
+    self:align(display.LEFT_CENTER)
+end
+
 function UILabel:speak(speed)
 
     if speed == nil then speed = 0.1 end
@@ -86,14 +93,6 @@ function UILabel:speak(speed)
     self.speakAction = nil
     self.speakAction = self:schedule(changeString, speed)
 end
-
-function UILabel:ctor(options)
-    makeUIControl_(self)
-    self:setLayoutSizePolicy(display.FIXED_SIZE, display.FIXED_SIZE)
-
-    self:align(display.LEFT_CENTER)
-end
-
 -- start --
 
 --------------------------------

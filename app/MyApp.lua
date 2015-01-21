@@ -13,13 +13,17 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
---平时
-isTest  = true
+-- --平时
+-- isTest  = true
 -- isDebug = false
 
---打包
+-- --测试打包
+-- isTest  = false
+-- isDebug = true
+
+--正式打包
 isTest  = false
-isDebug = true
+isDebug = false
 
 -- isTest  = true
 ui      = UI.new()
@@ -120,7 +124,7 @@ function MyApp:createGameStateFile()
             currentlevel =  {
                         group = 1,
 
-                        level = 6,
+                        level = 1,
             },
             guide = {
                         fight = false,
