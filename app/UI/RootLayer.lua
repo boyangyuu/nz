@@ -1,5 +1,3 @@
-
-
 local StartLayer = import("..start.StartLayer")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)

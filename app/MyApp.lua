@@ -81,10 +81,6 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 2 ,           
                                     },
-                                    {
-                                    intenlevel = 0,
-                                    weaponid   = 6 ,           
-                                    },                                    
 
                         },
                         weaponed = {
@@ -95,7 +91,7 @@ function MyApp:createGameStateFile()
                                         weaponid   = 2,
                                         },
                                 bag3 = {
-                                        weaponid   = 6,
+                                        
                                         },
                         },
             }, 
@@ -119,7 +115,7 @@ function MyApp:createGameStateFile()
        
             weaponsuipian = {},
             money = 1000000,
-            diamond = 0,
+            diamond = 100,
                       
             currentlevel =  {
                         group = 1,
@@ -128,6 +124,7 @@ function MyApp:createGameStateFile()
             },
             guide = {
                         fight = false,
+                        fightju = false,
             },
             fight = {
                         isPreferBag1 = true,

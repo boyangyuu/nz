@@ -189,7 +189,9 @@ function WeaponListModel:getWeaponInBag()
 	local threeWeapon={}
 	table.insert(threeWeapon,data.weapons.weaponed.bag1)
 	table.insert(threeWeapon,data.weapons.weaponed.bag2)
-	table.insert(threeWeapon,data.weapons.weaponed.bag3)
+	if table.nums(data.weapons.weaponed.bag3) ~= 0 then
+		table.insert(threeWeapon,data.weapons.weaponed.bag3)
+	end
 	return threeWeapon
 end
 
@@ -207,7 +209,7 @@ function WeaponListModel:equipBag( weaponid, index )
 						data.weapons.weaponed.bag3 = v
 					end
 					setUserData(data)
-					-- dump(data)
+					dump(data)
 				end
 			end
 		end

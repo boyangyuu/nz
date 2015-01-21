@@ -25,10 +25,10 @@ function FightResultPopup:loadCCS()
 end
 
 function FightResultPopup:playAnim()
-    function delayplay(  )
+    -- function delayplay(  )
         self.armature:getAnimation():play("renwuwc" , -1, 1)
-    end
-    scheduler.performWithDelayGlobal(delayplay, 0.3)
+    -- end
+    -- scheduler.performWithDelayGlobal(delayplay, 0.3)
 end
 
 function FightResultPopup:animationEvent(armatureBack,movementType,movementID)
