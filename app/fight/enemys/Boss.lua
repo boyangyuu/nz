@@ -31,10 +31,10 @@ end
 
 
 --implement attackable
-function Boss:getDemageScale(rangeStr)
+function Boss:getWeakScale(rangeStr)
 
-    assert(self.config.demageScale[rangeStr], "wave config is invalid:"..rangeStr)
-    return self.config.demageScale[rangeStr]
+    assert(self.config.weakScale[rangeStr], "wave config is invalid:"..rangeStr)
+    return self.config.weakScale[rangeStr]
 end
 
 function Boss:getConfig()

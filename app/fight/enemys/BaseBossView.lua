@@ -346,7 +346,6 @@ function BaseBossView:playDaoDan1()
 		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
 	    self:addScheduler(sch)    
 	end
-   
 end
 
 function BaseBossView:playDaoDan()

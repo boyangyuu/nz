@@ -137,7 +137,7 @@ function Attackable:checkWeak(focusNode)
 				 enemyRange)
 		if isInRange and isValid then 
 			local isHited = isInRange 
-			targetData.demageScale = self.enemy:getDemageScale(rangeStr)
+			targetData.demageScale = self.enemy:getWeakScale(rangeStr)
 			print("targetData.demageScale", targetData.demageScale)
 			targetData.demageType = "head"
 			targetData.enemy = self
