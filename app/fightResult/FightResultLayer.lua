@@ -71,9 +71,6 @@ function FightResultLayer:playstar(numStar)
 		    		function(armatureBack,movementType,movementId ) 
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
-		         		if self.isDone == true then
-			         		scheduler.performWithDelayGlobal(delaypop, 2)
-		         		end
 		         		scheduler.performWithDelayGlobal(showButton, 1)
 		         	end    
 	            end)
@@ -295,6 +292,10 @@ function FightResultLayer:getinlayfall()
 					 {type = "style2", content = "获得AK47零件 X1！"},
 					 {opacity = 155})
 			end
+     		if self.isDone == true then
+         		scheduler.performWithDelayGlobal(delaypop, 5)
+     		end
+
 
 		end
 	end

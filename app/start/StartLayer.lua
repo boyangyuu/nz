@@ -41,6 +41,14 @@ function StartLayer:initUI()
             ui:showPopup("AboutPopup")
         end
     end)
+    local src = "res/Start/caidantx/caidantx.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+    local armature = ccs.Armature:create("caidantx")
+    armature:setPosition(cc.p(568,320))
+    self:addChild(armature,100)
+    armature:getAnimation():play("caidantx" , -1, 1)
+
 end
 
 function StartLayer:beginGame()
