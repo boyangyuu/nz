@@ -22,7 +22,7 @@ function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
 	
 	--play
-	self:playStand()
+
 	
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
@@ -30,8 +30,10 @@ function BaseEnemyView:ctor(property)
     self:setNodeEventEnabled(true)
 
     local function callStart()
+    	self:setVisible(true)
     	self:playStartState(property.startState)
     end
+    self:setVisible(false)
     scheduler.performWithDelayGlobal(callStart, 0.01)    
 end
 
@@ -145,6 +147,7 @@ function BaseEnemyView:playWalk()
 	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
     self.armature:runAction(cc.RepeatForever:create(seq))	
+    self.enemy:beginWalkCd()
 end
 
 function BaseEnemyView:playHitted(event)
@@ -206,7 +209,7 @@ end
 --BaseEnemyView interface
 --not required
 function BaseEnemyView:playStartState(state)
-	-- assert("required method, must implement me")
+	self:playStand()
 end
 
 function BaseEnemyView:canHitted()

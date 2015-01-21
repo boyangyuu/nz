@@ -13,18 +13,37 @@ local FightConfigs = import("..fightConfigs.FightConfigs")
 function Enemy:ctor(properties)
     --super
     local waveConfig = FightConfigs:getWaveConfig()
-    self.config = waveConfig:getEnemys(properties.id)    
+    self.config = waveConfig:getEnemys(properties.id)  
+
+    local demageScale = properties["demageScale"] or 1.0
+    self:setDemageScale(demageScale)
+
     local property = {
         id = "enemy"..properties.id,
         maxHp = self.config.hp,
-        demage = self.config.demage,
     }
     Enemy.super.ctor(self, property) 
 
-    --
+    
     self.isFireCd = false
     self.isWalkCd = false
     self.isRollCd = false    
+end
+
+function Enemy:getDemage()
+    local baseDemage = self.config.demage
+    local scale = self:getDemageScale()
+    print("baseDemage", baseDemage)
+    print("scale", scale)
+    return baseDemage * scale
+end
+
+function Enemy:setDemageScale(scale)
+    self.demageScale = scale
+end
+
+function Enemy:getDemageScale()
+    return self.demageScale or 1.0
 end
 
 function Enemy:getFireRate()
@@ -72,7 +91,7 @@ function Enemy:beginRollCd()
     scheduler.performWithDelayGlobal(resumeCd, rollCd)
 end
 
-function Enemy:getDemageScale(rangeStr)
+function Enemy:getWeakScale(rangeStr)
     -- print(rangeStr, "rangeStr")
     return self.config[rangeStr]
 end

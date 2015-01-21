@@ -144,6 +144,7 @@ function BaseBossView:playMove()  --改为onMove
 		local action = self.config:getMoveLeftAction()
 		self.armature:runAction(cc.RepeatForever:create(action))		
 	end	
+	self.enemy:beginWalkCd()
 end
 
 function BaseBossView:playKill(event)
@@ -193,6 +194,12 @@ function BaseBossView:playSkill(skillName)
 		local index = string.sub(skillName, 5, 5)
 		-- print("index", index)
 		self:playWeak(tonumber(index))
+	elseif string.sub(skillName, 1, 6) == "demage" then 
+		local num = string.sub(skillName, 7, 9)
+		num = tonumber(num)
+		print("num", num)
+		local per = num / 100
+		self.enemy:setDemageScale(per)	
 	end
 end
 
@@ -332,6 +339,7 @@ function BaseBossView:playDaoDan1()
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
+			demageScale = self.enemy:getDemageScale(),
 			id = self.property["enemyId"], 
 		}
 		local function callfuncAddDao()
@@ -346,7 +354,6 @@ function BaseBossView:playDaoDan1()
 		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
 	    self:addScheduler(sch)    
 	end
-   
 end
 
 function BaseBossView:playDaoDan()
@@ -361,6 +368,7 @@ function BaseBossView:playDaoDan()
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
+			demageScale = self.enemy:getDemageScale(),
 			id = self.property["enemyId"], 
 		}
 		local function callfuncAddDao()
@@ -492,7 +500,6 @@ function BaseBossView:tick(t)
 		randomSeed =  math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
 			self:play("playWalk", handler(self, self.playMove))
-			self.enemy:beginWalkCd()
 		end
 	end
 end

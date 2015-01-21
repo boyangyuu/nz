@@ -171,7 +171,7 @@ end
 
 function Actor:setFullHp()
     self.hp_ = self:getMaxHp()
-    print("function Actor:setFullHp()self.hp_ ", self.hp_ )
+    -- print("function Actor:setFullHp()self.hp_ ", self.hp_ )
     self:dispatchEvent({name = Actor.HP_INCREASE_EVENT})
 end
 
@@ -194,7 +194,7 @@ end
 function Actor:decreaseHp(hp)
     assert(not self:isDead(), "actor is dead, can't change Hp")
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
-    print("Actor:decreaseHp:", hp)
+    -- print("Actor:decreaseHp:", hp)
     local newhp = self.hp_ - hp
     if newhp <= 0 then
         newhp = 0

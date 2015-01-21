@@ -130,6 +130,7 @@ function WeaponBag:refreshData(bag)
 
     end
     self.weaponed = self.weaponListModel:getWeaponInBag()
+    dump(self.weaponed)
     self.weapon1:removeAllChildren()
     self.weapon2:removeAllChildren()
     self.weapon3:removeAllChildren()

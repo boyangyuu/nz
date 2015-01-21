@@ -226,7 +226,7 @@ end
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
-    print("function Hero:helpFullHp()")
+    -- print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
     fight:pauseFight(true)
     ui:showPopup("commonPopup",

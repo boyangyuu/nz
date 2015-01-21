@@ -50,7 +50,8 @@ function CommonEnemyView:playRollLeft()
 
 	local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
     local seq = cc.Sequence:create(action)	
-    self.armature:runAction(cc.RepeatForever:create(seq))	
+    self.armature:runAction(cc.RepeatForever:create(seq))
+	self.enemy:beginRollCd()	
 end
 
 function CommonEnemyView:playRollRight()
@@ -60,7 +61,8 @@ function CommonEnemyView:playRollRight()
 
 	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
-    self.armature:runAction(cc.RepeatForever:create(seq))			
+    self.armature:runAction(cc.RepeatForever:create(seq))		
+	self.enemy:beginRollCd()	
 end
 
 --Attackable interface
@@ -77,7 +79,6 @@ function CommonEnemyView:tick(t)
 		end
 	end
 
-
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
 	assert(walkRate > 1, "invalid walkRate")
@@ -86,7 +87,6 @@ function CommonEnemyView:tick(t)
 		randomSeed =  math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
 			self:play("playWalk", handler(self, self.playWalk))
-			self.enemy:beginWalkCd()
 		end
 	end
 
@@ -98,7 +98,6 @@ function CommonEnemyView:tick(t)
 		randomSeed =  math.random(1, rollRate)
 		if randomSeed > rollRate - 1 then 
 			self:playRoll()
-			self.enemy:beginRollCd()
 		end
 	end
 end

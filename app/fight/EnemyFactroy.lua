@@ -8,6 +8,8 @@ local DaoEnemyView 		= import(".enemys.DaoEnemyView")
 local CommonEnemyView	= import(".enemys.CommonEnemyView")
 local JinbiEnemyView  	= import(".enemys.JinbiEnemyView")
 local RenzhiEnemyView 	= import(".enemys.RenzhiEnemyView")
+local FeijiEnemyView    = import(".enemys.FeijiEnemyView")
+
 
 local BaseBossView 		= import(".enemys.BaseBossView")
 local ChongBossView 	= import(".enemys.ChongBossView")
@@ -17,27 +19,30 @@ function EnemyFactory.createEnemy(property)
 	local enemyView
 
 	--boss
-	if property.type == "boss" then 
+	local type = property.type
+	if type == "boss" then 
 		enemyView = BaseBossView.new(property)
-	elseif property.type == "chongBoss" then
+	elseif type == "chongBoss" then
 		enemyView = ChongBossView.new(property)		
 		
 	--enemy
-	elseif property.type == "missile" then
+	elseif type == "missile" then
 		enemyView = MissileEnemyView.new(property)
-	elseif property.type == "san" then
+	elseif type == "san" then
 		enemyView = SanEnemyView.new(property)
-	elseif property.type == "jin" then
+	elseif type == "jin" then
 		enemyView = JinEnemyView.new(property)
-	elseif property.type == "bao" then
+	elseif type == "bao" then
 		enemyView = BaoEnemyView.new(property)	
-	elseif property.type == "dao" then
+	elseif type == "dao" then
 		enemyView = DaoEnemyView.new(property)	
-	elseif property.type == "jinbi" then
+	elseif type == "jinbi" then
 		enemyView = JinbiEnemyView.new(property)
-	elseif property.type == "renzhi" then
+	elseif type == "renzhi" then
 		enemyView = RenzhiEnemyView.new(property)							
-	else
+	elseif type == "feiji" or type == "jipu" then
+		enemyView = FeijiEnemyView.new(property)							
+	else		
 		enemyView = CommonEnemyView.new(property)
 	end
 	return enemyView

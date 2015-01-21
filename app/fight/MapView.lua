@@ -56,6 +56,9 @@ function MapView:ctor()
         :addEventListener(self.mapModel.EFFECT_JUSHAKE_EVENT	, handler(self, self.playEffectJuShaked))
 		
 	self:setNodeEventEnabled(true)
+
+	self.schCheckNumleft = scheduler.scheduleGlobal(
+					handler(self, self.checkNumLimit), 0.1)
 end
 
 function MapView:loadCCS()
@@ -198,8 +201,9 @@ end
 
 function MapView:checkWave()
 	local function checkEnemysEmpty()
-		local leftnum = self:getLeftEnemyNum()
-		if leftnum == 0 then 
+		local leftnum =  self:getLeftEnemyNum()
+		local cachenum = #self.cacheEnemys
+		if leftnum == 0 and cachenum == 0 then 
 			print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 
@@ -563,6 +567,9 @@ function MapView:onExit()
 		scheduler.unscheduleGlobal(self.checkWaveHandler)
 	end	
 	
+	if self.schCheckNumleft then
+		scheduler.unscheduleGlobal(self.schCheckNumleft)
+	end		
 end
 
 

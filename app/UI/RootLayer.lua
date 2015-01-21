@@ -1,5 +1,3 @@
-
-
 local StartLayer = import("..start.StartLayer")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
@@ -128,7 +126,7 @@ function RootLayer:addResFight()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
-        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs",
+        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs","feiji","yyc",
         "qiqiu01", "qiqiu02", "qiqiu03", "qiqiu04"}
  
     for i,v in ipairs(enemyImgs) do

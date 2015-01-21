@@ -15,6 +15,7 @@ local waves = {
 					id = 1,
 				},
 			},
+
 			{
 				time = 2,
 				num = 1,
@@ -154,6 +155,7 @@ local waves = {
 					missileId = 7,
 					missileType = "lei",
 				},
+
 			},	
 			{
 				time = 9,	
@@ -172,6 +174,7 @@ local waves = {
 	{
 		enemys = {                                           
 		                                                                -- 第二波
+
 			{
 				time = 1,
 				num = 3,
@@ -360,7 +363,7 @@ local bosses = {
 		walkRate = 30,                    --移动频率
 		walkCd = 1,                         --移动cd
 		chongfengDemage = 20,                --冲锋造成伤害
-		demageScale = {weak1 = 2, weak2 = 1.2},	--弱点伤害倍数
+		weakScale = {weak1 = 2, weak2 = 1.2},	--弱点伤害倍数
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
@@ -377,8 +380,17 @@ local bosses = {
 			},
 			weak2 = {                               --技能触发(可以同时)
 				0.40,                         
+			},	
+			demage12 = {
+				0.99,
+			},	
+			demage200 = {
+				0.10,
 			},						
 		},
+
+
+
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
 			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
