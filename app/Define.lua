@@ -13,18 +13,32 @@ Define.kEnemyRollSpeed 			= 12.0	 --滚动速度 每帧率
 Define.kEnemyRollWidth 			= 280    --滚动距离
 
 --近战兵
-Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
+Define.kJinEnemyWalkPos  		= -180		-- 相对地图的y轴位置
 Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素
 Define.kBaoEnemyWalkSpeed 		=  100.0 	--自爆兵 每秒前进像素
+
+--自爆兵
+Define.kBaoDemageOtherEnemys 	= 10  --自爆兵伤害值
+Define.kBaoRangeW 				= 200	--手雷范围
+Define.kBaoRangeH 				= 200	--手雷范围
+
+--人质兵
+Define.kRenzhiSpeed				= 600.0    --人质跑动速度 像素/s
+Define.kRenzhiRunTime			= 1.2      
+
+--飞机兵 
+Define.kfeijiSpeed				= 700.0  --速度
+Define.kfeijiRunTime 			= 1.0	 --大范围移动时间
+Define.kfeijiWalkTime			= 0.6    --小范围移动时间
+
+--吉普车兵
+Define.kjipuSpeed				= 500.0  --速度
+Define.kjipuRunTime 			= 1.0	 --大范围移动时间
+Define.kjipuWalkTime			= 0.6    --小范围移动时间
 
 --导弹
 Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 
 Define.kMissileLeiTime				= 1.8    --手雷 
-
---人质
-Define.kRenzhiSpeed				= 300.0    --人质跑动速度 像素/s
-Define.kRenzhiRunTime			= 1.2
-
 
 --黄金武器
 Define.kGoldActivate 			= 15    --黄金武器激活
@@ -36,11 +50,6 @@ Define.kRobotDemage			 	= 220    --机甲伤害
 Define.kRobotTime			 	= 10.0   --机甲持续时间
 Define.kRobotRangeH				= 40.0   -- 机甲范围
 Define.kRobotRangeW				= 80.0   --机甲范围
-
---自爆兵
-Define.kBaoDemageOtherEnemys 	= 10  --自爆兵伤害值
-Define.kBaoRangeW 				= 200	--手雷范围
-Define.kBaoRangeH 				= 200	--手雷范围
 
 --盾牌
 Define.cdTimes 					= 10.0   --十秒恢复完毕

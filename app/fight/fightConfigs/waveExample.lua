@@ -9,27 +9,50 @@ local waves = {
 			{
 				time = 2,
 				num = 1,
-				pos = {100, 200, 0, 170, 340, 100},
+				pos = {600, 200, 0, 170, 340, 100},
 				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 1,
-					placeName = "place5",			
+				property = {
+					type = "jipu" ,
+					id = 12,
+					placeName = "place1",
+					missileId = 7,
+					missileType = "daodan",
+					startState = "enterleft",
+					lastTime = 20.0,		--持续时间			
 				},
-			},		
+			},	
+			{
+				time = 2,
+				num = 1,
+				pos = {600, 200, 0, 170, 340, 100},
+				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+				property = {
+					type = "feiji" ,
+					id = 13,
+					placeName = "place2",
+					missileId = 7,
+					missileType = "daodan",
+					startState = "enterleft",
+					lastTime = 18.0,		--持续时间			
+				},
+			},			
+
+			--人质
 			-- {
 			-- 	time = 2,
 			-- 	num = 2,
-			-- 	pos = {100, 200, 0, 170, 340, 100},
+			-- 	pos = {300, 400, 0, 170, 340, 100},
 			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 			-- 	property = { 
 			-- 		id = 11,
 			-- 		type = "renzhi",
 			-- 		placeName = "place5",
+			-- 		startState = "enterleft",
 			-- 	},
 			-- },		
 			-- {
 			-- 	time = 5,
-			-- 	num = 6,
+			-- 	num = 1,
 			-- 	pos = {100, 200, 0, 170, 340, 100},
 			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
 			-- 	property = { 
@@ -147,10 +170,18 @@ local enemys = {
 
 	--人质
 	{id=11,image="hs",demage=0,hp=300,walkRate=100,walkCd = 1.0,
-		weak1=3,award = 60},							
+		weak1=3,award = 60},
+
+	--飞机
+	{id=12,image="feiji",demage=0,hp=3000,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 
+		weak1=3,award = 60},
+
+	--越野车
+	{id=13,image="yyc",demage=0,hp=3000,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 
+		weak1=3,award = 60},		
 }
 
-local mapId = "map_1_3"
+local mapId = "map_1_2"
 
 local isNotMoveMap = true  		--此关不能移动 
 

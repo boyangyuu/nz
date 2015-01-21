@@ -77,7 +77,6 @@ function CommonEnemyView:tick(t)
 		end
 	end
 
-
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
 	assert(walkRate > 1, "invalid walkRate")

@@ -19,7 +19,7 @@ isTest  = true
 
 --打包
 isTest  = false
-isDebug = true
+-- isDebug = true
 
 -- isTest  = true
 ui      = UI.new()
