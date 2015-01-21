@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	--[[{
+	{
 		enemys = { 
 			{
 				time = 1,	
@@ -300,7 +300,7 @@ local waves = {
 
 		},
 
-	},]]
+	},
 
 	{	
 		waveType = "boss",
@@ -342,7 +342,7 @@ local enemys = {
 	--铁球
 	{id=5,image="tieqiu",demage=20,hp=100,weak1=3,weak2=5},	
 	--手雷兵
-	{id=6,image="shouleib",demage=2,hp=160,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
+	{id=6,image="shouleib",demage=2,hp=130,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
 	--手雷
 	{id=7,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},	
 }

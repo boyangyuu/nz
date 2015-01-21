@@ -59,7 +59,7 @@ function JinEnemyView:playAhead()
     local time = math.abs(distanceY) / speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
-    local scale = 1.8
+    local scale = define.kJinEnemyScale
     local actionScale = cc.ScaleTo:create(time, scale)
 
     --

@@ -214,7 +214,7 @@ function MapView:getLeftEnemyNum()
 	local num = 0
 	for i,enemyView in ipairs(self.enemys) do
 		local type = enemyView:getEnemyType()
-		if type ~= "dao" and type ~= "renzhi" then 
+		if type ~= "missile" and type ~= "renzhi" and type ~= "jinbi" then 
 			num = num + 1
 		end
 	end
