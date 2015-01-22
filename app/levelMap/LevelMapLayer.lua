@@ -28,11 +28,14 @@ function LevelMapLayer:ctor(properties)
 end
 
 function LevelMapLayer:initData(properties)
-    if properties == nil then
+    dump(properties)
+    if properties.groupId == 0 then
         local group,level = self.LevelMapModel:getConfig()
         self.index = group
+        dump(self.index)
     else
-        self.index = properties.groupid
+        self.index = properties.groupId
+        dump(self.index)
     end
 
     --userData
@@ -76,13 +79,23 @@ function LevelMapLayer:initChooseLayer()
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
+    self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
+    local btngift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
-    local xstj = cc.uiloader:seekNodeByName(self.chooseRootNode, "xianshitejia")
-    local czlb = cc.uiloader:seekNodeByName(self.chooseRootNode, "chaozhilibao")
-    local mrrw = cc.uiloader:seekNodeByName(self.chooseRootNode, "meirirenwu")
-    xstj:enableOutline(cc.c4b(18, 130, 20,255), 2)
-    czlb:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    mrrw:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    local armature = ccs.Armature:create("guang")
+    -- armature:setPosition(-240,0)
+    armature:setScale(2)
+    addChildCenter(armature, self.panelGift)
+    -- self.panelGift:addChild(armature)
+    armature:getAnimation():play("guangtx" , -1, 1)
+
+
+    local action = transition.sequence({
+        cc.ScaleTo:create(0.5, 1.15),
+        cc.ScaleTo:create(0.5, 1),})
+    btngift:runAction(cc.RepeatForever:create(action))
+
+
 
     self.levelNum:setString(self.index)
 
@@ -273,10 +286,12 @@ end
 function LevelMapLayer:panelAction()
     local changeTime = 0.2
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
+    self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelGift:getContentSize().width-25, 0)))
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
+                self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelGift:getContentSize().width+25, 0)))
                 self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height+5)))
             end)}))
 end

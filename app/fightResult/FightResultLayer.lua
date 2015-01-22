@@ -99,11 +99,12 @@ function FightResultLayer:initUI()
     end
 
     self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
-    local btnback = cc.uiloader:seekNodeByName(self, "btnnext")
+    self.btnback = cc.uiloader:seekNodeByName(self, "btnnext")
     self.btngetall = cc.uiloader:seekNodeByName(self, "btngetall")
 	
 	self.btninlay:setOpacity(0)
 	self.btngetall:setOpacity(0)
+	self.btnback:setButtonEnabled(false)
 
     local xqwc = cc.ui.UILabel.new({
     UILabelType = 2, text = "镶嵌完成", size = 45})
@@ -116,6 +117,7 @@ function FightResultLayer:initUI()
 	function showButton()
 	    self.btninlay:runAction(cc.FadeIn:create(0.3))
 		self.btngetall:runAction(cc.FadeIn:create(0.3))
+		self.btnback:setButtonEnabled(true)
 	end
 
     addBtnEventListener(self.btninlay, function(event)
@@ -145,11 +147,13 @@ function FightResultLayer:initUI()
 	        end
         end
     end)
-	addBtnEventListener(btnback, function(event)
+	addBtnEventListener(self.btnback, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then		
-        	ui:changeLayer("HomeBarLayer",{})
+	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+	        dump(curGroup)
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})
         end
     end)
 end
