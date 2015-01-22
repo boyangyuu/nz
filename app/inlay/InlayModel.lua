@@ -306,6 +306,29 @@ function InlayModel:getGoldByType( typeName )
 	return false
 end
 
+function InlayModel:getGoldWeaponNum(  )
+	local config = self.config
+	local newTable = self:getInlayedGold(config)
+	local goldNum = self:getInlayNum(newTable[1]["id"])
+	for k,v in pairs(newTable) do
+		local newNum = self:getInlayNum(v["id"])
+		if newNum < goldNum then
+			goldNum = newNum
+		end
+	end
+	return goldNum
+end
+
+function InlayModel:getInlayedGold(configtable)
+	local gold = {}
+	for k,v in pairs(configtable) do
+		if v["property"] == 4 then
+			table.insert(gold, v)
+		end
+	end
+	return gold
+end
+
 function InlayModel:removeAllInlay()
 	if device.platform == "android" then
 		local allInlayed = self:getAllInlayed()
