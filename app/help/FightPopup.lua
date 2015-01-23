@@ -35,7 +35,7 @@ function FightPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			self:close()
-			ui:changeLayer("HomeBarLayer")
+			ui:changeLayer("HomeBarLayer",{})
 		end
 	end)
 
