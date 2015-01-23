@@ -390,10 +390,13 @@ local bosses = {
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 240,               --普攻频率
 		fireCd = 4,                     --普攻cd
+
 		walkRate = 180,                    --移动频率
 		walkCd = 2,                         --移动cd
 		chongfengDemage = 10,                --冲锋造成伤害
-		weakScale = {weak1 = 2, weak2 = 1.2},	--弱点伤害倍数
+		weak1 = 2,						--弱点伤害倍数
+		weak2 = 1.2,					--弱点伤害倍数
+
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {

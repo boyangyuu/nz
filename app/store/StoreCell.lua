@@ -6,6 +6,7 @@ function StoreCell:ctor(parameter)
     self.inlayModel = md:getInstance("InlayModel")
     self.propModel = md:getInstance("propModel")
     self.userModel = md:getInstance("UserModel")
+    self.storeModel = md:getInstance("StoreModel")
 	self:initCellUI(parameter)
 end
 
@@ -20,9 +21,6 @@ function StoreCell:initCellUI(parameter)
     jinbidi:setScale(2, 1.5)
     self:addChild(jinbidi)
 
-    -- local btnbuy = display.newScale9Sprite("#btn_g3.png",270,-30,cc.size(155,59),cc.rect(20,0,41,78))
-    -- self:addChild(btnbuy)
-    -- btnbuy:setTouchEnabled(true)
 
     local btnbuy = cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})
             :setButtonSize(155, 59)
@@ -93,6 +91,12 @@ function StoreCell:initCellUI(parameter)
     -- armature:getAnimation():play("guangtx" , -1, 1)
     -- dump(armature:getContentSize())
 
+    local btnarmature = ccs.Armature:create("sczg")
+    btnarmature:setPosition(-8,5)
+    -- btnarmature:setScale(1.2)
+    btnbuy:addChild(btnarmature)
+    btnarmature:getAnimation():play("sczg" , -1, 1)
+
 
     if type == "prop" then
         icon_zuanshi:setVisible(true)
@@ -151,13 +155,14 @@ function StoreCell:initCellUI(parameter)
                     if self.userModel:costDiamond(record["price"]) then
                         if record["nameid"] == "goldweapon" then
                             self.inlayModel:buyGoldsInlay(record["buynum"])
-                            md:getInstance("StoreModel"):setGoldWeaponNum()
-                            md:getInstance("InlayModel"):refreshInfo("speed")
+                            local goldnum = self.inlayModel:getGoldWeaponNum()
+                            self.storeModel:setGoldWeaponNum(goldnum)
+                            self.inlayModel:refreshInfo("speed")
                         else
                             self.propModel:buyProp(record["nameid"],record["buynum"])
                         end
                         um:buy(record["nameid"], 1, record["price"])   
-                        ownnumber:setString(md:getInstance("propModel"):getPropNum(record["nameid"]))
+                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
                     end
                 elseif type == "bank" then
                     self.userModel:buyDiamond(record["number"])

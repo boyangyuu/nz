@@ -10,7 +10,7 @@ local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
 
-function HomeBarLayer:ctor()
+function HomeBarLayer:ctor(properties)
     self.usermodel = md:getInstance("UserModel")
     self.storeModel = md:getInstance("StoreModel")
 
@@ -19,8 +19,10 @@ function HomeBarLayer:ctor()
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
     -- self:playSound()
+    self:initData(properties)
     self:loadCCS()
-    self:initHomeLayer()
+dump(self.groupid)
+    self:initHomeLayer(self.groupid)
     self:refreshMoney()
     self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
@@ -30,6 +32,15 @@ end
 function HomeBarLayer:playSound()
     local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
     audio.playMusic(homeBarMusic,true)
+end
+
+function HomeBarLayer:initData(properties)
+    if table.nums(properties) ~= 0 then
+        self.groupid = properties.groupid
+    else
+        self.groupid = 0
+    end
+     -- dump(properties)
 end
 
 function HomeBarLayer:loadCCS()
@@ -47,13 +58,15 @@ function HomeBarLayer:refreshMoney()
     btnDiamond:setString( self.usermodel:getDiamond())
 end   
 
-function HomeBarLayer:initHomeLayer()
+function HomeBarLayer:initHomeLayer(groupid)
     local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
     local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
     local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "panelmoney")
     local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btnarsenal")
     local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btninlay")
     local btnStore = cc.uiloader:seekNodeByName(self.homeRootNode, "btnstore")
+    local zuanshi = cc.uiloader:seekNodeByName(self.homeRootNode, "Image_18")
+    local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
     btnBack:setTouchEnabled(true)  
     btnArsenal:setTouchEnabled(true) 
@@ -63,11 +76,21 @@ function HomeBarLayer:initHomeLayer()
     btnBack:setVisible(false)
     btnBuyCoin:setTouchEnabled(true)
 
+    zsarmature = ccs.Armature:create("zss")
+    zsarmature:setPosition(cc.p(23,25))
+    zuanshi:addChild(zsarmature)
+    zsarmature:getAnimation():play("zss" , -1, 1)
+
+    jbarmature = ccs.Armature:create("jbs")
+    jbarmature:setPosition(cc.p(21,24))
+    jingbi:addChild(jbarmature)
+    jbarmature:getAnimation():play("jbs" , -1, 1)
+
     self.commonlayers = {}
     self.commonlayers["WeaponListLayer"] = WeaponListLayer.new()
     self.commonlayers["inlayLayer"] = InlayLayer.new()
     self.commonlayers["StoreLayer"] = StoreLayer.new()
-    self.commonlayers["levelMapLayer"] = LevelMapLayer.new()
+    self.commonlayers["levelMapLayer"] = LevelMapLayer.new({groupId = groupid})
     for k,v in pairs(self.commonlayers) do
         v:setVisible(false)
         self.commonRootNode:addChild(v)

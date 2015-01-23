@@ -45,7 +45,7 @@ Define.kMissileLeiTime				= 2.0    --手雷
 
 
 --黄金武器
-Define.kGoldActivate 			= 15    --黄金武器激活
+Define.kGoldActivate 			= 1500    --黄金武器激活
 Define.kGoldTime 				= 6     --黄金武器激活时间
 
 --机甲

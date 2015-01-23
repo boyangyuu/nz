@@ -305,8 +305,9 @@ local bosses = {
 		walkRate = 200,
 		saoFireOffset = 0.4, 		--扫射时间间隔
 		saoFireTimes = 10, 			--扫射次数
-		weakScale = {weak1 = 2, weak2 = 2, weak3 = 3},	--弱点伤害倍数
-		
+		weak1 = 2,					--弱点伤害倍数
+		weak2 = 2,					--弱点伤害倍数
+		weak3 = 3,					--弱点伤害倍数
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
 				0.65, 0.35,

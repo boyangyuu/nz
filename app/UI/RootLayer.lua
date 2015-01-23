@@ -105,6 +105,18 @@ function RootLayer:addResHome()
     local guangsrc = "res/Store/guang/guang.csb"
     manager:addArmatureFileInfoAsync(guangsrc,  handler(self, self.dataLoaded))
 
+    local sczgsrc = "res/Store/sczg/sczg.csb"
+    manager:addArmatureFileInfoAsync(sczgsrc,  handler(self, self.dataLoaded))
+
+    local leidasrc = "res/LevelMap/leida/leida.csb"
+    manager:addArmatureFileInfoAsync(leidasrc,  handler(self, self.dataLoaded))
+
+    local jbsrc = "res/HomeBarLayer/jbs/jbs.csb"
+    manager:addArmatureFileInfoAsync(jbsrc,  handler(self, self.dataLoaded))
+
+    local zssrc = "res/HomeBarLayer/zss/zss.csb"
+    manager:addArmatureFileInfoAsync(zssrc,  handler(self, self.dataLoaded))
+
     --sound
     local startMusic = "res/Start/start.ogg"
     audio.preloadMusic(startMusic)

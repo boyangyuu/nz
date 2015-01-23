@@ -22,11 +22,10 @@ GameData={}
 -- isDebug = true
 
 --正式打包
-isTest  = false
+isTest  = false        
 isDebug = false
 
 
--- isTest  = true
 ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
@@ -123,9 +122,9 @@ function MyApp:createGameStateFile()
             diamond = 100,
                       
             currentlevel =  {
-                        group = 1,
+                        group = 2,
 
-                        level = 1,
+                        level = 5,
             },
             guide = {
                         fight = false,

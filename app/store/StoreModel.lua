@@ -26,24 +26,14 @@ function StoreModel:getConfigTable(type)
 	return newTable
 end
 
-function StoreModel:setGoldWeaponNum()
-	local config = self.xqconfig
-	local newTable = self:orderByGold(config)
-	local InlayModel = md:getInstance("InlayModel")
-	local goldNum = InlayModel:getInlayNum(newTable[1]["id"])
-	for k,v in pairs(newTable) do
-		local newNum = InlayModel:getInlayNum(v["id"])
-		if newNum < goldNum then
-			goldNum = newNum
-		end
-	end
+function StoreModel:setGoldWeaponNum(goldNum)
+	
 	local data = getUserData()
 	if data.prop.goldweapon.num == goldNum then
 		return
 	else
 		data.prop.goldweapon.num = goldNum
 	    setUserData(data)
-	    self:refreshInfo("prop")
 	end
 end
 

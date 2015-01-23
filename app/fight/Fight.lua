@@ -153,7 +153,7 @@ end
 
 function Fight:checkJuContorlType()
     if self.isJujiFight == false then return end
-    local comps = {btnJu = false, btnChange =  false,}
+    local comps = {btnJu = true, btnChange =  false,}
     self:setCompsVisible(comps)
 end
 
