@@ -63,8 +63,13 @@ function IAPsdk:pay(name)
 	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	dump(self.config,"self.config")
 	dump(args,"args:")
-	if device.platform == 'android' then
-		-- luaj.callStaticMethod(className, "pay", args, sig)
+
+	if isTest then
+		self:callbackSuccess()
+	else
+		if device.platform == 'android' then
+			luaj.callStaticMethod(className, "pay", args, sig)
+		end
 	end
 end
 

@@ -1421,6 +1421,7 @@ Sprite Sheets 通俗一点解释就是包含多张图片的集合。Sprite Sheet
 -- end --
 
 function display.addSpriteFrames(plistFilename, image, handler)
+    --todopf 去掉res/..../
     local async = type(handler) == "function"
     local asyncHandler = nil
     if async then

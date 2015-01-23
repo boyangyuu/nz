@@ -28,6 +28,7 @@ Define.kBaoRangeH 				= 200	--自爆兵范围
 --人质
 Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2      
+Define.kRenzhiWalkTime			= 0.6   
 
 --飞机兵 
 Define.kfeijiSpeed				= 500.0  --速度

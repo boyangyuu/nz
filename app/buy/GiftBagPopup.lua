@@ -22,6 +22,11 @@ function GiftBagPopup:loadCCS()
 	local title = BuyConfigs.getConfig(name)
 	local giftBagNode = cc.uiloader:load(title.ccsPath)
     self:addChild(giftBagNode)
+
+    local src = "res/GiftBag/lb_ljlq/lb_ljlq.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+
 end
 
 function GiftBagPopup:initButtons()
@@ -41,6 +46,11 @@ function GiftBagPopup:initButtons()
 			print("receiveBtn is pressed!")
 		end
 	end)
+
+	local armature = ccs.Armature:create("lb_ljlq")
+	addChildCenter(armature, receiveBtn)
+	armature:getAnimation():play("lb_ljlq", -1, 1)
+
 
 	local btnClose = cc.uiloader:seekNodeByName(self, "btn_Closed")
 	btnClose:setTouchEnabled(true)

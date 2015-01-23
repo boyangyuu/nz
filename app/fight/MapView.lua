@@ -143,8 +143,8 @@ function MapView:updateEnemys()
 
 	if wave == nil then 
 		print("赢了")
-		scheduler.unscheduleGlobal(self.checkWaveHandler)
-		self.fight:onWin()
+		-- scheduler.unscheduleGlobal(self.checkWaveHandler)
+		-- self.fight:onWin()
 		return
 	end
 
@@ -345,12 +345,14 @@ function MapView:tick(dt)
 			local award = enemyModel:getAward()
 			self:doKillAward(pos, award)
 			--remove
+			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
-			enemy:removeFromParent()
+
 		elseif enemy and enemy:getWillRemoved() then
 			--remove
+			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
-			enemy:removeFromParent()
+
 		end
 	end
 
