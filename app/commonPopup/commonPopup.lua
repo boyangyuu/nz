@@ -15,6 +15,10 @@ end)
 		ui:showPopup("commonPopup",
 			 {type = "style3", content = "必须装备狙击枪"},
 			 {opacity = 0})
+	style4:仨按钮, 确定取消打电话
+		ui:showPopup("commonPopup",
+			 {type = "style4",opacity = 0}
+		)
 ]]
 function commonPopup:ctor(properties)
 	self.commonPopModel = md:getInstance("commonPopModel")
@@ -97,6 +101,41 @@ function commonPopup:initUI(properties)
 		     self:onClickClose()
 	        end
 	    end)
+
+	elseif typeName == "style4" then
+		local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
+		local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
+		local btncall = cc.uiloader:seekNodeByName(self, "btncall")
+		btntrue:setTouchEnabled(true)
+		btnfalse:setTouchEnabled(true)
+		btncall:setTouchEnabled(true)
+
+		addBtnEventListener(btntrue, function( event )
+			if event.name == "began" then
+				return true
+			elseif event.name == "end" then 
+				self:onClickCofirm()
+			end
+		end)
+
+		addBtnEventListener(btnfalse, function( event )
+			if event.name == "began" then
+				return true
+			elseif event.name == "end" then
+				self:onClickClose()
+			end
+		end)
+
+		btncall:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
+			if event.name == "began" then
+				return true
+			elseif event.name == "end" then
+				if device.platform == "android" then
+					local className = "org/cocos2dx/lua/appActivity"
+					luaj.callStaticMethod(className, "callPhone")
+				end
+			end
+		end)
 
 	end
 end
