@@ -21,7 +21,6 @@ function HomeBarLayer:ctor(properties)
     -- self:playSound()
     self:initData(properties)
     self:loadCCS()
-dump(self.groupid)
     self:initHomeLayer(self.groupid)
     self:refreshMoney()
     self:refreshCommonLayer("levelMapLayer")
@@ -69,9 +68,24 @@ function HomeBarLayer:initHomeLayer(groupid)
     local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
     btnBack:setTouchEnabled(true)  
-    btnArsenal:setTouchEnabled(true) 
-    btnInlay:setTouchEnabled(true)  
-    btnStore:setTouchEnabled(true)  
+    btnArsenal:onButtonPressed(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    btnInlay:onButtonPressed(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    btnStore:onButtonPressed(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
     btnSetting:setTouchEnabled(true)  
     btnBack:setVisible(false)
     btnBuyCoin:setTouchEnabled(true)
@@ -107,17 +121,15 @@ function HomeBarLayer:initHomeLayer(groupid)
         end
     end)
 
-
     addBtnEventListener(btnSetting, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
             ui:showPopup("MapPopup")
-            -- local layer = FightDescLayer:new()
-            -- self:addChild(layer)
-            -- md:getInstance("FightDescModel"):bossShow()
-            -- md:getInstance("FightDescModel"):enemyIntro("boss02")
+            btnInlay:setButtonEnabled(true)
+            btnStore:setButtonEnabled(true)
+            btnArsenal:setButtonEnabled(true)
         end
     end)
     addBtnEventListener(btnBack, function(event)
@@ -128,44 +140,38 @@ function HomeBarLayer:initHomeLayer(groupid)
             btnBack:setVisible(false)
             btnSetting:setVisible(true)
             self:refreshCommonLayer("levelMapLayer")
+            btnInlay:setButtonEnabled(true)
+            btnStore:setButtonEnabled(true)
+            btnArsenal:setButtonEnabled(true)
         end
     end)
-    addBtnEventListener(btnArsenal, function(event)
-        if event.name=='began' then
-            -- print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            btnSetting:setVisible(false)
-            btnBack:setVisible(true)
-            self:refreshCommonLayer("WeaponListLayer")
-            
-            -- print("Btn is pressed!")
-        end
+
+    btnArsenal:onButtonClicked(function()
+        btnSetting:setVisible(false)
+        btnBack:setVisible(true)
+        self:refreshCommonLayer("WeaponListLayer")
+        btnInlay:setButtonEnabled(true)
+        btnStore:setButtonEnabled(true)
+        btnArsenal:setButtonEnabled(false)
     end)
-    addBtnEventListener(btnInlay, function(event)
-        if event.name=='began' then
-            -- print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            btnSetting:setVisible(false)
-            btnBack:setVisible(true)
-            self:refreshCommonLayer("inlayLayer")
-
-        end
+    btnInlay:onButtonClicked(function()
+        btnSetting:setVisible(false)
+        btnBack:setVisible(true)
+        self:refreshCommonLayer("inlayLayer")
+        btnInlay:setButtonEnabled(false)
+        btnStore:setButtonEnabled(true)
+        btnArsenal:setButtonEnabled(true)
     end)
-    addBtnEventListener(btnStore, function(event)
-        if event.name=='began' then
-            -- print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            btnSetting:setVisible(false)
-            btnBack:setVisible(true)
-            self:refreshCommonLayer("StoreLayer")
+    btnStore:onButtonClicked(function()
+        btnSetting:setVisible(false)
+        btnBack:setVisible(true)
+        self:refreshCommonLayer("StoreLayer")
 
-            local buy = md:getInstance("BuyModel")
-            buy:buy("goldGiftBag", { isAll = true})
-
-        end
+        local buy = md:getInstance("BuyModel")
+        buy:buy("goldGiftBag", { isAll = true})
+        btnInlay:setButtonEnabled(true)
+        btnStore:setButtonEnabled(false)
+        btnArsenal:setButtonEnabled(true)
     end)
 end
 

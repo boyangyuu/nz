@@ -14,7 +14,7 @@ function StartLayer:playSound()
 end
 
 function StartLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/zhucaidan")
+	cc.FileUtils:getInstance():addSearchPath("res/Start")
     local controlNode = cc.uiloader:load("zhucaidan_1.ExportJson")
     self:addChild(controlNode)
 end
