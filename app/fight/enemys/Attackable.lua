@@ -412,7 +412,7 @@ end
 
 function Attackable:onExit()
 	self:removeAllSchedulers()
-	self:removeAllEventListeners()
+	-- self:removeAllEventListeners()
 end
 
 

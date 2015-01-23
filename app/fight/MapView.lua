@@ -402,7 +402,7 @@ function MapView:isCovered(enemy, focusNode)
 	    local pCover = cover:convertToWorldSpace(cc.p(0,0))
 	    coverBox.x = pCover.x
 	    coverBox.y = pCover.y
-	    dump(coverBox, "coverBox")
+	    -- dump(coverBox, "coverBox")
 	    --
 		local isCovered = cc.rectIntersectsRect(focusBox, coverBox)
 		if isCovered then 

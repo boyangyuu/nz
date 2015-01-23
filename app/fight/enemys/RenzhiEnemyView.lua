@@ -118,7 +118,8 @@ end
 
 function RenzhiEnemyView:playSpeak()
 	-- local randomSeed = math.random(1, 2)
-	self.armature:getAnimation():play("speak1" , -1, 1) 
+	self.armature:getAnimation():play("speak1" , -1, 0) 
+	
 end
 
 function RenzhiEnemyView:playRun()
@@ -185,7 +186,17 @@ end
 
 function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
+	if movementType == ccs.MovementEventType.complete then
+			local playCache = self:getPlayCache()
+			if playCache then 
+				playCache()
+			else 					
+				self:playStand()
+			end		
+	end	
+
 	if movementType == ccs.MovementEventType.loopComplete then
+		armatureBack:stopAllActions()
 		print("animationEvent id ", movementID)
 		if movementID == "runleft" or movementID == "runright" then
 			return 

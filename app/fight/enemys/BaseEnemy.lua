@@ -86,14 +86,14 @@ end
 
 function BaseEnemy:getSpeakRate()
 	assert(self.config["speakRate"] , "config speakRate is nil")
-	return self.config["speakRate"], not self.isRollCd
+	return self.config["speakRate"], not self.isSpeakCd
 end
 
 function BaseEnemy:beginSpeakCd()
     self.isSpeakCd = true
     assert(self.config["speakCd"] , "config speakCd is nil")
     local speakCd = self.config["speakCd"]
-
+    print("speakCd", speakCd)
     local function resumeCd()
         self.isSpeakCd = false
     end
