@@ -62,6 +62,8 @@ end
 -- end --
 
 function uiloader:load(jsonFile, params)
+
+	--todopf  去掉res/..../
 	local json
 	if not params or not params.bJsonStruct then
 		local pathInfo = io.pathinfo(jsonFile)
