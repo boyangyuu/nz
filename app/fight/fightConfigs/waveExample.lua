@@ -17,7 +17,10 @@ local waves = {
 					placeName = "place1",
 					missileId = 7,
 					missileType = "daodan",
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), 
+						cc.p(100, 100)},					
 					startState = "enterleft",
+
 					lastTime = 20.0,		--持续时间			
 				},
 			},	
@@ -32,24 +35,26 @@ local waves = {
 					placeName = "place2",
 					missileId = 7,
 					missileType = "daodan",
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100)},
 					startState = "enterleft",
 					lastTime = 18.0,		--持续时间			
 				},
 			},			
 
-			--人质
-			-- {
-			-- 	time = 2,
-			-- 	num = 2,
-			-- 	pos = {300, 400, 0, 170, 340, 100},
-			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-			-- 	property = { 
-			-- 		id = 11,
-			-- 		type = "renzhi",
-			-- 		placeName = "place5",
-			-- 		startState = "enterleft",
-			-- 	},
-			-- },		
+			-- 人质
+			{
+				time = 2,
+				num = 2,
+				pos = {300, 400, 0, 170, 340, 100},
+				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+				property = { 
+					id = 11,
+					type = "renzhi",
+					placeName = "place5",
+					startState = "enterleft",
+					lastTime = 20.0,		--持续时间
+				},
+			},		
 			-- {
 			-- 	time = 5,
 			-- 	num = 1,

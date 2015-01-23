@@ -31,15 +31,29 @@ function JinEnemyView:ctor(property)
 
 end
 
-function JinEnemyView:playAttack()
+function JinEnemyView:tick(t)
+    --change state
+    if self.isAheading then return end
 
+    --fire
+    local fireRate, isAble = self.enemy:getFireRate()
+    assert(fireRate > 1, "invalid fireRate")
+    if isAble then 
+        randomSeed = math.random(1, fireRate)
+        if randomSeed > fireRate - 1 then 
+            self:playAfterAlert("playFire", handler(self, self.playAttack))
+            self.enemy:beginFireCd()
+        end
+    end    
+end
+
+function JinEnemyView:playAttack()
     self.armature:getAnimation():play("attack" , -1, 1)
     self.enemy:hit(self.hero)
 end
 
 function JinEnemyView:playHitted(event)
     if self.isAheading then
-        -- print(self:playHittedEffect())
         self:playHittedEffect()
     else
         JinEnemyView.super.playHitted(self, event)
@@ -69,24 +83,11 @@ function JinEnemyView:playAhead()
 
         --改为呼吸
         self.armature:getAnimation():play("stand" , -1, 1) 
-        
-        --2秒一攻击
-        function attack()
-            self:playAfterAlert("fire", handler(self, self.playAttack))
-        end
-        local attackHandler = scheduler.scheduleGlobal(attack, kAttackOffset)
-        self:addScheduler(attackHandler)
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
     self:runAction(seq)
-
     self:runAction(actionScale)
-end
-
-function JinEnemyView:tick(t)
-    --change state
-    if self.isAheading then return end
 end
 
 function JinEnemyView:animationEvent(armatureBack,movementType,movementID)

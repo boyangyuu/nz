@@ -22,11 +22,10 @@ GameData={}
 -- isDebug = true
 
 --正式打包
-isTest  = false
+isTest  = false        
 isDebug = false
 
 
--- isTest  = true
 ui      = UI.new()
 md      = MD.new()
 um      = UM.new()

@@ -5,8 +5,7 @@
 “敵人”的实体
 
 ]]
---import
-import("..includes.functionUtils")
+
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = import("..fight.Actor")
 local GuideConfigs = import(".GuideConfigs")
