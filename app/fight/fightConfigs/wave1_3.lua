@@ -6,129 +6,20 @@ local waves = {
 		enemys = {
 			{
 				time = 1,
-				num = 1,
-				delay = {0,},
-				pos = {100,},
+				num = 2,
+				delay = {0,3},
+				pos = {100,150},
 				property = {
 					type = "jin",
 					placeName = "place1",  
-					id = 10,
+					id = 2,
 				},
 			},
 			{
-				time = 1,
+				time = 1.5,
 				num = 3,
-				delay = {0.4,0.8,1},
-				pos = {200,300,400},
-				property = {
-					type = "jin",
-					placeName = "place1",  
-					id = 2,
-				},
-			},
-			{
-				time = 3,
-				num = 3,
-				delay = {0.3,2,0.6,},
-				pos = {80,160,240},
-				property = {
-					type = "jin",
-					placeName = "place4",  
-					id = 2,
-				},
-			},
-			{
-				time = 7,
-				num = 1,
-				delay = {0.3,},
-				pos = {50,},					
-				property = {
-					placeName = "place3",   
-					id = 8,
-					startState = "",
-					type = "dao",
-					missileId = 9,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 9,
-				num = 1,
-				delay = {0.3, 0.6},
-				pos = {150,200},					
-				property = {
-					placeName = "place4",   
-					id = 8,
-					startState = "",
-					type = "dao",
-					missileId = 9,
-					missileType = "lei",
-				},
-			},					
-		},
-	},	
-	{
-		enemys = {
-			{
-				time = 3,
-				num = 1,
-				delay = {0.5, 1, 2, 7,8,9},
-				pos = {100,200,300,400,250,50},
-				property = {
-					type = "jin",
-					placeName = "place7",  
-					id = 10,
-				},
-			},
-			{
-				time =5,
-				num = 5,
-				delay = {0.3, 0.8, 1.3, 8, 9,10},
-				pos = {0,200,100,250,150,50},
-				property = {
-					type = "jin",
-					placeName = "place7",  
-					id = 2,
-				},
-			},
-			{
-				time =7,
-				num = 2,
-				delay = {0.3, 0.8, 1.3, 8, 9,10},
-				pos = {0,50},
-				property = {
-					type = "jin",
-					placeName = "place7",  
-					id = 2,
-				},
-			},
-			{
-				time = 13,
-				num = 1,
-				delay = {0.5, 1, 2, 7,8,9},
-				pos = {50},
-				property = {
-					type = "jin",
-					placeName = "place1",  
-					id = 10,
-				},
-			},
-			{
-				time = 4,
-				num = 2,
-				delay = {0,1,0.6,0.9,5,7,6},
-				pos = {75,150,200,50,100,150},
-				property = {
-					type = "jin",
-					placeName = "place1",  
-					id = 2,
-				},
-			},
-			{
-				time = 5,
-				num = 2,
-				delay = {0.3,2,0.6,0.9,5,7,6},
-				pos = {300,400,50,100,150},
+				delay = {0.5,1,3},
+				pos = {400,300,250},
 				property = {
 					type = "jin",
 					placeName = "place2",  
@@ -136,10 +27,21 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
+				time = 1.2,
 				num = 2,
-				delay = {0.3, 0.6},
-				pos = {50,100},					
+				delay = {0,3},
+				pos = {150,200},
+				property = {
+					type = "jin",
+					placeName = "place4",  
+					id = 2,
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0},
+				pos = {50},					
 				property = {
 					placeName = "place3",   
 					id = 8,
@@ -152,23 +54,112 @@ local waves = {
 			{
 				time = 9,
 				num = 1,
-				delay = {0.3, 0.6},
-				pos = {150,200},					
+				delay = {0},
+				pos = {10},					
 				property = {
 					placeName = "place4",   
+					id = 8,
+					startState = "rollright",
+					type = "dao",
+					missileId = 9,
+					missileType = "lei",
+				},
+			},					
+		},
+	},
+	                                                                -- 第二波	
+	{
+		enemys = {
+			{
+				time = 1,
+				num = 1,
+				delay = {0},
+				pos = {150},
+				property = {
+					type = "jin",
+					placeName = "place1",  
+					id = 10,
+				},
+			},
+			{
+				time = 2,
+				num = 3,
+				delay = {0.5,1.2,3},
+				pos = {450,350,250},
+				property = {
+					type = "jin",
+					placeName = "place2",  
+					id = 2,
+				},
+			},
+			{
+				time = 1.5,
+				num = 2,
+				delay = {0.5,3},
+				pos = {80,200},
+				property = {
+					type = "jin",
+					placeName = "place4",  
+					id = 2,
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0.3},
+				pos = {50},					
+				property = {
+					placeName = "place3",   
 					id = 8,
 					startState = "",
 					type = "dao",
 					missileId = 9,
 					missileType = "lei",
 				},
+			},	
+			{
+				time = 7,
+				num = 1,
+				delay = {0},
+				pos = {120},					
+				property = {
+					placeName = "place1",   
+					id = 8,
+					startState = "rollright",
+					type = "dao",
+					missileId = 9,
+					missileType = "lei",
+				},
 			},
 			{
-				time = 18,	
-				num = 4,
-				place = "place5",
-				pos = {100, 200, 150, 250},
-				delay = {0.1, 2, 0.9, 3},
+				time = 7,	
+				num = 3,
+				pos = {80,150,180},
+				delay = {0,0.5,1},
+				property = { 
+					type = "san",
+					id = 3,
+					enemyId = 1,
+					placeName = "place1",
+				},
+			},	
+			{
+				time = 7,	
+				num = 1,
+				pos = {50},
+				delay = {0},
+				property = { 
+					type = "san",
+					id = 3,
+					enemyId = 1,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 8,	
+				num = 2,
+				pos = {330,420},
+				delay = {0,0.8},
 				property = { 
 					type = "san",
 					id = 3,
@@ -177,167 +168,208 @@ local waves = {
 				},
 			},
 			{
-				time = 18,	
+				time = 8,	
 				num = 2,
-				pos = {130, 200},
-				delay = {0.1, 1.7},
+				pos = {1020,1050},
+				delay = {0,0.8},
 				property = { 
 					type = "san",
 					id = 3,
 					enemyId = 1,
-					placeName = "place1",
+					placeName = "place5",
 				},
-			},						
+			},												
 		},
 	},	
-	-- 金币
+	                                                                              -- 金币气球
 	{
 		enemys = {
 			{
-				time = 1,
-				num = 6,
-				delay = {0, 0.7, 1.4,2,2.7,3.5},
-				pos = {150,250,400,50,100,350},
+				time = 2,
+				num = 10,
+				delay = {0, 0, 0,0,0,0,0,0,0,0},
+				pos = {410,490,570,630,710,790,870,950,1030,1110},
 				property = {
 					type = "jinbi",
-					placeName = "place5",  
-					speed = 2,  --2*60 / s 
+					placeName = "place10",  
+					speed = 2,                                                    --2*60 / s   每秒移动60像素(右斜)
 					id = 7,
 				},
 			},
 			{
-				time = 5,
-				num = 7,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {200,100,0,300,50,150,250},
+				time = 4,
+				num = 10,
+				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
+				pos = {1110,1030,950,870,790,710,630,570,490,410},
 				property = {
 					type = "jinbi",
-					placeName = "place7",  
-					speed = 3.5,
+					placeName = "place5",  
+					speed = 3,                                                    --左斜
 					id = 6,
 				},
 			},
 			{
-				time = 9,
-				num = 6,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {50,150,250,100,200, 80},
+				time = 12,
+				num = 10,
+				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
+				pos = {410,490,570,630,710,790,870,950,1030,1110},
 				property = {
 					type = "jinbi",
-					placeName = "place4", 
-					speed = 7, 
-					id = 5,
-				},
-			},
-			{
-				time = 13,
-				num = 6,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {150,250,400,50,100,350},
-				property = {
-					type = "jinbi",
-					placeName = "place3",  
-					speed = 6.5,
-					id = 5,
+					placeName = "place5",  
+					speed = 3,                                                    --右斜
+					id = 7,
 				},
 			},
 			{
 				time = 17,
-				num = 7,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {200, 100, 0, 300, 50, 150, 250},
+				num = 10,
+				delay = {0, 0, 0,0,0,0,0,0,0,0},
+				pos = {1110,1030,950,870,790,710,630,570,490,410},
 				property = {
 					type = "jinbi",
-					placeName = "place7",  
+					placeName = "place5",  
+					speed = 3,                                                    --横
+					id = 6,
+				},
+			},
+			{
+				time = 17.5,
+				num = 10,
+				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
+				pos = {1110,1030,950,870,790,710,630,570,490,410},
+				property = {
+					type = "jinbi",
+					placeName = "place5",  
+					speed = 3,                                                    --左斜
+					id = 7,
+				},
+			},
+			{
+				time = 10,
+				num = 10,
+				delay = {0, 1.5, 3.0,5.0,9.0,13.5,15,20,25,28},
+				pos = {450,750,650,700,800, 1000,800,350,666,888},                                    
+				                                                                          -- 黄气球
+				property = {
+					type = "jinbi",
+					placeName = "place11", 
+					speed = 5, 
+					id = 5,
+				},
+			},
+			{
+				time = 3,
+				num = 10,
+				delay = {0, 3.0, 6.0,7.0,9.0,16.5,20.0,24,28,30},
+				pos = {500,900,650,720,690, 400,800,650,430,740},
+				property = {
+					type = "jinbi",
+					placeName = "place11", 
+					speed = 4.5, 
+					id = 6,
+				},
+			},
+			                                                                                 -- 背景散飞蓝气球
+			{
+				time = 11,
+				num = 10,
+				delay = {1, 3.7, 5.4,7,8.7,9.5,14.2,16,21,26},
+				pos = {750,450,600,380,800,550,750,350,870,666},
+				property = {
+					type = "jinbi",
+					placeName = "place11",  
+					speed = 3.5,
+					id = 7,
+				},
+			},                                                                                -- 背景散飞绿气球
+			{
+				time = 18,
+				num = 5,
+				delay = {1, 4, 7,11,15},
+				pos = {400, 500, 350, 300, 550},
+				property = {
+					type = "jinbi",
+					placeName = "place2",  
 					speed = 3.5,
 					id = 6,
 				},
 			},
 			{
-				time = 21,
+				time = 19,
 				num = 5,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {50, 150, 250, 100, 200},
+				delay = {1, 4, 7,11,15},
+				pos = {40, 50, 55, 280, 300},
 				property = {
 					type = "jinbi",
-					placeName = "place6", 
-					speed = 1.5, 
-					id = 7,
-				},
-			},			
-			{
-				time = 24,
-				num = 6,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {150,250,400,50,100,350},
-				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 1.5,
+					placeName = "place4",  
+					speed = 3.5,
 					id = 7,
 				},
 			},
 			{
-				time = 28,
-				num = 7,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {200,100,0,300,50,150,250},
+				time = 23.5,
+				num = 10,
+				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
+				pos = {1110,1030,950,870,790,710,630,570,490,410},
 				property = {
 					type = "jinbi",
-					placeName = "place7",  
-					speed = 4.5,
+					placeName = "place5",  
+					speed = 3,                                                    --左斜
+					id = 7,
+				},
+			},
+			{
+				time = 29,
+				num = 10,
+				delay = {0, 0, 0,0,0,0,0,0,0,0},
+				pos = {1110,1030,950,870,790,710,630,570,490,410},
+				property = {
+					type = "jinbi",
+					placeName = "place5",  
+					speed = 3,                                                    --横
 					id = 6,
 				},
 			},
 			{
-				time = 32,
-				num = 6,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {50,150,250,100,200, 80},
+				time = 30,
+				num = 10,
+				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
+				pos = {410,490,570,630,710,790,870,950,1030,1110},
 				property = {
 					type = "jinbi",
-					placeName = "place4", 
-					speed = 6, 
-					id = 5,
+					placeName = "place5",  
+					speed = 3,                                                    --右斜
+					id = 7,
 				},
 			},
 			{
-				time = 35,
-				num = 6,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {150,250,400,50,100,350},
+				time = 34,
+				num = 11,
+				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,2.1},
+				pos = {650,750,850,550,650,750,850,950,650,850,750},                                    
+				                                                                          -- 绿气球
 				property = {
 					type = "jinbi",
-					placeName = "place3",  
-					speed = 5.5,
-					id = 5,
+					placeName = "place11", 
+					speed = 3, 
+					id = 7,
 				},
 			},
 			{
 				time = 38,
-				num = 7,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {200, 100, 0, 300, 50, 150, 250},
+				num = 6,
+				delay = {1,1.5,1.8,2.0,2.5,3},
+				pos = {780,660,830,550,666,888},                                    
+				                                                                          -- 黄气球
 				property = {
 					type = "jinbi",
-					placeName = "place7",  
-					speed = 3.0,
-					id = 6,
+					placeName = "place11", 
+					speed = 5, 
+					id = 5,
 				},
 			},
-			{
-				time = 41,
-				num = 5,
-				delay = {0, 0.7, 1.4,2,2.7,3.5,4.2},
-				pos = {50, 150, 250, 100, 200},
-				property = {
-					type = "jinbi",
-					placeName = "place6", 
-					speed = 1.5, 
-					id = 7,
-				},
-			},			
 		},
+		
 	},		
 }
 
@@ -349,11 +381,11 @@ local enemys = {
 		weak1=3,weak2=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=190,walkRate=400,rollRate=0,fireRate=100,
+	{id=2,image="jinzhanb",demage=3,hp=260,fireRate=100,speed=40,
 		weak1=2,weak2=2},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=3,hp=200,walkRate=400,rollRate=0,
+	{id=3,image="sanbing01",demage=3,hp=190,walkRate=400,rollRate=0,
 		fireRate=100,weak1=1,weak2=1},
 
 	--自爆兵
@@ -369,16 +401,16 @@ local enemys = {
 	--金币绿气球
 	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 9},
 	--手雷兵
-	{id=8,image="shouleib",demage=2,hp=340,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
+	{id=8,image="shouleib",demage=2,hp=130,walkRate=200,rollRate=200,fireRate=200,fireCd=5,weak1=3,weak2=5},	
 	--手雷
 	{id=9,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},
 	-- 盾兵
-	{id=10,image="dunbing",demage=5,hp=380,walkRate=400,rollRate=0,fireRate=300,
+	{id=10,image="dunbing",demage=5,hp=390,fireRate=400,speed=20,
 		weak1=1,weak2=1},		
 }
 
 local mapId = "map_1_3"
-local limit = 9   				--此关敌人上限
+local limit = 10   				--此关敌人上限
 
 
 function waveClass:ctor()

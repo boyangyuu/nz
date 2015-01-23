@@ -9,13 +9,15 @@ end)
 local Zorder_up, Zorder_bg = 10, 0
 local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time of background
 
-function LevelMapLayer:ctor()
+function LevelMapLayer:ctor(properties)
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
     self.LevelMapModel = md:getInstance("LevelMapModel")
     self.FightResultModel = md:getInstance("FightResultModel")
     self.UserModel = md:getInstance("UserModel")
     self.LevelDetailModel = md:getInstance("LevelDetailModel")
-    self:initData()
+
+    self.index = 1
+    self:initData(properties)
     self:initBgLayer()
     self:initChooseLayer()
     self:refreshLevelLayer(self.index)
@@ -25,9 +27,18 @@ function LevelMapLayer:ctor()
 
 end
 
-function LevelMapLayer:initData()
+function LevelMapLayer:initData(properties)
+    dump(properties)
+    if properties.groupId == 0 then
+        local group,level = self.LevelMapModel:getConfig()
+        self.index = group
+        dump(self.index)
+    else
+        self.index = properties.groupId
+        dump(self.index)
+    end
+
     --userData
-    self.index = 1
     self.preIndex = 0
 
     --config
@@ -46,14 +57,12 @@ function LevelMapLayer:initBgLayer()
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
     addChildCenter(self.armature, self)
-    self.armature:getAnimation():play("0_1" , -1, 0)
+    self.armature:getAnimation():play("0_"..self.index , -1, 0)
 
-    -- self.ldarmature = ccs.Armature:create("leida")
-    -- self.ldarmature:setScale(4)
-    -- self.ldarmature:getAnimation():setSpeedScale(0.3)
-    -- self:addChild(self.ldarmature)
-    -- -- addChildCenter(self.ldarmature, self)
-    -- self.ldarmature:getAnimation():play("leida" , -1, 1)
+    ldarmature = ccs.Armature:create("leida")
+    ldarmature:setPosition(cc.p(568,260))
+    self:addChild(ldarmature)
+    ldarmature:getAnimation():play("leida" , -1, 1)
 
 
 end
@@ -70,13 +79,23 @@ function LevelMapLayer:initChooseLayer()
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
+    self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
+    local btngift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
-    local xstj = cc.uiloader:seekNodeByName(self.chooseRootNode, "xianshitejia")
-    local czlb = cc.uiloader:seekNodeByName(self.chooseRootNode, "chaozhilibao")
-    local mrrw = cc.uiloader:seekNodeByName(self.chooseRootNode, "meirirenwu")
-    xstj:enableOutline(cc.c4b(18, 130, 20,255), 2)
-    czlb:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    mrrw:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    local armature = ccs.Armature:create("guang")
+    -- armature:setPosition(-240,0)
+    armature:setScale(2)
+    addChildCenter(armature, self.panelGift)
+    -- self.panelGift:addChild(armature)
+    armature:getAnimation():play("guangtx" , -1, 1)
+
+
+    local action = transition.sequence({
+        cc.ScaleTo:create(0.5, 1.15),
+        cc.ScaleTo:create(0.5, 1),})
+    btngift:runAction(cc.RepeatForever:create(action))
+
+
 
     self.levelNum:setString(self.index)
 
@@ -167,7 +186,24 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local levelBtn = {}
     local levelDian = {}
     local panelBtn = {}
+    local dian = {}
     local group,level = self.LevelMapModel:getConfig()
+    for i=1,self.levelAmount[groupId]-1 do
+        dian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..i.."_0")
+    end
+    if  group > groupId then
+        for i=1,table.nums(dian) do
+            dian[i]:setVisible(true)
+        end
+    elseif group == groupId then
+        for i=level,table.nums(dian) do
+            dian[i]:setVisible(false)
+        end
+    else
+        for i=1,table.nums(dian) do
+            dian[i]:setVisible(false)
+        end
+    end
     for i = 1, self.levelAmount[groupId] do
         levelBtn[i]  = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
         levelDian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..i)
@@ -250,10 +286,12 @@ end
 function LevelMapLayer:panelAction()
     local changeTime = 0.2
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
+    self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelGift:getContentSize().width-25, 0)))
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
+                self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelGift:getContentSize().width+25, 0)))
                 self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height+5)))
             end)}))
 end

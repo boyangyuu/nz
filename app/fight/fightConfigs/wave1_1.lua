@@ -107,7 +107,7 @@ local enemys = {
 	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=200,rollRate=200,fireRate=100,fireCd=5,
 	weak1=5,weak2=4},
 	--手雷兵
-	{id=2,image="shouleib",demage=1,hp=110,walkRate=200,rollRate=200,fireRate=200,walkCd = 2.0, fireCd=5,weak1=3,weak2=5},	
+	{id=2,image="shouleib",demage=1,hp=120,walkRate=200,rollRate=200,fireRate=200,walkCd = 2.0, fireCd=5,weak1=3,weak2=5},	
 	--手雷
 	{id=3,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},				
 }
