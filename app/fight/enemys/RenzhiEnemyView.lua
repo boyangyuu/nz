@@ -38,13 +38,26 @@ function RenzhiEnemyView:tick()
 	local walkRate, isAble = self.enemy:getWalkRate()
 	assert(walkRate > 1, "invalid walkRate")
 
+	--walk
 	if isAble then
 		local randomSeed = math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
 			self:play("playWalk", handler(self, self.playRun))
 			self.enemy:beginWalkCd()
 		end
-	end	
+	end
+
+	--speak
+	local speakRate, isAble = self.enemy:getSpeakRate()
+	assert(speakRate > 1, "invalid speakRate")
+
+	if isAble then
+		local randomSeed = math.random(1, speakRate)
+		if randomSeed > speakRate - 1 then 
+			self:play("playSpeak", handler(self, self.playSpeak))
+			self.enemy:beginSpeakCd()
+		end
+	end		
 end
 
 function RenzhiEnemyView:playStartState(state)
@@ -101,6 +114,11 @@ function RenzhiEnemyView:exit()
 
     self:runAction(cc.Sequence:create(action, 
     		cc.CallFunc:create(callfunc)))	
+end
+
+function RenzhiEnemyView:playSpeak()
+	-- local randomSeed = math.random(1, 2)
+	self.armature:getAnimation():play("speak1" , -1, 1) 
 end
 
 function RenzhiEnemyView:playRun()

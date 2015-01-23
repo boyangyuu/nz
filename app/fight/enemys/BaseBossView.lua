@@ -28,7 +28,7 @@ function BaseBossView:ctor(property)
     
     --blood
     self:initBlood()
-
+    self.isRed = false
 	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
@@ -528,7 +528,7 @@ function BaseBossView:checkSkill(demage)
 	end
 end
 
-local isRed = false
+ 
 function BaseBossView:onHitted(targetData)
 	local demage 	 = targetData.demage
 	local scale  	 = targetData.demageScale
@@ -550,9 +550,9 @@ function BaseBossView:onHitted(targetData)
 	self:checkSkill(destDemage)
 	
 	--red
-	if isRed then return end
+	if self.isRed then return end
 	local function callfunc()
-		if isRed then 
+		if self.isRed then 
 			-- print("回复")
 			self.armature:setColor(cc.c3b(255,255,255))
 			
@@ -560,11 +560,11 @@ function BaseBossView:onHitted(targetData)
 	end
 
 	local function callfuncRestore()
-		isRed = false
+		self.isRed = false
 	end
 
 	-- print("变红")
-	isRed = true
+	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
 	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
 	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)

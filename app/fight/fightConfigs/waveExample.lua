@@ -175,7 +175,7 @@ local enemys = {
 
 	--人质
 	{id=11,image="hs",demage=0,hp=300,walkRate=100,walkCd = 1.0,
-		weak1=3,award = 60},
+		weak1=3,speakRate = 100,speakCd = 5.0,award = 60},
 
 	--飞机
 	{id=12,image="feiji",demage=0,hp=3000,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 

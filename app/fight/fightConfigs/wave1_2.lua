@@ -363,7 +363,8 @@ local bosses = {
 		walkRate = 30,                    --移动频率
 		walkCd = 1,                         --移动cd
 		chongfengDemage = 20,                --冲锋造成伤害
-		weakScale = {weak1 = 2, weak2 = 1.2},	--弱点伤害倍数
+		weak1 = 2,						--弱点伤害倍数
+		weak2 = 1.2,					--弱点伤害倍数
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
