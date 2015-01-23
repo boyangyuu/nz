@@ -2,6 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
+
 	{
 		enemys = { 
 			{
@@ -155,7 +156,6 @@ local waves = {
 					missileId = 7,
 					missileType = "lei",
 				},
-
 			},	
 			{
 				time = 9,	
@@ -312,13 +312,13 @@ local waves = {
 				descId = "boss02",
 				time = 3,	
 				num = 1,
-				pos = {300},
+				pos = {194},
 				delay = {0},
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
-					enemyId = 4, 
-					qiuId = 5,
+					enemyId = 8,                 --导弹id        
+					qiuId = 5,                   --铁球id
 					id = 1,
 				},
 			},		
@@ -329,25 +329,55 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=190,walkRate=200,rollRate=300,fireRate=100,fireCd=5,weak1=4,weak2=4},
+	{id=1,image="anim_enemy_002",demage=5,hp=260,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=3,
+	weak1=3},
 
 	--近战兵
 	{id=2,image="jinzhanb",demage=4,hp=1080,walkRate=400,rollRate=100,fireRate=100,
 		weak1=2,weak2=2},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=2,hp=190,walkRate=400,rollRate=100,
-		fireRate=300,weak1=4,weak2=5},
+	{id=3,image="sanbing01",demage=0,hp=260,
+	weak1=3},	             
 
-
-	{id=4,image="daodan",demage=10,hp=100,weak1=3,weak2=5},	
+    --导弹          --missileType = "daodan",
+	{id=4,image="daodan",demage=10,hp=1,weak1=1},
 
 	--铁球
-	{id=5,image="tieqiu",demage=20,hp=100,weak1=3,weak2=5},	
+	{id=5,image="tieqiu",demage=10,hp=1000,weak1=1},	
+
 	--手雷兵
-	{id=6,image="shouleib",demage=2,hp=130,walkRate=200,rollRate=200,fireRate=100,fireCd=5,weak1=3,weak2=5},	
+	{id=6,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=4,
+	weak1=3},
 	--手雷
-	{id=7,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},	
+	{id=7,image="shoulei",demage=10,hp=1,
+	weak1=3},
+	--BOSS导弹          --missileType = "daodan",
+	{id=8,image="daodan",demage=5,hp=1,weak1=1},
+
+
+	-- 	--普通兵
+	-- {id=1,image="anim_enemy_002",demage=2,hp=190,walkRate=200,walkCd=2.0,rollRate=300,rollCd=200,fireRate=100,fireCd=5,
+	-- weak1=4,weak2=4},
+
+	-- --近战兵
+	-- {id=2,image="jinzhanb",demage=4,hp=1080,walkRate=400,rollRate=100,fireRate=100,
+	-- 	weak1=2,weak2=2},
+
+	-- --伞兵
+	-- {id=3,image="sanbing01",demage=2,hp=190,walkRate=400,rollRate=100,
+	-- 	fireRate=300,weak1=4,weak2=5},
+
+
+	-- {id=4,image="daodan",demage=10,hp=100,weak1=3,weak2=5},	
+
+	-- --铁球
+	-- {id=5,image="tieqiu",demage=20,hp=100,weak1=3,weak2=5},	
+	-- --手雷兵
+	-- {id=6,image="shouleib",demage=2,hp=130,walkRate=200,walkCd=2.0,rollRate=200,rollCd=200,fireRate=100,fireCd=5,
+	-- weak1=3,weak2=5},	
+	-- --手雷
+	-- {id=7,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},
 }
 
 	--boss的关卡配置
@@ -360,9 +390,9 @@ local bosses = {
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 240,               --普攻频率
 		fireCd = 4,                     --普攻cd
-		walkRate = 30,                    --移动频率
-		walkCd = 1,                         --移动cd
-		chongfengDemage = 20,                --冲锋造成伤害
+		walkRate = 180,                    --移动频率
+		walkCd = 2,                         --移动cd
+		chongfengDemage = 10,                --冲锋造成伤害
 		weakScale = {weak1 = 2, weak2 = 1.2},	--弱点伤害倍数
 		
 		skilltrigger = {   			          --技能触发(可以同时)
@@ -381,11 +411,11 @@ local bosses = {
 			weak2 = {                               --技能触发(可以同时)
 				0.40,                         
 			},	
-			demage12 = {
-				0.99,
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.70,
 			},	
-			demage200 = {
-				0.10,
+			demage300 = {  
+				0.80,
 			},						
 		},
 

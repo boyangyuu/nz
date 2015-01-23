@@ -306,8 +306,9 @@ function HeroLayer:updateHp(event)
 		local value = 0.0
 		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 		local maxHp = self.hero:getMaxHp()
+		local baseHp = define.kHeroBaseHp 
 		if isInlayed then 
-			value =  maxHp * scale
+			value =  baseHp * scale
 		else 
 			value = 0.0
 		end

@@ -122,7 +122,7 @@ function MapView:loadPlaces()
     	local name = "cover" .. index
     	local coverNode = cc.uiloader:seekNodeByName(self.map, name)
 	    if coverNode then
-	        self.covers[index] = coverNode
+	        self.covers[#self.covers + 1] = coverNode
 			if isTest then coverNode:setColor(cc.c3b(255, 195, 0)) end
 		end
         index = index + 1

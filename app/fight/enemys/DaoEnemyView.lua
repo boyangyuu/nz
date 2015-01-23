@@ -56,20 +56,20 @@ function DaoEnemyView:tick()
         randomSeed =  math.random(1, walkRate)
         if randomSeed > walkRate - 1 then 
             self:play("playWalk", handler(self, self.playWalk))
-            self.enemy:beginWalkCd()
         end
     end
 
     --roll
     local rollRate, isAble = self.enemy:getRollRate()
-    assert(rollRate > 1, "invalid rollRate")
-
-    if isAble then 
-        randomSeed =  math.random(1, rollRate)
-        if randomSeed > rollRate - 1 then 
-            self:playRoll()
-        end
-    end    
+    if rollRate ~= nil  then 
+        assert(rollRate > 1, "invalid rollRate")
+        if isAble then 
+            randomSeed =  math.random(1, rollRate)
+            if randomSeed > rollRate - 1 then 
+                self:playRoll()
+            end
+        end    
+    end
 end
 
 function DaoEnemyView:playFire()

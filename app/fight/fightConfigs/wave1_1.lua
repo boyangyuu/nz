@@ -104,12 +104,13 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=200,rollRate=200,fireRate=100,fireCd=5,
-	weak1=5,weak2=4},
+	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=120,fireCd=5,
+	weak1=5},
 	--手雷兵
-	{id=2,image="shouleib",demage=1,hp=120,walkRate=200,rollRate=200,fireRate=200,walkCd = 2.0, fireCd=5,weak1=3,weak2=5},	
+	{id=2,image="shouleib",demage=1,hp=120,walkRate=200,walkCd = 2.0,rollRate=200,rollCd=2.0,fireRate=180, fireCd=5,
+	weak1=3},	
 	--手雷
-	{id=3,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},				
+	{id=3,image="shoulei",demage=5,hp=1,weak1=3},				
 }
 
 
