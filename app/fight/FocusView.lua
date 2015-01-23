@@ -25,7 +25,6 @@ function FocusView:ctor(properties)
 
     --event
     cc.EventProxy.new(self.hero, self)
-		 :addEventListener(self.hero.GUN_SWITCH_JU_EVENT, handler(self, self.switchJu))
 		 :addEventListener(self.hero.GUN_RELOAD_EVENT, handler(self, self.stopFire))
 		 :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.refreshFocus))
 
@@ -37,6 +36,11 @@ function FocusView:ctor(properties)
 	local inlay = md:getInstance("FightInlay")
 	cc.EventProxy.new(inlay, self)
 		:addEventListener(inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.refreshFocus))
+	
+	local map = md:getInstance("Map")		
+    cc.EventProxy.new(map, self)
+		 :addEventListener(map.GUN_OPEN_JU_EVENT, handler(self, self.addJu))
+		 :addEventListener(map.GUN_CLOSE_JU_EVENT, handler(self, self.removeJu))
 end
 
 function FocusView:refreshFocus(event)
@@ -91,6 +95,16 @@ function FocusView:playIdle()
 end
 
 function FocusView:playFire()
+	local map = md:getInstance("Map")
+	local isJu = map:getIsOpenJu()
+	if not isJu then 
+		self:playNormalFire()
+	else
+		self:playJuFire()
+	end
+end
+
+function FocusView:playNormalFire()
 	if self.playIndex == "stand" then
 		-- print("	if self.playIndex  then") 
 		self.armature:getAnimation():play("fire01" , -1, 1) 
@@ -100,6 +114,26 @@ function FocusView:playFire()
 		self.armature:getAnimation():play("fire02" , -1, 1) 
 		self.playIndex = "fire02"
 	end
+end
+
+function FocusView:playJuFire()
+	--
+	local map = md:getInstance("Map")
+	map:setIsJuAble(false)
+	--anim
+	local time1 = 0.15
+	local time2 = 0.4
+	local scale = 1.3
+	local moveAction1 = cc.ScaleBy:create(time1, scale)
+	local moveAction2 = cc.ScaleBy:create(time2, 1/scale)	
+
+	self.juNode:runAction(cc.Sequence:create(moveAction1, moveAction2, 
+		cc.DelayTime:create(0.4)))
+
+	--map 下移
+	local map = md:getInstance("Map")
+	map:dispatchEvent({name = map.EFFECT_JUSHAKE_EVENT, time1 = time1, time2 = time2}) 
+	
 end
 
 function FocusView:animationEvent(armatureBack,movementType,movementID)
@@ -134,19 +168,13 @@ function FocusView:getFocusRange()
 	return self.focusRange
 end
 
---狙击
-function FocusView:switchJu(event)
-
-	local isJu = not self.map:getIsJu()
-	if isJu then 
-		self:addJu()
-	else
-		self:removeJu()
-	end
-end
-
-function FocusView:addJu()
+function FocusView:addJu(event)
 	print("FocusView:addJu()")
+
+	local x, y = self:getParent():getPosition()
+	print("x"..x.."y"..y)
+	self.oriJuPos = cc.p(x, y)
+	dump("self.oriJuPos", self.oriJuPos)
 
 	--zoom
 	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
@@ -160,6 +188,8 @@ function FocusView:addJu()
 
 	--add ju
 	if self.juNode == nil then 
+
+		--todo!!
 		self.juNode = cc.uiloader:load("res/Fight/fightLayer/gun_ju/ju.ExportJson")
 		self.juNode:setAnchorPoint(0.5, 0.5)
 		addChildCenter(self.juNode, self)
@@ -171,26 +201,14 @@ function FocusView:addJu()
 	self.map:changeJuStatus()	
 end
 
-function FocusView:removeJu()
+function FocusView:removeJu(event)
 	print("FocusView:removeJu()")
-	--
-	local map = md:getInstance("Map")
-	map:setIsJuAble(false)
-	--anim
-	local time1 = 0.15
-	local time2 = 0.4
-	local scale = 1.3
-	local moveAction1 = cc.ScaleBy:create(time1, scale)
-	local moveAction2 = cc.ScaleBy:create(time2, 1/scale)	
-	local callfunc = cc.CallFunc:create(handler(self,self.removeJuEnd))
+	local ox, oy = self.oriJuPos.x, self.oriJuPos.y
+	local cx, cy = self:getParent():getPosition()
+	local destPos = cc.p(ox + (cx - ox)/4 , oy + (cy - oy)/4 )
 
-	self.juNode:runAction(cc.Sequence:create(moveAction1, moveAction2, 
-		cc.DelayTime:create(0.4), callfunc))
-
-	--map 下移
-	local map = md:getInstance("Map")
-	map:dispatchEvent({name = map.EFFECT_JUSHAKE_EVENT, time1 = time1, time2 = time2}) 
-
+	self:getParent():setPosition(destPos.x, destPos.y)
+	self:removeJuEnd()
 end
 
 function FocusView:removeJuEnd()

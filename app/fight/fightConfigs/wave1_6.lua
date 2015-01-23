@@ -305,8 +305,9 @@ local bosses = {
 		walkRate = 200,
 		saoFireOffset = 0.4, 		--扫射时间间隔
 		saoFireTimes = 10, 			--扫射次数
-		demageScale = {weak1 = 2, weak2 = 2, weak3 = 3},	--弱点伤害倍数
-		
+		weak1 = 2,					--弱点伤害倍数
+		weak2 = 2,					--弱点伤害倍数
+		weak3 = 3,					--弱点伤害倍数
 		skilltrigger = {   			--技能触发(可以同时)
 			moveLeftFire = {
 				0.65, 0.35,
@@ -325,7 +326,13 @@ local bosses = {
 			},	
 			weak3 = {
 				0.30,
-			},							
+			},	
+			demage150 = {  --伤害乘以1.20  备注不要超过三位数 比如demage1200是不行的
+				0.59,
+			},	
+			demage400 = {  
+				0.10,
+			},										
 		},
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
@@ -348,6 +355,8 @@ local bosses = {
 }
 
 local mapId = "map_1_6"
+
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves

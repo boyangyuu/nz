@@ -15,8 +15,7 @@ function LoadingLayer:ctor()
 end
 
 function LoadingLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/Loading/loading")
-    local controlNode = cc.uiloader:load("loading_1.ExportJson")
+    local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.ExportJson")
     self:addChild(controlNode)
 end
 

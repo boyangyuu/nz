@@ -14,11 +14,13 @@ Map.EFFECT_JUSHAKE_EVENT 	  = "EFFECT_JUSHAKE_EVENT"
 
 Map.MAP_ZOOM_OPEN_EVENT   = "MAP_ZOOM_OPEN_EVENT"
 Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
+Map.GUN_OPEN_JU_EVENT	  = "GUN_OPEN_JU_EVENT"
+Map.GUN_CLOSE_JU_EVENT    = "GUN_CLOSE_JU_EVENT"
 
 function Map:ctor()
     Map.super.ctor(self)
-    self.isJu = false
     self.isJuAble = true
+    self.isOpenJu_ = false
     self:setCurWaveConfig()
 end
 
@@ -33,12 +35,17 @@ function Map:getCurWaveConfig()
 	return self.curWaveCfg 
 end
 
-function Map:setIsJu(isJu_)
-	self.isJu = isJu_
+function Map:setIsOpenJu(isOpenJu_)
+	self.isOpenJu = isOpenJu_
+	if self.isOpenJu then 
+		self:dispatchEvent({name = Map.GUN_OPEN_JU_EVENT})	
+	else
+		self:dispatchEvent({name = Map.GUN_CLOSE_JU_EVENT})
+	end
 end
 
-function Map:getIsJu()
-	return self.isJu
+function Map:getIsOpenJu()
+	return self.isOpenJu
 end
 
 function Map:setIsJuAble(able)

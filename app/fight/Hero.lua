@@ -39,7 +39,6 @@ Hero.GUN_RELOAD_EVENT           = "GUN_RELOAD_EVENT"
 Hero.GUN_BULLET_EVENT           = "GUN_BULLET_EVENT"             
 Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
-Hero.GUN_SWITCH_JU_EVENT        = "GUN_SWITCH_JU_EVENT"
 
 --hp
 Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
@@ -56,6 +55,8 @@ function Hero:ctor(properties)
     self.bags = {}
     self:initGuns()
     self.isReloading = false
+    self.killCnt = 0
+    self.killGoldIndex = 1
 end
 
 
@@ -99,6 +100,26 @@ end
 
 function Hero:getCooldown()
     return self.gun:getCooldown()
+end
+
+function Hero:killEnemy(enemyPos, award)
+    self.killCnt = self.killCnt + 1
+    self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
+        enemyPos = enemyPos, award = award})
+    
+    --check gold
+    local map = md:getInstance("Map")
+    local waveConfig = map:getCurWaveConfig()
+    local curLimit = waveConfig:getGoldLimit(self.killGoldIndex)
+    if curLimit and self.killCnt ==  curLimit then 
+        print("激活黄武")
+        self.fightInlay:activeGold()
+        self.killGoldIndex = self.killGoldIndex + 1
+    end
+end
+
+function Hero:getKillCnt()
+    return self.killCnt
 end
 
 function Hero:canFire()

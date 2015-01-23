@@ -145,17 +145,11 @@ function HomeBarLayer:initHomeLayer(groupid)
             btnArsenal:setButtonEnabled(true)
         end
     end)
+
     btnArsenal:onButtonClicked(function()
         btnSetting:setVisible(false)
         btnBack:setVisible(true)
         self:refreshCommonLayer("WeaponListLayer")
-        local data = getUserData()
-        local isBuyed = data.giftBag.weaponGiftBag.isBuyed
-        if not isBuyed then 
-            print(isBuyed)
-            local buy = md:getInstance("BuyModel")
-            buy:buy("weaponGiftBag", {})
-        end
         btnInlay:setButtonEnabled(true)
         btnStore:setButtonEnabled(true)
         btnArsenal:setButtonEnabled(false)

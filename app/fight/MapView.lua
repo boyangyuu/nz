@@ -118,11 +118,11 @@ function MapView:loadPlaces()
     self.covers = {}
 	local index = 1
     while true do
-    	if index == 20 then break end
+    	if index == 40 then break end
     	local name = "cover" .. index
     	local coverNode = cc.uiloader:seekNodeByName(self.map, name)
 	    if coverNode then
-	        self.covers[index] = coverNode
+	        self.covers[#self.covers + 1] = coverNode
 			if isTest then coverNode:setColor(cc.c3b(255, 195, 0)) end
 		end
         index = index + 1
@@ -316,7 +316,7 @@ end
 
 function MapView:resumeZoom(event)
 	if _isZooming then return end
-	_isZooming = true
+	-- _isZooming = true
 	self.hero:setMapZoom(1.0)
 
 	local time = event.time
@@ -324,9 +324,12 @@ function MapView:resumeZoom(event)
 		_isZooming = false
 	end
 	local w, h = display.width, display.height
-	local action = cc.MoveTo:create(time , cc.p(w * 0.5, h * 0.5))	
-	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
-	self:runAction(cc.ScaleTo:create(time , 1))
+	-- local action = cc.MoveTo:create(time , cc.p(w * 0.5, h * 0.5))	
+	-- self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
+	-- self:runAction(cc.ScaleTo:create(time , 1))
+
+	self:setPosition(cc.p(w * 0.5, h * 0.5))
+	self:setScale(1.0)
 end
 
 --fight
@@ -356,8 +359,7 @@ function MapView:tick(dt)
 
 end
 function MapView:doKillAward(pos, award)
-	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-		enemyPos = pos, award = award})
+	self.hero:killEnemy(pos, award)
 end
 
 --[[
@@ -400,7 +402,7 @@ function MapView:isCovered(enemy, focusNode)
 	    local pCover = cover:convertToWorldSpace(cc.p(0,0))
 	    coverBox.x = pCover.x
 	    coverBox.y = pCover.y
-	    -- dump(coverBox, "coverBox")
+	    dump(coverBox, "coverBox")
 	    --
 		local isCovered = cc.rectIntersectsRect(focusBox, coverBox)
 		if isCovered then 
