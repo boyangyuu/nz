@@ -60,7 +60,7 @@ function LevelMapLayer:initBgLayer()
     self.armature:getAnimation():play("0_"..self.index , -1, 0)
 
     ldarmature = ccs.Armature:create("leida")
-    ldarmature:setPosition(cc.p(568,260))
+    ldarmature:setPosition(cc.p(568,300))
     self:addChild(ldarmature)
     ldarmature:getAnimation():play("leida" , -1, 1)
 
