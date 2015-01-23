@@ -42,10 +42,22 @@ function RenzhiEnemyView:tick()
 	if isAble then
 		local randomSeed = math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
-			self:play("playWalk", handler(self, self.playRun))
+			self:play("walk", handler(self, self.playRun))
 			self.enemy:beginWalkCd()
 		end
 	end
+
+	local rollRate, isAble = self.enemy:getRollRate()
+	assert(rollRate > 1, "invalid rollRate")
+
+	--roll
+	if isAble then
+		local randomSeed = math.random(1, rollRate)
+		if randomSeed > rollRate - 1 then 
+			self:play("roll", handler(self, self.playRoll))
+			self.enemy:beginRollCd()
+		end
+	end	
 
 	--speak
 	local speakRate, isAble = self.enemy:getSpeakRate()
@@ -118,29 +130,48 @@ end
 
 function RenzhiEnemyView:playSpeak()
 	-- local randomSeed = math.random(1, 2)
-	self.armature:getAnimation():play("speak1" , -1, 1) 
+	self.armature:getAnimation():play("speak1" , -1, 0) 
 end
 
 function RenzhiEnemyView:playRun()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then 
-		self:play("playRunLeft", handler(self, self.playRunLeft))
+		self:playRunAction(1, false)
 	else
-		self:play("playRunRight", handler(self, self.playRunRight))
+		self:playRunAction(-1, false)
 	end
 end
 
-function RenzhiEnemyView:playRunLeft()
-	print("function RenzhiEnemyView:playRunLeft()")
-	local speed = define.kRenzhiSpeed
-	local time  = define.kRenzhiRunTime
-	local width = speed * time * self:getScale()
+function RenzhiEnemyView:playRoll()
+	local randomSeed = math.random(1, 2)
+	if randomSeed == 1 then 
+		self:playRunAction(1, true)
+	else
+		self:playRunAction(-1, true)
+	end
+end
 
-	if not self:checkPlace(-width) then return end
-	self.armature:getAnimation():play("runleft" , -1, 1) 
-	print("self.playAnimId = runleft")
-	self.playAnimId = "runleft"
-	local action = cc.MoveBy:create(time, cc.p(-width, 0))
+function RenzhiEnemyView:playRunAction(direct, isRoll)
+	print("function RenzhiEnemyView:playRunLeft():",isRoll)
+	local speed = define.kRenzhiSpeed
+	local time 
+	if isRoll then 
+		time = define.kRenzhiRunTime
+	else
+		time = define.kRenzhiWalkTime
+	end
+	print("time"..time)
+	local width = speed * time * self:getScale() * direct
+	print("width", width)
+	if not self:checkPlace(width) then 
+		return 
+	end
+
+	local animName = direct == 1 and "runright" or "runleft"
+	self.armature:getAnimation():play(animName , -1, 0) 
+	print("self.playAnimId = "..animName)
+	self.playAnimId = animName
+	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(action)	
 
     self:restoreStand(time)
@@ -156,23 +187,6 @@ function RenzhiEnemyView:restoreStand(delay)
     self:addScheduler(self.schRestore)
 end
 
-function RenzhiEnemyView:playRunRight()
-	print("function RenzhiEnemyView:playRunRight()")	
-	local speed = define.kRenzhiSpeed
-	local time  = define.kRenzhiRunTime
-	local width = speed * time * self:getScale()
-	print("width", width)
-	if not self:checkPlace(width) then return end
-	self.armature:getAnimation():play("runright" , -1, 1)	
-	-- self:flipX(true)
-	print("self.playAnimId = runleft") 
-	self.playAnimId = "runright"
-	local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action)	
-
-    self:restoreStand(time)			
-end
-
 function RenzhiEnemyView:playKill(event)
 	--clear
 	self:clearPlayCache()
@@ -180,14 +194,19 @@ function RenzhiEnemyView:playKill(event)
 	if self.schRestore  then 
 		scheduler.unscheduleGlobal(self.schRestore)
 	end
-	self.armature:getAnimation():play("die" ,-1 , 1)
+	self.armature:getAnimation():play("die" ,-1 , 0)
 end
 
 function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
-	if self.isEntering or self.isExiting then return end
-	if movementType == ccs.MovementEventType.loopComplete then
+	if self.isEntering or self.isExiting then 
+		print("self.isEntering or self.isExiting")
+		return 
+	end
+	if movementType == ccs.MovementEventType.loopComplete 
+		or movementType ==  ccs.MovementEventType.complete then
 		print("animationEvent id ", movementID)
 		if movementID == "runleft" or movementID == "runright" then
+				self.armature:getAnimation():play(movementID , -1, 1)
 			return 
 		end
 
@@ -199,12 +218,7 @@ function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
 		end
 
 		if movementID ~= "die" then
-			local playCache = self:getPlayCache()
-			if playCache then 
-				playCache()
-			else 					
-				self:playStand()
-			end
+			self:playNextAnimCache()
     	elseif movementID == "die" then 
     		self:setDeadDone()
     		local fight = md:getInstance("Fight")
@@ -212,5 +226,7 @@ function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
     	end 
 	end
 end
+
+
 
 return RenzhiEnemyView

@@ -249,17 +249,23 @@ end
 
 function Attackable:play(state, handlerFunc)
 	local per = self.enemy:getHp() / self.enemy:getMaxHp()
-	-- print("进栈 state: "..state..", 当前血量:"..per)
+	print("进栈 state: "..state..", 当前血量:"..per)
 	
-	local index = #self.playCache + 1
 	local function play()
 		handlerFunc()
 		-- dump(self.playCache, "self.playCache")
 		local state = self.playCache[1].state
 		table.remove(self.playCache, 1)
-		-- print("出栈 state:"..state)
+		print("出栈 state:"..state)
 	end
-	self.playCache[index] = {func = play, state = state}
+	self:insertCache(play, state)
+end
+
+function Attackable:insertCache(play, state)
+	local index = #self.playCache + 1
+	if state == "skill" or index == 1 then 
+		self.playCache[index] = {func = play, state = state}
+	end
 end
 
 function Attackable:getPlayCache()
@@ -358,7 +364,7 @@ function Attackable:getPosInMap()
 
 	local map = self:getParent():getParent()
 	local box 	= map:getBoundingBox()
-	dump(box, "box")
+	-- dump(box, "box")
 	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
 	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
@@ -405,15 +411,13 @@ function Attackable:onEnter()
 	local isPause = fight:isPauseFight()
 	    -- print("function Fight:isPauseFight()"..isPause)
 	if isPause then 
-		print("		self:setPause(true) ")
+		print("self:setPause(true) ")
 		self:setPause({isPause = true}) 
 	end
 end
 
 function Attackable:onExit()
-	self:removeAllSchedulers()
-	self:removeAllEventListeners()
+	self:removeAllSchedulers()  
 end
-
 
 return Attackable
