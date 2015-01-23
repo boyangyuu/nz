@@ -106,7 +106,8 @@ function FeijiEnemyView:playEnter(direct)
 	end
 
 	self:setPositionX(srcPosX)
-	local time = (toPosx - srcPosX) / self.speed
+	local speed = self.speed * self:getScale()
+	local time =  math.abs(toPosx - srcPosX) / speed
 	local action = cc.MoveTo:create(time, cc.p(toPosx, 0))	
 	local callfunc = function ()
 		self.isEntering = false
@@ -124,14 +125,14 @@ function FeijiEnemyView:exit()
 	self.direct = "right"
 	self.isExiting = true
 	self.isRuning = true
-	local speed = self.speed
-	local width = display.width * 1.5
+	local speed = self.speed * self:getScale()
+	local width = display.width * 1.0
 	local action = cc.MoveBy:create(width/speed, cc.p(width, 0))
 	local callfunc = function ()
 		self:setWillRemoved()
 	end
 
-    self.armature:runAction(cc.Sequence:create(action, 
+    self:runAction(cc.Sequence:create(action, 
     		cc.CallFunc:create(callfunc)))	
 end
 
@@ -145,14 +146,15 @@ function FeijiEnemyView:playRun()
 end
 
 function FeijiEnemyView:playRunLeft()
-	local speed = self.speed
+	local speed = self.speed * self:getScale()
 	local time  = self.runTime
-	local width = speed * time * self:getScale()
+	local width = speed * time 
 
 	if not self:checkPlace(-width) then return end
 	self.direct = "left"
 	self.isRuning = true
 	self.armature:getAnimation():play("runleft" , -1, 1) 
+	print("width", width)
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
     self.armature:runAction(action)	
 
@@ -161,12 +163,12 @@ function FeijiEnemyView:playRunLeft()
 end
 
 function FeijiEnemyView:playRunRight()
-	local speed = self.speed
+	local speed = self.speed * self:getScale()
 	local time  = self.runTime
-	local width = speed * time * self:getScale()
+	local width = speed * time 
 
 	if not self:checkPlace(width) then return end
-
+	print("width", width)
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isRuning = true
@@ -187,9 +189,9 @@ function FeijiEnemyView:playWalk()
 end
 
 function FeijiEnemyView:playWalkLeft()
-	local speed = self.speed
+	local speed = self.speed * self:getScale()
 	local time  = self.walkTime
-	local width = speed * time * self:getScale()
+	local width = speed * time 
 
 	if not self:checkPlace(-width) then return end
 	self.direct = "left"
@@ -203,9 +205,9 @@ function FeijiEnemyView:playWalkLeft()
 end
 
 function FeijiEnemyView:playWalkRight()
-	local speed = self.speed
+	local speed = self.speed * self:getScale()
 	local time  = self.walkTime
-	local width = speed * time * self:getScale()
+	local width = speed * time
 
 	if not self:checkPlace(width) then return end
 
@@ -225,7 +227,10 @@ function FeijiEnemyView:playFire()
 
 	--daodan
 	local index = self.direct == "left" and -1 or 0
+	local offsetPoses = self.property["missileOffsets"]
+	local offsetIndex = 0
 	while true do
+		offsetIndex = offsetIndex + 1
 		index = index + 2
 		local name = "dao"..index
 	    local boneDao = self.armature:getBone(name)
@@ -242,12 +247,13 @@ function FeijiEnemyView:playFire()
 	        type = "missile",
 	        id = self.property["missileId"],
 	        missileType = self.property["missileType"],
+	        offset = offsetPoses[offsetIndex]
 	    }
 	    local function callfuncDaoDan()
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
-	    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
+	    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.5)
 	    self:addScheduler(sch)  
 
 	end
@@ -307,7 +313,7 @@ function FeijiEnemyView:playBombEffects()
 end
 
 function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
-
+	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
 		print("animationEvent id ", movementID)
 		if movementID ~= "dieright" and movementID ~= "dieleft" then

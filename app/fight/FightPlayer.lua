@@ -34,6 +34,7 @@ function FightPlayer:ctor(properties)
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
     self.fightProp  = md:getInstance("FightProp")
+
     --datas
     self.curGold    = 0
     self.tempChangeGoldHandler = nil
@@ -380,6 +381,7 @@ function FightPlayer:onMutiTouchEnd(event)
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
+    print("function FightPlayer:checkBtnJu(point,eventName)")
     if self.btnJu:isVisible() == false then return end 
     local rect = self.btnJu:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
@@ -387,7 +389,9 @@ function FightPlayer:checkBtnJu(point,eventName)
         --切换狙击镜
         print("-----------switch ju")
         addBtnEffect(self.btnJu)
-        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
+        local map = md:getInstance("Map")
+        local isOpen = map:getIsOpenJu()
+        map:setIsOpenJu(not isOpen)
     end
     return isTouch
 end
@@ -477,6 +481,29 @@ function FightPlayer:checkBtnChange(point)
     return isTouch    
 end
 
+
+function FightPlayer:onTouchMoved(event)
+    local  x, y, prevX, prevY 
+    for i,v in pairs(event.points) do
+        local isBtnTouchPoint = false
+        if not self.layerControl:getCascadeBoundingBox():containsPoint(cc.p(v.x, v.y)) then 
+            isBtnTouchPoint = true
+        end 
+        if isBtnTouchPoint == false then 
+            x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
+            local offsetX = x - prevX 
+            local offsetY = y - prevY
+            
+            --处理瞄准
+            self:moveFocus(offsetX, offsetY)
+            
+            --处理滑屏
+            self:moveBgLayer(offsetX, offsetY)
+        end
+    end
+end
+
+----attack----
 function FightPlayer:checkBtnFire(id,point,eventName)
     if eventName == "moved" then return false end
     -- print("eventName:"..eventName.."  id:"..id)
@@ -485,6 +512,11 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
     
     --in touch
+    if isTouch then
+        local isOpenJu = self:checkJuFire()
+        if isOpenJu then return false end 
+    end
+
     if isTouch  then
         if self.touchFireId == nil and 
             (eventName == "added" or eventName == "began") then
@@ -503,6 +535,21 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         self:onCancelledFire()     
     end          
     return isTouch
+end
+
+function FightPlayer:checkJuFire()
+    --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isJuLevel = levelModel:isJujiFight()
+    local map           = md:getInstance("Map")
+    local isOpenJu      = map:getIsOpenJu()
+
+    local isJuAble      = map:getIsJuAble()    
+    if isJuLevel and not isOpenJu then 
+        map:setIsOpenJu(true)
+        return true
+    end 
+    return false
 end
 
 function FightPlayer:onBtnFire()
@@ -540,19 +587,17 @@ function FightPlayer:onCancelledFire()
     --robot ju
     local robot         = md:getInstance("Robot")
     local isRobot       = robot:getIsRoboting()
-    local map           = md:getInstance("Map")
-    local isJu          = map:getIsJu()
-    local isJuAble      = map:getIsJuAble()
-    local levelModel    = md:getInstance("LevelDetailModel")
-    local isJuLevel     = levelModel:isJujiFight()
+
+    -- local levelModel    = md:getInstance("LevelDetailModel")
+    -- local isJuLevel     = levelModel:isJujiFight()
 
     if  isRobot then
         -- print("robot:stopFire()") 
         robot:stopFire()
-    elseif isJuLevel and isJuAble then
-        -- print("GUN_SWITCH_JU_EVENT")
-        if isJu then self:fire() end
-        self.hero:dispatchEvent({name = self.hero.GUN_SWITCH_JU_EVENT})
+    -- elseif isJuLevel and isJuAble then
+    --     -- print("GUN_SWITCH_JU_EVENT")
+    --     if isJu then self:fire() end
+
     else
         self.gunView:stopFire()
     end
@@ -565,29 +610,6 @@ function FightPlayer:onCancelledFire()
     end
 end
 
-
-function FightPlayer:onTouchMoved(event)
-    local  x, y, prevX, prevY 
-    for i,v in pairs(event.points) do
-        local isBtnTouchPoint = false
-        if not self.layerControl:getCascadeBoundingBox():containsPoint(cc.p(v.x, v.y)) then 
-            isBtnTouchPoint = true
-        end 
-        if isBtnTouchPoint == false then 
-            x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
-            local offsetX = x - prevX 
-            local offsetY = y - prevY
-            
-            --处理瞄准
-            self:moveFocus(offsetX, offsetY)
-            
-            --处理滑屏
-            self:moveBgLayer(offsetX, offsetY)
-        end
-    end
-end
-
-----attack----
 function FightPlayer:tick(dt)
     --gun
 end
@@ -601,12 +623,8 @@ function FightPlayer:isCoolDownDone()
 end
  
 function FightPlayer:checkFire()
-    -- print("FightPlayer:fire()")
-    local levelModel = md:getInstance("LevelDetailModel")
-    local isJuLevel = levelModel:isJujiFight()
-    if isJuLevel then 
-        return
-    end
+    -- -- print("FightPlayer:fire()")
+
     self:fire()
 end
  

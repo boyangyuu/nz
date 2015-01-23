@@ -21,14 +21,11 @@ Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素(�
 Define.kBaoEnemyWalkSpeed 		=  100.0 	--自爆兵 每秒前进速度
 Define.kBaoEnemyScale	  		=  1.5		-- 自爆兵到身前的比例
 Define.kBaoEnemyWalkSpeed 		=  100.0 	--自爆兵 每秒前进像素
-
-
---自爆兵
 Define.kBaoDemageOtherEnemys 	= 10  --自爆兵伤害值
-Define.kBaoRangeW 				= 200	--手雷范围
-Define.kBaoRangeH 				= 200	--手雷范围
+Define.kBaoRangeW 				= 200	--自爆兵范围
+Define.kBaoRangeH 				= 200	--自爆兵范围
 
---人质兵
+--人质
 Define.kRenzhiSpeed				= 600.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2      
 
@@ -46,12 +43,9 @@ Define.kjipuWalkTime			= 0.6    --小范围移动时间
 Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 
 Define.kMissileLeiTime				= 2.0    --手雷 
 
---人质
-Define.kRenzhiSpeed				= 300.0    --人质跑动速度 像素/s
-Define.kRenzhiRunTime			= 1.2        --人质左右跑动时间
 
 --黄金武器
-Define.kGoldActivate 			= 15    --黄金武器激活
+Define.kGoldActivate 			= 1500    --黄金武器激活
 Define.kGoldTime 				= 6     --黄金武器激活时间
 
 --机甲

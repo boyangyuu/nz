@@ -377,20 +377,20 @@ local waves = {
 local enemys = {
 
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=200,rollRate=300,fireRate=400,
-		weak1=3,weak2=3},
+	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=3,
+		weak1=3},
 
 	--近战兵
 	{id=2,image="jinzhanb",demage=3,hp=260,fireRate=100,speed=40,
-		weak1=2,weak2=2},
+		weak1=3},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=3,hp=190,walkRate=400,rollRate=0,
-		fireRate=100,weak1=1,weak2=1},
+	{id=3,image="sanbing01",demage=0,hp=190,
+	weak1=3},
 
 	--自爆兵
-	{id=4,image="zibaob",demage=10,hp=400,walkRate=400,rollRate=0,
-		fireRate=100,weak1=1,weak2=1},	
+	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,
+	weak1=3},	
 
 	--金币黄气球
 	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 30},	
@@ -401,12 +401,14 @@ local enemys = {
 	--金币绿气球
 	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 9},
 	--手雷兵
-	{id=8,image="shouleib",demage=2,hp=130,walkRate=200,rollRate=200,fireRate=200,fireCd=5,weak1=3,weak2=5},	
+	{id=8,image="shouleib",demage=2,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
+	weak1=3},	
 	--手雷
-	{id=9,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},
+	{id=9,image="shoulei",demage=5,hp=1,
+	weak1=3},
 	-- 盾兵
 	{id=10,image="dunbing",demage=5,hp=390,fireRate=400,speed=20,
-		weak1=1,weak2=1},		
+		weak1=3},		
 }
 
 local mapId = "map_1_3"

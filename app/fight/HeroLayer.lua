@@ -166,9 +166,13 @@ function HeroLayer:killEnemyCallBack(event)
 	--总杀
 	self.killCntTotal = self.killCntTotal + 1
 	
+	--modified by yby 取消黄武需求
+	--[[
 	if not isGold then 
 		self:killEnemyKeep()
 	end
+	]]
+	self:killEnemyKeep()
 end
 
 function HeroLayer:killEnemyKeep()
@@ -306,8 +310,9 @@ function HeroLayer:updateHp(event)
 		local value = 0.0
 		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 		local maxHp = self.hero:getMaxHp()
+		local baseHp = define.kHeroBaseHp 
 		if isInlayed then 
-			value =  maxHp * scale
+			value =  baseHp * scale
 		else 
 			value = 0.0
 		end
@@ -371,7 +376,7 @@ function HeroLayer:onExit()
 end
 
 function HeroLayer:onEnter()
-	-- self.inlay:checkNativeGold()
+	
 end
 
 return HeroLayer
