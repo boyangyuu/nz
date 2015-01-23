@@ -58,7 +58,6 @@ function FightInlay:activeGold()
     self:delayCallGoldEnd(kGoldTime)
 
     --
-
 end
 
 function FightInlay:delayCallGoldEnd(delay)

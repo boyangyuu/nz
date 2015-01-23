@@ -166,9 +166,13 @@ function HeroLayer:killEnemyCallBack(event)
 	--总杀
 	self.killCntTotal = self.killCntTotal + 1
 	
+	--modified by yby 取消黄武需求
+	--[[
 	if not isGold then 
 		self:killEnemyKeep()
 	end
+	]]
+	self:killEnemyKeep()
 end
 
 function HeroLayer:killEnemyKeep()
@@ -371,7 +375,7 @@ function HeroLayer:onExit()
 end
 
 function HeroLayer:onEnter()
-	-- self.inlay:checkNativeGold()
+	
 end
 
 return HeroLayer

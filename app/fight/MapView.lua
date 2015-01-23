@@ -118,7 +118,7 @@ function MapView:loadPlaces()
     self.covers = {}
 	local index = 1
     while true do
-    	if index == 20 then break end
+    	if index == 40 then break end
     	local name = "cover" .. index
     	local coverNode = cc.uiloader:seekNodeByName(self.map, name)
 	    if coverNode then
@@ -359,8 +359,7 @@ function MapView:tick(dt)
 
 end
 function MapView:doKillAward(pos, award)
-	self.hero:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-		enemyPos = pos, award = award})
+	self.hero:killEnemy(pos, award)
 end
 
 --[[
@@ -403,7 +402,7 @@ function MapView:isCovered(enemy, focusNode)
 	    local pCover = cover:convertToWorldSpace(cc.p(0,0))
 	    coverBox.x = pCover.x
 	    coverBox.y = pCover.y
-	    -- dump(coverBox, "coverBox")
+	    dump(coverBox, "coverBox")
 	    --
 		local isCovered = cc.rectIntersectsRect(focusBox, coverBox)
 		if isCovered then 

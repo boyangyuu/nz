@@ -85,8 +85,8 @@ function BaseEnemy:beginRollCd()
 end
 
 function BaseEnemy:getSpeakRate()
-	assert(self.config["SpeakRate"] , "config SpeakRate is nil")
-	return self.config["SpeakRate"], not self.isRollCd
+	assert(self.config["speakRate"] , "config speakRate is nil")
+	return self.config["speakRate"], not self.isRollCd
 end
 
 function BaseEnemy:beginSpeakCd()

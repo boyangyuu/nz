@@ -68,17 +68,17 @@ local waves = {
 			-- 		missileType = "lei",					
 			-- 	},
 			-- },						
-			-- {
-			-- 	time = 3,
-			-- 	num = 6,
-			-- 	pos = {100, 200, 0, 170, 140, 100},
-			-- 	delay = {0.1, 0.2,0.3, 0.1, 0.5, 0.1},
-			-- 	property = { 
-			-- 		id = 1,
-			-- 		-- enemyId = 1,
-			-- 		placeName = "place2",				
-			-- 	},
-			-- },	
+			{
+				time = 3,
+				num = 6,
+				pos = {100, 200, 0, 170, 140, 100},
+				delay = {0.1, 0.2,0.3, 0.1, 0.5, 0.1},
+				property = { 
+					id = 1,
+					-- enemyId = 1,
+					placeName = "place2",				
+				},
+			},	
 			-- {
 			-- 	time = 1,
 			-- 	num = 6,
@@ -175,7 +175,7 @@ local enemys = {
 
 	--人质
 	{id=11,image="hs",demage=0,hp=300,walkRate=100,walkCd = 1.0,
-		weak1=3,speakRate = 100,speakCd = 5.0,award = 60},
+		weak1=3,speakRate =100,speakCd = 5.0,award = 60},
 
 	--飞机
 	{id=12,image="feiji",demage=0,hp=3000,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 
@@ -199,6 +199,7 @@ function waveClass:ctor()
 	self.mapId  = mapId
 	self.isMoveMap = isMoveMap
 	self.renzhiLimit = 2   		--杀死人质上限
+	self.goldLimits = {1, 5, 9}   --黄武激活所需杀人个数
 end
 
 return waveClass

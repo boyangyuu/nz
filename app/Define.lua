@@ -51,7 +51,7 @@ Define.kRenzhiSpeed				= 300.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2        --人质左右跑动时间
 
 --黄金武器
-Define.kGoldActivate 			= 15    --黄金武器激活
+Define.kGoldActivate 			= 1500    --黄金武器激活
 Define.kGoldTime 				= 6     --黄金武器激活时间
 
 --机甲

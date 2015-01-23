@@ -55,6 +55,8 @@ function Hero:ctor(properties)
     self.bags = {}
     self:initGuns()
     self.isReloading = false
+    self.killCnt = 0
+    self.killGoldIndex = 1
 end
 
 
@@ -98,6 +100,26 @@ end
 
 function Hero:getCooldown()
     return self.gun:getCooldown()
+end
+
+function Hero:killEnemy(enemyPos, award)
+    self.killCnt = self.killCnt + 1
+    self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
+        enemyPos = enemyPos, award = award})
+    
+    --check gold
+    local map = md:getInstance("Map")
+    local waveConfig = map:getCurWaveConfig()
+    local curLimit = waveConfig:getGoldLimit(self.killGoldIndex)
+    if curLimit and self.killCnt ==  curLimit then 
+        print("激活黄武")
+        self.fightInlay:activeGold()
+        self.killGoldIndex = self.killGoldIndex + 1
+    end
+end
+
+function Hero:getKillCnt()
+    return self.killCnt
 end
 
 function Hero:canFire()
