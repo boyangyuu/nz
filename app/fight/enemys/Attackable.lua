@@ -417,7 +417,9 @@ function Attackable:onEnter()
 end
 
 function Attackable:onExit()
+
 	self:removeAllSchedulers()  
+
 end
 
 return Attackable

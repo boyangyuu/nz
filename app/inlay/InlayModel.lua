@@ -316,6 +316,7 @@ function InlayModel:getGoldWeaponNum(  )
 			goldNum = newNum
 		end
 	end
+	dump(goldNum)
 	return goldNum
 end
 

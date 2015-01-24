@@ -52,6 +52,34 @@ configs["zibaob"] = {
 	playanim = "stand",
 }
 
+configs["hs"] = {
+	title = "出现新兵种！",
+	name = "人质",
+	spc = "特性：",
+	skill = {"移动快","近身自爆","血量低"},
+	weakness = "瓦斯罐",
+	describe = "移动快，近身自爆攻击。",
+	playanim = "stand",
+}
+configs["feiji"] = {
+	title = "出现新兵种！",
+	name = "飞机",
+	spc = "特性：",
+	skill = {"移动快","近身自爆","血量低"},
+	weakness = "瓦斯罐",
+	describe = "移动快，近身自爆攻击。",
+	playanim = "stand",
+}
+configs["jipu"] = {
+	title = "出现新兵种！",
+	name = "越野车",
+	spc = "特性：",
+	skill = {"移动快","近身自爆","血量低"},
+	weakness = "瓦斯罐",
+	describe = "移动快，近身自爆攻击。",
+	playanim = "stand",
+}
+
 function EnemyDescConfig.getConfig(enemyID)
 	local enemyDescTable = configs[enemyID]
 	return enemyDescTable

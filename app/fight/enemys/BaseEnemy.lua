@@ -93,7 +93,7 @@ function BaseEnemy:beginSpeakCd()
     self.isSpeakCd = true
     assert(self.config["speakCd"] , "config speakCd is nil")
     local speakCd = self.config["speakCd"]
-
+    print("speakCd", speakCd)
     local function resumeCd()
         self.isSpeakCd = false
     end

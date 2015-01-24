@@ -114,13 +114,19 @@ function StoreCell:initCellUI(parameter)
 
     if type == "prop" then
         icon_zuanshi:setVisible(true)
+        dump(record)
         local Img = display.newSprite("#"..record["imgname"]..".png",-230,0)
         self:addChild(Img)
         detail:setString(record["name"])
         buynumber:setString("X "..record["buynum"])
         property:setString(record["describe"])
         price:setString(record["price"])
-        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+        if record["nameid"] == "goldweapon" then
+            local goldnum = self.inlayModel:getGoldWeaponNum()
+            ownnumber:setString(goldnum)
+        else
+            ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+        end
 
     elseif type == "bank" then
         ownnumber:setVisible(false)
@@ -169,14 +175,17 @@ function StoreCell:initCellUI(parameter)
                     if self.userModel:costDiamond(record["price"]) then
                         if record["nameid"] == "goldweapon" then
                             self.inlayModel:buyGoldsInlay(record["buynum"])
-                            local goldnum = self.inlayModel:getGoldWeaponNum()
-                            self.storeModel:setGoldWeaponNum(goldnum)
                             self.inlayModel:refreshInfo("speed")
                         else
                             self.propModel:buyProp(record["nameid"],record["buynum"])
                         end
                         um:buy(record["nameid"], 1, record["price"])   
-                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+                        if record["nameid"] == "goldweapon" then
+                            local goldnum = self.inlayModel:getGoldWeaponNum()
+                            ownnumber:setString(goldnum)
+                        else
+                            ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+                        end
                     end
                 elseif type == "bank" then
                     self.userModel:buyDiamond(record["number"])
