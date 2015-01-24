@@ -6,7 +6,7 @@ local InlayLayer = class("InlayLayer", function()
 end)
 
 function InlayLayer:ctor()
-
+    self.storeModel = md:getInstance("StoreModel")
     self.inlayModel = md:getInstance("InlayModel")
 
     cc.EventProxy.new(self.inlayModel , self)
@@ -68,7 +68,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipAllInlays()
-            md:getInstance("StoreModel"):setGoldWeaponNum()
+            self.storeModel:refreshInfo("prop")
         end
     end)
 
@@ -78,7 +78,7 @@ function InlayLayer:initUI()
             return true
         elseif event.name=='ended' then
             self.inlayModel:equipGoldInlays(true)
-            md:getInstance("StoreModel"):setGoldWeaponNum()
+            self.storeModel:refreshInfo("prop")
         end
     end)
 
@@ -90,7 +90,6 @@ function InlayLayer:initUI()
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-
                 self:refreshListView(v)    
             end
         end)
@@ -116,7 +115,7 @@ function InlayLayer:refreshListView(index)
 
     self.selectarm = ccs.Armature:create("xqtb")
     addChildCenter(self.selectarm, self.icon[index])
-    self.selectarm:getAnimation():play("xqtb" , -1, 1)
+    self.selectarm:getAnimation():play("xqtb",-1,1)
 
 end
 

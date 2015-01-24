@@ -164,6 +164,7 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
 	local width = speed * time * self:getScale() * direct
 	print("width", width)
 	if not self:checkPlace(width) then 
+		self:checkIdle()
 		return 
 	end
 
