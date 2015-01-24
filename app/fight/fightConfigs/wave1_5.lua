@@ -318,11 +318,11 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=4,hp=260,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=4,hp=260,walkRate=600,walkCd=1,rollRate=600,rollCd=1,fireRate=30,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=30,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
@@ -334,7 +334,7 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=260,walkRate=180,walkCd=2,fireRate=360,fireCd=4,
+	{id=5,image="zpbing",demage=0,hp=260,walkRate=180,walkCd=1,fireRate=30,fireCd=4,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
@@ -342,15 +342,15 @@ local enemys = {
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=5,hp=325,fireRate=300,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=5,hp=325,fireRate=30,fireCd=4,speed=40,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=5,hp=650,fireRate=300,fireCd=4,speed=20,
+	{id=8,image="dunbing",demage=5,hp=650,fireRate=30,fireCd=4,speed=20,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=20,hp=1000,fireRate=120,speed=100,
+	{id=9,image="zibaob",demage=20,hp=1000,fireRate=30,speed=100,
 	weak1=3},	
 
 	
@@ -359,11 +359,11 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=300, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=30, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=500, fireCd=2.0,
+	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=30, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--金币绿气球   type = "jinbi",
