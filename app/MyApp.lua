@@ -85,6 +85,10 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 2 ,           
                                     },
+                                    {
+                                    intenlevel = 0,
+                                    weaponid   = 6,           
+                                    },
 
                         },
                         weaponed = {
@@ -95,7 +99,7 @@ function MyApp:createGameStateFile()
                                         weaponid   = 2,
                                         },
                                 bag3 = {
-                                        
+                                        weaponid   = 3,
                                         },
                         },
             }, 
