@@ -213,6 +213,14 @@ function BaseEnemyView:playNextAnimCache()
 	end
 end
 
+function BaseEnemyView:checkIdle()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	if currentName == "" then
+		print("playStand()")				
+		self:playStand()
+	end
+end
+
 function BaseEnemyView:getModel(property)
 	return Enemy.new(property)
 end

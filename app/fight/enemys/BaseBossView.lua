@@ -512,10 +512,14 @@ function BaseBossView:checkSkill(demage)
 	local persentC = hp
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
+		print("skillName：", skillName)
+		print("persents", persents)
+
 		for i, v in ipairs(persents) do
+			print("i:"..i.."	v:"..v)
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				-- print("v", v)
+				print("v", v)
 				-- print("persentC", persentC)
 				-- print("persentO", persentO)
 				print("playSKill:"..skillName)
