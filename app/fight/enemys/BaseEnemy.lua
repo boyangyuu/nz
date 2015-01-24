@@ -10,11 +10,13 @@ local Actor = import("..Actor")
 local BaseEnemy = class("BaseEnemy", Actor)
 local FightConfigs = import("..fightConfigs.FightConfigs")
 
-function BaseEnemy:ctor(property)
+function BaseEnemy:ctor(actor_property, enemy_property)
     --super
-    BaseEnemy.super.ctor(self, property) 
+    BaseEnemy.super.ctor(self, actor_property) 
+    self.hp = self.config
 
-    local demageScale = property["demageScale"] or 1.0
+    -- dump(enemy_property, "enemy_property")
+    local demageScale = enemy_property["demageScale"] or 1.0
     self:setDemageScale(demageScale)
 
     self.isFireCd = false
@@ -32,10 +34,12 @@ function BaseEnemy:getDemage()
 end
 
 function BaseEnemy:setDemageScale(scale)
+    -- print("function BaseEnemy:setDemageScale(scale)  "..scale)
     self.demageScale = scale
 end
 
 function BaseEnemy:getDemageScale()
+     -- print("function BaseEnemy:getDemageScale(scale): "..self.demageScale)
     return self.demageScale or 1.0
 end
 

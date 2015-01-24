@@ -143,8 +143,8 @@ function MapView:updateEnemys()
 
 	if wave == nil then 
 		print("赢了")
-		-- scheduler.unscheduleGlobal(self.checkWaveHandler)
-		-- self.fight:onWin()
+		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		self.fight:onWin()
 		return
 	end
 
@@ -161,7 +161,7 @@ function MapView:updateEnemys()
 	for groupId, group in ipairs(wave.enemys) do
 		--desc
 		print("groupId"..groupId)
-		self:showEnemyIntro(group.descId)
+		self:showEnemyIntro(group.descId, group.time)
 		for i = 1, group.num do
 			--delay
 			print("group time", group.time)
@@ -189,14 +189,14 @@ function MapView:updateEnemys()
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:showEnemyIntro(descId)
+function MapView:showEnemyIntro(descId, time)
 	local function callfuncShow()
 		print("descId", descId)
 		if descId then 
 			self.fightDescModel:showEnemyIntro(descId)
 		end				
 	end
-	scheduler.performWithDelayGlobal(callfuncShow, 2.0)
+	scheduler.performWithDelayGlobal(callfuncShow, time)
 end
 
 function MapView:checkWave()

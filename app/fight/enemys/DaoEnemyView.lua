@@ -157,7 +157,7 @@ end
 
 function DaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
-        or  ccs.MovementEventType.complete   then
+        or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" then

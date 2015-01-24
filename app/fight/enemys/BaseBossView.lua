@@ -175,9 +175,7 @@ function BaseBossView:playBombEffects()
 end
 
 function BaseBossView:playSkill(skillName)
-	-- print("BaseBossView:playSkill: "..skillName)
-	local str =  string.sub(skillName, 1, 4)
-	print("skillName", str)
+	print("BaseBossView:playSkill: "..skillName)
 	if skillName == "moveLeftFire" then 
 		self:play("skill", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
@@ -197,7 +195,7 @@ function BaseBossView:playSkill(skillName)
 	elseif string.sub(skillName, 1, 6) == "demage" then 
 		local num = string.sub(skillName, 7, 9)
 		num = tonumber(num)
-		print("num", num)
+		print(" demage num", num)
 		local per = num / 100
 		self.enemy:setDemageScale(per)	
 	end
@@ -362,6 +360,7 @@ function BaseBossView:playDaoDan()
 	local kDelayAnim = 0.6 		-- 导弹动画播放0.6s 再发导弹
 	--导弹
 	for i=1,2 do
+		print("BaseBossView :getDemageScale(),",self.enemy:getDemageScale())
 		local boneName = "dao"..i
 		local bone = self.armature:getBone(boneName):getDisplayRenderNode()
 		local delay = kDelayAnim
@@ -515,9 +514,9 @@ function BaseBossView:checkSkill(demage)
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				-- print("v", v)
-				-- print("persentC", persentC)
-				-- print("persentO", persentO)
+				print("v", v)
+				print("persentC", persentC)
+				print("persentO", persentO)
 				print("playSKill:"..skillName)
 				local function callfuncSkill()
 					self:playSkill(skillName)

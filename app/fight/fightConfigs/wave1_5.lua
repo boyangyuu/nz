@@ -4,21 +4,21 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = {
-			{
-				descId = "hs", --简介
-				time = 2,
-				num = 1,
-				pos = {250},                               
-				delay = {2.6},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place4",
-					startState = "enterleft", 
-					lastTime = 7,                       -- 人质离开时间
-					                    			     -- 人质
-				},
-			}, 
+			-- {
+			-- 	descId = "hs", --简介
+			-- 	time = 2,
+			-- 	num = 1,
+			-- 	pos = {250},                               
+			-- 	delay = {2.6},                            
+			-- 	property = { 
+			-- 		id = 10,
+			-- 		type = "renzhi",
+			-- 		placeName = "place4",
+			-- 		startState = "enterleft", 
+			-- 		lastTime = 7,                       -- 人质离开时间
+			-- 		                    			     -- 人质
+			-- 	},
+			-- }, 
 
 			{
 				time = 2,
