@@ -61,9 +61,23 @@ local waves = {
 		},
 	},
 	{
-		enemys = { 
+		enemys = {
 			{
+				descId = "zpbing",               --简介
 				time = 3,
+				num = 1,
+				delay = {3},
+				pos = {15},
+				property = {
+					placeName = "place10",  
+					type = "dao",
+					id = 2,
+					missileId = 3,
+					missileType = "daodan",
+				},
+			}, 
+			{
+				time = 10,
 				num = 1,
 				delay = {0},
 				pos = {200},
@@ -74,7 +88,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 13,
 				num = 1,
 				delay = {0},
 				pos = {116},
@@ -85,7 +99,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 16,
 				num = 1,
 				delay = {0},
 				pos = {100},
@@ -96,7 +110,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,
+				time = 19,
 				num = 1,
 				delay = {0},
 				pos = {666},
@@ -110,7 +124,7 @@ local waves = {
 				},
 			},
 			{
-				time = 17,
+				time = 22,
 				num = 1,
 				delay = {0},
 				pos = {76},
@@ -120,19 +134,7 @@ local waves = {
 					startState = "rollright",
 				},
 			},	
-			{
-				time = 20,
-				num = 1,
-				delay = {0},
-				pos = {15},
-				property = {
-					placeName = "place10",  
-					type = "dao",
-					id = 2,
-					missileId = 3,
-					missileType = "daodan",
-				},
-			},
+			
 			
 		},
 	},

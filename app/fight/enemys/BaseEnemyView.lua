@@ -202,6 +202,17 @@ function BaseEnemyView:onHitted(targetData)
 	self:setBlood(hp/maxHp * 100)
 end
 
+function BaseEnemyView:playNextAnimCache()
+	local playCache = self:getPlayCache()
+	if playCache then 
+		print("playCache()")
+		playCache()
+	else 	
+		print("playStand()")				
+		self:playStand()
+	end
+end
+
 function BaseEnemyView:getModel(property)
 	return Enemy.new(property)
 end

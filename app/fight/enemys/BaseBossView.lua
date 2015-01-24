@@ -179,17 +179,17 @@ function BaseBossView:playSkill(skillName)
 	local str =  string.sub(skillName, 1, 4)
 	print("skillName", str)
 	if skillName == "moveLeftFire" then 
-		self:play("moveLeftFire", handler(self, self.playMoveLeftDaoFire))
+		self:play("skill", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
-		self:play("moveRightFire", handler(self, self.playMoveRightDaoFire))
+		self:play("skill", handler(self, self.playMoveRightDaoFire))
 	elseif skillName == "saoShe" then
-		self:play("saoShe", handler(self, self.playSaoShe))
+		self:play("skill", handler(self, self.playSaoShe))
 	elseif skillName == "daoDan" then
-		self:play("daoDan", handler(self, self.playDaoDan))
+		self:play("skill", handler(self, self.playDaoDan))
 	elseif skillName == "chongfeng" then
-		self:play("chongfeng", handler(self, self.playChongfeng))
+		self:play("skill", handler(self, self.playChongfeng))
 	elseif skillName == "tieqiu" then
-		self:play("tieqiu", handler(self, self.playTieQiu))
+		self:play("skill", handler(self, self.playTieQiu))
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
 		-- print("index", index)

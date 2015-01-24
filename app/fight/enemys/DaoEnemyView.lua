@@ -74,7 +74,7 @@ end
 
 function DaoEnemyView:playFire()
     --导弹
-    self.armature:getAnimation():play("fire" , -1, 1) 
+    self.armature:getAnimation():play("fire" , -1, 0) 
 
     print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
@@ -110,7 +110,7 @@ end
 
 function DaoEnemyView:playRollLeft()
     if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then return end
-    self.armature:getAnimation():play("rollleft" , -1, 1) 
+    self.armature:getAnimation():play("rollleft" , -1, 0) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 
     local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
@@ -121,7 +121,7 @@ end
 
 function DaoEnemyView:playRollRight()
     if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then return end
-    self.armature:getAnimation():play("rollright" , -1, 1) 
+    self.armature:getAnimation():play("rollright" , -1, 0) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 
     local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
@@ -132,7 +132,7 @@ end
 
 --Attackable interface
 function DaoEnemyView:playHitted(event)
-    self.armature:getAnimation():play("hit" , -1, 1) 
+    self.armature:getAnimation():play("hit" , -1, 0) 
 
     --飘红
     self:playHittedEffect()
@@ -156,7 +156,8 @@ function DaoEnemyView:onHitted(targetData)
 end
 
 function DaoEnemyView:animationEvent(armatureBack,movementType,movementID)
-    if movementType == ccs.MovementEventType.loopComplete then
+    if movementType == ccs.MovementEventType.loopComplete 
+        or  ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" then
