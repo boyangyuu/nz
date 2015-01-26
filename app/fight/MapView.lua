@@ -74,8 +74,6 @@ function MapView:loadCCS()
 	self.map = cc.uiloader:load(mapSrcName)
 	addChildCenter(self.map, self)
 
-
-
 	--effect self.mapAnim
 	self.mapAnim = MapAnimView.new()
 	self.map:addChild(self.mapAnim, kEffectZorder)
@@ -134,7 +132,6 @@ function MapView:startFight(event)
 	self.fightDescModel:start()
 	scheduler.performWithDelayGlobal(
 		handler(self, self.updateEnemys), 2.0)
-
 end
 
 function MapView:updateEnemys()
@@ -159,8 +156,6 @@ function MapView:updateEnemys()
 
 	--addEnemys
 	self:addWave(wave.enemys)
-
-	
 end
 
 function MapView:addWave(waveData)
@@ -179,9 +174,7 @@ function MapView:addWave(waveData)
 			--pos
 			assert(group["pos"], "group pos"..i)
 			local pos = group["pos"][i] or 0
-
-			--zorder
-			
+		
 			--add
 			local function addEnemyFunc()
 				zorder = zorder - 1
@@ -193,7 +186,7 @@ function MapView:addWave(waveData)
 		end
 	end	
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(
-		handler(self, self.checkWave), lastTime + 1)		
+		handler(self, self.checkWave), lastTime + 1)
 end
 
 function MapView:showEnemyIntro(descId, time)
@@ -449,8 +442,9 @@ end
 
 --events
 function MapView:callfuncAddWave(event)
-	dump(event, "event")
+	-- dump(event, "event")
 	self:addWave(event.waveData)
+
 end
 
 function MapView:callfuncAddEnemys(event)

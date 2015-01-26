@@ -60,7 +60,6 @@ function DaoEnemyView:tick()
 
     --roll
     local rollRate, isAble = self.enemy:getRollRate()
-
     if isAble then 
         assert(rollRate > 1, "invalid rollRate")
         randomSeed =  math.random(1, rollRate)
