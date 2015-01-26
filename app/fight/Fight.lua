@@ -25,6 +25,8 @@ Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
 Fight.RESULT_WIN_EVENT   = "RESULT_WIN_EVENT"
 Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
+Fight.FIGHT_RESUMEPOS_EVENT  = "FIGHT_RESUMEPOS_EVENT"
+
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
 end

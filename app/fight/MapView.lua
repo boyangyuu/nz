@@ -323,7 +323,7 @@ function MapView:resumeZoom(event)
 	local function zoomEnd()
 		_isZooming = false
 	end
-	local w, h = display.width, display.height
+	local w, h = display.width, display.height1
 	-- local action = cc.MoveTo:create(time , cc.p(w * 0.5, h * 0.5))	
 	-- self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
 	-- self:runAction(cc.ScaleTo:create(time , 1))
