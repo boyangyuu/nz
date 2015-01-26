@@ -439,9 +439,9 @@ function BaseBossView:zhaohuan()
 	local waveData = self.config["enemys"..self.zhaohuanIndex]
 	assert(waveData, "config is invalid, no enemys")
 	self.enemysCallNum = 0
-	self.enemysCallDeadNum = 0
-	for i,v in ipairs(waveData) do
-		self.enemysCallNum = self.enemysCallNum + v.num
+	for i,group in ipairs(waveData) do
+		group.property["deadEventData"] = {name = "ENEMY_KILL_LASTCALL_EVENT"}
+		self.enemysCallNum = self.enemysCallNum + group.num
 	end
 	print("self.enemysCallNum", self.enemysCallNum)
 
@@ -453,8 +453,8 @@ end
 
 function BaseBossView:onLastCallDead(event)
 	print("function BaseBossView:onLastCallDead(event)")
-	self.enemysCallDeadNum = self.enemysCallDeadNum  + 1
-	if self.enemysCallNum == self.enemysCallDeadNum then 
+	self.enemysCallNum = self.enemysCallNum  - 1
+	if self.enemysCallNum == 0 then 
 		print("取消无敌")
 		self:setUnhurted(false)	
 	end
