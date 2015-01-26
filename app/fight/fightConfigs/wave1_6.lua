@@ -2,251 +2,63 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
---[[	{
+	{
 		enemys = { 
 			{
+				descId = "zibaob", --简介
 				time = 3,	
-				num = 4,
-				pos = {10,90,310,400},
-				delay = {0,0.9,0.5,0.8},
-				property = {
-					placeName = "place1" ,
-					id = 1
-				},
-			},
-			{
-				time = 2,	
 				num = 1,
-				pos = {230},
-				delay = {0.6},
+				pos = {200},
+				delay = {4},
 				property = {
-					placeName = "place3" ,
-					type = "san",
-					id = 3,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 6,	
-				num = 3,
-				pos = {180,200,280},
-				delay = {0,0.4,0.2},
-				property = {
-					placeName = "place2" , 
-					startState = "rollleft",
-					id = 1,
-				},
-			},		
-			{
-				time = 9,	
-				num = 3,
-				place = "",
-				pos = {200,120,100},
-				delay = {0.3,0.6,0.7},
-				property = {
-					placeName = "place2" , 
-					id = 1,
-				},
-			},		
-			{
-				time = 10,	
-				num = 1,
-				pos = {25},
-				delay = {0.3},
-				property = {
-					placeName = "place4" ,  
-					id = 1,
-				},
-			},		
-			{
-				time = 13,	
-				num = 1,
-				pos = {40},
-				delay = {0.3},
-				property = {
-					placeName = "place1" ,   
-					id = 1,
-				},
-			},		
-			{
-				time = 16,	
-				num = 1,
-				pos = {30},
-				delay = {0.3},
-				property = {
-					placeName = "place2" ,    
-					id = 1,
-				},
-			},		
-			{
-				time = 19,	
-				num = 1,
-				pos = {30},
-				delay = {0.3},
-				property = { 
-					placeName = "place3" ,  
-					id = 1,
-				},
-			},		
-			{
-				time = 22,	
-				num = 1,
-				pos = {30},
-				delay = {0.3},
-				property = { 
-					id = 1,
-					placeName = "place4" ,  
-				},
-			},		
-			{
-				time = 25,	
-				num = 1,
-				pos = {30},
-				delay = {0.3},
-				property = {
-					placeName = "place1" ,   
-					id = 1,
-				},
-			},		
-			{
-				time = 16,	
-				num = 1,
-				pos = {10},
-				delay = {0.3},
-				property = {
-					type = "san",
-					enemyId = 1,
 					placeName = "place2" ,
-					id = 3,
+					id = 9,
+					type = "bao",
 				},
-			},		
+			},
+			
+			{
+				time = 10,
+				num = 6,
+				delay = {0,1.4,0.7,0.8,1.6,2.4},
+				pos = {250,350,550,900,1000,1080},
+				property = {
+					type = "jin",
+					placeName = "place3",  
+					id = 7,
+				},
+			},
+			{
+				time = 11,	
+				num = 1,
+				pos = {300},
+				delay = {0.9},
+				property = {
+					placeName = "place2" ,
+					id = 8,
+					type = "jin",
+				},
+			},
+			
 		
 		},
 	},
 	{
 		enemys = {
-			{
-				time = 2,
-				num = 2,
-				delay = {1.5,3},
-				pos = {200,280},
-				property = { 
-					placeName = "place6" ,
-					type = "jin",
-					id = 2,
-				},
-			},
-			{
-				time = 4,
-				num = 3,
-				delay = {0.3, 0.9,1.5},
-				pos = {10, 200, 90},	
-				property = { 
-					placeName = "place2" ,
-					id = 1,
-				},
-			},	
-			{
-				time = 5,
-				num = 3,
-				delay = {0.6, 0.9, 1.2},
-				pos = {10, 50, 100},					
-				property = { 
-					placeName = "place1" ,
-					type = "dao",
-					id = 5,
-					missileId = 6,
-				},
-			},						
+			
+
+
+
 		},
 	},	
 	{
 		enemys = {
-			{
-				time = 3,
-				num = 4,
-				delay = {0.6,0.8,1.1,1.6},
-				pos = {10,50, 120, 90},
-				property = {
-					type = "san",
-					enemyId = 1, 
-					placeName = "place1" ,
-					id = 3,
-				},
-			},		
-			{
-				time = 3,
-				num = 5,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},
-				property = {
-					placeName = "place2" , 
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 5,
-				num = 1,
-				delay = { 1.2},
-				pos = {30},
-				property = {
-					placeName = "place1" , 
-					type = "dao",
-					id = 5,
-					missileId = 6,
-				},
-			},
-			{
-				time =7,
-				num = 1,
-				delay = { 1.2},
-				pos = {30},
-				property = {
-					placeName = "place2" , 
-					type = "dao",
-					id = 5,
-					missileId = 6,
-				},
-			},
-			{
-				time =8,
-				num = 4,
-				delay = { 1.2,0.5,5,6},
-				pos = {400,300,260,60},
-				property = {
-					placeName = "place11" , 
-					type = "jin",
-					id = 2,
-				},
-			},
-			{
-				time =12,
-				num = 1,
-				delay = { 1.2},
-				pos = {30},
-				property = {
-					placeName = "place4" , 
-					type = "dao",
-					id = 5,
-					missileId = 6,
-				},
-			},
-			{
-				time =15,
-				num = 1,
-				delay = { 1.2},
-				pos = {300},
-				property = {
-					placeName = "place3" , 
-					type = "dao",
-					id = 5,
-					missileId = 6,
-				},
-			},
+			
+
+
 
 		},
-	},]]	
+	},	
 	{
 		enemys = {  --boss
 			{
@@ -257,7 +69,7 @@ local waves = {
 				delay = {0.3},
 				property = { 
 					type = "boss",
-					placeName = "place5",
+					placeName = "place1",
 					enemyId = 6, 
 					id = 1,
 				},
@@ -271,27 +83,42 @@ local waves = {
 
 --enemy的关卡配置
 local enemys = {
-	--普通兵
-	{id=1,image="anim_enemy_002",demage=6,hp=850,walkRate=200,rollRate=300,fireRate=400,
-		weak1=2,weak2=2},
-	
-	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=2000,walkRate=400,rollRate=0,fireRate=300,
-		weak1=2,weak2=2},
-	--伞兵
-	{id=3,image="sanbing01",demage=1,hp=400,walkRate=400,rollRate=0,
-		fireRate=300,weak1=1,weak2=1},
+	--普通兵                                      140--左右移动距离       280--滚动距离
+	{id=1,image="anim_enemy_002",demage=4,hp=260,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=60,fireCd=4,
+	weak1=3},
 
-	--自爆兵
-	{id=4,image="zibaob",demage=15,hp=1500,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5, speed = 90},	
+	--手雷兵      --type = "dao",
+	{id=2,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=60,fireCd=5,
+	weak1=3},
 
-	--导弹兵
-	{id=5,image="zpbing",demage=0,hp=1500,walkRate=400,rollRate=0,
-		fireRate=200,weak1=2,weak2=2},		
+	--手雷            --missileType = "lei",
+	{id=3,image="shoulei",demage=5,hp=1,
+	weak1=3},
 
-	--导弹
-	{id=6,image="daodan",demage=20,hp=300,weak1=1,weak2=1},					
+	--伞兵       --type = "san",
+	{id=4,image="sanbing01",demage=0,hp=260,
+	weak1=3},	                                                           
+
+	--导弹兵      --type = "dao",
+	{id=5,image="zpbing",demage=0,hp=260,walkRate=180,walkCd=1,fireRate=30,fireCd=5,
+	weak1=3},
+
+    --导弹          --missileType = "daodan",
+	{id=6,image="daodan",demage=10,hp=1,
+	weak1=1},	
+
+	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
+	{id=7,image="jinzhanb",demage=5,hp=325,fireRate=30,fireCd=4,speed=40,
+	weak1=3},
+
+	--盾兵         --type = "jin",
+	{id=8,image="dunbing",demage=5,hp=650,fireRate=30,fireCd=4,speed=20,
+	weak1=3},
+
+	--自爆兵        --type = "bao",
+	{id=9,image="zibaob",demage=20,hp=650,fireRate=30,speed=20,
+	weak1=3},	
+
 }
 
 --boss的关卡配置

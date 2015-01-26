@@ -43,6 +43,7 @@ function BaseEnemy:getDemageScale()
 end
 
 function BaseEnemy:getFireRate()
+    if self.config["fireRate"] == nil then return 0, false end
 	return self.config["fireRate"], not self.isFireCd
 end
 
@@ -59,6 +60,7 @@ function BaseEnemy:beginFireCd()
 end
 
 function BaseEnemy:getWalkRate()
+    if self.config["walkRate"] == nil then return 0, false end    
 	return self.config["walkRate"], not self.isWalkCd
 end
 
@@ -74,6 +76,7 @@ function BaseEnemy:beginWalkCd()
 end
 
 function BaseEnemy:getRollRate()
+    if self.config["rollRate"] == nil then return 0, false end        
 	return self.config["rollRate"], not self.isRollCd
 end
 
@@ -89,6 +92,7 @@ function BaseEnemy:beginRollCd()
 end
 
 function BaseEnemy:getSpeakRate()
+    if self.config["speakRate"] == nil then return 0, false end       
 	assert(self.config["speakRate"] , "config speakRate is nil")
 	return self.config["speakRate"], not self.isSpeakCd
 end

@@ -307,13 +307,13 @@ local waves = {
 
 	{	
 		waveType = "boss",
-		enemys = {  --boss
+		enemys = {                                              --boss
 			{
 				descId = "boss02",
 				time = 3,	
 				num = 1,
 				pos = {194},
-				delay = {0},
+				delay = {4},
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
@@ -344,7 +344,7 @@ local enemys = {
 	{id=4,image="daodan",demage=10,hp=1,weak1=1},
 
 	--铁球
-	{id=5,image="tieqiu",demage=10,hp=1000,weak1=1},	
+	{id=5,image="tieqiu",demage=20,hp=1000,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=4,
@@ -353,32 +353,10 @@ local enemys = {
 	{id=7,image="shoulei",demage=10,hp=1,
 	weak1=3},
 	--BOSS导弹          --missileType = "daodan",
-	{id=8,image="daodan",demage=5,hp=1,weak1=1},
+	{id=8,image="daodan",demage=3,hp=120,weak1=1},
 
-
-	-- 	--普通兵
-	-- {id=1,image="anim_enemy_002",demage=2,hp=190,walkRate=200,walkCd=2.0,rollRate=300,rollCd=200,fireRate=100,fireCd=5,
-	-- weak1=4,weak2=4},
-
-	-- --近战兵
-	-- {id=2,image="jinzhanb",demage=4,hp=1080,walkRate=400,rollRate=100,fireRate=100,
-	-- 	weak1=2,weak2=2},
-
-	-- --伞兵
-	-- {id=3,image="sanbing01",demage=2,hp=190,walkRate=400,rollRate=100,
-	-- 	fireRate=300,weak1=4,weak2=5},
-
-
-	-- {id=4,image="daodan",demage=10,hp=100,weak1=3,weak2=5},	
-
-	-- --铁球
-	-- {id=5,image="tieqiu",demage=20,hp=100,weak1=3,weak2=5},	
-	-- --手雷兵
-	-- {id=6,image="shouleib",demage=2,hp=130,walkRate=200,walkCd=2.0,rollRate=200,rollCd=200,fireRate=100,fireCd=5,
-	-- weak1=3,weak2=5},	
-	-- --手雷
-	-- {id=7,image="shoulei",demage=5,hp=1,weak1=3,weak2=5},
 }
+
 
 	--boss的关卡配置
 local bosses = {
@@ -386,44 +364,48 @@ local bosses = {
 	{
 
 		image = "boss02", --图片名字
-		hp = 80000,
+		hp = 100000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 240,               --普攻频率
+		fireRate = 30,               --普攻频率
 		fireCd = 4,                     --普攻cd
 
 		walkRate = 180,                    --移动频率
 		walkCd = 2,                         --移动cd
-		chongfengDemage = 10,                --冲锋造成伤害
-		weak1 = 2,						--弱点伤害倍数
-		weak2 = 1.2,					--弱点伤害倍数
+		chongfengDemage = 40,                --冲锋造成伤害
+		weak1 = 1.5,						--头 弱点伤害倍数
+		weak2 = 1.2,					--手 弱点伤害倍数
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90,0.60,0.30,0.10,
+				0.90,0.7,0.50,0.30,0.10,
 			},
 			moveRightFire = {
-				0.80,0.50, 0.20,0.05,
+				0.80,0.60, 0.40,0.20,0.05,
 			},
 			chongfeng = {
-				0.95, 0.75,0.65,0.45,0.25,
+				0.95,  0.85,0.75,0.65,0.45,0.25,0.15,0.05,
 			},
 			tieqiu = {
-				0.98, 0.85, 0.70,0.55,0.40,0.35,0.15,
+				0.95, 0.85, 0.65,0.50,0.35,0.20,0.05,
 			},
-			weak2 = {                               --技能触发(可以同时)
-				0.40,                         
-			},				
-			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.80,
+			weak2 = {                               --手 技能触发(可以同时)
+				0.80,0.4                         
+			},
+			weak1 = {                               --头 技能触发(可以同时)
+				0.60,0.2                         
+			},
+			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.85,
 			},	
-			demage300 = {  
-				0.65,
+			demage250 = {  
+				0.60,
 			},	
-			demage500 = {  
+			demage400 = {  
 				0.50,
 			},						
 		},
+
 
 
 
