@@ -9,10 +9,10 @@ local waves = {
 				time = 3,
 				num = 1,
 				delay = {0},
-				pos = {350},
+				pos = {300},
 				property = {
-					placeName = "place5",  
-					startState = "rollleft",
+					placeName = "place9",  
+					startState = "rollright",
 					id = 1,
 				},
 			},
@@ -25,10 +25,10 @@ local waves = {
 				time = 3,
 				num = 1,
 				delay = {0},
-				pos = {568},
+				pos = {360},
 				property = {
 					placeName = "place5",  
-					startState = "rollright",
+					startState = "rollleft",
 					id = 1,
 				},
 			},
@@ -36,7 +36,7 @@ local waves = {
 				time = 6,
 				num = 1,
 				delay = {0},
-				pos = {200},
+				pos = {500},
 				property = {
 					placeName = "place11",  
 					startState = "",
@@ -51,25 +51,14 @@ local waves = {
 				time = 9,
 				num = 1,
 				delay = {0},
-				pos = {600},
+				pos = {60},
 				property = {
-					placeName = "place9",  
-					startState = "rollleft",
-					id = 1,
-				},
-			},	
-			{
-				
-				time = 9,
-				num = 1,
-				delay = {0},
-				pos = {10},
-				property = {
-					placeName = "place15",  
+					placeName = "place10",  
 					startState = "",
 					id = 1,
 				},
 			},	
+			
 		},
 	},
 	{
@@ -92,9 +81,9 @@ local waves = {
 				time = 12,
 				num = 1,
 				delay = {0},
-				pos = {200},
+				pos = {50},
 				property = {
-					placeName = "place11",  
+					placeName = "place10",  
 					id = 1,
 					startState = "rollright",
 				},
@@ -150,7 +139,7 @@ local waves = {
 				time = 24,
 				num = 1,
 				delay = {0},
-				pos = {76},
+				pos = {95},
 				property = {
 					placeName = "place3",  
 					id = 1,
@@ -166,7 +155,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--导弹兵
@@ -185,6 +174,8 @@ local enemys = {
 	weak1=3,},	
 }
 local mapId = "map_1_4"
+
+
 
 local limit = 10    				--此关敌人上限
 
