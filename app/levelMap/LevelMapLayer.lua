@@ -56,13 +56,17 @@ function LevelMapLayer:initBgLayer()
 -- bg starting animation   
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
-    addChildCenter(self.armature, self)
+    self.armature:setAnchorPoint(0.5,0.5)
+    self.armature:setPosition(display.width/2,display.height1/2)
+
+    self:addChild(self.armature)
+    -- addChildCenter(self.armature, self)
     self.armature:getAnimation():play("0_"..self.index , -1, 0)
 
-    ldarmature = ccs.Armature:create("leida")
-    ldarmature:setPosition(cc.p(568,300))
-    self:addChild(ldarmature)
-    ldarmature:getAnimation():play("leida" , -1, 1)
+    self.ldarmature = ccs.Armature:create("leida")
+    self.ldarmature:setPosition(cc.p(568,300))
+    self:addChild(self.ldarmature)
+    self.ldarmature:getAnimation():play("leida" , -1, 1)
 
 
 end
@@ -119,7 +123,7 @@ function LevelMapLayer:initChooseLayer()
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            
             if self.index >= self.groupNum then
                 self.index = 1
                 self.preIndex = self.groupNum
@@ -281,6 +285,7 @@ end
 
 function LevelMapLayer:bgAction()    
     -- To make button disabled for a while
+    self.ldarmature:removeFromParent()
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
@@ -294,6 +299,10 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
         if movementID == self.animName then
             self.btnNext:setTouchEnabled(true)
             self.btnPre:setTouchEnabled(true)
+            self.ldarmature = ccs.Armature:create("leida")
+            self.ldarmature:setPosition(cc.p(568,300))
+            self:addChild(self.ldarmature)
+            self.ldarmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.index)
             self:refreshLevelLayer(self.index)
         end
