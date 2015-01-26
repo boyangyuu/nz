@@ -1,7 +1,7 @@
 
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
-local className = "org/cocos2dx/lua/IAPControl"
+local className = "com/hgtt/ccn/IAPControl"
 local sig = "(Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
