@@ -1,6 +1,3 @@
--- require("debugger")("192.168.1.86",10240,"luasoar",nil,"unix","/Users/donniesuen/Documents/MyRepository/client/demoFight")
-package.path = package.path .. ";src/"
-cc.FileUtils:getInstance():setPopupNotify(false)
 local myApp = require("app.MyApp").new()
 myApp:run()
 -- local debug = myApp:initDebug()

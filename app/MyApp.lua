@@ -6,14 +6,13 @@ local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
-local IAPsdk = require("app.SDK.IAPsdk")
 GameState = require("framework.cc.utils.GameState")
-
+local IAPsdk = require("app.SDK.IAPsdk")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
--- --平时
+
 isTest  = true
 isDebug = false
 
@@ -22,14 +21,15 @@ isDebug = false
 -- isDebug = true
 
 -- --正式打包
+
 isTest  = false        
 isDebug = false
-
 
 ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
 define  = Define.new()
+
 
 iap = IAPsdk.new()
 
@@ -99,7 +99,7 @@ function MyApp:createGameStateFile()
                                         weaponid   = 2,
                                         },
                                 bag3 = {
-                                        weaponid   = 3,
+                                        weaponid   = 6,
                                         },
                         },
             }, 
