@@ -203,11 +203,11 @@ end
 
 function FocusView:removeJu(event)
 	print("FocusView:removeJu()")
-	local ox, oy = self.oriJuPos.x, self.oriJuPos.y
-	local cx, cy = self:getParent():getPosition()
-	local destPos = cc.p(ox + (cx - ox)/4 , oy + (cy - oy)/4 )
+	-- local ox, oy = self.oriJuPos.x, self.oriJuPos.y
+	-- local cx, cy = self:getParent():getPosition()
+	-- local destPos = cc.p(ox + (cx - ox)/4 , oy + (cy - oy)/4 )
 
-	self:getParent():setPosition(destPos.x, destPos.y)
+	-- self:getParent():setPosition(destPos.x, destPos.y)
 	self:removeJuEnd()
 end
 

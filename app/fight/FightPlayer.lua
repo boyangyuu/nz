@@ -144,7 +144,7 @@ end
 
 function FightPlayer:setComponentVisible(event)
     local comps = event.comps
-    dump(comps, "comps")
+    -- dump(comps, "comps")
     for i,v in pairs(comps) do
         self[i]:setVisible(v)
         -- print(i,v)
@@ -671,9 +671,11 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     local isNotMove = map:isNotMoveMap()
     if isNotMove then return end    
 
+    local isOpenJu = map:getIsOpenJu()
+    local scale = isOpenJu and KFightConfig.scaleMoveBg * 4 or KFightConfig.scaleMoveBg 
+
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
-    local scale = KFightConfig.scaleMoveBg
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
     local x, y = layerMap:getPosition()
     self:justBgPos(layerMap)
@@ -691,8 +693,15 @@ function FightPlayer:justBgPos(node)
     local box = bgMap:getBoundingBox()
     -- dump(box, "box")
     -- print("bgMap pos", )  
-    local w, h = bgMap:getBgSize().width , 
-        bgMap:getBgSize().height
+    local map = md:getInstance("Map")
+    local isNotMove = map:isNotMoveMap()
+    if isNotMove then return end    
+
+    local isOpenJu = map:getIsOpenJu()
+    local scale = isOpenJu and  4 or 1.0
+
+    local w, h = bgMap:getBgSize().width * scale, 
+        bgMap:getBgSize().height * scale
     -- print("w", w)
     -- print("h", h)
     local offset = bgMap:getBgOffset()

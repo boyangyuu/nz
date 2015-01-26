@@ -127,6 +127,7 @@ function waveClass:ctor()
 	self.mapId  = mapId
 	self.limit  = limit
 	self.isNotMoveMap = isNotMoveMap
+	self.goldLimits	= {30, 50,}
 end
 
 return waveClass
