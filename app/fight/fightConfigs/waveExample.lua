@@ -5,7 +5,29 @@ local waveClass = class("waveExample", BaseWave)
 -- 测试 近战兵
 local waves = {
 	{
-		enemys = {  	
+		enemys = {  
+			{
+				time = 3,
+				num = 4,
+				delay = {0.6,0.8,1.1,1.6},
+				pos = {10,50, 120, 90},
+				property = {
+					type = "bao",
+					placeName = "place2" ,
+					id = 4,
+				},
+			},			
+			{
+				time = 10,
+				num = 4,
+				delay = {0.6,0.8,1.1,1.6},
+				pos = {10,50, 120, 90},
+				property = {
+					type = "bao",
+					placeName = "place2" ,
+					id = 4,
+				},
+			},					
 			-- {
 			-- 	time = 2,
 			-- 	num = 1,
@@ -20,8 +42,7 @@ local waves = {
 			-- 		missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), 
 			-- 			cc.p(100, 100)},					
 			-- 		startState = "enterleft",
-
-			-- 		lastTime = 20.0,		--持续时间			
+			-- 		lastTime = 20111.0,		--持续时间			
 			-- 	},
 			-- },	
 			-- {
@@ -42,19 +63,19 @@ local waves = {
 			-- },			
 
 			-- 人质
-			{
-				time = 2,
-				num = 1,
-				pos = {300, 400, 0, 170, 340, 100},
-				delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
-				property = { 
-					id = 11,
-					type = "renzhi",
-					placeName = "place5",
-					startState = "enterleft",
-					lastTime = 1120.0,		--持续时间
-				},
-			},		
+			-- {
+			-- 	time = 2,
+			-- 	num = 1,
+			-- 	pos = {300, 400, 0, 170, 340, 100},
+			-- 	delay = {0.4, 0.2,0.3, 0.5, 0.1, 0.1},
+			-- 	property = { 
+			-- 		id = 11,
+			-- 		type = "renzhi",
+			-- 		placeName = "place5",
+			-- 		startState = "enterleft",
+			-- 		lastTime = 1120.0,		--持续时间
+			-- 	},
+			-- },		
 			-- {
 			-- 	time = 5,
 			-- 	num = 1,
@@ -161,7 +182,7 @@ local enemys = {
 		weak1=2, fireCd=30.0},		
 		
 	--导弹
-	{id=7,image="daodan",demage=10,hp=100, weak1=3},		
+	{id=7,image="daodan",demage=10,hp=1, weak1=3},		
 
 	--手雷兵
 	{id=8,image="shouleib",demage=10,hp=100,walkRate=400,rollRate=10, rollCd = 1.5,

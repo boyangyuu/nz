@@ -13,7 +13,6 @@ local FightConfigs = import("..fightConfigs.FightConfigs")
 function BaseEnemy:ctor(actor_property, enemy_property)
     --super
     BaseEnemy.super.ctor(self, actor_property) 
-    self.hp = self.config
 
     -- dump(enemy_property, "enemy_property")
     local demageScale = enemy_property["demageScale"] or 1.0
@@ -49,9 +48,10 @@ end
 
 function BaseEnemy:beginFireCd()
     self.isFireCd = true
-    -- assert(self.config["fireCd"] , "config fireCd is nil")
+    assert(self.config["fireCd"] , "config fireCd is nil")
     local fireCd = self.config["fireCd"] or 3.0
 
+    print("fireCd", fireCd)
     local function resumeCd()
         self.isFireCd = false
     end

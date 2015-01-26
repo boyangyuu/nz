@@ -20,6 +20,7 @@ function BaseBossView:ctor(property)
 
 	--config
 	self.attackType = "weak"
+	self.zhaohuanIndex  = 1
 	-- dump(property, "property")
 	local index = property.id
 	local waveConfig = FightConfigs:getWaveConfig()
@@ -113,7 +114,7 @@ function BaseBossView:setBlood(scale)
 end
 
 function BaseBossView:playStand()
-	self.armature:getAnimation():play("stand" , -1, 1)  
+	self.armature:getAnimation():play("stand" , -1, 1)
 end
 
 function BaseBossView:playFire()
@@ -188,6 +189,11 @@ function BaseBossView:playSkill(skillName)
 		self:play("skill", handler(self, self.playChongfeng))
 	elseif skillName == "tieqiu" then
 		self:play("skill", handler(self, self.playTieQiu))
+	elseif skillName == "zhaohuan" then
+		self:play("skill", handler(self, self.playZhanHuan))
+	elseif skillName == "wudi" then
+		self:play("skill", handler(self, self.playWudi))		
+				
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
 		-- print("index", index)
@@ -418,6 +424,28 @@ function BaseBossView:playChongfeng()
     self:runAction(actionScale)	
 end
 
+function BaseBossView:playZhanHuan()
+	self.armature:getAnimation():play("zhaohuan", -1, 1)
+	self:zhaohuan()
+end
+
+function BaseBossView:zhaohuan()
+	local waveData = self.config["enemys"..self.zhaohuanIndex]
+	assert(waveData, "config is invalid, no enemys")
+	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
+		waveData = waveData})
+	self.zhaohuanIndex = self.zhaohuanIndex + 1
+end
+
+function BaseBossView:setUnhurted(isUnhurted)
+	self.isUnhurted = isUnhurted
+end
+
+function BaseBossView:playWudi()
+	print("function BaseBossView:playWudi()")
+	self.armature:getAnimation():play("stand02", -1, 1)
+end
+
 function BaseBossView:clearWeak()
 	--clear weaks
 	for i,weakData in pairs(self.weakNode) do
@@ -511,17 +539,17 @@ function BaseBossView:checkSkill(demage)
 	local persentC = hp
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
-		print("skillName：", skillName)
-		print("persents", persents)
+		-- print("skillName：", skillName)
+		-- print("persents", persents)
 
 		for i, v in ipairs(persents) do
 			print("i:"..i.."	v:"..v)
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				print("v", v)
+				-- print("v", v)
 
-				print("persentC", persentC)
-				print("persentO", persentO)
+				-- print("persentC", persentC)
+				-- print("persentO", persentO)
 
 				print("playSKill:"..skillName)
 				local function callfuncSkill()
@@ -530,7 +558,7 @@ function BaseBossView:checkSkill(demage)
 				scheduler.performWithDelayGlobal(callfuncSkill, 0.01)
 			end
 		end
-	end
+	end 
 end
 
  

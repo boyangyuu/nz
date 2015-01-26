@@ -42,7 +42,7 @@ function FeijiEnemyView:setData()
 end
 
 function FeijiEnemyView:playStartState(state)
-	print("playStartState")
+	-- print("playStartState")
 	if state == "enterleft" then 
 		self:playEnter("left")
 	elseif state == "enterright" then
@@ -120,7 +120,7 @@ function FeijiEnemyView:playEnter(direct)
 end
 
 function FeijiEnemyView:exit()
-	print("function FeijiEnemyView:exit()")
+	-- print("function FeijiEnemyView:exit()")
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true
@@ -154,7 +154,7 @@ function FeijiEnemyView:playRunLeft()
 	self.direct = "left"
 	self.isRuning = true
 	self.armature:getAnimation():play("runleft" , -1, 1) 
-	print("width", width)
+	-- print("width", width)
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
     self.armature:runAction(action)	
 
@@ -168,7 +168,7 @@ function FeijiEnemyView:playRunRight()
 	local width = speed * time 
 
 	if not self:checkPlace(width) then return end
-	print("width", width)
+	-- print("width", width)
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isRuning = true
@@ -235,7 +235,7 @@ function FeijiEnemyView:playFire()
 		local name = "dao"..index
 	    local boneDao = self.armature:getBone(name)
 	    if boneDao == nil then break end
-	    print("playFire index"..index)
+	    -- print("playFire index"..index)
 	    local boneImage = boneDao:getDisplayRenderNode()
 	    
 	    local pWorldBone = boneImage:convertToWorldSpace(cc.p(0, 0))
@@ -271,7 +271,7 @@ function FeijiEnemyView:restoreStand(delay)
 end
 
 function FeijiEnemyView:playStand()
-	print("function FeijiEnemyView:playStand()")
+	-- print("function FeijiEnemyView:playStand()")
 	if self.direct == "left" then 
 		self.armature:getAnimation():play("standleft" , -1, 1)
 	else 
@@ -315,7 +315,7 @@ end
 function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			if self.isRuning then
 				return 

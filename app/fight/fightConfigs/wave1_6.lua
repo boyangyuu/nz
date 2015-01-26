@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+--[[	{
 		enemys = { 
 			{
 				time = 3,	
@@ -246,11 +246,11 @@ local waves = {
 			},
 
 		},
-	},	
+	},]]	
 	{
 		enemys = {  --boss
 			{
-				descId = "boss02",  --简介
+				descId = "boss01",  --简介
 				time = 3,	
 				num = 1,
 				pos = {250},
@@ -284,7 +284,7 @@ local enemys = {
 
 	--自爆兵
 	{id=4,image="zibaob",demage=15,hp=1500,walkRate=400,rollRate=0,
-		fireRate=100,weak1=3,weak2=5},	
+		fireRate=100,weak1=3,weak2=5, speed = 90},	
 
 	--导弹兵
 	{id=5,image="zpbing",demage=0,hp=1500,walkRate=400,rollRate=0,
@@ -302,13 +302,17 @@ local bosses = {
 		hp = 150000,
 		demage = 3,
 		fireRate = 400,
+		fireCd = 4,  		
 		walkRate = 200,
+		walkCd = 2,                         --移动cd		
 		saoFireOffset = 0.4, 		--扫射时间间隔
 		saoFireTimes = 10, 			--扫射次数
 		weak1 = 2,					--弱点伤害倍数
 		weak2 = 2,					--弱点伤害倍数
 		weak3 = 3,					--弱点伤害倍数
 		skilltrigger = {   			--技能触发(可以同时)
+			zhaohuan = {0.999},
+			wudi	 = {0.999},
 			moveLeftFire = {
 				0.65, 0.35,
 			},
@@ -334,6 +338,57 @@ local bosses = {
 				0.10,
 			},										
 		},
+
+		enemys1 = {
+			{
+				time = 3,
+				num = 4,
+				delay = {0.6,0.8,1.1,1.6},
+				pos = {10,50, 120, 90},
+				property = {
+					type = "bao",
+					placeName = "place2" ,
+					id = 4,
+				},
+			},		
+			{
+				time = 3,
+				num = 5,
+				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
+				pos = {10, 20, 50, 100, 60},
+				property = {
+					placeName = "place2" , 
+					startState = "rollright",
+					id = 1,
+				},
+			},			
+		},
+		enemys2 = {
+			{
+				time = 3,
+				num = 4,
+				delay = {0.6,0.8,1.1,1.6},
+				pos = {10,50, 120, 90},
+				property = {
+					type = "san",
+					enemyId = 1, 
+					placeName = "place1" ,
+					id = 3,
+				},
+			},		
+			{
+				time = 3,
+				num = 5,
+				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
+				pos = {10, 20, 50, 100, 60},
+				property = {
+					placeName = "place2" , 
+					startState = "rollright",
+					id = 1,
+				},
+			},			
+		},		
+
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
 			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))

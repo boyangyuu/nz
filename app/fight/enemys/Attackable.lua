@@ -14,6 +14,7 @@ function Attackable:ctor(property)
 	--instance
     self.hero = md:getInstance("Hero")	
     self.fight = md:getInstance("Fight")
+    dump(property, "property")
 	self.enemy = self:getModel(property)
 	self.property = property
 
@@ -77,14 +78,14 @@ function Attackable:getTargetData(focusNode)
 
 	if self.attackType == "weak" or isGold then
 		if isHitedWeak then
-			-- print("isHitedWeak")
+			print("isHitedWeak")
 			return true, targetDataWeak 
 		elseif isHitedBody then 
 			return true, targetDataBody
 		end
 	else
 		if isHitedBody then
-			-- print("isHitedBody")
+			print("isHitedBody")
 			return true, targetDataBody
 		elseif isHitedWeak then 
 			return true, targetDataWeak
@@ -104,11 +105,10 @@ function Attackable:checkBody(focusNode)
 		local rangeStr = "body"..i
 		-- print("rangeStr", rangeStr)
 		local enemyRange = self:getRange(rangeStr)
-		-- dump(enemyRange, "body"..i)
 		if enemyRange == nil then break end 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
 				 enemyRange)
-		-- print(isInRange, "isInRange")
+		print(isInRange, "isInRange")
 		if isInRange then 
 			local isHited = isInRange 
 			targetData.demageScale = 1.0
@@ -130,7 +130,6 @@ function Attackable:checkWeak(focusNode)
 		i = i + 1
 		local rangeStr = "weak"..i
 		local enemyRange, isValid = self:getRange(rangeStr)
-		-- dump(enemyRange, "weak"..i)
 		if enemyRange == nil then break end 
 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
@@ -150,10 +149,12 @@ end
 function Attackable:rectIntersectsRectInWorld(node, enemyRange)
 	local bound = node:getBoundingBox()
 	local enemyBound = enemyRange:getBoundingBox()
+	
+	-- dump(enemyBound, "enemyBound")
 	local scale = self:getScale() * self.hero:getMapZoom()
 	enemyBound.width = enemyBound.width * scale
 	enemyBound.height = enemyBound.height * scale
-    
+    -- dump(enemyBound, "enemyBound2")
     local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
     bound.x = pWorld1.x
     bound.y = pWorld1.y
@@ -171,6 +172,8 @@ end
 	@param rectName {"weak1", "body1"..}
 	@return rect, isValid[是否当前有效]
 ]]
+
+--为boss设计的
 function Attackable:getRange(rectName)
 	assert(rectName, "invalid param")
 	local armature = self:getEnemyArmature()

@@ -86,8 +86,8 @@ function JinEnemyView:playAhead()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
-    self:runAction(seq)
-    self:runAction(actionScale)
+    transition.execute(self, seq, {easing = "sineIn",})
+    transition.execute(self, actionScale, {easing = "sineIn",})
 end
 
 function JinEnemyView:animationEvent(armatureBack,movementType,movementID)

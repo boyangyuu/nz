@@ -41,6 +41,7 @@ function MapView:ctor()
     self:scheduleUpdate()
     cc.EventProxy.new(self.hero, self)
         :addEventListener(Hero.GUN_FIRE_EVENT, handler(self, self.onHeroFire))
+        :addEventListener(Hero.ENEMY_WAVE_ADD_EVENT, handler(self, self.callfuncAddWave))
         :addEventListener(Hero.ENEMY_ADD_EVENT, handler(self, self.callfuncAddEnemys))
         :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
         :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
@@ -133,6 +134,8 @@ function MapView:startFight(event)
 	self.fightDescModel:start()
 	scheduler.performWithDelayGlobal(
 		handler(self, self.updateEnemys), 2.0)
+	self.checkWaveHandler = scheduler.performWithDelayGlobal(
+		handler(self, self.checkWave), 5.0)	
 end
 
 function MapView:updateEnemys()
@@ -156,9 +159,13 @@ function MapView:updateEnemys()
 	end
 
 	--addEnemys
+	self:addWave(wave.enemys)
+end
+
+function MapView:addWave(waveData)
 	local lastTime = 0
 	local zorder = 1000
-	for groupId, group in ipairs(wave.enemys) do
+	for groupId, group in ipairs(waveData) do
 		--desc
 		print("groupId"..groupId)
 		self:showEnemyIntro(group.descId, group.time)
@@ -174,7 +181,6 @@ function MapView:updateEnemys()
 
 			--zorder
 			
-
 			--add
 			local function addEnemyFunc()
 				zorder = zorder - 1
@@ -182,11 +188,9 @@ function MapView:updateEnemys()
 				self:cacheEnemy(group.property, pos, zorder)
 			end
 
-			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
+			self.addEnemysSch = scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
-	end
-	--check next wave
-	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
+	end	
 end
 
 function MapView:showEnemyIntro(descId, time)
@@ -430,7 +434,7 @@ function MapView:getEnemysInRect(rect)
 			-- dump(pos, "pos")
 			local enemyRect = cc.rect(pos.x, pos.y, 
 				box.width * scale, box.height * scale)   --有scale问题
-			-- dump(enemyRect, "enemyRect") 
+			dump(enemyRect, "enemyRect") 
 			if cc.rectIntersectsRect(rect, enemyRect) then
 			-- if cc.rectContainsPoint(rect, pos) then
 				enemys[#enemys + 1] = enemy
@@ -441,6 +445,11 @@ function MapView:getEnemysInRect(rect)
 end
 
 --events
+function MapView:callfuncAddWave(event)
+	dump(event, "event")
+	self:addWave(event.waveData)
+end
+
 function MapView:callfuncAddEnemys(event)
 	for i,enemyData in ipairs(event.enemys) do
 		local zorder = #event.enemys - i
@@ -512,7 +521,9 @@ function MapView:singleFire(datas)
 		local enemy = data.enemy
 		local zo  = enemy:getLocalZOrder()
 		local pi  = enemy:getPlaceZOrder()
-		-- print("placeZOrder: "..pi.." zorder: "..zo)
+		print("placeZOrder: "..pi.." zorder: "..zo)
+		print("maxPlaceZOrder", maxPlaceZOrder)
+		print("maxZorder", maxZorder)
 		if pi >= maxPlaceZOrder then
 			if zo >= maxZorder then 
 				selectedData = data
@@ -524,6 +535,7 @@ function MapView:singleFire(datas)
 
 	--hitted
 	if selectedData == nil then return end
+	print("function MapView:singleFire(datas)")
 	local demageScale = selectedData.demageScale or 1.0
 	local enemy = selectedData.enemy
 	
@@ -574,6 +586,10 @@ function MapView:onExit()
 	if self.schCheckNumleft then
 		scheduler.unscheduleGlobal(self.schCheckNumleft)
 	end		
+
+	if self.addEnemysSch then 
+		scheduler.unscheduleGlobal(self.addEnemysSch)
+	end
 end
 
 
