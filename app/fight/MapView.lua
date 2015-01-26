@@ -134,8 +134,7 @@ function MapView:startFight(event)
 	self.fightDescModel:start()
 	scheduler.performWithDelayGlobal(
 		handler(self, self.updateEnemys), 2.0)
-	self.checkWaveHandler = scheduler.performWithDelayGlobal(
-		handler(self, self.checkWave), 5.0)	
+
 end
 
 function MapView:updateEnemys()
@@ -160,6 +159,8 @@ function MapView:updateEnemys()
 
 	--addEnemys
 	self:addWave(wave.enemys)
+
+	
 end
 
 function MapView:addWave(waveData)
@@ -187,10 +188,12 @@ function MapView:addWave(waveData)
 				print("curzorder:", zorder)
 				self:cacheEnemy(group.property, pos, zorder)
 			end
-
-			self.addEnemysSch = scheduler.performWithDelayGlobal(addEnemyFunc, delay)
+			--todo
+			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
 		end
 	end	
+	self.checkWaveHandler = scheduler.performWithDelayGlobal(
+		handler(self, self.checkWave), lastTime + 1)		
 end
 
 function MapView:showEnemyIntro(descId, time)

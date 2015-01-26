@@ -53,13 +53,13 @@ configs["zibaob"] = {
 }
 
 configs["hs"] = {
-	title = "出现新兵种！",
+	title = "不要误伤人质！",
 	name = "人质",
 	spc = "特性：",
-	skill = {"移动快","近身自爆","血量低"},
-	weakness = "瓦斯罐",
-	describe = "移动快，近身自爆攻击。",
-	playanim = "stand",
+	skill = {"千万不要误伤人质！"},
+	weakness = " ",
+	describe = " ",
+	playanim = "speak1",
 }
 configs["feiji"] = {
 	title = "出现新兵种！",
@@ -68,7 +68,7 @@ configs["feiji"] = {
 	skill = {"移动快","会飞","发导弹"},
 	weakness = "瓦斯罐",
 	describe = "移动快，近身自爆攻击。",
-	playanim = "stand",
+	playanim = "fireright",
 }
 configs["jipu"] = {
 	title = "出现新兵种！",
@@ -77,7 +77,7 @@ configs["jipu"] = {
 	skill = {"移动快","发导弹","血量低"},
 	weakness = "瓦斯罐",
 	describe = "移动快，近身自爆攻击。",
-	playanim = "stand",
+	playanim = "fireright",
 }
 
 function EnemyDescConfig.getConfig(enemyID)

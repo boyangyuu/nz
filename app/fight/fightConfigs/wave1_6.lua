@@ -8,7 +8,19 @@ local waves = {
 				descId = "zibaob", --简介
 				time = 3,	
 				num = 1,
-				pos = {200},
+				pos = {300},
+				delay = {4},
+				property = {
+					placeName = "place2" ,
+					id = 9,
+					type = "bao",
+				},
+			},
+			{
+			
+				time = 9,	
+				num = 1,
+				pos = {500},
 				delay = {4},
 				property = {
 					placeName = "place2" ,
@@ -18,10 +30,10 @@ local waves = {
 			},
 			
 			{
-				time = 10,
+				time = 15,
 				num = 6,
 				delay = {0,1.4,0.7,0.8,1.6,2.4},
-				pos = {250,350,550,900,1000,1080},
+				pos = {350,470,500,960,1000,1080},
 				property = {
 					type = "jin",
 					placeName = "place3",  
@@ -29,7 +41,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,	
+				time = 18,	
 				num = 1,
 				pos = {300},
 				delay = {0.9},
@@ -37,6 +49,117 @@ local waves = {
 					placeName = "place2" ,
 					id = 8,
 					type = "jin",
+				},
+			},
+			{
+				time = 22,		
+				num = 4,
+				pos = {0,250,300,350,},
+				delay = {0,0.9,1.8,2.5,},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 25,		
+				num = 2,
+				pos = {300,400},
+				delay = {1.8,2.3},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	
+				},
+			},
+			{
+				time = 28,		
+				num = 4,
+				pos = {600,550,500,450,},
+				delay = {0,0.7,1.8,2.4,},
+				property = { 
+					placeName = "place3",
+					startState = "rollleft",
+					id = 1,	
+				},
+			},
+			{
+				time = 31,		
+				num = 2,
+				pos = {500,550},
+				delay = {0.8,1.6},
+				property = { 
+					placeName = "place4",
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	                                        --20个怪
+				},
+			},
+			{
+				time = 35,	
+				num = 1,
+				pos = {300},
+				delay = {0.9},
+				property = {
+					placeName = "place2" ,
+					id = 8,
+					type = "jin",
+				},
+			},
+			{
+				time = 38,		
+				num = 4,
+				pos = {0,250,300,350,},
+				delay = {0,0.9,1.8,2.5,},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 41,		
+				num = 1,
+				pos = {300},
+				delay = {1.8},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	
+				},
+			},
+			{
+				time = 44,		
+				num = 4,
+				pos = {600,550,500,450,},
+				delay = {0,0.7,1.8,2.4,},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,	
+				},
+			},
+			{
+				time = 47,		
+				num = 1,
+				pos = {550},
+				delay = {0.8},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	                                        --20个怪
 				},
 			},
 			
@@ -84,11 +207,11 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=4,hp=260,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=60,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=4,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=60,fireCd=5,
+	{id=2,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
@@ -100,23 +223,23 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=260,walkRate=180,walkCd=1,fireRate=30,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=260,walkRate=180,walkCd=2,fireRate=300,fireCd=6,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=1,
+	{id=6,image="daodan",demage=12,hp=85,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=5,hp=325,fireRate=30,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=6,hp=365,fireRate=180,fireCd=5,speed=60,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=5,hp=650,fireRate=30,fireCd=4,speed=20,
+	{id=8,image="dunbing",demage=5,hp=1000,fireRate=240,fireCd=5,speed=30,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=20,hp=1000,fireRate=30,speed=100,
+	{id=9,image="zibaob",demage=30,hp=365,fireRate=30,speed=120,
 	weak1=3},	
 
 	

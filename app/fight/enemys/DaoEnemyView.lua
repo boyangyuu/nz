@@ -39,8 +39,8 @@ end
 function DaoEnemyView:tick()
     --fire
     local fireRate, isAble = self.enemy:getFireRate()
-    assert(fireRate > 1, "invalid fireRate")
     if isAble then 
+        assert(fireRate > 1, "invalid fireRate")
         randomSeed = math.random(1, fireRate)
         if randomSeed > fireRate - 1 then 
             self:playAfterAlert("playFire", handler(self, self.playFire))
@@ -50,9 +50,8 @@ function DaoEnemyView:tick()
 
     --walk
     local walkRate, isAble = self.enemy:getWalkRate()
-    assert(walkRate > 1, "invalid walkRate")
-
     if isAble then
+        assert(walkRate > 1, "invalid walkRate")
         randomSeed =  math.random(1, walkRate)
         if randomSeed > walkRate - 1 then 
             self:play("playWalk", handler(self, self.playWalk))
@@ -61,20 +60,19 @@ function DaoEnemyView:tick()
 
     --roll
     local rollRate, isAble = self.enemy:getRollRate()
-    if rollRate ~= nil  then 
+
+    if isAble then 
         assert(rollRate > 1, "invalid rollRate")
-        if isAble then 
-            randomSeed =  math.random(1, rollRate)
-            if randomSeed > rollRate - 1 then 
-                self:playRoll()
-            end
-        end    
-    end
+        randomSeed =  math.random(1, rollRate)
+        if randomSeed > rollRate - 1 then 
+            self:playRoll()
+        end
+    end    
 end
 
 function DaoEnemyView:playFire()
     --导弹
-    self.armature:getAnimation():play("fire" , -1, 0) 
+    self.armature:getAnimation():play("fire" , -1, 1) 
 
     print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
@@ -110,7 +108,7 @@ end
 
 function DaoEnemyView:playRollLeft()
     if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then return end
-    self.armature:getAnimation():play("rollleft" , -1, 0) 
+    self.armature:getAnimation():play("rollleft" , -1, 1) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 
     local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
@@ -121,7 +119,7 @@ end
 
 function DaoEnemyView:playRollRight()
     if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then return end
-    self.armature:getAnimation():play("rollright" , -1, 0) 
+    self.armature:getAnimation():play("rollright" , -1, 1) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 
     local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
@@ -132,7 +130,7 @@ end
 
 --Attackable interface
 function DaoEnemyView:playHitted(event)
-    self.armature:getAnimation():play("hit" , -1, 0) 
+    self.armature:getAnimation():play("hit" , -1, 1) 
 
     --飘红
     self:playHittedEffect()
