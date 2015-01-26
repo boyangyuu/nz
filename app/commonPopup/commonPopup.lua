@@ -113,26 +113,31 @@ function commonPopup:initUI(properties)
 		addBtnEventListener(btntrue, function( event )
 			if event.name == "began" then
 				return true
-			elseif event.name == "end" then 
-				self:onClickCofirm()
+			elseif event.name == "ended" then
+				print("btntrue is pressed!") 
+				ui:closePopup("commonPopup")
 			end
 		end)
 
 		addBtnEventListener(btnfalse, function( event )
 			if event.name == "began" then
 				return true
-			elseif event.name == "end" then
-				self:onClickClose()
+			elseif event.name == "ended" then
+				print("btnfalse is pressed!")
+				ui:closePopup("commonPopup")
 			end
 		end)
 
 		btncall:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
 			if event.name == "began" then
+				-- print("btncall is pressed!")
 				return true
-			elseif event.name == "end" then
+			elseif event.name == "ended" then
+				
 				if device.platform == "android" then
-					local className = "org/cocos2dx/lua/appActivity"
-					luaj.callStaticMethod(className, "callPhone")
+					-- local className = "org/cocos2dx/lua/appActivity"
+					-- luaj.callStaticMethod(className, "callPhone")
+					print("btncall is pressed!")
 				end
 			end
 		end)
