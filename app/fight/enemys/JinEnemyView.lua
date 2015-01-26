@@ -41,7 +41,7 @@ function JinEnemyView:tick(t)
     if isAble then 
         randomSeed = math.random(1, fireRate)
         if randomSeed > fireRate - 1 then 
-            self:playAfterAlert("playFire", handler(self, self.playAttack))
+            self:playAfterAlert("skill", handler(self, self.playAttack))
             self.enemy:beginFireCd()
         end
     end    

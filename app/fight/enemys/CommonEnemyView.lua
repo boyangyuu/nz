@@ -75,7 +75,7 @@ function CommonEnemyView:tick(t)
 		assert(fireRate > 1, "invalid fireRate")
 		randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
-			self:playAfterAlert("playFire", handler(self, self.playFire))
+			self:playAfterAlert("skill", handler(self, self.playFire))
 			self.enemy:beginFireCd()
 		end
 	end
