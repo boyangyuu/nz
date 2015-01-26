@@ -1,5 +1,4 @@
 --import
-import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local DialogLayer   = import("..dialog.DialogLayer")
 local FightDescLayer = import(".fightDesc.FightDescLayer")
@@ -67,6 +66,7 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.CONTROL_SET_EVENT,  handler(self, self.setComponentVisible))
         :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
+        :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
 
     cc.EventProxy.new(self.fightProp, self)
         :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
@@ -654,6 +654,13 @@ function FightPlayer:fire()
 end
 
 ----move----
+function FightPlayer:onResumePos(event)
+    self.focusNode:setPosition(display.width/2, display.height1/2)
+    self.layerGun:setPositionX(display.width/2 + 200)
+    self.layerMap:setPosition(0, 0)
+    self:justBgPos(self.layerMap)
+end
+
 function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
@@ -672,11 +679,14 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     if isNotMove then return end    
 
     local isOpenJu = map:getIsOpenJu()
-    local scale = isOpenJu and KFightConfig.scaleMoveBg * 4 or KFightConfig.scaleMoveBg 
+    local scale = isOpenJu and KFightConfig.scaleMoveBg * define.kJuRange  or KFightConfig.scaleMoveBg 
 
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
+    print("xOri", xOri)
+    print("yOri", yOri)
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
+
     local x, y = layerMap:getPosition()
     self:justBgPos(layerMap)
 end
@@ -698,16 +708,16 @@ function FightPlayer:justBgPos(node)
     if isNotMove then return end    
 
     local isOpenJu = map:getIsOpenJu()
-    local scale = isOpenJu and  4 or 1.0
+    local scale = isOpenJu and define.kJuRange or 1.0
 
-    local w, h = bgMap:getBgSize().width * scale, 
-        bgMap:getBgSize().height * scale
+    local w, h = bgMap:getBgSize().width* scale  ,
+        bgMap:getBgSize().height  * scale
     -- print("w", w)
     -- print("h", h)
     local offset = bgMap:getBgOffset()
     local xL = (w - display.width1) / 2  
     local yL1 = -(h - display.height1 + offset.y * 2) / 2 
-    local yL2 = (h - display.height1 - offset.y * 2) / 2 
+    local yL2 = (h - display.height1 - offset.y * 2) / 2
     local x, y = node:getPosition()
 
     --x

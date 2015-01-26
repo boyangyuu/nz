@@ -41,6 +41,8 @@ function Map:setIsOpenJu(isOpenJu_)
 		self:dispatchEvent({name = Map.GUN_OPEN_JU_EVENT})	
 	else
 		self:dispatchEvent({name = Map.GUN_CLOSE_JU_EVENT})
+		local fight = md:getInstance("Fight")
+		fight:dispatchEvent({name = fight.FIGHT_RESUMEPOS_EVENT})
 	end
 end
 
