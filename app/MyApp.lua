@@ -7,7 +7,7 @@ local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 GameState = require("framework.cc.utils.GameState")
-
+local IAPsdk = require("app.SDK.IAPsdk")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
@@ -30,7 +30,7 @@ md      = MD.new()
 um      = UM.new()
 define  = Define.new()
 
-local IAPsdk = require("app.SDK.IAPsdk")
+
 iap = IAPsdk.new()
 
 function MyApp:ctor()
