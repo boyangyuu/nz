@@ -82,6 +82,10 @@ function LevelMapLayer:initChooseLayer()
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     local btngift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
+    -- modified by lpf
+    local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_kefu")
+
+
     local armature = ccs.Armature:create("guang")
     -- armature:setPosition(-240,0)
     armature:setScale(2)
@@ -173,6 +177,19 @@ function LevelMapLayer:initChooseLayer()
         elseif event.name=='ended' then
             print("Btn is pressed!")
         end
+    end)
+
+    -- 添加客服按钮点击事件
+    btnkefu:setTouchEnabled(true)
+    btnkefu:onButtonPressed(function( event )
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function( event )
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    :onButtonClicked(function( event )
+        ui:showPopup("commonPopup",{type = "style4",
+                opacity = 0})
     end)
 
 end

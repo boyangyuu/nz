@@ -13,9 +13,9 @@ function IAPsdk:setTelecomOperator()
     local telecomOperator = nil
     if device.platform == 'android' then
         -- local result,telecomOperator = luaj.callStaticMethod("org/cocos2dx/lua/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
-        print("运营商名:",telecomOperator)
         return telecomOperator
     end
+	print("telecomOperator:",telecomOperator)
     return telecomOperator
 end
 
@@ -60,17 +60,23 @@ end
 ]]
 
 function IAPsdk:pay(name)
+	print(name)
 	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	dump(self.config,"self.config")
 	dump(args,"args:")
 
-	if isTest then
+	if isTest or isDebug or telecomOperator == nil then
 		self:callbackSuccess()
+		print("self:callbackSuccess()")
 	else
 		if device.platform == 'android' then
 			luaj.callStaticMethod(className, "pay", args, sig)
 		end
 	end
+end
+
+function IAPsdk:query()
+	local args = {self.config[name], handler(self, self.queryResult)}
 end
 
 function IAPsdk:callbackSuccess( result )
