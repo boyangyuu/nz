@@ -116,8 +116,30 @@ local enemys = {
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=20,hp=650,fireRate=30,speed=20,
+	{id=9,image="zibaob",demage=20,hp=1000,fireRate=30,speed=100,
 	weak1=3},	
+
+	
+	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
+	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
+	weak1=1},
+
+	--飞机         type = "feiji" ,
+	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=30, fireCd=4.0,
+	weak1=3,    award = 60},
+
+	--越野车       type = "jipu" ,
+	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=30, fireCd=4.0,
+	weak1=3,    award = 60},
+
+	--金币绿气球   type = "jinbi",
+	{id=13,image="qiqiu03",hp=1,weak1=3,award = 9},	--award = 9   金币数量为9	
+
+	--金币蓝气球   type = "jinbi",
+	{id=14,image="qiqiu02",hp=1,weak1=3,award = 15},	--award = 15  金币数量为15
+
+	--金币黄气球   type = "jinbi",
+	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
 
 }
 
