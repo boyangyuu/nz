@@ -30,6 +30,7 @@ function BaseBossView:ctor(property)
     --blood
     self:initBlood()
     self.isRed = false
+    self.isUnhurted = false
 	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
@@ -38,6 +39,8 @@ function BaseBossView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
+    cc.EventProxy.new(self.hero, self)
+    	:addEventListener(self.hero.ENEMY_KILL_LASTCALL_EVENT, handler(self, self.onLastCallDead)) 
 
     self:initBody()
 
@@ -114,7 +117,8 @@ function BaseBossView:setBlood(scale)
 end
 
 function BaseBossView:playStand()
-	self.armature:getAnimation():play("stand" , -1, 1)
+	local animName = self.isUnhurted and "stand02" or "stand"
+	self.armature:getAnimation():play(animName , -1, 1)
 end
 
 function BaseBossView:playFire()
@@ -250,6 +254,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local callfuncBeforeOut = function ()
 		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
 		self.pauseOtherAnim = true
+		self:setUnhurted(true)
 	end
 	local beforeOutCall = cc.CallFunc:create(callfuncBeforeOut)
 
@@ -276,6 +281,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--回去之后
 	local callfuncAfterLeft = function ()
 		self.pauseOtherAnim = false
+		self.setUnhurted(false)
 	end	
 	local afterLeftCall = cc.CallFunc:create(callfuncAfterLeft)
 
@@ -432,9 +438,26 @@ end
 function BaseBossView:zhaohuan()
 	local waveData = self.config["enemys"..self.zhaohuanIndex]
 	assert(waveData, "config is invalid, no enemys")
+	self.enemysCallNum = 0
+	self.enemysCallDeadNum = 0
+	for i,v in ipairs(waveData) do
+		self.enemysCallNum = self.enemysCallNum + v.num
+	end
+	print("self.enemysCallNum", self.enemysCallNum)
+
 	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
 		waveData = waveData})
+
 	self.zhaohuanIndex = self.zhaohuanIndex + 1
+end
+
+function BaseBossView:onLastCallDead(event)
+	print("function BaseBossView:onLastCallDead(event)")
+	self.enemysCallDeadNum = self.enemysCallDeadNum  + 1
+	if self.enemysCallNum == self.enemysCallDeadNum then 
+		print("取消无敌")
+		self:setUnhurted(false)	
+	end
 end
 
 function BaseBossView:setUnhurted(isUnhurted)
@@ -442,8 +465,7 @@ function BaseBossView:setUnhurted(isUnhurted)
 end
 
 function BaseBossView:playWudi()
-	print("function BaseBossView:playWudi()")
-	self.armature:getAnimation():play("stand02", -1, 1)
+	self:setUnhurted(true)
 end
 
 function BaseBossView:clearWeak()
@@ -561,6 +583,12 @@ function BaseBossView:checkSkill(demage)
 	end 
 end
 
+function BaseBossView:canHitted()
+	if self.isUnhurted  then 
+		return false
+	end
+	return true
+end
  
 function BaseBossView:onHitted(targetData)
 	local demage 	 = targetData.demage
@@ -570,9 +598,10 @@ function BaseBossView:onHitted(targetData)
 	local demageType = targetData.demageType
 	
 	--血量
-	if self.enemy:canHitted() then
-		self.enemy:decreaseHp(destDemage)
+	if not( self.enemy:canHitted() and self:canHitted() ) then
+		return
 	end
+	self.enemy:decreaseHp(destDemage)
 
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()

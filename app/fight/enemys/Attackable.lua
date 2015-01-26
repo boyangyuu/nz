@@ -205,6 +205,10 @@ function Attackable:getDeadDone()
 end
 
 function Attackable:setDeadDone()
+	if self.property["deadEventData"] then 
+		self.hero:dispatchEvent(self.property["deadEventData"])
+	end
+
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
 	end
