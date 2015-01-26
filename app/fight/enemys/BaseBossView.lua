@@ -175,21 +175,19 @@ function BaseBossView:playBombEffects()
 end
 
 function BaseBossView:playSkill(skillName)
-	-- print("BaseBossView:playSkill: "..skillName)
-	local str =  string.sub(skillName, 1, 4)
-	print("skillName", str)
+	print("BaseBossView:playSkill: "..skillName)
 	if skillName == "moveLeftFire" then 
-		self:play("moveLeftFire", handler(self, self.playMoveLeftDaoFire))
+		self:play("skill", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
-		self:play("moveRightFire", handler(self, self.playMoveRightDaoFire))
+		self:play("skill", handler(self, self.playMoveRightDaoFire))
 	elseif skillName == "saoShe" then
-		self:play("saoShe", handler(self, self.playSaoShe))
+		self:play("skill", handler(self, self.playSaoShe))
 	elseif skillName == "daoDan" then
-		self:play("daoDan", handler(self, self.playDaoDan))
+		self:play("skill", handler(self, self.playDaoDan))
 	elseif skillName == "chongfeng" then
-		self:play("chongfeng", handler(self, self.playChongfeng))
+		self:play("skill", handler(self, self.playChongfeng))
 	elseif skillName == "tieqiu" then
-		self:play("tieqiu", handler(self, self.playTieQiu))
+		self:play("skill", handler(self, self.playTieQiu))
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
 		-- print("index", index)
@@ -197,7 +195,7 @@ function BaseBossView:playSkill(skillName)
 	elseif string.sub(skillName, 1, 6) == "demage" then 
 		local num = string.sub(skillName, 7, 9)
 		num = tonumber(num)
-		print("num", num)
+		print(" demage num", num)
 		local per = num / 100
 		self.enemy:setDemageScale(per)	
 	end
@@ -362,6 +360,7 @@ function BaseBossView:playDaoDan()
 	local kDelayAnim = 0.6 		-- 导弹动画播放0.6s 再发导弹
 	--导弹
 	for i=1,2 do
+		print("BaseBossView :getDemageScale(),",self.enemy:getDemageScale())
 		local boneName = "dao"..i
 		local bone = self.armature:getBone(boneName):getDisplayRenderNode()
 		local delay = kDelayAnim
@@ -512,12 +511,18 @@ function BaseBossView:checkSkill(demage)
 	local persentC = hp
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
+		print("skillName：", skillName)
+		print("persents", persents)
+
 		for i, v in ipairs(persents) do
+			print("i:"..i.."	v:"..v)
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				-- print("v", v)
-				-- print("persentC", persentC)
-				-- print("persentO", persentO)
+				print("v", v)
+
+				print("persentC", persentC)
+				print("persentO", persentO)
+
 				print("playSKill:"..skillName)
 				local function callfuncSkill()
 					self:playSkill(skillName)

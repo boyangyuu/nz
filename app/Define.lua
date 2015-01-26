@@ -26,16 +26,17 @@ Define.kBaoRangeW 				= 200	--自爆兵范围
 Define.kBaoRangeH 				= 200	--自爆兵范围
 
 --人质
-Define.kRenzhiSpeed				= 600.0    --人质跑动速度 像素/s
+Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2      
+Define.kRenzhiWalkTime			= 0.6   
 
 --飞机兵 
-Define.kfeijiSpeed				= 700.0  --速度
+Define.kfeijiSpeed				= 500.0  --速度
 Define.kfeijiRunTime 			= 1.0	 --大范围移动时间
 Define.kfeijiWalkTime			= 0.6    --小范围移动时间
 
 --吉普车兵
-Define.kjipuSpeed				= 500.0  --速度
+Define.kjipuSpeed				= 400.0  --速度
 Define.kjipuRunTime 			= 1.0	 --大范围移动时间
 Define.kjipuWalkTime			= 0.6    --小范围移动时间
 

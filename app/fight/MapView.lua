@@ -161,7 +161,7 @@ function MapView:updateEnemys()
 	for groupId, group in ipairs(wave.enemys) do
 		--desc
 		print("groupId"..groupId)
-		self:showEnemyIntro(group.descId)
+		self:showEnemyIntro(group.descId, group.time)
 		for i = 1, group.num do
 			--delay
 			print("group time", group.time)
@@ -189,14 +189,14 @@ function MapView:updateEnemys()
 	self.checkWaveHandler = scheduler.performWithDelayGlobal(handler(self, self.checkWave), lastTime + 5)
 end
 
-function MapView:showEnemyIntro(descId)
+function MapView:showEnemyIntro(descId, time)
 	local function callfuncShow()
 		print("descId", descId)
 		if descId then 
 			self.fightDescModel:showEnemyIntro(descId)
 		end				
 	end
-	scheduler.performWithDelayGlobal(callfuncShow, 2.0)
+	scheduler.performWithDelayGlobal(callfuncShow, time)
 end
 
 function MapView:checkWave()
@@ -345,12 +345,14 @@ function MapView:tick(dt)
 			local award = enemyModel:getAward()
 			self:doKillAward(pos, award)
 			--remove
+			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
-			enemy:removeFromParent()
+
 		elseif enemy and enemy:getWillRemoved() then
 			--remove
+			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
-			enemy:removeFromParent()
+
 		end
 	end
 
@@ -402,7 +404,7 @@ function MapView:isCovered(enemy, focusNode)
 	    local pCover = cover:convertToWorldSpace(cc.p(0,0))
 	    coverBox.x = pCover.x
 	    coverBox.y = pCover.y
-	    dump(coverBox, "coverBox")
+	    -- dump(coverBox, "coverBox")
 	    --
 		local isCovered = cc.rectIntersectsRect(focusBox, coverBox)
 		if isCovered then 

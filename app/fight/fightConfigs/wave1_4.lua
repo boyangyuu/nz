@@ -6,7 +6,7 @@ local waves = {
 	{
 		enemys = { 
 			{
-				time = 2,
+				time = 3,
 				num = 1,
 				delay = {0},
 				pos = {350},
@@ -51,19 +51,45 @@ local waves = {
 				time = 9,
 				num = 1,
 				delay = {0},
-				pos = {200},
+				pos = {600},
 				property = {
-					placeName = "place2",  
+					placeName = "place9",  
 					startState = "rollleft",
+					id = 1,
+				},
+			},	
+			{
+				
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {10},
+				property = {
+					placeName = "place15",  
+					startState = "",
 					id = 1,
 				},
 			},	
 		},
 	},
 	{
-		enemys = { 
+		enemys = {
 			{
+				descId = "zpbing",               --简介
 				time = 3,
+				num = 1,
+				delay = {4},
+				pos = {500},
+				property = {
+					placeName = "place11",  
+					type = "dao",
+					id = 2,
+					missileId = 3,
+					missileType = "daodan",
+				},
+			}, 
+			{
+				time = 12,
 				num = 1,
 				delay = {0},
 				pos = {200},
@@ -74,7 +100,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 15,
 				num = 1,
 				delay = {0},
 				pos = {116},
@@ -85,7 +111,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 18,
 				num = 1,
 				delay = {0},
 				pos = {100},
@@ -96,7 +122,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,
+				time = 21,
 				num = 1,
 				delay = {0},
 				pos = {666},
@@ -110,7 +136,18 @@ local waves = {
 				},
 			},
 			{
-				time = 17,
+				time = 21,
+				num = 1,
+				delay = {0},
+				pos = {600},
+				property = {
+					placeName = "place5",  
+					id = 1,
+					startState = "rollright",
+				},
+			},
+			{
+				time = 24,
 				num = 1,
 				delay = {0},
 				pos = {76},
@@ -120,19 +157,7 @@ local waves = {
 					startState = "rollright",
 				},
 			},	
-			{
-				time = 20,
-				num = 1,
-				delay = {0},
-				pos = {15},
-				property = {
-					placeName = "place10",  
-					type = "dao",
-					id = 2,
-					missileId = 3,
-					missileType = "daodan",
-				},
-			},
+			
 			
 		},
 	},
@@ -141,7 +166,7 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=120,walkCd=1,rollRate=1200,rollCd=10,fireRate=420,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=4,
 	weak1=3},
 
 	--导弹兵
@@ -149,11 +174,11 @@ local enemys = {
 	weak1=3},		
 
 	--导弹
-	{id=3,image="daodan",demage=8,hp=100,
+	{id=3,image="daodan",demage=8,hp=1,
 	weak1=3},
 
 	--手雷兵
-	{id=4,image="shouleib",demage=0,hp=220,walkRate=200,walkCd=1.0,rollRate=1200,rollCd=10,fireRate=400,fireCd=5,
+	{id=4,image="shouleib",demage=0,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=5,
 	weak1=3},	
 	--手雷
 	{id=5,image="shoulei",demage=4,hp=1,
