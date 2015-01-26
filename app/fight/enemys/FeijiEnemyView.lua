@@ -60,7 +60,7 @@ function FeijiEnemyView:tick()
 	local fireRate, isAble = self.enemy:getFireRate()
 	assert(fireRate > 1, "invalid fireRate")
 	if isAble then 
-		randomSeed = math.random(1, fireRate)
+		local randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
 			self:playAfterAlert("playFire", handler(self, self.playFire))
 			self.enemy:beginFireCd()
@@ -69,11 +69,13 @@ function FeijiEnemyView:tick()
 
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
+
+
 	assert(walkRate > 1, "invalid walkRate")
 	if isAble then
-		randomSeed =  math.random(1, walkRate)
+		local randomSeed =  math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
-			self:play("playRun", handler(self, self.playWalk))
+			self:playWalk()
 		end
 	end
 
@@ -81,9 +83,9 @@ function FeijiEnemyView:tick()
 	local rollRate, isAble = self.enemy:getRollRate()
 	assert(rollRate > 1, "invalid rollRate")
 	if isAble then 
-		randomSeed =  math.random(1, rollRate)
+		local randomSeed =  math.random(1, rollRate)
 		if randomSeed > rollRate - 1 then 
-			self:play("playRun", handler(self, self.playRun))
+			self:playRun()
 		end
 	end
 end
@@ -192,8 +194,9 @@ function FeijiEnemyView:playWalkLeft()
 	local speed = self.speed * self:getScale()
 	local time  = self.walkTime
 	local width = speed * time 
-
+	-- print()
 	if not self:checkPlace(-width) then return end
+
 	self.direct = "left"
 	self.isRuning = true
 	self.armature:getAnimation():play("runleft" , -1, 1) 
