@@ -304,6 +304,7 @@ local waves = {
 		},
 
 	},
+
 	{	
 		waveType = "boss",
 		enemys = {                                              --boss
