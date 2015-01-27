@@ -39,7 +39,6 @@ function InfoLayer:ctor()
 	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
 	self:setTouchSwallowEnabled(false) 
-	scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.01)
 end
 
 function InfoLayer:loadCCS()
@@ -189,7 +188,7 @@ end
 -- end
 
 function InfoLayer:initGuide()
-    local isDone = self.guide:check("fight")
+    local isDone = self.guide:isDone("fight")
     if isDone then return end
 	
 	local rect = self.blood2:getBoundingBox()

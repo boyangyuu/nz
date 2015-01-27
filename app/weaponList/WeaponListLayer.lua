@@ -501,4 +501,6 @@ function WeaponListLayer:equip(weaponid)
 
 end
 
+--guide
+
 return WeaponListLayer
