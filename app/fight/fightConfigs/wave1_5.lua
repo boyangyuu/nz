@@ -168,7 +168,7 @@ local waves = {
  
 			
 			{
-				time = 11,
+				time = 9,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -180,7 +180,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 14,
+				time = 13,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,400,600,700},					
@@ -428,7 +428,7 @@ local waves = {
 				time = 2,
 				num = 3,
 				pos = {400,460,600},                               
-				delay = {0.2,1.5,1.9},                            
+				delay = {0.2,1.5,4},                            
 				property = { 
 					id = 10,
 					type = "renzhi",

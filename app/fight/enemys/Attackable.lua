@@ -14,7 +14,7 @@ function Attackable:ctor(property)
 	--instance
     self.hero = md:getInstance("Hero")	
     self.fight = md:getInstance("Fight")
-    dump(property, "property")
+    -- dump(property, "property")
 	self.enemy = self:getModel(property)
 	self.property = property
 
@@ -205,9 +205,7 @@ function Attackable:getDeadDone()
 end
 
 function Attackable:setDeadDone()
-	if self.property["deadEventData"] then 
-		self.hero:dispatchEvent(self.property["deadEventData"])
-	end
+
 
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
@@ -225,9 +223,6 @@ function Attackable:setWillRemoved()
 	end
 	self.willRemoved = true
 	
-	if self.property["deadEventData"] then 
-		self.hero:dispatchEvent(self.property["deadEventData"])
-	end
 end
 
 function Attackable:checkPlace(offset)
@@ -436,9 +431,11 @@ function Attackable:onEnter()
 end
 
 function Attackable:onExit()
+	if self.property["deadEventData"] then 
+		self.hero:dispatchEvent(self.property["deadEventData"])
+	end
 
 	self:removeAllSchedulers()  
-
 end
 
 return Attackable

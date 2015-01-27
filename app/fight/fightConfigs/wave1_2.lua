@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
+--[[
 	{
 		enemys = { 
 			{
@@ -304,7 +304,7 @@ local waves = {
 		},
 
 	},
-
+]]
 	{	
 		waveType = "boss",
 		enemys = {                                              --boss
@@ -344,7 +344,7 @@ local enemys = {
 	{id=4,image="daodan",demage=10,hp=1,weak1=1},
 
 	--铁球
-	{id=5,image="tieqiu",demage=20,hp=1000,weak1=1},	
+	{id=5,image="tieqiu",demage=20,hp=10000,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=4,
@@ -372,28 +372,28 @@ local bosses = {
 		walkRate = 180,                    --移动频率
 		walkCd = 2,                         --移动cd
 		chongfengDemage = 40,                --冲锋造成伤害
-		weak1 = 1.5,						--头 弱点伤害倍数
+		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90,0.7,0.50,0.30,0.10,
+				0.90, 0.7, 0.50, 0.30, 0.10,
 			},
 			moveRightFire = {
-				0.80,0.60, 0.40,0.20,0.05,
+				0.80, 0.60, 0.40, 0.20, 0.05,
 			},
 			chongfeng = {
-				0.95,  0.85,0.75,0.65,0.45,0.25,0.15,0.05,
+				0.95, 0.85, 0.75, 0.65, 0.45, 0.25, 0.15, 0.05,
 			},
 			tieqiu = {
-				0.95, 0.85, 0.65,0.50,0.35,0.20,0.05,
+				0.95, 0.85, 0.65, 0.50, 0.35, 0.20, 0.05,
 			},
 			weak2 = {                               --手 技能触发(可以同时)
-				0.80,0.4                         
+				0.80,0.60,0.40, 0.20,                        
 			},
 			weak1 = {                               --头 技能触发(可以同时)
-				0.60,0.2                         
+				0.90,0.70,0.50,0.30,0.10                        
 			},
 			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.85,
@@ -438,6 +438,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
+	self.goldLimits = {35}   --黄武激活所需杀人个数
 end
 
 return waveClass
