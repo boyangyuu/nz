@@ -27,7 +27,7 @@ function StoreCell:initCellUI(parameter)
             :onButtonPressed(function(event)
                 event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
             end)
-            :onButtonRelease(function(event)
+           :onButtonRelease(function(event)
                 event.target:runAction(cc.ScaleTo:create(0.1, 1))
             end)
             
@@ -89,15 +89,6 @@ function StoreCell:initCellUI(parameter)
     pos:setRotation(170)
     self:addChild(pos)
 
-    -- local node = display.newSprite("#icon_zuanshi.png",41,1)
-    -- node:setScale(1)
-    -- node:setPosition(-240,0)
-    -- self:addChild(node)
-
-    -- local node = display.newNode()
-    -- node:setPosition(-240,0)
-    -- self:addChild(node)
-
     local armature = ccs.Armature:create("guang")
     -- armature:setPosition(130,80)
     armature:setScale(20)
@@ -114,7 +105,6 @@ function StoreCell:initCellUI(parameter)
 
     if type == "prop" then
         icon_zuanshi:setVisible(true)
-        dump(record)
         local Img = display.newSprite("#"..record["imgname"]..".png",-230,0)
         self:addChild(Img)
         detail:setString(record["name"])
@@ -186,9 +176,19 @@ function StoreCell:initCellUI(parameter)
                         else
                             ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
                         end
+                    else
+                        local buyModel = md:getInstance("BuyModel")
+                        if record["nameid"] == "goldweapon" then
+                            buyModel:buy("goldWeapon",{})
+                        elseif record["nameid"] == "jijia" then
+                            buyModel:buy("armedMecha",{})
+                        elseif record["nameid"] == "lei" then
+                            buyModel:buy("handGrenade",{})
+                        end
                     end
                 elseif type == "bank" then
-                    self.userModel:buyDiamond(record["number"])
+                    local buyModel = md:getInstance("BuyModel")
+                    buyModel:buy("stone"..record["number"],{})
                 elseif type == "inlay" then
                     if self.userModel:costMoney(record["goldPrice"]) then
                         self.inlayModel:buyInlay(record["id"])

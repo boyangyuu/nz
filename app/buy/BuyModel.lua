@@ -54,19 +54,13 @@ function BuyModel:deneyPay()
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)
-	print("BuyModel:buy_weaponGiftBag(buydata)")
-	local weaponList = md:getInstance("WeaponListModel")
-	local weaponId = buydata.weaponId
-	-- dump(buydata, "buydata")
-	for i = 3, 8 do
-		if i ~= 6 then 
-			weaponList:setWeapon(i)
-			weaponList:onceFull(i)
-		end
+	local weaponListModel = md:getInstance("WeaponListModel")
+	local weapontable = weaponListModel:getAllWeapon()
+	for k,v in pairs(weapontable) do
+		weaponListModel:setWeapon(v)
+		weaponListModel:onceFull(v)
 	end
-	local data = getUserData()
-	data.giftBag.weaponGiftBag.isBuyed = true
-    setUserData(data)	
+	self:setBought("weaponGiftBag")
 end
 
 function BuyModel:buy_novicesBag( buydata )
@@ -87,6 +81,7 @@ function BuyModel:buy_novicesBag( buydata )
 	local goldnum = InlayModel:getGoldWeaponNum()
 	StoreModel:setGoldWeaponNum(goldnum)
 	StoreModel:refreshInfo("prop")
+	self:setBought("novicesBag")
 end
 
 function BuyModel:buy_goldGiftBag( buydata )
@@ -183,7 +178,6 @@ function BuyModel:buy_goldWeapon( buydata )
 end
 
 function BuyModel:buy_onceFull( buydata )
-	print("BuyModel:buy_handGrenade( buydata )")
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:onceFull(buydata.weaponid)
 end
@@ -194,10 +188,37 @@ function BuyModel:buy_resurrection( buydata )
 	--yby todo
 end
 
-function BuyModel:buy_stone( buydata )
-	print("BuyModel:buy_stone1( buydata )")
+function BuyModel:buy_stone10( buydata )
 	local UserModel = md:getInstance("UserModel")
-	UserModel:buyDiamond(buydata.buynum)
+	UserModel:buyDiamond(10)
+end
+function BuyModel:buy_stone45( buydata )
+	local UserModel = md:getInstance("UserModel")
+	UserModel:buyDiamond(45)
+end
+function BuyModel:buy_stone120( buydata )
+	local UserModel = md:getInstance("UserModel")
+	UserModel:buyDiamond(120)
+end
+function BuyModel:buy_stone260( buydata )
+	local UserModel = md:getInstance("UserModel")
+	UserModel:buyDiamond(260)
+end
+function BuyModel:buy_stone450( buydata )
+	local UserModel = md:getInstance("UserModel")
+	UserModel:buyDiamond(450)
+end
+
+function BuyModel:checkBought(giftId)
+	local data = getUserData()
+	local isDone = data.giftBag[giftId] 
+	return isDone
+end
+
+function BuyModel:setBought(giftId)
+	local data = getUserData()
+	data.giftBag[giftId] = true
+	setUserData(data)
 end
 
 return BuyModel

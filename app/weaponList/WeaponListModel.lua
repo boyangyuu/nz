@@ -12,10 +12,17 @@ WeaponListModel.REFRESHBTN_EVENT = "REFRESHBTN_EVENT"
 function WeaponListModel:ctor(properties, events, callbacks)
 	WeaponListModel.super.ctor(self, properties)
 	self:addComponent("components.behavior.EventProtocol"):exportMethods()
+	-- self:initConfigTable()
+end
+
+function WeaponListModel:initConfigTable()
+	self.config = getConfig("config/weapon_weapon.json")
+	-- dump(self.config)
 end
 
 function WeaponListModel:getWeaponRecord(index)
-	local WeaponRecord = getRecordByID("config/weapon_weapon.json", index)
+	-- local WeaponRecord = getRecordFromTable(self.config,"id",index)
+	local WeaponRecord = getRecordByID("config/weapon_weapon.json",index)
 	return WeaponRecord
 end
 
@@ -244,6 +251,15 @@ function WeaponListModel:getFightWeaponValue(bagIndex)
 	assert(record, "record is nil id:"..id)
 	table.merge(weaponValue, record)
 	return weaponValue
+end
+
+function WeaponListModel:getAllWeapon( )
+	self:initConfigTable()
+	local weapontable = {}
+	for k,v in pairs(self.config) do
+		table.insert(weapontable,v["id"])
+	end
+	return weapontable
 end
 
 return WeaponListModel

@@ -77,8 +77,19 @@ function InlayLayer:initUI()
             -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self.inlayModel:equipGoldInlays(true)
-            self.storeModel:refreshInfo("prop")
+            -- self.inlayModel:equipGoldInlays(true)
+            -- self.storeModel:refreshInfo("prop")
+            local goldweaponNum = self.inlayModel:getGoldWeaponNum()
+            if goldweaponNum > 0 then
+                self.inlayModel:equipAllInlays()
+                self.storeModel:refreshInfo("prop")
+            else
+                function equipGold()
+                    self.inlayModel:equipAllInlays(true)
+                end
+                local buyModel = md:getInstance("BuyModel")
+                buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
+            end
         end
     end)
 
