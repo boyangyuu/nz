@@ -69,7 +69,7 @@ function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
 	local isDone = data.guide[groupId] 
-	isDone = true
+	-- isDone = true
 	return isDone
 end
 
@@ -113,6 +113,15 @@ end
 function Guide:getCurConfig()
 	assert(self.curConfig, "guideconfigs为空 step index"..self.stepIndex)
 	return self.curConfig
+end
+
+function Guide:clearData()
+	local data = getUserData()
+	for k,v in pairs(data.guide) do
+		print(k,v)
+		data.guide[k] = false
+	end
+	setUserData(data)
 end
 
 return Guide

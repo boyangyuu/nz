@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+--[[	{
 		enemys = { 
 			{
 				descId = "zibaob", --简介
@@ -58,7 +58,7 @@ local waves = {
 
 
 		},
-	},	
+	},	]]
 	{
 		enemys = {  --boss
 			{

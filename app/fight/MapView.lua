@@ -554,14 +554,14 @@ function MapView:onHeroPlaneFire(event)
 end
 
 function MapView:playEffectShaked(event)
-	print("function MapView:playEffectShaked(event)")
+	-- print("function MapView:playEffectShaked(event)")
 	local tMove = cc.MoveBy:create(0.07, cc.p(-36, -40))
 	self:runAction(cc.Sequence:create(tMove, tMove:reverse(),
 		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
 end
 
 function MapView:playEffectJuShaked(event)
-	print("function MapView:playEffectJu(event)")
+	-- print("function MapView:playEffectJu(event)")
 	local x = 100
 	local y = 300
 	local tMove = cc.MoveBy:create(event.time1, cc.p(-x, -y))

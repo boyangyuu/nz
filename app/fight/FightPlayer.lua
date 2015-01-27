@@ -683,8 +683,8 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
 
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
-    print("xOri", xOri)
-    print("yOri", yOri)
+    -- print("xOri", xOri)
+    -- print("yOri", yOri)
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
 
     local x, y = layerMap:getPosition()
@@ -763,10 +763,11 @@ function FightPlayer:initGuide()
 
     --move
     local isMoveGuideUnDone = true
+    local rect_guidemove = cc.rect(70, 40, 300, 100)
     self.guide:addClickListener({
         id = "fight_move",
         groupId = "fight",
-        rect = self.btnJu:getBoundingBox(),
+        rect = rect_guidemove,
         endfunc = function (touchEvent)
             if touchEvent.name == "moved" and isMoveGuideUnDone then
                 isMoveGuideUnDone = false

@@ -224,6 +224,10 @@ function Attackable:setWillRemoved()
 		self:removeAllSchedulers()	
 	end
 	self.willRemoved = true
+	
+	if self.property["deadEventData"] then 
+		self.hero:dispatchEvent(self.property["deadEventData"])
+	end
 end
 
 function Attackable:checkPlace(offset)
@@ -252,6 +256,14 @@ function Attackable:checkPlace(offset)
 	-- print("xLeft", xLeft)
 	-- print("xRight", xRight)	
 	return xLeftLimit < xLeft and xRight < xRightLimit 
+end
+
+function Attackable:checkIdle()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	if currentName == "" then
+		print("playStand()")				
+		self:playStand()
+	end
 end
 
 function Attackable:play(state, handlerFunc)
