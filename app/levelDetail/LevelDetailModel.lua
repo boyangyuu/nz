@@ -8,7 +8,10 @@ local WeaponListModel = import("..weaponList.WeaponListModel")
 
 local LevelDetailModel = class("LevelDetailModel", cc.mvc.ModelBase)
 
+LevelDetailModel.REFRESH_WEAPON_LISTVIEW = "REFRESH_WEAPON_LISTVIEW"
+
 function LevelDetailModel:ctor(properties)
+	LevelDetailModel.super.ctor(self, properties)
 	self:initConfigTable()
 	self.weaponListModel = md:getInstance("WeaponListModel")
 end
@@ -106,6 +109,10 @@ function LevelDetailModel:weapontogether(weaponid)
 			self.weaponListModel:setWeapon(weaponid)
 		end
 	end
+end
+
+function LevelDetailModel:reloadlistview()
+	self:dispatchEvent({name = LevelDetailModel.REFRESH_WEAPON_LISTVIEW})
 end
 
 return LevelDetailModel

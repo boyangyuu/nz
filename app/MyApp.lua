@@ -140,11 +140,9 @@ function MyApp:createGameStateFile()
 
             -- 礼包购买状态
             giftBag = { --buy
-                            weaponGiftBag = 
-                            {
-                                isBuyed = false,
-                            }
-                            
+                        --false 为未购买
+                        weaponGiftBag =  false,
+                        novicesBag = false,
             },
     }
     GameState.save(data)
