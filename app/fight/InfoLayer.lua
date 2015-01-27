@@ -15,16 +15,23 @@ function InfoLayer:ctor()
 	self.weaponModel 	= md:getInstance("WeaponListModel")
 	self.guide 			= md:getInstance("Guide")
 	self.fight  		= md:getInstance("Fight")
+	self.inlay 			= md:getInstance("FightInlay")
 
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Hero.GUN_CHANGE_EVENT		, handler(self, self.onRefreshGun))
 		:addEventListener(Hero.GUN_BULLET_EVENT 	, handler(self, self.onRefreshBullet))	
 		:addEventListener(Hero.HP_INCREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.HP_DECREASE_EVENT	, handler(self, self.onHeroHpChange))
+		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.onKillEnemy))	
+	
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
 		:addEventListener(self.fight.INFO_SHOW_EVENT, handler(self, self.onShow))
-		
+
+	cc.EventProxy.new(self.inlay, self)
+		:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
+		:addEventListener(self.inlay.INLAY_GOLD_END_EVENT	, handler(self, self.onActiveGoldEnd))
+
 	self:loadCCS()
 	self:initUI()
 	self:initGuide()
@@ -38,15 +45,27 @@ function InfoLayer:loadCCS()
 	self.root = cc.uiloader:load("res/Fight/fightLayer/ui/infoUI.ExportJson")
 	self:addChild(self.root)
 
-	self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/heroBlood.ExportJson")
-	self:addChild(self.blood)
-	local bloodAnimNode = cc.uiloader:seekNodeByName(self.blood, "bloodAnimNode")
-	self.bloodAnim = ccs.Armature:create("xuetiao")
- 	bloodAnimNode:addChild(self.bloodAnim)
- 	self:rejustBloodAnim()
- 	self.bloodAnim:getAnimation():setMovementEventCallFunc(
- 		handler(self, self.onBloodMovementEvent)) 
- 	self.bloodAnim:getAnimation():play("chixu", -1, 1)
+	-- self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/heroBlood.ExportJson")
+	-- self:addChild(self.blood)
+	-- local bloodAnimNode = cc.uiloader:seekNodeByName(self.blood, "bloodAnimNode")
+	-- self.bloodAnim = ccs.Armature:create("xuetiao")
+ -- 	bloodAnimNode:addChild(self.bloodAnim)
+ 	-- self:rejustBloodAnim()
+ 	-- self.bloodAnim:getAnimation():setMovementEventCallFunc(
+ 	-- 	handler(self, self.onBloodMovementEvent)) 
+ 	-- self.bloodAnim:getAnimation():play("chixu", -1, 1)
+
+
+ 	self.bloodNode  = cc.uiloader:seekNodeByName(self.root, "bloodNode")
+ 	self.blood2 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar1") 
+ 	self.blood1 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar2") 
+ 	self.bloodLabel = cc.uiloader:seekNodeByName(self.bloodNode, "labelValue") 
+	self.bloodLabel :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
+    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
+
+    self.goldNode 	= cc.uiloader:seekNodeByName(self.root, "goldNode")
+    self.gold1    	= cc.uiloader:seekNodeByName(self.goldNode, "progressBar1") 
+    -- self.gold1:setPercent(1)
 end
 
 function InfoLayer:initUI()
@@ -62,6 +81,8 @@ end
 
 function InfoLayer:initBullet()
 	self.labelBulletNum = cc.uiloader:seekNodeByName(self.root, "labelBulletNum")	
+	self.labelBulletNum :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
+    self.labelBulletNum :enableOutline(cc.c4b(255, 255, 255,255), 2)
 	local gun = self.hero:getGun()
 	self.labelBulletNum:setAnchorPoint(cc.p(0.5, 0.5))
 	self:onRefreshBullet({num = gun:getBulletNum()})
@@ -102,18 +123,41 @@ function InfoLayer:onHeroHpChange(event)
 	-- print("self.hero:getMaxHp()", self.hero:getMaxHp())
 	-- print("self.hero:getHp()", self.hero:getHp())
 	-- print("event.name", event.name)
-	local blood1 = cc.uiloader:seekNodeByName(self.blood, "progressBar1") 
-	local blood2 = cc.uiloader:seekNodeByName(self.blood, "progressBar2")
+	self.bloodLabel:setString(self.hero:getHp())
 	if event.name == "HP_DECREASE_EVENT" then 
-	    blood2:setPercent(per)
-	    blood1:setPercentWithDelay(per, 0.3)
-	    self:rejustBloodAnim()
+		-- self.blood2:setScaleX(per / 100)
+		-- self.blood1:setScaleX(per / 100)
+		print("per", per)
+	    self.blood2:setPercent(per)
+	    self.blood1:setPercentWithDelay(per, 0.3)
+	    -- self:rejustBloodAnim()
 	else
-	    blood1:setPercent(per)
-	    blood2:setPercentWithDelay(per, 0.3)
-	    scheduler.performWithDelayGlobal(handler(self, self.rejustBloodAnim), 0.3)
+		-- self.blood1:setScaleX(per / 100)		
+		-- self.blood2:setScaleX(per / 100)
+	    self.blood1:setPercent(per)
+	    self.blood2:setPercentWithDelay(per, 0.3)
+	    -- scheduler.performWithDelayGlobal(handler(self, self.rejustBloodAnim), 0.3)
     end		
-    self.bloodAnim:getAnimation():play("xuetiao_s" , -1, 1)	
+    -- self.bloodAnim:getAnimation():play("xuetiao_s" , -1, 1)	
+end
+
+function InfoLayer:onKillEnemy(event)
+	if self.isGolding then return end 
+
+	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
+	self.gold1:setPercent(per)
+	-- if per == 100 then 
+	-- 	self:onHide
+	-- 	self.isPlayGolding = true
+
+end
+
+function InfoLayer:onActiveGold(event)
+	print("循环播放激活动画")
+end
+
+function InfoLayer:onActiveGoldEnd(event)
+	print("停止播放动画")
 end
 
 function InfoLayer:onShow(event)
@@ -124,30 +168,28 @@ function InfoLayer:onHide(event)
 	self:setVisible(false)
 end
 
-function InfoLayer:rejustBloodAnim()
-	local per = self.hero:getHp() / self.hero:getMaxHp()
-	local blood2 = cc.uiloader:seekNodeByName(self.blood, "progressBar2")
-    local box  = blood2:getBoundingBox()
-	-- dump(box, "box")
-    local posx = per * box.width
-    local posy = box.height / 2
-    self.bloodAnim:setPosition(cc.p(posx, posy))
+-- function InfoLayer:rejustBloodAnim()
+-- 	local per = self.hero:getHp() / self.hero:getMaxHp()
+-- 	local blood2 = cc.uiloader:seekNodeByName(self.blood, "progressBar2")
+--     local box  = blood2:getBoundingBox()
+-- 	-- dump(box, "box")
+--     local posx = per * box.width
+--     local posy = box.height / 2
+--     self.bloodAnim:setPosition(cc.p(posx, posy))
 
-end
+-- end
 
-function InfoLayer:onBloodMovementEvent(armatureBack,movementType,movementID)
-	if movementType == ccs.MovementEventType.loopComplete then
-		armatureBack:getAnimation():play("chixu", -1, 1)
-	end
-end
+-- function InfoLayer:onBloodMovementEvent(armatureBack,movementType,movementID)
+-- 	if movementType == ccs.MovementEventType.loopComplete then
+-- 		armatureBack:getAnimation():play("chixu", -1, 1)
+-- 	end
+-- end
 
 function InfoLayer:initGuide()
     local isDone = self.guide:check("fight")
     if isDone then return end
 	
-	local rect = self.blood:getBoundingBox()
-	rect.height = rect.height * 3
-	rect.y = rect.y - rect.height * 0.5
+	local rect = self.blood2:getBoundingBox()
 	--blood
     local data1 = {
         id = "fight_blood",
@@ -161,9 +203,7 @@ function InfoLayer:initGuide()
 end
 
 function InfoLayer:onEnter()
-	scheduler.performWithDelayGlobal(function()
-		self.guide:startGuide("fight")
-	end, 0.2)
+
 end
 
 

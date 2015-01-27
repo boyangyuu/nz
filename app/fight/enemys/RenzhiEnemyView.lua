@@ -130,7 +130,7 @@ end
 
 function RenzhiEnemyView:playSpeak()
 	-- local randomSeed = math.random(1, 2)
-	self.armature:getAnimation():play("speak1" , -1, 0) 
+	self.armature:getAnimation():play("speak1" , -1, 1) 
 end
 
 function RenzhiEnemyView:playRun()
@@ -169,7 +169,7 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
 	end
 
 	local animName = direct == 1 and "runright" or "runleft"
-	self.armature:getAnimation():play(animName , -1, 0) 
+	self.armature:getAnimation():play(animName , -1, 1) 
 	print("self.playAnimId = "..animName)
 	self.playAnimId = animName
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
@@ -195,7 +195,7 @@ function RenzhiEnemyView:playKill(event)
 	if self.schRestore  then 
 		scheduler.unscheduleGlobal(self.schRestore)
 	end
-	self.armature:getAnimation():play("die" ,-1 , 0)
+	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
 function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)

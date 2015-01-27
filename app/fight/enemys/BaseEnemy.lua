@@ -13,7 +13,6 @@ local FightConfigs = import("..fightConfigs.FightConfigs")
 function BaseEnemy:ctor(actor_property, enemy_property)
     --super
     BaseEnemy.super.ctor(self, actor_property) 
-    self.hp = self.config
 
     -- dump(enemy_property, "enemy_property")
     local demageScale = enemy_property["demageScale"] or 1.0
@@ -44,14 +43,16 @@ function BaseEnemy:getDemageScale()
 end
 
 function BaseEnemy:getFireRate()
+    if self.config["fireRate"] == nil then return 0, false end
 	return self.config["fireRate"], not self.isFireCd
 end
 
 function BaseEnemy:beginFireCd()
     self.isFireCd = true
-    -- assert(self.config["fireCd"] , "config fireCd is nil")
+    assert(self.config["fireCd"] , "config fireCd is nil")
     local fireCd = self.config["fireCd"] or 3.0
 
+    print("fireCd", fireCd)
     local function resumeCd()
         self.isFireCd = false
     end
@@ -59,6 +60,7 @@ function BaseEnemy:beginFireCd()
 end
 
 function BaseEnemy:getWalkRate()
+    if self.config["walkRate"] == nil then return 0, false end    
 	return self.config["walkRate"], not self.isWalkCd
 end
 
@@ -74,6 +76,7 @@ function BaseEnemy:beginWalkCd()
 end
 
 function BaseEnemy:getRollRate()
+    if self.config["rollRate"] == nil then return 0, false end        
 	return self.config["rollRate"], not self.isRollCd
 end
 
@@ -89,6 +92,7 @@ function BaseEnemy:beginRollCd()
 end
 
 function BaseEnemy:getSpeakRate()
+    if self.config["speakRate"] == nil then return 0, false end       
 	assert(self.config["speakRate"] , "config speakRate is nil")
 	return self.config["speakRate"], not self.isSpeakCd
 end

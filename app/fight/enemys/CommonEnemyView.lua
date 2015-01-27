@@ -70,20 +70,21 @@ function CommonEnemyView:tick(t)
 	--change state
 	--fire
 	local fireRate, isAble = self.enemy:getFireRate()
-	assert(fireRate > 1, "invalid fireRate")
+	
 	if isAble then 
+		assert(fireRate > 1, "invalid fireRate")
 		randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
-			self:playAfterAlert("playFire", handler(self, self.playFire))
+			self:playAfterAlert("skill", handler(self, self.playFire))
 			self.enemy:beginFireCd()
 		end
 	end
 
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
-	assert(walkRate > 1, "invalid walkRate")
-
+	
 	if isAble then
+		assert(walkRate > 1, "invalid walkRate")
 		randomSeed =  math.random(1, walkRate)
 		if randomSeed > walkRate - 1 then 
 			self:play("playWalk", handler(self, self.playWalk))
@@ -92,9 +93,9 @@ function CommonEnemyView:tick(t)
 
 	--roll
 	local rollRate, isAble = self.enemy:getRollRate()
-	assert(rollRate > 1, "invalid rollRate")
-
+	
 	if isAble then 
+		assert(rollRate > 1, "invalid rollRate")
 		randomSeed =  math.random(1, rollRate)
 		if randomSeed > rollRate - 1 then 
 			self:playRoll()

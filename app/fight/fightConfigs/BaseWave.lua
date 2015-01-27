@@ -37,9 +37,9 @@ end
 
 function BaseWave:getGoldLimit(goldIndex)
 	if self.goldLimits == nil then 
-		return 0
+		return 100000
 	else
-		return self.goldLimits[goldIndex] or 0
+		return self.goldLimits[goldIndex] or 100000
 	end
 end
 

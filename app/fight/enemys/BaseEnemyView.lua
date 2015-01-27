@@ -102,7 +102,6 @@ function BaseEnemyView:showAlert()
 	self.isShowAlerting = true
 	local armature = ccs.Armature:create("tanhao")
 
-
     --add
     local bone = self.armature:getBone("alert")
     local posBone =  bone:convertToWorldSpace(cc.p(0.0,0.0))
@@ -142,7 +141,10 @@ function BaseEnemyView:playWalk()
     local widthOffset = define.kEnemyWalkWidth * isLeft * self:getScale()
     local isAble = self:checkPlace(widthOffset)
 
-    if not isAble then return end
+    if not isAble then
+    	self:checkIdle() 
+    	return 
+    end
 	self.armature:getAnimation():play("walk" , -1, 1)
 	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	
@@ -208,14 +210,6 @@ function BaseEnemyView:playNextAnimCache()
 		print("playCache()")
 		playCache()
 	else 	
-		print("playStand()")				
-		self:playStand()
-	end
-end
-
-function BaseEnemyView:checkIdle()
-	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	if currentName == "" then
 		print("playStand()")				
 		self:playStand()
 	end
