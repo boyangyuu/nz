@@ -75,10 +75,6 @@ function IAPsdk:pay(name)
 	end
 end
 
-function IAPsdk:query()
-	local args = {self.config[name], handler(self, self.queryResult)}
-end
-
 function IAPsdk:callbackSuccess( result )
 	-- body
 	self.buyModel:payDone(result)

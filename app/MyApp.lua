@@ -34,12 +34,14 @@ define  = Define.new()
 iap = IAPsdk.new()
 
 function MyApp:ctor()
+
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
 end
 
 function MyApp:run()
+    print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
 end

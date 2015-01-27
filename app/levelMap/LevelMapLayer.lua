@@ -262,6 +262,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= i  then
                     local levelId = i  
+                    print(" addBtnEventListener(panelBtn[i], function(event)")
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     ui:showPopup("commonPopup",
@@ -313,7 +314,7 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onExit()
+function LevelMapLayer:onCleanup()
 end
     
 return LevelMapLayer

@@ -419,8 +419,8 @@ function Attackable:onEnter()
 	end
 end
 
-function Attackable:onExit()
-
+function Attackable:onCleanup()
+	print("Attackable:onCleanup()")
 	self:removeAllSchedulers()  
 
 end

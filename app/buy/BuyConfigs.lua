@@ -39,10 +39,10 @@ local configs = {
 	goldWeapon     = {				--金武
 			isGift = false,
 	},
-	onceFull       = {
+	onceFull       = {				--一键满级
 			isGift = false,
 	},
-	resurrection   = {        --fuhuo
+	resurrection   = {        		--复活
 			isGift = false,
 	},
 	stone          = {
