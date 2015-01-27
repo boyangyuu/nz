@@ -57,7 +57,7 @@ end
 
 function HomeBarLayer:refreshMoney()
     self.btnMoney:setString(self.usermodel:getMoney())
-    self.btnMoney:setString(self.usermodel:getDiamond())
+    self.btnDiamond:setString(self.usermodel:getDiamond())
 end   
 
 function HomeBarLayer:initHomeLayer(groupid)
