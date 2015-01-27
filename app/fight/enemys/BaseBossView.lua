@@ -462,10 +462,18 @@ end
 
 function BaseBossView:setUnhurted(isUnhurted)
 	self.isUnhurted = isUnhurted
+	if not isUnhurted and self.wudiAnim then 
+		self.wudiAnim:removeSelf()
+	end
 end
 
 function BaseBossView:playWudi()
 	self:setUnhurted(true)
+	self.wudiAnim = ccs.Armature:create("wdhd")
+	self.wudiAnim:getAnimation():play("wdhd", -1, 1)
+	self.wudiAnim:setPosition(cc.p(0, 141))
+	self.wudiAnim:setScale(1.3)
+	self.armature:addChild(self.wudiAnim, 10000)
 end
 
 function BaseBossView:clearWeak()
@@ -506,6 +514,7 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 		if self.pauseOtherAnim and movementID ~= "die" then 
 			return 
 		end		
+
 		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then
@@ -526,7 +535,7 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 end
 
 function BaseBossView:tick(t)
-	if self.pauseOtherAnim then return end 
+	if self.pauseOtherAnim or self.isUnhurted then return end 
 	--change state
 	local randomSeed 
 

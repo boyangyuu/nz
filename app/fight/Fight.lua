@@ -34,7 +34,6 @@ end
 function Fight:beginFight()
     --关卡
 
-
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
 end
@@ -76,6 +75,12 @@ function Fight:startFight()
 
    --check ju
    self:checkJuContorlType()
+
+   --check guide
+   local guide = md:getInstance("Guide")
+    scheduler.performWithDelayGlobal(function()
+        guide:startGuide("fight")
+    end, 2.0)   
 end
 
 function Fight:endFight()

@@ -106,7 +106,11 @@ function DaoEnemyView:playRoll()
 end
 
 function DaoEnemyView:playRollLeft()
-    if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then return end
+    if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then 
+        self:checkIdle()
+        return
+    end
+
     self.armature:getAnimation():play("rollleft" , -1, 1) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 
@@ -117,7 +121,11 @@ function DaoEnemyView:playRollLeft()
 end
 
 function DaoEnemyView:playRollRight()
-    if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then return end
+    if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then 
+        self:checkIdle() 
+        return
+    end
+
     self.armature:getAnimation():play("rollright" , -1, 1) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 

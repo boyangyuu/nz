@@ -189,9 +189,7 @@ function InfoLayer:initGuide()
     local isDone = self.guide:check("fight")
     if isDone then return end
 	
-	local rect = self.blood:getBoundingBox()
-	rect.height = rect.height * 3
-	rect.y = rect.y - rect.height * 0.5
+	local rect = self.blood2:getBoundingBox()
 	--blood
     local data1 = {
         id = "fight_blood",
@@ -205,9 +203,7 @@ function InfoLayer:initGuide()
 end
 
 function InfoLayer:onEnter()
-	scheduler.performWithDelayGlobal(function()
-		self.guide:startGuide("fight")
-	end, 0.2)
+
 end
 
 
