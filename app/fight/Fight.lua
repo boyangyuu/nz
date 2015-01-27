@@ -79,8 +79,8 @@ function Fight:startFight()
    --check guide
    local guide = md:getInstance("Guide")
     scheduler.performWithDelayGlobal(function()
-        guide:startGuide("fight")
-    end, 2.0)   
+        guide:check("fight01")
+    end, 3.0)   
 end
 
 function Fight:endFight()

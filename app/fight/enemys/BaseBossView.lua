@@ -416,7 +416,8 @@ function BaseBossView:playChongfeng()
     local aheadEndFunc = function ()
         -- print("aheadEnd")
         self.isAheading = false
-        local destDemage = self.property["chongfengDemage"]
+        local destDemage = self.property["chongfengDemage"] * 
+        				self.enemy:getDemageScale()
         self.enemy:hit(self.hero, destDemage)
         self:setPosition(posOri)
         self:scaleBy(0.01, 1/scale)

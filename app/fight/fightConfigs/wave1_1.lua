@@ -46,7 +46,7 @@ local waves = {
 			},						
 		},
 	},	
-	{
+--[[	{
 		enemys = {
 			{
 				time = 2,
@@ -98,7 +98,7 @@ local waves = {
 			},	
 
 		},
-	},				
+	},	]]			
 }
 
 --enemy的关卡配置

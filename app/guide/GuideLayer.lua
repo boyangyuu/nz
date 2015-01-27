@@ -159,9 +159,8 @@ end
 
 function GuideLayer:loadCCS()
 	--ui
-	if self.guideNode then 
-		self.guideNode:removeFromParent() 
-	end
+	self:removeAllChildren()
+
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
@@ -233,7 +232,7 @@ function GuideLayer:refreshCommentUI()
 	local offset = cfg.contentOffset or {x = 0, y = 0}
 	local pos = cc.p(display.width1/2 + offset.x, 
 				display.height1/2 + offset.y)
-	dump(pos, "")
+	-- dump(pos, "")
 	contentNode:setPosition(pos)
 
 	--msg
@@ -249,8 +248,9 @@ function GuideLayer:start(event)
 	self:setVisible(true)
 	self:setTouchEnabled(true)
 	self.isGuiding = true
-	if self.bg then self.bg:setVisible(true) end 
-	if self.guideNode then self.guideNode:setVisible(true) end 
+	-- if self.bg then self.bg:setVisible(true) end 
+	-- if self.guideNode then self.guideNode:setVisible(true) end 
+
 	self:refreshUI()
 	self:refreshCommentUI()
 end

@@ -27,11 +27,10 @@ function FightResultLayer:ctor(properties)
 
     self.itemsTable = {}
 
-	self.isDone = self.guide:check("fightju")
+	self.isDone = self.guide:isDone("fightju")
     
     local fightResult = self.fightModel:getFightResult()
     self.grade = self:getGrade(fightResult["hpPercent"])
-
 
 	self:getinlayfall()
 	self:loadCCS()
@@ -39,9 +38,9 @@ function FightResultLayer:ctor(properties)
 	self:initUIContent()
 
 	self:playstar(self.grade)
+    self:setNodeEventEnabled(true)
 
-	
-	
+	self:initGuide()
 end
 
 function FightResultLayer:loadCCS()
@@ -115,6 +114,7 @@ function FightResultLayer:initUI()
     self.btngetall:setButtonLabel("disabled" , lqcg)
 
 	function showButton()
+		self:startGuide()
 	    self.btninlay:runAction(cc.FadeIn:create(0.3))
 		self.btngetall:runAction(cc.FadeIn:create(0.3))
 		self.btnback:setButtonEnabled(true)
@@ -152,7 +152,7 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then		
 	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-	        dump(curGroup)
+	        -- dump(curGroup)
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})
         end
     end)
@@ -211,7 +211,7 @@ function FightResultLayer:getinlayfall()
     local config = getConfig("config/inlayfall.json")
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	local curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
-	dump(curRecord)
+	-- dump(curRecord)
 	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(curRecord["suipianid"])
 	
 	-- 武器碎片
@@ -223,9 +223,9 @@ function FightResultLayer:getinlayfall()
 	-- 狙击
 	
 	local isExist = self.weaponListModel:isWeaponExist(6)
-	dump(self.isDone == false)
-	dump(curRecord["type"] == "boss")
-	dump(isExist == false)
+	-- dump(self.isDone == false)
+	-- dump(curRecord["type"] == "boss")
+	-- dump(isExist == false)
     if self.isDone == false and curRecord["type"] == "boss" and isExist == false then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
@@ -276,8 +276,8 @@ function FightResultLayer:getinlayfall()
 	end
 	self.giveTable = giveTable
 	self.lockTable = lockTable
-	dump(giveTable)
-	dump(lockTable)
+	-- dump(giveTable)
+	-- dump(lockTable)
 
 	for k,v in pairs(giveTable) do
 		table.insert(self.itemsTable,v)
@@ -332,7 +332,7 @@ function FightResultLayer:quickInlay()
 			table.insert(quickinlay,{inlayid = v["id"]})
 		end
 	end
-	dump(quickinlay)
+	-- dump(quickinlay)
 	self.inlayModel:equipAllBestInlays(quickinlay)
 end
 
@@ -368,8 +368,26 @@ function FightResultLayer:turnLeftCard()
 	end
 end
 
-function FightResultLayer:cancel()
-	
+function FightResultLayer:onEnter()
+end
+
+function FightResultLayer:startGuide()
+	self.guide:check("afterfight01")	
+end
+
+function FightResultLayer:initGuide()
+    local isDone = self.guide:isDone("afterfight01")
+    if isDone then return end
+
+    self.guide:addClickListener({
+        id = "afterfight01_jixu",
+        groupId = "afterfight01",
+        rect = self.btnback:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})        
+        end
+     })    	
 end
 
 return FightResultLayer

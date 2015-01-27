@@ -108,15 +108,15 @@ function MyApp:createGameStateFile()
                         inlayed  = {
                                         --存id bullet = 1,
                                     bullet = nil,
-                                    clip = nil,
-                                    speed = nil,
+                                    clip = 5,
+                                    speed = 9,
                                     crit = nil,
                                     blood = nil,
-                                    helper = nil,
+                                    helper = 22,
                         },
             },
             prop = {
-                        lei = {num = 0},
+                        lei = {num = 5},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
             },
@@ -126,13 +126,14 @@ function MyApp:createGameStateFile()
             diamond = 100,
                       
             currentlevel =  {
-                        group = 2,
+                        group = 1,
 
                         level = 5,
             },
             guide = {
-                        fight = false,
-                        fightju = false,
+                        fight01         = false,
+                        afterfight01    = false,
+                        fight02         = false,
             },
             fight = {
                         isPreferBag1 = true,
