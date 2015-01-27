@@ -341,6 +341,10 @@ local enemys = {
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
 
+	--boss召唤第一波自爆兵        --type = "bao",
+	{id=16,image="zibaob",demage=10,hp=65,fireRate=30,speed=120,
+	weak1=3},	
+
 }
 
 --boss的关卡配置
@@ -349,39 +353,42 @@ local bosses = {
 	{
 		image = "boss01", --图片名字
 		hp = 150000,
-		demage = 3,
-		fireRate = 240,
-		fireCd = 4,  		
+		demage = 2,
+		fireRate = 300,
+		fireCd = 5,  		
 		walkRate = 180,
 		walkCd = 2,                         --移动cd		
 		saoFireOffset = 0.4, 		--扫射时间间隔
 		saoFireTimes = 10, 			--一次扫射10下
-		weak1 = 2,					--弱点伤害倍数
-		weak2 = 2,					--弱点伤害倍数
-		weak3 = 3,					--弱点伤害倍数
-		skilltrigger = {   			--技能触发(可以同时)
-			zhaohuan = {0.999},                                        --召唤
-			wudi	 = {0.999},                                        --无敌
+		weak1 = 1.2,					--手  弱点伤害倍数
+		weak2 = 1.2,					--腹  弱点伤害倍数
+		weak3 = 1.2,					--头  弱点伤害倍数
+		skilltrigger = {   			   --技能触发(可以同时)
+
+			wudi	 = {0.95,0.75},                                        --无敌
+			zhaohuan = {0.95,0.75},                                        --召唤
+
+
 			moveLeftFire = {
-				0.65, 0.35,
+				0.90,0.70,0.60, 0.50,0.30,0.10,
 			},
 			moveRightFire = {
-				0.55, 0.25,
+				0.80,0.60,0.40,0.20, 0.05,
 			},
-			daoDan = {
-				0.80, 0.61, 0.40, 0.20,
+			daoDan = {                                   --两发导弹
+				0.999,0.96,0.93,0.85,0.75,0.65, 0.55,0.45, 0.35,0.25,
 			},
 			saoShe = {                             --调用普通攻击的伤害
-				0.95,0.70, 0.45,
+				0.55, 0.35,0.15
 			},
 			weak1 = {
-				0.60,
+				0.99,0.70,
 			},	
 			weak2 = {
-				0.60,
+				0.90,0.60,0.30
 			},	
 			weak3 = {
-				0.30,
+				0.80,0.50,0.20
 			},	
 			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.85,
@@ -396,25 +403,36 @@ local bosses = {
 
 		enemys1 = {                                                   --第一波召唤的兵
 			{
-				time = 3,
-				num = 4,
-				delay = {0.6,0.8,1.1,1.6},
-				pos = {10,50, 120, 90},
+				time = 2,	
+				num = 3,
+				pos = {560,660,760},
+				delay = {0.2,0.4,0.5},
 				property = {
+					placeName = "place3" ,
+					id = 16,
 					type = "bao",
-					placeName = "place2" ,
-					id = 4,
 				},
-			},		
+			},
 			{
-				time = 3,
-				num = 5,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},
+				time = 9,	
+				num = 4,
+				pos = {520,620,830,950},
+				delay = {0.8,0.6,0.4,0.2},
 				property = {
-					placeName = "place2" , 
-					startState = "rollright",
-					id = 1,
+					placeName = "place3" ,
+					id = 16,
+					type = "bao",
+				},
+			},
+			{
+				time = 16,	
+				num = 5,
+				pos = {400,480,660,860,1050},
+				delay = {0.2,0.8,0.6,0.4,0.2},
+				property = {
+					placeName = "place3" ,
+					id = 16,
+					type = "bao",
 				},
 			},
 		},
@@ -422,28 +440,53 @@ local bosses = {
 
 		enemys2 = {                                                      --第二波召唤的兵
 			{
-				time = 3,
-				num = 4,
-				delay = {0.6,0.8,1.1,1.6},
-				pos = {10,50, 120, 90},
+				time = 2,
+				num = 1,
+				pos = {300},
+				delay = {0.5},                         -- 飞机
 				property = {
-					type = "san",
-					enemyId = 1, 
-					placeName = "place2" ,
-					id = 3,
+					type = "feiji" ,
+					id = 11,
+					placeName = "place10",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 20.0,		                                    --持续时间			
 				},
-			},		
+			},
 			{
 				time = 3,
-				num = 5,
-				delay = {0.3, 0.6, 0.9, 1.2, 1.5},
-				pos = {10, 20, 50, 100, 60},
+				num = 1,
+				pos = {400},
+				delay = {0.5},                         -- 飞机
 				property = {
-					placeName = "place2" , 
-					startState = "rollright",
-					id = 1,
+					type = "feiji" ,
+					id = 11,
+					placeName = "place9",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 20.0,		                                    --持续时间			
 				},
-			},			
+			},
+			{
+				time = 4,
+				num = 1,
+				pos = {900},
+				delay = {0.5},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place9",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 20.0,		                                    --持续时间			
+				},
+			},
 		},		
 
 		getMoveLeftAction = function ()
