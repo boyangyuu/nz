@@ -13,6 +13,7 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 
+--平时
 isTest  = true
 isDebug = false
 
@@ -21,6 +22,9 @@ isDebug = false
 -- isDebug = true
 
 -- --正式打包
+-- isTest  = false        
+-- isDebug = false
+
 
 isTest  = false        
 isDebug = false
@@ -141,11 +145,9 @@ function MyApp:createGameStateFile()
 
             -- 礼包购买状态
             giftBag = { --buy
-                            weaponGiftBag = 
-                            {
-                                isBuyed = false,
-                            }
-                            
+                        --false 为未购买
+                        weaponGiftBag =  false,
+                        novicesBag = false,
             },
     }
     GameState.save(data)

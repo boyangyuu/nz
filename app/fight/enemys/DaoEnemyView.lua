@@ -39,8 +39,8 @@ end
 function DaoEnemyView:tick()
     --fire
     local fireRate, isAble = self.enemy:getFireRate()
-    assert(fireRate > 1, "invalid fireRate")
     if isAble then 
+        assert(fireRate > 1, "invalid fireRate")
         randomSeed = math.random(1, fireRate)
         if randomSeed > fireRate - 1 then 
             self:playAfterAlert("skill", handler(self, self.playFire))
@@ -50,9 +50,8 @@ function DaoEnemyView:tick()
 
     --walk
     local walkRate, isAble = self.enemy:getWalkRate()
-    assert(walkRate > 1, "invalid walkRate")
-
     if isAble then
+        assert(walkRate > 1, "invalid walkRate")
         randomSeed =  math.random(1, walkRate)
         if randomSeed > walkRate - 1 then 
             self:play("playWalk", handler(self, self.playWalk))

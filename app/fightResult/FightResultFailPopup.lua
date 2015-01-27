@@ -39,8 +39,12 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local fightProp = md:getInstance("FightProp")
-        	self:payDone()
+            local buy = md:getInstance("BuyModel")
+            function cancelGoldGift()
+                buy:buy("resurrection", {payDoneFunc = handler(self,self.payDone)})
+            end
+            buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone),
+                                    deneyBuyFunc = cancelGoldGift})
         end
     end)
 end

@@ -281,7 +281,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--回去之后
 	local callfuncAfterLeft = function ()
 		self.pauseOtherAnim = false
-		self.setUnhurted(false)
+		self:setUnhurted(false)
 	end	
 	local afterLeftCall = cc.CallFunc:create(callfuncAfterLeft)
 
@@ -416,8 +416,8 @@ function BaseBossView:playChongfeng()
     local aheadEndFunc = function ()
         -- print("aheadEnd")
         self.isAheading = false
-        local destDemage = self.property["chongfengDemage"] * 
-        				self.enemy:getDemageScale()
+        local destDemage = self.config["chongfengDemage"] 
+        	* self.enemy:getDemageScale()
         self.enemy:hit(self.hero, destDemage)
         self:setPosition(posOri)
         self:scaleBy(0.01, 1/scale)

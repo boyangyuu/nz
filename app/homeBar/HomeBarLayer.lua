@@ -69,6 +69,7 @@ function HomeBarLayer:initHomeLayer(groupid)
     local zuanshi = cc.uiloader:seekNodeByName(self.homeRootNode, "Image_18")
     local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
+
     self.btnBack:setTouchEnabled(true)  
     self.btnArsenal:onButtonPressed(function(event)
         event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
@@ -165,10 +166,11 @@ function HomeBarLayer:initHomeLayer(groupid)
         self:refreshCommonLayer("StoreLayer")
 
         local buy = md:getInstance("BuyModel")
-        buy:buy("goldGiftBag", { isAll = true})
+        buy:buy("goldGiftBag", {})
         self.btnInlay:setButtonEnabled(true)
         self.btnStore:setButtonEnabled(false)
         self.btnArsenal:setButtonEnabled(true)
+
     end)
 end
 
