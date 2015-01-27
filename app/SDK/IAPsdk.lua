@@ -12,7 +12,7 @@ end
 function IAPsdk:setTelecomOperator()
     local telecomOperator = nil
     if device.platform == 'android' then
-        -- local result,telecomOperator = luaj.callStaticMethod("org/cocos2dx/lua/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
+        local result,telecomOperator = luaj.callStaticMethod("org/cocos2dx/lua/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
         return telecomOperator
     end
 	print("telecomOperator:",telecomOperator)
