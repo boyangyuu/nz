@@ -29,8 +29,9 @@ end
 		self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 		return true
 	else
-		print("金钱不足请充值 弹出充值")
-		-- self:dis	
+		ui:showPopup("commonPopup",
+				 {type = "style2", content = "您的金币不足"},
+				 {opacity = 155})
 		return false
 	end
 end
@@ -43,7 +44,6 @@ function UserModel:costDiamond(diamond)
 		self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 		return true
 	else
-		print("钻石不足请充值 弹出充值")
 		return false
 	end
 end

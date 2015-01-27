@@ -40,12 +40,12 @@ function IAPsdk:initConfigs()
 		config["armedMecha"]       = "30000883682308"		--机甲
 		config["onceFull"]         = "30000883682309"		--一键满级
 		config["resurrection"]     = "30000883682310"	    --复活送黄武
-		config["stone1"]           = "30000883682311"		--一小堆宝石
-		config["stone2"]           = "30000883682312"		--一堆宝石
-		config["stone3"]           = "30000883682313"		--一麻袋宝石
-		config["stone4"]           = "30000883682314"		--一箱子宝石
-		config["stone5"]           = "30000883682315"		--堆成山的宝石
-		config["weapon"]   		   = "30000883682316"       --武器购买
+		config["stone10"]           = "30000883682311"		--一小堆宝石
+		config["stone45"]           = "30000883682312"		--一堆宝石
+		config["stone120"]           = "30000883682313"		--一麻袋宝石
+		config["stone260"]           = "30000883682314"		--一箱子宝石
+		config["stone450"]           = "30000883682315"		--堆成山的宝石
+		config["unlockWeapon"]   		   = "30000883682316"       --武器购买
 	elseif telecomOperator == "unicom" then
 
 	elseif telecomOperator == "telecom" then

@@ -39,20 +39,19 @@ end
 function DaoEnemyView:tick()
     --fire
     local fireRate, isAble = self.enemy:getFireRate()
-    assert(fireRate > 1, "invalid fireRate")
     if isAble then 
+        assert(fireRate > 1, "invalid fireRate")
         randomSeed = math.random(1, fireRate)
         if randomSeed > fireRate - 1 then 
-            self:playAfterAlert("playFire", handler(self, self.playFire))
+            self:playAfterAlert("skill", handler(self, self.playFire))
             self.enemy:beginFireCd()
         end
     end
 
     --walk
     local walkRate, isAble = self.enemy:getWalkRate()
-    assert(walkRate > 1, "invalid walkRate")
-
     if isAble then
+        assert(walkRate > 1, "invalid walkRate")
         randomSeed =  math.random(1, walkRate)
         if randomSeed > walkRate - 1 then 
             self:play("playWalk", handler(self, self.playWalk))
@@ -61,15 +60,13 @@ function DaoEnemyView:tick()
 
     --roll
     local rollRate, isAble = self.enemy:getRollRate()
-    if rollRate ~= nil  then 
+    if isAble then 
         assert(rollRate > 1, "invalid rollRate")
-        if isAble then 
-            randomSeed =  math.random(1, rollRate)
-            if randomSeed > rollRate - 1 then 
-                self:playRoll()
-            end
-        end    
-    end
+        randomSeed =  math.random(1, rollRate)
+        if randomSeed > rollRate - 1 then 
+            self:playRoll()
+        end
+    end    
 end
 
 function DaoEnemyView:playFire()
@@ -109,7 +106,11 @@ function DaoEnemyView:playRoll()
 end
 
 function DaoEnemyView:playRollLeft()
-    if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then return end
+    if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then 
+        self:checkIdle()
+        return
+    end
+
     self.armature:getAnimation():play("rollleft" , -1, 1) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 
@@ -120,7 +121,11 @@ function DaoEnemyView:playRollLeft()
 end
 
 function DaoEnemyView:playRollRight()
-    if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then return end
+    if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then 
+        self:checkIdle() 
+        return
+    end
+
     self.armature:getAnimation():play("rollright" , -1, 1) 
     local speed = define.kEnemyRollSpeed  * self:getScale() 
 

@@ -65,11 +65,12 @@ function BaoEnemyView:playBombEffects()
     for i=1,6 do
         local sch  = scheduler.performWithDelayGlobal(
             handler(self, self.playBombEffect), i * 0.1)
-        local sch1 = scheduler.performWithDelayGlobal(
-            handler(self, self.demageOthers), i * 0.1)
         self:addScheduler(sch)
-        self:addScheduler(sch1)
     end
+    local sch1 = scheduler.performWithDelayGlobal(
+        handler(self, self.demageOthers), 0.3)
+    
+    self:addScheduler(sch1)    
 end
 
 function BaoEnemyView:playHitted(event)

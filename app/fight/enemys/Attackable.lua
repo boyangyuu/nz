@@ -14,7 +14,7 @@ function Attackable:ctor(property)
 	--instance
     self.hero = md:getInstance("Hero")	
     self.fight = md:getInstance("Fight")
-    dump(property, "property")
+    -- dump(property, "property")
 	self.enemy = self:getModel(property)
 	self.property = property
 
@@ -205,6 +205,8 @@ function Attackable:getDeadDone()
 end
 
 function Attackable:setDeadDone()
+
+
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
 	end
@@ -220,6 +222,7 @@ function Attackable:setWillRemoved()
 		self:removeAllSchedulers()	
 	end
 	self.willRemoved = true
+	
 end
 
 function Attackable:checkPlace(offset)
@@ -248,6 +251,14 @@ function Attackable:checkPlace(offset)
 	-- print("xLeft", xLeft)
 	-- print("xRight", xRight)	
 	return xLeftLimit < xLeft and xRight < xRightLimit 
+end
+
+function Attackable:checkIdle()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	if currentName == "" then
+		print("playStand()")				
+		self:playStand()
+	end
 end
 
 function Attackable:play(state, handlerFunc)
@@ -421,8 +432,11 @@ end
 
 function Attackable:onCleanup()
 	print("Attackable:onCleanup()")
-	self:removeAllSchedulers()  
+	if self.property["deadEventData"] then 
+		self.hero:dispatchEvent(self.property["deadEventData"])
+	end
 
+	self:removeAllSchedulers()  
 end
 
 return Attackable

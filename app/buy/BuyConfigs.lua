@@ -40,14 +40,27 @@ local configs = {
 			isGift = false,
 	},
 	onceFull       = {				--一键满级
+
 			isGift = false,
 	},
 	resurrection   = {        		--复活
 			isGift = false,
 	},
-	stone          = {
+	stone10         = {
 			isGift = false,
-	}
+	},
+	stone45         = {
+			isGift = false,
+	},
+	stone120         = {
+			isGift = false,
+	},
+	stone260         = {
+			isGift = false,
+	},
+	stone450         = {
+			isGift = false,
+	},
 
 
 		-- --礼包

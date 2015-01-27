@@ -54,15 +54,22 @@ end
 
 function LevelMapLayer:initBgLayer()
 -- bg starting animation   
+    local buy = md:getInstance("BuyModel")
+    buy:buy("timeGiftBag", {})
+
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
-    addChildCenter(self.armature, self)
+    self.armature:setAnchorPoint(0.5,0.5)
+    self.armature:setPosition(display.width/2,display.height1/2)
+
+    self:addChild(self.armature)
+    -- addChildCenter(self.armature, self)
     self.armature:getAnimation():play("0_"..self.index , -1, 0)
 
-    ldarmature = ccs.Armature:create("leida")
-    ldarmature:setPosition(cc.p(568,300))
-    self:addChild(ldarmature)
-    ldarmature:getAnimation():play("leida" , -1, 1)
+    self.ldarmature = ccs.Armature:create("leida")
+    self.ldarmature:setPosition(cc.p(568,300))
+    self:addChild(self.ldarmature)
+    self.ldarmature:getAnimation():play("leida" , -1, 1)
 
 
 end
@@ -73,14 +80,14 @@ function LevelMapLayer:initChooseLayer()
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
     self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
-    local btnSale = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_sale")
-    local btnGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
-    local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gift")
+    local btnSale = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
+    local btnGold = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
+    local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
-    local btngift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
     -- modified by lpf
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_kefu")
@@ -92,12 +99,23 @@ function LevelMapLayer:initChooseLayer()
     addChildCenter(armature, self.panelGift)
     -- self.panelGift:addChild(armature)
     armature:getAnimation():play("guangtx" , -1, 1)
+    local buyModel = md:getInstance("BuyModel")
+    if buyModel:checkBought("novicesBag") then
+        self.panelGift:setVisible(false)
+    end
 
+    function hideGiftIcon()
+        self.panelGift:setVisible(false)
+    end
 
+    btnfirstgift:onButtonClicked(function()
+        buyModel:buy("novicesBag",{payDoneFunc = hideGiftIcon})
+        end)
+    
     local action = transition.sequence({
         cc.ScaleTo:create(0.5, 1.15),
         cc.ScaleTo:create(0.5, 1),})
-    btngift:runAction(cc.RepeatForever:create(action))
+    btnfirstgift:runAction(cc.RepeatForever:create(action))
 
 
 
@@ -119,7 +137,7 @@ function LevelMapLayer:initChooseLayer()
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            
             if self.index >= self.groupNum then
                 self.index = 1
                 self.preIndex = self.groupNum
@@ -150,12 +168,16 @@ function LevelMapLayer:initChooseLayer()
             self.UserModel:panelAction()
         end
     end)
-     addBtnEventListener(btnSale, function(event)
+
+    btnSale:setTouchEnabled(true)
+    addBtnEventListener(btnSale, function(event)
         if event.name=='began' then
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             print("Btn is pressed!")
+            local buy = md:getInstance("BuyModel")
+            buy:buy("timeGiftBag", {})
         end
     end)
 
@@ -169,19 +191,23 @@ function LevelMapLayer:initChooseLayer()
 
         end
     end)
-    btnGift:setTouchEnabled(true)
-    addBtnEventListener(btnGift, function(event)
+    btnGold:setTouchEnabled(true)
+    addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
             print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
+            local buy = md:getInstance("BuyModel")
+            buy:buy("goldGiftBag", {})
         end
     end)
 
     -- 添加客服按钮点击事件
     btnkefu:setTouchEnabled(true)
     btnkefu:onButtonPressed(function( event )
+        --test 清理引导
+        local guide = md:getInstance("Guide")
+        guide:clearData()
         event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
     end)
     :onButtonRelease(function( event )
@@ -282,6 +308,7 @@ end
 
 function LevelMapLayer:bgAction()    
     -- To make button disabled for a while
+    self.ldarmature:removeFromParent()
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
@@ -295,6 +322,10 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
         if movementID == self.animName then
             self.btnNext:setTouchEnabled(true)
             self.btnPre:setTouchEnabled(true)
+            self.ldarmature = ccs.Armature:create("leida")
+            self.ldarmature:setPosition(cc.p(568,300))
+            self:addChild(self.ldarmature)
+            self.ldarmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.index)
             self:refreshLevelLayer(self.index)
         end

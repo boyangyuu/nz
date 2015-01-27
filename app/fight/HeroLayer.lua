@@ -83,7 +83,6 @@ function HeroLayer:initData()
 
 	--killtimer
 	self.killCntKeep = 0
-	self.killCntTotal = 0
 
 	--hp
 	self:updateHp()
@@ -162,9 +161,6 @@ function HeroLayer:killEnemyCallBack(event)
 	--is already gold
 	local inlay = md:getInstance("FightInlay")
 	local isGold = inlay:getIsActiveGold()
-	
-	--总杀
-	self.killCntTotal = self.killCntTotal + 1
 	
 	--modified by yby 取消黄武需求
 	--[[

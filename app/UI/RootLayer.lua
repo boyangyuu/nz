@@ -165,7 +165,7 @@ function RootLayer:addResFight()
 
     local uiImgs = {"baotou", "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "xuetiao", "baozha4",
-        "effect_gun_kaiqiang"}
+        "effect_gun_kaiqiang", "wdhd"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
