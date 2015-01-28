@@ -89,7 +89,7 @@ function LevelMapLayer:initChooseLayer()
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
     -- modified by lpf
-    local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_kefu")
+    local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 
 
     local armature = ccs.Armature:create("guang")
