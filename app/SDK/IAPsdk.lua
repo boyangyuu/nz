@@ -1,7 +1,7 @@
 
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
-local className = "org/cocos2dx/lua/IAPControl"
+local className = "com/hgtt/ccn/IAPControl"
 local sig = "(Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
@@ -12,10 +12,10 @@ end
 function IAPsdk:setTelecomOperator()
     local telecomOperator = nil
     if device.platform == 'android' then
-        -- local result,telecomOperator = luaj.callStaticMethod("org/cocos2dx/lua/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
-        print("运营商名:",telecomOperator)
+        local result,telecomOperator = luaj.callStaticMethod("com/hgtt/ccn/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
         return telecomOperator
     end
+	print("telecomOperator:",telecomOperator)
     return telecomOperator
 end
 
@@ -40,12 +40,12 @@ function IAPsdk:initConfigs()
 		config["armedMecha"]       = "30000883682308"		--机甲
 		config["onceFull"]         = "30000883682309"		--一键满级
 		config["resurrection"]     = "30000883682310"	    --复活送黄武
-		config["stone1"]           = "30000883682311"		--一小堆宝石
-		config["stone2"]           = "30000883682312"		--一堆宝石
-		config["stone3"]           = "30000883682313"		--一麻袋宝石
-		config["stone4"]           = "30000883682314"		--一箱子宝石
-		config["stone5"]           = "30000883682315"		--堆成山的宝石
-		config["weapon"]   		   = "30000883682316"       --武器购买
+		config["stone10"]           = "30000883682311"		--一小堆宝石
+		config["stone45"]           = "30000883682312"		--一堆宝石
+		config["stone120"]           = "30000883682313"		--一麻袋宝石
+		config["stone260"]           = "30000883682314"		--一箱子宝石
+		config["stone450"]           = "30000883682315"		--堆成山的宝石
+		config["unlockWeapon"]   		   = "30000883682316"       --武器购买
 	elseif telecomOperator == "unicom" then
 
 	elseif telecomOperator == "telecom" then
@@ -60,12 +60,14 @@ end
 ]]
 
 function IAPsdk:pay(name)
+	print(name)
 	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	dump(self.config,"self.config")
 	dump(args,"args:")
 
-	if isTest then
+	if isTest or isDebug or telecomOperator == nil then
 		self:callbackSuccess()
+		print("self:callbackSuccess()")
 	else
 		if device.platform == 'android' then
 			luaj.callStaticMethod(className, "pay", args, sig)

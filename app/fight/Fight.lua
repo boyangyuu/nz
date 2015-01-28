@@ -25,13 +25,14 @@ Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
 Fight.RESULT_WIN_EVENT   = "RESULT_WIN_EVENT"
 Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
+Fight.FIGHT_RESUMEPOS_EVENT  = "FIGHT_RESUMEPOS_EVENT"
+
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
 end
 
 function Fight:beginFight()
     --关卡
-
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
@@ -74,6 +75,12 @@ function Fight:startFight()
 
    --check ju
    self:checkJuContorlType()
+
+   --check guide
+   local guide = md:getInstance("Guide")
+    scheduler.performWithDelayGlobal(function()
+        guide:check("fight01")
+    end, 3.0)   
 end
 
 function Fight:endFight()

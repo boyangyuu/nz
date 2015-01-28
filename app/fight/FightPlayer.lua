@@ -1,5 +1,4 @@
 --import
-import("..includes.functionUtils")
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local DialogLayer   = import("..dialog.DialogLayer")
 local FightDescLayer = import(".fightDesc.FightDescLayer")
@@ -67,6 +66,7 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.CONTROL_SET_EVENT,  handler(self, self.setComponentVisible))
         :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
+        :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
 
     cc.EventProxy.new(self.fightProp, self)
         :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
@@ -144,7 +144,7 @@ end
 
 function FightPlayer:setComponentVisible(event)
     local comps = event.comps
-    dump(comps, "comps")
+    -- dump(comps, "comps")
     for i,v in pairs(comps) do
         self[i]:setVisible(v)
         -- print(i,v)
@@ -198,7 +198,10 @@ function FightPlayer:initUI()
     layerDialog:addChild(fightDescLayer)
 
     --guide
-    scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide1), 0.1)
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
+
 end
 
 --启动盾牌恢复
@@ -471,7 +474,7 @@ end
 function FightPlayer:checkBtnChange(point)
     assert( point , "invalid params")
     if not self.btnChange:isVisible() then return end
-    local rect = self.btnChange:getBoundingBox()      
+    local rect = self.btnChange:getCascadeBoundingBox()  
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --换枪
@@ -508,7 +511,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     if eventName == "moved" then return false end
     -- print("eventName:"..eventName.."  id:"..id)
     local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
-    local rect = self.btnFire:getBoundingBox()      
+    local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
     
     --in touch
@@ -532,6 +535,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     -- not in touch
     if self.touchFireId == id and isend then
         self.touchFireId = nil
+        -- scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
         self:onCancelledFire()     
     end          
     return isTouch
@@ -654,12 +658,19 @@ function FightPlayer:fire()
 end
 
 ----move----
+function FightPlayer:onResumePos(event)
+    self.focusNode:setPosition(display.width/2, display.height1/2)
+    self.layerGun:setPositionX(display.width/2 + 200)
+    self.layerMap:setPosition(0, 0)
+    self:justBgPos(self.layerMap)
+end
+
 function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
-    offsetX = xOri + offsetX*scale
-    offsetY = yOri + offsetY*scale
+    offsetX = xOri + offsetX * scale
+    offsetY = yOri + offsetY * scale
     focusNode:setPosition(offsetX, offsetY)
     self:justFocusPos(focusNode)
     local x, y = focusNode:getPosition()
@@ -671,10 +682,15 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     local isNotMove = map:isNotMoveMap()
     if isNotMove then return end    
 
+    local isOpenJu = map:getIsOpenJu()
+    local scale = isOpenJu and KFightConfig.scaleMoveBg * define.kJuRange  or KFightConfig.scaleMoveBg 
+
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
-    local scale = KFightConfig.scaleMoveBg
+    -- print("xOri", xOri)
+    -- print("yOri", yOri)
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
+
     local x, y = layerMap:getPosition()
     self:justBgPos(layerMap)
 end
@@ -691,14 +707,21 @@ function FightPlayer:justBgPos(node)
     local box = bgMap:getBoundingBox()
     -- dump(box, "box")
     -- print("bgMap pos", )  
-    local w, h = bgMap:getBgSize().width , 
-        bgMap:getBgSize().height
+    local map = md:getInstance("Map")
+    local isNotMove = map:isNotMoveMap()
+    if isNotMove then return end    
+
+    local isOpenJu = map:getIsOpenJu()
+    local scale = isOpenJu and define.kJuRange or 1.0
+
+    local w, h = bgMap:getBgSize().width* scale  ,
+        bgMap:getBgSize().height  * scale
     -- print("w", w)
     -- print("h", h)
     local offset = bgMap:getBgOffset()
     local xL = (w - display.width1) / 2  
     local yL1 = -(h - display.height1 + offset.y * 2) / 2 
-    local yL2 = (h - display.height1 - offset.y * 2) / 2 
+    local yL2 = (h - display.height1 - offset.y * 2) / 2
     local x, y = node:getPosition()
 
     --x
@@ -737,22 +760,26 @@ function FightPlayer:justFocusPos(node)
     node:setPosition(x, y)
 end
 
-function FightPlayer:initGuide()
+function FightPlayer:initGuide1()
     --check   
-    local isDone = self.guide:check("fight")
+    local isDone = self.guide:isDone("fight01")
     if isDone then return end
+
+    self.focusNode:setPosition(cc.p(500,230))
 
     --move
     local isMoveGuideUnDone = true
+    local rect_guidemove = cc.rect(70, 40, 300, 100)
     self.guide:addClickListener({
         id = "fight_move",
-        groupId = "fight",
-        rect = self.btnJu:getBoundingBox(),
+        groupId = "fight01",
+        rect = rect_guidemove,
         endfunc = function (touchEvent)
             if touchEvent.name == "moved" and isMoveGuideUnDone then
                 isMoveGuideUnDone = false
                 -- print("ight_mov self.guide:doGuideNext()")
-                self.focusNode:moveBy(1.0, 0, -40)
+                -- self.focusNode:setPosition(cc.p(500,230))
+                self.focusNode:moveTo(1.0,588, 230)
                 self.guide:doGuideNext()
                 self.guide:hideGuideForTime(2.0)
             end
@@ -762,18 +789,19 @@ function FightPlayer:initGuide()
     --开枪1次
     self.guide:addClickListener({
         id = "fight_fire1",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             self.gunView:fire()
             self.hero:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.2)
         end
     })  
 
     --开枪1秒
     self.guide:addClickListener({
         id = "fight_fire2",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             self:onGuideFire(touchEvent)
@@ -783,7 +811,7 @@ function FightPlayer:initGuide()
     --扔雷
     self.guide:addClickListener( {
         id = "fight_throw",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnLei:getBoundingBox(),
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
@@ -795,7 +823,7 @@ function FightPlayer:initGuide()
     --换枪
     self.guide:addClickListener( {
         id = "fight_change",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnChange:getBoundingBox(),
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
@@ -807,13 +835,23 @@ function FightPlayer:initGuide()
     --结束
     self.guide:addClickListener( {
         id = "fight_finish",
-        groupId = "fight",
+        groupId = "fight01",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
 
         end
     })     
 
+    ----第二关----
+    --结束
+    self.guide:addClickListener( {
+        id = "fight_finish",
+        groupId = "fight01",
+        rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)
+
+        end
+    })         
 end
 
 local time_begin = nil
@@ -822,11 +860,12 @@ local isGuideFireBegin = false
 function FightPlayer:onGuideFire(touchEvent)
     -- print("os.time()", os.time())
     local name = touchEvent.name
+    local limitTime = 1.0
     
     --检查长按时间
     local function onGuideFireCheckFunc()
         local timeNow = os.time()
-        if time_begin and (timeNow - time_begin) >=  1.0 then 
+        if time_begin and (timeNow - time_begin) >=  limitTime then 
             -- print("长按射击引导完成")
             -- print("time_begin:", time_begin)
             scheduler.unscheduleGlobal(schGuideFire)
@@ -861,11 +900,40 @@ function FightPlayer:onGuideFire(touchEvent)
     end
 end
 
+
+function FightPlayer:initGuide2()
+    --check   
+    local isDone = self.guide:isDone("fight02")
+    if isDone then return end
+
+    --move
+    local isMoveGuideUnDone = true
+    local rect_guidemove = cc.rect(70, 40, 300, 100)
+    self.guide:addClickListener({
+        id = "fight_move",
+        groupId = "fight02",
+        rect = rect_guidemove,
+        endfunc = function (touchEvent)
+            if touchEvent.name == "moved" and isMoveGuideUnDone then
+                isMoveGuideUnDone = false
+                -- print("ight_mov self.guide:doGuideNext()")
+                -- self.focusNode:setPosition(cc.p(500,230))
+                self.focusNode:moveTo(1.0,588, 230)
+                self.guide:doGuideNext()
+                self.guide:hideGuideForTime(2.0)
+            end
+        end
+     })    
+end
+
+
+
 function FightPlayer:onEnter()
     
 end
 
-function FightPlayer:onExit()
+function FightPlayer:onCleanup()
+    print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end
 

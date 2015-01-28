@@ -27,9 +27,17 @@ function Guide:ctor(properties)
 end
 
 function Guide:check(groupId)
-	-- print(" Guide:check"..groupId)
-	if self:isDone(groupId) then return true end
-	return false
+	local configGroup =  GuideConfigs.getConfig(groupId)
+	assert(configGroup, "configGroup is nil groupId:"..groupId)
+	local preGroupId = configGroup["preGuideId"]
+	local isPreDone = true
+	if preGuideId then 
+		isPreDone = self:isDone(preGroupId)
+	end
+	local isCurDone = self:isDone(groupId)
+	if not isCurDone and isPreDone then 
+		self:startGuide(groupId)
+	end
 end
 
 function Guide:doGuideNext()
@@ -113,6 +121,15 @@ end
 function Guide:getCurConfig()
 	assert(self.curConfig, "guideconfigs为空 step index"..self.stepIndex)
 	return self.curConfig
+end
+
+function Guide:clearData()
+	local data = getUserData()
+	for k,v in pairs(data.guide) do
+		print(k,v)
+		data.guide[k] = false
+	end
+	setUserData(data)
 end
 
 return Guide

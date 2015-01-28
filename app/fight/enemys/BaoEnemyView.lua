@@ -30,12 +30,13 @@ end
 function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
-    self.armature:getAnimation():play("walk" , -1, 1) --
-    local speed = self.property["speed"] or define.kBaoEnemyWalkSpeed 
+    self.armature:getAnimation():play("walk" , -1, 1)
+    local configEnemy = self.enemy:getConfig()
+    local speed = configEnemy["speed"] or define.kBaoEnemyWalkSpeed
     local pWorldMap = self:getPosInMap()
     local distanceY = -pWorldMap.y + define.kJinEnemyWalkPos
 
-    local time = math.abs(distanceY) /speed
+    local time = math.abs(distanceY) / speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
     local scale = define.kBaoEnemyScale
@@ -51,9 +52,8 @@ function BaoEnemyView:playAhead()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
-    self:runAction(seq)
-
-    self:runAction(actionScale)
+    transition.execute(self, seq, {easing = "sineIn",})
+    transition.execute(self, actionScale, {easing = "sineIn",})
 end
 
 function BaoEnemyView:playKill(event)
@@ -65,11 +65,12 @@ function BaoEnemyView:playBombEffects()
     for i=1,6 do
         local sch  = scheduler.performWithDelayGlobal(
             handler(self, self.playBombEffect), i * 0.1)
-        local sch1 = scheduler.performWithDelayGlobal(
-            handler(self, self.demageOthers), i * 0.1)
         self:addScheduler(sch)
-        self:addScheduler(sch1)
     end
+    local sch1 = scheduler.performWithDelayGlobal(
+        handler(self, self.demageOthers), 0.3)
+    
+    self:addScheduler(sch1)    
 end
 
 function BaoEnemyView:playHitted(event)

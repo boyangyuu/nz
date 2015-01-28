@@ -6,24 +6,24 @@ local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
-local IAPsdk = require("app.SDK.IAPsdk")
 GameState = require("framework.cc.utils.GameState")
-
+local IAPsdk = require("app.SDK.IAPsdk")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
+
 -- --平时
 -- isTest  = true
 -- isDebug = false
 
--- --测试打包
--- isTest  = false
--- isDebug = true
+--测试打包
+isTest  = false
+isDebug = true
 
---正式打包
-isTest  = false        
-isDebug = false
+-- --正式打包
+-- isTest  = false        
+-- isDebug = false
 
 
 ui      = UI.new()
@@ -31,15 +31,18 @@ md      = MD.new()
 um      = UM.new()
 define  = Define.new()
 
+
 iap = IAPsdk.new()
 
 function MyApp:ctor()
+
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
 end
 
 function MyApp:run()
+    print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
 end
@@ -108,15 +111,15 @@ function MyApp:createGameStateFile()
                         inlayed  = {
                                         --存id bullet = 1,
                                     bullet = nil,
-                                    clip = nil,
-                                    speed = nil,
+                                    clip = 5,
+                                    speed = 9,
                                     crit = nil,
                                     blood = nil,
-                                    helper = nil,
+                                    helper = 22,
                         },
             },
             prop = {
-                        lei = {num = 0},
+                        lei = {num = 5},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
             },
@@ -126,13 +129,14 @@ function MyApp:createGameStateFile()
             diamond = 100,
                       
             currentlevel =  {
-                        group = 2,
+                        group = 1,
 
-                        level = 5,
+                        level = 1,
             },
             guide = {
-                        fight = false,
-                        fightju = false,
+                        fight01         = false,
+                        afterfight01    = false,
+                        fight02         = false,
             },
             fight = {
                         isPreferBag1 = true,
@@ -140,11 +144,9 @@ function MyApp:createGameStateFile()
 
             -- 礼包购买状态
             giftBag = { --buy
-                            weaponGiftBag = 
-                            {
-                                isBuyed = false,
-                            }
-                            
+                        --false 为未购买
+                        weaponGiftBag =  false,
+                        novicesBag = false,
             },
     }
     GameState.save(data)

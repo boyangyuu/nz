@@ -20,6 +20,7 @@ function BaseBossView:ctor(property)
 
 	--config
 	self.attackType = "weak"
+	self.zhaohuanIndex  = 1
 	-- dump(property, "property")
 	local index = property.id
 	local waveConfig = FightConfigs:getWaveConfig()
@@ -29,6 +30,7 @@ function BaseBossView:ctor(property)
     --blood
     self:initBlood()
     self.isRed = false
+    self.isUnhurted = false
 	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
@@ -37,6 +39,8 @@ function BaseBossView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
+    cc.EventProxy.new(self.hero, self)
+    	:addEventListener(self.hero.ENEMY_KILL_LASTCALL_EVENT, handler(self, self.onLastCallDead)) 
 
     self:initBody()
 
@@ -113,7 +117,8 @@ function BaseBossView:setBlood(scale)
 end
 
 function BaseBossView:playStand()
-	self.armature:getAnimation():play("stand" , -1, 1)  
+	local animName = self.isUnhurted and "stand02" or "stand"
+	self.armature:getAnimation():play(animName , -1, 1)
 end
 
 function BaseBossView:playFire()
@@ -188,6 +193,11 @@ function BaseBossView:playSkill(skillName)
 		self:play("skill", handler(self, self.playChongfeng))
 	elseif skillName == "tieqiu" then
 		self:play("skill", handler(self, self.playTieQiu))
+	elseif skillName == "zhaohuan" then
+		self:play("skill", handler(self, self.playZhanHuan))
+	elseif skillName == "wudi" then
+		self:play("skill", handler(self, self.playWudi))		
+				
 	elseif string.sub(skillName, 1, 4) == "weak" then 
 		local index = string.sub(skillName, 5, 5)
 		-- print("index", index)
@@ -244,6 +254,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local callfuncBeforeOut = function ()
 		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
 		self.pauseOtherAnim = true
+		self:setUnhurted(true)
 	end
 	local beforeOutCall = cc.CallFunc:create(callfuncBeforeOut)
 
@@ -270,6 +281,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--回去之后
 	local callfuncAfterLeft = function ()
 		self.pauseOtherAnim = false
+		self:setUnhurted(false)
 	end	
 	local afterLeftCall = cc.CallFunc:create(callfuncAfterLeft)
 
@@ -404,8 +416,14 @@ function BaseBossView:playChongfeng()
     local aheadEndFunc = function ()
         -- print("aheadEnd")
         self.isAheading = false
+-- <<<<<<< HEAD
         local cfDemage = self.config["chongfengDemage"]
         self.enemy:hit(self.hero, cfDemage)
+-- =======
+--         local destDemage = self.config["chongfengDemage"] 
+--         	* self.enemy:getDemageScale()
+--         self.enemy:hit(self.hero, destDemage)
+-- >>>>>>> 424d0f78f78adc2a6426fbd6608b61a177ee190a
         self:setPosition(posOri)
         self:scaleBy(0.01, 1/scale)
         local map = md:getInstance("Map")
@@ -416,6 +434,52 @@ function BaseBossView:playChongfeng()
     self:runAction(seq)
 
     self:runAction(actionScale)	
+end
+
+function BaseBossView:playZhanHuan()
+	self.armature:getAnimation():play("zhaohuan", -1, 1)
+	self:zhaohuan()
+end
+
+function BaseBossView:zhaohuan()
+	local waveData = self.config["enemys"..self.zhaohuanIndex]
+	assert(waveData, "config is invalid, no enemys")
+	self.enemysCallNum = 0
+	for i,group in ipairs(waveData) do
+		group.property["deadEventData"] = {name = "ENEMY_KILL_LASTCALL_EVENT"}
+		self.enemysCallNum = self.enemysCallNum + group.num
+	end
+	print("self.enemysCallNum", self.enemysCallNum)
+
+	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
+		waveData = waveData})
+
+	self.zhaohuanIndex = self.zhaohuanIndex + 1
+end
+
+function BaseBossView:onLastCallDead(event)
+	print("function BaseBossView:onLastCallDead(event)")
+	self.enemysCallNum = self.enemysCallNum  - 1
+	if self.enemysCallNum == 0 then 
+		print("取消无敌")
+		self:setUnhurted(false)	
+	end
+end
+
+function BaseBossView:setUnhurted(isUnhurted)
+	self.isUnhurted = isUnhurted
+	if not isUnhurted and self.wudiAnim then 
+		self.wudiAnim:removeSelf()
+	end
+end
+
+function BaseBossView:playWudi()
+	self:setUnhurted(true)
+	self.wudiAnim = ccs.Armature:create("wdhd")
+	self.wudiAnim:getAnimation():play("wdhd", -1, 1)
+	self.wudiAnim:setPosition(cc.p(0, 141))
+	self.wudiAnim:setScale(1.3)
+	self.armature:addChild(self.wudiAnim, 10000)
 end
 
 function BaseBossView:clearWeak()
@@ -456,6 +520,7 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 		if self.pauseOtherAnim and movementID ~= "die" then 
 			return 
 		end		
+
 		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
 		if movementID ~= "die" then
@@ -476,7 +541,7 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 end
 
 function BaseBossView:tick(t)
-	if self.pauseOtherAnim then return end 
+	if self.pauseOtherAnim or self.isUnhurted then return end 
 	--change state
 	local randomSeed 
 
@@ -511,17 +576,17 @@ function BaseBossView:checkSkill(demage)
 	local persentC = hp
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
-		print("skillName：", skillName)
-		print("persents", persents)
+		-- print("skillName：", skillName)
+		-- print("persents", persents)
 
 		for i, v in ipairs(persents) do
 			print("i:"..i.."	v:"..v)
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				print("v", v)
+				-- print("v", v)
 
-				print("persentC", persentC)
-				print("persentO", persentO)
+				-- print("persentC", persentC)
+				-- print("persentO", persentO)
 
 				print("playSKill:"..skillName)
 				local function callfuncSkill()
@@ -530,9 +595,15 @@ function BaseBossView:checkSkill(demage)
 				scheduler.performWithDelayGlobal(callfuncSkill, 0.01)
 			end
 		end
-	end
+	end 
 end
 
+function BaseBossView:canHitted()
+	if self.isUnhurted  then 
+		return false
+	end
+	return true
+end
  
 function BaseBossView:onHitted(targetData)
 	local demage 	 = targetData.demage
@@ -542,9 +613,10 @@ function BaseBossView:onHitted(targetData)
 	local demageType = targetData.demageType
 	
 	--血量
-	if self.enemy:canHitted() then
-		self.enemy:decreaseHp(destDemage)
+	if not( self.enemy:canHitted() and self:canHitted() ) then
+		return
 	end
+	self.enemy:decreaseHp(destDemage)
 
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()

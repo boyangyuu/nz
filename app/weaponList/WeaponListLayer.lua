@@ -21,9 +21,13 @@ function WeaponListLayer:ctor()
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.commonPopModel = md:getInstance("commonPopModel")
     self.userModel = md:getInstance("UserModel")
+    self.levelDetailModel = md:getInstance("LevelDetailModel")
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
+
+    cc.EventProxy.new(self.levelDetailModel, self)
+        :addEventListener(self.levelDetailModel.REFRESH_WEAPON_LISTVIEW, handler(self, self.reloadlistview))
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
@@ -140,24 +144,23 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-
-            if self.userModel:costDiamond(self.weaponrecord["cost"]) then
-                ui:showPopup("commonPopup",
-                    {type = "style3", content = "是否花费60钻石升级购买该武器？",
-                     callfuncCofirm =  handler(self, self.buyWeapon),
-                     callfuncClose  =  handler(self, self.closePopup)},
-                     { opacity = 155})
-
-            else
-                local buy = md:getInstance("BuyModel")
-                buy:buy("weaponGiftBag", {weaponId = self.weaponId})
+            local buyModel = md:getInstance("BuyModel")
+            function deneyBuyWeapon()
+                if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+                    ui:showPopup("commonPopup",
+                        {type = "style3", content = "是否花费60钻石升级购买该武器？",
+                         callfuncCofirm =  handler(self, self.buyWeapon),
+                         callfuncClose  =  handler(self, self.closePopup)},
+                         { opacity = 155})
+                else
+                    buyModel:buy("unlockWeapon",{weaponid = self.weaponId})
+                end
             end
-
-            
-
-            -- if self.userModel:costDiamond(self.weaponrecord["cost"]) then
-            --     self:buyWeapon(self.weaponId)
-            -- end
+            if buyModel:checkBought("weaponGiftBag") == false then
+                buyModel:buy("weaponGiftBag",{
+                    payDoneFunc = handler(self, self.reloadlistview),
+                                              deneyBuyFunc = deneyBuyWeapon})
+            end
         end
     end)
     addBtnEventListener(self.btnUpgrade, function(event)
@@ -166,22 +169,8 @@ function WeaponListLayer:initUI()
             return true
         elseif event.name=='ended' then
             local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
-            -- ui:showPopup("commonPopup",
-            --  {type = "style3", title = "提示",content = "是否花费"..self.costupgrade.."G升级到"..nextlevel.."星"},
-            --  {opacity = 155})
             if self.userModel:costMoney(self.costupgrade) then
                 self:intensify(self.weaponId)
-                local armature = ccs.Armature:create("wqsj")
-                addChildCenter(armature, self.layerGun)
-                armature:getAnimation():setMovementEventCallFunc(
-                function ( armatureBack,movementType,movement) 
-                    if movementType == ccs.MovementEventType.complete then
-                        armatureBack:stopAllActions()
-                        armatureBack:removeFromParent() 
-                    end 
-                end)
-                armature:getAnimation():play("wqsj" , -1, 0)
-
             end
         end
     end)
@@ -190,25 +179,17 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:onceFull(self.weaponId)
-            local armature = ccs.Armature:create("wqsj")
-                addChildCenter(armature, self.layerGun)
-                armature:getAnimation():setMovementEventCallFunc(
-                function ( armatureBack,movementType,movement) 
-                    if movementType == ccs.MovementEventType.complete then
-                        armatureBack:stopAllActions()
-                        armatureBack:removeFromParent() 
-                    end 
-                end)
-                armature:getAnimation():play("wqsj" , -1, 0)
+            -- self:onceFull(self.weaponId)
+                local buyModel = md:getInstance("BuyModel")
+                function deneyOncefull()
+                    buyModel:buy("onceFull",{weaponid = self.weaponId})
+                end
 
-            -- todo 改为buymodel
-            -- local data = getUserData()
-            -- if not data.giftBag.weaponGiftBag then
-            --     ui:showPopup("GiftBagPopup",{popupName = "weaponGiftBag",callBack = function()
-            --     self:onceFull(self.weaponId)
-            --     end})
-            -- end
+                if buyModel:checkBought("weaponGiftBag") == false then
+                    buyModel:buy("weaponGiftBag",{
+                        payDoneFunc = handler(self, self.reloadlistview),
+                                                  deneyBuyFunc = deneyOncefull})
+                end
         end
     end)
     addBtnEventListener(self.btnEquip, function(event)
@@ -236,9 +217,17 @@ function WeaponListLayer:initUI()
     addChildCenter(oncearmature, self.btnOncefull)
     armature:getAnimation():play("yjmj" , -1, 1)
     oncearmature:getAnimation():play("yjmj" , -1, 1)
-
 end
 
+-----------
+function WeaponListLayer:reloadlistview(event)
+    removeAllItems(self.weaponLV)
+    local configTab = getConfig("config/weapon_weapon.json")
+    self:loadWeaponList(self.weaponLV,configTab)
+    self.selectedContent = nil
+    self:refreshComment(self.weaponId)
+
+end
 
 -------------- ListView  --------------
 -- 初始化ListView
@@ -398,6 +387,19 @@ function WeaponListLayer:playstar(refreshStar,intenlevel)
                 end
                 scheduler.performWithDelayGlobal(delayStar, delay)
             end
+
+            local armature = ccs.Armature:create("wqsj")
+            armature:setPosition(750,450)
+            self:addChild(armature)
+            armature:getAnimation():setMovementEventCallFunc(
+            function ( armatureBack,movementType,movement) 
+                if movementType == ccs.MovementEventType.complete then
+                    armatureBack:stopAllActions()
+                    armatureBack:removeFromParent() 
+                end 
+            end)
+            armature:getAnimation():play("wqsj" , -1, 0)
+
         end 
         for k,v in pairs(self.stars) do
             if k<curLevel+1 then
@@ -489,14 +491,16 @@ function WeaponListLayer:closePopup()
 end
 
 -- 一键满级事件
-function WeaponListLayer:onceFull(weaponid)
-    self.weaponListModel:onceFull(weaponid)
-end
+-- function WeaponListLayer:onceFull(weaponid)
+--     self.weaponListModel:onceFull(weaponid)
+-- end
 
 -- 装备事件
 function WeaponListLayer:equip(weaponid)
     ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 150})
 
 end
+
+--guide
 
 return WeaponListLayer

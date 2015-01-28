@@ -16,7 +16,7 @@ end
 function ScrollViewCell:onTap(x, y)
 end
 
-function ScrollViewCell:onExit()
+function ScrollViewCell:onCleanup()
     self:removeAllEventListeners()
 end
 

@@ -41,7 +41,7 @@ function JinEnemyView:tick(t)
     if isAble then 
         randomSeed = math.random(1, fireRate)
         if randomSeed > fireRate - 1 then 
-            self:playAfterAlert("playFire", handler(self, self.playAttack))
+            self:playAfterAlert("skill", handler(self, self.playAttack))
             self.enemy:beginFireCd()
         end
     end    
@@ -86,8 +86,8 @@ function JinEnemyView:playAhead()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
-    self:runAction(seq)
-    self:runAction(actionScale)
+    transition.execute(self, seq, {easing = "sineIn",})
+    transition.execute(self, actionScale, {easing = "sineIn",})
 end
 
 function JinEnemyView:animationEvent(armatureBack,movementType,movementID)

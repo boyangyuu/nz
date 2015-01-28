@@ -30,8 +30,10 @@ Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
 Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人      
 Hero.ENEMY_KILL_HEAD_EVENT      = "ENEMY_KILL_HEAD_EVENT"   --爆头
 Hero.ENEMY_KILL_BOSS_EVENT      = "ENEMY_KILL_BOSS_EVENT"   --杀死boss 
+Hero.ENEMY_KILL_LASTCALL_EVENT  = "ENEMY_KILL_LASTCALL_EVENT"   --杀死最后一个召唤 
 
 Hero.ENEMY_ADD_EVENT            = "ENEMY_ADD_EVENT"
+Hero.ENEMY_WAVE_ADD_EVENT       = "ENEMY_WAVE_ADD_EVENT"
 Hero.ENEMY_ADD_MISSILE_EVENT    = "ENEMY_ADD_MISSILE_EVENT"
 
 --gun
@@ -104,18 +106,23 @@ end
 
 function Hero:killEnemy(enemyPos, award)
     self.killCnt = self.killCnt + 1
-    self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-        enemyPos = enemyPos, award = award})
-    
     --check gold
-    local map = md:getInstance("Map")
-    local waveConfig = map:getCurWaveConfig()
-    local curLimit = waveConfig:getGoldLimit(self.killGoldIndex)
+    local curLimit = self:getCurGoldLimit()
     if curLimit and self.killCnt ==  curLimit then 
         print("激活黄武")
         self.fightInlay:activeGold()
         self.killGoldIndex = self.killGoldIndex + 1
     end
+
+    self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
+        enemyPos = enemyPos, award = award})    
+end
+
+function Hero:getCurGoldLimit()
+    local map = md:getInstance("Map")
+    local waveConfig = map:getCurWaveConfig()    
+    local curLimit = waveConfig:getGoldLimit(self.killGoldIndex)
+    return curLimit
 end
 
 function Hero:getKillCnt()

@@ -21,7 +21,6 @@ function MissileEnemyView:ctor(property)
     self.srcPos = property.srcPos
     self.destPos = property.destPos
     self.srcScale = property.srcScale
-    self.property = property
 
     --events
     cc.EventProxy.new(self.enemy, self)
@@ -50,7 +49,7 @@ end
 
 function MissileEnemyView:playDaoDanFire()
     --scale
-    self:setScale(self.srcScale)
+    self.armature:setScale(self.srcScale)
     local time = define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0
     local scaleAction = cc.ScaleTo:create(time, destScale)
@@ -64,8 +63,34 @@ function MissileEnemyView:playDaoDanFire()
     local offset = self.property.offset or cc.p(0.0,0.0)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
-    self:runAction(seq)
-    self:runAction(cc.MoveTo:create(time, offset))
+    self.armature:runAction(seq)
+    self.armature:runAction(cc.MoveTo:create(time, offset))
+end
+
+--[[等注释]]
+function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
+    local bound = node:getBoundingBox()
+    local enemyBound = enemyRange:getBoundingBox()
+    
+    -- dump(enemyBound, "enemyBound")
+    local scale = self:getScale() * self.hero:getMapZoom()
+    enemyBound.width = enemyBound.width * scale
+    enemyBound.height = enemyBound.height * scale
+    dump(enemyBound, "enemyBound2")
+    local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
+    bound.x = pWorld1.x
+    bound.y = pWorld1.y
+    local pWorld2 = enemyRange:convertToWorldSpace(cc.p(0,0))
+    enemyBound.x = pWorld2.x
+    enemyBound.y = pWorld2.y    
+    
+    dump(bound, "bound ------")
+    dump(enemyBound, "enemyBound -------")    
+    -- self:test()
+
+    local isIn = cc.rectIntersectsRect(bound, enemyBound)
+    print("isIn", isIn)
+    return isIn
 end
 
 function MissileEnemyView:playLeiFire()
@@ -115,11 +140,11 @@ end
 
 --Attackable接口
 function MissileEnemyView:playHitted(event)
-
+print("MissileEnemyView:playHitted(event)")
 end
 
 function MissileEnemyView:playKill(event)
-    -- print("MissileEnemyView:playKill(event)")
+    print("MissileEnemyView:playKill(event)")
 
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
@@ -131,11 +156,10 @@ function MissileEnemyView:playKill(event)
 end
 
 function MissileEnemyView:onHitted(targetData)
-    -- print("function MissileEnemyView:onHitted(targetData)")
     local demage     = targetData.demage
     local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType or "body"
-    if self.enemy:canHitted() then return end
+    if not self.enemy:canHitted() then return end
     self.enemy:decreaseHp(demage * scale)
 end
 

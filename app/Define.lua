@@ -18,12 +18,11 @@ Define.kJinEnemyScale	  		=  1.7		-- 狼牙棒兵 盾兵到身前的比例
 Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素(默认值)
 
 --自爆兵
-Define.kBaoEnemyWalkSpeed 		=  100.0 	--自爆兵 每秒前进速度
-Define.kBaoEnemyScale	  		=  1.5		-- 自爆兵到身前的比例
-Define.kBaoEnemyWalkSpeed 		=  100.0 	--自爆兵 每秒前进像素
-Define.kBaoDemageOtherEnemys 	= 10  --自爆兵伤害值
-Define.kBaoRangeW 				= 200	--自爆兵范围
-Define.kBaoRangeH 				= 200	--自爆兵范围
+Define.kBaoEnemyWalkSpeed 		=  70.0 	--自爆兵 每秒前进速度
+Define.kBaoEnemyScale	  		=  1.2		-- 自爆兵到身前的比例
+Define.kBaoDemageOtherEnemys 	= 10        --自爆兵伤害值
+Define.kBaoRangeW 				= 200	    --自爆兵范围
+Define.kBaoRangeH 				= 200	     --自爆兵范围
 
 --人质
 Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
@@ -50,8 +49,8 @@ Define.kGoldActivate 			= 1500    --黄金武器激活
 Define.kGoldTime 				= 6     --黄金武器激活时间
 
 --机甲
-Define.kRobotCoolDownTime 		= 0.08   --robot 冷却时间
-Define.kRobotDemage			 	= 220    --机甲伤害
+Define.kRobotCoolDownTime 		= 0.05   --robot 冷却时间
+Define.kRobotDemage			 	= 300    --机甲伤害
 Define.kRobotTime			 	= 10.0   --机甲持续时间
 Define.kRobotRangeH				= 40.0   -- 机甲攻击范围框高
 Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽

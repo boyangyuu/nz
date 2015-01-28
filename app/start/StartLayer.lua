@@ -38,9 +38,20 @@ function StartLayer:initUI()
         if event.name == 'began' then
             return true
         elseif event.name == 'ended' then
-            ui:showPopup("AboutPopup")
+            ui:showPopup("AboutPopup",{popupName = "guangyu"})
         end
     end)
+
+    local btnHelp = cc.uiloader:seekNodeByName(self, "beginbtn_1")
+    btnHelp:setTouchEnabled(true)
+    addBtnEventListener(btnHelp, function( event )
+        if event.name == "began" then
+            return true
+        elseif event.name == "ended" then 
+            ui:showPopup("AboutPopup",{popupName = "bangzhu"})
+        end
+    end)
+
     local src = "res/Start/caidantx/caidantx.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)

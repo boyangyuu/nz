@@ -83,7 +83,6 @@ function HeroLayer:initData()
 
 	--killtimer
 	self.killCntKeep = 0
-	self.killCntTotal = 0
 
 	--hp
 	self:updateHp()
@@ -162,9 +161,6 @@ function HeroLayer:killEnemyCallBack(event)
 	--is already gold
 	local inlay = md:getInstance("FightInlay")
 	local isGold = inlay:getIsActiveGold()
-	
-	--总杀
-	self.killCntTotal = self.killCntTotal + 1
 	
 	--modified by yby 取消黄武需求
 	--[[
@@ -361,9 +357,8 @@ function HeroLayer:effectGunReload(event)
     self:addChild(armature)	
 end
 
-
-function HeroLayer:onExit()
-	print("function HeroLayer:onExit()")
+function HeroLayer:onCleanup()
+	print("function HeroLayer:onCleanup()")
 
 	if self.killTimerHandler then 
 		scheduler.unscheduleGlobal(self.killTimerHandler)
@@ -378,5 +373,6 @@ end
 function HeroLayer:onEnter()
 	
 end
+
 
 return HeroLayer

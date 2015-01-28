@@ -27,9 +27,7 @@ function SanEnemyView:ctor(property)
 
     --
     self:playFall() 
-
 end
-
 
 function SanEnemyView:tick()
     if self.isFalling then 

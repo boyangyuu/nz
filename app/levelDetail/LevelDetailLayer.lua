@@ -245,8 +245,15 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-	print("startbtn is clicked!")
-	print("self.groupId,", self.groupId)
+	if self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
+	    local buy = md:getInstance("BuyModel")
+	    buy:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame)})
+	else
+		self:startGame()
+	end
+end
+
+function LevelDetailLayer:startGame()
 	self.model:setCurGroupAndLevel(self.groupId,self.levelId)
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
@@ -254,7 +261,6 @@ function LevelDetailLayer:onClickBtnStart()
 	local levelInfo = self.groupId.."-"..self.levelId
 	um:startLevel(levelInfo)
 end
-
 
 function LevelDetailLayer:onClickBtnBibei()
 	print("bibeibtn is clicked!")
@@ -266,15 +272,27 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		print("弹板购买")
+		local buyModel = md:getInstance("BuyModel")
+        buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
+                                      })
 	end
 end
 
+function LevelDetailLayer:reloadlistview()
+	self.model:reloadlistview()
+	self.weaponListModel:equipBag(self.recomWeaponId,1)
+	self.alreadybibei:setVisible(true)
+	self.btnBibei:setVisible(false)
+end
+
 function LevelDetailLayer:onClickBtnGold()
-	print("goldbtn is clicked!")
-	self.inlayModel:equipGoldInlays(true)
-	self.alreadygold:setVisible(true)
-	self.btnGold:setVisible(false)
+	function equipGold()
+		self.inlayModel:equipAllInlays(true)
+		self.alreadygold:setVisible(true)
+		self.btnGold:setVisible(false)	
+	end
+	local buyModel = md:getInstance("BuyModel")
+    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
 end
 
 function LevelDetailLayer:onClickBtnJijia()
