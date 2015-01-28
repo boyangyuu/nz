@@ -1,6 +1,6 @@
 
 
-local PausePopup = require("app.help.PausePopup")
+local PausePopup = require("app.pauseScene.PausePopup")
 
 local director = cc.Director:getInstance()
 

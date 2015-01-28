@@ -4,7 +4,7 @@
 local scheduler = require("framework.scheduler")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
-local pauseScene = import("..help.PauseScene")
+local pauseScene = import("..pauseScene.PauseScene")
 
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()

@@ -48,8 +48,10 @@ function GiftBagPopup:initButtons()
 	end)
 
 	local armature = ccs.Armature:create("lb_ljlq")
-	addChildCenter(armature, receiveBtn)
+	armature:setScale(0.75)
+	armature:setPosition(140, 45)
 	armature:getAnimation():play("lb_ljlq", -1, 1)
+	receiveBtn:addChild(armature)
 
 
 	local btnClose = cc.uiloader:seekNodeByName(self, "btn_Closed")

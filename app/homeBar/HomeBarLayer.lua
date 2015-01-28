@@ -4,7 +4,7 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
-local pauseScene = import("..help.PauseScene")
+local pauseScene = import("..pauseScene.PauseScene")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -136,9 +136,9 @@ function HomeBarLayer:initHomeLayer(groupid)
             pause:pause("mapset")
 
 
-            btnInlay:setButtonEnabled(true)
-            btnStore:setButtonEnabled(true)
-            btnArsenal:setButtonEnabled(true)
+            -- btnInlay:setButtonEnabled(true)
+            -- btnStore:setButtonEnabled(true)
+            -- btnArsenal:setButtonEnabled(true)
         end
     end)
     addBtnEventListener(self.btnBack, function(event)

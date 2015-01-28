@@ -357,7 +357,6 @@ function HeroLayer:effectGunReload(event)
     self:addChild(armature)	
 end
 
-
 function HeroLayer:onCleanup()
 	print("function HeroLayer:onCleanup()")
 
@@ -374,5 +373,6 @@ end
 function HeroLayer:onEnter()
 	
 end
+
 
 return HeroLayer
