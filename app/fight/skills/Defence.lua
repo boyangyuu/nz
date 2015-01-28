@@ -52,9 +52,8 @@ end
 function Defence:refreshHp()
 	-- print("function Defence:refreshHp()")
 	local hero = md:getInstance("Hero")
-	self.maxHp = hero:getMaxHp()
-	self.hp = hero:getMaxHp()
-	-- print("function Defence:refreshHp() self.hp"..self.hp)
+	self.maxHp = define.kDefenceHp
+	self.hp = define.kDefenceHp
 end
 
 function Defence:decreseHp(demage)
