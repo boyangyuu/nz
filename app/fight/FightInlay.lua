@@ -74,8 +74,6 @@ end
 function FightInlay:setIsActiveGold(IsActiveGold_)
     self.IsActiveGold = IsActiveGold_ 
     print("function FightInlay:setIsActiveGold",IsActiveGold_)
-    local hero = md:getInstance("Hero")
-    hero:setFullHp()
 end
 
 function FightInlay:getIsActiveGold()
@@ -89,7 +87,7 @@ end
 function FightInlay:setIsNativeGold(isNativeGold_)
     self.isNativeGold = isNativeGold_
     local hero = md:getInstance("Hero")
-    hero:setFullHp()    
+    hero:setFullHp()
 end
 
 --[[

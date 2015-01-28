@@ -27,14 +27,17 @@ function Guide:ctor(properties)
 end
 
 function Guide:check(groupId)
+	if self.isGuiding then return end
+	
 	local configGroup =  GuideConfigs.getConfig(groupId)
 	assert(configGroup, "configGroup is nil groupId:"..groupId)
 	local preGroupId = configGroup["preGuideId"]
 	local isPreDone = true
-	if preGuideId then 
+	if preGroupId then 
 		isPreDone = self:isDone(preGroupId)
 	end
 	local isCurDone = self:isDone(groupId)
+	print("isCurDone", isCurDone)
 	if not isCurDone and isPreDone then 
 		self:startGuide(groupId)
 	end
@@ -60,14 +63,16 @@ function Guide:doGuideNext()
 	local listenData = self.datas[id]	
 	self.curData = listenData
 
+
 	--dispatch
-	-- print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
+	print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
 	self:dispatchEvent({name = Guide.GUIDE_START_EVENT, 
 				groupId = self.groupId})	
 end
 
 function Guide:startGuide(groupId)
-	if self:isDone(groupId) then return end
+	self.isGuiding = true
+	assert(self:isDone(groupId) == false , "groupId"..groupId)
 	self.groupId = groupId
 	self.stepIndex = 0
 	self:doGuideNext()
@@ -77,7 +82,8 @@ function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
 	local isDone = data.guide[groupId] 
-	isDone = true
+	-- print("isDone"..groupId, isDone)
+	-- isDone = true
 	return isDone
 end
 
@@ -97,8 +103,8 @@ end
 
 function Guide:finishGuide()
 	--clear
-	self.datas = {}
 	self.stepIndex = 0
+	self.isGuiding = false
 
 	--save userdata
 	local data = getUserData()
@@ -121,6 +127,14 @@ end
 function Guide:getCurConfig()
 	assert(self.curConfig, "guideconfigs为空 step index"..self.stepIndex)
 	return self.curConfig
+end
+
+function Guide:getCurGuideId()
+	if self.curConfig == nil then 
+		return nil
+	else
+		return self.curConfig["id"]
+	end
 end
 
 function Guide:clearData()

@@ -223,16 +223,26 @@ end
 function BaseBossView:platMoveDaoFireAction(isLeft)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
+
 	--出发
-	local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+	-- local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
 	local bound = self.armature:getBoundingBox()
-	local disOut = -(pWorld.x + bound.width / 2)
+	-- local disOut = -(pWorld.x + bound.width / 2)
+
+	local pos = self:getPosInMapBg()
+
+	local disOut =  -(pos.x + bound.width ) 
+	local disOut =  -(pos.x + bound.width)
+
+--1560 880 1170 660
 	local time = math.abs(disOut) / speed
 	local desPos = cc.p(disOut, posOri.y)
 	local actionOut = cc.MoveBy:create(time, desPos)
 
 	--到右屏幕
 	local disScreen = display.width + bound.width
+	local disScreen = 1560 			+ bound.width
+
 	time = math.abs(disScreen) / speed
  	desPos = cc.p(disScreen, posOri.y)
 	local actionScreen1 = cc.MoveBy:create(time, desPos)
@@ -246,7 +256,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--返回
 	local disBack = - disOut
 	desPos = cc.p(disBack, posOri.y)
-	time = math.abs(disScreen2) / speed
+	time = math.abs(disBack) / speed
 	local actionBack = cc.MoveBy:create(time, desPos)
 	local seq = nil
 	
@@ -345,7 +355,7 @@ function BaseBossView:playDaoDan1()
 	--todo 改为bone
 	--导弹
 	for i=1,7 do
-		local delay = 0.1 + 0.15 * i
+		local delay = 0.3 + 0.15 * i
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
@@ -444,7 +454,7 @@ function BaseBossView:zhaohuan()
 		group.property["deadEventData"] = {name = "ENEMY_KILL_LASTCALL_EVENT"}
 		self.enemysCallNum = self.enemysCallNum + group.num
 	end
-	print("self.enemysCallNum", self.enemysCallNum)
+	-- print("self.enemysCallNum", self.enemysCallNum)
 
 	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
 		waveData = waveData})
@@ -453,10 +463,10 @@ function BaseBossView:zhaohuan()
 end
 
 function BaseBossView:onLastCallDead(event)
-	print("function BaseBossView:onLastCallDead(event)")
+	-- print("function BaseBossView:onLastCallDead(event)")
 	self.enemysCallNum = self.enemysCallNum  - 1
 	if self.enemysCallNum == 0 then 
-		print("取消无敌")
+		-- print("取消无敌")
 		self:setUnhurted(false)	
 	end
 end
@@ -521,7 +531,7 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 		if movementID ~= "die" then
 			local playCache = self:getPlayCache()
             if self.isAheading then 
-                print("禁止")
+                -- print("禁止")
                 return
             end			
 			if playCache then 
@@ -575,7 +585,7 @@ function BaseBossView:checkSkill(demage)
 		-- print("persents", persents)
 
 		for i, v in ipairs(persents) do
-			print("i:"..i.."	v:"..v)
+			-- print("i:"..i.."	v:"..v)
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
 				-- print("v", v)
@@ -583,7 +593,7 @@ function BaseBossView:checkSkill(demage)
 				-- print("persentC", persentC)
 				-- print("persentO", persentO)
 
-				print("playSKill:"..skillName)
+				-- print("playSKill:"..skillName)
 				local function callfuncSkill()
 					self:playSkill(skillName)
 				end
@@ -621,6 +631,11 @@ function BaseBossView:onHitted(targetData)
 	--血量触发技能
 	self:checkSkill(destDemage)
 	
+
+	--check guide
+	-- print("persent", persent)
+	if persent < define.kGuideActiveJijia then self:checkGuide1() end
+
 	--red
 	if self.isRed then return end
 	local function callfunc()
@@ -692,6 +707,33 @@ end
 
 function BaseBossView:getModel(property)
 	return Boss.new(property)
+end
+
+function BaseBossView:onEnter()
+	BaseBossView.super:onEnter(self)
+	local sch = scheduler.performWithDelayGlobal(handler(self, self.checkGuide), 2.0)
+	self:addScheduler(sch)
+end
+
+function BaseBossView:checkGuide()
+	local guide = md:getInstance("Guide")
+	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
+		guide:check("fight02_dun")
+		self.isGuidedDun = true
+		local scale = define.kGuidebossHpScale
+		local maxHp = self.enemy:getMaxHp()
+		self.enemy:setMaxHp(maxHp * scale)
+		self.enemy:setFullHp()
+	end
+end
+
+function BaseBossView:checkGuide1()
+	local guide = md:getInstance("Guide")
+	if not guide:isDone("fight02") and not self.isGuidedJijia then 
+		print("guide:check(fight02)")
+		guide:check("fight02")
+		self.isGuidedJijia = true
+	end
 end
 
 return BaseBossView

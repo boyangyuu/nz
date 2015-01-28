@@ -50,16 +50,16 @@ function Defence:setIsDefending(isDefending_)
 end
 
 function Defence:refreshHp()
-	print("function Defence:refreshHp()")
+	-- print("function Defence:refreshHp()")
 	local hero = md:getInstance("Hero")
 	self.maxHp = hero:getMaxHp()
 	self.hp = hero:getMaxHp()
-	print("function Defence:refreshHp() self.hp"..self.hp)
+	-- print("function Defence:refreshHp() self.hp"..self.hp)
 end
 
 function Defence:decreseHp(demage)
-	print("myhp:", self.hp)
-	print("Defence:decreseHp(demage)", demage)
+	-- print("myhp:", self.hp)
+	-- print("Defence:decreseHp(demage)", demage)
 	assert(self.hp > 0, "Defence is dead")
 	local curHp = self.hp - demage
 	local hpOffset = self.maxHp / 10
@@ -83,11 +83,12 @@ end
 function Defence:clearData()
 	self.hp = 0
 	self.maxHp = 0
+	self.isDefending = false
 end
 
 function Defence:onHitted(demage)
 	--hp
-	print("demage", demage)
+	-- print("demage", demage)
 	self:decreseHp(demage)
 end
 
@@ -102,13 +103,13 @@ function Defence:switchStatus()
 end
 
 function Defence:startDefence()
-	print("Defence:startDefence()")
+	-- print("Defence:startDefence()")
 	self.isDefending = true
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = true})
 end
 
 function Defence:endDefence()
-	print("Defence:endDefence()")
+	-- print("Defence:endDefence()")
 	self.isDefending = false
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = false})
 end

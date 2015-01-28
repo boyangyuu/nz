@@ -6,6 +6,7 @@ function StartLayer:ctor()
     self:playSound()
 	self:loadCCS()
 	self:initUI()
+    self:setNodeEventEnabled(true)
 end
 
 function StartLayer:playSound()
@@ -49,6 +50,10 @@ function StartLayer:initUI()
     self:addChild(armature,100)
     armature:getAnimation():play("caidantx" , -1, 1)
 
+end
+
+function StartLayer:onEnter()
+    
 end
 
 function StartLayer:beginGame()

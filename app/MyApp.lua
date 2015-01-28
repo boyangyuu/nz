@@ -89,11 +89,6 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 2 ,           
                                     },
-                                    {
-                                    intenlevel = 0,
-                                    weaponid   = 6,           
-                                    },
-
                         },
                         weaponed = {
                                 bag1 =  {
@@ -135,9 +130,14 @@ function MyApp:createGameStateFile()
                         level = 5,
             },
             guide = {
-                        fight01         = false,
-                        afterfight01    = false,
-                        fight02         = false,
+                        fight01         = true,
+                        afterfight01    = true,
+                        prefight02      = true,
+                        fight02_dun     = true,
+                        fight02         = true,
+                        afterfight02    = true,
+                        fight04         = true,
+                        xiangqian       = true,
             },
             fight = {
                         isPreferBag1 = true,

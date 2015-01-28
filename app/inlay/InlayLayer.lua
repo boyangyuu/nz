@@ -21,6 +21,7 @@ function InlayLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
+    self:initGuide()
     self:onEnter()
 
 end
@@ -48,7 +49,7 @@ end
 
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
-    local oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
+    self.oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
     local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
     local yijianxiangqian = cc.uiloader:seekNodeByName(self, "yijianxiangqian")
     yijianxiangqian:enableOutline(cc.c4b(140, 49, 2,255), 2)
@@ -61,9 +62,9 @@ function InlayLayer:initUI()
 
     self.goldgun = cc.uiloader:seekNodeByName(self, "d")
     self.goldgun:setVisible(false)
-    oneForAllBtn:setTouchEnabled(true)
+    self.oneForAllBtn:setTouchEnabled(true)
     goldWeaponBtn:setTouchEnabled(true)
-    addBtnEventListener(oneForAllBtn, function(event)
+    addBtnEventListener(self.oneForAllBtn, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -189,6 +190,72 @@ function InlayLayer:refreshBtnIcon(event)
             equiparm:getAnimation():play("Animation1" , -1, 0)
         end
     end
+end
+
+function InlayLayer:initGuide()
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("xiangqian")
+    if isDone then return end
+
+    --点击镶嵌
+    local usermodel = md:getInstance("UserModel")
+    local kEnoughMoney = 60000              -- 4w 足够玩家买一套青铜
+    
+    --click
+    guide:addClickListener({
+        id = "xiangqian_xiangqian1",
+        groupId = "xiangqian",
+        rect = self.btn["clip"]:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:refreshListView("clip")
+            usermodel:addMoney(kEnoughMoney)
+        end
+     }) 
+
+    --buy
+    guide:addClickListener({
+        id = "xiangqian_xiangqian2",
+        groupId = "xiangqian",
+        rect = cc.rect(780, 70, 140, 50),
+        endfunc = function (touchEvent)
+            self.inlayModel:buyInlay(7,true,1) 
+        end
+     })    
+
+    --equip
+    guide:addClickListener({
+        id = "xiangqian_xiangqian3",
+        groupId = "xiangqian",
+        rect = cc.rect(940, 70, 140, 50),
+        endfunc = function (touchEvent)
+            self.inlayModel:equipInlay(7,true) 
+        end
+     }) 
+
+    --fast equip
+    guide:addClickListener({
+        id = "xiangqian_xiangqian4",
+        groupId = "xiangqian",
+        rect = self.oneForAllBtn:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+           self.inlayModel:buyInlay(3,false,1) 
+           self.inlayModel:buyInlay(7,false,1) 
+           self.inlayModel:buyInlay(11,false,1) 
+           self.inlayModel:buyInlay(15,false,1) 
+           self.inlayModel:buyInlay(19,false,1) 
+           self.inlayModel:buyInlay(23,true,1) 
+           self.inlayModel:equipAllInlays(true)
+        end
+     })     
+
+    guide:addClickListener({
+        id = "xiangqian_xiangqian5",
+        groupId = "xiangqian",
+        rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)
+        
+        end
+     })        
 end
 
 return InlayLayer
