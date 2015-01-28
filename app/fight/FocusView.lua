@@ -35,7 +35,8 @@ function FocusView:ctor(properties)
 
 	local inlay = md:getInstance("FightInlay")
 	cc.EventProxy.new(inlay, self)
-		:addEventListener(inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.refreshFocus))
+        :addEventListener(inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.refreshFocus))
+        :addEventListener(inlay.INLAY_GOLD_END_EVENT,	 handler(self, self.refreshFocus))
 	
 	local map = md:getInstance("Map")		
     cc.EventProxy.new(map, self)
@@ -46,7 +47,7 @@ end
 function FocusView:refreshFocus(event)
 	--clear
 	event = event or {}
-	-- print("function FocusView:refreshFocus(event)")
+	print("function FocusView:refreshFocus(event)")
 	if self.armature then
 		self.armature:removeFromParent()
 	end
@@ -160,7 +161,7 @@ function FocusView:setFocusRange(size)
     self.focusRange:setContentSize(size)
     addChildCenter(self.focusRange, self)
 
-    dump(size, "function FocusView:setFocusRange(size)")
+    -- dump(size, "function FocusView:setFocusRange(size)")
     drawBoundingBox(nil, self.focusRange, cc.c4f(1.0, 0.0, 0, 1.0))
 end
 

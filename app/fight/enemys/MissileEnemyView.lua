@@ -84,12 +84,12 @@ function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
     enemyBound.x = pWorld2.x
     enemyBound.y = pWorld2.y    
     
-    dump(bound, "bound ------")
-    dump(enemyBound, "enemyBound -------")    
+    -- dump(bound, "bound ------")
+    -- dump(enemyBound, "enemyBound -------")    
     -- self:test()
 
     local isIn = cc.rectIntersectsRect(bound, enemyBound)
-    print("isIn", isIn)
+    -- print("isIn", isIn)
     return isIn
 end
 
@@ -140,11 +140,9 @@ end
 
 --Attackable接口
 function MissileEnemyView:playHitted(event)
-print("MissileEnemyView:playHitted(event)")
 end
 
 function MissileEnemyView:playKill(event)
-    print("MissileEnemyView:playKill(event)")
 
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)

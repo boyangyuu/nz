@@ -70,17 +70,23 @@ function Fight:willEndFight()
 end
 
 function Fight:startFight()
-   self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-   self.inlay:checkNativeGold()
+    self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
+    self.inlay:checkNativeGold()
 
-   --check ju
-   self:checkJuContorlType()
+    --check ju
+    self:checkJuContorlType()
 
-   --check guide
-   local guide = md:getInstance("Guide")
-    scheduler.performWithDelayGlobal(function()
-        guide:startGuide("fight")
-    end, 2.0)   
+    --check guide
+    local guide = md:getInstance("Guide")
+    if self.groupId == 1 and self.levelId == 1 then 
+        scheduler.performWithDelayGlobal(function()
+            guide:check("fight01")
+        end, 2.0)   
+    elseif self.groupId == 1 and self.levelId == 4 then 
+        scheduler.performWithDelayGlobal(function()
+            guide:check("fight04")
+        end, 2.0)   
+    end
 end
 
 function Fight:endFight()

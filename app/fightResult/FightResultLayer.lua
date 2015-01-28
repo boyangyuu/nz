@@ -27,11 +27,10 @@ function FightResultLayer:ctor(properties)
 
     self.itemsTable = {}
 
-	self.isDone = self.guide:check("fightju")
+	self.isDone = self.guide:isDone("afterfight02")
     
     local fightResult = self.fightModel:getFightResult()
     self.grade = self:getGrade(fightResult["hpPercent"])
-
 
 	self:getinlayfall()
 	self:loadCCS()
@@ -39,9 +38,10 @@ function FightResultLayer:ctor(properties)
 	self:initUIContent()
 
 	self:playstar(self.grade)
+    self:setNodeEventEnabled(true)
 
-	
-	
+	self:initGuide()
+	self:initGuide2()
 end
 
 function FightResultLayer:loadCCS()
@@ -115,6 +115,7 @@ function FightResultLayer:initUI()
     self.btngetall:setButtonLabel("disabled" , lqcg)
 
 	function showButton()
+		self:startGuide()
 	    self.btninlay:runAction(cc.FadeIn:create(0.3))
 		self.btngetall:runAction(cc.FadeIn:create(0.3))
 		self.btnback:setButtonEnabled(true)
@@ -136,15 +137,12 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        if self.isDone == true then
-		        ui:showPopup("commonPopup",
-					 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
-					 callfuncCofirm =  handler(self, self.turnLeftCard),
-		             callfuncClose  =  handler(self, self.cancel)},
-					 {opacity = 155})
-	        else
-	        	self:turnLeftCard()
-	        end
+	        ui:showPopup("commonPopup",
+				 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
+				 callfuncCofirm =  handler(self, self.turnLeftCard),
+	             callfuncClose  =  handler(self, self.cancel)},
+				 {opacity = 155})
+
         end
     end)
 	addBtnEventListener(self.btnback, function(event)
@@ -152,7 +150,7 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then		
 	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-	        dump(curGroup)
+	        -- dump(curGroup)
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})
         end
     end)
@@ -211,7 +209,7 @@ function FightResultLayer:getinlayfall()
     local config = getConfig("config/inlayfall.json")
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	local curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
-	dump(curRecord)
+	-- dump(curRecord)
 	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(curRecord["suipianid"])
 	
 	-- 武器碎片
@@ -223,9 +221,9 @@ function FightResultLayer:getinlayfall()
 	-- 狙击
 	
 	local isExist = self.weaponListModel:isWeaponExist(6)
-	dump(self.isDone == false)
-	dump(curRecord["type"] == "boss")
-	dump(isExist == false)
+	-- dump(self.isDone == false)
+	-- dump(curRecord["type"] == "boss")
+	-- dump(isExist == false)
     if self.isDone == false and curRecord["type"] == "boss" and isExist == false then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
@@ -276,8 +274,8 @@ function FightResultLayer:getinlayfall()
 	end
 	self.giveTable = giveTable
 	self.lockTable = lockTable
-	dump(giveTable)
-	dump(lockTable)
+	-- dump(giveTable)
+	-- dump(lockTable)
 
 	for k,v in pairs(giveTable) do
 		table.insert(self.itemsTable,v)
@@ -332,7 +330,7 @@ function FightResultLayer:quickInlay()
 			table.insert(quickinlay,{inlayid = v["id"]})
 		end
 	end
-	dump(quickinlay)
+	-- dump(quickinlay)
 	self.inlayModel:equipAllBestInlays(quickinlay)
 end
 
@@ -368,8 +366,59 @@ function FightResultLayer:turnLeftCard()
 	end
 end
 
-function FightResultLayer:cancel()
-	
+function FightResultLayer:onEnter()
+end
+
+function FightResultLayer:startGuide()
+	self.guide:check("afterfight01")	
+	self.guide:check("afterfight02")
+end
+
+function FightResultLayer:initGuide()
+    local isDone = self.guide:isDone("afterfight01")
+    if isDone then return end
+
+    self.guide:addClickListener({
+        id = "afterfight01_jixu",
+        groupId = "afterfight01",
+        rect = self.btnback:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})        
+        end
+     })    	
+end
+
+function FightResultLayer:initGuide2()
+    local isDone = self.guide:isDone("afterfight02")
+    if isDone then return end
+    self.guide:addClickListener({
+        id = "afterfight02_award",
+        groupId = "afterfight02",
+       rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)
+        	      
+        end
+     })  
+
+    self.guide:addClickListener({
+        id = "afterfight02_get",
+        groupId = "afterfight02",
+        rect = self.btngetall:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+			self:turnLeftCard()       
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "afterfight02_next",
+        groupId = "afterfight02",
+        rect = self.btnback:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})     
+        end
+     })       	
 end
 
 return FightResultLayer

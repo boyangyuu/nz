@@ -356,9 +356,8 @@ function HeroLayer:effectGunReload(event)
     self:addChild(armature)	
 end
 
-
-function HeroLayer:onExit()
-	print("function HeroLayer:onExit()")
+function HeroLayer:onCleanup()
+	print("function HeroLayer:onCleanup()")
 
 	if self.killTimerHandler then 
 		scheduler.unscheduleGlobal(self.killTimerHandler)
@@ -373,5 +372,6 @@ end
 function HeroLayer:onEnter()
 	
 end
+
 
 return HeroLayer

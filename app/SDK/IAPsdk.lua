@@ -1,7 +1,7 @@
 
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
-local className = "org/cocos2dx/lua/IAPControl"
+local className = "com/hgtt/ccn/IAPControl"
 local sig = "(Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
@@ -12,7 +12,7 @@ end
 function IAPsdk:setTelecomOperator()
     local telecomOperator = nil
     if device.platform == 'android' then
-        -- local result,telecomOperator = luaj.callStaticMethod("org/cocos2dx/lua/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
+        local result,telecomOperator = luaj.callStaticMethod("com/hgtt/ccn/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
         return telecomOperator
     end
 	print("telecomOperator:",telecomOperator)
@@ -73,10 +73,6 @@ function IAPsdk:pay(name)
 			luaj.callStaticMethod(className, "pay", args, sig)
 		end
 	end
-end
-
-function IAPsdk:query()
-	local args = {self.config[name], handler(self, self.queryResult)}
 end
 
 function IAPsdk:callbackSuccess( result )

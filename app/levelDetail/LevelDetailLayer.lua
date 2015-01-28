@@ -19,7 +19,7 @@ function LevelDetailLayer:ctor(properties)
 	self:loadCCS()
 	self:initUI()
 
-
+    self:initGuide()
 end
 
 function LevelDetailLayer:loadCCS()
@@ -307,6 +307,44 @@ function LevelDetailLayer:initData()
 	local groupId = self.groupId
 	local levelId = self.levelId
 	self.DataTable = self.model:getConfig(groupId,levelId)
+end
+
+function LevelDetailLayer:initGuide()
+	local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("prefight02")
+    if isDone then return end
+
+    print("function LevelDetailLayer:initGuide()")
+
+    --点击一键装备
+    guide:addClickListener({
+        id = "prefight02_equip1",
+        groupId = "prefight02",
+        rect = self.btnBibei:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onClickBtnBibei()
+        end
+     })    
+
+    --点击装备黄金武器
+    guide:addClickListener({
+        id = "prefight02_equip2",
+        groupId = "prefight02",
+        rect = self.btnGold:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onClickBtnGold()
+        end
+     }) 	
+
+    --点击进入战斗
+    guide:addClickListener({
+        id = "prefight02_enter",
+        groupId = "prefight02",
+        rect = self.btnStart:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onClickBtnStart()
+        end
+     })     
 end
 
 return LevelDetailLayer

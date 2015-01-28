@@ -20,7 +20,9 @@ function GuideLayer:ctor()
 	--
 	self:setVisible(false)
 	self.isWaiting = false
-	
+	self.bg 	  = nil
+	self.armature = nil
+		
 	--ui
 	self:loadCCS()
 
@@ -149,19 +151,20 @@ function GuideLayer:getTargetRect()
 end
 
 function GuideLayer:isTouchTarget(pos)
-	dump(pos, "pos")
+	-- dump(pos, "pos")
 	pos.y = pos.y - display.offset 
 	local rect = self:getTargetRect()
-	dump(rect, "rect")
+	-- dump(rect, "rect")
 	local b = cc.rectContainsPoint(rect, pos)
 	return b
 end
 
 function GuideLayer:loadCCS()
 	--ui
-	if self.guideNode then 
-		self.guideNode:removeFromParent() 
-	end
+	self:removeAllChildren()
+	self.bg 	  = nil
+	self.armature = nil
+
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
@@ -170,6 +173,7 @@ function GuideLayer:loadCCS()
     manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
 end
+
 
 function GuideLayer:refreshUI()
 	local cfg = self.guide:getCurConfig()
@@ -233,7 +237,7 @@ function GuideLayer:refreshCommentUI()
 	local offset = cfg.contentOffset or {x = 0, y = 0}
 	local pos = cc.p(display.width1/2 + offset.x, 
 				display.height1/2 + offset.y)
-	dump(pos, "")
+	-- dump(pos, "")
 	contentNode:setPosition(pos)
 
 	--msg
@@ -249,8 +253,9 @@ function GuideLayer:start(event)
 	self:setVisible(true)
 	self:setTouchEnabled(true)
 	self.isGuiding = true
-	if self.bg then self.bg:setVisible(true) end 
-	if self.guideNode then self.guideNode:setVisible(true) end 
+	-- if self.bg then self.bg:setVisible(true) end 
+	-- if self.guideNode then self.guideNode:setVisible(true) end 
+
 	self:refreshUI()
 	self:refreshCommentUI()
 end

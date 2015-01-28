@@ -77,9 +77,23 @@ function Robot:startRobot()
 	--show robot
 	self:dispatchEvent({name = Robot.ROBOT_START_EVENT})
 
+	--cancell dun
+	local defence = md:getInstance("Defence")
+	defence:endDefence()
+
+	--check guide
+	local guide = md:getInstance("Guide")
+	local curGuideId = guide:getCurGuideId()
+	if curGuideId == "fight02_jijia" then 
+		--引导的时候 机甲一直在
+		return 
+	end
+	
 	--sch endRobot
 	local kTimeEnd = define.kRobotTime
 	scheduler.performWithDelayGlobal(handler(self, self.endRobot), kTimeEnd) 
+
+
 end
 
 function Robot:endRobot()

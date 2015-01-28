@@ -198,7 +198,10 @@ function FightPlayer:initUI()
     layerDialog:addChild(fightDescLayer)
 
     --guide
-    scheduler.performWithDelayGlobal(handler(self, self.initGuide), 0.1)
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide1), 0.1)
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
+
 end
 
 --启动盾牌恢复
@@ -471,7 +474,7 @@ end
 function FightPlayer:checkBtnChange(point)
     assert( point , "invalid params")
     if not self.btnChange:isVisible() then return end
-    local rect = self.btnChange:getBoundingBox()      
+    local rect = self.btnChange:getCascadeBoundingBox()  
     isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --换枪
@@ -508,7 +511,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     if eventName == "moved" then return false end
     -- print("eventName:"..eventName.."  id:"..id)
     local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
-    local rect = self.btnFire:getBoundingBox()      
+    local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
     
     --in touch
@@ -532,6 +535,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     -- not in touch
     if self.touchFireId == id and isend then
         self.touchFireId = nil
+        -- scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
         self:onCancelledFire()     
     end          
     return isTouch
@@ -665,8 +669,8 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
-    offsetX = xOri + offsetX*scale
-    offsetY = yOri + offsetY*scale
+    offsetX = xOri + offsetX * scale
+    offsetY = yOri + offsetY * scale
     focusNode:setPosition(offsetX, offsetY)
     self:justFocusPos(focusNode)
     local x, y = focusNode:getPosition()
@@ -756,23 +760,26 @@ function FightPlayer:justFocusPos(node)
     node:setPosition(x, y)
 end
 
-function FightPlayer:initGuide()
+function FightPlayer:initGuide1()
     --check   
-    local isDone = self.guide:check("fight")
+    local isDone = self.guide:isDone("fight01")
     if isDone then return end
+
+    self.focusNode:setPosition(cc.p(500,230))
 
     --move
     local isMoveGuideUnDone = true
     local rect_guidemove = cc.rect(70, 40, 300, 100)
     self.guide:addClickListener({
         id = "fight_move",
-        groupId = "fight",
+        groupId = "fight01",
         rect = rect_guidemove,
         endfunc = function (touchEvent)
             if touchEvent.name == "moved" and isMoveGuideUnDone then
                 isMoveGuideUnDone = false
                 -- print("ight_mov self.guide:doGuideNext()")
-                self.focusNode:moveBy(1.0, 0, -40)
+                -- self.focusNode:setPosition(cc.p(500,230))
+                self.focusNode:moveTo(1.0,588, 230)
                 self.guide:doGuideNext()
                 self.guide:hideGuideForTime(2.0)
             end
@@ -782,18 +789,19 @@ function FightPlayer:initGuide()
     --开枪1次
     self.guide:addClickListener({
         id = "fight_fire1",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             self.gunView:fire()
             self.hero:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.2)
         end
     })  
 
     --开枪1秒
     self.guide:addClickListener({
         id = "fight_fire2",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             self:onGuideFire(touchEvent)
@@ -803,7 +811,7 @@ function FightPlayer:initGuide()
     --扔雷
     self.guide:addClickListener( {
         id = "fight_throw",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnLei:getBoundingBox(),
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
@@ -815,7 +823,7 @@ function FightPlayer:initGuide()
     --换枪
     self.guide:addClickListener( {
         id = "fight_change",
-        groupId = "fight",
+        groupId = "fight01",
         rect = self.btnChange:getBoundingBox(),
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
@@ -827,13 +835,13 @@ function FightPlayer:initGuide()
     --结束
     self.guide:addClickListener( {
         id = "fight_finish",
-        groupId = "fight",
+        groupId = "fight01",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-
+            guide:finishGuide()
         end
     })     
-
+      
 end
 
 local time_begin = nil
@@ -842,11 +850,12 @@ local isGuideFireBegin = false
 function FightPlayer:onGuideFire(touchEvent)
     -- print("os.time()", os.time())
     local name = touchEvent.name
+    local limitTime = 0.9
     
     --检查长按时间
     local function onGuideFireCheckFunc()
         local timeNow = os.time()
-        if time_begin and (timeNow - time_begin) >=  1.0 then 
+        if time_begin and (timeNow - time_begin) >=  limitTime then 
             -- print("长按射击引导完成")
             -- print("time_begin:", time_begin)
             scheduler.unscheduleGlobal(schGuideFire)
@@ -881,11 +890,87 @@ function FightPlayer:onGuideFire(touchEvent)
     end
 end
 
+
+function FightPlayer:initGuide2()
+    --check   
+    local isDone = self.guide:isDone("fight02")
+    if isDone then return end
+
+    --盾
+    self.guide:addClickListener({
+        id = "fight02_dun",
+        groupId = "fight02_dun",
+        rect = self.btnDefence:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self.defence:setIsAble(true) 
+            self.defence:startDefence()   
+        end
+     })    
+
+    --机甲
+    self.guide:addClickListener({
+        id = "fight02_jijia",
+        groupId = "fight02",
+        rect = self.btnRobot:getBoundingBox(),
+        endfunc = function (touchEvent)
+            addBtnEffect(self.btnRobot)
+            local robot = md:getInstance("Robot")
+            robot:startRobot()  
+        end
+     })       
+end
+
+function FightPlayer:initGuide3()
+    local isDone = self.guide:isDone("fight04")
+    if isDone then return end
+
+    self.guide:addClickListener({
+        id = "fight04_open",
+        groupId = "fight04",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            local map = md:getInstance("Map")
+            map:setIsOpenJu(true)            
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "fight04_fire",
+        groupId = "fight04",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self.gunView:fire()
+            self.hero:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.2)
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "fight04_close",
+        groupId = "fight04",
+        rect = self.btnJu:getBoundingBox(),
+        endfunc = function (touchEvent)
+            local map = md:getInstance("Map")
+            map:setIsOpenJu(false)          
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "fight04_finish",
+        groupId = "fight04",
+        rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)         
+        end
+     })        
+
+end
+
 function FightPlayer:onEnter()
     
 end
 
-function FightPlayer:onExit()
+function FightPlayer:onCleanup()
+    print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end
 

@@ -4,6 +4,7 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
+local pauseScene = import("..pauseScene.PauseScene")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -11,8 +12,9 @@ local HomeBarLayer = class("HomeBarLayer", function()
 end)
 
 function HomeBarLayer:ctor(properties)
-    self.usermodel = md:getInstance("UserModel")
-    self.storeModel = md:getInstance("StoreModel")
+    self.usermodel   = md:getInstance("UserModel")
+    self.storeModel  = md:getInstance("StoreModel")
+    self.guide       = md:getInstance("Guide")
 
     cc.EventProxy.new(self.usermodel , self)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
@@ -23,9 +25,12 @@ function HomeBarLayer:ctor(properties)
     self:loadCCS()
     self:initHomeLayer(self.groupid)
     self:refreshMoney()
+
+    self:initGuideWeapon()
+    self:initGuideInlay()
+
     self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
-
 end
 
 function HomeBarLayer:playSound()
@@ -48,47 +53,48 @@ function HomeBarLayer:loadCCS()
     self:addChild(rootNode)
     self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "biaotou")
     self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonlayer")
+    self.btnMoney = cc.uiloader:seekNodeByName(self.homeRootNode, "money")
+    self.btnDiamond = cc.uiloader:seekNodeByName(self.homeRootNode, "diamond")
 end
 
 function HomeBarLayer:refreshMoney()
-    local btnMoney = cc.uiloader:seekNodeByName(self.homeRootNode, "money")
-    btnMoney:setString( self.usermodel:getMoney())
-    local btnDiamond = cc.uiloader:seekNodeByName(self.homeRootNode, "diamond")
-    btnDiamond:setString( self.usermodel:getDiamond())
+    self.btnMoney:setString(self.usermodel:getMoney())
+    self.btnDiamond:setString(self.usermodel:getDiamond())
 end   
 
 function HomeBarLayer:initHomeLayer(groupid)
-    local btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
-    local btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
-    local btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "panelmoney")
-    local btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btnarsenal")
-    local btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btninlay")
-    local btnStore = cc.uiloader:seekNodeByName(self.homeRootNode, "btnstore")
+    self.btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
+    self.btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
+    self.btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "panelmoney")
+    self.btnArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "btnarsenal")
+    self.btnInlay = cc.uiloader:seekNodeByName(self.homeRootNode, "btninlay")
+    self.btnStore = cc.uiloader:seekNodeByName(self.homeRootNode, "btnstore")
     local zuanshi = cc.uiloader:seekNodeByName(self.homeRootNode, "Image_18")
     local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
-    btnBack:setTouchEnabled(true)  
-    btnArsenal:onButtonPressed(function(event)
-                event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-            end)
-            :onButtonRelease(function(event)
-                event.target:runAction(cc.ScaleTo:create(0.1, 1))
-            end)
-    btnInlay:onButtonPressed(function(event)
-                event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-            end)
-            :onButtonRelease(function(event)
-                event.target:runAction(cc.ScaleTo:create(0.1, 1))
-            end)
-    btnStore:onButtonPressed(function(event)
-                event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-            end)
-            :onButtonRelease(function(event)
-                event.target:runAction(cc.ScaleTo:create(0.1, 1))
-            end)
-    btnSetting:setTouchEnabled(true)  
-    btnBack:setVisible(false)
-    btnBuyCoin:setTouchEnabled(true)
+
+    self.btnBack:setTouchEnabled(true)  
+    self.btnArsenal:onButtonPressed(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    self.btnInlay:onButtonPressed(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    self.btnStore:onButtonPressed(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function(event)
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    self.btnSetting:setTouchEnabled(true)  
+    self.btnBack:setVisible(false)
+    self.btnBuyCoin:setTouchEnabled(true)
 
     zsarmature = ccs.Armature:create("zss")
     zsarmature:setPosition(cc.p(23,25))
@@ -110,68 +116,58 @@ function HomeBarLayer:initHomeLayer(groupid)
         self.commonRootNode:addChild(v)
     end
 
-    btnBuyCoin:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+    self.btnBuyCoin:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
             self.storeModel:refreshInfo("bank")
-            btnSetting:setVisible(false)
-            btnBack:setVisible(true)
+            self.btnSetting:setVisible(false)
+            self.btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
         end
     end)
 
-    addBtnEventListener(btnSetting, function(event)
+    addBtnEventListener(self.btnSetting, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            ui:showPopup("MapPopup")
-            btnInlay:setButtonEnabled(true)
-            btnStore:setButtonEnabled(true)
-            btnArsenal:setButtonEnabled(true)
+            -- ui:showPopup("MapPopup")
+            -- cc.Director:getInstance():pushScene(MapPopup)
+            local pause = pauseScene.new()
+            pause:pause("mapset")
+
+
+            -- btnInlay:setButtonEnabled(true)
+            -- btnStore:setButtonEnabled(true)
+            -- btnArsenal:setButtonEnabled(true)
         end
     end)
-    addBtnEventListener(btnBack, function(event)
+    addBtnEventListener(self.btnBack, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
-            btnBack:setVisible(false)
-            btnSetting:setVisible(true)
-            self:refreshCommonLayer("levelMapLayer")
-            btnInlay:setButtonEnabled(true)
-            btnStore:setButtonEnabled(true)
-            btnArsenal:setButtonEnabled(true)
+            self:onBtnBackClicked()
         end
     end)
 
-    btnArsenal:onButtonClicked(function()
-        btnSetting:setVisible(false)
-        btnBack:setVisible(true)
-        self:refreshCommonLayer("WeaponListLayer")
-        btnInlay:setButtonEnabled(true)
-        btnStore:setButtonEnabled(true)
-        btnArsenal:setButtonEnabled(false)
+    self.btnArsenal:onButtonClicked(function()
+        self:onBtnArsenalClicked()
     end)
-    btnInlay:onButtonClicked(function()
-        btnSetting:setVisible(false)
-        btnBack:setVisible(true)
-        self:refreshCommonLayer("inlayLayer")
-        btnInlay:setButtonEnabled(false)
-        btnStore:setButtonEnabled(true)
-        btnArsenal:setButtonEnabled(true)
+    self.btnInlay:onButtonClicked(function()
+        self:onBtnInlayClicked()
     end)
-    btnStore:onButtonClicked(function()
-        btnSetting:setVisible(false)
-        btnBack:setVisible(true)
+    self.btnStore:onButtonClicked(function()
+        self.btnSetting:setVisible(false)
+        self.btnBack:setVisible(true)
         self:refreshCommonLayer("StoreLayer")
 
         local buy = md:getInstance("BuyModel")
         buy:buy("goldGiftBag", {})
-        btnInlay:setButtonEnabled(true)
-        btnStore:setButtonEnabled(false)
-        btnArsenal:setButtonEnabled(true)
+        self.btnInlay:setButtonEnabled(true)
+        self.btnStore:setButtonEnabled(false)
+        self.btnArsenal:setButtonEnabled(true)
+
     end)
 end
 
@@ -179,6 +175,7 @@ function HomeBarLayer:refreshCommonLayer(layer)
     for k,v in pairs(self.commonlayers) do
         if k == layer then
             v:setVisible(true)
+            v:onEnter()
         else
             v:setVisible(false)
         end
@@ -197,9 +194,91 @@ end
 
 function HomeBarLayer:onEnter()
     self:playSound()
+    self.guide:check("prefight02")
 end
 
-function HomeBarLayer:onExit()
+function HomeBarLayer:onCleanup()
+
+end
+
+function HomeBarLayer:onBtnInlayClicked()
+    self.btnSetting:setVisible(false)
+    self.btnBack:setVisible(true)
+    self:refreshCommonLayer("inlayLayer")
+    self.btnInlay:setButtonEnabled(false)
+    self.btnStore:setButtonEnabled(true)
+    self.btnArsenal:setButtonEnabled(true)
+end
+
+function HomeBarLayer:onBtnArsenalClicked()
+    self.btnSetting:setVisible(false)
+    self.btnBack:setVisible(true)
+    self:refreshCommonLayer("WeaponListLayer")
+    self.btnInlay:setButtonEnabled(true)
+    self.btnStore:setButtonEnabled(true)
+    self.btnArsenal:setButtonEnabled(false)
+end
+
+function HomeBarLayer:onBtnBackClicked()
+    self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
+    self.btnBack:setVisible(false)
+    self.btnSetting:setVisible(true)
+    self:refreshCommonLayer("levelMapLayer")
+    self.btnInlay:setButtonEnabled(true)
+    self.btnStore:setButtonEnabled(true)
+    self.btnArsenal:setButtonEnabled(true)
+end
+
+function HomeBarLayer:initGuideWeapon()
+    local isDone = self.guide:isDone("prefight02")
+    if isDone then return end
+
+    print("function HomeBarLayer:initGuide()")
+
+    self.guide:addClickListener({
+        id = "prefight02_wuqiku",
+        groupId = "prefight02",
+        rect = self.btnArsenal:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onBtnArsenalClicked()
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "prefight02_back",
+        groupId = "prefight02",
+        rect = self.btnBack:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onBtnBackClicked()
+        end
+     })        
+
+end
+
+function HomeBarLayer:initGuideInlay() 
+    local isDone = self.guide:isDone("xiangqian")
+    if isDone then return end
+
+    --点击镶嵌
+    self.guide:addClickListener({
+        id = "xiangqian_xiangqian",
+        groupId = "xiangqian",
+        rect = self.btnInlay:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onBtnInlayClicked()
+        end
+     })    
+
+    --点击返回按钮
+    self.guide:addClickListener({
+        id = "xiangqian_back",
+        groupId = "xiangqian",
+        rect = self.btnBack:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            -- self.guide:finishGuide()
+            self:onBtnBackClicked()
+        end
+     })        
 
 end
 

@@ -25,13 +25,15 @@ layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 
 -- 关于Popup
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
--- 地图暂停Popup
-layerClasses["MapPopup"]             = import("..help.MapPopup")
--- 战斗暂停Popup
-layerClasses["FightPopup"]           = import("..help.FightPopup")
+-- -- 地图暂停Popup
+-- layerClasses["MapPopup"]             = import("..help.MapPopup")
+-- -- 战斗暂停Popup
+-- layerClasses["FightPopup"]           = import("..help.FightPopup")
 
 -- giftBag
-layerClasses["GiftBagPopup"]      = import("..buy.GiftBagPopup")
+layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
+
+-- pauseScene
 
 
 
@@ -64,6 +66,8 @@ function UI:showPopup(layerId, properties, extra)
 	end
 
 	local layerCls = self:getLayerCls(layerId)
+
+	print("UI:showPopup(layerId, properties, extra)")
 	
 	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
 		opacity = opacity, anim = anim, 

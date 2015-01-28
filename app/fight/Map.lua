@@ -79,4 +79,12 @@ function Map:isNotMoveMap()
 	return notmove
 end
 
+function Map:getMapBgNode()
+	return self.mapBgNode 
+end
+
+function Map:setMapBgNode(mapBgNode)
+	self.mapBgNode = mapBgNode
+end
+
 return Map
