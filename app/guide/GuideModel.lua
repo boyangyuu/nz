@@ -1,4 +1,4 @@
-\-- local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+-- local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 -- --[[--
 --[[--
