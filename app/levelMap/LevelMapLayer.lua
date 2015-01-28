@@ -356,8 +356,8 @@ end
 
 function LevelMapLayer:checkGuide()
     local curGroupId, curLevelId = self.LevelMapModel:getConfig()
-    print("curGroupId", curGroupId)
-    print("curLevelId", curLevelId)
+    -- print("curGroupId", curGroupId)
+    -- print("curLevelId", curLevelId)
 
     if curGroupId == 1 and curLevelId == 5 then 
         local guide = md:getInstance("Guide")
