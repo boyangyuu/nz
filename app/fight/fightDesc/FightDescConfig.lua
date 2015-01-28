@@ -53,30 +53,30 @@ configs["zibaob"] = {
 }
 
 configs["hs"] = {
-	title = "不要误伤人质！",
+	title = "解救人质！",
 	name = "人质",
 	spc = "特性：",
-	skill = {"千万不要误伤人质！"},
+	skill = {"不要误伤人质！"},
 	weakness = " ",
-	describe = " ",
+	describe = "误杀人质会任务失败! ",
 	playanim = "speak1",
 }
 configs["feiji"] = {
 	title = "出现新兵种！",
 	name = "飞机",
 	spc = "特性：",
-	skill = {"移动快","会飞","发导弹"},
-	weakness = "瓦斯罐",
-	describe = "移动快，近身自爆攻击。",
+	skill = {"移动快","空投伞兵","发射导弹"},
+	weakness = "螺旋桨",
+	describe = "高机动,高伤害。",
 	playanim = "fireright",
 }
-configs["jipu"] = {
+configs["yyc"] = {
 	title = "出现新兵种！",
 	name = "越野车",
 	spc = "特性：",
-	skill = {"移动快","发导弹","血量低"},
-	weakness = "瓦斯罐",
-	describe = "移动快，近身自爆攻击。",
+	skill = {"运输兵","发导弹","血量高"},
+	weakness = "导弹发射器",
+	describe = "攻击高,血量高。",
 	playanim = "fireright",
 }
 

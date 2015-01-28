@@ -84,6 +84,7 @@ function DaoEnemyView:playFire()
         destPos = pWorldBone,
         type = "missile",
         id = self.property["missileId"],
+        demageScale = self.enemy:getDemageScale(),
         missileType = self.property["missileType"],
     }
     local function callfuncDaoDan()

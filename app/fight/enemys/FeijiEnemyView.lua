@@ -249,6 +249,7 @@ function FeijiEnemyView:playFire()
 	        destPos = pWorldBone,
 	        type = "missile",
 	        id = self.property["missileId"],
+	        demageScale = self.enemy:getDemageScale(),
 	        missileType = self.property["missileType"],
 	        offset = offsetPoses[offsetIndex]
 	    }
