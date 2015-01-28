@@ -357,7 +357,6 @@ local enemys = {
 
 }
 
-
 	--boss的关卡配置
 local bosses = {
 	--第一个出场的boss
