@@ -1,4 +1,4 @@
--- local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
+\-- local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 -- --[[--
 --[[--
@@ -24,6 +24,7 @@ function Guide:ctor(properties)
 	self.groupId = nil
 	self.stepIndex = nil
 	self.curData = nil
+	self.isGuiding = false
 end
 
 function Guide:check(groupId)
@@ -40,6 +41,7 @@ function Guide:check(groupId)
 	print("isCurDone", isCurDone)
 	if not isCurDone and isPreDone then 
 		self:startGuide(groupId)
+		return true
 	end
 end
 
@@ -117,6 +119,10 @@ function Guide:finishGuide()
 	--dispatch
 	self:dispatchEvent({name = Guide.GUIDE_FINISH_EVENT, 
 				groupId = self.groupId})	
+end
+
+function Guide:getIsGuiding()
+	return self.isGuiding
 end
 
 function Guide:getCurData()

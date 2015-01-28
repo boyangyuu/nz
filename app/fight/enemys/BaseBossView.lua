@@ -718,7 +718,8 @@ end
 function BaseBossView:checkGuide()
 	local guide = md:getInstance("Guide")
 	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
-		guide:check("fight02_dun")
+		local isStart = guide:check("fight02_dun")
+		if not isStart then return end
 		self.isGuidedDun = true
 		local scale = define.kGuidebossHpScale
 		local maxHp = self.enemy:getMaxHp()
