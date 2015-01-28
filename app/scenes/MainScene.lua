@@ -53,11 +53,11 @@ function MainScene:ctor()
 end
 
 function MainScene:onEnter()
-
+    display.resume()
 end
 
 function MainScene:onExit()
-
+    display.pause()
 end
 
 return MainScene

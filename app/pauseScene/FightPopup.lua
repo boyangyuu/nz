@@ -35,7 +35,7 @@ function FightPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			self:close()
-			ui:changeLayer("HomeBarLayer",{})
+			
 		end
 	end)
 
@@ -76,9 +76,12 @@ function FightPopup:onEnter()
 end
 
 function FightPopup:close()
-	local fight = md:getInstance("Fight")
-	fight:pauseFight(false)
-	ui:closePopup("FightPopup")
+	-- local fight = md:getInstance("Fight")
+	-- fight:pauseFight(false)
+	-- ui:closePopup("FightPopup")
+	local scene = cc.Director:getInstance():getRunningScene()
+	cc.Director:getInstance():popScene()
+	scene = nil
 end
 
 return FightPopup

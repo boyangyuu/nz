@@ -969,7 +969,8 @@ function FightPlayer:onEnter()
     
 end
 
-function FightPlayer:onExit()
+function FightPlayer:onCleanup()
+    print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end
 

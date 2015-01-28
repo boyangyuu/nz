@@ -4,6 +4,7 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
+local pauseScene = import("..pauseScene.PauseScene")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -58,7 +59,7 @@ end
 
 function HomeBarLayer:refreshMoney()
     self.btnMoney:setString(self.usermodel:getMoney())
-    self.btnMoney:setString(self.usermodel:getDiamond())
+    self.btnDiamond:setString(self.usermodel:getDiamond())
 end   
 
 function HomeBarLayer:initHomeLayer(groupid)
@@ -131,10 +132,15 @@ function HomeBarLayer:initHomeLayer(groupid)
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            ui:showPopup("MapPopup")
-            self.btnInlay:setButtonEnabled(true)
-            self.btnStore:setButtonEnabled(true)
-            self.btnArsenal:setButtonEnabled(true)
+            -- ui:showPopup("MapPopup")
+            -- cc.Director:getInstance():pushScene(MapPopup)
+            local pause = pauseScene.new()
+            pause:pause("mapset")
+
+
+            -- btnInlay:setButtonEnabled(true)
+            -- btnStore:setButtonEnabled(true)
+            -- btnArsenal:setButtonEnabled(true)
         end
     end)
     addBtnEventListener(self.btnBack, function(event)
@@ -191,7 +197,7 @@ function HomeBarLayer:onEnter()
     self.guide:check("prefight02")
 end
 
-function HomeBarLayer:onExit()
+function HomeBarLayer:onCleanup()
 
 end
 

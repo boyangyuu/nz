@@ -13,21 +13,18 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 
---平时
-isTest  = true
-isDebug = false
+-- --平时
+-- isTest  = true
+-- isDebug = false
 
--- --测试打包
--- isTest  = false
--- isDebug = true
+--测试打包
+isTest  = false
+isDebug = true
 
 -- --正式打包
 -- isTest  = false        
 -- isDebug = false
 
-
-isTest  = false        
-isDebug = false
 
 ui      = UI.new()
 md      = MD.new()
@@ -38,12 +35,14 @@ define  = Define.new()
 iap = IAPsdk.new()
 
 function MyApp:ctor()
+
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
 end
 
 function MyApp:run()
+    print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
 end
@@ -127,7 +126,7 @@ function MyApp:createGameStateFile()
             currentlevel =  {
                         group = 1,
 
-                        level = 5,
+                        level = 1,
             },
             guide = {
                         fight01         = true,
