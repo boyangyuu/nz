@@ -337,6 +337,9 @@ end
 function FightResultLayer:turnLeftCard()
 	if self.userModel:costDiamond(10) then
 		for k,v in pairs(self.lockTable) do
+                um:buy("fanpai", 1, 10)   
+
+
 			if v["falltype"] == "inlay" then
 				self.inlayModel:buyInlay(v["id"])
 				table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
