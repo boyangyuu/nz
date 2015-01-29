@@ -26,17 +26,6 @@ function StoreModel:getConfigTable(type)
 	return newTable
 end
 
-function StoreModel:setGoldWeaponNum(goldNum)
-	
-	local data = getUserData()
-	if data.prop.goldweapon.num == goldNum then
-		return
-	else
-		data.prop.goldweapon.num = goldNum
-	    setUserData(data)
-	end
-end
-
 function StoreModel:orderByGold(configtable)
 	local gold = {}
 	for k,v in pairs(configtable) do

@@ -12,8 +12,8 @@ end)
 
 local director = cc.Director:getInstance()
 
-function PausePopup:ctor(popupName)
-	self.popupName = popupName
+function PausePopup:ctor(properties)
+	self.popupName = properties.popupName
 	self:loadCCS()
 	self:initButtons()
 end

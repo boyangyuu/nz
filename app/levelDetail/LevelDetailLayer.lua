@@ -10,6 +10,7 @@ function LevelDetailLayer:ctor(properties)
 	self.weaponListModel = md:getInstance("WeaponListModel")
 	self.inlayModel 	 = md:getInstance("InlayModel")
 	self.propModel       = md:getInstance("propModel")
+	self.guide           = md:getInstance("Guide")
 	self.groupId = properties.groupId
 	print("self.groupId,", self.groupId)
 	self.levelId = properties.levelId
@@ -245,7 +246,8 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-	if self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
+    local isDone = self.guide:isDone("prefight02")
+	if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
 	    local buy = md:getInstance("BuyModel")
 	    buy:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame)})
 	else
@@ -272,9 +274,12 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		local buyModel = md:getInstance("BuyModel")
-        buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
-                                      })
+		local isDone = self.guide:isDone("prefight02")
+		if isDone then
+			local buyModel = md:getInstance("BuyModel")
+	        buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
+	                                      })
+		end
 	end
 end
 
@@ -291,15 +296,25 @@ function LevelDetailLayer:onClickBtnGold()
 		self.alreadygold:setVisible(true)
 		self.btnGold:setVisible(false)	
 	end
-	local buyModel = md:getInstance("BuyModel")
-    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
+	local isDone = self.guide:isDone("prefight02")
+	if isDone then
+		local buyModel = md:getInstance("BuyModel")
+	    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
+	end
 end
 
 function LevelDetailLayer:onClickBtnJijia()
 	print("jijiabtn is clicked!")
-	self.propModel:buyProp("jijia",1)
-	self.alreadyjijia:setVisible(true)
-	self.btnJijia:setVisible(false)
+	function equipJijia()
+		self.alreadyjijia:setVisible(true)
+		self.btnJijia:setVisible(false)	
+	end
+	local isDone = self.guide:isDone("prefight02")
+	if isDone then
+		local buyModel = md:getInstance("BuyModel")
+	    buyModel:buy("armedMecha",{payDoneFunc = equipJijia})
+	end
+
 end
 
 ---- initData ----
