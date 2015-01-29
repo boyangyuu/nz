@@ -17,8 +17,8 @@ function PauseScene:showPopup(event)
 	--jie
 	local screenCapture = self:screenCapture()
 	local sprite = display.newSprite(screenCapture:getSprite():getTexture())
-	sprite:setPosition(display.width1/2, display.height1/2)
-	sprite:setAnchorPoint(0.5,0.5)
+	-- sprite:setPosition(display.width1/2, display.height1/2)
+	sprite:setAnchorPoint(0,0)
 	sprite:setFlippedY(true)
 	self:addChild(sprite, -1)
 
@@ -32,7 +32,7 @@ function PauseScene:showPopup(event)
 	local pro = event.properties
 	local layer = cls.new(pro)
 	-- print(type(layer))
-
+	layer:setPositionY(display.offset)
 	self:addChild(layer)
 	-- layer:scale(0.0)
 	-- if event.anim == false then
@@ -68,7 +68,7 @@ function PauseScene:addBgLayer()
 end
 
 function PauseScene:screenCapture()
-    local renderTexture = cc.RenderTexture:create(display.width1,display.height1)
+    local renderTexture = cc.RenderTexture:create(display.width,display.height)
     local runningScene = cc.Director:getInstance():getRunningScene()
 
     renderTexture:begin()
