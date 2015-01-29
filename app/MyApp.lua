@@ -129,6 +129,7 @@ function MyApp:createGameStateFile()
                         level = 5,
             },
             guide = {
+
                         isFirstRunning  = true,
                         fight01         = false,
                         afterfight01    = false,
@@ -138,6 +139,7 @@ function MyApp:createGameStateFile()
                         afterfight02    = false,
                         fight04         = false,
                         xiangqian       = false,
+
             },
             fight = {
                         isPreferBag1 = true,
