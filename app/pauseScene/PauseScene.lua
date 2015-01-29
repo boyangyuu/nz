@@ -15,8 +15,7 @@ end
 function PauseScene:pause(configid)
 	local screenCapture = self:screenCapture()
 	local sprite = display.newSprite(screenCapture:getSprite():getTexture())
-	sprite:setPosition(display.width1/2, display.height1/2)
-	sprite:setAnchorPoint(0.5,0.5)
+	sprite:setAnchorPoint(0.0,0.0)
 	sprite:setFlippedY(true)
 	self:addChild(sprite, -1)
 
@@ -29,11 +28,12 @@ end
 
 function PauseScene:initBGLayer()
 	local bgLayer = display.newColorLayer(cc.c4b(0, 0, 0, 150))
-	self:addChild(bgLayer);
+	bgLayer:setPositionY(display.offset)
+	self:addChild(bgLayer)
 end
 
 function PauseScene:screenCapture()
-    local renderTexture = cc.RenderTexture:create(display.width1,display.height1)
+    local renderTexture = cc.RenderTexture:create(display.width,display.height)
     local runningScene = cc.Director:getInstance():getRunningScene()
 
     renderTexture:begin()

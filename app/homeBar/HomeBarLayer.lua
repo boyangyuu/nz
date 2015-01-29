@@ -4,7 +4,6 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
-local pauseScene = import("..pauseScene.PauseScene")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -24,6 +23,7 @@ function HomeBarLayer:ctor(properties)
     self:initData(properties)
     self:loadCCS()
     self:initHomeLayer(self.groupid)
+    self:popUpGify(properties)
     self:refreshMoney()
 
     self:initGuideWeapon()
@@ -33,18 +33,25 @@ function HomeBarLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 end
 
+function HomeBarLayer:popUpGify(properties)
+    local isDone = self.guide:isDone("prefight02")
+    if properties.popgift and isDone then
+        local buy = md:getInstance("BuyModel")
+        buy:buy("timeGiftBag", {})    
+    end
+end
+
 function HomeBarLayer:playSound()
     local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
     audio.playMusic(homeBarMusic,true)
 end
 
 function HomeBarLayer:initData(properties)
-    if table.nums(properties) ~= 0 then
+    if properties.groupid ~= nil then
         self.groupid = properties.groupid
     else
         self.groupid = 0
     end
-     -- dump(properties)
 end
 
 function HomeBarLayer:loadCCS()
@@ -132,10 +139,10 @@ function HomeBarLayer:initHomeLayer(groupid)
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            -- ui:showPopup("MapPopup")
+            ui:showPopup("pausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
             -- cc.Director:getInstance():pushScene(MapPopup)
-            local pause = pauseScene.new()
-            pause:pause("mapset")
+            -- local pause = pauseScene.new()
+            -- pause:pause({type = "mapset"})
 
 
             -- btnInlay:setButtonEnabled(true)

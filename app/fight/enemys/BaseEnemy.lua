@@ -25,7 +25,7 @@ function BaseEnemy:ctor(actor_property, enemy_property)
 end
 
 function BaseEnemy:getDemage()
-    local baseDemage = self.config.demage
+    local baseDemage = self.config.demage or 1.0
     local scale = self:getDemageScale()
     -- print("baseDemage", baseDemage)
     -- print("scale", scale)
@@ -51,8 +51,6 @@ function BaseEnemy:beginFireCd()
     self.isFireCd = true
     assert(self.config["fireCd"] , "config fireCd is nil")
     local fireCd = self.config["fireCd"] or 3.0
-
-    print("fireCd", fireCd)
     local function resumeCd()
         self.isFireCd = false
     end

@@ -19,6 +19,7 @@ function LevelMapLayer:ctor(properties)
     self.index = 1
     self:initData(properties)
     self:initBgLayer()
+    self:initDailyLogin()
     self:initChooseLayer()
     self:refreshLevelLayer(self.index)
     cc.EventProxy.new(self.FightResultModel, self)
@@ -27,14 +28,11 @@ function LevelMapLayer:ctor(properties)
 end
 
 function LevelMapLayer:initData(properties)
-    -- dump(properties)
     if properties.groupId == 0 then
         local group,level = self.LevelMapModel:getConfig()
         self.index = group
-        -- dump(self.index)
     else
         self.index = properties.groupId
-        -- dump(self.index)
     end
 
     --userData
@@ -51,10 +49,18 @@ function LevelMapLayer:initData(properties)
     end
 end
 
+function LevelMapLayer:initDailyLogin()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("afterfight02")
+    if dailyLoginModel:checkPop() and isDone then
+        ui:showPopup("DailyLoginLayer", {})
+        dailyLoginModel:donotPop()
+    end
+end
+
 function LevelMapLayer:initBgLayer()
 -- bg starting animation   
-    local buy = md:getInstance("BuyModel")
-    -- buy:buy("timeGiftBag", {})
 
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))

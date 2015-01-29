@@ -67,7 +67,6 @@ function DefenceView:hideDefence()
 			cc.CallFunc:create(
 				function ()
 					self:setVisible(false)
-					self.defence:setIsDefending(false)
 					self:setPositionY(-display.height1)
 				end
 			)

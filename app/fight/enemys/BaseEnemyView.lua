@@ -10,20 +10,16 @@
 ]]
 
 --import
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = class("BaseEnemyView", Attackable)
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
-local kWalkWidth = 20
 
 function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
 	
 	--play
-
-	
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
@@ -152,6 +148,8 @@ function BaseEnemyView:playWalk()
     self.enemy:beginWalkCd()
 end
 
+
+
 function BaseEnemyView:playHitted(event)
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	print("function BaseEnemyView:playHitted(event)")
@@ -170,7 +168,6 @@ function BaseEnemyView:playKill(event)
 	self.armature:stopAllActions()
 	self:setPause({isPause = true})
 
-	
 	--以防万一
 	if self and self.setDeadDone then 
 		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)

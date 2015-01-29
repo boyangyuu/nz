@@ -158,7 +158,9 @@ function WeaponListLayer:initUI()
                     buyModel:buy("unlockWeapon",{weaponid = self.weaponId})
                 end
             end
-            if buyModel:checkBought("weaponGiftBag") == false then
+            local guide = md:getInstance("Guide")
+            local isDone = guide:isDone("prefight02")
+            if buyModel:checkBought("weaponGiftBag") == false and isDone then
                 buyModel:buy("weaponGiftBag",{
                     payDoneFunc = handler(self, self.reloadlistview),
                                               deneyBuyFunc = deneyBuyWeapon})
@@ -170,7 +172,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
+            -- local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
             if self.userModel:costMoney(self.costupgrade) then
                 self:intensify(self.weaponId)
             end
@@ -186,8 +188,9 @@ function WeaponListLayer:initUI()
                 function deneyOncefull()
                     buyModel:buy("onceFull",{weaponid = self.weaponId})
                 end
-
-                if buyModel:checkBought("weaponGiftBag") == false then
+                local guide = md:getInstance("Guide")
+                local isDone = guide:isDone("prefight02")
+                if buyModel:checkBought("weaponGiftBag") == false and isDone then
                     buyModel:buy("weaponGiftBag",{
                         payDoneFunc = handler(self, self.reloadlistview),
                                                   deneyBuyFunc = deneyOncefull})
@@ -511,6 +514,7 @@ end
 function WeaponListLayer:initGuide()
     --check   
     local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("prefight02")
     if isDone then return end
 
     --点击左侧mp5

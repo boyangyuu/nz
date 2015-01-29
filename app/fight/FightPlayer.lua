@@ -838,7 +838,7 @@ function FightPlayer:initGuide1()
         groupId = "fight01",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-            guide:finishGuide()
+            self.guide:finishGuide()
         end
     })     
       

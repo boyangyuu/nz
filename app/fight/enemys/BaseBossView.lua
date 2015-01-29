@@ -407,7 +407,6 @@ end
 function BaseBossView:playChongfeng()
 	self.armature:getAnimation():play("chongfeng", -1, 1)
     --前进
-    self.isAheading = true
     local speed = 400
     local desY = -180
     local scale = 2.0
@@ -424,8 +423,7 @@ function BaseBossView:playChongfeng()
 
     --
     local aheadEndFunc = function ()
-        -- print("aheadEnd")
-        self.isAheading = false
+  		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()
         self.enemy:hit(self.hero, destDemage)
@@ -433,6 +431,8 @@ function BaseBossView:playChongfeng()
         self:scaleBy(0.01, 1/scale)
         local map = md:getInstance("Map")
         map:playEffect("shake")
+        --restore
+	    self:playStand()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
@@ -475,6 +475,7 @@ function BaseBossView:setUnhurted(isUnhurted)
 	self.isUnhurted = isUnhurted
 	if not isUnhurted and self.wudiAnim then 
 		self.wudiAnim:removeSelf()
+		self.wudiAnim = nil
 	end
 end
 
@@ -528,12 +529,14 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 
 		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
+
+        if  movementID == "chongfeng"  then
+            self.armature:getAnimation():play(movementID , -1, 1)
+            return 
+        end
+
 		if movementID ~= "die" then
-			local playCache = self:getPlayCache()
-            if self.isAheading then 
-                -- print("禁止")
-                return
-            end			
+			local playCache = self:getPlayCache()		
 			if playCache then 
 				playCache()
 			else 					
