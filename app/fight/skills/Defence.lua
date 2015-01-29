@@ -46,12 +46,12 @@ function Defence:getIsDefending()
 end
 
 function Defence:setIsDefending(isDefending_)
+	print("function Defence:setIsDefending(isDefending_)")
 	self.isDefending = isDefending_
 end
 
 function Defence:refreshHp()
 	-- print("function Defence:refreshHp()")
-	local hero = md:getInstance("Hero")
 	self.maxHp = define.kDefenceHp
 	self.hp = define.kDefenceHp
 end
@@ -103,13 +103,13 @@ end
 
 function Defence:startDefence()
 	print("Defence:startDefence()")
-	self.isDefending = true
+	self:setIsDefending(true)
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = true})
 end
 
 function Defence:endDefence()
 	print("Defence:endDefence()")
-	self.isDefending = false
+	self:setIsDefending(false)
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = false})
 end
 

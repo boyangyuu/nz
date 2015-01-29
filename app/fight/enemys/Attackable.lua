@@ -108,7 +108,7 @@ function Attackable:checkBody(focusNode)
 		if enemyRange == nil then break end 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
 				 enemyRange)
-		print(isInRange, "isInRange")
+		-- print(isInRange, "isInRange")
 		if isInRange then 
 			local isHited = isInRange 
 			targetData.demageScale = 1.0

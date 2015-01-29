@@ -76,7 +76,7 @@ function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
     local scale = self:getScale() * self.hero:getMapZoom()
     enemyBound.width = enemyBound.width * scale
     enemyBound.height = enemyBound.height * scale
-    dump(enemyBound, "enemyBound2")
+    -- dump(enemyBound, "enemyBound2")
     local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
     bound.x = pWorld1.x
     bound.y = pWorld1.y

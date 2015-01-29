@@ -126,38 +126,25 @@ end
 
 function InfoLayer:onHeroHpChange(event)
 	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	-- print("self.hero:getMaxHp()", self.hero:getMaxHp())
-	-- print("self.hero:getHp()", self.hero:getHp())
-	-- print("event.name", event.name)
+	print("self.hero:getMaxHp()", self.hero:getMaxHp())
+	print("self.hero:getHp()", self.hero:getHp())
+	print("event.name", event.name)
 
 	local displayHp = math.floor(self.hero:getHp() )
 	self.bloodLabel:setString(displayHp)
 	if event.name == "HP_DECREASE_EVENT" then 
-		-- self.blood2:setScaleX(per / 100)
-		-- self.blood1:setScaleX(per / 100)
-		print("per", per)
 	    self.blood2:setPercent(per)
 	    self.blood1:setPercentWithDelay(per, 0.3)
-	    -- self:rejustBloodAnim()
 	else
-		-- self.blood1:setScaleX(per / 100)		
-		-- self.blood2:setScaleX(per / 100)
 	    self.blood1:setPercent(per)
 	    self.blood2:setPercentWithDelay(per, 0.3)
-	    -- scheduler.performWithDelayGlobal(handler(self, self.rejustBloodAnim), 0.3)
-    end		
-    -- self.bloodAnim:getAnimation():play("xuetiao_s" , -1, 1)	
+    end			
 end
 
 function InfoLayer:onKillEnemy(event)
 	if self.isGolding then return end 
-
 	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
 	self.gold1:setPercent(per)
-	-- if per == 100 then 
-	-- 	self:onHide
-	-- 	self.isPlayGolding = true
-
 end
 
 function InfoLayer:onActiveGold(event)

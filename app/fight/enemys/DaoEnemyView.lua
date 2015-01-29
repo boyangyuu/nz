@@ -5,6 +5,7 @@
 1. desc: a.发射攻击物品 (导弹 斧头 煤气罐  )
 ]]
 
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
