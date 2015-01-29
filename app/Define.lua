@@ -31,10 +31,12 @@ Define.kRenzhiWalkTime			= 0.6
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
-Define.kRenzheSpeed				= 1400.0    --忍者跑动速度 像素/s
-Define.kRenzheRunTime			= 3.0      
+Define.kRenzheSpeed				= 600.0    --忍者跑动速度 像素/s
+Define.kRenzheRunTime			= 2.0      
 Define.kRenzheWalkTime			= 0.5   
-
+Define.kRenzheShanTime			= 4.0   
+Define.kRenzheShanOffsetMin		= 300  
+Define.kRenzheShanOffsetMax		= 600
 
 --飞机兵 
 Define.kfeijiSpeed				= 500.0  --速度
@@ -49,6 +51,9 @@ Define.kjipuWalkTime			= 0.6    --小范围移动时间
 --导弹
 Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 
 Define.kMissileLeiTime				= 2.0    --手雷 
+
+--飞镖
+Define.kMissileFeibiaTime		= 1.0
 
 
 --黄金武器

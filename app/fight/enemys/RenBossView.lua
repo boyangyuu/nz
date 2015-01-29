@@ -11,6 +11,7 @@ end
 
 function RenBossView:tick()
     --change state
+    if self.isShaning then return end
 
     --fire    
     local fireRate, isAble = self.enemy:getFireRate()
@@ -22,6 +23,17 @@ function RenBossView:tick()
             self.enemy:beginFireCd()
         end
     end
+
+    --闪
+    local shanRate, isAble = self.enemy:getShanRate()
+    if isAble then
+        assert(shanRate > 1, "invalid shanRate")
+        local randomSeed = math.random(1, shanRate)
+        if randomSeed > shanRate - 1 then 
+            self:play("shan", handler(self, self.playShan))
+            self.enemy:beginShanCd()
+        end
+    end 
 
     --walk
     local walkRate, isAble = self.enemy:getWalkRate()
@@ -44,18 +56,7 @@ function RenBossView:tick()
             self.enemy:beginRollCd()
         end
     end 
-
-    --roll
-    local rollRate, isAble = self.enemy:getRollRate()
-    if isAble then
-        assert(rollRate > 1, "invalid rollRate")
-        local randomSeed = math.random(1, rollRate)
-        if randomSeed > rollRate - 1 then 
-            self:play("roll", handler(self, self.playRun))
-            self.enemy:beginRollCd()
-        end
-    end 
-    
+ 
     -- --speak
     -- local speakRate, isAble = self.enemy:getSpeakRate()
     -- assert(speakRate > 1, "invalid speakRate")
@@ -67,6 +68,11 @@ function RenBossView:tick()
     --         self.enemy:beginSpeakCd()
     --     end
     -- end     
+end
+
+function RenBossView:onHitted(targetData )
+    if self.isShaning then return end
+    RenBossView.super.onHitted(self, targetData)
 end
 
 function RenBossView:playWalk()
@@ -87,6 +93,31 @@ function RenBossView:playRun()
     else
         self:playRunAction(-1, isRun)
     end
+end
+
+function RenBossView:playShan()
+    local randomSeed = math.random(1, 2)
+    local isLeft = randomSeed == 1 and -1 or 1 
+    local offset =  math.random(define.kRenzheShanOffsetMin , 
+                            define.kRenzheShanOffsetMax)   
+                         * self:getScale() * isLeft
+    if not self:checkPlace(offset) then 
+        self:checkIdle()
+        return 
+    end 
+
+    --
+    self.armature:getAnimation():play("shanchu" , -1, 1) 
+    self.isShaning = true
+
+    --callfunc
+    local function shanru()
+        self:setVisible(true)
+        self:setPositionX(self:getPositionX() +  offset)
+        self.armature:getAnimation():play("shanru" , -1, 1) 
+        self.isShaning = false
+    end
+    scheduler.performWithDelayGlobal(shanru, define.kRenzheShanTime)
 end
 
 function RenBossView:playRunAction(direct, isRun)
@@ -123,22 +154,38 @@ function RenBossView:playFire()
     print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
-    -- pWorldBone = self.armature:convertToWorldSpace(cc.p(0,0))
-    -- dump(self.property, "self.property")
-    local property = {
-        srcPos = pWorldBone,
-        srcScale = self:getScale() * 0.3,
-        destPos = pWorldBone,
-        type = "missile",
-        id = self.property["missileId"],
-        demageScale = self.enemy:getDemageScale(),
-        missileType = self.property["missileType"],
-    }
-    local function callfuncDaoDan()
-         self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+    local offsetPoses = self.property["missileOffsets"]
+    for i=1,#offsetPoses do
+        local delay = 0.6 + 0.10 * i 
+        local property = {
+            srcPos = pWorldBone,
+            srcScale = self:getScale() * 0.4,
+            destScale = 1.5,
+            destPos = pWorldBone,
+            offset = offsetPoses[i],
+            type = "missile",
+            id = self.property["missileId"],
+            demageScale = self.enemy:getDemageScale(),
+            missileType = "feibiao",
+        }
+        local function callfuncDaoDan()
+             self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+        end
+        local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
+        self:addScheduler(sch)         
     end
-    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
-    self:addScheduler(sch) 
+end
+
+function RenBossView:playZhanHuan()
+    self.armature:getAnimation():play("zhaohuan", -1, 1)
+    self:zhaohuan()
+    self.isShaning = true
+end
+
+function RenBossView:onKillLastCall()
+    self.isShaning = false
+    self:setVisible(true)
+    self.armature:getAnimation():play("shanru" , -1, 1) 
 end
 
 function RenBossView:animationEvent(armatureBack,movementType,movementID)
@@ -146,6 +193,16 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
+        if movementID == "shanchu" then 
+            self:setVisible(false)
+            return
+        end
+
+        if movementID == "zhaohuan" then 
+            self:setVisible(false)
+            return
+        end
+
         if movementID == "runleft" 
 	            or movementID == "runright" 
 	            or movementID == "walk" 
