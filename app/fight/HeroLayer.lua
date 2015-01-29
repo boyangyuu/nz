@@ -17,7 +17,6 @@ local RobotView = import(".skills.RobotView")
 local HeroAnimView = import(".HeroAnimView")
 --kconfig
 local kRemainSumTimes = 4
-local kLeiDemage = 600.0
 local kLeiW = 100.0
 
 local HeroLayer = class("HeroLayer", function()
@@ -269,7 +268,7 @@ function HeroLayer:onThrowGrenade(event)
 					cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
 				 	cc.CallFunc:create(
 				 		function ()
-		                    local targetData = {demage = kLeiDemage, demageType = "lei", demageScale = 1.0}
+		                    local targetData = {demage = define.kLeiDemage, demageType = "lei", demageScale = 1.0}
 		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
 		                    	targetData = targetData, destPos = destPos,destRect = destRect })
 							armature:removeFromParent()
@@ -357,9 +356,8 @@ function HeroLayer:effectGunReload(event)
     self:addChild(armature)	
 end
 
-
-function HeroLayer:onExit()
-	print("function HeroLayer:onExit()")
+function HeroLayer:onCleanup()
+	print("function HeroLayer:onCleanup()")
 
 	if self.killTimerHandler then 
 		scheduler.unscheduleGlobal(self.killTimerHandler)
@@ -374,5 +372,6 @@ end
 function HeroLayer:onEnter()
 	
 end
+
 
 return HeroLayer

@@ -59,9 +59,10 @@ Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽
 --角色扔的手雷
 Define.kBaoRangeW 				= 200	--手雷范围宽
 Define.kBaoRangeH 				= 200	--手雷范围高
-
+Define.kLeiDemage 				= 2500.0	--手雷伤害
 --盾牌
-Define.cdTimes 					= 15.0   --十秒恢复完毕
+Define.cdTimes 					= 10.0   --十秒恢复完毕
+Define.kDefenceHp				= 150
 
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
@@ -76,6 +77,10 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 
 --狙击枪
 Define.kJuRange 				= 4.0
+
+--引导
+Define.kGuideActiveJijia	 	= 0.1  --boss还有百分之10血时 触发机甲
+Define.kGuidebossHpScale		= 0.5  --引导的时候 boss的血量缩小0.5
 
 function Define:ctor()
     Define.super.ctor(self) 

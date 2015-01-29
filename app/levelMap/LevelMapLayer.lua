@@ -22,10 +22,9 @@ function LevelMapLayer:ctor(properties)
     self:initDailyLogin()
     self:initChooseLayer()
     self:refreshLevelLayer(self.index)
-
     cc.EventProxy.new(self.FightResultModel, self)
         :addEventListener("POPUP_LEVELDETAIL", handler(self, self.PopupLevelDetail))
-
+    self:initGuide() 
 end
 
 function LevelMapLayer:initData(properties)
@@ -60,8 +59,6 @@ end
 
 function LevelMapLayer:initBgLayer()
 -- bg starting animation   
-    -- local buy = md:getInstance("BuyModel")
-    -- buy:buy("timeGiftBag", {})
 
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
@@ -294,6 +291,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= i  then
                     local levelId = i  
+                    print(" addBtnEventListener(panelBtn[i], function(event)")
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     ui:showPopup("commonPopup",
@@ -333,6 +331,7 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self.ldarmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.index)
             self:refreshLevelLayer(self.index)
+            self:checkGuide()
         end
     end
 end
@@ -350,7 +349,38 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onExit()
+function LevelMapLayer:onCleanup()
+
 end
-    
+
+function LevelMapLayer:onEnter()   
+    self:checkGuide()
+    print("function LevelMapLayer:checkGuide()  ")
+end
+
+function LevelMapLayer:checkGuide()
+    local curGroupId, curLevelId = self.LevelMapModel:getConfig()
+    -- print("curGroupId", curGroupId)
+    -- print("curLevelId", curLevelId)
+
+    if curGroupId == 1 and curLevelId == 5 then 
+        local guide = md:getInstance("Guide")
+        guide:check("xiangqian")
+    end
+end
+
+function LevelMapLayer:initGuide()
+    --点击进入下一关
+    local rect = cc.rect(200, 107, 120, 120)
+    local guide = md:getInstance("Guide")
+    guide:addClickListener({
+        id = "prefight02_nextlevel",
+        groupId = "prefight02",
+        rect = rect,
+        endfunc = function (touchEvent)
+            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
+        end
+     })   
+end
+
 return LevelMapLayer

@@ -378,7 +378,7 @@ function Attackable:getPosInMap()
 
 	local map = self:getParent():getParent()
 	local box 	= map:getBoundingBox()
-	-- dump(box, "box")
+	dump(box, "box")
 	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
 	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
@@ -390,6 +390,19 @@ function Attackable:getPosInMap()
 	local worldMap = map:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end
+
+function Attackable:getPosInMapBg()
+	local world = self:convertToWorldSpace(cc.p(0,0))
+	-- dump(world, "world")
+
+	local map = md:getInstance("Map")
+	local mapbg = map:getMapBgNode()
+	local box 	= mapbg:getBoundingBox()
+	dump(box, "box")
+	local worldMap = mapbg:convertToNodeSpace(cc.p(world.x, world.y))	
+	return worldMap
+end
+
 
 function Attackable:getPlaceZOrder()
 	return self.property.placeZOrder
@@ -430,7 +443,8 @@ function Attackable:onEnter()
 	end
 end
 
-function Attackable:onExit()
+function Attackable:onCleanup()
+	print("Attackable:onCleanup()")
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end

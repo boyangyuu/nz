@@ -207,7 +207,6 @@ end
 --hp相关
 function Hero:doRelive()
     self.fsm__:doEvent("relive") --todo
-    
 end
 
 function Hero:getMaxHp()

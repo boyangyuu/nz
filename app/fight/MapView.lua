@@ -66,7 +66,7 @@ function MapView:loadCCS()
 	--map
 
 	local waveConfig = self.mapModel:getCurWaveConfig()
-	dump(waveConfig, "waveConfig")
+	-- dump(waveConfig, "waveConfig")
 	local mapName = waveConfig:getMapId()
 	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
@@ -80,8 +80,9 @@ function MapView:loadCCS()
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
+	self.mapModel:setMapBgNode(self.bg)
 	local box = self.bg:getBoundingBox()
-	dump(box, "box")
+	-- dump(box, "box")
 	self:loadPlaces()
 end
 
@@ -99,7 +100,7 @@ function MapView:loadPlaces()
 
         if placeNode then 		
 			placeZOrder = placeNode:getLocalZOrder()
-			print("placeZOrder", placeZOrder)
+			-- print("placeZOrder", placeZOrder)
 	    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 
 	    	if scaleNode then scaleNode:setVisible(false) end
@@ -572,7 +573,8 @@ function MapView:playEffectJuShaked(event)
 	self:runAction(cc.Sequence:create(tMove, tMove1))
 end
 
-function MapView:onExit() 
+function MapView:onCleanup() 
+	print("MapView:onCleanup() ")
 	if self.checkEnemysEmptyHandler then
 		scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
 	end

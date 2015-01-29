@@ -4,6 +4,7 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
+local pauseScene = import("..pauseScene.PauseScene")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -25,10 +26,12 @@ function HomeBarLayer:ctor(properties)
     self:initHomeLayer(self.groupid)
     self:popUpGify(properties)
     self:refreshMoney()
+
+    self:initGuideWeapon()
+    self:initGuideInlay()
+
     self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
-
-    self:initGuide()
 end
 
 function HomeBarLayer:popUpGify(properties)
@@ -136,23 +139,22 @@ function HomeBarLayer:initHomeLayer(groupid)
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            ui:showPopup("MapPopup")
-            self.btnInlay:setButtonEnabled(true)
-            self.btnStore:setButtonEnabled(true)
-            self.btnArsenal:setButtonEnabled(true)
+            -- ui:showPopup("MapPopup")
+            -- cc.Director:getInstance():pushScene(MapPopup)
+            local pause = pauseScene.new()
+            pause:pause("mapset")
+
+
+            -- btnInlay:setButtonEnabled(true)
+            -- btnStore:setButtonEnabled(true)
+            -- btnArsenal:setButtonEnabled(true)
         end
     end)
     addBtnEventListener(self.btnBack, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
-            self.btnBack:setVisible(false)
-            self.btnSetting:setVisible(true)
-            self:refreshCommonLayer("levelMapLayer")
-            self.btnInlay:setButtonEnabled(true)
-            self.btnStore:setButtonEnabled(true)
-            self.btnArsenal:setButtonEnabled(true)
+            self:onBtnBackClicked()
         end
     end)
 
@@ -160,12 +162,7 @@ function HomeBarLayer:initHomeLayer(groupid)
         self:onBtnArsenalClicked()
     end)
     self.btnInlay:onButtonClicked(function()
-        self.btnSetting:setVisible(false)
-        self.btnBack:setVisible(true)
-        self:refreshCommonLayer("inlayLayer")
-        self.btnInlay:setButtonEnabled(false)
-        self.btnStore:setButtonEnabled(true)
-        self.btnArsenal:setButtonEnabled(true)
+        self:onBtnInlayClicked()
     end)
     self.btnStore:onButtonClicked(function()
         self.btnSetting:setVisible(false)
@@ -204,10 +201,20 @@ end
 
 function HomeBarLayer:onEnter()
     self:playSound()
+    self.guide:check("prefight02")
 end
 
-function HomeBarLayer:onExit()
+function HomeBarLayer:onCleanup()
 
+end
+
+function HomeBarLayer:onBtnInlayClicked()
+    self.btnSetting:setVisible(false)
+    self.btnBack:setVisible(true)
+    self:refreshCommonLayer("inlayLayer")
+    self.btnInlay:setButtonEnabled(false)
+    self.btnStore:setButtonEnabled(true)
+    self.btnArsenal:setButtonEnabled(true)
 end
 
 function HomeBarLayer:onBtnArsenalClicked()
@@ -219,18 +226,67 @@ function HomeBarLayer:onBtnArsenalClicked()
     self.btnArsenal:setButtonEnabled(false)
 end
 
-function HomeBarLayer:initGuide()
-    --check   
-    local isDone = self.guide:isDone("afterfight01")
+function HomeBarLayer:onBtnBackClicked()
+    self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
+    self.btnBack:setVisible(false)
+    self.btnSetting:setVisible(true)
+    self:refreshCommonLayer("levelMapLayer")
+    self.btnInlay:setButtonEnabled(true)
+    self.btnStore:setButtonEnabled(true)
+    self.btnArsenal:setButtonEnabled(true)
+end
+
+function HomeBarLayer:initGuideWeapon()
+    local isDone = self.guide:isDone("prefight02")
     if isDone then return end
+
+    print("function HomeBarLayer:initGuide()")
+
     self.guide:addClickListener({
-        id = "afterfight01_wuqiku",
-        groupId = "afterfight01",
+        id = "prefight02_wuqiku",
+        groupId = "prefight02",
         rect = self.btnArsenal:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
             self:onBtnArsenalClicked()
         end
      })    
+
+    self.guide:addClickListener({
+        id = "prefight02_back",
+        groupId = "prefight02",
+        rect = self.btnBack:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onBtnBackClicked()
+        end
+     })        
+
+end
+
+function HomeBarLayer:initGuideInlay() 
+    local isDone = self.guide:isDone("xiangqian")
+    if isDone then return end
+
+    --点击镶嵌
+    self.guide:addClickListener({
+        id = "xiangqian_xiangqian",
+        groupId = "xiangqian",
+        rect = self.btnInlay:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            self:onBtnInlayClicked()
+        end
+     })    
+
+    --点击返回按钮
+    self.guide:addClickListener({
+        id = "xiangqian_back",
+        groupId = "xiangqian",
+        rect = self.btnBack:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+            -- self.guide:finishGuide()
+            self:onBtnBackClicked()
+        end
+     })        
+
 end
 
 return HomeBarLayer

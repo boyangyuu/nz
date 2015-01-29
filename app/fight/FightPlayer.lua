@@ -838,20 +838,10 @@ function FightPlayer:initGuide1()
         groupId = "fight01",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-
+            guide:finishGuide()
         end
     })     
-
-    ----第二关----
-    --结束
-    self.guide:addClickListener( {
-        id = "fight_finish",
-        groupId = "fight01",
-        rect = cc.rect(0, 0, display.width1, display.height1),
-        endfunc = function (touchEvent)
-
-        end
-    })         
+      
 end
 
 local time_begin = nil
@@ -860,7 +850,7 @@ local isGuideFireBegin = false
 function FightPlayer:onGuideFire(touchEvent)
     -- print("os.time()", os.time())
     local name = touchEvent.name
-    local limitTime = 1.0
+    local limitTime = 0.9
     
     --检查长按时间
     local function onGuideFireCheckFunc()
@@ -906,33 +896,81 @@ function FightPlayer:initGuide2()
     local isDone = self.guide:isDone("fight02")
     if isDone then return end
 
-    --move
-    local isMoveGuideUnDone = true
-    local rect_guidemove = cc.rect(70, 40, 300, 100)
+    --盾
     self.guide:addClickListener({
-        id = "fight_move",
-        groupId = "fight02",
-        rect = rect_guidemove,
+        id = "fight02_dun",
+        groupId = "fight02_dun",
+        rect = self.btnDefence:getBoundingBox(),
         endfunc = function (touchEvent)
-            if touchEvent.name == "moved" and isMoveGuideUnDone then
-                isMoveGuideUnDone = false
-                -- print("ight_mov self.guide:doGuideNext()")
-                -- self.focusNode:setPosition(cc.p(500,230))
-                self.focusNode:moveTo(1.0,588, 230)
-                self.guide:doGuideNext()
-                self.guide:hideGuideForTime(2.0)
-            end
+            self.defence:setIsAble(true) 
+            self.defence:startDefence()   
         end
      })    
+
+    --机甲
+    self.guide:addClickListener({
+        id = "fight02_jijia",
+        groupId = "fight02",
+        rect = self.btnRobot:getBoundingBox(),
+        endfunc = function (touchEvent)
+            addBtnEffect(self.btnRobot)
+            local robot = md:getInstance("Robot")
+            robot:startRobot()  
+        end
+     })       
 end
 
+function FightPlayer:initGuide3()
+    local isDone = self.guide:isDone("fight04")
+    if isDone then return end
 
+    self.guide:addClickListener({
+        id = "fight04_open",
+        groupId = "fight04",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            local map = md:getInstance("Map")
+            map:setIsOpenJu(true)            
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "fight04_fire",
+        groupId = "fight04",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self.gunView:fire()
+            self.hero:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.2)
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "fight04_close",
+        groupId = "fight04",
+        rect = self.btnJu:getBoundingBox(),
+        endfunc = function (touchEvent)
+            local map = md:getInstance("Map")
+            map:setIsOpenJu(false)          
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "fight04_finish",
+        groupId = "fight04",
+        rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)         
+        end
+     })        
+
+end
 
 function FightPlayer:onEnter()
     
 end
 
-function FightPlayer:onExit()
+function FightPlayer:onCleanup()
+    print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end
 

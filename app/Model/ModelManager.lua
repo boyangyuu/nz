@@ -37,7 +37,7 @@ modelClasses["Guide"]               = import("..guide.GuideModel")
 modelClasses["DebugModel"]          = import("..debug.DebugModel")
 
 --buy
-modelClasses["BuyModel"]          = import("..buy.BuyModel")
+modelClasses["BuyModel"]            = import("..buy.BuyModel")
 
 --need create
 needCreateClasses["Hero"] = true

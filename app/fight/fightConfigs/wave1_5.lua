@@ -168,7 +168,7 @@ local waves = {
  
 			
 			{
-				time = 9,
+				time = 3,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -180,7 +180,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 13,
+				time = 7,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,400,600,700},					
@@ -192,7 +192,7 @@ local waves = {
 				},
 			},
 			{
-				time = 16,
+				time = 9,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
 				pos = {300,500,550,600,1000},					
@@ -204,7 +204,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 11,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -217,7 +217,7 @@ local waves = {
 				},
 			},
 			{
-				time = 20,
+				time = 13,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -230,7 +230,7 @@ local waves = {
 				},
 			},
 			{
-				time = 22,
+				time = 15,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -243,7 +243,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 17,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -256,7 +256,7 @@ local waves = {
 				},
 			},
 			{
-				time = 26,	
+				time = 20,	
 				num = 2,
 				pos = {180,200},
 				delay = {0.5,1},
