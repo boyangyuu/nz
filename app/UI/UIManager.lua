@@ -69,6 +69,7 @@ function UI:showPopup(layerId, properties, extra)
 		opacity = extra.opacity
 		anim = extra.anim
 		isPauseScene = extra.isPauseScene
+		properties.isPauseScene = extra.isPauseScene
 	end
 
 	local layerCls = self:getLayerCls(layerId)
