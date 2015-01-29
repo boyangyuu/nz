@@ -45,7 +45,7 @@ Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 --hp
 Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
-Hero.AWARD_GOLD_INCREASE_EVENT      = "AWARD_GOLD_INCREASE_EVENT"
+Hero.AWARD_GOLD_INCREASE_EVENT  = "AWARD_GOLD_INCREASE_EVENT"
 
 
 function Hero:ctor(properties)
@@ -245,7 +245,6 @@ function Hero:isHelpHp()
     local maxhp = self:getMaxHp()
     local hp = self:getHp()
     
-
     local isLessHp =  (hp / maxhp) < define.kBuyFullHpTime   
     return isDefenceAble and isLessHp 
 end
@@ -261,12 +260,6 @@ function Hero:helpFullHp()
              callfuncCofirm =  handler(self, self.onBuyFullHp),
              callfuncClose  =  handler(self, self.onDenyFullHp)},
          { opacity = 0, isPauseScene = true})  
-
-    -- local pausescene = PauseScene.new()
-    -- ui:showPopup("", {opacity = 10, isPauseScese = true})
-    -- pausescene:pause({type = "style3", content = "是否立即回复生命？",
-    --          callfuncCofirm =  handler(self, self.onBuyFullHp),
-    --          callfuncClose  =  handler(self, self.onDenyFullHp)})   
 end
 
 function Hero:onBuyFullHp()

@@ -67,7 +67,6 @@ function MissileEnemyView:playDaoDanFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))
 end
 
---[[等注释]]
 function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
     local bound = node:getBoundingBox()
     local enemyBound = enemyRange:getBoundingBox()

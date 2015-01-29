@@ -27,7 +27,6 @@ end
 
 function Defence:setIsAble(isAble)
 	self.isAble = isAble
-	self:setIsDefending(isAble)
 	if isAble then
 		self:refreshHp()
 		self:dispatchEvent({name = Defence.DEFENCE_RESUME_EVENT})
