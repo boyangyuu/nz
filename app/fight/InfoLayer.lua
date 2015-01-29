@@ -4,7 +4,6 @@
 local scheduler = require("framework.scheduler")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
-local pauseScene = import("..pauseScene.PauseScene")
 
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
@@ -97,9 +96,9 @@ function InfoLayer:initBtns()
                 return true
             elseif event.name =='ended' then
             	-- cc.ColorUtil:isHighLighted(btnStop, false)
-            	-- ui:showPopup("FightPopup")
-            	ps = pauseScene.new()
-            	ps:pause("fightset")
+            	ui:showPopup("pausePopup",{popupName = "fightset"},{anim = true,isPauseScene = true})
+            	-- ps = pauseScene.new()
+            	-- ps:pause({type = "fightset"})
             end
         end)
 end

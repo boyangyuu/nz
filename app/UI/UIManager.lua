@@ -1,11 +1,15 @@
 local UI = class("UIManager",cc.mvc.ModelBase)
 
+local PauseScene = require("app.pause.PauseScene")
+
 -- 定义事件
 UI.LAYER_CHANGE_EVENT 	= "LAYER_CHANGE_EVENT"
 UI.POPUP_SHOW_EVENT   	= "POPUP_SHOW_EVENT"
 UI.POPUP_CLOSE_EVENT   	= "POPUP_CLOSE_EVENT"
 UI.LOAD_SHOW_EVENT 		= "LOAD_SHOW_EVENT"
 UI.LOAD_HIDE_EVENT 		= "LOAD_HIDE_EVENT"
+UI.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
+UI.PAUSESCENE_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
 
 --保存layer
 local layerClasses = {}
@@ -17,6 +21,7 @@ layerClasses["FightResultLayer"]     = import("..fightResult.FightResultLayer")
 layerClasses["LevelDetailLayer"] 	 = import("..levelDetail.LevelDetailLayer")
 layerClasses["DialogLayer"] 		 = import("..dialog.DialogLayer")
 layerClasses["StartLayer"]           = import("..start.StartLayer")
+layerClasses["storyLayer"]           = import("..start.StoryLayer")
 
 --popup
 layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
@@ -25,16 +30,12 @@ layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 
 -- 关于Popup
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
--- -- 地图暂停Popup
--- layerClasses["MapPopup"]             = import("..help.MapPopup")
--- -- 战斗暂停Popup
--- layerClasses["FightPopup"]           = import("..help.FightPopup")
 
 -- giftBag
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 
--- pauseScene
-
+-- pausePopup
+layerClasses["pausePopup"]           = import("..pause.PausePopup")
 
 
 function UI:ctor(properties)
@@ -60,22 +61,38 @@ end
 function UI:showPopup(layerId, properties, extra)
 	local opacity 
 	local anim
+	local isPauseScene
 	if extra then 
 		opacity = extra.opacity
 		anim = extra.anim
+		isPauseScene = extra.isPauseScene
 	end
 
 	local layerCls = self:getLayerCls(layerId)
 
 	print("UI:showPopup(layerId, properties, extra)")
 	
-	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
-		opacity = opacity, anim = anim, 
-		properties = properties})
+	if not isPauseScene then
+		print("1UI:showPopup isPauseScene:",isPauseScene)
+		self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
+			opacity = opacity, anim = anim, 
+			properties = properties})
+	else
+		print("2UI:showPopup isPauseScene:",isPauseScene)
+		local pauseScene = PauseScene.new()
+		print(type(pauseScene))
+		self:dispatchEvent({name = UI.PAUSESCENE_SHOW_EVENT, layerCls = layerCls,
+			opacity = opacity, anim = anim,
+			properties = properties})
+	end
 end
 
-function UI:closePopup(layerId)
-	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId})
+function UI:closePopup(layerId,isPauseScene)
+	if not isPauseScene then 
+		self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId})
+	else
+		self:dispatchEvent({name = UI.PAUSE_CLOSE_EVENT, layerid = layerId})
+	end
 end
 
 function UI:getLayerCls(layerId)

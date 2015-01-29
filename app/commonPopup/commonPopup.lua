@@ -150,7 +150,11 @@ function commonPopup:onClickCofirm()
 	if func ~= nil then 
 		func()		
 	end
-	ui:closePopup("commonPopup")
+	if self.properties.type == "style3" then 
+		cc.Director:getInstance():popScene()
+	else
+		ui:closePopup("commonPopup")
+	end
 end
 
 function commonPopup:onClickClose()
@@ -158,7 +162,11 @@ function commonPopup:onClickClose()
 	if func ~= nil then 
 		func()
 	end	
-	ui:closePopup("commonPopup")	
+	if self.properties.type == "style3" then 
+		cc.Director:getInstance():popScene()
+	else
+		ui:closePopup("commonPopup")
+	end	
 end
 
 return commonPopup

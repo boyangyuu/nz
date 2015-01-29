@@ -254,14 +254,20 @@ end
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
-    -- print("function Hero:helpFullHp()")
+    print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
     fight:pauseFight(true)
     ui:showPopup("commonPopup",
         {type = "style3", content = "是否立即回复生命？",
              callfuncCofirm =  handler(self, self.onBuyFullHp),
              callfuncClose  =  handler(self, self.onDenyFullHp)},
-         { opacity = 0})        
+         { opacity = 0, isPauseScene = true})  
+
+    -- local pausescene = PauseScene.new()
+    -- ui:showPopup("", {opacity = 10, isPauseScese = true})
+    -- pausescene:pause({type = "style3", content = "是否立即回复生命？",
+    --          callfuncCofirm =  handler(self, self.onBuyFullHp),
+    --          callfuncClose  =  handler(self, self.onDenyFullHp)})   
 end
 
 function Hero:onBuyFullHp()
