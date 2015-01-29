@@ -35,8 +35,10 @@ function WeaponListLayer:ctor()
 
     -- 点开页面默认选择某个武器
     print("self:refreshComment(self.selectedCellId)")
-      self:refreshComment(self.selectedCellId)
+    self:refreshComment(self.selectedCellId)
     
+
+    self:initGuide()
 end
 
 -- loadCCS
@@ -156,7 +158,9 @@ function WeaponListLayer:initUI()
                     buyModel:buy("unlockWeapon",{weaponid = self.weaponId})
                 end
             end
-            if buyModel:checkBought("weaponGiftBag") == false then
+            local guide = md:getInstance("Guide")
+            local isDone = guide:isDone("prefight02")
+            if buyModel:checkBought("weaponGiftBag") == false and isDone then
                 buyModel:buy("weaponGiftBag",{
                     payDoneFunc = handler(self, self.reloadlistview),
                                               deneyBuyFunc = deneyBuyWeapon})
@@ -168,7 +172,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
+            -- local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
             if self.userModel:costMoney(self.costupgrade) then
                 self:intensify(self.weaponId)
             end
@@ -184,8 +188,9 @@ function WeaponListLayer:initUI()
                 function deneyOncefull()
                     buyModel:buy("onceFull",{weaponid = self.weaponId})
                 end
-
-                if buyModel:checkBought("weaponGiftBag") == false then
+                local guide = md:getInstance("Guide")
+                local isDone = guide:isDone("prefight02")
+                if buyModel:checkBought("weaponGiftBag") == false and isDone then
                     buyModel:buy("weaponGiftBag",{
                         payDoneFunc = handler(self, self.reloadlistview),
                                                   deneyBuyFunc = deneyOncefull})
@@ -502,5 +507,50 @@ function WeaponListLayer:equip(weaponid)
 end
 
 --guide
+function WeaponListLayer:onEnter()
+    print("function WeaponListLayer:onEnter()")
+end
+
+function WeaponListLayer:initGuide()
+    --check   
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("prefight02")
+    if isDone then return end
+
+    --点击左侧mp5
+    local rect1 = cc.rect(70, 260, 240, 110)
+    guide:addClickListener({
+        id = "prefight02_shengji1",
+        groupId = "prefight02",
+        rect = rect1,
+        endfunc = function (touchEvent)
+            self:touchListener({name = "clicked", itemPos = 2})
+        end
+     })       
+
+    --点击右侧升级
+    local rect2 = cc.rect(945, 130, 131, 64)
+    guide:addClickListener({
+        id = "prefight02_shengji2",
+        groupId = "prefight02",
+        rect = rect2,
+        endfunc = function (touchEvent)
+            if self.userModel:costMoney(self.costupgrade) then
+                self:intensify(self.weaponId)
+            end
+        end
+     })   
+
+    --祝贺
+    guide:addClickListener({
+        id = "prefight02_shengji3",
+        groupId = "prefight02",
+        rect =  cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)
+
+        end
+     })   
+     
+end
 
 return WeaponListLayer

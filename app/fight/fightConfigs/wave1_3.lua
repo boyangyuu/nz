@@ -71,9 +71,10 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 1,
+				descId = "dunbing",  --简介
+				time = 2,
 				num = 1,
-				delay = {0},
+				delay = {4},
 				pos = {150},
 				property = {
 					type = "jin",
@@ -82,7 +83,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 5,
 				num = 3,
 				delay = {0.5,1.2,3},
 				pos = {450,350,250},
@@ -93,7 +94,7 @@ local waves = {
 				},
 			},
 			{
-				time = 1.5,
+				time = 4.5,
 				num = 2,
 				delay = {0.5,3},
 				pos = {80,200},
@@ -104,7 +105,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 9,
 				num = 1,
 				delay = {0.3},
 				pos = {50},					
@@ -118,7 +119,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 7,
+				time = 10,
 				num = 1,
 				delay = {0},
 				pos = {120},					
@@ -132,7 +133,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 10,	
 				num = 3,
 				pos = {80,150,180},
 				delay = {0,0.5,1},
@@ -144,7 +145,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 7,	
+				time = 10,	
 				num = 1,
 				pos = {50},
 				delay = {0},
@@ -156,7 +157,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 11,	
 				num = 2,
 				pos = {330,420},
 				delay = {0,0.8},
@@ -168,7 +169,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 11,	
 				num = 2,
 				pos = {1020,1050},
 				delay = {0,0.8},
@@ -381,7 +382,7 @@ local enemys = {
 		weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=260,fireRate=100,speed=40,
+	{id=2,image="jinzhanb",demage=4,hp=260,fireRate=180,fireCd=4,speed=40,
 		weak1=3},
 
 	--伞兵
@@ -389,7 +390,7 @@ local enemys = {
 	weak1=3},
 
 	--自爆兵
-	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,
+	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,fireCd=4,speed=120,
 	weak1=3},	
 
 	--金币黄气球
@@ -407,7 +408,7 @@ local enemys = {
 	{id=9,image="shoulei",demage=5,hp=1,
 	weak1=3},
 	-- 盾兵
-	{id=10,image="dunbing",demage=5,hp=390,fireRate=400,speed=20,
+	{id=10,image="dunbing",demage=5,hp=390,fireRate=400,fireCd=5,speed=20,
 		weak1=3},		
 }
 

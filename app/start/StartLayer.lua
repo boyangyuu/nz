@@ -6,6 +6,7 @@ function StartLayer:ctor()
     self:playSound()
 	self:loadCCS()
 	self:initUI()
+    self:setNodeEventEnabled(true)
 end
 
 function StartLayer:playSound()
@@ -89,12 +90,14 @@ function StartLayer:initUI()
 
 end
 
+function StartLayer:onEnter()
+    
+end
+
 function StartLayer:beginGame()
-    -- if not self:isDone("isFirstRunning") then
-	    ui:changeLayer("HomeBarLayer",{})
-    -- else 
-    --     ui:changeLayer("storyLayer",{})
-    -- end
+
+    self:initDailyLogin()
+    ui:changeLayer("HomeBarLayer",{popgift = true})
 end
 
 function StartLayer:isDone(id)
@@ -104,6 +107,20 @@ function StartLayer:isDone(id)
     else 
         return true
     end
+
+ 
+end
+
+function StartLayer:initDailyLogin()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    
+    local isToday = dailyLoginModel:isToday()
+    local isGet = dailyLoginModel:isGet()
+    if isToday  == false  then
+        dailyLoginModel:setGet(false)
+    end
+    dailyLoginModel:setTime()
+
 end
 
 return StartLayer

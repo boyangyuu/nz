@@ -219,7 +219,7 @@ function RootLayer:addResFightMusic()
 end
 
 function RootLayer:dataLoaded(percent)
-    print(" dataLoaded() percent:"..percent)
+    -- print(" dataLoaded() percent:"..percent)
     if percent == 1 then
         if self.isadded then return end
 
@@ -233,7 +233,7 @@ end
 function RootLayer:removeLoadDelay()
     local function callfunc ()
         ui:hideLoad()   
-        print("ui:hideLoad()")   
+        -- print("ui:hideLoad()")   
     end
 
     local function callfuncAdd()

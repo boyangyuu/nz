@@ -20,7 +20,9 @@ function GuideLayer:ctor()
 	--
 	self:setVisible(false)
 	self.isWaiting = false
-	
+	self.bg 	  = nil
+	self.armature = nil
+		
 	--ui
 	self:loadCCS()
 
@@ -149,10 +151,10 @@ function GuideLayer:getTargetRect()
 end
 
 function GuideLayer:isTouchTarget(pos)
-	dump(pos, "pos")
+	-- dump(pos, "pos")
 	pos.y = pos.y - display.offset 
 	local rect = self:getTargetRect()
-	dump(rect, "rect")
+	-- dump(rect, "rect")
 	local b = cc.rectContainsPoint(rect, pos)
 	return b
 end
@@ -160,6 +162,8 @@ end
 function GuideLayer:loadCCS()
 	--ui
 	self:removeAllChildren()
+	self.bg 	  = nil
+	self.armature = nil
 
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
@@ -169,6 +173,7 @@ function GuideLayer:loadCCS()
     manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
 end
+
 
 function GuideLayer:refreshUI()
 	local cfg = self.guide:getCurConfig()

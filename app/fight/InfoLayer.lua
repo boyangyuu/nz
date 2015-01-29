@@ -59,9 +59,11 @@ function InfoLayer:loadCCS()
  	self.blood2 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar1") 
  	self.blood1 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar2") 
  	self.bloodLabel = cc.uiloader:seekNodeByName(self.bloodNode, "labelValue") 
-	self.bloodLabel :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
-    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
-
+	
+	if device.platform ~= "windows" then
+		self.bloodLabel :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
+	    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
+	end
     self.goldNode 	= cc.uiloader:seekNodeByName(self.root, "goldNode")
     self.gold1    	= cc.uiloader:seekNodeByName(self.goldNode, "progressBar1") 
     -- self.gold1:setPercent(1)
@@ -80,8 +82,10 @@ end
 
 function InfoLayer:initBullet()
 	self.labelBulletNum = cc.uiloader:seekNodeByName(self.root, "labelBulletNum")	
-	self.labelBulletNum :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
-    self.labelBulletNum :enableOutline(cc.c4b(255, 255, 255,255), 2)
+	if device.platform ~= "windows" then
+		self.labelBulletNum :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
+	    self.labelBulletNum :enableOutline(cc.c4b(255, 255, 255,255), 2)
+	end
 	local gun = self.hero:getGun()
 	self.labelBulletNum:setAnchorPoint(cc.p(0.5, 0.5))
 	self:onRefreshBullet({num = gun:getBulletNum()})
@@ -124,7 +128,9 @@ function InfoLayer:onHeroHpChange(event)
 	-- print("self.hero:getMaxHp()", self.hero:getMaxHp())
 	-- print("self.hero:getHp()", self.hero:getHp())
 	-- print("event.name", event.name)
-	self.bloodLabel:setString(self.hero:getHp())
+
+	local displayHp = math.floor(self.hero:getHp() )
+	self.bloodLabel:setString(displayHp)
 	if event.name == "HP_DECREASE_EVENT" then 
 		-- self.blood2:setScaleX(per / 100)
 		-- self.blood1:setScaleX(per / 100)

@@ -19,14 +19,9 @@ function GunView:ctor()
 	self.inlay = md:getInstance("FightInlay")
 	self.isChanging = false
 	self.isFiring = false
-	--gun armature and base
 	self:refreshGun()
-	-- scheduler.performWithDelayGlobal( handler(self, self.refreshGun), 1.0)  
 
 	--event
-	cc.EventProxy.new(self.hero, self)
-        :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
-
 	cc.EventProxy.new(self.hero, self)
         :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
 
@@ -80,7 +75,7 @@ function GunView:playChange(event)
 	--clear
 	self:setPosition(cc.p(0.0,0.0))
 
-	print("GunView:playChange(event)")
+	-- print("GunView:playChange(event)")
 	local disy = 150
 	local actionDown = cc.MoveBy:create(0.2, cc.p(0.0, -disy))
 	local actionUp 	 = cc.MoveBy:create(0.2, cc.p(0.0, disy))
@@ -122,7 +117,7 @@ function GunView:playReload()
 	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
 	
 	--hero层reload动画
-	print("GunView:playReload()")
+	-- print("GunView:playReload()")
 	self.hero:dispatchEvent({
 				name = self.hero.GUN_RELOAD_EVENT , speedScale = speedScale})
 end
@@ -156,7 +151,7 @@ function GunView:refreshGun()
 
 	--gun
 	local config = self.gun:getConfig()
-	dump(config, "config")
+	-- dump(config, "config")
 	
 	--armature
 	local animName = config.animName --动作特效
@@ -225,7 +220,7 @@ end
 
 
 function GunView:onActiveGold(event)
-	print("GunView:onActiveGold(event)")
+	-- print("GunView:onActiveGold(event)")
 	self.isGolding = true
 	self.gun:setFullBulletNum()
 	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
@@ -233,6 +228,7 @@ end
 
 function GunView:onActiveGoldEnd(event)
 	self.isGolding = false
+	self.gun:setFullBulletNum()
 	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
 end
 

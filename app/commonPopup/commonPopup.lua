@@ -1,5 +1,7 @@
+-- local LayerColor_WHITE = cc.c4b(0, 0, 0, 0)
 local commonPopup = class("commonPopup",function()
 	return display.newLayer()
+	-- return display.newColorLayer(LayerColor_WHITE)
 end)
 
 --[[
