@@ -87,7 +87,7 @@ end
 
 function Defence:onHitted(demage)
 	--hp
-	-- print("demage", demage)
+	print("demage", demage)
 	self:decreseHp(demage)
 end
 
@@ -102,13 +102,13 @@ function Defence:switchStatus()
 end
 
 function Defence:startDefence()
-	-- print("Defence:startDefence()")
+	print("Defence:startDefence()")
 	self.isDefending = true
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = true})
 end
 
 function Defence:endDefence()
-	-- print("Defence:endDefence()")
+	print("Defence:endDefence()")
 	self.isDefending = false
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = false})
 end

@@ -351,6 +351,16 @@ function Attackable:playBombEffect()
 	bomb:getAnimation():play("baozha4", -1, 0)
 end
 
+function Attackable:restoreStand(delay)
+	local function restore()
+		self.playAnimId = nil
+		self:playStand()
+		self.armature:stopAllActions()	
+	end
+    self.schRestore = scheduler.performWithDelayGlobal(restore, delay)
+    self:addScheduler(self.schRestore)
+end
+
 function Attackable:test()
     local weakNode2 = self.armature:getBone("weak2")
     if weakNode2 then drawBoundingBox(self.armature, weakNode2:getDisplayRenderNode(), "red")  end
@@ -444,7 +454,7 @@ function Attackable:onEnter()
 end
 
 function Attackable:onCleanup()
-	print("Attackable:onCleanup()")
+	-- print("Attackable:onCleanup()")
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end
