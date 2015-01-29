@@ -4,7 +4,6 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
-local pauseScene = import("..pauseScene.PauseScene")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
@@ -140,10 +139,10 @@ function HomeBarLayer:initHomeLayer(groupid)
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            -- ui:showPopup("MapPopup")
+            ui:showPopup("pausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
             -- cc.Director:getInstance():pushScene(MapPopup)
-            local pause = pauseScene.new()
-            pause:pause("mapset")
+            -- local pause = pauseScene.new()
+            -- pause:pause({type = "mapset"})
 
 
             -- btnInlay:setButtonEnabled(true)

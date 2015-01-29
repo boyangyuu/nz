@@ -33,6 +33,33 @@ function StartLayer:initUI()
         	self:beginGame()
         end
     end)
+
+    local btnMusic = cc.uiloader:seekNodeByName(self, "btnmusic")
+    btnMusic:setTouchEnabled(true)
+    local play = cc.uiloader:seekNodeByName(btnMusic, "play")
+    local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
+    play:setVisible(false)
+    local isPlaying = true
+    addBtnEventListener(btnMusic, function( event )
+        if event.name == "began" then 
+            return true
+        elseif event.name == "ended" then
+            if isPlaying then 
+                stop:setVisible(false)
+                play:setVisible(true)
+                audio:pauseMusic()
+                audio:pauseAllSounds()
+                isPlaying = false
+            else
+                stop:setVisible(true)
+                play:setVisible(false)
+                audio:resumeMusic()
+                audio:resumeAllSounds()
+                isPlaying = true
+            end
+        end
+    end)
+
     local btnAbout = cc.uiloader:seekNodeByName(self, "beginbtn_2")
     btnAbout:setTouchEnabled(true)
     addBtnEventListener(btnAbout, function( event )
@@ -68,8 +95,20 @@ function StartLayer:onEnter()
 end
 
 function StartLayer:beginGame()
+
     self:initDailyLogin()
-	ui:changeLayer("HomeBarLayer",{popgift = true})
+    ui:changeLayer("HomeBarLayer",{popgift = true})
+end
+
+function StartLayer:isDone(id)
+    local data = getUserData()
+    if data then 
+        return data.guide[id]
+    else 
+        return true
+    end
+
+ 
 end
 
 function StartLayer:initDailyLogin()
@@ -81,6 +120,7 @@ function StartLayer:initDailyLogin()
         dailyLoginModel:setGet(false)
     end
     dailyLoginModel:setTime()
+
 end
 
 return StartLayer

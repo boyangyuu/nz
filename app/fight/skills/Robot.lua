@@ -13,7 +13,7 @@ Robot.ROBOT_START_EVENT		 = "ROBOT_START_EVENT"
 Robot.ROBOT_ENDTIME_EVENT	 = "ROBOT_ENDTIME_EVENT"
 Robot.ROBOT_BEHURTED_EVENT 	 = "ROBOT_BEHURTED_EVENT"
 Robot.ROBOT_FIRE_EVENT 		 = "ROBOT_FIRE_EVENT"
-Robot.ROBOT_STOPFIRE_EVENT   = "ROBOT_STOPFIRE_EVENT"
+Robot.ROBOT_STOPFIRE_EVENT   = "ROBOT_STOPFIRE_EVE                                                                                                                                                                                                                                                                                                                                                                                                         NT"
 
 function Robot:ctor()
     Robot.super.ctor(self)
@@ -92,8 +92,6 @@ function Robot:startRobot()
 	--sch endRobot
 	local kTimeEnd = define.kRobotTime
 	scheduler.performWithDelayGlobal(handler(self, self.endRobot), kTimeEnd) 
-
-
 end
 
 function Robot:endRobot()

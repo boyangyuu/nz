@@ -672,15 +672,15 @@ local waves = {
 --enemy的关卡配置                                                    青铜难度对应怪物属性
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=8,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=9,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=10,hp=270,
+	{id=3,image="shoulei",demage=12,hp=270,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -688,19 +688,19 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=540,walkRate=180,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=540,walkRate=180,walkCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=270,
+	{id=6,image="daodan",demage=16,hp=270,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=9,hp=675,fireRate=180,fireCd=3,speed=60,
+	{id=7,image="jinzhanb",demage=9,hp=675,fireRate=120,fireCd=3,speed=60,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=10,hp=2700,fireRate=180,fireCd=4,speed=30,
+	{id=8,image="dunbing",demage=12,hp=2700,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
@@ -713,28 +713,14 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=100000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=20000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=20000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=3,    award = 60},
 
-	--金币绿气球   type = "jinbi",
-	{id=13,image="qiqiu03",hp=1,weak1=3,award = 9},	--award = 9   金币数量为9	
 
-	--金币蓝气球   type = "jinbi",
-	{id=14,image="qiqiu02",hp=1,weak1=3,award = 15},	--award = 15  金币数量为15
-
-	--金币黄气球   type = "jinbi",
-	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
-
-	--boss召唤第一波自爆兵        --type = "bao",
-	{id=16,image="zibaob",demage=10,hp=65,fireRate=30,speed=120,
-	weak1=3},
-	--boss召唤第二波自爆兵        --type = "bao",	
-	{id=17,image="zibaob",demage=30,hp=195,fireRate=30,speed=120,
-	weak1=3},	
 
 }
 

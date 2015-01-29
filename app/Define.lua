@@ -24,10 +24,17 @@ Define.kBaoDemageOtherEnemys 	= 10        --自爆兵伤害值
 Define.kBaoRangeW 				= 200	    --自爆兵范围
 Define.kBaoRangeH 				= 200	     --自爆兵范围
 
---人质
+--人质兵
 Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2      
 Define.kRenzhiWalkTime			= 0.6   
+
+--忍者兵
+Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
+Define.kRenzheSpeed				= 1400.0    --忍者跑动速度 像素/s
+Define.kRenzheRunTime			= 3.0      
+Define.kRenzheWalkTime			= 0.5   
+
 
 --飞机兵 
 Define.kfeijiSpeed				= 500.0  --速度
@@ -61,7 +68,7 @@ Define.kBaoRangeW 				= 200	--手雷范围宽
 Define.kBaoRangeH 				= 200	--手雷范围高
 Define.kLeiDemage 				= 2500.0	--手雷伤害
 --盾牌
-Define.cdTimes 					= 10.0   --十秒恢复完毕
+Define.cdTimes 					= 15.0   --十秒恢复完毕
 Define.kDefenceHp				= 150
 
 --奖励

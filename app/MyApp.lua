@@ -14,12 +14,12 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 GameData={}
 
 -- --平时
-isTest  = true
-isDebug = false
+-- isTest  = true
+-- isDebug = false
 
---测试打包
--- isTest  = false
--- isDebug = true
+-- 测试打包
+isTest  = false
+isDebug = true
 
 -- --正式打包
 -- isTest  = false        
@@ -30,9 +30,7 @@ ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
 define  = Define.new()
-
-
-iap = IAPsdk.new()
+iap     = IAPsdk.new()
 
 function MyApp:ctor()
 
@@ -106,11 +104,11 @@ function MyApp:createGameStateFile()
                         inlayed  = {
                                         --存id bullet = 1,
                                     bullet = nil,
-                                    clip = 5,
-                                    speed = 9,
+                                    clip = nil,
+                                    speed = nil,
                                     crit = nil,
                                     blood = nil,
-                                    helper = 22,
+                                    helper = nil,
                         },
             },
             prop = {
@@ -128,17 +126,20 @@ function MyApp:createGameStateFile()
             currentlevel =  {
                         group = 1,
 
-                        level = 1,
+                        level = 5,
             },
             guide = {
-                        fight01         = true,
-                        afterfight01    = true,
-                        prefight02      = true,
-                        fight02_dun     = true,
-                        fight02         = true,
-                        afterfight02    = true,
-                        fight04         = true,
-                        xiangqian       = true,
+
+                        isFirstRunning  = true,
+                        fight01         = false,
+                        afterfight01    = false,
+                        prefight02      = false,
+                        fight02_dun     = false,
+                        fight02         = false,
+                        afterfight02    = false,
+                        fight04         = false,
+                        xiangqian       = false,
+
             },
             fight = {
                         isPreferBag1 = true,

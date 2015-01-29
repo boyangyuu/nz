@@ -264,16 +264,6 @@ function FeijiEnemyView:playFire()
 
 end
 
-function FeijiEnemyView:restoreStand(delay)
-	local function restore()
-		 self:playStand()
-		 self.armature:stopAllActions()	
-		 self.isRuning = false
-	end
-    self.schRestore =  scheduler.performWithDelayGlobal(restore, delay)
-    self:addScheduler(self.schRestore)
-end
-
 function FeijiEnemyView:playStand()
 	-- print("function FeijiEnemyView:playStand()")
 	if self.direct == "left" then 
