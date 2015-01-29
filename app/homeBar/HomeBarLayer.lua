@@ -35,7 +35,8 @@ function HomeBarLayer:ctor(properties)
 end
 
 function HomeBarLayer:popUpGify(properties)
-    if properties.popgift then
+    local isDone = self.guide:isDone("prefight02")
+    if properties.popgift and isDone then
         local buy = md:getInstance("BuyModel")
         buy:buy("timeGiftBag", {})    
     end

@@ -51,7 +51,9 @@ end
 
 function LevelMapLayer:initDailyLogin()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
-    if dailyLoginModel:checkPop() then
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("afterfight02")
+    if dailyLoginModel:checkPop() and isDone then
         ui:showPopup("DailyLoginLayer", {})
         dailyLoginModel:donotPop()
     end
