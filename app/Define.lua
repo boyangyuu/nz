@@ -61,7 +61,7 @@ Define.kBaoRangeW 				= 200	--手雷范围宽
 Define.kBaoRangeH 				= 200	--手雷范围高
 Define.kLeiDemage 				= 2500.0	--手雷伤害
 --盾牌
-Define.cdTimes 					= 10.0   --十秒恢复完毕
+Define.cdTimes 					= 15.0   --十秒恢复完毕
 Define.kDefenceHp				= 150
 
 --奖励

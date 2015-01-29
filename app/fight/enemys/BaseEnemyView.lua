@@ -115,7 +115,7 @@ function BaseEnemyView:showAlert()
     self.armature:addChild(armature) 
 
     --play
-	armature:getAnimation():play("tanhao", -1, 0)
+	armature:getAnimation():play("tanhao", -1, 1)
     local function alertAnimEvent(armatureBack,movementType,movementID)
         armature:removeFromParent()
         self.isShowAlerting = false
