@@ -168,7 +168,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
+            -- local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
             if self.userModel:costMoney(self.costupgrade) then
                 self:intensify(self.weaponId)
             end

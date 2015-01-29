@@ -30,10 +30,13 @@ function FightResultLayer:ctor(properties)
 	self.isDone = self.guide:isDone("fightju")
     
     local fightResult = self.fightModel:getFightResult()
+    local UserModel = md:getInstance("UserModel")
+    UserModel:addMoney(fightResult["goldNum"])
     self.grade = self:getGrade(fightResult["hpPercent"])
 
 	self:getinlayfall()
 	self:loadCCS()
+	self:setDailyPopup()
 	self:initUI()
 	self:initUIContent()
 
@@ -223,9 +226,6 @@ function FightResultLayer:getinlayfall()
 	-- 狙击
 	
 	local isExist = self.weaponListModel:isWeaponExist(6)
-	-- dump(self.isDone == false)
-	-- dump(curRecord["type"] == "boss")
-	-- dump(isExist == false)
     if self.isDone == false and curRecord["type"] == "boss" and isExist == false then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
@@ -388,6 +388,14 @@ function FightResultLayer:initGuide()
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})        
         end
      })    	
+end
+
+function FightResultLayer:setDailyPopup()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+	local isGet = dailyLoginModel:isGet()
+	if isGet == false then
+		dailyLoginModel:setPopup()
+	end
 end
 
 return FightResultLayer

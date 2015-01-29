@@ -23,11 +23,19 @@ function HomeBarLayer:ctor(properties)
     self:initData(properties)
     self:loadCCS()
     self:initHomeLayer(self.groupid)
+    self:popUpGify(properties)
     self:refreshMoney()
     self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
 
     self:initGuide()
+end
+
+function HomeBarLayer:popUpGify(properties)
+    if properties.popgift then
+        local buy = md:getInstance("BuyModel")
+        buy:buy("timeGiftBag", {})    
+    end
 end
 
 function HomeBarLayer:playSound()
@@ -36,12 +44,11 @@ function HomeBarLayer:playSound()
 end
 
 function HomeBarLayer:initData(properties)
-    if table.nums(properties) ~= 0 then
+    if properties.groupid ~= nil then
         self.groupid = properties.groupid
     else
         self.groupid = 0
     end
-     -- dump(properties)
 end
 
 function HomeBarLayer:loadCCS()
@@ -56,7 +63,7 @@ end
 
 function HomeBarLayer:refreshMoney()
     self.btnMoney:setString(self.usermodel:getMoney())
-    self.btnMoney:setString(self.usermodel:getDiamond())
+    self.btnDiamond:setString(self.usermodel:getDiamond())
 end   
 
 function HomeBarLayer:initHomeLayer(groupid)

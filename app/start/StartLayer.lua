@@ -52,7 +52,19 @@ function StartLayer:initUI()
 end
 
 function StartLayer:beginGame()
-	ui:changeLayer("HomeBarLayer",{})
+    self:initDailyLogin()
+	ui:changeLayer("HomeBarLayer",{popgift = true})
+end
+
+function StartLayer:initDailyLogin()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    
+    local isToday = dailyLoginModel:isToday()
+    local isGet = dailyLoginModel:isGet()
+    if isToday  == false  then
+        dailyLoginModel:setGet(false)
+    end
+    dailyLoginModel:setTime()
 end
 
 return StartLayer

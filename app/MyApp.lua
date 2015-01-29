@@ -128,6 +128,8 @@ function MyApp:createGameStateFile()
             weaponsuipian = {},
             money = 1000000,
             diamond = 100,
+
+
                       
             currentlevel =  {
                         group = 1,
@@ -149,6 +151,12 @@ function MyApp:createGameStateFile()
                         weaponGiftBag =  false,
                         novicesBag = false,
             },
+            dailylogin = {
+                        logintime = "00000",
+                        isGet = false,
+                        dailyid = 0,
+            },
+            
     }
     GameState.save(data)
     -- dump(GameState.load(), "GameState.load()")

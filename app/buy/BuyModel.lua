@@ -78,8 +78,6 @@ function BuyModel:buy_novicesBag( buydata )
 	propModel:buyProp("lei",10)
 	--金币*188888
 	UserModel:addMoney(188888)
-	local goldnum = InlayModel:getGoldWeaponNum()
-	StoreModel:setGoldWeaponNum(goldnum)
 	StoreModel:refreshInfo("prop")
 	self:setBought("novicesBag")
 end
@@ -97,8 +95,6 @@ function BuyModel:buy_goldGiftBag( buydata )
 	propModel:buyProp("jijia",15)
 	--手雷*10
 	propModel:buyProp("lei",30)
-	local goldnum = InlayModel:getGoldWeaponNum()
-	StoreModel:setGoldWeaponNum(goldnum)
 	StoreModel:refreshInfo("prop")
 	
 end
@@ -114,8 +110,6 @@ function BuyModel:buy_changshuang( buydata )
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
-	local goldnum = InlayModel:getGoldWeaponNum()
-	StoreModel:setGoldWeaponNum(goldnum)
 	StoreModel:refreshInfo("prop")
 
 	--todo yby 满血
@@ -137,8 +131,6 @@ function BuyModel:buy_timeGiftBag( buydata )
 	--zuanshi*260
 	UserModel:buyDiamond(260)
 	UserModel:addMoney(188888)
-	local goldnum = InlayModel:getGoldWeaponNum()
-	StoreModel:setGoldWeaponNum(goldnum)
 	StoreModel:refreshInfo("prop")
 end
 
@@ -172,8 +164,6 @@ function BuyModel:buy_goldWeapon( buydata )
 	local propModel = md:getInstance("propModel")
 	InlayModel:buyGoldsInlay(2)
 	InlayModel:refreshInfo("speed")
-	local goldnum = InlayModel:getGoldWeaponNum()
-	StoreModel:setGoldWeaponNum(goldnum)
 	StoreModel:refreshInfo("prop")
 end
 
