@@ -244,6 +244,10 @@ end
 --手雷
 function HeroLayer:onThrowGrenade(event)
 
+	--	effect
+	local soundSrc  = "res/Music/fight/rengsl.wav"
+	self.audioId =  audio.playSound(soundSrc,false)		
+
 	local armature = ccs.Armature:create("shoulei")
 	self:addChild(armature)
 	armature:setPosition(display.width / 2, 0)

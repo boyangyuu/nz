@@ -40,6 +40,10 @@ end
 
 function RobotView:hideRobot(event)
 	self.armature:getAnimation():play("jijia_shou", -1, 1) --reverse
+
+	--effect
+	local soundSrc  = "res/Music/fight/jijia_close.wav"
+	self.audioId1 =  audio.playSound(soundSrc,false)		
 end
 
 function RobotView:showRobot(event)
@@ -47,6 +51,10 @@ function RobotView:showRobot(event)
 	self:clearUI()
 	self:setVisible(true)
 	self.armature:getAnimation():play("jijia", -1, 1)
+
+	--effect
+	local soundSrc  = "res/Music/fight/jijia_open.wav"
+	self.audioId2 =  audio.playSound(soundSrc,false)		
 end
 
 function RobotView:RobotBehurtEffect(event)
