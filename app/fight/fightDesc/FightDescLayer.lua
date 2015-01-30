@@ -35,6 +35,8 @@ function FightDescLayer:start(event)
         end)
     addChildCenter(armature, self.animPanl)
     armature:getAnimation():play("renwuks" , -1, 1)
+    local letsgo   = "res/Music/ui/letsgo.wav"
+    audio.playSound(letsgo,false)
 end
 
 function FightDescLayer:bossShow(event)
