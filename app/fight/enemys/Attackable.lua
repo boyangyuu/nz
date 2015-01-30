@@ -278,7 +278,7 @@ end
 function Attackable:insertCache(play, state)
 	local index = #self.playCache + 1
 	if state == "skillPre" then 
-		table.insert(self.playCache, {func = play, state = state})
+		table.insert(self.playCache, 1, {func = play, state = state})
 	elseif state == "skill" or index == 1 then 
 		self.playCache[index] = {func = play, state = state}
 	end

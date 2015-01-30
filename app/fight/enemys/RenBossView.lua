@@ -19,7 +19,7 @@ function RenBossView:tick()
         assert(fireRate > 1, "invalid fireRate")
         local randomSeed = math.random(1, fireRate)
         if randomSeed > fireRate - 1 then 
-            self:play("skill", handler(self, self.playFire))
+            self:play("fire", handler(self, self.playFire))
             self.enemy:beginFireCd()
         end
     end
