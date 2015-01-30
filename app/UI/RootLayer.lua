@@ -157,7 +157,13 @@ function RootLayer:addResFight()
     -- display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)    
     --armature
 
-    --music weapon
+    local musics = {"bj_zhandou.wav"}
+    for i,v in ipairs(musics) do
+        local src = "res/Music/fight/"..musics[i]
+        audio.preloadMusic(src)
+    end
+
+    --sound weapon
     local weaponEffects = {"lmdfire.wav", "mp5fire.wav", "syfire.wav", "ak47fire.wav", "m4fire.wav", "rpgfire.wav", 
                 "m134fire.wav", "jfzcfire.wav"}
  
@@ -165,7 +171,8 @@ function RootLayer:addResFight()
         local src = "res/Music/weapon/"..weaponEffects[i]
         audio.preloadSound(src)
     end
-    --music effect
+
+    --sound effect
     local uiEffects = {"jijia_open.wav", "jijia_close.wav", "glass.wav", "gold.wav", "golds.wav", "hzd.wav", 
                 "slbz.wav", "die.wav", "rengsl.wav", "plane.wav", "hithd.wav","beng.wav"}
  
