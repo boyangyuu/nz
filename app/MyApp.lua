@@ -124,13 +124,13 @@ function MyApp:createGameStateFile()
 
                       
             currentlevel =  {
-                        group = 1,
+                        group = 2,
 
                         level = 5,
             },
             guide = {
 
-                        isFirstRunning  = true,
+                        isFirstRunning  = false,
                         fight01         = false,
                         afterfight01    = false,
                         prefight02      = false,

@@ -139,7 +139,7 @@ function RootLayer:addResFight()
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
         "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs","feiji","yyc",
-        "renzb", "feibiao",
+        "renzb", "feibiao","dzboss","zzw",
         "qiqiu01", "qiqiu02", "qiqiu03", "qiqiu04"}
  
     for i,v in ipairs(enemyImgs) do
