@@ -257,20 +257,17 @@ local waves = {
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "renzheBoss",
+					type = "duozuBoss",
 					placeName = "place8",
-					missileId = 18, 
-					missileOffsets = {cc.p(-150,50) , cc.p(150, -50)},
+					wangId    = 19,
+					missileId = 6, 
+					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
 					id = 1,
 				},
 			},
-
 		},
 	},
-
 }
-
-
 
 
 --enemy的关卡配置                                                    白银难度对应怪物属性
@@ -332,6 +329,7 @@ local enemys = {
 
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
+	
 	--近战boss兵         --type = "jin",
 	{id=16,image="jinzhanb",demage=120,hp=20000,fireRate=60,fireCd=2,speed=40,scale = 3.0,
 	weak1=3}, 
@@ -342,43 +340,44 @@ local enemys = {
 
 	--飞镖
 	{id=18,image="feibiao",demage=10,hp=2500},                             --scale = 3.0,  近战走到屏幕最近放缩比例
-
-
-
+	
+	--蜘蛛网
+	{id=19,image="zzw",demage=10,hp=12500}, 
 }
 
+--fire1 dao1 dao2 发闪光弹
+--fire2 dao3 dao4 dao5 --多发导弹
+--fire3 dao6  --发蜘蛛网
 
 
 	--boss的关卡配置
 local bosses = {
 	--第一个出场的boss
 	{
-
-		image = "renzb", --图片名字
+		image = "dzboss", --图片名字
 		hp = 200000,
 		fireRate = 30,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --
 		walkRate = 180,                    --移动频率
-		walkCd = 2,                         --移动cd
-		rollRate = 100,					--快速移动
-		rollCd = 2,						--快速移动cd
-		shanRate = 180, 				--瞬移
-		shanCd	= 2,					
-
-		chongfengDemage = 50,                --冲锋造成伤害
+		walkCd = 2,                         --移动cd				
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--左腿 弱点伤害倍数
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
-		
+		wudiTime = 3.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
+			wudi = {
+				0.90,0.70,0.50                 --召唤
+			}, 			
 			zhaohuan = {
+				0.90,0.70,0.50                 --召唤
+			},   
+			yanwu = {
 				0.90,0.70,0.50,0.30,0.10                    --召唤
-			},                                           
-			chongfeng = {
-				0.95, 0.85, 0.75,0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05,      --冲锋
-			},
-
+			},    
+			wang = {
+				0.999,0.970,0.50,0.30,0.10                    --召唤
+			},    						                                        
 			weak3 = {                               --右腿 技能触发(可以同时)
 				0.85,0.65,0.45, 0.25,                        
 			},	

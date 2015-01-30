@@ -22,8 +22,6 @@ end
 
 function StartLayer:initUI()
     local btnBegin = cc.uiloader:seekNodeByName(self, "beginbtn")
-    local gifticon = cc.uiloader:seekNodeByName(self, "gifticon")
-    gifticon:setColor(cc.c3b(255, 45, 49))
     btnBegin:setTouchEnabled(true)
     addBtnEventListener(btnBegin, function(event)
         if event.name == 'began' then
@@ -118,13 +116,16 @@ end
 
 function StartLayer:initDailyLogin()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
-    
+
     local isToday = dailyLoginModel:isToday()
     local isGet = dailyLoginModel:isGet()
     if isToday  == false  then
         dailyLoginModel:setGet(false)
     end
-    dailyLoginModel:setTime()
+    -- dailyLoginModel:setTime()
+    local data = getUserData()
+    data.dailylogin.logintime = "%9"
+    setUserData(data)
 
 end
 

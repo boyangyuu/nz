@@ -390,7 +390,7 @@ function Attackable:getPosInMap()
 
 	local map = self:getParent():getParent()
 	local box 	= map:getBoundingBox()
-	dump(box, "box")
+	-- dump(box, "box")
 	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
 	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
@@ -410,7 +410,7 @@ function Attackable:getPosInMapBg()
 	local map = md:getInstance("Map")
 	local mapbg = map:getMapBgNode()
 	local box 	= mapbg:getBoundingBox()
-	dump(box, "box")
+	-- dump(box, "box")
 	local worldMap = mapbg:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end
