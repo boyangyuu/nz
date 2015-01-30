@@ -142,7 +142,7 @@ function FightResultLayer:initUI()
         elseif event.name=='ended' then
 	        ui:showPopup("commonPopup",
 				 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
-				 callfuncCofirm =  handler(self, self.turnLeftCard),
+				 callfuncCofirm =  handler(self, self.leftCard),
 	             callfuncClose  =  handler(self, self.cancel)},
 				 {opacity = 155})
 
@@ -334,39 +334,46 @@ function FightResultLayer:quickInlay()
 	self.inlayModel:equipAllBestInlays(quickinlay)
 end
 
-function FightResultLayer:turnLeftCard()
+function FightResultLayer:leftCard()
 	if self.userModel:costDiamond(10) then
-		for k,v in pairs(self.lockTable) do
-                um:buy("fanpai", 1, 10)   
+		self:turnLeftCard()
+	else
+        local buyModel = md:getInstance("BuyModel")
+        buyModel:buy("stone120",{})
+	end
+end
+
+function FightResultLayer:turnLeftCard()
+	for k,v in pairs(self.lockTable) do
+            um:buy("fanpai", 1, 10)   
 
 
-			if v["falltype"] == "inlay" then
-				self.inlayModel:buyInlay(v["id"])
-				table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
-			elseif v["falltype"] == "gun" then
-				self.weaponListModel:setWeapon(v["id"])
-				self.weaponListModel:equipBag(v["id"],3)
-				function delaypopgun()
-					ui:showPopup("commonPopup",
-						 {type = "style2", content = "获得雷明顿！"},
-						 {opacity = 155})
-				end
-				scheduler.performWithDelayGlobal(delaypopgun, 0.5)
-			elseif v["falltype"] == "suipian" then
-				self.levelDetailModel:setsuipian(v["id"])
+		if v["falltype"] == "inlay" then
+			self.inlayModel:buyInlay(v["id"])
+			table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
+		elseif v["falltype"] == "gun" then
+			self.weaponListModel:setWeapon(v["id"])
+			self.weaponListModel:equipBag(v["id"],3)
+			function delaypopgun()
 				ui:showPopup("commonPopup",
-					 {type = "style2", content = "获得AK47零件 X1！"},
+					 {type = "style2", content = "获得雷明顿！"},
 					 {opacity = 155})
 			end
+			scheduler.performWithDelayGlobal(delaypopgun, 0.5)
+		elseif v["falltype"] == "suipian" then
+			self.levelDetailModel:setsuipian(v["id"])
+			ui:showPopup("commonPopup",
+				 {type = "style2", content = "获得AK47零件 X1！"},
+				 {opacity = 155})
 		end
-		dump(self.giveTable)
-		for k,v in pairs(self.lock) do
-			if v:isVisible() == true then
-				v:setVisible(false)
-			end
-		end
-		self.btngetall:setButtonEnabled(false)
 	end
+	dump(self.giveTable)
+	for k,v in pairs(self.lock) do
+		if v:isVisible() == true then
+			v:setVisible(false)
+		end
+	end
+	self.btngetall:setButtonEnabled(false)
 end
 
 function FightResultLayer:onEnter()
