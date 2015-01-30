@@ -9,6 +9,11 @@ function FightResultPopup:ctor()
 	self:playAnim()
 end
 
+function FightResultPopup:playSound()
+    local rwwc   = "res/Music/rwwc.ogg"
+    audio.playSound(sound,false)
+end
+
 function FightResultPopup:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/FightResult/fightResultAnim")
 	local controlNode = cc.uiloader:load("fightResultSuccess.ExportJson")

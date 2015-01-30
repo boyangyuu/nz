@@ -296,10 +296,16 @@ function LevelDetailLayer:onClickBtnGold()
 		self.alreadygold:setVisible(true)
 		self.btnGold:setVisible(false)	
 	end
+	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	local isDone = self.guide:isDone("prefight02")
-	if isDone then
-		local buyModel = md:getInstance("BuyModel")
-	    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
+	if goldweaponNum > 0 then
+        self.inlayModel:equipAllInlays()
+        self.storeModel:refreshInfo("prop")
+    else
+		if isDone then
+			local buyModel = md:getInstance("BuyModel")
+		    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
+		end
 	end
 end
 

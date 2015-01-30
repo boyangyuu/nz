@@ -117,12 +117,32 @@ function RootLayer:addResHome()
     local zssrc = "res/HomeBarLayer/zss/zss.csb"
     manager:addArmatureFileInfoAsync(zssrc,  handler(self, self.dataLoaded))
 
+    local mrdlsrc = "res/GiftBag/mrdl/mrdl.csb"
+    manager:addArmatureFileInfoAsync(mrdlsrc,  handler(self, self.dataLoaded))
+
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
+    
     --sound
     local startMusic = "res/Start/start.ogg"
     audio.preloadMusic(startMusic)
     -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
     -- audio.preloadMusic(homeBarMusic)
 
+    local rwwc   = "res/Music/rwwc.ogg"
+    local dianji = "res/Music/dianji.ogg"
+    local letsgo = "res/Music/letsgo.ogg"
+    local gmcg   = "res/Music/gmcg.ogg"
+    local wqsj   = "res/Music/wqsj.ogg"
+    local xqcg   = "res/Music/xqcg.ogg"
+    local zx     = "res/Music/zx.ogg"
+    audio.preloadSound(rwwc)
+    audio.preloadSound(dianji)
+    audio.preloadSound(letsgo)
+    audio.preloadSound(gmcg)
+    audio.preloadSound(wqsj)
+    audio.preloadSound(xqcg)
+    audio.preloadSound(zx)
 
 end
 
@@ -139,7 +159,7 @@ function RootLayer:addResFight()
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
         "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs","feiji","yyc",
-        "renzb", "feibiao",
+        "renzb", "feibiao","dzboss","zzw",
         "qiqiu01", "qiqiu02", "qiqiu03", "qiqiu04"}
  
     for i,v in ipairs(enemyImgs) do

@@ -7,7 +7,7 @@ desc：
 	2.敌人管理者
 ]]
 
-local scheduler 	= require(cc.PACKAGE_NAME .. ".scheduler")
+-- local scheduler 	= require(cc.PACKAGE_NAME .. ".scheduler")
 
 local Hero 			= import(".Hero")
 local Fight         = import(".Fight")
@@ -19,7 +19,7 @@ local MapView = class("MapView", function()
     return display.newNode()
 end)
 
-_isZooming = false
+
 local kMissileZorder = 10000
 local kMissilePlaceZOrder = 100
 local kEffectZorder = 101
@@ -32,6 +32,7 @@ function MapView:ctor()
 	self.cacheEnemys    = {}
 	self.waveIndex 		= 1
 	self.isPause 		= false
+	self._isZooming 	= false
 	self.fightDescModel = md:getInstance("FightDescModel")
 	--ccs
 	self:loadCCS()
@@ -58,8 +59,9 @@ function MapView:ctor()
 		
 	self:setNodeEventEnabled(true)
 
-	self.schCheckNumleft = scheduler.scheduleGlobal(
-					handler(self, self.checkNumLimit), 0.1)
+	self:schedule(handler(self, self.checkNumLimit),  1)	
+	-- self.schCheckNumleft = scheduler.scheduleGlobal(
+	-- 				handler(self, self.checkNumLimit), 0.1)
 end
 
 function MapView:loadCCS()
@@ -131,8 +133,9 @@ end
 
 function MapView:startFight(event)
 	self.fightDescModel:start()
-	scheduler.performWithDelayGlobal(
-		handler(self, self.updateEnemys), 2.0)
+	self:performWithDelay(handler(self, self.updateEnemys), 2.0)
+	-- scheduler.performWithDelayGlobal(
+	-- 	handler(self, self.updateEnemys), 2.0)
 end
 
 function MapView:updateEnemys()
@@ -143,7 +146,7 @@ function MapView:updateEnemys()
 
 	if wave == nil then 
 		print("赢了")
-		scheduler.unscheduleGlobal(self.checkWaveHandler)
+		-- scheduler.unscheduleGlobal(self.checkWaveHandler)
 		self.fight:onWin()
 		return
 	end
@@ -183,11 +186,13 @@ function MapView:addWave(waveData)
 				self:cacheEnemy(group.property, pos, zorder)
 			end
 			--todo
-			scheduler.performWithDelayGlobal(addEnemyFunc, delay)
+			-- scheduler.performWithDelayGlobal(addEnemyFunc, delay)
+			self:performWithDelay(addEnemyFunc, delay)
 		end
 	end	
-	self.checkWaveHandler = scheduler.performWithDelayGlobal(
-		handler(self, self.checkWave), lastTime + 1)
+	-- self.checkWaveHandler = scheduler.performWithDelayGlobal(
+	-- 	handler(self, self.checkWave), lastTime + 1)
+	self:performWithDelay(handler(self, self.checkWave), lastTime + 1)	
 end
 
 function MapView:showEnemyIntro(descId, time)
@@ -197,7 +202,8 @@ function MapView:showEnemyIntro(descId, time)
 			self.fightDescModel:showEnemyIntro(descId)
 		end				
 	end
-	scheduler.performWithDelayGlobal(callfuncShow, time)
+	self:performWithDelay(callfuncShow, time)
+	-- scheduler.performWithDelayGlobal(callfuncShow, time)
 end
 
 function MapView:checkWave()
@@ -209,17 +215,20 @@ function MapView:checkWave()
 			self.waveIndex = self.waveIndex + 1
 
 			self:updateEnemys()
-			scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+			transition.removeAction(self.checkEnemysEmptyHandler)
+			-- scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
 		end
 	end
-	self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 1.0)
+	self.checkEnemysEmptyHandler = self:schedule(checkEnemysEmpty, 1.0)
+	-- self.checkEnemysEmptyHandler = scheduler.scheduleGlobal(checkEnemysEmpty, 1.0)
 end
 
 function MapView:getLeftEnemyNum()
 	local num = 0
 	for i,enemyView in ipairs(self.enemys) do
 		local type = enemyView:getEnemyType()
-		if type ~= "missile" and type ~= "renzhi" and type ~= "jinbi" then 
+		if type ~= "missile" and type ~= "renzhi" 
+			and type ~= "jinbi" and type ~= "dao_wang" then 
 			num = num + 1
 		end
 	end
@@ -293,7 +302,7 @@ function MapView:getBgOffset()
 end
 
 function MapView:openZoom(event)
-	if _isZooming then return end
+	if self._isZooming then return end
 
 	--event data
 	local destWorldPos = event.destWorldPos
@@ -302,10 +311,10 @@ function MapView:openZoom(event)
 	self.hero:setMapZoom(scale)
 
 	--todo 禁止触摸 todoyby
-	_isZooming = true
+	self._isZooming = true
 	local function zoomEnd()
 		-- 回复触摸Ftodoyby
-		_isZooming = false
+		self._isZooming = false
 	end
 	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))
 	local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
@@ -316,13 +325,12 @@ function MapView:openZoom(event)
 end
 
 function MapView:resumeZoom(event)
-	if _isZooming then return end
-	-- _isZooming = true
+	if self._isZooming then return end
 	self.hero:setMapZoom(1.0)
 
 	local time = event.time
 	local function zoomEnd()
-		_isZooming = false
+		self._isZooming = false
 	end
 	local w, h = display.width, display.height1
 	-- local action = cc.MoveTo:create(time , cc.p(w * 0.5, h * 0.5))	
@@ -353,7 +361,6 @@ function MapView:tick(dt)
 			--remove
 			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
-
 		end
 	end
 
@@ -456,9 +463,9 @@ function MapView:callfuncAddEnemys(event)
 			enemyData.pos.x, zorder)
 			-- self:cacheEnemy() --todo
 		end		
-		
-		scheduler.performWithDelayGlobal(addEnemyFunc, 
-			enemyData.delay)
+		self:performWithDelay(addEnemyFunc, enemyData.delay)
+		-- scheduler.performWithDelayGlobal(addEnemyFunc, 
+		-- 	enemyData.delay)
 	end
 end
 
@@ -575,20 +582,20 @@ end
 
 function MapView:onCleanup() 
 	print("MapView:onCleanup() ")
-	if self.checkEnemysEmptyHandler then
-		scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-	end
-	if self.checkWaveHandler then
-		scheduler.unscheduleGlobal(self.checkWaveHandler)
-	end	
+	-- if self.checkEnemysEmptyHandler then
+	-- 	scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
+	-- end
+	-- if self.checkWaveHandler then
+	-- 	scheduler.unscheduleGlobal(self.checkWaveHandler)
+	-- end	
 	
-	if self.schCheckNumleft then
-		scheduler.unscheduleGlobal(self.schCheckNumleft)
-	end		
+	-- if self.schCheckNumleft then
+	-- 	scheduler.unscheduleGlobal(self.schCheckNumleft)
+	-- end		
 
-	if self.addEnemysSch then 
-		scheduler.unscheduleGlobal(self.addEnemysSch)
-	end
+	-- if self.addEnemysSch then 
+	-- 	scheduler.unscheduleGlobal(self.addEnemysSch)
+	-- end
 end
 
 

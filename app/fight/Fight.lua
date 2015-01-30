@@ -18,6 +18,7 @@ Fight.FIGHT_END_EVENT    = "FIGHT_END_EVENT"
 Fight.CONTROL_HIDE_EVENT = "CONTROL_HIDE_EVENT"
 Fight.CONTROL_SHOW_EVENT = "CONTROL_SHOW_EVENT"
 Fight.CONTROL_SET_EVENT  = "CONTROL_SET_EVENT"
+Fight.FIGHT_FIRE_PAUSE_EVENT = "FIGHT_FIRE_PAUSE_EVENT"
 
 Fight.INFO_HIDE_EVENT = "INFO_HIDE_EVENT"
 Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
@@ -185,6 +186,11 @@ function Fight:setCompsVisible(componentVisibles)
 end
 
 ---- 关卡相关end ----
+function Fight:stopFire()
+    self:dispatchEvent({name = Fight.FIGHT_FIRE_PAUSE_EVENT})
+end
+
+
 function Fight:addKillRenzhiNum()
     self.killRenzhiNum = self.killRenzhiNum + 1
 

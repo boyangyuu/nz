@@ -277,7 +277,9 @@ end
 
 function Attackable:insertCache(play, state)
 	local index = #self.playCache + 1
-	if state == "skill" or index == 1 then 
+	if state == "skillPre" then 
+		table.insert(self.playCache, 1, {func = play, state = state})
+	elseif state == "skill" or index == 1 then 
 		self.playCache[index] = {func = play, state = state}
 	end
 end
@@ -388,7 +390,7 @@ function Attackable:getPosInMap()
 
 	local map = self:getParent():getParent()
 	local box 	= map:getBoundingBox()
-	dump(box, "box")
+	-- dump(box, "box")
 	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
 	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
@@ -408,7 +410,7 @@ function Attackable:getPosInMapBg()
 	local map = md:getInstance("Map")
 	local mapbg = map:getMapBgNode()
 	local box 	= mapbg:getBoundingBox()
-	dump(box, "box")
+	-- dump(box, "box")
 	local worldMap = mapbg:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end

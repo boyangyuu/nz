@@ -96,7 +96,7 @@ function MissileEnemyView:playFeibiaoFire()
     --scale
     self.armature:setScale(self.srcScale)
     local time = define.kMissileFeibiaTime    
-    local destScale = self.property["destScale"] or 1.0
+    local destScale = define.kMissileFeibiaScale 
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
@@ -111,31 +111,6 @@ function MissileEnemyView:playFeibiaoFire()
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
     self.armature:runAction(seq)
     self.armature:runAction(cc.MoveTo:create(time, offset))
-end
-
-function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
-    local bound = node:getBoundingBox()
-    local enemyBound = enemyRange:getBoundingBox()
-    
-    -- dump(enemyBound, "enemyBound")
-    local scale = self:getScale() * self.hero:getMapZoom()
-    enemyBound.width = enemyBound.width * scale
-    enemyBound.height = enemyBound.height * scale
-    -- dump(enemyBound, "enemyBound2")
-    local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
-    bound.x = pWorld1.x
-    bound.y = pWorld1.y
-    local pWorld2 = enemyRange:convertToWorldSpace(cc.p(0,0))
-    enemyBound.x = pWorld2.x
-    enemyBound.y = pWorld2.y    
-    
-    -- dump(bound, "bound ------")
-    -- dump(enemyBound, "enemyBound -------")    
-    -- self:test()
-
-    local isIn = cc.rectIntersectsRect(bound, enemyBound)
-    -- print("isIn", isIn)
-    return isIn
 end
 
 function MissileEnemyView:playBomb()
@@ -177,6 +152,7 @@ function MissileEnemyView:playKill(event)
     else
 
     end     
+    self.armature:stopAllActions()  
 end
 
 function MissileEnemyView:onHitted(targetData)

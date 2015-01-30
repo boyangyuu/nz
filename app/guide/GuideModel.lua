@@ -58,7 +58,7 @@ function Guide:doGuideNext()
 	self.curConfig = configStep
 
 	--打点
-	print("configStep[id])", configStep["id"])
+	um:event(configStep["id"])
 
 	--check finish
 	if self.curConfig == nil then 
