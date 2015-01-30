@@ -151,8 +151,6 @@ function RenBossView:playSkill(skillName)
     print("RenBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "feibiao" then 
-        local index = string.sub(skillName, 8, 8)
-        self:playFeibiao(index)
         local function callfuncFeibiao()
             self:playFeibiao(skillName)
         end
@@ -163,7 +161,8 @@ function RenBossView:playSkill(skillName)
 end
 
 function RenBossView:playFeibiao(skillName)
-    assert(index, "playFeibiao index is nil")
+    assert(skillName, "playFeibiao index is nil")
+
     local config = self.config[skillName] 
     self.armature:getAnimation():play("fire" , -1, 1) 
     for i=1,#config.srcPoses do

@@ -338,7 +338,7 @@ local enemys = {
 
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="renzb",demage=50,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
-	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3, award = 10},	
+	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3},	
 
 	--飞镖
 	{id=18,image="feibiao",demage=10,hp=2500},                             --scale = 3.0,  近战走到屏幕最近放缩比例
@@ -372,6 +372,12 @@ local bosses = {
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
 		
 		skilltrigger = {   			          --技能触发(可以同时)
+			feibiao1 = {                --暴雨梨花针1
+				0.999,0.60,0.40,0.20
+			},
+			-- feibiao2 = {                --暴雨梨花针2
+			-- 	0.89,0.88,0.86,
+			-- },							
 			zhaohuan = {
 				0.90,0.70,0.50,0.30,0.10                    --召唤
 			},                                           
@@ -399,6 +405,21 @@ local bosses = {
 			},	
 						
 		},
+
+		feibiao1 = {    --srcPoses= 初始位置       --offsetPoses =偏移 
+			srcPoses = {cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2),
+			 		    cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2),
+			 		    cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2), },   
+
+			offsetPoses = {cc.p(-100, 100), cc.p(100, 100), cc.p(-100, -100), cc.p(100, -100),
+			               cc.p(-200, 200), cc.p(200, 200), cc.p(-200, -200), cc.p(200, -200), 
+			               cc.p(-300, 300), cc.p(300, 300), cc.p(-300, -300), cc.p(300, -300),}               
+		},
+		-- feibiao2 = {
+		-- 	srcPoses = {cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2), },
+		-- 	offsetPoses = {cc.p(-300, -300), cc.p(-300, 300), cc.p(300, -300), cc.p(300, 300), }
+
+		-- },		
 		enemys1 = {                                                   --第一波召唤的忍者兵
 			{
 				time = 2,	
@@ -492,6 +513,134 @@ local bosses = {
 		},	
 
 		enemys3 = {                                                   --第三波召唤的忍者兵
+			{
+				time = 2,	
+				num = 1,
+				pos = {400},
+				delay = {0.2},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 2,	
+				num = 1,
+				pos = {1000},
+				delay = {0.2},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 2,	
+				num = 1,
+				pos = {550},
+				delay = {0.4},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 2,	
+				num = 1,
+				pos = {850},
+				delay = {0.4},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 2,	
+				num = 1,
+				pos = {700},
+				delay = {0.6},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+        },
+
+
+		enemys4 = {                                                   --第四波召唤的忍者兵
+			{
+				time = 2,	
+				num = 1,
+				pos = {400},
+				delay = {0.2},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 2,	
+				num = 1,
+				pos = {1000},
+				delay = {0.2},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 2,	
+				num = 1,
+				pos = {550},
+				delay = {0.4},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 2,	
+				num = 1,
+				pos = {850},
+				delay = {0.4},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 2,	
+				num = 1,
+				pos = {700},
+				delay = {0.6},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+
+		},
+
+		enemys5 = {                                                   --第五波召唤的忍者兵
 			{
 				time = 2,	
 				num = 1,
