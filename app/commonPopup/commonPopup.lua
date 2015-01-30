@@ -148,26 +148,28 @@ function commonPopup:initUI(properties)
 end
 
 function commonPopup:onClickCofirm()
+	if self.properties.type == "style3" and self.properties.isPauseScene then 
+		cc.Director:getInstance():popScene()
+	else
+		ui:closePopup("commonPopup")
+	end
+
 	local func =  self.properties.callfuncCofirm
 	if func ~= nil then 
 		func()		
 	end
-	if self.properties.type == "style3" and self.properties.isPauseScene then 
-		cc.Director:getInstance():popScene()
-	else
-		ui:closePopup("commonPopup")
-	end
 end
 
 function commonPopup:onClickClose()
-	local func =  self.properties.callfuncClose
-	if func ~= nil then 
-		func()
-	end	
 	if self.properties.type == "style3" and self.properties.isPauseScene then 
 		cc.Director:getInstance():popScene()
 	else
 		ui:closePopup("commonPopup")
+	end	
+	
+	local func =  self.properties.callfuncClose
+	if func ~= nil then 
+		func()
 	end	
 end
 
