@@ -344,6 +344,9 @@ function InlayModel:removeAllInlay()
 			local useInfo = self:getInlayType(v).."_"..self:getInlayRecord(v)["property"]
 			um:use(useInfo, 1,0)
 		end
+		if self:isGetAllGold() then
+			um:use("goldweapon", 1,0)
+		end
 	end
 	local data = getUserData()
 	data.inlay.inlayed = {}

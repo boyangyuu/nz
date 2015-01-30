@@ -148,7 +148,7 @@ function WeaponListLayer:initUI()
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
             function deneyBuyWeapon()
-                if self.userModel:getDiamond() > self.weaponrecord["cost"] then
+                if self.userModel:getDiamond() >= self.weaponrecord["cost"] then
                     ui:showPopup("commonPopup",
                         {type = "style3", content = "是否花费60钻石升级购买该武器？",
                          callfuncCofirm =  handler(self, self.buyWeapon),
@@ -273,7 +273,6 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
             v:removeAllChildren()
         end
     end
-
 
     if index == nil then index = self.selectedCellId end
     

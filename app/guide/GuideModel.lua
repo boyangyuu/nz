@@ -54,6 +54,9 @@ function Guide:doGuideNext()
 	local configStep = configGroup["steps"][self.stepIndex]	
 	self.curConfig = configStep
 
+	--打点
+	um:event(configStep["id"])
+
 	--check finish
 	if self.curConfig == nil then 
 		self:finishGuide()

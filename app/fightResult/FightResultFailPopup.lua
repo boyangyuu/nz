@@ -42,7 +42,7 @@ function FightResultFailPopup:initUI()
             um:failLevel(levelInfo)
 
 	        ui:closePopup("FightResultFailPopup")
-           local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+           local curGroup, curLevel = fight:getCurGroupAndLevel()
             ui:changeLayer("HomeBarLayer",{groupid = curGroup})
         end
     end)

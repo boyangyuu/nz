@@ -102,7 +102,7 @@ end
 -- @param level 关卡,如果level == NULL 则为当前关卡
 -- @return void
 -- cc.UMAnalytics:finishLevel("1-2")
-function UM:finishLevel( level )
+function UM:finishLevel(level)
     if device.platform == "android" then
         cc.UMAnalytics:finishLevel(level)
     end
