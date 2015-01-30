@@ -170,7 +170,7 @@ function RootLayer:addResFight()
                 "slbz.wav", "die.wav", "rengsl.wav", "plane.wav", "hithd.wav","beng.wav"}
  
     for i,v in ipairs(uiEffects) do
-        local src = "res/Music/weapon/"..uiEffects[i]
+        local src = "res/Music/fight/"..uiEffects[i]
         audio.preloadSound(src)
     end    
 
