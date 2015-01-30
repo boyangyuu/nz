@@ -312,7 +312,7 @@ local waves = {
 				descId = "boss02",
 				time = 3,	
 				num = 1,
-				pos = {194},
+				pos = {450},
 				delay = {4},
 				property = { 
 					type = "chongBoss",
@@ -389,6 +389,7 @@ local bosses = {
 			tieqiu = {
 				0.999, 0.80, 0.60, 0.40, 0.20, 0.05,
 			},
+			
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
 			},

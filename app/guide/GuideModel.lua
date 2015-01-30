@@ -46,6 +46,9 @@ function Guide:check(groupId)
 end
 
 function Guide:doGuideNext()
+
+
+
 	--next
 	self.stepIndex = self.stepIndex + 1
 

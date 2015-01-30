@@ -30,7 +30,7 @@ Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
 Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人      
 Hero.ENEMY_KILL_HEAD_EVENT      = "ENEMY_KILL_HEAD_EVENT"   --爆头
 Hero.ENEMY_KILL_BOSS_EVENT      = "ENEMY_KILL_BOSS_EVENT"   --杀死boss 
-Hero.ENEMY_KILL_LASTCALL_EVENT  = "ENEMY_KILL_LASTCALL_EVENT"   --杀死最后一个召唤 
+Hero.ENEMY_KILL_CALL_EVENT       = "ENEMY_KILL_CALL_EVENT"   --杀死召唤 
 
 Hero.ENEMY_ADD_EVENT            = "ENEMY_ADD_EVENT"
 Hero.ENEMY_WAVE_ADD_EVENT       = "ENEMY_WAVE_ADD_EVENT"
@@ -254,7 +254,8 @@ function Hero:helpFullHp()
     --暂停
     print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
-    fight:pauseFight(true)
+    -- fight:pauseFight(true)
+    fight:stopFire()
     ui:showPopup("commonPopup",
         {type = "style3", content = "是否立即回复生命？",
              callfuncCofirm =  handler(self, self.onBuyFullHp),
