@@ -151,8 +151,6 @@ function RenBossView:playSkill(skillName)
     print("RenBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "feibiao" then 
-        local index = string.sub(skillName, 8, 8)
-        self:playFeibiao(index)
         local function callfuncFeibiao()
             self:playFeibiao(skillName)
         end
@@ -163,16 +161,19 @@ function RenBossView:playSkill(skillName)
 end
 
 function RenBossView:playFeibiao(skillName)
-    assert(index, "playFeibiao index is nil")
+    assert(skillName, "playFeibiao index is nil")
+
     local config = self.config[skillName] 
     self.armature:getAnimation():play("fire" , -1, 1) 
-    for i=1,#config.srcPoses do
-        local delay = 0.6 + 0.10 * i 
+    local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
+    local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
+    for i=1,#config.offsetPoses do
+        local delay = 0.6 + 0.20 * i 
         local property = {
-            srcPos = config.srcPoses[i],
+            srcPos = pWorldBone,
             srcScale = self:getScale() * 0.4,
             destScale = 1.5,
-            destPos = config.srcPoses[i],
+            destPos = pWorldBone,
             offset = config.offsetPoses[i],
             type = "missile",
             id = self.property["missileId"],

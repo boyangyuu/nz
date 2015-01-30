@@ -156,7 +156,7 @@ function RenEnemyView:playChongfeng()
     
     --前进
     local speed = 400
-    local desY = -180
+    local desY = -0
     local scale = 2.0
 
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
