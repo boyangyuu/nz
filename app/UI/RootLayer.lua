@@ -124,25 +124,25 @@ function RootLayer:addResHome()
     manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
     
     --sound
-    local startMusic = "res/Start/start.ogg"
-    audio.preloadMusic(startMusic)
-    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
-    -- audio.preloadMusic(homeBarMusic)
+    -- local startMusic = "res/Start/start.ogg"
+    -- audio.preloadMusic(startMusic)
+    -- -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    -- -- audio.preloadMusic(homeBarMusic)
 
-    local rwwc   = "res/Music/rwwc.ogg"
-    local dianji = "res/Music/dianji.ogg"
-    local letsgo = "res/Music/letsgo.ogg"
-    local gmcg   = "res/Music/gmcg.ogg"
-    local wqsj   = "res/Music/wqsj.ogg"
-    local xqcg   = "res/Music/xqcg.ogg"
-    local zx     = "res/Music/zx.ogg"
-    audio.preloadSound(rwwc)
-    audio.preloadSound(dianji)
-    audio.preloadSound(letsgo)
-    audio.preloadSound(gmcg)
-    audio.preloadSound(wqsj)
-    audio.preloadSound(xqcg)
-    audio.preloadSound(zx)
+    -- local rwwc   = "res/Music/rwwc.ogg"
+    -- local dianji = "res/Music/dianji.ogg"
+    -- local letsgo = "res/Music/letsgo.ogg"
+    -- local gmcg   = "res/Music/gmcg.ogg"
+    -- local wqsj   = "res/Music/wqsj.ogg"
+    -- local xqcg   = "res/Music/xqcg.ogg"
+    -- local zx     = "res/Music/zx.ogg"
+    -- audio.preloadSound(rwwc)
+    -- audio.preloadSound(dianji)
+    -- audio.preloadSound(letsgo)
+    -- audio.preloadSound(gmcg)
+    -- audio.preloadSound(wqsj)
+    -- audio.preloadSound(xqcg)
+    -- audio.preloadSound(zx)
 
 end
 

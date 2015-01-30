@@ -9,6 +9,8 @@ function addBtnEventListener(node, callfunc)
         if event.name=='began' then
             -- cc.ColorUtil:isHighLighted(node, true)
             node:runAction(cc.ScaleTo:create(0.05, 1.1))
+            local dianji = "res/Music/ui/dianji.wav"
+            audio.playSound(dianji,false)
         elseif event.name=='ended' then
             -- cc.ColorUtil:isHighLighted(node, false)        
             node:runAction(cc.ScaleTo:create(0.1, 1))

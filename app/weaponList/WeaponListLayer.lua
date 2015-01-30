@@ -476,6 +476,8 @@ function WeaponListLayer:buyWeapon(event)
     if self.userModel:costDiamond(self.weaponrecord["cost"]) then
         function delay()
             self.weaponListModel:buyWeapon(self.weaponId)
+            local gmcg   = "res/Music/ui/gmcg.wav"
+            audio.playSound(gmcg,false)
         end
         scheduler.performWithDelayGlobal(delay, 0.4)
     end
