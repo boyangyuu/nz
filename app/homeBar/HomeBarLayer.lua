@@ -42,7 +42,7 @@ function HomeBarLayer:popUpGify(properties)
 end
 
 function HomeBarLayer:playSound()
-    local homeBarMusic = "res/Music/bg/bgyx.ogg"
+    local homeBarMusic = "res/Music1/bg/bgyx.ogg"
     audio.playMusic(homeBarMusic,true)
 end
 

@@ -124,7 +124,7 @@ function RootLayer:addResHome()
     manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
     
     --sound
-    local startMusic = "res/Music/bg/bgyx.wav"
+    local startMusic = "res/Music1/bg/bgyx.ogg"
     audio.preloadMusic(startMusic)
     -- -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
     -- -- audio.preloadMusic(homeBarMusic)
