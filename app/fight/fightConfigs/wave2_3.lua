@@ -337,11 +337,11 @@ local enemys = {
 	weak1=3}, 
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=50,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=50,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=10,hp=2500},                             --scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=18,image="feibiao",demage=15,hp=30000},                             --scale = 3.0,  近战走到屏幕最近放缩比例
 
 
 
@@ -355,7 +355,7 @@ local bosses = {
 	{
 
 		image = "renzb", --图片名字
-		hp = 200000,
+		hp = 300000,
 		fireRate = 30,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --
@@ -367,9 +367,9 @@ local bosses = {
 		shanCd	= 2,					
 
 		chongfengDemage = 50,                --冲锋造成伤害
-		weak1 = 1.2,						--头 弱点伤害倍数
-		weak2 = 1.2,					--左腿 弱点伤害倍数
-		weak3 = 1.2,					--右腿 弱点伤害倍数	
+		weak1 = 1.1,						--头 弱点伤害倍数
+		weak2 = 1.1,					--左腿 弱点伤害倍数
+		weak3 = 1.1,					--右腿 弱点伤害倍数	
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			feibiao1 = {                --暴雨梨花针1

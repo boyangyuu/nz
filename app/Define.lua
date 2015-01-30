@@ -54,7 +54,7 @@ Define.kMissileLeiTime				= 2.0    --手雷
 
 --飞镖
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
-
+Define.kMissileFeibiaScale      = 1.5        --飞镖飞到屏幕的大小
 
 --黄金武器
 Define.kGoldActivate 			= 1500    --黄金武器激活

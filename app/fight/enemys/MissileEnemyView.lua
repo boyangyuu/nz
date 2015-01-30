@@ -96,7 +96,7 @@ function MissileEnemyView:playFeibiaoFire()
     --scale
     self.armature:setScale(self.srcScale)
     local time = define.kMissileFeibiaTime    
-    local destScale = self.property["destScale"] or 1.0
+    local destScale = define.kMissileFeibiaScale 
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
