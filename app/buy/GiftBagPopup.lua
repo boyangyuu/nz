@@ -36,7 +36,8 @@ function GiftBagPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("GiftBagPopup")
+			self:close()
+			
 			print("popupName:",self.param.popupName)
 			local configName = self.param.popupName
 			iap:pay(configName)
@@ -47,11 +48,14 @@ function GiftBagPopup:initButtons()
 		end
 	end)
 
-	local armature = ccs.Armature:create("lb_ljlq")
-	armature:setScale(0.75)
-	armature:setPosition(140, 45)
-	armature:getAnimation():play("lb_ljlq", -1, 1)
-	receiveBtn:addChild(armature)
+	if not self.param.isFight then 
+
+		local armature = ccs.Armature:create("lb_ljlq")
+		armature:setScale(0.75)
+		armature:setPosition(141, 45)
+		armature:getAnimation():play("lb_ljlq", -1, 1)
+		receiveBtn:addChild(armature)
+	end
 
 
 	local btnClose = cc.uiloader:seekNodeByName(self, "btn_Closed")
@@ -60,7 +64,7 @@ function GiftBagPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("GiftBagPopup")
+			self:close()
 			self.buyModel:deneyPay()
 			print("btnClose is pressed!")
 		end
@@ -71,6 +75,14 @@ function GiftBagPopup:initButtons()
 		if bitmap then
 			bitmap:setColor(cc.c3b(0, 255, 161))
 		end
+	end
+end
+
+function GiftBagPopup:close()
+	if self.param.isFight then
+		ui:closePopup("GiftBagPopup", true)
+	else
+		ui:closePopup("GiftBagPopup")
 	end
 end
 

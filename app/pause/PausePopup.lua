@@ -57,7 +57,9 @@ function PausePopup:initButtons()
 	local isMusicPlaying = audio:isMusicPlaying()
 	if isMusicPlaying then
 		musicplay:setVisible(false)
+		musicclose:setVisible(true)
 	else
+		musicplay:setVisible(true)
 		musicclose:setVisible(false)
 	end
 	

@@ -70,6 +70,7 @@ function UI:showPopup(layerId, properties, extra)
 		anim = extra.anim
 		isPauseScene = extra.isPauseScene
 		properties.isPauseScene = extra.isPauseScene
+		properties.isFight = extra.isFight 
 	end
 
 	local layerCls = self:getLayerCls(layerId)

@@ -132,13 +132,13 @@ function commonPopup:initUI(properties)
 
 		btncall:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
 			if event.name == "began" then
-				-- print("btncall is pressed!")
+				print("btncall is pressed!")
 				return true
 			elseif event.name == "ended" then
 				
 				if device.platform == "android" then
-					-- local className = "org/cocos2dx/lua/appActivity"
-					-- luaj.callStaticMethod(className, "callPhone")
+					local className = "com/hgtt/ccn/IAPControl"
+					luaj.callStaticMethod(className, "callPhone")
 					print("btncall is pressed!")
 				end
 			end

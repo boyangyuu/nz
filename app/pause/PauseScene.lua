@@ -6,6 +6,7 @@ end)
 
 function PauseScene:ctor()
  	-- body
+ 	self.layers = {}
  	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.PAUSESCENE_SHOW_EVENT, handler(self, self.showPopup))	
 		:addEventListener(ui.PAUSESCENE_CLOSE_EVENT, handler(self, self.closePopup))
@@ -29,9 +30,14 @@ function PauseScene:showPopup(event)
 	director:pushScene(self)
 
 	local cls = event.layerCls
+	local str = cls.__cname
 	local pro = event.properties
 	local layer = cls.new(pro)
-	-- print(type(layer))
+	if self.layers[str] ~= nil then 	
+		self.layers[str]:removeSelf()
+		self.layers[str] = nil
+	end
+	self.layers[str] = layer
 	layer:setPositionY(display.offset)
 	self:addChild(layer)
 	-- layer:scale(0.0)
@@ -39,7 +45,7 @@ function PauseScene:showPopup(event)
 	-- 	layer:scale(1)
 	-- 	print("dsdfad1")
 	-- else
-		-- layer:scaleTo(0.3, 1)
+	-- 	layer:scaleTo(0.3, 1)
 	-- 	print("dsdfad2")
 	-- end
 
@@ -47,17 +53,17 @@ end
 
 function PauseScene:closePopup(event)
 	-- body
-	transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
-    	delay = 0,
-    	easing = "In",
-    	onComplete = function() 
-	    	self.layers[event.layerId]:removeSelf()
-	    	self.layers[event.layerId] = nil
-	    	if table.nums(self.layers) == 0 then
-	    		self:setVisible(false)
-	    	end
-       end, 
-	})
+	-- transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
+ --    	delay = 0,
+ --    	easing = "In",
+ --    	onComplete = function() 
+	--     	self.layers[event.layerId]:removeSelf()
+	--     	self.layers[event.layerId] = nil
+	--     	if table.nums(self.layers) == 0 then
+	--     		self:setVisible(false)
+	--     	end
+ --       end, 
+	-- })
 	local director = cc.Director:getInstance()
 	director:popScene()
 end
