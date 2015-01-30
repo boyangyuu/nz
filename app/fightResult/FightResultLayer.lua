@@ -79,6 +79,8 @@ function FightResultLayer:playstar(numStar)
 	            end)
 		    end
 			starArmature:getAnimation():play("gkjs_xing" , -1, 0)
+		    local zx = "res/Music/ui/zx.wav"
+		    audio.playSound(zx,false)
 		end
 		playStarHandler = scheduler.performWithDelayGlobal(starcall, delay)
 	end
