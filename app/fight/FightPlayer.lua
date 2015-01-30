@@ -850,9 +850,6 @@ function FightPlayer:initGuide1()
       
 end
 
-local time_begin = nil
-local schGuideFire
-local isGuideFireBegin = false
 function FightPlayer:onGuideFire(touchEvent)
     -- print("os.time()", os.time())
     local name = touchEvent.name
@@ -861,10 +858,10 @@ function FightPlayer:onGuideFire(touchEvent)
     --检查长按时间
     local function onGuideFireCheckFunc()
         local timeNow = os.time()
-        if time_begin and (timeNow - time_begin) >=  limitTime then 
+        if self.time_begin and (timeNow - self.time_begin) >=  limitTime then 
             -- print("长按射击引导完成")
-            -- print("time_begin:", time_begin)
-            scheduler.unscheduleGlobal(schGuideFire)
+            -- print("self.time_begin:", self.time_begin)
+            scheduler.unscheduleGlobal(self.schGuideFire)
             self:onCancelledFire()
             self.guide:doGuideNext()
             self.guide:hideGuideForTime(2.0)
@@ -874,18 +871,18 @@ function FightPlayer:onGuideFire(touchEvent)
     --开始计时
     if name == "began"  then
         print("开始计时") 
-        isGuideFireBegin = true
-        time_begin = os.time()
-        schGuideFire = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
+        self.isGuideFireBegin = true
+        self.time_begin = os.time()
+        self.schGuideFire = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
     end
 
     --停止计时
     if name == "ended" or name == "cancelled" then
-        if isGuideFireBegin == false then return end 
+        if self.isGuideFireBegin == false then return end 
         -- print("停止计时")
-        time_begin = nil
-        if schGuideFire then 
-            scheduler.unscheduleGlobal(schGuideFire)
+        self.time_begin = nil
+        if self.schGuideFire then 
+            scheduler.unscheduleGlobal(self.schGuideFire)
         end
     end
 

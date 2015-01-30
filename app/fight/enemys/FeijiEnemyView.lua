@@ -274,6 +274,10 @@ function FeijiEnemyView:playStand()
 end
 
 function FeijiEnemyView:onHitted(targetData)
+	if self.isEntering or self.isExiting then 
+		return 
+	end
+
 	FeijiEnemyView.super.onHitted(self, targetData)
 end
 
