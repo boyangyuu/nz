@@ -147,6 +147,46 @@ function RenBossView:playRunAction(direct, isRun)
     self:restoreStand(time)  
 end
 
+function RenBossView:playSkill(skillName)
+    print("RenBossView:playSkill: "..skillName)
+    local name = string.sub(skillName, 1, 7)
+    if name == "feibiao" then 
+        local index = string.sub(skillName, 8, 8)
+        self:playFeibiao(index)
+        local function callfuncFeibiao()
+            self:playFeibiao(skillName)
+        end
+        self:play("skill",callfuncFeibiao)
+        return 
+    end
+    RenBossView.super.playSkill(self, skillName)
+end
+
+function RenBossView:playFeibiao(skillName)
+    assert(index, "playFeibiao index is nil")
+    local config = self.config[skillName] 
+    self.armature:getAnimation():play("fire" , -1, 1) 
+    for i=1,#config.srcPoses do
+        local delay = 0.6 + 0.10 * i 
+        local property = {
+            srcPos = config.srcPoses[i],
+            srcScale = self:getScale() * 0.4,
+            destScale = 1.5,
+            destPos = config.srcPoses[i],
+            offset = config.offsetPoses[i],
+            type = "missile",
+            id = self.property["missileId"],
+            demageScale = self.enemy:getDemageScale(),
+            missileType = "feibiao",
+        }
+        local function callfuncDaoDan()
+             self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+        end
+        local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
+        self:addScheduler(sch)         
+    end    
+end
+
 function RenBossView:playFire()
     --导弹
     self.armature:getAnimation():play("fire" , -1, 1) 

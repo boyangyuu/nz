@@ -46,6 +46,9 @@ function Guide:check(groupId)
 end
 
 function Guide:doGuideNext()
+
+
+
 	--next
 	self.stepIndex = self.stepIndex + 1
 
@@ -53,6 +56,9 @@ function Guide:doGuideNext()
 	local configGroup =  GuideConfigs.getConfig(self.groupId)
 	local configStep = configGroup["steps"][self.stepIndex]	
 	self.curConfig = configStep
+
+	--打点
+	print("configStep[id])", configStep["id"])
 
 	--check finish
 	if self.curConfig == nil then 
