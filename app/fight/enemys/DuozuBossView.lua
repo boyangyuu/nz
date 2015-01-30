@@ -11,7 +11,7 @@ end
 
 function DuozuBossView:tick()
     --change state
-
+    if self.isWudi then return end
     --fire    
     local fireRate, isAble = self.enemy:getFireRate()
     if isAble then
@@ -49,7 +49,7 @@ function DuozuBossView:tick()
 end
 
 function DuozuBossView:onHitted(targetData )
-    if self.isShaning then return end
+    if self.isShaning or self.isWudi then return end
     DuozuBossView.super.onHitted(self, targetData)
 end
 
@@ -92,6 +92,9 @@ function DuozuBossView:playSkill(skillName)
     elseif name == "wang" then 
         self:play("skillPre",handler(self, self.playSkillWang))
         return 
+    elseif name == "wudi" then 
+        self:play("skillPre",handler(self, self.playSkillWudi))
+        return         
     end    
     DuozuBossView.super.playSkill(self, skillName)
 end
@@ -162,16 +165,31 @@ function DuozuBossView:playSkillWang()
         srcScale = self:getScale() * 0.4,
         destScale = 1.5,
         destPos = pWorldBone,
-        type = "missile",
-        id = self.property["missileId"],
+        type = "dao_wang",
+        id = self.property["wangId"],
         demageScale = self.enemy:getDemageScale(),
-        -- missileType = "wang",
     }
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
     local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
     self:addScheduler(sch)   
+end
+
+function DuozuBossView:playSkillWudi()
+    self.isWudi = true
+    self.wudiAnim = ccs.Armature:create("wdhd")
+    self.wudiAnim:getAnimation():play("wdhd", -1, 1)
+    self.wudiAnim:setPosition(cc.p(0, 141))
+    self.wudiAnim:setScale(1.3)
+    self.armature:addChild(self.wudiAnim, 10000)
+    self:performWithDelay(handler(self, self.endWudi), 
+            self.config["wudiTime"])
+end
+
+function DuozuBossView:endWudi()
+    self.isWudi = false
+    self.wudiAnim:removeSelf()    
 end
 
 function DuozuBossView:playZhanHuan()
@@ -187,6 +205,7 @@ function DuozuBossView:onKillLastCall()
 end
 
 function DuozuBossView:animationEvent(armatureBack,movementType,movementID)
+    if self.isWudi then return end
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)

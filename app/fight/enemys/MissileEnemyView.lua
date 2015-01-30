@@ -113,31 +113,6 @@ function MissileEnemyView:playFeibiaoFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))
 end
 
-function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
-    local bound = node:getBoundingBox()
-    local enemyBound = enemyRange:getBoundingBox()
-    
-    -- dump(enemyBound, "enemyBound")
-    local scale = self:getScale() * self.hero:getMapZoom()
-    enemyBound.width = enemyBound.width * scale
-    enemyBound.height = enemyBound.height * scale
-    -- dump(enemyBound, "enemyBound2")
-    local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
-    bound.x = pWorld1.x
-    bound.y = pWorld1.y
-    local pWorld2 = enemyRange:convertToWorldSpace(cc.p(0,0))
-    enemyBound.x = pWorld2.x
-    enemyBound.y = pWorld2.y    
-    
-    -- dump(bound, "bound ------")
-    -- dump(enemyBound, "enemyBound -------")    
-    -- self:test()
-
-    local isIn = cc.rectIntersectsRect(bound, enemyBound)
-    -- print("isIn", isIn)
-    return isIn
-end
-
 function MissileEnemyView:playBomb()
     local missileType = self.property["missileType"]
     

@@ -259,6 +259,7 @@ local waves = {
 				property = { 
 					type = "duozuBoss",
 					placeName = "place8",
+					wangId    = 19,
 					missileId = 6, 
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
 					id = 1,
@@ -339,7 +340,9 @@ local enemys = {
 
 	--飞镖
 	{id=18,image="feibiao",demage=10,hp=2500},                             --scale = 3.0,  近战走到屏幕最近放缩比例
-
+	
+	--蜘蛛网
+	{id=19,image="zzw",demage=10,hp=12500}, 
 }
 
 --fire1 dao1 dao2 发闪光弹
@@ -361,8 +364,11 @@ local bosses = {
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--左腿 弱点伤害倍数
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
-		
+		wudiTime = 3.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
+			wudi = {
+				0.90,0.70,0.50                 --召唤
+			}, 			
 			zhaohuan = {
 				0.90,0.70,0.50                 --召唤
 			},   
@@ -370,7 +376,7 @@ local bosses = {
 				0.90,0.70,0.50,0.30,0.10                    --召唤
 			},    
 			wang = {
-				0.90,0.70,0.50,0.30,0.10                    --召唤
+				0.999,0.970,0.50,0.30,0.10                    --召唤
 			},    						                                        
 			weak3 = {                               --右腿 技能触发(可以同时)
 				0.85,0.65,0.45, 0.25,                        
