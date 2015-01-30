@@ -24,6 +24,7 @@ function GunView:ctor()
 	--event
 	cc.EventProxy.new(self.hero, self)
         :addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.playChange))
+        :addEventListener(self.hero.FIRE_EVENT, handler(self, self.onHeroFire))
 
 	cc.EventProxy.new(self.inlay, self)
         :addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT, handler(self, self.onActiveGold))
@@ -57,8 +58,15 @@ function GunView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1)	
 
 	--music
-	local soundName = "res/Fight/music/leibz.wav"
-	-- audio.playMusic(soundName,false)
+
+
+end
+
+function GunView:onHeroFire(event)
+	local config = self.gun:getConfig()
+	local soundName = config.imgName 			--动作特效	
+	local soundSrc  = "res/Music/weapon/"..soundName.."fire.wav"
+	self.audioId =  audio.playSound(soundSrc,false)	
 end
 
 function GunView:stopFire()
@@ -67,6 +75,7 @@ function GunView:stopFire()
 	self.jqkzd:setVisible(false)
 	self.dk   :setVisible(false)
 	self:playIdle()
+	-- audio.pauseSound(self.audioId)
 end
 
 function GunView:playChange(event)
@@ -217,7 +226,6 @@ function GunView:setGoldGun(isGold)
 		boneIndex = boneIndex + 1
 	end
 end
-
 
 function GunView:onActiveGold(event)
 	-- print("GunView:onActiveGold(event)")

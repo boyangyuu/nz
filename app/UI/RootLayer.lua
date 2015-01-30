@@ -139,6 +139,25 @@ function RootLayer:addResFight()
     -- end
     -- display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)    
     --armature
+
+    --music weapon
+    local weaponEffects = {"lmdfire.wav", "mp5fire.wav", "syfire.wav", "ak47fire.wav", "m4fire.wav", "rpgfire.wav", 
+                "m134fire.wav", "jfzcfire.wav"}
+ 
+    for i,v in ipairs(weaponEffects) do
+        local src = "res/Music/weapon/"..weaponEffects[i]
+        audio.preloadSound(src)
+    end
+    --music effect
+    local uiEffects = {"jijia_open.wav", "jijia_close.wav", "glass.wav", "gold.wav", "golds.wav", "hzd.wav", 
+                "slbz.wav", "die.wav", "rengsl.wav", "plane.wav", "hithd.wav","beng.wav"}
+ 
+    for i,v in ipairs(uiEffects) do
+        local src = "res/Music/weapon/"..uiEffects[i]
+        audio.preloadSound(src)
+    end    
+
+    --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
         "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs","feiji","yyc",
