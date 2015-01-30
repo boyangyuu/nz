@@ -36,7 +36,7 @@ function InlayModel:refreshInfo(typename)
 end
 
 function InlayModel:buyGoldsInlay(buynumber)
-	dump(buynumber)
+	-- dump(buynumber)
 	local goldtable = self:getConfigTable("property", 4)
 	for k,v in pairs(goldtable) do
 		self:buyInlay(v["id"],false,buynumber)
@@ -44,7 +44,7 @@ function InlayModel:buyGoldsInlay(buynumber)
 end
 
 function InlayModel:buyInlay(inlayid,isRefresh,buyNum)
-	dump(buyNum)
+	-- dump(buyNum)
  	local data = getUserData()
 	if self:isBagsExist(inlayid)  then
 		for k,v in pairs(data.inlay.bags) do
@@ -219,7 +219,7 @@ function InlayModel:equipAllBestInlays(table)
 	        end
 	    end
 	end
-	dump(bestInlayId)
+	-- dump(bestInlayId)
 
 	for k,v in pairs(bestInlayId) do
 		if v ~= 0 then
@@ -323,7 +323,7 @@ function InlayModel:getGoldWeaponNum(  )
 			goldNum = newNum
 		end
 	end
-	dump(goldNum)
+	-- dump(goldNum)
 	return goldNum
 end
 

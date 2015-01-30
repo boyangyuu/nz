@@ -9,10 +9,11 @@ local CommonEnemyView	= import(".enemys.CommonEnemyView")
 local JinbiEnemyView  	= import(".enemys.JinbiEnemyView")
 local RenzhiEnemyView 	= import(".enemys.RenzhiEnemyView")
 local FeijiEnemyView    = import(".enemys.FeijiEnemyView")
-
+local RenEnemyView   	= import(".enemys.RenEnemyView")
 
 local BaseBossView 		= import(".enemys.BaseBossView")
 local ChongBossView 	= import(".enemys.ChongBossView")
+local RenBossView 		= import(".enemys.RenBossView")
 
 function EnemyFactory.createEnemy(property)
 	assert(property, "property is nil")
@@ -24,7 +25,9 @@ function EnemyFactory.createEnemy(property)
 		enemyView = BaseBossView.new(property)
 	elseif type == "chongBoss" then
 		enemyView = ChongBossView.new(property)		
-		
+	elseif type == "renzheBoss" then
+		enemyView = RenBossView.new(property)		
+
 	--enemy
 	elseif type == "missile" then
 		enemyView = MissileEnemyView.new(property)
@@ -42,7 +45,9 @@ function EnemyFactory.createEnemy(property)
 		enemyView = RenzhiEnemyView.new(property)							
 	elseif type == "feiji" or type == "jipu" then
 		enemyView = FeijiEnemyView.new(property)							
-	else		
+	elseif type == "renzhe" then
+		enemyView = RenEnemyView.new(property)							
+	else				
 		enemyView = CommonEnemyView.new(property)
 	end
 	return enemyView

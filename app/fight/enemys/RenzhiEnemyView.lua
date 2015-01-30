@@ -28,7 +28,7 @@ function RenzhiEnemyView:ctor(property)
     self.isEntering = true
     self.playAnimId = nil
     self.isExiting  = false
-    local lastTime = self.property["lastTime"]
+    local lastTime = self.property["lastTime"] or 1.0
     local sch = scheduler.performWithDelayGlobal(handler(self, self.exit), lastTime)
     self:addScheduler(sch)        
 end
@@ -129,8 +129,9 @@ function RenzhiEnemyView:exit()
 end
 
 function RenzhiEnemyView:playSpeak()
-	-- local randomSeed = math.random(1, 2)
-	self.armature:getAnimation():play("speak1" , -1, 1) 
+	local randomSeed = math.random(1, 2)
+	local animName = "speak"..randomSeed
+	self.armature:getAnimation():play(animName , -1, 1) 
 end
 
 function RenzhiEnemyView:playRun()
@@ -178,16 +179,6 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
     self:restoreStand(time)
 end
 
-function RenzhiEnemyView:restoreStand(delay)
-	local function restore()
-		self.playAnimId = nil
-		self:playStand()
-		self.armature:stopAllActions()	
-	end
-    self.schRestore = scheduler.performWithDelayGlobal(restore, delay)
-    self:addScheduler(self.schRestore)
-end
-
 function RenzhiEnemyView:playKill(event)
 	--clear
 	self:clearPlayCache()
@@ -206,7 +197,8 @@ function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete 
 		or movementType ==  ccs.MovementEventType.complete then
 		print("animationEvent id ", movementID)
-		if movementID == "runleft" or movementID == "runright" then
+		if movementID == "runleft" 
+			or movementID == "runright"  then
 				self.armature:getAnimation():play(movementID , -1, 1)
 			return 
 		end

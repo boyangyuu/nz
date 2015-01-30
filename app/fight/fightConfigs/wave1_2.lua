@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
+--[[
 	{
 		enemys = { 
 			{
@@ -304,7 +304,7 @@ local waves = {
 		},
 
 	},
-
+]]
 	{	
 		waveType = "boss",
 		enemys = {                                              --boss
@@ -315,10 +315,10 @@ local waves = {
 				pos = {194},
 				delay = {4},
 				property = { 
-					type = "chongBoss",
+					type = "renzheBoss",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},
 					placeName = "place8",
-					enemyId = 8,                 --导弹id        
-					qiuId = 5,                   --铁球id
+					missileId = 10,                 --导弹id        
 					id = 1,
 				},
 			},		
@@ -352,9 +352,16 @@ local enemys = {
 	--手雷
 	{id=7,image="shoulei",demage=10,hp=1,
 	weak1=3},
+
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=3,hp=120,weak1=1},
 
+	--忍者兵
+	{id=9,image="renzb",demage=50,hp=900,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 
+		shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3,award = 60},	
+
+	--飞镖
+	{id=10,image="feibiao",demage=10,hp=300},		
 }
 
 	--boss的关卡配置
@@ -362,32 +369,33 @@ local bosses = {
 	--第一个出场的boss
 	{
 
-		image = "boss02", --图片名字
+		image = "renzb", --图片名字
 		hp = 100000,
-		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 30,               --普攻频率
 		fireCd = 4,                     --普攻cd
-
+		demage = 0,  				 --
 		walkRate = 180,                    --移动频率
 		walkCd = 2,                         --移动cd
+		rollRate = 100,					--快速移动
+		rollCd = 2,						--快速移动cd
+		shanRate = 180, 				--瞬移
+		shanCd	= 2,					
+
 		chongfengDemage = 40,                --冲锋造成伤害
 		weak1 = 1.2,						--头 弱点伤害倍数
-		weak2 = 1.2,					--手 弱点伤害倍数
-
+		weak2 = 1.2,					--左腿 弱点伤害倍数
+		weak3 = 1.2,					--右腿 弱点伤害倍数	
 		
 		skilltrigger = {   			          --技能触发(可以同时)
-			moveLeftFire = {
-				0.90,  0.50, 0.10,
-			},
-			moveRightFire = {
-				0.70,  0.30, 
-			},
+			zhaohuan = {
+				0.95,0.80,0.75,0.55,0.25
+			},               --召唤
 			chongfeng = {
-			    0.97, 0.95, 0.93, 0.87, 0.84, 0.75, 0.65, 0.45,0.35, 0.25, 0.15, 0.05,
+				0.99, 0.97, 0.87,0.84, 0.75, 0.65, 0.45,0.35, 0.25, 0.15, 0.05,
 			},
-			tieqiu = {
-				0.999, 0.80, 0.60, 0.40, 0.20, 0.05,
-			},
+			weak3 = {                               --手 技能触发(可以同时)
+				0.82,0.62,0.42, 0.22,                        
+			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
 			},
@@ -402,29 +410,51 @@ local bosses = {
 			},	
 			demage400 = {  
 				0.50,
-			},						
+			},	
+						
 		},
-
-
-
-
-		getMoveLeftAction = function ()
-			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
-			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
-			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
-			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
-			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
-			return cc.Sequence:create(move1, move2, move3, move4, move5)
-		end,
-
-		getMoveRightAction = function ()
-			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
-			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
-			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
-			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
-			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
-			return cc.Sequence:create(move1, move2, move3, move4, move5)
-		end,
+		enemys1 = {                                                   --第一波召唤的自爆兵
+			{
+				time = 2,	
+				num = 4,
+				pos = {560,660,760,460},
+				delay = {0.2,0.4,0.5,0.7},
+				property = {
+					placeName = "place3" ,
+					id = 9,
+					type = "renzhe",
+					missileId = 10,
+				},
+			},	
+		},	
+		enemys2 = {                                                   --第一波召唤的自爆兵
+			{
+				time = 2,	
+				num = 4,
+				pos = {560,660,760,460},
+				delay = {0.2,0.4,0.5,0.7},
+				property = {
+					placeName = "place4" ,
+					id = 9,
+					type = "renzhe",
+					missileId = 10,
+				},
+			},	
+		},	
+		enemys3 = {                                                   --第一波召唤的自爆兵
+			{
+				time = 2,	
+				num = 4,
+				pos = {560,660,760,460},
+				delay = {0.2,0.4,0.5,0.7},
+				property = {
+					placeName = "place5" ,
+					id = 9,
+					type = "renzhe",
+					missileId = 10,
+				},
+			},	
+		},							
 	},
 }
 

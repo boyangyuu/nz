@@ -148,7 +148,7 @@ function WeaponListLayer:initUI()
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
             function deneyBuyWeapon()
-                if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+                if self.userModel:getDiamond() > self.weaponrecord["cost"] then
                     ui:showPopup("commonPopup",
                         {type = "style3", content = "是否花费60钻石升级购买该武器？",
                          callfuncCofirm =  handler(self, self.buyWeapon),
@@ -473,12 +473,13 @@ end
 
 -- 购买事件
 function WeaponListLayer:buyWeapon(event)
-     ui:closePopup("commonPopup")
-    function delay( )
-        self.weaponListModel:buyWeapon(self.weaponId)
+    ui:closePopup("commonPopup")
+    if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+        function delay()
+            self.weaponListModel:buyWeapon(self.weaponId)
+        end
+        scheduler.performWithDelayGlobal(delay, 0.4)
     end
-    scheduler.performWithDelayGlobal(delay, 0.4)
-
 end
 
 -- 升级事件

@@ -445,52 +445,52 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=3,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=120,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=12,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
+	{id=2,image="shouleib",demage=0,hp=218,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=5,hp=1,
+	{id=3,image="shoulei",demage=15,hp=1,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=260,
+	{id=4,image="sanbing01",demage=0,hp=327,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=195,walkRate=180,walkCd=2,fireRate=180,fireCd=6,
+	{id=5,image="zpbing",demage=0,hp=436,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=6.6,hp=1,
+	{id=6,image="daodan",demage=15,hp=1,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=5,hp=325,fireRate=180,fireCd=5,speed=40,
+	{id=7,image="jinzhanb",demage=9,hp=545,fireRate=180,fireCd=3,speed=60,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=5,hp=650,fireRate=180,fireCd=5,speed=20,
+	{id=8,image="dunbing",demage=12,hp=1090,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=20,hp=1000,fireRate=30,speed=80,
+	{id=9,image="zibaob",demage=30,hp=436,fireRate=30,speed=120,
 	weak1=3},	
 
 	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
+	--人质         type = "renzhi",                                             speakRate =120,speakCd = 2.0,人质喊话cd
+	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=6.0,
+	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=5.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=6.0,
+	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=5.0,
 	weak1=3,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -522,32 +522,3 @@ function waveClass:ctor()
 end
 
 return waveClass
-
-
-            -- {
-			-- 	time = 9,
-			-- 	num = 1,
-			-- 	pos = {500},
-			-- 	delay = {0.4},                            -- 吉普车
-			-- 	property = {
-			-- 		type = "jipu" ,
-			-- 		id = 12,
-			-- 		placeName = "place2",
-			-- 		missileId = 6,
-			-- 		missileType = "daodan",
-			-- 		startState = "enterleft",
-			-- 		lastTime = 30.0,		--持续时间			
-			-- 	},
-			-- },	
-
-			-- {
-			-- 	descId = "dunbing", --简介
-			-- 	time = 2,	
-			-- 	num = 1,
-			-- 	pos = {230},
-			-- 	delay = {2.6},
-			-- 	property = {
-			-- 		placeName = "place13" ,
-			-- 		type = "jin",
-			-- 		id = 2,
-			-- 	},

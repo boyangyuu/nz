@@ -40,7 +40,7 @@ function BaseBossView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     cc.EventProxy.new(self.hero, self)
-    	:addEventListener(self.hero.ENEMY_KILL_LASTCALL_EVENT, handler(self, self.onLastCallDead)) 
+    	:addEventListener(self.hero.ENEMY_KILL_CALL_EVENT, handler(self, self.onKillCall)) 
 
     self:initBody()
 
@@ -407,7 +407,6 @@ end
 function BaseBossView:playChongfeng()
 	self.armature:getAnimation():play("chongfeng", -1, 1)
     --前进
-    self.isAheading = true
     local speed = 400
     local desY = -180
     local scale = 2.0
@@ -424,8 +423,7 @@ function BaseBossView:playChongfeng()
 
     --
     local aheadEndFunc = function ()
-        -- print("aheadEnd")
-        self.isAheading = false
+  		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()
         self.enemy:hit(self.hero, destDemage)
@@ -433,6 +431,8 @@ function BaseBossView:playChongfeng()
         self:scaleBy(0.01, 1/scale)
         local map = md:getInstance("Map")
         map:playEffect("shake")
+        --restore
+	    self:playStand()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
@@ -451,7 +451,7 @@ function BaseBossView:zhaohuan()
 	assert(waveData, "config is invalid, no enemys")
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
-		group.property["deadEventData"] = {name = "ENEMY_KILL_LASTCALL_EVENT"}
+		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}
 		self.enemysCallNum = self.enemysCallNum + group.num
 	end
 	-- print("self.enemysCallNum", self.enemysCallNum)
@@ -462,19 +462,24 @@ function BaseBossView:zhaohuan()
 	self.zhaohuanIndex = self.zhaohuanIndex + 1
 end
 
-function BaseBossView:onLastCallDead(event)
+function BaseBossView:onKillCall(event)
 	-- print("function BaseBossView:onLastCallDead(event)")
 	self.enemysCallNum = self.enemysCallNum  - 1
 	if self.enemysCallNum == 0 then 
 		-- print("取消无敌")
-		self:setUnhurted(false)	
+		self:onKillLastCall()
 	end
+end
+
+function BaseBossView:onKillLastCall()
+	self:setUnhurted(false)	
 end
 
 function BaseBossView:setUnhurted(isUnhurted)
 	self.isUnhurted = isUnhurted
 	if not isUnhurted and self.wudiAnim then 
 		self.wudiAnim:removeSelf()
+		self.wudiAnim = nil
 	end
 end
 
@@ -528,12 +533,14 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 
 		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
+
+        if  movementID == "chongfeng"  then
+            self.armature:getAnimation():play(movementID , -1, 1)
+            return 
+        end
+
 		if movementID ~= "die" then
-			local playCache = self:getPlayCache()
-            if self.isAheading then 
-                -- print("禁止")
-                return
-            end			
+			local playCache = self:getPlayCache()		
 			if playCache then 
 				playCache()
 			else 					
