@@ -154,7 +154,7 @@ function RenBossView:playSkill(skillName)
         local function callfuncFeibiao()
             self:playFeibiao(skillName)
         end
-        self:play("skill",callfuncFeibiao)
+        self:play("skillPre",callfuncFeibiao)
         return 
     end
     RenBossView.super.playSkill(self, skillName)
