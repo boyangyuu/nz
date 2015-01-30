@@ -58,8 +58,6 @@ function GunView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1)	
 
 	--music
-
-
 end
 
 function GunView:onHeroFire(event)
@@ -115,7 +113,10 @@ function GunView:playReload()
 
 	self.hero:setIsReloading(true)
 
-	--
+	--effect
+	local soundSrc  = "res/Music/fight/hzd.wav"
+	self.audioId =  audio.playSound(soundSrc,false)	
+
 	--回调 子弹full
 	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime

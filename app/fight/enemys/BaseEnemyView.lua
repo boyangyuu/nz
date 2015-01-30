@@ -173,6 +173,9 @@ function BaseEnemyView:playKill(event)
 		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
 	end
 
+	local soundSrc  = "res/Music/fight/die.wav"
+	self.audioId =  audio.playSound(soundSrc,false)	
+
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
