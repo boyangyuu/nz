@@ -177,6 +177,7 @@ function MissileEnemyView:playKill(event)
     else
 
     end     
+    self.armature:stopAllActions()  
 end
 
 function MissileEnemyView:onHitted(targetData)

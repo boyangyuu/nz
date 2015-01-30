@@ -254,7 +254,8 @@ function Hero:helpFullHp()
     --暂停
     print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
-    fight:pauseFight(true)
+    -- fight:pauseFight(true)
+    fight:stopFire()
     ui:showPopup("commonPopup",
         {type = "style3", content = "是否立即回复生命？",
              callfuncCofirm =  handler(self, self.onBuyFullHp),
