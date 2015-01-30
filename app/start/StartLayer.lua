@@ -10,7 +10,7 @@ function StartLayer:ctor()
 end
 
 function StartLayer:playSound()
-    local startMusic = "res/Music/bg/bgyx.wav"
+    local startMusic = "res/Music/bg/bjyx.wav"
     audio.playMusic(startMusic,true)
 end
 
