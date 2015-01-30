@@ -91,11 +91,12 @@ function UI:showPopup(layerId, properties, extra)
 	end
 end
 
-function UI:closePopup(layerId,isPauseScene)
+function UI:closePopup(layerId, isPauseScene)
 	if not isPauseScene then 
+		print("self:dispatchEvent({name = UI.POP")
 		self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId})
 	else
-		self:dispatchEvent({name = UI.PAUSE_CLOSE_EVENT, layerid = layerId})
+		self:dispatchEvent({name = UI.PAUSESCENE_CLOSE_EVENT, layerid = layerId})
 	end
 end
 

@@ -1,5 +1,4 @@
 
-
 local StoryLayer = class("StoryLayer", function()
 	return display.newLayer()
 end)
@@ -7,46 +6,99 @@ end)
 function StoryLayer:ctor(properties)
 	self.properties = properties
 	self.talks = {}
+	self.pursons = {}
+	self.id = 1
 	self:loadCCS()
-	self:setTalks()
-	self:initButton()
+	self:initTalks()
+	self:initTouchEvent()
 end
 
 function StoryLayer:loadCCS()
-	local filePath = "res/storyBackground/storybackground.ExportJson"
+	local filePath = "res/storybord/storybord.ExportJson"
 	self.storyNode = cc.uiloader:load(filePath)
 	self:addChild(self.storyNode)
 end
 
-function StoryLayer:setTalks()
-	local posSet = {1136, -1111 ,1136}
+
+function StoryLayer:initTalks()
+	local posSet = {-250, 1232 ,-250}
 	local fileName = "talk"
 	for i = 1,3 do
 		local talk = cc.uiloader:seekNodeByName(self.storyNode, fileName..i)
-		talk:setPosition(posSet[1], 121)
+		if i ~= 1 then
+			talk:setVisible(false)
+		end
 		self.talks[fileName..i] = talk
+		local purson = cc.uiloader:seekNodeByName(talk, "purson"..i)
+		purson:setPosition(posSet[i], 240)
+		self.pursons["purson"..i] = purson
+
 	end
 	
-	-- for i = 1, 3 do
-		self.talks[fileName..1]:moveTo(0.5,28,121)
-		self:speak(self.talks[fileName..1])
+	self:changeTalk()
+end
+
+function StoryLayer:initTouchEvent()
+	self.btnContinue = cc.uiloader:seekNodeByName(self.storyNode, "btncontinue")
+	self.btnContinue:setVisible(false)
+	-- self.btnContinue:setTouchEnabled(true)
+	self:setTouchEnabled(false)
+	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
+		if event.name == 'began' then
+			return true
+		elseif event.name == 'ended' then
+			self.btnContinue:setVisible(false)
+			if self.id < 3 then
+				self:setTouchEnabled(false)
+				self.talks["talk"..self.id]:setVisible(false)
+				self.id = self.id + 1
+				self:changeTalk()
+			else
+				local data = getUserData()
+				data.guide.isFirstRunning = false
+				setUserData(data)
+				ui:changeLayer("HomeBarLayer",{})
+			end
+		end
+	end)
+end
+
+-- 人物交替出现
+function StoryLayer:changeTalk()
+	self:stopAllActions()
+	self.actions = nil
+	self.actions = {cc.DelayTime:create(0.3)}
+	print("StoryLayer:changeTalk():",self.id)
+	-- if self.id < 4 then
+		self.talks["talk"..self.id]:setVisible(true)
+		if self.id ~= 2 then
+			self.pursons["purson"..self.id]:moveTo(0.2,214,240)
+		else
+			self.pursons["purson"..self.id]:moveTo(0.2,860,240)
+		end
+		self:speak(self.talks["talk"..self.id])
 	-- end
-
 end
 
-function StoryLayer:initButton()
-	local btnContinue = cc.uiloader:seekNodeByName(self.storyNode, "continue")
-	btnContinue:setVisible(false)
-end
-
+-- 文字打印
 function StoryLayer:speak(talk)
-	local label1 = cc.uiloader:seekNodeByName(talk ,"Label_1")
-	label1:speak(0.1)
-
-	local str = "    不知道老哥又搞什么飞机,什么也不说就让我来这里,还穿的这么稀奇古怪,看来今天的假期就这么报废了"
-	local label2 = cc.uiloader:seekNodeByName(talk, "Label_2")
-	label2:setString(str)
-	-- label2:speak(0.1)
+	local name = "Label"
+	for i = 2,4 do
+		local label = cc.uiloader:seekNodeByName(talk, name..i)
+		if label then
+			table.insert(self.actions, cc.CallFunc:create(function()
+				print("antion : ",i)
+					label:setVisible(true)
+					label:speak(0.05)
+				end))
+			table.insert(self.actions, cc.DelayTime:create(1))
+		end
+	end
+	table.insert(self.actions, cc.CallFunc:create(function()
+		self.btnContinue:setVisible(true)
+		self:setTouchEnabled(true)
+	end))
+	self:runAction(transition.sequence(self.actions))
 
 end
 
