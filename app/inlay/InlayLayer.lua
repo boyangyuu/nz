@@ -23,6 +23,10 @@ function InlayLayer:ctor()
 	self:initUI()
     self:initGuide()
     self:onEnter()
+    self:refreshBtnIcon({typename = "speed"})
+    self:refreshListView("speed")
+    self:refreshAvatar()
+
 
 end
 
@@ -36,9 +40,6 @@ function InlayLayer:loadCCS()
 end
 
 function InlayLayer:onEnter()
-    self:refreshBtnIcon({typename = "speed"})
-    self:refreshListView("speed")
-    self:refreshAvatar()
 end
 
 function InlayLayer:refreshInlay(event)

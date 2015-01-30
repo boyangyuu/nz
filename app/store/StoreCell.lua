@@ -96,11 +96,14 @@ function StoreCell:initCellUI(parameter)
     armature:getAnimation():play("guangtx" , -1, 1)
     dump(armature:getContentSize())
 
-    local btnarmature = ccs.Armature:create("sczg")
-    btnarmature:setPosition(-8,5)
+
+    local btnarmature = ccs.Armature:create("bt_yjzb")
+    btnarmature:setPosition(2,3)
     -- btnarmature:setScale(1.2)
     btnbuy:addChild(btnarmature)
-    btnarmature:getAnimation():play("sczg" , -1, 1)
+    btnarmature:getAnimation():play("yjzb" , -1, 1)
+
+
 
 
     if type == "prop" then
