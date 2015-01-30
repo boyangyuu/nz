@@ -80,6 +80,14 @@ function HomeBarLayer:initHomeLayer(groupid)
     local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
 
+
+    local btnarmature = ccs.Armature:create("sczg")
+    btnarmature:setPosition(0,0)
+    -- btnarmature:setScale(1.2)
+    self.btnStore:addChild(btnarmature)
+    btnarmature:getAnimation():play("sczg" , -1, 1)
+
+
     self.btnBack:setTouchEnabled(true)  
     self.btnArsenal:onButtonPressed(function(event)
         -- event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
