@@ -15,12 +15,13 @@ function RenEnemyView:ctor(property)
     --instance
     RenEnemyView.super.ctor(self, property) 
 
-    self.isAheading = false
-
     --events
     cc.EventProxy.new(self.enemy, self)
         :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill)) 
+
+    --
+    self.isChongCd = false
 end
 
 ---- state ----
@@ -34,9 +35,14 @@ function RenEnemyView:playStartState(state)
     end
 end
 
+function RenEnemyView:onHitted(targetData)
+    if self.isShaning then return end
+    RenEnemyView.super.onHitted(self, targetData)
+end
+
 function RenEnemyView:tick()
     --change state
-
+    if self.isShaning then return end
     --fire    
     local fireRate, isAble = self.enemy:getFireRate()
     if isAble then
@@ -45,6 +51,29 @@ function RenEnemyView:tick()
         if randomSeed > fireRate - 1 then 
             self:play("skill", handler(self, self.playFire))
             self.enemy:beginFireCd()
+        end
+    end
+
+    --闪
+    local shanRate, isAble = self.enemy:getShanRate()
+    if isAble then
+        assert(shanRate > 1, "invalid shanRate")
+        local randomSeed = math.random(1, shanRate)
+        if randomSeed > shanRate - 1 then 
+            self:play("skill", handler(self, self.playShan))
+            self.enemy:beginShanCd()
+        end
+    end  
+
+    --冲锋
+    local config = self.enemy:getConfig()
+    local chongRate, isAble = config["chongRate"], not self.isChongCd
+    if isAble then
+        assert(chongRate > 1, "invalid chongRate")
+        local randomSeed = math.random(1, chongRate)
+        if randomSeed > chongRate - 1 then 
+            self:play("skill", handler(self, self.playChongfeng))
+            self:beginChongCd()
         end
     end
 
@@ -70,17 +99,6 @@ function RenEnemyView:tick()
         end
     end 
 
-    --roll
-    local rollRate, isAble = self.enemy:getRollRate()
-    if isAble then
-        assert(rollRate > 1, "invalid rollRate")
-        local randomSeed = math.random(1, rollRate)
-        if randomSeed > rollRate - 1 then 
-            self:play("roll", handler(self, self.playRun))
-            self.enemy:beginRollCd()
-        end
-    end 
-
     -- --speak
     -- local speakRate, isAble = self.enemy:getSpeakRate()
     -- assert(speakRate > 1, "invalid speakRate")
@@ -94,6 +112,17 @@ function RenEnemyView:tick()
     -- end     
 end
 
+function RenEnemyView:beginChongCd()
+    self.isChongCd = true
+    local config = self.enemy:getConfig()
+    assert(config["chongCd"] , "config ChongCd is nil")
+    local chongCd = config["ChongCd"] or 3.0
+    local function resumeCd()
+        self.isChongCd = false
+    end
+    scheduler.performWithDelayGlobal(resumeCd, chongCd)
+end
+
 function RenEnemyView:playEnter()
     self.armature:getAnimation():play("fenshenru" , -1, 1)
 end
@@ -105,22 +134,60 @@ function RenEnemyView:playFire()
     print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
-    -- pWorldBone = self.armature:convertToWorldSpace(cc.p(0,0))
-    -- dump(self.property, "self.property")
     local property = {
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,
         destPos = pWorldBone,
+        destScale = 1.2,
         type = "missile",
         id = self.property["missileId"],
         demageScale = self.enemy:getDemageScale(),
-        missileType = self.property["missileType"],
+        missileType = "feibiao",
     }
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
-    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
+    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.8)
     self:addScheduler(sch)    
+end
+
+function RenEnemyView:playChongfeng()
+    self.armature:getAnimation():play("chongfeng", -1, 1)
+    
+    --前进
+    local speed = 400
+    local desY = -180
+    local scale = 2.0
+
+    local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+    -- dump(pWorld, "pWorld")
+    local posOri = cc.p(self:getPositionX(), self:getPositionY())
+    
+    local distanceY = desY - pWorld.y
+    local time = math.abs(distanceY) /speed
+    local desPos = cc.p(0, distanceY)
+    local actionAhead = cc.MoveBy:create(time, desPos)
+    local actionScale = cc.ScaleBy:create(time, scale)
+
+    --
+    local aheadEndFunc = function ()
+        --demage
+        local config = self.enemy:getConfig()
+        local destDemage = config["demage"] 
+            * self.enemy:getDemageScale()
+        self.enemy:hit(self.hero, destDemage)
+        self:setPosition(posOri)
+        self:scaleBy(0.01, 1/scale)
+        local map = md:getInstance("Map")
+        map:playEffect("shake")
+        --restore
+        self:playStand()
+    end
+    local afterAhead = cc.CallFunc:create(aheadEndFunc)
+    local seq = cc.Sequence:create(actionAhead, afterAhead)
+    self:runAction(seq)
+
+    self:runAction(actionScale) 
 end
 
 function RenEnemyView:playWalk()
@@ -141,6 +208,30 @@ function RenEnemyView:playRun()
     else
         self:playRunAction(-1, isRun)
     end
+end
+
+function RenEnemyView:playShan()
+    local randomSeed = math.random(1, 2)
+    local isLeft = randomSeed == 1 and -1 or 1 
+    local offset =  math.random(define.kRenzheShanOffsetMin , 
+                            define.kRenzheShanOffsetMax)   
+                         * self:getScale() * isLeft
+    if not self:checkPlace(offset) then 
+        self:checkIdle()
+        return 
+    end 
+    --
+    self.armature:getAnimation():play("shanchu" , -1, 1) 
+    self.isShaning = true
+
+    --callfunc
+    local function shanru()
+        self:setVisible(true)
+        self:setPositionX(self:getPositionX() +  offset)
+        self.armature:getAnimation():play("shanru" , -1, 1) 
+        self.isShaning = false
+    end
+    scheduler.performWithDelayGlobal(shanru, define.kRenzheShanTime)
 end
 
 function RenEnemyView:playRunAction(direct, isRun)
@@ -178,21 +269,18 @@ function RenEnemyView:playHitted(event)
     self:playHittedEffect()
 end
 
-function RenEnemyView:onHitted(targetData)
-    local demage     = targetData.demage
-    local scale      = targetData.demageScale or 1.0
-    local demageType = targetData.demageType
-    if not self.enemy:canHitted() then return end
-    
-    self.enemy:decreaseHp(demage * scale)
-    --爆头
-    if self.enemy:getHp() == 0 then 
-        if demageType == "head" then 
-            print("爆头")
-            self.hero:dispatchEvent({
-                name = self.hero.ENEMY_KILL_HEAD_EVENT})
-        end
-    end          
+function RenEnemyView:playKill()
+    --clear
+    self:clearPlayCache()
+    self.armature:stopAllActions()
+    self:setPause({isPause = true})
+
+    --以防万一
+    if self and self.setDeadDone then 
+        scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
+    end
+
+    self.armature:getAnimation():play("die02" ,-1 , 1)
 end
 
 function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
@@ -200,24 +288,26 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
+        if movementID == "shanchu" then 
+            self:setVisible(false)
+            return
+        end
+
         if movementID == "runleft" 
             or movementID == "runright" 
-            or movementID == "walk" then
+            or movementID == "walk" 
+            or movementID == "chongfeng" then
                 self.armature:getAnimation():play(movementID , -1, 1)
             return 
         end
 
-        if movementID == "die" then
+        if movementID == "die02" then
             self:setDeadDone()
             return
         end
 
         if movementID == "stand" then 
-            local playCache = self:getPlayCache()
-            if self.isAheading then 
-                -- print("禁止")
-                return
-            end             
+            local playCache = self:getPlayCache()           
             if playCache then 
                 playCache()
             else                    

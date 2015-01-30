@@ -22,6 +22,7 @@ function BaseEnemy:ctor(actor_property, enemy_property)
     self.isWalkCd = false
     self.isRollCd = false    
     self.isSpeakCd = false
+    self.isShanCd = false
 end
 
 function BaseEnemy:getDemage()
@@ -104,6 +105,23 @@ function BaseEnemy:beginSpeakCd()
         self.isSpeakCd = false
     end
     scheduler.performWithDelayGlobal(resumeCd, speakCd)
+end
+
+function BaseEnemy:getShanRate()
+    if self.config["shanRate"] == nil then return 0, false end       
+    assert(self.config["shanRate"] , "config shanRate is nil")
+    return self.config["shanRate"], not self.isSpeakCd
+end
+
+function BaseEnemy:beginShanCd()
+    self.isShanCd = true
+    assert(self.config["shanCd"] , "config shanCd is nil")
+    local shanCd = self.config["shanCd"]
+    print("shanCd", shanCd)
+    local function resumeCd()
+        self.isShanCd = false
+    end
+    scheduler.performWithDelayGlobal(resumeCd, shanCd)
 end
 
 function BaseEnemy:getWeakScale(rangeStr)

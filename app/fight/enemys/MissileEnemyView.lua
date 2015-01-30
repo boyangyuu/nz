@@ -41,6 +41,8 @@ function MissileEnemyView:playFire()
         self:playDaoDanFire()
     elseif missileType == "lei" then
         self:playLeiFire()
+    elseif missileType == "feibiao" then
+        self:playFeibiaoFire()        
     else 
         assert(false, "invalid missileType"..missileType)
     end 
@@ -57,6 +59,50 @@ function MissileEnemyView:playDaoDanFire()
     --call end
     local function callMoveEnd()
         self:playBomb()
+    end
+
+    --run
+    local offset = self.property.offset or cc.p(0.0,0.0)
+    self.armature:getAnimation():play("fire" , -1, 1) 
+    local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
+    self.armature:runAction(seq)
+    self.armature:runAction(cc.MoveTo:create(time, offset))
+end
+
+function MissileEnemyView:playLeiFire()
+    -- print("lei")
+    
+    self.armature:getAnimation():play("fire" , -1, 1)  
+    local srcPos = self.property["srcPos"]
+    local destPos = cc.p(srcPos.x - 90, 20)
+    local jumpTime = define.kMissileLeiTime
+    local jumpH = 300.0
+    local moveAction = cc.JumpTo:create(jumpTime, destPos, jumpH, 1)
+    local action = transition.newEasing(moveAction,"in", jumpTime)   
+    
+    local callFunc = function ()
+        self:playBomb()
+    end
+
+    local seq =  cc.Sequence:create(
+                    action,
+                    cc.CallFunc:create(callFunc) )    
+    self:runAction(seq)
+    self.armature:setScale(0.05)
+    self.armature:runAction(cc.ScaleTo:create(jumpTime, 2.0))
+end
+
+function MissileEnemyView:playFeibiaoFire()
+    --scale
+    self.armature:setScale(self.srcScale)
+    local time = define.kMissileFeibiaTime    
+    local destScale = self.property["destScale"] or 1.0
+    local scaleAction = cc.ScaleTo:create(time, destScale)
+
+    --call end
+    local function callMoveEnd()
+        self.armature:getAnimation():play("die02", -1 , 1 )
+        self.enemy:hit(self.hero)           
     end
 
     --run
@@ -92,28 +138,6 @@ function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
     return isIn
 end
 
-function MissileEnemyView:playLeiFire()
-    -- print("lei")
-    
-    self.armature:getAnimation():play("fire" , -1, 1)  
-    local srcPos = self.property["srcPos"]
-    local destPos = cc.p(srcPos.x - 90, 20)
-    local jumpTime = define.kMissileLeiTime
-    local jumpH = 300.0
-    local moveAction = cc.JumpTo:create(jumpTime, destPos, jumpH, 1)
-    local action = transition.newEasing(moveAction,"in", jumpTime)   
-    
-    local callFunc = function ()
-        self:playBomb()
-    end
-    local seq =  cc.Sequence:create(
-                    action,
-                    cc.CallFunc:create(callFunc) )    
-    self:runAction(seq)
-    self.armature:setScale(0.05)
-    self.armature:runAction(cc.ScaleTo:create(jumpTime, 2.0))
-end
-
 function MissileEnemyView:playBomb()
     local missileType = self.property["missileType"]
     
@@ -131,7 +155,7 @@ function MissileEnemyView:playBomb()
     --屏幕爆炸效果
     local animName = self.property.animName
     if animName then 
-            self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT, 
+        self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT, 
                 animName = animName})
     end
 
@@ -139,6 +163,7 @@ end
 
 --Attackable接口
 function MissileEnemyView:playHitted(event)
+
 end
 
 function MissileEnemyView:playKill(event)
@@ -149,6 +174,8 @@ function MissileEnemyView:playKill(event)
     local missileType = self.property["missileType"]
     if missileType == "tie" or missileType == "lei" then
         self:playBombEffect()
+    else
+
     end     
 end
 
@@ -164,12 +191,12 @@ function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
 
-        if movementID ~= "die" then
+        if movementID ~= "die" and movementID ~= "die02" then
             local playCache = self:getPlayCache()
             if playCache then 
                 playCache()
             end
-        elseif movementID == "die" then
+        else
              self:setWillRemoved()
         end
     end

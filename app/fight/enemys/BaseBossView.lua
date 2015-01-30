@@ -40,7 +40,7 @@ function BaseBossView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     cc.EventProxy.new(self.hero, self)
-    	:addEventListener(self.hero.ENEMY_KILL_LASTCALL_EVENT, handler(self, self.onLastCallDead)) 
+    	:addEventListener(self.hero.ENEMY_KILL_CALL_EVENT, handler(self, self.onKillCall)) 
 
     self:initBody()
 
@@ -451,7 +451,7 @@ function BaseBossView:zhaohuan()
 	assert(waveData, "config is invalid, no enemys")
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
-		group.property["deadEventData"] = {name = "ENEMY_KILL_LASTCALL_EVENT"}
+		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}
 		self.enemysCallNum = self.enemysCallNum + group.num
 	end
 	-- print("self.enemysCallNum", self.enemysCallNum)
@@ -462,13 +462,17 @@ function BaseBossView:zhaohuan()
 	self.zhaohuanIndex = self.zhaohuanIndex + 1
 end
 
-function BaseBossView:onLastCallDead(event)
+function BaseBossView:onKillCall(event)
 	-- print("function BaseBossView:onLastCallDead(event)")
 	self.enemysCallNum = self.enemysCallNum  - 1
 	if self.enemysCallNum == 0 then 
 		-- print("取消无敌")
-		self:setUnhurted(false)	
+		self:onKillLastCall()
 	end
+end
+
+function BaseBossView:onKillLastCall()
+	self:setUnhurted(false)	
 end
 
 function BaseBossView:setUnhurted(isUnhurted)

@@ -116,12 +116,21 @@ function Fight:onFail()
 
     ui:showPopup("FightResultFailPopup",{},{anim = false})
 
+    local buy = md:getInstance("BuyModel")
+    buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)})
+
     --clear
     self:clearFightData() 
 
     --todo 改在返回大地图
-    local levelInfo = self.groupId.."-"..self.levelId  
-    um:failLevel(levelInfo)
+    -- local levelInfo = self.groupId.."-"..self.levelId  
+    -- um:failLevel(levelInfo)
+end
+
+function Fight:payDone()
+    self.inlayModel:equipGoldInlays(false)
+    self:relive()
+    ui:closePopup("FightResultFailPopup")
 end
 
 function Fight:pauseFight(isPause)

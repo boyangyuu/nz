@@ -7,7 +7,7 @@ local UM = class("UMsdk",cc.mvc.ModelBase)
 -- cc.UMAnalytics:startLevel("1-2")
 function UM:startLevel( level )
 	if device.platform == "android" then
-	    -- cc.UMAnalytics:startLevel(level)
+	    cc.UMAnalytics:startLevel(level)
 	end
 end
 
@@ -19,7 +19,7 @@ end
 -- cc.UMAnalytics:payVirtualCurrency(10, 21, 100)
 function UM:payVirtualCurrency( cash ,source,coin)
     if device.platform == "android" then
-        -- cc.UMAnalytics:payVirtualCurrency(cash, source, coin)
+        cc.UMAnalytics:payVirtualCurrency(cash, source, coin)
     end
 end
 
@@ -33,7 +33,7 @@ end
 -- cc.UMAnalytics:payProps(10, 21, "prop_1", 2, 50)
 function UM:payProps( cash,source,item,amount,price )
     if device.platform == "android" then
-        -- cc.UMAnalytics:payProps(cash, source, item, amount, price)
+        cc.UMAnalytics:payProps(cash, source, item, amount, price)
     end
 end
 
@@ -45,7 +45,7 @@ end
 -- cc.UMAnalytics:use("prop_1", 1, 50)
 function UM:use( item,amount,price )
     if device.platform == "android" then
-        -- cc.UMAnalytics:use(item, amount, price)
+        cc.UMAnalytics:use(item, amount, price)
     end
 end
 
@@ -57,7 +57,7 @@ end
 -- cc.UMAnalytics:buy("prop_1", 2, 50)
 function UM:buy( item,amount,price )
     if device.platform == "android" then
-        -- cc.UMAnalytics:buy(item, amount, price)
+        cc.UMAnalytics:buy(item, amount, price)
     end
 end
 
@@ -82,7 +82,7 @@ end
 -- cc.UMAnalytics:bonusProps("prop_1", 2, 50, 21)
 function UM:bonusProps(item, amount, price, source)
     if device.platform == "android" then
-        -- cc.UMAnalytics:bonusProps(item, amount, price, source)
+        cc.UMAnalytics:bonusProps(item, amount, price, source)
     end
 end
 
@@ -93,7 +93,7 @@ end
 -- cc.UMAnalytics:event("1-1")
 function UM:event( eventId )
     if device.platform == "android" then
-        -- cc.UMAnalytics:event(eventId)
+        cc.UMAnalytics:event(eventId)
     end
 end
 
@@ -104,7 +104,7 @@ end
 -- cc.UMAnalytics:finishLevel("1-2")
 function UM:finishLevel( level )
     if device.platform == "android" then
-        -- cc.UMAnalytics:finishLevel(level)
+        cc.UMAnalytics:finishLevel(level)
     end
 end
 
@@ -116,7 +116,7 @@ end
 -- cc.UMAnalytics:failLevel("1-1")
 function UM:failLevel( level )
     if device.platform == "android" then
-        -- cc.UMAnalytics:failLevel(level)
+        cc.UMAnalytics:failLevel(level)
     end
 end
 
