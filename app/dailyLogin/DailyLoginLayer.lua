@@ -36,14 +36,27 @@ function DailyLoginLayer:initUI()
 		end
     end
     self.already = {}
+    self.tx = {}
     for i=1,7 do
     	self.already[i] = cc.uiloader:seekNodeByName(self, "already"..i)
     	self.already[i]:setVisible(false)
+    	self.tx[i] = cc.uiloader:seekNodeByName(self, "tx"..i)
     end
+
+
+
+
     local dailyInfo = self.dailyLoginModel:getDailyInfo()
     for i=1,dailyInfo["dailyid"] do
     	self.already[i]:setVisible(true)
     end
+    
+    local armature = ccs.Armature:create("mrdl")
+    local parePanl = self.tx[dailyInfo["dailyid"]+1]
+    armature:setScale(2)
+    armature:setPosition(110,150)
+parePanl:addChild(armature) --   addChildCenter(armature, parePanl)
+    armature:getAnimation():play("die" , -1, 1)
 
     receiveBtn:setTouchEnabled(true)
 	addBtnEventListener(receiveBtn, function(event)

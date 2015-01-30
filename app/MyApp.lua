@@ -131,14 +131,14 @@ function MyApp:createGameStateFile()
             guide = {
 
                         isFirstRunning  = true,
-                        fight01         = false,
-                        afterfight01    = false,
-                        prefight02      = false,
-                        fight02_dun     = false,
-                        fight02         = false,
-                        afterfight02    = false,
-                        fight04         = false,
-                        xiangqian       = false,
+                        fight01         = true,
+                        afterfight01    = true,
+                        prefight02      = true,
+                        fight02_dun     = true,
+                        fight02         = true,
+                        afterfight02    = true,
+                        fight04         = true,
+                        xiangqian       = true,
 
             },
             fight = {

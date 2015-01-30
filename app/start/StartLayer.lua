@@ -111,13 +111,16 @@ end
 
 function StartLayer:initDailyLogin()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
-    
+
     local isToday = dailyLoginModel:isToday()
     local isGet = dailyLoginModel:isGet()
     if isToday  == false  then
         dailyLoginModel:setGet(false)
     end
-    dailyLoginModel:setTime()
+    -- dailyLoginModel:setTime()
+    local data = getUserData()
+    data.dailylogin.logintime = "%9"
+    setUserData(data)
 
 end
 
