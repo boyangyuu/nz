@@ -159,8 +159,8 @@ function WeaponListLayer:initUI()
                 end
             end
             local guide = md:getInstance("Guide")
-            local isDone = guide:isDone("prefight02")
-            if buyModel:checkBought("weaponGiftBag") == false and isDone then
+            -- local isDone = guide:isDone("prefight02")
+            if buyModel:checkBought("weaponGiftBag") == false  then
                 buyModel:buy("weaponGiftBag",{
                     payDoneFunc = handler(self, self.reloadlistview),
                                               deneyBuyFunc = deneyBuyWeapon})

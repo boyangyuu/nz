@@ -40,6 +40,7 @@ function PopupRootLayer:showPopup(event)
 end
 
 function PopupRootLayer:closePopup(event)
+	print(" PopupRootLayer:closePopup(event)")
 	transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
     	delay = 0,
     	easing = "In",

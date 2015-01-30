@@ -30,7 +30,7 @@ function RenBossView:tick()
         assert(shanRate > 1, "invalid shanRate")
         local randomSeed = math.random(1, shanRate)
         if randomSeed > shanRate - 1 then 
-            self:play("shan", handler(self, self.playShan))
+            self:play("skill", handler(self, self.playShan))
             self.enemy:beginShanCd()
         end
     end 
