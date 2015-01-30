@@ -17,13 +17,13 @@ GameData={}
 -- isTest  = true
 -- isDebug = false
 
---测试打包
-isTest  = false
-isDebug = true
+-- --测试打包
+-- isTest  = false
+-- isDebug = true
 
--- --正式打包
--- isTest  = false        
--- isDebug = false
+--正式打包
+isTest  = false        
+isDebug = false
 
 
 ui      = UI.new()

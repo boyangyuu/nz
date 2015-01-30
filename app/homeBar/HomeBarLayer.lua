@@ -32,7 +32,8 @@ function HomeBarLayer:ctor(properties)
 end
 
 function HomeBarLayer:playSound()
-    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    local homeBarMusic = "res/homeBar.ogg"
     audio.playMusic(homeBarMusic,true)
 end
 
