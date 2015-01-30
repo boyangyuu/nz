@@ -43,8 +43,7 @@ end
 
 function HomeBarLayer:playSound()
     -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
-    local homeBarMusic = "res/homeBar.ogg"
-    audio.playMusic(homeBarMusic,true)
+    -- audio.playMusic(homeBarMusic,true)
 end
 
 function HomeBarLayer:initData(properties)

@@ -11,8 +11,7 @@ end
 
 function StartLayer:playSound()
     -- local startMusic = "res/Start/start.ogg"
-    local startMusic = "res/start.ogg"
-    audio.playMusic(startMusic,true)
+    -- audio.playMusic(startMusic,true)
 end
 
 function StartLayer:loadCCS()
