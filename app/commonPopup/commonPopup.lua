@@ -152,7 +152,7 @@ function commonPopup:onClickCofirm()
 	if func ~= nil then 
 		func()		
 	end
-	if self.properties.type == "style3" then 
+	if self.properties.type == "style3" and self.properties.isPauseScene then 
 		cc.Director:getInstance():popScene()
 	else
 		ui:closePopup("commonPopup")
@@ -164,7 +164,7 @@ function commonPopup:onClickClose()
 	if func ~= nil then 
 		func()
 	end	
-	if self.properties.type == "style3" then 
+	if self.properties.type == "style3" and self.properties.isPauseScene then 
 		cc.Director:getInstance():popScene()
 	else
 		ui:closePopup("commonPopup")
