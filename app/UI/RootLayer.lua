@@ -117,6 +117,9 @@ function RootLayer:addResHome()
     local zssrc = "res/HomeBarLayer/zss/zss.csb"
     manager:addArmatureFileInfoAsync(zssrc,  handler(self, self.dataLoaded))
 
+    local mrdlsrc = "res/GiftBag/mrdl/mrdl.csb"
+    manager:addArmatureFileInfoAsync(mrdlsrc,  handler(self, self.dataLoaded))
+
     --sound
     local startMusic = "res/Start/start.ogg"
     audio.preloadMusic(startMusic)
