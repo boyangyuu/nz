@@ -22,10 +22,11 @@ function BaseEnemy:ctor(actor_property, enemy_property)
     self.isWalkCd = false
     self.isRollCd = false    
     self.isSpeakCd = false
+    self.isShanCd = false
 end
 
 function BaseEnemy:getDemage()
-    local baseDemage = self.config.demage
+    local baseDemage = self.config.demage or 1.0
     local scale = self:getDemageScale()
     -- print("baseDemage", baseDemage)
     -- print("scale", scale)
@@ -51,8 +52,6 @@ function BaseEnemy:beginFireCd()
     self.isFireCd = true
     assert(self.config["fireCd"] , "config fireCd is nil")
     local fireCd = self.config["fireCd"] or 3.0
-
-    print("fireCd", fireCd)
     local function resumeCd()
         self.isFireCd = false
     end
@@ -106,6 +105,23 @@ function BaseEnemy:beginSpeakCd()
         self.isSpeakCd = false
     end
     scheduler.performWithDelayGlobal(resumeCd, speakCd)
+end
+
+function BaseEnemy:getShanRate()
+    if self.config["shanRate"] == nil then return 0, false end       
+    assert(self.config["shanRate"] , "config shanRate is nil")
+    return self.config["shanRate"], not self.isSpeakCd
+end
+
+function BaseEnemy:beginShanCd()
+    self.isShanCd = true
+    assert(self.config["shanCd"] , "config shanCd is nil")
+    local shanCd = self.config["shanCd"]
+    print("shanCd", shanCd)
+    local function resumeCd()
+        self.isShanCd = false
+    end
+    scheduler.performWithDelayGlobal(resumeCd, shanCd)
 end
 
 function BaseEnemy:getWeakScale(rangeStr)

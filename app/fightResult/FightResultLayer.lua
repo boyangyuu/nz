@@ -27,13 +27,16 @@ function FightResultLayer:ctor(properties)
 
     self.itemsTable = {}
 
-	self.isDone = self.guide:isDone("fightju")
+	self.isDone = self.guide:isDone("afterfight02")
     
     local fightResult = self.fightModel:getFightResult()
+    local UserModel = md:getInstance("UserModel")
+    UserModel:addMoney(fightResult["goldNum"])
     self.grade = self:getGrade(fightResult["hpPercent"])
 
 	self:getinlayfall()
 	self:loadCCS()
+	self:setDailyPopup()
 	self:initUI()
 	self:initUIContent()
 
@@ -41,6 +44,7 @@ function FightResultLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 
 	self:initGuide()
+	self:initGuide2()
 end
 
 function FightResultLayer:loadCCS()
@@ -136,15 +140,12 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-	        if self.isDone == true then
-		        ui:showPopup("commonPopup",
-					 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
-					 callfuncCofirm =  handler(self, self.turnLeftCard),
-		             callfuncClose  =  handler(self, self.cancel)},
-					 {opacity = 155})
-	        else
-	        	self:turnLeftCard()
-	        end
+	        ui:showPopup("commonPopup",
+				 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
+				 callfuncCofirm =  handler(self, self.turnLeftCard),
+	             callfuncClose  =  handler(self, self.cancel)},
+				 {opacity = 155})
+
         end
     end)
 	addBtnEventListener(self.btnback, function(event)
@@ -223,9 +224,6 @@ function FightResultLayer:getinlayfall()
 	-- 狙击
 	
 	local isExist = self.weaponListModel:isWeaponExist(6)
-	-- dump(self.isDone == false)
-	-- dump(curRecord["type"] == "boss")
-	-- dump(isExist == false)
     if self.isDone == false and curRecord["type"] == "boss" and isExist == false then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
@@ -339,6 +337,9 @@ end
 function FightResultLayer:turnLeftCard()
 	if self.userModel:costDiamond(10) then
 		for k,v in pairs(self.lockTable) do
+                um:buy("fanpai", 1, 10)   
+
+
 			if v["falltype"] == "inlay" then
 				self.inlayModel:buyInlay(v["id"])
 				table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
@@ -373,6 +374,7 @@ end
 
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
+	self.guide:check("afterfight02")
 end
 
 function FightResultLayer:initGuide()
@@ -388,6 +390,46 @@ function FightResultLayer:initGuide()
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})        
         end
      })    	
+end
+
+function FightResultLayer:setDailyPopup()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+	local isGet = dailyLoginModel:isGet()
+	if isGet == false then
+		dailyLoginModel:setPopup()
+	end
+end
+
+function FightResultLayer:initGuide2()
+    local isDone = self.guide:isDone("afterfight02")
+    if isDone then return end
+    self.guide:addClickListener({
+        id = "afterfight02_award",
+        groupId = "afterfight02",
+       rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)
+        	      
+        end
+     })  
+
+    self.guide:addClickListener({
+        id = "afterfight02_get",
+        groupId = "afterfight02",
+        rect = self.btngetall:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+			self:turnLeftCard()       
+        end
+     })    
+
+    self.guide:addClickListener({
+        id = "afterfight02_next",
+        groupId = "afterfight02",
+        rect = self.btnback:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})     
+        end
+     })       	
 end
 
 return FightResultLayer

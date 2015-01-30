@@ -108,7 +108,7 @@ function Attackable:checkBody(focusNode)
 		if enemyRange == nil then break end 	
 		local isInRange = self:rectIntersectsRectInWorld(focusNode,
 				 enemyRange)
-		print(isInRange, "isInRange")
+		-- print(isInRange, "isInRange")
 		if isInRange then 
 			local isHited = isInRange 
 			targetData.demageScale = 1.0
@@ -351,6 +351,16 @@ function Attackable:playBombEffect()
 	bomb:getAnimation():play("baozha4", -1, 0)
 end
 
+function Attackable:restoreStand(delay)
+	local function restore()
+		self.playAnimId = nil
+		self:playStand()
+		self.armature:stopAllActions()	
+	end
+    self.schRestore = scheduler.performWithDelayGlobal(restore, delay)
+    self:addScheduler(self.schRestore)
+end
+
 function Attackable:test()
     local weakNode2 = self.armature:getBone("weak2")
     if weakNode2 then drawBoundingBox(self.armature, weakNode2:getDisplayRenderNode(), "red")  end
@@ -378,7 +388,7 @@ function Attackable:getPosInMap()
 
 	local map = self:getParent():getParent()
 	local box 	= map:getBoundingBox()
-	-- dump(box, "box")
+	dump(box, "box")
 	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
 
 	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
@@ -390,6 +400,19 @@ function Attackable:getPosInMap()
 	local worldMap = map:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end
+
+function Attackable:getPosInMapBg()
+	local world = self:convertToWorldSpace(cc.p(0,0))
+	-- dump(world, "world")
+
+	local map = md:getInstance("Map")
+	local mapbg = map:getMapBgNode()
+	local box 	= mapbg:getBoundingBox()
+	dump(box, "box")
+	local worldMap = mapbg:convertToNodeSpace(cc.p(world.x, world.y))	
+	return worldMap
+end
+
 
 function Attackable:getPlaceZOrder()
 	return self.property.placeZOrder
@@ -431,7 +454,7 @@ function Attackable:onEnter()
 end
 
 function Attackable:onCleanup()
-	print("Attackable:onCleanup()")
+	-- print("Attackable:onCleanup()")
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end

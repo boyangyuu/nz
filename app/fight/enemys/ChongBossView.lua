@@ -37,6 +37,8 @@ function ChongBossView:playFire()
 		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
 	    self:addScheduler(sch)
 	end
+
+	
 end
 
 function ChongBossView:playTieQiu()

@@ -10,24 +10,25 @@ local waves = {
 				time = 3,
 				num = 4,
 				delay = {0.6,0.8,1.1,1.6},
-				pos = {10,50, 120, 90},
+				pos = {10,150, 220, 290},
 				property = {
-					type = "bao",
-					placeName = "place2" ,
-					id = 4,
+					type = "renzhe",
+					placeName = "place4" ,
+					id = 14,
+					missileId = 7,
 				},
 			},			
-			{
-				time = 10,
-				num = 4,
-				delay = {0.6,0.8,1.1,1.6},
-				pos = {10,50, 120, 90},
-				property = {
-					type = "bao",
-					placeName = "place2" ,
-					id = 4,
-				},
-			},					
+			-- {
+			-- 	time = 10,
+			-- 	num = 4,
+			-- 	delay = {0.6,0.8,1.1,1.6},
+			-- 	pos = {10,50, 120, 90},
+			-- 	property = {
+			-- 		type = "bao",
+			-- 		placeName = "place2" ,
+			-- 		id = 4,
+			-- 	},
+			-- },					
 			-- {
 			-- 	time = 2,
 			-- 	num = 1,
@@ -204,7 +205,11 @@ local enemys = {
 
 	--越野车
 	{id=13,image="yyc",demage=0,hp=3000,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 
-		weak1=3,award = 60},		
+		weak1=3,award = 60},	
+
+	--忍者兵
+	{id=14,image="renzb",demage=100,hp=300,fireRate=200, fireCd=2.0,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5, 
+		weak1=3,award = 60},			
 }
 
 local mapId = "map_1_2"

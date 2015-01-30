@@ -139,6 +139,7 @@ function RootLayer:addResFight()
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
         "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs","feiji","yyc",
+        "renzb", "feibiao",
         "qiqiu01", "qiqiu02", "qiqiu03", "qiqiu04"}
  
     for i,v in ipairs(enemyImgs) do
@@ -219,7 +220,7 @@ function RootLayer:addResFightMusic()
 end
 
 function RootLayer:dataLoaded(percent)
-    print(" dataLoaded() percent:"..percent)
+    -- print(" dataLoaded() percent:"..percent)
     if percent == 1 then
         if self.isadded then return end
 
@@ -233,7 +234,7 @@ end
 function RootLayer:removeLoadDelay()
     local function callfunc ()
         ui:hideLoad()   
-        print("ui:hideLoad()")   
+        -- print("ui:hideLoad()")   
     end
 
     local function callfuncAdd()

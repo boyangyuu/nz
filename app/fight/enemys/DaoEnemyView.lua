@@ -5,15 +5,11 @@
 1. desc: a.发射攻击物品 (导弹 斧头 煤气罐  )
 ]]
 
-
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
-local Hero = import("..Hero")
 local BaseEnemyView = import(".BaseEnemyView")
 local DaoEnemyView = class("DaoEnemyView", BaseEnemyView)  
-
 
 function DaoEnemyView:ctor(property)
     --instance
@@ -84,10 +80,11 @@ function DaoEnemyView:playFire()
         destPos = pWorldBone,
         type = "missile",
         id = self.property["missileId"],
+        demageScale = self.enemy:getDemageScale(),
         missileType = self.property["missileType"],
     }
     local function callfuncDaoDan()
-         self.hero:dispatchEvent({name = Hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+         self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
     local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
     self:addScheduler(sch)    

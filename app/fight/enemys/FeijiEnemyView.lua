@@ -249,6 +249,7 @@ function FeijiEnemyView:playFire()
 	        destPos = pWorldBone,
 	        type = "missile",
 	        id = self.property["missileId"],
+	        demageScale = self.enemy:getDemageScale(),
 	        missileType = self.property["missileType"],
 	        offset = offsetPoses[offsetIndex]
 	    }
@@ -261,16 +262,6 @@ function FeijiEnemyView:playFire()
 
 	end
 
-end
-
-function FeijiEnemyView:restoreStand(delay)
-	local function restore()
-		 self:playStand()
-		 self.armature:stopAllActions()	
-		 self.isRuning = false
-	end
-    self.schRestore =  scheduler.performWithDelayGlobal(restore, delay)
-    self:addScheduler(self.schRestore)
 end
 
 function FeijiEnemyView:playStand()

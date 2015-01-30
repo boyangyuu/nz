@@ -148,7 +148,8 @@ function WeaponListModel:isWeaponExist(weaponid)
 end
 
 function WeaponListModel:isRecomWeaponed(weaponid)
-	if self:getWeaponStatus(weaponid) == 1 then
+	local weaponStatus = self:getWeaponStatus(weaponid)
+	if weaponStatus == 1 or weaponStatus == 2 or weaponStatus == 3 then
 		return true
 	else
 		return false

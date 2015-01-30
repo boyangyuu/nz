@@ -4,7 +4,6 @@
 local scheduler = require("framework.scheduler")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
-local pauseScene = import("..pauseScene.PauseScene")
 
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
@@ -60,9 +59,11 @@ function InfoLayer:loadCCS()
  	self.blood2 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar1") 
  	self.blood1 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar2") 
  	self.bloodLabel = cc.uiloader:seekNodeByName(self.bloodNode, "labelValue") 
-	self.bloodLabel :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
-    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
-
+	
+	if device.platform ~= "windows" then
+		self.bloodLabel :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
+	    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
+	end
     self.goldNode 	= cc.uiloader:seekNodeByName(self.root, "goldNode")
     self.gold1    	= cc.uiloader:seekNodeByName(self.goldNode, "progressBar1") 
     -- self.gold1:setPercent(1)
@@ -81,8 +82,10 @@ end
 
 function InfoLayer:initBullet()
 	self.labelBulletNum = cc.uiloader:seekNodeByName(self.root, "labelBulletNum")	
-	self.labelBulletNum :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
-    self.labelBulletNum :enableOutline(cc.c4b(255, 255, 255,255), 2)
+	if device.platform ~= "windows" then
+		self.labelBulletNum :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
+	    self.labelBulletNum :enableOutline(cc.c4b(255, 255, 255,255), 2)
+	end
 	local gun = self.hero:getGun()
 	self.labelBulletNum:setAnchorPoint(cc.p(0.5, 0.5))
 	self:onRefreshBullet({num = gun:getBulletNum()})
@@ -97,9 +100,9 @@ function InfoLayer:initBtns()
                 return true
             elseif event.name =='ended' then
             	-- cc.ColorUtil:isHighLighted(btnStop, false)
-            	-- ui:showPopup("FightPopup")
-            	ps = pauseScene.new()
-            	ps:pause("fightset")
+            	ui:showPopup("pausePopup",{popupName = "fightset"},{anim = true,isPauseScene = true})
+            	-- ps = pauseScene.new()
+            	-- ps:pause({type = "fightset"})
             end
         end)
 end
@@ -122,36 +125,25 @@ end
 
 function InfoLayer:onHeroHpChange(event)
 	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	-- print("self.hero:getMaxHp()", self.hero:getMaxHp())
-	-- print("self.hero:getHp()", self.hero:getHp())
-	-- print("event.name", event.name)
-	self.bloodLabel:setString(self.hero:getHp())
+	print("self.hero:getMaxHp()", self.hero:getMaxHp())
+	print("self.hero:getHp()", self.hero:getHp())
+	print("event.name", event.name)
+
+	local displayHp = math.floor(self.hero:getHp() )
+	self.bloodLabel:setString(displayHp)
 	if event.name == "HP_DECREASE_EVENT" then 
-		-- self.blood2:setScaleX(per / 100)
-		-- self.blood1:setScaleX(per / 100)
-		print("per", per)
 	    self.blood2:setPercent(per)
 	    self.blood1:setPercentWithDelay(per, 0.3)
-	    -- self:rejustBloodAnim()
 	else
-		-- self.blood1:setScaleX(per / 100)		
-		-- self.blood2:setScaleX(per / 100)
 	    self.blood1:setPercent(per)
 	    self.blood2:setPercentWithDelay(per, 0.3)
-	    -- scheduler.performWithDelayGlobal(handler(self, self.rejustBloodAnim), 0.3)
-    end		
-    -- self.bloodAnim:getAnimation():play("xuetiao_s" , -1, 1)	
+    end			
 end
 
 function InfoLayer:onKillEnemy(event)
 	if self.isGolding then return end 
-
 	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
 	self.gold1:setPercent(per)
-	-- if per == 100 then 
-	-- 	self:onHide
-	-- 	self.isPlayGolding = true
-
 end
 
 function InfoLayer:onActiveGold(event)

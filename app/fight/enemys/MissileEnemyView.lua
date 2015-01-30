@@ -41,6 +41,8 @@ function MissileEnemyView:playFire()
         self:playDaoDanFire()
     elseif missileType == "lei" then
         self:playLeiFire()
+    elseif missileType == "feibiao" then
+        self:playFeibiaoFire()        
     else 
         assert(false, "invalid missileType"..missileType)
     end 
@@ -67,32 +69,6 @@ function MissileEnemyView:playDaoDanFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))
 end
 
---[[等注释]]
-function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
-    local bound = node:getBoundingBox()
-    local enemyBound = enemyRange:getBoundingBox()
-    
-    -- dump(enemyBound, "enemyBound")
-    local scale = self:getScale() * self.hero:getMapZoom()
-    enemyBound.width = enemyBound.width * scale
-    enemyBound.height = enemyBound.height * scale
-    dump(enemyBound, "enemyBound2")
-    local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
-    bound.x = pWorld1.x
-    bound.y = pWorld1.y
-    local pWorld2 = enemyRange:convertToWorldSpace(cc.p(0,0))
-    enemyBound.x = pWorld2.x
-    enemyBound.y = pWorld2.y    
-    
-    dump(bound, "bound ------")
-    dump(enemyBound, "enemyBound -------")    
-    -- self:test()
-
-    local isIn = cc.rectIntersectsRect(bound, enemyBound)
-    print("isIn", isIn)
-    return isIn
-end
-
 function MissileEnemyView:playLeiFire()
     -- print("lei")
     
@@ -107,12 +83,59 @@ function MissileEnemyView:playLeiFire()
     local callFunc = function ()
         self:playBomb()
     end
+
     local seq =  cc.Sequence:create(
                     action,
                     cc.CallFunc:create(callFunc) )    
     self:runAction(seq)
     self.armature:setScale(0.05)
     self.armature:runAction(cc.ScaleTo:create(jumpTime, 2.0))
+end
+
+function MissileEnemyView:playFeibiaoFire()
+    --scale
+    self.armature:setScale(self.srcScale)
+    local time = define.kMissileFeibiaTime    
+    local destScale = self.property["destScale"] or 1.0
+    local scaleAction = cc.ScaleTo:create(time, destScale)
+
+    --call end
+    local function callMoveEnd()
+        self.armature:getAnimation():play("die02", -1 , 1 )
+        self.enemy:hit(self.hero)           
+    end
+
+    --run
+    local offset = self.property.offset or cc.p(0.0,0.0)
+    self.armature:getAnimation():play("fire" , -1, 1) 
+    local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
+    self.armature:runAction(seq)
+    self.armature:runAction(cc.MoveTo:create(time, offset))
+end
+
+function MissileEnemyView:rectIntersectsRectInWorld(node, enemyRange)
+    local bound = node:getBoundingBox()
+    local enemyBound = enemyRange:getBoundingBox()
+    
+    -- dump(enemyBound, "enemyBound")
+    local scale = self:getScale() * self.hero:getMapZoom()
+    enemyBound.width = enemyBound.width * scale
+    enemyBound.height = enemyBound.height * scale
+    -- dump(enemyBound, "enemyBound2")
+    local pWorld1 = node:convertToWorldSpace(cc.p(0,0))
+    bound.x = pWorld1.x
+    bound.y = pWorld1.y
+    local pWorld2 = enemyRange:convertToWorldSpace(cc.p(0,0))
+    enemyBound.x = pWorld2.x
+    enemyBound.y = pWorld2.y    
+    
+    -- dump(bound, "bound ------")
+    -- dump(enemyBound, "enemyBound -------")    
+    -- self:test()
+
+    local isIn = cc.rectIntersectsRect(bound, enemyBound)
+    -- print("isIn", isIn)
+    return isIn
 end
 
 function MissileEnemyView:playBomb()
@@ -132,7 +155,7 @@ function MissileEnemyView:playBomb()
     --屏幕爆炸效果
     local animName = self.property.animName
     if animName then 
-            self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT, 
+        self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT, 
                 animName = animName})
     end
 
@@ -140,11 +163,10 @@ end
 
 --Attackable接口
 function MissileEnemyView:playHitted(event)
-print("MissileEnemyView:playHitted(event)")
+
 end
 
 function MissileEnemyView:playKill(event)
-    print("MissileEnemyView:playKill(event)")
 
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
@@ -152,6 +174,8 @@ function MissileEnemyView:playKill(event)
     local missileType = self.property["missileType"]
     if missileType == "tie" or missileType == "lei" then
         self:playBombEffect()
+    else
+
     end     
 end
 
@@ -167,12 +191,12 @@ function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
 
-        if movementID ~= "die" then
+        if movementID ~= "die" and movementID ~= "die02" then
             local playCache = self:getPlayCache()
             if playCache then 
                 playCache()
             end
-        elseif movementID == "die" then
+        else
              self:setWillRemoved()
         end
     end

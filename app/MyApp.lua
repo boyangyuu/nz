@@ -30,9 +30,7 @@ ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
 define  = Define.new()
-
-
-iap = IAPsdk.new()
+iap     = IAPsdk.new()
 
 function MyApp:ctor()
 
@@ -88,11 +86,6 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 2 ,           
                                     },
-                                    {
-                                    intenlevel = 0,
-                                    weaponid   = 6,           
-                                    },
-
                         },
                         weaponed = {
                                 bag1 =  {
@@ -111,11 +104,11 @@ function MyApp:createGameStateFile()
                         inlayed  = {
                                         --存id bullet = 1,
                                     bullet = nil,
-                                    clip = 5,
-                                    speed = 9,
+                                    clip = nil,
+                                    speed = nil,
                                     crit = nil,
                                     blood = nil,
-                                    helper = 22,
+                                    helper = nil,
                         },
             },
             prop = {
@@ -127,16 +120,26 @@ function MyApp:createGameStateFile()
             weaponsuipian = {},
             money = 1000000000,
             diamond = 100,
+
+
                       
             currentlevel =  {
                         group = 1,
 
-                        level = 1,
+                        level = 5,
             },
             guide = {
+
+                        isFirstRunning  = true,
                         fight01         = false,
                         afterfight01    = false,
+                        prefight02      = false,
+                        fight02_dun     = false,
                         fight02         = false,
+                        afterfight02    = false,
+                        fight04         = false,
+                        xiangqian       = false,
+
             },
             fight = {
                         isPreferBag1 = true,
@@ -148,6 +151,12 @@ function MyApp:createGameStateFile()
                         weaponGiftBag =  false,
                         novicesBag = false,
             },
+            dailylogin = {
+                        logintime = "00000",
+                        isGet = false,
+                        dailyid = 0,
+            },
+            
     }
     GameState.save(data)
     -- dump(GameState.load(), "GameState.load()")

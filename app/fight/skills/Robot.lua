@@ -13,7 +13,7 @@ Robot.ROBOT_START_EVENT		 = "ROBOT_START_EVENT"
 Robot.ROBOT_ENDTIME_EVENT	 = "ROBOT_ENDTIME_EVENT"
 Robot.ROBOT_BEHURTED_EVENT 	 = "ROBOT_BEHURTED_EVENT"
 Robot.ROBOT_FIRE_EVENT 		 = "ROBOT_FIRE_EVENT"
-Robot.ROBOT_STOPFIRE_EVENT   = "ROBOT_STOPFIRE_EVENT"
+Robot.ROBOT_STOPFIRE_EVENT   = "ROBOT_STOPFIRE_EVE                                                                                                                                                                                                                                                                                                                                                                                                         NT"
 
 function Robot:ctor()
     Robot.super.ctor(self)
@@ -77,6 +77,18 @@ function Robot:startRobot()
 	--show robot
 	self:dispatchEvent({name = Robot.ROBOT_START_EVENT})
 
+	--cancell dun
+	local defence = md:getInstance("Defence")
+	defence:endDefence()
+
+	--check guide
+	local guide = md:getInstance("Guide")
+	local curGuideId = guide:getCurGuideId()
+	if curGuideId == "fight02_jijia" and  guide:getIsGuiding() then 
+		--引导的时候 机甲一直在
+		return 
+	end
+	
 	--sch endRobot
 	local kTimeEnd = define.kRobotTime
 	scheduler.performWithDelayGlobal(handler(self, self.endRobot), kTimeEnd) 

@@ -30,7 +30,7 @@ Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
 Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人      
 Hero.ENEMY_KILL_HEAD_EVENT      = "ENEMY_KILL_HEAD_EVENT"   --爆头
 Hero.ENEMY_KILL_BOSS_EVENT      = "ENEMY_KILL_BOSS_EVENT"   --杀死boss 
-Hero.ENEMY_KILL_LASTCALL_EVENT  = "ENEMY_KILL_LASTCALL_EVENT"   --杀死最后一个召唤 
+Hero.ENEMY_KILL_CALL_EVENT       = "ENEMY_KILL_CALL_EVENT"   --杀死召唤 
 
 Hero.ENEMY_ADD_EVENT            = "ENEMY_ADD_EVENT"
 Hero.ENEMY_WAVE_ADD_EVENT       = "ENEMY_WAVE_ADD_EVENT"
@@ -45,7 +45,7 @@ Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 --hp
 Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 
-Hero.AWARD_GOLD_INCREASE_EVENT      = "AWARD_GOLD_INCREASE_EVENT"
+Hero.AWARD_GOLD_INCREASE_EVENT  = "AWARD_GOLD_INCREASE_EVENT"
 
 
 function Hero:ctor(properties)
@@ -207,7 +207,6 @@ end
 --hp相关
 function Hero:doRelive()
     self.fsm__:doEvent("relive") --todo
-    
 end
 
 function Hero:getMaxHp()
@@ -246,7 +245,6 @@ function Hero:isHelpHp()
     local maxhp = self:getMaxHp()
     local hp = self:getHp()
     
-
     local isLessHp =  (hp / maxhp) < define.kBuyFullHpTime   
     return isDefenceAble and isLessHp 
 end
@@ -254,14 +252,14 @@ end
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
-    -- print("function Hero:helpFullHp()")
+    print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
     fight:pauseFight(true)
     ui:showPopup("commonPopup",
         {type = "style3", content = "是否立即回复生命？",
              callfuncCofirm =  handler(self, self.onBuyFullHp),
              callfuncClose  =  handler(self, self.onDenyFullHp)},
-         { opacity = 0})        
+         { opacity = 0, isPauseScene = true})  
 end
 
 function Hero:onBuyFullHp()

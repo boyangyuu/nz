@@ -24,10 +24,19 @@ Define.kBaoDemageOtherEnemys 	= 10        --自爆兵伤害值
 Define.kBaoRangeW 				= 200	    --自爆兵范围
 Define.kBaoRangeH 				= 200	     --自爆兵范围
 
---人质
+--人质兵
 Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
-Define.kRenzhiRunTime			= 1.2      
-Define.kRenzhiWalkTime			= 0.6   
+Define.kRenzhiRunTime			= 1.2      --跑动时间
+Define.kRenzhiWalkTime			= 0.6      --行走时间
+
+--忍者兵
+Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
+Define.kRenzheSpeed				= 600.0    --忍者跑动速度 像素/s
+Define.kRenzheRunTime			= 2.0       -- 忍者跑步时间
+Define.kRenzheWalkTime			= 0.5   	--忍者行走时间
+Define.kRenzheShanTime			= 3.0   	--忍者瞬移时间
+Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离 
+Define.kRenzheShanOffsetMax		= 600		--忍者瞬移最大距离 
 
 --飞机兵 
 Define.kfeijiSpeed				= 500.0  --速度
@@ -42,6 +51,9 @@ Define.kjipuWalkTime			= 0.6    --小范围移动时间
 --导弹
 Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 
 Define.kMissileLeiTime				= 2.0    --手雷 
+
+--飞镖
+Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
 
 
 --黄金武器
@@ -59,9 +71,10 @@ Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽
 --角色扔的手雷
 Define.kBaoRangeW 				= 200	--手雷范围宽
 Define.kBaoRangeH 				= 200	--手雷范围高
-
+Define.kLeiDemage 				= 2500.0	--手雷伤害
 --盾牌
 Define.cdTimes 					= 15.0   --十秒恢复完毕
+Define.kDefenceHp				= 150    --盾牌血量
 
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
@@ -76,6 +89,10 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 
 --狙击枪
 Define.kJuRange 				= 4.0
+
+--引导
+Define.kGuideActiveJijia	 	= 0.1  --boss还有百分之10血时 触发机甲
+Define.kGuidebossHpScale		= 0.5  --引导的时候 boss的血量缩小0.5
 
 function Define:ctor()
     Define.super.ctor(self) 

@@ -11,7 +11,6 @@ function LevelMapModel:getConfig()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
 	return group,level
-
 end
 
 

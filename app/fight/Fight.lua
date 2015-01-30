@@ -70,17 +70,23 @@ function Fight:willEndFight()
 end
 
 function Fight:startFight()
-   self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-   self.inlay:checkNativeGold()
+    self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
+    self.inlay:checkNativeGold()
 
-   --check ju
-   self:checkJuContorlType()
+    --check ju
+    self:checkJuContorlType()
 
-   --check guide
-   local guide = md:getInstance("Guide")
-    scheduler.performWithDelayGlobal(function()
-        guide:check("fight01")
-    end, 3.0)   
+    --check guide
+    local guide = md:getInstance("Guide")
+    if self.groupId == 1 and self.levelId == 1 then 
+        scheduler.performWithDelayGlobal(function()
+            guide:check("fight01")
+        end, 2.0)   
+    elseif self.groupId == 1 and self.levelId == 4 then 
+        scheduler.performWithDelayGlobal(function()
+            guide:check("fight04")
+        end, 2.0)   
+    end
 end
 
 function Fight:endFight()
@@ -110,12 +116,21 @@ function Fight:onFail()
 
     ui:showPopup("FightResultFailPopup",{},{anim = false})
 
+    local buy = md:getInstance("BuyModel")
+    buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)})
+
     --clear
     self:clearFightData() 
 
     --todo 改在返回大地图
-    local levelInfo = self.groupId.."-"..self.levelId  
-    um:failLevel(levelInfo)
+    -- local levelInfo = self.groupId.."-"..self.levelId  
+    -- um:failLevel(levelInfo)
+end
+
+function Fight:payDone()
+    self.inlayModel:equipGoldInlays(false)
+    self:relive()
+    ui:closePopup("FightResultFailPopup")
 end
 
 function Fight:pauseFight(isPause)
