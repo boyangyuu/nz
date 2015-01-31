@@ -141,7 +141,7 @@ function getRecordFromTable(table, propertyName, key)
 end
 
 function getUserData()
-    return GameData.data
+    return GameData
 end
 
 function setUserData(data)

@@ -56,10 +56,10 @@ function MyApp:initGameState()
             if param.name=="save" then
                 local str=json.encode(param.values)
                 str=crypto.encryptXXTEA(str, "abcd")
-                returnValue={data=param.values}
+                returnValue={data=str}
             elseif param.name=="load" then
                 local str=crypto.decryptXXTEA(param.values.data, "abcd")
-                returnValue=param.values
+                returnValue=json.decode(str)
             end
         end
         return returnValue
