@@ -25,7 +25,7 @@ function EnemyFactory.createEnemy(property)
 
 	--boss
 	local type = property.type
-	print("function EnemyFactory.createEnemy(property)"..type)	
+	-- print("function EnemyFactory.createEnemy(property)"，type)	
 	if type == "boss" then 
 		enemyView = BaseBossView.new(property)
 	elseif type == "chongBoss" then

@@ -4,6 +4,7 @@ local FightResultLayer = class("FightResultLayer", function()
 end)
 
 function FightResultLayer:ctor(properties)
+	audio.stopMusic(false)
     self.fightModel 	  = md:getInstance("Fight")
 	self.weaponListModel  = md:getInstance("WeaponListModel")
 	self.guide      	  = md:getInstance("Guide")

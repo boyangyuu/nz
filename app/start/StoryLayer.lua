@@ -55,7 +55,7 @@ function StoryLayer:initTouchEvent()
 				self:changeTalk()
 			else
 				local data = getUserData()
-				data.guide.isFirstRunning = false
+				data.guide.gamePre = true
 				setUserData(data)
 				ui:changeLayer("HomeBarLayer",{})
 			end

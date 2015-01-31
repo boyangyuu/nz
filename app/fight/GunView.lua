@@ -37,34 +37,32 @@ function GunView:playIdle()
 end
 
 function GunView:fire()
+	--bullet
 	local num = self.gun:getCurBulletNum() - 1
 	self.gun:setCurBulletNum(num)
-	self:playFire()
-end
 
-function GunView:playFire()
-
-	if self.isFiring == true then return end 	
+	-- if self.isFiring == true then return end 	
 	self.isFiring = true
 	print("function GunView:playFire()")
 	--枪火
 	self.jqk   :setVisible(true)
 	self.jqkzd :setVisible(true)
 	self.dk    :setVisible(true)
-	self.jqk:getAnimation()	 :play("fire" , -1, 1)
-	self.jqkzd:getAnimation():play("qkzd" , -1, 1)
-	self.dk:getAnimation()	 :play("danke", -1, 1)
-	-- local name = self.armature:getAnimation():getCurrentMovementID()
-	self.armature:getAnimation():play("fire" , -1, 1)	
+	self.jqk:getAnimation()	 :play("fire" , -1, 0)
+	self.jqkzd:getAnimation():play("qkzd" , -1, 0)
+	self.dk:getAnimation()	 :play("danke", -1, 0)
+	self.armature:getAnimation():play("fire" , -1, 0)	
 
-	--music
-end
-
-function GunView:onHeroFire(event)
+	--sound
 	local config = self.gun:getConfig()
 	local soundName = config.imgName 			--动作特效	
 	local soundSrc  = "res/Music/weapon/"..soundName.."fire.wav"
-	self.audioId =  audio.playSound(soundSrc,false)	
+	self.audioId =  audio.playSound(soundSrc,false)		
+end
+
+function GunView:onHeroFire(event)
+	-- print("function GunView:onHeroFire(event)")
+	self:fire()
 end
 
 function GunView:stopFire()
@@ -166,6 +164,7 @@ function GunView:refreshGun()
 	--armature
 	local animName = config.animName --动作特效
 	local armature = ccs.Armature:create(animName)
+    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	self.armature = armature
 	self:playIdle()	
 	self:addChild(armature)
@@ -179,6 +178,7 @@ function GunView:refreshGun()
     local jqkName = config.jqkName --机枪口特效
     self.jqk = ccs.Armature:create(jqkName)
     self.jqk:setVisible(false)
+    self.jqk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
     local boneQk = armature:getBone("qk")
     local posBone = boneQk:convertToWorldSpace(cc.p(0, 0))
     local posArm = armature:convertToWorldSpace(cc.p(0, 0))
@@ -191,15 +191,15 @@ function GunView:refreshGun()
     self.jqkzd:setVisible(false)
    	self.jqkzd:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqkzd , 1)
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-
+    self.jqkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
+    
     --蛋壳
     self:addDanke()
 end
 
 function GunView:addDanke()
 	self.dk = ccs.Armature:create("danke")
-
+	self.dk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	--todo
 
 	--special check

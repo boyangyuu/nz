@@ -12,8 +12,8 @@ end
 function ChongBossView:playFire()
 	-- 2 3
 	-- 1 4 
-	print("发射导弹")
-	print("BaseBossView :getDemageScale(),",self.enemy:getDemageScale())
+	-- print("发射导弹")
+	-- print("BaseBossView :getDemageScale(),",self.enemy:getDemageScale())
 	self.armature:getAnimation():play("daodan" , -1, 1) 
 	local offsetPoses ={cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) }
 	for i=1,4 do

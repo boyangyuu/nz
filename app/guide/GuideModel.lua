@@ -46,8 +46,11 @@ function Guide:check(groupId)
 end
 
 function Guide:doGuideNext()
-
-
+	--check finish
+	if self:isDone(self.groupId) then 
+		-- self:finishGuide()
+		return
+	end
 
 	--next
 	self.stepIndex = self.stepIndex + 1
@@ -57,14 +60,14 @@ function Guide:doGuideNext()
 	local configStep = configGroup["steps"][self.stepIndex]	
 	self.curConfig = configStep
 
-	--打点
-	um:event(configStep["id"])
-
 	--check finish
 	if self.curConfig == nil then 
 		self:finishGuide()
 		return
 	end
+
+	--打点
+	um:event(self.curConfig["id"])
 
 	--update listenData
 	local id = configStep.id
@@ -79,6 +82,7 @@ function Guide:doGuideNext()
 end
 
 function Guide:startGuide(groupId)
+	print("function Guide:startGuide(groupId)", groupId)
 	self.isGuiding = true
 	assert(self:isDone(groupId) == false , "groupId"..groupId)
 	self.groupId = groupId
@@ -111,6 +115,7 @@ end
 
 function Guide:finishGuide()
 	--clear
+	print("function Guide:finishGuide()")
 	self.stepIndex = 0
 	self.isGuiding = false
 

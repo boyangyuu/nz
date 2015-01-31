@@ -47,6 +47,7 @@ end
 function LoadingLayer:onShow(event)
     self:setVisible(true)
     self:playAnim()
+    audio.stopMusic(false)
 end
 
 function LoadingLayer:onHide(event)

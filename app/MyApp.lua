@@ -107,8 +107,8 @@ function MyApp:createGameStateFile()
                                     clip = nil,
                                     speed = nil,
                                     crit = nil,
-                                    blood = nil,
-                                    helper = nil,
+                                    blood = nil,    
+                                    helper = nil,   
                         },
             },
             prop = {
@@ -124,20 +124,19 @@ function MyApp:createGameStateFile()
 
                       
             currentlevel =  {
-                        group = 2,
-
-                        level = 5,
+                        group = 1,
+                        level = 1,
             },
             guide = {
-                        isFirstRunning  = true,
+                        gamePre         = true,
                         fight01         = true,
-                        afterfight01    = true,
-                        prefight02      = true,
-                        fight02_dun     = true,
-                        fight02         = true,
-                        afterfight02    = true,
-                        fight04         = true,
-                        xiangqian       = true,
+                        afterfight01    = false,
+                        prefight02      = false,
+                        fight02_dun     = false,
+                        fight02         = false,
+                        afterfight02    = false,
+                        fight04         = false,
+                        xiangqian       = false,
             },
             fight = {
                         isPreferBag1 = true,

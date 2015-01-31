@@ -31,16 +31,13 @@ function HeroAnimView:playHurtedBomb(event)
 	armature:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
     	    	if movementType == ccs.MovementEventType.loopComplete then
-    	    		print("HeroLayer:removeFromParent()")
+    	    		-- print("HeroLayer:removeFromParent()")
     	    		armature:removeFromParent()
     	    		armature = nil
     	    	end
 	    	end)
 	armature:getAnimation():playWithIndex(0 , -1, 1)	
 
-	--effect
-	local soundSrc  = "res/Music/fight/slbz.wav"
-	self.audioId1 =  audio.playSound(soundSrc,false)	
 end
 
 function HeroAnimView:playKillHead(event)
