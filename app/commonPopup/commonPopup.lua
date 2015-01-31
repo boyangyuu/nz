@@ -149,14 +149,22 @@ end
 
 function commonPopup:onClickCofirm()
 	if self.properties.type == "style3" and self.properties.isPauseScene then 
-		cc.Director:getInstance():popScene()
+		print("commonPopup:onClickCofirm() isPauseScene")
 		local buyModel = md:getInstance("BuyModel")
 		if buyModel:checkBought("weaponGiftBag") == false then
+			print("buyModel:checkBought(weaponGiftBag) == false ")
 			buyModel:buy("weaponGiftBag", {
                     payDoneFunc = self.properties.callfuncCofirm,
                     deneyBuyFunc = function()
                     	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
-                    end})
+                    end, isFight = true})
+		else
+			buyModel:buy("goldGiftBag", {
+                    payDoneFunc = self.properties.callfuncCofirm,
+                    deneyBuyFunc = function()
+                    	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
+                    end, isFight = true})
+		end
 	else
 		ui:closePopup("commonPopup")
 		local func =  self.properties.callfuncCofirm
@@ -164,8 +172,6 @@ function commonPopup:onClickCofirm()
 			func()		
 		end
 	end
-
-end
 end
 
 function commonPopup:onClickClose()

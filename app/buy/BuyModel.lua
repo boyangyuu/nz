@@ -32,6 +32,7 @@ function BuyModel:buy(configid, buydata)
 
 	if isGift then
 		if isFight then
+			print("BuyModel, configid:",configid)
         	ui:showPopup("GiftBagPopup",{popupName = configid},{isPauseScene = true, isFight = isFight})
         else 
         	ui:showPopup("GiftBagPopup",{popupName = configid})

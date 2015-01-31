@@ -6,6 +6,7 @@ end)
 
 function PauseScene:ctor()
  	-- body
+ 	self.id = 1
  	self.layers = {}
  	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.PAUSESCENE_SHOW_EVENT, handler(self, self.showPopup))	
@@ -25,19 +26,20 @@ function PauseScene:showPopup(event)
 
 
 	self:addBgLayer()
+	-- local director = cc.Director:getInstance()
+	-- director:pushScene(self)
 
-	local director = cc.Director:getInstance()
-	director:pushScene(self)
+
 
 	local cls = event.layerCls
-	local str = cls.__cname
+	self.str = cls.__cname
 	local pro = event.properties
 	local layer = cls.new(pro)
 	if self.layers[str] ~= nil then 	
 		self.layers[str]:removeSelf()
 		self.layers[str] = nil
 	end
-	self.layers[str] = layer
+	self.layers[self.str] = layer
 	layer:setPositionY(display.offset)
 	self:addChild(layer)
 	-- layer:scale(0.0)
@@ -48,6 +50,13 @@ function PauseScene:showPopup(event)
 	-- 	layer:scaleTo(0.3, 1)
 	-- 	print("dsdfad2")
 	-- end
+
+	if self.str ~= "weaponGiftBag" then
+		local director = cc.Director:getInstance()
+		director:pushScene(self)
+		print("PauseScene id:",self.id)
+		self.id = self.id + 1
+	end
 
 end
 
@@ -66,6 +75,7 @@ function PauseScene:closePopup(event)
 	-- })
 	local director = cc.Director:getInstance()
 	director:popScene()
+	print("PauseScene:closePopup(event)")
 end
 
 function PauseScene:addBgLayer()

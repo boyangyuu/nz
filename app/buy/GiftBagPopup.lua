@@ -79,7 +79,9 @@ function GiftBagPopup:initButtons()
 end
 
 function GiftBagPopup:close()
+	print("GiftBagPopup:close()")
 	if self.param.isFight then
+		print("self.param.isFight:",true)
 		ui:closePopup("GiftBagPopup", true)
 	else
 		ui:closePopup("GiftBagPopup")
