@@ -58,8 +58,8 @@ Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
 Define.kMissileFeibiaScale      = 1.5        --飞镖飞到屏幕的大小
 
 --蜘蛛网
-Define.kMissileWangTime			= 0.5    --飞过来的时间
-Define.kMissileWangHitTime      = 0.5    -- 攻击间隔
+Define.kMissileWangTime			= 0.8    --飞过来的时间
+Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
 
 --黄金武器
