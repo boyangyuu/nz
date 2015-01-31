@@ -119,10 +119,10 @@ function StartLayer:initDailyLogin()
     if isToday  == false  then
         dailyLoginModel:setGet(false)
     end
-    -- dailyLoginModel:setTime()
-    local data = getUserData()
-    data.dailylogin.logintime = "%9"
-    setUserData(data)
+    dailyLoginModel:setTime()
+    -- local data = getUserData()
+    -- data.dailylogin.logintime = "%9"
+    -- setUserData(data)
 
 end
 

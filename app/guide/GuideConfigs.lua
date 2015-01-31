@@ -111,7 +111,7 @@ configs["xiangqian"] = {
 	preGuideId = "fight04",
 	steps = {
 		--进镶嵌页面  一套青铜 
-		{id = "xiangqian_xiangqian", msg = "点击左侧按钮进入镶嵌界面", }, 
+		{id = "xiangqian_xiangqian", msg = "点击按钮进入镶嵌界面", }, 
 		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择镶嵌属性", }, 
 		{id = "xiangqian_xiangqian2", msg = "点击购买",},
 		{id = "xiangqian_xiangqian3", msg = "点击装备", },
@@ -119,7 +119,6 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具 , 要节省使用哦", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
 		{id = "xiangqian_nextLevel", msg = "点击按钮返回大地图", },		
-
 	}
 }
 
