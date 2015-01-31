@@ -107,8 +107,8 @@ function MyApp:createGameStateFile()
                                     clip = nil,
                                     speed = nil,
                                     crit = nil,
-                                    blood = nil,
-                                    helper = nil,
+                                    blood = nil,    
+                                    helper = nil,   
                         },
             },
             prop = {
@@ -125,11 +125,10 @@ function MyApp:createGameStateFile()
                       
             currentlevel =  {
                         group = 1,
-
-                        level = 5,
+                        level = 1,
             },
             guide = {
-                        isFirstRunning  = false,
+                        gamePre         = false,
                         fight01         = false,
                         afterfight01    = false,
                         prefight02      = false,

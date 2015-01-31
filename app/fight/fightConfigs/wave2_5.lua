@@ -110,7 +110,7 @@ local waves = {
 					startState = "",
 					type = "dao",
 					missileId = 6,
-					missileType = "daodan",                      --10
+					missileType = "daodan",                      --10个
 				},
 			},
 	
@@ -279,10 +279,10 @@ local waves = {
 			},
 			{
 				time = 34,
-				num = 11,
-				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,2.1},
-				pos = {650,750,850,550,650,750,850,950,650,850,750},                                    
-				                                                                          -- 绿气球
+				num = 12,
+				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,1.4,2.1},
+				pos = {650,750,850,550,650,750,850,950,650,750,850,750},                                    
+				                                                                          -- 心形绿气球
 				property = {
 					type = "jinbi",
 					placeName = "place10", 
@@ -300,6 +300,19 @@ local waves = {
 					type = "jinbi",
 					placeName = "place11", 
 					speed = 5, 
+					id = 15,
+				},
+			},
+			{
+				time = 41,
+				num = 12,
+				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,1.4,2.1},
+				pos = {650,750,850,550,650,750,850,950,650,750,850,750},                                    
+				                                                                          -- 心形金气球
+				property = {
+					type = "jinbi",
+					placeName = "place10", 
+					speed = 3, 
 					id = 15,
 				},
 			},
@@ -323,7 +336,7 @@ local enemys = {
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=375,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
@@ -335,7 +348,7 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=562,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=20000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
@@ -389,7 +402,7 @@ local enemys = {
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=12500},  
 	--盾兵BOSS         --type = "jin",
-	{id=20,image="dunbing",demage=25,hp=100000,fireRate=30,fireCd= 3 ,speed= 80, scale = 3.0,
+	{id=20,image="dunbing",demage=18,hp=50000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
 	weak1=3},                           
 }
 
@@ -453,5 +466,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.goldLimits = {26,}   --黄武激活所需杀人个数
+
 end
 return waveClass
