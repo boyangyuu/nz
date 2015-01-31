@@ -1,4 +1,3 @@
-local scheduler = require("framework.scheduler")
 local InlayListCell = import(".InlayListCell")
 
 local InlayLayer = class("InlayLayer", function()

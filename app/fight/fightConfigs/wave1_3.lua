@@ -345,9 +345,9 @@ local waves = {
 			},
 			{
 				time = 34,
-				num = 11,
-				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,2.1},
-				pos = {650,750,850,550,650,750,850,950,650,850,750},                                    
+				num = 12,
+				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,1.4,2.1},
+				pos = {650,750,850,550,650,750,850,950,650,750,850,750},                                    
 				                                                                          -- 绿气球
 				property = {
 					type = "jinbi",
@@ -422,7 +422,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {26,}   --黄武激活所需杀人个数
+	self.goldLimits = {26,66}   --黄武激活所需杀人个数
 end
 
 
