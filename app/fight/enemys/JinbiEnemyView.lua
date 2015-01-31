@@ -66,8 +66,6 @@ function JinbiEnemyView:playKill(event)
     self.armature:getAnimation():play("die" , -1, 1)
     print("JinbiEnemyView elsplayKill") 
     self.isFlying  = false
-    self.hero:dispatchEvent({
-                name = self.hero.ENEMY_KILL_HEAD_EVENT})
     --屏幕动画
 end
 
