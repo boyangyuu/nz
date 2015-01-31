@@ -21,7 +21,7 @@ end
 
 function MapAnimView:getScaleByPos(pos)
 	local offsetScale = (math.abs(pos.y - display.height/2)) / (display.height/2)
-	local scale = 0.3 + 0.7 * offsetScale
+	local scale = 0.6 + 0.4 * offsetScale
 	return scale
 end
 
