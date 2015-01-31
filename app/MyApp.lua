@@ -118,13 +118,13 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
-            money = 1000000,
-            diamond = 100,
+            money = 0,
+            diamond = 0,
 
 
                       
             currentlevel =  {
-                        group = 3,
+                        group = 1,
 
                         level = 5,
             },

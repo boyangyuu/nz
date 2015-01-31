@@ -94,6 +94,7 @@ function LevelMapLayer:initChooseLayer()
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
+    btnTask:setVisible(false)
     -- modified by lpf
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 
@@ -186,16 +187,16 @@ function LevelMapLayer:initChooseLayer()
         end
     end)
 
-    btnTask:setTouchEnabled(true)
-    addBtnEventListener(btnTask, function(event)
-        if event.name=='began' then
-            print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("Btn is pressed!")
+    -- btnTask:setTouchEnabled(true)
+    -- addBtnEventListener(btnTask, function(event)
+    --     if event.name=='began' then
+    --         print("Btn is begining!")
+    --         return true
+    --     elseif event.name=='ended' then
+    --         print("Btn is pressed!")
 
-        end
-    end)
+    --     end
+    -- end)
     btnGold:setTouchEnabled(true)
     addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
