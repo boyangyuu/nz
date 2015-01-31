@@ -7,9 +7,9 @@ local waves = {
 		enemys = { 
 			{
 				time = 2,
-				num = 1,
-				delay = {0},
-				pos = {300},
+				num = 2,
+				delay = {0.3,1.0},
+				pos = {300,550},
 				property = {
 					placeName = "place9",  
 					startState = "rollright",
@@ -80,6 +80,20 @@ local waves = {
 					type = "dao",
 					missileId = 6,
 					missileType = "daodan",
+				},
+			},
+			{
+				time = 21,
+				num = 2,
+				delay = {0.6,1.1},
+				pos = {300,500},
+				property = {
+					placeName = "place9",  
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",                                         --10
 				},
 			},
 			
@@ -174,8 +188,34 @@ local waves = {
 			{
 				time = 24,
 				num = 1,
+				delay = {0.4},
+				pos = {195},
+				property = {
+					placeName = "place14",  
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},
+			}, 
+			{
+				time = 27,
+				num = 1,
+				delay = {0.4},
+				pos = {80},
+				property = {
+					placeName = "place12",  
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},
+			}, 
+			{
+				time = 30,
+				num = 1,
 				pos = {450},
-				delay = {0.5},                         -- 飞机
+				delay = {0.5},                         -- 飞机          10
 				property = {
 					type = "feiji" ,
 					id = 11,
@@ -184,7 +224,7 @@ local waves = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 30.0,		                                    --持续时间			
+					lastTime = 40.0,		                                    --持续时间			
 				},
 			},	
 			
@@ -283,5 +323,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.goldLimits = {300}   --黄武激活所需杀人个数
 end
 return waveClass

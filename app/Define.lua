@@ -64,7 +64,7 @@ Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
 --黄金武器
 Define.kGoldActivate 			= 1500    --黄金武器激活
-Define.kGoldTime 				= 6     --黄金武器激活时间
+Define.kGoldTime 				= 8     --黄金武器激活时间
 
 --机甲
 Define.kRobotCoolDownTime 		= 0.05   --robot 冷却时间
