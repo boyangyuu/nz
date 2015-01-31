@@ -83,9 +83,7 @@ function FightProp:costGoldWeapon()
 		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
 						deneyBuyFunc = deneyBuyFunc})	
 	end
-
 	self:refreshData()
-
 end
 
 function FightProp:getGoldNum()
