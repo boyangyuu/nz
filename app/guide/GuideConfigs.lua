@@ -72,16 +72,16 @@ configs["fight02_dun"] = {
 	preGuideId = "prefight02",
 	steps = {
 		--boss出现3秒 开盾提示
-		{id = "fight02_dun", msg = "boss来袭 , 开启盾牌抵御boss的进攻！！", }, 
+		{id = "fight02_dun", msg = "毁灭者来袭 , 开启盾牌抵御毁灭者的进攻！！", }, 
 	}
 }
 
---- 第二关boss之后 ----
+--- 第二关毁灭者之后 ----
 configs["fight02"] = {
 	preGuideId = "fight02_dun",
 	steps = {
-		--boss掉剩下10% 血 机甲开
-		{id = "fight02_jijia", msg = "开启机甲模式 , 和boss决一死战！！", }, 
+		--毁灭者掉剩下10% 血 机甲开
+		{id = "fight02_jijia", msg = "开启机甲模式 , 和毁灭者决一死战！！", }, 
 	}
 }
 
@@ -89,7 +89,7 @@ configs["fight02"] = {
 configs["afterfight02"] = {
 	preGuideId = "fight02",
 	steps = {
-		{id = "afterfight02_award", msg = "中大奖了 ！ 居然掉落了一把枪！  ", skipDelay = 2.0 }, 
+		{id = "afterfight02_award", msg = "中大奖了 ! 居然掉落了一把枪!  ", skipDelay = 2.0 }, 
 		{id = "afterfight02_get", msg = "点击按钮 , 领取雷明顿和镶嵌道具", skipDelay = 2.0 }, 
 		{id = "afterfight02_next", msg = "点击按钮 , 回到大地图"}, 	
 	}
@@ -99,9 +99,9 @@ configs["afterfight02"] = {
 configs["fight04"] = {
 	preGuideId = "afterfight02",
 	steps = {
-		{id = "fight04_open", msg = "点击开镜", }, 
-		{id = "fight04_fire", msg = "点击开火", }, 
-		{id = "fight04_close", msg = "点击关镜", }, 
+		{id = "fight04_open", msg = "         点击开镜", }, 
+		{id = "fight04_fire", msg = "         点击开火", }, 
+		{id = "fight04_close", msg = "        点击关镜", }, 
 		{id = "fight04_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}	
 }
@@ -118,6 +118,8 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌 , 镶嵌背包内最好的道具", },
 		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具 , 要节省使用哦", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
+		{id = "xiangqian_nextLevel", msg = "点击按钮返回大地图", },		
+
 	}
 }
 

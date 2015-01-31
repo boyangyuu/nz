@@ -61,7 +61,8 @@ end
 
 function BuyModel:buy_weaponGiftBag(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
-	local weapontable = weaponListModel:getAllWeapon()
+	-- local weapontable = weaponListModel:getAllWeapon()
+	local weapontable = {3,4,5,7,8}
 	for k,v in pairs(weapontable) do
 		weaponListModel:setWeapon(v)
 		weaponListModel:onceFull(v)

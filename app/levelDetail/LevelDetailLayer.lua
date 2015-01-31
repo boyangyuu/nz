@@ -119,19 +119,20 @@ end
 function LevelDetailLayer:initMapUI(mapName)
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")
 
-	local mapSrcName = mapName..".json"   -- todo 外界
+	local mapSrcName = mapName..".jpg"   -- todo 外界
+	local mapimg = cc.ui.UIImage.new(mapSrcName)
 
-	local map = cc.uiloader:load(mapSrcName)
-	local mapimg = cc.uiloader:seekNodeByName(map, "bg")
+	-- local map = cc.uiloader:load(mapSrcName)
+	-- local mapimg = cc.uiloader:seekNodeByName(map, "bg")
 
 	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
 	local mapPanlSize = mapNode:getContentSize()
 	print(mapPanlSize.width,mapPanlSize.height)
 	local mapImgSize = mapimg:getBoundingBox()
 	print(mapImgSize.width,mapImgSize.height)
-	map:setScale(mapPanlSize.width/mapImgSize.width,mapPanlSize.height/mapImgSize.height)
-	map:setAnchorPoint(0.5,0.5)
-	addChildCenter(map, mapNode)
+	mapimg:setScale(mapPanlSize.width/mapImgSize.width,mapPanlSize.height/mapImgSize.height)
+	-- map:setAnchorPoint(0.5,0.5)
+	addChildCenter(mapimg, mapNode)
 
 
 	--clear
@@ -249,7 +250,8 @@ function LevelDetailLayer:onClickBtnStart()
     local isDone = self.guide:isDone("prefight02")
 	if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
 	    local buy = md:getInstance("BuyModel")
-	    buy:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame)})
+	    buy:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
+						    	payDoneFunc = handler(self, self.startGame)})
 	else
 		self:startGame()
 	end
@@ -302,12 +304,21 @@ function LevelDetailLayer:onClickBtnGold()
         self.inlayModel:equipAllInlays()
         self.storeModel  = md:getInstance("StoreModel")
         self.storeModel:refreshInfo("prop")
+		self.alreadygold:setVisible(true)
+		self.btnGold:setVisible(false)	
     else
-		if isDone then
+		if isDone then  
 			local buyModel = md:getInstance("BuyModel")
 		    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
 		end
 	end
+end
+
+function LevelDetailLayer:onClickGuideBtnGold()
+	self.alreadygold:setVisible(true)
+	self.btnGold:setVisible(false)	
+
+	self.inlayModel:equipGoldInlays()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
@@ -354,7 +365,7 @@ function LevelDetailLayer:initGuide()
         groupId = "prefight02",
         rect = self.btnGold:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-            self:onClickBtnGold()
+            self:onClickGuideBtnGold()
         end
      }) 	
 

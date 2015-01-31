@@ -1,5 +1,3 @@
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
 local FightResultPopup = class("FightResultPopup", function()
 	return display.newLayer()
 end)
@@ -31,10 +29,7 @@ function FightResultPopup:loadCCS()
 end
 
 function FightResultPopup:playAnim()
-    -- function delayplay(  )
-        self.armature:getAnimation():play("renwuwc" , -1, 1)
-    -- end
-    -- scheduler.performWithDelayGlobal(delayplay, 0.3)
+    self.armature:getAnimation():play("renwuwc" , -1, 1)
 end
 
 function FightResultPopup:animationEvent(armatureBack,movementType,movementID)

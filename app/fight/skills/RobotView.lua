@@ -70,6 +70,9 @@ end
 
 function RobotView:playFire(event)
 	self.armature:getAnimation():play("jijia_fire", -1, 1)
+
+	local soundSrc  = "res/Music/fight/m134fire.wav"
+	self.audioId2 =  audio.playSound(soundSrc,false)	
 end
 
 function RobotView:stopFire(event)

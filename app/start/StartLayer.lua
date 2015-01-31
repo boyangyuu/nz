@@ -96,7 +96,7 @@ function StartLayer:beginGame()
 
     self:initDailyLogin()
 
-    if not self:isDone("isFirstRunning") then 
+    if self:isDone("gamePre") then 
         ui:changeLayer("HomeBarLayer",{popgift = true})
     else
         ui:changeLayer("storyLayer",{})
@@ -110,8 +110,6 @@ function StartLayer:isDone(id)
     else 
         return true
     end
-
- 
 end
 
 function StartLayer:initDailyLogin()

@@ -167,11 +167,11 @@ function MapView:addWave(waveData)
 	local zorder = 1000
 	for groupId, group in ipairs(waveData) do
 		--desc
-		print("groupId"..groupId)
+		-- print("groupId"..groupId)
 		self:showEnemyIntro(group.descId, group.time)
 		for i = 1, group.num do
 			--delay
-			print("group time", group.time)
+			-- print("group time", group.time)
 			local delay = (group.delay[i] or lastTime) + group.time
 			if delay > lastTime then lastTime = delay end
 			
@@ -182,7 +182,7 @@ function MapView:addWave(waveData)
 			--add
 			local function addEnemyFunc()
 				zorder = zorder - 1
-				print("curzorder:", zorder)
+				-- print("curzorder:", zorder)
 				self:cacheEnemy(group.property, pos, zorder)
 			end
 			--todo
@@ -197,7 +197,7 @@ end
 
 function MapView:showEnemyIntro(descId, time)
 	local function callfuncShow()
-		print("descId", descId)
+		-- print("descId", descId)
 		if descId then 
 			self.fightDescModel:showEnemyIntro(descId)
 		end				
