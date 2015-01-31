@@ -388,10 +388,7 @@ local bosses = {
 			},
 			tieqiu = {
 				0.999, 0.80, 0.60, 0.40, 0.20, 0.05,
-			},
-
-			
-			
+			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
 			},
@@ -441,7 +438,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {35}   --黄武激活所需杀人个数  本关共60个小怪
+	self.goldLimits = {10,35}   --黄武激活所需杀人个数  本关共60个小怪
 end
 
 return waveClass
