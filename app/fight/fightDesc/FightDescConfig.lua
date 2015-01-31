@@ -79,6 +79,24 @@ configs["yyc"] = {
 	describe = "攻击高,血量高。",
 	playanim = "fireright",
 }
+configs["dzboss"] = {
+	title = "BOSS信息！",
+	name = "巨炮泰坦",
+	spc = "技能：",
+	skill = {"闪光雷","召唤小怪","连续飞弹"},
+	weakness = "头部、手部、腹部",
+	describe = "行动缓慢，但是是暴力伤害的象征。",
+	playanim = "stand",
+}
+configs["renzb"] = {
+	title = "BOSS信息！",
+	name = "鬼眼",
+	spc = "技能：",
+	skill = {"影分身","旋风斩","手里剑"},
+	weakness = "头部、腿部",
+	describe = "行动敏捷的伊贺忍者后裔，海岛组三号人物。擅长伪装、暗杀。",
+	playanim = "stand",
+}
 
 function EnemyDescConfig.getConfig(enemyID)
 	local enemyDescTable = configs[enemyID]
