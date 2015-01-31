@@ -52,6 +52,7 @@ function Fight:refreshData(properties)
     self.inlayModel = md:getInstance("InlayModel")
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
+    self.robot      = md:createInstance("Robot")
     self.inlay = self.hero:getFightInlay()
 
     local levelModel = md:getInstance("LevelDetailModel")
@@ -216,7 +217,8 @@ end
 function Fight:cleanModels()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
-    md:deleteInstance("Defence")  
+    md:deleteInstance("Defence")
+    md:deleteInstance("Robot")  
 end
 
 function Fight:setGoldValue(goldValue_)

@@ -66,7 +66,9 @@ function InfoLayer:loadCCS()
 	end
     self.goldNode 	= cc.uiloader:seekNodeByName(self.root, "goldNode")
     self.gold1    	= cc.uiloader:seekNodeByName(self.goldNode, "progressBar1") 
-    -- self.gold1:setPercent(1)
+    self.goldAnim 	= cc.uiloader:seekNodeByName(self.goldNode, "animNode") 
+    self.gold1:setPercent(1)
+
 end
 
 function InfoLayer:initUI()
@@ -147,11 +149,31 @@ function InfoLayer:onKillEnemy(event)
 end
 
 function InfoLayer:onActiveGold(event)
-	-- print("循环播放激活动画")
+	self.isGolding = true
+	self.gold1:setPercent(100)
+	print("循环播放激活动画")
+	self.goldArmature = ccs.Armature:create("hjnlc")
+	self.goldArmature:setAnchorPoint(cc.p(0,0))
+	self.goldArmature:setPosition(cc.p(-22,-24))
+	self.goldAnim:addChild(self.goldArmature)
+	self.goldArmature:getAnimation():play("hjnlc_kaishi", -1, 1)
+	self.goldArmature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
 end
 
 function InfoLayer:onActiveGoldEnd(event)
-	-- print("停止播放动画")
+	self.isGolding = false
+	self.gold1:setPercent(0)
+	-- print("function InfoLayer:onActiveGoldEnd(event)")
+	self.goldArmature:removeSelf()
+end
+
+function InfoLayer:animationEvent(armatureBack,movementType,movementID)
+    if movementType == ccs.MovementEventType.loopComplete then
+        self.goldArmature:stopAllActions()
+        if movementID == "hjnlc_kaishi" then
+        	self.goldArmature:getAnimation():play("hjnlc_chixu", -1, 1)
+        end
+    end
 end
 
 function InfoLayer:onShow(event)
