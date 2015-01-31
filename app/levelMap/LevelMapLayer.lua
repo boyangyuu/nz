@@ -94,6 +94,14 @@ function LevelMapLayer:initChooseLayer()
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
+
+    local armature = ccs.Armature:create("thj_bx")
+    armature:setPosition(56,43)
+    btnGold:addChild(armature) 
+    armature:getAnimation():play("thj_bx" , -1, 1)
+
+
+
     btnTask:setVisible(false)
     -- modified by lpf
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
