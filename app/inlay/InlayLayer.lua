@@ -23,6 +23,10 @@ function InlayLayer:ctor()
 	self:initUI()
     self:initGuide()
     self:onEnter()
+    self:refreshBtnIcon({typename = "speed"})
+    self:refreshListView("speed")
+    self:refreshAvatar()
+
 
 end
 
@@ -36,9 +40,6 @@ function InlayLayer:loadCCS()
 end
 
 function InlayLayer:onEnter()
-    self:refreshBtnIcon({typename = "speed"})
-    self:refreshListView("speed")
-    self:refreshAvatar()
 end
 
 function InlayLayer:refreshInlay(event)
@@ -68,6 +69,7 @@ function InlayLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
+            self:playSoundxqcg()
             self.inlayModel:equipAllInlays()
             self.storeModel:refreshInfo("prop")
         end
@@ -83,10 +85,12 @@ function InlayLayer:initUI()
             local goldweaponNum = self.inlayModel:getGoldWeaponNum()
             if goldweaponNum > 0 then
                 self.inlayModel:equipAllInlays()
+                self:playSoundxqcg()
                 self.storeModel:refreshInfo("prop")
             else
                 function equipGold()
                     self.inlayModel:equipAllInlays(true)
+                    self:playSoundxqcg()
                 end
                 local buyModel = md:getInstance("BuyModel")
                 buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
@@ -106,6 +110,11 @@ function InlayLayer:initUI()
             end
         end)
     end
+end
+
+function InlayLayer:playSoundxqcg()
+    local xqcg = "res/Music/ui/xqcg.wav"
+    audio.playSound(xqcg,false)
 end
 
 function InlayLayer:refreshListView(index)

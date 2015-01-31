@@ -120,12 +120,29 @@ function RootLayer:addResHome()
     local mrdlsrc = "res/GiftBag/mrdl/mrdl.csb"
     manager:addArmatureFileInfoAsync(mrdlsrc,  handler(self, self.dataLoaded))
 
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
+    
     --sound
-    local startMusic = "res/Start/start.ogg"
+    local startMusic = "res/Music/bg/bjyx.wav"
     audio.preloadMusic(startMusic)
-    -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
-    -- audio.preloadMusic(homeBarMusic)
+    -- -- local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    -- -- audio.preloadMusic(homeBarMusic)
 
+    -- local rwwc   = "res/Music/rwwc.ogg"
+    -- local dianji = "res/Music/dianji.ogg"
+    -- local letsgo = "res/Music/letsgo.ogg"
+    -- local gmcg   = "res/Music/gmcg.ogg"
+    -- local wqsj   = "res/Music/wqsj.ogg"
+    -- local xqcg   = "res/Music/xqcg.ogg"
+    -- local zx     = "res/Music/zx.ogg"
+    -- audio.preloadSound(rwwc)
+    -- audio.preloadSound(dianji)
+    -- audio.preloadSound(letsgo)
+    -- audio.preloadSound(gmcg)
+    -- audio.preloadSound(wqsj)
+    -- audio.preloadSound(xqcg)
+    -- audio.preloadSound(zx)
 
 end
 
@@ -138,6 +155,32 @@ function RootLayer:addResFight()
     -- -- do something
     -- end
     -- display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)    
+    --armature
+
+    local musics = {"bj_zhandou.wav"}
+    for i,v in ipairs(musics) do
+        local src = "res/Music/fight/"..musics[i]
+        audio.preloadMusic(src)
+    end
+
+    --sound weapon
+    local weaponEffects = {"lmdfire.wav", "mp5fire.wav", "syfire.wav", "ak47fire.wav", "m4fire.wav", "rpgfire.wav", 
+                "m134fire.wav", "jfzcfire.wav"}
+ 
+    for i,v in ipairs(weaponEffects) do
+        local src = "res/Music/weapon/"..weaponEffects[i]
+        audio.preloadSound(src)
+    end
+
+    --sound effect
+    local uiEffects = {"jijia_open.wav", "jijia_close.wav", "glass.wav", "gold.wav", "golds.wav", "hzd.wav", 
+                "slbz.wav", "die.wav", "rengsl.wav", "plane.wav", "hithd.wav","beng.wav"}
+ 
+    for i,v in ipairs(uiEffects) do
+        local src = "res/Music/fight/"..uiEffects[i]
+        audio.preloadSound(src)
+    end    
+
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 

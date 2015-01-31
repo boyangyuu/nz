@@ -42,7 +42,7 @@ function HomeBarLayer:popUpGify(properties)
 end
 
 function HomeBarLayer:playSound()
-    local homeBarMusic = "res/HomeBarLayer/homeBar.ogg"
+    local homeBarMusic = "res/Music/bg/bjyx.wav"
     audio.playMusic(homeBarMusic,true)
 end
 
@@ -79,6 +79,14 @@ function HomeBarLayer:initHomeLayer(groupid)
     local zuanshi = cc.uiloader:seekNodeByName(self.homeRootNode, "Image_18")
     local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
+
+
+    local btnarmature = ccs.Armature:create("sczg")
+    btnarmature:setPosition(0,0)
+    -- btnarmature:setScale(1.2)
+    self.btnStore:addChild(btnarmature)
+    btnarmature:getAnimation():play("sczg" , -1, 1)
+
 
     self.btnBack:setTouchEnabled(true)  
     self.btnArsenal:onButtonPressed(function(event)

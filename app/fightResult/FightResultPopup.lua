@@ -7,6 +7,12 @@ end)
 function FightResultPopup:ctor()
 	self:loadCCS()
 	self:playAnim()
+    self:playSound()
+end
+
+function FightResultPopup:playSound()
+    local rwwc   = "res/Music/ui/rwwc.wav"
+    audio.playSound(rwwc,false)
 end
 
 function FightResultPopup:loadCCS()

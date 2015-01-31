@@ -300,6 +300,7 @@ function LevelDetailLayer:onClickBtnGold()
 	local isDone = self.guide:isDone("prefight02")
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
+        self.storeModel  = md:getInstance("StoreModel")
         self.storeModel:refreshInfo("prop")
     else
 		if isDone then

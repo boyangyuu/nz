@@ -174,6 +174,8 @@ function WeaponListLayer:initUI()
         elseif event.name=='ended' then
             -- local nextlevel = self.weaponListModel:getIntenlevel(self.weaponId)+1
             if self.userModel:costMoney(self.costupgrade) then
+                local wqsj = "res/Music/ui/wqsj.wav"
+                audio.playSound(wqsj,false)
                 self:intensify(self.weaponId)
             end
         end
@@ -388,6 +390,9 @@ function WeaponListLayer:playstar(refreshStar,intenlevel)
                     self.starArmature:setScale(0.448,0.452)
                     self.panlStars[i]:addChild(self.starArmature)
                     self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
+                    local zx = "res/Music/ui/zx.wav"
+                    audio.playSound(zx,false)
+
                 end
                 scheduler.performWithDelayGlobal(delayStar, delay)
             end
@@ -476,6 +481,8 @@ function WeaponListLayer:buyWeapon(event)
     if self.userModel:costDiamond(self.weaponrecord["cost"]) then
         function delay()
             self.weaponListModel:buyWeapon(self.weaponId)
+            local gmcg   = "res/Music/ui/gmcg.wav"
+            audio.playSound(gmcg,false)
         end
         scheduler.performWithDelayGlobal(delay, 0.4)
     end
