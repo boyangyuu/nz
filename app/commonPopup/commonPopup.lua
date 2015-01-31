@@ -132,13 +132,13 @@ function commonPopup:initUI(properties)
 
 		btncall:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
 			if event.name == "began" then
-				-- print("btncall is pressed!")
+				print("btncall is pressed!")
 				return true
 			elseif event.name == "ended" then
 				
 				if device.platform == "android" then
-					-- local className = "org/cocos2dx/lua/appActivity"
-					-- luaj.callStaticMethod(className, "callPhone")
+					local className = "com/hgtt/ccn/IAPControl"
+					luaj.callStaticMethod(className, "callPhone")
 					print("btncall is pressed!")
 				end
 			end
@@ -148,26 +148,42 @@ function commonPopup:initUI(properties)
 end
 
 function commonPopup:onClickCofirm()
-	local func =  self.properties.callfuncCofirm
-	if func ~= nil then 
-		func()		
-	end
 	if self.properties.type == "style3" and self.properties.isPauseScene then 
-		cc.Director:getInstance():popScene()
+		print("commonPopup:onClickCofirm() isPauseScene")
+		local buyModel = md:getInstance("BuyModel")
+		if buyModel:checkBought("weaponGiftBag") == false then
+			print("buyModel:checkBought(weaponGiftBag) == false ")
+			buyModel:buy("weaponGiftBag", {
+                    payDoneFunc = self.properties.callfuncCofirm,
+                    deneyBuyFunc = function()
+                    	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
+                    end, isFight = true, isPauseSecond = true})
+		else
+			buyModel:buy("goldGiftBag", {
+                    payDoneFunc = self.properties.callfuncCofirm,
+                    deneyBuyFunc = function()
+                    	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
+                    end, isFight = true, isPauseSecond = true})
+		end
 	else
 		ui:closePopup("commonPopup")
+		local func =  self.properties.callfuncCofirm
+		if func ~= nil then 
+			func()		
+		end
 	end
 end
 
 function commonPopup:onClickClose()
-	local func =  self.properties.callfuncClose
-	if func ~= nil then 
-		func()
-	end	
 	if self.properties.type == "style3" and self.properties.isPauseScene then 
 		cc.Director:getInstance():popScene()
 	else
 		ui:closePopup("commonPopup")
+	end	
+	
+	local func =  self.properties.callfuncClose
+	if func ~= nil then 
+		func()
 	end	
 end
 
