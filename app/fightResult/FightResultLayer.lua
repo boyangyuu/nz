@@ -1,4 +1,5 @@
 local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
+local Color_BLACK = cc.c3b(0, 0, 0)
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)
@@ -114,11 +115,25 @@ function FightResultLayer:initUI()
 
     local xqwc = cc.ui.UILabel.new({
     UILabelType = 2, text = "镶嵌完成", size = 45})
+    local ksxq = cc.ui.UILabel.new({
+    UILabelType = 2, text = "快速镶嵌", size = 45})
     local lqcg = cc.ui.UILabel.new({
     UILabelType = 2, text = "领取成功", size = 45})
+    local lqsy = cc.ui.UILabel.new({
+    UILabelType = 2, text = "领取剩余", size = 45})
+    local jx = cc.ui.UILabel.new({
+    UILabelType = 2, text = "继续", size = 45})
+    xqwc:enableOutline(Color_BLACK,2)
+    lqcg:enableOutline(Color_BLACK,2)
+    ksxq:enableOutline(Color_BLACK,2)
+    lqsy:enableOutline(Color_BLACK,2)
+    jx:enableOutline(Color_BLACK,2)
 
     self.btninlay:setButtonLabel("disabled", xqwc)
     self.btngetall:setButtonLabel("disabled" , lqcg)
+    self.btninlay:setButtonLabel("normal", ksxq)
+    self.btngetall:setButtonLabel("normal" , lqsy)
+    self.btnback:setButtonLabel("normal" , jx)
 
 	function showButton()
 		self:startGuide()

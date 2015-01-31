@@ -55,7 +55,7 @@ function DailyLoginLayer:initUI()
     local parePanl = self.tx[dailyInfo["dailyid"]+1]
     armature:setScale(2)
     armature:setPosition(110,150)
-parePanl:addChild(armature) --   addChildCenter(armature, parePanl)
+    parePanl:addChild(armature) 
     armature:getAnimation():play("die" , -1, 1)
 
     receiveBtn:setTouchEnabled(true)

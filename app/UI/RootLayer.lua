@@ -123,6 +123,9 @@ function RootLayer:addResHome()
     local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
     manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
     
+    local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.csb"
+    manager:addArmatureFileInfoAsync(thjbxsrc,  handler(self, self.dataLoaded))
+    
     --sound
     local startMusic = "res/Music/bg/bjyx.wav"
     audio.preloadMusic(startMusic)
