@@ -78,14 +78,14 @@ function Attackable:getTargetData(focusNode)
 
 	if self.attackType == "weak" or isGold then
 		if isHitedWeak then
-			print("isHitedWeak")
+			-- print("isHitedWeak")
 			return true, targetDataWeak 
 		elseif isHitedBody then 
 			return true, targetDataBody
 		end
 	else
 		if isHitedBody then
-			print("isHitedBody")
+			-- print("isHitedBody")
 			return true, targetDataBody
 		elseif isHitedWeak then 
 			return true, targetDataWeak
@@ -137,7 +137,7 @@ function Attackable:checkWeak(focusNode)
 		if isInRange and isValid then 
 			local isHited = isInRange 
 			targetData.demageScale = self.enemy:getWeakScale(rangeStr)
-			print("targetData.demageScale", targetData.demageScale)
+			-- print("targetData.demageScale", targetData.demageScale)
 			targetData.demageType = "head"
 			targetData.enemy = self
 			return isHited,  targetData
@@ -316,7 +316,7 @@ function Attackable:playHittedEffect()
 	if self.isRed then return end
 	local function callfunc()
 		if self.isRed then 
-			print("回复")
+			-- print("回复")
 			self.armature:setColor(cc.c3b(255,255,255))
 		end
 	end
@@ -326,7 +326,7 @@ function Attackable:playHittedEffect()
 		self.isRed = false
 	end
 
-	print("变红")
+	-- print("变红")
 	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
 	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
@@ -450,7 +450,7 @@ function Attackable:onEnter()
 	local isPause = fight:isPauseFight()
 	    -- print("function Fight:isPauseFight()"..isPause)
 	if isPause then 
-		print("self:setPause(true) ")
+		-- print("self:setPause(true) ")
 		self:setPause({isPause = true}) 
 	end
 end

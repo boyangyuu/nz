@@ -23,7 +23,7 @@ function HeroAnimView:ctor()
 end
 
 function HeroAnimView:playHurtedBomb(event)
-	print("HeroLayer:playHurtedBomb()")
+	-- print("HeroLayer:playHurtedBomb()")
 	local animName = event.animName
 	local armature = ccs.Armature:create(animName)
 	-- assert(armature, "armature os mil animName:"..bls)
@@ -41,7 +41,7 @@ function HeroAnimView:playHurtedBomb(event)
 end
 
 function HeroAnimView:playKillHead(event)
-	print("function HeroAnimView:playKillHead(event)")
+	-- print("function HeroAnimView:playKillHead(event)")
 	local baotou = ccs.Armature:create("baotou")
 	baotou:getAnimation():play("baotou" , -1, 1)
     baotou:getAnimation():setMovementEventCallFunc(
