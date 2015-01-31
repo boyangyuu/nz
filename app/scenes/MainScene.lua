@@ -50,6 +50,8 @@ function MainScene:ctor()
             :pos(0, display.offset+640)
             :addTo(self,600)
             :setTouchEnabled(false)
+
+            -- dump(GameData)
 end
 
 function MainScene:onEnter()
