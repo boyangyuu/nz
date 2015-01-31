@@ -25,6 +25,8 @@ isDebug = true
 -- isTest  = false        
 -- isDebug = false
 
+isMusicPlaying = true
+
 
 ui      = UI.new()
 md      = MD.new()
@@ -118,8 +120,8 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
-            money = 1000000,
-            diamond = 100,
+            money = 0,
+            diamond = 0,
 
 
                       
@@ -128,8 +130,8 @@ function MyApp:createGameStateFile()
                         level = 1,
             },
             guide = {
-                        gamePre         = true,
-                        fight01         = true,
+                        gamePre         = false,
+                        fight01         = false,
                         afterfight01    = false,
                         prefight02      = false,
                         fight02_dun     = false,

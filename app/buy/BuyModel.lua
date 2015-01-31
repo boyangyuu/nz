@@ -28,9 +28,15 @@ function BuyModel:buy(configid, buydata)
     self.curBuydata =  buydata
 	local config  = BuyConfigs.getConfig(configid)
 	local isGift = config.isGift --todo
+	local isFight = buydata.isFight
 
 	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configid})
+		if isFight then
+			print("BuyModel, configid:",configid)
+        	ui:showPopup("GiftBagPopup",{popupName = configid},{isPauseScene = true, isFight = isFight, isPauseSecond = buydata.isPauseSecond})
+        else 
+        	ui:showPopup("GiftBagPopup",{popupName = configid})
+        end
     else
     	--mm
     	iap:pay(configid)
