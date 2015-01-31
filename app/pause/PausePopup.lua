@@ -42,8 +42,10 @@ function PausePopup:initButtons()
 	backBtn:setTouchEnabled(true)
 	addBtnEventListener(backBtn, function( event )
 		if event.name == 'began' then
+			self:btnColor(backBtn, true)
 			return true
 		elseif event.name == 'ended' then
+			self:btnColor(backBtn, false)
 			director:popScene()
 			-- ui:closePopup("PausePopup")
 			self:btnEvent()
@@ -54,7 +56,6 @@ function PausePopup:initButtons()
 	local musicClosedBtn = cc.uiloader:seekNodeByName(self, "Panel_MusicClosed")
 	local musicplay = cc.uiloader:seekNodeByName(musicClosedBtn, "musicplay")
 	local musicclose = cc.uiloader:seekNodeByName(musicClosedBtn, "musicclose")
-	local isMusicPlaying = audio:isMusicPlaying()
 	if isMusicPlaying then
 		musicplay:setVisible(false)
 		musicclose:setVisible(true)
@@ -66,21 +67,24 @@ function PausePopup:initButtons()
 	musicClosedBtn:setTouchEnabled(true)
 	addBtnEventListener(musicClosedBtn, function( event )
 		if event.name == 'began' then
+			self:btnColor(musicClosedBtn, true)
 			return true
 		elseif event.name == 'ended' then 
-			local isMusicPlaying = audio:isMusicPlaying()
+		self:btnColor(musicClosedBtn, false)
 			if isMusicPlaying then
 				print("music is playing")
-				musicplay:setVisible(false)
-				musicclose:setVisible(true)
-				audio:pauseMusic()
-				audio:pauseAllSounds()
-			else
-				print("music is close")
 				musicplay:setVisible(true)
 				musicclose:setVisible(false)
+				audio:pauseMusic()
+				audio:pauseAllSounds()
+				isMusicPlaying = false
+			else
+				print("music is close")
+				musicplay:setVisible(false)
+				musicclose:setVisible(true)
 				audio:resumeMusic()
 				audio:resumeAllSounds()
+				isMusicPlaying = true
 			end
 			
 			print("musicClosedBtn is pressed!")
@@ -96,6 +100,15 @@ function PausePopup:initButtons()
 			director:popScene()
 		end
 	end)
+end
+
+function PausePopup:btnColor(btn,isPress)
+	if isPress then 
+		btn:setColor(cc.c3b(150, 150, 150))
+	else 
+		btn:setColor(cc.c3b(0, 0, 0))
+	end
+
 end
 
 function PausePopup:btnEvent()

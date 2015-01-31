@@ -157,13 +157,13 @@ function commonPopup:onClickCofirm()
                     payDoneFunc = self.properties.callfuncCofirm,
                     deneyBuyFunc = function()
                     	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
-                    end, isFight = true})
+                    end, isFight = true, isPauseSecond = true})
 		else
 			buyModel:buy("goldGiftBag", {
                     payDoneFunc = self.properties.callfuncCofirm,
                     deneyBuyFunc = function()
                     	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
-                    end, isFight = true})
+                    end, isFight = true, isPauseSecond = true})
 		end
 	else
 		ui:closePopup("commonPopup")

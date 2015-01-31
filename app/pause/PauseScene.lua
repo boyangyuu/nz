@@ -16,23 +16,29 @@ end
 function PauseScene:showPopup(event)
 	print("PauseScene:showPopup(event)")
 
-	--jie
-	local screenCapture = self:screenCapture()
-	local sprite = display.newSprite(screenCapture:getSprite():getTexture())
-	-- sprite:setPosition(display.width1/2, display.height1/2)
-	sprite:setAnchorPoint(0,0)
-	sprite:setFlippedY(true)
-	self:addChild(sprite, -1)
+	print("event.isPauseSecond:",event.isPauseSecond)
+	if not event.isPauseSecond then
+	--jieping
+		local screenCapture = self:screenCapture()
+		local sprite = display.newSprite(screenCapture:getSprite():getTexture())
+		-- sprite:setPosition(display.width1/2, display.height1/2)
+		sprite:setAnchorPoint(0,0)
+		sprite:setFlippedY(true)
+		self:addChild(sprite, -1)
 
 
-	self:addBgLayer()
-	-- local director = cc.Director:getInstance()
-	-- director:pushScene(self)
+		self:addBgLayer()
+		local director = cc.Director:getInstance()
+		director:pushScene(self)
+		print("PauseScene id:",self.id)
+		self.id = self.id + 1
+	end
 
 
 
 	local cls = event.layerCls
 	self.str = cls.__cname
+	print("PauseScene layer Name:",self.str)
 	local pro = event.properties
 	local layer = cls.new(pro)
 	if self.layers[str] ~= nil then 	
@@ -42,21 +48,16 @@ function PauseScene:showPopup(event)
 	self.layers[self.str] = layer
 	layer:setPositionY(display.offset)
 	self:addChild(layer)
-	-- layer:scale(0.0)
-	-- if event.anim == false then
-	-- 	layer:scale(1)
-	-- 	print("dsdfad1")
-	-- else
-	-- 	layer:scaleTo(0.3, 1)
-	-- 	print("dsdfad2")
-	-- end
-
-	if self.str ~= "weaponGiftBag" then
-		local director = cc.Director:getInstance()
-		director:pushScene(self)
-		print("PauseScene id:",self.id)
-		self.id = self.id + 1
+	layer:scale(0.0)
+	if event.anim == false then
+		layer:scale(1)
+		print("dsdfad1")
+	else
+		layer:scaleTo(0.3, 1)
+		print("dsdfad2")
 	end
+
+	
 
 end
 
