@@ -56,10 +56,12 @@ end
 
 function MainScene:onEnter()
     display.resume()
+    -- self:resume()
 end
 
 function MainScene:onExit()
     display.pause()
+    -- self:pause()
 end
 
 return MainScene

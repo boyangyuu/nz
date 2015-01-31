@@ -124,6 +124,7 @@ function FightPlayer:showControl(event)
     self.btnLei:setVisible(true)
     self.label_jijiaNum:setVisible(true)
     self.label_leiNum:setVisible(true)
+    self.label_gold:setVisible(true)   
 
     local levelModel = md:getInstance("LevelDetailModel")
     local isju = levelModel:isJujiFight()
@@ -142,6 +143,7 @@ function FightPlayer:hideControl(event)
     self.btnLei:setVisible(false)
     self.label_jijiaNum:setVisible(false)
     self.label_leiNum:setVisible(false)
+    self.label_gold:setVisible(true)
 end
 
 function FightPlayer:setComponentVisible(event)
@@ -301,7 +303,6 @@ function FightPlayer:initDefence()
 end
 
 function FightPlayer:initBtns()
-
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
     self.btnFire:setTouchEnabled(true)  
@@ -332,7 +333,8 @@ function FightPlayer:initBtns()
     self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_leiNum = cc.uiloader:seekNodeByName(self, "label_shouleiNum")
     local num = self.fightProp:getLeiNum()
-    self.label_leiNum:setString(num)     
+    self.label_leiNum:setString(num)   
+
     --btnJu
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
     self.btnJu:setVisible(false)
@@ -342,8 +344,11 @@ function FightPlayer:initBtns()
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
     self.btnGold:setTouchEnabled(true)
-    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)  
-
+    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    self.label_gold = cc.uiloader:seekNodeByName(self, "label_gold")    
+    self.label_gold:setColor(cc.c3b(255, 146, 0))
+    local num = self.fightProp:getGoldNum()
+    self.label_gold:setString(num)
 end
 
 ---- touch and btn----
@@ -405,12 +410,12 @@ function FightPlayer:checkBtnGold(point, eventName)
     if self.btnGold:isVisible() == false then return end 
     local rect = self.btnGold:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
-    if isTouch then 
-        -- print("点击黄金枪 购买")
+    if isTouch then
+        print("点击黄金枪 购买")
         addBtnEffect(self.btnGold)
         self.fightProp:costGoldWeapon()
     end
-    return isTouch    
+    return isTouch
 end
 
 function FightPlayer:checkbtnRobot(point)
@@ -454,12 +459,19 @@ end
 function FightPlayer:refreshPropData(event)
     print("function FightPlayer:refreshPropData(event)")
     local fightProp = md:getInstance("FightProp")
+    
+    --jijia
     local numjijia = fightProp:getRobotNum()
     self.label_jijiaNum:setString(numjijia)
+    
+    --lei
     local numlei   = fightProp:getLeiNum()
-    print("numjijia:"..numjijia.."numlei:"..numlei)
+    -- print("numjijia:"..numjijia.."numlei:"..numlei)
     self.label_leiNum:setString(numlei)
 
+    --gold
+    local numGold   = fightProp:getGoldNum()
+    self.label_gold:setString(numGold)
 end
 
 function FightPlayer:checkbtnDefence(point)
@@ -781,6 +793,7 @@ function FightPlayer:initGuide1()
     inlayModel:buyInlay(20,false,1) 
     inlayModel:equipInlay(24,false) 
     inlayModel:equipInlay(20,false) 
+    self.hero:setFullHp()
 
     --move
     local isMoveGuideUnDone = true
@@ -907,7 +920,7 @@ function FightPlayer:initGuide2()
     --check   
     local isDone = self.guide:isDone("fight02_dun")
     local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 5 and gid == 1
+    local isWillGuide = lid == 2 and gid == 1
     if isDone and not isWillGuide then return end
 
     --盾

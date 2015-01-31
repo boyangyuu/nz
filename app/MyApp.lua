@@ -25,6 +25,8 @@ isDebug = true
 -- isTest  = false        
 -- isDebug = false
 
+isMusicPlaying = true
+
 
 ui      = UI.new()
 md      = MD.new()

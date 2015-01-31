@@ -35,7 +35,7 @@ function FightProp:costRobot(callfuncSuccess)
 			self.buyModel:buy("armedMecha", {payDoneFunc = handler(self, self.refreshData)})
 		end 
 		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc})
+						deneyBuyFunc = deneyBuyFunc, isFight = true})
 	end
 	self:refreshData()
 end
@@ -55,7 +55,7 @@ function FightProp:costLei(callfuncSuccess)
 			self.buyModel:buy("handGrenade", {payDoneFunc = handler(self, self.refreshData)})
 		end 		
 		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc})
+						deneyBuyFunc = deneyBuyFunc,isFight = true})
 	end
 	self:refreshData()
 end
@@ -66,21 +66,37 @@ function FightProp:getLeiNum()
 end
 
 function FightProp:costGoldWeapon()
-	local function deneyBuyFunc()
-		self.buyModel:buy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon)})
-	end 		
-	self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
-					deneyBuyFunc = deneyBuyFunc})	
+	local fightInlay = md:getInstance("FightInlay")
+	local isNativeGold = fightInlay:getIsNativeGold()
+	if isNativeGold then return end
+
+	local num = self:getGoldNum()
+	if num >= 1 then 
+		-- self.goldNum = self.goldNum - 1		
+		local inlayModel = md:getInstance("InlayModel")
+		inlayModel:equipAllInlays()
+		fightInlay:checkNativeGold()
+	else
+		local function deneyBuyFunc()
+			self.buyModel:buy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon)})
+		end 		
+		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
+						deneyBuyFunc = deneyBuyFunc})	
+	end
+
+	self:refreshData()
+
 end
 
 function FightProp:getGoldNum()
-	local num
-	return num 
+	local inlayModel = md:getInstance("InlayModel")
+	return inlayModel:getGoldWeaponNum()
 end
 
 function FightProp:startGoldWeapon()
 	local inlay = md:getInstance("FightInlay")
 	inlay:activeGoldForever()
+	self:refreshData()
 end
 
 function FightProp:costReliveBag()
