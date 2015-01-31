@@ -304,6 +304,8 @@ function LevelDetailLayer:onClickBtnGold()
         self.inlayModel:equipAllInlays()
         self.storeModel  = md:getInstance("StoreModel")
         self.storeModel:refreshInfo("prop")
+		self.alreadygold:setVisible(true)
+		self.btnGold:setVisible(false)	
     else
 		if isDone then
 			local buyModel = md:getInstance("BuyModel")
