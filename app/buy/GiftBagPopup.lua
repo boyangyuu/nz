@@ -12,6 +12,7 @@ function GiftBagPopup:ctor(properties)
 	self.buyModel = md:getInstance("BuyModel")
 
 	self.param = properties
+	print("GiftBagPopup:ctor  self.param.isFight:",self.param.isFight)
 	self:loadCCS()
 	self:initButtons()
 end
