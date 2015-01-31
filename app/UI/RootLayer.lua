@@ -198,7 +198,7 @@ function RootLayer:addResFight()
     end
 
     local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
-        "beizha_sl", "bls", "btqpg", "bossdies"}
+        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

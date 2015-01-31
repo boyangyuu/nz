@@ -97,7 +97,7 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 Define.kJuRange 				= 4.0
 
 --引导
-Define.kGuideActiveJijia	 	= 0.1  --boss还有百分之10血时 触发机甲
+Define.kGuideActiveJijia	 	= 0.25  --boss还有百分之10血时 触发机甲
 Define.kGuidebossHpScale		= 0.5  --引导的时候 boss的血量缩小0.5
 
 function Define:ctor()
