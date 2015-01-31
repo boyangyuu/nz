@@ -153,7 +153,7 @@ function Guide:clearData()
 	local data = getUserData()
 	for k,v in pairs(data.guide) do
 		print(k,v)
-		data.guide[k] = false
+		data.guide[k] = not data.guide[k]
 	end
 	setUserData(data)
 end

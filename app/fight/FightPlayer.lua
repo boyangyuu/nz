@@ -969,7 +969,8 @@ function FightPlayer:initGuide3()
 end
 
 function FightPlayer:onEnter()
-    
+    local src = "res/Music/fight/bj_zhandou.wav"
+    audio.playMusic(src, true)
 end
 
 function FightPlayer:onCleanup()

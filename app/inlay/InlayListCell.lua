@@ -61,7 +61,12 @@ function InlayListCell:initCellUI(record)
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function()
+            local dianji = "res/Music/ui/dianji.wav"
+            audio.playSound(dianji,false)
             if self.userModel:costMoney(record["goldPrice"]) then
+                local gmcg = "res/Music/ui/gmcg.wav"
+                audio.playSound(gmcg,false)
+
                 num = num + 1
                 ownnumber:setString(num)
                 self.inlayModel:buyInlay(record["id"],false)
@@ -84,6 +89,10 @@ function InlayListCell:initCellUI(record)
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function()
+            local dianji = "res/Music/ui/dianji.wav"
+            audio.playSound(dianji,false)
+            local xqcg = "res/Music/ui/xqcg.wav"
+            audio.playSound(xqcg,false)
             self.inlayModel:equipInlay(record["id"],true)
         end)
         :pos(170, -36)

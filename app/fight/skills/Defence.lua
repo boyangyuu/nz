@@ -88,6 +88,10 @@ function Defence:onHitted(demage)
 	--hp
 	print("demage", demage)
 	self:decreseHp(demage)
+
+	--子弹挨打
+	local soundSrc  = "res/Music/fight/hithd.wav"
+	self.audioId =  audio.playSound(soundSrc,false)		
 end
 
 function Defence:switchStatus()
