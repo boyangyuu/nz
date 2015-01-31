@@ -94,6 +94,7 @@ function LevelMapLayer:initChooseLayer()
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
+    btnTask:setVisible(false)
     -- modified by lpf
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 
@@ -186,16 +187,16 @@ function LevelMapLayer:initChooseLayer()
         end
     end)
 
-    btnTask:setTouchEnabled(true)
-    addBtnEventListener(btnTask, function(event)
-        if event.name=='began' then
-            print("Btn is begining!")
-            return true
-        elseif event.name=='ended' then
-            print("Btn is pressed!")
+    -- btnTask:setTouchEnabled(true)
+    -- addBtnEventListener(btnTask, function(event)
+    --     if event.name=='began' then
+    --         print("Btn is begining!")
+    --         return true
+    --     elseif event.name=='ended' then
+    --         print("Btn is pressed!")
 
-        end
-    end)
+    --     end
+    -- end)
     btnGold:setTouchEnabled(true)
     addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
@@ -372,7 +373,7 @@ function LevelMapLayer:checkGuide()
 end
 
 function LevelMapLayer:initGuide()
-    --点击进入下一关
+    --开启第二关之后 点击进入下一关
     local rect = cc.rect(200, 107, 120, 120)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
@@ -383,6 +384,18 @@ function LevelMapLayer:initGuide()
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
         end
      })   
+
+    --镶嵌之后 点击进入下一关
+    local rect = cc.rect(572, 344, 120, 120)
+    local guide = md:getInstance("Guide")
+    guide:addClickListener({
+        id = "xiangqian_nextLevel",
+        groupId = "xiangqian",
+        rect = rect,
+        endfunc = function (touchEvent)
+            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 5})
+        end
+     })       
 end
 
 return LevelMapLayer

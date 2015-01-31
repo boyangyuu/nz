@@ -561,13 +561,13 @@ end
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
-    if  isRobot then
+    -- print("isRobot", isRobot)
+    if isRobot then
         if robot:isCoolDownDone() then
             self:robotFire()
         end
     else
         if self:isCoolDownDone() then 
-            
             self:checkFire()
         end        
     end 
@@ -655,7 +655,7 @@ function FightPlayer:fire()
 
     --gun
     if  self.gunView:canShot() then  --todo
-        self.gunView:fire()
+        -- self.gunView:fire()
         self.focusView:playFire()
         
         --todo 发命令
@@ -769,9 +769,18 @@ end
 function FightPlayer:initGuide1()
     --check   
     local isDone = self.guide:isDone("fight01")
-    if isDone then return end
+    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 1 and gid == 1
+    if isDone and not isWillGuide then return end    
 
     self.focusNode:setPosition(cc.p(500,230))
+
+    --inlay 
+    local inlayModel = md:getInstance("InlayModel")
+    inlayModel:buyInlay(24,false,1) 
+    inlayModel:buyInlay(20,false,1) 
+    inlayModel:equipInlay(24,false) 
+    inlayModel:equipInlay(20,false) 
 
     --move
     local isMoveGuideUnDone = true
@@ -896,8 +905,10 @@ end
 
 function FightPlayer:initGuide2()
     --check   
-    local isDone = self.guide:isDone("fight02")
-    if isDone then return end
+    local isDone = self.guide:isDone("fight02_dun")
+    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 5 and gid == 1
+    if isDone and not isWillGuide then return end
 
     --盾
     self.guide:addClickListener({
@@ -908,7 +919,7 @@ function FightPlayer:initGuide2()
             self.defence:setIsAble(true) 
             self.defence:startDefence()   
         end
-     })    
+    })    
 
     --机甲
     self.guide:addClickListener({
@@ -918,14 +929,17 @@ function FightPlayer:initGuide2()
         endfunc = function (touchEvent)
             addBtnEffect(self.btnRobot)
             local robot = md:getInstance("Robot")
+            -- print("！！！！！！！fight02_jijia")
             robot:startRobot()  
         end
-     })       
+    })       
 end
 
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
-    if isDone then return end
+    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 4 and gid == 1
+    if isDone and not isWillGuide then return end   
 
     self.guide:addClickListener({
         id = "fight04_open",

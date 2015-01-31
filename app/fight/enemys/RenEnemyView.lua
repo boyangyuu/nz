@@ -131,7 +131,7 @@ function RenEnemyView:playFire()
     --导弹
     self.armature:getAnimation():play("fire" , -1, 1) 
 
-    print("发射")
+    -- print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     local property = {

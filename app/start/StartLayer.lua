@@ -37,23 +37,22 @@ function StartLayer:initUI()
     local play = cc.uiloader:seekNodeByName(btnMusic, "play")
     local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
     play:setVisible(false)
-    local isPlaying = true
     addBtnEventListener(btnMusic, function( event )
         if event.name == "began" then 
             return true
         elseif event.name == "ended" then
-            if isPlaying then 
+            if isMusicPlaying then 
                 stop:setVisible(false)
                 play:setVisible(true)
                 audio:pauseMusic()
                 audio:pauseAllSounds()
-                isPlaying = false
+                isMusicPlaying = false
             else
                 stop:setVisible(true)
                 play:setVisible(false)
                 audio:resumeMusic()
                 audio:resumeAllSounds()
-                isPlaying = true
+                isMusicPlaying = true
             end
         end
     end)
@@ -96,7 +95,7 @@ function StartLayer:beginGame()
 
     self:initDailyLogin()
 
-    if not self:isDone("isFirstRunning") then 
+    if self:isDone("gamePre") then 
         ui:changeLayer("HomeBarLayer",{popgift = true})
     else
         ui:changeLayer("storyLayer",{})
@@ -110,8 +109,6 @@ function StartLayer:isDone(id)
     else 
         return true
     end
-
- 
 end
 
 function StartLayer:initDailyLogin()
