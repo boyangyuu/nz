@@ -313,7 +313,7 @@ function InlayModel:getGoldByType( typeName )
 	return false
 end
 
-function InlayModel:getGoldWeaponNum(  )
+function InlayModel:getGoldWeaponNum()
 	local config = self.config
 	local newTable = self:getInlayedGold(config)
 	local goldNum = self:getInlayNum(newTable[1]["id"])

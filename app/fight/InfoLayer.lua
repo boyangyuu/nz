@@ -162,28 +162,11 @@ function InfoLayer:onHide(event)
 	self:setVisible(false)
 end
 
--- function InfoLayer:rejustBloodAnim()
--- 	local per = self.hero:getHp() / self.hero:getMaxHp()
--- 	local blood2 = cc.uiloader:seekNodeByName(self.blood, "progressBar2")
---     local box  = blood2:getBoundingBox()
--- 	-- dump(box, "box")
---     local posx = per * box.width
---     local posy = box.height / 2
---     self.bloodAnim:setPosition(cc.p(posx, posy))
-
--- end
-
--- function InfoLayer:onBloodMovementEvent(armatureBack,movementType,movementID)
--- 	if movementType == ccs.MovementEventType.loopComplete then
--- 		armatureBack:getAnimation():play("chixu", -1, 1)
--- 	end
--- end
 
 function InfoLayer:initGuide()
     local isDone = self.guide:isDone("fight")
     if isDone then return end
-	
-	local rect = self.blood2:getBoundingBox()
+	local rect = cc.rect(105, 500, 285,105)
 	--blood
     local data1 = {
         id = "fight_blood",

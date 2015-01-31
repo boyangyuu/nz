@@ -669,7 +669,7 @@ local waves = {
 	
 }
 
---enemy的关卡配置                                                    青铜难度对应怪物属性
+--enemy的关卡配置                                        青铜镶嵌 MP5伤害80  dps大于等于3 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=9,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,

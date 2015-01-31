@@ -6,7 +6,7 @@ local waves = {
 	{
 		enemys = { 
 			{
-				time = 3,
+				time = 2,
 				num = 1,
 				delay = {0},
 				pos = {300},
@@ -18,9 +18,9 @@ local waves = {
 			},
 
 			{
-				time = 3,
+				time = 5,
 				num = 1,
-				delay = {0},
+				delay = {0.5},
 				pos = {360},
 				property = {
 					placeName = "place5",  
@@ -29,13 +29,13 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 8,
 				num = 1,
 				delay = {0},
 				pos = {500},
 				property = {
 					placeName = "place11",  
-					startState = "",
+					startState = "rollleft",
 					id = 2,
 					type = "dao",
 					missileId = 3,
@@ -44,19 +44,49 @@ local waves = {
 			},
 			{
 				
-				time = 9,
+				time = 11,
 				num = 1,
 				delay = {0},
-				pos = {60},
+				pos = {50},
 				property = {
 					placeName = "place10",  
 					startState = "",
 					id = 1,
 				},
-			},	
+			},
+			{
+				time = 14,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					placeName = "place9",  
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				
+				time = 17,
+				num = 2,
+				delay = {0.3,1.6},
+				pos = {90,280},
+				property = {
+					placeName = "place16",
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},
+			
 			
 		},
 	},
+
 	{
 		enemys = {
 			{
@@ -73,7 +103,7 @@ local waves = {
 				},
 			}, 
 			{
-				time = 12,
+				time = 6,
 				num = 1,
 				delay = {0},
 				pos = {50},
@@ -84,7 +114,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 9,
 				num = 1,
 				delay = {0},
 				pos = {116},
@@ -95,7 +125,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 12,
 				num = 1,
 				delay = {0},
 				pos = {100},
@@ -106,7 +136,7 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 15,
 				num = 1,
 				delay = {0},
 				pos = {666},
@@ -120,7 +150,7 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 18,
 				num = 1,
 				delay = {0},
 				pos = {600},
@@ -131,7 +161,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 21,
 				num = 1,
 				delay = {0},
 				pos = {95},
@@ -139,6 +169,22 @@ local waves = {
 					placeName = "place3",  
 					id = 1,
 					startState = "rollright",
+				},
+			},
+			{
+				time = 24,
+				num = 1,
+				pos = {450},
+				delay = {0.5},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place17",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 30.0,		                                    --持续时间			
 				},
 			},	
 			
@@ -153,11 +199,11 @@ local waves = {
 --enemy的关卡配置                                                    白银难度对应怪物属性
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=16,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=16,hp=770,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=375,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=770,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
@@ -169,7 +215,7 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=562,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=1540,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
@@ -194,8 +240,8 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
-	weak1=3,    award = 60},
+	{id=11,image="feiji",demage=0,hp=4620, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	weak1=1.0,    award = 60},
 
 	--越野车       type = "jipu" ,
 	{id=12,image="yyc",demage=0,hp=10000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,

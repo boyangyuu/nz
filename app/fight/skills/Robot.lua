@@ -42,13 +42,16 @@ end
 
 function Robot:fire()
 	self:coolDownFire()
-	print("robot fire")
+	-- print("robot fire")
+	local soundSrc  = "res/Music/weapon/m134fire.wav"
+	self.audioId1 =  audio.playSound(soundSrc,false)	
+		
 	self:dispatchEvent({name = Robot.ROBOT_FIRE_EVENT})
 end
 
 function Robot:stopFire()
 	if self.isRoboting == false then return end
-	print("function Robot:stopFire()")
+	-- print("function Robot:stopFire()")
 	self:dispatchEvent({name = Robot.ROBOT_STOPFIRE_EVENT})
 end
 

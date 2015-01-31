@@ -326,10 +326,10 @@ local waves = {
 	},
 }
 
---enemy的关卡配置                           白银镶嵌 MP5伤害80  dps大于等于5 怪物数据
+--enemy的关卡配置                           青铜镶嵌 MP5伤害65  dps大于等于3 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=15,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=9,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--近战兵
@@ -337,11 +337,11 @@ local enemys = {
 		weak1=3},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=562,
+	{id=3,image="sanbing01",demage=0,hp=327,
 	weak1=3},	             
 
     --导弹          --missileType = "daodan",
-	{id=4,image="daodan",demage=20,hp=1,
+	{id=4,image="daodan",demage=5,hp=1,
 	weak1=1},
 
 	--铁球
@@ -349,13 +349,13 @@ local enemys = {
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
-	{id=6,image="shouleib",demage=0,hp=375,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=6,image="shouleib",demage=0,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 	--手雷
-	{id=7,image="shoulei",demage=20,hp=1,
+	{id=7,image="shoulei",demage=12,hp=1,
 	weak1=3},
 	--BOSS导弹          --missileType = "daodan",
-	{id=8,image="daodan",demage=15,hp=375,weak1=1},
+	{id=8,image="daodan",demage=5,hp=327,weak1=1},
 
 
 }
@@ -396,6 +396,8 @@ local bosses = {
 			tieqiu = {
 				0.999, 0.80, 0.60, 0.40, 0.20, 0.05,
 			},
+
+			
 			
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
