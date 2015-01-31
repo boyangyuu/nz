@@ -90,7 +90,7 @@ end
 
 function GuideLayer:onTouchTarget(event)
 	--
-	if self.isWaiting then return end
+	if self.isWaiting or not self.isGuiding then return end
 	if event == nil then return end
 
 	--调用监听者的回调函数

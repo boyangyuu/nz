@@ -70,6 +70,8 @@ end
 
 function RobotView:playFire(event)
 	self.armature:getAnimation():play("jijia_fire", -1, 1)
+
+	
 end
 
 function RobotView:stopFire(event)

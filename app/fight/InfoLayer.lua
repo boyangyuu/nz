@@ -125,9 +125,9 @@ end
 
 function InfoLayer:onHeroHpChange(event)
 	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	print("self.hero:getMaxHp()", self.hero:getMaxHp())
-	print("self.hero:getHp()", self.hero:getHp())
-	print("event.name", event.name)
+	-- print("self.hero:getMaxHp()", self.hero:getMaxHp())
+	-- print("self.hero:getHp()", self.hero:getHp())
+	-- print("event.name", event.name)
 
 	local displayHp = math.floor(self.hero:getHp() )
 	self.bloodLabel:setString(displayHp)
@@ -147,11 +147,11 @@ function InfoLayer:onKillEnemy(event)
 end
 
 function InfoLayer:onActiveGold(event)
-	print("循环播放激活动画")
+	-- print("循环播放激活动画")
 end
 
 function InfoLayer:onActiveGoldEnd(event)
-	print("停止播放动画")
+	-- print("停止播放动画")
 end
 
 function InfoLayer:onShow(event)

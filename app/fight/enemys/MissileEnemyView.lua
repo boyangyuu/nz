@@ -102,7 +102,8 @@ function MissileEnemyView:playFeibiaoFire()
     --call end
     local function callMoveEnd()
         self.armature:getAnimation():play("die02", -1 , 1 )
-        self.enemy:hit(self.hero)           
+        self.enemy:hit(self.hero) 
+        self:playSound()          
     end
 
     --run
@@ -115,7 +116,10 @@ end
 
 function MissileEnemyView:playBomb()
     local missileType = self.property["missileType"]
-    
+
+    --sound
+    self:playSound()
+
     --kill
     self.armature:getAnimation():play("die" , -1, 1)  
     
@@ -153,6 +157,12 @@ function MissileEnemyView:playKill(event)
 
     end     
     self.armature:stopAllActions()  
+end
+
+function MissileEnemyView:playSound()
+    --sound effect
+    local soundSrc  = "res/Music/fight/slbz.wav"
+    self.audioId1 =  audio.playSound(soundSrc,false)  
 end
 
 function MissileEnemyView:onHitted(targetData)

@@ -68,9 +68,9 @@ function DuozuBossView:playWalkAction(direct)
     local speed = isRun and define.kRenzheSpeed  or define.kRenzheWalkSpeed
     local time = isRoll and define.kRenzheRunTime or define.kRenzheWalkTime
 
-    -- print("time"..time)
+    print("time"..time)
     local width = speed * time * self:getScale() * direct
-    -- print("width", width)
+    print("width", width)
     if not self:checkPlace(width) then 
         self:checkIdle()
         return 
@@ -84,7 +84,7 @@ function DuozuBossView:playWalkAction(direct)
 end
 
 function DuozuBossView:playSkill(skillName)
-    print("DuozuBossView:playSkill: "..skillName)
+    -- print("DuozuBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "yanwu" then 
         self:play("skillPre",handler(self, self.playSkillWu))
@@ -131,7 +131,7 @@ function DuozuBossView:playSkillWu()
     --烟雾弹
     self.armature:getAnimation():play("fire1" , -1, 1) 
 
-    print("发射烟雾弹")
+    -- print("发射烟雾弹")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     local delay = 0.6
@@ -208,7 +208,7 @@ function DuozuBossView:animationEvent(armatureBack,movementType,movementID)
     if self.isWudi then return end
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        -- print("animationEvent id ", movementID)
+        print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID == "runleft"  or movementID == "runright" then
             self.armature:getAnimation():play(movementID , -1, 1)

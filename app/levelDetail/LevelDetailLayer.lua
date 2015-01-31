@@ -303,11 +303,18 @@ function LevelDetailLayer:onClickBtnGold()
         self.storeModel  = md:getInstance("StoreModel")
         self.storeModel:refreshInfo("prop")
     else
-		if isDone then
+		if isDone then  
 			local buyModel = md:getInstance("BuyModel")
 		    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
 		end
 	end
+end
+
+function LevelDetailLayer:onClickGuideBtnGold()
+	self.alreadygold:setVisible(true)
+	self.btnGold:setVisible(false)	
+
+	self.inlayModel:equipGoldInlays()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
@@ -354,7 +361,7 @@ function LevelDetailLayer:initGuide()
         groupId = "prefight02",
         rect = self.btnGold:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-            self:onClickBtnGold()
+            self:onClickGuideBtnGold()
         end
      }) 	
 
