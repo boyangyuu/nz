@@ -48,14 +48,14 @@ function PauseScene:showPopup(event)
 	self.layers[self.str] = layer
 	layer:setPositionY(display.offset)
 	self:addChild(layer)
-	layer:scale(0.0)
-	if event.anim == false then
-		layer:scale(1)
-		print("dsdfad1")
-	else
-		layer:scaleTo(0.3, 1)
-		print("dsdfad2")
-	end
+	-- layer:scale(0.0)
+	-- if event.anim == false then
+	-- 	layer:scale(1)
+	-- 	print("dsdfad1")
+	-- else
+	-- 	layer:scaleTo(0.3, 1)
+	-- 	print("dsdfad2")
+	-- end
 
 	
 

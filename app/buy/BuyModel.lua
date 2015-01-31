@@ -28,7 +28,7 @@ function BuyModel:buy(configid, buydata)
     self.curBuydata =  buydata
 	local config  = BuyConfigs.getConfig(configid)
 	local isGift = config.isGift --todo
-	local isFight = buydata.isFight
+	self.isFight = buydata.isFight
 
 	if isGift then
 		if isFight then
@@ -50,13 +50,14 @@ function BuyModel:payDone(result)
 	dump(self.curBuydata, "self.curBuydata")
 	local payDoneFunc = self.curBuydata.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
-
+	-- self:giftBagClose()
 end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
 	local deneyBuyFunc = self.curBuydata.deneyBuyFunc
 	if deneyBuyFunc then  deneyBuyFunc() end
+	-- self:giftBagClose()
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)
@@ -216,6 +217,15 @@ function BuyModel:setBought(giftId)
 	local data = getUserData()
 	data.giftBag[giftId] = true
 	setUserData(data)
+end
+
+function BuyModel:giftBagClose()
+	if self.isFight then
+		print("self.param.isFight:",true)
+		ui:closePopup("GiftBagPopup", true)
+	else
+		ui:closePopup("GiftBagPopup")
+	end
 end
 
 return BuyModel
