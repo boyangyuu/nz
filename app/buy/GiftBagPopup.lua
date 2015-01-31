@@ -51,10 +51,10 @@ function GiftBagPopup:initButtons()
 	if not self.param.isFight then 
 
 		local armature = ccs.Armature:create("lb_ljlq")
-		armature:setScale(0.75)
-		armature:setPosition(141, 45)
+		-- armature:setPosition(141, 45)
 		armature:getAnimation():play("lb_ljlq", -1, 1)
-		receiveBtn:addChild(armature)
+		-- receiveBtn:addChild(armature)
+		addChildCenter(armature, receiveBtn)
 	end
 
 
