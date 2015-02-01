@@ -354,7 +354,7 @@ local enemys = {
 	{id=7,image="shoulei",demage=4,hp=1,
 	weak1=3},
 	--BOSS导弹          --missileType = "daodan",
-	{id=8,image="daodan",demage=5,hp=190,weak1=1},
+	{id=8,image="daodan",demage=5,hp=120,weak1=1},
 
 }
 
@@ -366,10 +366,10 @@ local bosses = {
 		image = "boss02", --图片名字
 		hp = 100000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 120,               --普攻频率
+		fireRate = 100,               --普攻频率
 		fireCd = 3,                     --普攻cd
 
-		walkRate = 180,                    --移动频率
+		walkRate = 120,                    --移动频率
 		walkCd = 2,                         --移动cd
 		chongfengDemage = 25,                --冲锋造成伤害
 		weak1 = 1.2,						--头 弱点伤害倍数
@@ -387,7 +387,7 @@ local bosses = {
 			     0.95, 0.93, 0.85, 0.75, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
 			},
 			tieqiu = {
-				0.999, 0.80, 0.60, 0.40, 0.20, 0.05,
+				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
@@ -438,7 +438,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {35,55}   --黄武激活所需杀人个数  本关共60个小怪
+	self.goldLimits = {25,55,90}   --黄武激活所需杀人个数  本关共60个小怪
 end
 
 return waveClass

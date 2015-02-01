@@ -207,7 +207,7 @@ function InlayLayer:initGuide()
 
     --点击镶嵌
     local usermodel = md:getInstance("UserModel")
-    local kEnoughMoney = 60000              -- 4w 足够玩家买一套青铜
+    -- local kEnoughMoney = 60000              -- 4w 足够玩家买一套青铜
     
     --click
     guide:addClickListener({
@@ -216,7 +216,7 @@ function InlayLayer:initGuide()
         rect = self.btn["clip"]:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
             self:refreshListView("clip")
-            usermodel:addMoney(kEnoughMoney)
+            -- usermodel:addMoney(kEnoughMoney)
         end
      }) 
 
