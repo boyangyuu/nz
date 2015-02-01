@@ -129,7 +129,6 @@ function FightPlayer:showControl(event)
     local isju = levelModel:isJujiFight()
     if isju then 
         self.btnChange:setVisible(false) 
-        self.btnRobot:setVisible(false)
     end
 end
 
@@ -1010,6 +1009,13 @@ end
 function FightPlayer:onEnter()
     local src = "res/Music/fight/bj_zhandou.wav"
     audio.playMusic(src, true)
+
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju then 
+        self.btnRobot:setVisible(false)
+        self.label_jijiaNum:setVisible(false)       
+    end 
 end
 
 function FightPlayer:onCleanup()
