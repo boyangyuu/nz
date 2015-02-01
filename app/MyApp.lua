@@ -118,7 +118,7 @@ function MyApp:createGameStateFile()
        
             weaponsuipian = {},
 
-            money = 0,
+            money = 2000,
             diamond = 0,
 
 
