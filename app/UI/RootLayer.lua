@@ -74,7 +74,7 @@ function RootLayer:addResHome()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
 
-    local bossImgs = {"boss01","boss02",}
+    local bossImgs = {"boss01","boss02","dzboss","renzb"}
  
     for i,v in ipairs(bossImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
