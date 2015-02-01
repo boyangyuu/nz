@@ -101,7 +101,7 @@ configs["fight04"] = {
 	steps = {
 		{id = "fight04_open", msg = "         点击开镜", }, 
 		{id = "fight04_fire", msg = "         点击开火", }, 
-		{id = "fight04_close", msg = "        点击关镜", }, 
+		{id = "fight04_close", msg = "         点击关镜", }, 
 		{id = "fight04_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}	
 }
