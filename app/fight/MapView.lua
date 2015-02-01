@@ -581,23 +581,4 @@ function MapView:playEffectJuShaked(event)
 	self:runAction(cc.Sequence:create(tMove, tMove1))
 end
 
-function MapView:onCleanup() 
-	print("MapView:onCleanup() ")
-	-- if self.checkEnemysEmptyHandler then
-	-- 	scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-	-- end
-	-- if self.checkWaveHandler then
-	-- 	scheduler.unscheduleGlobal(self.checkWaveHandler)
-	-- end	
-	
-	-- if self.schCheckNumleft then
-	-- 	scheduler.unscheduleGlobal(self.schCheckNumleft)
-	-- end		
-
-	-- if self.addEnemysSch then 
-	-- 	scheduler.unscheduleGlobal(self.addEnemysSch)
-	-- end
-end
-
-
 return MapView

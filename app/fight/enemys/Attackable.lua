@@ -464,11 +464,9 @@ function Attackable:onEnter()
 end
 
 function Attackable:onCleanup()
-	-- print("Attackable:onCleanup()")
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end
-
 	self:removeAllSchedulers()  
 end
 
