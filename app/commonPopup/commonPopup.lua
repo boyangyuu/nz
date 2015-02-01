@@ -139,6 +139,7 @@ function commonPopup:initUI(properties)
 				if device.platform == "android" then
 					local className = "com/hgtt/ccn/IAPControl"
 					luaj.callStaticMethod(className, "callPhone")
+					um:event("kefu")
 					print("btncall is pressed!")
 				end
 			end

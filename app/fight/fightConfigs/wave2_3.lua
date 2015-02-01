@@ -250,11 +250,11 @@ local waves = {
 	{
 		enemys = {  --boss
 			{
-				-- descId = "boss02", --简介
-				time = 1,	
+				descId = "renzb", --简介
+				time = 2,	
 				num = 1,
 				pos = {368},
-				delay = {1},
+				delay = {4},
 				property = { 
 					type = "renzheBoss",
 					placeName = "place13",
@@ -272,42 +272,42 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    白银难度对应怪物属性
+--enemy的关卡配置                                                    青铜镶嵌 MP5伤害80  dps大于等于3 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=16,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=12,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=375,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=375,
+	{id=3,image="shoulei",demage=12,hp=135,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=562,
+	{id=4,image="sanbing01",demage=0,hp=405,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=562,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=540,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=375,
+	{id=6,image="daodan",demage=15,hp=375,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=936,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=12,hp=675,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=3744,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=15,hp=1350,fireRate=180,fireCd=5,speed=35,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=60,hp=562,fireRate=30,speed=100,
+	{id=9,image="zibaob",demage=15,hp=270,fireRate=30,speed=100,
 	weak1=3},	
 
 	
@@ -332,15 +332,15 @@ local enemys = {
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
 	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=120,hp=20000,fireRate=60,fireCd=2,speed=40,scale = 2.5 ,
+	{id=16,image="jinzhanb",demage=9,hp=10000,fireRate=120,fireCd=3,speed=40,scale = 2.5 ,
 	weak1=3},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=35,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=8000},                             
+	{id=18,image="feibiao",demage=10,hp=7000},                             
 
 
 
@@ -352,6 +352,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
+
 
 		image = "renzb",                       --图片名字
 		hp = 200000,
@@ -372,14 +373,14 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 
-			feibiao1 = { 0.80, 0.60, 0.40, 0.20              --暴雨梨花针1
+			feibiao1 = { 0.80, 0.60, 0.30              --暴雨梨花针1
 			},
 			-- feibiao2 = {                --暴雨梨花针2
 			-- 	0.89,0.88,0.86,
 			-- },							
-			zhaohuan = { 0.90,0.70,0.50,0.30                    --召唤分身
+			zhaohuan = { 0.90,0.70, 0.40                    --召唤分身
 			},                                           
-			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.55, 0.45, 0.25, 0.15, 0.05,      --冲锋
+			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.55, 0.45, 0.25, 0.15     --冲锋
 			},
 
 
@@ -404,7 +405,7 @@ local bosses = {
 						
 		},
 
-		feibiao1 = {    --srcPoses= 初始位置       --offsetPoses =偏移 
+		feibiao1 = {    --srcPoses= 初始位置       --offsetPoses =偏移    --暴雨梨花针1
 			-- srcPoses = {cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2),
 			--  		    cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2),
 			--  		    cc.p(1136/2,640/2), cc.p(1136/2,640/2),cc.p(1136/2,640/2), cc.p(1136/2,640/2), },   
@@ -540,68 +541,68 @@ local bosses = {
 
 		},	
 
-		enemys4 = {                                                   --第四波召唤的忍者兵
-			{
-				time = 2,	
-				num = 1,
-				pos = {400},
-				delay = {0.2},
-				property = {
-					placeName = "place1" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 2,	
-				num = 1,
-				pos = {1000},
-				delay = {0.2},
-				property = {
-					placeName = "place1" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 2,	
-				num = 1,
-				pos = {550},
-				delay = {0.4},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 2,	
-				num = 1,
-				pos = {850},
-				delay = {0.4},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 2,	
-				num = 1,
-				pos = {700},
-				delay = {0.6},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-        },
+		-- enemys4 = {                                                   --第四波召唤的忍者兵
+		-- 	{
+		-- 		time = 2,	
+		-- 		num = 1,
+		-- 		pos = {400},
+		-- 		delay = {0.2},
+		-- 		property = {
+		-- 			placeName = "place1" ,
+		-- 			id = 17,
+		-- 			type = "renzhe",
+		-- 			missileId = 18,
+		-- 		},
+		-- 	},	
+		-- 	{
+		-- 		time = 2,	
+		-- 		num = 1,
+		-- 		pos = {1000},
+		-- 		delay = {0.2},
+		-- 		property = {
+		-- 			placeName = "place1" ,
+		-- 			id = 17,
+		-- 			type = "renzhe",
+		-- 			missileId = 18,
+		-- 		},
+		-- 	},
+		-- 	{
+		-- 		time = 2,	
+		-- 		num = 1,
+		-- 		pos = {550},
+		-- 		delay = {0.4},
+		-- 		property = {
+		-- 			placeName = "place2" ,
+		-- 			id = 17,
+		-- 			type = "renzhe",
+		-- 			missileId = 18,
+		-- 		},
+		-- 	},	
+		-- 	{
+		-- 		time = 2,	
+		-- 		num = 1,
+		-- 		pos = {850},
+		-- 		delay = {0.4},
+		-- 		property = {
+		-- 			placeName = "place2" ,
+		-- 			id = 17,
+		-- 			type = "renzhe",
+		-- 			missileId = 18,
+		-- 		},
+		-- 	},
+		-- 	{
+		-- 		time = 2,	
+		-- 		num = 1,
+		-- 		pos = {700},
+		-- 		delay = {0.6},
+		-- 		property = {
+		-- 			placeName = "place3" ,
+		-- 			id = 17,
+		-- 			type = "renzhe",
+		-- 			missileId = 18,
+		-- 		},
+		-- 	},
+  --       },
 
 
 	},
@@ -617,7 +618,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {35}   --黄武激活所需杀人个数
+	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
 end
 
 return waveClass

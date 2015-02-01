@@ -18,7 +18,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 5,	
 				num = 5,
 				pos = {325,420,510,770,900},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -29,7 +29,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 3,
 				delay = {2.0,2.5,3},
 				pos = {400,680,960},
@@ -40,7 +40,7 @@ local waves = {
 				},
 			},			
 			{
-				time = 15,
+				time = 12,
 				num = 3,
 				delay = {0.1,0.2,0.3},
 				pos = {250,460,600},
@@ -62,7 +62,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 18,
 				num = 3,
 				delay = {2.8,2.5,3},
 				pos = {200,380,560},
@@ -97,7 +97,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 22,
+				time = 24,
 				num = 1,
 				delay = {0.8},
 				pos = {550},
@@ -126,7 +126,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 5,	
 				num = 5,
 				pos = {325,420,510,770,900},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -137,7 +137,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 3,
 				delay = {2.0,2.5,3},
 				pos = {400,680,960},
@@ -150,7 +150,7 @@ local waves = {
 
 			{
 			    
-				time = 7,
+				time = 10,
 				num = 1,
 				pos = {450},
 				delay = {0.5},                         -- 飞机
@@ -177,7 +177,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,	
+				time = 17,	
 				num = 5,
 				pos = {25,120,310,470,600},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -188,7 +188,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 19,
 				num = 3,
 				delay = {2.8,2.5,3},
 				pos = {200,380,560},
@@ -200,7 +200,7 @@ local waves = {
 			},
 			{
 			    
-				time = 20,
+				time = 22,
 				num = 1,
 				pos = {550},
 				delay = {0.5},                         -- 飞机
@@ -217,7 +217,7 @@ local waves = {
 			},	
 			{
 			    
-				time = 22,
+				time = 23,
 				num = 1,
 				pos = {850},
 				delay = {0.5},                         -- 飞机
@@ -233,7 +233,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 21,
+				time = 29,
 				num = 5,
 				delay = {0.7,1.4,1.8, 2.1,2.8},
 				pos = {350,550,600,800,950},					
@@ -264,7 +264,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 5,	
 				num = 5,
 				pos = {325,420,510,770,900},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -275,7 +275,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 5,
 				delay = {2.0,2.5,3,2.5,2.0},
 				pos = {380,680,960,720,888},
@@ -288,9 +288,9 @@ local waves = {
 
 			
 			{
-				time = 22,
+				time = 15,
 				num = 10,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.60,0.4,0.3,0.2,0.1},
+				delay = {0.5,0.9,1.4,1.9,2.4,3.0,3.4,4.0,4.5,5.1},
 				pos = {350,460,600,1050,570,456,780,666,510,980},
 				property = { 
 					placeName = "place3" ,
@@ -300,7 +300,7 @@ local waves = {
 			},
 
 			{
-				time = 25,
+				time = 23,
 				num = 1,
 				delay = {1.6},
 				pos = {670},
@@ -311,7 +311,7 @@ local waves = {
 				},
 			},
 			{
-				time = 26,
+				time = 28,
 				num = 4,
 				delay = {0.8,1.5,2.6,3},
 				pos = {50,120,550,600},
@@ -324,7 +324,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 28,
+				time = 30,
 				num = 2,
 				delay = {0.8,1.5},
 				pos = {50,120},
@@ -335,7 +335,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 28,
+				time = 33,
 				num = 3,
 				delay = {0.8,1.2,1.6},
 				pos = {490,560,590},
@@ -355,42 +355,42 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    白银难度对应怪物属性
+--enemy的关卡配置                                                    青铜镶嵌 MP5伤害80  dps大于等于3 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=16,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=12,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=375,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=375,
+	{id=3,image="shoulei",demage=12,hp=135,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=562,
+	{id=4,image="sanbing01",demage=0,hp=405,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=562,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=540,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=375,
+	{id=6,image="daodan",demage=15,hp=135,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=936,fireRate=180,fireCd=4,speed=60,
+	{id=7,image="jinzhanb",demage=12,hp=675,fireRate=180,fireCd=4,speed=60,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=3744,fireRate=180,fireCd=5,speed=30,
+	{id=8,image="dunbing",demage=15,hp=1350,fireRate=180,fireCd=5,speed=40,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=60,hp=562,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=15,hp=270,fireRate=30,speed=120,
 	weak1=3},	
 
 	
@@ -415,7 +415,7 @@ local enemys = {
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
 	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=120,hp=20000,fireRate=60,fireCd=2,speed=40,scale = 3.0,
+	{id=16,image="jinzhanb",demage=8,hp=10000,fireRate=180,fireCd=4,speed=40,scale = 3.0,
 	weak1=3},                                                               --scale = 3.0,  近战走到屏幕最近放缩比例
 
 
@@ -432,6 +432,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {300}   --黄武激活所需杀人个数
+	self.goldLimits = {25,55,95,130}   --黄武激活所需杀人个数
 end
 return waveClass

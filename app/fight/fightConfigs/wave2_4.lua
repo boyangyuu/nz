@@ -50,8 +50,10 @@ local waves = {
 				pos = {50},
 				property = {
 					placeName = "place10",  
-					startState = "",
-					id = 1,
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
 				},
 			},
 			{
@@ -103,6 +105,7 @@ local waves = {
 
 	{
 		enemys = {
+
 			{
 				time = 3,
 				num = 1,
@@ -123,8 +126,10 @@ local waves = {
 				pos = {50},
 				property = {
 					placeName = "place10",  
-					id = 1,
-					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
 				},
 			},
 			{
@@ -214,8 +219,28 @@ local waves = {
 			{
 				time = 30,
 				num = 1,
-				pos = {450},
-				delay = {0.5},                         -- 飞机          10
+				delay = {0},
+				pos = {500},
+				property = {
+					placeName = "place9",  
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+
+		},
+	},
+			
+	{
+		enemys = {
+		    {
+				time = 3,
+				num = 1,
+				pos = {700},
+				delay = {0.5},                         -- 飞机          
 				property = {
 					type = "feiji" ,
 					id = 11,
@@ -225,6 +250,30 @@ local waves = {
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 40.0,		                                    --持续时间			
+				},
+			},
+			{
+				time = 10,
+				num = 5,
+				delay = {0,0.7,1.4, 2.1,2.8},
+				pos = {100,230,300,450,480},					
+				property = {
+					placeName = "place11",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},	
+			{
+				time = 15,
+				num = 5,
+				delay = {0,0.7,1.4, 2.1,2.8},
+				pos = {380,490,570,660,700},					
+				property = {
+					placeName = "place9",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
 				},
 			},	
 			
@@ -236,30 +285,30 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    白银难度对应怪物属性
+--enemy的关卡配置                                   普通难度 狙击枪350*1.2伤害          dps大于等于2
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=16,hp=770,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=840,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=770,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=840,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=375,
+	{id=3,image="shoulei",demage=8,hp=420,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=562,
+	{id=4,image="sanbing01",demage=0,hp=840,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=1540,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=1260,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=375,
+	{id=6,image="daodan",demage=10,hp=420,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
@@ -280,7 +329,7 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=4620, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=2520, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=1.0,    award = 60},
 
 	--越野车       type = "jipu" ,
@@ -323,6 +372,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {300}   --黄武激活所需杀人个数
+	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
 end
 return waveClass

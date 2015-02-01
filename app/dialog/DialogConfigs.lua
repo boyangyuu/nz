@@ -57,6 +57,61 @@ configs[1]  = {
 	},
 }
 
+configs[2]  = {
+	level1 = {
+		forward = {
+			{role = "夜玫瑰", imgname = "role_yemeigui",msg = "沙漠深处发现鬼眼行踪！", pos = "left"},
+			{role = "安琪儿", imgname = "role_anqi", msg = "杰这家伙也不见了", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "坏了，一定是他自己偷偷跑出去了！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "我去追他", pos = "right"},
+		},
+	},
+	level2 = {
+		forward = {
+			{role = "杰",imgname = "role_jie", msg = "幸好你来了，不然我就去见哥哥了。", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "嘿嘿，记得请我吃饭哦！", pos = "right"},
+			{role = "鬼眼",imgname = "role_yemeigui", msg = "敌人越来越多，快炸毁大门，挡住敌人。", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "收到！", pos = "left"},
+		},	
+	},
+	level3 = {
+		forward = {
+			{role = "杰",imgname = "role_jie", msg = "出来吧，鬼眼！我知道你在这！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，可爱的小朋友，又追来了，我忙着哪，没工夫陪你玩哦。", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "闭嘴！你被捕了！叛徒！", pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "哼哼,想抓我？那就要看你的本事了！", pos = "right"},
+		},
+	},
+	level4 = {
+		forward = {
+			{role = "鬼眼",imgname = "role_guiyan", msg = "将敌人抵挡在基地外", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
+		},
+	},
+	level5 = {
+		forward = {
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "啊！叛徒竟然是你，鬼眼！",pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，被发现也好，省的我费事了，都把命留下吧！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼绑架了很多人质，注意不要误伤人质！",  pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "无耻。。。。。。",  pos = "left"},
+		},
+		after = {
+			{role = "杰",imgname = "role_jie", msg = "我哥哥是不是你害死的？",  pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "你哥哥不识抬举，想见他还不容易，我来帮你一把，哈哈!",  pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "杰，敌人援兵到了，快撤退。",  pos = "right"},
+		},
+	},
+	level6 = {
+		forward = {
+			{role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，查到杀害我哥哥的真凶", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "小心他们最后的傀儡机甲首领————黑暗金刚！", pos = "left"},
+		},
+	},
+}
+
 function DialogConfigs.getConfig(groupId,levelId,appear)
 	local gid = configs[groupId]
 	if gid == nil then return nil end

@@ -39,7 +39,7 @@ function BaoEnemyView:playAhead()
     local time = math.abs(distanceY) / speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
-    local scale = define.kBaoEnemyScale
+    local scale = configEnemy["scale"] or define.kBaoEnemyScale 
     local actionScale = cc.ScaleTo:create(time, scale)
 
     --

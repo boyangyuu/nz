@@ -267,7 +267,7 @@ local waves = {
 			{
 				time = 3,
 				num = 5,
-				delay = {0.1,0.2,0.3,0.2,0.1},
+				delay = {0.1,0.5,0.8,1.2,1.5},
 				pos = {330,550,660,760,1050},
 				property = { 
 					placeName = "place3" ,
@@ -276,10 +276,10 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 6,	
 				num = 5,
 				pos = {325,420,510,770,900},
-				delay = {0.4,0.9,0.5,0.8,1.5},
+				delay = {0.4,0.9,1.5,1.9,2.1},
 				property = {
 					placeName = "place3" ,         --近
 					id = 7,
@@ -287,7 +287,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 9,
 				num = 5,
 				delay = {2.0,2.5,3,2.5,2.0},
 				pos = {380,680,960,720,888},
@@ -300,9 +300,9 @@ local waves = {
 
 			
 			{
-				time = 22,
+				time = 15,
 				num = 10,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.60,0.4,0.3,0.2,0.1},
+				delay = {0.5,0.9,1.3,1.8,2.1,2.60,2.4,3.0,3.3,3.6},
 				pos = {350,460,600,1050,570,456,780,666,510,980},
 				property = { 
 					placeName = "place3" ,
@@ -312,7 +312,7 @@ local waves = {
 			},
 
 			{
-				time = 28,
+				time = 21,
 				num = 1,
 				delay = {1.6},
 				pos = {670},
@@ -323,7 +323,7 @@ local waves = {
 				},
 			},
 			{
-				time = 30,
+				time = 26,
 				num = 4,
 				delay = {0.8,1.5,2.6,3},
 				pos = {50,120,550,600},
@@ -336,7 +336,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 30,
+				time = 31,
 				num = 2,
 				delay = {0.8,1.5},
 				pos = {50,120},
@@ -347,7 +347,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 30,
+				time = 33,
 				num = 3,
 				delay = {0.8,1.2,1.6},
 				pos = {490,560,590},
@@ -371,7 +371,7 @@ local waves = {
 				property = { 
 					type = "boss",
 					placeName = "place1",
-					enemyId = 6,            --BOSS导弹ID
+					enemyId = 19,            --BOSS导弹ID
 					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
 				},
 			},
@@ -449,8 +449,11 @@ local enemys = {
 	{id=17,image="zibaob",demage=20,hp=545,fireRate=30,speed=120,
 	weak1=3},
 	--自爆兵        --type = "bao",自爆boss
-	{id=18,image="zibaob",demage=10,hp=960,fireRate=30,speed=120,scale = 3.0,
-	weak1=3},	                                                  --scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=18,image="zibaob",demage=10,hp=960,fireRate=30,speed=120,scale = 4.0,
+	weak1=3},	 
+	--导弹          --missileType = "daodan",
+	{id=19,image="daodan",demage=10,hp=130,
+	weak1=1},	                                                 --scale = 3.0,  近战走到屏幕最近放缩比例
 	
 
 }
@@ -461,34 +464,37 @@ local bosses = {
 	{
 		image = "boss01", --图片名字
 		hp = 150000,
-		demage = 2,
-		fireRate = 120,
+		demage = 3,
+		fireRate = 60,
 		fireCd = 3,  		
 		walkRate = 120,
-		walkCd = 2,                         --移动cd		
-		saoFireOffset = 0.2, 		--扫射时间间隔
-		saoFireTimes = 10, 			--一次扫射10下
+		walkCd = 2,         --移动cd	
+		wudiTime = 6 , 	
+		saoFireOffset = 0.1, 		--扫射时间间隔
+		saoFireTimes = 20, 			--一次扫射10下
 		weak1 = 1.1,					--手  弱点伤害倍数
 		weak2 = 1.1,					--腹  弱点伤害倍数
 		weak3 = 1.1,					--头  弱点伤害倍数
 		skilltrigger = {   			   --技能触发(可以同时)
 
-			wudi	 = {0.85,0.55,0.25},                                        --无敌
-			zhaohuan = {0.85,0.55,0.25},                                        --召唤
+                                    
+			wudi = {0.91,0.71,0.51,0.31,0.11            --无敌
+			},                                        
 
-			saoShe = {                             --调用普通攻击的伤害  扫射
-				0.83, 0.63, 0.53, 0.23, 0.07,
-			},                                       
+			saoShe = { 0.90, 0.70, 0.50, 0.30, 0.10     --调用普通攻击的伤害  扫射
+			}, 
+
+			zhaohuan = {0.95,0.65,0.35},                                        --召唤 
 
 			moveLeftFire = {
-				0.90, 0.50, 0.10,
+				0.80, 0.40, 
 			},
 			moveRightFire = {
-				0.70, 0.30,
+				0.60, 0.20,
 			},
 			
 			daoDan = {                                   --两发导弹
-				0.999,0.95,0.75,0.65, 0.45, 0.35, 0.22,
+				0.999,0.96,0.85,0.64, 0.45, 0.34, 0.22,
 			},
 			weak1 = {
 				0.85,0.70,0.60,0.50,0.35
@@ -665,6 +671,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {35,75}   --黄武激活所需杀人个数
+	self.goldLimits = {35,75,130}   --黄武激活所需杀人个数
 end
 return waveClass

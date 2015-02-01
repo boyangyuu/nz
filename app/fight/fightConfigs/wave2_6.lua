@@ -278,14 +278,14 @@ local bosses = {
 				},
 			},
 			{
-				time = 2,
+				time = 3,
 				num = 1,
 				pos = {200},
 				delay = {0.5},                            -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place11",
+					placeName = "place5",
 					missileId = 6,
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -303,7 +303,7 @@ local bosses = {
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place11",
+					placeName = "place5",
 					missileId = 6,
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -327,5 +327,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
+	
 end
 return waveClass

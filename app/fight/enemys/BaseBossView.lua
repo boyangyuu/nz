@@ -476,24 +476,28 @@ function BaseBossView:onKillCall(event)
 end
 
 function BaseBossView:onKillLastCall()
-	self:setUnhurted(false)	
+	-- self:setUnhurted(false)	
 end
 
 function BaseBossView:setUnhurted(isUnhurted)
 	self.isUnhurted = isUnhurted
-	if not isUnhurted and self.wudiAnim then 
-		self.wudiAnim:removeSelf()
-		self.wudiAnim = nil
-	end
 end
 
 function BaseBossView:playWudi()
-	self:setUnhurted(true)
+	self.isUnhurted = true
 	self.wudiAnim = ccs.Armature:create("wdhd")
 	self.wudiAnim:getAnimation():play("wdhd", -1, 1)
 	self.wudiAnim:setPosition(cc.p(0, 141))
 	self.wudiAnim:setScale(1.3)
 	self.armature:addChild(self.wudiAnim, 10000)
+    self:performWithDelay(handler(self, self.endWudi), 
+            self.config["wudiTime"])	
+end
+
+function BaseBossView:endWudi()
+    self.isUnhurted = false
+    self.wudiAnim:removeSelf()    
+    self.wudiAnim = nil
 end
 
 function BaseBossView:clearWeak()
