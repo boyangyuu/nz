@@ -35,7 +35,7 @@ function FightProp:costRobot(callfuncSuccess)
 			self.buyModel:buy("armedMecha", {payDoneFunc = handler(self, self.refreshData)})
 		end 
 		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc, isFight = true})
+						deneyBuyFunc = deneyBuyFunc})
 	end
 	self:refreshData()
 end
@@ -55,7 +55,7 @@ function FightProp:costLei(callfuncSuccess)
 			self.buyModel:buy("handGrenade", {payDoneFunc = handler(self, self.refreshData)})
 		end 		
 		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc,isFight = true})
+						deneyBuyFunc = deneyBuyFunc})
 	end
 	self:refreshData()
 end
