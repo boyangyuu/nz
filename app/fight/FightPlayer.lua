@@ -668,10 +668,10 @@ function FightPlayer:fire()
 
     --gun
     if  self.gunView:canShot() then  --todo
-        -- self.gunView:fire()
         self.focusView:playFire()
         
         --todo 发命令
+        print("dispatchEvent GUN_FIRE_EVENT")
         self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
 end
@@ -821,9 +821,8 @@ function FightPlayer:initGuide1()
         groupId = "fight01",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
-            self.gunView:fire()
-            self.hero:fire()
-            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.2)
+            self:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
         end
     })  
 
