@@ -69,6 +69,10 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		weaponListModel:onceFull(v)
 	end
 	self:setBought("weaponGiftBag")
+
+	--手雷*10
+	propModel:buyProp("lei",10)
+	StoreModel:refreshInfo("prop")
 	um:payProps(20,2,"buy_weapongiftbag",1,0)
 end
 
