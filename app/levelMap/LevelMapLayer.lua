@@ -284,12 +284,17 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             armature:setScale(0.8)
             armature:setPosition(panelBtn[i]:getContentSize().width/2,20)
             panelBtn[level]:addChild(armature)
+
             if type == "boss" or type == "juji" then
                 armature:getAnimation():play("dizuohong" , -1, 1)
+                -- armature:removeFromParent()
             elseif type == "jinbi" then
                 armature:getAnimation():play("dizuohuang" , -1, 1)
-            elseif type == "putong" then
+                -- armature:removeFromParent()
+            elseif type == "putong" or  type == "renzhi" then
                 armature:getAnimation():play("dizuolan" , -1, 1)
+                print("jhavdjuaciydgvcgsviyasvc")
+                dump(armature:getPosition())
             end
         else           
             if device.platform ~= "windows" then
