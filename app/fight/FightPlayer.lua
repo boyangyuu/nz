@@ -1000,7 +1000,9 @@ function FightPlayer:initGuide3()
         id = "fight04_finish",
         groupId = "fight04",
         rect = cc.rect(0, 0, display.width1, display.height1),
-        endfunc = function (touchEvent)         
+        endfunc = function (touchEvent) 
+            self:onCancelledFire() 
+            self.touchFireId = nil       
         end
      })        
 
