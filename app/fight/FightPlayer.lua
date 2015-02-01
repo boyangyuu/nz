@@ -524,7 +524,7 @@ end
 ----attack----
 function FightPlayer:checkBtnFire(id,point,eventName)
     if eventName == "moved" then return false end
-    -- print("eventName:"..eventName.."  id:"..id)
+    print("eventName:"..eventName.."  id:"..id)
     local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
     local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
@@ -542,8 +542,10 @@ function FightPlayer:checkBtnFire(id,point,eventName)
             -- print("self.touchFireId set "..id) 
         end
         if self.touchFireId == id and not isend then
-            self.btnFireSch =  scheduler.scheduleGlobal(
-                handler(self, self.onBtnFire), 0.05)
+            -- self.btnFireSch =  scheduler.scheduleGlobal(
+            --     handler(self, self.onBtnFire), 0.05)
+            -- self:onBtnFire()
+            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.01)
         end
     end
    
@@ -574,7 +576,8 @@ end
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
-    -- print("isRobot", isRobot)
+    print("onBtnFire", onBtnFire)
+    self.hero.fsm__:doEvent("ready")
     if isRobot then
         if robot:isCoolDownDone() then
             self:robotFire()
@@ -619,8 +622,8 @@ function FightPlayer:onCancelledFire()
 
     --sch
     if self.btnFireSch then
-        scheduler.unscheduleGlobal(self.btnFireSch)
-        self.btnFireSch = nil
+        -- scheduler.unscheduleGlobal(self.btnFireSch)
+        transition.removeAction(self.btnFireSch)
     end
 end
 
@@ -633,7 +636,7 @@ function FightPlayer:tick(dt)
 end
 
 function FightPlayer:isCoolDownDone()
-    if  self.hero:canFire() then 
+    if self.hero:canFire() then 
         return true 
     end
 
@@ -641,7 +644,7 @@ function FightPlayer:isCoolDownDone()
 end
  
 function FightPlayer:checkFire()
-    -- -- print("FightPlayer:fire()")
+    print("FightPlayer:fire()")
 
     self:fire()
 end
@@ -659,11 +662,13 @@ function FightPlayer:fire()
     --hero 控制cooldown
     if self.gunView:canShot() then  --todo
         self.hero:fire() 
+        -- print("self.hero:fire() ")
     end    
     
 end
 
 function FightPlayer:onHeroFire(event)
+    -- print("function FightPlayer:onHeroFire(event)")
     local focusRangeNode = self.focusView:getFocusRange()
     self.focusView:playFire()
     self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})    
@@ -1041,10 +1046,10 @@ function FightPlayer:removeAllSchs()
         scheduler.unscheduleGlobal(self.resumeDefenceHandler)
         self.resumeDefenceHandler= nil
     end
-    if self.btnFireSch then
-        scheduler.unscheduleGlobal(self.btnFireSch)
-        self.btnFireSch = nil
-    end
+    -- if self.btnFireSch then
+    --     scheduler.unscheduleGlobal(self.btnFireSch)
+    --     self.btnFireSch = nil
+    -- end
 end
 
 return FightPlayer
