@@ -17,7 +17,7 @@ end
 -- @param coin 虚拟币数量
 -- @return void
 -- cc.UMAnalytics:payVirtualCurrency(10, 21, 100)
-function UM:payVirtualCurrency( cash ,source,coin)
+function UM:payVirtualCurrency(cash,source,coin)
     if device.platform == "android" then
         cc.UMAnalytics:payVirtualCurrency(cash, source, coin)
     end
@@ -69,7 +69,7 @@ end
 
 function UM:bonusVirtualCurrency( coin ,source)
     if device.platform == "android" then
-        -- cc.UMAnalytics:bonusVirtualCurrency(coin, source)
+        cc.UMAnalytics:bonusVirtualCurrency(coin, source)
     end
 end
 

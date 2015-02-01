@@ -129,7 +129,6 @@ function FightPlayer:showControl(event)
     local isju = levelModel:isJujiFight()
     if isju then 
         self.btnChange:setVisible(false) 
-        self.btnRobot:setVisible(false)
     end
 end
 
@@ -669,10 +668,10 @@ function FightPlayer:fire()
 
     --gun
     if  self.gunView:canShot() then  --todo
-        -- self.gunView:fire()
         self.focusView:playFire()
         
         --todo 发命令
+        print("dispatchEvent GUN_FIRE_EVENT")
         self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
     end
 end
@@ -822,9 +821,8 @@ function FightPlayer:initGuide1()
         groupId = "fight01",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
-            self.gunView:fire()
-            self.hero:fire()
-            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.2)
+            self:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
         end
     })  
 
@@ -868,7 +866,8 @@ function FightPlayer:initGuide1()
         groupId = "fight01",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-            self.guide:finishGuide()
+            self:onCancelledFire() 
+            self.touchFireId = nil                 
         end
     })     
       
@@ -1001,7 +1000,9 @@ function FightPlayer:initGuide3()
         id = "fight04_finish",
         groupId = "fight04",
         rect = cc.rect(0, 0, display.width1, display.height1),
-        endfunc = function (touchEvent)         
+        endfunc = function (touchEvent) 
+            self:onCancelledFire() 
+            self.touchFireId = nil       
         end
      })        
 
@@ -1010,6 +1011,13 @@ end
 function FightPlayer:onEnter()
     local src = "res/Music/fight/bj_zhandou.wav"
     audio.playMusic(src, true)
+
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight()
+    if isju then 
+        self.btnRobot:setVisible(false)
+        self.label_jijiaNum:setVisible(false)       
+    end 
 end
 
 function FightPlayer:onCleanup()

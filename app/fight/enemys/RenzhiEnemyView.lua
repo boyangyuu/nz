@@ -116,7 +116,6 @@ function RenzhiEnemyView:exit()
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true
-	self.isRuning = true
 	local speed = define.kRenzhiSpeed * self:getScale()
 	local width = display.width * 1.0
 	local action = cc.MoveBy:create(width/speed, cc.p(width, 0))

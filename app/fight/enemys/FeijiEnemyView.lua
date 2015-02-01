@@ -59,18 +59,16 @@ function FeijiEnemyView:tick()
 	--fire
 	local fireRate, isAble = self.enemy:getFireRate()
 	assert(fireRate > 1, "invalid fireRate")
-	if isAble then 
+	if isAble then
 		local randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
-			self:playAfterAlert("skill", handler(self, self.playFire))
+			self:playAfterAlert("fire", handler(self, self.playFire))
 			self.enemy:beginFireCd()
 		end
 	end
 
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
-
-
 	assert(walkRate > 1, "invalid walkRate")
 	if isAble then
 		local randomSeed =  math.random(1, walkRate)
@@ -92,7 +90,6 @@ end
 
 function FeijiEnemyView:playEnter(direct)
 	self.isEntering = true
-	self.isRuning = true
 	local isLeft = direct == "left" 
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
@@ -113,7 +110,6 @@ function FeijiEnemyView:playEnter(direct)
 	local action = cc.MoveTo:create(time, cc.p(toPosx, 0))	
 	local callfunc = function ()
 		self.isEntering = false
-		self.isRuning = false
 		self:playStand()
 	end
 
@@ -126,7 +122,6 @@ function FeijiEnemyView:exit()
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true
-	self.isRuning = true
 	local speed = self.speed * self:getScale()
 	local width = display.width * 1.0
 	local action = cc.MoveBy:create(width/speed, cc.p(width, 0))
@@ -154,7 +149,6 @@ function FeijiEnemyView:playRunLeft()
 
 	if not self:checkPlace(-width) then return end
 	self.direct = "left"
-	self.isRuning = true
 	self.armature:getAnimation():play("runleft" , -1, 1) 
 	-- print("width", width)
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
@@ -173,7 +167,6 @@ function FeijiEnemyView:playRunRight()
 	-- print("width", width)
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
-	self.isRuning = true
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(action)	
 
@@ -198,7 +191,6 @@ function FeijiEnemyView:playWalkLeft()
 	if not self:checkPlace(-width) then return end
 
 	self.direct = "left"
-	self.isRuning = true
 	self.armature:getAnimation():play("runleft" , -1, 1) 
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
     self.armature:runAction(action)	
@@ -216,7 +208,6 @@ function FeijiEnemyView:playWalkRight()
 
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
-	self.isRuning = true
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(action)	
 
@@ -225,6 +216,7 @@ function FeijiEnemyView:playWalkRight()
 end
 
 function FeijiEnemyView:playFire()
+	print("function FeijiEnemyView:playFire()")
 	local name = self.direct == "right" and "fireright" or "fireleft"
 	self.armature:getAnimation():play(name , -1, 1)
 
@@ -254,6 +246,7 @@ function FeijiEnemyView:playFire()
 	        offset = offsetPoses[offsetIndex]
 	    }
 	    local function callfuncDaoDan()
+	    	print("local function callfuncDaoDan()")
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
@@ -314,13 +307,14 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
 		-- print("animationEvent id ", movementID)
-		if movementID ~= "dieright" and movementID ~= "dieleft" then
-			if self.isRuning then
-				return 
-			end	
+		if movementID == "runright" or movementID == "runleft" then 
+			return 
+		end
 
+		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			local playCache = self:getPlayCache()
-			if playCache then 
+			if playCache then
+				print("playCache") 
 				playCache()
 			else 					
 				self:playStand()
