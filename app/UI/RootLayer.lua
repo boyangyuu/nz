@@ -62,11 +62,15 @@ function RootLayer:clearCache()
 end
 
 function RootLayer:addResHome()
+    display.removeUnusedSpriteFrames()
     --sprite
     print("function RootLayer:addResHome()")
     cc.FileUtils:getInstance():addSearchPath("res/public")
-    display.addSpriteFrames("allImg0.plist", "allImg0.png")
-    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
+    local cb = function(plist, image)
+       
+    end
+    display.addSpriteFrames("allImg0.plist", "allImg0.png" ,cb)
+    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png" ,cb)
     
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
@@ -75,7 +79,7 @@ function RootLayer:addResHome()
  
     for i,v in ipairs(bossImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
-        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded)) 
     end
 
     local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
@@ -150,15 +154,16 @@ function RootLayer:addResHome()
 end
 
 function RootLayer:addResFight()
+    display.removeUnusedSpriteFrames()
     print("function RootLayer:addResFight()")
     --sprite
-    display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
-    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png")
-    -- local cb = function(plist, image)
-    -- -- do something
-    -- end
-    -- display.addSpriteFrames("Sprites.plist", "Sprites.png", cb)    
-    --armature
+    local cb = function(plist, image)
+       
+    end    
+    cc.FileUtils:getInstance():addSearchPath("res/public")    
+    display.addSpriteFrames("allImg0.plist", "allImg0.png", cb )    
+    display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", cb)
+    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png", cb)
 
     local musics = {"bj_zhandou.wav"}
     for i,v in ipairs(musics) do

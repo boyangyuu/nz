@@ -89,12 +89,12 @@ function StoreCell:initCellUI(parameter)
     pos:setRotation(170)
     self:addChild(pos)
 
-    local armature = ccs.Armature:create("guang")
-    -- armature:setPosition(130,80)
-    armature:setScale(20)
-    pos:addChild(armature)
-    armature:getAnimation():play("guangtx" , -1, 1)
-    dump(armature:getContentSize())
+    -- local armature = ccs.Armature:create("guang")
+    -- -- armature:setPosition(130,80)
+    -- armature:setScale(20)
+    -- pos:addChild(armature)
+    -- armature:getAnimation():play("guangtx" , -1, 1)
+    -- dump(armature:getContentSize())
 
 
     local btnarmature = ccs.Armature:create("bt_yjzb")
