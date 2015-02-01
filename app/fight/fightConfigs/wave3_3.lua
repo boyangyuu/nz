@@ -119,9 +119,35 @@ local waves = {
 	},
 	{
 		enemys = {
-	
+
+			                                                               --忍者 dps主力
+			{
+				time = 2,	
+				num = 1,
+				pos = {900},
+				delay = {0.2},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 5,	
+				num = 1,
+				pos = {400},
+				delay = {0.4},
+				property = {
+					placeName = "place4" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			
             {
-				time = 3,	
+				time = 9,	
 				num = 4,
 				pos = {200,250,300,350,},
 				delay = {0,0.5,0.8,1,},
@@ -131,8 +157,21 @@ local waves = {
 					id = 1,
 				},
 			},
+
 			{
-				time = 6,	
+				time = 12,	
+				num = 1,
+				pos = {600},
+				delay = {0.6},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 15,	
 				num = 2,
 				pos = {300,350},
 				delay = {0.5,1},
@@ -146,7 +185,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 18,
 				num = 2,
 				delay = {0.2,1},
 				pos = {550,800},
@@ -157,7 +196,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 21,
 				num = 3,
 				delay = {0.2,1,1.5},
 				pos = {190,230,250},
@@ -168,7 +207,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 24,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -181,7 +220,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 27,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -194,7 +233,7 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 30,
 				num = 3,
 				delay = {0.5,1,2.5},
 				pos = {190,230,250},
@@ -205,7 +244,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 33,
 				num = 1,
 				delay = {1},
 				pos = {230},
@@ -219,7 +258,7 @@ local waves = {
 				},
 			},
 			{
-				time = 28,	
+				time = 36,	
 				num = 3,
 				pos = {200,300,350,},
 				delay = {0,0.5,1,},
@@ -457,15 +496,15 @@ local waves = {
 --enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于7  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=15,hp=1863,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=21,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=3105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=211,
+	{id=3,image="shoulei",demage=28,hp=211,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -473,23 +512,23 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=3726,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=35000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=211,
+	{id=6,image="daodan",demage=35,hp=5000,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=1055,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=20,hp=40000,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=4200,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=25,hp=45000,fireRate=180,fireCd=5,speed=35,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=422,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
 	weak1=3},	
 
 	
@@ -498,11 +537,11 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=50000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=10000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=3,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -518,7 +557,7 @@ local enemys = {
 	weak1=3},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=40,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3},	
 
 	--飞镖
@@ -527,7 +566,7 @@ local enemys = {
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=12500},  
 	--盾兵BOSS         --type = "jin",
-	{id=20,image="dunbing",demage=15,hp=50000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
+	{id=20,image="dunbing",demage=21,hp=90000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
 	weak1=3},                           
 }
 
