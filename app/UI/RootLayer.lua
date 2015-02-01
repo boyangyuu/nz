@@ -61,16 +61,6 @@ function RootLayer:clearCache()
     -- display.removeUnusedSpriteFrames()
 end
 
-local cb = function(plist, image)
-   
-end
-
-function RootLayer:makesprite(str)
-     local plist = string.gsub(str, ".csb", "0.plist")
-     local png = string.gsub(str, ".csb", "0.png")
-     display.addSpriteFrames(plist, png ,cb)
-end
-
 function RootLayer:addResHome()
     display.removeUnusedSpriteFrames()
     --sprite
@@ -89,72 +79,115 @@ function RootLayer:addResHome()
     for i,v in ipairs(bossImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded)) 
-        self:makesprite(src)
+        local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
+        display.addSpriteFrames(plist, png, cb)          
     end
 
     local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
     manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
-    self:makesprite(mapsrc)
+    local plist = "res/LevelMap/map_shijie/shijiemap0.plist"
+    local png   = "res/LevelMap/map_shijie/shijiemap0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local dizuosrc = "res/LevelMap/gktb/gktb.csb"
     manager:addArmatureFileInfoAsync(dizuosrc,  handler(self, self.dataLoaded))
-    self:makesprite(dizuosrc)
+    local plist = "res/LevelMap/gktb/gktb0.plist"
+    local png   = "res/LevelMap/gktb/gktb0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
     manager:addArmatureFileInfoAsync(inlaybtnsrc,  handler(self, self.dataLoaded))
-    self:makesprite(inlaybtnsrc)
+    local plist = "res/InlayShop/xqan_hjwq/xqan_hjwq0.plist"
+    local png   = "res/InlayShop/xqan_hjwq/xqan_hjwq0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
     manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
-    self:makesprite(ydfhsrc)
+    local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
+    local png   = "res/FightResult/anim/ydfh/ydfh0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.csb"
     manager:addArmatureFileInfoAsync(hjwqbssrc,  handler(self, self.dataLoaded))
-    self:makesprite(hjwqbssrc)
+    local plist = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.plist"
+    local png   = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local xqtbsrc = "res/InlayShop/xqtb/xqtb.csb"
     manager:addArmatureFileInfoAsync(xqtbsrc,  handler(self, self.dataLoaded))
-    self:makesprite(xqtbsrc)
+    local plist = "res/InlayShop/xqtb/xqtb0.plist"
+    local png   = "res/InlayShop/xqtb/xqtb0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local xqzbsrc = "res/InlayShop/xqzb/xqzb.csb"
     manager:addArmatureFileInfoAsync(xqzbsrc,  handler(self, self.dataLoaded))
-    self:makesprite(xqzbsrc)
+    local plist = "res/InlayShop/xqzb/xqzb0.plist"
+    local png   = "res/InlayShop/xqzb/xqzb0.png"
+    display.addSpriteFrames(plist, png, cb)          
 
     local wqsjsrc = "res/WeaponList/wqsj/wqsj.csb"
     manager:addArmatureFileInfoAsync(wqsjsrc,  handler(self, self.dataLoaded))
-    self:makesprite(wqsjsrc)
+        local plist = "res/WeaponList/wqsj/wqsj0.plist"
+    local png   = "res/WeaponList/wqsj/wqsj0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local guangsrc = "res/Store/guang/guang.csb"
     manager:addArmatureFileInfoAsync(guangsrc,  handler(self, self.dataLoaded))
-    self:makesprite(guangsrc)
+        local plist = "res/Store/guang/guang0.plist"
+    local png   = "res/Store/guang/guang0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local sczgsrc = "res/Store/sczg/sczg.csb"
     manager:addArmatureFileInfoAsync(sczgsrc,  handler(self, self.dataLoaded))
-    self:makesprite(sczgsrc)
+        local plist = "res/Store/sczg/sczg0.plist"
+    local png   = "res/Store/sczg/sczg0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local leidasrc = "res/LevelMap/leida/leida.csb"
     manager:addArmatureFileInfoAsync(leidasrc,  handler(self, self.dataLoaded))
-    self:makesprite(leidasrc)
+        local plist = "res/LevelMap/leida/leida0.plist"
+    local png   = "res/LevelMap/leida/leida0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local jbsrc = "res/HomeBarLayer/jbs/jbs.csb"
     manager:addArmatureFileInfoAsync(jbsrc,  handler(self, self.dataLoaded))
-    self:makesprite(jbsrc)
+        local plist = "res/HomeBarLayer/jbs/jbs0.plist"
+    local png   = "res/HomeBarLayer/jbs/jbs0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local zssrc = "res/HomeBarLayer/zss/zss.csb"
     manager:addArmatureFileInfoAsync(zssrc,  handler(self, self.dataLoaded))
-    self:makesprite(zssrc)
+        local plist = "res/HomeBarLayer/zss/zss0.plist"
+    local png   = "res/HomeBarLayer/zss/zss0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local mrdlsrc = "res/GiftBag/mrdl/mrdl.csb"
     manager:addArmatureFileInfoAsync(mrdlsrc,  handler(self, self.dataLoaded))
-    self:makesprite(mrdlsrc)
+        local plist = "res/GiftBag/mrdl/mrdl0.plist"
+    local png   = "res/GiftBag/mrdl/mrdl0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
     manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
-    self:makesprite(yjzbsrc)
+        local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.csb"
     manager:addArmatureFileInfoAsync(thjbxsrc,  handler(self, self.dataLoaded))
-    self:makesprite(thjbxsrc)
+        local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
+    local png   = "res/LevelMap/thj_bx/thj_bx0.png"
+    display.addSpriteFrames(plist, png, cb)          
+
 
     --music bg
     local startMusic = "res/Music/bg/bjyx.wav"
