@@ -259,10 +259,17 @@ function Hero:helpFullHp()
     fight:stopFire()
     ui:showPopup("commonPopup",
         {type = "style3", content = "是否立即回复生命？",
-             callfuncCofirm =  handler(self, self.onBuyFullHp),
+             callfuncCofirm =  handler(self, self.showTuhao),
              callfuncClose  =  handler(self, self.onDenyFullHp)},
-         { opacity = 0, isPauseScene = true})  
+         { opacity = 0})      
 end
+
+function Hero:showTuhao()
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyFullHp),
+                    deneyBuyFunc = handler(self, self.onDenyFullHp)})    
+end
+
 
 function Hero:onBuyFullHp()
     print("立即回复生命 function Hero:onBuyFullHp()")

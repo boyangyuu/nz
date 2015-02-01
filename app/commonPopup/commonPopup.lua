@@ -149,41 +149,41 @@ function commonPopup:initUI(properties)
 end
 
 function commonPopup:onClickCofirm()
-	if self.properties.type == "style3" and self.properties.isPauseScene then 
-		print("commonPopup:onClickCofirm() isPauseScene")
-		local buyModel = md:getInstance("BuyModel")
-		if buyModel:checkBought("weaponGiftBag") == false then
-			print("buyModel:checkBought(weaponGiftBag) == false ")
-			buyModel:buy("weaponGiftBag", {
-                    payDoneFunc = self.properties.callfuncCofirm,
-                    deneyBuyFunc = function()
-                    	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
-                    end, isFight = true, isPauseSecond = true})
-		else
-			buyModel:buy("goldGiftBag", {
-                    payDoneFunc = self.properties.callfuncCofirm,
-                    deneyBuyFunc = function()
-                    	buyModel:buy("resurrection",{payDoneFunc = self.properties.callfuncCofirm})
-                    end, isFight = true, isPauseSecond = true})
-		end
-	else
+	-- if self.properties.type == "style3" and self.properties.isPauseScene then 
+	-- 	print("commonPopup:onClickCofirm() isPauseScene")
+	-- 	local buyModel = md:getInstance("BuyModel")
+	-- 	if buyModel:checkBought("weaponGiftBag") == false then
+	-- 		print("buyModel:checkBought(weaponGiftBag) == false ")
+	-- 		buyModel:buy("weaponGiftBag", {
+ --                    payDoneFunc = self.properties.callfuncCofirm,
+ --                    deneyBuyFunc = self.properties.callfuncCofirm, 
+ --                    isFight = true, isPauseSecond = true})
+	-- 	else
+	-- 		buyModel:buy("goldGiftBag", {
+ --                    payDoneFunc = self.properties.callfuncCofirm,
+ --                    deneyBuyFunc = self.properties.callfuncCofirm,
+ --                     isFight = true, isPauseSecond = true})
+	-- 	end
+	-- else
 		ui:closePopup("commonPopup")
 		local func =  self.properties.callfuncCofirm
-		if func ~= nil then 
+		if func ~= nil then
+			print("callfuncCofirm")
 			func()		
 		end
-	end
+	-- end
 end
 
 function commonPopup:onClickClose()
-	if self.properties.type == "style3" and self.properties.isPauseScene then 
-		cc.Director:getInstance():popScene()
-	else
-		ui:closePopup("commonPopup")
-	end	
-	
+	-- if self.properties.type == "style3" and self.properties.isPauseScene then 
+	-- 	cc.Director:getInstance():popScene()
+	-- else
+		
+	-- end	
+	ui:closePopup("commonPopup")
 	local func =  self.properties.callfuncClose
-	if func ~= nil then 
+	if func ~= nil then
+		print("callfuncClose")  
 		func()
 	end	
 end
