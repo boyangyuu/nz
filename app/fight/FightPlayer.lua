@@ -545,7 +545,10 @@ function FightPlayer:checkBtnFire(id,point,eventName)
             -- self.btnFireSch =  scheduler.scheduleGlobal(
             --     handler(self, self.onBtnFire), 0.05)
             -- self:onBtnFire()
-            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.01)
+            self.hero.fsm__:doEvent("ready")
+            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.05)
+            -- self.btnFireSch =  scheduler.scheduleGlobal(
+            --     handler(self, self.onBtnFire), 0.05)
         end
     end
    
@@ -577,7 +580,8 @@ function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
     print("onBtnFire", onBtnFire)
-    self.hero.fsm__:doEvent("ready")
+    -- self.hero.fsm__:doEvent("ready")
+    -- self.hero:fire()
     if isRobot then
         if robot:isCoolDownDone() then
             self:robotFire()
@@ -1024,6 +1028,7 @@ function FightPlayer:onEnter()
 end
 
 function FightPlayer:onCleanup()
+    -- FightPlayer.super.onCleanup(self)
     print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end

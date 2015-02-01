@@ -361,8 +361,7 @@ function HeroLayer:effectGunReload(event)
 end
 
 function HeroLayer:onCleanup()
-	-- print("function HeroLayer:onCleanup()")
-
+	-- HeroLayer.super.onCleanup(self)
 	if self.killTimerHandler then 
 		scheduler.unscheduleGlobal(self.killTimerHandler)
 		self.killTimerHandler = nil

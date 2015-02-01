@@ -208,10 +208,6 @@ function HomeBarLayer:onEnter()
     self.guide:check("prefight02")
 end
 
-function HomeBarLayer:onCleanup()
-
-end
-
 function HomeBarLayer:onBtnInlayClicked()
     self.btnSetting:setVisible(false)
     self.btnBack:setVisible(true)
