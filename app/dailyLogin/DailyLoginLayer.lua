@@ -43,9 +43,6 @@ function DailyLoginLayer:initUI()
     	self.tx[i] = cc.uiloader:seekNodeByName(self, "tx"..i)
     end
 
-
-
-
     local dailyInfo = self.dailyLoginModel:getDailyInfo()
     for i=1,dailyInfo["dailyid"] do
     	self.already[i]:setVisible(true)
@@ -75,9 +72,5 @@ function DailyLoginLayer:initUI()
 		end
 	end)
 end
-
--- function function_name( ... )
--- 	-- body
--- end
 
 return DailyLoginLayer
