@@ -25,9 +25,6 @@ isDebug = true
 -- isTest  = false        
 -- isDebug = false
 
-isMusicPlaying = true
-
-
 ui      = UI.new()
 md      = MD.new()
 um      = UM.new()
@@ -126,7 +123,7 @@ function MyApp:createGameStateFile()
 
                       
             currentlevel =  {
-                        group = 4,
+                        group = 1,
                         level = 1,
             },
             guide = {

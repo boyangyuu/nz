@@ -5,6 +5,8 @@ local Define = class("Define", cc.mvc.ModelBase)
 --hero
 Define.kHeroBaseHp 				= 100.0  --角色血量
 Define.kHeroCritScale 			= 3.0  --暴击倍数
+Define.kHeroHelper				= 1.0  --默认回血1.0/s
+
 
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 5.0    --左右移动速度
@@ -99,6 +101,7 @@ Define.kJuRange 				= 4.0
 --引导
 Define.kGuideActiveJijia	 	= 0.25  --boss还有百分之10血时 触发机甲
 Define.kGuidebossHpScale		= 0.5  --引导的时候 boss的血量缩小0.5
+
 
 function Define:ctor()
     Define.super.ctor(self) 

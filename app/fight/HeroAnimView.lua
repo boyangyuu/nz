@@ -70,17 +70,16 @@ function HeroAnimView:playWindEffect(event)
 end
 
 function HeroAnimView:playEffectBling(event)
+	print("function HeroAnimView:playEffectBling(event)")
 	local armature = ccs.Armature:create("bossdies")
 	armature:getAnimation():play("shan" , -1, 1)
-    -- armature:getAnimation():setMovementEventCallFunc(
-    -- 	function ( armatureBack,movementType,movement) 
-	   --  	if movementType == ccs.MovementEventType.loopComplete then
-	   --  		armatureBack:stopAllActions()
-	   --  		armatureBack:removeFromParent() 
-	   --  	end 
-    -- 	end
-    -- )
-    self:addChild(armature) 	
+    self:addChild(armature) 
+    local function endFunc()
+	    print("HeroAnimView endFunc")
+    	armature:removeSelf()
+    	armature = nil
+    end
+    self:performWithDelay(endFunc, 2.6)
 end
 
 return HeroAnimView
