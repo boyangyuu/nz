@@ -84,11 +84,11 @@ function Fight:startFight()
     if self.groupId == 1 and self.levelId == 1 then 
         scheduler.performWithDelayGlobal(function()
             guide:check("fight01")
-        end, 1.0)   
+        end, 0.0)   
     elseif self.groupId == 1 and self.levelId == 4 then 
         scheduler.performWithDelayGlobal(function()
             guide:check("fight04")
-        end, 1.0)   
+        end, 0.0)   
     end
 end
 
