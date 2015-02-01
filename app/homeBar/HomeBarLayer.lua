@@ -133,6 +133,9 @@ function HomeBarLayer:initHomeLayer(groupid)
             self.btnSetting:setVisible(false)
             self.btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
+            self.btnInlay:setButtonEnabled(true)
+            self.btnStore:setButtonEnabled(false)
+            self.btnArsenal:setButtonEnabled(true)
         end
     end)
 

@@ -62,7 +62,7 @@ function RootLayer:clearCache()
 end
 
 function RootLayer:addResHome()
-    display.removeUnusedSpriteFrames()
+    -- display.removeUnusedSpriteFrames()
     --sprite
     print("function RootLayer:addResHome()")
     cc.FileUtils:getInstance():addSearchPath("res/public")
@@ -204,7 +204,7 @@ function RootLayer:addResHome()
 end
 
 function RootLayer:addResFight()
-    display.removeUnusedSpriteFrames()
+    -- display.removeUnusedSpriteFrames()
     print("function RootLayer:addResFight()")
     --sprite
     local cb = function(plist, image)
