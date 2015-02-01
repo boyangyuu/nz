@@ -217,13 +217,9 @@ function RootLayer:addResFight()
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end
 
     local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
@@ -231,26 +227,18 @@ function RootLayer:addResFight()
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/heroAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/heroAnim/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)        
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end
 
     local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz",}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/mapAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/mapAnim/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)       
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end
 
     local uiImgs = {"baotou", "huanzidan", "ruodiangj", "tanhao",
@@ -259,39 +247,27 @@ function RootLayer:addResFight()
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/uiAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/uiAnim/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)         
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end
 
     local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/jqkAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/jqkAnim/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)          
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end 
 
     local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx"} 
     for i,v in ipairs(focusImgs) do
         local src = "res/Fight/focusAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/focusAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/focusAnim/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)         
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end 
 
     local gunImgs = {"anim_ak", "anim_jfzc", "anim_lmd", "anim_m4", "anim_m134",
@@ -299,18 +275,13 @@ function RootLayer:addResFight()
     for i,v in ipairs(gunImgs) do
         local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
         local plist = "res/Fight/gunsAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/gunsAnim/"..v.."/"..v.."0.png"
         display.addSpriteFrames(plist, png, cb)          
-=======
-        self:makesprite(src)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
     end    
 
     local rwkssrc = "res/public/Anim/renwuks/renwuks.csb"
     manager:addArmatureFileInfoAsync(rwkssrc,  handler(self, self.dataLoaded))
-<<<<<<< HEAD
     display.addSpriteFrames("res/public/Anim/renwuks/renwuks0.plist", 
         "res/public/Anim/renwuks/renwuks0.png", cb) 
 
@@ -328,22 +299,6 @@ function RootLayer:addResFight()
     manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/public/Anim/qiangdicx/qiangdicx0.plist", 
         "res/public/Anim/qiangdicx/qiangdicx0.png", cb)    
-=======
-    self:makesprite(rwkssrc)
-
-
-    local drlxsrc = "res/public/Anim/direnlx/direnlx.csb"
-    manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
-    self:makesprite(drlxsrc)
-
-    local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.csb"
-    manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
-    self:makesprite(bossjjsrc)
-
-    local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
-    manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
-    self:makesprite(qdcxsrc)
->>>>>>> 3735b0349e423ce23cc01b83b8f321a8ebcf4173
 
    --music
     self:addResFightMusic()
