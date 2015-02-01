@@ -657,11 +657,10 @@ end
 
 function FightPlayer:fire()
     --hero 控制cooldown
-    self.hero:fire()
-
-    -- --gun
-    -- if  self.gunView:canShot() then  --todo
-    -- end
+    if self.gunView:canShot() then  --todo
+        self.hero:fire() 
+    end    
+    
 end
 
 function FightPlayer:onHeroFire(event)
