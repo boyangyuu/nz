@@ -187,17 +187,19 @@ function WeaponListLayer:initUI()
             return true
         elseif event.name=='ended' then
             -- self:onceFull(self.weaponId)
-                local buyModel = md:getInstance("BuyModel")
-                function deneyOncefull()
-                    buyModel:buy("onceFull",{weaponid = self.weaponId})
-                end
-                local guide = md:getInstance("Guide")
-                local isDone = guide:isDone("prefight02")
-                if buyModel:checkBought("weaponGiftBag") == false and isDone then
-                    buyModel:buy("weaponGiftBag",{
-                        payDoneFunc = handler(self, self.reloadlistview),
-                                                  deneyBuyFunc = deneyOncefull})
-                end
+            local buyModel = md:getInstance("BuyModel")
+            function deneyOncefull()
+                buyModel:buy("onceFull",{weaponid = self.weaponId})
+            end
+            local guide = md:getInstance("Guide")
+            local isDone = guide:isDone("prefight02")
+            if buyModel:checkBought("weaponGiftBag") == false and isDone then
+                buyModel:buy("weaponGiftBag",{
+                    payDoneFunc = handler(self, self.reloadlistview),
+                                              deneyBuyFunc = deneyOncefull})
+            elseif buyModel:checkBought("weaponGiftBag") == true and isDone then
+                buyModel:buy("onceFull",{weaponid = self.weaponId})
+            end
         end
     end)
     addBtnEventListener(self.btnEquip, function(event)
