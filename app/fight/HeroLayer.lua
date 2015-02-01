@@ -258,9 +258,7 @@ function HeroLayer:onThrowGrenade(event)
 	local destPos = event.throwPos
 	local destRect = cc.rect(destPos.x, destPos.y ,
 						kLeiW,kLeiW)
-	destRect.x = destPos.x - kLeiW / 2
 	destRect.y = destPos.y - kLeiW / 2
-	
 	--lei
 	local function playBombEffect()
 		local map = md:getInstance("Map")
@@ -313,7 +311,7 @@ function HeroLayer:updateHp(event)
 		if isInlayed then 
 			value =  baseHp * scale
 		else 
-			value = 0.0
+			value = define.kHeroHelper
 		end
 		if self.hero:isDead() then 
 			

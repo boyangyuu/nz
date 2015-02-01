@@ -69,6 +69,8 @@ function InfoLayer:loadCCS()
     self.goldAnim 	= cc.uiloader:seekNodeByName(self.goldNode, "animNode") 
     self.gold1:setPercent(1)
 
+	local displayHp = math.floor(self.hero:getHp() )
+	self.bloodLabel:setString(displayHp)
 end
 
 function InfoLayer:initUI()
@@ -152,6 +154,11 @@ function InfoLayer:onActiveGold(event)
 	self.isGolding = true
 	self.gold1:setPercent(100)
 	print("循环播放激活动画")
+	if self.goldArmature then 
+		self.goldArmature:removeSelf()
+		self.goldArmature = nil
+	end
+
 	self.goldArmature = ccs.Armature:create("hjnlc")
 	self.goldArmature:setAnchorPoint(cc.p(0,0))
 	self.goldArmature:setPosition(cc.p(-22,-24))
@@ -165,11 +172,13 @@ function InfoLayer:onActiveGoldEnd(event)
 	self.gold1:setPercent(0)
 	-- print("function InfoLayer:onActiveGoldEnd(event)")
 	self.goldArmature:removeSelf()
+	self.goldArmature = nil
 end
 
 function InfoLayer:animationEvent(armatureBack,movementType,movementID)
+    if armatureBack == nil then return end
     if movementType == ccs.MovementEventType.loopComplete then
-        self.goldArmature:stopAllActions()
+        armatureBack:stopAllActions()
         if movementID == "hjnlc_kaishi" then
         	self.goldArmature:getAnimation():play("hjnlc_chixu", -1, 1)
         end
