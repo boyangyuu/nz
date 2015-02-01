@@ -74,10 +74,11 @@ function WeaponListLayer:initUI()
     self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
     self.equipedone       = cc.uiloader:seekNodeByName(self, "bag1")
     self.equipedtwo       = cc.uiloader:seekNodeByName(self, "bag2")
-    self.equipedju       = cc.uiloader:seekNodeByName(self, "bag3")
+    self.equipedju        = cc.uiloader:seekNodeByName(self, "bag3")
     self.upgradecost      = cc.uiloader:seekNodeByName(self, "upgradecost")
-    self.buycost      = cc.uiloader:seekNodeByName(self, "buycost")
+    self.buycost          = cc.uiloader:seekNodeByName(self, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self, "damagepluse")
+    self.suipiannum       = cc.uiloader:seekNodeByName(self, "suipiannum")
 
     local shanghai = cc.uiloader:seekNodeByName(self, "shanghai")
     local jingzhun = cc.uiloader:seekNodeByName(self, "jingzhun")
@@ -347,6 +348,16 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
 
 
     self:playstar(refreshStar,intenlevel)
+
+    local leveldetailmodel = md:getInstance("LevelDetailModel")
+    local suipiannum = leveldetailmodel:getSuiPianNum(self.weaponId)
+    local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
+    if self.weaponrecord["parts"] == 1 and not isGot then
+        self.suipiannum:setVisible(true)
+        self.suipiannum:setString("LJ"..suipiannum.."/5")
+    elseif isGot then
+        self.suipiannum:setVisible(false)
+    end
 
     -- refresh 选择状态
     local itemContent = self.weaponLV.items_[index]:getContent()
