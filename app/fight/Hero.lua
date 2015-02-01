@@ -222,41 +222,56 @@ function Hero:getMaxHp()
 end
 
 function Hero:decreaseHp(hp)
+    if self:getIsPause() then 
+        return 
+    end
+
     local defence = md:getInstance("Defence")
     local robot   = md:getInstance("Robot")
     if defence:getIsDefending() then 
         defence:onHitted(hp)
     elseif robot:getIsRoboting() then
         robot:onHitted()
-    elseif self:isHelpHp() then
+    elseif self:isHelpHp(hp) then
         self:helpFullHp()
     else
         Hero.super.decreaseHp(self, hp)
     end
 end
 
-function Hero:isHelpHp()
+function Hero:getIsPause()
+    return self.isPause or false
+end
+
+function Hero:setIsPause(isPause)
+    self.isPause = isPause
+end
+
+function Hero:isHelpHp(demage)
+    demage = 0
     if self:isDead() then return false end
-    if self.isHelped then return false end
+    -- if self.isHelped then return false end
 
     local defence   = md:getInstance("Defence")
     local isDefenceAble =  defence:getIsAble() and 
                 not defence:getIsDefending()
     local maxhp = self:getMaxHp()
-    local hp = self:getHp()
+    local desthp = self:getHp() - demage
     
-    local isLessHp =  (hp / maxhp) < define.kBuyFullHpTime   
+    local isLessHp =  (desthp / maxhp) < define.kBuyFullHpTime   
     return isDefenceAble and isLessHp 
 end
 
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
-    self.isHelped = true
+    -- self.isHelped = true
     print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
-    -- fight:pauseFight(true)
     fight:stopFire()
+    self.isPause = true
+
+    --pop
     ui:showPopup("commonPopup",
         {type = "style3", content = "是否立即回复生命？",
              callfuncCofirm =  handler(self, self.showTuhao),
@@ -272,6 +287,9 @@ end
 
 
 function Hero:onBuyFullHp()
+    --clear pause
+    self.isPause = false
+
     print("立即回复生命 function Hero:onBuyFullHp()")
     local fight = md:getInstance("Fight")
     fight:pauseFight(false)
@@ -284,6 +302,9 @@ function Hero:onBuyFullHp()
 end
 
 function Hero:onDenyFullHp()
+    --clear pause
+    self.isPause = false
+
     print("立即回复生命 function Hero:onDenyFullHp()")
     local fight = md:getInstance("Fight")
     fight:pauseFight(false)

@@ -94,7 +94,7 @@ function MyApp:createGameStateFile()
                                         weaponid   = 2,
                                         },
                                 bag3 = {
-                                        weaponid   = 6,
+                                        -- weaponid   = 6,
                                         },
                         },
             }, 
@@ -117,25 +117,25 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
-            money = 0,
+            money = 2000,
             diamond = 0,
 
 
                       
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 5,
             },
             guide = {
-                        gamePre         = false,
-                        fight01         = false,
-                        afterfight01    = false,
-                        prefight02      = false,
-                        fight02_dun     = false,
-                        fight02         = false,
-                        afterfight02    = false,
-                        fight04         = false,
-                        xiangqian       = false,
+                        gamePre         = true,
+                        fight01         = true,
+                        afterfight01    = true,
+                        prefight02      = true,
+                        fight02_dun     = true,
+                        fight02         = true,
+                        afterfight02    = true,
+                        fight04         = true,
+                        xiangqian       = true,
             },
             fight = {
                         isPreferBag1 = true,

@@ -302,8 +302,10 @@ function HeroLayer:updateHp(event)
 	end
 
 	local function updateHpFunc()
-		-- print("updateHpFunc()")
-		--inlay
+		--ispause
+		local isPause = self.hero:getIsPause()
+		if isPause then return end
+
 		local value = 0.0
 		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 		local maxHp = self.hero:getMaxHp()

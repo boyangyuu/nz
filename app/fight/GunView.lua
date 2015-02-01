@@ -4,7 +4,6 @@
 “枪”的视图
 
 ]]
-import("..includes.functionUtils")
 local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
 local Gun  		 = import(".Gun")
 

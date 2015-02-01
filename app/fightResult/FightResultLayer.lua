@@ -175,7 +175,7 @@ function FightResultLayer:initUI()
         elseif event.name=='ended' then		
 	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	        -- dump(curGroup)
-	        if curLevel == 6 then
+	        if curLevel == 6 and curGroup < 4 then
 	        	curGroup = curGroup + 1
 	        end
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})

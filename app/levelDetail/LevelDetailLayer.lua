@@ -63,6 +63,10 @@ function LevelDetailLayer:loadCCS()
     local src = "res/LevelDetail/btequipanim/bt_yjzb.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
+    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    display.addSpriteFrames(plist,png)
+
 end
 
 function LevelDetailLayer:initUI()
@@ -96,10 +100,11 @@ function LevelDetailLayer:initUI()
 			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
 	end
 	if DataTable["type"] == "boss" then
+		dump(DataTable["enemyPlay"])
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
 		armature:setScale(DataTable["scale"])
 		addChildCenter(armature, self.panlEnemy)
-		-- armature:getAnimation():play("stand" , -1, 1)
+		armature:getAnimation():play("stand" , -1, 1)
 	end
 
 

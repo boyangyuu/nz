@@ -19,7 +19,6 @@ function HomeBarLayer:ctor(properties)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
-    -- self:playSound()
     self:initData(properties)
     self:loadCCS()
     self:initHomeLayer(self.groupid)
@@ -37,13 +36,8 @@ function HomeBarLayer:popUpGify(properties)
     local isDone = self.guide:isDone("xiangqian")
     if properties.popgift and isDone then
         local buy = md:getInstance("BuyModel")
-        buy:buy("timeGiftBag", {})    
+        buy:buy("timeGiftBag", {})
     end
-end
-
-function HomeBarLayer:playSound()
-    local homeBarMusic = "res/Music/bg/bjyx.wav"
-    audio.playMusic(homeBarMusic,true)
 end
 
 function HomeBarLayer:initData(properties)
@@ -139,6 +133,9 @@ function HomeBarLayer:initHomeLayer(groupid)
             self.btnSetting:setVisible(false)
             self.btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
+            self.btnInlay:setButtonEnabled(true)
+            self.btnStore:setButtonEnabled(false)
+            self.btnArsenal:setButtonEnabled(true)
         end
     end)
 
@@ -208,7 +205,6 @@ function HomeBarLayer:homeBarAction()
 end
 
 function HomeBarLayer:onEnter()
-    self:playSound()
     self.guide:check("prefight02")
 end
 

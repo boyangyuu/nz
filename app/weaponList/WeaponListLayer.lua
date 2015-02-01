@@ -55,6 +55,12 @@ function WeaponListLayer:loadCCS()
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(starsrc)
+    local plist = "res/WeaponList/btbuyanim/bt_goumai0.plist"
+    local png = "res/WeaponList/btbuyanim/bt_goumai0.png"
+    display.addSpriteFrames(plist,png)
+    local starplist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
+    local starpng = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
+    display.addSpriteFrames(starplist,starpng)
 
 end
 
@@ -187,17 +193,19 @@ function WeaponListLayer:initUI()
             return true
         elseif event.name=='ended' then
             -- self:onceFull(self.weaponId)
-                local buyModel = md:getInstance("BuyModel")
-                function deneyOncefull()
-                    buyModel:buy("onceFull",{weaponid = self.weaponId})
-                end
-                local guide = md:getInstance("Guide")
-                local isDone = guide:isDone("prefight02")
-                if buyModel:checkBought("weaponGiftBag") == false and isDone then
-                    buyModel:buy("weaponGiftBag",{
-                        payDoneFunc = handler(self, self.reloadlistview),
-                                                  deneyBuyFunc = deneyOncefull})
-                end
+            local buyModel = md:getInstance("BuyModel")
+            function deneyOncefull()
+                buyModel:buy("onceFull",{weaponid = self.weaponId})
+            end
+            local guide = md:getInstance("Guide")
+            local isDone = guide:isDone("prefight02")
+            if buyModel:checkBought("weaponGiftBag") == false and isDone then
+                buyModel:buy("weaponGiftBag",{
+                    payDoneFunc = handler(self, self.reloadlistview),
+                                              deneyBuyFunc = deneyOncefull})
+            elseif buyModel:checkBought("weaponGiftBag") == true and isDone then
+                buyModel:buy("onceFull",{weaponid = self.weaponId})
+            end
         end
     end)
     addBtnEventListener(self.btnEquip, function(event)
@@ -288,6 +296,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.layerGun:removeAllChildren()
     self.weaponrecord = self.weaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
+    self.weapontype = self.weaponrecord["type"]
     self.labelName:setString(self.weaponrecord["name"])
     self.buycost:setString(self.weaponrecord["cost"])
     self.labelDescribe:setString(self.weaponrecord["describe"])
@@ -492,6 +501,9 @@ function WeaponListLayer:buyWeapon(event)
     if self.userModel:costDiamond(self.weaponrecord["cost"]) then
         function delay()
             self.weaponListModel:buyWeapon(self.weaponId)
+            if self.weapontype == "ju" then
+                self.weaponListModel:equipBag(self.weaponId,3)
+            end
             local gmcg   = "res/Music/ui/gmcg.wav"
             audio.playSound(gmcg,false)
         end
