@@ -79,6 +79,11 @@ function StartLayer:initUI()
     local src = "res/Start/caidantx/caidantx.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
+
+    local plist = "res/Start/caidantx/caidantx0.plist"
+    local png = "res/Start/caidantx/caidantx0.png"
+    display.addSpriteFrames(plist,png)
+
     local armature = ccs.Armature:create("caidantx")
     armature:setPosition(cc.p(568,320))
     self:addChild(armature,100)

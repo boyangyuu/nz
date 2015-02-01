@@ -55,6 +55,12 @@ function WeaponListLayer:loadCCS()
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(starsrc)
+    local plist = "res/WeaponList/btbuyanim/bt_goumai0.plist"
+    local png = "res/WeaponList/btbuyanim/bt_goumai0.png"
+    display.addSpriteFrames(plist,png)
+    local starplist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
+    local starpng = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
+    display.addSpriteFrames(starplist,starpng)
 
 end
 
