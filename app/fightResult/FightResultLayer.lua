@@ -34,6 +34,7 @@ function FightResultLayer:ctor(properties)
     local fightResult = self.fightModel:getFightResult()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
+    um:bonusVirtualCurrency(fightResult["goldNum"],1)
     self.grade = self:getGrade(fightResult["hpPercent"])
 
 	self:getinlayfall()
@@ -174,6 +175,9 @@ function FightResultLayer:initUI()
         elseif event.name=='ended' then		
 	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	        -- dump(curGroup)
+	        if curLevel == 6 then
+	        	curGroup = curGroup + 1
+	        end
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})
         end
     end)
