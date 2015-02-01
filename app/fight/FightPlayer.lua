@@ -58,7 +58,7 @@ function FightPlayer:ctor(properties)
         
         :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
         :addEventListener(self.hero.AWARD_GOLD_INCREASE_EVENT, handler(self, self.changeGoldCount)) 
-    
+        :addEventListener(self.hero.FIRE_EVENT, handler(self, self.onHeroFire))
     cc.EventProxy.new(self.fight, self)
         :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
         :addEventListener(self.fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
@@ -611,12 +611,7 @@ function FightPlayer:onCancelledFire()
     -- local isJuLevel     = levelModel:isJujiFight()
 
     if  isRobot then
-        -- print("robot:stopFire()") 
         robot:stopFire()
-    -- elseif isJuLevel and isJuAble then
-    --     -- print("GUN_SWITCH_JU_EVENT")
-    --     if isJu then self:fire() end
-
     else
         self.gunView:stopFire()
     end
@@ -661,19 +656,18 @@ function FightPlayer:robotFire()
 end
 
 function FightPlayer:fire()
-    local focusRangeNode = self.focusView:getFocusRange()
-
     --hero 控制cooldown
     self.hero:fire()
 
-    --gun
-    if  self.gunView:canShot() then  --todo
-        self.focusView:playFire()
-        
-        --todo 发命令
-        print("dispatchEvent GUN_FIRE_EVENT")
-        self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})
-    end
+    -- --gun
+    -- if  self.gunView:canShot() then  --todo
+    -- end
+end
+
+function FightPlayer:onHeroFire(event)
+    local focusRangeNode = self.focusView:getFocusRange()
+    self.focusView:playFire()
+    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})    
 end
 
 ----move----
@@ -782,10 +776,14 @@ end
 function FightPlayer:initGuide1()
     --check   
     local isDone = self.guide:isDone("fight01")
-    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 1 and gid == 1
-    if isDone and not isWillGuide then return end    
+    print("isDone", isDone)
+    if isDone or not isWillGuide then 
+        return 
+    end    
 
+    print("function FightPlayer:initGuide1()")
     self.focusNode:setPosition(cc.p(500,230))
 
     --inlay 
@@ -920,10 +918,11 @@ end
 function FightPlayer:initGuide2()
     --check   
     local isDone = self.guide:isDone("fight02_dun")
-    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 2 and gid == 1
-    if isDone and not isWillGuide then return end
-
+    print("function FightPlayer:initGuide4()", isDone)    
+    if isDone or not isWillGuide then return end
+    
     --盾
     self.guide:addClickListener({
         id = "fight02_dun",
@@ -941,9 +940,9 @@ end
 function FightPlayer:initGuide4()
     --check     
     local isDone = self.guide:isDone("fight02")
-    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 2 and gid == 1
-    if isDone and not isWillGuide then return end
+    if isDone or not isWillGuide then return end
 
     --机甲
     self.guide:addClickListener({
@@ -961,9 +960,9 @@ end
 
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
-    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 4 and gid == 1
-    if isDone and not isWillGuide then return end   
+    if isDone or not isWillGuide then return end   
 
     self.guide:addClickListener({
         id = "fight04_open",
