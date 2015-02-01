@@ -31,12 +31,12 @@ function BuyModel:buy(configid, buydata)
 	self.isFight = buydata.isFight
 
 	if isGift then
-		if self.isFight then
-			print("BuyModel, configid:",configid)
-        	ui:showPopup("GiftBagPopup",{popupName = configid},{isPauseScene = true, isFight = self.isFight, isPauseSecond = buydata.isPauseSecond})
-        else 
+		-- if self.isFight then
+		-- 	print("BuyModel, configid:",configid)
+  --       	ui:showPopup("GiftBagPopup",{popupName = configid},{isPauseScene = true, isFight = self.isFight, isPauseSecond = buydata.isPauseSecond})
+  --       else 
         	ui:showPopup("GiftBagPopup",{popupName = configid})
-        end
+        -- end
     else
     	--mm
     	iap:pay(configid)
@@ -69,6 +69,10 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		weaponListModel:onceFull(v)
 	end
 	self:setBought("weaponGiftBag")
+
+	--手雷*10
+	propModel:buyProp("lei",10)
+	StoreModel:refreshInfo("prop")
 	um:payProps(20,2,"buy_weapongiftbag",1,0)
 end
 
@@ -234,13 +238,13 @@ function BuyModel:setBought(giftId)
 end
 
 function BuyModel:close()
-	print("GiftBagPopup:close()",self.isFight)
-	if self.isFight then
-		print("self.param.isFight:",true)
-		ui:closePopup("GiftBagPopup",true)
-	else
+	-- print("GiftBagPopup:close()",self.isFight)
+	-- if self.isFight then
+	-- 	print("self.param.isFight:",true)
+	-- 	ui:closePopup("GiftBagPopup",true)
+	-- else
 		ui:closePopup("GiftBagPopup")
-	end
+	-- end
 end
 
 return BuyModel
