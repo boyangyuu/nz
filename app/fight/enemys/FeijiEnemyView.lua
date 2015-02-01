@@ -59,18 +59,16 @@ function FeijiEnemyView:tick()
 	--fire
 	local fireRate, isAble = self.enemy:getFireRate()
 	assert(fireRate > 1, "invalid fireRate")
-	if isAble then 
+	if isAble then
 		local randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
-			self:playAfterAlert("skill", handler(self, self.playFire))
+			self:playAfterAlert("fire", handler(self, self.playFire))
 			self.enemy:beginFireCd()
 		end
 	end
 
 	--walk
 	local walkRate, isAble = self.enemy:getWalkRate()
-
-
 	assert(walkRate > 1, "invalid walkRate")
 	if isAble then
 		local randomSeed =  math.random(1, walkRate)
@@ -225,6 +223,7 @@ function FeijiEnemyView:playWalkRight()
 end
 
 function FeijiEnemyView:playFire()
+	print("function FeijiEnemyView:playFire()")
 	local name = self.direct == "right" and "fireright" or "fireleft"
 	self.armature:getAnimation():play(name , -1, 1)
 
@@ -254,6 +253,7 @@ function FeijiEnemyView:playFire()
 	        offset = offsetPoses[offsetIndex]
 	    }
 	    local function callfuncDaoDan()
+	    	print("local function callfuncDaoDan()")
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
@@ -314,13 +314,14 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
 		-- print("animationEvent id ", movementID)
-		if movementID ~= "dieright" and movementID ~= "dieleft" then
-			if self.isRuning then
-				return 
-			end	
+		if movementID == "runright" or movementID == "runleft" then 
+			return 
+		end
 
+		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			local playCache = self:getPlayCache()
-			if playCache then 
+			if playCache then
+				print("playCache") 
 				playCache()
 			else 					
 				self:playStand()
