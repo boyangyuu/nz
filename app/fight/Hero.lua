@@ -237,6 +237,7 @@ end
 
 function Hero:isHelpHp()
     if self:isDead() then return false end
+    if self.isHelped then return false end
 
     local defence   = md:getInstance("Defence")
     local isDefenceAble =  defence:getIsAble() and 
@@ -251,6 +252,7 @@ end
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
+    self.isHelped = true
     print("function Hero:helpFullHp()")
     local fight = md:getInstance("Fight")
     -- fight:pauseFight(true)
@@ -282,7 +284,6 @@ function Hero:onDenyFullHp()
     local defence   = md:getInstance("Defence")
     defence:startDefence()    
 end
-
 
 --map
 function Hero:setMapZoom(scale)
