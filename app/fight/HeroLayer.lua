@@ -313,7 +313,7 @@ function HeroLayer:updateHp(event)
 		if isInlayed then 
 			value =  baseHp * scale
 		else 
-			value = 0.0
+			value = define.kHeroHelper
 		end
 		if self.hero:isDead() then 
 			

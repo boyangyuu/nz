@@ -171,7 +171,11 @@ function GuideLayer:loadCCS()
     --anim
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
+    display.addSpriteFrames("res/xinshou/yd_zyhua/yd_zyhua0.plist", 
+        "res/xinshou/yd_zyhua/yd_zyhua0.png")     
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
+    display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
+        "res/xinshou/yd_dianji/yd_dianji0.png")     
 end
 
 
@@ -250,6 +254,7 @@ end
 
 function GuideLayer:start(event)
 	print("function GuideLayer:start(event)")
+	self:loadCCS()	
 	self:setVisible(true)
 	self:setTouchEnabled(true)
 	self.isGuiding = true
