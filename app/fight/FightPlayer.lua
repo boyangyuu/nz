@@ -68,8 +68,7 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
-
-
+       
     cc.EventProxy.new(self.fightProp, self)
         :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
 
@@ -208,7 +207,7 @@ function FightPlayer:initUI()
     scheduler.performWithDelayGlobal(handler(self, self.initGuide1), 0.1)
     scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
-
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide4), 0.1)    
 end
 
 --启动盾牌恢复
@@ -937,6 +936,16 @@ function FightPlayer:initGuide2()
         end
     })    
 
+    
+end
+
+function FightPlayer:initGuide4()
+    --check     
+    local isDone = self.guide:isDone("fight02")
+    local lid, gid = self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 2 and gid == 1
+    if isDone and not isWillGuide then return end
+
     --机甲
     self.guide:addClickListener({
         id = "fight02_jijia",
@@ -948,7 +957,7 @@ function FightPlayer:initGuide2()
             -- print("！！！！！！！fight02_jijia")
             robot:startRobot()  
         end
-    })       
+    })   
 end
 
 function FightPlayer:initGuide3()

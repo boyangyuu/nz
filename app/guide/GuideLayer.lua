@@ -1,8 +1,5 @@
 
 
-
-import("..includes.functionUtils")
-
 local LayerColor_BLACK = cc.c4b(255, 0, 0, 0)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
@@ -171,7 +168,11 @@ function GuideLayer:loadCCS()
     --anim
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
+    display.addSpriteFrames("res/xinshou/yd_zyhua/yd_zyhua0.plist", 
+        "res/xinshou/yd_zyhua/yd_zyhua0.png")     
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
+    display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
+        "res/xinshou/yd_dianji/yd_dianji0.png")     
 end
 
 
@@ -194,7 +195,7 @@ function GuideLayer:refreshUI()
 	local circle = display.newRect(rect, params) --todo改为九宫格
 	local opacityCfg = cfg.opacity 
 	local render = cc.RenderTexture:create(display.width1, display.height1)
-	local opacity = opacityCfg or 0.5 --透明度
+	local opacity = opacityCfg or 0.7 --透明度
 	render:clear(0.1, 0.1, 0.1, opacity)
 	render:begin()
 		circle:setBlendFunc(gl.DST_ALPHA, gl.ZERO)
@@ -241,15 +242,32 @@ function GuideLayer:refreshCommentUI()
 	contentNode:setPosition(pos)
 
 	--msg
+	
 	local label_content =  cc.uiloader:seekNodeByName(self.guideNode, "label_content")
 	local msg = cfg.msg
 	assert(msg, "msg is nil")
+
+
+	--guide role
+	local isRight = cfg.rolepos == "right"
+
+	local image_role = cc.uiloader:seekNodeByName(self.guideNode, "image_role")
+	image_role:setFlippedX(not isRight)
+	if isRight then  
+		label_content:setPositionX(90)
+		image_role:setPositionX(700)
+	else
+		label_content:setPositionX(250)
+		image_role:setPositionX(-40)
+	end	
+
 	label_content:setString(msg)
-	label_content:speak(0.1)
+	label_content:speak(0.1)	
 end
 
 function GuideLayer:start(event)
 	print("function GuideLayer:start(event)")
+	self:loadCCS()	
 	self:setVisible(true)
 	self:setTouchEnabled(true)
 	self.isGuiding = true

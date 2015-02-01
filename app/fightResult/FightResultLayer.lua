@@ -59,7 +59,9 @@ function FightResultLayer:loadCCS()
     local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(starsrc)
-
+    local plist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
+    local png = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
+    display.addSpriteFrames(plist,png)
 end
 
 local playStarHandler = nil
