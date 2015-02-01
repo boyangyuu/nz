@@ -119,6 +119,121 @@ local waves = {
 	},
 	{
 		enemys = {
+	
+            {
+				time = 3,	
+				num = 4,
+				pos = {200,250,300,350,},
+				delay = {0,0.5,0.8,1,},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 6,	
+				num = 2,
+				pos = {300,350},
+				delay = {0.5,1},
+				property = { 
+					placeName = "place1",
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 9,
+				num = 2,
+				delay = {0.2,1},
+				pos = {550,800},
+				property = { 
+					placeName = "place3",
+					id = 1,
+					startState = "rollleft",	
+				},
+			},
+			{
+				time = 12,
+				num = 3,
+				delay = {0.2,1,1.5},
+				pos = {190,230,250},
+				property = { 
+					placeName = "place10",
+					id = 1,
+					startState = "rollright",	
+				},
+			},
+			{
+				time = 15,
+				num = 1,
+				delay = {0.5},
+				pos = {45},
+				property = { 
+					placeName = "place7",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 18,
+				num = 1,
+				delay = {0.5},
+				pos = {45},
+				property = { 
+					placeName = "place6",
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},
+			{
+				time = 21,
+				num = 3,
+				delay = {0.5,1,2.5},
+				pos = {190,230,250},
+				property = { 
+					placeName = "place10",
+					id = 1,
+					startState = "rollright",	
+				},
+			},
+			{
+				time = 24,
+				num = 1,
+				delay = {1},
+				pos = {230},
+				property = { 
+					placeName = "place10",
+					id = 2,
+					startState = "rollright",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	
+				},
+			},
+			{
+				time = 28,	
+				num = 3,
+				pos = {200,300,350,},
+				delay = {0,0.5,1,},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",                                          --第一波20个怪
+					id = 1,
+				},
+			},
+			
+		},
+	},
+	{
+		enemys = {
 			{
 				time = 2,
 				num = 10,
@@ -308,6 +423,19 @@ local waves = {
 				num = 12,
 				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,1.4,2.1},
 				pos = {650,750,850,550,650,750,850,950,650,750,850,750},                                    
+				                                                                          -- 心形蓝气球
+				property = {
+					type = "jinbi",
+					placeName = "place10", 
+					speed = 3, 
+					id = 14,
+				},
+			},
+			{
+				time = 44,
+				num = 12,
+				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,1.4,2.1},
+				pos = {650,750,850,550,650,750,850,950,650,750,850,750},                                    
 				                                                                          -- 心形金气球
 				property = {
 					type = "jinbi",
@@ -316,55 +444,52 @@ local waves = {
 					id = 15,
 				},
 			},
+
 		},
 	},
-	{
-		enemys = {
-			
-		},
-	},	
+	
 	
 }
 
 
 
 
---enemy的关卡配置                                                    黄金mp5满级135难度对应怪物属性
+--enemy的关卡配置                                                    白银镶嵌 MP5伤害90  dps大于等于5 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=16,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=15,hp=633,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=422,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=375,
+	{id=3,image="shoulei",demage=20,hp=211,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=562,
+	{id=4,image="sanbing01",demage=0,hp=633,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=20000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=844,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=375,
+	{id=6,image="daodan",demage=25,hp=211,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=936,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=20,hp=1055,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=3744,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=25,hp=4200,fireRate=180,fireCd=5,speed=35,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=60,hp=562,fireRate=30,speed=100,
+	{id=9,image="zibaob",demage=25,hp=422,fireRate=30,speed=120,
 	weak1=3},	
 
 	
@@ -402,62 +527,11 @@ local enemys = {
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=12500},  
 	--盾兵BOSS         --type = "jin",
-	{id=20,image="dunbing",demage=18,hp=50000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
+	{id=20,image="dunbing",demage=15,hp=50000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
 	weak1=3},                           
 }
 
---boss的关卡配置
-local bosses = {
-	--第一个出场的boss
-	{
-		image = "boss01", --图片名字
-		hp = 10000,
-		demage = 3,
-		fireRate = 400,
-		walkRate = 200,
-		saoFireOffset = 0.4, 		--扫射时间间隔
-		saoFireTimes = 10, 			--扫射次数
-		demageScale = {weak1 = 2, weak2 = 3, weak3 = 3},	--弱点伤害倍数
-		
-		skilltrigger = {   			--技能触发(可以同时)
-			moveLeftFire = {
-				0.95, 0.50,
-			},
-			moveRightFire = {
-				0.85, 0.30,
-			},
-			daoDan = {
-				0.80, 0.70, 0.50, 0.20,
-			},
-			saoShe = {
-				0.65, 0.55,
-			},
-			weak2 = {
-				0.70,
-			},	
-			weak3 = {
-				0.30,
-			},							
-		},
-		getMoveLeftAction = function ()
-			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
-			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
-			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
-			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
-			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
-			return cc.Sequence:create(move1, move2, move3, move4, move5)
-		end,
 
-		getMoveRightAction = function ()
-			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
-			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
-			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
-			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
-			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
-			return cc.Sequence:create(move1, move2, move3, move4, move5)
-		end,
-	},
-}
 
 local mapId = "map_1_5"
 
@@ -466,7 +540,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {26,}   --黄武激活所需杀人个数
+	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
 
 end
 return waveClass

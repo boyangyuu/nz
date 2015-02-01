@@ -201,7 +201,6 @@ end
 function DuozuBossView:onKillLastCall()
     self.isShaning = false
     self:setVisible(true)
-    self.armature:getAnimation():play("shanru" , -1, 1) 
 end
 
 function DuozuBossView:animationEvent(armatureBack,movementType,movementID)

@@ -18,7 +18,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 5,	
 				num = 5,
 				pos = {325,420,510,770,900},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -29,7 +29,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 3,
 				delay = {2.0,2.5,3},
 				pos = {400,680,960},
@@ -40,7 +40,7 @@ local waves = {
 				},
 			},			
 			{
-				time = 15,
+				time = 12,
 				num = 3,
 				delay = {0.1,0.2,0.3},
 				pos = {250,460,600},
@@ -62,7 +62,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 18,
 				num = 3,
 				delay = {2.8,2.5,3},
 				pos = {200,380,560},
@@ -97,7 +97,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 22,
+				time = 24,
 				num = 1,
 				delay = {0.8},
 				pos = {550},
@@ -126,7 +126,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 5,	
 				num = 5,
 				pos = {325,420,510,770,900},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -137,7 +137,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 3,
 				delay = {2.0,2.5,3},
 				pos = {400,680,960},
@@ -150,7 +150,7 @@ local waves = {
 
 			{
 			    
-				time = 7,
+				time = 10,
 				num = 1,
 				pos = {450},
 				delay = {0.5},                         -- 飞机
@@ -177,7 +177,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,	
+				time = 17,	
 				num = 5,
 				pos = {25,120,310,470,600},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -188,7 +188,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 19,
 				num = 3,
 				delay = {2.8,2.5,3},
 				pos = {200,380,560},
@@ -200,7 +200,7 @@ local waves = {
 			},
 			{
 			    
-				time = 20,
+				time = 22,
 				num = 1,
 				pos = {550},
 				delay = {0.5},                         -- 飞机
@@ -217,7 +217,7 @@ local waves = {
 			},	
 			{
 			    
-				time = 22,
+				time = 23,
 				num = 1,
 				pos = {850},
 				delay = {0.5},                         -- 飞机
@@ -233,7 +233,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 21,
+				time = 29,
 				num = 5,
 				delay = {0.7,1.4,1.8, 2.1,2.8},
 				pos = {350,550,600,800,950},					
@@ -264,7 +264,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 5,	
 				num = 5,
 				pos = {325,420,510,770,900},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -275,7 +275,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 5,
 				delay = {2.0,2.5,3,2.5,2.0},
 				pos = {380,680,960,720,888},
@@ -288,9 +288,9 @@ local waves = {
 
 			
 			{
-				time = 22,
+				time = 15,
 				num = 10,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.60,0.4,0.3,0.2,0.1},
+				delay = {0.5,0.9,1.4,1.9,2.4,3.0,3.4,4.0,4.5,5.1},
 				pos = {350,460,600,1050,570,456,780,666,510,980},
 				property = { 
 					placeName = "place3" ,
@@ -300,7 +300,7 @@ local waves = {
 			},
 
 			{
-				time = 25,
+				time = 23,
 				num = 1,
 				delay = {1.6},
 				pos = {670},
@@ -311,7 +311,7 @@ local waves = {
 				},
 			},
 			{
-				time = 26,
+				time = 28,
 				num = 4,
 				delay = {0.8,1.5,2.6,3},
 				pos = {50,120,550,600},
@@ -324,7 +324,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 28,
+				time = 30,
 				num = 2,
 				delay = {0.8,1.5},
 				pos = {50,120},
@@ -335,7 +335,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 28,
+				time = 33,
 				num = 3,
 				delay = {0.8,1.2,1.6},
 				pos = {490,560,590},
@@ -432,6 +432,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {45}   --黄武激活所需杀人个数
+	self.goldLimits = {25,55,95,130}   --黄武激活所需杀人个数
 end
 return waveClass
