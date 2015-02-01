@@ -27,6 +27,10 @@ function GiftBagPopup:loadCCS()
     local src = "res/GiftBag/lb_ljlq/lb_ljlq.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
+    local plist = "res/GiftBag/lb_ljlq/lb_ljlq0.plist"
+    local png   = "res/GiftBag/lb_ljlq/lb_ljlq0.png"
+    display.addSpriteFrames(plist, png)          
+
 
 end
 

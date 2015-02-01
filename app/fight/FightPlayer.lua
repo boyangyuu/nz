@@ -1008,7 +1008,7 @@ function FightPlayer:initGuide3()
 end
 
 function FightPlayer:onEnter()
-    local src = "res/Music/fight/bj_zhandou.wav"
+    local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
 
     local levelModel = md:getInstance("LevelDetailModel")

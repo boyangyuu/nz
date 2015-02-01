@@ -23,6 +23,10 @@ function FightResultPopup:loadCCS()
     local src = "res/FightResult/anim/renwuwc/renwuwc.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
+    local plist = "res/FightResult/anim/renwuwc/renwuwc0.plist"
+    local png   = "res/FightResult/anim/renwuwc/renwuwc0.png"
+    display.addSpriteFrames(plist, png)          
+
     self.armature = ccs.Armature:create("renwuwc")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
     addChildCenter(self.armature, animLayer)
