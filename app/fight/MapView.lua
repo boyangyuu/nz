@@ -93,7 +93,7 @@ function MapView:loadPlaces()
 	local index = 1
 	self.places = {}
     while true do
-        if index == 20 then
+        if index == 40 then
             break
         end
 
