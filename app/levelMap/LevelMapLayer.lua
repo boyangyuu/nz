@@ -399,7 +399,7 @@ function LevelMapLayer:initGuide()
      })   
 
     --镶嵌之后 点击进入下一关
-    local rect = cc.rect(572, 344, 120, 120)
+    local rect = cc.rect(600, 384, 120, 120)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "xiangqian_nextLevel",

@@ -56,14 +56,14 @@ configs["prefight02"] = {
 	preGuideId = "afterfight01",
 	steps = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
-		{id = "prefight02_shengji1", msg = "点击左侧MP5", }, 
+		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 100}, msg = "点击左侧MP5", }, 
 		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
 		{id = "prefight02_shengji3", msg = "恭喜主公升级成功", skipMode = "clickScreen", opacity = 0.0},
 		{id = "prefight02_back", msg = "点击按钮返回大地图", },		
 		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", },		
-		{id = "prefight02_equip1", msg = "点击一键装备 , 装备M4A1", },		
+		-- {id = "prefight02_equip1", msg = "点击一键装备 , 装备M4A1", },		
 		{id = "prefight02_equip2", msg = "点击一键装备 , 装备黄金武器", },		
-		{id = "prefight02_enter", msg = "点击开始游戏按钮 , 开始战斗！", },
+		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
 	}
 }
 

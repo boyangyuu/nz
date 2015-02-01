@@ -75,7 +75,8 @@ function Attackable:getTargetData(focusNode)
 	local isHitedWeak, targetDataWeak = self:checkWeak(focusNode)
 	local isHitedBody, targetDataBody = self:checkBody(focusNode)
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
-
+	isGold = true
+	
 	if self.attackType == "weak" or isGold then
 		if isHitedWeak then
 			-- print("isHitedWeak")

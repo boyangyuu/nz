@@ -269,6 +269,10 @@ function Hero:onBuyFullHp()
     fight:pauseFight(false)
 
     self:setFullHp()
+
+    --refresh 买礼包时候需要刷新
+    local fightProp = md:getInstance("FightProp")
+    fightProp:refreshData()
 end
 
 function Hero:onDenyFullHp()
