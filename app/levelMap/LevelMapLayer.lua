@@ -39,7 +39,9 @@ function LevelMapLayer:initData(properties)
     self.preIndex = 0
 
     --config
+
     local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
+    -- local recordsLevel = self.LevelMapModel:getConfig()
     self.groupNum = #recordsLevel
 
     self.levelAmount = {}
@@ -327,6 +329,7 @@ function LevelMapLayer:bgAction()
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
+    print(self.preIndex.."_"..self.index)
     self.animName = self.preIndex.."_"..self.index
     self.armature:getAnimation():play(self.animName , -1, 0)
 end
