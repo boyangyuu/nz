@@ -6,7 +6,7 @@ DEBUG = 1
 DEBUG_FPS = true
 
 -- dump memory info every 10 seconds
-DEBUG_MEM = true
+DEBUG_MEM = false
 
 -- load deprecated API
 LOAD_DEPRECATED_API = false
