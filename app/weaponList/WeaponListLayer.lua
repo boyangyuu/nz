@@ -296,6 +296,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self.layerGun:removeAllChildren()
     self.weaponrecord = self.weaponListModel:getWeaponRecord(index)
     self.weaponId = self.weaponrecord["id"]
+    self.weapontype = self.weaponrecord["type"]
     self.labelName:setString(self.weaponrecord["name"])
     self.buycost:setString(self.weaponrecord["cost"])
     self.labelDescribe:setString(self.weaponrecord["describe"])
@@ -500,6 +501,9 @@ function WeaponListLayer:buyWeapon(event)
     if self.userModel:costDiamond(self.weaponrecord["cost"]) then
         function delay()
             self.weaponListModel:buyWeapon(self.weaponId)
+            if self.weapontype == "ju" then
+                self.weaponListModel:equipBag(self.weaponId,3)
+            end
             local gmcg   = "res/Music/ui/gmcg.wav"
             audio.playSound(gmcg,false)
         end
