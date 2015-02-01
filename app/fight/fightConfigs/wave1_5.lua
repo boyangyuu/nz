@@ -438,6 +438,42 @@ local waves = {
 					                    			   -- 人质
 				},
 			},
+			{
+				time = 5,
+				num = 4,
+				delay = {0.7,1.4, 2.1,2.8},
+				pos = {300,350,400,600},					
+				property = {
+					placeName = "place2",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},	
+			{
+				time = 8,
+				num = 4,
+				delay = {0.7,1.4, 2.1,2.8},
+				pos = {300,400,600,700},					
+				property = {
+					placeName = "place3",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},
+			{
+				time = 11,
+				num = 5,
+				delay = {0,0.7,1.4, 2.1,2.8},
+				pos = {300,500,550,600,1000},					
+				property = {
+					placeName = "place10",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},
 
 	    },		
 	}
@@ -445,15 +481,15 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=12,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=4,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=218,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
+	{id=2,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=15,hp=1,
+	{id=3,image="shoulei",demage=5,hp=1,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -461,19 +497,19 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=436,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=240,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=1,
+	{id=6,image="daodan",demage=5,hp=1,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=9,hp=545,fireRate=180,fireCd=3,speed=60,
+	{id=7,image="jinzhanb",demage=3,hp=545,fireRate=180,fireCd=3,speed=60,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=12,hp=1090,fireRate=180,fireCd=4,speed=40,
+	{id=8,image="dunbing",demage=4,hp=1090,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
@@ -517,6 +553,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.renzhiLimit = 1   		--杀死人质上限
+	self.goldLimits = {300}   --黄武激活所需杀人个数
 	-- self.goldLimits = {3, 50, 90}   --黄武激活所需杀人个数
 
 end

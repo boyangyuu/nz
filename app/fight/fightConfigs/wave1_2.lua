@@ -326,18 +326,18 @@ local waves = {
 	},
 }
 
---enemy的关卡配置                           青铜镶嵌 MP5伤害65  dps大于等于3 怪物数据
+--enemy的关卡配置                           无镶嵌 MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=9,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=15,hp=936,walkRate=180,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=3,
+	{id=2,image="jinzhanb",demage=15,hp=190,walkRate=180,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=3,
 		weak1=3},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=327,
+	{id=3,image="sanbing01",demage=0,hp=190,
 	weak1=3},	             
 
     --导弹          --missileType = "daodan",
@@ -348,13 +348,13 @@ local enemys = {
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
-	{id=6,image="shouleib",demage=0,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=6,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 	--手雷
-	{id=7,image="shoulei",demage=12,hp=1,
+	{id=7,image="shoulei",demage=4,hp=1,
 	weak1=3},
 	--BOSS导弹          --missileType = "daodan",
-	{id=8,image="daodan",demage=5,hp=327,weak1=1},
+	{id=8,image="daodan",demage=5,hp=190,weak1=1},
 
 }
 
@@ -438,7 +438,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {35}   --黄武激活所需杀人个数  本关共60个小怪
+	self.goldLimits = {35,55}   --黄武激活所需杀人个数  本关共60个小怪
 end
 
 return waveClass
