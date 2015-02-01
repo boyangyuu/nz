@@ -34,6 +34,9 @@ function LoadingLayer:initUI()
     local plist = "res/Loading/loading_bjmap/loading_bjmap0.plist"
     local png = "res/Loading/loading_bjmap/loading_bjmap0.png"
     display.addSpriteFrames(plist,png)
+    local yuanplist = "res/Loading/loading_yuan/loading_yuan0.plist"
+    local yuanpng = "res/Loading/loading_yuan/loading_yuan0.png"
+    display.addSpriteFrames(yuanplist,yuanpng)
 
     --anim
     self.maparmature = ccs.Armature:create("loading_bjmap")
@@ -64,7 +67,7 @@ end
 function LoadingLayer:onShow(event)
     self:setVisible(true)
     self:playAnim()
-    audio.stopMusic(false)
+    audio.stopMusic(true)
 end
 
 function LoadingLayer:onHide(event)

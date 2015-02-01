@@ -657,11 +657,10 @@ end
 
 function FightPlayer:fire()
     --hero 控制cooldown
-    self.hero:fire()
-
-    -- --gun
-    -- if  self.gunView:canShot() then  --todo
-    -- end
+    if self.gunView:canShot() then  --todo
+        self.hero:fire() 
+    end    
+    
 end
 
 function FightPlayer:onHeroFire(event)
@@ -1008,7 +1007,7 @@ function FightPlayer:initGuide3()
 end
 
 function FightPlayer:onEnter()
-    local src = "res/Music/fight/bj_zhandou.wav"
+    local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
 
     local levelModel = md:getInstance("LevelDetailModel")
