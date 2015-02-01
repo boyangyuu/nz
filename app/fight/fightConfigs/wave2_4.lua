@@ -372,6 +372,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {300}   --黄武激活所需杀人个数
+	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
 end
 return waveClass

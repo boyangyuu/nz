@@ -445,7 +445,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {25,55,90}   --黄武激活所需杀人个数  本关共60个小怪
+	self.goldLimits = {25,55,95}   --黄武激活所需杀人个数  本关共60个小怪
 end
 
 return waveClass

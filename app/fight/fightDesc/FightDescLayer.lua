@@ -12,7 +12,8 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.waveStart))
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.enemyIntro))
 
-	self:loadCCS()
+    	self:loadCCS()
+        self:setTouchSwallowEnabled(false)
 end
 
 function FightDescLayer:loadCCS()
@@ -40,6 +41,7 @@ function FightDescLayer:start(event)
 end
 
 function FightDescLayer:bossShow(event)
+    self:setTouchSwallowEnabled(true)
     self:setVisible(true)
     local armature = ccs.Armature:create("qiangdicx")
     armature:getAnimation():setMovementEventCallFunc(
@@ -71,6 +73,7 @@ function FightDescLayer:waveStart(event)
 end
 
 function FightDescLayer:enemyIntro(event)
+
     self:setVisible(true)
     local controlNode = cc.uiloader:load("res/CommonPopup/animLayer/animLayer_2.ExportJson")
     self:addChild(controlNode)

@@ -99,7 +99,7 @@ function LevelDetailLayer:initUI()
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
 		armature:setScale(DataTable["scale"])
 		addChildCenter(armature, self.panlEnemy)
-		armature:getAnimation():play("stand" , -1, 1)
+		-- armature:getAnimation():play("stand" , -1, 1)
 	end
 
 
