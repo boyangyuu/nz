@@ -68,8 +68,7 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
-
-
+       
     cc.EventProxy.new(self.fightProp, self)
         :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
 

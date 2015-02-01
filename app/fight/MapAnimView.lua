@@ -97,7 +97,6 @@ function MapAnimView:playEffectLeiBomb(event)
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	local armature = ccs.Armature:create("baozhasl_y")
 	armature:setPosition(pos)
-	
 	--scale 狙图特殊处理
 	local scale = self:getScaleByPos(pos)
 	armature:setScale(scale)	

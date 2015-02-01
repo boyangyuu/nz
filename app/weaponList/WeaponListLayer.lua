@@ -525,7 +525,7 @@ function WeaponListLayer:initGuide()
     if isDone then return end
 
     --点击左侧mp5
-    local rect1 = cc.rect(70, 260, 240, 110)
+    local rect1 = cc.rect(50, 270, 240, 110)
     guide:addClickListener({
         id = "prefight02_shengji1",
         groupId = "prefight02",

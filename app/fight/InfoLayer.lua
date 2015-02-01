@@ -69,6 +69,8 @@ function InfoLayer:loadCCS()
     self.goldAnim 	= cc.uiloader:seekNodeByName(self.goldNode, "animNode") 
     self.gold1:setPercent(1)
 
+	local displayHp = math.floor(self.hero:getHp() )
+	self.bloodLabel:setString(displayHp)
 end
 
 function InfoLayer:initUI()

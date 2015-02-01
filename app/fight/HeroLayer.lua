@@ -258,9 +258,7 @@ function HeroLayer:onThrowGrenade(event)
 	local destPos = event.throwPos
 	local destRect = cc.rect(destPos.x, destPos.y ,
 						kLeiW,kLeiW)
-	destRect.x = destPos.x - kLeiW / 2
 	destRect.y = destPos.y - kLeiW / 2
-	
 	--lei
 	local function playBombEffect()
 		local map = md:getInstance("Map")
