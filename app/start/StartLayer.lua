@@ -37,22 +37,21 @@ function StartLayer:initUI()
     local play = cc.uiloader:seekNodeByName(btnMusic, "play")
     local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
     play:setVisible(false)
+    local isPlaying = audio.isMusicPlaying()
     addBtnEventListener(btnMusic, function( event )
         if event.name == "began" then 
             return true
         elseif event.name == "ended" then
-            if isMusicPlaying then 
+            if not isPlaying then 
                 stop:setVisible(false)
                 play:setVisible(true)
-                audio:pauseMusic()
-                audio:pauseAllSounds()
-                isMusicPlaying = false
+                audio.stopAllMusicAndSounds(true)
+                isPlaying = true
             else
                 stop:setVisible(true)
                 play:setVisible(false)
-                audio:resumeMusic()
-                audio:resumeAllSounds()
-                isMusicPlaying = true
+                audio.stopAllMusicAndSounds(false)
+                isPlaying = false
             end
         end
     end)
