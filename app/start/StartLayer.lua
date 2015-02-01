@@ -92,8 +92,7 @@ function StartLayer:onEnter()
 end
 
 function StartLayer:beginGame()
-
-    self:initDailyLogin()
+    self:initDailyLogin()       
 
     if self:isDone("gamePre") then 
         ui:changeLayer("HomeBarLayer",{popgift = true})
