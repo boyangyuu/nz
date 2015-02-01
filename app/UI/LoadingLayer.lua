@@ -28,6 +28,10 @@ function LoadingLayer:initUI()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(yuansrc)
 
+    local plist = "res/Loading/loading_bjmap/loading_bjmap0.plist"
+    local png = "res/Loading/loading_bjmap/loading_bjmap0.png"
+    display.addSpriteFrames(plist,png)
+
     --anim
     self.maparmature = ccs.Armature:create("loading_bjmap")
     self.maparmature :setAnchorPoint(0,0)
