@@ -44,14 +44,12 @@ function StartLayer:initUI()
             if isMusicPlaying then 
                 stop:setVisible(false)
                 play:setVisible(true)
-                audio:pauseMusic()
-                audio:pauseAllSounds()
+                audio.stopAllMusicAndSounds(true)
                 isMusicPlaying = false
             else
                 stop:setVisible(true)
                 play:setVisible(false)
-                audio:resumeMusic()
-                audio:resumeAllSounds()
+                audio.stopAllMusicAndSounds(false)
                 isMusicPlaying = true
             end
         end

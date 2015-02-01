@@ -75,15 +75,13 @@ function PausePopup:initButtons()
 				print("music is playing")
 				musicplay:setVisible(true)
 				musicclose:setVisible(false)
-				audio:pauseMusic()
-				audio:pauseAllSounds()
+				audio.stopAllMusicAndSounds(true)
 				isMusicPlaying = false
 			else
 				print("music is close")
 				musicplay:setVisible(false)
 				musicclose:setVisible(true)
-				audio:resumeMusic()
-				audio:resumeAllSounds()
+				audio.stopAllMusicAndSounds(false)
 				isMusicPlaying = true
 			end
 			
