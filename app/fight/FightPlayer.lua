@@ -269,7 +269,8 @@ function FightPlayer:initTouchArea()
     --move区域
     self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
 
-    layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
+    -- layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
+    layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name == "began" or event.name == "added" then
             self:onMutiTouchBegin(event)
         elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
@@ -306,8 +307,8 @@ end
 function FightPlayer:initBtns()
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    self.btnFire:setTouchEnabled(true)  
-    self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnFire:setTouchEnabled(true)  
+    -- self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
@@ -555,7 +556,6 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     -- not in touch
     if self.touchFireId == id and isend then
         self.touchFireId = nil
-        -- scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
         self:onCancelledFire()     
     end          
     return isTouch
@@ -649,7 +649,6 @@ end
  
 function FightPlayer:checkFire()
     print("FightPlayer:fire()")
-
     self:fire()
 end
  
@@ -666,13 +665,11 @@ function FightPlayer:fire()
     --hero 控制cooldown
     if self.gunView:canShot() then  --todo
         self.hero:fire() 
-        -- print("self.hero:fire() ")
     end    
     
 end
 
 function FightPlayer:onHeroFire(event)
-    -- print("function FightPlayer:onHeroFire(event)")
     local focusRangeNode = self.focusView:getFocusRange()
     self.focusView:playFire()
     self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})    
@@ -708,8 +705,6 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
 
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
-    -- print("xOri", xOri)
-    -- print("yOri", yOri)
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
 
     local x, y = layerMap:getPosition()
