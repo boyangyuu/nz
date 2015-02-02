@@ -22,7 +22,7 @@ configs[1]  = {
 	level3 = {
 		forward = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "隐藏能源核心的金库被袭击！请求支援！请求支援！", pos = "left"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。中了调虎离山的计了！行动组火速回援", pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。中了敌人的调虎离山计了！行动组火速回援", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "收到！", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "收到！", pos = "left"},
 		},
