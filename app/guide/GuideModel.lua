@@ -51,6 +51,7 @@ function Guide:doGuideNext()
 		-- self:finishGuide()
 		return
 	end
+	local configGroup =  GuideConfigs.getConfig(self.groupId)
 
 	--um finish
 	if self.stepIndex ~= 0 then
@@ -61,7 +62,6 @@ function Guide:doGuideNext()
 	self.stepIndex = self.stepIndex + 1
 
 	--update config
-	local configGroup =  GuideConfigs.getConfig(self.groupId)
 	local configStep = configGroup["steps"][self.stepIndex]	
 	self.curConfig = configStep
 
