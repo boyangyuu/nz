@@ -98,7 +98,7 @@ function GuideLayer:onTouchTarget(event)
 	-- dump(event, "event")
 
 	--检查是否是特殊事件监听
-	if event.name ~= "began" then
+	if event.name ~= "began" and event.name ~= "added" then
 		if cfg.touchType ~= "all" then return end
 	end
 
