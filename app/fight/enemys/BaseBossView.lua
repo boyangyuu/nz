@@ -467,7 +467,7 @@ function BaseBossView:zhaohuan()
 end
 
 function BaseBossView:onKillCall(event)
-	-- print("function BaseBossView:onLastCallDead(event)")
+	if self.enemysCallNum == nil then return end --todo 需要修改
 	self.enemysCallNum = self.enemysCallNum  - 1
 	if self.enemysCallNum == 0 then 
 		-- print("取消无敌")

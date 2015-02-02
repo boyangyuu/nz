@@ -124,7 +124,7 @@ local waves = {
 			{
 				time = 2,	
 				num = 1,
-				pos = {900},
+				pos = {600},
 				delay = {0.2},
 				property = {
 					placeName = "place3" ,
@@ -138,11 +138,10 @@ local waves = {
 				num = 1,
 				pos = {400},
 				delay = {0.4},
-				property = {
-					placeName = "place4" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			
@@ -161,7 +160,7 @@ local waves = {
 			{
 				time = 12,	
 				num = 1,
-				pos = {600},
+				pos = {700},
 				delay = {0.6},
 				property = {
 					placeName = "place3" ,

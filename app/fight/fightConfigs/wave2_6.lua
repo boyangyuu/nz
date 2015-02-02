@@ -488,7 +488,7 @@ local bosses = {
 			wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
 			},
 
-			-- yanwu = { 0.90,0.70,0.50,0.30,0.10                    --烟雾
+			-- yanwu = { 0.90,0.70,0.50,0.30,0.10                     --烟雾
 			-- },  
 
 
@@ -586,7 +586,7 @@ local bosses = {
 
 	    },	
 
-		enemys3 = {                                                   --第三波召唤的忍者兵
+		enemys3 = {                                                   --第三波召唤的兵
 			{
 				time = 2,
 				num = 1,
@@ -604,7 +604,7 @@ local bosses = {
 				},
 			},
 			{
-				time = 4,
+				time = 5,
 				num = 2,
 				pos = {400,880},
 				delay = {0.3,0.9},                         -- 飞机
@@ -620,7 +620,7 @@ local bosses = {
 				},
 			},
 			{
-				time = 3,
+				time = 8,
 				num = 3,
 				pos = {200,550,920},
 				delay = {0.5,1.2,1.8},                            -- 吉普车
@@ -655,11 +655,11 @@ local bosses = {
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 120.0,		                                    --持续时间
-					--demageScale = 1.5                    --伤害翻1.5倍			
+					demageScale = 1.5                    --伤害翻1.5倍			
 				},
 			},
 			{
-				time = 4,
+				time = 5,
 				num = 2,
 				pos = {400,880},
 				delay = {0.3,0.9},                         -- 飞机
@@ -676,7 +676,7 @@ local bosses = {
 				},
 			},
 			{
-				time = 3,
+				time = 8,
 				num = 3,
 				pos = {200,550,920},
 				delay = {0.5,1.2,1.8},                            -- 吉普车
@@ -689,7 +689,7 @@ local bosses = {
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 120.0,		--持续时间
-					--demageScale = 1.5                    --伤害翻1.5倍		
+					--demageScale = 1.2                    --伤害翻1.5倍		
 
 				},
 			},
