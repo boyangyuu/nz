@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
---[[
+
 	{
 		enemys = { 
 
@@ -235,7 +235,7 @@ local waves = {
 			},	
 		},
 	},
-]]
+
 	{
 		enemys = {  
 			--   蓝boss 白银 （2条）   
@@ -244,7 +244,7 @@ local waves = {
 				time = 3,	
 				num = 1,
 				pos = {450},
-				delay = {4},
+				delay = {0.4},
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
@@ -254,13 +254,18 @@ local waves = {
 				},
 			},	
 
+
+		},
+	},
+	{
+		enemys = {  
 			-- 忍者 白银 （3条）      血量（ -100 - 100）
 			--      黄金 （3条）      血量（100）
 			{
-				time = 2,	
+				time = 3,	
 				num = 1,
 				pos = {368},
-				delay = {4},
+				delay = {0.4},
 				property = { 
 					type = "renzheBoss",
 					placeName = "place13",
@@ -269,49 +274,49 @@ local waves = {
 					id = 1,
 				},
 			},
+
 		},
 	},
-
 }
 
 
 
---enemy的关卡配置                                                    青铜镶嵌 MP5伤害80  dps大于等于3 怪物数据
+--enemy的关卡配置                                                    黄金镶嵌 MP5满级  dps大于等于7 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=12,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=28,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=135,
+	{id=3,image="shoulei",demage=27,hp=135,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=405,
+	{id=4,image="sanbing01",demage=0,hp=30000,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=540,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=35000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=375,
+	{id=6,image="daodan",demage=35,hp=375,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=12,hp=675,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=12,hp=30000,fireRate=180,fireCd=4,speed=80,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=1350,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=15,hp=40000,fireRate=180,fireCd=5,speed=60,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=270,fireRate=30,speed=100,
+	{id=9,image="zibaob",demage=15,hp=20000,fireRate=30,speed=100,
 	weak1=3},	
 
 	
@@ -320,11 +325,11 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=40000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=10000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=40000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=3,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -340,7 +345,7 @@ local enemys = {
 	weak1=3},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=35,hp=25000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=35,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3},	
 
 	--飞镖
@@ -358,7 +363,7 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "renzb",                       --图片名字
-		hp = 100000,
+		hp = 200000,
 		fireRate = 60,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --
@@ -383,7 +388,7 @@ local bosses = {
 			-- },							
 			zhaohuan = { 0.90,0.70, 0.40                    --召唤分身
 			},                                           
-			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.55, 0.45, 0.25, 0.15     --冲锋
+			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.50, 0.20     --冲锋
 			},
 
 
@@ -552,16 +557,16 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90,  0.50, 0.10,
+				0.90,  0.50, 
 			},
 			moveRightFire = {
-				0.70,  0.30, 
+				 0.30, 
 			},
 			chongfeng = {
-			     0.95, 0.93, 0.85, 0.75, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
+			     0.95,  0.70,  0.10
 			},
 			tieqiu = {
-				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
+			     0.80, 0.60, 0.40, 0.20
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
@@ -575,7 +580,7 @@ local bosses = {
 			demage250 = {  
 				0.60,
 			},	
-			demage400 = {  
+			demage300 = {  
 				0.50,
 			},						
 		},

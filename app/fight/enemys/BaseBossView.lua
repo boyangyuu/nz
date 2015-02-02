@@ -471,7 +471,7 @@ function BaseBossView:zhaohuan()
 end
 
 function BaseBossView:onKillCall(event)
-	-- print("function BaseBossView:onLastCallDead(event)")
+	if self.enemysCallNum == nil then return end --todo 需要修改
 	self.enemysCallNum = self.enemysCallNum  - 1
 	if self.enemysCallNum == 0 then 
 		-- print("取消无敌")
@@ -758,6 +758,10 @@ function BaseBossView:checkGuide1()
 			self.isGuidedJijia = true
 			local fight = md:getInstance("Fight")
 			fight:stopFire()	
+
+			--show jijia
+			local data = {label_jijiaNum = true,  btnRobot = true}
+			fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})			
 		end		
 	end
 end

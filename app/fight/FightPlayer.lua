@@ -312,27 +312,27 @@ function FightPlayer:initBtns()
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
-    self.btnChange:setTouchEnabled(true)
-    self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnChange:setTouchEnabled(true)
+    -- self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnDefence
     self.btnDefence = cc.uiloader:seekNodeByName(self, "btnDun")
-    self.btnDefence:setTouchEnabled(true)
-    self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnDefence:setTouchEnabled(true)
+    -- self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self:initDefence()
 
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
-    self.btnRobot:setTouchEnabled(true)
-    self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnRobot:setTouchEnabled(true)
+    -- self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_jijiaNum = cc.uiloader:seekNodeByName(self, "label_jijiaNum")
     local num = self.fightProp:getRobotNum()
     self.label_jijiaNum:setString(num) 
     
     --btnLei
     self.btnLei = cc.uiloader:seekNodeByName(self, "btnLei")
-    self.btnLei:setTouchEnabled(true)
-    self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnLei:setTouchEnabled(true)
+    -- self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_leiNum = cc.uiloader:seekNodeByName(self, "label_shouleiNum")
     local num = self.fightProp:getLeiNum()
     self.label_leiNum:setString(num)   
@@ -340,13 +340,13 @@ function FightPlayer:initBtns()
     --btnJu
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
     self.btnJu:setVisible(false)
-    self.btnJu:setTouchEnabled(true)
-    self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnJu:setTouchEnabled(true)
+    -- self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
-    self.btnGold:setTouchEnabled(true)
-    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnGold:setTouchEnabled(true)
+    -- self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_gold = cc.uiloader:seekNodeByName(self, "label_gold")    
     self.label_gold:setColor(cc.c3b(255, 146, 0))
     local num = self.fightProp:getGoldNum()
@@ -877,7 +877,7 @@ end
 function FightPlayer:onGuideFire(touchEvent)
     -- print("os.time()", os.time())
     local name = touchEvent.name
-    local limitTime = 0.9
+    local limitTime = 0.6
     
     --检查长按时间
     local function onGuideFireCheckFunc()
@@ -948,6 +948,10 @@ function FightPlayer:initGuide4()
     if isDone or not isWillGuide then return end
 
     --机甲
+    self.btnRobot:setVisible(false)
+    self.label_jijiaNum:setVisible(false)
+    
+    --btn
     self.guide:addClickListener({
         id = "fight02_jijia",
         groupId = "fight02",

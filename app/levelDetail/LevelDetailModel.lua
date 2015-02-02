@@ -65,7 +65,7 @@ function LevelDetailModel:setsuipian(weaponid)
 			for k,v in pairs(data.weaponsuipian) do
 				if v.weaponid == weaponid then
 					data.weaponsuipian[k].number = data.weaponsuipian[k].number + 1
-					if data.weaponsuipian[k].number == 5 then
+					if data.weaponsuipian[k].number == 10 then
 						self:weapontogether(weaponid)
 					end
 				end

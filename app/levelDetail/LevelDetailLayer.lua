@@ -323,7 +323,13 @@ function LevelDetailLayer:onClickGuideBtnGold()
 	self.alreadygold:setVisible(true)
 	self.btnGold:setVisible(false)	
 
-	self.inlayModel:equipGoldInlays()
+	local data = getUserData()
+	local isAwardGold = data.isAwardGold
+	if isAwardGold == false then 
+		self.inlayModel:equipGoldInlays()
+		data.isAwardGold = true
+		setUserData(data)
+	end
 end
 
 function LevelDetailLayer:onClickBtnJijia()
