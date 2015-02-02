@@ -366,7 +366,7 @@ local bosses = {
 	{
 
 		image = "boss02", --图片名字
-		hp = 100000,
+		hp = 50000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 100,               --普攻频率
 		fireCd = 3,                     --普攻cd
@@ -383,9 +383,7 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-
 				0.90,  0.50, 0.10,
-
 			},
 			moveRightFire = {
 				0.70,  0.30, 
@@ -402,18 +400,16 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.90,0.70,0.50,0.30,0.10                        
 			},
-			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.85,
+			demage160 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.99,
 			},	
 			demage250 = {  
-				0.60,
+				0.80,
 			},	
 			demage400 = {  
 				0.50,
 			},						
 		},
-
-
 
 
 		getMoveLeftAction = function ()
