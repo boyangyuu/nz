@@ -165,11 +165,17 @@ function HomeBarLayer:initHomeLayer(groupid)
 
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
+        local dianji = "res/Music/ui/dianji.wav"
+        audio.playSound(dianji,false)
     end)
     self.btnInlay:onButtonClicked(function()
         self:onBtnInlayClicked()
+        local dianji = "res/Music/ui/dianji.wav"
+        audio.playSound(dianji,false)
     end)
     self.btnStore:onButtonClicked(function()
+        local dianji = "res/Music/ui/dianji.wav"
+        audio.playSound(dianji,false)
         self.btnSetting:setVisible(false)
         self.btnBack:setVisible(true)
         self:refreshCommonLayer("StoreLayer")
