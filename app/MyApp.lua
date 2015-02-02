@@ -137,7 +137,9 @@ function MyApp:createGameStateFile()
                         afterfight02    = false,
                         fight04         = false,
                         xiangqian       = false,
+
             },
+            isAwardGold     = false,
             fight = {
                         isPreferBag1 = true,
             },
