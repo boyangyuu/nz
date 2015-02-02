@@ -147,6 +147,11 @@ function StoreCell:initCellUI(parameter)
         property:setString("原价："..record["costprice"].." 元")
         price:setString(record["price"])
 
+        if record["price"] == 1 then
+            -- discountlabel:setVisible(false)
+            discount:setVisible(false)
+            redline:setVisible(false)
+        end
     elseif type == "inlay" then
         buynumber:setVisible(false)
         icon_jibi:setVisible(true)

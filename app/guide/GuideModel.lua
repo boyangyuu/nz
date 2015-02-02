@@ -52,6 +52,11 @@ function Guide:doGuideNext()
 		return
 	end
 
+	--um finish
+	if self.stepIndex ~= 0 then
+		local lastconfigStep = configGroup["steps"][self.stepIndex]	
+		um:finishLevel(lastconfigStep["id"])
+	end
 	--next
 	self.stepIndex = self.stepIndex + 1
 
@@ -66,9 +71,8 @@ function Guide:doGuideNext()
 		return
 	end
 
-	--打点
-	um:event(self.curConfig["id"])
-
+	--um start
+	um:startLevel(self.curConfig["id"])
 	--update listenData
 	local id = configStep.id
 	local listenData = self.datas[id]	
