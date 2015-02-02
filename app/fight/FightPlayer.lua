@@ -340,8 +340,8 @@ function FightPlayer:initBtns()
     --btnJu
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
     self.btnJu:setVisible(false)
-    self.btnJu:setTouchEnabled(true)
-    self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnJu:setTouchEnabled(true)
+    -- self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
