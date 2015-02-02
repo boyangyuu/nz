@@ -56,6 +56,7 @@ function PausePopup:initButtons()
 	local musicClosedBtn = cc.uiloader:seekNodeByName(self, "Panel_MusicClosed")
 	local musicplay = cc.uiloader:seekNodeByName(musicClosedBtn, "musicplay")
 	local musicclose = cc.uiloader:seekNodeByName(musicClosedBtn, "musicclose")
+
 	local isPlaying = audio.isMusicPlaying()
 	if isPlaying then
 		musicplay:setVisible(false)
@@ -71,6 +72,7 @@ function PausePopup:initButtons()
 			self:btnColor(musicClosedBtn, true)
 			return true
 		elseif event.name == 'ended' then 
+
 		self:btnColor(musicClosedBtn, false)
 			if isPlaying then
 				print("music is playing")

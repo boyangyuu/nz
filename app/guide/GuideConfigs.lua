@@ -35,7 +35,7 @@ configs["fight01"] = {
 		{id = "fight_blood", msg = "阿杰 , 这是生命值 , 生命耗尽后游戏失败", rolepos = "right", }, 
 		{id = "fight_move", msg = "在屏幕上左右滑动可以移动准星",touchType = "all", skipMode = "condition", hand = "move"},
 		{id = "fight_fire1", msg = "在高亮区域点击 , 枪械将会射击", skipDelay = 1.0},
-		{id = "fight_fire2", msg = "长按会连续射击 , 请长按1.0秒",touchType = "all", skipMode = "condition", 
+		{id = "fight_fire2", msg = "长按射击按钮 , 会连续射击",touchType = "all", skipMode = "condition", 
 				hand = "longtouch",opacity = 0.0, contentOffset = {x = 0, y = 50}},
 		{id = "fight_throw", msg = "在高亮区域点击 , 将会投掷手雷", skipDelay = 1.0},
 		{id = "fight_change", msg = "在高亮区域点击 , 将会更换枪械", skipDelay = 1.0},
@@ -53,7 +53,7 @@ configs["afterfight01"] = {
 
 --- 开启第二关之后 ----
 configs["prefight02"] = {
-	preGuideId = "afterfight01",
+	preGuideId = "fight01",
 	steps = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
 		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 100}, msg = "点击左侧MP5", rolepos = "right"}, 

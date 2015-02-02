@@ -69,21 +69,21 @@ function  DailyLoginModel:setGift(dailyID)
 	local StoreModel = md:getInstance("StoreModel")
 	if giftInfo["type"] == "gold" then
 		UserModel:addMoney(giftInfo["number"])
-	    um:bonusVirtualCurrency(giftInfo["number"],1)
+	    um:bonusVirtualCurrency(giftInfo["number"],3)
 		return true
 	elseif giftInfo["type"] == "lei" then
 		propModel:buyProp("lei",giftInfo["number"])
-		um:bonusProps("lei", giftInfo["number"], 0, 1)
+		um:bonusProps("lei", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "jijia" then
 		propModel:buyProp("jijia",giftInfo["number"])
-		um:bonusProps("jijia", giftInfo["number"], 0, 1)
+		um:bonusProps("jijia", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "goldweapon" then
 		InlayModel:buyGoldsInlay(giftInfo["number"])
-		um:bonusProps("goldweapon", giftInfo["number"], 0, 1)
+		um:bonusProps("goldweapon", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		InlayModel:refreshInfo("speed")
 		return true

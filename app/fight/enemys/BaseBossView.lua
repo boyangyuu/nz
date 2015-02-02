@@ -427,6 +427,10 @@ function BaseBossView:playChongfeng()
 
     --
     local aheadEndFunc = function ()
+
+        -- print("aheadEnd")
+        self.isAheading = false
+
   		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()
@@ -754,6 +758,10 @@ function BaseBossView:checkGuide1()
 			self.isGuidedJijia = true
 			local fight = md:getInstance("Fight")
 			fight:stopFire()	
+
+			--show jijia
+			local data = {label_jijiaNum = true,  btnRobot = true}
+			fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})			
 		end		
 	end
 end

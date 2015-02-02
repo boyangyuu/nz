@@ -356,11 +356,12 @@ function MapView:tick(dt)
 			--remove
 			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
-
+			enemy = nil
 		elseif enemy and enemy:getWillRemoved() then
 			--remove
 			enemy:removeFromParent()			
 			table.remove(self.enemys, i)
+			enemy = nil
 		end
 	end
 
@@ -438,7 +439,7 @@ function MapView:getEnemysInRect(rect)
 			-- dump(pos, "pos")
 			local enemyRect = cc.rect(pos.x, pos.y, 
 				box.width * scale, box.height * scale)   --有scale问题
-			dump(enemyRect, "enemyRect") 
+			-- dump(enemyRect, "enemyRect") 
 			if cc.rectIntersectsRect(rect, enemyRect) then
 			-- if cc.rectContainsPoint(rect, pos) then
 				enemys[#enemys + 1] = enemy
@@ -579,24 +580,5 @@ function MapView:playEffectJuShaked(event)
 	-- local action1    = transition.newEasing(tMove, "in", time)	
 	self:runAction(cc.Sequence:create(tMove, tMove1))
 end
-
-function MapView:onCleanup() 
-	print("MapView:onCleanup() ")
-	-- if self.checkEnemysEmptyHandler then
-	-- 	scheduler.unscheduleGlobal(self.checkEnemysEmptyHandler)
-	-- end
-	-- if self.checkWaveHandler then
-	-- 	scheduler.unscheduleGlobal(self.checkWaveHandler)
-	-- end	
-	
-	-- if self.schCheckNumleft then
-	-- 	scheduler.unscheduleGlobal(self.schCheckNumleft)
-	-- end		
-
-	-- if self.addEnemysSch then 
-	-- 	scheduler.unscheduleGlobal(self.addEnemysSch)
-	-- end
-end
-
 
 return MapView

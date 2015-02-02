@@ -46,9 +46,6 @@ function GiftBagPopup:initButtons()
 			print("popupName:",self.param.popupName)
 			local configName = self.param.popupName
 			iap:pay(configName)
-
-			-- self.buyModel:payDone()
-
 			print("receiveBtn is pressed!")
 		end
 	end)

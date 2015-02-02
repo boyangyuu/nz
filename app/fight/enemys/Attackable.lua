@@ -177,7 +177,14 @@ end
 --为boss设计的
 function Attackable:getRange(rectName)
 	assert(rectName, "invalid param")
+
 	local armature = self:getEnemyArmature()
+	-- local isright = type(armature.getBone) == "function"
+	-- if isright == false then 
+	-- 	dump(self, "self")
+	-- end
+	-- assert(isright, "")
+	-- local armature = nil
 	local bone = armature:getBone(rectName)
 	if not bone then return nil, false end
 	local node = bone:getDisplayRenderNode() 
@@ -457,11 +464,9 @@ function Attackable:onEnter()
 end
 
 function Attackable:onCleanup()
-	-- print("Attackable:onCleanup()")
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end
-
 	self:removeAllSchedulers()  
 end
 

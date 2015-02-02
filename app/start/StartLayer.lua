@@ -42,16 +42,16 @@ function StartLayer:initUI()
         if event.name == "began" then 
             return true
         elseif event.name == "ended" then
-            if isPlaying then 
+            if  isPlaying then 
                 stop:setVisible(false)
                 play:setVisible(true)
                 audio.stopAllMusicAndSounds(true)
-                isPlaying = true
+                isPlaying = false
             else
                 stop:setVisible(true)
                 play:setVisible(false)
                 audio.stopAllMusicAndSounds(false)
-                isPlaying = false
+                isPlaying = true
             end
         end
     end)
