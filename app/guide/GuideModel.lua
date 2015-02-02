@@ -159,12 +159,13 @@ function Guide:getCurGuideId()
 end
 
 function Guide:clearData()
-	local data = getUserData()
-	for k,v in pairs(data.guide) do
-		print(k,v)
-		data.guide[k] = false
-	end
-	setUserData(data)
+	
+	-- local data = getUserData()
+	-- for k,v in pairs(data.guide) do
+	-- 	print(k,v)
+	-- 	data.guide[k] = false
+	-- end
+	-- setUserData(data)
 end
 
 return Guide
