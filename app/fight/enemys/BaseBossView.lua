@@ -759,9 +759,9 @@ function BaseBossView:checkGuide1()
 			local fight = md:getInstance("Fight")
 			fight:stopFire()	
 
-			--show jijia
-			local data = {label_jijiaNum = true,  btnRobot = true}
-			fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})			
+			-- --show jijia
+			-- local data = {label_jijiaNum = true,  btnRobot = true}
+			-- fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})			
 		end		
 	end
 end
