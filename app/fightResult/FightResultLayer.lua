@@ -34,7 +34,7 @@ function FightResultLayer:ctor(properties)
     local fightResult = self.fightModel:getFightResult()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
-    um:bonusVirtualCurrency(fightResult["goldNum"],1)
+    um:bonusVirtualCurrency(fightResult["goldNum"],4)
     self.grade = self:getGrade(fightResult["hpPercent"])
 
 	self:getinlayfall()
@@ -313,9 +313,10 @@ function FightResultLayer:getinlayfall()
 				 {opacity = 155})
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
+			local name = self.weaponListModel:getWeaponNameByID(v["id"])
 			function delaypop( )
 				ui:showPopup("commonPopup",
-					 {type = "style2", content = "获得AK47零件 X1！"},
+					 {type = "style2", content = "获得"..name.."零件 X1！"},
 					 {opacity = 155})
 			end
      		if self.isDone == true then
@@ -386,8 +387,9 @@ function FightResultLayer:turnLeftCard()
 			scheduler.performWithDelayGlobal(delaypopgun, 0.5)
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
+			dump(name)
 			ui:showPopup("commonPopup",
-				 {type = "style2", content = "获得AK47零件 X1！"},
+				 {type = "style2", content = "获得"..name.."零件 X1！"},
 				 {opacity = 155})
 		end
 	end
