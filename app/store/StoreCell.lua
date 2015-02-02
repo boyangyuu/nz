@@ -162,9 +162,6 @@ function StoreCell:initCellUI(parameter)
         ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
     end
 
-    function payDoneFunc( ... )
-        -- body
-    end
 
     btnbuy:onButtonClicked(function()
             local dianji = "res/Music/ui/dianji.wav"

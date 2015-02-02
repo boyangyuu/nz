@@ -427,6 +427,10 @@ function BaseBossView:playChongfeng()
 
     --
     local aheadEndFunc = function ()
+
+        -- print("aheadEnd")
+        self.isAheading = false
+
   		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()

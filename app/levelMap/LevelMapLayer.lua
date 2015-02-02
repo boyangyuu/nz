@@ -364,10 +364,6 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onCleanup()
-
-end
-
 function LevelMapLayer:onEnter()   
     self:checkGuide()
     print("function LevelMapLayer:checkGuide()  ")

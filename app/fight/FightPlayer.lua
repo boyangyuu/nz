@@ -269,7 +269,8 @@ function FightPlayer:initTouchArea()
     --move区域
     self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
 
-    layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
+    -- layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
+    layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name == "began" or event.name == "added" then
             self:onMutiTouchBegin(event)
         elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
@@ -306,32 +307,32 @@ end
 function FightPlayer:initBtns()
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    self.btnFire:setTouchEnabled(true)  
-    self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnFire:setTouchEnabled(true)  
+    -- self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
-    self.btnChange:setTouchEnabled(true)
-    self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnChange:setTouchEnabled(true)
+    -- self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnDefence
     self.btnDefence = cc.uiloader:seekNodeByName(self, "btnDun")
-    self.btnDefence:setTouchEnabled(true)
-    self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnDefence:setTouchEnabled(true)
+    -- self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self:initDefence()
 
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
-    self.btnRobot:setTouchEnabled(true)
-    self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnRobot:setTouchEnabled(true)
+    -- self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_jijiaNum = cc.uiloader:seekNodeByName(self, "label_jijiaNum")
     local num = self.fightProp:getRobotNum()
     self.label_jijiaNum:setString(num) 
     
     --btnLei
     self.btnLei = cc.uiloader:seekNodeByName(self, "btnLei")
-    self.btnLei:setTouchEnabled(true)
-    self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnLei:setTouchEnabled(true)
+    -- self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_leiNum = cc.uiloader:seekNodeByName(self, "label_shouleiNum")
     local num = self.fightProp:getLeiNum()
     self.label_leiNum:setString(num)   
@@ -344,8 +345,8 @@ function FightPlayer:initBtns()
 
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
-    self.btnGold:setTouchEnabled(true)
-    self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
+    -- self.btnGold:setTouchEnabled(true)
+    -- self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_gold = cc.uiloader:seekNodeByName(self, "label_gold")    
     self.label_gold:setColor(cc.c3b(255, 146, 0))
     local num = self.fightProp:getGoldNum()
@@ -524,7 +525,7 @@ end
 ----attack----
 function FightPlayer:checkBtnFire(id,point,eventName)
     if eventName == "moved" then return false end
-    -- print("eventName:"..eventName.."  id:"..id)
+    print("eventName:"..eventName.."  id:"..id)
     local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
     local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
@@ -542,15 +543,19 @@ function FightPlayer:checkBtnFire(id,point,eventName)
             -- print("self.touchFireId set "..id) 
         end
         if self.touchFireId == id and not isend then
-            self.btnFireSch =  scheduler.scheduleGlobal(
-                handler(self, self.onBtnFire), 0.05)
+            -- self.btnFireSch =  scheduler.scheduleGlobal(
+            --     handler(self, self.onBtnFire), 0.05)
+            -- self:onBtnFire()
+            self.hero.fsm__:doEvent("ready")
+            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.05)
+            -- self.btnFireSch =  scheduler.scheduleGlobal(
+            --     handler(self, self.onBtnFire), 0.05)
         end
     end
    
     -- not in touch
     if self.touchFireId == id and isend then
         self.touchFireId = nil
-        -- scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
         self:onCancelledFire()     
     end          
     return isTouch
@@ -574,7 +579,9 @@ end
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
-    -- print("isRobot", isRobot)
+    print("onBtnFire", onBtnFire)
+    -- self.hero.fsm__:doEvent("ready")
+    -- self.hero:fire()
     if isRobot then
         if robot:isCoolDownDone() then
             self:robotFire()
@@ -619,8 +626,8 @@ function FightPlayer:onCancelledFire()
 
     --sch
     if self.btnFireSch then
-        scheduler.unscheduleGlobal(self.btnFireSch)
-        self.btnFireSch = nil
+        -- scheduler.unscheduleGlobal(self.btnFireSch)
+        transition.removeAction(self.btnFireSch)
     end
 end
 
@@ -633,7 +640,7 @@ function FightPlayer:tick(dt)
 end
 
 function FightPlayer:isCoolDownDone()
-    if  self.hero:canFire() then 
+    if self.hero:canFire() then 
         return true 
     end
 
@@ -641,8 +648,7 @@ function FightPlayer:isCoolDownDone()
 end
  
 function FightPlayer:checkFire()
-    -- -- print("FightPlayer:fire()")
-
+    print("FightPlayer:fire()")
     self:fire()
 end
  
@@ -699,8 +705,6 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
 
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
-    -- print("xOri", xOri)
-    -- print("yOri", yOri)
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
 
     local x, y = layerMap:getPosition()
@@ -873,7 +877,7 @@ end
 function FightPlayer:onGuideFire(touchEvent)
     -- print("os.time()", os.time())
     local name = touchEvent.name
-    local limitTime = 0.9
+    local limitTime = 0.6
     
     --检查长按时间
     local function onGuideFireCheckFunc()
@@ -1019,6 +1023,7 @@ function FightPlayer:onEnter()
 end
 
 function FightPlayer:onCleanup()
+    -- FightPlayer.super.onCleanup(self)
     print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end
@@ -1041,10 +1046,10 @@ function FightPlayer:removeAllSchs()
         scheduler.unscheduleGlobal(self.resumeDefenceHandler)
         self.resumeDefenceHandler= nil
     end
-    if self.btnFireSch then
-        scheduler.unscheduleGlobal(self.btnFireSch)
-        self.btnFireSch = nil
-    end
+    -- if self.btnFireSch then
+    --     scheduler.unscheduleGlobal(self.btnFireSch)
+    --     self.btnFireSch = nil
+    -- end
 end
 
 return FightPlayer

@@ -17,7 +17,7 @@ GameData={}
 -- isTest  = true
 -- isDebug = false
 
--- 测试打包
+--测试打包
 isTest  = false
 isDebug = true
 
@@ -117,6 +117,7 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
+
             money = 2000,
             diamond = 0,
 
@@ -124,18 +125,18 @@ function MyApp:createGameStateFile()
                       
             currentlevel =  {
                         group = 1,
-                        level = 5,
+                        level = 1,
             },
             guide = {
-                        gamePre         = true,
-                        fight01         = true,
-                        afterfight01    = true,
-                        prefight02      = true,
-                        fight02_dun     = true,
-                        fight02         = true,
-                        afterfight02    = true,
-                        fight04         = true,
-                        xiangqian       = true,
+                        gamePre         = false,
+                        fight01         = false,
+                        afterfight01    = false,
+                        prefight02      = false,
+                        fight02_dun     = false,
+                        fight02         = false,
+                        afterfight02    = false,
+                        fight04         = false,
+                        xiangqian       = false,
             },
             fight = {
                         isPreferBag1 = true,

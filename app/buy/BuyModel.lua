@@ -50,14 +50,12 @@ function BuyModel:payDone(result)
 	dump(self.curBuydata, "self.curBuydata")
 	local payDoneFunc = self.curBuydata.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
-	-- self:close()
 end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
 	local deneyBuyFunc = self.curBuydata.deneyBuyFunc
 	if deneyBuyFunc then  deneyBuyFunc() end
-	-- self:close()
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)
@@ -236,16 +234,6 @@ function BuyModel:setBought(giftId)
 	local data = getUserData()
 	data.giftBag[giftId] = true
 	setUserData(data)
-end
-
-function BuyModel:close()
-	-- print("GiftBagPopup:close()",self.isFight)
-	-- if self.isFight then
-	-- 	print("self.param.isFight:",true)
-	-- 	ui:closePopup("GiftBagPopup",true)
-	-- else
-		ui:closePopup("GiftBagPopup")
-	-- end
 end
 
 return BuyModel
