@@ -948,6 +948,10 @@ function FightPlayer:initGuide4()
     if isDone or not isWillGuide then return end
 
     --机甲
+    self.btnRobot:setVisible(false)
+    self.label_jijiaNum:setVisible(false)
+    
+    --btn
     self.guide:addClickListener({
         id = "fight02_jijia",
         groupId = "fight02",
