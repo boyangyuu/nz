@@ -345,6 +345,7 @@ local enemys = {
 	weak1=1},
 
 	--铁球
+
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
@@ -355,6 +356,7 @@ local enemys = {
 	weak1=3},
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,weak1=1},
+
 
 }
 
@@ -371,14 +373,19 @@ local bosses = {
 
 		walkRate = 120,                    --移动频率
 		walkCd = 2,                         --移动cd
+
 		chongfengDemage = 25,                --冲锋造成伤害
+
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数
+
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
+
 				0.90,  0.50, 0.10,
+
 			},
 			moveRightFire = {
 				0.70,  0.30, 

@@ -17,7 +17,7 @@ GameData={}
 -- isTest  = true
 -- isDebug = false
 
--- 测试打包
+--测试打包
 isTest  = false
 isDebug = true
 
@@ -117,6 +117,7 @@ function MyApp:createGameStateFile()
             },
        
             weaponsuipian = {},
+
             money = 2000,
             diamond = 0,
 
