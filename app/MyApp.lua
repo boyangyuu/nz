@@ -17,13 +17,13 @@ GameData={}
 -- isTest  = true
 -- isDebug = false
 
---测试打包
-isTest  = false
-isDebug = true
+-- --测试打包
+-- isTest  = false
+-- isDebug = true
 
--- --正式打包
--- isTest  = false        
--- isDebug = false
+--正式打包
+isTest  = false        
+isDebug = false
 
 ui      = UI.new()
 md      = MD.new()
@@ -85,6 +85,10 @@ function MyApp:createGameStateFile()
                                     intenlevel = 0,
                                     weaponid   = 2 ,           
                                     },
+                                    {
+                                    intenlevel = 0,
+                                    weaponid   = 6, 
+                                    }
                         },
                         weaponed = {
                                 bag1 =  {
@@ -94,7 +98,7 @@ function MyApp:createGameStateFile()
                                         weaponid   = 2,
                                         },
                                 bag3 = {
-                                        -- weaponid   = 6,
+                                        weaponid   = 6,
                                         },
                         },
             }, 

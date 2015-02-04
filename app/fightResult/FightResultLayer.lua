@@ -247,8 +247,7 @@ function FightResultLayer:getinlayfall()
 
 	-- 狙击
 	
-	local isExist = self.weaponListModel:isWeaponExist(6)
-    if self.isDone == false and curRecord["type"] == "boss" and isExist == false then
+    if self.isDone == false and curRecord["type"] == "boss" then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
 	end
