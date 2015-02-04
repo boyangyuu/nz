@@ -36,20 +36,20 @@ function StartLayer:initUI()
     btnMusic:setTouchEnabled(true)
     local play = cc.uiloader:seekNodeByName(btnMusic, "play")
     local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
-    play:setVisible(false)
+    stop:setVisible(false)
     local isPlaying = audio.isMusicPlaying()
     addBtnEventListener(btnMusic, function( event )
         if event.name == "began" then 
             return true
         elseif event.name == "ended" then
             if  isPlaying then 
-                stop:setVisible(false)
-                play:setVisible(true)
+                stop:setVisible(true)
+                play:setVisible(false)
                 audio.stopAllMusicAndSounds(true)
                 isPlaying = false
             else
-                stop:setVisible(true)
-                play:setVisible(false)
+                stop:setVisible(false)
+                play:setVisible(true)
                 audio.stopAllMusicAndSounds(false)
                 isPlaying = true
             end
