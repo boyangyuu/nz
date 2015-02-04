@@ -36,10 +36,10 @@ configs["fight01"] = {
 		{id = "fight_move", msg = "在屏幕上左右滑动可以移动准星",touchType = "all", skipMode = "condition", hand = "move"},
 		{id = "fight_fire1", msg = "在高亮区域点击 , 枪械将会射击", skipDelay = 1.0},
 		{id = "fight_fire2", msg = "长按射击按钮 , 会连续射击",touchType = "all", skipMode = "condition", 
-				hand = "longtouch",opacity = 0.0, contentOffset = {x = 0, y = 50}},
+				hand = "longtouch", contentOffset = {x = 0, y = 50}},
 		{id = "fight_throw", msg = "在高亮区域点击 , 将会投掷手雷", skipDelay = 1.0},
 		{id = "fight_change", msg = "在高亮区域点击 , 将会更换枪械", skipDelay = 1.0},
-		{id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
+		-- {id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}
 }
 
