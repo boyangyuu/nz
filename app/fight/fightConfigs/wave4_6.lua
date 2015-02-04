@@ -511,7 +511,10 @@ local bosses = {
 			},	
 			demage400 = {  
 				0.50,
-			},	
+			},
+			demage500 = {  
+				0.30,
+			},		
 						
 		},
 		enemys1 = {                                                   --第一波召唤自爆兵
@@ -637,7 +640,6 @@ local bosses = {
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 120.0,		--持续时间
-					demageScale = 1.5                    --伤害翻1.5倍		
 
 				},
 			},
@@ -658,8 +660,7 @@ local bosses = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 120.0,		                                    --持续时间
-					demageScale = 1.5                    --伤害翻1.5倍			
+					lastTime = 120.0,		                                    --持续时间		
 				},
 			},
 			{
@@ -675,8 +676,7 @@ local bosses = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 120.0,		                                    --持续时间
-					demageScale = 1.5                    --伤害翻1.5倍			
+					lastTime = 120.0,		                                    --持续时间		
 				},
 			},
 			{
@@ -692,8 +692,7 @@ local bosses = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 120.0,		--持续时间
-					demageScale = 1.5                    --伤害翻1.5倍		
+					lastTime = 120.0,		--持续时间	
 
 				},
 			},

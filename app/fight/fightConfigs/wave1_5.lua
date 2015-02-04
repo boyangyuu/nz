@@ -22,10 +22,10 @@ local waves = {
 			},
 	
             {
-				time = 12,	
+				time = 6,	
 				num = 4,
-				pos = {200,250,300,350,},
-				delay = {0,0.5,0.8,1,},
+				pos = {200,350,300,450,},
+				delay = {0.9,1.9,2.3,1.6},
 				property = { 
 					placeName = "place2",
 					startState = "rollright",
@@ -33,7 +33,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	
+				time = 10,	
 				num = 2,
 				pos = {300,350},
 				delay = {0.5,1},
@@ -47,7 +47,7 @@ local waves = {
 				},
 			},
 			{
-				time = 16,
+				time = 8,
 				num = 2,
 				delay = {0.2,1},
 				pos = {550,800},
@@ -58,10 +58,10 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 15,
 				num = 3,
 				delay = {0.2,1,1.5},
-				pos = {190,230,250},
+				pos = {150,230,450},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -69,7 +69,7 @@ local waves = {
 				},
 			},
 			{
-				time = 20,
+				time = 18,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -98,7 +98,7 @@ local waves = {
 				time = 24,
 				num = 3,
 				delay = {0.5,1,2.5},
-				pos = {190,230,250},
+				pos = {130,330,550},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -168,7 +168,7 @@ local waves = {
  
 			
 			{
-				time = 3,
+				time = 2.5,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -180,7 +180,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 7,
+				time = 3.5,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,400,600,700},					
@@ -258,7 +258,7 @@ local waves = {
 			{
 				time = 20,	
 				num = 2,
-				pos = {180,200},
+				pos = {180,500},
 				delay = {0.5,1},
 				property = { 
 					placeName = "place11",
@@ -474,6 +474,31 @@ local waves = {
 					enemyId = 1,
 				},
 			},
+			{
+				time = 14,
+				num = 3,
+				delay = {0.5,1,2.5},
+				pos = {130,330,1000},
+				property = { 
+					placeName = "place10",
+					id = 1,
+					startState = "rollright",	
+				},
+			},
+			{
+				time = 16,
+				num = 2,
+				delay = {0.5,1},
+				pos = {450,1130},
+				property = { 
+					placeName = "place10",
+					id = 2,
+					startState = "rollleft",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	
+				},
+			},
 
 	    },		
 	}
@@ -481,15 +506,15 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=4,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=6,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
+	{id=2,image="shouleib",demage=0,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=5,hp=1,
+	{id=3,image="shoulei",demage=7,hp=1,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -497,11 +522,11 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=240,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=436,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=5,hp=1,
+	{id=6,image="daodan",demage=7,hp=1,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
@@ -522,7 +547,7 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=5.0,
+	{id=11,image="feiji",demage=0,hp=18888, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=5.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,

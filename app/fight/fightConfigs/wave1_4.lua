@@ -61,6 +61,28 @@ local waves = {
 					missileType = "lei",
 				},
 			},	
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {200},
+				property = {
+					placeName = "place3",  
+					startState = "rollright",
+					id = 1,	
+				},
+			},	
+			{
+				time = 15,
+				num = 1,
+				delay = {0},
+				pos = {600},
+				property = {
+					placeName = "place9",  
+					startState = "rollleft",
+					id = 1,	
+				},
+			},	
 			
 		},
 	},
@@ -151,6 +173,19 @@ local waves = {
 					startState = "rollright",
 				},
 			},	
+			{
+				time = 27,
+				num = 1,
+				delay = {4},
+				pos = {450},
+				property = {
+					placeName = "place11",  
+					type = "dao",
+					id = 2,
+					missileId = 3,
+					missileType = "daodan",
+				},
+			}, 
 			
 			
 		},
@@ -189,7 +224,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {30,65,120,180}   --黄武激活所需杀人个数
+	self.goldLimits = {10,65,120,180}   --黄武激活所需杀人个数
 
 end
 
