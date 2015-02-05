@@ -8,6 +8,7 @@ function PauseScene:ctor()
  	-- body
  	self.id = 1
  	self.layers = {}
+ 	-- self.isChanging = false
  	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.PAUSESCENE_SHOW_EVENT, handler(self, self.showPopup))	
 		:addEventListener(ui.PAUSESCENE_CLOSE_EVENT, handler(self, self.closePopup))
@@ -74,6 +75,8 @@ function PauseScene:closePopup(event)
 	--     	end
  --       end, 
 	-- })
+	-- if self.isChanging then return end 
+	-- self.isChanging = true
 	local director = cc.Director:getInstance()
 	director:popScene()
 	print("PauseScene:closePopup(event)")

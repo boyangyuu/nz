@@ -32,7 +32,7 @@ local configs = {}
 configs["fight01"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_blood", msg = "阿杰 , 这是生命值 , 生命耗尽后游戏失败", rolepos = "right", }, 
+		{id = "fight_blood", msg = "阿杰 , 这是生命值", rolepos = "right", }, 
 		{id = "fight_move", msg = "在屏幕上左右滑动可以移动准星",touchType = "all", skipMode = "condition", hand = "move"},
 		{id = "fight_fire1", msg = "在高亮区域点击 , 枪械将会射击", skipDelay = 1.0},
 		{id = "fight_fire2", msg = "长按射击按钮 , 会连续射击",touchType = "all", skipMode = "condition", 
@@ -56,7 +56,7 @@ configs["prefight02"] = {
 	preGuideId = "fight01",
 	steps = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
-		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 100}, msg = "点击左侧MP5", rolepos = "right"}, 
+		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
 		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
 		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen", opacity = 0.0},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
@@ -72,7 +72,7 @@ configs["fight02_dun"] = {
 	preGuideId = "prefight02",
 	steps = {
 		--boss出现3秒 开盾提示
-		{id = "fight02_dun", msg = "毁灭者来袭 , 开启盾牌抵御毁灭者的进攻！！", }, 
+		{id = "fight02_dun", msg = "开启盾牌抵御毁灭者的进攻！！", }, 
 	}
 }
 
@@ -81,7 +81,7 @@ configs["fight02"] = {
 	preGuideId = "fight02_dun",
 	steps = {
 		--毁灭者掉剩下10% 血 机甲开
-		{id = "fight02_jijia", msg = "开启机甲模式 , 和毁灭者决一死战！！", }, 
+		{id = "fight02_jijia", msg = "开启机甲模式和毁灭者决一死战！！", }, 
 	}
 }
 

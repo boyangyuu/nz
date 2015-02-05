@@ -197,7 +197,7 @@ end
 function InfoLayer:initGuide()
     local isDone = self.guide:isDone("fight")
     if isDone then return end
-	local rect = cc.rect(105, 500, 285,105)
+	local rect = cc.rect(105, 500, 285,140)
 	--blood
     local data1 = {
         id = "fight_blood",

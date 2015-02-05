@@ -40,7 +40,7 @@ end
 function AboutPopup:initText()
 	if self.popupName == "bangzhu" then
 		local text = {
-						"\n穿越火线之cs逆战射击 \n \n",
+						"\n全民突袭 \n \n",
 						"故事背景:\n",
 						"      故事发生在2034年，主人公“杰”收到哥哥的留言，要\n",
 						"他代替哥哥去执行一个艰巨的任务。然而等待他的是\n",

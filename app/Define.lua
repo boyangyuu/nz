@@ -94,6 +94,8 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 --手打黄武
 --子弹
 
+--手雷
+Define.kShouLeiCd    			= 0.5  -- 
 
 --狙击枪
 Define.kJuRange 				= 4.0
