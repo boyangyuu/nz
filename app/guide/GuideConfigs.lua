@@ -72,7 +72,7 @@ configs["fight02_dun"] = {
 	preGuideId = "prefight02",
 	steps = {
 		--boss出现3秒 开盾提示
-		{id = "fight02_dun", msg = "毁灭者来袭 , 开启盾牌抵御毁灭者的进攻！！", }, 
+		{id = "fight02_dun", msg = "开启盾牌抵御毁灭者的进攻！！", }, 
 	}
 }
 
@@ -81,7 +81,7 @@ configs["fight02"] = {
 	preGuideId = "fight02_dun",
 	steps = {
 		--毁灭者掉剩下10% 血 机甲开
-		{id = "fight02_jijia", msg = "开启机甲模式 , 和毁灭者决一死战！！", }, 
+		{id = "fight02_jijia", msg = "开启机甲模式和毁灭者决一死战！！", }, 
 	}
 }
 
