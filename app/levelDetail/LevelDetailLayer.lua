@@ -97,7 +97,7 @@ function LevelDetailLayer:initUI()
 		self.labelget:setVisible(true)
 		self.panelbiaozhu:setVisible(true)
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
-			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/5")
+			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/10")
 	end
 	if DataTable["type"] == "boss" then
 		dump(DataTable["enemyPlay"])

@@ -16,7 +16,6 @@ configs = {
     "BOSS威力强大可是干掉后会掉落武器零件哦",
     "BOSS是有弱点的哦",
     "瞄准敌人头部会有爆头伤害哦！",
-    "无cd扔手雷那感觉真是额外的酸爽啊！",
 }
 
 function LoadingLayer:ctor()
