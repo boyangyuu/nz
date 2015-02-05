@@ -24,7 +24,10 @@ function WeaponListLayer:ctor()
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     --events
     cc.EventProxy.new(self.weaponListModel, self)
-        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT, handler(self, self.refresh))
+        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshBtns))
+        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshStar))        
+        :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT, handler(self, self.playOneStar))
+        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
     cc.EventProxy.new(self.levelDetailModel, self)
         :addEventListener(self.levelDetailModel.REFRESH_WEAPON_LISTVIEW, handler(self, self.reloadlistview))
@@ -36,7 +39,7 @@ function WeaponListLayer:ctor()
     -- 点开页面默认选择某个武器
     print("self:refreshComment(self.selectedCellId)")
     self:refreshComment(self.selectedCellId)
-    
+    self:refreshStar()
 
     self:initGuide()
 end
@@ -243,7 +246,6 @@ function WeaponListLayer:reloadlistview(event)
     self:loadWeaponList(self.weaponLV,configTab)
     self.selectedContent = nil
     self:refreshComment(self.weaponId)
-
 end
 
 -------------- ListView  --------------
@@ -268,18 +270,18 @@ end
 -- ListView 点击事件
 function WeaponListLayer:touchListener(event)
     if "clicked" == event.name then
-     self:refreshComment(event.itemPos)
+        self:refreshComment(event.itemPos)
+        self:refreshStar()
     end
 end
 
-function WeaponListLayer:refresh(event)
-    -- dump(event, "WeaponListLayer:refresh(event)")
-    self:refreshComment(self.selectedCellId,event.star,event.intenlevel)
+function WeaponListLayer:refreshBtns(event)
+    self:refreshComment(self.selectedCellId)
     self:showButton(event)
 end
 
 -- 通过index选择Cell  refreshComment(cellIndex)  
-function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
+function WeaponListLayer:refreshComment(index)
     for k,v in pairs(self.panlStars) do
         if self.starArmature then
             v:removeAllChildren()
@@ -292,7 +294,7 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
 
     -- refresh 详情内容
     for k,v in pairs(self.stars) do
-            v:setVisible(false)
+        v:setVisible(false)
     end
     self.layerGun:removeAllChildren()
     self.weaponrecord = self.weaponListModel:getWeaponRecord(index)
@@ -356,9 +358,6 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
         cc.FadeIn:create(1),})
     self.damagepluse:runAction(cc.RepeatForever:create(action))
 
-
-    self:playstar(refreshStar,intenlevel)
-
     local leveldetailmodel = md:getInstance("LevelDetailModel")
     local suipiannum = leveldetailmodel:getSuiPianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
@@ -386,59 +385,100 @@ function WeaponListLayer:refreshComment(index,refreshStar,intenlevel)
     self:showButton()
 end
 ------------- 
-function WeaponListLayer:playstar(refreshStar,intenlevel)
+function WeaponListLayer:playOneStar(event)
     local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
-    if curLevel == 0 then
-        for k,v in pairs(self.stars) do
-            v:setVisible(false)
-        end
-    else
-        if refreshStar then
-            local toLevel
-            if intenlevel then
-                toLevel = 10
-                curLevel = intenlevel+1
-            else
-                toLevel = curLevel
-            end
-            local ind = 0
-            for i=curLevel,toLevel do
-                local delay = ind * 0.1
-                ind = ind + 1
-                function delayStar( )
-                    self.starArmature = ccs.Armature:create("gkjs_xing")
-                    self.starArmature:setPosition(19.5,19)
-                    self.starArmature:setScale(0.448,0.452)
-                    self.panlStars[i]:addChild(self.starArmature)
-                    self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
-                    local zx = "res/Music/ui/zx.wav"
-                    audio.playSound(zx,false)
 
-                end
-                scheduler.performWithDelayGlobal(delayStar, delay)
-            end
+    --hide
+    self.stars[curLevel]:setVisible(false)
 
-            local armature = ccs.Armature:create("wqsj")
-            armature:setPosition(750,450)
-            self:addChild(armature)
-            armature:getAnimation():setMovementEventCallFunc(
-            function ( armatureBack,movementType,movement) 
-                if movementType == ccs.MovementEventType.complete then
-                    armatureBack:stopAllActions()
-                    armatureBack:removeFromParent() 
-                end 
-            end)
-            armature:getAnimation():play("wqsj" , -1, 0)
+    --star
+    local delay = 0.1
+    function delayStar()
+        self.starArmature = ccs.Armature:create("gkjs_xing")
+        self.starArmature:setPosition(19.5,19)
+        self.starArmature:setScale(0.448,0.452)
+        self.panlStars[curLevel]:addChild(self.starArmature)
+        self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
+        local zx = "res/Music/ui/zx.wav"
+        audio.playSound(zx,false)
+        --show
+        self.stars[curLevel]:setVisible(true)
+    end
+    scheduler.performWithDelayGlobal(delayStar, delay)
 
+    --weapon anim
+    local armature = ccs.Armature:create("wqsj")
+    armature:setPosition(750,450)
+    self:addChild(armature)
+    armature:getAnimation():setMovementEventCallFunc(
+    function ( armatureBack,movementType,movement) 
+        if movementType == ccs.MovementEventType.complete then
+            armatureBack:stopAllActions()
+            armatureBack:removeFromParent() 
         end 
-        for k,v in pairs(self.stars) do
-            if k<curLevel+1 then
-                v:setVisible(true)
-            end
+    end)
+    armature:getAnimation():play("wqsj" , -1, 0)
+end
+
+function WeaponListLayer:playFullStar(event)
+    local destWeaponId = event.weaponId
+    if destWeaponId ~= self.weaponId then return end
+    local lastLevel = event.lastLevel
+    assert(lastLevel, "lastLevel")
+    local fromStar, toStar = lastLevel + 1, 10
+    print("fromStar", fromStar)  
+    print("toStar"  , toStar)    
+    local delay = 0
+
+    --hide
+
+
+    for i= fromStar, toStar do
+        self.stars[i]:setVisible(false)
+        delay = delay + 0.1
+        function delayStar( )
+            self.starArmature = ccs.Armature:create("gkjs_xing")
+            self.starArmature:setPosition(19.5,19)
+            self.starArmature:setScale(0.448,0.452)
+            self.panlStars[i]:addChild(self.starArmature)
+            self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
+            local zx = "res/Music/ui/zx.wav"
+            audio.playSound(zx,false)
+            --show
+            self.stars[i]:setVisible(true)
+        end
+        scheduler.performWithDelayGlobal(delayStar, delay)
+    end
+
+    local armature = ccs.Armature:create("wqsj")
+    armature:setPosition(750,450)
+    self:addChild(armature)
+    armature:getAnimation():setMovementEventCallFunc(
+    function ( armatureBack,movementType,movement) 
+        if movementType == ccs.MovementEventType.complete then
+            armatureBack:stopAllActions()
+            armatureBack:removeFromParent() 
+        end 
+    end)
+    armature:getAnimation():play("wqsj" , -1, 0)
+end
+
+
+function WeaponListLayer:refreshStar()
+    self:hideStars()
+    local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
+    for k,v in pairs(self.stars) do
+        if k < curLevel + 1 then
+            v:setVisible(true)
         end
     end
 end
 
+function WeaponListLayer:hideStars()
+    for i,v in pairs(self.stars) do
+        v:setVisible(false)
+    end    
+end
 
 -- 从数据获取当前weapon装备状态判断显示button
 function WeaponListLayer:showButton()
