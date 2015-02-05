@@ -45,6 +45,8 @@ function PausePopup:initButtons()
 			self:btnColor(backBtn, true)
 			return true
 		elseif event.name == 'ended' then
+			if self.isChanging then return end 
+			self.isChanging = true
 			self:btnColor(backBtn, false)
 			director:popScene()
 			-- ui:closePopup("PausePopup")
