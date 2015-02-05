@@ -130,7 +130,6 @@ function BaseBossView:playHitted(event)
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp)	
-	-- self:playBombEffect(2)
 end
 
 function BaseBossView:playMove()  --改为onMove
@@ -174,7 +173,7 @@ end
 function BaseBossView:playBombEffects()
 	for i=1,32 do
 		local sch = scheduler.performWithDelayGlobal(
-			handler(self, self.playBombEffect), i * 0.1)
+			handler(self, self.playBombEffect), i * 0.05)
 		self:addScheduler(sch)
 	end
 end

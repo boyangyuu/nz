@@ -345,6 +345,7 @@ end
 
 function Attackable:playBombEffect()
 	local bone = self.armature:getBone("bomb")
+	if bone == nil then return end
 	assert(bone, "bomb bone is nil")
 	local box = bone:getDisplayRenderNode():getBoundingBox()
 	-- local box = self.armature:getBoundingBox()

@@ -140,23 +140,6 @@ function DaoEnemyView:playHitted(event)
     self:playHittedEffect()
 end
 
-function DaoEnemyView:onHitted(targetData)
-    local demage     = targetData.demage
-    local scale      = targetData.demageScale or 1.0
-    local demageType = targetData.demageType
-    if not self.enemy:canHitted() then return end
-    
-    self.enemy:decreaseHp(demage * scale)
-    --爆头
-    if self.enemy:getHp() == 0 then 
-        if demageType == "head" then 
-            print("爆头")
-            self.hero:dispatchEvent({
-                name = self.hero.ENEMY_KILL_HEAD_EVENT})
-        end
-    end          
-end
-
 function DaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
