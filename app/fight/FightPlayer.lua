@@ -586,7 +586,7 @@ end
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
-    print("onBtnFire", onBtnFire)
+    -- print("onBtnFire", onBtnFire)
     -- self.hero.fsm__:doEvent("ready")
     -- self.hero:fire()
     if isRobot then
@@ -655,7 +655,6 @@ function FightPlayer:isCoolDownDone()
 end
  
 function FightPlayer:checkFire()
-    print("FightPlayer:fire()")
     self:fire()
 end
  
