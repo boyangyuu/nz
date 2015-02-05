@@ -60,6 +60,7 @@ end
 
 function BuyModel:buy_weaponGiftBag(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
+	local StoreModel = md:getInstance("StoreModel")
 	-- local weapontable = weaponListModel:getAllWeapon()
 	local propModel = md:getInstance("propModel")
 	local weapontable = {3,4,5,7,8}
