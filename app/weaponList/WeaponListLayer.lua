@@ -31,6 +31,7 @@ function WeaponListLayer:ctor()
 
     cc.EventProxy.new(self.levelDetailModel, self)
         :addEventListener(self.levelDetailModel.REFRESH_WEAPON_LISTVIEW, handler(self, self.reloadlistview))
+    
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
 	self:loadCCS()
@@ -389,6 +390,9 @@ function WeaponListLayer:playOneStar(event)
     local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
 
     --hide
+    for i=1,curLevel-1 do
+        self.stars[i]:setVisible(true)
+    end
     self.stars[curLevel]:setVisible(false)
 
     --star
@@ -431,7 +435,9 @@ function WeaponListLayer:playFullStar(event)
     local delay = 0
 
     --hide
-
+    for i=1,fromStar-1 do
+        self.stars[i]:setVisible(true)
+    end
 
     for i= fromStar, toStar do
         self.stars[i]:setVisible(false)

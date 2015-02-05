@@ -101,13 +101,13 @@ function BuyModel:buy_goldGiftBag( buydata )
 	local InlayModel = md:getInstance("InlayModel")
 	local StoreModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	--黄武*1
+	--黄武*15
 	InlayModel:buyGoldsInlay(15)
     InlayModel:refreshInfo("speed")
 
-	--机甲*1
+	--机甲*15
 	propModel:buyProp("jijia",15)
-	--手雷*10
+	--手雷*30
 	propModel:buyProp("lei",30)
 	StoreModel:refreshInfo("prop")
 	um:payProps(30,5,"buy_goldgiftbag",1,0)
@@ -117,17 +117,15 @@ function BuyModel:buy_changshuang( buydata )
 	local InlayModel = md:getInstance("InlayModel")
 	local StoreModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	--黄武*1
+	--黄武*4
 	InlayModel:buyGoldsInlay(4)
     InlayModel:refreshInfo("speed")
-	--机甲*1
+	--机甲*3
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
 	StoreModel:refreshInfo("prop")
 	um:payProps(6,5,"buy_changshuang",1,0)
-
-	--todo yby 满血
 end
 
 function BuyModel:buy_timeGiftBag( buydata )
@@ -153,7 +151,7 @@ end
 function BuyModel:buy_handGrenade( buydata )
 	local propModel = md:getInstance("propModel")
 	local StoreModel = md:getInstance("StoreModel")
-	--手雷*10
+	--手雷*20
 	propModel:buyProp("lei",20)
 	StoreModel:refreshInfo("prop")
 	um:payProps(4,5,"buy_handgrenade",1,0)
