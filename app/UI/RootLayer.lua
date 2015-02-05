@@ -355,7 +355,13 @@ end
 function RootLayer:imageLoaded(plist, image)
     --todo 加个尾图 方便测试 例如ima ge == "res/ended.png"
     -- if image == "res/LevelMap/thj_bx/thj_bx0.png" then
-    if image == "res/thj_bx0.png" then
+    local lastImage
+    if device.platform == "windows" then 
+        lastImage = "res/LevelMap/thj_bx/thj_bx0.png"
+    else
+        lastImage =  "res/thj_bx0.png"
+    end
+    if image == lastImage then
         self.isLoadImage  = true
         self:onloadDone()
     end
