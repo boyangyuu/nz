@@ -16,40 +16,29 @@ function LoadingLayer:ctor()
 end
 
 function LoadingLayer:loadCCS()
-    local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.ExportJson")
+    local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.json")
     self:addChild(controlNode)
 end
 
 function LoadingLayer:initUI()
-	local main = cc.uiloader:seekNodeByName(self, "main")
 	local quan = cc.uiloader:seekNodeByName(self, "quan")
     self.loadpercent = cc.uiloader:seekNodeByName(self, "loadpercent")
     self.loadpercent:enableOutline(cc.c3b( 0, 0, 0), 2)
-	local src = "res/Loading/loading_bjmap/loading_bjmap.csb"
 	local yuansrc = "res/Loading/loading_yuan/loading_yuan.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(yuansrc)
 
-    local plist = "res/Loading/loading_bjmap/loading_bjmap0.plist"
-    local png = "res/Loading/loading_bjmap/loading_bjmap0.png"
-    display.addSpriteFrames(plist,png)
     local yuanplist = "res/Loading/loading_yuan/loading_yuan0.plist"
     local yuanpng = "res/Loading/loading_yuan/loading_yuan0.png"
     display.addSpriteFrames(yuanplist,yuanpng)
 
-    --anim
-    self.maparmature = ccs.Armature:create("loading_bjmap")
-    self.maparmature :setAnchorPoint(0,0)
-    main:addChild(self.maparmature)
-    
+    --anim    
     self.quanarmature = ccs.Armature:create("loading_yuan")
     self.quanarmature:setAnchorPoint(0.5,0.5)
     addChildCenter(self.quanarmature, quan)
 end
 
 function LoadingLayer:playAnim()
-    self.maparmature :getAnimation():play("loading_bjmap")
     self.quanarmature:getAnimation():play("loading_z")
 end
 
