@@ -9,7 +9,7 @@ local waves = {
 			{
 				time = 3,
 				num = 5,
-				delay = {0.1,0.3,0.5,0.3,0.1},
+				delay = {0.1,0.8,1.5,2.3,2.7},
 				pos = {230,330,500,590,690},
 				property = { 
 					placeName = "place1" ,
@@ -18,10 +18,10 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	
+				time = 7,	
 				num = 5,
 				pos = {250,330,510,600,700},
-				delay = {0.4,0.9,0.5,0.8,1.5},
+				delay = {0.4,1.2,2.0,2.8,3.5},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -29,9 +29,9 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 11,
 				num = 5,
-				delay = {2.0,2.5,3,2.5,2.0},
+				delay = {0.5,1.3,3.7,2.9,2.1},
 				pos = {200,350,680,490,250},
 				property = { 
 					placeName = "place1" ,
@@ -44,7 +44,7 @@ local waves = {
 			{
 				time = 20,
 				num = 5,
-				delay = {0.1,1.0,2.5,1.6,1.9,},
+				delay = {0.2,1.0,3.3,1.8,2.6,},
 				pos = {290,350,460,600,456,},
 				property = { 
 					placeName = "place1" ,
@@ -55,7 +55,7 @@ local waves = {
 			{
 				time = 24,
 				num = 5,
-				delay = {1.6,1.9,2.1,0.3,0.8},
+				delay = {1.6,3.5,3.1,2.3,0.8},
 				pos = {290,350,460,600,570},
 				property = { 
 					placeName = "place1" ,
@@ -64,10 +64,10 @@ local waves = {
 				},
 			},
 			{
-				time = 27,	
+				time = 28,	
 				num = 5,
 				pos = {250,330,510,600,700},
-				delay = {0.4,0.9,0.5,0.8,1.5},
+				delay = {0.4,1.5,2.3,3.8,3.2},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -75,10 +75,10 @@ local waves = {
 				},
 			},
 			{
-				time = 29,	
+				time = 32,	
 				num = 5,
 				pos = {650,530,310,400,200},
-				delay = {1.5,0.9,0.4,1.3,1.8},
+				delay = {1.3,0.9,2.4,3.0,1.8},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -87,7 +87,7 @@ local waves = {
 			},
 
 			{
-				time = 31,
+				time = 36,
 				num = 1,
 				delay = {0.6},
 				pos = {470},
@@ -108,7 +108,7 @@ local waves = {
 			 {
 				time = 3,
 				num = 3,
-				delay = {0.1,0.2,0.3},
+				delay = {0.1,0.9,1.5},
 				pos = {350,560,700},
 				property = { 
 					placeName = "place1" ,
@@ -117,10 +117,10 @@ local waves = {
 				},
 			},
 			{
-				time = 3.5,	
+				time = 7,	
 				num = 5,
 				pos = {325,420,220,550,700},
-				delay = {0.4,0.9,0.5,0.8,1.5},
+				delay = {0.4,1.2,2.5,3.3,1.8},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -128,9 +128,9 @@ local waves = {
 				},
 			},
 			{
-				time = 3.5,
+				time = 11,
 				num = 3,
-				delay = {2.0,2.5,3},
+				delay = {0.5,2.5,1.3},
 				pos = {400,300,670},
 				property = { 
 					placeName = "place1" ,
@@ -159,7 +159,7 @@ local waves = {
 			{
 				time = 15,
 				num = 3,
-				delay = {0.1,0.2,0.3},
+				delay = {0.1,0.9,1.7},
 				pos = {250,460,600},
 				property = { 
 					placeName = "place1" ,
@@ -168,7 +168,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,	
+				time = 19,	
 				num = 5,
 				pos = {250,350,310,470,600},
 				delay = {0.4,0.9,0.5,0.8,1.5},
@@ -179,9 +179,9 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 23,
 				num = 3,
-				delay = {2.8,2.5,3},
+				delay = {0.3,2.0,1.1},
 				pos = {300,460,560},
 				property = { 
 					placeName = "place1" ,
@@ -208,7 +208,7 @@ local waves = {
 			},	
 			{
 			    
-				time = 22,
+				time = 23,
 				num = 1,
 				pos = {850},
 				delay = {0.5},                         -- 飞机
@@ -224,9 +224,9 @@ local waves = {
 				},
 			},	
 			{
-				time = 21,
+				time = 25,
 				num = 5,
-				delay = {0.7,1.4,1.8, 2.1,2.8},
+				delay = {0.7,1.4,3.5, 2.1,2.8},
 				pos = {350,550,600,800,950},					
 				property = {
 					placeName = "place1",  
@@ -272,42 +272,42 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    青铜镶嵌 MP5伤害80  dps大于等于3 怪物数据
+--enemy的关卡配置                                                    白银镶嵌 MP5伤害80  dps大于等于3 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=12,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=12,hp=561,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=374,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=135,
+	{id=3,image="shoulei",demage=12,hp=187,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=405,
+	{id=4,image="sanbing01",demage=0,hp=561,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=540,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=748,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=375,
+	{id=6,image="daodan",demage=15,hp=374,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=12,hp=675,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=12,hp=935,fireRate=180,fireCd=4,speed=40,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=1350,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=15,hp=1870,fireRate=180,fireCd=5,speed=35,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=270,fireRate=30,speed=100,
+	{id=9,image="zibaob",demage=15,hp=374,fireRate=30,speed=100,
 	weak1=3},	
 
 	
@@ -316,11 +316,11 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=15000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=10000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=15000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=3,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -332,7 +332,7 @@ local enemys = {
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
 	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=9,hp=10000,fireRate=120,fireCd=3,speed=40,scale = 2.5 ,
+	{id=16,image="jinzhanb",demage=9,hp=15000,fireRate=120,fireCd=3,speed=40,scale = 2.5 ,
 	weak1=3},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
@@ -373,12 +373,12 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 
-			feibiao1 = { 0.80, 0.60, 0.30              --暴雨梨花针1
+			feibiao1 = { 0.80, 0.60, 0.40 , 0.20           --暴雨梨花针1
 			},
 			-- feibiao2 = {                --暴雨梨花针2
 			-- 	0.89,0.88,0.86,
 			-- },							
-			zhaohuan = { 0.90,0.70, 0.40                    --召唤分身
+			zhaohuan = { 0.90, 0.70, 0.30                    --召唤分身
 			},                                           
 			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.55, 0.45, 0.25, 0.15     --冲锋
 			},
@@ -618,7 +618,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
+	self.goldLimits = {40,95,140,180}   --黄武激活所需杀人个数
 end
 
 return waveClass

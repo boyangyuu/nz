@@ -325,7 +325,7 @@ local waves = {
 			},	
 
 			{
-				time = 6,
+				time = 5,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -339,7 +339,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 7,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -353,7 +353,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 9,	
 				num = 2,
 				pos = {250,350},
 				delay = {1,1.5,1.8},
@@ -365,7 +365,7 @@ local waves = {
 			},
 
 			{
-				time = 13,	
+				time = 12,	
 				num = 3,
 				pos = {800,750,700},
 				delay = {0,0.6,0.8},
@@ -482,9 +482,9 @@ local waves = {
 		enemys = { 
 			{
 				time = 2,
-				num = 1,
-				pos = {200},
-				delay = {0.5},                            -- 吉普车
+				num = 2,
+				pos = {200,600},
+				delay = {0.5,2.5},                            -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
@@ -494,13 +494,13 @@ local waves = {
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 30.0,		--持续时间
-					demageScale = 2                    --伤害翻1.5倍		
+					--demageScale = 2                    --伤害翻1.5倍		
 
 				},
 			},
 
 			{
-				time = 6,
+				time = 5,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -511,11 +511,11 @@ local waves = {
 					type = "dao",
 					missileId = 3,
 					missileType = "lei",
-					demageScale = 2                    --伤害翻1.5倍
+					--demageScale = 2                    --伤害翻1.5倍
 				},
 			},
 			{
-				time = 8,
+				time = 7,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -526,32 +526,32 @@ local waves = {
 					type = "dao",
 					missileId = 3,
 					missileType = "lei",
-			        demageScale = 2                    --伤害翻1.5倍
+			        --demageScale = 2                    --伤害翻1.5倍
 				},
 			},
 			{
-				time = 10,	
+				time = 9,	
 				num = 2,
-				pos = {250,350},
+				pos = {250,450},
 				delay = {1,1.8},
 				property = { 
 					placeName = "place3",
 					startState = "rollright",
 					id = 1,
-					demageScale = 2                    --伤害翻1.2倍
+					--demageScale = 2                    --伤害翻1.2倍
 				},
 			},
 
 			{
-				time = 13,	
+				time = 12,	
 				num = 3,
-				pos = {800,750,700},
+				pos = {800,750,650},
 				delay = {0,0.6,0.8},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
 					id = 1,
-					demageScale = 2                    --伤害翻1.2倍
+					--demageScale = 2                    --伤害翻1.2倍
 				},
 			},
 
@@ -566,7 +566,7 @@ local waves = {
 					placeName = "place1",
 					startState = "rollright",
 					id = 1,
-					demageScale = 2                    --伤害翻1.2倍
+					--demageScale = 2                    --伤害翻1.2倍
 				},
 			},		
 			{
@@ -578,7 +578,7 @@ local waves = {
 					placeName = "place4", 
 					startState = "rollleft",
 					id = 1,
-					demageScale = 2                    --伤害翻1.2倍
+					--demageScale = 2                    --伤害翻1.2倍
 				},
 			},
 			{
@@ -593,7 +593,7 @@ local waves = {
 					type = "dao",
 					missileId = 3,
 					missileType = "lei",
-					demageScale = 2                    --伤害翻1.2倍
+					--demageScale = 2                    --伤害翻1.2倍
 				},
 			},	
 			{
@@ -605,7 +605,7 @@ local waves = {
 					placeName = "place3", 
 					startState = "rollleft",
 					id = 1,
-					demageScale = 2                    --伤害翻1.2倍
+					--demageScale = 2                    --伤害翻1.2倍
 				},
 			},
 
@@ -669,30 +669,30 @@ local waves = {
 	
 }
 
---enemy的关卡配置                                        无镶嵌 MP5伤害70  dps大于等于1 怪物数据
+--enemy的关卡配置                                        青铜镶嵌 MP5伤害70  dps大于等于2.5 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=3,hp=210,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=7.5,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=140,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=4,hp=1,
+	{id=3,image="shoulei",demage=10,hp=270,
 	weak1=3},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=210,
+	{id=4,image="sanbing01",demage=0,hp=405,
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=280,walkRate=180,walkCd=2,fireRate=240,fireCd=4,
+	{id=5,image="zpbing",demage=0,hp=540,walkRate=180,walkCd=2,fireRate=240,fireCd=4,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=4,hp=1,
+	{id=6,image="daodan",demage=10,hp=270,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
@@ -713,11 +713,11 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=1400, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=1400,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=18000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=3,    award = 60},
 
 
@@ -735,7 +735,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {25,55,95,130}   --黄武激活所需杀人个数
+	self.goldLimits = {25,65,105,140}   --黄武激活所需杀人个数
 end
 
 return waveClass

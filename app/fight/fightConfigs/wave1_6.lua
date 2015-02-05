@@ -300,7 +300,7 @@ local waves = {
 
 			
 			{
-				time = 15,
+				time = 18,
 				num = 10,
 				delay = {0.5,0.9,1.3,1.8,2.1,2.60,2.4,3.0,3.3,3.6},
 				pos = {350,460,600,1050,570,456,780,666,510,980},
@@ -312,13 +312,13 @@ local waves = {
 			},
 
 			{
-				time = 21,
+				time = 23,
 				num = 1,
 				delay = {1.6},
 				pos = {670},
 				property = { 
 					placeName = "place11" ,
-					type = "bao",                  --自爆boss 15                                
+					type = "bao",                  --自爆boss                                 
 					id = 18,
 				},
 			},
@@ -386,15 +386,15 @@ local waves = {
 --enemy的关卡配置                                               青铜难度 65伤害dps大于等于2
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=3,hp= 190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=6,hp= 327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=218,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=4,hp=1,
+	{id=3,image="shoulei",demage=8,hp=1,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -402,23 +402,23 @@ local enemys = {
 	weak1=3},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=190,walkRate=180,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=436,walkRate=180,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=5,hp=327,
+	{id=6,image="daodan",demage=10,hp=327,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=3,hp=240,fireRate=120,fireCd=3,speed=60,
+	{id=7,image="jinzhanb",demage=6,hp=545,fireRate=120,fireCd=3,speed=80,
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=4,hp=480,fireRate=180,fireCd=4,speed=40,
+	{id=8,image="dunbing",demage=8,hp=2180,fireRate=180,fireCd=4,speed=60,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=5,hp=120,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=10,hp=218,fireRate=30,speed=120,
 	weak1=3},	
 
 	
@@ -427,7 +427,7 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=8888, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
 	--越野车       type = "jipu" ,
@@ -449,8 +449,8 @@ local enemys = {
 	--boss召唤第二波自爆兵        --type = "bao",	
 	{id=17,image="zibaob",demage=20,hp=545,fireRate=30,speed=120,
 	weak1=3},
-	--自爆兵        --type = "bao",自爆boss
-	{id=18,image="zibaob",demage=10,hp=960,fireRate=30,speed=120,scale = 4.0,
+	--自爆兵BOSS        --type = "bao",自爆boss
+	{id=18,image="zibaob",demage=20,hp=2180,fireRate=30,speed=110,scale = 4.0,
 	weak1=3},	 
 	--导弹          --missileType = "daodan",
 	{id=19,image="daodan",demage=10,hp=130,

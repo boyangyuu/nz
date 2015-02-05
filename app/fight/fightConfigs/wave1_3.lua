@@ -394,13 +394,13 @@ local enemys = {
 	weak1=3},	
 
 	--金币黄气球
-	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 30},	
+	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 40},	
 
 	--金币蓝气球
-	{id=6,image="qiqiu02",demage=10,hp=1,weak1=3,award = 15},	
+	{id=6,image="qiqiu02",demage=10,hp=1,weak1=3,award = 20},	
 
 	--金币绿气球
-	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 9},
+	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 10},
 	--手雷兵
 	{id=8,image="shouleib",demage=2,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
 	weak1=3},	

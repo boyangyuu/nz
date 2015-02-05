@@ -439,7 +439,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
+				time = 3,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -503,7 +503,7 @@ local waves = {
 	    },		
 	}
 }
---enemy的关卡配置
+--enemy的关卡配置                        mp5伤害 青铜镶嵌
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=6,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
