@@ -117,7 +117,7 @@ function BaseEnemy:beginShanCd()
     self.isShanCd = true
     assert(self.config["shanCd"] , "config shanCd is nil")
     local shanCd = self.config["shanCd"]
-    print("shanCd", shanCd)
+    -- print("shanCd", shanCd)
     local function resumeCd()
         self.isShanCd = false
     end
