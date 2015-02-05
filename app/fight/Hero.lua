@@ -248,9 +248,7 @@ function Hero:setIsPause(isPause)
 end
 
 function Hero:isHelpHp(demage)
-    demage = 0
     if self:isDead() then return false end
-    -- if self.isHelped then return false end
 
     local defence   = md:getInstance("Defence")
     local isDefenceAble =  defence:getIsAble() and 
