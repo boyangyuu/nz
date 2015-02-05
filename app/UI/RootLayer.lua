@@ -190,8 +190,8 @@ function RootLayer:addResHome()
 
 
     --music bg
-    local startMusic = "res/Music/bg/bjyx.wav"
-    audio.preloadMusic(startMusic)
+    -- local startMusic = "res/Music/bg/bjyx.wav"
+    -- audio.preloadMusic(startMusic)
 
     --sound ui
     local uiEffects = {"rwwc.wav", "dianji.wav", "letsgo.wav", "gmcg.wav",
