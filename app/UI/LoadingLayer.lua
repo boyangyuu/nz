@@ -22,7 +22,6 @@ configs = {
 function LoadingLayer:ctor()
 	self:loadCCS()
 	self:initUI()
-    self:showPercent()
 	-- self:changeHomeLayer()
     self:setNodeEventEnabled(true)
     cc.EventProxy.new(ui, self)
@@ -39,10 +38,7 @@ end
 function LoadingLayer:initUI()
 	local quan = cc.uiloader:seekNodeByName(self, "quan")
     self.loadpercent = cc.uiloader:seekNodeByName(self, "loadpercent")
-    local describe = cc.uiloader:seekNodeByName(self, "describe")
-    math.randomseed(os.time())
-    local rans = math.random(#configs)
-    describe:setString(configs[rans])
+    self.describe = cc.uiloader:seekNodeByName(self, "describe")
 
     self.loadpercent:enableOutline(cc.c3b( 0, 0, 0), 2)
 	local yuansrc = "res/Loading/loading_yuan/loading_yuan.csb"
@@ -57,6 +53,12 @@ function LoadingLayer:initUI()
     self.quanarmature = ccs.Armature:create("loading_yuan")
     self.quanarmature:setAnchorPoint(0.5,0.5)
     addChildCenter(self.quanarmature, quan)
+end
+
+function LoadingLayer:setDesc()
+    math.randomseed(os.time())
+    local rans = math.random(1,#configs)
+    self.describe:setString(configs[rans])
 end
 
 function LoadingLayer:playAnim()
@@ -76,7 +78,9 @@ end
 
 function LoadingLayer:onShow(event)
     self:setVisible(true)
+    self:setDesc()
     self:playAnim()
+    self:showPercent()
     audio.stopMusic(true)
 end
 
