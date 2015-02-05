@@ -58,7 +58,7 @@ configs["hs"] = {
 	spc = "特性：",
 	skill = {"不要误伤人质！"},
 	weakness = " ",
-	describe = "误杀人质会任务失败! ",
+	describe = "不要误伤人质！ ",
 	playanim = "speak1",
 }
 configs["feiji"] = {
