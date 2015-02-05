@@ -356,7 +356,7 @@ function RootLayer:imageLoaded(plist, image)
     --todo 加个尾图 方便测试 例如ima ge == "res/ended.png"
     -- if image == "res/LevelMap/thj_bx/thj_bx0.png" then
     local lastImage
-    if device.platform == "windows" then 
+    if device.platform == "windows" or  device.platform == "mac" then 
         lastImage = "res/LevelMap/thj_bx/thj_bx0.png"
     else
         lastImage =  "res/thj_bx0.png"
