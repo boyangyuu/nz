@@ -263,7 +263,7 @@ function GuideLayer:refreshCommentUI()
 	end	
 
 	label_content:setString(msg)
-	label_content:speak(0.1)	
+	-- label_content:speak(0.1)	
 end
 
 function GuideLayer:start(event)
