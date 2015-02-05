@@ -101,12 +101,6 @@ function RootLayer:addResHome()
     local png   = "res/InlayShop/xqan_hjwq/xqan_hjwq0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
-    manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
-    local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
-    local png   = "res/FightResult/anim/ydfh/ydfh0.png"
-    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
-
     local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.csb"
     manager:addArmatureFileInfoAsync(hjwqbssrc,  handler(self, self.dataLoaded))
     local plist = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.plist"
@@ -307,6 +301,11 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))         
     end 
 
+    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
+    manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
+    local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
+    local png   = "res/FightResult/anim/ydfh/ydfh0.png"
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
 
     local rwkssrc = "res/public/Anim/renwuks/renwuks.csb"

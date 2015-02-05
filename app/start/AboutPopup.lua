@@ -40,7 +40,7 @@ end
 function AboutPopup:initText()
 	if self.popupName == "bangzhu" then
 		local text = {
-						"\n穿越火线之cs逆战射击 \n \n",
+						"\n全民突袭 \n \n",
 						"故事背景:\n",
 						"      故事发生在2034年，主人公“杰”收到哥哥的留言，要\n",
 						"他代替哥哥去执行一个艰巨的任务。然而等待他的是\n",
@@ -63,7 +63,7 @@ function AboutPopup:initText()
 						"武器升级:花费金币提高武器的属性。\n",
 						"镶嵌:为武器镶嵌各种零件，额外提高武器能力。\n",
 						"斗结束后零件消失。\n",
-						"商城:花费购买各种道具 \n"
+						"商城:花费购买各种道具。\n"
 						}
 						
 		self.text = "";
