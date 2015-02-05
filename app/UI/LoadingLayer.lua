@@ -3,6 +3,22 @@ local LoadingLayer = class("LoadingLayer", function()
 	return display.newLayer()
 end)
 
+local configs = {}
+configs = {
+    "黄金武器的威力巨大，会给你意外惊喜！",
+    "灵活使用盾牌会救你的命哦，亲！",
+    "机甲可以让你免受任何伤害，够酷吧！",
+    "有些目标只有消灭杂兵后才会出来，BOSS就得摆谱嘛！",
+    "火箭筒这么帅的家伙你还不拿出来秀一秀吗？那可是妹子的最爱！",
+    "限时抢购的礼包我是不会错过的，亲！",
+    "子弹是无限而且免费的，还有比这更爽的射击游戏吗？",
+    "黄金镶嵌可以启用黄金武器哦！亲！",
+    "BOSS威力强大可是干掉后会掉落武器零件哦",
+    "BOSS是有弱点的哦",
+    "瞄准敌人头部会有爆头伤害哦！",
+    "无cd扔手雷那感觉真是额外的酸爽啊！",
+}
+
 function LoadingLayer:ctor()
 	self:loadCCS()
 	self:initUI()
@@ -23,6 +39,11 @@ end
 function LoadingLayer:initUI()
 	local quan = cc.uiloader:seekNodeByName(self, "quan")
     self.loadpercent = cc.uiloader:seekNodeByName(self, "loadpercent")
+    local describe = cc.uiloader:seekNodeByName(self, "describe")
+    math.randomseed(os.time())
+    local rans = math.random(#configs)
+    describe:setString(configs[rans])
+
     self.loadpercent:enableOutline(cc.c3b( 0, 0, 0), 2)
 	local yuansrc = "res/Loading/loading_yuan/loading_yuan.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
