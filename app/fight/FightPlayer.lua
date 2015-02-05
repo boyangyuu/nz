@@ -441,7 +441,14 @@ function FightPlayer:checkBtnLei(point)
     if not self.btnLei:isVisible() then return end    
     local rect = self.btnLei:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
+    if self.isShouLeing then return end
+    local function restore()
+        self.isShouLeing = false
+    end
+    self:performWithDelay(restore, define.kShouLeiCd)
+
     if isTouch then
+        self.isShouLeing = true
         addBtnEffect(self.btnLei)
 
         local w, h = self.focusNode:getCascadeBoundingBox().width, 
