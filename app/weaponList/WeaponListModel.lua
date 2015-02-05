@@ -8,6 +8,8 @@ import("..includes.functionUtils")
 local WeaponListModel = class("WeaponListModel", cc.mvc.ModelBase)
 
 WeaponListModel.REFRESHBTN_EVENT = "REFRESHBTN_EVENT"
+WeaponListModel.WEAPON_STAR_ONE_EVENT = "WEAPON_STAR_ONE_EVENT"
+WeaponListModel.WEAPON_STAR_FULL_EVENT = "WEAPON_STAR_FULL_EVENT"
 
 function WeaponListModel:ctor(properties, events, callbacks)
 	WeaponListModel.super.ctor(self, properties)
@@ -112,17 +114,18 @@ function WeaponListModel:intensify(weaponid)
 			end
 		end
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star = true})
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_ONE_EVENT})
 end
 
-function WeaponListModel:onceFull(weaponid)
+function WeaponListModel:onceFull(weaponId)
 	local data = getUserData()
-	local intenlevel
+	local lastLevel
 	for k,v in pairs(data.weapons.bags) do
 		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == weaponid then
+			if k1 == "weaponid" and v1 == weaponId then
 				if data.weapons.bags[k].intenlevel < 10 then
-					intenlevel = data.weapons.bags[k].intenlevel
+					lastLevel = data.weapons.bags[k].intenlevel
 					data.weapons.bags[k].intenlevel = 10
 					setUserData(data)
 				else
@@ -131,7 +134,9 @@ function WeaponListModel:onceFull(weaponid)
 			end
 		end
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star = true,intenlevel = intenlevel})
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_FULL_EVENT, 
+		lastLevel = lastLevel, weaponId = weaponId})
 end
 
 --isWeInBag
