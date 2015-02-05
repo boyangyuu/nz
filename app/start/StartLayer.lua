@@ -16,7 +16,7 @@ end
 
 function StartLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/Start")
-    local controlNode = cc.uiloader:load("zhucaidan_1.ExportJson")
+    local controlNode = cc.uiloader:load("zhucaidan_1.json")
     self:addChild(controlNode)
 end
 
