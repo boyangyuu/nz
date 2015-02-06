@@ -248,6 +248,7 @@ function Hero:setIsPause(isPause)
 end
 
 function Hero:isHelpHp(demage)
+    print("demage", demage)
     if self:isDead() then return false end
 
     local defence   = md:getInstance("Defence")
@@ -256,18 +257,19 @@ function Hero:isHelpHp(demage)
     local maxhp = self:getMaxHp()
     local desthp = self:getHp() - demage
     
-    local isLessHp =  (desthp / maxhp) < define.kBuyFullHpTime   
+    local destPer = desthp / maxhp
+    print("destPer", destPer)
+    local isLessHp =  destPer < define.kBuyFullHpTime   
     return isDefenceAble and isLessHp 
 end
 
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
-    -- self.isHelped = true
     print("function Hero:helpFullHp()")
+    self.isPause = true
     local fight = md:getInstance("Fight")
     fight:stopFire()
-    self.isPause = true
 
     --pop
     ui:showPopup("commonPopup",

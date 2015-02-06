@@ -42,7 +42,7 @@ function GunView:fire()
 
 	-- if self.isFiring == true then return end 	
 	self.isFiring = true
-	print("function GunView:playFire()")
+	-- print("function GunView:playFire()")
 	--枪火
 	self.jqk   :setVisible(true)
 	self.jqkzd :setVisible(true)

@@ -34,7 +34,7 @@ function MapAnimView:playEffectShooted(event)
 
 	--robot gold or special gun
 	local isGold = inlay:getIsActiveGold()
-	print("isGold", isGold)
+	-- print("isGold", isGold)
 	local isRobot = md:getInstance("Robot"):getIsRoboting()
 	local hero    = md:getInstance("Hero")
 	local gunCfg  = hero:getGun():getConfig()
