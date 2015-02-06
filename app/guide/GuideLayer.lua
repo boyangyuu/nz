@@ -36,7 +36,7 @@ function GuideLayer:ctor()
 end
 
 function GuideLayer:onTouch(event)
-	if not self.isGuiding then return false end
+	-- if not self.isGuiding then return false end
     if event.name == "began" or event.name == "added" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
@@ -44,11 +44,11 @@ function GuideLayer:onTouch(event)
     elseif event.name == "moved" then 
         return self:onMutiTouchMoved(event)
     end
-    return true
+    return false
 end
 
 function GuideLayer:onMutiTouchBegin(event)
-	dump(event, "onMutiTouchBegin event")
+	-- dump(event, "onMutiTouchBegin event")
 	if event.points == nil then return false end
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
@@ -73,7 +73,7 @@ function GuideLayer:onMutiTouchMoved(event)
 			return true
 		end
 	end
-	return true
+	return false
 end
 
 function GuideLayer:onMutiTouchEnd(event)
@@ -83,7 +83,7 @@ function GuideLayer:onMutiTouchEnd(event)
 		local isTouch = self:isTouchTarget(pos)
 		self:onTouchTarget(event)
 	end
-	return true
+	return false
 end
 
 function GuideLayer:onTouchTarget(event)
