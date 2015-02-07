@@ -1,7 +1,7 @@
 
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
-local className = "com/hgtt/ccn/IAPControl"
+local className = "com/hgtt/com/IAPControl"
 local sig = "(Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
@@ -12,7 +12,7 @@ end
 function IAPsdk:setTelecomOperator()
     local telecomOperator = nil
     if device.platform == 'android' then
-        local result,telecomOperator = luaj.callStaticMethod("com/hgtt/ccn/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
+        local result,telecomOperator = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
         return telecomOperator
     end
 	print("telecomOperator:",telecomOperator)
