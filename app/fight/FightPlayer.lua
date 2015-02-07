@@ -268,8 +268,6 @@ function FightPlayer:initTouchArea()
 
     --move区域
     self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
-
-    -- layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name == "began" or event.name == "added" then
             self:onMutiTouchBegin(event)

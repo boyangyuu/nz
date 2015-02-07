@@ -30,8 +30,7 @@ function GuideLayer:ctor()
 		:addEventListener(self.guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
 	--touch
     self:setTouchEnabled(true) 
-    self:setTouchSwallowEnabled(true) 
-    self:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)		
+    self:setTouchMode(cc.cc.TOUCH_MODE_ALL_AT_ONCE)		
     self:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouch))
 end
 
@@ -48,8 +47,9 @@ function GuideLayer:onTouch(event)
 end
 
 function GuideLayer:onMutiTouchBegin(event)
-	-- dump(event, "onMutiTouchBegin event")
+	dump(event, "onMutiTouchBegin event")
 	if event.points == nil then return false end
+	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
@@ -64,6 +64,7 @@ end
 
 function GuideLayer:onMutiTouchMoved(event)
 	-- dump(event, "onMutiTouchMoved event")
+	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
@@ -78,6 +79,7 @@ end
 
 function GuideLayer:onMutiTouchEnd(event)
 	-- dump(event, "onMutiTouchEnd event")
+	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
@@ -124,6 +126,7 @@ function GuideLayer:onTouchTarget(event)
 end
 
 function GuideLayer:hideForTime(event)
+	if self.isGuiding == false then return end
 	local delay = event.delay
 	local function restoreFunc()
 		self.bg:setVisible(true)
@@ -150,6 +153,7 @@ end
 
 function GuideLayer:isTouchTarget(pos)
 	-- dump(pos, "pos")
+
 	pos.y = pos.y - display.offset 
 	local rect = self:getTargetRect()
 	-- dump(rect, "rect")
@@ -282,11 +286,12 @@ end
 function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
 	--clear
-	self:loadCCS()
+	-- self:loadCCS()
 	self:setTouchEnabled(false)
 	self.isGuiding = false
 	--visible
 	self:setVisible(false)
+	self:setVisible(true)
 end
 
 return GuideLayer
