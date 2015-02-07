@@ -172,8 +172,6 @@ function GuideLayer:loadCCS()
     self.touchAll:setTouchEnabled(true) 
     self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
     self.touchAll:setTouchSwallowEnabled(false) 	
-    self.touchAll:setVisible(true)
-    -- self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))              
     self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))              
 
     --touchone
@@ -306,7 +304,7 @@ function GuideLayer:finish(event)
 	self.touchOne:setTouchEnabled(false)
 	self.isGuiding = false
 	self.isFirst = false
-	
+
 	--visible
 	self:setVisible(false)
 end
