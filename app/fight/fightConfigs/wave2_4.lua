@@ -288,11 +288,11 @@ local waves = {
 --enemy的关卡配置                                   普通难度 狙击枪350*1.2伤害          dps大于等于3
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=12,hp=1470,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=12,hp=924,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=1470,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=924,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
@@ -300,11 +300,11 @@ local enemys = {
 	weak1=1},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=1470,
+	{id=4,image="sanbing01",demage=0,hp=924,
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=1960,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=1386,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
@@ -329,7 +329,7 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=6000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=4620, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	--越野车       type = "jipu" ,
@@ -372,6 +372,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {25,65,105,150}   --黄武激活所需杀人个数
+	self.goldLimits = {75,160,250}   --黄武激活所需杀人个数
 end
 return waveClass

@@ -142,7 +142,7 @@ end
 
 --Attackable interface
 function DaoEnemyView:playHitted(event)
-    self.armature:getAnimation():play("hit" , -1, 1) 
+    -- self.armature:getAnimation():play("hit" , -1, 1) 
 
     --飘红
     self:playHittedEffect()

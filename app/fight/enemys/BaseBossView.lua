@@ -363,7 +363,7 @@ function BaseBossView:playDaoDan1()
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
 			demageScale = self.enemy:getDemageScale(),
-			id = self.property["enemyId"], 
+			id = self.property["missileId"], 
 		}
 		local function callfuncAddDao()
 			local boneName = "dao2"

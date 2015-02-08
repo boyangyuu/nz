@@ -153,6 +153,7 @@ local waves = {
 			
 		},
 	},
+
 	{
 		enemys = {
 		   	{
@@ -259,7 +260,6 @@ local waves = {
 		},
 	},
 
-
 	{
 		enemys = { 
 
@@ -358,12 +358,28 @@ local waves = {
 			},	
 			
 		},
-	},	
+	},
 
 	{
-		enemys = {                                                 --boss
+		enemys = {                                                                -- 1-6 boss
 			{
-				--descId = "dzboss", --简介
+				time = 3,	
+				num = 1,
+				pos = {500},
+				delay = {0.4},
+				property = { 
+					type = "boss",
+					placeName = "place1",
+					missileId = 6,            --BOSS导弹ID
+					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
+				},
+			},
+		},
+	},		
+
+	{
+		enemys = {                                                 -- 2-6 boss
+			{
 				time = 3,	
 				num = 1,
 				pos = {500},
@@ -374,7 +390,7 @@ local waves = {
 					wangId    = 19,
 					missileId = 6, 
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
-					id = 1,
+					id = 2,
 				},
 			},
 
@@ -402,7 +418,7 @@ local enemys = {
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=35000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
@@ -410,15 +426,15 @@ local enemys = {
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=20000,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=20,hp=30000,fireRate=180,fireCd=4,speed=40,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=35000,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=25,hp=90000,fireRate=180,fireCd=5,speed=35,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=10000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
 	weak1=2},	
 
 	
@@ -427,11 +443,11 @@ local enemys = {
 	weak1=2},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=50000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=200000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=200000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -443,11 +459,11 @@ local enemys = {
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=2,award = 30},	--award = 30  金币数量为30
 	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=120,hp=20000,fireRate=60,fireCd=2,speed=40,scale = 2.5 ,
+	{id=16,image="jinzhanb",demage=120,hp=90000,fireRate=60,fireCd=2,speed=40,scale = 2.5 ,
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=40,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
@@ -468,10 +484,217 @@ local enemys = {
 
 
 	--boss的关卡配置
-local bosses = {
-	--第一个出场的boss
+local bosses = {	
+	--第1个出场的boss
+	{
+		image = "boss01", --图片名字
+		-- hp = 150000,
+		award = 50000,                   --boss产出金币数量
+		hp = 160000,
+		demage = 3,
+		fireRate = 60,
+		fireCd = 3,  		
+		walkRate = 120,
+		walkCd = 2,         --移动cd	
+		wudiTime = 6 , 	
+		saoFireOffset = 0.1, 		--扫射时间间隔
+		saoFireTimes = 20, 			--一次扫射10下
+		weak1 = 1.1,					--手  弱点伤害倍数
+		weak2 = 1.1,					--腹  弱点伤害倍数
+		weak3 = 1.1,					--头  弱点伤害倍数
+		skilltrigger = {   			   --技能触发(可以同时)
+
+
+                                    
+			wudi = {0.91,0.71,0.51,0.31,0.11            --无敌
+			},                                        
+
+			saoShe = { 0.90, 0.70, 0.50, 0.30 , 0.10   --调用普通攻击的伤害  扫射
+			}, 
+
+			-- zhaohuan = {0.95,0.65,0.35},                                        --召唤 
+
+			moveLeftFire = {
+				0.80, 0.40, 
+			},
+			moveRightFire = {
+				0.60, 0.20,
+			},
+			
+			daoDan = {                                   --两发导弹
+				0.999,0.96,0.85,0.64, 0.45, 0.34, 0.22,
+			},
+			weak1 = {
+				0.85,0.70,0.60,0.50,0.35
+			},	
+			weak2 = {
+				0.95,0.80,0.65,0.30,0.40
+			},	
+			weak3 = {
+				0.90,0.75,0.55,0.45,0.20
+			},
+
+			
+
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.95,
+			},	
+			demage400 = {  
+				0.70,
+			},	
+			demage600 = {  
+				0.20,
+			},							
+		},
+--[[
+		enemys1 = {                                                   --第一波召唤的自爆兵
+			{
+				time = 2,	
+				num = 3,
+				pos = {560,660,760},
+				delay = {0.2,0.4,0.5},
+				property = {
+					placeName = "place3" ,
+					id = 16,
+					type = "bao",
+				},
+			},
+			{
+				time = 9,	
+				num = 4,
+				pos = {520,620,830,950},
+				delay = {0.8,0.6,0.4,0.2},
+				property = {
+					placeName = "place3" ,
+					id = 16,
+					type = "bao",
+				},
+			},
+			{
+				time = 16,	
+				num = 5,
+				pos = {400,480,660,860,1050},
+				delay = {0.2,0.8,0.6,0.4,0.2},
+				property = {
+					placeName = "place3" ,
+					id = 16,
+					type = "bao",
+				},
+			},
+		},
+
+
+		enemys2 = {                                                      --第二波召唤的兵
+			{
+				time = 2,	
+				num = 3,
+				pos = {560,660,760},
+				delay = {0.2,0.4,0.5},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "bao",
+				},
+			},
+			{
+				time = 7,	
+				num = 4,
+				pos = {520,620,830,950},
+				delay = {0.8,0.6,0.4,0.2},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "bao",
+				},
+			},
+			{
+				time = 12,	
+				num = 5,
+				pos = {400,480,660,860,1050},
+				delay = {0.2,0.8,0.6,0.4,0.2},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "bao",
+				},
+			},
+		},
+
+
+		
+		enemys3 = {                                                      --第三波召唤的兵
+			{
+				time = 2,
+				num = 1,
+				pos = {300},
+				delay = {0.5},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place10",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 30.0,		                                    --持续时间			
+				},
+			},
+			{
+				time = 3,
+				num = 1,
+				pos = {400},
+				delay = {0.5},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place9",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 30.0,		                                    --持续时间			
+				},
+			},
+			{
+				time = 4,
+				num = 1,
+				pos = {900},
+				delay = {0.5},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place9",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 30.0,		                                    --持续时间			
+				},
+			},
+		},		
+]]
+		getMoveLeftAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
+			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
+			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
+			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+
+		getMoveRightAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
+			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
+			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
+			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+	},
+	--第2个出场的boss
 	{
 		image = "dzboss", --图片名字
+		award = 50000,                   --boss产出金币数量
 		hp = 250000,
 		fireRate = 60,                  --普攻频率
 		fireCd = 4,                     --普攻cd
@@ -700,8 +923,6 @@ local bosses = {
 			
 		},													
 	},
-
-
 }
 
 local mapId = "map_1_6"
@@ -711,7 +932,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
+	self.goldLimits = {75,160,250}  --黄武激活所需杀人个数
 	
 end
 return waveClass

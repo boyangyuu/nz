@@ -661,42 +661,42 @@ local waves = {
 	
 }
 
---enemy的关卡配置                                        青铜镶嵌 MP5伤害70  dps大于等于2.5 怪物数据
+--enemy的关卡配置                                        青铜镶嵌 MP5伤害80  dps大于等于2.5 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=7.5,hp=405,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=7.5,hp=403,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1= 2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=270,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=403,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1= 2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=10,hp=270,
+	{id=3,image="shoulei",demage=10,hp=134,
 	weak1=1},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=405,
+	{id=4,image="sanbing01",demage=0,hp=403,
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=540,walkRate=180,walkCd=2,fireRate=240,fireCd=4,
+	{id=5,image="zpbing",demage=0,hp=538,walkRate=180,walkCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=270,
+	{id=6,image="daodan",demage=10,hp=268,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=3,hp=350,fireRate=120,fireCd=3,speed=60,
+	{id=7,image="jinzhanb",demage=3,hp=806,fireRate=120,fireCd=3,speed=60,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=4,hp=700,fireRate=180,fireCd=4,speed=40,
+	{id=8,image="dunbing",demage=4,hp=4030,fireRate=180,fireCd=4,speed=40,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=10,hp=140,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=10,hp=403,fireRate=30,speed=120,
 	weak1=2},	
 
 	
@@ -705,11 +705,11 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=12000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=18000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=12000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 
@@ -727,7 +727,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {25,65,105,140}   --黄武激活所需杀人个数
+	self.goldLimits = {75,160,250}   --黄武激活所需杀人个数
 end
 
 return waveClass

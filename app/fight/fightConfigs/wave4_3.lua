@@ -248,7 +248,7 @@ local waves = {
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
-					enemyId = 6,                 --导弹id        
+					missileId = 6,                 --导弹id        
 					qiuId = 19,                   --铁球id
 					id = 2,
 				},
@@ -284,11 +284,11 @@ local waves = {
 --enemy的关卡配置                                                    黄金镶嵌 MP5满级  dps大于等于7 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=28,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=28,hp=20000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=20000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
@@ -296,11 +296,11 @@ local enemys = {
 	weak1=1},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=30000,
+	{id=4,image="sanbing01",demage=0,hp=20000,
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=35000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
@@ -312,7 +312,7 @@ local enemys = {
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=40000,fireRate=180,fireCd=5,speed=60,
+	{id=8,image="dunbing",demage=15,hp=90000,fireRate=180,fireCd=5,speed=60,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
@@ -325,11 +325,11 @@ local enemys = {
 	weak1=2},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=40000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=200000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=40000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=200000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -341,18 +341,18 @@ local enemys = {
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=2,award = 30},	--award = 30  金币数量为30
 	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=9,hp=10000,fireRate=120,fireCd=3,speed=40,scale = 2.5 ,
+	{id=16,image="jinzhanb",demage=9,hp=100000,fireRate=120,fireCd=3,speed=40,scale = 2.5 ,
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=35,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=35,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=10,hp=7000},                             
+	{id=18,image="feibiao",demage=10,hp=30000},                             
 
 	--铁球
-	{id=19,image="tieqiu",demage=20,hp=3760,weak1=1},
+	{id=19,image="tieqiu",demage=20,hp=90000,weak1=1},
 
 }
 
@@ -363,6 +363,7 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "renzb",                       --图片名字
+		award = 40000,                   --boss产出金币数量
 		hp = 200000,
 		fireRate = 60,               --普攻频率
 		fireCd = 4,                     --普攻cd
@@ -381,14 +382,14 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 
-			feibiao1 = { 0.80, 0.60, 0.30              --暴雨梨花针1
+			feibiao1 = { 0.80, 0.60, 0.40 , 0.20            --暴雨梨花针1
 			},
 			-- feibiao2 = {                --暴雨梨花针2
 			-- 	0.89,0.88,0.86,
 			-- },							
-			zhaohuan = { 0.90,0.70, 0.40                    --召唤分身
+			zhaohuan = { 0.90,0.70, 0.30                    --召唤分身
 			},                                           
-			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.50, 0.20     --冲锋
+			chongfeng = { 0.95, 0.85, 0.75,0.65, 0.50, 0.10     --冲锋
 			},
 
 
@@ -544,6 +545,7 @@ local bosses = {
 
 		image = "boss02", --图片名字
 		hp = 100000,
+		award = 20000,                   --boss产出金币数量
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 100,               --普攻频率
 		fireCd = 3,                     --普攻cd
@@ -557,7 +559,7 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90,  0.50, 
+				0.90,  0.50, 0.15
 			},
 			moveRightFire = {
 				 0.30, 
@@ -568,6 +570,7 @@ local bosses = {
 			tieqiu = {
 			     0.80, 0.60, 0.40, 0.20
 			},	
+
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80,0.60,0.40, 0.20,                        
 			},
@@ -613,7 +616,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
+	self.goldLimits ={75,160,250}   --黄武激活所需杀人个数
 end
 
 return waveClass

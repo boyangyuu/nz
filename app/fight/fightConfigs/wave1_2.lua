@@ -317,7 +317,7 @@ local waves = {
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
-					enemyId = 8,                 --导弹id        
+					missileId = 8,                 --导弹id        
 					qiuId = 5,                   --铁球id
 					id = 1,
 				},

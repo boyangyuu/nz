@@ -389,11 +389,11 @@ local enemys = {
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=468,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=702,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=375,
+	{id=3,image="shoulei",demage=20,hp=234,
 	weak1=1},
 
 	--伞兵       --type = "san",
@@ -405,19 +405,19 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=375,
+	{id=6,image="daodan",demage=10,hp=468,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=1170,fireRate=180,fireCd=4,speed=80,
+	{id=7,image="jinzhanb",demage=20,hp=1404,fireRate=180,fireCd=4,speed=80,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=2340,fireRate=180,fireCd=5,speed=60,
+	{id=8,image="dunbing",demage=25,hp=7020,fireRate=180,fireCd=5,speed=60,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=468,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=702,fireRate=30,speed=120,
 	weak1=2},	
 
 	
@@ -469,6 +469,7 @@ local bosses = {
 	{
 		image = "dzboss", --图片名字
 		hp = 250000,
+		award = 30000,
 		fireRate = 60,                  --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				    --
@@ -479,10 +480,10 @@ local bosses = {
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
 		wudiTime = 5.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
-			wudi = { 0.91, 0.71, 0.51 , 0.31, 0.16, 0.10               --无敌
+			wudi = { 0.91, 0.71, 0.51 , 0.31, 0.16, 0.10 ,0.06               --无敌
 			}, 
 
-			zhaohuan = { 0.90,0.70,0.50, 0.30                     --召唤小兵
+			zhaohuan = { 0.90, 0.70, 0.50, 0.30                     --召唤小兵
 			},   
 
 			wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
@@ -707,7 +708,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {25,55,90,130}   --黄武激活所需杀人个数
+	self.goldLimits = {75,160,250}  --黄武激活所需杀人个数
 	
 end
 return waveClass
