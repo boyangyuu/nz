@@ -47,7 +47,27 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "30000883682314"		--一箱子宝石
 		config["stone450"]         = "30000883682315"		--堆成山的宝石
 		config["unlockWeapon"] 	   = "30000883682316"       --武器购买
+
 	elseif telecomOperator == "unicom" then
+		--礼包
+		config["novicesBag"]       = "001"		--新手礼包
+		config["weaponGiftBag"]    = "002"		--武器到礼包
+		config["goldGiftBag"]      = "003"		--土豪金礼包
+		config["timeGiftBag"]      = "004"		--限时特价
+		config["changshuang"]      = "005"		--畅爽礼包
+
+		--单件
+		config["goldWeapon"]       = "006"		--黄武
+		config["handGrenade"]      = "007"		--手雷
+		config["armedMecha"]       = "008"		--机甲
+		config["onceFull"]         = "009"		--一键满级
+		config["resurrection"]     = "010"	    --复活送黄武
+		config["stone10"]          = "011"		--一小堆宝石
+		config["stone45"]          = "012"		--一堆宝石
+		config["stone120"]         = "013"		--一麻袋宝石
+		config["stone260"]         = "014"		--一箱子宝石
+		config["stone450"]         = "015"		--堆成山的宝石
+		config["unlockWeapon"]     = "016"       --武器购买
 
 	elseif telecomOperator == "telecom" then
 		config["novicesBag"]       = "5139361"		--新手礼包

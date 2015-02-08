@@ -147,7 +147,10 @@ function MapView:updateEnemys()
 	if wave == nil then 
 		print("赢了")
 		-- scheduler.unscheduleGlobal(self.checkWaveHandler)
-		self.fight:onWin()
+		local function win()
+			self.fight:onWin()			
+		end
+		self:performWithDelay(win, 3.0)
 		return
 	end
 

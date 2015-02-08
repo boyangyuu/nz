@@ -17,7 +17,6 @@ function BaseEnemy:ctor(actor_property, enemy_property)
     -- dump(enemy_property, "enemy_property")
     local demageScale = enemy_property["demageScale"] or 1.0
     self:setDemageScale(demageScale)
-
     self.isFireCd = false
     self.isWalkCd = false
     self.isRollCd = false    
