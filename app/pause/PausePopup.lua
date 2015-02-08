@@ -76,21 +76,19 @@ function PausePopup:initButtons()
 		elseif event.name == 'ended' then 
 
 		self:btnColor(musicClosedBtn, false)
-			if isPlaying then
-				print("music is playing")
-				musicplay:setVisible(true)
-				musicclose:setVisible(false)
-				audio.stopAllMusicAndSounds(true)
-				isPlaying = false
-			else
-				print("music is close")
-				musicplay:setVisible(false)
-				musicclose:setVisible(true)
-				audio.stopAllMusicAndSounds(false)
-				isPlaying = true
-			end
-			
-			print("musicClosedBtn is pressed!")
+			local isOpen = audio.isSwitchOpen()
+			-- print("music is playing")
+			isOpen = not isOpen
+			musicplay:setVisible(isOpen)
+			musicclose:setVisible(not isOpen)
+			isPlaying = false
+			audio.switchAllMusicAndSounds(isOpen)
+
+			--save
+		    local data = getUserData()
+		    data.preference["isOpenMusic"] = isPlaying
+		    setUserData(data)
+			-- print("musicClosedBtn is pressed!")
 		end
 	end)
 

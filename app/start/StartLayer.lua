@@ -3,13 +3,12 @@ local StartLayer = class("StartLayer", function()
 end)
 
 function StartLayer:ctor()
-    self:playSound()
 	self:loadCCS()
 	self:initUI()
     self:setNodeEventEnabled(true)
 end
 
-function StartLayer:playSound()
+function StartLayer:playBgMusic()
     local startMusic = "res/Music/bg/bjyx.wav"
     audio.playMusic(startMusic,true)
 end
@@ -21,6 +20,8 @@ function StartLayer:loadCCS()
 end
 
 function StartLayer:initUI()
+    self:initMusicUI()
+
     local btnBegin = cc.uiloader:seekNodeByName(self, "beginbtn")
     btnBegin:setTouchEnabled(true)
     addBtnEventListener(btnBegin, function(event)
@@ -29,30 +30,6 @@ function StartLayer:initUI()
             return true
         elseif event.name == 'ended' then
         	self:beginGame()
-        end
-    end)
-
-    local btnMusic = cc.uiloader:seekNodeByName(self, "btnmusic")
-    btnMusic:setTouchEnabled(true)
-    local play = cc.uiloader:seekNodeByName(btnMusic, "play")
-    local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
-    stop:setVisible(false)
-    local isPlaying = audio.isMusicPlaying()
-    addBtnEventListener(btnMusic, function( event )
-        if event.name == "began" then 
-            return true
-        elseif event.name == "ended" then
-            if  isPlaying then 
-                stop:setVisible(true)
-                play:setVisible(false)
-                audio.stopAllMusicAndSounds(true)
-                isPlaying = false
-            else
-                stop:setVisible(false)
-                play:setVisible(true)
-                audio.stopAllMusicAndSounds(false)
-                isPlaying = true
-            end
         end
     end)
 
@@ -88,11 +65,54 @@ function StartLayer:initUI()
     armature:setPosition(cc.p(568,320))
     self:addChild(armature,100)
     armature:getAnimation():play("caidantx" , -1, 1)
-
 end
 
-function StartLayer:onEnter()
+function StartLayer:initMusicUI()
+    local data = getUserData()
+    local isOpenMusic = data.preference["isOpenMusic"]
+
+    local btnMusic = cc.uiloader:seekNodeByName(self, "btnmusic")
+    btnMusic:setTouchEnabled(true)
+    local play = cc.uiloader:seekNodeByName(btnMusic, "play")
+    local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
+    play:setVisible(isOpenMusic)
+    stop:setVisible(not isOpenMusic)
     
+    addBtnEventListener(btnMusic, function(event)
+        if event.name == "began" then 
+            return true
+        elseif event.name == "ended" then
+            self:switchSound()
+        end
+    end)    
+end
+
+function StartLayer:switchSound()
+    local btnMusic  = cc.uiloader:seekNodeByName(self, "btnmusic")
+    local play      = cc.uiloader:seekNodeByName(btnMusic, "play")
+    local stop      = cc.uiloader:seekNodeByName(btnMusic, "stop")    
+    local isPlaying = audio.isSwitchOpen()
+    isPlaying = not isPlaying
+    print("isPlaying", isPlaying)
+    --switch
+
+    stop:setVisible(not isPlaying)
+    play:setVisible(isPlaying)
+    audio.switchAllMusicAndSounds(isPlaying)
+
+    --save
+    local data = getUserData()
+    data.preference["isOpenMusic"] = isPlaying
+    setUserData(data)
+end
+
+
+function StartLayer:onEnter()
+    self:playBgMusic() 
+
+    local data = getUserData()
+    local isPlaying = data.preference["isOpenMusic"]
+    audio.switchAllMusicAndSounds(isPlaying)
 end
 
 function StartLayer:beginGame()

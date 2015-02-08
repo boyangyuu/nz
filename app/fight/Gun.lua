@@ -67,6 +67,7 @@ function Gun:getBulletNum()
     else
         value = baseValue
     end	
+    value = math.floor(value)
 	return value
 end
 

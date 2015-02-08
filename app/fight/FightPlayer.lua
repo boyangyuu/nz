@@ -268,8 +268,6 @@ function FightPlayer:initTouchArea()
 
     --move区域
     self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
-
-    -- layerTouch:addNodeEventListener(cc.NODE_TOUCH_CAPTURE_EVENT, function(event)
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name == "began" or event.name == "added" then
             self:onMutiTouchBegin(event)
@@ -307,32 +305,22 @@ end
 function FightPlayer:initBtns()
     --btnfire   
     self.btnFire = cc.uiloader:seekNodeByName(self, "btnFire")
-    -- self.btnFire:setTouchEnabled(true)  
-    -- self.btnFire:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnChange
     self.btnChange = cc.uiloader:seekNodeByName(self, "btnChange")
-    -- self.btnChange:setTouchEnabled(true)
-    -- self.btnChange:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnDefence
     self.btnDefence = cc.uiloader:seekNodeByName(self, "btnDun")
-    -- self.btnDefence:setTouchEnabled(true)
-    -- self.btnDefence:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self:initDefence()
 
     --btnRobot
     self.btnRobot = cc.uiloader:seekNodeByName(self, "btnRobot")
-    -- self.btnRobot:setTouchEnabled(true)
-    -- self.btnRobot:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_jijiaNum = cc.uiloader:seekNodeByName(self, "label_jijiaNum")
     local num = self.fightProp:getRobotNum()
     self.label_jijiaNum:setString(num) 
     
     --btnLei
     self.btnLei = cc.uiloader:seekNodeByName(self, "btnLei")
-    -- self.btnLei:setTouchEnabled(true)
-    -- self.btnLei:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_leiNum = cc.uiloader:seekNodeByName(self, "label_shouleiNum")
     local num = self.fightProp:getLeiNum()
     self.label_leiNum:setString(num)   
@@ -340,13 +328,9 @@ function FightPlayer:initBtns()
     --btnJu
     self.btnJu = cc.uiloader:seekNodeByName(self, "btnJun")
     self.btnJu:setVisible(false)
-    -- self.btnJu:setTouchEnabled(true)
-    -- self.btnJu:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
 
     --btnGold
     self.btnGold = cc.uiloader:seekNodeByName(self, "btnGold")
-    -- self.btnGold:setTouchEnabled(true)
-    -- self.btnGold:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     self.label_gold = cc.uiloader:seekNodeByName(self, "label_gold")    
     self.label_gold:setColor(cc.c3b(255, 146, 0))
     local num = self.fightProp:getGoldNum()

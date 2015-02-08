@@ -159,6 +159,9 @@ function MyApp:createGameStateFile()
                         isGet = false,
                         dailyid = 0,
             },
+            preference = {
+                isOpenMusic = true
+            },
             
     }
     GameState.save(data)
