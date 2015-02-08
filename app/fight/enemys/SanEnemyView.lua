@@ -60,7 +60,6 @@ end
 function SanEnemyView:stopFall()
 	--stop action
 	self.armature:stopAllActions()
-    self.armature:removeFromParent()
     self:setWillRemoved()  
 
     -- 召唤

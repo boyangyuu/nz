@@ -75,7 +75,7 @@ function Attackable:getTargetData(focusNode)
 	local isHitedWeak, targetDataWeak = self:checkWeak(focusNode)
 	local isHitedBody, targetDataBody = self:checkBody(focusNode)
 	
-	if self.attackType == "weak" then
+	if true then
 		if isHitedWeak then
 			-- print("isHitedWeak")
 			return true, targetDataWeak 

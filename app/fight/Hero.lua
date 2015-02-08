@@ -236,6 +236,7 @@ function Hero:decreaseHp(hp)
         robot:onHitted()
     elseif self:isHelpHp(hp) then
         self:helpFullHp()
+        Hero.super.decreaseHp(self, hp)
     else
         Hero.super.decreaseHp(self, hp)
     end
@@ -252,16 +253,18 @@ end
 function Hero:isHelpHp(demage)
     print("demage", demage)
     if self:isDead() then return false end
-
     local defence   = md:getInstance("Defence")
     local isDefenceAble =  defence:getIsAble() and 
                 not defence:getIsDefending()
     local maxhp = self:getMaxHp()
     local desthp = self:getHp() - demage
-    
     local destPer = desthp / maxhp
     print("destPer", destPer)
-    local isLessHp =  destPer < define.kBuyFullHpTime   
+    local isLessHp =  destPer < define.kBuyFullHpTime  
+
+    --致死 
+    if desthp <= 0 then return false end 
+    
     return isDefenceAble and isLessHp 
 end
 
