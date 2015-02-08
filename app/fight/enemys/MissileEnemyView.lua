@@ -161,7 +161,7 @@ end
 
 function MissileEnemyView:playSound()
     --sound effect
-    local soundSrc  = "res/Music/fight/slbz.wav"
+    local soundSrc  = "res/Music/fight/hd_bz.wav"
     self.audioId1 =  audio.playSound(soundSrc,false)  
 end
 
