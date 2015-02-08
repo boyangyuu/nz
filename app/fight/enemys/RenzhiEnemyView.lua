@@ -178,10 +178,8 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
     self:restoreStand(time)
 
     --sound
-    if isRoll then 
-	    local soundSrc  = "res/Music/fight/rz_kp.wav"
-	    self.audioId =  audio.playSound(soundSrc,false)   
-	end
+    local soundSrc  = "res/Music/fight/rz_kp.wav"
+    self.audioId =  audio.playSound(soundSrc,false)   
 
 end
 

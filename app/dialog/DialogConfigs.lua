@@ -47,7 +47,7 @@ configs[1]  = {
 			{role = "杰",imgname = "role_jie", msg = "我姐姐被你带到哪里去啦？",  pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "你姐姐不识抬举，马上就要被我送到非洲了，哈哈!",  pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "杰，敌人援兵到了，快撤退。",  pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "啊！姐姐坚持住！！等我！！",  pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "非洲！？姐姐要坚持住啊！！",  pos = "left"},
 		},
 	},
 	level6 = {
