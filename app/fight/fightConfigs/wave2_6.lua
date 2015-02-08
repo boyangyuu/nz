@@ -360,6 +360,7 @@ local waves = {
 		},
 	},	
 	{
+		waveType = "boss",                                      --强敌出现
 		enemys = {                                                 --boss
 			{
 				descId = "dzboss", --简介

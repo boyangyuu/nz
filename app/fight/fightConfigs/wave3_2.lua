@@ -237,6 +237,7 @@ local waves = {
 	},
 
 	{
+		waveType = "boss",                                      --强敌出现
 		enemys = {  
 			--   蓝boss 白银 （2条）   
 			--  		黄金 （3条）      血量（100）
