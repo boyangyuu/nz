@@ -53,11 +53,11 @@ function JinEnemyView:playAttack()
 end
 
 function JinEnemyView:playHitted(event)
-    if self.isAheading then
-        self:playHittedEffect()
-    else
-        JinEnemyView.super.playHitted(self, event)
-    end
+    -- if self.isAheading then
+    self:playHittedEffect()
+    -- else
+    --     JinEnemyView.super.playHitted(self, event)
+    -- end
 end
 
 function JinEnemyView:playAhead()

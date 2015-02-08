@@ -23,7 +23,7 @@ function ChongBossView:playFire()
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
-			id = self.property["enemyId"], 
+			id = self.property["missileId"], 
 			demageScale = self.enemy:getDemageScale(),
 			offset = offsetPoses[i],
 		}
