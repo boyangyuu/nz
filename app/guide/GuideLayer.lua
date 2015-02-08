@@ -17,7 +17,7 @@ function GuideLayer:ctor()
 	self.isWaiting = false
 	self.bg 	  = nil
 	self.armature = nil
-		
+	self:setTouchSwallowEnabled(false)
 	--ui
 	self:loadCCS()
 
@@ -35,9 +35,10 @@ function GuideLayer:onTouchOne(event)
 end
 
 function GuideLayer:onTouch(event)
-	dump(event, "event")
+	-- dump(event, "event")
 	if not self.isGuiding then return false end
-    if event.name == "began" or event.name == "added" then
+    -- if event.name == "began" or event.name == "added" then
+	if event.name == "began" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
         return self:onMutiTouchEnd(event)
@@ -50,7 +51,6 @@ end
 function GuideLayer:onMutiTouchBegin(event)
 	-- dump(event, "onMutiTouchBegin event")
 	if event.points == nil then return false end
-	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
@@ -65,7 +65,6 @@ end
 
 function GuideLayer:onMutiTouchMoved(event)
 	-- dump(event, "onMutiTouchMoved event")
-	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
@@ -80,7 +79,6 @@ end
 
 function GuideLayer:onMutiTouchEnd(event)
 	-- dump(event, "onMutiTouchEnd event")
-	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
@@ -127,7 +125,7 @@ function GuideLayer:onTouchTarget(event)
 end
 
 function GuideLayer:hideForTime(event)
-	if self.isGuiding == false then return end
+	if 1 == 1 then return end
 	local delay = event.delay
 	local function restoreFunc()
 		self.bg:setVisible(true)
@@ -171,14 +169,15 @@ function GuideLayer:loadCCS()
     self.touchAll = cc.uiloader:seekNodeByName(self.guideNode, "touchAll")
     self.touchAll:setTouchEnabled(true) 
     self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
-    self.touchAll:setTouchSwallowEnabled(false) 	
+    self.touchAll:setTouchSwallowEnabled(true) 
+    -- self.touchAll:setTouchSwallowEnabled(false) 	
     self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))              
 
     --touchone
-	self.touchOne = cc.uiloader:seekNodeByName(self.guideNode, "touchOne")
-    self.touchOne:setTouchEnabled(true) 	
-    self.touchOne:setTouchSwallowEnabled(true) 
-    self.touchOne:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouchOne))
+	-- self.touchOne = cc.uiloader:seekNodeByName(self.guideNode, "touchOne")
+ --    self.touchOne:setTouchEnabled(true) 	
+ --    self.touchOne:setTouchSwallowEnabled(true) 
+ --    self.touchOne:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouchOne))
 end
 
 function GuideLayer:checkFirstGuide()
@@ -301,7 +300,7 @@ end
 function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
 	--touch
-	self.touchOne:setTouchEnabled(false)
+	-- self.touchOne:setTouchEnabled(false)
 	self.isGuiding = false
 	self.isFirst = false
 
