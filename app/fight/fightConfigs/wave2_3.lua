@@ -237,17 +237,9 @@ local waves = {
 			},	
 			
 		},
-	},
-
-
-	-- {
-	-- 	enemys = {
-			
-			
-			
-	-- 	},
-	-- },	
+	},	
 	{
+	    waveType = "boss",                                      --强敌出现
 		enemys = {  --boss
 			{
 				descId = "renzb", --简介

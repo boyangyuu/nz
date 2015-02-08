@@ -362,6 +362,7 @@ local waves = {
 	},	
 
 	{
+		waveType = "boss",                                      --强敌出现
 		enemys = {                                                                --boss
 			{
 				descId = "boss01",  --简介

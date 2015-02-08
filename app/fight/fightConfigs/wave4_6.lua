@@ -361,6 +361,7 @@ local waves = {
 	},
 
 	{
+	    waveType = "boss",                                      --强敌出现
 		enemys = {                                                                -- 1-6 boss
 			{
 				time = 3,	
