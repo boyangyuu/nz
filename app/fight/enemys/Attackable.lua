@@ -362,8 +362,8 @@ function Attackable:playBombEffect()
 	bomb:getAnimation():play("baozha4", -1, 0)
 	
     --sound
-    local soundSrc  = "res/Music/fight/diebz.wav"
-    self.audioId =  audio.playSound(soundSrc,false)    
+    -- local soundSrc  = "res/Music/fight/diebz.wav"
+    -- self.audioId =  audio.playSound(soundSrc,false)    
 end
 
 function Attackable:restoreStand(delay)

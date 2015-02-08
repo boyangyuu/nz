@@ -80,7 +80,7 @@ function FightResultLayer:playstar(numStar)
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
 		         		scheduler.performWithDelayGlobal(showButton, 1)
-		         		if self.isDone == true then
+		         		if self.isDone == true and self.isPop then
 			         		scheduler.performWithDelayGlobal(delaypop, 2)
 			     		end
 			     		scheduler.performWithDelayGlobal(handler(self,self.sentGiftInlay), 4)
@@ -303,7 +303,7 @@ function FightResultLayer:getinlayfall()
 	self.lockTable = lockTable
 	-- dump(giveTable)
 	-- dump(lockTable)
-
+	self.isPop = false -- ak掉落提示
 	for k,v in pairs(giveTable) do
 		table.insert(self.itemsTable,v)
 		if v["falltype"] == "inlay" then
@@ -322,6 +322,7 @@ function FightResultLayer:getinlayfall()
 					 {type = "style2", content = "恭喜获得"..name.."零件 X1！"},
 					 {opacity = 155})
 			end
+			self.isPop = true
      		-- if self.isDone == true then
        --   		scheduler.performWithDelayGlobal(delaypop, 4)
      		-- end

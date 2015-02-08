@@ -22,10 +22,10 @@ configs[1]  = {
 	},
 	level3 = {
 		forward = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "护士妹妹们的寝室楼被袭击！！！！请求支援！请求支援！", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "能源站被袭击！！！！请求支援！请求支援！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。中了敌人的调虎离山计了！行动组火速回援", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "收到！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "太卑鄙了！妹妹们等我！！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "太卑鄙了！", pos = "left"},
 		},
 	},
 	level4 = {
@@ -41,7 +41,7 @@ configs[1]  = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "啊！是你抓走了我姐姐！！！！！鬼眼！你个叛徒！",pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，被发现也好，省的我费事了，都把命留下吧！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼绑架了很多人质，注意不要误伤人质！",  pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "真是无耻至极！！。。(搁我我也这么干！(^o^)~)。",  pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "真是无耻至极！！。。。",  pos = "left"},
 		},
 		after = {
 			{role = "杰",imgname = "role_jie", msg = "我姐姐被你带到哪里去啦？",  pos = "left"},
