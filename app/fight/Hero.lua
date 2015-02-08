@@ -112,7 +112,9 @@ function Hero:killEnemy(enemyPos, award)
         self.fightInlay:activeGold()
         self.killGoldIndex = self.killGoldIndex + 1
     end
-
+    
+    self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
+                        value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
         enemyPos = enemyPos, award = award})    
 end
