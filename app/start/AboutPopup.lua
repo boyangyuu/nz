@@ -70,13 +70,14 @@ function AboutPopup:initText()
 		for k,v in pairs(text) do
 			self.text = self.text..v
 		end
-		
+		print(self.text)
 	end
 end
 
 function AboutPopup:initContent()
 	if self.popupName == "bangzhu" then
 		local textLabel = cc.uiloader:seekNodeByName(self.aboutNode, "context")
+		print(self.text)
 		textLabel:setString(self.text)
 	end
 end

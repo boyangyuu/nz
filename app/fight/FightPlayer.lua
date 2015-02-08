@@ -95,7 +95,7 @@ function FightPlayer:changeGoldCount(event)
     local function changeGold()
         local totalGold = self.fight:getGoldValue()
         if self.curGold < totalGold then
-            self.curGold = self.curGold + 1
+            self.curGold = self.curGold + 10
             self.labelGold:setString(self.curGold)
         else
             if self.tempChangeGoldHandler then
