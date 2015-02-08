@@ -162,16 +162,11 @@ function HomeBarLayer:initHomeLayer(groupid)
             self:onBtnBackClicked()
         end
     end)
-
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
-        local dianji = "res/Music/ui/dianji.wav"
-        audio.playSound(dianji,false)
     end)
     self.btnInlay:onButtonClicked(function()
         self:onBtnInlayClicked()
-        local dianji = "res/Music/ui/dianji.wav"
-        audio.playSound(dianji,false)
     end)
     self.btnStore:onButtonClicked(function()
         local dianji = "res/Music/ui/dianji.wav"
@@ -221,6 +216,9 @@ function HomeBarLayer:onBtnInlayClicked()
     self.btnInlay:setButtonEnabled(false)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(true)
+
+    --sound
+    playSoundBtn()    
 end
 
 function HomeBarLayer:onBtnArsenalClicked()
@@ -230,6 +228,9 @@ function HomeBarLayer:onBtnArsenalClicked()
     self.btnInlay:setButtonEnabled(true)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(false)
+    
+    --sound
+    playSoundBtn()    
 end
 
 function HomeBarLayer:onBtnBackClicked()
@@ -240,6 +241,9 @@ function HomeBarLayer:onBtnBackClicked()
     self.btnInlay:setButtonEnabled(true)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(true)
+
+    --sound
+    playSoundBtn()
 end
 
 function HomeBarLayer:initGuideWeapon()

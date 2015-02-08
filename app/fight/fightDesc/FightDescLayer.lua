@@ -54,6 +54,10 @@ function FightDescLayer:bossShow(event)
         end)
     addChildCenter(armature, self.animPanl)
     armature:getAnimation():play("qiangdicx" , -1, 1)
+
+    --sound
+    local soundSrc  = "res/Music/fight/qdcx.wav"
+    self.audioId =  audio.playSound(soundSrc,false)    
 end
 
 function FightDescLayer:waveStart(event)

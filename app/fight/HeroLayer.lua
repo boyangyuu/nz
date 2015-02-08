@@ -152,6 +152,10 @@ function HeroLayer:onActiveGold(event)
 	    	end 
     	end
     )
+
+    --sound
+    local soundSrc  = "res/Music/fight/hjwq.wav"
+    self.audioId =  audio.playSound(soundSrc,false)      
 end
 
 --杀掉敌人后的回调

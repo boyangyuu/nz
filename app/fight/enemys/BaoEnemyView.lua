@@ -57,8 +57,8 @@ function BaoEnemyView:playAhead()
 end
 
 function BaoEnemyView:playKill(event)
-    self:playBombEffects()
     BaoEnemyView.super.playKill(self,event)
+    self:playBombEffects()
 end
 
 function BaoEnemyView:playBombEffects()

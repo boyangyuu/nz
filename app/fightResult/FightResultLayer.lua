@@ -419,7 +419,8 @@ function FightResultLayer:initGuide()
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
 	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})        
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})     
+		    playSoundBtn()         	   
         end
      })    	
 end
@@ -440,7 +441,7 @@ function FightResultLayer:initGuide2()
         groupId = "afterfight02",
        rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-        	      
+        	playSoundBtn()
         end
      })  
 
@@ -449,7 +450,8 @@ function FightResultLayer:initGuide2()
         groupId = "afterfight02",
         rect = self.btngetall:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			self:turnLeftCard()       
+			self:turnLeftCard()   
+			playSoundBtn()    
         end
      })    
 
@@ -459,7 +461,8 @@ function FightResultLayer:initGuide2()
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
 	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})     
+        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})  
+			playSoundBtn()    
         end
      })       	
 end

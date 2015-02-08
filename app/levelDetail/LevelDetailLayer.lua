@@ -317,6 +317,8 @@ function LevelDetailLayer:onClickBtnGold()
 		    buyModel:buy("goldWeapon",{payDoneFunc = equipGold})
 		end
 	end
+	--sound
+	playSoundBtn()	
 end
 
 function LevelDetailLayer:onClickGuideBtnGold()
@@ -330,6 +332,9 @@ function LevelDetailLayer:onClickGuideBtnGold()
 		data.isAwardGold = true
 		setUserData(data)
 	end
+
+	--sound
+	playSoundBtn()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
@@ -344,6 +349,8 @@ function LevelDetailLayer:onClickBtnJijia()
 	    buyModel:buy("armedMecha",{payDoneFunc = equipJijia})
 	end
 
+	--sound
+	playSoundBtn()
 end
 
 ---- initData ----

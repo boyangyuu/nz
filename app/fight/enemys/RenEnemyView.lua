@@ -281,6 +281,10 @@ function RenEnemyView:playKill()
     end
 
     self.armature:getAnimation():play("die02" ,-1 , 1)
+
+    --sound
+    local soundSrc  = "res/Music/fight/die.wav"
+    self.audioId =  audio.playSound(soundSrc,false)     
 end
 
 function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
