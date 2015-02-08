@@ -24,11 +24,11 @@ function GiftBagPopup:loadCCS()
 	local giftBagNode = cc.uiloader:load(title.ccsPath)
     self:addChild(giftBagNode)
 
-    local src = "res/GiftBag/lb_ljlq/lb_ljlq.csb"
+    local src = "res/GiftBag/lb_ljgm/lb_ljgm.csb"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
-    local plist = "res/GiftBag/lb_ljlq/lb_ljlq0.plist"
-    local png   = "res/GiftBag/lb_ljlq/lb_ljlq0.png"
+    local plist = "res/GiftBag/lb_ljgm/lb_ljgm0.plist"
+    local png   = "res/GiftBag/lb_ljgm/lb_ljgm0.png"
     display.addSpriteFrames(plist, png)          
 
 
@@ -52,9 +52,9 @@ function GiftBagPopup:initButtons()
 
 	if not self.param.isFight then 
 
-		local armature = ccs.Armature:create("lb_ljlq")
+		local armature = ccs.Armature:create("lb_ljgm")
 		-- armature:setPosition(141, 45)
-		armature:getAnimation():play("lb_ljlq", -1, 1)
+		armature:getAnimation():play("lb_ljgm", -1, 1)
 		-- receiveBtn:addChild(armature)
 		addChildCenter(armature, receiveBtn)
 	end
