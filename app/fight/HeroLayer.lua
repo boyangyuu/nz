@@ -142,13 +142,16 @@ end
 
 --触发黄金武器
 function HeroLayer:onActiveGold(event)
+	print("function HeroLayer:onActiveGold(event)")
 	local armature = ccs.Armature:create("hjwq")
 	addChildCenter(armature, self)
     local anim = armature:getAnimation()
-	anim:playWithIndex(0)
+	anim:play("hjwq" , -1, 1)
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementId ) 
-	    	if movementType == ccs.MovementEventType.complete then
+    		print("movementType", movementType)
+	    	if movementType == ccs.MovementEventType.loopComplete then
+	    		print("armature:removeFromParent()")
 				armature:removeFromParent()
 	    	end 
     	end
@@ -226,6 +229,7 @@ function HeroLayer:bloodBehurtEffect()
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementI ) 
 	    	if movementType == ccs.MovementEventType.complete then
+	    		print("bloodBehurtEffect")
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
 	    	end 

@@ -93,17 +93,19 @@ end
 
 function MapAnimView:playEffectLeiBomb(event)
 	local pWorld = event.pWorld
+
 	--pos
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	local armature = ccs.Armature:create("baozhasl_y")
 	armature:setPosition(pos)
+
 	--scale 狙图特殊处理
 	local scale = self:getScaleByPos(pos)
 	armature:setScale(scale)	
 	self:addChild(armature)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
+	    	if movementType == ccs.MovementEventType.complete then
 				armature:removeFromParent()
 	    	end 
     	end)	

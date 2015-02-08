@@ -51,6 +51,7 @@ end
 function GuideLayer:onMutiTouchBegin(event)
 	-- dump(event, "onMutiTouchBegin event")
 	if event.points == nil then return false end
+	if #event.points > 1 then return end 
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
