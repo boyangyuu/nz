@@ -49,6 +49,7 @@ function HeroAnimView:playKillHead(event)
 	    	if movementType == ccs.MovementEventType.loopComplete then
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
+	    		armatureBack = nil
 	    	end 
     	end
     )
@@ -63,6 +64,7 @@ function HeroAnimView:playWindEffect(event)
 	    	if movementType == ccs.MovementEventType.loopComplete then
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
+	    		armatureBack = nil
 	    	end 
     	end
     )

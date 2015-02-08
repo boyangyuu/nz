@@ -80,6 +80,7 @@ Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽
 Define.kBaoRangeW 				= 200	--手雷范围宽
 Define.kBaoRangeH 				= 200	--手雷范围高
 Define.kLeiDemage 				= 2500.0	--手雷伤害
+
 --盾牌
 Define.cdTimes 					= 15.0   --十秒恢复完毕
 Define.kDefenceHp				= 65    --盾牌血量

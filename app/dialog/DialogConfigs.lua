@@ -5,26 +5,27 @@ local configs = {}
 configs[1]  = {
 	level1 = {
 		forward = {
-			{role = "安琪儿", imgname = "role_anqi",msg = "根据可靠情报，这个仓库里藏匿着眼镜蛇部队的大量军火。", pos = "right"},
+			{role = "安琪儿", imgname = "role_anqi",msg = "根据可靠情报，这个仓库里藏匿着很多被拐骗的无知少女！", pos = "right"},
 			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "杰，在支援没到之前你需要只身前往那里，一定要拖住敌人，为支援争取时间。", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "加油，不要辱没了我们龙组的威名！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "了解，任务开始！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "了解，少女们我来了！！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。", pos = "right"},
 		},
 	},
 	level2 = {
 		forward = {
-			{role = "杰",imgname = "role_jie", msg = "成功抵达位置，但是敌人有埋伏。我们被包围了。", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "队长，敌人越来越多了，申请动用“黄金武器”！", pos = "right"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。申请许可，全员立刻换装黄金武器！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "哈哈！黄金武器，这个给力！老虎不发威你当我是哈喽kitty ！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，我们面临着被群歼的危险！！！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "动用“黄金武器”！全员立刻换装黄金武器！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "黄金武器，无限震动！！！！看看谁歼灭谁！！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。", pos = "right"},		
 		},	
 	},
 	level3 = {
 		forward = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "隐藏能源核心的金库被袭击！请求支援！请求支援！", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "护士妹妹们的寝室楼被袭击！！！！请求支援！请求支援！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "。。。。。。中了敌人的调虎离山计了！行动组火速回援", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "收到！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "收到！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "太卑鄙了！妹妹们等我！！", pos = "left"},
 		},
 	},
 	level4 = {
@@ -37,22 +38,25 @@ configs[1]  = {
 	},
 	level5 = {
 		forward = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "啊！叛徒竟然是你，鬼眼！",pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "啊！是你抓走了我姐姐！！！！！鬼眼！你个叛徒！",pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，被发现也好，省的我费事了，都把命留下吧！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼绑架了很多人质，注意不要误伤人质！",  pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "无耻。。。。。。",  pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "真是无耻至极！！。。(搁我我也这么干！(^o^)~)。",  pos = "left"},
 		},
 		after = {
-			{role = "杰",imgname = "role_jie", msg = "我哥哥是不是你害死的？",  pos = "left"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "你哥哥不识抬举，想见他还不容易，我来帮你一把，哈哈!",  pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "我姐姐被你带到哪里去啦？",  pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "你姐姐不识抬举，马上就要被我送到非洲了，哈哈!",  pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "杰，敌人援兵到了，快撤退。",  pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "非洲！？姐姐要坚持住啊！！",  pos = "left"},
 		},
 	},
 	level6 = {
 		forward = {
-			{role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，查到杀害我哥哥的真凶", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，直到找到我的姐姐！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "小心他们最后的傀儡机甲首领————黑暗金刚！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "是不是它从背后偷袭我姐姐的！！？？", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "对，是从背后偷袭你姐姐的！！",pos = "right"},		
 		},
 	},
 }
@@ -62,15 +66,15 @@ configs[2]  = {
 		forward = {
 			{role = "夜玫瑰", imgname = "role_yemeigui",msg = "沙漠深处发现鬼眼行踪！", pos = "left"},
 			{role = "安琪儿", imgname = "role_anqi", msg = "杰这家伙也不见了", pos = "right"},
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "坏了，一定是他自己偷偷跑出去了！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "我去追他", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "坏了，一定是他自己上网吧偷偷打游戏去了！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "我去追他！！", pos = "right"},
 		},
 	},
 	level2 = {
 		forward = {
-			{role = "杰",imgname = "role_jie", msg = "幸好你来了，不然我就去见哥哥了。", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "嘿嘿，记得请我吃饭哦！", pos = "right"},
-			{role = "鬼眼",imgname = "role_yemeigui", msg = "敌人越来越多，快炸毁大门，挡住敌人。", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "幸好你来了，不然我也要被俘获了！！哭。。", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "额，我看够呛，会被你俘获才对！！", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "敌人越来越多，快炸毁大门，挡住敌人。", pos = "left"},
 			{role = "杰",imgname = "role_jie", msg = "收到！", pos = "left"},
 		},	
 	},

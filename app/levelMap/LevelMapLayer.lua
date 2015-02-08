@@ -390,6 +390,7 @@ function LevelMapLayer:initGuide()
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
+            playSoundBtn()
         end
      })   
 
@@ -402,6 +403,7 @@ function LevelMapLayer:initGuide()
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 5})
+            playSoundBtn()
         end
      })       
 end

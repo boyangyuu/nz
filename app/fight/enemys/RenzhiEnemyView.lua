@@ -176,6 +176,18 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
     self.armature:runAction(action)	
 
     self:restoreStand(time)
+
+    --sound
+    local soundSrc  = "res/Music/fight/rz_kp.wav"
+    self.audioId =  audio.playSound(soundSrc,false)   
+
+end
+
+function RenzhiEnemyView:onHitted(targetData)
+	RenzhiEnemyView.super.onHitted(self, targetData)
+    --sound
+    local soundSrc  = "res/Music/fight/rz_bj.wav"
+	audio.playSound(soundSrc,false)  	
 end
 
 function RenzhiEnemyView:playKill(event)
@@ -186,6 +198,10 @@ function RenzhiEnemyView:playKill(event)
 		scheduler.unscheduleGlobal(self.schRestore)
 	end
 	self.armature:getAnimation():play("die" ,-1 , 1)
+
+	--sound
+    local soundSrc  = "res/Music/fight/rz_die.wav"
+    local audioId =  audio.playSound(soundSrc,false)   	
 end
 
 function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
