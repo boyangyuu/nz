@@ -80,6 +80,10 @@ function FightResultLayer:playstar(numStar)
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
 		         		scheduler.performWithDelayGlobal(showButton, 1)
+		         		if self.isDone == true then
+			         		scheduler.performWithDelayGlobal(delaypop, 2)
+			     		end
+			     		scheduler.performWithDelayGlobal(handler(self,self.sentGiftInlay), 4)
 		         	end    
 	            end)
 		    end
@@ -235,19 +239,19 @@ function FightResultLayer:getinlayfall()
 	local probaTable = {}
     local config = getConfig("config/inlayfall.json")
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-	local curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
-	-- dump(curRecord)
-	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(curRecord["suipianid"])
+	self.curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
+	-- dump(self.curRecord)
+	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(self.curRecord["suipianid"])
 	
 	-- 武器碎片
-	if curRecord["type"] == "boss" and isWeaponAlreadyTogether == false then
-		table.insert(probaTable,{id = curRecord["suipianid"],falltype = "suipian"})
-		table.insert(giveTable,{id = curRecord["suipianid"],falltype = "suipian"})
+	if self.curRecord["type"] == "boss" and isWeaponAlreadyTogether == false then
+		table.insert(probaTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
+		table.insert(giveTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
 	end
 
 	-- 狙击
 	
-    if self.isDone == false and curRecord["type"] == "boss" then
+    if self.isDone == false and self.curRecord["type"] == "boss" then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
 	end
@@ -308,19 +312,19 @@ function FightResultLayer:getinlayfall()
 			self.weaponListModel:setWeapon(v["id"])
 			self.weaponListModel:equipBag(v["id"], 3)
 			ui:showPopup("commonPopup",
-				 {type = "style2", content = "获得雷明顿！"},
+				 {type = "style2", content = "恭喜获得雷明顿！"},
 				 {opacity = 155})
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
 			local name = self.weaponListModel:getWeaponNameByID(v["id"])
 			function delaypop( )
 				ui:showPopup("commonPopup",
-					 {type = "style2", content = "获得"..name.."零件 X1！"},
+					 {type = "style2", content = "恭喜获得"..name.."零件 X1！"},
 					 {opacity = 155})
 			end
-     		if self.isDone == true then
-         		scheduler.performWithDelayGlobal(delaypop, 5)
-     		end
+     		-- if self.isDone == true then
+       --   		scheduler.performWithDelayGlobal(delaypop, 4)
+     		-- end
 
 
 		end
@@ -331,6 +335,30 @@ function FightResultLayer:getinlayfall()
 	end
 	dump(self.itemsTable)
     -- return probaTable
+end
+
+function FightResultLayer:sentGiftInlay()
+	if self.curRecord["giftInlay"] then
+		local name
+		local quality = self.curRecord["giftInlay"]
+		if quality == 1 then
+			name = "普通"
+		elseif quality == 2 then
+			name = "青铜"
+		elseif quality == 3 then
+			name = "白银"
+		elseif quality == 4 then
+			name = "黄金"
+		else
+			return
+		end
+		self.fightResultModel:giftInlay(self.curRecord["giftInlay"])
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "恭喜获得"..name.."镶嵌一套！"},
+			 {opacity = 155})
+	else
+		return
+	end
 end
 
 function FightResultLayer:getGrade(LeftPersent)
@@ -348,14 +376,15 @@ function FightResultLayer:getGrade(LeftPersent)
 end
 
 function FightResultLayer:quickInlay()
-	local quickinlay = {}
-	for k,v in pairs(self.giveTable) do
-		if v["falltype"] == "inlay" then
-			table.insert(quickinlay,{inlayid = v["id"]})
-		end
-	end
-	-- dump(quickinlay)
-	self.inlayModel:equipAllBestInlays(quickinlay)
+	-- local quickinlay = {}
+	-- for k,v in pairs(self.giveTable) do
+	-- 	if v["falltype"] == "inlay" then
+	-- 		table.insert(quickinlay,{inlayid = v["id"]})
+	-- 	end
+	-- end
+	-- -- dump(quickinlay)
+	-- self.inlayModel:equipAllBestInlays(quickinlay)
+	 self.inlayModel:equipAllInlays()
 end
 
 function FightResultLayer:leftCard()
@@ -380,7 +409,7 @@ function FightResultLayer:turnLeftCard()
 			self.weaponListModel:equipBag(v["id"],3)
 			function delaypopgun()
 				ui:showPopup("commonPopup",
-					 {type = "style2", content = "获得雷明顿！"},
+					 {type = "style2", content = "恭喜获得雷明顿！"},
 					 {opacity = 155})
 			end
 			scheduler.performWithDelayGlobal(delaypopgun, 0.5)

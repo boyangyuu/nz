@@ -71,6 +71,7 @@ function commonPopup:initUI(properties)
 	    panl_style2:setTouchEnabled(true)
 	    panl_style2:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
 	        if event.name=='began' then
+	        	self:onClickCofirm()
 	            ui:closePopup("commonPopup")
 	            return true
 	        end
@@ -78,6 +79,7 @@ function commonPopup:initUI(properties)
 
 	    -- auto remove popup windows after 2 secs.
 	    self:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
+            self:onClickCofirm()
             ui:closePopup("commonPopup")
         end)}))
 

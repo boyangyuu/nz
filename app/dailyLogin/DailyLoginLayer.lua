@@ -12,10 +12,23 @@ end
 function DailyLoginLayer:loadCCS()
 	local controlNode = cc.uiloader:load("res/GiftBag/GiftBag/GiftBag_LoginGiftBag.json")
     self:addChild(controlNode)
+
+    local src = "res/GiftBag/lb_ljlq/lb_ljlq.csb"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+    local plist = "res/GiftBag/lb_ljlq/lb_ljlq0.plist"
+    local png   = "res/GiftBag/lb_ljlq/lb_ljlq0.png"
+    display.addSpriteFrames(plist, png)          
+
 end
 
 function DailyLoginLayer:initUI()
     local receiveBtn = cc.uiloader:seekNodeByName(self, "btn_Receive")
+
+    local armature = ccs.Armature:create("lb_ljlq")
+    armature:getAnimation():play("lb_ljlq", -1, 1)
+    addChildCenter(armature, receiveBtn)
+
     local getnum = {}
     local bg = {}
     for i=1,7 do
