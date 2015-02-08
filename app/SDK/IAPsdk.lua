@@ -49,24 +49,24 @@ function IAPsdk:initConfigs()
 	elseif telecomOperator == "unicom" then
 
 	elseif telecomOperator == "telecom" then
-		config["novicesBag"]       = "5127955"		--新手礼包
-		config["weaponGiftBag"]    = "5127956"		--武器到礼包
-		config["goldGiftBag"]      = "5127957"		--土豪金礼包
-		config["timeGiftBag"]      = "5127958"		--限时特价
-		config["changshuang"]      = "5127959"		--畅爽礼包
+		config["novicesBag"]       = "5139361"		--新手礼包
+		config["weaponGiftBag"]    = "5139362"		--武器到礼包
+		config["goldGiftBag"]      = "5139363"		--土豪金礼包
+		config["timeGiftBag"]      = "5139364"		--限时特价
+		config["changshuang"]      = "5139365"		--畅爽礼包
 
 		--单件
-		config["goldWeapon"]       = "5127960"		--黄武
-		config["handGrenade"]      = "5127961"		--手雷
-		config["armedMecha"]       = "5127962"		--机甲
-		config["onceFull"]         = "5127963"		--一键满级
-		config["resurrection"]     = "5127964"	    --复活送黄武
-		config["stone10"]          = "5127965"		--一小堆宝石
-		config["stone45"]          = "5127966"		--一堆宝石
-		config["stone120"]         = "5127967"		--一麻袋宝石
-		config["stone260"]         = "5127968"		--一箱子宝石
-		config["stone450"]         = "5127969"		--堆成山的宝石
-		config["unlockWeapon"]     = "5127970"       --武器购买
+		config["goldWeapon"]       = "5139366"		--黄武
+		config["handGrenade"]      = "5139367"		--手雷
+		config["armedMecha"]       = "5139368"		--机甲
+		config["onceFull"]         = "5139369"		--一键满级
+		config["resurrection"]     = "5139370"	    --复活送黄武
+		config["stone10"]          = "5139371"		--一小堆宝石
+		config["stone45"]          = "5139372"		--一堆宝石
+		config["stone120"]         = "5139373"		--一麻袋宝石
+		config["stone260"]         = "5139374"		--一箱子宝石
+		config["stone450"]         = "5139375"		--堆成山的宝石
+		config["unlockWeapon"]     = "5139376"       --武器购买
 	end
 end
 
