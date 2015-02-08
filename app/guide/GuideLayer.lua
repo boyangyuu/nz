@@ -5,8 +5,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
 local GuideLayer = class("GuideLayer", function()
 	local layer = display.newColorLayer(LayerColor_BLACK)
-	layer:setAnchorPoint(0.5, 0.5)
-	layer:setPosition(0.0,0.0) 
     return layer
 end)
 
@@ -19,7 +17,7 @@ function GuideLayer:ctor()
 	self.isWaiting = false
 	self.bg 	  = nil
 	self.armature = nil
-		
+	self:setTouchSwallowEnabled(false)
 	--ui
 	self:loadCCS()
 
@@ -28,27 +26,30 @@ function GuideLayer:ctor()
 		:addEventListener(self.guide.GUIDE_START_EVENT, handler(self, self.start))
 		:addEventListener(self.guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
 		:addEventListener(self.guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
-	--touch
-    self:setTouchEnabled(true) 
-    self:setTouchSwallowEnabled(true) 
-    self:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)		
-    self:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouch))
+	
+end
+
+function GuideLayer:onTouchOne(event)
+	print("function GuideLayer:onTouchOne(event)")
+    return false
 end
 
 function GuideLayer:onTouch(event)
+	-- dump(event, "event")
 	if not self.isGuiding then return false end
-    if event.name == "began" or event.name == "added" then
+    -- if event.name == "began" or event.name == "added" then
+	if event.name == "began" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
         return self:onMutiTouchEnd(event)
     elseif event.name == "moved" then 
         return self:onMutiTouchMoved(event)
     end
-    return true
+    return false
 end
 
 function GuideLayer:onMutiTouchBegin(event)
-	dump(event, "onMutiTouchBegin event")
+	-- dump(event, "onMutiTouchBegin event")
 	if event.points == nil then return false end
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
@@ -73,7 +74,7 @@ function GuideLayer:onMutiTouchMoved(event)
 			return true
 		end
 	end
-	return true
+	return false
 end
 
 function GuideLayer:onMutiTouchEnd(event)
@@ -83,7 +84,7 @@ function GuideLayer:onMutiTouchEnd(event)
 		local isTouch = self:isTouchTarget(pos)
 		self:onTouchTarget(event)
 	end
-	return true
+	return false
 end
 
 function GuideLayer:onTouchTarget(event)
@@ -124,6 +125,7 @@ function GuideLayer:onTouchTarget(event)
 end
 
 function GuideLayer:hideForTime(event)
+	if 1 == 1 then return end
 	local delay = event.delay
 	local function restoreFunc()
 		self.bg:setVisible(true)
@@ -150,6 +152,7 @@ end
 
 function GuideLayer:isTouchTarget(pos)
 	-- dump(pos, "pos")
+
 	pos.y = pos.y - display.offset 
 	local rect = self:getTargetRect()
 	-- dump(rect, "rect")
@@ -158,26 +161,41 @@ function GuideLayer:isTouchTarget(pos)
 end
 
 function GuideLayer:loadCCS()
-	--ui
-	self:removeAllChildren()
-	self.bg 	  = nil
-	self.armature = nil
 
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
-    --anim
+    --touchAll
+    self.touchAll = cc.uiloader:seekNodeByName(self.guideNode, "touchAll")
+    self.touchAll:setTouchEnabled(true) 
+    self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
+    self.touchAll:setTouchSwallowEnabled(true) 
+    -- self.touchAll:setTouchSwallowEnabled(false) 	
+    self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))              
+
+    --touchone
+	-- self.touchOne = cc.uiloader:seekNodeByName(self.guideNode, "touchOne")
+ --    self.touchOne:setTouchEnabled(true) 	
+ --    self.touchOne:setTouchSwallowEnabled(true) 
+ --    self.touchOne:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouchOne))
+end
+
+function GuideLayer:checkFirstGuide()
+	if self.isFirst then return end
+	self.isFirst = true
+	--res
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
     display.addSpriteFrames("res/xinshou/yd_zyhua/yd_zyhua0.plist", 
         "res/xinshou/yd_zyhua/yd_zyhua0.png")     
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
     display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
-        "res/xinshou/yd_dianji/yd_dianji0.png")     
+        "res/xinshou/yd_dianji/yd_dianji0.png")	 
 end
 
-
 function GuideLayer:refreshUI()
+
+
 	local cfg = self.guide:getCurConfig()
 
 	--clear
@@ -232,7 +250,9 @@ function GuideLayer:refreshUI()
 end
 
 function GuideLayer:refreshCommentUI()
-	local cfg = self.guide:getCurConfig()
+	print("function GuideLayer:refreshCommentUI()")
+	local cfg = self.guide:getCurConfig()    --anim
+
 
 	--guide offset
 	local contentNode = cc.uiloader:seekNodeByName(self.guideNode, "guide")
@@ -268,23 +288,22 @@ end
 
 function GuideLayer:start(event)
 	print("function GuideLayer:start(event)")
-	self:loadCCS()	
-	self:setVisible(true)
-	self:setTouchEnabled(true)
 	self.isGuiding = true
-	-- if self.bg then self.bg:setVisible(true) end 
-	-- if self.guideNode then self.guideNode:setVisible(true) end 
 
+	--refresh
+	self:setVisible(true)
+	self:checkFirstGuide()
 	self:refreshUI()
 	self:refreshCommentUI()
 end
 
 function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
-	--clear
-	self:loadCCS()
-	self:setTouchEnabled(false)
+	--touch
+	-- self.touchOne:setTouchEnabled(false)
 	self.isGuiding = false
+	self.isFirst = false
+
 	--visible
 	self:setVisible(false)
 end

@@ -1,7 +1,8 @@
 
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
-local className = "com/hgtt/qmtx/IAPControl"
+local className = "com/hgtt/com/IAPControl"
+
 local sig = "(Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
@@ -12,7 +13,7 @@ end
 function IAPsdk:setTelecomOperator()
     local telecomOperator = nil
     if device.platform == 'android' then
-        local result,telecomOperator = luaj.callStaticMethod("com/hgtt/qmtx/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
+        local result,telecomOperator = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getOperatorName", {}, "()Ljava/lang/String;")
         return telecomOperator
     end
 	print("telecomOperator:",telecomOperator)
@@ -40,16 +41,33 @@ function IAPsdk:initConfigs()
 		config["armedMecha"]       = "30000883682308"		--机甲
 		config["onceFull"]         = "30000883682309"		--一键满级
 		config["resurrection"]     = "30000883682310"	    --复活送黄武
-		config["stone10"]           = "30000883682311"		--一小堆宝石
-		config["stone45"]           = "30000883682312"		--一堆宝石
-		config["stone120"]           = "30000883682313"		--一麻袋宝石
-		config["stone260"]           = "30000883682314"		--一箱子宝石
-		config["stone450"]           = "30000883682315"		--堆成山的宝石
-		config["unlockWeapon"]   		   = "30000883682316"       --武器购买
+		config["stone10"]          = "30000883682311"		--一小堆宝石
+		config["stone45"]          = "30000883682312"		--一堆宝石
+		config["stone120"]         = "30000883682313"		--一麻袋宝石
+		config["stone260"]         = "30000883682314"		--一箱子宝石
+		config["stone450"]         = "30000883682315"		--堆成山的宝石
+		config["unlockWeapon"] 	   = "30000883682316"       --武器购买
 	elseif telecomOperator == "unicom" then
 
 	elseif telecomOperator == "telecom" then
+		config["novicesBag"]       = "5139361"		--新手礼包
+		config["weaponGiftBag"]    = "5139362"		--武器到礼包
+		config["goldGiftBag"]      = "5139363"		--土豪金礼包
+		config["timeGiftBag"]      = "5139364"		--限时特价
+		config["changshuang"]      = "5139365"		--畅爽礼包
 
+		--单件
+		config["goldWeapon"]       = "5139366"		--黄武
+		config["handGrenade"]      = "5139367"		--手雷
+		config["armedMecha"]       = "5139368"		--机甲
+		config["onceFull"]         = "5139369"		--一键满级
+		config["resurrection"]     = "5139370"	    --复活送黄武
+		config["stone10"]          = "5139371"		--一小堆宝石
+		config["stone45"]          = "5139372"		--一堆宝石
+		config["stone120"]         = "5139373"		--一麻袋宝石
+		config["stone260"]         = "5139374"		--一箱子宝石
+		config["stone450"]         = "5139375"		--堆成山的宝石
+		config["unlockWeapon"]     = "5139376"       --武器购买
 	end
 end
 
