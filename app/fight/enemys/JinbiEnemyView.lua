@@ -68,8 +68,8 @@ function JinbiEnemyView:playKill(event)
     self.isFlying  = false
     --屏幕动画
 
-    local soundSrc  = "res/Music/fight/golds.wav"
-    self.audioId =  audio.playSound(soundSrc,false)  
+    -- local soundSrc  = "res/Music/fight/golds.wav"
+    -- self.audioId =  audio.playSound(soundSrc,false)  
 
 end
 

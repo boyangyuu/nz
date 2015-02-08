@@ -112,7 +112,7 @@ function MapAnimView:playEffectLeiBomb(event)
 	armature:getAnimation():playWithIndex(0)
 
 	--sound
-    local soundSrc  = "res/Music/fight/slbz.wav"
+    local soundSrc  = "res/Music/fight/hd_bz.wav"
     audio.playSound(soundSrc,false) 	
 end
 

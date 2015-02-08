@@ -168,6 +168,8 @@ function BaseBossView:playKill(event)
 	
 	--blood
 	self.blood:setVisible(false)
+
+	self:performWithDelay(handler(self, self.setWillRemoved), 5.0)
 end
 
 function BaseBossView:playBombEffects()
