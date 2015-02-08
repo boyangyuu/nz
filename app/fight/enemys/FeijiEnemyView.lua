@@ -114,7 +114,11 @@ function FeijiEnemyView:playEnter(direct)
 	end
 
     self:runAction(cc.Sequence:create(action, 
-    		cc.CallFunc:create(callfunc)))		
+    		cc.CallFunc:create(callfunc)))	
+
+    --sound
+    local soundSrc  = "res/Music/fight/plane.wav"
+    self.audioId =  audio.playSound(soundSrc,true) 
 end
 
 function FeijiEnemyView:exit()
@@ -127,6 +131,8 @@ function FeijiEnemyView:exit()
 	local action = cc.MoveBy:create(width/speed, cc.p(width, 0))
 	local callfunc = function ()
 		self:setWillRemoved()
+		--sound
+		audio.stopSound(self.audioId)
 	end
 
     self:runAction(cc.Sequence:create(action, 
@@ -293,6 +299,8 @@ function FeijiEnemyView:playKill(event)
 	self.armature:getAnimation():play(name , -1, 1)
 	self:playBombEffects()
 
+	--sound
+	audio.stopSound(self.audioId)
 end
 
 function FeijiEnemyView:playBombEffects()

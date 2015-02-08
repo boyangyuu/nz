@@ -139,6 +139,7 @@ function commonPopup:initUI(properties)
 			elseif event.name == "ended" then
 				
 				if device.platform == "android" then
+
 					local className = "com/hgtt/com/IAPControl"
 					luaj.callStaticMethod(className, "callPhone")
 					um:event("kefu")

@@ -182,19 +182,6 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-
-    --music bg
-    -- local startMusic = "res/Music/bg/bjyx.wav"
-    -- audio.preloadMusic(startMusic)
-
-    --sound ui
-    -- local uiEffects = {"rwwc.wav", "dianji.wav", "letsgo.wav", "gmcg.wav",
-    --                  "wqsj.wav", "xqcg.wav", "zx.wav"}
- 
-    -- for i,v in ipairs(uiEffects) do
-    --     local src = "res/Music/ui/"..uiEffects[i]
-    --     audio.preloadSound(src)
-    -- end
 end
 
 function RootLayer:addResFight()
@@ -214,20 +201,7 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png", handler(self, self.imageLoaded))
 
-    -- local musics = {"bj_zhandou.wav"}
-    -- for i,v in ipairs(musics) do
-    --     local src = "res/Music/fight/"..musics[i]
-    --     audio.preloadMusic(src)
-    -- end
 
-    -- --sound weapon
-    -- local weaponEffects = {"lmdfire.wav", "mp5fire.wav", "syfire.wav", "ak47fire.wav", "m4fire.wav", "rpgfire.wav", 
-    --             "m134fire.wav", "jfzcfire.wav"}
- 
-    -- for i,v in ipairs(weaponEffects) do
-    --     local src = "res/Music/weapon/"..weaponEffects[i]
-    --     audio.preloadSound(src)
-    -- end
 
     --sound effect
     local uiEffects = {"jijia_open.wav", "jijia_close.wav", "glass.wav", "gold.wav", "golds.wav", "hzd.wav", 

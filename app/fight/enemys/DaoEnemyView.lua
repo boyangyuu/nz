@@ -90,6 +90,14 @@ function DaoEnemyView:playFire()
     self:addScheduler(sch)    
 end
 
+function DaoEnemyView:playKill(event)
+    DaoEnemyView.super.playKill(self, event)
+
+    --sound
+    local soundSrc  = "res/Music/fight/die02.wav"
+    self.audioId =  audio.playSound(soundSrc,false) 
+end
+
 function DaoEnemyView:playRoll()
     local randomSeed = math.random(1, 2)
     local canRoll = self.property["missileType"] == "lei"

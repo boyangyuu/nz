@@ -2,6 +2,11 @@
 
 ---- View ----
 -- add button event listener
+function playSoundBtn()
+    local dianji = "res/Music/ui/dianji.wav"
+    audio.playSound(dianji,false)
+end
+
 function addBtnEventListener(node, callfunc)
     assert(node, "node is invalid")
     assert(callfunc, "callfunc is invalid")

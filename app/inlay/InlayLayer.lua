@@ -207,7 +207,6 @@ function InlayLayer:initGuide()
 
     --点击镶嵌
     local usermodel = md:getInstance("UserModel")
-    -- local kEnoughMoney = 60000              -- 4w 足够玩家买一套青铜
     
     --click
     guide:addClickListener({
@@ -216,7 +215,8 @@ function InlayLayer:initGuide()
         rect = self.btn["clip"]:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
             self:refreshListView("clip")
-            -- usermodel:addMoney(kEnoughMoney)
+
+            playSoundBtn()
         end
      }) 
 
@@ -227,6 +227,8 @@ function InlayLayer:initGuide()
         rect = cc.rect(780, 70, 140, 50),
         endfunc = function (touchEvent)
             self.inlayModel:buyInlay(7,true,1) 
+
+            playSoundBtn()
         end
      })    
 
@@ -237,6 +239,8 @@ function InlayLayer:initGuide()
         rect = cc.rect(940, 70, 140, 50),
         endfunc = function (touchEvent)
             self.inlayModel:equipInlay(7,true) 
+
+            playSoundBtn()
         end
      }) 
 
@@ -253,6 +257,8 @@ function InlayLayer:initGuide()
            self.inlayModel:buyInlay(19,false,1) 
            self.inlayModel:buyInlay(23,true,1) 
            self.inlayModel:equipAllInlays(true)
+
+           playSoundBtn()
         end
      })     
 
@@ -261,7 +267,7 @@ function InlayLayer:initGuide()
         groupId = "xiangqian",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-        
+            
         end
      })        
 end

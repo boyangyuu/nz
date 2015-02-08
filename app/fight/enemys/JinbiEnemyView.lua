@@ -67,6 +67,10 @@ function JinbiEnemyView:playKill(event)
     print("JinbiEnemyView elsplayKill") 
     self.isFlying  = false
     --屏幕动画
+
+    local soundSrc  = "res/Music/fight/golds.wav"
+    self.audioId =  audio.playSound(soundSrc,false)  
+
 end
 
 function JinbiEnemyView:playHitted(event)

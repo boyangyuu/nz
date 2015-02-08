@@ -109,7 +109,7 @@ function HeroLayer:killEnmeyGold(event)
 	local baseValue = define.kGoldCoinValue
 	-- print("value", value)
 	local num = math.floor(value / baseValue)
-	
+	if num > 8 then num = 8 end 
 	local isMany = num > 3
 	local w = isMany and 10 or 24
 	local d = 0.1
@@ -129,10 +129,6 @@ function HeroLayer:killEnmeyGold(event)
 				cc.MoveTo:create(0.4, cc.p(664, 604)),
 				cc.ScaleTo:create(0.4, 0.5)),
 			cc.CallFunc:create(function ()
-				if i == 1 then
-					self.hero:dispatchEvent({name = self.hero.AWARD_GOLD_INCREASE_EVENT, 
-						value = value})
-				end
 				armature:removeFromParent()
 			end)
 		))
@@ -142,17 +138,24 @@ end
 
 --触发黄金武器
 function HeroLayer:onActiveGold(event)
+	print("function HeroLayer:onActiveGold(event)")
 	local armature = ccs.Armature:create("hjwq")
 	addChildCenter(armature, self)
     local anim = armature:getAnimation()
-	anim:playWithIndex(0)
+	anim:play("hjwq" , -1, 1)
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementId ) 
-	    	if movementType == ccs.MovementEventType.complete then
+    		print("movementType", movementType)
+	    	if movementType == ccs.MovementEventType.loopComplete then
+	    		print("armature:removeFromParent()")
 				armature:removeFromParent()
 	    	end 
     	end
     )
+
+    --sound
+    local soundSrc  = "res/Music/fight/hjwq.wav"
+    self.audioId =  audio.playSound(soundSrc,false)      
 end
 
 --杀掉敌人后的回调
@@ -226,6 +229,7 @@ function HeroLayer:bloodBehurtEffect()
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementI ) 
 	    	if movementType == ccs.MovementEventType.complete then
+	    		print("bloodBehurtEffect")
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
 	    	end 

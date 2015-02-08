@@ -38,7 +38,8 @@ function Gun:getCooldown()
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
 	local value = scale * baseValue
-	return  value
+	local kscale = define.kCoolDownScale
+	return  value * kscale
 end
 
 function Gun:setFullBulletNum()

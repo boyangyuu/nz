@@ -47,6 +47,14 @@ function JinEnemyView:tick(t)
     end    
 end
 
+function JinEnemyView:playKill(event)
+    JinEnemyView.super.playKill(self,event)
+
+    --sound
+    local soundSrc  = "res/Music/fight/die02.wav"
+    self.audioId =  audio.playSound(soundSrc,false) 
+end
+
 function JinEnemyView:playAttack()
     self.armature:getAnimation():play("attack" , -1, 1)
     self.enemy:hit(self.hero)

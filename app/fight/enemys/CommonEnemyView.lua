@@ -28,6 +28,14 @@ function CommonEnemyView:playStartState(state)
 	end
 end
 
+function CommonEnemyView:playKill(event)
+	CommonEnemyView.super.playKill(self,event)
+
+	--sound
+	local soundSrc  = "res/Music/fight/die.wav"
+	self.audioId =  audio.playSound(soundSrc,false)	
+end
+
 function CommonEnemyView:playThrow()
 	self.armature:getAnimation():play("throw", -1, 1)
 	local pos = cc.p(self:getPositionX(), self:getPositionY() + 220)

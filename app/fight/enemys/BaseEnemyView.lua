@@ -173,9 +173,6 @@ function BaseEnemyView:playKill(event)
 		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
 	end
 
-	local soundSrc  = "res/Music/fight/die.wav"
-	self.audioId =  audio.playSound(soundSrc,false)	
-
 	self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
@@ -193,6 +190,8 @@ function BaseEnemyView:onHitted(targetData)
 	if self.enemy:getHp() == 0 then 
 		if demageType == "head" then 
 			print("爆头")
+			local soundSrc  = "res/Music/fight/btts.wav"
+			self.audioId =  audio.playSound(soundSrc,false)				
 			self.hero:dispatchEvent({
 				name = self.hero.ENEMY_KILL_HEAD_EVENT})
 		end
