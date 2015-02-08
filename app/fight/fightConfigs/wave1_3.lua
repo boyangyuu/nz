@@ -7,18 +7,19 @@ local waves = {
 			{
 				time = 1,
 				num = 2,
-				delay = {0,3},
-				pos = {100,150},
+				delay = {0.2,0.9},
+				pos = {60,170},
 				property = {
 					type = "jin",
-					placeName = "place1",  
+					placeName = "place1",
+					hpScale = 1.0,
 					id = 2,
 				},
 			},
 			{
-				time = 1.5,
+				time = 2,
 				num = 3,
-				delay = {0.5,1,3},
+				delay = {0.5,1.2,1.7},
 				pos = {400,300,250},
 				property = {
 					type = "jin",
@@ -27,10 +28,10 @@ local waves = {
 				},
 			},
 			{
-				time = 1.2,
+				time = 3,
 				num = 2,
-				delay = {0,3},
-				pos = {150,200},
+				delay = {0.1,0.9},
+				pos = {80,200},
 				property = {
 					type = "jin",
 					placeName = "place4",  
@@ -83,9 +84,9 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
+				time = 7,
 				num = 3,
-				delay = {0.5,1.2,3},
+				delay = {0.5,1.0,1.6},
 				pos = {450,350,250},
 				property = {
 					type = "jin",
@@ -94,9 +95,9 @@ local waves = {
 				},
 			},
 			{
-				time = 4.5,
+				time = 10,
 				num = 2,
-				delay = {0.5,3},
+				delay = {0.5,1.1},
 				pos = {80,200},
 				property = {
 					type = "jin",
@@ -105,7 +106,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 13,
 				num = 1,
 				delay = {0.3},
 				pos = {50},					
@@ -119,7 +120,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 10,
+				time = 16,
 				num = 1,
 				delay = {0},
 				pos = {120},					
@@ -133,7 +134,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 19,	
 				num = 3,
 				pos = {80,150,180},
 				delay = {0,0.5,1},
@@ -145,7 +146,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 10,	
+				time = 22,	
 				num = 1,
 				pos = {50},
 				delay = {0},
@@ -157,7 +158,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,	
+				time = 25,	
 				num = 2,
 				pos = {330,420},
 				delay = {0,0.8},
@@ -169,7 +170,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,	
+				time = 28,	
 				num = 2,
 				pos = {1020,1050},
 				delay = {0,0.8},
@@ -378,20 +379,20 @@ local waves = {
 local enemys = {
 
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=3,
-		weak1=3},
+	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=4,
+		weak1=2},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=4,hp=260,fireRate=180,fireCd=4,speed=40,
-		weak1=3},
+	{id=2,image="jinzhanb",demage=4,hp=380,fireRate=180,fireCd=4,speed=50,
+		weak1=2},
 
 	--伞兵
 	{id=3,image="sanbing01",demage=0,hp=190,
-	weak1=3},
+	weak1=2},
 
 	--自爆兵
 	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,fireCd=4,speed=120,
-	weak1=3},	
+	weak1=2},	
 
 	--金币黄气球
 	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 40},	
@@ -403,13 +404,13 @@ local enemys = {
 	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 10},
 	--手雷兵
 	{id=8,image="shouleib",demage=2,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
-	weak1=3},	
+	weak1=2},	
 	--手雷
 	{id=9,image="shoulei",demage=5,hp=1,
 	weak1=3},
 	-- 盾兵
-	{id=10,image="dunbing",demage=5,hp=390,fireRate=400,fireCd=5,speed=20,
-		weak1=3},		
+	{id=10,image="dunbing",demage=5,hp=3800,fireRate=400,fireCd=5,speed=40,
+	weak1=2},		
 }
 
 local mapId = "map_1_3"

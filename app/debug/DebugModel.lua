@@ -6,7 +6,6 @@ DebugModel.DEBUG_CLOSE_EVENT  = "DEBUG_CLOSE_EVENT"
 
 function DebugModel:ctor(properties)
 	DebugModel.super.ctor(self, properties)
-	self:showPopup()
 end
 
 function DebugModel:showPopup(debugInfo)
