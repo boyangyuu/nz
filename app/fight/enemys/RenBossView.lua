@@ -234,6 +234,11 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
+        if movementID == "die" then
+            self:setDeadDone()
+            return
+        end
+
         if movementID == "shanchu" then 
             self:setVisible(false)
             return
@@ -250,11 +255,6 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
 	            or movementID == "chongfeng"  then
             self.armature:getAnimation():play(movementID , -1, 1)
             return 
-        end
-
-        if movementID == "die" then
-            self:setDeadDone()
-            return
         end
 
         if movementID == "stand" then 
