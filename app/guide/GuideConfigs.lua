@@ -118,7 +118,7 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌 , 镶嵌背包内最好的道具", },
 		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具 , 要节省使用哦", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
-		{id = "xiangqian_nextLevel", msg = "点击按钮返回大地图", },		
+		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关", },		
 	}
 }
 
