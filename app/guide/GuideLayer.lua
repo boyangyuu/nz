@@ -37,8 +37,7 @@ end
 function GuideLayer:onTouch(event)
 	-- dump(event, "event")
 	if not self.isGuiding then return false end
-    -- if event.name == "began" or event.name == "added" then
-	if event.name == "began" then
+    if event.name == "began" or event.name == "added" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
         return self:onMutiTouchEnd(event)
@@ -168,17 +167,6 @@ function GuideLayer:loadCCS()
 
     --touchAll
     self.touchAll = cc.uiloader:seekNodeByName(self.guideNode, "touchAll")
-    self.touchAll:setTouchEnabled(true) 
-    self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
-    self.touchAll:setTouchSwallowEnabled(true) 
-    -- self.touchAll:setTouchSwallowEnabled(false) 	
-    self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))              
-
-    --touchone
-	-- self.touchOne = cc.uiloader:seekNodeByName(self.guideNode, "touchOne")
- --    self.touchOne:setTouchEnabled(true) 	
- --    self.touchOne:setTouchSwallowEnabled(true) 
- --    self.touchOne:addNodeEventListener(cc.NODE_TOUCH_EVENT,handler(self, self.onTouchOne))
 end
 
 function GuideLayer:checkFirstGuide()
@@ -191,7 +179,13 @@ function GuideLayer:checkFirstGuide()
         "res/xinshou/yd_zyhua/yd_zyhua0.png")     
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
     display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
-        "res/xinshou/yd_dianji/yd_dianji0.png")	 
+        "res/xinshou/yd_dianji/yd_dianji0.png")	
+
+    --touch 
+    self.touchAll:setTouchEnabled(true) 
+    self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
+    self.touchAll:setTouchSwallowEnabled(true) 	
+    self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))     
 end
 
 function GuideLayer:refreshUI()
@@ -208,7 +202,7 @@ function GuideLayer:refreshUI()
 	--highLight
 	local rect = self:getTargetRect()
 	local size = cc.size(rect.width, rect.height)
-	dump(rect, "rect")
+	-- dump(rect, "rect")
 	local params = {fillColor = cc.c4f(255,0,0,255), 
 			borderColor = cc.c4f(0,0,0,0), 
 			borderWidth = 5}
@@ -301,9 +295,9 @@ end
 function GuideLayer:finish(event)
 	print("function GuideLayer:finish(event)")
 	--touch
-	-- self.touchOne:setTouchEnabled(false)
 	self.isGuiding = false
 	self.isFirst = false
+	self.touchAll:removeAllNodeEventListeners()	
 
 	--visible
 	self:setVisible(false)

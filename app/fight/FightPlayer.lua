@@ -620,6 +620,7 @@ function FightPlayer:onCancelledFire()
         -- scheduler.unscheduleGlobal(self.btnFireSch)
         transition.removeAction(self.btnFireSch)
     end
+    self.touchFireId = nil 
 end
 
 function FightPlayer:stopFire(event)
@@ -851,17 +852,14 @@ function FightPlayer:initGuide1()
         end
     })     
 
-    --结束
-    self.guide:addClickListener( {
-        id = "fight_finish",
-        groupId = "fight01",
-        rect = cc.rect(0, 0, display.width1, display.height1),
-        endfunc = function (touchEvent)
-            self:onCancelledFire() 
-            self.touchFireId = nil                 
-        end
-    })     
-      
+    -- --结束
+    -- self.guide:addClickListener( {
+    --     id = "fight_finish",
+    --     groupId = "fight01",
+    --     rect = cc.rect(0, 0, display.width1, display.height1),
+    --     endfunc = function (touchEvent)              
+    --     end
+    -- })     
 end
 
 function FightPlayer:onGuideFire(touchEvent)
@@ -883,7 +881,7 @@ function FightPlayer:onGuideFire(touchEvent)
     end
 
     --开始计时
-    if name == "began"  then
+    if name == "began" or name == "added" then
         print("开始计时") 
         self.isGuideFireBegin = true
         self.time_begin = os.time()
@@ -891,9 +889,9 @@ function FightPlayer:onGuideFire(touchEvent)
     end
 
     --停止计时
-    if name == "ended" or name == "cancelled" then
+    if name == "ended" or name == "cancelled" or name == "removed" then
         if self.isGuideFireBegin == false then return end 
-        -- print("停止计时")
+        print("停止计时")
         self.time_begin = nil
         if self.schGuideFire then 
             scheduler.unscheduleGlobal(self.schGuideFire)
