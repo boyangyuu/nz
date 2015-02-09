@@ -229,7 +229,6 @@ function HeroLayer:bloodBehurtEffect()
     anim:setMovementEventCallFunc(
     	function ( armatureBack,movementType,movementI ) 
 	    	if movementType == ccs.MovementEventType.complete then
-	    		print("bloodBehurtEffect")
 	    		armatureBack:stopAllActions()
 	    		armatureBack:removeFromParent() 
 	    	end 
