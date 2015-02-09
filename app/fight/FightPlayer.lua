@@ -269,6 +269,11 @@ function FightPlayer:initTouchArea()
     --move区域
     self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        dump(event, "event")
+        --guide
+        local guide = md:getInstance("Guide")
+        local isUntouch = guide:getCurGroupId() == "fight01"
+        if isUntouch then return end
         if event.name == "began" or event.name == "added" then
             self:onMutiTouchBegin(event)
         elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
@@ -777,6 +782,9 @@ function FightPlayer:initGuide1()
         return 
     end    
 
+    --touch
+    self.guide:setTouchSwallow(false)
+
     print("function FightPlayer:initGuide1()")
     self.focusNode:setPosition(cc.p(500,230))
 
@@ -852,14 +860,14 @@ function FightPlayer:initGuide1()
         end
     })     
 
-    -- --结束
-    -- self.guide:addClickListener( {
-    --     id = "fight_finish",
-    --     groupId = "fight01",
-    --     rect = cc.rect(0, 0, display.width1, display.height1),
-    --     endfunc = function (touchEvent)              
-    --     end
-    -- })     
+    --结束
+    self.guide:addClickListener( {
+        id = "fight_finish",
+        groupId = "fight01",
+        rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)              
+        end
+    })     
 end
 
 function FightPlayer:onGuideFire(touchEvent)
@@ -995,8 +1003,7 @@ function FightPlayer:initGuide3()
         groupId = "fight04",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent) 
-            self:onCancelledFire() 
-            self.touchFireId = nil       
+            self:onCancelledFire()    
         end
      })        
 

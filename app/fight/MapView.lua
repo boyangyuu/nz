@@ -495,7 +495,10 @@ function MapView:onHeroFire(event)
 
 	--isThrough
 	local gun = self.hero:getGun()
-	local isThrough = gun:isFireThrough()
+	local robot = md:getInstance("Robot")
+	local isRobotFire = robot:getIsRoboting()
+
+	local isThrough = gun:isFireThrough() and not isRobotFire
 	if isThrough then
 		self:mutiFire(datas)
 	else

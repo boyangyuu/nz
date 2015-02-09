@@ -39,7 +39,7 @@ configs["fight01"] = {
 				hand = "longtouch", contentOffset = {x = 0, y = 50}},
 		{id = "fight_throw", msg = "在高亮区域点击 , 将会投掷手雷", skipDelay = 1.0},
 		{id = "fight_change", msg = "在高亮区域点击 , 将会更换枪械"},
-		-- {id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
+		{id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}
 }
 
