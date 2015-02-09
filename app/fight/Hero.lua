@@ -235,8 +235,8 @@ function Hero:decreaseHp(hp)
     elseif robot:getIsRoboting() then
         robot:onHitted()
     elseif self:isHelpHp(hp) then
-        self:helpFullHp()
         Hero.super.decreaseHp(self, hp)
+        self:helpFullHp()
     else
         Hero.super.decreaseHp(self, hp)
     end
