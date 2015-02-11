@@ -94,7 +94,7 @@ function FeijiEnemyView:playEnter(direct)
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	local toPosx = self:getPositionX()
-	print("toPosx", toPosx)
+	local toPosY = self:getPositionY()
 
 	local posInMapx = self:getPosInMap().x
 	local srcPosX = 0 
@@ -107,7 +107,7 @@ function FeijiEnemyView:playEnter(direct)
 	self:setPositionX(srcPosX)
 	local speed = self.speed * self:getScale()
 	local time =  math.abs(toPosx - srcPosX) / speed
-	local action = cc.MoveTo:create(time, cc.p(toPosx, 0))	
+	local action = cc.MoveTo:create(time, cc.p(toPosx, toPosY))	
 	local callfunc = function ()
 		self.isEntering = false
 		self:playStand()

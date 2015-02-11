@@ -20,10 +20,10 @@ end)
 
 local kMissileZorder = 10000
 local kMissilePlaceZOrder = 100
-local kEffectZorder = 101
+local kEffectZorder = 10000001
 local kDefine = {
 	orderMax = 20,  	--敌人同时出场最大序号
-	zorderOffset = 100 	--
+	zorderOffset = 30 	--
 }
 function MapView:ctor()
 	--instance
@@ -190,14 +190,16 @@ function MapView:addWave(waveData)
 			
 			--pos
 			assert(group["pos"], "group pos"..i)
-			local pos = group["pos"][i] or 0
 			
 			--add
 			local function addEnemyFunc()
 				order = order - 1
-				local enemyProperty = group.property
+				local enemyProperty = clone(group.property)
 				--出场顺序
-				enemyProperty["order"] = order  
+				enemyProperty["order"] = order 
+				local pos = group["pos"][i] 
+				assert("pos", pos)
+				print("pos", pos)
 				enemyProperty["offsetX"] = pos 
 				self:cacheEnemy(enemyProperty)
 			end
@@ -265,7 +267,8 @@ function MapView:addEnemy(property)
 
 	--pos
 	local offsetX = property["offsetX"]
-	
+	assert("offsetX", offsetX)
+
 	--add
 	local worldPlace    = placeNode:convertToWorldSpace(cc.p(0,0))
 	local posPlaceInMap = self.map:convertToNodeSpace(worldPlace)
