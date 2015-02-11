@@ -99,14 +99,13 @@ function InfoLayer:initBtns()
 	local btnStop = cc.uiloader:seekNodeByName(self.root, "btnStop")
 	btnStop:setTouchEnabled(true)
 	btnStop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+	        local guide = md:getInstance("Guide")
+	        local isUntouch = guide:getCurGroupId() == "fight01"
+	        if isUntouch then return end			
             if event.name =='began' then                
-                -- cc.ColorUtil:isHighLighted(btnStop, true)
                 return true
             elseif event.name =='ended' then
-            	-- cc.ColorUtil:isHighLighted(btnStop, false)
             	ui:showPopup("pausePopup",{popupName = "fightset"},{anim = true,isPauseScene = true})
-            	-- ps = pauseScene.new()
-            	-- ps:pause({type = "fightset"})
             end
         end)
 end

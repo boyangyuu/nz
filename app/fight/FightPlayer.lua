@@ -76,7 +76,6 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
     
-    self:scheduleUpdate()
     self:setNodeEventEnabled(true)
     
 end
@@ -149,10 +148,8 @@ end
 
 function FightPlayer:setComponentVisible(event)
     local comps = event.comps
-    -- dump(comps, "comps")
     for i,v in pairs(comps) do
         self[i]:setVisible(v)
-        -- print(i,v)
     end
 end
 
@@ -211,7 +208,6 @@ end
 
 --启动盾牌恢复
 function FightPlayer:startDefenceResume(event)
-    -- print("function FightPlayer:startDefenceResume(event)")
     self.labelDefenceResume:setVisible(true)
     
     --受伤
@@ -225,7 +221,6 @@ function FightPlayer:startDefenceResume(event)
         local t = self.defenceBar:getPercentage()
         local t1 = tonumber(self.labelDefenceResume:getString())
         if 0 == t1 then
-            -- print("盾牌恢复成功")
             scheduler.unscheduleGlobal(self.resumeDefenceHandler)
             self.defenceBar:setVisible(false)
             self.labelDefenceResume:setVisible(false)
@@ -244,7 +239,6 @@ end
 
 function FightPlayer:onDefenceBeHurt(event)
     local percent = event.percent * 100
-    -- print("percent,", percent)
     self.defenceDemage:setPercent(percent)
 end
 
@@ -269,7 +263,6 @@ function FightPlayer:initTouchArea()
     --move区域
     self.layerControl = cc.uiloader:seekNodeByName(self, "layerControl")
     layerTouch:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        dump(event, "event")
         --guide
         local guide = md:getInstance("Guide")
         local isUntouch = guide:getCurGroupId() == "fight01"
@@ -344,8 +337,6 @@ end
 
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
-     -- dump(event, "event onMutiTouchBegin")
-
     --check
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
@@ -382,13 +373,11 @@ function FightPlayer:onMutiTouchEnd(event)
 end
 
 function FightPlayer:checkBtnJu(point,eventName)
-    print("function FightPlayer:checkBtnJu(point,eventName)")
     if self.btnJu:isVisible() == false then return end 
     local rect = self.btnJu:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then 
         --切换狙击镜
-        print("-----------switch ju")
         addBtnEffect(self.btnJu)
         local map = md:getInstance("Map")
         local isOpen = map:getIsOpenJu()
@@ -402,7 +391,6 @@ function FightPlayer:checkBtnGold(point, eventName)
     local rect = self.btnGold:getCascadeBoundingBox()  
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y))     
     if isTouch then
-        print("点击黄金枪 购买")
         addBtnEffect(self.btnGold)
         self.fightProp:costGoldWeapon()
     end
@@ -455,7 +443,6 @@ function FightPlayer:checkBtnLei(point)
 end
 
 function FightPlayer:refreshPropData(event)
-    print("function FightPlayer:refreshPropData(event)")
     local fightProp = md:getInstance("FightProp")
     
     --jijia
@@ -464,7 +451,6 @@ function FightPlayer:refreshPropData(event)
     
     --lei
     local numlei   = fightProp:getLeiNum()
-    -- print("numjijia:"..numjijia.."numlei:"..numlei)
     self.label_leiNum:setString(numlei)
 
     --gold
@@ -521,7 +507,6 @@ end
 ----attack----
 function FightPlayer:checkBtnFire(id,point,eventName)
     if eventName == "moved" then return false end
-    print("eventName:"..eventName.."  id:"..id)
     local isend  = eventName == "ended" or eventName == "cancelled" or eventName == "removed"
     local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
@@ -536,16 +521,10 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         if self.touchFireId == nil and 
             (eventName == "added" or eventName == "began") then
             self.touchFireId = id
-            -- print("self.touchFireId set "..id) 
         end
         if self.touchFireId == id and not isend then
-            -- self.btnFireSch =  scheduler.scheduleGlobal(
-            --     handler(self, self.onBtnFire), 0.05)
-            -- self:onBtnFire()
             self.hero.fsm__:doEvent("ready")
             self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.05)
-            -- self.btnFireSch =  scheduler.scheduleGlobal(
-            --     handler(self, self.onBtnFire), 0.05)
         end
     end
    
@@ -575,9 +554,6 @@ end
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
     local isRobot = robot:getIsRoboting()
-    -- print("onBtnFire", onBtnFire)
-    -- self.hero.fsm__:doEvent("ready")
-    -- self.hero:fire()
     if isRobot then
         if robot:isCoolDownDone() then
             self:robotFire()
@@ -604,15 +580,10 @@ function FightPlayer:onBtnFire()
 end
 
 function FightPlayer:onCancelledFire()
-    -- print("FightPlayer:onCancelledFire()")
 
     --robot ju
     local robot         = md:getInstance("Robot")
     local isRobot       = robot:getIsRoboting()
-
-    -- local levelModel    = md:getInstance("LevelDetailModel")
-    -- local isJuLevel     = levelModel:isJujiFight()
-
     if  isRobot then
         robot:stopFire()
     else
@@ -622,7 +593,6 @@ function FightPlayer:onCancelledFire()
 
     --sch
     if self.btnFireSch then
-        -- scheduler.unscheduleGlobal(self.btnFireSch)
         transition.removeAction(self.btnFireSch)
     end
     self.touchFireId = nil 
@@ -630,10 +600,6 @@ end
 
 function FightPlayer:stopFire(event)
     self:onCancelledFire()
-end
-
-function FightPlayer:tick(dt)
-    --gun
 end
 
 function FightPlayer:isCoolDownDone()
@@ -717,8 +683,6 @@ function FightPlayer:justBgPos(node)
     local layerMap = self.layerMap
     local bgMap = self.mapView
     local box = bgMap:getBoundingBox()
-    -- dump(box, "box")
-    -- print("bgMap pos", )  
     local map = md:getInstance("Map")
     local isNotMove = map:isNotMoveMap()
     if isNotMove then return end    
@@ -728,8 +692,6 @@ function FightPlayer:justBgPos(node)
 
     local w, h = bgMap:getBgSize().width* scale  ,
         bgMap:getBgSize().height  * scale
-    -- print("w", w)
-    -- print("h", h)
     local offset = bgMap:getBgOffset()
     local xL = (w - display.width1) / 2  
     local yL1 = -(h - display.height1 + offset.y * 2) / 2 
@@ -777,15 +739,12 @@ function FightPlayer:initGuide1()
     local isDone = self.guide:isDone("fight01")
     local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 1 and gid == 1
-    print("isDone", isDone)
     if isDone or not isWillGuide then 
         return 
     end    
 
     --touch
     self.guide:setTouchSwallow(false)
-
-    print("function FightPlayer:initGuide1()")
     self.focusNode:setPosition(cc.p(500,230))
 
     --inlay 
@@ -806,8 +765,6 @@ function FightPlayer:initGuide1()
         endfunc = function (touchEvent)
             if touchEvent.name == "moved" and isMoveGuideUnDone then
                 isMoveGuideUnDone = false
-                -- print("ight_mov self.guide:doGuideNext()")
-                -- self.focusNode:setPosition(cc.p(500,230))
                 self.focusNode:moveTo(1.0,588, 230)
                 self.guide:doGuideNext()
                 self.guide:hideGuideForTime(2.0)
@@ -871,7 +828,6 @@ function FightPlayer:initGuide1()
 end
 
 function FightPlayer:onGuideFire(touchEvent)
-    -- print("os.time()", os.time())
     local name = touchEvent.name
     local limitTime = 0.6
     
@@ -879,8 +835,6 @@ function FightPlayer:onGuideFire(touchEvent)
     local function onGuideFireCheckFunc()
         local timeNow = os.time()
         if self.time_begin and (timeNow - self.time_begin) >=  limitTime then 
-            -- print("长按射击引导完成")
-            -- print("self.time_begin:", self.time_begin)
             scheduler.unscheduleGlobal(self.schGuideFire)
             self:onCancelledFire()
             self.guide:doGuideNext()
@@ -889,8 +843,7 @@ function FightPlayer:onGuideFire(touchEvent)
     end
 
     --开始计时
-    if name == "began" or name == "added" then
-        print("开始计时") 
+    if name == "began" or name == "added" then 
         self.isGuideFireBegin = true
         self.time_begin = os.time()
         self.schGuideFire = scheduler.scheduleUpdateGlobal(onGuideFireCheckFunc) 
@@ -899,7 +852,6 @@ function FightPlayer:onGuideFire(touchEvent)
     --停止计时
     if name == "ended" or name == "cancelled" or name == "removed" then
         if self.isGuideFireBegin == false then return end 
-        print("停止计时")
         self.time_begin = nil
         if self.schGuideFire then 
             scheduler.unscheduleGlobal(self.schGuideFire)
@@ -908,7 +860,6 @@ function FightPlayer:onGuideFire(touchEvent)
 
     --响应事件
     for id, point in pairs(touchEvent.points) do
-        -- print("name", name)
         self:checkBtnFire(id, point,name)
     end
 end
@@ -919,7 +870,6 @@ function FightPlayer:initGuide2()
     local isDone = self.guide:isDone("fight02_dun")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 2 and gid == 1
-    print("function FightPlayer:initGuide4()", isDone)    
     if isDone or not isWillGuide then return end
     
     --盾
@@ -932,8 +882,6 @@ function FightPlayer:initGuide2()
             self.defence:startDefence()   
         end
     })    
-
-    
 end
 
 function FightPlayer:initGuide4()
@@ -955,7 +903,6 @@ function FightPlayer:initGuide4()
         endfunc = function (touchEvent)
             addBtnEffect(self.btnRobot)
             local robot = md:getInstance("Robot")
-            -- print("！！！！！！！fight02_jijia")
             robot:startRobot()  
         end
     })   
@@ -964,7 +911,7 @@ end
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 4 and gid == 1
+    local isWillGuide = lid == 3 and gid == 1
     if isDone or not isWillGuide then return end   
 
     self.guide:addClickListener({
@@ -1006,7 +953,6 @@ function FightPlayer:initGuide3()
             self:onCancelledFire()    
         end
      })        
-
 end
 
 function FightPlayer:onEnter()
@@ -1022,8 +968,6 @@ function FightPlayer:onEnter()
 end
 
 function FightPlayer:onCleanup()
-    -- FightPlayer.super.onCleanup(self)
-    print("FightPlayer:onCleanup()")
     self:removeAllSchs()
 end
 
@@ -1036,7 +980,6 @@ function FightPlayer:onResultWin()
 end
 
 function FightPlayer:removeAllSchs()
-    -- print("function FightPlayer:removeAllSchs()")
     if self.tempChangeGoldHandler then 
         scheduler.unscheduleGlobal(self.tempChangeGoldHandler)
         self.tempChangeGoldHandler = nil
@@ -1045,10 +988,6 @@ function FightPlayer:removeAllSchs()
         scheduler.unscheduleGlobal(self.resumeDefenceHandler)
         self.resumeDefenceHandler= nil
     end
-    -- if self.btnFireSch then
-    --     scheduler.unscheduleGlobal(self.btnFireSch)
-    --     self.btnFireSch = nil
-    -- end
 end
 
 return FightPlayer
