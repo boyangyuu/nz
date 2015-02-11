@@ -17,15 +17,18 @@ function GuideLayer:ctor()
 	self.isWaiting = false
 	self.bg 	  = nil
 	self.armature = nil
+	self.isSwallow = true
 	self:setTouchSwallowEnabled(false)
 	--ui
 	self:loadCCS()
 
 	--event
 	cc.EventProxy.new(self.guide, self)
-		:addEventListener(self.guide.GUIDE_START_EVENT, handler(self, self.start))
-		:addEventListener(self.guide.GUIDE_FINISH_EVENT, handler(self, self.finish))
-		:addEventListener(self.guide.GUIDE_HIDE_EVENT, handler(self, self.hideForTime))
+		:addEventListener(self.guide.GUIDE_START_EVENT, 		 handler(self, self.start))
+		:addEventListener(self.guide.GUIDE_FINISH_EVENT,		 handler(self, self.finish))
+		:addEventListener(self.guide.GUIDE_HIDE_EVENT, 			 handler(self, self.hideForTime))
+		:addEventListener(self.guide.GUIDE_TOUCHSWALLOW_EVENT,   handler(self, self.setTouchSwallow))
+
 	
 end
 
@@ -38,6 +41,7 @@ function GuideLayer:onTouch(event)
 	-- dump(event, "event")
 	if not self.isGuiding then return false end
     if event.name == "began" or event.name == "added" then
+	-- if event.name == "began" then    	
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
         return self:onMutiTouchEnd(event)
@@ -184,13 +188,12 @@ function GuideLayer:checkFirstGuide()
     --touch 
     self.touchAll:setTouchEnabled(true) 
     self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
-    self.touchAll:setTouchSwallowEnabled(true) 	
+    local isSwallow = self:getIsTouchSwallow()
+    self.touchAll:setTouchSwallowEnabled(isSwallow) 	
     self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))     
 end
 
 function GuideLayer:refreshUI()
-
-
 	local cfg = self.guide:getCurConfig()
 
 	--clear
@@ -298,9 +301,18 @@ function GuideLayer:finish(event)
 	self.isGuiding = false
 	self.isFirst = false
 	self.touchAll:removeAllNodeEventListeners()	
+	self.isSwallow  = true
 
 	--visible
 	self:setVisible(false)
+end
+
+function GuideLayer:setTouchSwallow(event)
+	self.isSwallow = event.isSwallow
+end
+
+function GuideLayer:getIsTouchSwallow()
+	return self.isSwallow
 end
 
 return GuideLayer

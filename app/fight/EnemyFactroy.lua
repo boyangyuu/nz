@@ -58,7 +58,8 @@ function EnemyFactory.createEnemy(property)
 		enemyView = FeijiEnemyView.new(property)							
 	elseif type == "renzhe" then
 		enemyView = RenEnemyView.new(property)							
-	else				
+	else		
+		property["type"] = "common"		
 		enemyView = CommonEnemyView.new(property)
 	end
 	return enemyView

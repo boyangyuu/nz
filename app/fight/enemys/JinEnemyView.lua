@@ -74,8 +74,6 @@ function JinEnemyView:playAhead()
     self.armature:getAnimation():play("walk" , -1, 1) --
     local configEnemy = self.enemy:getConfig()
     local speed = configEnemy["speed"] or define.kJinEnemyWalkSpeed 
-    -- local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-    -- local desY = -180
     local pWorldMap = self:getPosInMap()
     local distanceY = -pWorldMap.y + define.kJinEnemyWalkPos
     local time = math.abs(distanceY) / speed
@@ -86,7 +84,6 @@ function JinEnemyView:playAhead()
 
     --
     local aheadEndFunc = function ()
-        -- print("aheadEnd")
          self.isAheading = false
 
         --改为呼吸

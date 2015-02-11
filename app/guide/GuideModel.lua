@@ -1,4 +1,3 @@
--- local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 -- --[[--
 --[[--
@@ -12,9 +11,10 @@ local GuideConfigs = import(".GuideConfigs")
 local Guide = class("Guide", cc.mvc.ModelBase)
 
 -- 定义事件
-Guide.GUIDE_START_EVENT = "GUIDE_START_EVENT"
-Guide.GUIDE_FINISH_EVENT = "GUIDE_FINISH_EVENT"
-Guide.GUIDE_HIDE_EVENT = "GUIDE_HIDE_EVENT"
+Guide.GUIDE_START_EVENT 		= "GUIDE_START_EVENT"
+Guide.GUIDE_FINISH_EVENT 		= "GUIDE_FINISH_EVENT"
+Guide.GUIDE_HIDE_EVENT 			= "GUIDE_HIDE_EVENT"
+Guide.GUIDE_TOUCHSWALLOW_EVENT  = "GUIDE_TOUCHSWALLOW_EVENT"
 
 function Guide:ctor(properties)
     Guide.super.ctor(self, properties) 
@@ -43,6 +43,11 @@ function Guide:check(groupId)
 		self:startGuide(groupId)
 		return true
 	end
+end
+
+function Guide:setTouchSwallow(isSwallow)
+	self:dispatchEvent({name = Guide.GUIDE_TOUCHSWALLOW_EVENT, 
+				isSwallow = isSwallow})
 end
 
 function Guide:doGuideNext()
@@ -118,11 +123,6 @@ function Guide:hideGuideForTime(delay)
 end
 
 function Guide:finishGuide()
-	--clear
-	print("function Guide:finishGuide()")
-	self.stepIndex = 0
-	self.isGuiding = false
-
 	--save userdata
 	local data = getUserData()
 	local groupId = self.groupId
@@ -133,7 +133,13 @@ function Guide:finishGuide()
 
 	--dispatch
 	self:dispatchEvent({name = Guide.GUIDE_FINISH_EVENT, 
-				groupId = self.groupId})	
+				groupId = self.groupId})
+
+	--clear
+	print("function Guide:finishGuide()")
+	self.stepIndex = 0
+	self.isGuiding = false	
+	self.groupId = nil	
 end
 
 function Guide:getIsGuiding()
@@ -156,6 +162,10 @@ function Guide:getCurGuideId()
 	else
 		return self.curConfig["id"]
 	end
+end
+
+function Guide:getCurGroupId()
+	return self.groupId
 end
 
 function Guide:clearData()
