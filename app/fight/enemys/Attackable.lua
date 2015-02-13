@@ -406,11 +406,6 @@ function Attackable:getPosInMapBg()
 	return worldMap
 end
 
-function Attackable:getPlaceZOrder()
-	local placeNode = self:getPlaceNode()
-	return placeNode:getLocalZOrder()
-end
-
 function Attackable:getNickname()
 	return self.property["type"] .. "_" ..
 		(self.property["order"] or 0)

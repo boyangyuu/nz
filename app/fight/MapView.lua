@@ -17,20 +17,24 @@ local MapView = class("MapView", function()
     return display.newNode()
 end)
 
-
-local kMissileZorder = 10000
-local kMissilePlaceZOrder = 100
 local kEffectZorder = 10000001
+
 local kDefine = {
-	orderMax = 20,  	--敌人同时出场最大序号
-	zorderOffset = 30 	--
+	orderMax 		 = 29,  --敌人同时出场最大序号
+	zorderOffset	 = 30, 	--不同y坐标的
+	missileZorder 	 = 30 * 30 + 2000,
+	sanZorder 	 	 = 30 * 30 + 1000,
+	feijiZorder 	 = 30 * 30 + 500,
 }
+
+--① 敌人先后顺序不对 , ② 近战兵 自爆兵 的到达 ③ 导弹兵 伞兵 飞机兵分层
 function MapView:ctor()
 	--instance
 	self.hero 			= md:getInstance("Hero")
 	self.fight			= md:getInstance("Fight")
 	self.mapModel 		= md:getInstance("Map")
 	self.enemys 		= {}
+	self.missileNum     = 0
 	self.cacheEnemys    = {}
 	self.waveIndex 		= 1
 	self.isPause 		= false
@@ -101,8 +105,6 @@ function MapView:loadPlaces()
     	local placeNode = cc.uiloader:seekNodeByName(self.map, name)
 
         if placeNode then 		
-			placeZOrder = placeNode:getLocalZOrder()
-			-- print("placeZOrder", placeZOrder)
 	    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
 
 	    	if scaleNode then scaleNode:setVisible(false) end
@@ -268,12 +270,32 @@ function MapView:addEnemy(property)
 	--pos
 	local offsetX = property["offsetX"]
 	assert("offsetX", offsetX)
-
-	--add
 	local worldPlace    = placeNode:convertToWorldSpace(cc.p(0,0))
 	local posPlaceInMap = self.map:convertToNodeSpace(worldPlace)
 	enemyView:setPosition(cc.p(posPlaceInMap.x + offsetX, posPlaceInMap.y))
+	
+	--zorder
+	local order      = property["order"]
+	local zorderType = self:getZorderByType(property["type"])
+	local zorder     = 0
+	if zorderType then 
+		zorder = zorderType - order
+	end
+
+	--add
 	self.map:addChild(enemyView)
+end
+
+function MapView:getZorderByType(enemyType)
+	if enemyType == "san" then 
+		return kDefine["sanZorder"]
+	elseif enemyType == "missile" then 
+		return kDefine["missileZorder"]
+	elseif enemyType == "feiji" then 
+		return kDefine["feijiZorder"]
+	else
+		return nil 
+	end
 end
 
 function MapView:checkNumLimit()
@@ -306,7 +328,7 @@ function MapView:checkZorder()
 		end
 
 		--zorder
-		local zorder 	  = zIndex * offset - appearorder
+		local zorder = zIndex * offset - appearorder
 		-- print("....................")
 		-- print(i .." posy ".. posy)
 		-- print("zorder", zorder)
@@ -323,7 +345,14 @@ function MapView:getSortedObjects()
 			type        = "enemy",
 			node        = v,
 		}
-		objects[#objects + 1] = object 
+		--todo
+		local enemyType = v:getProperty()["type"]
+		local isunChecked = enemyType == "san" 
+							 or enemyType =="missile"
+							 or enemyType == "feiji"
+		if not isunChecked then 
+			objects[#objects + 1] = object 
+		end
 	end
 
 	for i,v in ipairs(self.covers) do
@@ -488,9 +517,9 @@ function MapView:isCovered(enemy, focusNode)
 	    --
 		local isCovered = cc.rectIntersectsRect(focusBox, coverBox)
 		if isCovered then 
-			local placeZ = enemy:getPlaceZOrder() --todozorder
+			local enemyZ = enemy:getLocalZOrder() 
 			local coverZ = cover:getLocalZOrder()
-			if placeZ < coverZ then return true end
+			if enemyZ < coverZ then return true end
 		end
 	end
 	return false
@@ -510,7 +539,6 @@ function MapView:getEnemysInRect(rect)
 			-- dump(pos, "pos")
 			local enemyRect = cc.rect(pos.x, pos.y, 
 				box.width * scale, box.height * scale)   --有scale问题
-			-- dump(enemyRect, "enemyRect") 
 			if cc.rectIntersectsRect(rect, enemyRect) then
 				enemys[#enemys + 1] = enemy
 			end
@@ -521,9 +549,7 @@ end
 
 --events
 function MapView:callfuncAddWave(event)
-	-- dump(event, "event")
 	self:addWave(event.waveData)
-
 end
 
 function MapView:callfuncAddEnemys(event)
@@ -539,17 +565,17 @@ end
 
 function MapView:callfuncAddMissile(event)
 	local property = event.property
-	property.placeZOrder = kMissilePlaceZOrder
-	kMissileZorder = kMissileZorder - 1
-	-- dump(property, "property")
+	--pos
 	local enemyView = EnemyFactroy.createEnemy(property)
 	local pWorld = property.srcPos
-	-- dump(pWorld, "pWorld")
 	local pos = self.map:convertToNodeSpace(pWorld)
-	-- dump(pos,"pos")
 	enemyView:setPosition(pos)
 	self.enemys[#self.enemys + 1] = enemyView
-	self.map:addChild(enemyView, kMissileZorder)
+
+	--zorder
+	self.missileNum = self.missileNum + 1
+	local zorder    = kDefine.missileZorder	- self.missileNum
+	self.map:addChild(enemyView, zorder)
 end
 
 function MapView:onHeroFire(event)
@@ -591,22 +617,14 @@ end
 
 function MapView:singleFire(datas)
 	local selectedData  = nil
-	local maxPlaceZOrder = -1
 	local maxZorder 	= -1
 	for i,data in ipairs(datas) do
 		local enemy = data.enemy
 		local zo  = enemy:getLocalZOrder()  --todozorder
-		local pi  = enemy:getPlaceZOrder()  --todozorder
-		-- print("placeZOrder: "..pi.." zorder: "..zo)
-		-- print("maxPlaceZOrder", maxPlaceZOrder)
-		-- print("maxZorder", maxZorder)
-		if pi >= maxPlaceZOrder then
-			if zo >= maxZorder then 
-				selectedData = data
-				maxZorder    = zo
-				maxPlaceZOrder= pi 
-			end
-		end	 
+		if zo >= maxZorder then 
+			selectedData = data
+			maxZorder    = zo
+		end 
 	end
 
 	--hitted

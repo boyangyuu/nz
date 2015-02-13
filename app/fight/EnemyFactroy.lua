@@ -19,12 +19,11 @@ local RenBossView 		= import(".enemys.RenBossView")
 local DuozuBossView		= import(".enemys.DuozuBossView")
  
 function EnemyFactory.createEnemy(property)
-
 	assert(property, "property is nil")
 	local enemyView
 
 	--boss
-	local type = property.type
+	local type = property.type or "common"	
 	-- print("function EnemyFactory.createEnemy(property)"，type)	
 	if type == "boss" then 
 		enemyView = BaseBossView.new(property)
@@ -59,7 +58,6 @@ function EnemyFactory.createEnemy(property)
 	elseif type == "renzhe" then
 		enemyView = RenEnemyView.new(property)							
 	else		
-		property["type"] = "common"		
 		enemyView = CommonEnemyView.new(property)
 	end
 	return enemyView
