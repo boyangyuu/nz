@@ -2,6 +2,65 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
+	{
+		enemys = {
+			{
+				time = 1,
+				num = 1,
+				delay = {0},
+				pos = {600},
+				property = { 
+					placeName = "place3",
+					startState = "",
+					id = 1,
+				},
+			},					
+		},
+	},
+	{
+		enemys = {
+			{
+				time = 1,
+				num = 2,
+				delay ={0, 0.2},
+				pos = {550,650},		
+				property = { 
+					placeName = "place3",
+					startState = "",
+					id = 1,
+				},
+			},					
+		},
+	},
+	{
+		enemys = {
+			{
+				time = 1,
+				num = 2,
+				delay ={0, 0.2},
+				pos = {550,650},		
+				property = { 
+					placeName = "place3",
+					startState = "",
+					id = 1,
+				},
+			},	
+			{
+				time = 1,
+				num = 1,
+				delay = {0.1},
+				pos = {600},
+				property = { 
+					placeName = "place3",
+					id = 6,
+					startState = "",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},						
+		},
+	},	
 
 	{
 		enemys = { 
@@ -69,7 +128,7 @@ local waves = {
 				},
 			},
 
-						-- 以上是第一波第一批
+						-- 以上是第三波第一批
 			
 			{
 				time = 5,	
@@ -329,7 +388,7 @@ local waves = {
 --enemy的关卡配置                           无镶嵌 MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=1800,rollCd=120,fireRate=180,fireCd=3,
 	weak1=2},
 
 	--近战兵
@@ -337,7 +396,7 @@ local enemys = {
 	weak1=2},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=190,
+	{id=3,image="sanbing01",demage=0,hp=160,
 	weak1=2},	             
 
     --导弹          --missileType = "daodan",
@@ -349,10 +408,10 @@ local enemys = {
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
-	{id=6,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=6,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=1800,rollCd=120,fireRate=180,fireCd=4,
 	weak1=2},
 	--手雷
-	{id=7,image="shoulei",demage=4,hp=1,
+	{id=7,image="shoulei",demage=1,hp=1,
 	weak1=2},
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
