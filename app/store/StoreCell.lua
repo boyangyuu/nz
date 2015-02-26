@@ -193,9 +193,7 @@ function StoreCell:addBtnEvent()
                 buyModel:buy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)})
             elseif self.type == "inlay" then
                 if self.userModel:costMoney(self.record["goldPrice"]) then
-                    local gmcg   = "res/Music/ui/gmcg.wav"
-                    audio.playSound(gmcg,false)
-
+                    self:playSound()
                     self.inlayModel:buyInlay(self.record["id"])
                     self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
                 end
