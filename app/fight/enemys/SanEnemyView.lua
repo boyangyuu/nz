@@ -17,24 +17,29 @@ local SanEnemyView = class("SanEnemyView", Attackable)
 function SanEnemyView:ctor(property)
 	--instance
 	SanEnemyView.super.ctor(self, property) 
-    self.isFalling = true
+    self.isFalling = false
 	-- dump(property, "property")
     
     --events
     cc.EventProxy.new(self.enemy, self)
-        :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
-        :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill)) 
+        :addEventListener(Actor.HP_DECREASE_EVENT,  handler(self, self.playHitted)) 
+        :addEventListener(Actor.KILL_EVENT,         handler(self, self.playKill)) 
 
     --
-    self:playFall() 
+    self:setVisible(false)
+
+end
+
+function SanEnemyView:onEnter()
+    self:performWithDelay(handler(self, self.playFall), 0.1)    
 end
 
 function SanEnemyView:tick()
-    if self.isFalling then 
+    
+    if self.isFalling then
         local enemy = self.armature:getBone("enemy"):getDisplayRenderNode()
         local pWorld = enemy:convertToWorldSpace(cc.p(0,0))
-
-        local placeNode = self:getParent()
+        local placeNode = self:getPlaceNode()
         local pWorld2 = placeNode:convertToWorldSpace(cc.p(0,0))
         if pWorld.y <= pWorld2.y then 
             self.isFalling = false
@@ -45,34 +50,37 @@ end
 
 function SanEnemyView:playFall()
 	--start
-	self.armature:setPositionY(display.height)
-	
+    self:setVisible(true)
+	self:setPositionY(display.height)
+    self.isFalling = true
     --action
-	local speed = -2 * 60
+	local speed = -1 * 60
 	local action = cc.MoveBy:create(1, cc.p(0, speed))
     local seq = cc.Sequence:create(action)	
-    self.armature:runAction(cc.RepeatForever:create(seq))
+    self:runAction(cc.RepeatForever:create(seq))
 
     --play
     self.armature:getAnimation():play("jiangluo" , -1, 1) 
 end
 
 function SanEnemyView:stopFall()
-	--stop action
-	self.armature:stopAllActions()
-    self:setWillRemoved()  
-
     -- 召唤
     -- dump(self.property, "self.property")
     local data = {
-        pos = cc.p(self:getPositionX(), self:getPlaceBound().y),
+        pos = cc.p(self:getPositionX(), 0),
         delay = 0,
         property = {
                 id = self.property.enemyId,
                 placeName = self.property.placeName,
+                offsetX = self.property.offsetX
                 },
         }
-    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = {data}})    
+    --todoyby  只有这一处用到 没必要 可以删掉! 模仿boss的召唤即可
+    self.hero:dispatchEvent({name = "ENEMY_ADD_EVENT", enemys = {data}})   
+
+    --stop action
+    self:stopAllActions()
+    self:setWillRemoved()       
 end
 
 --Attackable interface
@@ -81,7 +89,6 @@ function SanEnemyView:playHitted(event)
 end
 
 function SanEnemyView:playKill(event)
-    -- print("SanEnemyView:playKill")
     self:setDeadDone()
 
     --屏幕动画
@@ -104,7 +111,6 @@ function SanEnemyView:onHitted(targetData)
         end
     end          
 end
-
 
 function SanEnemyView:animationEvent(armatureBack,movementType,movementID)
 

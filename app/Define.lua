@@ -40,6 +40,11 @@ Define.kRenzheShanTime			= 3.0   	--忍者瞬移时间
 Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离 
 Define.kRenzheShanOffsetMax		= 600		--忍者瞬移最大距离 
 
+--蓝色boss 红色boss
+Define.kBlueBossSpeed				= 500.0  --速度
+Define.kBlueBossRunTime 			= 1.0	 --大范围移动时间
+Define.kBlueBossWalkTime			= 0.6    --小范围移动时间
+
 --飞机兵 
 Define.kfeijiSpeed				= 500.0  --速度
 Define.kfeijiRunTime 			= 1.0	 --大范围移动时间
@@ -70,9 +75,9 @@ Define.kGoldTime 				= 8     --黄金武器激活时间
 
 --机甲
 Define.kRobotCoolDownTime 		= 0.05   --robot 冷却时间
-Define.kRobotDemage			 	= 300    --机甲伤害
+Define.kRobotDemage			 	= 350    --机甲伤害
 Define.kRobotTime			 	= 10.0   --机甲持续时间
-Define.kRobotRangeH				= 40.0   -- 机甲攻击范围框高
+Define.kRobotRangeH				= 40.0   --机甲攻击范围框高
 Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽
 
 
@@ -102,8 +107,8 @@ Define.kShouLeiCd    			= 0.5  --
 Define.kJuRange 				= 4.0
 
 --引导
-Define.kGuideActiveJijia	 	= 0.25  --boss还有百分之10血时 触发机甲
-Define.kGuidebossHpScale		= 0.5  --引导的时候 boss的血量缩小0.5
+Define.kGuideActiveJijia	 	= 0.35  --boss还有百分之10血时 触发机甲
+Define.kGuidebossHpScale		= 0.70  --引导的时候 boss的血量缩小0.7
 
 
 function Define:ctor()

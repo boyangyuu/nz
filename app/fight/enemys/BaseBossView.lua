@@ -134,21 +134,28 @@ end
 
 function BaseBossView:playMove()  --改为onMove
 	local isLeft = math.random(1, 2)
-	local limitDis = 100
+	local time  = define.kBlueBossWalkTime
+	local speed = define.kBlueBossSpeed		
+	local width   = time * speed * self:getScale()
 	local direction = isLeft == 1 and 1 or -1
-	if not self:checkPlace(limitDis * direction) then return end
+	if not self:checkPlace(width * direction) then return end
 	
+	--action
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
 		local action = self.config:getMoveRightAction()
-		self.armature:runAction(cc.RepeatForever:create(action))	
+		self:runAction(action)	
 
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
 		local action = self.config:getMoveLeftAction()
-		self.armature:runAction(cc.RepeatForever:create(action))		
+		self:runAction(action)		
 	end	
+
+	local action = cc.MoveBy:create(time, cc.p(width, 0))
+	self:runAction(action)
 	self.enemy:beginWalkCd()
+	self:restoreStand(time)
 end
 
 function BaseBossView:playKill(event)
@@ -239,9 +246,8 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local disOut =  -(pos.x + bound.width ) 
 	local disOut =  -(pos.x + bound.width)
 
---1560 880 1170 660
 	local time = math.abs(disOut) / speed
-	local desPos = cc.p(disOut, posOri.y)
+	local desPos = cc.p(disOut, 0)
 	local actionOut = cc.MoveBy:create(time, desPos)
 
 	--到右屏幕
@@ -249,18 +255,18 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local disScreen = 1560 			+ bound.width
 
 	time = math.abs(disScreen) / speed
- 	desPos = cc.p(disScreen, posOri.y)
+ 	desPos = cc.p(disScreen, 0)
 	local actionScreen1 = cc.MoveBy:create(time, desPos)
 
 	--到左屏幕
 	local disScreen2 = -disScreen
 	time = math.abs(disScreen2) / speed
-	desPos = cc.p(disScreen2, posOri.y)
+	desPos = cc.p(disScreen2, 0)
 	local actionScreen2 = cc.MoveBy:create(time, desPos)
 
 	--返回
 	local disBack = - disOut
-	desPos = cc.p(disBack, posOri.y)
+	desPos = cc.p(disBack, 0)
 	time = math.abs(disBack) / speed
 	local actionBack = cc.MoveBy:create(time, desPos)
 	local seq = nil
@@ -328,7 +334,7 @@ function BaseBossView:playMoveRightFire()
 	self.armature:getAnimation():play("moverightfire" , -1, 1)
 	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
     local seq = cc.Sequence:create(action)	
-    self.armature:runAction(cc.RepeatForever:create(seq))	
+    self:runAction(cc.RepeatForever:create(seq))	
 
 	self.enemy:hit(self.hero)
 end
@@ -416,7 +422,7 @@ function BaseBossView:playChongfeng()
     local desY = -180
     local scale = 2.0
 
-    local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
+    local pWorld = self:convertToWorldSpace(cc.p(0,0))
     -- dump(pWorld, "pWorld")
     local posOri = cc.p(self:getPositionX(), self:getPositionY())
     
@@ -428,10 +434,8 @@ function BaseBossView:playChongfeng()
 
     --
     local aheadEndFunc = function ()
-
-        -- print("aheadEnd")
+        print("aheadEnd")
         self.isAheading = false
-
   		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()
@@ -546,7 +550,6 @@ function BaseBossView:animationEvent(armatureBack,movementType,movementID)
 
 		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
-
         if  movementID == "chongfeng"  then
             self.armature:getAnimation():play(movementID , -1, 1)
             return 

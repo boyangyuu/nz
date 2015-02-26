@@ -9,7 +9,6 @@ function DebugModel:ctor(properties)
 end
 
 function DebugModel:showPopup(debugInfo)
-	print("function DebugModel:showPopup(debugInfo)")
 	-- layer:showError()
 	if isDebug then 
 		self:dispatchEvent({name = DebugModel.DEBUG_SHOW_EVENT,debugInfo = debugInfo})

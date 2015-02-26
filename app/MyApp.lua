@@ -169,7 +169,6 @@ function MyApp:createGameStateFile()
 end
 
 function MyApp:showError(debugInfo)
-    print("function MyApp:showError(debugInfo)")
     local debug = md:getInstance("DebugModel")
     debug:showPopup(debugInfo)
 end

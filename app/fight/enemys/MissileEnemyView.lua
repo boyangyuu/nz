@@ -6,7 +6,6 @@
 2. enemy的移动范围判断
 ]]
 
-import("...includes.functionUtils")
 local Attackable = import(".Attackable")
 local Enemy = import(".Enemy")
 local Hero = import("..Hero")

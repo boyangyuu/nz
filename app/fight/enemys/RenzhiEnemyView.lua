@@ -173,14 +173,13 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
 	print("self.playAnimId = "..animName)
 	self.playAnimId = animName
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action)	
+    self:runAction(action)	
 
     self:restoreStand(time)
 
     --sound
     local soundSrc  = "res/Music/fight/rz_kp.wav"
     self.audioId =  audio.playSound(soundSrc,false)   
-
 end
 
 function RenzhiEnemyView:onHitted(targetData)

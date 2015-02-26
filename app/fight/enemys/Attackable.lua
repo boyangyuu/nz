@@ -14,11 +14,8 @@ function Attackable:ctor(property)
 	--instance
     self.hero = md:getInstance("Hero")	
     self.fight = md:getInstance("Fight")
-    -- dump(property, "property")
 	self.enemy = self:getModel(property)
 	self.property = property
-
-	self:setPlaceBound(property.boundPlace)
 	self.deadDone = false
 	self.schedulers = {}
 	self.playCache = {}
@@ -177,12 +174,6 @@ function Attackable:getRange(rectName)
 	assert(rectName, "invalid param")
 
 	local armature = self:getEnemyArmature()
-	-- local isright = type(armature.getBone) == "function"
-	-- if isright == false then 
-	-- 	dump(self, "self")
-	-- end
-	-- assert(isright, "")
-	-- local armature = nil
 	local bone = armature:getBone(rectName)
 	if not bone then return nil, false end
 	local node = bone:getDisplayRenderNode() 
@@ -196,14 +187,20 @@ function Attackable:getBodyBox()
 	return box
 end
 
-function Attackable:setPlaceBound(bound)
-	if bound == nil then return end
-	assert(bound, "bound is nil")
-	self.placeBound = bound 
+function Attackable:getPlaceBound()
+	local placeNode = self:getPlaceNode()
+	local boundPlace 	= placeNode:getBoundingBox()
+	local pWorld 		= placeNode:convertToWorldSpace(cc.p(0,0))
+	boundPlace.x 		= pWorld.x
+	return boundPlace
 end
 
-function Attackable:getPlaceBound()
-	return self.placeBound
+function Attackable:getPlaceNode()
+	return self.property["placeNode"]
+end
+
+function Attackable:getProperty()
+	return self.property
 end
 
 function Attackable:getDeadDone()
@@ -234,15 +231,12 @@ end
 function Attackable:checkPlace(offset)
 	local offset = offset or 0
 	--place的范围
-	local placeNode = self:getParent()
+	local placeNode = self:getPlaceNode()
 	local pWorld1	  = placeNode:convertToWorldSpace(cc.p(0,0))
 	local bound1 	  = placeNode:getBoundingBox()
 	
 	local xLeftLimit  = pWorld1.x  
 	local xRightLimit = pWorld1.x + bound1.width
-	-- dump(pWorld1, "pWorld1")
-	-- print("xLeftLimit", xLeftLimit)
-	-- print("xRightLimit", xRightLimit)
 
 	--我的范围
 	local bodyNode = self.armature:getBone("body1"):getDisplayRenderNode()
@@ -397,38 +391,24 @@ end
 
 function Attackable:getPosInMap()
 	local world = self:convertToWorldSpace(cc.p(0,0))
-	-- dump(world, "world")
-
-	local map = self:getParent():getParent()
+	local map   = self:getParent()
 	local box 	= map:getBoundingBox()
-	-- dump(box, "box")
-	-- local worldMap = map:convertToWorldSpace(cc.p(0,0))
-
-	-- local posMap = cc.p(map:getPositionX(), map:getPositionY())
-	-- -- dump(worldMap, "worldMap")
-
-	-- local worldInMap = self:convertToWorldSpace(posMap)
-	-- -- dump(worldInMap, "worldInMap")
-	
 	local worldMap = map:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end
 
 function Attackable:getPosInMapBg()
 	local world = self:convertToWorldSpace(cc.p(0,0))
-	-- dump(world, "world")
-
-	local map = md:getInstance("Map")
+	local map   = md:getInstance("Map")
 	local mapbg = map:getMapBgNode()
 	local box 	= mapbg:getBoundingBox()
-	-- dump(box, "box")
 	local worldMap = mapbg:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end
 
-
-function Attackable:getPlaceZOrder()
-	return self.property.placeZOrder
+function Attackable:getNickname()
+	return self.property["type"] .. "_" ..
+		(self.property["order"] or 0)
 end
 
 function Attackable:getEnemyType()
