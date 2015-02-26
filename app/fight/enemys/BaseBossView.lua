@@ -144,15 +144,14 @@ function BaseBossView:playMove()  --改为onMove
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
 		local action = self.config:getMoveRightAction()
-		self:runAction(action)	
-
+		self:runAction(action)
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
 		local action = self.config:getMoveLeftAction()
 		self:runAction(action)		
 	end	
 
-	local action = cc.MoveBy:create(time, cc.p(width, 0))
+	local action = cc.MoveBy:create(time, cc.p(width * direction, 0))
 	self:runAction(action)
 	self.enemy:beginWalkCd()
 	self:restoreStand(time)
