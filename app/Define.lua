@@ -59,14 +59,12 @@ Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间
 Define.kMissileLeiTime				= 2.0    --手雷 
 
 --飞镖
-
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
 Define.kMissileFeibiaScale      = 1.5        --飞镖飞到屏幕的大小
 
 --蜘蛛网
 Define.kMissileWangTime			= 0.8    --飞过来的时间
 Define.kMissileWangHitTime      = 1    -- 攻击间隔
-
 
 --黄金武器
 Define.kGoldActivate 			= 1500    --黄金武器激活
@@ -81,9 +79,13 @@ Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽
 
 
 --角色扔的手雷
-Define.kBaoRangeW 				= 200	--手雷范围宽
-Define.kBaoRangeH 				= 200	--手雷范围高
+Define.kBaoRangeW 				= 200	--自爆范围宽
+Define.kBaoRangeH 				= 200	--自爆范围高
+
+Define.kLeiRangeW 				= 150	--手雷范围宽
+Define.kLeiRangeH 				= 150	--手雷范围高
 Define.kLeiDemage 				= 2500.0	--手雷伤害
+Define.kLeiTime				    = 1.0	--手雷伤害
 
 --盾牌
 Define.cdTimes 					= 15.0   --十秒恢复完毕

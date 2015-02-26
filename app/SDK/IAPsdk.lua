@@ -103,14 +103,14 @@ function IAPsdk:pay(name)
 	-- dump(self.config,"self.config")
 	-- dump(args,"args:")
 
-	-- if isTest or isDebug or telecomOperator == nil then
-	-- 	-- self:callbackSuccess()
-	-- 	print("请在手机上支付 傻逼！")
-	-- else
+	if isFree or telecomOperator == nil then
+		self:callbackSuccess()
+		print("请在手机上支付 傻逼！")
+	else
 		if device.platform == 'android' then
 			luaj.callStaticMethod(className, "pay", args, sig)
 		end
-	-- end
+	end
 end
 
 function IAPsdk:callbackSuccess( result )

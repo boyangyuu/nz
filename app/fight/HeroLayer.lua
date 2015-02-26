@@ -15,9 +15,6 @@ local Fight 	= import(".Fight")
 local DefenceView = import(".skills.DefenceView")
 local RobotView = import(".skills.RobotView")
 local HeroAnimView = import(".HeroAnimView")
---kconfig
-local kRemainSumTimes = 4
-local kLeiW = 100.0
 
 local HeroLayer = class("HeroLayer", function()
     return display.newLayer()
@@ -35,7 +32,7 @@ function HeroLayer:ctor(properties)
 	cc.EventProxy.new(self.hero, self)
 
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
-		:addEventListener(Hero.SKILL_GRENADE_START_EVENT	, handler(self, self.onThrowGrenade))		
+	
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))	
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnmeyGold))		
 		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
@@ -147,7 +144,6 @@ function HeroLayer:onActiveGold(event)
     	function ( armatureBack,movementType,movementId ) 
     		print("movementType", movementType)
 	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		print("armature:removeFromParent()")
 				armature:removeFromParent()
 	    	end 
     	end
@@ -247,55 +243,6 @@ end
 --手雷
 function HeroLayer:onThrowGrenade(event)
 
-	--	effect
-	local soundSrc  = "res/Music/fight/rengsl.wav"
-	self.audioId =  audio.playSound(soundSrc,false)		
-
-	local armature = ccs.Armature:create("shoulei")
-	self:addChild(armature)
-	armature:setPosition(display.width / 2, 0)
-	armature:setScale(2.0)
-	armature:getAnimation():play("fire", -1, 1)
-	
-	--destRect
-	local destPos = event.throwPos
-	local destRect = cc.rect(destPos.x, destPos.y ,
-						kLeiW,kLeiW)
-	destRect.y = destPos.y - kLeiW / 2
-	--lei
-	local function playBombEffect()
-		local map = md:getInstance("Map")
-		map:dispatchEvent({name = map.EFFECT_LEI_BOMB_EVENT,
-			pWorld = destRect})
-	end
-
-	local seq =  cc.Sequence:create(
-					cc.Spawn:create(cc.JumpTo:create(1, event.throwPos, 300, 1), cc.ScaleTo:create(1, 0.3)),
-				 	cc.CallFunc:create(
-				 		function ()
-		                    local targetData = {demage = define.kLeiDemage, demageType = "lei", demageScale = 1.0}
-		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
-		                    	targetData = targetData, destPos = destPos,destRect = destRect })
-							armature:removeFromParent()
-							playBombEffect()
-						end)
-					 )
-	armature:runAction(seq)
-
-	-- shadow
-	local shadow = display.newSprite("#btn_dun03.png")
-	shadow:setOpacity(100)
-	shadow:setSkewY(70)
-	shadow:setPosition(display.width / 2, 0)
-	self:addChild(shadow)
-	local seq2 = cc.Sequence:create(
-					cc.MoveTo:create(1, cc.p(event.throwPos)),
-					cc.CallFunc:create(
-						function () 
-							shadow:removeFromParent()
-					 	end
-					))
-	shadow:runAction(seq2)
 end
 
 function HeroLayer:updateHp(event)
