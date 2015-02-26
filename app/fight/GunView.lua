@@ -17,7 +17,6 @@ function GunView:ctor()
 	self.hero = md:getInstance("Hero")
 	self.inlay = md:getInstance("FightInlay")
 	self.isChanging = false
-	self.isFiring = false
 	self:refreshGun()
 
 	--event
@@ -40,8 +39,6 @@ function GunView:fire()
 	local num = self.gun:getCurBulletNum() - 1
 	self.gun:setCurBulletNum(num)
 
-	-- if self.isFiring == true then return end 	
-	self.isFiring = true
 	-- print("function GunView:playFire()")
 	--枪火
 	self.jqk   :setVisible(true)
@@ -65,7 +62,6 @@ function GunView:onHeroFire(event)
 end
 
 function GunView:stopFire()
-	self.isFiring = false
 	self.jqk  :setVisible(false)
 	self.jqkzd:setVisible(false)
 	self.dk   :setVisible(false)
@@ -151,7 +147,7 @@ end
 function GunView:refreshGun()
 	
 	
-	-- print("refreshGun")
+	print("refreshGun")
 	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
@@ -220,6 +216,8 @@ function GunView:setGoldGun(isGold)
 	local skinIndex = isGold and 1 or 0
 	self.armature:getBone("gun"):changeDisplayWithIndex(skinIndex, true) 
 	local boneIndex = 1
+
+	--other bone
 	while(true) do
 		local boneStr = "gun"..boneIndex
 		local bone = self.armature:getBone(boneStr)

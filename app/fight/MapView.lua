@@ -22,9 +22,9 @@ local kEffectZorder = 10000001
 local kDefine = {
 	orderMax 		 = 29,  --敌人同时出场最大序号
 	zorderOffset	 = 30, 	--不同y坐标的
-	missileZorder 	 = 30 * 30 + 2000,
-	sanZorder 	 	 = 30 * 30 + 1000,
 	feijiZorder 	 = 30 * 30 + 500,
+	sanZorder 	 	 = 30 * 30 + 1000,	
+	missileZorder 	 = 30 * 30 + 2000,	
 }
 
 --① 敌人先后顺序不对 , ② 近战兵 自爆兵 的到达 ③ 导弹兵 伞兵 飞机兵分层
@@ -51,9 +51,10 @@ function MapView:ctor()
         :addEventListener(Hero.ENEMY_WAVE_ADD_EVENT, handler(self, self.callfuncAddWave))
         :addEventListener(Hero.ENEMY_ADD_EVENT, handler(self, self.callfuncAddEnemys))
         :addEventListener(Hero.ENEMY_ADD_MISSILE_EVENT, handler(self, self.callfuncAddMissile))
-        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT, handler(self, self.enemysHittedInRange))
-        :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, handler(self, self.enemysHittedInRange))
-    
+        :addEventListener(Hero.SKILL_GRENADE_ARRIVE_EVENT,    handler(self, self.enemysHittedInRange))
+        :addEventListener(Hero.ENEMY_ATTACK_MUTI_EVENT, 	  handler(self, self.enemysHittedInRange))
+		:addEventListener(Hero.SKILL_GRENADE_START_EVENT,	  handler(self, self.onThrowGrenade))	
+
     cc.EventProxy.new(self.fight, self)   
         :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
 
@@ -645,8 +646,60 @@ function MapView:enemysHittedInRange(event)
 	end
 end
 
-function MapView:onHeroPlaneFire(event)
+function MapView:onThrowGrenade(event)
+	--	effect
+	local soundSrc  = "res/Music/fight/rengsl.wav"
+	self.audioId =  audio.playSound(soundSrc,false)		
+
+	local armature = ccs.Armature:create("shoulei")
+	self.mapAnim:addChild(armature, kEffectZorder)
+	armature:setPosition(display.width / 2, 0)
+	armature:setScale(2.0)
+	armature:getAnimation():play("fire", -1, 1)
 	
+	--destRect
+	local focusWorld = event.focusWorld
+	local destPos = self.mapAnim:convertToNodeSpace(cc.p(focusWorld.x, focusWorld.y))
+
+	local destRect = cc.rect(destPos.x - define.kLeiRangeW/2, 
+							 destPos.y - define.kLeiRangeH/2,
+							 define.kLeiRangeW,define.kLeiRangeH)
+	--lei
+	local function playBombEffect()
+		local map = md:getInstance("Map")
+		map:dispatchEvent({name = map.EFFECT_LEI_BOMB_EVENT,
+			destPos = destPos})
+	end
+	local time = define.kLeiTime	
+	local seq =  cc.Sequence:create(
+					cc.Spawn:create(cc.ScaleTo:create(time, 0.3),
+					 				cc.JumpTo:create(time, destPos, 300, 1)),
+				 	cc.CallFunc:create(
+				 		function ()
+		                    local targetData = {demage = define.kLeiDemage, demageType = "lei", demageScale = 1.0}
+		                    self.hero:dispatchEvent({name = Hero.SKILL_GRENADE_ARRIVE_EVENT, 
+		                    	targetData = targetData, destRect = destRect })
+							armature:removeFromParent()
+							playBombEffect()
+						end)
+					 )
+	armature:runAction(seq)
+
+	-- shadow
+	local shadow = display.newSprite("#shadow.png")
+	shadow:setOpacity(100)
+	shadow:setScale(4.0)
+	shadow:setPosition(display.width / 2, 0)
+	self.mapAnim:addChild(shadow, kEffectZorder)
+	local seq2 = cc.Sequence:create(
+					cc.MoveTo:create(time, destPos),
+					cc.CallFunc:create(
+						function () 
+							shadow:removeFromParent()
+					 	end
+					))
+	shadow:scaleTo(time, 1.0)
+	shadow:runAction(seq2)	
 end
 
 function MapView:playEffectShaked(event)

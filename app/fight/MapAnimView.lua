@@ -92,15 +92,12 @@ function MapAnimView:addShootedArmature(animName, pos)
 end
 
 function MapAnimView:playEffectLeiBomb(event)
-	local pWorld = event.pWorld
-
-	--pos
-	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
+	local destPos = event.destPos
 	local armature = ccs.Armature:create("baozhasl_y")
-	armature:setPosition(pos)
+	armature:setPosition(destPos)
 
 	--scale 狙图特殊处理
-	local scale = self:getScaleByPos(pos)
+	local scale = self:getScaleByPos(destPos)
 	armature:setScale(scale)	
 	self:addChild(armature)
 	armature:getAnimation():setMovementEventCallFunc(

@@ -428,15 +428,17 @@ function FightPlayer:checkBtnLei(point)
         self.isShouLeing = true
         addBtnEffect(self.btnLei)
 
-        local w, h = self.focusNode:getCascadeBoundingBox().width, 
-                self.focusNode:getCascadeBoundingBox().height
-        local destPos = cc.p(self.focusNode:getPositionX(), 
-            self.focusNode:getPositionY())
+        -- -- local w, h = self.focusNode:getCascadeBoundingBox().width, 
+        -- --         self.focusNode:getCascadeBoundingBox().height
+        -- local throwPos = cc.p(self.focusNode:getPositionX(), 
+        --     self.focusNode:getPositionY())
 
+        -- dump(throwPos, "throwPos focus")
         --cost
+        local pWorld = self.focusNode:convertToWorldSpace(cc.p(0,0))
         local function callfunc()
             self.hero:dispatchEvent({name = self.hero.SKILL_GRENADE_START_EVENT,
-                throwPos = destPos})
+                focusWorld = pWorld})
         end        
         self.fightProp:costLei(callfunc)
     end

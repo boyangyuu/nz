@@ -16,7 +16,7 @@ GameData={}
 -- --平时
 -- isTest  = true
 -- isDebug = false
-
+isFree = true   --付费免费
 -- --测试打包
 -- isTest  = false
 -- isDebug = true
@@ -32,7 +32,6 @@ define  = Define.new()
 iap     = IAPsdk.new()
 
 function MyApp:ctor()
-
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
