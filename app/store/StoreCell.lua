@@ -7,22 +7,23 @@ function StoreCell:ctor(parameter)
     self.propModel = md:getInstance("propModel")
     self.userModel = md:getInstance("UserModel")
     self.storeModel = md:getInstance("StoreModel")
-	self:initCellUI(parameter)
+
+    self.record = parameter.record
+    self.type = parameter.celltype
+	
+    self:initCellUI()
+    self:initCellData()
+    self:addBtnEvent()
 end
 
-function StoreCell:initCellUI(parameter)
-
-
-	local record = parameter.record
-	local type = parameter.celltype
+function StoreCell:initCellUI()
     local panl_xuanze = display.newScale9Sprite("#panl_xuanze.png",3,0,cc.size(735,157),cc.rect(169,0,1,1))
     self:addChild(panl_xuanze)
     local jinbidi = display.newSprite("#jinbidi.png",0,25)
     jinbidi:setScale(2, 1.5)
     self:addChild(jinbidi)
 
-
-    local btnbuy = cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})
+    self.btnbuy = cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})
             :setButtonSize(155, 59)
             :onButtonPressed(function(event)
                 event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
@@ -30,104 +31,92 @@ function StoreCell:initCellUI(parameter)
            :onButtonRelease(function(event)
                 event.target:runAction(cc.ScaleTo:create(0.1, 1))
             end)
-            
             :pos(270,-30)
             :addTo(self)
 
-
-    local icon_zuanshi = display.newSprite("#icon_zuanshi.png",41,1)
-    icon_zuanshi:setScale(0.7)
-    btnbuy:addChild(icon_zuanshi)
-    icon_zuanshi:setVisible(false)
-    local icon_jibi = display.newSprite("#icon_jibi.png",41,1)
-    icon_jibi:setScale(0.8)
-    btnbuy:addChild(icon_jibi)
-    icon_jibi:setVisible(false)
+    self.icon_zuanshi = display.newSprite("#icon_zuanshi.png",41,1)
+    self.icon_zuanshi:setScale(0.7)
+    self.btnbuy:addChild(self.icon_zuanshi)
+    self.icon_zuanshi:setVisible(false)
+    self.icon_jibi = display.newSprite("#icon_jibi.png",41,1)
+    self.icon_jibi:setScale(0.8)
+    self.btnbuy:addChild(self.icon_jibi)
+    self.icon_jibi:setVisible(false)
     
-    local  property= cc.ui.UILabel.new({
-        UILabelType = 2, text = record["name"], size = 28})
+    self.property= cc.ui.UILabel.new({
+        UILabelType = 2, text = self.record["name"], size = 28})
     :align(display.CENTER, 0, -20)
     :addTo(self)
-    local  buynumber= cc.ui.UILabel.new({
+    self.buynumber= cc.ui.UILabel.new({
         UILabelType = 2, text = "X 50", size = 29, color = cc.c3b(254, 233, 2)})
     :align(display.CENTER, 80, 26)
     :addTo(self)
-    local already = cc.ui.UILabel.new({
+    self.already = cc.ui.UILabel.new({
         UILabelType = 2, text = "已拥有", size = 31})
     :align(display.CENTER, 265, 48)
     :addTo(self)
-    already:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    local ownnumber = cc.ui.UILabel.new({
+    self.already:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.ownnumber = cc.ui.UILabel.new({
         UILabelType = 2, text = "60", size = 31})
     :align(cc.ui.TEXT_ALIGN_CENTER, 332, 48)
     :addTo(self)
-    ownnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    local detail = cc.ui.UILabel.new({
+    self.ownnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.detail = cc.ui.UILabel.new({
         UILabelType = 2, text = "黄金精准", size = 31})
     :align(display.CENTER, -40, 25)
     :addTo(self)
-    detail:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.detail:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
-    local icon_yuan = cc.ui.UILabel.new({
+    self.icon_yuan = cc.ui.UILabel.new({
         UILabelType = 2, text = "元", size = 25})
     :align(display.CENTER, 25 , 4)
-    :addTo(btnbuy)
-    icon_yuan:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    icon_yuan:setVisible(false)
-    local  price= cc.ui.UILabel.new({
+    :addTo(self.btnbuy)
+    self.icon_yuan:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.icon_yuan:setVisible(false)
+    self.price= cc.ui.UILabel.new({
         UILabelType = 2, text = "50000", size = 28})
     :align(display.CENTER, -16, 3)
-    :addTo(btnbuy)
-    price:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    local redline = display.newScale9Sprite("#honggang.png",0,-23,cc.size(160,9),cc.rect(12,0,1,1))
-    redline:setRotation(170)
-    self:addChild(redline)
-    redline:setVisible(false)
+    :addTo(self.btnbuy)
+    self.price:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.redline = display.newScale9Sprite("#honggang.png",0,-23,cc.size(160,9),cc.rect(12,0,1,1))
+    self.redline:setRotation(170)
+    self:addChild(self.redline)
+    self.redline:setVisible(false)
 
     local pos = display.newScale9Sprite("#honggang.png",-250,0,cc.size(160,9),cc.rect(12,0,1,1))
     pos:setScale(0.1)
     pos:setRotation(170)
     self:addChild(pos)
 
-    -- local armature = ccs.Armature:create("guang")
-    -- -- armature:setPosition(130,80)
-    -- armature:setScale(20)
-    -- pos:addChild(armature)
-    -- armature:getAnimation():play("guangtx" , -1, 1)
-    -- dump(armature:getContentSize())
-
-
     local btnarmature = ccs.Armature:create("bt_yjzb")
     btnarmature:setPosition(2,3)
     -- btnarmature:setScale(1.2)
-    btnbuy:addChild(btnarmature)
+    self.btnbuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
+end
 
-
-
-
-    if type == "prop" then
-        icon_zuanshi:setVisible(true)
-        local Img = display.newSprite("#"..record["imgname"]..".png",-230,0)
+function StoreCell:initCellData()
+    if self.type == "prop" then
+        self.icon_zuanshi:setVisible(true)
+        local Img = display.newSprite("#"..self.record["imgname"]..".png",-230,0)
         self:addChild(Img)
-        detail:setString(record["name"])
-        buynumber:setString("X "..record["buynum"])
-        property:setString(record["describe"])
-        price:setString(record["price"])
-        if record["nameid"] == "goldweapon" then
+        self.detail:setString(self.record["name"])
+        self.buynumber:setString("X "..self.record["buynum"])
+        self.property:setString(self.record["describe"])
+        self.price:setString(self.record["price"])
+        if self.record["nameid"] == "goldweapon" then
             local goldnum = self.inlayModel:getGoldWeaponNum()
-            ownnumber:setString(goldnum)
+            self.ownnumber:setString(goldnum)
         else
-            ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+            self.ownnumber:setString(self.propModel:getPropNum(self.record["nameid"]))
         end
+    elseif self.type == "bank" then
+        self.ownnumber:setVisible(false)
+        self.already:setVisible(false)
+        self.icon_yuan:setVisible(true)
+        self.redline:setVisible(true)
 
-    elseif type == "bank" then
-        ownnumber:setVisible(false)
-        already:setVisible(false)
-        icon_yuan:setVisible(true)
-        redline:setVisible(true)
-
-        local Img = display.newSprite("#"..record["imgname"]..".png",-230,0)
+        local Img = display.newSprite("#"..self.record["imgname"]..".png",-230,0)
         self:addChild(Img)
 
         local discount = display.newSprite("#dazhe.png",-300,30)
@@ -141,76 +130,77 @@ function StoreCell:initCellUI(parameter)
         discountlabel:enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
         discountlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 
-        detail:setString(record["name"])
-        buynumber:setString("X "..record["number"])
-        discountlabel:setString("+"..record["discount"].."%")
-        property:setString("原价："..record["costprice"].." 元")
-        price:setString(record["price"])
+        self.detail:setString(self.record["name"])
+        self.buynumber:setString("X "..self.record["number"])
+        discountlabel:setString("+"..self.record["discount"].."%")
+        self.property:setString("原价："..self.record["costprice"].." 元")
+        self.price:setString(self.record["price"])
 
-        if record["price"] == 1 then
+        if self.record["price"] == 1 then
             -- discountlabel:setVisible(false)
             discount:setVisible(false)
-            redline:setVisible(false)
+            self.redline:setVisible(false)
         end
-    elseif type == "inlay" then
-        buynumber:setVisible(false)
-        icon_jibi:setVisible(true)
+    elseif self.type == "inlay" then
+        self.buynumber:setVisible(false)
+        self.icon_jibi:setVisible(true)
 
-        local Img = display.newSprite("#"..record["imgname"]..".png",-240,0)
+        local Img = display.newSprite("#"..self.record["imgname"]..".png",-240,0)
         Img:setScale(1.2)
         self:addChild(Img)
-        detail:setString(record["describe2"])
-        detail:setPosition(0,25)
-        property:setString(record["describe1"].." "..record["valueDisplay"])
-        property:setPosition(0,-20)
-        price:setString(record["goldPrice"])
-        ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
+        self.detail:setString(self.record["describe2"])
+        self.detail:setPosition(0,25)
+        self.property:setString(self.record["describe1"].." "..self.record["valueDisplay"])
+        self.property:setPosition(0,-20)
+        self.price:setString(self.record["goldPrice"])
+        self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
     end
+end
 
-
-    btnbuy:onButtonClicked(function()
+function StoreCell:addBtnEvent()
+        self.btnbuy:onButtonClicked(function()
             local dianji = "res/Music/ui/dianji.wav"
             audio.playSound(dianji,false)
 
-            if type == "prop" then
-                if self.userModel:costDiamond(record["price"]) then
+            if self.type == "prop" then
+                if self.userModel:costDiamond(self.record["price"]) then
                     self:playSound()
-                    if record["nameid"] == "goldweapon" then
-                        self.inlayModel:buyGoldsInlay(record["buynum"])
+                    if self.record["nameid"] == "goldweapon" then
+                        self.inlayModel:buyGoldsInlay(self.record["buynum"])
                         self.inlayModel:refreshInfo("speed")
                     else
-                        self.propModel:buyProp(record["nameid"],record["buynum"])
+                        self.propModel:buyProp(self.record["nameid"],self.record["buynum"])
                     end
-                    um:buy(record["nameid"], 1, record["price"])   
-                    if record["nameid"] == "goldweapon" then
+                    um:buy(self.record["nameid"], 1, self.record["price"])   
+                    if self.record["nameid"] == "goldweapon" then
                         local goldnum = self.inlayModel:getGoldWeaponNum()
-                        ownnumber:setString(goldnum)
+                        self.ownnumber:setString(goldnum)
                     else
-                        ownnumber:setString(self.propModel:getPropNum(record["nameid"]))
+                        self.ownnumber:setString(self.propModel:getPropNum(self.record["nameid"]))
                     end
                 else
                     local buyModel = md:getInstance("BuyModel")
-                    if record["nameid"] == "goldweapon" then
+                    if self.record["nameid"] == "goldweapon" then
                         buyModel:buy("goldWeapon",{payDoneFunc = handler(self,self.playSound)})
-                    elseif record["nameid"] == "jijia" then
+                    elseif self.record["nameid"] == "jijia" then
                         buyModel:buy("armedMecha",{payDoneFunc = handler(self,self.playSound)})
-                    elseif record["nameid"] == "lei" then
+                    elseif self.record["nameid"] == "lei" then
                         buyModel:buy("handGrenade",{payDoneFunc = handler(self,self.playSound)})
                     end
                 end
-            elseif type == "bank" then
+            elseif self.type == "bank" then
                 local buyModel = md:getInstance("BuyModel")
-                buyModel:buy("stone"..record["number"],{payDoneFunc = handler(self,self.playSound)})
-            elseif type == "inlay" then
-                if self.userModel:costMoney(record["goldPrice"]) then
+                buyModel:buy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)})
+            elseif self.type == "inlay" then
+                if self.userModel:costMoney(self.record["goldPrice"]) then
                     local gmcg   = "res/Music/ui/gmcg.wav"
                     audio.playSound(gmcg,false)
 
-                    self.inlayModel:buyInlay(record["id"])
-                    ownnumber:setString(self.inlayModel:getInlayNum(record["id"]))
+                    self.inlayModel:buyInlay(self.record["id"])
+                    self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
                 end
-                local buyInfo = record["type"].."_"..record["property"]
-                um:buy(buyInfo, 1, record["goldPrice"])   
+                local buyInfo = self.record["type"].."_"..self.record["property"]
+                um:buy(buyInfo, 1, self.record["goldPrice"])   
             end
         end)
 end

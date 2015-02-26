@@ -234,7 +234,7 @@ function HomeBarLayer:onBtnArsenalClicked()
 end
 
 function HomeBarLayer:onBtnBackClicked()
-    self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
+    -- self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
     self.btnBack:setVisible(false)
     self.btnSetting:setVisible(true)
     self:refreshCommonLayer("levelMapLayer")
