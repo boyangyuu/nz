@@ -41,9 +41,8 @@ Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离
 Define.kRenzheShanOffsetMax		= 600		--忍者瞬移最大距离 
 
 --蓝色boss 红色boss
-Define.kBlueBossSpeed				= 500.0  --速度
-Define.kBlueBossRunTime 			= 1.0	 --大范围移动时间
-Define.kBlueBossWalkTime			= 0.6    --小范围移动时间
+Define.kBlueBossSpeed				= 200.0  --速度
+Define.kBlueBossWalkTime			= 1.0    --小范围移动时间
 
 --飞机兵 
 Define.kfeijiSpeed				= 500.0  --速度

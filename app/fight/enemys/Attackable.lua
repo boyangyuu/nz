@@ -248,6 +248,7 @@ function Attackable:checkPlace(offset)
 	-- print("offset", offset)
 	local xLeft   = pWorld2.x - bound2.width/2 * scale + offset
 	local xRight  = pWorld2.x + bound2.width/2 * scale + offset
+
 	-- print("xLeft", xLeft)
 	-- print("xRight", xRight)	
 	return xLeftLimit < xLeft and xRight < xRightLimit 
