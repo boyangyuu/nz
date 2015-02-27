@@ -109,7 +109,7 @@ Define.kJuRange 				= 4.0
 
 --引导
 Define.kGuideActiveJijia	 	= 0.35  --boss还有百分之10血时 触发机甲
-Define.kGuidebossHpScale		= 0.70  --引导的时候 boss的血量缩小0.7
+-- Define.kGuidebossHpScale		= 0.70  --引导的时候 boss的血量缩小0.7
 
 
 function Define:ctor()

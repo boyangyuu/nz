@@ -745,9 +745,9 @@ function BaseBossView:checkGuide()
 		self.isGuidedDun = true
 		local fight = md:getInstance("Fight")
 		fight:stopFire()
-		local scale = define.kGuidebossHpScale
+		-- local scale = define.kGuidebossHpScale
 		local maxHp = self.enemy:getMaxHp()
-		self.enemy:setMaxHp(maxHp * scale)
+		self.enemy:setMaxHp(maxHp * 1)
 		self.enemy:setFullHp()
 	end
 end
@@ -755,7 +755,7 @@ end
 function BaseBossView:checkGuide1()
 	local guide = md:getInstance("Guide")
 	if not guide:isDone("fight02") and not self.isGuidedJijia then 
-		print("guide:check(fight02)")
+		-- print("guide:check(fight02)")
 		local isWillGuide = guide:check("fight02")
 		if isWillGuide then 
 			self.isGuidedJijia = true

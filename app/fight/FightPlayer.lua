@@ -22,14 +22,12 @@ end)
 
 function FightPlayer:ctor(properties)
     --instance
-    -- print("FightPlayer:ctor(properties)")
     self.fight      = md:getInstance("Fight")
     self.fight:refreshData(properties)
     self.fight:beginFight()
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
-
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
     self.fightProp  = md:getInstance("FightProp")
@@ -47,7 +45,6 @@ function FightPlayer:ctor(properties)
     self.gunView        = GunView.new()
     self.heroLayer      = HeroLayer.new()
     self.infoLayer      = InfoLayer.new() 
-    self.touchIds       = {} --todo
     self.isControlVisible = true
     --ui
     self:initUI()
@@ -428,12 +425,6 @@ function FightPlayer:checkBtnLei(point)
         self.isShouLeing = true
         addBtnEffect(self.btnLei)
 
-        -- -- local w, h = self.focusNode:getCascadeBoundingBox().width, 
-        -- --         self.focusNode:getCascadeBoundingBox().height
-        -- local throwPos = cc.p(self.focusNode:getPositionX(), 
-        --     self.focusNode:getPositionY())
-
-        -- dump(throwPos, "throwPos focus")
         --cost
         local pWorld = self.focusNode:convertToWorldSpace(cc.p(0,0))
         local function callfunc()
@@ -484,7 +475,6 @@ function FightPlayer:checkBtnChange(point)
     return isTouch    
 end
 
-
 function FightPlayer:onTouchMoved(event)
     local  x, y, prevX, prevY 
     for i,v in pairs(event.points) do
@@ -495,8 +485,7 @@ function FightPlayer:onTouchMoved(event)
         if isBtnTouchPoint == false then 
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
             local offsetX = x - prevX 
-            local offsetY = y - prevY
-            
+            local offsetY = y - prevY            
             --处理瞄准
             self:moveFocus(offsetX, offsetY)
             
@@ -630,7 +619,6 @@ function FightPlayer:fire()
     if self.gunView:canShot() then  --todo
         self.hero:fire() 
     end    
-    
 end
 
 function FightPlayer:onHeroFire(event)
@@ -655,6 +643,9 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     offsetY = yOri + offsetY * scale
     focusNode:setPosition(offsetX, offsetY)
     self:justFocusPos(focusNode)
+
+    --变红 todoyby
+
     local x, y = focusNode:getPosition()
     self:moveGun(x - xOri,y - yOri)
 end
@@ -774,26 +765,26 @@ function FightPlayer:initGuide1()
         end
      })
     
-    --开枪1次
-    self.guide:addClickListener({
-        id = "fight_fire1",
-        groupId = "fight01",
-        rect = self.btnFire:getBoundingBox(),
-        endfunc = function (touchEvent)
-            self:fire()
-            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
-        end
-    })  
+    -- --开枪1次
+    -- self.guide:addClickListener({
+    --     id = "fight_fire1",
+    --     groupId = "fight01",
+    --     rect = self.btnFire:getBoundingBox(),
+    --     endfunc = function (touchEvent)
+    --         self:fire()
+    --         scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
+    --     end
+    -- })  
 
-    --开枪1秒
-    self.guide:addClickListener({
-        id = "fight_fire2",
-        groupId = "fight01",
-        rect = self.btnFire:getBoundingBox(),
-        endfunc = function (touchEvent)
-            self:onGuideFire(touchEvent)
-        end
-    })  
+    -- --开枪1秒
+    -- self.guide:addClickListener({
+    --     id = "fight_fire2",
+    --     groupId = "fight01",
+    --     rect = self.btnFire:getBoundingBox(),
+    --     endfunc = function (touchEvent)
+    --         self:onGuideFire(touchEvent)
+    --     end
+    -- })  
 
     --扔雷
     self.guide:addClickListener( {
@@ -828,7 +819,7 @@ function FightPlayer:initGuide1()
         end
     })     
 end
-
+--[[
 function FightPlayer:onGuideFire(touchEvent)
     local name = touchEvent.name
     local limitTime = 0.6
@@ -865,8 +856,7 @@ function FightPlayer:onGuideFire(touchEvent)
         self:checkBtnFire(id, point,name)
     end
 end
-
-
+]]
 function FightPlayer:initGuide2()
     --check   
     local isDone = self.guide:isDone("fight02_dun")
