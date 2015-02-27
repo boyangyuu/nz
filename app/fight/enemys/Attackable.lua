@@ -340,7 +340,9 @@ function Attackable:playBombEffect()
 	local bone = self.armature:getBone("bomb")
 	if bone == nil then return end
 	assert(bone, "bomb bone is nil")
-	local box = bone:getDisplayRenderNode():getBoundingBox()
+	local node = bone:getDisplayRenderNode()
+	if node == nil then return end
+	local box = node:getBoundingBox()
 	-- local box = self.armature:getBoundingBox()
 	local bomb = ccs.Armature:create("baozha4")
 	bomb:setAnchorPoint(0.5,0.5)
@@ -349,7 +351,7 @@ function Attackable:playBombEffect()
 	-- dump(bombBox, "bombBox")
 	bomb:setPosition(
 		math.random(-box.width/2, box.width/2 ), 
-		math.random(0, box.height ))
+		math.random(0, box.height))
 
 	self.armature:addChild(bomb, 100)
 	bomb:getAnimation():play("baozha4", -1, 0)
@@ -364,6 +366,7 @@ function Attackable:restoreStand(delay)
 		self.playAnimId = nil
 		self:playStand()
 		self.armature:stopAllActions()	
+		self:stopAllActions()
 	end
     self.schRestore = scheduler.performWithDelayGlobal(restore, delay)
     self:addScheduler(self.schRestore)
@@ -402,7 +405,6 @@ function Attackable:getPosInMapBg()
 	local world = self:convertToWorldSpace(cc.p(0,0))
 	local map   = md:getInstance("Map")
 	local mapbg = map:getMapBgNode()
-	local box 	= mapbg:getBoundingBox()
 	local worldMap = mapbg:convertToNodeSpace(cc.p(world.x, world.y))	
 	return worldMap
 end

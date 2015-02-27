@@ -87,9 +87,7 @@ function MapView:loadCCS()
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
-	self.mapModel:setMapBgNode(self.bg)
-	local box = self.bg:getBoundingBox()
-	-- dump(box, "box")
+	self.mapModel:setMapBgNode(self.map)
 	self:loadPlaces()
 end
 

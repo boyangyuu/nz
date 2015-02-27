@@ -58,7 +58,7 @@ function StoryLayer:initTouchEvent()
 				data.guide.gamePre = true
 				setUserData(data)
 				ui:changeLayer("FightPlayer", {groupId = 1, 
-					levelId = 1})				
+					levelId = 0})				
 			end
 		end
 	end)

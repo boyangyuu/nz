@@ -2,6 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
+
 	{
 		enemys = {                                          --1波1个
 			{
@@ -514,15 +515,16 @@ local enemys = {
 	weak1=1},
 
 	--铁球
-
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
+	
 	--手雷
 	{id=7,image="shoulei",demage=1,hp=1,
 	weak1=2},
+	
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
 	weak1=1},
@@ -560,16 +562,16 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90,  0.50, 0.10,
+				0.80, 0.70, 0.50, 0.10,
 			},
 			moveRightFire = {
-				0.70,  0.30, 
+				0.90,  0.60, 0.70,  0.30, 
 			},
 			chongfeng = {
 			     0.95, 0.93, 0.85, 0.75, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
 			},
 			tieqiu = {
-				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
+				0.99, 0.80, 0.60, 0.40, 0.20, 0.10,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40, 0.10,                        
@@ -596,6 +598,7 @@ local bosses = {
 			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
 			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
 			return cc.Sequence:create(move1, move2, move3, move4, move5)
+				
 		end,
 
 		getMoveRightAction = function ()
@@ -609,16 +612,13 @@ local bosses = {
 	},
 }
 
-local mapId = "map_1_2"
-local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
-	self.mapId  = mapId
-	self.limit  = limit
-	self.goldLimits = {225,355,495}   --黄武激活所需杀人个数  本关共60个小怪
+	self.mapId  = "map_1_2"
+	self.limit  = 10
 end
 
 return waveClass
