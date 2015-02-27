@@ -5,7 +5,6 @@
 ]]
 
 --includes
-
 local Map = class("Map", cc.mvc.ModelBase)
 --events
 Map.EFFECT_LEI_BOMB_EVENT = "EFFECT_LEI_BOMB_EVENT"
@@ -14,6 +13,7 @@ Map.EFFECT_JUSHAKE_EVENT 	  = "EFFECT_JUSHAKE_EVENT"
 
 Map.MAP_ZOOM_OPEN_EVENT   = "MAP_ZOOM_OPEN_EVENT"
 Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
+
 Map.GUN_OPEN_JU_EVENT	  = "GUN_OPEN_JU_EVENT"
 Map.GUN_CLOSE_JU_EVENT    = "GUN_CLOSE_JU_EVENT"
 
@@ -70,7 +70,6 @@ function Map:playEffect(name)
 		print("function Map:playEffect(name)")
 		self:dispatchEvent({name = Map.EFFECT_SHAKE_EVENT})
 	else
-
 	end
 end
 

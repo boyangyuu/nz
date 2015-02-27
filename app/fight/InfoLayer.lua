@@ -34,7 +34,7 @@ function InfoLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-	self:initGuide()
+	-- self:initGuide()
 	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
 	self:setTouchSwallowEnabled(false) 
@@ -191,8 +191,7 @@ end
 function InfoLayer:onHide(event)
 	self:setVisible(false)
 end
-
-
+--[[
 function InfoLayer:initGuide()
     local isDone = self.guide:isDone("fight")
     if isDone then return end
@@ -208,7 +207,7 @@ function InfoLayer:initGuide()
     }
     self.guide:addClickListener(data1)  
 end
-
+]]
 function InfoLayer:onEnter()
 
 end

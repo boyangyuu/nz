@@ -31,6 +31,7 @@ function BaseBossView:ctor(property)
     self:initBlood()
     self.isRed = false
     self.isUnhurted = false
+
 	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
@@ -110,8 +111,6 @@ function BaseBossView:setBlood(scale)
 	    node2:setVisible(false)
     end
 
-    -- local newPer = newScale * 100
-    -- bloodUp:setPercent(newPer)
     bloodUp:setScaleX(newScale)
     transition.scaleTo(bloodDown, {scaleX = newScale, time = 0.1})
 end
@@ -132,14 +131,15 @@ function BaseBossView:playHitted(event)
 	self:setBlood(hp/maxHp)	
 end
 
-function BaseBossView:playMove()  --改为onMove
+function BaseBossView:playMove()  
+	local pos = self:getPosInMapBg()
 	local isLeft = math.random(1, 2)
-	local time  = define.kBlueBossWalkTime
-	local speed = define.kBlueBossSpeed		
-	local width   = time * speed * self:getScale()
+	local time   = define.kBlueBossWalkTime	
+	local width  = 200 * self:getScale()
 	local direction = isLeft == 1 and 1 or -1
 	if not self:checkPlace(width * direction) then return end
 	
+
 	--action
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
@@ -151,10 +151,8 @@ function BaseBossView:playMove()  --改为onMove
 		self:runAction(action)		
 	end	
 
-	local action = cc.MoveBy:create(time, cc.p(width * direction, 0))
-	self:runAction(action)
 	self.enemy:beginWalkCd()
-	self:restoreStand(time)
+	self:restoreStand(time - 0.01)
 end
 
 function BaseBossView:playKill(event)
@@ -212,7 +210,7 @@ function BaseBossView:playSkill(skillName)
 	elseif string.sub(skillName, 1, 6) == "demage" then 
 		local num = string.sub(skillName, 7, 9)
 		num = tonumber(num)
-		print(" demage num", num)
+		-- print(" demage num", num)
 		local per = num / 100
 
 		local guide = md:getInstance("Guide")
@@ -234,25 +232,19 @@ end
 function BaseBossView:platMoveDaoFireAction(isLeft)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
-
-	--出发
-	-- local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
-	local bound = self.armature:getBoundingBox()
-	-- local disOut = -(pWorld.x + bound.width / 2)
-
+--[[
+	--向左出发
+	local bound = self.armature:getCascadeBoundingBox() 
 	local pos = self:getPosInMapBg()
-
-	local disOut =  -(pos.x + bound.width ) 
-	local disOut =  -(pos.x + bound.width)
-
+	dump(pos, "pos")
+	local disOut = isLeft and  -(pos.x + bound.width ) or 
+						(1660 - pos.x)
 	local time = math.abs(disOut) / speed
 	local desPos = cc.p(disOut, 0)
 	local actionOut = cc.MoveBy:create(time, desPos)
 
 	--到右屏幕
-	local disScreen = display.width + bound.width
-	local disScreen = 1560 			+ bound.width
-
+	local disScreen = 1660 + bound.width
 	time = math.abs(disScreen) / speed
  	desPos = cc.p(disScreen, 0)
 	local actionScreen1 = cc.MoveBy:create(time, desPos)
@@ -269,7 +261,61 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	time = math.abs(disBack) / speed
 	local actionBack = cc.MoveBy:create(time, desPos)
 	local seq = nil
-	
+		--向左出发
+	local bound = self.armature:getCascadeBoundingBox() 
+	local pos = self:getPosInMapBg()
+	dump(pos, "pos")
+	local disOut = isLeft and  -(pos.x + bound.width ) or 
+						(1660 - pos.x)
+	local time = math.abs(disOut) / speed
+	local desPos = cc.p(disOut, 0)
+	local actionOut = cc.MoveBy:create(time, desPos)
+
+	--到右屏幕
+	local disScreen = 1660 + bound.width
+	time = math.abs(disScreen) / speed
+ 	desPos = cc.p(disScreen, 0)
+	local actionScreen1 = cc.MoveBy:create(time, desPos)
+
+	--到左屏幕
+	local disScreen2 = -disScreen
+	time = math.abs(disScreen2) / speed
+	desPos = cc.p(disScreen2, 0)
+	local actionScreen2 = cc.MoveBy:create(time, desPos)
+
+	--返回
+	local disBack = - disOut
+	desPos = cc.p(disBack, 0)
+	time = math.abs(disBack) / speed
+	local actionBack = cc.MoveBy:create(time, desPos)
+	local seq = nil
+
+]]
+
+	--向左出发
+	local bound = self.armature:getCascadeBoundingBox() 
+	local pos = self:getPosInMapBg()
+	dump(pos, "pos")
+	local disOut = isLeft and  -bound.width or 1560
+	local time = math.abs(posOri.x - disOut) / speed
+	local desPos = cc.p(disOut, posOri.y)
+	local actionOut = cc.MoveTo:create(time, desPos)
+
+	--到右屏幕
+	desPos = cc.p(1660 + bound.width, posOri.y)
+	local time = math.abs(1660) / speed
+	local actionScreen1 = cc.MoveTo:create(time, desPos)
+
+	--到左屏幕
+	desPos = cc.p(- bound.width - 200, posOri.y)
+	local time = math.abs(1660) / speed	
+	local actionScreen2 = cc.MoveTo:create(time, desPos)
+
+	--返回
+	local time = math.abs(posOri.x - desPos.x) / speed
+	local actionBack = cc.MoveTo:create(time, posOri)
+	local seq = nil
+
 	--出发之前
 	local callfuncBeforeOut = function ()
 		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
@@ -315,27 +361,13 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 		beforeBackCall, actionBack, afterLeftCall)	
 	else 
 		seq = cc.Sequence:create(
-		beforeOutCall, actionBack,
+		beforeOutCall, actionOut,
 		beforeRightCall, actionScreen2, 
 		cc.DelayTime:create(2.0),
 		beforeLeftCall, actionScreen1, 
-		beforeBackCall, actionOut, afterLeftCall)	
+		beforeBackCall, actionBack, afterLeftCall)	
 	end
 	self:runAction(seq)
-end
-
-function BaseBossView:playMoveRightFire()
-	local dis = 2 
-    local widthOffset = 100 
-    local isAble = self:checkPlace(widthOffset)
-    if not isAble then return end
-
-	self.armature:getAnimation():play("moverightfire" , -1, 1)
-	local action = cc.MoveBy:create(1/60, cc.p(dis, 0))
-    local seq = cc.Sequence:create(action)	
-    self:runAction(cc.RepeatForever:create(seq))	
-
-	self.enemy:hit(self.hero)
 end
 
 function BaseBossView:playSaoShe()
@@ -345,7 +377,6 @@ function BaseBossView:playSaoShe()
 	local fireOffset = self.config["saoFireOffset"]
 	local fireTimes = self.config["saoFireTimes"]
 	self:continueFire(fireTimes, fireOffset)
-	
 end
 
 function BaseBossView:continueFire(sumTimes, fireOffset)
@@ -362,10 +393,9 @@ function BaseBossView:continueFire(sumTimes, fireOffset)
 end
 
 function BaseBossView:playDaoDan1()
-	--todo 改为bone
 	--导弹
-	for i=1,7 do
-		local delay = 0.3 + 0.15 * i
+	for i=1,4 do
+		local delay = 0.4 + 0.3 * i
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
@@ -416,7 +446,8 @@ end
 
 function BaseBossView:playChongfeng()
 	self.armature:getAnimation():play("chongfeng", -1, 1)
-    --前进
+
+    --ahead begin
     local speed = 400
     local desY = -180
     local scale = 2.0
@@ -433,8 +464,7 @@ function BaseBossView:playChongfeng()
 
     --
     local aheadEndFunc = function ()
-        print("aheadEnd")
-        self.isAheading = false
+        print("ahead end")
   		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()
@@ -745,9 +775,9 @@ function BaseBossView:checkGuide()
 		self.isGuidedDun = true
 		local fight = md:getInstance("Fight")
 		fight:stopFire()
-		local scale = define.kGuidebossHpScale
+		-- local scale = define.kGuidebossHpScale
 		local maxHp = self.enemy:getMaxHp()
-		self.enemy:setMaxHp(maxHp * scale)
+		self.enemy:setMaxHp(maxHp * 1)
 		self.enemy:setFullHp()
 	end
 end
@@ -755,7 +785,7 @@ end
 function BaseBossView:checkGuide1()
 	local guide = md:getInstance("Guide")
 	if not guide:isDone("fight02") and not self.isGuidedJijia then 
-		print("guide:check(fight02)")
+		-- print("guide:check(fight02)")
 		local isWillGuide = guide:check("fight02")
 		if isWillGuide then 
 			self.isGuidedJijia = true

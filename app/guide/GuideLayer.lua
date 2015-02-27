@@ -210,7 +210,7 @@ function GuideLayer:refreshUI()
 	local circle = display.newRect(rect, params) --todo改为九宫格
 	local opacityCfg = cfg.opacity 
 	local render = cc.RenderTexture:create(display.width1, display.height1)
-	local opacity = opacityCfg or 0.5 --透明度
+	local opacity = opacityCfg or 0.8 --透明度
 	render:clear(0.1, 0.1, 0.1, opacity)
 	render:begin()
 		circle:setBlendFunc(gl.DST_ALPHA, gl.ZERO)

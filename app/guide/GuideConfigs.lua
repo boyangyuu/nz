@@ -32,14 +32,14 @@ local configs = {}
 configs["fight01"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_blood", msg = "阿杰 , 这是生命值", rolepos = "right", }, 
+		-- {id = "fight_blood", msg = "阿杰 , 这是生命值", rolepos = "right", }, 
 		{id = "fight_move", msg = "在屏幕上左右滑动可以移动准星",touchType = "all", skipMode = "condition", hand = "move"},
-		{id = "fight_fire1", msg = "在高亮区域点击 , 枪械将会射击", skipDelay = 1.0},
-		{id = "fight_fire2", msg = "长按射击按钮 , 会连续射击",touchType = "all", skipMode = "condition", 
-				hand = "longtouch", contentOffset = {x = 0, y = 50}},
-		{id = "fight_throw", msg = "在高亮区域点击 , 将会投掷手雷", skipDelay = 1.0},
+		-- {id = "fight_fire1", msg = "在高亮区域点击 , 枪械将会射击", skipDelay = 1.0},
+		-- {id = "fight_fire2", msg = "长按射击按钮 , 会连续射击",touchType = "all", skipMode = "condition", 
+				-- hand = "longtouch", contentOffset = {x = 0, y = 50}},
+		-- {id = "fight_throw", msg = "在高亮区域点击 , 将会投掷手雷", skipDelay = 1.0},
 		{id = "fight_change", msg = "在高亮区域点击 , 将会更换枪械"},
-		{id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
+		-- {id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}
 }
 
@@ -58,7 +58,7 @@ configs["prefight02"] = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
 		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
 		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
-		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen", opacity = 0.0},
+		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen"},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
 		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", },		
 		-- {id = "prefight02_equip1", msg = "点击一键装备 , 装备M4A1", },		
