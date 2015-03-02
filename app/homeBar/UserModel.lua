@@ -63,10 +63,16 @@ end
 end
 
 function UserModel:levelPass(groupId,levelId)
+	dump(groupId)
+	dump(levelId)
 	local data = getUserData()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
-	if groupId == group and levelId ==level then
+	if groupId == 0 and levelId == 0 then
+		return
+	elseif math.floor(levelId) < levelId then
+		return
+	elseif groupId == group and levelId == level then
 		if self.LevelMapModel:getNextGroupAndLevel(group, level) == false then
 			print("通关")
 		else

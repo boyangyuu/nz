@@ -158,49 +158,49 @@ function StoreCell:initCellData()
 end
 
 function StoreCell:addBtnEvent()
-        self.btnbuy:onButtonClicked(function()
-            local dianji = "res/Music/ui/dianji.wav"
-            audio.playSound(dianji,false)
+    self.btnbuy:onButtonClicked(function()
+        local dianji = "res/Music/ui/dianji.wav"
+        audio.playSound(dianji,false)
 
-            if self.type == "prop" then
-                if self.userModel:costDiamond(self.record["price"]) then
-                    self:playSound()
-                    if self.record["nameid"] == "goldweapon" then
-                        self.inlayModel:buyGoldsInlay(self.record["buynum"])
-                        self.inlayModel:refreshInfo("speed")
-                    else
-                        self.propModel:buyProp(self.record["nameid"],self.record["buynum"])
-                    end
-                    um:buy(self.record["nameid"], 1, self.record["price"])   
-                    if self.record["nameid"] == "goldweapon" then
-                        local goldnum = self.inlayModel:getGoldWeaponNum()
-                        self.ownnumber:setString(goldnum)
-                    else
-                        self.ownnumber:setString(self.propModel:getPropNum(self.record["nameid"]))
-                    end
+        if self.type == "prop" then
+            if self.userModel:costDiamond(self.record["price"]) then
+                self:playSound()
+                if self.record["nameid"] == "goldweapon" then
+                    self.inlayModel:buyGoldsInlay(self.record["buynum"])
+                    self.inlayModel:refreshInfo("speed")
                 else
-                    local buyModel = md:getInstance("BuyModel")
-                    if self.record["nameid"] == "goldweapon" then
-                        buyModel:buy("goldWeapon",{payDoneFunc = handler(self,self.playSound)})
-                    elseif self.record["nameid"] == "jijia" then
-                        buyModel:buy("armedMecha",{payDoneFunc = handler(self,self.playSound)})
-                    elseif self.record["nameid"] == "lei" then
-                        buyModel:buy("handGrenade",{payDoneFunc = handler(self,self.playSound)})
-                    end
+                    self.propModel:buyProp(self.record["nameid"],self.record["buynum"])
                 end
-            elseif self.type == "bank" then
+                um:buy(self.record["nameid"], 1, self.record["price"])   
+                if self.record["nameid"] == "goldweapon" then
+                    local goldnum = self.inlayModel:getGoldWeaponNum()
+                    self.ownnumber:setString(goldnum)
+                else
+                    self.ownnumber:setString(self.propModel:getPropNum(self.record["nameid"]))
+                end
+            else
                 local buyModel = md:getInstance("BuyModel")
-                buyModel:buy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)})
-            elseif self.type == "inlay" then
-                if self.userModel:costMoney(self.record["goldPrice"]) then
-                    self:playSound()
-                    self.inlayModel:buyInlay(self.record["id"])
-                    self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
+                if self.record["nameid"] == "goldweapon" then
+                    buyModel:buy("goldWeapon",{payDoneFunc = handler(self,self.playSound)})
+                elseif self.record["nameid"] == "jijia" then
+                    buyModel:buy("armedMecha",{payDoneFunc = handler(self,self.playSound)})
+                elseif self.record["nameid"] == "lei" then
+                    buyModel:buy("handGrenade",{payDoneFunc = handler(self,self.playSound)})
                 end
-                local buyInfo = self.record["type"].."_"..self.record["property"]
-                um:buy(buyInfo, 1, self.record["goldPrice"])   
             end
-        end)
+        elseif self.type == "bank" then
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:buy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)})
+        elseif self.type == "inlay" then
+            if self.userModel:costMoney(self.record["goldPrice"]) then
+                self:playSound()
+                self.inlayModel:buyInlay(self.record["id"])
+                self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
+            end
+            local buyInfo = self.record["type"].."_"..self.record["property"]
+            um:buy(buyInfo, 1, self.record["goldPrice"])   
+        end
+    end)
 end
 
 function StoreCell:playSound()

@@ -19,7 +19,10 @@ function FightConfigs:getWaveConfig()
 	self.fight = md:getInstance("Fight")
 	local group = self.fight:getGroupId()
 	local level = self.fight:getLevelId()
-	
+    if math.floor(level) < level then
+        level = tostring(level)
+        level = string.gsub(level, "%.", "_")
+    end
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
 	local waveFight = require(p .. str_src).new()

@@ -13,6 +13,29 @@ function LevelMapModel:getConfig()
 	return group,level
 end
 
+function LevelMapModel:getLevelNum(gid)
+    local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
+    local recordnum = #recordsGroup
+    local maxLevel = recordsGroup[recordnum]
+    local levelNum = maxLevel["levelId"]
+    return levelNum
+end
+
+function LevelMapModel:getGroupNum()
+    local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
+    local groupNum = #recordsLevel
+    return groupNum
+end
+
+function LevelMapModel:getGroupInfo(gid)
+	local groupInfo = {}
+    local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
+    for i=1, #recordsGroup do
+    	local record = recordsGroup[i]
+    	groupInfo[i] = record["levelId"]
+    end
+    return groupInfo
+end
 
 function LevelMapModel:getNextGroupAndLevel(gid, lid)
 	local levelid = lid
