@@ -2,7 +2,6 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
 	{
 		enemys = {                                          --1波1个
 			{
@@ -63,7 +62,7 @@ local waves = {
 		},
 	},	
 	{
-		enemys = {                                           --4波换炮
+		enemys = {                                           --4波换枪 mp5
 			{
 				time = 1,	
 				num = 4,
@@ -105,22 +104,22 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			{
-				time = 6,
-				num = 1,
-				pos = {800},
-				delay = {0.1},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 10,
-					placeName = "place12",
-					missileId = 4,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},		
+			-- {
+			-- 	time = 6,
+			-- 	num = 1,
+			-- 	pos = {800},
+			-- 	delay = {0.1},                            -- 吉普车
+			-- 	property = {
+			-- 		type = "jipu" ,
+			-- 		id = 10,
+			-- 		placeName = "place12",
+			-- 		missileId = 4,
+			-- 		missileType = "daodan",
+			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+			-- 		startState = "enterleft",
+			-- 		lastTime = 60.0,		--持续时间			
+			-- 	},
+			-- },		
 			{
 				time = 8,
 				num = 1,
@@ -320,7 +319,7 @@ local waves = {
 		},
 	},	
 	{
-		enemys = {                                           -- 第6波空军+飞机
+		enemys = {                                           -- 第6波 给黄武 空军+飞机
 			{
 				time = 1,
 				num = 3,
@@ -476,7 +475,7 @@ local waves = {
 		},
 	},
 	{	
-		waveType = "boss",                                      --强敌出现
+		waveType = "boss",                                      --强敌出现  boss剩余20血给机甲
 		enemys = {                                              --boss
 			{
 				descId = "boss02",
@@ -499,15 +498,15 @@ local waves = {
 --enemy的关卡配置                           无镶嵌 MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=1,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=190,fireRate=180,fireCd=3,speed=40,scale = 1.5,
+	{id=2,image="jinzhanb",demage=3,hp=140,fireRate=180,fireCd=3,speed=40,scale = 1.4,
 	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=160,
+	{id=3,image="sanbing01",demage=0,hp=105,
 	weak1=2},	             
 
     --导弹          --missileType = "daodan",
@@ -515,16 +514,15 @@ local enemys = {
 	weak1=1},
 
 	--铁球
+
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
-	{id=6,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=6,image="shouleib",demage=0,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
-	
 	--手雷
 	{id=7,image="shoulei",demage=1,hp=1,
 	weak1=2},
-	
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
 	weak1=1},
@@ -557,21 +555,21 @@ local bosses = {
 
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数
-		award = 9000,                   --boss产出金币数量
+		award = 1000,                   --boss产出金币数量
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.80, 0.70, 0.50, 0.10,
+				0.90,  0.50, 0.10,
 			},
 			moveRightFire = {
-				0.90,  0.60, 0.70,  0.30, 
+				0.70,  0.30, 
 			},
 			chongfeng = {
 			     0.95, 0.93, 0.85, 0.75, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
 			},
 			tieqiu = {
-				0.99, 0.80, 0.60, 0.40, 0.20, 0.10,
+				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40, 0.10,                        
@@ -598,7 +596,6 @@ local bosses = {
 			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
 			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
 			return cc.Sequence:create(move1, move2, move3, move4, move5)
-				
 		end,
 
 		getMoveRightAction = function ()
@@ -612,13 +609,16 @@ local bosses = {
 	},
 }
 
+local mapId = "map_1_2"
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
-	self.mapId  = "map_1_2"
-	self.limit  = 10
+	self.mapId  = mapId
+	self.limit  = limit
+	self.goldLimits = {225,355,495}   --黄武激活所需杀人个数  本关共60个小怪
 end
 
 return waveClass

@@ -303,12 +303,12 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 
 	--到右屏幕
 	desPos = cc.p(1660 + bound.width, posOri.y)
-	local time = math.abs(1660) / speed
+	local time = math.abs(1660 + 2 * bound.width) / speed
 	local actionScreen1 = cc.MoveTo:create(time, desPos)
 
 	--到左屏幕
 	desPos = cc.p(- bound.width - 200, posOri.y)
-	local time = math.abs(1660) / speed	
+	local time = math.abs(1660 + 2 * bound.width) / speed	
 	local actionScreen2 = cc.MoveTo:create(time, desPos)
 
 	--返回
@@ -395,7 +395,7 @@ end
 function BaseBossView:playDaoDan1()
 	--导弹
 	for i=1,4 do
-		local delay = 0.4 + 0.3 * i
+		local delay = 0.4 + 0.15 * i
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
@@ -522,6 +522,7 @@ function BaseBossView:setUnhurted(isUnhurted)
 end
 
 function BaseBossView:playWudi()
+	if self.wudiAnim ~= nil then return end
 	self.isUnhurted = true
 	self.wudiAnim = ccs.Armature:create("wdhd")
 	self.wudiAnim:getAnimation():play("wdhd", -1, 1)
@@ -534,8 +535,10 @@ end
 
 function BaseBossView:endWudi()
     self.isUnhurted = false
-    self.wudiAnim:removeSelf()    
-    self.wudiAnim = nil
+    if self.wudiAnim then 
+	    self.wudiAnim:removeSelf()    
+	    self.wudiAnim = nil
+	end
 end
 
 function BaseBossView:clearWeak()
