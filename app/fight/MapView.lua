@@ -245,7 +245,7 @@ function MapView:checkGuide()
 	--guide
 	local guide = md:getInstance("Guide")
 	local gid, lid = self.fight:getCurGroupAndLevel()
-	local isGuide = gid == 1 and lid == 0
+	local isGuide = gid == 0 and lid == 0
 	if self.waveIndex == 3 then	
 		--visible
 		print("function MapView:checkGuide() 3")

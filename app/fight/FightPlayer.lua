@@ -746,7 +746,7 @@ function FightPlayer:initGuide1()
     --check   
     local isDone = self.guide:isDone("fight01_1")
     local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 0 and gid == 1
+    local isWillGuide = lid == 0 and gid == 0
     if isDone or not isWillGuide then 
         return 
     end    
