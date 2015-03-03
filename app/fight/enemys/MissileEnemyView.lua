@@ -45,7 +45,6 @@ function MissileEnemyView:playFire()
     else 
         assert(false, "invalid missileType"..missileType)
     end 
-
 end
 
 function MissileEnemyView:playDaoDanFire()
@@ -69,8 +68,6 @@ function MissileEnemyView:playDaoDanFire()
 end
 
 function MissileEnemyView:playLeiFire()
-    -- print("lei")
-    
     self.armature:getAnimation():play("fire" , -1, 1)  
     local srcPos = self.property["srcPos"]
     local destPos = cc.p(srcPos.x - 90, 20)

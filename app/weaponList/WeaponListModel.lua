@@ -23,7 +23,6 @@ function WeaponListModel:initConfigTable()
 end
 
 function WeaponListModel:getWeaponRecord(index)
-	-- local WeaponRecord = getRecordFromTable(self.config,"id",index)
 	local WeaponRecord = getRecordByID("config/weapon_weapon.json",index)
 	return WeaponRecord
 end
@@ -49,7 +48,7 @@ end
 
 --[[
 	@param : weaponid
-	@param : levelParam ("nextLevel" or "maxLevel" or nil)
+	@param : levelParam ("nextLevel" or "maxLevel" or "minLevel", nil)
 	
 	@return: {bulletNum = 100,accuracy  = 100,reloadTime = 100,demage = 100 }
 ]]
@@ -69,6 +68,8 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 		end
 	elseif levelParam == "maxLevel" then
 		level = 10
+	elseif levelParam == "minLevel" then 
+		level = 1	
 	end
 	local growtableStr = "config/weapon_"..growTableName..".json"
 	local intenlevelData = getRecordByKey(growtableStr,"level",level)[1]
@@ -82,7 +83,7 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 	return property
 end
 
-function WeaponListModel:setWeapon(weaponid)
+function WeaponListModel:buyWeapon(weaponid)
 	if self:isWeaponExist(weaponid)  then
         print("已拥有")
     else
@@ -92,10 +93,6 @@ function WeaponListModel:setWeapon(weaponid)
 	    setUserData(data)
 	    -- dump(GameState.load())
     end 
-end
-
-function WeaponListModel:buyWeapon(weaponid)
-	self:setWeapon(weaponid)
 	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
 end
 
@@ -243,23 +240,18 @@ end
 	@param : 
 	@return: {demage = 100, }
 ]]
-function WeaponListModel:getFightWeaponValue(bagIndex)
-	assert(bagIndex, "bagIndex is nil")
-	local data = getUserData()
-	local weapon = data.weapons.weaponed[bagIndex]
-	local id = weapon["weaponid"]
-	assert(id, "id is nil bagIndex is invalid:"..bagIndex)
-
-	local weaponValue = self:getWeaponProperity(id) 
-	assert(weaponValue, "weaponValue is nil id :"..id)
+function WeaponListModel:getFightWeaponValue(configId, isInBag)
+	local param = isInBag and nil or "minLevel"
+	local weaponValue = self:getWeaponProperity(configId, param) 
+	assert(weaponValue, "weaponValue is nil id :"..configId)
 	--cooldown
-	local record = getRecordByID("config/weapon_weapon.json", id)
-	assert(record, "record is nil id:"..id)
+	local record = getRecordByID("config/weapon_weapon.json", configId)
+	assert(record, "record is nil configId:"..configId)
 	table.merge(weaponValue, record)
 	return weaponValue
 end
 
-function WeaponListModel:getAllWeapon( )
+function WeaponListModel:getAllWeapon()
 	self:initConfigTable()
 	local weapontable = {}
 	for k,v in pairs(self.config) do

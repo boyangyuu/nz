@@ -16,7 +16,7 @@ local configs = {}
 	}
 
 	skipDelay: {
-				skipDelay = 1.0 代表引导层消失1.0秒
+				skipDelay = 1.0 代表引导层消失1.0秒, 且可以移动
 	} 
 	touchType： {
 				all = 接受所有事件
@@ -28,18 +28,43 @@ local configs = {}
 	}
 ]]
 
-----登陆之后	----
-configs["fight01"] = {
+----第一关 移动----
+configs["fight01_move"] = {
 	preGuideId = nil,
 	steps = {
-		-- {id = "fight_blood", msg = "阿杰 , 这是生命值", rolepos = "right", }, 
-		{id = "fight_move", msg = "在屏幕上左右滑动可以移动准星",touchType = "all", skipMode = "condition", hand = "move"},
-		-- {id = "fight_fire1", msg = "在高亮区域点击 , 枪械将会射击", skipDelay = 1.0},
-		-- {id = "fight_fire2", msg = "长按射击按钮 , 会连续射击",touchType = "all", skipMode = "condition", 
-				-- hand = "longtouch", contentOffset = {x = 0, y = 50}},
-		-- {id = "fight_throw", msg = "在高亮区域点击 , 将会投掷手雷", skipDelay = 1.0},
+		{id = "fight_move", msg = "", hand = "move",rolepos = "hide"},
+	}
+}
+
+--第一关 开火
+configs["fight01_fire"] = {
+	preGuideId = nil,
+	steps = {
+		{id = "fight_fire", msg = "", hand = "fire", rolepos = "hide"},
+	}
+}
+
+---- 第一关 扔雷----
+configs["fight01_lei"] = {
+	preGuideId = nil,
+	steps = {
+		{id = "fight_lei", msg = "在高亮区域点击 , 将会投掷手雷"},
+	}
+}
+
+---- 第一关 换枪(火箭筒)----
+configs["fight01_change"] = {
+	preGuideId = nil,
+	steps = {
 		{id = "fight_change", msg = "在高亮区域点击 , 将会更换枪械"},
-		-- {id = "fight_finish", msg = "快消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
+	}
+}
+
+---- 第一关 黄金枪----
+configs["fight01_gold"] = {
+	preGuideId = nil,
+	steps = {
+		{id = "fight_gold", msg = "敌人越来越多 , 快变身为黄金武器模式 ! "},
 	}
 }
 
