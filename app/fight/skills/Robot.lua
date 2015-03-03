@@ -87,7 +87,7 @@ function Robot:startRobot()
 	--check guide
 	local guide = md:getInstance("Guide")
 	local curGuideId = guide:getCurGuideId()
-	if curGuideId == "fight02_jijia" and  guide:getIsGuiding() then 
+	if curGuideId == "fight01_jijia" and  guide:getIsGuiding() then 
 		--引导的时候 机甲一直在
 		return 
 	end

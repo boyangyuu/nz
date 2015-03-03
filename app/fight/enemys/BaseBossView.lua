@@ -212,10 +212,6 @@ function BaseBossView:playSkill(skillName)
 		num = tonumber(num)
 		-- print(" demage num", num)
 		local per = num / 100
-
-		local guide = md:getInstance("Guide")
-		local isDone = guide:isDone("fight02")
-		if not isDone then return end
 		self.enemy:setDemageScale(per)	
 	end
 end
@@ -707,31 +703,38 @@ end
 
 function BaseBossView:onEnter()
 	BaseBossView.super:onEnter(self)
-	local sch = scheduler.performWithDelayGlobal(handler(self, self.checkGuide), 2.0)
-	self:addScheduler(sch)
+	-- local sch = scheduler.performWithDelayGlobal(handler(self, self.checkGuide), 2.0)
+	-- self:addScheduler(sch)
 end
 
-function BaseBossView:checkGuide()
-	local guide = md:getInstance("Guide")
-	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
-		local isStart = guide:check("fight02_dun")
-		if not isStart then return end
-		self.isGuidedDun = true
-		local fight = md:getInstance("Fight")
-		fight:stopFire()
-		-- local scale = define.kGuidebossHpScale
-		local maxHp = self.enemy:getMaxHp()
-		self.enemy:setMaxHp(maxHp * 1)
-		self.enemy:setFullHp()
-	end
-end
+-- function BaseBossView:checkGuide()
+-- 	local guide = md:getInstance("Guide")
+-- 	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
+-- 		local isStart = guide:check("fight02_dun")
+-- 		if not isStart then return end
+-- 		self.isGuidedDun = true
+-- 		local fight = md:getInstance("Fight")
+-- 		fight:stopFire()
+-- 		-- local scale = define.kGuidebossHpScale
+-- 		local maxHp = self.enemy:getMaxHp()
+-- 		self.enemy:setMaxHp(maxHp * 1)
+-- 		self.enemy:setFullHp()
+-- 	end
+-- end
 
 function BaseBossView:checkGuide1()
+	print("function BaseBossView:checkGuide1()")
 	local guide = md:getInstance("Guide")
-	if not guide:isDone("fight02") and not self.isGuidedJijia then 
-		-- print("guide:check(fight02)")
-		local isWillGuide = guide:check("fight02")
-		if isWillGuide then 
+	local fight = md:getInstance("Fight")
+	local gid = fight:getGroupId()
+	local lid = fight:getLevelId()	
+	local isGuideLevel = gid == 0 and lid == 0
+	if not guide:isDone("fight01_jijia") and not self.isGuidedJijia 
+		and isGuideLevel then 
+		print("function BaseBossView:checkGuide1()1111")
+		local isWillGuide = guide:check("fight01_jijia")
+		if isWillGuide then
+			print("function BaseBossView:checkGuide1()1111") 
 			self.isGuidedJijia = true
 			local fight = md:getInstance("Fight")
 			fight:stopFire()	

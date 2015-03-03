@@ -207,7 +207,7 @@ function FightPlayer:initUI()
 
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide1), 0.1)
-    scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
+    -- scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide4), 0.1)    
 end
@@ -744,7 +744,7 @@ end
 
 function FightPlayer:initGuide1()
     --check   
-    local isDone = self.guide:isDone("fight01_1")
+    local isDone = self.guide:isDone("fight01_move")
     local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 0 and gid == 0
     if isDone or not isWillGuide then 
@@ -807,9 +807,9 @@ function FightPlayer:initGuide1()
         groupId = "fight01_lei",
         rect = self.btnLei:getBoundingBox(),
         endfunc = function (touchEvent)
-            for id, point in pairs(touchEvent.points) do
-                self:checkBtnLei(point)
-            end
+            local pWorld = self.focusNode:convertToWorldSpace(cc.p(0,0))
+            self.hero:dispatchEvent({name = self.hero.SKILL_GRENADE_START_EVENT,
+                    focusWorld = pWorld})
         end
     })  
 
@@ -831,37 +831,16 @@ function FightPlayer:initGuide1()
         groupId = "fight01_gold",
         rect = self.btnGold:getBoundingBox(),
         endfunc = function (touchEvent)
-            for id, point in pairs(touchEvent.points) do
-                self:checkBtnGold(point)
-            end
+            self.inlay:activeGoldForever()
         end
     })     
 end
 
-function FightPlayer:initGuide2()
-    --check   
-    local isDone = self.guide:isDone("fight02_dun")
-    local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 2 and gid == 1
-    if isDone or not isWillGuide then return end
-    
-    --盾
-    self.guide:addClickListener({
-        id = "fight02_dun",
-        groupId = "fight02_dun",
-        rect = self.btnDefence:getBoundingBox(),
-        endfunc = function (touchEvent)
-            self.defence:setIsAble(true) 
-            self.defence:startDefence()   
-        end
-    })    
-end
-
 function FightPlayer:initGuide4()
     --check     
-    local isDone = self.guide:isDone("fight02")
+    local isDone = self.guide:isDone("fight01_jijia")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 2 and gid == 1
+    local isWillGuide = lid == 0 and gid == 0
     if isDone or not isWillGuide then return end
 
     --机甲
@@ -870,8 +849,8 @@ function FightPlayer:initGuide4()
     
     --btn
     self.guide:addClickListener({
-        id = "fight02_jijia",
-        groupId = "fight02",
+        id = "fight01_jijia",
+        groupId = "fight01_jijia",
         rect = self.btnRobot:getBoundingBox(),
         endfunc = function (touchEvent)
             addBtnEffect(self.btnRobot)
@@ -880,6 +859,25 @@ function FightPlayer:initGuide4()
         end
     })   
 end
+
+-- function FightPlayer:initGuide2()
+--     --check   
+--     local isDone = self.guide:isDone("fight02_dun")
+--     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
+--     local isWillGuide = lid == 2 and gid == 1
+--     if isDone or not isWillGuide then return end
+    
+--     --盾
+--     self.guide:addClickListener({
+--         id = "fight02_dun",
+--         groupId = "fight02_dun",
+--         rect = self.btnDefence:getBoundingBox(),
+--         endfunc = function (touchEvent)
+--             self.defence:setIsAble(true) 
+--             self.defence:startDefence()   
+--         end
+--     })    
+-- end
 
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
