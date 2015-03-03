@@ -7,13 +7,13 @@ function FightDescLayer:ctor()
     self.model = md:getInstance("FightDescModel")
 
     cc.EventProxy.new(self.model, self)
-        :addEventListener(self.model.START_ANIM_EVENT, handler(self, self.start))
-        :addEventListener(self.model.BOSSSHOW_ANIM_EVENT, handler(self, self.bossShow))
-        :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.waveStart))
-        :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.enemyIntro))
+        :addEventListener(self.model.START_ANIM_EVENT, handler(self, self.onFightStart))
+        :addEventListener(self.model.BOSSSHOW_ANIM_EVENT, handler(self, self.onBossStart))
+        :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.onWaveStart))
+        :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
 
-    	self:loadCCS()
-        self:setTouchSwallowEnabled(false)
+	self:loadCCS()
+    self:setTouchSwallowEnabled(false)
 end
 
 function FightDescLayer:loadCCS()
@@ -23,7 +23,7 @@ function FightDescLayer:loadCCS()
     self.animPanl = cc.uiloader:seekNodeByName(self, "animPanl")
 end
 
-function FightDescLayer:start(event)
+function FightDescLayer:onFightStart(event)
     self:setVisible(true)
     local armature = ccs.Armature:create("renwuks")
     armature:getAnimation():setMovementEventCallFunc(
@@ -40,7 +40,7 @@ function FightDescLayer:start(event)
     audio.playSound(letsgo,false)
 end
 
-function FightDescLayer:bossShow(event)
+function FightDescLayer:onBossStart(event)
     self:setTouchSwallowEnabled(true)
     self:setVisible(true)
     local armature = ccs.Armature:create("qiangdicx")
@@ -60,7 +60,7 @@ function FightDescLayer:bossShow(event)
     self.audioId =  audio.playSound(soundSrc,false)    
 end
 
-function FightDescLayer:waveStart(event)
+function FightDescLayer:onWaveStart(event)
     self:setVisible(true)
     armature = ccs.Armature:create("direnlx")
     armature:getAnimation():setMovementEventCallFunc(
@@ -76,7 +76,7 @@ function FightDescLayer:waveStart(event)
     armature:getAnimation():play(animName , -1, 1)
 end
 
-function FightDescLayer:enemyIntro(event)
+function FightDescLayer:onShowEnemyIntro(event)
 
     self:setVisible(true)
     local controlNode = cc.uiloader:load("res/CommonPopup/animLayer/animLayer_2.ExportJson")

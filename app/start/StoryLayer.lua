@@ -11,6 +11,14 @@ function StoryLayer:ctor(properties)
 	self:loadCCS()
 	self:initTalks()
 	self:initTouchEvent()
+	self:setNodeEventEnabled(true)
+end
+
+function StoryLayer:onEnter()
+	--test
+	ui:changeLayer("FightPlayer", {groupId = 1, 
+		levelId = 0})	
+	--testend
 end
 
 function StoryLayer:loadCCS()
@@ -54,6 +62,7 @@ function StoryLayer:initTouchEvent()
 				self.id = self.id + 1
 				self:changeTalk()
 			else
+
 				local data = getUserData()
 				data.guide.gamePre = true
 				setUserData(data)

@@ -62,6 +62,36 @@ end
 
 
 --枪械相关
+function Hero:initGuns()
+    self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
+    self.bags["bag2"] = Gun.new({bagIndex = "bag2"})
+
+    --ju
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isJuLevel = levelModel:isJujiFight()
+    if isJuLevel then 
+        self.bags["bag1"] = Gun.new({bagIndex = "bag3"}) 
+        self.bags["bag2"] = Gun.new({bagIndex = "bag3"})
+    end
+    self.isGun1 = self:isPreferBag1()
+    local bagIndex = self:getCurBagIndex()
+    self:setGun(bagIndex)     
+end
+
+function Hero:getCurBagIndex()
+    local bagIndex = nil
+    if self.isGun1 then 
+        bagIndex = "bag1"
+    else
+        bagIndex = "bag2"
+    end   
+    return bagIndex   
+end
+
+function Hero:getGun()
+    return self.gun
+end
+
 function Hero:changeGun()
     self.isGun1 = not self.isGun1
     local bagIndex = nil
@@ -74,8 +104,24 @@ function Hero:changeGun()
     self:setGun(bagIndex)
     self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
 
+    --refresh bulletNum
     local bulletNum = self.gun:getCurBulletNum()
     self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})
+end
+
+function Hero:changeTempGun(configid)
+    local bagIndex = self:getCurBagIndex()
+    
+    -- self.oriGun = clone(self.bags[bagIndex])  --旧枪  
+    self.bags[bagIndex] = Gun.new({bagIndex = bagIndex ,configId = configid}) 
+
+    --refresh
+    self:setGun(bagIndex)
+    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
+    local bulletNum = self.gun:getCurBulletNum()
+    self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})    
+
+    --hide change
 end
 
 function Hero:isPreferBag1()
@@ -142,33 +188,6 @@ end
 
 function Hero:setIsReloading(isReloading)
     self.isReloading = isReloading
-end
-
-
-function Hero:initGuns()
-    self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
-    self.bags["bag2"] = Gun.new({bagIndex = "bag2"})
-
-    --ju
-    local levelModel = md:getInstance("LevelDetailModel")
-    local isJuLevel = levelModel:isJujiFight()
-    if isJuLevel then 
-        self.bags["bag1"] = Gun.new({bagIndex = "bag3"}) 
-        self.bags["bag2"] = Gun.new({bagIndex = "bag3"})
-    end
-
-    self.isGun1 = self:isPreferBag1()
-    local bagIndex = nil
-    if self.isGun1 then 
-        bagIndex = "bag1"
-    else
-        bagIndex = "bag2"
-    end    
-    self:setGun(bagIndex)    
-end
-
-function Hero:getGun()
-    return self.gun
 end
 
 

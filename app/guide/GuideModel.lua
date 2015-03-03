@@ -61,6 +61,7 @@ function Guide:doGuideNext()
 	--um finish
 	if self.stepIndex ~= 0 then
 		local lastconfigStep = configGroup["steps"][self.stepIndex]	
+		--todo 改为自定义事件
 		um:finishLevel(lastconfigStep["id"])
 	end
 	--next
@@ -76,8 +77,8 @@ function Guide:doGuideNext()
 		return
 	end
 
-	--um start
-	um:startLevel(self.curConfig["id"])
+	-- --um start
+	-- um:startLevel(self.curConfig["id"])
 	--update listenData
 	local id = configStep.id
 	local listenData = self.datas[id]	
@@ -93,7 +94,7 @@ end
 function Guide:startGuide(groupId)
 	print("function Guide:startGuide(groupId)", groupId)
 	self.isGuiding = true
-	assert(self:isDone(groupId) == false , "groupId"..groupId)
+	assert(self:isDone(groupId) == false , "no exist groupId"..groupId)
 	self.groupId = groupId
 	self.stepIndex = 0
 	self:doGuideNext()
@@ -169,12 +170,12 @@ function Guide:getCurGroupId()
 end
 
 function Guide:clearData()
-	-- local data = getUserData()
-	-- for k,v in pairs(data.guide) do
-	-- 	print(k,v)
-	-- 	data.guide[k] = false
-	-- end
-	-- setUserData(data)
+	local data = getUserData()
+	for k,v in pairs(data.guide) do
+		print(k,v)
+		data.guide[k] = false
+	end
+	setUserData(data)
 end
 
 return Guide

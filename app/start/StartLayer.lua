@@ -109,7 +109,6 @@ end
 
 function StartLayer:onEnter()
     self:playBgMusic() 
-
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
@@ -118,17 +117,22 @@ end
 function StartLayer:beginGame()
     self:initDailyLogin()       
 
-    if self:isDone("gamePre") then 
+    if self:isGuideDone() then 
         ui:changeLayer("HomeBarLayer",{popgift = true})
     else
+        --clear data
+        local guide = md:getInstance("Guide")
+        guide:clearData()        
+
+        --story
         ui:changeLayer("storyLayer",{})
     end
 end
 
-function StartLayer:isDone(id)
+function StartLayer:isGuideDone()
     local data = getUserData()
     if data then 
-        return data.guide[id]
+        return data.guide["afterfight01"]
     else 
         return true
     end

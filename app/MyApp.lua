@@ -13,17 +13,9 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 
--- --平时
--- isTest  = true
--- isDebug = false
-isFree = true   --付费免费
--- --测试打包
--- isTest  = false
--- isDebug = true
-
---正式打包
-isTest  = false        
-isDebug = false
+isFree = true       --付费免费
+isTest  = false     --战斗的各种框     
+isDebug = true      --debug页面
 
 ui      = UI.new()
 md      = MD.new()
@@ -129,8 +121,12 @@ function MyApp:createGameStateFile()
                         level = 6,
             },
             guide = {
-                        gamePre         = false,
-                        fight01         = false,
+                        gamePre          = false,
+                        fight01_move     = false,
+                        fight01_fire     = false,
+                        fight01_lei      = false,
+                        fight01_gold     = false,
+                        fight01_change   = false,
                         afterfight01    = false,
                         prefight02      = false,
                         fight02_dun     = false,
@@ -138,11 +134,10 @@ function MyApp:createGameStateFile()
                         afterfight02    = false,
                         fight04         = false,
                         xiangqian       = false,
-
             },
             isAwardGold     = false,
             fight = {
-                        isPreferBag1 = true,
+               isPreferBag1 = true,
             },
 
             -- 礼包购买状态

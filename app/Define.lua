@@ -5,7 +5,9 @@ local Define = class("Define", cc.mvc.ModelBase)
 --hero
 Define.kHeroBaseHp 				= 100.0  --角色血量
 Define.kHeroCritScale 			= 3.0  --暴击倍数
+
 Define.kHeroHelper				= 0.5  --默认回血0/s
+
 Define.kCoolDownScale           = 1.0   --枪的冷却时间系数
 
 --手雷兵 远程兵 

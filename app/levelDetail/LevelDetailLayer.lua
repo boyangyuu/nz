@@ -267,8 +267,6 @@ function LevelDetailLayer:startGame()
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
 	self:onClickBtnOff()
-	local levelInfo = self.groupId.."-"..self.levelId
-	um:startLevel(levelInfo)
 end
 
 function LevelDetailLayer:onClickBtnBibei()

@@ -107,7 +107,7 @@ function LevelDetailModel:weapontogether(weaponid)
 	for k,v in pairs(data.weaponsuipian) do
 		if v.weaponid == weaponid then
 			table.remove(data.weaponsuipian,k)
-			self.weaponListModel:setWeapon(weaponid)
+			self.weaponListModel:buyWeapon(weaponid)
 		end
 	end
 end

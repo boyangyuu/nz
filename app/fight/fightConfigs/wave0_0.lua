@@ -32,8 +32,9 @@ local waves = {
 			},					
 		},
 	},
+	--[引导] 3波 3个敌人,扔雷	
 	{
-		enemys = {                                          --3波3个 扔雷
+		enemys = {                                          
 			{
 				time = 1,
 				num = 2,
@@ -61,6 +62,7 @@ local waves = {
 			},						
 		},
 	},	
+	--[引导] 4波 换枪
 	{
 		enemys = {                                           --4波换枪 mp5
 			{
@@ -159,8 +161,17 @@ local waves = {
 			},		                                     	
 		},
 	},	
+	
+	--[引导] 5波 换加特林,长按文字
 	{
-		enemys = {                                           --5波换加特林
+		--体验枪
+		gunData = 
+			{ 
+			    id = 8,    --枪id
+			    delay = 10, --10s之后出现
+			    time = 20,	--持续20s
+		    },		    
+		enemys = {                                           
 			{
 				time = 1,	
 				num = 4,
@@ -318,6 +329,7 @@ local waves = {
 		                                     	
 		},
 	},	
+	--[引导] 第6波空军+飞机 点击黄武
 	{
 		enemys = {                                           -- 第6波 给黄武 空军+飞机
 			{
@@ -474,8 +486,10 @@ local waves = {
 			},
 		},
 	},
-	{	
-		waveType = "boss",                                      --强敌出现  boss剩余20血给机甲
+
+	--[引导] boss 出现之后开盾; 20%永久机甲
+	{
+		waveType = "boss",                                      --强敌出现
 		enemys = {                                              --boss
 			{
 				descId = "boss02",
@@ -534,7 +548,6 @@ local enemys = {
 	--越野车       type = "jipu" ,
 	{id=10,image="yyc",demage=0,hp=1600,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=240, fireCd=5.0,
 	weak1=2,    award = 60},
-
 }
 
 	--boss的关卡配置

@@ -238,8 +238,6 @@ function HeroLayer:onHurtEffect(event)
  	self:bloodBehurtEffect()
 end
 
-
-
 --手雷
 function HeroLayer:onThrowGrenade(event)
 
