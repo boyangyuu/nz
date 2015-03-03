@@ -39,15 +39,11 @@ function LevelMapLayer:initData(properties)
     self.preIndex = 0
 
     --config
-
-    local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
-    -- local recordsLevel = self.LevelMapModel:getConfig()
-    self.groupNum = #recordsLevel
+    self.groupNum = self.LevelMapModel:getGroupNum()
 
     self.levelAmount = {}
     for i = 1, self.groupNum do
-        local recordsGroup = getRecordByKey("config/guanqia.json","groupId",i)
-        self.levelAmount[i] = #recordsGroup
+        self.levelAmount[i] = self.LevelMapModel:getLevelNum(i)
     end
 end
 
@@ -77,7 +73,6 @@ function LevelMapLayer:initBgLayer()
     self.ldarmature:setPosition(cc.p(568,300))
     self:addChild(self.ldarmature)
     self.ldarmature:getAnimation():play("leida" , -1, 1)
-
 
 end
 
@@ -150,7 +145,6 @@ function LevelMapLayer:initChooseLayer()
     -- add listener (attention: this isnot button, so we add node event listener)
     addBtnEventListener(self.btnNext, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             
@@ -168,10 +162,8 @@ function LevelMapLayer:initChooseLayer()
     end)
     addBtnEventListener(self.btnPre, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
             if self.index < 2 then
                 self.index = self.groupNum
                 self.preIndex = 1
@@ -188,10 +180,8 @@ function LevelMapLayer:initChooseLayer()
     btnSale:setTouchEnabled(true)
     addBtnEventListener(btnSale, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
             return true
         elseif event.name=='ended' then
-            print("Btn is pressed!")
             local buy = md:getInstance("BuyModel")
             buy:buy("timeGiftBag", {})
         end
@@ -204,13 +194,12 @@ function LevelMapLayer:initChooseLayer()
     --         return true
     --     elseif event.name=='ended' then
     --         print("Btn is pressed!")
-
     --     end
     -- end)
+
     btnGold:setTouchEnabled(true)
     addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
-            print("Btn is begining!")
             return true
         elseif event.name=='ended' then
             local buy = md:getInstance("BuyModel")
@@ -244,44 +233,59 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local panelBtn = {}
     local dian = {}
     local group,level = self.LevelMapModel:getConfig()
-    for i=1,self.levelAmount[groupId]-1 do
-        dian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..i.."_0")
+
+
+    local groupInfo = self.LevelMapModel:getGroupInfo(self.index)
+
+
+    for k,v in pairs(groupInfo) do
+        if k ~= #groupInfo then
+            dian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..v.."_0")
+        end
     end
-    if  group > groupId then
-        for i=1,table.nums(dian) do
-            dian[i]:setVisible(true)
+
+    if group > groupId then
+        for k,v in pairs(dian) do
+            dian[k]:setVisible(true)
         end
     elseif group == groupId then
-        for i=level,table.nums(dian) do
-            dian[i]:setVisible(false)
+        for k,v in pairs(groupInfo) do
+            if v >= level and k ~= #groupInfo then
+                dian[v]:setVisible(false)
+            end
         end
     else
-        for i=1,table.nums(dian) do
-            dian[i]:setVisible(false)
+        for k,v in pairs(dian) do
+            dian[k]:setVisible(false)
         end
     end
-    for i = 1, self.levelAmount[groupId] do
-        levelBtn[i]  = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..i)
-        levelDian[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..i)
-        panelBtn[i] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..i)
-        panelBtn[i]:setTouchEnabled(true)
-        local record = self.LevelDetailModel:getConfig(group,level)
-        if  group > groupId or group == groupId and level > i  then
 
-        elseif group == groupId and level == i then
-            print("....i")
-            levelDian[i]:setVisible(false)
-            -- while true do
+    -- for i = 1, self.levelAmount[groupId] do
+    for k,v in pairs(groupInfo) do
+        levelBtn[v]  = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..v)
+        levelDian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..v)
+        panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)
+        panelBtn[v]:setTouchEnabled(true)
+    end
+
+
+    for k,v in pairs(groupInfo) do
+        local record = self.LevelDetailModel:getConfig(group,level)
+        if  group > groupId or group == groupId and level > v then
+
+        elseif group == groupId and level == v then
+            levelDian[v]:setVisible(false)
+            
             local action = transition.sequence({
-            cc.MoveTo:create(0.625, cc.p(levelBtn[i]:getPositionX() , levelBtn[i]:getPositionY()+ 15)), 
-            cc.MoveTo:create(0.625, cc.p(levelBtn[i]:getPositionX(), levelBtn[i]:getPositionY() - 15))})
-            levelBtn[i]:runAction(cc.RepeatForever:create(action))
+            cc.MoveTo:create(0.625, cc.p(levelBtn[v]:getPositionX() , levelBtn[v]:getPositionY()+ 15)), 
+            cc.MoveTo:create(0.625, cc.p(levelBtn[v]:getPositionX(), levelBtn[v]:getPositionY() - 15))})
+            levelBtn[v]:runAction(cc.RepeatForever:create(action))
 
             -- end
             local type = record["type"]
             local armature = ccs.Armature:create("gktb")
             armature:setScale(0.8)
-            armature:setPosition(panelBtn[i]:getContentSize().width/2,20)
+            armature:setPosition(panelBtn[v]:getContentSize().width/2,20)
             panelBtn[level]:addChild(armature)
 
             if type == "boss" or type == "juji" then
@@ -291,18 +295,18 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             elseif type == "putong" or  type == "renzhi" then
                 armature:getAnimation():play("dizuolan" , -1, 1)
             end
-        else           
+        else       
             if device.platform ~= "windows" then
-                cc.ColorUtil:setGray(levelBtn[i])                 
-                cc.ColorUtil:setGray(levelDian[i]) 
+                cc.ColorUtil:setGray(levelBtn[v])                 
+                cc.ColorUtil:setGray(levelDian[v]) 
             end                
         end
+
         -- add listener
-        addBtnEventListener(panelBtn[i], function(event)
+        panelBtn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then
-                if  group > groupId or group == groupId and level >= i  then
-                    local levelId = i  
-                    print(" addBtnEventListener(panelBtn[i], function(event)")
+                if  group > groupId or group == groupId and level >= v  then
+                    local levelId = v
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     ui:showPopup("commonPopup",
@@ -326,7 +330,6 @@ function LevelMapLayer:bgAction()
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
-    print(self.preIndex.."_"..self.index)
     self.animName = self.preIndex.."_"..self.index
     self.armature:getAnimation():play(self.animName , -1, 0)
 end
@@ -342,6 +345,7 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self:addChild(self.ldarmature)
             self.ldarmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.index)
+
             self:refreshLevelLayer(self.index)
             self:checkGuide()
         end
@@ -368,8 +372,6 @@ end
 
 function LevelMapLayer:checkGuide()
     local curGroupId, curLevelId = self.LevelMapModel:getConfig()
-    -- print("curGroupId", curGroupId)
-    -- print("curLevelId", curLevelId)
 
     if curGroupId == 1 and curLevelId == 5 then 
         local guide = md:getInstance("Guide")

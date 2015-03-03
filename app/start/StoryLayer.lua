@@ -53,7 +53,6 @@ function StoryLayer:initTouchEvent()
 	self:setTouchEnabled(false)
 	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
 		if event.name == 'began' then
-
 			return true
 		elseif event.name == 'ended' then
 			self.btnContinue:setVisible(false)
@@ -63,7 +62,11 @@ function StoryLayer:initTouchEvent()
 				self.id = self.id + 1
 				self:changeTalk()
 			else
-				ui:changeLayer("FightPlayer", {groupId = 1, 
+
+				local data = getUserData()
+				data.guide.gamePre = true
+				setUserData(data)
+				ui:changeLayer("FightPlayer", {groupId = 0, 
 					levelId = 0})				
 			end
 		end
