@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+	{		
 		enemys = {                                          --1波1个
 			{
 				time = 1,

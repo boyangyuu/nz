@@ -256,7 +256,7 @@ function MapView:checkGuide()
 			guide:check("fight01_lei") 
 		end
 	end
-	if self.waveIndex == 2 then 
+	if self.waveIndex == 4 then 
 		--visible	
 		if isGuide then	
 			local comps = {btnChange = true}

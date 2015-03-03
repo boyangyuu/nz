@@ -68,6 +68,15 @@ configs["fight01_gold"] = {
 	}
 }
 
+--- 第一关毁灭者之后 ----
+configs["fight01_jijia"] = {
+	preGuideId = nil,
+	steps = {
+		--毁灭者掉剩下10% 血 机甲开
+		{id = "fight01_jijia", msg = "开启机甲模式和毁灭者决一死战！！", }, 
+	}
+}
+
 ---- 第一关结算之后 ----
 configs["afterfight01"] = {
 	preGuideId = "fight01",
@@ -75,6 +84,7 @@ configs["afterfight01"] = {
 		{id = "afterfight01_jixu", msg = "点击按钮回到大地图"}, 
 	}
 }
+
 
 --- 开启第二关之后 ----
 configs["prefight02"] = {
@@ -92,23 +102,14 @@ configs["prefight02"] = {
 	}
 }
 
---- 第二关boss之后 ----
-configs["fight02_dun"] = {
-	preGuideId = "prefight02",
-	steps = {
-		--boss出现3秒 开盾提示
-		{id = "fight02_dun", msg = "开启盾牌抵御毁灭者的进攻！！", }, 
-	}
-}
-
---- 第二关毁灭者之后 ----
-configs["fight02"] = {
-	preGuideId = "fight02_dun",
-	steps = {
-		--毁灭者掉剩下10% 血 机甲开
-		{id = "fight02_jijia", msg = "开启机甲模式和毁灭者决一死战！！", }, 
-	}
-}
+-- --- 第二关boss之后 ----
+-- configs["fight02_dun"] = {
+-- 	preGuideId = "prefight02",
+-- 	steps = {
+-- 		--boss出现3秒 开盾提示
+-- 		{id = "fight02_dun", msg = "开启盾牌抵御毁灭者的进攻！！", }, 
+-- 	}
+-- }
 
 ---- 第二关结束之后 ----
 configs["afterfight02"] = {

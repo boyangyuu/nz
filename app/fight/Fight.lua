@@ -85,7 +85,7 @@ function Fight:startFight()
 
     --check guide
     local guide = md:getInstance("Guide")
-    if self.groupId == 1 and self.levelId == 0 then 
+    if self.groupId == 0 and self.levelId == 0 then 
         scheduler.performWithDelayGlobal(function()
             guide:check("fight01_move")
         end, 0.0)       
