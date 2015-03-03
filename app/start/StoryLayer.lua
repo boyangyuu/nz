@@ -16,7 +16,7 @@ end
 
 function StoryLayer:onEnter()
 	--test
-	ui:changeLayer("FightPlayer", {groupId = 1, 
+	ui:changeLayer("FightPlayer", {groupId = 0, 
 		levelId = 0})	
 	--testend
 end
