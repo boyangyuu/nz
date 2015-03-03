@@ -212,10 +212,6 @@ function BaseBossView:playSkill(skillName)
 		num = tonumber(num)
 		-- print(" demage num", num)
 		local per = num / 100
-
-		local guide = md:getInstance("Guide")
-		local isDone = guide:isDone("fight02")
-		if not isDone then return end
 		self.enemy:setDemageScale(per)	
 	end
 end

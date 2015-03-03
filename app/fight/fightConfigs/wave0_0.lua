@@ -8,9 +8,9 @@ local waves = {
 				time = 1,
 				num = 1,
 				delay = {0},
-				pos = {70},
+				pos = {15},
 				property = { 
-					placeName = "place14",
+					placeName = "place15",
 					startState = "",
 					id = 1,
 				},
@@ -23,7 +23,7 @@ local waves = {
 				time = 1,
 				num = 2,
 				delay ={0, 0.2},
-				pos = {10,130},		
+				pos = {10,120},		
 				property = { 
 					placeName = "place14",
 					startState = "",
@@ -39,7 +39,7 @@ local waves = {
 				time = 1,
 				num = 2,
 				delay ={0, 0.2},
-				pos = {10,130},		
+				pos = {10,120},		
 				property = { 
 					placeName = "place14",
 					startState = "",
@@ -68,8 +68,8 @@ local waves = {
 			{
 				time = 1,	
 				num = 4,
-				pos = {200,260,330,440,},
-				delay = {0,0.5,0.8,1,},
+				pos = {200,260,330,440},
+				delay = {0,0.5,1,1.5},
 				property = { 
 					placeName = "place1",
 					startState = "rollright",
@@ -78,22 +78,6 @@ local waves = {
 			},
 			{
 				time = 2,
-				num = 1,
-				pos = {350},
-				delay = {0.1},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 10,
-					placeName = "place12",
-					missileId = 4,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},	
-			{
-				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -106,24 +90,8 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			-- {
-			-- 	time = 6,
-			-- 	num = 1,
-			-- 	pos = {800},
-			-- 	delay = {0.1},                            -- 吉普车
-			-- 	property = {
-			-- 		type = "jipu" ,
-			-- 		id = 10,
-			-- 		placeName = "place12",
-			-- 		missileId = 4,
-			-- 		missileType = "daodan",
-			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-			-- 		startState = "enterleft",
-			-- 		lastTime = 60.0,		--持续时间			
-			-- 	},
-			-- },		
 			{
-				time = 8,
+				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -137,7 +105,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 6,	
 				num = 2,
 				pos = {250,350},
 				delay = {1,1.8},
@@ -149,10 +117,10 @@ local waves = {
 			},
 
 			{
-				time = 12,	
+				time = 8,	
 				num = 3,
 				pos = {820,750,660},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -171,21 +139,21 @@ local waves = {
 			    delay = 10, --10s之后出现
 			    time = 20,	--持续20s
 		    },		    
-		enemys = {                                           
+		enemys = {
+
 			{
 				time = 1,	
-				num = 4,
-				pos = {200,260,330,440,},
-				delay = {0,0.5,0.8,1,},
+				num = 2,
+				pos = {250,350},
+				delay = {1,1.8},
 				property = { 
-					placeName = "place1",
+					placeName = "place3",
 					startState = "rollright",
 					id = 1,
 				},
 			},
-
 			{
-				time = 2,
+				time = 1,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -199,7 +167,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 2,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -213,22 +181,21 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	
-				num = 2,
-				pos = {250,350},
-				delay = {1,1.8},
+				time = 3,	
+				num = 4,
+				pos = {200,260,330,440,},
+				delay = {0,0.5,0.8,1.3,},
 				property = { 
-					placeName = "place3",
+					placeName = "place1",
 					startState = "rollright",
 					id = 1,
 				},
 			},
-
 			{
 				time = 5,	
 				num = 3,
 				pos = {820,750,660},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -250,7 +217,7 @@ local waves = {
 				time = 8,	
 				num = 3,
 				pos = {800,650,700},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.1},
 				property = {
 					placeName = "place4", 
 					startState = "rollleft",
@@ -260,7 +227,7 @@ local waves = {
 			{
 				time = 10,
 				num = 2,
-				delay = {0.2,0},
+				delay = {0.2,0.8},
 				pos = {250,900},
 				property = { 
 					placeName = "place3",
@@ -286,7 +253,7 @@ local waves = {
 				time = 14,	
 				num = 3,
 				pos = {240,370,300},
-				delay = {1,1.5,1.8},
+				delay = {0,0.6,1.3},
 				property = { 
 					placeName = "place1",
 					id = 2,
@@ -307,7 +274,7 @@ local waves = {
 			{
 				time = 18,
 				num = 2,
-				delay = {0.2,0},
+				delay = {0.2,0.9},
 				pos = {250,700},
 				property = { 
 					placeName = "place1",
@@ -319,7 +286,7 @@ local waves = {
 				time = 20,	
 				num = 3,
 				pos = {820,910,980},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = {
 					placeName = "place2",
 					id = 2,
@@ -335,7 +302,7 @@ local waves = {
 			{
 				time = 1,
 				num = 3,
-				delay = {0, 0.6, 0.8},
+				delay = {0, 0.6, 1.2},
 				pos = {200,270,340,},	
 				property = { 
 					placeName = "place1", 
@@ -346,7 +313,7 @@ local waves = {
 			{
 				time = 2,
 				num = 3,
-				delay = {0, 0.3, 0.7},
+				delay = {0, 0.7, 1.4},
 				pos = {800,650,900},	
 				property = { 
 					placeName = "place1", 
@@ -387,7 +354,7 @@ local waves = {
 			{
 				time = 4,
 				num = 3,
-				delay = {0.2,0.3, 0.6},
+				delay = {0.2,0.8, 1.3},
 				pos = {470,550,700},					
 				property = {
 					placeName = "place2",  
@@ -428,7 +395,7 @@ local waves = {
 				time = 9,	
 				num = 2,
 				pos = {350,700},
-				delay = {0.3,0.7},
+				delay = {0.3,0.9},
 				property = { 
 					type = "san",
 					id = 3,
@@ -439,7 +406,7 @@ local waves = {
 			{
 				time = 10,
 				num = 3,
-				delay = {0, 0.6, 0.8},
+				delay = {0, 0.6, 1.3},
 				pos = {200,260,330,},	
 				property = { 
 					placeName = "place1", 
@@ -461,7 +428,7 @@ local waves = {
 			{
 				time = 12,
 				num = 3,
-				delay = {0.2,0.3, 0.6},
+				delay = {0.2,0.6, 0.9},
 				pos = {480,550,700},					
 				property = {
 					placeName = "place2",  
@@ -542,7 +509,7 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=9,image="feiji",demage=0,hp=1600, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=9,image="feiji",demage=0,hp=3200, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
@@ -585,18 +552,18 @@ local bosses = {
 				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
-				0.80, 0.40, 0.10,                        
+				0.80, 0.40,                        
 			},
 			weak1 = {                               --头 技能触发(可以同时)
-				0.60, 0.20                      
+				0.60, 0.20,                      
 			},
-			demage160 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage100 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.99,
 			},	
-			demage250 = {  
+			demage150 = {  
 				0.80,
 			},	
-			demage400 = {  
+			demage200 = {  
 				0.50,
 			},						
 		},
