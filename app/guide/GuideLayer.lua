@@ -14,7 +14,6 @@ function GuideLayer:ctor()
 
 	--
 	self:setVisible(false)
-	self.isWaiting = false
 	self.bg 	  = nil
 	self.armature = nil
 	self.isSwallow = true
@@ -38,8 +37,7 @@ end
 function GuideLayer:onTouch(event)
 	-- dump(event, "event")
 	if not self.isGuiding then return false end
-    if event.name == "began" or event.name == "added" then
-	-- if event.name == "began" then    	
+    if event.name == "began" or event.name == "added" then    	
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
         return self:onMutiTouchEnd(event)
@@ -91,7 +89,7 @@ end
 
 function GuideLayer:onTouchTarget(event)
 	--
-	if self.isWaiting or not self.isGuiding then return end
+	if not self.isGuiding then return end
 	if event == nil then return end
 
 	--调用监听者的回调函数
@@ -127,18 +125,15 @@ function GuideLayer:onTouchTarget(event)
 end
 
 function GuideLayer:hideForTime(event)
-	if 1 == 1 then return end
 	local delay = event.delay
 	local function restoreFunc()
 		self.bg:setVisible(true)
 		self.guideNode:setVisible(true)
-		self.isWaiting = false
 	end
 
 	--hide
 	self.guideNode:setVisible(false)
 	self.bg:setVisible(false)
-	self.isWaiting = true
 
 	--restore after time
 	scheduler.performWithDelayGlobal(restoreFunc, delay)	
@@ -163,7 +158,6 @@ function GuideLayer:isTouchTarget(pos)
 end
 
 function GuideLayer:loadCCS()
-
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
@@ -176,8 +170,8 @@ function GuideLayer:checkFirstGuide()
 	self.isFirst = true
 	--res
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo("res/xinshou/yd_zyhua/yd_zyhua.csb")
-    display.addSpriteFrames("res/xinshou/yd_zyhua/yd_zyhua0.plist", 
+    manager:addArmatureFileInfo("res/xinshou/xinsyd/xinsyd.csb")
+    display.addSpriteFrames("res/xinshou/xinsyd/xinsyd.plist", 
         "res/xinshou/yd_zyhua/yd_zyhua0.png")     
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
     display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
@@ -202,7 +196,9 @@ function GuideLayer:refreshUI()
 
 	--highLight
 	local rect = self:getTargetRect()
-	local size = cc.size(rect.width, rect.height)
+	if cfg["hand"] == "move" or cfg["hand"] == "fire" then
+		rect = cc.rect(0, 0, display.width1, display.height1)
+	end
 	-- dump(rect, "rect")
 	local params = {fillColor = cc.c4f(255,0,0,255), 
 			borderColor = cc.c4f(0,0,0,0), 
@@ -230,18 +226,23 @@ function GuideLayer:refreshUI()
 	end
 
 	--hand cfg
-	if cfg.hand == "move" then 
-		self.armature = ccs.Armature:create("yd_zyhua")
-		self.armature:getAnimation():play("yd_zyhua" , -1, 1)
-	elseif cfg.hand == "longtouch" then
+	if cfg["hand"] == "move" then 
+		self.armature = ccs.Armature:create("xinsyd")
+		self.armature:getAnimation():play("huadong" , -1, 1)
+		self.armature:setPosition(display.width1/2,
+				display.height1/2)						
+	elseif cfg["hand"] == "fire" then 
+		self.armature = ccs.Armature:create("xinsyd")
+		self.armature:getAnimation():play("dianji" , -1, 1)
+		self.armature:setPosition(display.width1/2,
+				display.height1/2)					
+	else
 		self.armature = ccs.Armature:create("yd_dianji")
-		self.armature:getAnimation():play("yd_changan" , -1, 1)
-	else 
-		self.armature = ccs.Armature:create("yd_dianji")
-		self.armature:getAnimation():play("yd_dianji" , -1, 1)				
+		self.armature:getAnimation():play("yd_dianji" , -1, 1)		
+		self.armature:setPosition(rect.x + rect.width/2,
+				rect.y + rect.height/2)							
 	end
-	self.armature:setPosition(rect.x + rect.width/2,
-			rect.y + rect.height/2)	
+
 	self.guideNode:addChild(self.armature)
 end
 
@@ -249,28 +250,27 @@ function GuideLayer:refreshCommentUI()
 	print("function GuideLayer:refreshCommentUI()")
 	local cfg = self.guide:getCurConfig()    --anim
 
-
 	--guide offset
 	local contentNode = cc.uiloader:seekNodeByName(self.guideNode, "guide")
 	local offset = cfg.contentOffset or {x = 0, y = 0}
 	local pos = cc.p(display.width1/2 + offset.x, 
 				display.height1/2 + offset.y)
 	-- dump(pos, "")
-	contentNode:setPosition(pos)
+	contentNode:setPosition(pos)	
+	if cfg.rolepos == "hide" then 
+		contentNode:setVisible(false)
+		return 
+	end
 
 	--msg
-	
 	local label_content =  cc.uiloader:seekNodeByName(self.guideNode, "label_content")
 	local msg = cfg.msg
 	assert(msg, "msg is nil")
 
-
 	--guide role
-	local isRight = cfg.rolepos == "right"
-
 	local image_role = cc.uiloader:seekNodeByName(self.guideNode, "image_role")
 	image_role:setFlippedX(not isRight)
-	if isRight then  
+	if cfg.rolepos == "right" then  
 		label_content:setPositionX(90)
 		image_role:setPositionX(700)
 	else

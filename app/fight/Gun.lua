@@ -17,14 +17,23 @@ function Gun:ctor(properties)
     --instance
     self.inlay 		 = md:getInstance("FightInlay")
     self.weaponModel = md:getInstance("WeaponListModel")
-    self.bagIndex = properties.bagIndex
-	self:setConfig()
+    self.bagIndex    = properties.bagIndex
+    self.configId    = properties.configId
+	self:initConfig()
 	self.curBulletNum = self:getBulletNum()
 end
 
-function Gun:setConfig()
-	self.config = self.weaponModel:getFightWeaponValue(self.bagIndex)
-	-- dump(self.config, "self.config gun")
+function Gun:initConfig()
+	local isHelpGun = self.configId ~= nil 
+	if not isHelpGun then 
+		local data = getUserData()
+		local weapon = data.weapons.weaponed[self.bagIndex]
+		self.configId = weapon["weaponid"]
+	else
+		print("is help gun")
+	end
+	self.config = self.weaponModel:getFightWeaponValue(self.configId, isInBag)
+	dump(self.config, "self.config gun")
 end
 
 function Gun:getConfig()

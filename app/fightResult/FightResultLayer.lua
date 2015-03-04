@@ -319,7 +319,7 @@ function FightResultLayer:getinlayfall()
 		if v["falltype"] == "inlay" then
 			self.inlayModel:buyInlay(v["id"])
 		elseif v["falltype"] == "gun" then
-			self.weaponListModel:setWeapon(v["id"])
+			self.weaponListModel:buyWeapon(v["id"])
 			self.weaponListModel:equipBag(v["id"], 3)
 			ui:showPopup("commonPopup",
 				 {type = "style2", content = "恭喜获得雷明顿！",delay = 0.5},
@@ -412,7 +412,7 @@ function FightResultLayer:turnLeftCard()
 			self.inlayModel:buyInlay(v["id"])
 			table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
 		elseif v["falltype"] == "gun" then
-			self.weaponListModel:setWeapon(v["id"])
+			self.weaponListModel:buyWeapon(v["id"])
 			self.weaponListModel:equipBag(v["id"],3)
 			function delaypopgun()
 				ui:showPopup("commonPopup",

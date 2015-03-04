@@ -172,6 +172,12 @@ function MapView:updateEnemys()
 		self.fightDescModel:waveStart(self.waveIndex)
 	end
 
+	--gunData
+	if wave.gunData then  
+		local fightGun = md:getInstance("FightGun")
+		fightGun:showGunIntro(wave.gunData)
+	end
+
 	--addEnemys
 	self:addWave(wave.enemys)
 end
@@ -181,7 +187,9 @@ function MapView:addWave(waveData)
 	local order = kDefine["orderMax"]
 	for groupId, group in ipairs(waveData) do
 		--desc
-		self:showEnemyIntro(group.descId, group.time)
+		if group.descId then 
+			self:showEnemyIntro(group.descId, group.time)
+		end
 
 		--cache
 		for i = 1, group.num do
@@ -200,7 +208,6 @@ function MapView:addWave(waveData)
 				enemyProperty["order"] = order 
 				local pos = group["pos"][i] 
 				assert("pos", pos)
-				print("pos", pos)
 				enemyProperty["offsetX"] = pos 
 				self:cacheEnemy(enemyProperty)
 			end
@@ -213,9 +220,7 @@ end
 
 function MapView:showEnemyIntro(descId, time)
 	local function callfuncShow()
-		if descId then 
-			self.fightDescModel:showEnemyIntro(descId)
-		end				
+		self.fightDescModel:showEnemyIntro(descId)		
 	end
 	self:performWithDelay(callfuncShow, time)
 end
@@ -228,11 +233,45 @@ function MapView:checkWave()
 			print("第"..self.waveIndex.."波怪物消灭完毕")
 			self.waveIndex = self.waveIndex + 1
 
+			self:checkGuide()
 			self:updateEnemys()
 			transition.removeAction(self.checkEnemysEmptyHandler)
 		end
 	end
 	self.checkEnemysEmptyHandler = self:schedule(checkEnemysEmpty, 1.0)
+end
+
+function MapView:checkGuide()
+	--guide
+	local guide = md:getInstance("Guide")
+	local gid, lid = self.fight:getCurGroupAndLevel()
+	local isGuide = gid == 0 and lid == 0
+	if self.waveIndex == 3 then	
+		--visible
+		print("function MapView:checkGuide() 3")
+		if isGuide then	
+			local comps = {btnLei = true, label_leiNum =  true,}
+			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})			
+			self.fight:dispatchEvent({name = self.fight.FIGHT_RESTOREGUN_EVENT})						
+			guide:check("fight01_lei") 
+		end
+	end
+	if self.waveIndex == 4 then 
+		--visible	
+		if isGuide then	
+			local comps = {btnChange = true}
+			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
+			guide:check("fight01_change") 
+		end
+	end	
+	if self.waveIndex == 6 then 
+		--visible	
+		if isGuide then	
+			local comps = {btnGold = true, label_gold = true}
+			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
+			guide:check("fight01_gold") 
+		end
+	end		
 end
 
 function MapView:getLeftEnemyNum()

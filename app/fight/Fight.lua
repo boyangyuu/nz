@@ -16,9 +16,11 @@ Fight.FIGHT_START_EVENT  = "FIGHT_START_EVENT"
 Fight.FIGHT_END_EVENT    = "FIGHT_END_EVENT"
 Fight.GUN_RELOAD_EVENT    = "GUN_RELOAD_EVENT"
 
-Fight.CONTROL_HIDE_EVENT = "CONTROL_HIDE_EVENT"
-Fight.CONTROL_SHOW_EVENT = "CONTROL_SHOW_EVENT"
-Fight.CONTROL_SET_EVENT  = "CONTROL_SET_EVENT"
+Fight.CONTROL_HIDE_EVENT     = "CONTROL_HIDE_EVENT"
+Fight.CONTROL_SHOW_EVENT     = "CONTROL_SHOW_EVENT"
+Fight.CONTROL_SET_EVENT      = "CONTROL_SET_EVENT"
+Fight.FIGHT_RESTOREGUN_EVENT = "FIGHT_RESTOREGUN_EVENT"
+
 Fight.FIGHT_FIRE_PAUSE_EVENT = "FIGHT_FIRE_PAUSE_EVENT"
 
 Fight.INFO_HIDE_EVENT = "INFO_HIDE_EVENT"
@@ -35,6 +37,8 @@ end
 
 function Fight:beginFight()
     --关卡
+    local levelInfo = self.groupId.."-"..self.levelId
+    um:startLevel(levelInfo)
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
@@ -81,22 +85,24 @@ function Fight:startFight()
 
     --check guide
     local guide = md:getInstance("Guide")
-    if self.groupId == 1 and self.levelId == 1 then 
+    if self.groupId == 0 and self.levelId == 0 then 
         scheduler.performWithDelayGlobal(function()
-            guide:check("fight01")
-        end, 0.0)   
-    elseif self.groupId == 1 and self.levelId == 4 then 
-        scheduler.performWithDelayGlobal(function()
-            guide:check("fight04")
-        end, 0.0)   
+            guide:check("fight01_move")
+        end, 0.0)       
+    -- elseif self.groupId == 1 and self.levelId == 1 then 
+    --     scheduler.performWithDelayGlobal(function()
+    --         guide:check("fight01")
+    --     end, 0.0)   
+    -- elseif self.groupId == 1 and self.levelId == 4 then 
+    --     scheduler.performWithDelayGlobal(function()
+    --         guide:check("fight04")
+    --     end, 0.0)   
     end
 end
 
 function Fight:endFight()
-    -- print("function Fight:endFight()")
     self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
     ui:showPopup("FightResultPopup",{},{anim = false})
-
 end
 
 function Fight:onWin()
@@ -116,18 +122,16 @@ function Fight:onFail()
     self.result = "fail"   
     local fightProp = md:getInstance("FightProp")
     fightProp:costReliveBag()
-
     ui:showPopup("FightResultFailPopup",{},{anim = false})
-
     local buy = md:getInstance("BuyModel")
     buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)})
 
     --clear
     self:clearFightData() 
 
-    --todo 改在返回大地图
-    -- local levelInfo = self.groupId.."-"..self.levelId  
-    -- um:failLevel(levelInfo)
+    --um
+    local levelInfo = self.groupId.."-"..self.levelId  
+    um:failLevel(levelInfo)
 end
 
 function Fight:payDone()

@@ -2,16 +2,15 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
-	{
+	{		
 		enemys = {                                          --1波1个
 			{
 				time = 1,
 				num = 1,
 				delay = {0},
-				pos = {70},
+				pos = {15},
 				property = { 
-					placeName = "place14",
+					placeName = "place15",
 					startState = "",
 					id = 1,
 				},
@@ -24,7 +23,7 @@ local waves = {
 				time = 1,
 				num = 2,
 				delay ={0, 0.2},
-				pos = {10,130},		
+				pos = {10,120},		
 				property = { 
 					placeName = "place14",
 					startState = "",
@@ -33,13 +32,14 @@ local waves = {
 			},					
 		},
 	},
+	--[引导] 3波 3个敌人,扔雷	
 	{
-		enemys = {                                          --3波3个 扔雷
+		enemys = {                                          
 			{
 				time = 1,
 				num = 2,
 				delay ={0, 0.2},
-				pos = {10,130},		
+				pos = {10,120},		
 				property = { 
 					placeName = "place14",
 					startState = "",
@@ -62,13 +62,14 @@ local waves = {
 			},						
 		},
 	},	
+	--[引导] 4波 换枪
 	{
-		enemys = {                                           --4波换炮
+		enemys = {                                           --4波换枪 mp5
 			{
 				time = 1,	
 				num = 4,
-				pos = {200,260,330,440,},
-				delay = {0,0.5,0.8,1,},
+				pos = {200,260,330,440},
+				delay = {0,0.5,1,1.5},
 				property = { 
 					placeName = "place1",
 					startState = "rollright",
@@ -77,22 +78,6 @@ local waves = {
 			},
 			{
 				time = 2,
-				num = 1,
-				pos = {350},
-				delay = {0.1},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 10,
-					placeName = "place12",
-					missileId = 4,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},	
-			{
-				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -106,23 +91,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
-				num = 1,
-				pos = {800},
-				delay = {0.1},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 10,
-					placeName = "place12",
-					missileId = 4,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},		
-			{
-				time = 8,
+				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -136,7 +105,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 6,	
 				num = 2,
 				pos = {250,350},
 				delay = {1,1.8},
@@ -148,10 +117,10 @@ local waves = {
 			},
 
 			{
-				time = 12,	
+				time = 8,	
 				num = 3,
 				pos = {820,750,660},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -160,22 +129,31 @@ local waves = {
 			},		                                     	
 		},
 	},	
+	
+	--[引导] 5波 换加特林,长按文字
 	{
-		enemys = {                                           --5波换加特林
+		--体验枪
+		gunData = 
+			{ 
+			    id = 8,    --枪id
+			    delay = 10, --10s之后出现
+			    time = 20,	--持续20s
+		    },		    
+		enemys = {
+
 			{
 				time = 1,	
-				num = 4,
-				pos = {200,260,330,440,},
-				delay = {0,0.5,0.8,1,},
+				num = 2,
+				pos = {250,350},
+				delay = {1,1.8},
 				property = { 
-					placeName = "place1",
+					placeName = "place3",
 					startState = "rollright",
 					id = 1,
 				},
 			},
-
 			{
-				time = 2,
+				time = 1,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -189,7 +167,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 2,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -203,22 +181,21 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	
-				num = 2,
-				pos = {250,350},
-				delay = {1,1.8},
+				time = 3,	
+				num = 4,
+				pos = {200,260,330,440,},
+				delay = {0,0.5,0.8,1.3,},
 				property = { 
-					placeName = "place3",
+					placeName = "place1",
 					startState = "rollright",
 					id = 1,
 				},
 			},
-
 			{
 				time = 5,	
 				num = 3,
 				pos = {820,750,660},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -240,7 +217,7 @@ local waves = {
 				time = 8,	
 				num = 3,
 				pos = {800,650,700},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.1},
 				property = {
 					placeName = "place4", 
 					startState = "rollleft",
@@ -250,7 +227,7 @@ local waves = {
 			{
 				time = 10,
 				num = 2,
-				delay = {0.2,0},
+				delay = {0.2,0.8},
 				pos = {250,900},
 				property = { 
 					placeName = "place3",
@@ -276,7 +253,7 @@ local waves = {
 				time = 14,	
 				num = 3,
 				pos = {240,370,300},
-				delay = {1,1.5,1.8},
+				delay = {0,0.6,1.3},
 				property = { 
 					placeName = "place1",
 					id = 2,
@@ -297,7 +274,7 @@ local waves = {
 			{
 				time = 18,
 				num = 2,
-				delay = {0.2,0},
+				delay = {0.2,0.9},
 				pos = {250,700},
 				property = { 
 					placeName = "place1",
@@ -309,7 +286,7 @@ local waves = {
 				time = 20,	
 				num = 3,
 				pos = {820,910,980},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = {
 					placeName = "place2",
 					id = 2,
@@ -319,12 +296,13 @@ local waves = {
 		                                     	
 		},
 	},	
+	--[引导] 第6波空军+飞机 点击黄武
 	{
-		enemys = {                                           -- 第6波空军+飞机
+		enemys = {                                           -- 第6波 给黄武 空军+飞机
 			{
 				time = 1,
 				num = 3,
-				delay = {0, 0.6, 0.8},
+				delay = {0, 0.6, 1.2},
 				pos = {200,270,340,},	
 				property = { 
 					placeName = "place1", 
@@ -335,7 +313,7 @@ local waves = {
 			{
 				time = 2,
 				num = 3,
-				delay = {0, 0.3, 0.7},
+				delay = {0, 0.7, 1.4},
 				pos = {800,650,900},	
 				property = { 
 					placeName = "place1", 
@@ -376,7 +354,7 @@ local waves = {
 			{
 				time = 4,
 				num = 3,
-				delay = {0.2,0.3, 0.6},
+				delay = {0.2,0.8, 1.3},
 				pos = {470,550,700},					
 				property = {
 					placeName = "place2",  
@@ -417,7 +395,7 @@ local waves = {
 				time = 9,	
 				num = 2,
 				pos = {350,700},
-				delay = {0.3,0.7},
+				delay = {0.3,0.9},
 				property = { 
 					type = "san",
 					id = 3,
@@ -428,7 +406,7 @@ local waves = {
 			{
 				time = 10,
 				num = 3,
-				delay = {0, 0.6, 0.8},
+				delay = {0, 0.6, 1.3},
 				pos = {200,260,330,},	
 				property = { 
 					placeName = "place1", 
@@ -450,7 +428,7 @@ local waves = {
 			{
 				time = 12,
 				num = 3,
-				delay = {0.2,0.3, 0.6},
+				delay = {0.2,0.6, 0.9},
 				pos = {480,550,700},					
 				property = {
 					placeName = "place2",  
@@ -475,7 +453,9 @@ local waves = {
 			},
 		},
 	},
-	{	
+
+	--[引导] boss 出现之后开盾; 20%永久机甲
+	{
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                              --boss
 			{
@@ -499,15 +479,15 @@ local waves = {
 --enemy的关卡配置                           无镶嵌 MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=1,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=190,fireRate=180,fireCd=3,speed=40,scale = 1.5,
+	{id=2,image="jinzhanb",demage=3,hp=140,fireRate=180,fireCd=3,speed=40,scale = 1.4,
 	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=160,
+	{id=3,image="sanbing01",demage=0,hp=105,
 	weak1=2},	             
 
     --导弹          --missileType = "daodan",
@@ -515,28 +495,26 @@ local enemys = {
 	weak1=1},
 
 	--铁球
+
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵
-	{id=6,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=6,image="shouleib",demage=0,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
-	
 	--手雷
 	{id=7,image="shoulei",demage=1,hp=1,
 	weak1=2},
-	
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=9,image="feiji",demage=0,hp=1600, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=9,image="feiji",demage=0,hp=3200, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
 	{id=10,image="yyc",demage=0,hp=1600,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=240, fireCd=5.0,
 	weak1=2,    award = 60},
-
 }
 
 	--boss的关卡配置
@@ -557,35 +535,35 @@ local bosses = {
 
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数
-		award = 9000,                   --boss产出金币数量
+		award = 1000,                   --boss产出金币数量
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.80, 0.70, 0.50, 0.10,
+				0.90,  0.50, 0.10,
 			},
 			moveRightFire = {
-				0.90,  0.60, 0.70,  0.30, 
+				0.70,  0.30, 
 			},
 			chongfeng = {
 			     0.95, 0.93, 0.85, 0.75, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
 			},
 			tieqiu = {
-				0.99, 0.80, 0.60, 0.40, 0.20, 0.10,
+				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
-				0.80, 0.40, 0.10,                        
+				0.80, 0.40,                        
 			},
 			weak1 = {                               --头 技能触发(可以同时)
-				0.60, 0.20                      
+				0.60, 0.20,                      
 			},
-			demage160 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage100 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.99,
 			},	
-			demage250 = {  
+			demage150 = {  
 				0.80,
 			},	
-			demage400 = {  
+			demage200 = {  
 				0.50,
 			},						
 		},
@@ -598,7 +576,6 @@ local bosses = {
 			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
 			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
 			return cc.Sequence:create(move1, move2, move3, move4, move5)
-				
 		end,
 
 		getMoveRightAction = function ()
@@ -612,13 +589,16 @@ local bosses = {
 	},
 }
 
+local mapId = "map_1_2"
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
-	self.mapId  = "map_1_2"
-	self.limit  = 10
+	self.mapId  = mapId
+	self.limit  = limit
+	self.goldLimits = {225,355,495}   --黄武激活所需杀人个数  本关共60个小怪
 end
 
 return waveClass

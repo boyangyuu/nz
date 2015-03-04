@@ -32,6 +32,7 @@ function InfoLayer:ctor()
 		:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
 		:addEventListener(self.inlay.INLAY_GOLD_END_EVENT	, handler(self, self.onActiveGoldEnd))
 
+
 	self:loadCCS()
 	self:initUI()
 	-- self:initGuide()
@@ -113,6 +114,7 @@ end
 function InfoLayer:onRefreshGun(event)
 	self.gunDisplay:removeAllChildren()
 	local record = self.hero:getGun():getConfig()
+	dump(record, "function InfoLayer:onRefreshGun(event)")
 	local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 	icon:setScaleX(0.05)
 	icon:setScaleY(0.05)
@@ -191,23 +193,7 @@ end
 function InfoLayer:onHide(event)
 	self:setVisible(false)
 end
---[[
-function InfoLayer:initGuide()
-    local isDone = self.guide:isDone("fight")
-    if isDone then return end
-	local rect = cc.rect(105, 500, 285,140)
-	--blood
-    local data1 = {
-        id = "fight_blood",
-        groupId = "fight",
-        rect = rect,
-        endfunc = function (touchEvent)
-        	
-        end
-    }
-    self.guide:addClickListener(data1)  
-end
-]]
+
 function InfoLayer:onEnter()
 
 end

@@ -210,9 +210,6 @@ function LevelMapLayer:initChooseLayer()
     -- 添加客服按钮点击事件
     btnkefu:setTouchEnabled(true)
     btnkefu:onButtonPressed(function( event )
-        --test 清理引导
-        local guide = md:getInstance("Guide")
-        guide:clearData()
         event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
     end)
     :onButtonRelease(function( event )

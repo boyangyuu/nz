@@ -5,7 +5,9 @@ local Define = class("Define", cc.mvc.ModelBase)
 --hero
 Define.kHeroBaseHp 				= 100.0  --角色血量
 Define.kHeroCritScale 			= 3.0  --暴击倍数
-Define.kHeroHelper				= 1.0  --默认回血1.0/s
+
+Define.kHeroHelper				= 0.5  --默认回血0/s
+
 Define.kCoolDownScale           = 1.0   --枪的冷却时间系数
 
 --手雷兵 远程兵 
@@ -34,7 +36,7 @@ Define.kRenzhiWalkTime			= 0.6      --行走时间
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
 Define.kRenzheSpeed				= 600.0    --忍者跑动速度 像素/s
-Define.kRenzheRunTime			= 2.0       -- 忍者跑步时间
+Define.kRenzheRunTime			= 2.0       --忍者跑步时间
 Define.kRenzheWalkTime			= 0.5   	--忍者行走时间
 Define.kRenzheShanTime			= 3.0   	--忍者瞬移时间
 Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离 
@@ -108,7 +110,7 @@ Define.kShouLeiCd    			= 0.5  --
 Define.kJuRange 				= 4.0
 
 --引导
-Define.kGuideActiveJijia	 	= 0.35  --boss还有百分之10血时 触发机甲
+Define.kGuideActiveJijia	 	= 0.20  --boss还有百分之10血时 触发机甲
 -- Define.kGuidebossHpScale		= 0.70  --引导的时候 boss的血量缩小0.7
 
 

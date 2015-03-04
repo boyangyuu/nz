@@ -38,9 +38,6 @@ function FightResultFailPopup:initUI()
         elseif event.name=='ended' then
             local fight  = md:getInstance("Fight")
             local groupid,levelid = fight:getCurGroupAndLevel()
-            local levelInfo = groupid.."-"..levelid
-            um:failLevel(levelInfo)
-
 	        ui:closePopup("FightResultFailPopup")
            local curGroup, curLevel = fight:getCurGroupAndLevel()
             ui:changeLayer("HomeBarLayer",{groupid = curGroup})

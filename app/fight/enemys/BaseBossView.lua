@@ -41,7 +41,7 @@ function BaseBossView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     cc.EventProxy.new(self.hero, self)
-    	:addEventListener(self.hero.ENEMY_KILL_CALL_EVENT, handler(self, self.onKillCall)) 
+    	-- :addEventListener(self.hero.ENEMY_KILL_CALL_EVENT, handler(self, self.onKillCall)) 
 
     self:initBody()
 
@@ -212,10 +212,6 @@ function BaseBossView:playSkill(skillName)
 		num = tonumber(num)
 		-- print(" demage num", num)
 		local per = num / 100
-
-		local guide = md:getInstance("Guide")
-		local isDone = guide:isDone("fight02")
-		if not isDone then return end
 		self.enemy:setDemageScale(per)	
 	end
 end
@@ -232,65 +228,6 @@ end
 function BaseBossView:platMoveDaoFireAction(isLeft)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
---[[
-	--向左出发
-	local bound = self.armature:getCascadeBoundingBox() 
-	local pos = self:getPosInMapBg()
-	dump(pos, "pos")
-	local disOut = isLeft and  -(pos.x + bound.width ) or 
-						(1660 - pos.x)
-	local time = math.abs(disOut) / speed
-	local desPos = cc.p(disOut, 0)
-	local actionOut = cc.MoveBy:create(time, desPos)
-
-	--到右屏幕
-	local disScreen = 1660 + bound.width
-	time = math.abs(disScreen) / speed
- 	desPos = cc.p(disScreen, 0)
-	local actionScreen1 = cc.MoveBy:create(time, desPos)
-
-	--到左屏幕
-	local disScreen2 = -disScreen
-	time = math.abs(disScreen2) / speed
-	desPos = cc.p(disScreen2, 0)
-	local actionScreen2 = cc.MoveBy:create(time, desPos)
-
-	--返回
-	local disBack = - disOut
-	desPos = cc.p(disBack, 0)
-	time = math.abs(disBack) / speed
-	local actionBack = cc.MoveBy:create(time, desPos)
-	local seq = nil
-		--向左出发
-	local bound = self.armature:getCascadeBoundingBox() 
-	local pos = self:getPosInMapBg()
-	dump(pos, "pos")
-	local disOut = isLeft and  -(pos.x + bound.width ) or 
-						(1660 - pos.x)
-	local time = math.abs(disOut) / speed
-	local desPos = cc.p(disOut, 0)
-	local actionOut = cc.MoveBy:create(time, desPos)
-
-	--到右屏幕
-	local disScreen = 1660 + bound.width
-	time = math.abs(disScreen) / speed
- 	desPos = cc.p(disScreen, 0)
-	local actionScreen1 = cc.MoveBy:create(time, desPos)
-
-	--到左屏幕
-	local disScreen2 = -disScreen
-	time = math.abs(disScreen2) / speed
-	desPos = cc.p(disScreen2, 0)
-	local actionScreen2 = cc.MoveBy:create(time, desPos)
-
-	--返回
-	local disBack = - disOut
-	desPos = cc.p(disBack, 0)
-	time = math.abs(disBack) / speed
-	local actionBack = cc.MoveBy:create(time, desPos)
-	local seq = nil
-
-]]
 
 	--向左出发
 	local bound = self.armature:getCascadeBoundingBox() 
@@ -303,12 +240,12 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 
 	--到右屏幕
 	desPos = cc.p(1660 + bound.width, posOri.y)
-	local time = math.abs(1660) / speed
+	local time = math.abs(1660 + 2 * bound.width) / speed
 	local actionScreen1 = cc.MoveTo:create(time, desPos)
 
 	--到左屏幕
 	desPos = cc.p(- bound.width - 200, posOri.y)
-	local time = math.abs(1660) / speed	
+	local time = math.abs(1660 + 2 * bound.width) / speed	
 	local actionScreen2 = cc.MoveTo:create(time, desPos)
 
 	--返回
@@ -395,7 +332,7 @@ end
 function BaseBossView:playDaoDan1()
 	--导弹
 	for i=1,4 do
-		local delay = 0.4 + 0.3 * i
+		local delay = 0.4 + 0.15 * i
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
@@ -494,7 +431,7 @@ function BaseBossView:zhaohuan()
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
 		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}
-		self.enemysCallNum = self.enemysCallNum + group.num
+		-- self.enemysCallNum = self.enemysCallNum + group.num
 	end
 	-- print("self.enemysCallNum", self.enemysCallNum)
 
@@ -504,14 +441,14 @@ function BaseBossView:zhaohuan()
 	self.zhaohuanIndex = self.zhaohuanIndex + 1
 end
 
-function BaseBossView:onKillCall(event)
-	if self.enemysCallNum == nil then return end --todo 需要修改
-	self.enemysCallNum = self.enemysCallNum  - 1
-	if self.enemysCallNum == 0 then 
-		-- print("取消无敌")
-		self:onKillLastCall()
-	end
-end
+-- function BaseBossView:onKillCall(event)
+-- 	if self.enemysCallNum == nil then return end --todo 需要修改
+-- 	self.enemysCallNum = self.enemysCallNum  - 1
+-- 	if self.enemysCallNum == 0 then 
+-- 		-- print("取消无敌")
+-- 		self:onKillLastCall()
+-- 	end
+-- end
 
 function BaseBossView:onKillLastCall()
 	-- self:setUnhurted(false)	
@@ -522,6 +459,7 @@ function BaseBossView:setUnhurted(isUnhurted)
 end
 
 function BaseBossView:playWudi()
+	if self.wudiAnim ~= nil then return end
 	self.isUnhurted = true
 	self.wudiAnim = ccs.Armature:create("wdhd")
 	self.wudiAnim:getAnimation():play("wdhd", -1, 1)
@@ -534,8 +472,10 @@ end
 
 function BaseBossView:endWudi()
     self.isUnhurted = false
-    self.wudiAnim:removeSelf()    
-    self.wudiAnim = nil
+    if self.wudiAnim then 
+	    self.wudiAnim:removeSelf()    
+	    self.wudiAnim = nil
+	end
 end
 
 function BaseBossView:clearWeak()
@@ -763,31 +703,38 @@ end
 
 function BaseBossView:onEnter()
 	BaseBossView.super:onEnter(self)
-	local sch = scheduler.performWithDelayGlobal(handler(self, self.checkGuide), 2.0)
-	self:addScheduler(sch)
+	-- local sch = scheduler.performWithDelayGlobal(handler(self, self.checkGuide), 2.0)
+	-- self:addScheduler(sch)
 end
 
-function BaseBossView:checkGuide()
-	local guide = md:getInstance("Guide")
-	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
-		local isStart = guide:check("fight02_dun")
-		if not isStart then return end
-		self.isGuidedDun = true
-		local fight = md:getInstance("Fight")
-		fight:stopFire()
-		-- local scale = define.kGuidebossHpScale
-		local maxHp = self.enemy:getMaxHp()
-		self.enemy:setMaxHp(maxHp * 1)
-		self.enemy:setFullHp()
-	end
-end
+-- function BaseBossView:checkGuide()
+-- 	local guide = md:getInstance("Guide")
+-- 	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
+-- 		local isStart = guide:check("fight02_dun")
+-- 		if not isStart then return end
+-- 		self.isGuidedDun = true
+-- 		local fight = md:getInstance("Fight")
+-- 		fight:stopFire()
+-- 		-- local scale = define.kGuidebossHpScale
+-- 		local maxHp = self.enemy:getMaxHp()
+-- 		self.enemy:setMaxHp(maxHp * 1)
+-- 		self.enemy:setFullHp()
+-- 	end
+-- end
 
 function BaseBossView:checkGuide1()
+	print("function BaseBossView:checkGuide1()")
 	local guide = md:getInstance("Guide")
-	if not guide:isDone("fight02") and not self.isGuidedJijia then 
-		-- print("guide:check(fight02)")
-		local isWillGuide = guide:check("fight02")
-		if isWillGuide then 
+	local fight = md:getInstance("Fight")
+	local gid = fight:getGroupId()
+	local lid = fight:getLevelId()	
+	local isGuideLevel = gid == 0 and lid == 0
+	if not guide:isDone("fight01_jijia") and not self.isGuidedJijia 
+		and isGuideLevel then 
+		print("function BaseBossView:checkGuide1()1111")
+		local isWillGuide = guide:check("fight01_jijia")
+		if isWillGuide then
+			print("function BaseBossView:checkGuide1()1111") 
 			self.isGuidedJijia = true
 			local fight = md:getInstance("Fight")
 			fight:stopFire()	
