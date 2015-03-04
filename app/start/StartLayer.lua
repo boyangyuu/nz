@@ -117,8 +117,11 @@ end
 function StartLayer:beginGame()
     self:initDailyLogin()       
 
-    if self:isGuideDone() then 
-        ui:changeLayer("HomeBarLayer",{popgift = true})
+    if self:isGuideDone() then
+        local levelMapModel = md:getInstance("LevelMapModel")
+        local groupId, levelId = levelMapModel:getConfig()
+        print("groupId", groupId)
+        ui:changeLayer("HomeBarLayer",{groupId = groupId, popGift = true})
     else
         --clear data
         local guide = md:getInstance("Guide")

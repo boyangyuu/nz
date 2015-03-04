@@ -79,7 +79,7 @@ configs["fight01_jijia"] = {
 
 ---- 第一关结算之后 ----
 configs["afterfight01"] = {
-	preGuideId = "fight01_jijia",
+	preGuideId = nil,
 	steps = {
 		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把雷明顿!  ", skipDelay = 2.0 }, 
 		{id = "afterfight01_inlay", msg = "点击按钮 , 镶嵌道具", skipDelay = 2.0 },		

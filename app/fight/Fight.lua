@@ -104,7 +104,7 @@ end
 function Fight:onWin()
     if self.result then return end
     self.result = "win" 
-    self.userModel:levelPass(self.groupId,self.levelId)
+    self.userModel:levelPass(self.groupId, self.levelId)
 
     self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    

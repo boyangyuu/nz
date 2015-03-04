@@ -176,21 +176,29 @@ function FightResultLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then		
-	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-	        -- dump(curGroup)
-	        if curLevel == 6 and curGroup < 4 then
-	        	curGroup = curGroup + 1
-	        end
-        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})
-
-			if self.LevelMapModel:getNextGroupAndLevel(curGroup, curLevel) == false then
-				print("0-0 OR 1-4.1 OR tongguan")
-			else
-				local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
-	        	self.fightResultModel:popupleveldetail(nextG, nextL)
-	        end
+        	self:onClickBtnNext()
         end
     end)
+end
+
+function FightResultLayer:onClickBtnNext()
+    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+    -- dump(curGroup)
+
+    --todo
+    if curLevel == 6 and curGroup < 4 then
+    	curGroup = curGroup + 1
+    end
+
+	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
+
+	if self.levelMapModel:getNextGroupAndLevel(curGroup, curLevel) == false then
+		print("0-0 OR 1-4.1 OR 通关")
+	else
+		local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+    	self.fightResultModel:popupleveldetail(nextG, nextL)
+    end
+	playSoundBtn()     
 end
 
 function FightResultLayer:initUIContent()
@@ -474,9 +482,7 @@ function FightResultLayer:initGuide()
         groupId = "afterfight01",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})     
-		    playSoundBtn()         	   
+			ui:changeLayer("HomeBarLayer",{groupId = 1})   
         end
      })    	
 end
@@ -496,9 +502,7 @@ function FightResultLayer:initGuide2()
         groupId = "afterfight02",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-	        local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-        	ui:changeLayer("HomeBarLayer",{groupid = curGroup})  
-			playSoundBtn()    
+			self:onClickBtnNext()  
         end
      })       	
 end

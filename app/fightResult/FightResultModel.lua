@@ -11,7 +11,7 @@ function FightResultModel:getInlayrecordByID(inlayid)
 	return record
 end
 
-function FightResultModel:popupleveldetail(group,level)
+function FightResultModel:popuplevelDetail(group,level)
     self:dispatchEvent({name = "POPUP_LEVELDETAIL",gid = group,lid = level})
 end
 
