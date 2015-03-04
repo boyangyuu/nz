@@ -52,7 +52,7 @@ configs["fight01_lei"] = {
 	}
 }
 
----- 第一关 换枪(火箭筒)----
+---- 第一关 换枪(rpg)----
 configs["fight01_change"] = {
 	preGuideId = nil,
 	steps = {
@@ -79,51 +79,33 @@ configs["fight01_jijia"] = {
 
 ---- 第一关结算之后 ----
 configs["afterfight01"] = {
-	preGuideId = "fight01",
+	preGuideId = "fight01_jijia",
 	steps = {
-		{id = "afterfight01_jixu", msg = "点击按钮回到大地图"}, 
+		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把雷明顿!  ", skipDelay = 2.0 }, 
+		{id = "afterfight01_inlay", msg = "点击按钮 , 镶嵌道具", skipDelay = 2.0 },		
+		{id = "afterfight01_get", msg = "点击按钮 , 领取雷明顿和镶嵌道具", skipDelay = 2.0 },	
+		{id = "afterfight01_jixu", msg = "点击按钮 , 进入下一关"}, 
 	}
 }
 
-
 --- 开启第二关之后 ----
 configs["prefight02"] = {
-	preGuideId = "fight01",
+	preGuideId = "afterfight01",
 	steps = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
 		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
 		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
 		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen"},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
-		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", },		
-		-- {id = "prefight02_equip1", msg = "点击一键装备 , 装备M4A1", },		
-		{id = "prefight02_equip2", msg = "点击一键装备 , 装备黄金武器", },		
+		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", contentOffset = {x = 0, y = -180},rolepos = "right", },			
+		{id = "prefight02_equip", msg = "点击一键装备 , 装备黄金武器", },		
 		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
-	}
-}
-
--- --- 第二关boss之后 ----
--- configs["fight02_dun"] = {
--- 	preGuideId = "prefight02",
--- 	steps = {
--- 		--boss出现3秒 开盾提示
--- 		{id = "fight02_dun", msg = "开启盾牌抵御毁灭者的进攻！！", }, 
--- 	}
--- }
-
----- 第二关结束之后 ----
-configs["afterfight02"] = {
-	preGuideId = "fight02",
-	steps = {
-		{id = "afterfight02_award", msg = "中大奖了 ! 居然掉落了一把枪!  ", skipDelay = 2.0 }, 
-		{id = "afterfight02_get", msg = "点击按钮 , 领取雷明顿和镶嵌道具", skipDelay = 2.0 }, 
-		{id = "afterfight02_next", msg = "点击按钮 , 回到大地图"}, 	
 	}
 }
 
 ---- 第四关战斗开始之后 ----
 configs["fight04"] = {
-	preGuideId = "afterfight02",
+	preGuideId = nil,
 	steps = {
 		{id = "fight04_open", msg = "         点击开镜", }, 
 		{id = "fight04_fire", msg = "         点击开火", }, 
@@ -132,9 +114,9 @@ configs["fight04"] = {
 	}	
 }
 
----- 开启第5关之后  ----
+---- 开启第3关之后  ----
 configs["xiangqian"] = {
-	preGuideId = "fight04",
+	preGuideId = "prefight02",
 	steps = {
 		--进镶嵌页面  一套青铜 
 		{id = "xiangqian_xiangqian", msg = "点击按钮进入镶嵌界面", }, 

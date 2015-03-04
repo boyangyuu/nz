@@ -106,7 +106,7 @@ function MyApp:createGameStateFile()
                         },
             },
             prop = {
-                        lei = {num = 5},
+                        lei = {num = 15},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
             },
@@ -118,7 +118,7 @@ function MyApp:createGameStateFile()
         
             currentlevel =  {
                         group = 1,
-                        level = 6,
+                        level = 1,
             },
             guide = {
                         gamePre         = false,
@@ -128,12 +128,11 @@ function MyApp:createGameStateFile()
                         fight01_gold    = false,
                         fight01_change  = false,
                         fight01_jijia   = false,   
+                        afterfight01    = false,   
 
-                        afterfight01    = false,
-                        -- fight02_dun     = false,     
                         prefight02      = false,
-
                         afterfight02    = false,
+                        
                         fight04         = false,
                         xiangqian       = false,
             },

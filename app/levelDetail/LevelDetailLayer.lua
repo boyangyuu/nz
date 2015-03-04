@@ -363,23 +363,11 @@ function LevelDetailLayer:initGuide()
     local isDone = guide:isDone("prefight02")
     if isDone then return end
 
-    print("function LevelDetailLayer:initGuide()")
-
-    --点击一键装备
-    guide:addClickListener({
-        id = "prefight02_equip1",
-        groupId = "prefight02",
-        rect = self.btnBibei:getCascadeBoundingBox(),
-        endfunc = function (touchEvent)
-            self:onClickBtnBibei()
-        end
-     })    
-
     --点击装备黄金武器
     guide:addClickListener({
-        id = "prefight02_equip2",
+        id = "prefight02_equip",
         groupId = "prefight02",
-        rect = self.btnGold:getCascadeBoundingBox(),
+        rect = cc.rect(400, 10, 340, 240),
         endfunc = function (touchEvent)
             self:onClickGuideBtnGold()
         end

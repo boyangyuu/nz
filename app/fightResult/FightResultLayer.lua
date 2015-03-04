@@ -83,7 +83,6 @@ function FightResultLayer:playstar(numStar)
 		         		if self.isDone == true and self.isPop then
 			         		scheduler.performWithDelayGlobal(delaypop, 2)
 			     		end
-			     		scheduler.performWithDelayGlobal(handler(self,self.sentGiftInlay), 4)
 		         	end    
 	            end)
 		    end
@@ -338,30 +337,6 @@ function FightResultLayer:getinlayfall()
     -- return probaTable
 end
 
-function FightResultLayer:sentGiftInlay()
-	if self.curRecord["giftInlay"] then
-		local name
-		local quality = self.curRecord["giftInlay"]
-		if quality == 1 then
-			name = "普通"
-		elseif quality == 2 then
-			name = "青铜"
-		elseif quality == 3 then
-			name = "白银"
-		elseif quality == 4 then
-			name = "黄金"
-		else
-			return
-		end
-		self.fightResultModel:giftInlay(self.curRecord["giftInlay"])
-		ui:showPopup("commonPopup",
-			 {type = "style2", content = "恭喜获得"..name.."镶嵌一套！"},
-			 {opacity = 155})
-	else
-		return
-	end
-end
-
 function FightResultLayer:getGrade(LeftPersent)
 	if LeftPersent < 0.2 then
 		return 1
@@ -436,13 +411,44 @@ end
 
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
-	self.guide:check("afterfight02")
+	-- self.guide:check("afterfight02")
 end
 
 function FightResultLayer:initGuide()
     local isDone = self.guide:isDone("afterfight01")
     if isDone then return end
+    self.guide:addClickListener({
+        id = "afterfight01_award",
+        groupId = "afterfight01",
+       rect = cc.rect(0, 0, display.width1, display.height1),
+        endfunc = function (touchEvent)
+        	playSoundBtn()
+        end
+     })  
 
+    self.guide:addClickListener({
+        id = "afterfight01_inlay",
+        groupId = "afterfight01",
+        rect = self.btninlay:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+	        ui:showPopup("commonPopup",
+				 {type = "style2", content = "镶嵌成功"},
+				 {opacity = 155})
+        	self:quickInlay()
+	        self.btninlay:setButtonEnabled(false)  
+			playSoundBtn()    
+        end
+     }) 
+
+    self.guide:addClickListener({
+        id = "afterfight01_get",
+        groupId = "afterfight01",
+        rect = self.btngetall:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+			self:turnLeftCard()   
+			playSoundBtn()    
+        end
+     })   
     self.guide:addClickListener({
         id = "afterfight01_jixu",
         groupId = "afterfight01",
@@ -465,25 +471,7 @@ end
 
 function FightResultLayer:initGuide2()
     local isDone = self.guide:isDone("afterfight02")
-    if isDone then return end
-    self.guide:addClickListener({
-        id = "afterfight02_award",
-        groupId = "afterfight02",
-       rect = cc.rect(0, 0, display.width1, display.height1),
-        endfunc = function (touchEvent)
-        	playSoundBtn()
-        end
-     })  
-
-    self.guide:addClickListener({
-        id = "afterfight02_get",
-        groupId = "afterfight02",
-        rect = self.btngetall:getCascadeBoundingBox(),
-        endfunc = function (touchEvent)
-			self:turnLeftCard()   
-			playSoundBtn()    
-        end
-     })    
+ 
 
     self.guide:addClickListener({
         id = "afterfight02_next",

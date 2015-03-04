@@ -260,6 +260,8 @@ function GuideLayer:refreshCommentUI()
 	if cfg.rolepos == "hide" then 
 		contentNode:setVisible(false)
 		return 
+	else
+		contentNode:setVisible(true)
 	end
 
 	--msg

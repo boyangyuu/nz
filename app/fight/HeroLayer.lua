@@ -104,12 +104,14 @@ function HeroLayer:killEnmeyGold(event)
 	local enemyPos = event.enemyPos
 	local value = event.award 
 	local baseValue = define.kGoldCoinValue
+	local flySpeed = 900.0
 	-- print("value", value)
 	local num = math.floor(value / baseValue)
-	if num > 8 then num = 8 end 
+	if num > 12 then num = 12 end 
 	local isMany = num > 3
-	local w = isMany and 10 or 24
+	local w = isMany and 5 or 5
 	local d = 0.1
+	local destPos = cc.p(664, 604)
 	for i = 1, num do
 		local direct = i % 2 == 1 and -1 or 1
 		local xIndex = (num + i * direct) 
@@ -117,14 +119,15 @@ function HeroLayer:killEnmeyGold(event)
 		local delay = xIndex * d
 		local armature = ccs.Armature:create("gold")
 		armature:setPosition(enemyPos.x, enemyPos.y)
+		local flyTime = cc.pGetDistance(enemyPos, destPos) / flySpeed
+		armature:setScale(0.5)
 		armature:getAnimation():play("gold", -1, 1)
-		armature:runAction(cc.Sequence:create(
-		
+		armature:runAction(cc.Sequence:create(		
 			cc.JumpBy:create(0.4, cc.p(i * w * direct, 0), 80, 1),
 			cc.DelayTime:create(delay),
 			cc.Spawn:create(
-				cc.MoveTo:create(0.4, cc.p(664, 604)),
-				cc.ScaleTo:create(0.4, 0.5)),
+				cc.MoveTo:create(flyTime, destPos),
+				cc.ScaleTo:create(flyTime, 0.3)),
 			cc.CallFunc:create(function ()
 				armature:removeFromParent()
 			end)

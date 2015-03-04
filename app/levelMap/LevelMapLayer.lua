@@ -373,22 +373,22 @@ end
 function LevelMapLayer:checkGuide()
     local curGroupId, curLevelId = self.LevelMapModel:getConfig()
 
-    if curGroupId == 1 and curLevelId == 5 then 
+    if curGroupId == 1 and curLevelId == 3 then 
         local guide = md:getInstance("Guide")
         guide:check("xiangqian")
     end
 end
 
 function LevelMapLayer:initGuide()
-    --开启第二关之后 点击进入下一关
-    local rect = cc.rect(200, 107, 120, 120)
+    --开启第1关之后 点击进入下一关
+    local rect = cc.rect(95, 280, 120, 120)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "prefight02_nextlevel",
         groupId = "prefight02",
         rect = rect,
         endfunc = function (touchEvent)
-            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
+            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 1})
             playSoundBtn()
         end
      })   

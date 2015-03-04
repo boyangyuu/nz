@@ -89,14 +89,10 @@ function Fight:startFight()
         scheduler.performWithDelayGlobal(function()
             guide:check("fight01_move")
         end, 0.0)       
-    -- elseif self.groupId == 1 and self.levelId == 1 then 
-    --     scheduler.performWithDelayGlobal(function()
-    --         guide:check("fight01")
-    --     end, 0.0)   
-    -- elseif self.groupId == 1 and self.levelId == 4 then 
-    --     scheduler.performWithDelayGlobal(function()
-    --         guide:check("fight04")
-    --     end, 0.0)   
+    elseif self.groupId == 1 and self.levelId == 4.1 then 
+        scheduler.performWithDelayGlobal(function()
+            guide:check("fight04")
+        end, 0.0)   
     end
 end
 
@@ -236,6 +232,11 @@ end
 
 function Fight:setFightResult()
     local hpPercent = self.hero:getHp() / self.hero:getMaxHp()
+    -- is gold weapon
+    local inlay = md:getInstance("FightInlay")
+    local isGold = inlay:getIsNativeGold()
+    local hpPercent = isGold and 1.00 or hpPercent
+
     self.fightResult = {}
     self.fightResult["goldNum"]   = self.goldValue
     self.fightResult["hpPercent"] = hpPercent
