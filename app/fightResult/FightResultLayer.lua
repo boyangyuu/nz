@@ -13,7 +13,7 @@ function FightResultLayer:ctor(properties)
 	self.fightResultModel = md:getInstance("FightResultModel")
     self.inlayModel 	  = md:getInstance("InlayModel")
     self.userModel        = md:getInstance("UserModel")
-
+    self.levelMapModel    = md:getInstance("LevelMapModel")
 
 	self.cardover = {}
     self.cardgold = {}
@@ -153,8 +153,8 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
 	        ui:showPopup("commonPopup",
-				 {type = "style2", content = "镶嵌成功"},
-				 {opacity = 155})
+				 {type = "style2", content = "镶嵌成功",delay = 0.5},
+				 {opacity = 155})				
         	self:quickInlay()
 	        self.btninlay:setButtonEnabled(false)
         end
@@ -182,6 +182,13 @@ function FightResultLayer:initUI()
 	        	curGroup = curGroup + 1
 	        end
         	ui:changeLayer("HomeBarLayer",{groupid = curGroup})
+
+			if self.LevelMapModel:getNextGroupAndLevel(curGroup, curLevel) == false then
+				print("0-0 OR 1-4.1 OR tongguan")
+			else
+				local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+	        	self.fightResultModel:popupleveldetail(nextG, nextL)
+	        end
         end
     end)
 end
@@ -200,7 +207,7 @@ function FightResultLayer:initUIContent()
 			self.cardlabel[k]:setString(record["describe2"])
 			local icon = display.newSprite("#"..record["imgname"]..".png")
 			addChildCenter(icon, self.cardicon[k])
-			if record["property"] ~= 4 then
+			if record["property"] ~= 4 and record["property"] ~= 3 then
 				self.cardgold[k]:setVisible(false)
 			end
     	elseif v["falltype"] == "suipian" then
@@ -231,8 +238,6 @@ function FightResultLayer:playCard()
 end
 
 function FightResultLayer:getinlayfall()
-	math.randomseed(os.time())
-	
 	local giveTable = {}
 	local lockTable = {}
 	local probaTable = {}
@@ -268,6 +273,8 @@ function FightResultLayer:getinlayfall()
 				table.insert(giveTable,{id = v["inlayid"], falltype = "inlay"})
 			elseif ran < 5 and self.grade > table.nums(giveTable) then
 				table.insert(giveTable,{id = v["inlayid"], falltype = "inlay"})
+			elseif self.grade == 5 then
+				table.insert(giveTable,{id = v["inlayid"], falltype = "inlay"})
 			else
 				table.insert(lockTable,{id = v["inlayid"], falltype = "inlay"})
 			end
@@ -276,7 +283,7 @@ function FightResultLayer:getinlayfall()
 	end
 
 	-- 普通镶嵌
-	local givenum = self.grade - table.nums(giveTable)
+	local givenum = self.grade + 1 - table.nums(giveTable)
 	local inserttable = {}
 	local normalnum = 6 - table.nums(probaTable)
 	local index = 1
@@ -300,8 +307,6 @@ function FightResultLayer:getinlayfall()
 	end
 	self.giveTable = giveTable
 	self.lockTable = lockTable
-	-- dump(giveTable)
-	-- dump(lockTable)
 	self.isPop = false -- ak掉落提示
 	for k,v in pairs(giveTable) do
 		table.insert(self.itemsTable,v)
@@ -311,14 +316,14 @@ function FightResultLayer:getinlayfall()
 			self.weaponListModel:buyWeapon(v["id"])
 			self.weaponListModel:equipBag(v["id"], 3)
 			ui:showPopup("commonPopup",
-				 {type = "style2", content = "恭喜获得雷明顿！"},
+				 {type = "style2", content = "恭喜获得雷明顿！",delay = 0.5},
 				 {opacity = 155})
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
 			local name = self.weaponListModel:getWeaponNameByID(v["id"])
 			function delaypop( )
 				ui:showPopup("commonPopup",
-					 {type = "style2", content = "恭喜获得"..name.."零件 X1！"},
+					 {type = "style2", content = "恭喜获得"..name.."零件 X1！",delay = 0.5},
 					 {opacity = 155})
 			end
 			self.isPop = true
@@ -333,18 +338,37 @@ function FightResultLayer:getinlayfall()
 	for k,v in pairs(lockTable) do
 		table.insert(self.itemsTable,v)
 	end
-	dump(self.itemsTable)
-    -- return probaTable
 end
 
+-- function FightResultLayer:sentGiftInlay()
+-- 	if self.curRecord["giftInlay"] then
+-- 		local name
+-- 		local quality = self.curRecord["giftInlay"]
+-- 		if quality == 1 then
+-- 			name = "普通"
+-- 		elseif quality == 2 then
+-- 			name = "青铜"
+-- 		elseif quality == 3 then
+-- 			name = "白银"
+-- 		elseif quality == 4 then
+-- 			name = "黄金"
+-- 		else
+-- 			return
+-- 		end
+-- 		self.fightResultModel:giftInlay(self.curRecord["giftInlay"])
+-- 		ui:showPopup("commonPopup",
+-- 			 {type = "style2", content = "恭喜获得"..name.."镶嵌一套！",delay = 0.5},
+-- 			 {opacity = 155})
+-- 	else
+-- 		return
+-- 	end
+-- end
+
+>>>>>>> 0b492f5ddbf11b723cdc834162df028bbace6f3f
 function FightResultLayer:getGrade(LeftPersent)
 	if LeftPersent < 0.2 then
-		return 1
-	elseif LeftPersent < 0.4 then
-		return 2
-	elseif LeftPersent < 0.6 then
 		return 3
-	elseif LeftPersent < 0.95 then
+	elseif LeftPersent < 0.6 then
 		return 4
 	else
 		return 5
@@ -385,19 +409,17 @@ function FightResultLayer:turnLeftCard()
 			self.weaponListModel:equipBag(v["id"],3)
 			function delaypopgun()
 				ui:showPopup("commonPopup",
-					 {type = "style2", content = "恭喜获得雷明顿！"},
+					 {type = "style2", content = "恭喜获得雷明顿！",delay = 0.5},
 					 {opacity = 155})
 			end
 			scheduler.performWithDelayGlobal(delaypopgun, 0.5)
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
-			dump(name)
 			ui:showPopup("commonPopup",
-				 {type = "style2", content = "获得"..name.."零件 X1！"},
+				 {type = "style2", content = "获得"..name.."零件 X1！",delay = 0.5},
 				 {opacity = 155})
 		end
 	end
-	dump(self.giveTable)
 	for k,v in pairs(self.lock) do
 		if v:isVisible() == true then
 			v:setVisible(false)

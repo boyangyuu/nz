@@ -36,7 +36,7 @@ Define.kRenzhiWalkTime			= 0.6      --行走时间
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
 Define.kRenzheSpeed				= 600.0    --忍者跑动速度 像素/s
-Define.kRenzheRunTime			= 2.0       -- 忍者跑步时间
+Define.kRenzheRunTime			= 2.0       --忍者跑步时间
 Define.kRenzheWalkTime			= 0.5   	--忍者行走时间
 Define.kRenzheShanTime			= 3.0   	--忍者瞬移时间
 Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离 

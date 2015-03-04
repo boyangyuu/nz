@@ -47,6 +47,12 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 
     local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
     local groupNum = #recordsLevel
+    if groupId == 0 and levelId == 0 then
+		return false
+	elseif math.floor(levelId) < levelId then
+		return false
+	end
+
 	if lid < maxLevel then
 		levelid = levelid + 1
 		return groupid,levelid

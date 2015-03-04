@@ -12,7 +12,6 @@ function LevelDetailLayer:ctor(properties)
 	self.propModel       = md:getInstance("propModel")
 	self.guide           = md:getInstance("Guide")
 	self.groupId = properties.groupId
-	print("self.groupId,", self.groupId)
 	self.levelId = properties.levelId
 	self:initData()
 	
@@ -100,7 +99,6 @@ function LevelDetailLayer:initUI()
 			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/10")
 	end
 	if DataTable["type"] == "boss" then
-		dump(DataTable["enemyPlay"])
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
 		armature:setScale(DataTable["scale"])
 		addChildCenter(armature, self.panlEnemy)
@@ -132,9 +130,7 @@ function LevelDetailLayer:initMapUI(mapName)
 
 	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
 	local mapPanlSize = mapNode:getContentSize()
-	print(mapPanlSize.width,mapPanlSize.height)
 	local mapImgSize = mapimg:getBoundingBox()
-	print(mapImgSize.width,mapImgSize.height)
 	mapimg:setScale(mapPanlSize.width/mapImgSize.width,mapPanlSize.height/mapImgSize.height)
 	-- map:setAnchorPoint(0.5,0.5)
 	addChildCenter(mapimg, mapNode)
@@ -202,7 +198,6 @@ function LevelDetailLayer:initBtns()
 	--offbtn
 	addBtnEventListener(self.btnOff, function(event)
         if event.name=='began' then
-            -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnOff()
@@ -211,7 +206,6 @@ function LevelDetailLayer:initBtns()
     --startbtn
     addBtnEventListener(self.btnStart, function(event)
         if event.name=='began' then
-            -- print("startbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnStart()
@@ -220,7 +214,6 @@ function LevelDetailLayer:initBtns()
     --bibei
     addBtnEventListener(self.btnBibei, function(event)
         if event.name=='began' then
-            -- print("bibeibtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnBibei()
@@ -229,7 +222,6 @@ function LevelDetailLayer:initBtns()
     --gold
     addBtnEventListener(self.btnGold, function(event)
         if event.name=='began' then
-            -- print("btngold is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnGold()
@@ -238,7 +230,6 @@ function LevelDetailLayer:initBtns()
     --jijia
     addBtnEventListener(self.btnJijia, function(event)
         if event.name=='began' then
-            -- print("btnJijia is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnJijia()
@@ -270,7 +261,6 @@ function LevelDetailLayer:startGame()
 end
 
 function LevelDetailLayer:onClickBtnBibei()
-	print("bibeibtn is clicked!")
 	if self.weaponListModel:isWeaponExist(self.recomWeaponId) then
 		if self.DataTable["type"] == "juji" then
 		else
@@ -336,7 +326,6 @@ function LevelDetailLayer:onClickGuideBtnGold()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
-	print("jijiabtn is clicked!")
 	function equipJijia()
 		self.alreadyjijia:setVisible(true)
 		self.btnJijia:setVisible(false)	
