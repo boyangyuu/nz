@@ -363,8 +363,6 @@ end
 -- 		return
 -- 	end
 -- end
-
->>>>>>> 0b492f5ddbf11b723cdc834162df028bbace6f3f
 function FightResultLayer:getGrade(LeftPersent)
 	if LeftPersent < 0.2 then
 		return 3
@@ -493,8 +491,6 @@ end
 
 function FightResultLayer:initGuide2()
     local isDone = self.guide:isDone("afterfight02")
- 
-
     self.guide:addClickListener({
         id = "afterfight02_next",
         groupId = "afterfight02",
