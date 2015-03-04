@@ -313,7 +313,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     ui:showPopup("commonPopup",
-                     {type = "style2", content = "本关还没开启"},
+                     {type = "style2", content = "本关还没开启",delay = 2},
                      { opacity = 0})
                 end
             end

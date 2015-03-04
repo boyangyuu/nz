@@ -63,8 +63,6 @@ end
 end
 
 function UserModel:levelPass(groupId,levelId)
-	dump(groupId)
-	dump(levelId)
 	local data = getUserData()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
