@@ -192,11 +192,11 @@ function FightResultLayer:onClickBtnNext()
 
 	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
 
-	if self.levelMapModel:getNextGroupAndLevel(curGroup, curLevel) == false then
+	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) == false then
 		print("0-0 OR 1-4.1 OR 通关")
 	else
 		local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
-    	self.fightResultModel:popupleveldetail(nextG, nextL)
+    	self.fightResultModel:popuplevelDetail(nextG, nextL)
     end
 	playSoundBtn()     
 end

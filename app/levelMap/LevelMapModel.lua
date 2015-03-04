@@ -68,7 +68,9 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 end
 
 function LevelMapModel:isExistNextLevel(groupId, levelId)
-	
+	if math.floor(lid) < lid then
+		return false
+	end	
 end
 
 return LevelMapModel
