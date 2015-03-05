@@ -23,6 +23,8 @@ function HomeBarLayer:ctor(properties)
     self:loadCCS()
     self:initHomeLayer()
     self:popUpGify(properties)
+    self:popUpNextLevel(properties)
+    self:initDailyLogin()
     self:refreshMoney()
 
     self:initGuideWeapon()
@@ -37,6 +39,26 @@ function HomeBarLayer:popUpGify(properties)
     if properties.popGift and isDone then
         local buy = md:getInstance("BuyModel")
         buy:buy("timeGiftBag", {})
+    end
+end
+
+function HomeBarLayer:popUpNextLevel(properties)
+    if properties.isPopupNext then
+        local levelMapModel = md:getInstance("LevelMapModel")
+        local fightModel = md:getInstance("Fight")
+        local curGroup, curLevel = fightModel:getCurGroupAndLevel()
+        local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+        ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
+    end
+end
+
+function HomeBarLayer:initDailyLogin()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("afterfight02")
+    if dailyLoginModel:checkPop() and isDone then
+        ui:showPopup("DailyLoginLayer", {})
+        dailyLoginModel:donotPop()
     end
 end
 

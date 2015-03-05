@@ -190,13 +190,11 @@ function FightResultLayer:onClickBtnNext()
     	curGroup = curGroup + 1
     end
 
-	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
-
 	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) == false then
 		print("0-0 OR 1-4.1 OR 通关")
+		ui:changeLayer("HomeBarLayer",{groupId = curGroup})
 	else
-		local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
-    	self.fightResultModel:popuplevelDetail(nextG, nextL)
+    	ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
     end
 	playSoundBtn()     
 end
@@ -346,31 +344,9 @@ function FightResultLayer:getinlayfall()
 	for k,v in pairs(lockTable) do
 		table.insert(self.itemsTable,v)
 	end
+	dump(self.itemsTable)
 end
 
--- function FightResultLayer:sentGiftInlay()
--- 	if self.curRecord["giftInlay"] then
--- 		local name
--- 		local quality = self.curRecord["giftInlay"]
--- 		if quality == 1 then
--- 			name = "普通"
--- 		elseif quality == 2 then
--- 			name = "青铜"
--- 		elseif quality == 3 then
--- 			name = "白银"
--- 		elseif quality == 4 then
--- 			name = "黄金"
--- 		else
--- 			return
--- 		end
--- 		self.fightResultModel:giftInlay(self.curRecord["giftInlay"])
--- 		ui:showPopup("commonPopup",
--- 			 {type = "style2", content = "恭喜获得"..name.."镶嵌一套！",delay = 0.5},
--- 			 {opacity = 155})
--- 	else
--- 		return
--- 	end
--- end
 function FightResultLayer:getGrade(LeftPersent)
 	if LeftPersent < 0.2 then
 		return 3

@@ -75,7 +75,6 @@ function LevelDetailModel:setsuipian(weaponid)
 		    table.insert(data.weaponsuipian, weaponsuipian)
 		end
 	    setUserData(data)
-	    dump(GameState.load())
 	end
 end
 
