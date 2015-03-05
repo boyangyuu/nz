@@ -101,7 +101,7 @@ function RenzhiEnemyView:playEnter(direct)
 
 	self:setPositionX(srcPosX)
 	local time = (toPosx - srcPosX) / define.kRenzhiSpeed
-	local action = cc.MoveTo:create(time, cc.p(toPosx, 0))
+	local action = cc.MoveTo:create(time, cc.p(toPosx, self:getPositionY()))
 	local callfunc = function ()
 		self.isEntering = false
 		self:playStand()
@@ -112,7 +112,6 @@ function RenzhiEnemyView:playEnter(direct)
 end
 
 function RenzhiEnemyView:exit()
-	print("function RenzhiEnemyView:exit()")
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true
@@ -182,7 +181,14 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
     self.audioId =  audio.playSound(soundSrc,false)   
 end
 
+function RenzhiEnemyView:getIsWudi()
+	return self.isEntering or self.isExiting
+end
+
 function RenzhiEnemyView:onHitted(targetData)
+	if self:getIsWudi() then 
+		return
+	end
 	RenzhiEnemyView.super.onHitted(self, targetData)
     --sound
     local soundSrc  = "res/Music/fight/rz_bj.wav"
