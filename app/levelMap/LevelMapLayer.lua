@@ -16,7 +16,6 @@ function LevelMapLayer:ctor(properties)
     
     self:initData(properties)
     self:initBgLayer()
-    self:initDailyLogin()
     self:initChooseLayer()
     self:refreshLevelLayer(self.curGroupId)
     cc.EventProxy.new(self.FightResultModel, self)
@@ -39,15 +38,6 @@ function LevelMapLayer:initData(properties)
     end
 end
 
-function LevelMapLayer:initDailyLogin()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-    local isDone = guide:isDone("afterfight02")
-    if dailyLoginModel:checkPop() and isDone then
-        ui:showPopup("DailyLoginLayer", {})
-        dailyLoginModel:donotPop()
-    end
-end
 
 function LevelMapLayer:initBgLayer()
     -- bg starting animation   

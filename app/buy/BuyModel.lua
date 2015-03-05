@@ -65,7 +65,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	local propModel = md:getInstance("propModel")
 	local weapontable = {3,4,5,7,8}
 	for k,v in pairs(weapontable) do
-		weaponListModel:setWeapon(v)
+		weaponListModel:buyWeapon(v)
 		weaponListModel:onceFull(v)
 	end
 	self:setBought("weaponGiftBag")

@@ -3,23 +3,12 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {                                         
+		enemys = {
 			{
-				time = 1,	
-				num = 4,
-				pos = {200,260,330,440,},
-				delay = {0,0.5,0.8,1,},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 3,
-				num = 1,
-				delay = {0.5},
-				pos = {800},
+				time = 1,
+				num = 2,
+				delay = {0.2,0.9},
+				pos = {600,800},
 				property = { 
 					placeName = "place1",
 					id = 6,
@@ -30,7 +19,29 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 1.3,	
+				num = 2,
+				pos = {230,430},
+				delay = {0,0.8},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 1.5,	
+				num = 3,
+				pos = {960,830,670},
+				delay = {0,0.8,1.3},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 2,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -44,10 +55,10 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 2.5,	
 				num = 2,
 				pos = {250,350},
-				delay = {1,1.8},
+				delay = {0.3,1.2},
 				property = { 
 					placeName = "place3",
 					startState = "rollright",
@@ -55,7 +66,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,	
+				time = 3,	
 				num = 2,
 				pos = {820,660},
 				delay = {0,0.8},
@@ -64,8 +75,19 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},		                                     	
-		},                                                              --10个
+			},	
+			{
+				time = 3.5,	
+				num = 3,
+				pos = {250,350,470},
+				delay = {0,0.6,1.2},
+				property = { 
+					placeName = "place4",
+					startState = "rollright",
+					id = 1,
+				},
+			},	                                     	
+		},                                                              --15个
 	},	
 	{
 		enemys = {                                           
@@ -73,7 +95,7 @@ local waves = {
 				time = 1,	
 				num = 4,
 				pos = {200,280,430,540,},
-				delay = {0,0.5,0.8,1,},
+				delay = {0,0.5,1,1.5},
 				property = { 
 					placeName = "place1",
 					startState = "rollright",
@@ -82,12 +104,12 @@ local waves = {
 			},
 
 			{
-				time = 2,
+				time = 1.5,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
 				property = { 
-					placeName = "place1",
+					placeName = "place2",
 					id = 6,
 					startState = "rollleft",
 					type = "dao",
@@ -96,12 +118,12 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 2,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
 				property = { 
-					placeName = "place1",
+					placeName = "place3",
 					id = 6,
 					startState = "rollright",
 					type = "dao",
@@ -110,7 +132,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	
+				time = 2.5,	
 				num = 2,
 				pos = {250,350},
 				delay = {1,1.8},
@@ -122,10 +144,10 @@ local waves = {
 			},
 
 			{
-				time = 5,	
+				time = 3,	
 				num = 3,
 				pos = {820,750,660},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -133,10 +155,10 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 3.5,	
 				num = 3,
 				pos = {240,370,300},
-				delay = {1,1.5,1.8},
+				delay = {0,0.5,1.3},
 				property = { 
 					placeName = "place1",
 					startState = "rollright",
@@ -144,10 +166,10 @@ local waves = {
 				},
 			},		
 			{
-				time = 8,	
+				time = 4,	
 				num = 3,
 				pos = {800,650,700},
-				delay = {0,0.6,0.8},
+				delay = {0,0.6,1.2},
 				property = {
 					placeName = "place4", 
 					startState = "rollleft",
@@ -155,9 +177,9 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 4.5,
 				num = 2,
-				delay = {0.2,0},
+				delay = {0.2,1},
 				pos = {250,900},
 				property = { 
 					placeName = "place3",
@@ -169,29 +191,18 @@ local waves = {
 				},
 			},	
 			{
-				time = 12,	
+				time = 5,	
 				num = 2,
 				pos = {870,950},
 				delay = {0,0.6},
 				property = {
-					placeName = "place3", 
+					placeName = "place4", 
 					startState = "rollleft",
 					id = 1,
 				},
-			},
+			},	
 			{
-				time = 14,	
-				num = 3,
-				pos = {240,370,300},
-				delay = {1,1.5,1.8},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					type = "jin",
-				},
-			},		
-			{
-				time = 16,	
+				time = 6,	
 				num = 2,
 				pos = {1000,750},
 				delay = {0,0.8},
@@ -202,73 +213,27 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 6.5,
 				num = 2,
-				delay = {0.2,0},
+				delay = {0.2,1},
 				pos = {250,700},
 				property = { 
 					placeName = "place1",
 					id = 2,
 					type = "jin",
 				},
-			},	
-			{
-				time = 20,	
-				num = 3,
-				pos = {820,910,980},
-				delay = {0,0.6,0.8},
-				property = {
-					placeName = "place2",
-					id = 2,
-					type = "jin",                                   --第二波31个
-				},
-			},
-		                                     	
+			},	                                                   --第二波25个                                  	
 		},
 	},	
 	{
-		enemys = {                                           --第三波
-			{
-				time = 1,
-				num = 3,
-				delay = {0, 0.6, 0.8},
-				pos = {200,270,340,},	
-				property = { 
-					placeName = "place1", 
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 2,
-				num = 3,
-				delay = {0, 0.3, 0.7},
-				pos = {800,650,900},	
-				property = { 
-					placeName = "place1", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 2,	
-				num = 1,
-				pos = {300},
-				delay = {0.5},
-				property = { 
-					placeName = "place1",
-					id = 6,
-					startState = "rollright",
-					type = "dao",
-					missileId = 7,
-					missileType = "lei",
-				},
-			},
-			{
+		enemys = {                            --第三波
+
+			{   
+			    descId = "feiji", --简介
 				time = 3,
 				num = 1,
 				pos = {450},
-				delay = {0.5},                         -- 飞机
+				delay = {4},                         -- 飞机(飞机出场有飞行过程)
 				property = {
 					type = "feiji" ,
 					id = 9,
@@ -279,11 +244,11 @@ local waves = {
 					startState = "enterleft",
 					lastTime = 60.0,		                                    --持续时间			
 				},
-			},		
+			},
 			{
-				time = 4,
+				time = 11,
 				num = 3,
-				delay = {0.2,0.3, 0.6},
+				delay = {0.1,0.9, 1.5},
 				pos = {470,550,700},					
 				property = {
 					placeName = "place2",  
@@ -293,7 +258,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 12,	
 				num = 8,
 				pos = {300,360,430,500,560,620,700,850},
 				delay = {0,0.7,1.4,2.1,3.5,2.9,2.1,1.5},
@@ -305,10 +270,32 @@ local waves = {
 				},
 			},
 			{
-				time = 9,	
+				time = 13,
+				num = 3,
+				delay = {0, 0.6, 1.2},
+				pos = {200,270,340,},	
+				property = { 
+					placeName = "place2", 
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 14,
+				num = 3,
+				delay = {0, 0.6, 1.4},
+				pos = {800,650,900},	
+				property = { 
+					placeName = "place1", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 15,	
 				num = 2,
 				pos = {350,700},
-				delay = {0.3,0.7},
+				delay = {0.1,0.7},
 				property = { 
 					type = "san",
 					id = 3,
@@ -317,9 +304,23 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 15,	
+				num = 2,
+				pos = {300,600},
+				delay = {0.5,1},
+				property = { 
+					placeName = "place1",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 16,
 				num = 3,
-				delay = {0, 0.6, 0.8},
+				delay = {0, 0.6, 1.3},
 				pos = {200,260,330,},	
 				property = { 
 					placeName = "place1", 
@@ -328,25 +329,9 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
-				num = 1,
-				pos = {350},
-				delay = {0.1},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 10,
-					placeName = "place12",
-					missileId = 4,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},	
-			{
-				time = 11,
+				time = 17,
 				num = 3,
-				delay = {0, 0.3, 0.7},
+				delay = {0, 0.6, 1.3},
 				pos = {760,820,900},	
 				property = { 
 					placeName = "place1", 
@@ -355,10 +340,22 @@ local waves = {
 				},
 			},	
 			{
-				time = 12,
+				time = 18,
 				num = 3,
-				delay = {0.2,0.3, 0.6},
+				delay = {0.2,0.9, 1.4},
 				pos = {480,550,700},					
+				property = {
+					placeName = "place2",  
+					type = "san",
+					id = 3,
+					enemyId = 1,
+				},
+			},
+			{
+				time = 19,
+				num = 2,
+				delay = {0.2,0.9},
+				pos = {280,450},					
 				property = {
 					placeName = "place2",  
 					type = "san",
@@ -367,7 +364,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 13,	
+				time = 20,	
 				num = 1,
 				pos = {300},
 				delay = {0.5},
@@ -377,7 +374,7 @@ local waves = {
 					startState = "rollright",
 					type = "dao",
 					missileId = 7,
-					missileType = "lei",                   --第三波32个
+					missileType = "lei",                   --第三波35个
 				},
 			},
 		},
@@ -419,7 +416,7 @@ local enemys = {
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=9,image="feiji",demage=0,hp=1600, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=9,image="feiji",demage=0,hp=3200, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
@@ -439,7 +436,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {25,95,160}   --黄武激活所需杀人个数  本关共60个小怪
+	self.goldLimits = {25,95,160}   --黄武激活所需杀人个数  本关共15+25+35=75个小怪
 end
 
 return waveClass
