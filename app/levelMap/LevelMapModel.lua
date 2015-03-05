@@ -41,6 +41,9 @@ function LevelMapModel:getGroupInfo(gid)
 end
 
 function LevelMapModel:getNextGroupAndLevel(gid, lid)
+	assert(gid, "groupId")
+	assert(lid, "levelId")
+
 	local lid1, gid1
 	-- local detailTable = getConfig("config/guanqia.json")
 	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
@@ -49,27 +52,43 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 
     local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
     local groupNum = #recordsLevel
-    if gid == 0 and lid == 0 then
-		return false
-	elseif math.floor(lid) < lid then
-		return false
-	end
 
 	if lid < maxLevel then
 		lid1 = lid + 1
+		gid1 = gid
+
+		assert(gid1, "groupId")
+		assert(lid1, "levelId")
 		return gid1,lid1
 	elseif lid == maxLevel and gid < groupNum then
 		gid1 = gid + 1
 		lid1 = 1
+		assert(gid1, "groupId")
+		assert(lid1, "levelId")
 		return gid1,lid1
-	elseif lid == maxLevel and gid == groupNum then
-		return false --后面无关卡
 	end
 end
 
 function LevelMapModel:isExistNextLevel(groupId, levelId)
-	if math.floor(lid) < lid then
+
+	assert(groupId, "groupId")
+	assert(levelId, "levelId")
+
+	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",groupId)
+	local maxLevelRecord = recordsGroup[#recordsGroup]
+	local maxLevel = maxLevelRecord["levelId"]
+
+    local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
+    local groupNum = #recordsLevel
+
+	if math.floor(levelId) < levelId then
 		return false
+	elseif groupId == 0 and levelId == 0 then
+		return false
+	elseif levelId == maxLevel and groupId == groupNum then
+		return false --后面无关卡
+	else
+		return true
 	end	
 end
 

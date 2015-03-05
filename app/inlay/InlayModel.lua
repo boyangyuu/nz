@@ -277,6 +277,8 @@ function InlayModel:isGetAllGold()
 end
 
 function InlayModel:getInlayType(inlayid)
+		assert(inlayid, "inlayid")
+
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end
 
