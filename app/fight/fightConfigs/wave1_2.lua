@@ -6,21 +6,20 @@ local waves = {
 		enemys = {
 			{
 				time = 1,
-				num = 2,
-				delay = {0.1,0.9},
-				pos = {60,170},
+				num = 1,
+				delay = {0.1},
+				pos = {190},
 				property = {
 					type = "jin",
 					placeName = "place1",
-					hpScale = 1.0,
 					id = 2,
 				},
 			},
 			{
-				time = 2,
-				num = 3,
-				delay = {0.5,1.2,1.7},
-				pos = {400,300,250},
+				time = 1.5,
+				num = 1,
+				delay = {0.3},
+				pos = {400},
 				property = {
 					type = "jin",
 					placeName = "place2",  
@@ -28,10 +27,10 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
-				num = 2,
-				delay = {0.1,0.9},
-				pos = {80,200},
+				time = 2,
+				num = 1,
+				delay = {0.1},
+				pos = {80},
 				property = {
 					type = "jin",
 					placeName = "place4",  
@@ -39,7 +38,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 2.5,
 				num = 1,
 				delay = {0},
 				pos = {50},					
@@ -53,7 +52,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 9,
+				time = 3,                                          --第一波5个怪
 				num = 1,
 				delay = {0},
 				pos = {10},					
@@ -68,26 +67,14 @@ local waves = {
 			},					
 		},
 	},
-	                                                                -- 第二波	
+	                                                                -- 第二波15个怪	
 	{
 		enemys = {
 			{
-				descId = "dunbing",  --简介
-				time = 2,
-				num = 1,
-				delay = {4},
-				pos = {150},
-				property = {
-					type = "jin",
-					placeName = "place1",  
-					id = 10,
-				},
-			},
-			{
-				time = 7,
-				num = 3,
-				delay = {0.5,1.0,1.6},
-				pos = {450,350,250},
+				time = 1,
+				num = 2,
+				delay = {0.5,1.0},
+				pos = {250,350},
 				property = {
 					type = "jin",
 					placeName = "place2",  
@@ -95,7 +82,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 1.5,
 				num = 2,
 				delay = {0.5,1.1},
 				pos = {80,200},
@@ -106,7 +93,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,
+				time = 2,
 				num = 1,
 				delay = {0.3},
 				pos = {50},					
@@ -120,7 +107,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 16,
+				time = 2.5,
 				num = 1,
 				delay = {0},
 				pos = {120},					
@@ -134,9 +121,9 @@ local waves = {
 				},
 			},
 			{
-				time = 19,	
+				time = 3,	
 				num = 3,
-				pos = {80,150,180},
+				pos = {80,150,210},
 				delay = {0,0.5,1},
 				property = { 
 					type = "san",
@@ -146,7 +133,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 22,	
+				time = 3.5,	
 				num = 1,
 				pos = {50},
 				delay = {0},
@@ -158,7 +145,7 @@ local waves = {
 				},
 			},
 			{
-				time = 25,	
+				time = 4,	
 				num = 2,
 				pos = {330,420},
 				delay = {0,0.8},
@@ -170,9 +157,9 @@ local waves = {
 				},
 			},
 			{
-				time = 28,	
+				time = 4.5,	
 				num = 2,
-				pos = {1020,1050},
+				pos = {980,1050},
 				delay = {0,0.8},
 				property = { 
 					type = "san",
@@ -183,7 +170,23 @@ local waves = {
 			},												
 		},
 	},	
-	                                                                              -- 金币气球
+	{
+		enemys = {
+			{
+				descId = "dunbing",  --简介
+				time = 3,
+				num = 1,
+				delay = {4},
+				pos = {580},
+				property = {
+					type = "jin",
+					placeName = "place2",  
+					id = 10,
+				},
+			}, 
+		},
+	}, 
+	                                                                            -- 金币气球
 	{
 		enemys = {
 			{
@@ -409,7 +412,7 @@ local enemys = {
 	{id=9,image="shoulei",demage=3,hp=1,
 	weak1=3},
 	-- 盾兵
-	{id=10,image="dunbing",demage=3,hp=2000,fireRate=400,fireCd=5,speed=30,
+	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,
 	weak1=3},		
 }
 
@@ -423,7 +426,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {30,65,120,180}   --黄武激活所需杀人个数
+	self.goldLimits = {30,75,150}   --黄武激活所需杀人个数
 end
 
 

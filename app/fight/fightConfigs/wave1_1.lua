@@ -6,9 +6,9 @@ local waves = {
 		enemys = {
 			{
 				time = 1,
-				num = 2,
-				delay = {0,0.8},
-				pos = {330,400},
+				num = 1,
+				delay = {0},
+				pos = {330},
 				property = { 
 					placeName = "place6",
 					startState = "rollleft",
@@ -16,10 +16,10 @@ local waves = {
 				},
 			},
 			{
-				time = 4,
-				num = 2,
-				delay = {0,0.8},
-				pos = {50,135},
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {135},
 				property = { 
 					placeName = "place5",
 					startState = "rollright",
@@ -32,9 +32,9 @@ local waves = {
 		enemys = {
 			{
 				time = 1,
-				num = 3,
-				delay ={0, 0.5, 1.2},
-				pos = {130,220,280},		
+				num = 2,
+				delay ={0, 0.5},
+				pos = {130,280},		
 				property = { 
 					placeName = "place4",
 					startState = "rollleft",
@@ -42,7 +42,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 2,
+				time = 1.5,
 				num = 1,
 				delay = {0.1},
 				pos = {80},
@@ -56,10 +56,10 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
-				num = 2,
-				delay = {0.3,1},
-				pos = {130,200},
+				time = 2,
+				num = 1,
+				delay = {0.3},
+				pos = {200},
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",
@@ -74,7 +74,7 @@ local waves = {
 				time = 1,
 				num = 2,
 				delay = {0, 0.6},
-				pos = {390,450},
+				pos = {200,400},
 				property = {
 					placeName = "place6", 
 					startState = "rollleft",
@@ -83,7 +83,7 @@ local waves = {
 			},
 					
 			{
-				time = 2,
+				time = 1.5,
 				num = 1,
 				delay = {0},
 				pos = {60},
@@ -97,10 +97,10 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 2,
 				num = 1,
 				delay = {0.5},
-				pos = {230},
+				pos = {175},
 				property = { 
 					placeName = "place4", 
 					startState = "rollleft",
@@ -108,7 +108,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,
+				time = 2.5,
 				num = 1,
 				delay = {0.5},
 				pos = {40},
@@ -122,7 +122,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
+				time = 3,
 				num = 1,
 				delay = {0.5},
 				pos = {230},
@@ -133,7 +133,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 3.5,
 				num = 1,
 				delay = {0.5},
 				pos = {50},
@@ -144,10 +144,10 @@ local waves = {
 				},
 			},						
 			{
-				time = 7,
+				time = 4,
 				num = 2,
 				delay = {0, 0.3},
-				pos = {180,270},
+				pos = {170,330},
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",

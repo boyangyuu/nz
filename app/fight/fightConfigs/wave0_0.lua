@@ -77,7 +77,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 1.5,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -91,7 +91,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,
+				time = 2,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -105,7 +105,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 2.5,	
 				num = 2,
 				pos = {250,350},
 				delay = {1,1.8},
@@ -117,7 +117,7 @@ local waves = {
 			},
 
 			{
-				time = 8,	
+				time = 3,	
 				num = 3,
 				pos = {820,750,660},
 				delay = {0,0.6,1.2},
@@ -167,7 +167,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 1.5,
 				num = 1,
 				delay = {0.5},
 				pos = {250},
@@ -181,7 +181,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 2,	
 				num = 4,
 				pos = {200,260,330,440,},
 				delay = {0,0.5,0.8,1.3,},
@@ -192,7 +192,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,	
+				time = 2.5,	
 				num = 3,
 				pos = {820,750,660},
 				delay = {0,0.6,1.2},
@@ -203,7 +203,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 3,	
 				num = 3,
 				pos = {240,370,300},
 				delay = {1,1.5,1.8},
@@ -214,7 +214,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 8,	
+				time = 3.5,	
 				num = 3,
 				pos = {800,650,700},
 				delay = {0,0.6,1.1},
@@ -225,7 +225,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 4,
 				num = 2,
 				delay = {0.2,0.8},
 				pos = {250,900},
@@ -239,7 +239,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 12,	
+				time = 4.5,	
 				num = 2,
 				pos = {870,950},
 				delay = {0,0.6},
@@ -250,7 +250,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	
+				time = 5,	
 				num = 3,
 				pos = {240,370,300},
 				delay = {0,0.6,1.3},
@@ -261,7 +261,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 16,	
+				time = 5.5,	
 				num = 2,
 				pos = {1000,750},
 				delay = {0,0.8},
@@ -272,7 +272,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 6,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {250,700},
@@ -283,7 +283,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 20,	
+				time = 6.5,	
 				num = 3,
 				pos = {820,910,980},
 				delay = {0,0.6,1.2},
@@ -311,7 +311,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 1.5,
 				num = 3,
 				delay = {0, 0.7, 1.4},
 				pos = {800,650,900},	
@@ -336,7 +336,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 2.5,
 				num = 1,
 				pos = {450},
 				delay = {0.5},                         -- 飞机
@@ -352,7 +352,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 4,
+				time = 3,
 				num = 3,
 				delay = {0.2,0.8, 1.3},
 				pos = {470,550,700},					
@@ -364,7 +364,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 3.5,	
 				num = 8,
 				pos = {300,360,430,500,560,620,700,850},
 				delay = {0,0.7,1.4,2.1,3.5,2.9,2.1,1.5},
@@ -376,7 +376,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 8,
+				time = 4,
 				num = 1,
 				pos = {450},
 				delay = {0.5},                         -- 飞机
@@ -392,7 +392,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 9,	
+				time = 4.5,	
 				num = 2,
 				pos = {350,700},
 				delay = {0.3,0.9},
@@ -404,7 +404,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 5,
 				num = 3,
 				delay = {0, 0.6, 1.3},
 				pos = {200,260,330,},	
@@ -415,7 +415,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 5.5,
 				num = 3,
 				delay = {0, 0.3, 0.7},
 				pos = {760,820,900},	
@@ -426,7 +426,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 12,
+				time = 6,
 				num = 3,
 				delay = {0.2,0.6, 0.9},
 				pos = {480,550,700},					
@@ -438,7 +438,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 13,	
+				time = 6.5,	
 				num = 1,
 				pos = {300},
 				delay = {0.5},
@@ -525,7 +525,7 @@ local bosses = {
 		image = "boss02", --图片名字
 		hp = 50000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 100,               --普攻频率
+		fireRate = 120,               --普攻频率
 		fireCd = 3,                     --普攻cd
 
 		walkRate = 120,                    --移动频率
@@ -535,21 +535,21 @@ local bosses = {
 
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数
-		award = 1000,                   --boss产出金币数量
+		award = 1100,                   --boss产出金币数量
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90,  0.50, 0.10,
+				0.90, 0.50, 0.10,
 			},
 			moveRightFire = {
 				0.70,  0.30, 
 			},
 			chongfeng = {
-			     0.95, 0.93, 0.85, 0.75, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
+			    0.95, 0.85, 0.65, 0.45, 0.35, 0.25, 0.15, 0.05,
 			},
 			tieqiu = {
-				0.999, 0.80, 0.60, 0.40, 0.20, 0.10,
+				0.999, 0.80, 0.60, 0.40, 0.20,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40,                        

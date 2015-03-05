@@ -56,8 +56,8 @@ Define.kjipuRunTime 			= 1.0	 --大范围移动时间
 Define.kjipuWalkTime			= 0.6    --小范围移动时间
 
 --导弹
-Define.kMissileDaoTime				= 2.0    --导弹，铁球飞行时间 
-Define.kMissileLeiTime				= 2.0    --手雷 
+Define.kMissileDaoTime				= 2.5    --导弹，铁球飞行时间 
+Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
 
 --飞镖
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
