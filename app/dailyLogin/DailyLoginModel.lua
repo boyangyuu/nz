@@ -18,7 +18,7 @@ end
 
 function DailyLoginModel:setTime()
 	local data = getUserData()
-	dump(os.date("%x"))
+	-- dump(os.date("%x"))
 	data.dailylogin.logintime = os.date("%x")
 	setUserData(data)
 end
