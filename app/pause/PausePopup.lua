@@ -117,11 +117,11 @@ function PausePopup:btnEvent()
 		ui:changeLayer("StartLayer", {})
 
 	elseif self.popupName == "fightset" then
-		ui:changeLayer("HomeBarLayer",{})
         local fight  = md:getInstance("Fight")
         local groupid,levelid = fight:getCurGroupAndLevel()
         local levelInfo = groupid.."-"..levelid
         um:failLevel(levelInfo)
+		ui:changeLayer("HomeBarLayer",{groupId = groupid})
 	end
 end
 
