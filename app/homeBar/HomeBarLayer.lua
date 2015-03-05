@@ -21,8 +21,10 @@ function HomeBarLayer:ctor(properties)
     
     self:initData(properties)
     self:loadCCS()
-    self:initHomeLayer(self.groupid)
+    self:initHomeLayer()
     self:popUpGify(properties)
+    self:popUpNextLevel(properties)
+    self:initDailyLogin()
     self:refreshMoney()
 
     self:initGuideWeapon()
@@ -34,18 +36,35 @@ end
 
 function HomeBarLayer:popUpGify(properties)
     local isDone = self.guide:isDone("xiangqian")
-    if properties.popgift and isDone then
+    if properties.popGift and isDone then
         local buy = md:getInstance("BuyModel")
         buy:buy("timeGiftBag", {})
     end
 end
 
-function HomeBarLayer:initData(properties)
-    if properties.groupid ~= nil then
-        self.groupid = properties.groupid
-    else
-        self.groupid = 0
+function HomeBarLayer:popUpNextLevel(properties)
+    if properties.isPopupNext then
+        local levelMapModel = md:getInstance("LevelMapModel")
+        local fightModel = md:getInstance("Fight")
+        local curGroup, curLevel = fightModel:getCurGroupAndLevel()
+        local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+        ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
     end
+end
+
+function HomeBarLayer:initDailyLogin()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("afterfight02")
+    if dailyLoginModel:checkPop() and isDone then
+        ui:showPopup("DailyLoginLayer", {})
+        dailyLoginModel:donotPop()
+    end
+end
+
+function HomeBarLayer:initData(properties)
+    assert(properties.groupId, "properties.groupId is nil")
+    self.groupid = properties.groupId
 end
 
 function HomeBarLayer:loadCCS()
@@ -63,7 +82,7 @@ function HomeBarLayer:refreshMoney()
     self.btnDiamond:setString(self.usermodel:getDiamond())
 end   
 
-function HomeBarLayer:initHomeLayer(groupid)
+function HomeBarLayer:initHomeLayer()
     self.btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
     self.btnBack = cc.uiloader:seekNodeByName(self.homeRootNode, "btnback")
     self.btnBuyCoin = cc.uiloader:seekNodeByName(self.homeRootNode, "panelmoney")
@@ -119,7 +138,7 @@ function HomeBarLayer:initHomeLayer(groupid)
     self.commonlayers["WeaponListLayer"] = WeaponListLayer.new()
     self.commonlayers["inlayLayer"] = InlayLayer.new()
     self.commonlayers["StoreLayer"] = StoreLayer.new()
-    self.commonlayers["levelMapLayer"] = LevelMapLayer.new({groupId = groupid})
+    self.commonlayers["levelMapLayer"] = LevelMapLayer.new({groupId = self.groupid})
     for k,v in pairs(self.commonlayers) do
         v:setVisible(false)
         self.commonRootNode:addChild(v)

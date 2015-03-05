@@ -765,12 +765,6 @@ function FightPlayer:initGuide1()
     --touch
     self.guide:setTouchSwallow(false)
 
-    --prepare inlay 
-    local inlayModel = md:getInstance("InlayModel")
-    inlayModel:buyInlay(24,false,1) 
-    inlayModel:equipInlay(24,false) 
-    self.hero:setFullHp()
-
     --prepare gun
     
     --move
@@ -882,7 +876,7 @@ end
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 3 and gid == 1
+    local isWillGuide = lid == 4.1 and gid == 1
     if isDone or not isWillGuide then return end   
 
     self.guide:addClickListener({

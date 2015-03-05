@@ -63,24 +63,30 @@ end
 end
 
 function UserModel:levelPass(groupId,levelId)
-	dump(groupId)
-	dump(levelId)
+	assert(groupId, "groupId")
+	assert(levelId, "levelId")
 	local data = getUserData()
-	local group = data.currentlevel.group
-	local level = data.currentlevel.level
+	local curGroupId = data.currentlevel.group
+	local curLevelId = data.currentlevel.level
+print("curGroupId",curGroupId)
+print("curLevelId",curLevelId)
+	--是否开启下一关
+	local isOpenNext = groupId == curGroupId and levelId == curLevelId
+	
 	if groupId == 0 and levelId == 0 then
 		return
 	elseif math.floor(levelId) < levelId then
 		return
-	elseif groupId == group and levelId == level then
-		if self.LevelMapModel:getNextGroupAndLevel(group, level) == false then
-			print("通关")
-		else
-			local nextgroup,nextlevel = self.LevelMapModel:getNextGroupAndLevel(group, level)
+	elseif isOpenNext then
+		if self.LevelMapModel:isExistNextLevel(groupId, levelId) then
+			local nextgroup,nextlevel = self.LevelMapModel:getNextGroupAndLevel(groupId, levelId)
+			print("nextgroup",nextgroup)
+			print("nextlevel",nextlevel)
 			data.currentlevel.group = nextgroup
 			data.currentlevel.level = nextlevel
 			setUserData(data)
-			-- dump(GameState.load())
+		else
+			print("通关")
 		end
 	end
 end

@@ -31,7 +31,6 @@ function HeroAnimView:playHurtedBomb(event)
 	armature:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
     	    	if movementType == ccs.MovementEventType.loopComplete then
-    	    		-- print("HeroLayer:removeFromParent()")
     	    		armature:removeFromParent()
     	    		armature = nil
     	    	end

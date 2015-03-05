@@ -114,7 +114,7 @@ end
 function InfoLayer:onRefreshGun(event)
 	self.gunDisplay:removeAllChildren()
 	local record = self.hero:getGun():getConfig()
-	dump(record, "function InfoLayer:onRefreshGun(event)")
+	-- dump(record, "function InfoLayer:onRefreshGun(event)")
 	local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 	icon:setScaleX(0.05)
 	icon:setScaleY(0.05)

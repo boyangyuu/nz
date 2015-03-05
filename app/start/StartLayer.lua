@@ -112,13 +112,18 @@ function StartLayer:onEnter()
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
+    local data = getUserData()
 end
 
 function StartLayer:beginGame()
+    print("function StartLayer:beginGame()")
     self:initDailyLogin()       
 
-    if self:isGuideDone() then 
-        ui:changeLayer("HomeBarLayer",{popgift = true})
+    if self:isGuideDone() then
+        local levelMapModel = md:getInstance("LevelMapModel")
+        local groupId, levelId = levelMapModel:getConfig()
+        -- print("groupId", groupId)
+        ui:changeLayer("HomeBarLayer",{groupId = groupId, popGift = true})
     else
         --clear data
         local guide = md:getInstance("Guide")
@@ -130,12 +135,9 @@ function StartLayer:beginGame()
 end
 
 function StartLayer:isGuideDone()
-    local data = getUserData()
-    if data then 
-        return data.guide["afterfight01"]
-    else 
-        return true
-    end
+    local guide = md:getInstance("Guide")
+    -- print("isGuideDone()", guide:isDone("afterfight01"))
+    return guide:isDone("afterfight01")
 end
 
 function StartLayer:initDailyLogin()
@@ -147,9 +149,6 @@ function StartLayer:initDailyLogin()
         dailyLoginModel:setGet(false)
     end
     dailyLoginModel:setTime()
-    -- local data = getUserData()
-    -- data.dailylogin.logintime = "%9"
-    -- setUserData(data)
 
 end
 

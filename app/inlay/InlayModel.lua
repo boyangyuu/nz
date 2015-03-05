@@ -160,6 +160,7 @@ function InlayModel:equipAllInlays(isRefresh)
 	end
 	for k,v in pairs(bags) do
 		-- local priority = self:getInlayPriority(v.inlayid)
+		dump(v.inlayid)
 		local priority = self:getInlayRecord(v.inlayid)["property"]
 		local typename = self:getInlayType(v.inlayid)
 		if priority > bestInlay[typename] then
@@ -277,6 +278,8 @@ function InlayModel:isGetAllGold()
 end
 
 function InlayModel:getInlayType(inlayid)
+		assert(inlayid, "inlayid")
+
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end
 

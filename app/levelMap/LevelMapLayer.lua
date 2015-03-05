@@ -1,6 +1,4 @@
 
-import("..includes.functionUtils")
-
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
 end)
@@ -15,28 +13,21 @@ function LevelMapLayer:ctor(properties)
     self.FightResultModel = md:getInstance("FightResultModel")
     self.UserModel = md:getInstance("UserModel")
     self.LevelDetailModel = md:getInstance("LevelDetailModel")
-
-    self.index = 1
+    
     self:initData(properties)
     self:initBgLayer()
-    self:initDailyLogin()
     self:initChooseLayer()
-    self:refreshLevelLayer(self.index)
+    self:refreshLevelLayer(self.curGroupId)
     cc.EventProxy.new(self.FightResultModel, self)
-        :addEventListener("POPUP_LEVELDETAIL", handler(self, self.PopupLevelDetail))
+        :addEventListener("POPUP_LEVELDETAIL", handler(self, self.popupLevelDetail))
     self:initGuide() 
 end
 
 function LevelMapLayer:initData(properties)
-    if properties.groupId == 0 then
-        local group,level = self.LevelMapModel:getConfig()
-        self.index = group
-    else
-        self.index = properties.groupId
-    end
-
+    assert(properties.groupId, "properties.groupId is nil")
+    self.curGroupId = properties.groupId
     --userData
-    self.preIndex = 0
+    self.preGroupId = 0
 
     --config
     self.groupNum = self.LevelMapModel:getGroupNum()
@@ -47,18 +38,9 @@ function LevelMapLayer:initData(properties)
     end
 end
 
-function LevelMapLayer:initDailyLogin()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-    local isDone = guide:isDone("afterfight02")
-    if dailyLoginModel:checkPop() and isDone then
-        ui:showPopup("DailyLoginLayer", {})
-        dailyLoginModel:donotPop()
-    end
-end
 
 function LevelMapLayer:initBgLayer()
--- bg starting animation   
+    -- bg starting animation   
 
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
@@ -67,12 +49,13 @@ function LevelMapLayer:initBgLayer()
 
     self:addChild(self.armature)
     -- addChildCenter(self.armature, self)
-    self.armature:getAnimation():play("0_"..self.index , -1, 0)
+    print("self.curGroupId", self.curGroupId)
+    self.armature:getAnimation():play("0_"..self.curGroupId , -1, 0)
 
-    self.ldarmature = ccs.Armature:create("leida")
-    self.ldarmature:setPosition(cc.p(568,300))
-    self:addChild(self.ldarmature)
-    self.ldarmature:getAnimation():play("leida" , -1, 1)
+    self.ldArmature = ccs.Armature:create("leida")
+    self.ldArmature:setPosition(cc.p(568,300))
+    self:addChild(self.ldArmature)
+    self.ldArmature:getAnimation():play("leida" , -1, 1)
 
 end
 
@@ -130,7 +113,7 @@ function LevelMapLayer:initChooseLayer()
 
 
 
-    self.levelNum:setString(self.index)
+    self.levelNum:setString(self.curGroupId)
 
     local actionPre = transition.sequence({
     cc.MoveTo:create(0.5, cc.p(self.btnPre:getPositionX()-10 , self.btnPre:getPositionY())), 
@@ -148,12 +131,12 @@ function LevelMapLayer:initChooseLayer()
             return true
         elseif event.name=='ended' then
             
-            if self.index >= self.groupNum then
-                self.index = 1
-                self.preIndex = self.groupNum
+            if self.curGroupId >= self.groupNum then
+                self.curGroupId = 1
+                self.preGroupId = self.groupNum
             else
-                self.index = self.index + 1
-                self.preIndex = self.index - 1
+                self.curGroupId = self.curGroupId + 1
+                self.preGroupId = self.curGroupId - 1
             end
             self:bgAction()
             self:panelAction()
@@ -164,12 +147,12 @@ function LevelMapLayer:initChooseLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            if self.index < 2 then
-                self.index = self.groupNum
-                self.preIndex = 1
+            if self.curGroupId < 2 then
+                self.curGroupId = self.groupNum
+                self.preGroupId = 1
             else
-                self.index = self.index - 1
-                self.preIndex = self.index + 1
+                self.curGroupId = self.curGroupId - 1
+                self.preGroupId = self.curGroupId + 1
             end
             self:bgAction()
             self:panelAction()
@@ -235,7 +218,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local group,level = self.LevelMapModel:getConfig()
 
 
-    local groupInfo = self.LevelMapModel:getGroupInfo(self.index)
+    local groupInfo = self.LevelMapModel:getGroupInfo(self.curGroupId)
 
 
     for k,v in pairs(groupInfo) do
@@ -310,7 +293,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     ui:showPopup("commonPopup",
-                     {type = "style2", content = "本关还没开启"},
+                     {type = "style2", content = "本关还没开启",delay = 2},
                      { opacity = 0})
                 end
             end
@@ -318,7 +301,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     end
 end
 
-function LevelMapLayer:PopupLevelDetail(event)
+function LevelMapLayer:popupLevelDetail(event)
     groupId = event.gid
     levelId = event.lid
     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
@@ -326,11 +309,11 @@ end
 
 function LevelMapLayer:bgAction()    
     -- To make button disabled for a while
-    self.ldarmature:removeFromParent()
+    self.ldArmature:removeFromParent()
     self.btnNext:setTouchEnabled(false)
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
-    self.animName = self.preIndex.."_"..self.index
+    self.animName = self.preGroupId.."_"..self.curGroupId
     self.armature:getAnimation():play(self.animName , -1, 0)
 end
 
@@ -340,13 +323,13 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
         if movementID == self.animName then
             self.btnNext:setTouchEnabled(true)
             self.btnPre:setTouchEnabled(true)
-            self.ldarmature = ccs.Armature:create("leida")
-            self.ldarmature:setPosition(cc.p(568,300))
-            self:addChild(self.ldarmature)
-            self.ldarmature:getAnimation():play("leida" , -1, 1)
-            self.levelNum:setString(self.index)
+            self.ldArmature = ccs.Armature:create("leida")
+            self.ldArmature:setPosition(cc.p(568,300))
+            self:addChild(self.ldArmature)
+            self.ldArmature:getAnimation():play("leida" , -1, 1)
+            self.levelNum:setString(self.curGroupId)
 
-            self:refreshLevelLayer(self.index)
+            self:refreshLevelLayer(self.curGroupId)
             self:checkGuide()
         end
     end
@@ -373,22 +356,22 @@ end
 function LevelMapLayer:checkGuide()
     local curGroupId, curLevelId = self.LevelMapModel:getConfig()
 
-    if curGroupId == 1 and curLevelId == 5 then 
+    if curGroupId == 1 and curLevelId == 3 then 
         local guide = md:getInstance("Guide")
         guide:check("xiangqian")
     end
 end
 
 function LevelMapLayer:initGuide()
-    --开启第二关之后 点击进入下一关
-    local rect = cc.rect(200, 107, 120, 120)
+    --开启第1关之后 点击进入下一关
+    local rect = cc.rect(95, 280, 120, 120)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "prefight02_nextlevel",
         groupId = "prefight02",
         rect = rect,
         endfunc = function (touchEvent)
-            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
+            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 1})
             playSoundBtn()
         end
      })   

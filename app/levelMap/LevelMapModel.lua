@@ -10,6 +10,9 @@ function LevelMapModel:getConfig()
 	local data = getUserData()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
+	-- dump(data, "data")
+	assert(group, "group is nil")
+	assert(level, "level is nil")
 	return group,level
 end
 
@@ -38,8 +41,10 @@ function LevelMapModel:getGroupInfo(gid)
 end
 
 function LevelMapModel:getNextGroupAndLevel(gid, lid)
-	local levelid = lid
-	local groupid = gid
+	assert(gid, "groupId")
+	assert(lid, "levelId")
+
+	local lid1, gid1
 	-- local detailTable = getConfig("config/guanqia.json")
 	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
 	local maxLevelRecord = recordsGroup[#recordsGroup]
@@ -47,16 +52,44 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 
     local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
     local groupNum = #recordsLevel
+
 	if lid < maxLevel then
-		levelid = levelid + 1
-		return groupid,levelid
+		lid1 = lid + 1
+		gid1 = gid
+
+		assert(gid1, "groupId")
+		assert(lid1, "levelId")
+		return gid1,lid1
 	elseif lid == maxLevel and gid < groupNum then
-		groupid = groupid + 1
-		levelid = 1
-		return groupid,levelid
-	elseif lid == maxLevel and gid == groupNum then
-		return false --后面无关卡
+		gid1 = gid + 1
+		lid1 = 1
+		assert(gid1, "groupId")
+		assert(lid1, "levelId")
+		return gid1,lid1
 	end
+end
+
+function LevelMapModel:isExistNextLevel(groupId, levelId)
+
+	assert(groupId, "groupId")
+	assert(levelId, "levelId")
+
+	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",groupId)
+	local maxLevelRecord = recordsGroup[#recordsGroup]
+	local maxLevel = maxLevelRecord["levelId"]
+
+    local recordsLevel = getRecordByKey("config/guanqia.json","levelId",1)
+    local groupNum = #recordsLevel
+
+	if math.floor(levelId) < levelId then
+		return false
+	elseif groupId == 0 and levelId == 0 then
+		return false
+	elseif levelId == maxLevel and groupId == groupNum then
+		return false --后面无关卡
+	else
+		return true
+	end	
 end
 
 return LevelMapModel

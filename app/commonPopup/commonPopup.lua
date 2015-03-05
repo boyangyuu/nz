@@ -11,7 +11,7 @@ end)
 			 {opacity = 0})
 	style2:只有一个板，没有按钮，三秒消失
 		ui:showPopup("commonPopup",
-			 {type = "style2", content = "本关还没开启"},
+			 {type = "style2", content = "本关还没开启", delay = 0.5},
 			 {opacity = 0})
 	style3:俩按钮，确定取消，content
 		ui:showPopup("commonPopup",
@@ -65,6 +65,10 @@ function commonPopup:initUI(properties)
 	    end)
 
 	elseif typeName == "style2" then
+		local delay = properties.delay
+		if delay == nil then
+			delay = 2
+		end
 	    local labelTip = cc.uiloader:seekNodeByName(self, "Label_tip")
 	    local panl_style2 = cc.uiloader:seekNodeByName(self, "panl_style2")
 	    labelTip:setString(properties.content)
@@ -78,7 +82,7 @@ function commonPopup:initUI(properties)
 	    end)
 
 	    -- auto remove popup windows after 2 secs.
-	    self:runAction(transition.sequence({cc.DelayTime:create(2), cc.CallFunc:create(function()
+	    self:runAction(transition.sequence({cc.DelayTime:create(delay), cc.CallFunc:create(function()
             self:onClickCofirm()
             ui:closePopup("commonPopup")
         end)}))

@@ -341,7 +341,7 @@ function RootLayer:imageLoaded(plist, image)
 end
 
 function RootLayer:dataLoaded(percent)
-    print(" dataLoaded() percent:"..percent)
+    -- print(" dataLoaded() percent:"..percent)
     if percent == 1 then
         if self.isLoadedArma then return end
         --clear load
