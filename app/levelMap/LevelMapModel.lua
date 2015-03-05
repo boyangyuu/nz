@@ -10,7 +10,7 @@ function LevelMapModel:getConfig()
 	local data = getUserData()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
-	dump(data, "data")
+	-- dump(data, "data")
 	assert(group, "group is nil")
 	assert(level, "level is nil")
 	return group,level
