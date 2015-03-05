@@ -765,12 +765,6 @@ function FightPlayer:initGuide1()
     --touch
     self.guide:setTouchSwallow(false)
 
-    --prepare inlay 
-    local inlayModel = md:getInstance("InlayModel")
-    inlayModel:buyInlay(24,false,1) 
-    inlayModel:equipInlay(24,false) 
-    self.hero:setFullHp()
-
     --prepare gun
     
     --move

@@ -111,7 +111,7 @@ function GunView:playReload()
 	self.audioId =  audio.playSound(soundSrc,false)	
 
 	--回调 子弹full
-	local reloadTime = self.gun:getReloadTime()
+	local reloadTime = self.gun:getReloadTime() / 2 
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
 		self.hero:setIsReloading(false)

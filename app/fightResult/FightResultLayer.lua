@@ -382,14 +382,6 @@ function FightResultLayer:getGrade(LeftPersent)
 end
 
 function FightResultLayer:quickInlay()
-	-- local quickinlay = {}
-	-- for k,v in pairs(self.giveTable) do
-	-- 	if v["falltype"] == "inlay" then
-	-- 		table.insert(quickinlay,{inlayid = v["id"]})
-	-- 	end
-	-- end
-	-- -- dump(quickinlay)
-	-- self.inlayModel:equipAllBestInlays(quickinlay)
 	 self.inlayModel:equipAllInlays()
 end
 
