@@ -64,7 +64,7 @@ Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
 Define.kMissileFeibiaScale      = 1.5        --飞镖飞到屏幕的大小
 
 --蜘蛛网
-Define.kMissileWangTime			= 0.8    --飞过来的时间
+Define.kMissileWangTime			= 1    --飞过来的时间
 Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
 --黄金武器
@@ -110,7 +110,7 @@ Define.kShouLeiCd    			= 0.5  --
 Define.kJuRange 				= 4.0
 
 --引导
-Define.kGuideActiveJijia	 	= 0.20  --boss还有百分之10血时 触发机甲
+Define.kGuideActiveJijia	 	= 0.20  --boss还有百分之20血时 触发机甲
 -- Define.kGuidebossHpScale		= 0.70  --引导的时候 boss的血量缩小0.7
 
 

@@ -312,28 +312,8 @@ function MapView:addEnemy(property)
 	local posPlaceInMap = self.map:convertToNodeSpace(worldPlace)
 	enemyView:setPosition(cc.p(posPlaceInMap.x + offsetX, posPlaceInMap.y))
 	
-	--zorder
-	local order      = property["order"]
-	local zorderType = self:getZorderByType(property["type"])
-	local zorder     = 0
-	if zorderType then 
-		zorder = zorderType - order
-	end
-
 	--add
 	self.map:addChild(enemyView)
-end
-
-function MapView:getZorderByType(enemyType)
-	if enemyType == "san" then 
-		return kDefine["sanZorder"]
-	elseif enemyType == "missile" then 
-		return kDefine["missileZorder"]
-	elseif enemyType == "feiji" then 
-		return kDefine["feijiZorder"]
-	else
-		return nil 
-	end
 end
 
 function MapView:checkNumLimit()
@@ -357,6 +337,7 @@ function MapView:checkZorder()
 	local zIndex  = 1
 	local curPosy = display.height1
 	for i,object in ipairs(objects) do
+		local typeOrder   = 0
 		local posy 		  = object["posy"]
 		local appearorder = object["appearorder"] 
 		local node        = object["node"]
@@ -365,8 +346,12 @@ function MapView:checkZorder()
 			zIndex = zIndex + 1
 		end
 
+		if object["type"] == "enemy" then 
+			typeOrder = kDefine[object.enemyType .. "Zorder"] or 0
+		end
+
 		--zorder
-		local zorder = zIndex * offset - appearorder
+		local zorder = zIndex * offset - appearorder + typeOrder
 		node:setLocalZOrder(zorder) 
 	end
 end
@@ -378,13 +363,12 @@ function MapView:getSortedObjects()
 			posy  		= v:getPositionY(),
 			appearorder = v:getProperty()["order"] or 0,
 			type        = "enemy",
+			enemyType   = v:getProperty()["type"],
 			node        = v,
 		}
 		--todo
 		local enemyType = v:getProperty()["type"]
-		local isunChecked = enemyType == "san" 
-							 or enemyType =="missile"
-							 or enemyType == "feiji"
+		local isunChecked =  enemyType =="missile"
 		if not isunChecked then 
 			objects[#objects + 1] = object 
 		end
@@ -609,6 +593,7 @@ function MapView:callfuncAddMissile(event)
 
 	--zorder
 	self.missileNum = self.missileNum + 1
+	--todo 用order 出厂顺序处理
 	local zorder    = kDefine.missileZorder	- self.missileNum
 	self.map:addChild(enemyView, zorder)
 end

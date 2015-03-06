@@ -42,7 +42,6 @@ function FeijiEnemyView:setData()
 end
 
 function FeijiEnemyView:playStartState(state)
-	-- print("playStartState")
 	if state == "enterleft" then 
 		self:playEnter("left")
 	elseif state == "enterright" then
@@ -122,7 +121,7 @@ function FeijiEnemyView:playEnter(direct)
 end
 
 function FeijiEnemyView:exit()
-	-- print("function FeijiEnemyView:exit()")
+	if self.enemy:isDead() then return end
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true

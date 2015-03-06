@@ -409,10 +409,10 @@ local enemys = {
 	weak1=2},
 	--自爆兵BOSS        --type = "bao",自爆boss
 	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=110,scale = 3.5,
-	weak1=2},	 
+	weak1=2},	                                                --scale = 3.0,  近战走到屏幕最近放缩比例	 
 	--boss导弹          --missileType = "daodan",
 	{id=19,image="daodan",demage=10,hp=200,
-	weak1=1},	                                                 --scale = 3.0,  近战走到屏幕最近放缩比例
+	weak1=1},
 	
 
 }
@@ -432,7 +432,7 @@ local bosses = {
 		walkCd = 2,         --移动cd	
 		wudiTime = 6 , 	
 		saoFireOffset = 0.1, 		--扫射时间间隔
-		saoFireTimes = 10, 			--一次扫射10下
+		saoFireTimes = 15, 			--一次扫射10下
 		weak1 = 1.2,					--手  弱点伤害倍数
 		weak2 = 1.2,					--腹  弱点伤害倍数
 		weak3 = 1.2,					--头  弱点伤害倍数
@@ -443,7 +443,7 @@ local bosses = {
 			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
 			-- },                                        
 
-			saoShe = { 0.90, 0.70, 0.45, 0.20 ,0.10     --调用普通攻击的伤害  扫射
+			saoShe = { 0.90, 0.70, 0.50, 0.30 ,0.10     --调用普通攻击的伤害  扫射
 			}, 
 
 			zhaohuan = {0.95,0.65,0.35},                         --召唤 
@@ -456,7 +456,7 @@ local bosses = {
 			},
 			
 			daoDan = {                                            --两发导弹
-				0.999,0.96,0.85,0.64, 0.45, 0.34, 0.22,
+				0.99,0.85,0.75, 0.45, 0.34, 0.22,
 			},
 			weak1 = {
 				0.70,0.60,0.30,
@@ -471,19 +471,19 @@ local bosses = {
 			
 
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.95,
+				0.90,
 			},	
 			demage200 = {  
-				0.70,
+				0.60,
 			},	
 			demage300 = {  
-				0.20,
+				0.30,
 			},							
 		},
 
 		enemys1 = {                                                   --第一波召唤的自爆兵
 			{
-				time = 2,	
+				time = 1,	
 				num = 3,
 				pos = {460,660,860},
 				delay = {0.2,0.4,0.5},
@@ -493,19 +493,19 @@ local bosses = {
 					type = "bao",
 				},
 			},
+			-- {
+			-- 	time = 9,	
+			-- 	num = 4,
+			-- 	pos = {520,620,830,950},
+			-- 	delay = {0.8,0.6,0.4,0.2},
+			-- 	property = {
+			-- 		placeName = "place3" ,
+			-- 		id = 16,
+			-- 		type = "bao",
+			-- 	},
+			-- },
 			{
 				time = 9,	
-				num = 4,
-				pos = {520,620,830,950},
-				delay = {0.8,0.6,0.4,0.2},
-				property = {
-					placeName = "place3" ,
-					id = 16,
-					type = "bao",
-				},
-			},
-			{
-				time = 16,	
 				num = 5,
 				pos = {400,480,660,860,1050},
 				delay = {0.2,0.8,0.6,0.4,0.2},
@@ -520,7 +520,7 @@ local bosses = {
 
 		enemys2 = {                                                      --第二波召唤的兵
 			{
-				time = 2,	
+				time = 1,	
 				num = 3,
 				pos = {560,660,760},
 				delay = {0.2,0.4,0.5},
@@ -530,19 +530,19 @@ local bosses = {
 					type = "bao",
 				},
 			},
+			-- {
+			-- 	time = 7,	
+			-- 	num = 4,
+			-- 	pos = {520,620,830,950},
+			-- 	delay = {0.8,0.6,0.4,0.2},
+			-- 	property = {
+			-- 		placeName = "place3" ,
+			-- 		id = 17,
+			-- 		type = "bao",
+			-- 	},
+			-- },
 			{
 				time = 7,	
-				num = 4,
-				pos = {520,620,830,950},
-				delay = {0.8,0.6,0.4,0.2},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "bao",
-				},
-			},
-			{
-				time = 12,	
 				num = 5,
 				pos = {400,480,660,860,1050},
 				delay = {0.2,0.8,0.6,0.4,0.2},
@@ -558,7 +558,7 @@ local bosses = {
 		
 		enemys3 = {                                                      --第三波召唤的兵
 			{
-				time = 2,
+				time = 1,
 				num = 1,
 				pos = {300},
 				delay = {0.5},                         -- 飞机
@@ -574,7 +574,7 @@ local bosses = {
 				},
 			},
 			{
-				time = 5,
+				time = 4,
 				num = 1,
 				pos = {400},
 				delay = {0.5},                         -- 飞机
@@ -590,7 +590,7 @@ local bosses = {
 				},
 			},
 			{
-				time = 8,
+				time = 7,
 				num = 1,
 				pos = {900},
 				delay = {0.5},                         -- 飞机

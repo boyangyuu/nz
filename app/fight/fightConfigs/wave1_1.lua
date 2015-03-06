@@ -153,8 +153,7 @@ local waves = {
 					startState = "rollright",
 					id = 1,
 				},
-			},	
-
+			},
 		},
 	},				
 }
