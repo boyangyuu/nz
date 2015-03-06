@@ -30,7 +30,7 @@ local waves = {
 				time = 2,
 				num = 1,
 				delay = {0.1},
-				pos = {80},
+				pos = {100},
 				property = {
 					type = "jin",
 					placeName = "place4",  
@@ -55,9 +55,9 @@ local waves = {
 				time = 3,                                          --第一波5个怪
 				num = 1,
 				delay = {0},
-				pos = {10},					
+				pos = {800},					
 				property = {
-					placeName = "place4",   
+					placeName = "place5",   
 					id = 8,
 					startState = "rollright",
 					type = "dao",
@@ -135,13 +135,13 @@ local waves = {
 			{
 				time = 3.5,	
 				num = 1,
-				pos = {50},
+				pos = {600},
 				delay = {0},
 				property = { 
 					type = "san",
 					id = 3,
 					enemyId = 1,
-					placeName = "place3",
+					placeName = "place6",
 				},
 			},
 			{
@@ -202,6 +202,19 @@ local waves = {
 				},
 			},
 			{
+				time = 3,
+				num = 10,
+				delay = {0, 3.0, 6.0,7.0,9.0,16.5,20.0,24,28,30},
+				pos = {500,900,650,720,690, 400,800,650,430,740},
+				property = {
+					type = "jinbi",
+					placeName = "place11", 
+					speed = 4.5, 
+					id = 6,
+				},
+			},
+			                                                                                 -- 背景散飞蓝气球
+			{
 				time = 4,
 				num = 10,
 				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
@@ -213,6 +226,32 @@ local waves = {
 					id = 6,
 				},
 			},
+
+			{
+				time = 10,
+				num = 10,
+				delay = {0, 1.5, 3.0,5.0,9.0,13.5,15,20,25,28},
+				pos = {450,750,650,700,800, 1000,800,350,666,888},                                    
+				                                                                          -- 黄气球
+				property = {
+					type = "jinbi",
+					placeName = "place11", 
+					speed = 5, 
+					id = 5,
+				},
+			},
+			{
+				time = 11,
+				num = 10,
+				delay = {1, 3.7, 5.4,7,8.7,9.5,14.2,16,21,26},
+				pos = {750,450,600,380,800,550,750,350,870,666},
+				property = {
+					type = "jinbi",
+					placeName = "place11",  
+					speed = 3.5,
+					id = 7,
+				},
+			},                                                                                -- 背景散飞绿气球
 			{
 				time = 12,
 				num = 10,
@@ -249,44 +288,6 @@ local waves = {
 					id = 7,
 				},
 			},
-			{
-				time = 10,
-				num = 10,
-				delay = {0, 1.5, 3.0,5.0,9.0,13.5,15,20,25,28},
-				pos = {450,750,650,700,800, 1000,800,350,666,888},                                    
-				                                                                          -- 黄气球
-				property = {
-					type = "jinbi",
-					placeName = "place11", 
-					speed = 5, 
-					id = 5,
-				},
-			},
-			{
-				time = 3,
-				num = 10,
-				delay = {0, 3.0, 6.0,7.0,9.0,16.5,20.0,24,28,30},
-				pos = {500,900,650,720,690, 400,800,650,430,740},
-				property = {
-					type = "jinbi",
-					placeName = "place11", 
-					speed = 4.5, 
-					id = 6,
-				},
-			},
-			                                                                                 -- 背景散飞蓝气球
-			{
-				time = 11,
-				num = 10,
-				delay = {1, 3.7, 5.4,7,8.7,9.5,14.2,16,21,26},
-				pos = {750,450,600,380,800,550,750,350,870,666},
-				property = {
-					type = "jinbi",
-					placeName = "place11",  
-					speed = 3.5,
-					id = 7,
-				},
-			},                                                                                -- 背景散飞绿气球
 			{
 				time = 18,
 				num = 5,
@@ -412,8 +413,8 @@ local enemys = {
 	{id=9,image="shoulei",demage=3,hp=1,
 	weak1=3},
 	-- 盾兵
-	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,
-	weak1=3},		
+	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,scale = 2.0,
+	weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
 }
 
 local mapId = "map_1_3"

@@ -102,7 +102,6 @@ local waves = {
 					id = 1,
 				},
 			},
-
 			{
 				time = 1.5,
 				num = 1,
@@ -142,7 +141,6 @@ local waves = {
 					id = 1,
 				},
 			},
-
 			{
 				time = 3,	
 				num = 3,
