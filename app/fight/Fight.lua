@@ -120,8 +120,8 @@ function Fight:onFail()
     local fightProp = md:getInstance("FightProp")
     fightProp:costReliveBag()
     ui:showPopup("FightResultFailPopup",{},{anim = false})
-    local buy = md:getInstance("BuyModel")
-    buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)})
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)},"战斗失败界面")
 
     --clear
     self:clearFightData() 

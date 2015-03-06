@@ -168,8 +168,8 @@ function LevelMapLayer:initChooseLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buy = md:getInstance("BuyModel")
-            buy:buy("timeGiftBag", {})
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:buy("timeGiftBag", {}, "大地图页面_点击限时礼包")
         end
     end)
 
@@ -188,8 +188,8 @@ function LevelMapLayer:initChooseLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buy = md:getInstance("BuyModel")
-            buy:buy("goldGiftBag", {})
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:buy("goldGiftBag", {}, "大地图页面_点击土豪金礼包")
         end
     end)
 

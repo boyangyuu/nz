@@ -65,8 +65,7 @@ end
 function UserModel:getUserLevel(groupId,levelId)
 	local levelDetailModel = md:getInstance("LevelDetailModel")
 	local levelRecord = levelDetailModel:getConfig(groupId,levelId)
-	dump(levelRecord["userLevel"])
-	return levelRecord["userLevel"]
+	um:setLevel(levelRecord["userLevel"])
 end
 
 return UserModel
