@@ -23,7 +23,8 @@ function EnemyFactory.createEnemy(property)
 	local enemyView
 
 	--boss
-	local type = property.type or "common"	
+	property.type = property.type or "common"	
+	local type = property.type
 	-- print("function EnemyFactory.createEnemy(property)"，type)	
 	if type == "boss" then 
 		enemyView = BaseBossView.new(property)

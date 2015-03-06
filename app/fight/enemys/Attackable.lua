@@ -354,11 +354,7 @@ function Attackable:playBombEffect()
 		math.random(0, box.height))
 
 	self.armature:addChild(bomb, 100)
-	bomb:getAnimation():play("baozha4", -1, 0)
-	
-    --sound
-    -- local soundSrc  = "res/Music/fight/diebz.wav"
-    -- self.audioId =  audio.playSound(soundSrc,false)    
+	bomb:getAnimation():play("baozha4", -1, 0) 
 end
 
 function Attackable:restoreStand(delay)

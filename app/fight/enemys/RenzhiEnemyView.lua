@@ -112,6 +112,7 @@ function RenzhiEnemyView:playEnter(direct)
 end
 
 function RenzhiEnemyView:exit()
+	if self.enemy:isDead() then return end
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true

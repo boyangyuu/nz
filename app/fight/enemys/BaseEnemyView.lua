@@ -191,7 +191,7 @@ function BaseEnemyView:onHitted(targetData)
 		if demageType == "head" then 
 			print("爆头")
 			local soundSrc  = "res/Music/fight/btts.wav"
-			self.audioId =  audio.playSound(soundSrc,false)				
+			audio.playSound(soundSrc,false)				
 			self.hero:dispatchEvent({
 				name = self.hero.ENEMY_KILL_HEAD_EVENT})
 		end
@@ -206,10 +206,8 @@ end
 function BaseEnemyView:playNextAnimCache()
 	local playCache = self:getPlayCache()
 	if playCache then 
-		print("playCache()")
 		playCache()
-	else 	
-		print("playStand()")				
+	else 				
 		self:playStand()
 	end
 end
