@@ -62,32 +62,11 @@ end
 	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 end
 
-function UserModel:levelPass(groupId,levelId)
-	assert(groupId, "groupId")
-	assert(levelId, "levelId")
-	local data = getUserData()
-	local curGroupId = data.currentlevel.group
-	local curLevelId = data.currentlevel.level
-	--是否开启下一关
-	local isOpenNext = groupId == curGroupId and levelId == curLevelId
-	
-	if groupId == 0 and levelId == 0 then
-		return
-	elseif math.floor(levelId) < levelId then
-		return
-	elseif isOpenNext then
-		if self.LevelMapModel:isExistNextLevel(groupId, levelId) then
-			local nextgroup,nextlevel = self.LevelMapModel:getNextGroupAndLevel(groupId, levelId)
-			print("nextgroup",nextgroup)
-			print("nextlevel",nextlevel)
-			data.currentlevel.group = nextgroup
-			data.currentlevel.level = nextlevel
-			setUserData(data)
-		else
-			print("通关")
-		end
-	end
+function UserModel:getUserLevel(groupId,levelId)
+	local levelDetailModel = md:getInstance("LevelDetailModel")
+	local levelRecord = levelDetailModel:getConfig(groupId,levelId)
+	dump(levelRecord["userLevel"])
+	return levelRecord["userLevel"]
 end
-
 
 return UserModel

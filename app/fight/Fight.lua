@@ -53,7 +53,6 @@ function Fight:refreshData(properties)
     --init inatance
     self:cleanModels()
 
-    self.userModel  = md:getInstance("UserModel")
     self.inlayModel = md:getInstance("InlayModel")
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
@@ -104,8 +103,10 @@ end
 function Fight:onWin()
     if self.result then return end
     self.result = "win" 
-    self.userModel:levelPass(self.groupId, self.levelId)
-
+    local levelMapModel = md:getInstance("LevelMapModel")
+    local userModel = md:getInstance("UserModel")
+    levelMapModel:levelPass(self.groupId, self.levelId)
+    userModel:getUserLevel(self.groupId, self.levelId)
     self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    
     um:finishLevel(levelInfo)

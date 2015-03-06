@@ -32,10 +32,10 @@ function LevelMapLayer:initData(properties)
     --config
     self.groupNum = self.LevelMapModel:getGroupNum()
 
-    self.levelAmount = {}
-    for i = 1, self.groupNum do
-        self.levelAmount[i] = self.LevelMapModel:getLevelNum(i)
-    end
+    -- self.levelAmount = {}
+    -- for i = 1, self.groupNum do
+    --     self.levelAmount[i] = self.LevelMapModel:getLevelNum(i)
+    -- end
 end
 
 
