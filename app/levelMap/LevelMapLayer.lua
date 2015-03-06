@@ -50,6 +50,9 @@ function LevelMapLayer:initBgLayer()
     self:addChild(self.armature)
     -- addChildCenter(self.armature, self)
     print("self.curGroupId", self.curGroupId)
+    if self.curGroupId == 0 then
+        self.curGroupId = 1
+    end
     self.armature:getAnimation():play("0_"..self.curGroupId , -1, 0)
 
     self.ldArmature = ccs.Armature:create("leida")

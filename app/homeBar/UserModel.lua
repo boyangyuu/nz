@@ -68,8 +68,6 @@ function UserModel:levelPass(groupId,levelId)
 	local data = getUserData()
 	local curGroupId = data.currentlevel.group
 	local curLevelId = data.currentlevel.level
-print("curGroupId",curGroupId)
-print("curLevelId",curLevelId)
 	--是否开启下一关
 	local isOpenNext = groupId == curGroupId and levelId == curLevelId
 	
