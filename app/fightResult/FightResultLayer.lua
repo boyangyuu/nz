@@ -17,7 +17,8 @@ function FightResultLayer:ctor(properties)
 
 	self.cardover = {}
     self.cardgold = {}
-    self.cardnormal = {}
+    self.cardsilver = {}
+	self.cardbronze = {}
     self.cardtouch = {}
     self.cardicon = {}
     self.cardlabel = {}
@@ -102,7 +103,8 @@ function FightResultLayer:initUI()
 	end
     for i=1,6 do
     	self.cardgold[i] = cc.uiloader:seekNodeByName(self, "cardgold"..i)
-    	self.cardnormal[i] = cc.uiloader:seekNodeByName(self, "cardnormal"..i)
+    	self.cardsilver[i] = cc.uiloader:seekNodeByName(self, "cardsilver"..i)
+    	self.cardbronze[i] = cc.uiloader:seekNodeByName(self, "cardbronze"..i)
     	self.cardover[i] = cc.uiloader:seekNodeByName(self, "cardover"..i)
     	self.cardicon[i] = cc.uiloader:seekNodeByName(self, "icon"..i)
     	self.cardlabel[i] = cc.uiloader:seekNodeByName(self, "labelcard"..i)
@@ -213,8 +215,16 @@ function FightResultLayer:initUIContent()
 			self.cardlabel[k]:setString(record["describe2"])
 			local icon = display.newSprite("#"..record["imgname"]..".png")
 			addChildCenter(icon, self.cardicon[k])
-			if record["property"] ~= 4 and record["property"] ~= 3 then
+			if record["property"] == 2 then
 				self.cardgold[k]:setVisible(false)
+				self.cardsilver[k]:setVisible(false)
+			elseif record["property"] == 3 then
+				self.cardgold[k]:setVisible(false)
+				dump(k)
+				self.cardbronze[k]:setVisible(false)
+			elseif record["property"] == 4 then
+				self.cardsilver[k]:setVisible(false)
+				self.cardbronze[k]:setVisible(false)
 			end
     	elseif v["falltype"] == "suipian" then
     		local record = self.weaponListModel:getWeaponRecord(v["id"])
