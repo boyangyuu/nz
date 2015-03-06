@@ -118,7 +118,7 @@ function MyApp:createGameStateFile()
         
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 6,
             },
             guide = {
                         gamePre         = true,

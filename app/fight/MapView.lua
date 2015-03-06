@@ -132,14 +132,14 @@ function MapView:loadPlaces()
     end   
 
     --init cover image
-    self.coverimages = {}
+    self.coverImages = {}
 	local index = 1
     while true do
     	if index == 20 then break end
     	local name = "image" .. index
     	local node = cc.uiloader:seekNodeByName(self.map, name)
 	    if node then
-	        self.coverimages[#self.coverimages + 1] = node
+	    	self.coverImages[#self.coverImages + 1] = node
 		end
         index = index + 1
     end       	
@@ -355,7 +355,7 @@ function MapView:checkZorder()
 	if #objects == 0 then return end
 	local offset  = kDefine["zorderOffset"]
 	local zIndex  = 1
-	local curPosy = 1136
+	local curPosy = display.height1
 	for i,object in ipairs(objects) do
 		local posy 		  = object["posy"]
 		local appearorder = object["appearorder"] 
@@ -367,9 +367,6 @@ function MapView:checkZorder()
 
 		--zorder
 		local zorder = zIndex * offset - appearorder
-		-- print("....................")
-		-- print(i .." posy ".. posy)
-		-- print("zorder", zorder)
 		node:setLocalZOrder(zorder) 
 	end
 end
@@ -378,7 +375,7 @@ function MapView:getSortedObjects()
 	local objects = {}
 	for i,v in ipairs(self.enemys) do
 		local object = {
-			posy  		= v:getPositionY()	,
+			posy  		= v:getPositionY(),
 			appearorder = v:getProperty()["order"] or 0,
 			type        = "enemy",
 			node        = v,
@@ -403,11 +400,11 @@ function MapView:getSortedObjects()
 		objects[#objects + 1] = object 
 	end
 
-	for i,v in ipairs(self.coverimages) do
+	for i,v in ipairs(self.coverImages) do
 		local object = {
 			posy  		= v:getPositionY()	,
 			appearorder = 0,
-			type        = "coverimage",
+			type        = "coverImage",
 			node        = v,
 		}
 		objects[#objects + 1] = object 
@@ -596,7 +593,7 @@ function MapView:callfuncAddEnemys(event)
 			local p = enemyData.property 
 			p["order"] = i
 			self:addEnemy(p)
-		end		
+		end			
 		self:performWithDelay(addEnemyFunc, enemyData.delay)
 	end
 end
