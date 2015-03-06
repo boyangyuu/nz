@@ -132,14 +132,14 @@ function MapView:loadPlaces()
     end   
 
     --init cover image
-    self.coverimages = {}
+    self.coverImages = {}
 	local index = 1
     while true do
     	if index == 20 then break end
     	local name = "image" .. index
     	local node = cc.uiloader:seekNodeByName(self.map, name)
 	    if node then
-	        self.coverimages[#self.coverimages + 1] = node
+	    	self.coverImages[#self.coverImages + 1] = node
 		end
         index = index + 1
     end       	
@@ -312,28 +312,8 @@ function MapView:addEnemy(property)
 	local posPlaceInMap = self.map:convertToNodeSpace(worldPlace)
 	enemyView:setPosition(cc.p(posPlaceInMap.x + offsetX, posPlaceInMap.y))
 	
-	--zorder
-	local order      = property["order"]
-	local zorderType = self:getZorderByType(property["type"])
-	local zorder     = 0
-	if zorderType then 
-		zorder = zorderType - order
-	end
-
 	--add
 	self.map:addChild(enemyView)
-end
-
-function MapView:getZorderByType(enemyType)
-	if enemyType == "san" then 
-		return kDefine["sanZorder"]
-	elseif enemyType == "missile" then 
-		return kDefine["missileZorder"]
-	elseif enemyType == "feiji" then 
-		return kDefine["feijiZorder"]
-	else
-		return nil 
-	end
 end
 
 function MapView:checkNumLimit()
@@ -355,8 +335,9 @@ function MapView:checkZorder()
 	if #objects == 0 then return end
 	local offset  = kDefine["zorderOffset"]
 	local zIndex  = 1
-	local curPosy = 1136
+	local curPosy = display.height1
 	for i,object in ipairs(objects) do
+		local typeOrder   = 0
 		local posy 		  = object["posy"]
 		local appearorder = object["appearorder"] 
 		local node        = object["node"]
@@ -365,11 +346,12 @@ function MapView:checkZorder()
 			zIndex = zIndex + 1
 		end
 
+		if object["type"] == "enemy" then 
+			typeOrder = kDefine[object.enemyType .. "Zorder"] or 0
+		end
+
 		--zorder
-		local zorder = zIndex * offset - appearorder
-		-- print("....................")
-		-- print(i .." posy ".. posy)
-		-- print("zorder", zorder)
+		local zorder = zIndex * offset - appearorder + typeOrder
 		node:setLocalZOrder(zorder) 
 	end
 end
@@ -378,16 +360,15 @@ function MapView:getSortedObjects()
 	local objects = {}
 	for i,v in ipairs(self.enemys) do
 		local object = {
-			posy  		= v:getPositionY()	,
+			posy  		= v:getPositionY(),
 			appearorder = v:getProperty()["order"] or 0,
 			type        = "enemy",
+			enemyType   = v:getProperty()["type"],
 			node        = v,
 		}
 		--todo
 		local enemyType = v:getProperty()["type"]
-		local isunChecked = enemyType == "san" 
-							 or enemyType =="missile"
-							 or enemyType == "feiji"
+		local isunChecked =  enemyType =="missile"
 		if not isunChecked then 
 			objects[#objects + 1] = object 
 		end
@@ -403,11 +384,11 @@ function MapView:getSortedObjects()
 		objects[#objects + 1] = object 
 	end
 
-	for i,v in ipairs(self.coverimages) do
+	for i,v in ipairs(self.coverImages) do
 		local object = {
 			posy  		= v:getPositionY()	,
 			appearorder = 0,
-			type        = "coverimage",
+			type        = "coverImage",
 			node        = v,
 		}
 		objects[#objects + 1] = object 
@@ -596,7 +577,7 @@ function MapView:callfuncAddEnemys(event)
 			local p = enemyData.property 
 			p["order"] = i
 			self:addEnemy(p)
-		end		
+		end			
 		self:performWithDelay(addEnemyFunc, enemyData.delay)
 	end
 end
@@ -612,6 +593,7 @@ function MapView:callfuncAddMissile(event)
 
 	--zorder
 	self.missileNum = self.missileNum + 1
+	--todo 用order 出厂顺序处理
 	local zorder    = kDefine.missileZorder	- self.missileNum
 	self.map:addChild(enemyView, zorder)
 end
