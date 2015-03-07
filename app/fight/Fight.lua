@@ -130,6 +130,7 @@ function Fight:onFail()
     --um
     local levelInfo = self.groupId.."-"..self.levelId  
     um:failLevel(levelInfo)
+    um:event("关卡完成", {levelInfo = "关卡失败"})
 end
 
 function Fight:payDone()
