@@ -31,11 +31,14 @@ function BuyModel:showBuy(configId, buyData, strDesc)
 
     local buyConfig = BuyConfigs.getConfig(configId) 
     print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strDesc)
-    local name = buyConfig.name .. "__" ..strDesc
+    self.propName = buyConfig.name .. "__" ..strDesc
 
     --todo 价格
-    um:onChargeRequest(self.orderId, name, buyConfig.price, "CNY", 0, "MM")
-    -- um:event(self.propName, {self.propName = "1234"})
+    um:onChargeRequest(self.orderId, self.propName, buyConfig.price, "CNY", 0, "MM")
+     -- TalkingData支付打点
+	local umData = {}
+	umData[self.propName] = "点击支付"
+	um:event("支付事件", umData)
 
 	local config  = BuyConfigs.getConfig(configId)
 	local isGift = config.isGift 
@@ -44,6 +47,7 @@ function BuyModel:showBuy(configId, buyData, strDesc)
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId})
     else
+
     	iap:pay(configId)
     end
 end
@@ -67,7 +71,10 @@ function BuyModel:payDone(result)
 
 	-- TalkingData 支付成功标志
 	um:onChargeSuccess(self.orderId)
-	-- um:event(self.propName)
+	-- TalkingData支付打点
+	local umData = {}
+	umData[self.propName] = "支付成功"
+	um:event("支付事件", umData)
 
 	-- dump(self.curBuyData, "self.curBuyData")
 	local payDoneFunc = self.curBuyData.payDoneFunc
@@ -76,6 +83,11 @@ end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
+	-- TalkingData打点
+	local umData = {}
+	umData[self.propName] = "支付失败"
+	um:event("支付事件", umData)
+
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
 	if deneyBuyFunc then  deneyBuyFunc() end
 end

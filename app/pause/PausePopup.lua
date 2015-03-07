@@ -121,7 +121,9 @@ function PausePopup:btnEvent()
         local groupid,levelid = fight:getCurGroupAndLevel()
         local levelInfo = groupid.."-"..levelid
         -- um:failLevel(levelInfo)
-        um:event("关卡完成", {levelInfo = "中途退出"})
+        local umData = {}
+    	umData[levelInfo] = "中途退出"
+    	um:event("关卡完成情况", umData)
 		ui:changeLayer("HomeBarLayer",{groupId = groupid})
 	end
 end
