@@ -245,10 +245,10 @@ end
 function LevelDetailLayer:onClickBtnStart()
     local isDone = self.guide:isDone("prefight02")
 	if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
-	    -- local buyModel = md:getInstance("BuyModel")
-	    -- buyModel:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
-					-- 	    	payDoneFunc = handler(self, self.startGame)}, 
-					-- 	    	"关卡详情_点击开始按钮")
+	    local buyModel = md:getInstance("BuyModel")
+	    buyModel:showBuy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
+						    	payDoneFunc = handler(self, self.startGame)}, 
+						    	"关卡详情_点击开始按钮")
 	else
 		self:startGame()
 	end
@@ -273,7 +273,7 @@ function LevelDetailLayer:onClickBtnBibei()
 		local isDone = self.guide:isDone("prefight02")
 		if isDone then
 			local buyModel = md:getInstance("BuyModel")
-	        buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
+	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
 	        	"关卡详情_点击必备按钮")
 		end
 	end
@@ -303,7 +303,7 @@ function LevelDetailLayer:onClickBtnGold()
     else
 		if isDone then  
 			local buyModel = md:getInstance("BuyModel")
-		    buyModel:buy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_点击黄武按钮")
+		    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_点击黄武按钮")
 		end
 	end
 	--sound
@@ -334,7 +334,7 @@ function LevelDetailLayer:onClickBtnJijia()
 	local isDone = self.guide:isDone("prefight02")
 	if isDone then
 		local buyModel = md:getInstance("BuyModel")
-	    buyModel:buy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	    buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
 	end
 
 	--sound

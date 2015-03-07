@@ -92,7 +92,7 @@ function InlayLayer:initUI()
                     self:playSoundxqcg()
                 end
                 local buyModel = md:getInstance("BuyModel")
-                buyModel:buy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_黄武")
+                buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_点击一键黄武")
             end
         end
     end)

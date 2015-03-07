@@ -378,7 +378,7 @@ function FightResultLayer:leftCard()
 		self:turnLeftCard()
 	else
         local buyModel = md:getInstance("BuyModel")
-        buyModel:buy("stone120",{}, "战斗结算界面_翻牌")
+        buyModel:showBuy("stone120",{}, "战斗结算界面_点击翻牌")
 	end
 end
 

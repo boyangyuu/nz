@@ -37,7 +37,9 @@ end
 function HomeBarLayer:popUpGify(properties)
     local isDone = self.guide:isDone("xiangqian")
     if properties.popGift and isDone then
-        ui:showPopup("GiftBagPopup",{popupName = "timeGiftBag"})
+        local buyModel = md:getInstance("BuyModel")
+        buyModel:showBuy("timeGiftBag", {payDoneFunc = handler(self, self.refreshData)}
+                        , "主界面_进游戏自动弹出")
     end
 end
 
@@ -173,7 +175,7 @@ function HomeBarLayer:initHomeLayer()
         self:refreshCommonLayer("StoreLayer")
 
         local buyModel = md:getInstance("BuyModel")
-        buyModel:buy("goldGiftBag", {}, "主界面_点击土豪金礼包")
+        buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
         self.btnInlay:setButtonEnabled(true)
         self.btnStore:setButtonEnabled(false)
         self.btnArsenal:setButtonEnabled(true)
