@@ -38,7 +38,8 @@ function HomeBarLayer:popUpGify(properties)
     local isDone = self.guide:isDone("xiangqian")
     if properties.popGift and isDone then
         local buyModel = md:getInstance("BuyModel")
-        buyModel:buy("timeGiftBag", {}, "主界面_点击限时礼包")
+        buyModel:showBuy("timeGiftBag", {payDoneFunc = handler(self, self.refreshData)}
+                        , "主界面_进游戏自动弹出")
     end
 end
 
@@ -96,30 +97,11 @@ function HomeBarLayer:initHomeLayer()
 
     local btnarmature = ccs.Armature:create("sczg")
     btnarmature:setPosition(0,0)
-    -- btnarmature:setScale(1.2)
     self.btnStore:addChild(btnarmature)
     btnarmature:getAnimation():play("sczg" , -1, 1)
 
 
     self.btnBack:setTouchEnabled(true)  
-    self.btnArsenal:onButtonPressed(function(event)
-        -- event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-    end)
-    :onButtonRelease(function(event)
-        -- event.target:runAction(cc.ScaleTo:create(0.1, 1))
-    end)
-    self.btnInlay:onButtonPressed(function(event)
-        -- event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-    end)
-    :onButtonRelease(function(event)
-        -- event.target:runAction(cc.ScaleTo:create(0.1, 1))
-    end)
-    self.btnStore:onButtonPressed(function(event)
-        -- event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-    end)
-    :onButtonRelease(function(event)
-        -- event.target:runAction(cc.ScaleTo:create(0.1, 1))
-    end)
     self.btnSetting:setTouchEnabled(true)  
     self.btnBack:setVisible(false)
     self.btnBuyCoin:setTouchEnabled(true)
@@ -164,14 +146,6 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
             ui:showPopup("pausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
-            -- cc.Director:getInstance():pushScene(MapPopup)
-            -- local pause = pauseScene.new()
-            -- pause:pause({type = "mapset"})
-
-
-            -- btnInlay:setButtonEnabled(true)
-            -- btnStore:setButtonEnabled(true)
-            -- btnArsenal:setButtonEnabled(true)
         end
     end)
     addBtnEventListener(self.btnBack, function(event)
@@ -195,7 +169,7 @@ function HomeBarLayer:initHomeLayer()
         self:refreshCommonLayer("StoreLayer")
 
         local buyModel = md:getInstance("BuyModel")
-        buyModel:buy("goldGiftBag", {}, "主界面_点击土豪金礼包")
+        buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
         self.btnInlay:setButtonEnabled(true)
         self.btnStore:setButtonEnabled(false)
         self.btnArsenal:setButtonEnabled(true)

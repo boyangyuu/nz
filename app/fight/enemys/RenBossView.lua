@@ -121,7 +121,6 @@ function RenBossView:playShan()
 end
 
 function RenBossView:playRunAction(direct, isRun)
-    
     -- print("function RenBossView:playRunAction():",isRun)
     local speed = isRun and define.kRenzheSpeed  or define.kRenzheWalkSpeed
     local time = isRoll and define.kRenzheRunTime or define.kRenzheWalkTime
@@ -149,7 +148,7 @@ function RenBossView:playRunAction(direct, isRun)
 end
 
 function RenBossView:playSkill(skillName)
-    print("RenBossView:playSkill: "..skillName)
+    -- print("RenBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "feibiao" then 
         local function callfuncFeibiao()
@@ -192,8 +191,6 @@ end
 function RenBossView:playFire()
     --导弹
     self.armature:getAnimation():play("fire" , -1, 1) 
-
-    -- print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     local offsetPoses = self.property["missileOffsets"]
@@ -241,16 +238,10 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
         end
 
         armatureBack:stopAllActions()
-        if movementID == "shanchu" then 
+        if movementID == "shanchu" or movementID == "zhaohuan" then 
             self:setVisible(false)
             return
         end
-
-        if movementID == "zhaohuan" then 
-            self:setVisible(false)
-            return
-        end
-
 
         if movementID == "die" then
             self:setDeadDone()

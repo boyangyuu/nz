@@ -7,54 +7,53 @@ local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 
 -- 定义事件
-
-
 function BuyModel:ctor(properties)
     BuyModel.super.ctor(self, properties) 
-	
-	--instance
-	-- self:buy("weaponGiftBag", {a=1})
 end
 
---
 function BuyModel:clearData()
     self.curId = nil
-    self.curBuydata =  nil
+    self.curBuyData =  nil
     self.orderId = nil
+    self.propName = nil
 end
 
-function BuyModel:buy(configid, buydata, strDesc)
-	assert(strDesc, "strDesc is nil configid :"..configid)
+function BuyModel:showBuy(configId, buyData, strDesc)
+	assert(strDesc, "strDesc is nil configId :"..configId)
 	-- local name = configName .. "__" .. strDesc
 	-- um:..
 	self:clearData()
-    self.curId = configid
-    self.curBuydata =  buydata
+    self.curId = configId
+    self.curBuyData =  buyData
 
     -- TalkingData支付统计
     self.orderId = self:getRandomOrderId()
-    local buyConfig = BuyConfigs.getConfig(configid) 
-    print("商品名称："..buyConfig.name.." 价格:",buyConfig.price)
-    self.propName = buyConfig.name .. "__" ..strDesc
+
+    local buyConfig = BuyConfigs.getConfig(configId) 
+    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strDesc)
+    local name = buyConfig.name .. "__" ..strDesc
+
     --todo 价格
-    um:onChargeRequest(self.orderId, self.propName, buyConfig.price, "CNY", 0, "MM")
+    um:onChargeRequest(self.orderId, name, buyConfig.price, "CNY", 0, "MM")
     -- um:event(self.propName, {self.propName = "1234"})
 
-	local config  = BuyConfigs.getConfig(configid)
-	local isGift = config.isGift --todo
-	self.isFight = buydata.isFight
+	local config  = BuyConfigs.getConfig(configId)
+	local isGift = config.isGift 
+	self.isFight = buyData.isFight
 
 	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configid})
+        ui:showPopup("GiftBagPopup",{popupName = configId})
     else
-    	--mm
-    	iap:pay(configid)
+    	iap:pay(configId)
     end
 end
 
 -- 生成订单号
 function BuyModel:getRandomOrderId()
-	local deviceId = TalkingDataGA:getDeviceId()
+	local deviceId = "windows"
+	if device.platform == "android" then 
+		deviceId = TalkingDataGA:getDeviceId()
+	end
 	local osTime = os.time()
 	local seed = math.random(1, osTime)
 	local id = deviceId.."_"..osTime.."_"..seed
@@ -64,20 +63,20 @@ end
 function BuyModel:payDone(result)
 	print("function BuyModel:payDone():"..self.curId)
 	local funcStr = "buy_"..self.curId
-	self[funcStr](self, self.curBuydata)
+	self[funcStr](self, self.curBuyData)
 
 	-- TalkingData 支付成功标志
 	um:onChargeSuccess(self.orderId)
 	-- um:event(self.propName)
 
-	-- dump(self.curBuydata, "self.curBuydata")
-	local payDoneFunc = self.curBuydata.payDoneFunc
+	-- dump(self.curBuyData, "self.curBuyData")
+	local payDoneFunc = self.curBuyData.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
 end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
-	local deneyBuyFunc = self.curBuydata.deneyBuyFunc
+	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
 	if deneyBuyFunc then  deneyBuyFunc() end
 end
 

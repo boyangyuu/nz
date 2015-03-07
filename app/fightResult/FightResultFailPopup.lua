@@ -9,7 +9,7 @@ end
 
 function FightResultFailPopup:popUpGift()
     local buyModel = md:getInstance("BuyModel")
-    buyModel:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)}, "战斗结算页面")
+    buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)}, "战斗结算页面_点击复活按钮")
 end
 
 function FightResultFailPopup:initUI()
@@ -48,7 +48,7 @@ function FightResultFailPopup:initUI()
             return true
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
-                buyModel:buy("resurrection", {payDoneFunc = handler(self,self.payDone),
+                buyModel:showBuy("resurrection", {payDoneFunc = handler(self,self.payDone),
                                 deneyBuyFunc = cancelGoldGift}, "战斗失败页面_点击原地复活")
         end
     end)
@@ -58,7 +58,7 @@ end
 
 function FightResultFailPopup:payDone()
     local fight = md:getInstance("Fight")
-   fight:payDone()
+    fight:payDone()
     --黄武
     -- local inlay = md:getInstance("InlayModel")
     -- inlay:equipGoldInlays(false)

@@ -110,6 +110,7 @@ function Fight:onWin()
     self:setFightResult()
     local levelInfo = self.groupId.."-"..self.levelId    
     um:finishLevel(levelInfo)
+    um:event("关卡完成", {levelInfo = "关卡完成"})
     self:willEndFight()  
     self:clearFightData()  
 end
@@ -121,7 +122,7 @@ function Fight:onFail()
     fightProp:costReliveBag()
     ui:showPopup("FightResultFailPopup",{},{anim = false})
     local buyModel = md:getInstance("BuyModel")
-    buyModel:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)},"战斗失败界面")
+    buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)},"战斗失败界面_点击复活")
 
     --clear
     self:clearFightData() 
