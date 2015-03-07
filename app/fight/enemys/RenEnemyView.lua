@@ -280,7 +280,7 @@ function RenEnemyView:playKill()
         scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
     end
     self.armature:getAnimation():play("die02" ,-1 , 1)
-
+    
     --sound
     local soundSrc  = "res/Music/fight/die.wav"
     self.audioId =  audio.playSound(soundSrc,false)     

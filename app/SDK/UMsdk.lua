@@ -51,6 +51,9 @@ end
 -- @param price 道具单价
 function UM:onChargeSuccess(orderid)
     -- body
+    if device.platform ~= "android" then
+        return
+    end    
     TDGAVirtualCurrency:onChargeSuccess(orderid)
 end
 
@@ -146,11 +149,17 @@ end
 -- @param  levelId 玩家等级
 function UM:setLevel( levelId )
     -- body
+    if device.platform ~= "android" then
+        return
+    end    
     print("设置玩家等级:",levelId)
     TDGAAccount:setLevel(levelId)
 end
 
 function UM:setUserAccount()
+    if device.platform ~= "android" then
+        return
+    end    
     TDGAAccount:setAccount(TalkingDataGA:getDeviceId())
     TDGAAccount:setAccountType(TDGAAccount.KAccountAnonymous)
     local data = getUserData()
