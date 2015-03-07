@@ -122,7 +122,6 @@ function InlayModel:equipInlay(inlayid, isRefresh)
 	end
     
     setUserData(data)
-    -- dump(GameState.load())
 end
 
 function InlayModel:replaceInlayed(inlayid)
@@ -159,16 +158,13 @@ function InlayModel:equipAllInlays(isRefresh)
 		bags[k] = v
 	end
 	for k,v in pairs(bags) do
-		-- local priority = self:getInlayPriority(v.inlayid)
-		dump(v.inlayid)
 		local priority = self:getInlayRecord(v.inlayid)["property"]
 		local typename = self:getInlayType(v.inlayid)
 		if priority > bestInlay[typename] then
 			bestInlay[typename] = priority
 		end
 		for k1,v1 in pairs(allinlayed) do
-			-- local inlayedPriority = self:getInlayPriority(v1)
-					local inlayedPriority = self:getInlayRecord(v1)["property"]
+			local inlayedPriority = self:getInlayRecord(v1)["property"]
 
 			if k1 == typename and bestInlay[typename] < inlayedPriority then
 				bestInlay[typename] = inlayedPriority
@@ -201,8 +197,7 @@ function InlayModel:equipAllBestInlays(table)
 	local bestInlay = {bullet=0,clip=0,speed=0,crit=0,blood=0,helper=0}	
 	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	for k,v in pairs(table) do
-		-- local priority = self:getInlayPriority(v.inlayid)
-				local priority = self:getInlayRecord(v.inlayid)["property"]
+		local priority = self:getInlayRecord(v.inlayid)["property"]
 
 		local typename = self:getInlayType(v.inlayid)
 		if priority > bestInlay[typename] then
@@ -220,11 +215,9 @@ function InlayModel:equipAllBestInlays(table)
 	        end
 	    end
 	end
-	-- dump(bestInlayId)
 
 	for k,v in pairs(bestInlayId) do
 		if v ~= 0 then
-			-- dump(v)
 			self:equipInlay(v, false)
 		end
 	end
@@ -262,13 +255,10 @@ function InlayModel:isGetAllGold()
 	for k,v in pairs(allInlayed) do
 		x = x + 1
 	end
-	-- dump(allInlayed)
-	-- print(x)
 	if x ~= 6 then
 		return false
 	end
 	for k,v in pairs(allInlayed) do
-		-- local Priority = self:getInlayPriority(v)
 		local Priority = self:getInlayRecord(v)["property"]
 		if Priority ~= 4 then
 			return false
@@ -282,10 +272,6 @@ function InlayModel:getInlayType(inlayid)
 
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end
-
--- function InlayModel:getInlayPriority(inlayid)
--- 	return self:getConfigTable("id", inlayid)[1]["property"]
--- end
 
 function InlayModel:getInlayRecord(inlayid)
 	return self:getConfigTable("id", inlayid)[1]
@@ -326,7 +312,6 @@ function InlayModel:getGoldWeaponNum()
 			goldNum = newNum
 		end
 	end
-	-- dump(goldNum)
 	return goldNum
 end
 
