@@ -115,7 +115,8 @@ function MyApp:createGameStateFile()
 
             money = 0,
             diamond = 0,
-        
+            
+            --开启的关卡
             currentlevel =  {
                         group = 1,
                         level = 1,

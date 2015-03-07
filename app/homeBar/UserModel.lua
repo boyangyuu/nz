@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 
 local UserModel = class("UserModel", cc.mvc.ModelBase)
 
@@ -62,10 +61,24 @@ end
 	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 end
 
-function UserModel:getUserLevel(groupId,levelId)
-	local levelDetailModel = md:getInstance("LevelDetailModel")
-	local levelRecord = levelDetailModel:getConfig(groupId,levelId)
-	um:setLevel(levelRecord["userLevel"])
+function UserModel:setUserLevel(level)
+	--check
+	local data = getUserData()
+	local curLevel = data.user.level 
+	assert(level >= curLevel, "level is invalid ".. level)
+
+	--save
+	data.user.level = level
+	setUserData(data)
+
+	--um
+	um:setLevel(levelRecord["userLevel"])	
+end
+
+function UserModel:getUserLevel()
+	local data = getUserData()
+	local curLevel = data.user.level 
+	return curLevel 
 end
 
 return UserModel
