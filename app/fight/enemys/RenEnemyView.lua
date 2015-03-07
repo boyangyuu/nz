@@ -256,9 +256,9 @@ function RenEnemyView:playRunAction(direct, isRun)
 
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action) 
-
-    self:restoreStand(time)  
+    self.armature:runAction(cc.Sequence:create(action, 
+        cc.CallFunc:create(handler(self, self.restoreStand))
+        ))  
 end
 
 --Attackable interface
@@ -291,18 +291,16 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
-        armatureBack:stopAllActions()
-        if movementID == "shanchu" then 
-            self:setVisible(false)
-            return
-        end
-
         if movementID == "runleft" 
             or movementID == "runright" 
             or movementID == "walk" 
             or movementID == "chongfeng" then
-                self.armature:getAnimation():play(movementID , -1, 1)
             return 
+        end        
+        armatureBack:stopAllActions()
+        if movementID == "shanchu" then 
+            self:setVisible(false)
+            return
         end
 
         if movementID == "die02" then

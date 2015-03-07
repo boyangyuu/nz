@@ -28,9 +28,8 @@ function FeijiEnemyView:ctor(property)
     self.isEntering = true
     self.isExiting  = false
     local lastTime = self.property["lastTime"]
-    local sch = scheduler.performWithDelayGlobal(handler(self, self.exit), lastTime)
-    self:addScheduler(sch)
-
+    self:schedule(handler(self, self.playExit), lastTime)
+    
     self:setData()
 end
 
@@ -61,7 +60,7 @@ function FeijiEnemyView:tick()
 	if isAble then
 		local randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
-			self:playAfterAlert("fire", handler(self, self.playFire))
+			self:playAfterAlert("skill", handler(self, self.playFire))
 			self.enemy:beginFireCd()
 		end
 	end
@@ -120,7 +119,7 @@ function FeijiEnemyView:playEnter(direct)
     self.audioId =  audio.playSound(soundSrc,true) 
 end
 
-function FeijiEnemyView:exit()
+function FeijiEnemyView:playExit()
 	if self.enemy:isDead() then return end
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
@@ -157,9 +156,9 @@ function FeijiEnemyView:playRunLeft()
 	self.armature:getAnimation():play("runleft" , -1, 1) 
 	-- print("width", width)
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
-    self.armature:runAction(action)	
-
-    self:restoreStand(time)
+    self.armature:runAction(cc.Sequence:create(action, 
+    	cc.CallFunc:create(handler(self, self.restoreStand))
+    	))	
 	self.enemy:beginRollCd()
 end
 
@@ -173,9 +172,9 @@ function FeijiEnemyView:playRunRight()
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action)	
-
-    self:restoreStand(time)		
+    self.armature:runAction(cc.Sequence:create(action, 
+    	cc.CallFunc:create(handler(self, self.restoreStand))
+    	))		
 	self.enemy:beginRollCd()	
 end
 
@@ -200,7 +199,9 @@ function FeijiEnemyView:playWalkLeft()
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
     self.armature:runAction(action)	
 
-    self:restoreStand(time)
+    self.armature:runAction(cc.Sequence:create(action, 
+    	cc.CallFunc:create(handler(self, self.restoreStand))
+    	))		
 	self.enemy:beginWalkCd()    
 end
 
@@ -216,7 +217,9 @@ function FeijiEnemyView:playWalkRight()
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(action)	
 
-    self:restoreStand(time)		
+    self.armature:runAction(cc.Sequence:create(action, 
+    	cc.CallFunc:create(handler(self, self.restoreStand))
+    	))				
 	self.enemy:beginWalkCd()    	
 end
 
@@ -257,13 +260,10 @@ function FeijiEnemyView:playFire()
 	    end
 	    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.5)
 	    self:addScheduler(sch)  
-
 	end
-
 end
 
 function FeijiEnemyView:playStand()
-	-- print("function FeijiEnemyView:playStand()")
 	if self.direct == "left" then 
 		self.armature:getAnimation():play("standleft" , -1, 1)
 	else 
@@ -275,7 +275,6 @@ function FeijiEnemyView:onHitted(targetData)
 	if self.isEntering or self.isExiting then 
 		return 
 	end
-
 	FeijiEnemyView.super.onHitted(self, targetData)
 end
 
@@ -319,9 +318,9 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 		end
 
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
-			local playCache = self:getPlayCache()
+	  		local playCache = self:getPlayCache()
 			if playCache then
-				print("playCache") 
+				-- print("playCache") 
 				playCache()
 			else 					
 				self:playStand()
@@ -331,5 +330,7 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
     	end 
 	end
 end
+
+
 
 return FeijiEnemyView
