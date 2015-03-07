@@ -387,7 +387,7 @@ local enemys = {
 		weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=2,hp=380,fireRate=180,fireCd=3,speed=35,
+	{id=2,image="jinzhanb",demage=3,hp=380,fireRate=180,fireCd=3,speed=35,
 		weak1=3},
 
 	--伞兵

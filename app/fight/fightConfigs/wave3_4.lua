@@ -2,7 +2,6 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
 	{
 		enemys = { 
 			{
@@ -97,9 +96,7 @@ local waves = {
 					missileId = 3,
 					missileType = "lei",                                         --10
 				},
-			},
-			
-			
+			},	
 		},
 	},
 
@@ -230,10 +227,9 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-
 		},
 	},
-			
+		
 	{
 		enemys = {
 		    {
@@ -289,7 +285,7 @@ local waves = {
 				},
 			},
 			{
-				time = 35,	      --忍者
+				time = 3,	      --忍者
 				num = 1,
 				pos = {300},
 				delay = {0.2},
@@ -385,7 +381,7 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=40,hp=8000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=40,hp=8000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖

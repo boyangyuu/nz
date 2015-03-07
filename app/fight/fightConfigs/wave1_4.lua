@@ -344,7 +344,7 @@ local waves = {
 --enemy的关卡配置                                           小兵难度    青铜镶嵌  满级武器  难度 80 伤害dps大于等于1.5
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=4.5,hp= 327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=3,hp= 327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
@@ -352,7 +352,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=6,hp=1,
+	{id=3,image="shoulei",demage=4,hp=1,
 	weak1=1},
 
 	--伞兵       --type = "san",
