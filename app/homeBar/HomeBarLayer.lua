@@ -51,6 +51,12 @@ function HomeBarLayer:popUpNextLevel(properties)
     end
 end
 
+function HomeBarLayer:popUpWeaponGiftBag(properties)
+    if properties.isPopupWeaponBag then
+        ui:showPopup("GiftBagPopup",{popupName = "weaponGiftBag"})
+    end
+end
+
 function HomeBarLayer:initDailyLogin()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
     local guide = md:getInstance("Guide")

@@ -245,10 +245,10 @@ end
 function LevelDetailLayer:onClickBtnStart()
     local isDone = self.guide:isDone("prefight02")
 	if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
-	    local buyModel = md:getInstance("BuyModel")
-	    buyModel:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
-						    	payDoneFunc = handler(self, self.startGame)}, 
-						    	"关卡详情_点击开始按钮")
+	    -- local buyModel = md:getInstance("BuyModel")
+	    -- buyModel:buy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
+					-- 	    	payDoneFunc = handler(self, self.startGame)}, 
+					-- 	    	"关卡详情_点击开始按钮")
 	else
 		self:startGame()
 	end

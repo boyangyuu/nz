@@ -39,7 +39,7 @@ function FightResultFailPopup:initUI()
             local fight  = md:getInstance("Fight")
             local groupid,levelid = fight:getCurGroupAndLevel()
             ui:closePopup("FightResultFailPopup")
-            ui:changeLayer("HomeBarLayer",{groupId = groupid})
+            ui:changeLayer("HomeBarLayer",{groupId = groupid,isPopupWeaponBag = true})
         end
     end)
     btnrevive:setTouchEnabled(true)
