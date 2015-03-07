@@ -35,9 +35,10 @@ function BuyModel:buy(configid, buydata, strDesc)
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configid) 
     print("商品名称："..buyConfig.name.." 价格:",buyConfig.price)
-    local name = buyConfig.name .. "__" ..strDesc
+    self.propName = buyConfig.name .. "__" ..strDesc
     --todo 价格
-    um:onChargeRequest(self.orderId, name, buyConfig.price, "CNY", 0, "MM")
+    um:onChargeRequest(self.orderId, self.propName, buyConfig.price, "CNY", 0, "MM")
+    -- um:event(self.propName, {self.propName = "1234"})
 
 	local config  = BuyConfigs.getConfig(configid)
 	local isGift = config.isGift --todo
@@ -67,6 +68,7 @@ function BuyModel:payDone(result)
 
 	-- TalkingData 支付成功标志
 	um:onChargeSuccess(self.orderId)
+	-- um:event(self.propName)
 
 	-- dump(self.curBuydata, "self.curBuydata")
 	local payDoneFunc = self.curBuydata.payDoneFunc

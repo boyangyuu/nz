@@ -120,7 +120,7 @@ function PausePopup:btnEvent()
         local fight  = md:getInstance("Fight")
         local groupid,levelid = fight:getCurGroupAndLevel()
         local levelInfo = groupid.."-"..levelid
-        um:failLevel(levelInfo)
+        -- um:failLevel(levelInfo)
 		ui:changeLayer("HomeBarLayer",{groupId = groupid})
 	end
 end

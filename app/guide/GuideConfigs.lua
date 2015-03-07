@@ -28,7 +28,7 @@ local configs = {}
 	}
 ]]
 
-----第一关 移动----
+----第0关 移动----
 configs["fight01_move"] = {
 	preGuideId = nil,
 	steps = {
@@ -36,7 +36,7 @@ configs["fight01_move"] = {
 	}
 }
 
---第一关 开火
+--第0关 开火
 configs["fight01_fire"] = {
 	preGuideId = nil,
 	steps = {
@@ -44,7 +44,7 @@ configs["fight01_fire"] = {
 	}
 }
 
----- 第一关 扔雷----
+---- 第0关 扔雷----
 configs["fight01_lei"] = {
 	preGuideId = nil,
 	steps = {
@@ -52,7 +52,7 @@ configs["fight01_lei"] = {
 	}
 }
 
----- 第一关 换枪(rpg)----
+---- 第0关 换枪(rpg)----
 configs["fight01_change"] = {
 	preGuideId = nil,
 	steps = {
@@ -60,7 +60,7 @@ configs["fight01_change"] = {
 	}
 }
 
----- 第一关 黄金枪----
+---- 第0关 黄金枪----
 configs["fight01_gold"] = {
 	preGuideId = nil,
 	steps = {
@@ -68,7 +68,7 @@ configs["fight01_gold"] = {
 	}
 }
 
---- 第一关毁灭者之后 ----
+--- 第0关毁灭者之后 ----
 configs["fight01_jijia"] = {
 	preGuideId = nil,
 	steps = {
@@ -77,7 +77,7 @@ configs["fight01_jijia"] = {
 	}
 }
 
----- 第一关结算之后 ----
+---- 第0关结算之后 ----
 configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
@@ -88,7 +88,7 @@ configs["afterfight01"] = {
 	}
 }
 
---- 开启第二关之后 ----
+--- 开启第2关之后 ----
 configs["prefight02"] = {
 	preGuideId = "afterfight01",
 	steps = {
@@ -101,17 +101,6 @@ configs["prefight02"] = {
 		{id = "prefight02_equip", msg = "点击一键装备 , 装备黄金武器", },		
 		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
 	}
-}
-
----- 第四关战斗开始之后 ----
-configs["fight04"] = {
-	preGuideId = nil,
-	steps = {
-		{id = "fight04_open", msg = "         点击开镜", }, 
-		{id = "fight04_fire", msg = "         点击开火", }, 
-		{id = "fight04_close", msg = "         点击关镜", }, 
-		{id = "fight04_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
-	}	
 }
 
 ---- 开启第3关之后  ----
@@ -129,6 +118,19 @@ configs["xiangqian"] = {
 		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关", },		
 	}
 }
+
+---- 第四关战斗开始之后 ----
+configs["fight04"] = {
+	preGuideId = nil,
+	steps = {
+		{id = "fight04_open", msg = "         点击开镜", }, 
+		{id = "fight04_fire", msg = "         点击开火", }, 
+		{id = "fight04_close", msg = "         点击关镜", }, 
+		{id = "fight04_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
+	}	
+}
+
+
 
 
 

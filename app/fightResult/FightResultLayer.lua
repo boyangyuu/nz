@@ -191,12 +191,14 @@ function FightResultLayer:onClickBtnNext()
     if curLevel == 6 and curGroup < 4 then
     	curGroup = curGroup + 1
     end
+	
+	local isDoneXiangqian = self.guide:isDone("xiangqian")
 
-	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) == false then
-		print("0-0 OR 1-4.1 OR 通关")
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup})
+	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) and isDoneXiangqian then
+		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
 	else
-    	ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
+		print("0-0 OR 1-4.1 OR 通关")
+    	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
     end
 	playSoundBtn()     
 end
