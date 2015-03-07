@@ -241,16 +241,10 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
         end
 
         armatureBack:stopAllActions()
-        if movementID == "shanchu" then 
+        if movementID == "shanchu" or movementID == "zhaohuan" then 
             self:setVisible(false)
             return
         end
-
-        if movementID == "zhaohuan" then 
-            self:setVisible(false)
-            return
-        end
-
 
         if movementID == "die" then
             self:setDeadDone()
