@@ -121,6 +121,7 @@ function RenBossView:playShan()
 end
 
 function RenBossView:playRunAction(direct, isRun)
+    
     -- print("function RenBossView:playRunAction():",isRun)
     local speed = isRun and define.kRenzheSpeed  or define.kRenzheWalkSpeed
     local time = isRoll and define.kRenzheRunTime or define.kRenzheWalkTime
@@ -139,12 +140,12 @@ function RenBossView:playRunAction(direct, isRun)
     else
         animName = "walk"
     end
-
+    print("RenBossView:playRunAc")
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action) 
-
-    self:restoreStand(time)  
+    self.armature:runAction(cc.Sequence:create(action, 
+        cc.CallFunc:create(handler(self, self.restoreStand))
+        ))   
 end
 
 function RenBossView:playSkill(skillName)
@@ -232,7 +233,13 @@ end
 function RenBossView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        -- print("animationEvent id ", movementID)
+        if movementID == "runleft" 
+                or movementID == "runright" 
+                or movementID == "walk" 
+                or movementID == "chongfeng"  then
+            return 
+        end
+
         armatureBack:stopAllActions()
         if movementID == "shanchu" then 
             self:setVisible(false)
@@ -244,13 +251,6 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
             return
         end
 
-        if movementID == "runleft" 
-	            or movementID == "runright" 
-	            or movementID == "walk" 
-	            or movementID == "chongfeng"  then
-            self.armature:getAnimation():play(movementID , -1, 1)
-            return 
-        end
 
         if movementID == "die" then
             self:setDeadDone()

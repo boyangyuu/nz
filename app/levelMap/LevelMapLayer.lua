@@ -32,10 +32,10 @@ function LevelMapLayer:initData(properties)
     --config
     self.groupNum = self.LevelMapModel:getGroupNum()
 
-    self.levelAmount = {}
-    for i = 1, self.groupNum do
-        self.levelAmount[i] = self.LevelMapModel:getLevelNum(i)
-    end
+    -- self.levelAmount = {}
+    -- for i = 1, self.groupNum do
+    --     self.levelAmount[i] = self.LevelMapModel:getLevelNum(i)
+    -- end
 end
 
 
@@ -50,6 +50,9 @@ function LevelMapLayer:initBgLayer()
     self:addChild(self.armature)
     -- addChildCenter(self.armature, self)
     print("self.curGroupId", self.curGroupId)
+    if self.curGroupId == 0 then
+        self.curGroupId = 1
+    end
     self.armature:getAnimation():play("0_"..self.curGroupId , -1, 0)
 
     self.ldArmature = ccs.Armature:create("leida")
@@ -103,7 +106,7 @@ function LevelMapLayer:initChooseLayer()
     end
 
     btnfirstgift:onButtonClicked(function()
-        buyModel:buy("novicesBag",{payDoneFunc = hideGiftIcon})
+        buyModel:buy("novicesBag",{payDoneFunc = hideGiftIcon}, "关卡地图_点击新手礼包")
         end)
     
     local action = transition.sequence({
@@ -165,8 +168,8 @@ function LevelMapLayer:initChooseLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buy = md:getInstance("BuyModel")
-            buy:buy("timeGiftBag", {})
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:buy("timeGiftBag", {}, "大地图页面_点击限时礼包")
         end
     end)
 
@@ -185,8 +188,8 @@ function LevelMapLayer:initChooseLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buy = md:getInstance("BuyModel")
-            buy:buy("goldGiftBag", {})
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:buy("goldGiftBag", {}, "大地图页面_点击土豪金礼包")
         end
     end)
 

@@ -1,21 +1,21 @@
 local FightResultFailPopup = class("FightResultFailPopup", function()
-	return display.newLayer()
+    return display.newLayer()
 end)
 
 function FightResultFailPopup:ctor()
-	self:initUI()
+    self:initUI()
     -- self:popUpGift()
 end
 
 function FightResultFailPopup:popUpGift()
-    local buy = md:getInstance("BuyModel")
-    buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)})
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)}, "战斗结算页面")
 end
 
 function FightResultFailPopup:initUI()
     --loadCCS
-	cc.FileUtils:getInstance():addSearchPath("res/FightResult/fightResultAnim")
-	local controlNode = cc.uiloader:load("fightResultFail.ExportJson")
+    cc.FileUtils:getInstance():addSearchPath("res/FightResult/fightResultAnim")
+    local controlNode = cc.uiloader:load("fightResultFail.ExportJson")
     self:addChild(controlNode)
 
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
@@ -38,7 +38,7 @@ function FightResultFailPopup:initUI()
         elseif event.name=='ended' then
             local fight  = md:getInstance("Fight")
             local groupid,levelid = fight:getCurGroupAndLevel()
-	        ui:closePopup("FightResultFailPopup")
+            ui:closePopup("FightResultFailPopup")
             ui:changeLayer("HomeBarLayer",{groupId = groupid})
         end
     end)
@@ -47,12 +47,9 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buy = md:getInstance("BuyModel")
-            -- function cancelGoldGift()
-                buy:buy("resurrection", {payDoneFunc = handler(self,self.payDone)})
-            -- end
-            -- buy:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone),
-            --                         deneyBuyFunc = cancelGoldGift})
+            local buyModel = md:getInstance("BuyModel")
+                buyModel:buy("resurrection", {payDoneFunc = handler(self,self.payDone)}, "战斗失败页面_点击原地复活")
+                                deneyBuyFunc = cancelGoldGift})
         end
     end)
 end

@@ -19,9 +19,9 @@ end
 function LevelMapModel:getLevelNum(gid)
     local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
     local recordnum = #recordsGroup
-    local maxLevel = recordsGroup[recordnum]
-    local levelNum = maxLevel["levelId"]
-    return levelNum
+    -- local maxLevel = recordsGroup[recordnum]
+    -- local levelNum = maxLevel["levelId"]
+    return recordnum
 end
 
 function LevelMapModel:getGroupNum()
@@ -63,14 +63,11 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 	elseif lid == maxLevel and gid < groupNum then
 		gid1 = gid + 1
 		lid1 = 1
-		assert(gid1, "groupId")
-		assert(lid1, "levelId")
 		return gid1,lid1
 	end
 end
 
 function LevelMapModel:isExistNextLevel(groupId, levelId)
-
 	assert(groupId, "groupId")
 	assert(levelId, "levelId")
 
@@ -90,6 +87,42 @@ function LevelMapModel:isExistNextLevel(groupId, levelId)
 	else
 		return true
 	end	
+end
+
+function LevelMapModel:levelPass(groupId,levelId)
+	assert(groupId, "groupId")
+	assert(levelId, "levelId")
+	local data = getUserData()
+	local curGroupId = data.currentlevel.group
+	local curLevelId = data.currentlevel.level
+
+	local isOpenNext = groupId == curGroupId and levelId == curLevelId 	
+	
+	if groupId == 0 and levelId == 0 then
+		return	
+	elseif math.floor(levelId) < levelId then
+		return
+
+	--开启关卡
+	elseif isOpenNext then
+		if self:isExistNextLevel(groupId, levelId) then
+			local nextgroup,nextlevel = self:getNextGroupAndLevel(groupId, levelId)
+			-- print("nextgroup",nextgroup)
+			-- print("nextlevel",nextlevel)	
+			--save user level
+			local levelDetailModel = md:getInstance("LevelDetailModel")
+			local levelRecord = levelDetailModel:getConfig(curGroupId,curLevelId)
+			local userModel = md:getInstance("UserModel")
+			userModel:setUserLevel(levelRecord["userLevel"])
+
+			--save 关卡进度
+			data.currentlevel.group = nextgroup
+			data.currentlevel.level = nextlevel
+			setUserData(data)	
+		else
+			print("通关")
+		end
+	end
 end
 
 return LevelMapModel

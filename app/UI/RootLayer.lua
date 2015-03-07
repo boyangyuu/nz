@@ -185,23 +185,11 @@ function RootLayer:addResHome()
 end
 
 function RootLayer:addResFight()
-    -- display.removeUnusedSpriteFrames()
-
-    -- print("function RootLayer:addResFight()")
-    -- --sprite
-    -- local cb = function(plist, image)
-       
-    -- end    
-
-    print("function RootLayer:addResFight()")   
-
     cc.FileUtils:getInstance():addSearchPath("res/public")    
     display.addSpriteFrames("allImg0.plist", "allImg0.png", handler(self, self.imageLoaded) ) 
     display.addSpriteFrames("role0.plist", "role0.png" ,handler(self, self.imageLoaded))   
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))
     display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png", handler(self, self.imageLoaded))
-
-
 
     --sound effect
     local uiEffects = {"jijia_open.wav", "jijia_close.wav", "glass.wav", "gold.wav", "golds.wav", "hzd.wav", 

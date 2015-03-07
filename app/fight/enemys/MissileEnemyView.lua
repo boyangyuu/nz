@@ -142,7 +142,6 @@ function MissileEnemyView:playHitted(event)
 end
 
 function MissileEnemyView:playKill(event)
-
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
     

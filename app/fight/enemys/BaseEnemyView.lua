@@ -148,8 +148,6 @@ function BaseEnemyView:playWalk()
     self.enemy:beginWalkCd()
 end
 
-
-
 function BaseEnemyView:playHitted(event)
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	print("function BaseEnemyView:playHitted(event)")
@@ -189,7 +187,7 @@ function BaseEnemyView:onHitted(targetData)
 	--爆头
 	if self.enemy:getHp() == 0 then 
 		if demageType == "head" then 
-			print("爆头")
+			-- print("爆头")
 			local soundSrc  = "res/Music/fight/btts.wav"
 			audio.playSound(soundSrc,false)				
 			self.hero:dispatchEvent({

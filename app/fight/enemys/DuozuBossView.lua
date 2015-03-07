@@ -79,8 +79,9 @@ function DuozuBossView:playWalkAction(direct)
     local animName = direct == 1 and "walkleft" or "walkright"
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action) 
-    self:restoreStand(time)  
+    self.armature:runAction(cc.Sequence:create(action, 
+        cc.CallFunc:create(handler(self, self.restoreStand))
+        ))  
 end
 
 function DuozuBossView:playSkill(skillName)
@@ -208,12 +209,11 @@ function DuozuBossView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
         print("animationEvent id ", movementID)
-        armatureBack:stopAllActions()
         if movementID == "runleft"  or movementID == "runright" then
-            self.armature:getAnimation():play(movementID , -1, 1)
             return 
         end
 
+        armatureBack:stopAllActions()
         if movementID == "die" then
             self:setDeadDone()
             return

@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 
 local UserModel = class("UserModel", cc.mvc.ModelBase)
 
@@ -62,34 +61,24 @@ end
 	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 end
 
-function UserModel:levelPass(groupId,levelId)
-	assert(groupId, "groupId")
-	assert(levelId, "levelId")
+function UserModel:setUserLevel(level)
+	--check
 	local data = getUserData()
-	local curGroupId = data.currentlevel.group
-	local curLevelId = data.currentlevel.level
-print("curGroupId",curGroupId)
-print("curLevelId",curLevelId)
-	--是否开启下一关
-	local isOpenNext = groupId == curGroupId and levelId == curLevelId
-	
-	if groupId == 0 and levelId == 0 then
-		return
-	elseif math.floor(levelId) < levelId then
-		return
-	elseif isOpenNext then
-		if self.LevelMapModel:isExistNextLevel(groupId, levelId) then
-			local nextgroup,nextlevel = self.LevelMapModel:getNextGroupAndLevel(groupId, levelId)
-			print("nextgroup",nextgroup)
-			print("nextlevel",nextlevel)
-			data.currentlevel.group = nextgroup
-			data.currentlevel.level = nextlevel
-			setUserData(data)
-		else
-			print("通关")
-		end
-	end
+	local curLevel = data.user.level 
+	assert(level >= curLevel, "level is invalid ".. level)
+
+	--save
+	data.user.level = level
+	setUserData(data)
+
+	--um
+	um:setLevel(levelRecord["userLevel"])	
 end
 
+function UserModel:getUserLevel()
+	local data = getUserData()
+	local curLevel = data.user.level 
+	return curLevel 
+end
 
 return UserModel
