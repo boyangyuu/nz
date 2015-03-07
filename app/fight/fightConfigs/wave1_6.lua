@@ -7,7 +7,7 @@ local waves = {
 		enemys = { 
 
 			{
-				time = 3,
+				time = 2,
 				num = 5,
 				delay = {0.1,0.8,1.5,2.3,2.7},
 				pos = {230,330,500,590,690},
@@ -18,7 +18,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 6,	
 				num = 5,
 				pos = {250,330,510,600,700},
 				delay = {0.4,1.2,2.0,2.8,3.5},
@@ -29,20 +29,29 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
-				num = 5,
-				delay = {0.5,1.3,3.7,2.9,2.1},
-				pos = {200,350,680,490,250},
+				time = 10,
+				num = 2,
+				delay = {0.2,1.3},
+				pos = {350,650},
 				property = { 
 					placeName = "place1" ,
 					type = "jin",                  --盾 15
 					id = 8,
 				},
 			},
-
-			
 			{
-				time = 20,
+				time = 14,
+				num = 1,
+				delay = {0.8},
+				pos = {900},
+				property = { 
+					placeName = "place2" ,
+					type = "jin",                  --盾 15
+					id = 8,
+				},
+			},
+			{
+				time = 18,
 				num = 5,
 				delay = {0.2,1.0,3.3,1.8,2.6,},
 				pos = {290,350,460,600,456,},
@@ -53,7 +62,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 22,
 				num = 5,
 				delay = {1.6,3.5,3.1,2.3,0.8},
 				pos = {290,350,460,600,570},
@@ -64,7 +73,7 @@ local waves = {
 				},
 			},
 			{
-				time = 28,	
+				time = 26,	
 				num = 5,
 				pos = {250,330,510,600,700},
 				delay = {0.4,1.5,2.3,3.8,3.2},
@@ -74,31 +83,28 @@ local waves = {
 					type = "jin",
 				},
 			},
-			{
-				time = 32,	
-				num = 5,
-				pos = {650,530,310,400,200},
-				delay = {1.3,0.9,2.4,3.0,1.8},
-				property = {
-					placeName = "place1" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-
-			{
-				time = 36,
-				num = 1,
-				delay = {0.6},
-				pos = {470},
-				property = { 
-					placeName = "place12" ,
-					type = "jin",                  --近boss                                 
-					id = 16,
-				},
-			},
-			
-			
+			-- {
+			-- 	time = 30,	
+			-- 	num = 5,
+			-- 	pos = {650,530,310,400,200},
+			-- 	delay = {1.3,0.9,2.4,3.0,1.8},
+			-- 	property = {
+			-- 		placeName = "place1" ,         --近
+			-- 		id = 7,
+			-- 		type = "jin",
+			-- 	},
+			-- },
+			-- {
+			-- 	time = 36,
+			-- 	num = 1,
+			-- 	delay = {0.6},
+			-- 	pos = {470},
+			-- 	property = { 
+			-- 		placeName = "place12" ,
+			-- 		type = "jin",                  --近boss                                 
+			-- 		id = 16,
+			-- 	},
+			-- },
 		},
 	},
 
@@ -106,7 +112,7 @@ local waves = {
 		enemys = {
 
 			 {
-				time = 3,
+				time = 2,
 				num = 3,
 				delay = {0.1,0.9,1.5},
 				pos = {350,560,700},
@@ -117,10 +123,10 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 6,	
 				num = 5,
-				pos = {325,420,220,550,700},
 				delay = {0.4,1.2,2.5,3.3,1.8},
+				pos = {325,420,220,550,700},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -128,34 +134,16 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 10,
 				num = 3,
-				delay = {0.5,2.5,1.3},
-				pos = {400,300,670},
+				delay = {0.2,0.7,1.3},
+				pos = {500,300,700},
 				property = { 
 					placeName = "place1" ,
 					type = "jin",                  --盾
 					id = 8,
 				},
 			},
-
-			{
-			    
-				time = 7,
-				num = 1,
-				pos = {450},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place11",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 30.0,		                                    --持续时间			
-				},
-			},	
 			{
 				time = 15,
 				num = 3,
@@ -170,8 +158,8 @@ local waves = {
 			{
 				time = 19,	
 				num = 5,
+				delay = {0.2,0.9,0.5,0.8,1.5},
 				pos = {250,350,310,470,600},
-				delay = {0.4,0.9,0.5,0.8,1.5},
 				property = {
 					placeName = "place1" ,
 					id = 7,
@@ -181,10 +169,10 @@ local waves = {
 			{
 				time = 23,
 				num = 3,
-				delay = {0.3,2.0,1.1},
-				pos = {300,460,560},
+				delay = {0.3,0.8,1.3},
+				pos = {350,650,900},
 				property = { 
-					placeName = "place1" ,
+					placeName = "place2" ,
 					type = "jin",       --盾
 					id = 8,
 				},
@@ -328,7 +316,7 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=35,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=35,hp=25000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
@@ -347,7 +335,7 @@ local bosses = {
 
 		award = 25000,
 		image = "renzb",                       --图片名字
-		hp = 200000,
+		hp = 100000,
 		fireRate = 60,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --

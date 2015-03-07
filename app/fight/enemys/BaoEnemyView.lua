@@ -26,7 +26,6 @@ function BaoEnemyView:ctor(property)
     self:addScheduler(aheadScheduler)
 end
 
-
 function BaoEnemyView:playAhead()
     --前进
     self.isAheading = true
