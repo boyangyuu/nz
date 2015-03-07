@@ -53,7 +53,10 @@ end
 
 -- 生成订单号
 function BuyModel:getRandomOrderId()
-	local deviceId = TalkingDataGA:getDeviceId()
+	local deviceId = ""
+	if device.platform == "android" then
+		deviceId = TalkingDataGA:getDeviceId()
+	end
 	local osTime = os.time()
 	local seed = math.random(1, osTime)
 	local id = deviceId.."_"..osTime.."_"..seed

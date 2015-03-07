@@ -72,7 +72,7 @@ function UserModel:setUserLevel(level)
 	setUserData(data)
 
 	--um
-	um:setLevel(levelRecord["userLevel"])	
+	um:setLevel(level)	
 end
 
 function UserModel:getUserLevel()
