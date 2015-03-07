@@ -146,6 +146,15 @@ end
 -- @param  levelId 玩家等级
 function UM:setLevel( levelId )
     -- body
+    print("设置玩家等级:",levelId)
+    TDGAAccount:setLevel(levelId)
+end
+
+function UM:setUserAccount()
+    TDGAAccount:setAccount(TalkingDataGA:getDeviceId())
+    TDGAAccount:setAccountType(TDGAAccount.KAccountAnonymous)
+    local data = getUserData()
+    local levelId = data.user.level
     TDGAAccount:setLevel(levelId)
 end
 

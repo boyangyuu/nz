@@ -32,7 +32,7 @@ end
 function MyApp:run()
     print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
-    self:enterScene("MainScene")
+    self:enterScene("MainScene") 
 end
 
 function MyApp:initGameState()
@@ -60,6 +60,9 @@ function MyApp:initGameState()
         self:createGameStateFile()
         GameData=GameState.load()
     end
+
+    -- TalkingData 设置玩家账户及等级
+    um:setUserAccount()
 end
 
 function MyApp:createGameStateFile()
