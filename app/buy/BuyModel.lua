@@ -34,7 +34,7 @@ function BuyModel:buy(configid, buydata, strDesc)
     -- TalkingData支付统计
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configid) 
-    print("商品名称："..buyConfig.name.." 价格:",buyConfig.price)
+    print("点击付费点:".. buyConfig.name.." 位置:" .. strDesc)
     local name = buyConfig.name .. "__" ..strDesc
     --todo 价格
     um:onChargeRequest(self.orderId, name, buyConfig.price, "CNY", 0, "MM")
@@ -53,7 +53,10 @@ end
 
 -- 生成订单号
 function BuyModel:getRandomOrderId()
-	local deviceId = TalkingDataGA:getDeviceId()
+	local deviceId = "windows"
+	if device.platform == "android" then 
+		deviceId = TalkingDataGA:getDeviceId()
+	end
 	local osTime = os.time()
 	local seed = math.random(1, osTime)
 	local id = deviceId.."_"..osTime.."_"..seed

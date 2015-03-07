@@ -121,7 +121,6 @@ function RenBossView:playShan()
 end
 
 function RenBossView:playRunAction(direct, isRun)
-    
     -- print("function RenBossView:playRunAction():",isRun)
     local speed = isRun and define.kRenzheSpeed  or define.kRenzheWalkSpeed
     local time = isRoll and define.kRenzheRunTime or define.kRenzheWalkTime
@@ -149,7 +148,7 @@ function RenBossView:playRunAction(direct, isRun)
 end
 
 function RenBossView:playSkill(skillName)
-    print("RenBossView:playSkill: "..skillName)
+    -- print("RenBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "feibiao" then 
         local function callfuncFeibiao()
