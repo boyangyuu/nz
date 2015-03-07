@@ -273,8 +273,8 @@ function LevelDetailLayer:onClickBtnBibei()
 		local isDone = self.guide:isDone("prefight02")
 		if isDone then
 			local buyModel = md:getInstance("BuyModel")
-	        buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
-	                                      }, "关卡详情_点击必备按钮")
+	        buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
+	        	"关卡详情_点击必备按钮")
 		end
 	end
 end

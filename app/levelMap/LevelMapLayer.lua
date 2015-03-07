@@ -106,7 +106,7 @@ function LevelMapLayer:initChooseLayer()
     end
 
     btnfirstgift:onButtonClicked(function()
-        buyModel:buy("novicesBag",{payDoneFunc = hideGiftIcon})
+        buyModel:buy("novicesBag",{payDoneFunc = hideGiftIcon}, "关卡地图_点击新手礼包")
         end)
     
     local action = transition.sequence({

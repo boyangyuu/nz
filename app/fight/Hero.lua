@@ -304,7 +304,8 @@ end
 function Hero:showTuhao()
     local buyModel = md:getInstance("BuyModel")
     buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyFullHp),
-                    deneyBuyFunc = handler(self, self.onDenyFullHp)})    
+                    deneyBuyFunc = handler(self, self.onDenyFullHp)}
+                    ,"战斗界面_10%血")    
 end
 
 
