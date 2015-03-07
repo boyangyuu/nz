@@ -58,7 +58,7 @@ end
 
 function FightResultFailPopup:payDone()
     local fight = md:getInstance("Fight")
-   fight:payDone()
+    fight:payDone()
     --黄武
     -- local inlay = md:getInstance("InlayModel")
     -- inlay:equipGoldInlays(false)

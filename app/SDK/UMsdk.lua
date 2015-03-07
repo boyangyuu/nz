@@ -50,6 +50,10 @@ end
 -- @param amount 道具数量
 -- @param price 道具单价
 function UM:onChargeSuccess(orderid)
+    if device.platform ~= "android" then
+        return
+    end
+
     -- body
     if device.platform ~= "android" then
         return
@@ -64,10 +68,9 @@ end
 -- @param amount 道具数量
 -- @param price 道具单价
 function UM:onChargeRequest(orderId, iapId, currencyAmount, currencyType, virtualCurrencyAmount, paymentType)
-    --todo
     if device.platform ~= "android" then
         return
-    end      
+    end
     TDGAVirtualCurrency:onChargeRequest(orderId, iapId, currencyAmount, currencyType, virtualCurrencyAmount, paymentType)
 end
 
