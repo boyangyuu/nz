@@ -55,6 +55,9 @@ function UM:onChargeSuccess(orderid)
     end
 
     -- body
+    if device.platform ~= "android" then
+        return
+    end    
     TDGAVirtualCurrency:onChargeSuccess(orderid)
 end
 
@@ -68,7 +71,6 @@ function UM:onChargeRequest(orderId, iapId, currencyAmount, currencyType, virtua
     if device.platform ~= "android" then
         return
     end
-
     TDGAVirtualCurrency:onChargeRequest(orderId, iapId, currencyAmount, currencyType, virtualCurrencyAmount, paymentType)
 end
 
@@ -155,8 +157,19 @@ function UM:setLevel( levelId )
     -- body
     if device.platform ~= "android" then
         return
-    end
+    end    
+    print("设置玩家等级:",levelId)
+    TDGAAccount:setLevel(levelId)
+end
 
+function UM:setUserAccount()
+    if device.platform ~= "android" then
+        return
+    end    
+    TDGAAccount:setAccount(TalkingDataGA:getDeviceId())
+    TDGAAccount:setAccountType(TDGAAccount.KAccountAnonymous)
+    local data = getUserData()
+    local levelId = data.user.level
     TDGAAccount:setLevel(levelId)
 end
 

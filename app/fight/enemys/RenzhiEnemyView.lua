@@ -26,8 +26,8 @@ function RenzhiEnemyView:ctor(property)
 
     --
     self.isEntering = true
-    self.playAnimId = nil
     self.isExiting  = false
+    self.playAnimId = nil
     local lastTime = self.property["lastTime"] or 1.0
     local sch = scheduler.performWithDelayGlobal(handler(self, self.exit), lastTime)
     self:addScheduler(sch)        
@@ -173,9 +173,9 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
 	print("self.playAnimId = "..animName)
 	self.playAnimId = animName
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self:runAction(action)	
-
-    self:restoreStand(time)
+    self.armature:runAction(cc.Sequence:create(action, 
+    	cc.CallFunc:create(handler(self, self.restoreStand))
+    	))	
 
     --sound
     local soundSrc  = "res/Music/fight/rz_kp.wav"
@@ -217,7 +217,7 @@ function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	end
 	if movementType == ccs.MovementEventType.loopComplete 
 		or movementType ==  ccs.MovementEventType.complete then
-		print("animationEvent id ", movementID)
+		-- print("animationEvent id ", movementID)
 		if movementID == "runleft" 
 			or movementID == "runright"  then
 				self.armature:getAnimation():play(movementID , -1, 1)

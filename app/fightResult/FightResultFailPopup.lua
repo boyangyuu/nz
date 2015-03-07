@@ -49,7 +49,7 @@ function FightResultFailPopup:initUI()
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
                 buyModel:buy("resurrection", {payDoneFunc = handler(self,self.payDone),
-                    deneyBuyFunc = cancelGoldGift}, "战斗失败页面_点击原地复活")
+                               deneyBuyFunc = cancelGoldGift}, "战斗失败页面_点击原地复活")
         end
     end)
 end

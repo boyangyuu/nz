@@ -41,7 +41,7 @@ function BaseBossView:ctor(property)
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     cc.EventProxy.new(self.hero, self)
-    	-- :addEventListener(self.hero.ENEMY_KILL_CALL_EVENT, handler(self, self.onKillCall)) 
+    	:addEventListener(self.hero.ENEMY_KILL_CALL_EVENT, handler(self, self.onKillCall)) 
 
     self:initBody()
 
@@ -137,22 +137,23 @@ function BaseBossView:playMove()
 	local time   = define.kBlueBossWalkTime	
 	local width  = 200 * self:getScale()
 	local direction = isLeft == 1 and 1 or -1
+	local action
 	if not self:checkPlace(width * direction) then return end
 	
 
 	--action
 	if isLeft == 1 then 
 		self.armature:getAnimation():play("moveright" , -1, 1) 
-		local action = self.config:getMoveRightAction()
-		self:runAction(action)
+		action = self.config:getMoveRightAction()
 	else
 		self.armature:getAnimation():play("moveleft" , -1, 1) 
-		local action = self.config:getMoveLeftAction()
-		self:runAction(action)		
+		action = self.config:getMoveLeftAction()
 	end	
 
 	self.enemy:beginWalkCd()
-	self:restoreStand(time - 0.01)
+    self.armature:runAction(cc.Sequence:create(action, 
+    	cc.CallFunc:create(handler(self, self.restoreStand))
+    	))	
 end
 
 function BaseBossView:playKill(event)
@@ -173,7 +174,7 @@ function BaseBossView:playKill(event)
 	--blood
 	self.blood:setVisible(false)
 
-	self:performWithDelay(handler(self, self.setWillRemoved), 5.0)
+	self:setWillRemoved(5.0)
 end
 
 function BaseBossView:playBombEffects()
@@ -431,9 +432,9 @@ function BaseBossView:zhaohuan()
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
 		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}
-		-- self.enemysCallNum = self.enemysCallNum + group.num
+		self.enemysCallNum = self.enemysCallNum + group.num
 	end
-	-- print("self.enemysCallNum", self.enemysCallNum)
+	print("self.enemysCallNum", self.enemysCallNum)
 
 	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
 		waveData = waveData})
@@ -441,14 +442,14 @@ function BaseBossView:zhaohuan()
 	self.zhaohuanIndex = self.zhaohuanIndex + 1
 end
 
--- function BaseBossView:onKillCall(event)
--- 	if self.enemysCallNum == nil then return end --todo 需要修改
--- 	self.enemysCallNum = self.enemysCallNum  - 1
--- 	if self.enemysCallNum == 0 then 
--- 		-- print("取消无敌")
--- 		self:onKillLastCall()
--- 	end
--- end
+function BaseBossView:onKillCall(event)
+	if self.enemysCallNum == nil then return end --todo 需要修改
+	self.enemysCallNum = self.enemysCallNum  - 1
+	if self.enemysCallNum == 0 then 
+		-- print("取消无敌")
+		self:onKillLastCall()
+	end
+end
 
 function BaseBossView:onKillLastCall()
 	-- self:setUnhurted(false)	

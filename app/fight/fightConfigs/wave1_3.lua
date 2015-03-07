@@ -90,6 +90,13 @@ local waves = {
 		},                                                              --15个
 	},	
 	{
+	    --体验枪
+		gunData = 
+			{ 
+			    id = 4,    --枪id
+			    delay = 4, --10s之后出现
+			    time = 20,	--持续20s
+		    },		    
 		enemys = {                                           
 			{
 				time = 1,	
@@ -162,9 +169,10 @@ local waves = {
 					startState = "rollright",
 					id = 1,
 				},
-			},		
+			},
+
 			{
-				time = 4,	
+				time = 4,	                                         --给体验枪飓风之锤
 				num = 3,
 				pos = {800,650,700},
 				delay = {0,0.6,1.2},
@@ -396,7 +404,7 @@ local enemys = {
 	weak1=2},	             
 
     --导弹          --missileType = "daodan",
-	{id=4,image="daodan",demage=2,hp=1,
+	{id=4,image="daodan",demage=3,hp=1,
 	weak1=1},
 
 	--铁球
@@ -407,7 +415,7 @@ local enemys = {
 	{id=6,image="shouleib",demage=0,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 	--手雷
-	{id=7,image="shoulei",demage=1,hp=1,
+	{id=7,image="shoulei",demage=3,hp=1,
 	weak1=2},
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
@@ -434,7 +442,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {25,95,160}   --黄武激活所需杀人个数  本关共15+25+35=75个小怪
+	self.goldLimits = {41,95,160}   --黄武激活所需杀人个数  本关共15+25+35=75个小怪
 end
 
 return waveClass

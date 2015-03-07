@@ -33,8 +33,9 @@ function Attackable:ctor(property)
     	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
     	
     self:scheduleUpdate()  
+    self:schedule(handler(self, self.checkAnim), 0.1)
     self:setNodeEventEnabled(true)	
-    
+
     self:test()
 end
 
@@ -208,11 +209,10 @@ function Attackable:getDeadDone()
 end
 
 function Attackable:setDeadDone()
-
-
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
 	end
+	-- self:stopAllActions()
 	self.deadDone = true
 end
 
@@ -220,12 +220,19 @@ function Attackable:getWillRemoved()
 	return self.willRemoved or false 
 end
 
-function Attackable:setWillRemoved()
+function Attackable:setWillRemoved(time)
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
 	end
-	self.willRemoved = true
-	
+	self:stopAllActions()
+	local function callFunc()
+		self.willRemoved = true
+	end 
+	if time then 
+		self:performWithDelay(callFunc, time)
+	else
+		callFunc()
+	end
 end
 
 function Attackable:checkPlace(offset)
@@ -254,10 +261,12 @@ function Attackable:checkPlace(offset)
 	return xLeftLimit < xLeft and xRight < xRightLimit 
 end
 
+
+
 function Attackable:checkIdle()
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	if currentName == "" then
-		print("playStand()")				
+		-- print("playStand()")				
 		self:playStand()
 	end
 end
@@ -278,9 +287,9 @@ end
 
 function Attackable:insertCache(play, state)
 	local index = #self.playCache + 1
-	if state == "skillPre" then 
+	if state == "skillPre" then  --高于技能
 		table.insert(self.playCache, 1, {func = play, state = state})
-	elseif state == "skill" or index == 1 then 
+	elseif state == "skill" or index == 1 then --技能 or 第一个cache
 		self.playCache[index] = {func = play, state = state}
 	end
 end
@@ -357,15 +366,22 @@ function Attackable:playBombEffect()
 	bomb:getAnimation():play("baozha4", -1, 0) 
 end
 
-function Attackable:restoreStand(delay)
-	local function restore()
-		self.playAnimId = nil
+function Attackable:restoreStand()
+	-- print("Attackable restoreStand")
+	self.playAnimId = nil --todo!!!
+	self.armature:stopAllActions()	
+	self.armature:getAnimation():stop()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+end
+
+function Attackable:checkAnim()
+	-- return
+	if self.enemy:isDead() then return end
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	if currentName == "" or currentName == nil then 	
+		print("Attackable checkAnim:" .. self:getEnemyType())	
 		self:playStand()
-		self.armature:stopAllActions()	
-		self:stopAllActions()
 	end
-    self.schRestore = scheduler.performWithDelayGlobal(restore, delay)
-    self:addScheduler(self.schRestore)
 end
 
 function Attackable:test()

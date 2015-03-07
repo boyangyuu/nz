@@ -31,32 +31,31 @@ function SanEnemyView:ctor(property)
 end
 
 function SanEnemyView:onEnter()
-    self:performWithDelay(handler(self, self.playFall), 0.1)    
+    self:playFall()    
 end
 
 function SanEnemyView:tick()
     
-    if self.isFalling then
-        local enemy = self.armature:getBone("enemy"):getDisplayRenderNode()
-        local pWorld = enemy:convertToWorldSpace(cc.p(0,0))
-        local placeNode = self:getPlaceNode()
-        local pWorld2 = placeNode:convertToWorldSpace(cc.p(0,0))
-        if pWorld.y <= pWorld2.y then 
-            self.isFalling = false
-            self:stopFall()
-        end
-    end
+end
+
+function SanEnemyView:getDestPosY()
+    -- body
 end
 
 function SanEnemyView:playFall()
 	--start
     self:setVisible(true)
 	self:setPositionY(display.height)
-    self.isFalling = true
+
     --action
-	local speed = -1 * 60
-	local action = cc.MoveBy:create(1, cc.p(0, speed))
-    local seq = cc.Sequence:create(action)	
+	local speed = 60
+    local destPosY = self:getPlaceNode():getPositionY()
+    local distance = display.height - destPosY
+    local time = distance / speed 
+	local action = cc.MoveBy:create(time, cc.p(0, -distance))
+    
+    --callfunc
+    local seq = cc.Sequence:create(action, cc.CallFunc:create(handler(self, self.stopFall)))	
     self:runAction(cc.RepeatForever:create(seq))
 
     --play

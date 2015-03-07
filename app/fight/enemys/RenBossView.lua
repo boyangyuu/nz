@@ -139,16 +139,16 @@ function RenBossView:playRunAction(direct, isRun)
     else
         animName = "walk"
     end
-
+    print("RenBossView:playRunAc")
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(action) 
-
-    self:restoreStand(time)  
+    self.armature:runAction(cc.Sequence:create(action, 
+        cc.CallFunc:create(handler(self, self.restoreStand))
+        ))   
 end
 
 function RenBossView:playSkill(skillName)
-    print("RenBossView:playSkill: "..skillName)
+    -- print("RenBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "feibiao" then 
         local function callfuncFeibiao()
@@ -232,24 +232,17 @@ end
 function RenBossView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        -- print("animationEvent id ", movementID)
-        armatureBack:stopAllActions()
-        if movementID == "shanchu" then 
-            self:setVisible(false)
-            return
-        end
-
-        if movementID == "zhaohuan" then 
-            self:setVisible(false)
-            return
-        end
-
         if movementID == "runleft" 
-	            or movementID == "runright" 
-	            or movementID == "walk" 
-	            or movementID == "chongfeng"  then
-            self.armature:getAnimation():play(movementID , -1, 1)
+                or movementID == "runright" 
+                or movementID == "walk" 
+                or movementID == "chongfeng"  then
             return 
+        end
+
+        armatureBack:stopAllActions()
+        if movementID == "shanchu" or movementID == "zhaohuan" then 
+            self:setVisible(false)
+            return
         end
 
         if movementID == "die" then

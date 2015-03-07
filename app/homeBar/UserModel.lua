@@ -71,6 +71,7 @@ function UserModel:setUserLevel(level)
 	data.user.level = level
 	setUserData(data)
 
+	dump(data)
 	--um
 	um:setLevel(level)	
 end

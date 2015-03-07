@@ -8,7 +8,7 @@ configs["boss02"] = {
 	spc = "技能：",
 	skill = {"粉碎投掷","野蛮冲撞","火箭弹"},
 	weakness = "头部，手部",
-	describe = "海岛组研发的二代机甲战士，残酷冷血，破坏力极强。",
+	describe = "山口组研发的二代机甲战士，残酷冷血，破坏力极强。",
 	playanim = "stand",
 }
 
@@ -94,7 +94,7 @@ configs["renzb"] = {
 	spc = "技能：",
 	skill = {"影分身","旋风斩","风魔手里剑"},
 	weakness = "头部、腿部",
-	describe = "行动敏捷的伊贺忍者后裔，海岛组三号人物。擅长伪装、暗杀。",
+	describe = "行动敏捷的伊贺忍者后裔，山口组三号人物。擅长伪装、暗杀。",
 	playanim = "stand",
 }
 
