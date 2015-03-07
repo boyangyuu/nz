@@ -161,13 +161,13 @@ function WeaponListLayer:initUI()
                          callfuncClose  =  handler(self, self.closePopup)},
                          { opacity = 155})
                 else
-                    buyModel:buy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponrecord["name"])
+                    buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponrecord["name"])
                 end
             end
             local guide = md:getInstance("Guide")
             -- local isDone = guide:isDone("prefight02")
             if buyModel:checkBought("weaponGiftBag") == false  then
-                buyModel:buy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
+                buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
                                               deneyBuyFunc = deneyBuyWeapon}, 
                                                "武器库界面_点击解锁"..self.weaponrecord["name"])
             end
@@ -192,16 +192,16 @@ function WeaponListLayer:initUI()
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
             function deneyOncefull()
-                buyModel:buy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponrecord["name"])
+                buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponrecord["name"])
             end
             local guide = md:getInstance("Guide")
             local isDone = guide:isDone("prefight02")
             if buyModel:checkBought("weaponGiftBag") == false and isDone then
-                buyModel:buy("weaponGiftBag",{
+                buyModel:showBuy("weaponGiftBag",{
                     payDoneFunc = handler(self, self.reloadlistview),
                                               deneyBuyFunc = deneyOncefull})
             elseif buyModel:checkBought("weaponGiftBag") == true and isDone then
-                buyModel:buy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponrecord["name"])
+                buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponrecord["name"])
             end
         end
     end)
