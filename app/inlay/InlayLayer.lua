@@ -92,7 +92,7 @@ function InlayLayer:initUI()
                     self:playSoundxqcg()
                 end
                 local buyModel = md:getInstance("BuyModel")
-                buyModel:buy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_黄武")
+                buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_点击一键黄武")
             end
         end
     end)
@@ -251,11 +251,11 @@ function InlayLayer:initGuide()
         rect = self.oneForAllBtn:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
            self.inlayModel:buyInlay(3,false,1) 
-           self.inlayModel:buyInlay(7,false,1) 
-           self.inlayModel:buyInlay(11,false,1) 
+           self.inlayModel:buyInlay(6,false,1) 
+           self.inlayModel:buyInlay(9,false,1) 
+           self.inlayModel:buyInlay(12,false,1) 
            self.inlayModel:buyInlay(15,false,1) 
-           self.inlayModel:buyInlay(19,false,1) 
-           self.inlayModel:buyInlay(23,true,1) 
+           self.inlayModel:buyInlay(18,true,1) 
            self.inlayModel:equipAllInlays(true)
 
            playSoundBtn()

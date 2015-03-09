@@ -109,7 +109,7 @@ function MyApp:createGameStateFile()
                         },
             },
             prop = {
-                        lei = {num = 15},
+                        lei = {num = 5},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
             },
@@ -122,9 +122,8 @@ function MyApp:createGameStateFile()
             --开启的关卡
             currentlevel =  {
                         group = 2,
-                        level = 6,
+                        level = 2,
             },
-
             user = {
                 level = 1,
             },

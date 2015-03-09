@@ -12,14 +12,12 @@ function GiftBagPopup:ctor(properties)
 	self.buyModel = md:getInstance("BuyModel")
 
 	self.param = properties
-	print("GiftBagPopup:ctor  self.param.isFight:",self.param.isFight)
 	self:loadCCS()
 	self:initButtons()
 end
 
 function GiftBagPopup:loadCCS()
 	local name = self.param.popupName
-	-- local btnTag = properties.btn
 	local title = BuyConfigs.getConfig(name)
 	local giftBagNode = cc.uiloader:load(title.ccsPath)
     self:addChild(giftBagNode)
@@ -30,8 +28,6 @@ function GiftBagPopup:loadCCS()
     local plist = "res/GiftBag/lb_ljgm/lb_ljgm0.plist"
     local png   = "res/GiftBag/lb_ljgm/lb_ljgm0.png"
     display.addSpriteFrames(plist, png)          
-
-
 end
 
 function GiftBagPopup:initButtons()
@@ -42,24 +38,16 @@ function GiftBagPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			self:close()
-			
-			print("popupName:",self.param.popupName)
-			local configName = self.param.popupName
-			iap:pay(configName)
-			print("receiveBtn is pressed!")
+			self.buyModel:payGift()
 		end
 	end)
 
-	if not self.param.isFight then 
+	--按钮动画
+	local armature = ccs.Armature:create("lb_ljgm")
+	armature:getAnimation():play("lb_ljgm", -1, 1)
+	addChildCenter(armature, receiveBtn)
 
-		local armature = ccs.Armature:create("lb_ljgm")
-		-- armature:setPosition(141, 45)
-		armature:getAnimation():play("lb_ljgm", -1, 1)
-		-- receiveBtn:addChild(armature)
-		addChildCenter(armature, receiveBtn)
-	end
-
-
+	--
 	local btnClose = cc.uiloader:seekNodeByName(self, "btn_Closed")
 	btnClose:setTouchEnabled(true)
 	addBtnEventListener(btnClose, function(event)
@@ -81,13 +69,7 @@ function GiftBagPopup:initButtons()
 end
 
 function GiftBagPopup:close()
-	print("GiftBagPopup:close()")
-	if self.param.isFight then
-		print("self.param.isFight:",true)
-		ui:closePopup("GiftBagPopup", true)
-	else
-		ui:closePopup("GiftBagPopup")
-	end
+	ui:closePopup("GiftBagPopup")
 end
 
 return GiftBagPopup

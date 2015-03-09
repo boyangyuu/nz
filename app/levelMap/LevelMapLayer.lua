@@ -106,7 +106,7 @@ function LevelMapLayer:initChooseLayer()
     end
 
     btnfirstgift:onButtonClicked(function()
-        buyModel:buy("novicesBag",{payDoneFunc = hideGiftIcon}, "关卡地图_点击新手礼包")
+        buyModel:showBuy("novicesBag",{payDoneFunc = hideGiftIcon}, "主界面_点击新手礼包")
         end)
     
     local action = transition.sequence({
@@ -169,19 +169,9 @@ function LevelMapLayer:initChooseLayer()
             return true
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
-            buyModel:buy("timeGiftBag", {}, "大地图页面_点击限时礼包")
+            buyModel:showBuy("timeGiftBag", {}, "主界面_点击限时礼包")
         end
     end)
-
-    -- btnTask:setTouchEnabled(true)
-    -- addBtnEventListener(btnTask, function(event)
-    --     if event.name=='began' then
-    --         print("Btn is begining!")
-    --         return true
-    --     elseif event.name=='ended' then
-    --         print("Btn is pressed!")
-    --     end
-    -- end)
 
     btnGold:setTouchEnabled(true)
     addBtnEventListener(btnGold, function(event)
@@ -189,7 +179,7 @@ function LevelMapLayer:initChooseLayer()
             return true
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
-            buyModel:buy("goldGiftBag", {}, "大地图页面_点击土豪金礼包")
+            buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
         end
     end)
 

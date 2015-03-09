@@ -181,16 +181,16 @@ function StoreCell:addBtnEvent()
             else
                 local buyModel = md:getInstance("BuyModel")
                 if self.record["nameid"] == "goldweapon" then
-                    buyModel:buy("goldWeapon",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击黄武")
+                    buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击黄武")
                 elseif self.record["nameid"] == "jijia" then
-                    buyModel:buy("armedMecha",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击机甲")
+                    buyModel:showBuy("armedMecha",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击机甲")
                 elseif self.record["nameid"] == "lei" then
-                    buyModel:buy("handGrenade",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击手雷")
+                    buyModel:showBuy("handGrenade",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击手雷")
                 end
             end
         elseif self.type == "bank" then
             local buyModel = md:getInstance("BuyModel")
-            buyModel:buy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击钻石")
+            buyModel:showBuy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击钻石")
         elseif self.type == "inlay" then
             if self.userModel:costMoney(self.record["goldPrice"]) then
                 self:playSound()

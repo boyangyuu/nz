@@ -9,7 +9,7 @@ end
 
 function FightResultFailPopup:popUpGift()
     local buyModel = md:getInstance("BuyModel")
-    buyModel:buy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)}, "战斗结算页面")
+    buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self,self.payReliveDone)}, "战斗结算页面_点击复活按钮")
 end
 
 function FightResultFailPopup:initUI()
@@ -36,10 +36,7 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local fight  = md:getInstance("Fight")
-            local groupid,levelid = fight:getCurGroupAndLevel()
-            ui:closePopup("FightResultFailPopup")
-            ui:changeLayer("HomeBarLayer",{groupId = groupid})
+            self:onClickBackHome()
         end
     end)
     btnrevive:setTouchEnabled(true)
@@ -47,24 +44,30 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-                buyModel:buy("resurrection", {payDoneFunc = handler(self,self.payDone),
-                               deneyBuyFunc = cancelGoldGift}, "战斗失败页面_点击原地复活")
+            self:onClickRelive()
         end
     end)
 end
 
+function FightResultFailPopup:onClickRelive()
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:showBuy("resurrection", 
+        {payDoneFunc = handler(self,self.payReliveDone)}, 
+        "战斗失败页面_点击原地复活")
+end
 
+function FightResultFailPopup:onClickBackHome()
+    local fight  = md:getInstance("Fight")
+    fight:onGiveUp()
 
-function FightResultFailPopup:payDone()
+    local groupid,levelid = fight:getCurGroupAndLevel()
+    ui:closePopup("FightResultFailPopup")
+    ui:changeLayer("HomeBarLayer",{groupId = groupid})    
+end
+
+function FightResultFailPopup:payReliveDone()
     local fight = md:getInstance("Fight")
-    fight:payDone()
-    --黄武
-    -- local inlay = md:getInstance("InlayModel")
-    -- inlay:equipGoldInlays(false)
-    
-    -- fight:relive()
-    -- ui:closePopup("FightResultFailPopup")
+    fight:payReliveDone()
 end
 
 return FightResultFailPopup

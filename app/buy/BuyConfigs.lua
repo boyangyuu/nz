@@ -11,13 +11,13 @@ local configs = {
 	},
 	goldGiftBag    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag.json",
-			isGift = true,
+			isGift = false,
 			price = 30,
 			name = "土豪金礼包",
 	},
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
-			isGift = true,
+			isGift = false,
 			price = 1,
 			name = "新手礼包",
 	}, 

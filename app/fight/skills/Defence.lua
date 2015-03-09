@@ -108,6 +108,13 @@ function Defence:startDefence()
 	print("Defence:startDefence()")
 	self:setIsDefending(true)
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = true})
+
+    --um
+    local fight = md:getInstance("Fight")
+    local levelInfo = fight:getLevelInfo()  
+    local umData = {}
+    umData[levelInfo] = "盾"
+    um:event("关卡道具使用", umData) 
 end
 
 function Defence:endDefence()

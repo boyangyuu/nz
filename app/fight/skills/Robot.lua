@@ -70,8 +70,16 @@ end
 
 function Robot:startRobot()
 	print("Robot:startRobot()")
-	self.isRoboting = true
+    --um
+    local fight = md:getInstance("Fight")
+    local levelInfo = fight:getLevelInfo()  
+    local umData = {}
+    umData[levelInfo] = "机甲"
+    um:event("关卡道具使用", umData) 	
 
+	--data
+	self.isRoboting = true
+	
 	--visible
 	local fight = md:getInstance("Fight")
 	fight:dispatchEvent({name = fight.CONTROL_HIDE_EVENT})

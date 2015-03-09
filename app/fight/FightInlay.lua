@@ -21,6 +21,26 @@ function FightInlay:ctor(properties)
     self.inlayModel = md:getInstance("InlayModel") 
     self.isNativeGold = false
     self.IsActiveGold = false
+
+    --check
+    self:initUm()
+end
+
+function FightInlay:initUm()
+    local inlays = self.inlayModel:getAllInlayed()
+    for type,configId in ipairs(inlays) do
+        local record = self.inlayModel:getInlayRecord(configId)   
+        local name   = record["describe2"]
+
+        --um
+        local fight = md:getInstance("Fight")
+        local levelInfo = fight:getLevelInfo()  
+        local umData = {}
+        umData[levelInfo] = name
+
+        print("关卡道具使用")
+        um:event("关卡道具使用", umData)      
+    end
 end
 
 function FightInlay:checkNativeGold()
@@ -29,13 +49,13 @@ function FightInlay:checkNativeGold()
     print("isNativeGold", isNativeGold)
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
-        self:activeGoldForever()
+        self:activeGoldOnCost()
     end
 end
 
-function FightInlay:activeGoldForever()
+function FightInlay:activeGoldOnCost()
     self:setIsActiveGold(true)
-    print("FightInlay:activeGoldForever()") 
+    print("FightInlay:activeGoldOnCost()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
 
@@ -44,6 +64,13 @@ function FightInlay:activeGoldForever()
 
     --inlay
     self:setIsNativeGold(true)  
+
+    --um
+    local fight = md:getInstance("Fight")
+    local levelInfo = fight:getLevelInfo()  
+    local umData = {}
+    umData[levelInfo] = "黄武"
+    um:event("关卡道具使用", umData)    
 end
 
 function FightInlay:activeGold()

@@ -191,8 +191,8 @@ function FightResultLayer:onClickBtnNext()
     if curLevel == 6 and curGroup < 4 then
     	curGroup = curGroup + 1
     end
-
-    local isDoneXiangqian = self.guide:isDone("xiangqian")
+	
+	local isDoneXiangqian = self.guide:isDone("xiangqian")
 
 	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
@@ -378,7 +378,7 @@ function FightResultLayer:leftCard()
 		self:turnLeftCard()
 	else
         local buyModel = md:getInstance("BuyModel")
-        buyModel:buy("stone120",{}, "战斗结算界面_翻牌")
+        buyModel:showBuy("stone120",{}, "战斗结算界面_点击翻牌")
 	end
 end
 

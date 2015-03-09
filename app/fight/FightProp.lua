@@ -20,7 +20,6 @@ function FightProp:ctor(properties)
 end
 
 function FightProp:refreshData()
-	print("function FightProp:refreshData()")
 	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
 end
 
@@ -32,9 +31,9 @@ function FightProp:costRobot(callfuncSuccess)
 	else
 		--buy
 		local function deneyBuyFunc()
-			self.buyModel:buy("armedMecha", {payDoneFunc = handler(self, self.refreshData)}, "战斗界面_点击机甲")
+			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData)}, "战斗界面_点击机甲")
 		end 
-		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
+		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 						deneyBuyFunc = deneyBuyFunc}, "战斗界面_点击机甲")
 	end
 	self:refreshData()
@@ -50,12 +49,20 @@ function FightProp:costLei(callfuncSuccess)
 	if num >= 1 then 
 		self.propModel:costProp("lei",1) 
 		callfuncSuccess()
+		--todo 
+
+	    --um
+	    local fight = md:getInstance("Fight")
+	    local levelInfo = fight:getLevelInfo()  
+	    local umData = {}
+	    umData[levelInfo] = "手雷"
+	    um:event("关卡道具使用", umData) 		
 	else
 		local function deneyBuyFunc()
-			self.buyModel:buy("handGrenade", {payDoneFunc = handler(self, self.refreshData)}
+			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData)}
 						, "战斗界面_点击手雷")
 		end 		
-		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
+		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 						deneyBuyFunc = deneyBuyFunc}
 						, "战斗界面_点击手雷")
 	end
@@ -80,10 +87,10 @@ function FightProp:costGoldWeapon()
 		fightInlay:checkNativeGold()
 	else
 		local function deneyBuyFunc()
-			self.buyModel:buy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon)}
+			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon)}
 				, "战斗界面_点击黄武")
 		end 		
-		self.buyModel:buy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
+		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
 						deneyBuyFunc = deneyBuyFunc}
 						, "战斗界面_点击黄武")	
 	end
@@ -97,7 +104,7 @@ end
 
 function FightProp:startGoldWeapon()
 	local inlay = md:getInstance("FightInlay")
-	inlay:activeGoldForever()
+	inlay:activeGoldOnCost()
 	self:refreshData()
 end
 
