@@ -22,10 +22,9 @@ function GunHelpLayer:loadCCS()
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
         "res/Fight/uiAnim/yd_saosan/yd_saosan0.png")     
 
-
 	self.node = cc.uiloader:load("res/fight/helpWeapon/helpWeapon.ExportJson")
     self:addChild(self.node)
-    self.nameNode = cc.uiloader:seekNodeByName(self, "nameNode")
+    self.nameNode   = cc.uiloader:seekNodeByName(self, "nameNode")
     self.btnGet     = cc.uiloader:seekNodeByName(self, "btnGet")
     self.gunDisplay = cc.uiloader:seekNodeByName(self, "gunDisplay")
     self.btnGet:onButtonPressed(function( event )

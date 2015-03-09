@@ -75,6 +75,7 @@ Define.kGoldTime 				= 8     --黄金武器激活时间
 Define.kRobotCoolDownTime 		= 0.05   --robot 冷却时间
 Define.kRobotDemage			 	= 700    --机甲伤害
 Define.kRobotTime			 	= 10.0   --机甲持续时间
+Define.kRobotTimeRelieve		= 5.0    --复活 机甲持续时间
 Define.kRobotRangeH				= 40.0   --机甲攻击范围框高
 Define.kRobotRangeW				= 80.0   --机甲攻击范围框宽
 

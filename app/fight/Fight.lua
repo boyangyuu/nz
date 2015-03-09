@@ -163,7 +163,7 @@ function Fight:onRelive()
 
     --jijia
     local robot = md:getInstance("Robot")
-    robot:startRobot()
+    robot:startRobot(define.kRobotTimeRelieve)
 end
 
 function Fight:pauseFight(isPause)
