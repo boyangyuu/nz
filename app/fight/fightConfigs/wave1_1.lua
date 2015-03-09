@@ -158,7 +158,7 @@ local waves = {
 	},				
 }
 
---enemy的关卡配置
+--enemy的关卡配置                         无镶嵌 mp5伤害55  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,

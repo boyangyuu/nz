@@ -150,12 +150,20 @@ function Fight:onRelive()
     um:event("关卡道具使用", umData)
 
     --relive
-    self.inlayModel:equipGoldInlays(false)
     ui:closePopup("FightResultFailPopup")
     self.hero:doRelive()
-    self.inlay:checkNativeGold()
+    
+    --clear
     self.killRenzhiNum = 0
-    self.result = nil    
+    self.result = nil 
+
+    --gold
+    self.inlayModel:equipGoldInlays(false)
+    self.inlay:checkNativeGold()
+
+    --jijia
+    local robot = md:getInstance("Robot")
+    robot:startRobot(define.kRobotTimeRelieve)
 end
 
 function Fight:pauseFight(isPause)
@@ -228,10 +236,6 @@ function Fight:addKillRenzhiNum()
     if self.killRenzhiNum >= limit then
         self.hero:doKill()
     end
-end
-
-function Fight:relive()
-
 end
 
 function Fight:clearFightData()

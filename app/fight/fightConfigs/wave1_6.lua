@@ -316,11 +316,11 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=35,hp=25000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=35,hp=15000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=10,hp=7000},                             
+	{id=18,image="feibiao",demage=10,hp=3500},                             
 
 
 
@@ -598,7 +598,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {75,160,250}   --黄武激活所需杀人个数
+	self.goldLimits = {300}   --黄武激活所需杀人个数  备份数量75,160,250
 end
 
 return waveClass

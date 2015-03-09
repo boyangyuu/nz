@@ -68,7 +68,7 @@ function Robot:onHitted()
 	print("Robot is on hitted")
 end
 
-function Robot:startRobot()
+function Robot:startRobot(time)
 	print("Robot:startRobot()")
     --um
     local fight = md:getInstance("Fight")
@@ -101,8 +101,8 @@ function Robot:startRobot()
 	end
 	
 	--sch endRobot
-	local kTimeEnd = define.kRobotTime
-	scheduler.performWithDelayGlobal(handler(self, self.endRobot), kTimeEnd) 
+	local time = time or define.kRobotTime 
+	scheduler.performWithDelayGlobal(handler(self, self.endRobot), time) 
 end
 
 function Robot:endRobot()
