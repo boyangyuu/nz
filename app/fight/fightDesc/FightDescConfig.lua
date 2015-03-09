@@ -8,7 +8,7 @@ configs["boss02"] = {
 	spc = "技能：",
 	skill = {"粉碎投掷","野蛮冲撞","火箭弹"},
 	weakness = "头部，手部",
-	describe = "山口组研发的二代机甲战士，残酷冷血，破坏力极强。",
+	describe = "眼镜蛇研发的二代机甲战士，残酷冷血，据说有三兄弟。",
 	playanim = "stand",
 }
 
@@ -26,9 +26,9 @@ configs["zpbing"] = {
 	title = "出现新兵种！",
 	name = "导弹兵",
 	spc = "特性：",
-	skill = {"血量低","攻击慢","伤害高"},
+	skill = {"攻击慢","伤害高"},
 	weakness = "头部",
-	describe = "自身生命少，攻击节奏慢，但伤害恐怖。",
+	describe = "眼镜蛇高级佣兵，伤害恐怖。",
 	playanim = "stand",
 }
 
@@ -38,7 +38,7 @@ configs["dunbing"] = {
 	spc = "特性：",
 	skill = {"血量高","防御高","行动慢"},
 	weakness = "头部",
-	describe = "行动迟缓，但防御和血量超高。",
+	describe = "合金盾牌使其拥有超高的血量和防御。",
 	playanim = "stand",
 }
 
@@ -48,7 +48,7 @@ configs["zibaob"] = {
 	spc = "特性：",
 	skill = {"移动快","近身自爆","血量低"},
 	weakness = "瓦斯罐",
-	describe = "移动快，近身自爆攻击。",
+	describe = "疯狂的自杀式攻击。",
 	playanim = "stand",
 }
 
@@ -57,8 +57,8 @@ configs["hs"] = {
 	name = "人质",
 	spc = "特性：",
 	skill = {"不要误伤人质！"},
-	weakness = " ",
-	describe = "不要误伤人质！ ",
+	weakness = "胸",
+	describe = "不要打我的脸！人家很爱漂亮的！",
 	playanim = "speak1",
 }
 configs["feiji"] = {
@@ -94,7 +94,17 @@ configs["renzb"] = {
 	spc = "技能：",
 	skill = {"影分身","旋风斩","风魔手里剑"},
 	weakness = "头部、腿部",
-	describe = "行动敏捷的伊贺忍者后裔，山口组三号人物。擅长伪装、暗杀。",
+	describe = "行动敏捷的伊贺忍者后裔，眼镜蛇三号人物。擅长伪装、暗杀。",
+	playanim = "stand",
+}
+
+configs["jinzhanb"] = {
+	title = "出现新兵种！",
+	name = "近战兵",
+	spc = "特性：",
+	skill = {"血量高","近身攻击"},
+	weakness = "头部",
+	describe = "疯狂的野蛮战士,近战嗜血",
 	playanim = "stand",
 }
 

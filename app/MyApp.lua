@@ -116,12 +116,12 @@ function MyApp:createGameStateFile()
        
             weaponsuipian = {},
 
-            money = 18880,
-            diamond = 188880,
+            money = 10000000,
+            diamond = 8880,
             
             --开启的关卡
             currentlevel =  {
-                        group = 6,
+                        group = 2,
                         level = 6,
             },
 
@@ -129,20 +129,20 @@ function MyApp:createGameStateFile()
                 level = 1,
             },
             guide = {
-                        gamePre         = false,
-                        fight01_move    = false,
-                        fight01_fire    = false,
-                        fight01_lei     = false,
-                        fight01_gold    = false,
-                        fight01_change  = false,
-                        fight01_jijia   = false,   
-                        afterfight01    = false,   
+                        gamePre         = true,
+                        fight01_move    = true,
+                        fight01_fire    = true,
+                        fight01_lei     = true,
+                        fight01_gold    = true,
+                        fight01_change  = true,
+                        fight01_jijia   = true,   
+                        afterfight01    = true,   
 
-                        prefight02      = false,
-                        afterfight02    = false,
+                        prefight02      = true,
+                        afterfight02    = true,
                         
-                        fight04         = false,
-                        xiangqian       = false,
+                        fight04         = true,
+                        xiangqian       = true,
             },
             isAwardGold     = false,
             fight = {
