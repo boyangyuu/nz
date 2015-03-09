@@ -171,7 +171,6 @@ function FightResultLayer:initUI()
 				 callfuncCofirm =  handler(self, self.leftCard),
 	             callfuncClose  =  handler(self, self.cancel)},
 				 {opacity = 155})
-
         end
     end)
 	addBtnEventListener(self.btnback, function(event)
@@ -197,6 +196,8 @@ function FightResultLayer:onClickBtnNext()
 	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
 	elseif curGroup == 0 and curLevel == 0 then
+		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
+	elseif curGroup == 1 and curLevel == 3 then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
 	else
 		print("0-0 OR 1-4.1 OR 通关")
@@ -386,7 +387,7 @@ end
 
 function FightResultLayer:turnLeftCard()
 	for k,v in pairs(self.lockTable) do
-            um:buy("fanpai", 1, 10)   
+            um:buy("翻拍", 1, 10)   
 
 
 		if v["falltype"] == "inlay" then

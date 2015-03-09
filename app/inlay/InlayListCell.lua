@@ -70,8 +70,7 @@ function InlayListCell:initCellUI(record)
                 num = num + 1
                 ownnumber:setString(num)
                 self.inlayModel:buyInlay(record["id"],false)
-                local buyInfo = record["type"].."_"..record["property"]
-                um:buy(buyInfo, 1, record["goldPrice"])   
+                um:buy(record["describe2"], 1, record["goldPrice"])   
             else
                 buyModel:showBuy("goldGiftBag",{payDoneFunc = refresh,deneyBuyFunc = deneyGoldGift},
                      "镶嵌页面_购买单个镶嵌金币不足")

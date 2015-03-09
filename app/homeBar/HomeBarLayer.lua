@@ -19,11 +19,16 @@ function HomeBarLayer:ctor(properties)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
-    self:initData(properties)
+    cc.EventProxy.new(ui, self)
+        :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.mapPopUp))
+    self.properties = properties
+    self:initData(self.properties)
     self:loadCCS()
     self:initHomeLayer()
-    self:popUpNextLevel(properties)
-    self:initDailyLogin()
+    -- self:popUpNextLevel(properties)
+    -- self:popUpWeaponGift(properties)
+    -- self:popUpGoldGift(properties)
+    -- self:initDailyLogin()
     self:refreshMoney()
 
     self:initGuideWeapon()
@@ -43,13 +48,13 @@ function HomeBarLayer:popUpWeaponGift(properties)
 end
 
 function HomeBarLayer:popUpGoldGift(properties)
-    local buyModel = md:getInstance("BuyModel")
-    local isDone = self.guide:isDone("xiangqian")
-    local isBoughtWeapon = buyModel:checkBought("weaponGiftBag") == false
-    if properties.popGoldGift and isDone then
-        self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-                        deneyBuyFunc = deneyBuyFunc}, "主界面_战斗失败购买过武包")
-    end
+    -- local buyModel = md:getInstance("BuyModel")
+    -- local isDone = self.guide:isDone("xiangqian")
+    -- local isBoughtWeapon = buyModel:checkBought("weaponGiftBag") == false
+    -- if properties.popGoldGift and isDone then
+    --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData)},
+    --      "主界面_战斗失败购买过武包")
+    -- end
 end
 
 function HomeBarLayer:refreshData()
@@ -65,6 +70,13 @@ function HomeBarLayer:popUpNextLevel(properties)
         local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
         ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
     end
+end
+
+function HomeBarLayer:mapPopUp(event)
+    self:popUpNextLevel(self.properties)
+    self:popUpGoldGift(self.properties)
+    self:popUpWeaponGift(self.properties)
+    self:initDailyLogin()
 end
 
 function HomeBarLayer:initDailyLogin()

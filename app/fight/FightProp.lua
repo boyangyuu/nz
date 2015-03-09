@@ -26,7 +26,7 @@ end
 function FightProp:costRobot(callfuncSuccess)
 	local num = self.propModel:getPropNum("jijia")
 	if num >= 1 then 
-		self.propModel:costProp("jijia",1) 
+		self.propModel:costProp("机甲",1) 
 		callfuncSuccess()
 	else
 		--buy
@@ -47,7 +47,7 @@ end
 function FightProp:costLei(callfuncSuccess)
 	local num = self.propModel:getPropNum("lei")
 	if num >= 1 then 
-		self.propModel:costProp("lei",1) 
+		self.propModel:costProp("手雷",1) 
 		callfuncSuccess()
 		--todo 
 
