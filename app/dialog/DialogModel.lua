@@ -17,7 +17,12 @@ function Dialog:check(appear)
 	self.appearType = appear
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
-	local levelId = "level"..fight:getLevelId()
+	local levelId = fight:getLevelId()
+	if math.floor(levelId) < levelId then
+        levelId = tostring(levelId)
+        levelId = string.gsub(levelId, "%.", "_")
+	end
+	levelId = "level"..levelId
 	local config = DialogConfigs.getConfig(groupId,levelId,appear)
 	-- dump(config, "config")
 	if config == nil then
@@ -34,9 +39,13 @@ end
 function Dialog:getDialogNum()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
-	local levelId = "level"..fight:getLevelId()
+	local levelId = fight:getLevelId()
+	if math.floor(levelId) < levelId then
+        levelId = tostring(levelId)
+        levelId = string.gsub(levelId, "%.", "_")
+	end
+	levelId = "level"..levelId
 	local appear  = self:getAppearType() 
-
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	assert(configs, "configs is nil")
 	return #configs
