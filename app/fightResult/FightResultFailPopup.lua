@@ -4,12 +4,6 @@ end)
 
 function FightResultFailPopup:ctor()
     self:initUI()
-    -- self:popUpGift()
-end
-
-function FightResultFailPopup:popUpGift()
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self,self.payReliveDone)}, "战斗结算页面_点击复活按钮")
 end
 
 function FightResultFailPopup:initUI()
@@ -45,11 +39,17 @@ function FightResultFailPopup:initUI()
     end)
 end
 
+function FightResultFailPopup:deneyGoldGift()
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone)},
+     "战斗失败页面_原地复活取消土豪")
+end
+
 function FightResultFailPopup:onClickRelive()
     local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("resurrection", 
-        {payDoneFunc = handler(self,self.payReliveDone)}, 
-        "战斗失败页面_点击原地复活")
+    buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
+        deneyBuyFunc = handler(self,self.deneyGoldGift)},
+     "失败页面_点击复活按钮")
 end
 
 function FightResultFailPopup:onClickBackHome()
@@ -58,7 +58,16 @@ function FightResultFailPopup:onClickBackHome()
 
     local groupid,levelid = fight:getCurGroupAndLevel()
     ui:closePopup("FightResultFailPopup")
-    ui:changeLayer("HomeBarLayer",{groupId = groupid})    
+    local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
+    if isBoughtWeapon == false and groupid == 1 and levelid == 3 then
+        ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
+        return
+    end
+    if isBoughtWeapon then
+        ui:changeLayer("HomeBarLayer",{groupId = groupid,popGoldGift = true})
+    else
+        ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
+    end
 end
 
 function FightResultFailPopup:payReliveDone()

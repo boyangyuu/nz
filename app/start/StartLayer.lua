@@ -123,7 +123,7 @@ function StartLayer:beginGame()
         local levelMapModel = md:getInstance("LevelMapModel")
         local groupId, levelId = levelMapModel:getConfig()
         -- print("groupId", groupId)
-        ui:changeLayer("HomeBarLayer",{groupId = groupId, popGift = true})
+        ui:changeLayer("HomeBarLayer",{groupId = groupId, popWeaponGift = true})
     else
         --clear data
         local guide = md:getInstance("Guide")

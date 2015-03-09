@@ -73,17 +73,17 @@ function  DailyLoginModel:setGift(dailyID)
 		return true
 	elseif giftInfo["type"] == "lei" then
 		propModel:buyProp("lei",giftInfo["number"])
-		um:bonusProps("lei", giftInfo["number"], 0, 3)
+		um:bonusProps("手雷", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "jijia" then
 		propModel:buyProp("jijia",giftInfo["number"])
-		um:bonusProps("jijia", giftInfo["number"], 0, 3)
+		um:bonusProps("机甲", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "goldweapon" then
 		InlayModel:buyGoldsInlay(giftInfo["number"])
-		um:bonusProps("goldweapon", giftInfo["number"], 0, 3)
+		um:bonusProps("黄金武器", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		InlayModel:refreshInfo("speed")
 		return true

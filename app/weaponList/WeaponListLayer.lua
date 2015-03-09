@@ -21,10 +21,12 @@ function WeaponListLayer:ctor()
     self.commonPopModel = md:getInstance("commonPopModel")
     self.userModel = md:getInstance("UserModel")
     self.levelDetailModel = md:getInstance("LevelDetailModel")
+    self.buyModel = md:getInstance("BuyModel")
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
         :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT, handler(self, self.playOneStar))
+        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
     cc.EventProxy.new(self.levelDetailModel, self)
@@ -152,25 +154,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            function deneyBuyWeapon()
-                if self.userModel:getDiamond() >= self.weaponrecord["cost"] then
-                    ui:showPopup("commonPopup",
-                        {type = "style3", content = "是否花费60钻石升级购买该武器？",
-                         callfuncCofirm =  handler(self, self.buyWeapon),
-                         callfuncClose  =  handler(self, self.closePopup)},
-                         { opacity = 155})
-                else
-                    buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponrecord["name"])
-                end
-            end
-            local guide = md:getInstance("Guide")
-            -- local isDone = guide:isDone("prefight02")
-            if buyModel:checkBought("weaponGiftBag") == false  then
-                buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
-                                              deneyBuyFunc = deneyBuyWeapon}, 
-                                               "武器库界面_点击解锁"..self.weaponrecord["name"])
-            end
+            self:onClickBtnBuy()
         end
     end)
     addBtnEventListener(self.btnUpgrade, function(event)
@@ -181,7 +165,7 @@ function WeaponListLayer:initUI()
             if self.userModel:costMoney(self.costupgrade) then
                 local wqsj = "res/Music/ui/wqsj.wav"
                 audio.playSound(wqsj,false)
-                self:intensify(self.weaponId)
+                self:onClickBtnUpgrade(self.weaponId)
             end
         end
     end)
@@ -190,19 +174,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            function deneyOncefull()
-                buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponrecord["name"])
-            end
-            local guide = md:getInstance("Guide")
-            local isDone = guide:isDone("prefight02")
-            if buyModel:checkBought("weaponGiftBag") == false and isDone then
-                buyModel:showBuy("weaponGiftBag",{
-                    payDoneFunc = handler(self, self.reloadlistview),
-                                              deneyBuyFunc = deneyOncefull})
-            elseif buyModel:checkBought("weaponGiftBag") == true and isDone then
-                buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponrecord["name"])
-            end
+            self:onClickBtnOncefull()
         end
     end)
     addBtnEventListener(self.btnEquip, function(event)
@@ -210,7 +182,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:equip(self.weaponId)
+            self:onClickBtnEquip(self.weaponId)
         end
     end)
 
@@ -219,7 +191,7 @@ function WeaponListLayer:initUI()
             print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            self:equip(self.weaponId)
+            self:onClickBtnEquip(self.weaponId)
         end
     end)
 
@@ -230,6 +202,55 @@ function WeaponListLayer:initUI()
     addChildCenter(oncearmature, self.btnOncefull)
     armature:getAnimation():play("yjmj" , -1, 1)
     oncearmature:getAnimation():play("yjmj" , -1, 1)
+end
+
+-- 装备事件
+function WeaponListLayer:onClickBtnEquip(weaponid)
+    ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 150})
+
+end
+
+function WeaponListLayer:onClickBtnOncefull()
+    function deneyOncefull()
+        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
+    end
+    local guide = md:getInstance("Guide")
+    local isDone = guide:isDone("prefight02")
+    local isBoughtWeapon = self.buyModel:checkBought("weaponGiftBag")
+    if not isBoughtWeapon and isDone then
+        self.buyModel:showBuy("weaponGiftBag",{
+            payDoneFunc = handler(self, self.reloadlistview),
+                                      deneyBuyFunc = deneyOncefull},"武器库界面_点击一键满级")
+    elseif isBoughtWeapon and isDone then
+        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
+    end
+end
+
+function WeaponListLayer:onClickBtnBuy()
+    local guide = md:getInstance("Guide")
+    -- local isDone = guide:isDone("prefight02")
+    if self.buyModel:checkBought("weaponGiftBag") == false  then
+        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
+                                      deneyBuyFunc = handler(self, self.deneyBuyWeapon)}, 
+                                       "武器库界面_点击解锁武器大礼包"..self.weaponRecord["name"])
+    end
+end
+
+function WeaponListLayer:deneyBuyWeapon()
+    if self.userModel:getDiamond() >= self.weaponRecord["cost"] then
+        ui:showPopup("commonPopup",
+            {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."钻石升级购买该武器？",
+             callfuncCofirm =  handler(self, self.buyWeapon),
+             callfuncClose  =  handler(self, self.closePopup)},
+             { opacity = 155})
+    else
+        local rmbCost = self.weaponRecord["rmbCost"]
+        if  rmbCost == 6 then
+            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponRecord["name"])
+        elseif rmbCost == 10 then
+            self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
+        end
+    end
 end
 
 -----------
@@ -277,15 +298,15 @@ end
 function WeaponListLayer:refreshComment()
     -- refresh 详情内容
     self.layerGun:removeAllChildren()
-    self.weaponrecord = self.weaponListModel:getWeaponRecord(self.weaponId)
-    self.weaponId = self.weaponrecord["id"]
-    self.weapontype = self.weaponrecord["type"]
-    self.labelName:setString(self.weaponrecord["name"])
-    self.buycost:setString(self.weaponrecord["cost"])
-    self.labelDescribe:setString(self.weaponrecord["describe"])
-    local weaponImg = display.newSprite("#icon_"..self.weaponrecord["imgName"]..".png")
+    self.weaponRecord = self.weaponListModel:getWeaponRecord(self.weaponId)
+    self.weaponId = self.weaponRecord["id"]
+    self.weapontype = self.weaponRecord["type"]
+    self.labelName:setString(self.weaponRecord["name"])
+    self.buycost:setString(self.weaponRecord["cost"])
+    self.labelDescribe:setString(self.weaponRecord["describe"])
+    local weaponImg = display.newSprite("#icon_"..self.weaponRecord["imgName"]..".png")
     addChildCenter(weaponImg, self.layerGun)
-    local imageName = self.weaponrecord["imgName"]
+    local imageName = self.weaponRecord["imgName"]
     local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
     if weaponSpc then
         self.layerGun:addChild(weaponSpc)
@@ -341,7 +362,7 @@ function WeaponListLayer:refreshComment()
     local leveldetailmodel = md:getInstance("LevelDetailModel")
     local suipiannum = leveldetailmodel:getSuiPianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
-    if self.weaponrecord["parts"] == 1 and not isGot then
+    if self.weaponRecord["parts"] == 1 and not isGot then
         self.suipiannum:setVisible(true)
         self.suipiannum:setString("LJ"..suipiannum.."/10")
     elseif isGot then
@@ -522,7 +543,7 @@ end
 -- 购买事件
 function WeaponListLayer:buyWeapon(event)
     ui:closePopup("commonPopup")
-    if self.userModel:costDiamond(self.weaponrecord["cost"]) then
+    if self.userModel:costDiamond(self.weaponRecord["cost"]) then
         function delay()
             self.weaponListModel:buyWeapon(self.weaponId)
             if self.weapontype == "ju" then
@@ -536,29 +557,15 @@ function WeaponListLayer:buyWeapon(event)
 end
 
 -- 升级事件
-function WeaponListLayer:intensify(event)
-    -- ui:closePopup()
-    -- function delayplaystar( )
-        self.weaponListModel:intensify(self.weaponId)
-    -- end
-    -- scheduler.performWithDelayGlobal(delayplaystar, 0.4)
-
+function WeaponListLayer:onClickBtnUpgrade(event)
+    self.weaponListModel:intensify(self.weaponId)
 end
 
 function WeaponListLayer:closePopup()
     ui:closePopup("commonPopup")
 end
 
--- 一键满级事件
--- function WeaponListLayer:onceFull(weaponid)
---     self.weaponListModel:onceFull(weaponid)
--- end
 
--- 装备事件
-function WeaponListLayer:equip(weaponid)
-    ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 150})
-
-end
 
 --guide
 function WeaponListLayer:onEnter()
@@ -592,7 +599,7 @@ function WeaponListLayer:initGuide()
         rect = rect2,
         endfunc = function (touchEvent)
             if self.userModel:costMoney(self.costupgrade) then
-                self:intensify(self.weaponId)
+                self:onClickBtnUpgrade(self.weaponId)
             end
         end
      })   
