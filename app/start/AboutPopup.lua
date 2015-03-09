@@ -42,9 +42,9 @@ function AboutPopup:initText()
 		local text = {
 				-- "\n全民突袭 \n \n",
 				"故事背景:\n",
-				"    故事发生在2034年，主人公“杰”收到哥哥的留言，要",
-				"他代替哥哥去执行一个艰巨的任务。然而等待他的是",
-				"哥哥的遇难和上司的背叛。“杰”和他的队友身处极度",
+				"    故事发生在2034年，主人公“杰”收到姐姐的留言，要",
+				"他代替姐姐去执行一个艰巨的任务。然而等待他的是",
+				"姐姐的遇难和上司的背叛。“杰”和他的队友身处极度",
 				"危险之中，错综复杂的世界，他们将面对诸多敌人，",
 				"随时随地准备对抗迎面而来的袭击。 ",
 				"\n\n操作方法:",
@@ -78,7 +78,24 @@ function AboutPopup:initContent()
 	if self.popupName == "bangzhu" then
 		local textLabel = cc.uiloader:seekNodeByName(self.aboutNode, "context")
 		print(self.text)
-		textLabel:setString(self.text)
+		-- textLabel:setString(self.text)
+	end
+
+	if self.popupName == "guangyu" then
+		local versionLabel = cc.uiloader:seekNodeByName(self.aboutNode, "version")
+		versionLabel:setString("1.1.1")
+		local gameName = cc.uiloader:seekNodeByName(self.aboutNode, "gameName")
+		gameName:setString("全民突袭")
+		local gameType = cc.uiloader:seekNodeByName(self.aboutNode, "gameType")
+		gameType:setString("射击")
+		local company = cc.uiloader:seekNodeByName(self.aboutNode, "company")
+		company:setString("北京浩歌通途信息技术有限公司")
+		local phone = cc.uiloader:seekNodeByName(self.aboutNode, "phone")
+		phone:setString("010-82602182")
+		local email = cc.uiloader:seekNodeByName(self.aboutNode, "email")
+		email:setString("2758942941@qq.com")
+		local qq = cc.uiloader:seekNodeByName(self.aboutNode, "qq")
+		qq:setString("2758942941") 
 	end
 end
 
