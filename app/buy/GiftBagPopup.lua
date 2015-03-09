@@ -38,9 +38,7 @@ function GiftBagPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			self:close()
-			local configName = self.param.popupName
-			
-			iap:pay(configName)
+			self.buyModel:payGift()
 		end
 	end)
 

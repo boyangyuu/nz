@@ -52,7 +52,7 @@ end
 function FightResultFailPopup:onClickRelive()
     local buyModel = md:getInstance("BuyModel")
     buyModel:showBuy("resurrection", 
-        {payDoneFunc = handler(self,self.payDone)}, 
+        {payDoneFunc = handler(self,self.payReliveDone)}, 
         "战斗失败页面_点击原地复活")
 end
 

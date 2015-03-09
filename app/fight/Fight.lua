@@ -36,12 +36,18 @@ function Fight:ctor(properties)
 end
 
 function Fight:beginFight()
-    --关卡
-    local levelInfo = self:getLevelInfo()
-    um:startLevel(levelInfo)
+    --um
+    self:initUm()
+
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
+end
+
+function Fight:initUm()
+    --level
+    local levelInfo = self:getLevelInfo()
+    um:startLevel(levelInfo)
 end
 
 function Fight:refreshData(properties)
@@ -57,7 +63,7 @@ function Fight:refreshData(properties)
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.robot      = md:createInstance("Robot")
-    self.inlay = self.hero:getFightInlay()
+    self.inlay      = self.hero:getFightInlay()
 
     local levelModel = md:getInstance("LevelDetailModel")
     self.isJujiFight = levelModel:isJujiFight()
@@ -118,11 +124,9 @@ function Fight:onWin()
 end
 
 function Fight:onGiveUp()
+    --um
     local levelInfo = self:getLevelInfo()  
     um:failLevel(levelInfo)
-    local umData = {}
-    umData[levelInfo] = "复活"
-    um:event("关卡道具使用", umData)
 end
 
 function Fight:onFail()
@@ -136,16 +140,9 @@ function Fight:onFail()
 
     --clear
     self:clearFightData() 
-
-    --um
-    local levelInfo = self:getLevelInfo()  
-    um:failLevel(levelInfo)
-    local umData = {}
-    umData[levelInfo] = "复活"
-    um:event("关卡道具使用", umData)
 end
 
-function Fight:payReliveDone()
+function Fight:onRelive()
     --um
     local levelInfo = self:getLevelInfo()  
     local umData = {}
@@ -154,8 +151,11 @@ function Fight:payReliveDone()
 
     --relive
     self.inlayModel:equipGoldInlays(false)
-    self:relive()
     ui:closePopup("FightResultFailPopup")
+    self.hero:doRelive()
+    self.inlay:checkNativeGold()
+    self.killRenzhiNum = 0
+    self.result = nil    
 end
 
 function Fight:pauseFight(isPause)
@@ -231,10 +231,7 @@ function Fight:addKillRenzhiNum()
 end
 
 function Fight:relive()
-    self.hero:doRelive()
-    self.inlay:checkNativeGold()
-    self.killRenzhiNum = 0
-    self.result = nil
+
 end
 
 function Fight:clearFightData()
