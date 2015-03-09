@@ -141,13 +141,16 @@ end
 -- @param  label 分类标签。不同的标签会分别进行统计，方便同一事件的不同标签的对比,为NULL或空字符串时后台会生成和eventId同名的标签.
 -- @return void.
 -- cc.UMAnalytics:event("1-1")
-function UM:event( eventId )
+function UM:event( eventId, eventData )
     if device.platform ~= "android" then
         return
     end
 
     -- TalkingData todo
-    TalkingDataGa:onEvent(eventId)
+    if eventData == nil then
+        eventData = {}
+    end
+    TalkingDataGA:onEvent(eventId, eventData)
 end
 
 

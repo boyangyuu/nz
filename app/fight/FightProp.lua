@@ -49,6 +49,14 @@ function FightProp:costLei(callfuncSuccess)
 	if num >= 1 then 
 		self.propModel:costProp("lei",1) 
 		callfuncSuccess()
+		--todo 
+
+	    --um
+	    local fight = md:getInstance("Fight")
+	    local levelInfo = fight:getLevelInfo()  
+	    local umData = {}
+	    umData[levelInfo] = "手雷"
+	    um:event("关卡道具使用", umData) 		
 	else
 		local function deneyBuyFunc()
 			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData)}
@@ -96,7 +104,7 @@ end
 
 function FightProp:startGoldWeapon()
 	local inlay = md:getInstance("FightInlay")
-	inlay:activeGoldForever()
+	inlay:activeGoldOnCost()
 	self:refreshData()
 end
 

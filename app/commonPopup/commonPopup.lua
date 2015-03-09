@@ -146,7 +146,6 @@ function commonPopup:initUI(properties)
 
 					local className = "com/hgtt/com/IAPControl"
 					luaj.callStaticMethod(className, "callPhone")
-					um:event("kefu")
 					print("btncall is pressed!")
 				end
 			end
