@@ -196,6 +196,8 @@ function FightResultLayer:onClickBtnNext()
 
 	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
+	elseif curGroup == 0 and curLevel == 0 then
+		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
 	else
 		print("0-0 OR 1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})

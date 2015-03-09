@@ -104,7 +104,6 @@ function BuyModel:buy_novicesBag( buydata )
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	local userModel = md:getInstance("UserModel")
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
     inlayModel:refreshInfo("speed")
@@ -112,8 +111,6 @@ function BuyModel:buy_novicesBag( buydata )
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
-	--金币*188888
-	userModel:addMoney(188888)
 	storeModel:refreshInfo("prop")
 	self:setBought("novicesBag")
 end
@@ -185,6 +182,11 @@ end
 
 function BuyModel:buy_unlockWeapon( buydata )
 	print("BuyModel:buy_unlockWeapon( buydata )")
+	local weaponListModel = md:getInstance("WeaponListModel")
+	weaponListModel:buyWeapon(buydata.weaponid)
+end
+
+function BuyModel:buy_highgradeWeapon(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
 end

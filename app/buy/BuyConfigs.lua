@@ -48,6 +48,11 @@ local configs = {
 			price = 6,
 			name = "解锁武器",
 	},
+	highgradeWeapon   = {      --解锁高级武器
+			isGift = false,
+			price = 10,
+			name = "解锁高级武器",
+	},
 	goldWeapon     = {				--金武
 			isGift = false,
 			price = 4,

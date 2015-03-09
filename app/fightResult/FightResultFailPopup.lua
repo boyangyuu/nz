@@ -4,12 +4,6 @@ end)
 
 function FightResultFailPopup:ctor()
     self:initUI()
-    -- self:popUpGift()
-end
-
-function FightResultFailPopup:popUpGift()
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)}, "战斗结算页面_点击复活按钮")
 end
 
 function FightResultFailPopup:initUI()
@@ -39,7 +33,14 @@ function FightResultFailPopup:initUI()
             local fight  = md:getInstance("Fight")
             local groupid,levelid = fight:getCurGroupAndLevel()
             ui:closePopup("FightResultFailPopup")
-            ui:changeLayer("HomeBarLayer",{groupId = groupid,isPopupWeaponBag = true})
+
+            local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
+            if isBoughtWeapon then
+                ui:changeLayer("HomeBarLayer",{groupId = groupid,popGoldGift = true})
+            else
+                ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
+            end
+
         end
     end)
     btnrevive:setTouchEnabled(true)
@@ -48,13 +49,17 @@ function FightResultFailPopup:initUI()
             return true
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
-                buyModel:showBuy("resurrection", {payDoneFunc = handler(self,self.payDone),
-                                deneyBuyFunc = cancelGoldGift}, "战斗失败页面_点击原地复活")
+            buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payDone),deneyBuyFunc = handler(self,self.deneyGoldGift)},
+             "失败页面_点击复活按钮")
         end
     end)
 end
 
-
+function FightResultFailPopup:deneyGoldGift()
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:showBuy("resurrection", {payDoneFunc = handler(self,self.payDone)},
+     "战斗失败页面_原地复活取消土豪")
+end
 
 function FightResultFailPopup:payDone()
     local fight = md:getInstance("Fight")

@@ -243,15 +243,15 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-    local isDone = self.guide:isDone("prefight02")
-	if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
-	    local buyModel = md:getInstance("BuyModel")
-	    buyModel:showBuy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
-						    	payDoneFunc = handler(self, self.startGame)}, 
-						    	"关卡详情_点击开始按钮")
-	else
+    -- local isDone = self.guide:isDone("prefight02")
+	-- if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
+	--     local buyModel = md:getInstance("BuyModel")
+	    -- buyModel:showBuy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
+					-- 	    	payDoneFunc = handler(self, self.startGame)}, 
+					-- 	    	"关卡详情_点击开始按钮")
+	-- else
 		self:startGame()
-	end
+	-- end
 end
 
 function LevelDetailLayer:startGame()
@@ -287,11 +287,17 @@ function LevelDetailLayer:reloadlistview()
 end
 
 function LevelDetailLayer:onClickBtnGold()
+	local buyModel = md:getInstance("BuyModel")
 	function equipGold()
 		self.inlayModel:equipAllInlays(true)
 		self.alreadygold:setVisible(true)
 		self.btnGold:setVisible(false)	
 	end
+	
+	function deneyGoldGift()
+	    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_黄武按钮取消土豪礼包")
+	end
+
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	local isDone = self.guide:isDone("prefight02")
 	if goldweaponNum > 0 then
@@ -302,8 +308,8 @@ function LevelDetailLayer:onClickBtnGold()
 		self.btnGold:setVisible(false)	
     else
 		if isDone then  
-			local buyModel = md:getInstance("BuyModel")
-		    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_点击黄武按钮")
+		    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+		     "关卡详情_点击黄武按钮")
 		end
 	end
 	--sound
@@ -327,14 +333,20 @@ function LevelDetailLayer:onClickGuideBtnGold()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
+	local buyModel = md:getInstance("BuyModel")
 	function equipJijia()
 		self.alreadyjijia:setVisible(true)
 		self.btnJijia:setVisible(false)	
 	end
+
+	function deneyGoldGiftJijia()
+	    buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	end
+	
 	local isDone = self.guide:isDone("prefight02")
 	if isDone then
-		local buyModel = md:getInstance("BuyModel")
-	    buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
+		     "关卡详情_点击机甲按钮")
 	end
 
 	--sound

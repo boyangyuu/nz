@@ -91,8 +91,12 @@ function InlayLayer:initUI()
                     self.inlayModel:equipAllInlays(true)
                     self:playSoundxqcg()
                 end
+                function deneyGoldGift()
+                    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
+                end
                 local buyModel = md:getInstance("BuyModel")
-                buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_点击一键黄武")
+                buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+                     "镶嵌页面_点击一键黄武")
             end
         end
     end)
