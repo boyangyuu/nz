@@ -414,7 +414,7 @@ local enemys = {
 
 	
 	--人质         type = "renzhi",                                             speakRate =120,speakCd = 2.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
+	{id=10,image="hs",demage=0,hp=200,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
 	weak1=1},
 
 	--飞机         type = "feiji" ,

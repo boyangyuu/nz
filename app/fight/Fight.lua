@@ -150,10 +150,10 @@ end
 
 function Fight:onGiveUp()
     --um
+    local levelInfo = self:getLevelInfo() 
     local umData = {}
     umData[levelInfo] = "关卡失败"    
     um:event("关卡完成情况", umData)
-    local levelInfo = self:getLevelInfo()  
     um:failLevel(levelInfo)
 end
 
@@ -252,7 +252,6 @@ function Fight:stopFire()
     self:dispatchEvent({name = Fight.FIGHT_FIRE_PAUSE_EVENT})
 end
 
-
 function Fight:addKillRenzhiNum()
     self.killRenzhiNum = self.killRenzhiNum + 1
 
@@ -260,6 +259,7 @@ function Fight:addKillRenzhiNum()
     local waveConfig    = fightConfigs:getWaveConfig()
     local limit         = waveConfig:getRenzhiLimit()
     if self.killRenzhiNum >= limit then
+        self.hero:doKill()
         self:onFail()
     end
 end
