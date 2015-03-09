@@ -58,11 +58,12 @@ function BuyModel:getRandomOrderId()
 end
 
 function BuyModel:payDone(result)
-	print("function BuyModel:payDone():"..self.curId)
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuyData)
 
 	-- TalkingData 支付成功标志
+	local buyConfig = BuyConfigs.getConfig(self.curId ) 
+	print("成功记录付费点:", buyConfig["name"])
 	um:onChargeSuccess(self.orderId)
 
 	-- dump(self.curBuyData, "self.curBuyData")

@@ -15,10 +15,7 @@ function StoryLayer:ctor(properties)
 end
 
 function StoryLayer:onEnter()
-	--test
-	ui:changeLayer("FightPlayer", {groupId = 0, 
-		levelId = 0})	
-	--testend
+	audio.stopMusic(false)
 end
 
 function StoryLayer:loadCCS()
@@ -26,7 +23,6 @@ function StoryLayer:loadCCS()
 	self.storyNode = cc.uiloader:load(filePath)
 	self:addChild(self.storyNode)
 end
-
 
 function StoryLayer:initTalks()
 	local posSet = {-250, 1232 ,-250}
