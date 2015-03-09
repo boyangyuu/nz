@@ -6,35 +6,35 @@ local waves = {
 		enemys = {
 			{
 				time = 1,
-				num = 1,
-				delay = {0.1},
-				pos = {190},
+				num = 2,
+				delay = {0.1,0.6},
+				pos = {110,200},
 				property = {
-					type = "jin",
 					placeName = "place1",
-					id = 2,
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
 				time = 1.5,
-				num = 1,
-				delay = {0.3},
-				pos = {400},
+				num = 2,
+				delay = {0.3,0.8},
+				pos = {260,320},
 				property = {
-					type = "jin",
-					placeName = "place2",  
-					id = 2,
+					placeName = "place2", 
+					startState = "rollright", 
+					id = 1,
 				},
 			},
 			{
 				time = 2,
-				num = 1,
-				delay = {0.1},
-				pos = {100},
+				num = 2,
+				delay = {0.1,0.6},
+				pos = {140,200},
 				property = {
-					type = "jin",
 					placeName = "place4",  
-					id = 2,
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 			{
@@ -52,10 +52,21 @@ local waves = {
 				},
 			},	
 			{
-				time = 3,                                          --第一波5个怪
+				time = 3,
 				num = 1,
-				delay = {0},
-				pos = {800},					
+				delay = {0.1},
+				pos = {250},
+				property = {
+					placeName = "place6",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 3,                                          --第一波10个怪
+				num = 2,
+				delay = {0,0.5},
+				pos = {800,400},					
 				property = {
 					placeName = "place5",   
 					id = 8,
@@ -76,20 +87,20 @@ local waves = {
 				delay = {0.5,1.0},
 				pos = {250,350},
 				property = {
-					type = "jin",
 					placeName = "place2",  
-					id = 2,
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
 				time = 1.5,
-				num = 2,
-				delay = {0.5,1.1},
-				pos = {80,200},
+				num = 3,
+				delay = {0,0.5,1.1},
+				pos = {700,850,1000},
 				property = {
-					type = "jin",
-					placeName = "place4",  
-					id = 2,
+					placeName = "place6",
+					startState = "rollleft",  
+					id = 1,
 				},
 			},
 			{
@@ -173,7 +184,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				descId = "dunbing",  --简介
+				descId = "jinzhanb",  --简介
 				time = 3,
 				num = 1,
 				delay = {4},
@@ -181,7 +192,51 @@ local waves = {
 				property = {
 					type = "jin",
 					placeName = "place2",  
-					id = 10,
+					id = 2,
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				delay = {0.2},
+				pos = {340},
+				property = {
+					type = "jin",
+					placeName = "place2",  
+					id = 2,
+				},
+			}, 
+			{
+				time = 6,
+				num = 1,
+				delay = {0.5},
+				pos = {100},
+				property = {
+					type = "jin",
+					placeName = "place4",  
+					id = 2,
+				},
+			}, 
+			{
+				time = 7,
+				num = 1,
+				delay = {0},
+				pos = {90},
+				property = {
+					type = "jin",
+					placeName = "place1",  
+					id = 2,
+				},
+			}, 
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {30},
+				property = {
+					type = "jin",
+					placeName = "place4",  
+					id = 2,
 				},
 			}, 
 		},
@@ -383,15 +438,15 @@ local waves = {
 local enemys = {
 
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=190,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=300,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=2,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 		weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=380,fireRate=180,fireCd=3,speed=35,
+	{id=2,image="jinzhanb",demage=3,hp=585,fireRate=180,fireCd=3,speed=40,
 		weak1=3},
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=190,
+	{id=3,image="sanbing01",demage=0,hp=195,
 	weak1=3},
 
 	--自爆兵
@@ -407,7 +462,7 @@ local enemys = {
 	--金币绿气球
 	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 10},
 	--手雷兵
-	{id=8,image="shouleib",demage=2,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
+	{id=8,image="shouleib",demage=0,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
 	weak1=3},	
 	--手雷
 	{id=9,image="shoulei",demage=3,hp=1,
@@ -427,7 +482,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {30,75,150}   --黄武激活所需杀人个数
+	self.goldLimits = {40,300}   --黄武激活所需杀人个数
 end
 
 

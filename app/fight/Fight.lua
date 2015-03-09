@@ -36,12 +36,18 @@ function Fight:ctor(properties)
 end
 
 function Fight:beginFight()
-    --关卡
-    local levelInfo = self.groupId.."-"..self.levelId
-    um:startLevel(levelInfo)
+    --um
+    self:initUm()
+
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
+end
+
+function Fight:initUm()
+    --level
+    local levelInfo = self:getLevelInfo()
+    um:startLevel(levelInfo)
 end
 
 function Fight:refreshData(properties)
@@ -57,7 +63,7 @@ function Fight:refreshData(properties)
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.robot      = md:createInstance("Robot")
-    self.inlay = self.hero:getFightInlay()
+    self.inlay      = self.hero:getFightInlay()
 
     local levelModel = md:getInstance("LevelDetailModel")
     self.isJujiFight = levelModel:isJujiFight()
@@ -108,10 +114,19 @@ function Fight:onWin()
     levelMapModel:levelPass(self.groupId, self.levelId)
     userModel:getUserLevel(self.groupId, self.levelId)
     self:setFightResult()
-    local levelInfo = self.groupId.."-"..self.levelId    
+    local levelInfo = self:getLevelInfo()    
     um:finishLevel(levelInfo)
+    local umData = {}
+    umData[levelInfo] = "关卡胜利"
+    um:event("关卡完成情况", umData)
     self:willEndFight()  
     self:clearFightData()  
+end
+
+function Fight:onGiveUp()
+    --um
+    local levelInfo = self:getLevelInfo()  
+    um:failLevel(levelInfo)
 end
 
 function Fight:onFail()
@@ -125,16 +140,30 @@ function Fight:onFail()
 
     --clear
     self:clearFightData() 
-
-    --um
-    local levelInfo = self.groupId.."-"..self.levelId  
-    um:failLevel(levelInfo)
 end
 
-function Fight:payDone()
-    self.inlayModel:equipGoldInlays(false)
-    self:relive()
+function Fight:onRelive()
+    --um
+    local levelInfo = self:getLevelInfo()  
+    local umData = {}
+    umData[levelInfo] = "复活"
+    um:event("关卡道具使用", umData)
+
+    --relive
     ui:closePopup("FightResultFailPopup")
+    self.hero:doRelive()
+    
+    --clear
+    self.killRenzhiNum = 0
+    self.result = nil 
+
+    --gold
+    self.inlayModel:equipGoldInlays(false)
+    self.inlay:checkNativeGold()
+
+    --jijia
+    local robot = md:getInstance("Robot")
+    robot:startRobot(define.kRobotTimeRelieve)
 end
 
 function Fight:pauseFight(isPause)
@@ -177,6 +206,10 @@ function Fight:getCurGroupAndLevel()
     return self.groupId , self.levelId 
 end
 
+function Fight:getLevelInfo()
+    return self.groupId.."-"..self.levelId
+end
+
 function Fight:checkJuContorlType()
     if self.isJujiFight == false then return end
     local comps = {btnJu = true, btnChange =  false,}
@@ -203,13 +236,6 @@ function Fight:addKillRenzhiNum()
     if self.killRenzhiNum >= limit then
         self.hero:doKill()
     end
-end
-
-function Fight:relive()
-    self.hero:doRelive()
-    self.inlay:checkNativeGold()
-    self.killRenzhiNum = 0
-    self.result = nil
 end
 
 function Fight:clearFightData()

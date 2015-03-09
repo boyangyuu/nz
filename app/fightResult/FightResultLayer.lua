@@ -191,8 +191,8 @@ function FightResultLayer:onClickBtnNext()
     if curLevel == 6 and curGroup < 4 then
     	curGroup = curGroup + 1
     end
-
-    local isDoneXiangqian = self.guide:isDone("xiangqian")
+	
+	local isDoneXiangqian = self.guide:isDone("xiangqian")
 
 	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})

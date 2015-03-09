@@ -22,10 +22,9 @@ function GunHelpLayer:loadCCS()
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
         "res/Fight/uiAnim/yd_saosan/yd_saosan0.png")     
 
-
 	self.node = cc.uiloader:load("res/fight/helpWeapon/helpWeapon.ExportJson")
     self:addChild(self.node)
-    self.label_name = cc.uiloader:seekNodeByName(self, "label_name")
+    self.nameNode   = cc.uiloader:seekNodeByName(self, "nameNode")
     self.btnGet     = cc.uiloader:seekNodeByName(self, "btnGet")
     self.gunDisplay = cc.uiloader:seekNodeByName(self, "gunDisplay")
     self.btnGet:onButtonPressed(function( event )
@@ -58,6 +57,11 @@ function GunHelpLayer:onShow(event)
     icon:setScaleY(0.2)
     icon:scaleTo(0.7, 0.7)
     addChildCenter(icon, self.gunDisplay)    
+
+    --gun name 
+    local nameImg = display.newSprite("#name_"..record["imgName"]..".png")
+    nameImg:setAnchorPoint(0.5,0.5)
+    self.nameNode:addChild(nameImg)
 
     --action
     local x,y = self.node:getPosition()

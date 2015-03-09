@@ -68,10 +68,18 @@ function Robot:onHitted()
 	print("Robot is on hitted")
 end
 
-function Robot:startRobot()
+function Robot:startRobot(time)
 	print("Robot:startRobot()")
-	self.isRoboting = true
+    --um
+    local fight = md:getInstance("Fight")
+    local levelInfo = fight:getLevelInfo()  
+    local umData = {}
+    umData[levelInfo] = "机甲"
+    um:event("关卡道具使用", umData) 	
 
+	--data
+	self.isRoboting = true
+	
 	--visible
 	local fight = md:getInstance("Fight")
 	fight:dispatchEvent({name = fight.CONTROL_HIDE_EVENT})
@@ -93,8 +101,8 @@ function Robot:startRobot()
 	end
 	
 	--sch endRobot
-	local kTimeEnd = define.kRobotTime
-	scheduler.performWithDelayGlobal(handler(self, self.endRobot), kTimeEnd) 
+	local time = time or define.kRobotTime 
+	scheduler.performWithDelayGlobal(handler(self, self.endRobot), time) 
 end
 
 function Robot:endRobot()

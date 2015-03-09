@@ -30,17 +30,7 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local fight  = md:getInstance("Fight")
-            local groupid,levelid = fight:getCurGroupAndLevel()
-            ui:closePopup("FightResultFailPopup")
-
-            local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
-            if isBoughtWeapon then
-                ui:changeLayer("HomeBarLayer",{groupId = groupid,popGoldGift = true})
-            else
-                ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
-            end
-
+            self:onClickBackHome()
         end
     end)
     btnrevive:setTouchEnabled(true)
@@ -48,28 +38,41 @@ function FightResultFailPopup:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payDone),deneyBuyFunc = handler(self,self.deneyGoldGift)},
-             "失败页面_点击复活按钮")
+            self:onClickRelive()
         end
     end)
 end
 
 function FightResultFailPopup:deneyGoldGift()
     local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("resurrection", {payDoneFunc = handler(self,self.payDone)},
+    buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone)},
      "战斗失败页面_原地复活取消土豪")
 end
 
-function FightResultFailPopup:payDone()
+function FightResultFailPopup:onClickRelive()
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
+        deneyBuyFunc = handler(self,self.deneyGoldGift)},
+     "失败页面_点击复活按钮")
+end
+
+function FightResultFailPopup:onClickBackHome()
+    local fight  = md:getInstance("Fight")
+    fight:onGiveUp()
+
+    local groupid,levelid = fight:getCurGroupAndLevel()
+    ui:closePopup("FightResultFailPopup")
+    local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
+    if isBoughtWeapon then
+        ui:changeLayer("HomeBarLayer",{groupId = groupid,popGoldGift = true})
+    else
+        ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
+    end
+end
+
+function FightResultFailPopup:payReliveDone()
     local fight = md:getInstance("Fight")
-    fight:payDone()
-    --黄武
-    -- local inlay = md:getInstance("InlayModel")
-    -- inlay:equipGoldInlays(false)
-    
-    -- fight:relive()
-    -- ui:closePopup("FightResultFailPopup")
+    fight:payReliveDone()
 end
 
 return FightResultFailPopup

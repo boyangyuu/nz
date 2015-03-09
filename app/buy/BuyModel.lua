@@ -15,34 +15,45 @@ function BuyModel:clearData()
     self.curId = nil
     self.curBuyData =  nil
     self.orderId = nil
+    self.strDesc = nil
 end
 
-function BuyModel:showBuy(configId, buyData, strDesc)
-	assert(strDesc, "strDesc is nil configId :"..configId)
-	-- local name = configName .. "__" .. strDesc
-	-- um:..
+function BuyModel:showBuy(configId, buyData, strPos)
+	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
 
-    -- TalkingData支付统计
-    self.orderId = self:getRandomOrderId()
-    local buyConfig = BuyConfigs.getConfig(configId) 
-    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strDesc)
-    local name = buyConfig.name .. "__" ..strDesc
-    
-    --todo 价格
-    um:onChargeRequest(self.orderId, name, buyConfig.price, "CNY", 0, "MM")
-
 	local config  = BuyConfigs.getConfig(configId)
 	local isGift = config.isGift 
-	self.isFight = buyData.isFight
 
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId})
     else
+
     	iap:pay(configId)
     end
+
+    --um pay
+    self.orderId = self:getRandomOrderId()
+    local buyConfig = BuyConfigs.getConfig(configId) 
+    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
+    self.strDesc = buyConfig.name .. "__" ..strPos
+    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, "MM")
+	
+    --um event
+	local umData = {}
+	umData[self.strDesc] = "展示付费点"
+	um:event("支付情况", umData)    
+end
+
+function BuyModel:payGift()
+	iap:pay(self.curId)
+
+	--um
+	local umData = {}
+	umData[self.strDesc] = "点击购买礼包"
+	um:event("支付情况", umData)   	
 end
 
 -- 生成订单号
@@ -58,22 +69,36 @@ function BuyModel:getRandomOrderId()
 end
 
 function BuyModel:payDone(result)
-	print("function BuyModel:payDone():"..self.curId)
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuyData)
 
 	-- TalkingData 支付成功标志
+	local buyConfig = BuyConfigs.getConfig(self.curId ) 
+	print("成功记录付费点:", buyConfig["name"])
 	um:onChargeSuccess(self.orderId)
-
+	
 	-- dump(self.curBuyData, "self.curBuyData")
 	local payDoneFunc = self.curBuyData.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
+
+    --um pay
+	um:onChargeSuccess(self.orderId)
+
+	--um event
+	local umData = {}
+	umData[self.strDesc] = "支付成功"
+	um:event("支付情况", umData)
 end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
 	if deneyBuyFunc then  deneyBuyFunc() end
+
+	-- um event
+	local umData = {}
+	umData[self.strDesc] = "支付拒绝"
+	um:event("支付情况", umData)	
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)

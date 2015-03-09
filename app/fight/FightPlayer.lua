@@ -825,7 +825,7 @@ function FightPlayer:initGuide1()
         groupId = "fight01_gold",
         rect = self.btnGold:getBoundingBox(),
         endfunc = function (touchEvent)
-            self.inlay:activeGoldForever()
+            self.inlay:activeGoldOnCost()
         end
     })     
 end

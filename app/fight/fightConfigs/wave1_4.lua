@@ -130,24 +130,35 @@ local waves = {
 	},
 	{
 		enemys = {
-		   	{
+		 --   	{
+			-- 	time = 2,
+			-- 	num = 1,
+			-- 	pos = {700},
+			-- 	delay = {0.5},                         -- 飞机
+			-- 	property = {
+			-- 		type = "feiji" ,
+			-- 		id = 11,
+			-- 		placeName = "place10",
+			-- 		missileId = 6,
+			-- 		missileType = "daodan",
+			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+			-- 		startState = "enterleft",
+			-- 		lastTime = 30.0,		                                    --持续时间			
+			-- 	},
+			-- },
+			{
 				time = 2,
-				num = 1,
-				pos = {700},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 30.0,		                                    --持续时间			
+				num = 5,
+				delay = {0.1,0.5,0.8,1.2,1.5},
+				pos = {430,550,660,760,1050},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",                  --爆
+					id = 9,	
 				},
 			},
 			{
-				time = 6,
+				time = 3,
 				num = 5,
 				delay = {0.7,1.4, 2.1,2.8,3.1},
 				pos = {400,470,600,750,820},					
@@ -159,7 +170,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 10,
+				time = 5,
 				num = 5,
 				delay = {0.7,1.4, 2.1,2.8,3.2},
 				pos = {680,750,810,900,1000},					
@@ -171,7 +182,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,		
+				time = 5,		
 				num = 2,
 				pos = {200,380},
 				delay = {0.5,1.3},
@@ -185,7 +196,18 @@ local waves = {
 				},
 			},	
 			{
-				time = 16,		
+				time = 6,		
+				num = 5,
+				pos = {150,230,310,400,460},
+				delay = {0.8,1.6,2.3,3.0,3.4},
+				property = { 
+					placeName = "place2",
+					startState = "rollright",
+					id = 1,                                        
+				},
+			},
+			{
+				time = 7,		
 				num = 2,
 				pos = {460,530},
 				delay = {0.3,1.2},
@@ -199,18 +221,7 @@ local waves = {
 				},
 			},
 			{
-				time = 19,		
-				num = 5,
-				pos = {150,230,310,400,460},
-				delay = {0.8,1.6,2.3,3.0,3.4},
-				property = { 
-					placeName = "place2",
-					startState = "rollright",
-					id = 1,                                        
-				},
-			},
-			{
-				time = 22,		
+				time = 8,		
 				num = 4,
 				pos = {600,830,920,1000},
 				delay = {0.8,1.6,2.3,3.0},
@@ -287,10 +298,8 @@ local waves = {
 				pos = {150,220,550,630},
 				property = { 
 					placeName = "place2" ,
-					type = "dao",      --导
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
+					startState = "rollright",
+					id = 1,
 				},                                                          
 			},	
 			{
@@ -440,8 +449,8 @@ local bosses = {
 
 
                                     
-			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
-			-- },                                        
+			wudi = {0.91,0.71,0.51,0.31                    --无敌
+			},                                        
 
 			saoShe = { 0.90, 0.70, 0.50, 0.30 ,0.10     --调用普通攻击的伤害  扫射
 			}, 
@@ -483,7 +492,7 @@ local bosses = {
 
 		enemys1 = {                                                   --第一波召唤的自爆兵
 			{
-				time = 1,	
+				time = 0.5,	
 				num = 3,
 				pos = {460,660,860},
 				delay = {0.2,0.4,0.5},
@@ -493,19 +502,8 @@ local bosses = {
 					type = "bao",
 				},
 			},
-			-- {
-			-- 	time = 9,	
-			-- 	num = 4,
-			-- 	pos = {520,620,830,950},
-			-- 	delay = {0.8,0.6,0.4,0.2},
-			-- 	property = {
-			-- 		placeName = "place3" ,
-			-- 		id = 16,
-			-- 		type = "bao",
-			-- 	},
-			-- },
 			{
-				time = 9,	
+				time = 5,	
 				num = 5,
 				pos = {400,480,660,860,1050},
 				delay = {0.2,0.8,0.6,0.4,0.2},
@@ -520,7 +518,7 @@ local bosses = {
 
 		enemys2 = {                                                      --第二波召唤的兵
 			{
-				time = 1,	
+				time = 0.5,	
 				num = 3,
 				pos = {560,660,760},
 				delay = {0.2,0.4,0.5},
@@ -530,19 +528,8 @@ local bosses = {
 					type = "bao",
 				},
 			},
-			-- {
-			-- 	time = 7,	
-			-- 	num = 4,
-			-- 	pos = {520,620,830,950},
-			-- 	delay = {0.8,0.6,0.4,0.2},
-			-- 	property = {
-			-- 		placeName = "place3" ,
-			-- 		id = 17,
-			-- 		type = "bao",
-			-- 	},
-			-- },
 			{
-				time = 7,	
+				time = 5,	
 				num = 5,
 				pos = {400,480,660,860,1050},
 				delay = {0.2,0.8,0.6,0.4,0.2},
@@ -558,51 +545,36 @@ local bosses = {
 		
 		enemys3 = {                                                      --第三波召唤的兵
 			{
-				time = 1,
-				num = 1,
-				pos = {300},
-				delay = {0.5},                         -- 飞机
+				time = 0.5,	
+				num = 3,
+				pos = {560,660,760},
+				delay = {0.2,0.4,0.5},
 				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 30.0,		                                    --持续时间			
+					placeName = "place3" ,
+					id = 17,
+					type = "bao",
 				},
 			},
 			{
-				time = 4,
-				num = 1,
-				pos = {400},
-				delay = {0.5},                         -- 飞机
+				time = 5,	
+				num = 4,
+				pos = {520,620,830,950},
+				delay = {0.8,0.6,0.4,0.2},
 				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place9",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 30.0,		                                    --持续时间			
+					placeName = "place3" ,
+					id = 17,
+					type = "bao",
 				},
 			},
 			{
-				time = 7,
-				num = 1,
-				pos = {900},
-				delay = {0.5},                         -- 飞机
+				time = 9,	
+				num = 5,
+				pos = {400,480,660,860,1050},
+				delay = {0.2,0.8,0.6,0.4,0.2},
 				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place9",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 30.0,		                                    --持续时间			
+					placeName = "place3" ,
+					id = 17,
+					type = "bao",
 				},
 			},
 		},		
@@ -636,6 +608,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {65,160}   --黄武激活所需杀人个数
+	self.goldLimits = {300}   --黄武激活所需杀人个数  备份数量65,160
 end
 return waveClass
