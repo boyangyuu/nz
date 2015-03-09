@@ -16,6 +16,8 @@ end
 
 function StoryLayer:onEnter()
 	audio.stopMusic(false)
+				ui:changeLayer("FightPlayer", {groupId = 0, 
+					levelId = 0})		
 end
 
 function StoryLayer:loadCCS()

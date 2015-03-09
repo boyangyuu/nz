@@ -171,7 +171,7 @@ function StoreCell:addBtnEvent()
                 else
                     self.propModel:buyProp(self.record["nameid"],self.record["buynum"])
                 end
-                um:buy(self.record["nameid"], 1, self.record["price"])   
+                um:buy(self.record["name"], 1, self.record["price"])   
                 if self.record["nameid"] == "goldweapon" then
                     local goldnum = self.inlayModel:getGoldWeaponNum()
                     self.ownnumber:setString(goldnum)
@@ -180,12 +180,16 @@ function StoreCell:addBtnEvent()
                 end
             else
                 local buyModel = md:getInstance("BuyModel")
+
                 if self.record["nameid"] == "goldweapon" then
-                    buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击黄武")
+                    self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.playSound),
+                        deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_黄武钻石不够")
                 elseif self.record["nameid"] == "jijia" then
-                    buyModel:showBuy("armedMecha",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击机甲")
+                    self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.playSound),
+                        deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_机甲钻石不够")
                 elseif self.record["nameid"] == "lei" then
-                    buyModel:showBuy("handGrenade",{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击手雷")
+                    self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.playSound),
+                        deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_手雷钻石不够")
                 end
             end
         elseif self.type == "bank" then
@@ -197,10 +201,21 @@ function StoreCell:addBtnEvent()
                 self.inlayModel:buyInlay(self.record["id"])
                 self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
             end
-            local buyInfo = self.record["type"].."_"..self.record["property"]
-            um:buy(buyInfo, 1, self.record["goldPrice"])   
+            um:buy(self.record["describe2"], 1, self.record["goldPrice"])   
         end
     end)
+end
+
+
+function StoreCell:deneyGoldGift()
+    local buyModel = md:getInstance("BuyModel")
+    if self.record["nameid"] == "goldweapon" then
+        buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self,self.playSound)}, "商城界面_取消土豪买黄武")
+    elseif self.record["nameid"] == "jijia" then
+        buyModel:showBuy("armedMecha",{payDoneFunc = handler(self,self.playSound)}, "商城界面_取消土豪买机甲")
+    elseif self.record["nameid"] == "lei" then
+        buyModel:showBuy("handGrenade",{payDoneFunc = handler(self,self.playSound)}, "商城界面_取消土豪买手雷")
+    end
 end
 
 function StoreCell:playSound()

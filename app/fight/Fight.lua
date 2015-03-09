@@ -37,17 +37,10 @@ end
 
 function Fight:beginFight()
     --um
-    self:initUm()
-
+    self:refreshUm()
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
-end
-
-function Fight:initUm()
-    --level
-    local levelInfo = self:getLevelInfo()
-    um:startLevel(levelInfo)
 end
 
 function Fight:refreshData(properties)
@@ -71,6 +64,33 @@ function Fight:refreshData(properties)
     self.result = nil
     self.isPause = false
     self.killRenzhiNum  = 0
+end
+
+function Fight:refreshUm()
+    --事件统计_镶嵌
+    self.inlay:refreshUm()
+
+    --事件统计_关卡开始
+    local data = getUserData()
+    local curGid = data.currentlevel.group
+    local curLid = data.currentlevel.level
+
+    local fGid, fLid = self:getCurGroupAndLevel()    
+    local levelInfo = self:getLevelInfo()
+    local str = nil
+    if (fGid == curGid and fLid > curLid) or 
+        (fGid > curGid) then 
+        str = "关卡开始_新"
+    else
+        str = "关卡开始_旧" 
+    end
+    local umData = {}
+    umData[levelInfo] = str
+    um:event("关卡次数情况", umData)       
+
+    --任务统计
+    local levelInfo = self:getLevelInfo()
+    um:startLevel(levelInfo)
 end
 
 function Fight:willStartFight()
@@ -104,6 +124,8 @@ end
 function Fight:endFight()
     self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
     ui:showPopup("FightResultPopup",{},{anim = false})
+
+    um:finishLevel(levelInfo)
 end
 
 function Fight:onWin()
@@ -114,17 +136,23 @@ function Fight:onWin()
     levelMapModel:levelPass(self.groupId, self.levelId)
     userModel:getUserLevel(self.groupId, self.levelId)
     self:setFightResult()
+
+    --um
     local levelInfo = self:getLevelInfo()    
     um:finishLevel(levelInfo)
     local umData = {}
     umData[levelInfo] = "关卡胜利"
     um:event("关卡完成情况", umData)
+
     self:willEndFight()  
     self:clearFightData()  
 end
 
 function Fight:onGiveUp()
     --um
+    local umData = {}
+    umData[levelInfo] = "关卡失败"    
+    um:event("关卡完成情况", umData)
     local levelInfo = self:getLevelInfo()  
     um:failLevel(levelInfo)
 end
@@ -135,9 +163,7 @@ function Fight:onFail()
     local fightProp = md:getInstance("FightProp")
     fightProp:costReliveBag()
     ui:showPopup("FightResultFailPopup",{},{anim = false})
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self,self.payDone)},"战斗失败界面_点击复活")
-
+    
     --clear
     self:clearFightData() 
 end
@@ -234,7 +260,7 @@ function Fight:addKillRenzhiNum()
     local waveConfig    = fightConfigs:getWaveConfig()
     local limit         = waveConfig:getRenzhiLimit()
     if self.killRenzhiNum >= limit then
-        self.hero:doKill()
+        self:onFail()
     end
 end
 

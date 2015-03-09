@@ -15,45 +15,34 @@ function BuyModel:clearData()
     self.curId = nil
     self.curBuyData =  nil
     self.orderId = nil
-    self.strDesc = nil
 end
 
-function BuyModel:showBuy(configId, buyData, strPos)
-	assert(strPos, "strPos is nil configId :"..configId)
+function BuyModel:showBuy(configId, buyData, strDesc)
+	assert(strDesc, "strDesc is nil configId :"..configId)
+	-- local name = configName .. "__" .. strDesc
+	-- um:..
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
 
+    -- TalkingData支付统计
+    self.orderId = self:getRandomOrderId()
+    local buyConfig = BuyConfigs.getConfig(configId) 
+    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strDesc)
+    local name = buyConfig.name .. "__" ..strDesc
+    
+    --todo 价格
+    um:onChargeRequest(self.orderId, name, buyConfig.price, "CNY", 0, "MM")
+
 	local config  = BuyConfigs.getConfig(configId)
 	local isGift = config.isGift 
+	self.isFight = buyData.isFight
 
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId})
     else
-
     	iap:pay(configId)
     end
-
-    --um pay
-    self.orderId = self:getRandomOrderId()
-    local buyConfig = BuyConfigs.getConfig(configId) 
-    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
-    self.strDesc = buyConfig.name .. "__" ..strPos
-    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, "MM")
-	
-    --um event
-	local umData = {}
-	umData[self.strDesc] = "展示付费点"
-	um:event("支付情况", umData)    
-end
-
-function BuyModel:payGift()
-	iap:pay(self.curId)
-
-	--um
-	local umData = {}
-	umData[self.strDesc] = "点击购买礼包"
-	um:event("支付情况", umData)   	
 end
 
 -- 生成订单号
@@ -69,41 +58,28 @@ function BuyModel:getRandomOrderId()
 end
 
 function BuyModel:payDone(result)
+	print("function BuyModel:payDone():"..self.curId)
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuyData)
 
 	-- TalkingData 支付成功标志
-	local buyConfig = BuyConfigs.getConfig(self.curId ) 
-	print("成功记录付费点:", buyConfig["name"])
 	um:onChargeSuccess(self.orderId)
-	
+
 	-- dump(self.curBuyData, "self.curBuyData")
 	local payDoneFunc = self.curBuyData.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
-
-    --um pay
-	um:onChargeSuccess(self.orderId)
-
-	--um event
-	local umData = {}
-	umData[self.strDesc] = "支付成功"
-	um:event("支付情况", umData)
 end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
 	if deneyBuyFunc then  deneyBuyFunc() end
-
-	-- um event
-	local umData = {}
-	umData[self.strDesc] = "支付拒绝"
-	um:event("支付情况", umData)	
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
 	-- local weapontable = weaponListModel:getAllWeapon()
 	local propModel = md:getInstance("propModel")
 	local weapontable = {3,4,5,7,8}
@@ -113,93 +89,95 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	end
 	self:setBought("weaponGiftBag")
 
+	--黄武*3
+	inlayModel:buyGoldsInlay(3)
+    inlayModel:refreshInfo("speed")
+
+
 	--手雷*10
 	propModel:buyProp("lei",10)
-	StoreModel:refreshInfo("prop")
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_novicesBag( buydata )
 	print("BuyModel:buy_novicesBag(buydata)")
-	local InlayModel = md:getInstance("InlayModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	local UserModel = md:getInstance("UserModel")
-	--黄武*1
-	InlayModel:buyGoldsInlay(1)
-    InlayModel:refreshInfo("speed")
-	--机甲*1
-	propModel:buyProp("jijia",1)
+	--黄武*4
+	inlayModel:buyGoldsInlay(4)
+    inlayModel:refreshInfo("speed")
+	--机甲*3
+	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
-	--金币*188888
-	UserModel:addMoney(188888)
-	StoreModel:refreshInfo("prop")
+	storeModel:refreshInfo("prop")
 	self:setBought("novicesBag")
 end
 
 function BuyModel:buy_goldGiftBag( buydata )
 	print("BuyModel:buy_goldGiftBag(buydata)")
-	local InlayModel = md:getInstance("InlayModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
 	--黄武*15
-	InlayModel:buyGoldsInlay(15)
-    InlayModel:refreshInfo("speed")
+	inlayModel:buyGoldsInlay(15)
+    inlayModel:refreshInfo("speed")
 
 	--机甲*15
 	propModel:buyProp("jijia",15)
 	--手雷*30
 	propModel:buyProp("lei",30)
-	StoreModel:refreshInfo("prop")
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_changshuang( buydata )
-	local InlayModel = md:getInstance("InlayModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
 	--黄武*4
-	InlayModel:buyGoldsInlay(4)
-    InlayModel:refreshInfo("speed")
+	inlayModel:buyGoldsInlay(4)
+    inlayModel:refreshInfo("speed")
 	--机甲*3
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
-	StoreModel:refreshInfo("prop")
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_timeGiftBag( buydata )
-	local InlayModel = md:getInstance("InlayModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	local UserModel = md:getInstance("UserModel")
+	local userModel = md:getInstance("UserModel")
 	--黄武*4
-	InlayModel:buyGoldsInlay(4)
-    InlayModel:refreshInfo("speed")
+	inlayModel:buyGoldsInlay(4)
+    inlayModel:refreshInfo("speed")
 	--机甲*3
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
 	--金币*188888
 	--zuanshi*260
-	UserModel:buyDiamond(260)
-	UserModel:addMoney(188888)
-	StoreModel:refreshInfo("prop")
+	userModel:buyDiamond(260)
+	userModel:addMoney(188888)
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_handGrenade( buydata )
 	local propModel = md:getInstance("propModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local storeModel = md:getInstance("StoreModel")
 	--手雷*20
 	propModel:buyProp("lei",20)
-	StoreModel:refreshInfo("prop")
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_armedMecha( buydata )
 	local propModel = md:getInstance("propModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local storeModel = md:getInstance("StoreModel")
 	--jijia*2
 	propModel:buyProp("jijia",2)
-	StoreModel:refreshInfo("prop")
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_unlockWeapon( buydata )
@@ -208,15 +186,20 @@ function BuyModel:buy_unlockWeapon( buydata )
 	weaponListModel:buyWeapon(buydata.weaponid)
 end
 
+function BuyModel:buy_highgradeWeapon(buydata)
+	local weaponListModel = md:getInstance("WeaponListModel")
+	weaponListModel:buyWeapon(buydata.weaponid)
+end
+
 function BuyModel:buy_goldWeapon( buydata )
 	print("BuyModel:buy_goldWeapon( buydata )")
 	--黄武*2
-	local InlayModel = md:getInstance("InlayModel")
-	local StoreModel = md:getInstance("StoreModel")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	InlayModel:buyGoldsInlay(2)
-	InlayModel:refreshInfo("speed")
-	StoreModel:refreshInfo("prop")
+	inlayModel:buyGoldsInlay(2)
+	inlayModel:refreshInfo("speed")
+	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_onceFull( buydata )
@@ -230,24 +213,24 @@ function BuyModel:buy_resurrection( buydata )
 end
 
 function BuyModel:buy_stone10( buydata )
-	local UserModel = md:getInstance("UserModel")
-	UserModel:buyDiamond(10)
+	local userModel = md:getInstance("UserModel")
+	userModel:buyDiamond(10)
 end
 function BuyModel:buy_stone45( buydata )
-	local UserModel = md:getInstance("UserModel")
-	UserModel:buyDiamond(45)
+	local userModel = md:getInstance("UserModel")
+	userModel:buyDiamond(45)
 end
 function BuyModel:buy_stone120( buydata )
-	local UserModel = md:getInstance("UserModel")
-	UserModel:buyDiamond(120)
+	local userModel = md:getInstance("UserModel")
+	userModel:buyDiamond(120)
 end
 function BuyModel:buy_stone260( buydata )
-	local UserModel = md:getInstance("UserModel")
-	UserModel:buyDiamond(260)
+	local userModel = md:getInstance("UserModel")
+	userModel:buyDiamond(260)
 end
 function BuyModel:buy_stone450( buydata )
-	local UserModel = md:getInstance("UserModel")
-	UserModel:buyDiamond(450)
+	local userModel = md:getInstance("UserModel")
+	userModel:buyDiamond(450)
 end
 
 function BuyModel:checkBought(giftId)

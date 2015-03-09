@@ -330,11 +330,11 @@ function InlayModel:removeAllInlay()
 	if device.platform == "android" then
 		local allInlayed = self:getAllInlayed()
 		for k,v in pairs(allInlayed) do
-			local useInfo = self:getInlayType(v).."_"..self:getInlayRecord(v)["property"]
+			local useInfo = self:getInlayRecord(v)["describe2"]
 			um:use(useInfo, 1,0)
 		end
 		if self:isGetAllGold() then
-			um:use("goldweapon", 1,0)
+			um:use("黄金武器", 1,0)
 		end
 	end
 	local data = getUserData()

@@ -59,10 +59,11 @@ function Guide:doGuideNext()
 	local configGroup =  GuideConfigs.getConfig(self.groupId)
 
 	--um finish
+	local umStr = nil
 	if self.stepIndex ~= 0 then
 		local lastconfigStep = configGroup["steps"][self.stepIndex]	
 		--todo 改为自定义事件
-		um:finishLevel(lastconfigStep["id"])
+		um:finishLevel("新手:" .. lastconfigStep["id"])
 	end
 	--next
 	self.stepIndex = self.stepIndex + 1
@@ -78,12 +79,12 @@ function Guide:doGuideNext()
 	end
 
 	-- --um start
-	-- um:startLevel(self.curConfig["id"])
+	um:startLevel(self.curConfig["id"])
+
 	--update listenData
 	local id = configStep.id
 	local listenData = self.datas[id]	
 	self.curData = listenData
-
 
 	--dispatch
 	print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)

@@ -98,6 +98,12 @@ function LevelMapModel:levelPass(groupId,levelId)
 
 	local isOpenNext = groupId == curGroupId and levelId == curLevelId 	
 	
+	--save user level
+	local levelDetailModel = md:getInstance("LevelDetailModel")
+	local levelRecord = levelDetailModel:getConfig(curGroupId,curLevelId)
+	local userModel = md:getInstance("UserModel")
+	userModel:setUserLevel(levelRecord["userLevel"])
+
 	if groupId == 0 and levelId == 0 then
 		return	
 	elseif math.floor(levelId) < levelId then
@@ -109,11 +115,6 @@ function LevelMapModel:levelPass(groupId,levelId)
 			local nextgroup,nextlevel = self:getNextGroupAndLevel(groupId, levelId)
 			-- print("nextgroup",nextgroup)
 			-- print("nextlevel",nextlevel)	
-			--save user level
-			local levelDetailModel = md:getInstance("LevelDetailModel")
-			local levelRecord = levelDetailModel:getConfig(curGroupId,curLevelId)
-			local userModel = md:getInstance("UserModel")
-			userModel:setUserLevel(levelRecord["userLevel"])
 
 			--save 关卡进度
 			data.currentlevel.group = nextgroup

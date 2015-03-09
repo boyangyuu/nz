@@ -21,12 +21,9 @@ function FightInlay:ctor(properties)
     self.inlayModel = md:getInstance("InlayModel") 
     self.isNativeGold = false
     self.IsActiveGold = false
-
-    --check
-    self:initUm()
 end
 
-function FightInlay:initUm()
+function FightInlay:refreshUm()
     local inlays = self.inlayModel:getAllInlayed()
     for type,configId in ipairs(inlays) do
         local record = self.inlayModel:getInlayRecord(configId)   

@@ -19,12 +19,16 @@ function HomeBarLayer:ctor(properties)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
-    self:initData(properties)
+    cc.EventProxy.new(ui, self)
+        :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.mapPopUp))
+    self.properties = properties
+    self:initData(self.properties)
     self:loadCCS()
     self:initHomeLayer()
-    self:popUpGify(properties)
-    self:popUpNextLevel(properties)
-    self:initDailyLogin()
+    -- self:popUpNextLevel(properties)
+    -- self:popUpWeaponGift(properties)
+    -- self:popUpGoldGift(properties)
+    -- self:initDailyLogin()
     self:refreshMoney()
 
     self:initGuideWeapon()
@@ -34,13 +38,28 @@ function HomeBarLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 end
 
-function HomeBarLayer:popUpGify(properties)
+function HomeBarLayer:popUpWeaponGift(properties)
+    local buyModel = md:getInstance("BuyModel")
     local isDone = self.guide:isDone("xiangqian")
-    if properties.popGift and isDone then
-        local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("timeGiftBag", {payDoneFunc = handler(self, self.refreshData)}
-                        , "主界面_进游戏自动弹出")
+    local isNotBought = buyModel:checkBought("weaponGiftBag") == false
+    if properties.popWeaponGift and isDone and isNotBought then
+        buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData)},"主界面_进游戏自动弹出")
     end
+end
+
+function HomeBarLayer:popUpGoldGift(properties)
+    -- local buyModel = md:getInstance("BuyModel")
+    -- local isDone = self.guide:isDone("xiangqian")
+    -- local isBoughtWeapon = buyModel:checkBought("weaponGiftBag") == false
+    -- if properties.popGoldGift and isDone then
+    --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData)},
+    --      "主界面_战斗失败购买过武包")
+    -- end
+end
+
+function HomeBarLayer:refreshData()
+    local levelDetailModel = md:getInstance("LevelDetailModel")
+    levelDetailModel:reloadlistview()
 end
 
 function HomeBarLayer:popUpNextLevel(properties)
@@ -51,6 +70,13 @@ function HomeBarLayer:popUpNextLevel(properties)
         local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
         ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
     end
+end
+
+function HomeBarLayer:mapPopUp(event)
+    self:popUpNextLevel(self.properties)
+    self:popUpGoldGift(self.properties)
+    self:popUpWeaponGift(self.properties)
+    self:initDailyLogin()
 end
 
 function HomeBarLayer:initDailyLogin()
@@ -168,8 +194,6 @@ function HomeBarLayer:initHomeLayer()
         self.btnBack:setVisible(true)
         self:refreshCommonLayer("StoreLayer")
 
-        local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
         self.btnInlay:setButtonEnabled(true)
         self.btnStore:setButtonEnabled(false)
         self.btnArsenal:setButtonEnabled(true)

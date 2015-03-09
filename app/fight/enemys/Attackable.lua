@@ -262,15 +262,6 @@ function Attackable:checkPlace(offset)
 end
 
 
-
-function Attackable:checkIdle()
-	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	if currentName == "" then
-		-- print("playStand()")				
-		self:playStand()
-	end
-end
-
 function Attackable:play(state, handlerFunc)
 	local per = self.enemy:getHp() / self.enemy:getMaxHp()
 	-- print("进栈 state: "..state..", 当前血量:"..per)
@@ -379,7 +370,14 @@ function Attackable:checkAnim()
 	if self.enemy:isDead() then return end
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	if currentName == "" or currentName == nil then 	
-		print("Attackable checkAnim:" .. self:getEnemyType())	
+		-- print("Attackable checkAnim:" .. self:getEnemyType())	
+		self:playStand()
+	end
+end
+
+function Attackable:checkIdle()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	if currentName == "" then		
 		self:playStand()
 	end
 end

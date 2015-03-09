@@ -69,6 +69,7 @@ function LevelMapLayer:initChooseLayer()
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
     self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
     local btnSale = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
+    btnSale:setVisible(false)
     local btnGold = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
     local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
@@ -163,16 +164,18 @@ function LevelMapLayer:initChooseLayer()
         end
     end)
 
-    btnSale:setTouchEnabled(true)
-    addBtnEventListener(btnSale, function(event)
-        if event.name=='began' then
-            return true
-        elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("timeGiftBag", {}, "主界面_点击限时礼包")
-        end
-    end)
 
+    --todo 限时礼包，暂时隐藏
+
+    -- btnSale:setTouchEnabled(true)
+    -- addBtnEventListener(btnSale, function(event)
+    --     if event.name=='began' then
+    --         return true
+    --     elseif event.name=='ended' then
+    --         local buyModel = md:getInstance("BuyModel")
+    --         buyModel:showBuy("timeGiftBag", {}, "主界面_点击限时礼包")
+    --     end
+    -- end)
     btnGold:setTouchEnabled(true)
     addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
