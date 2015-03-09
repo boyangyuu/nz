@@ -20,8 +20,6 @@ function FightResultFailPopup:initUI()
 
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     local btnrevive = cc.uiloader:seekNodeByName(self, "btnrevive")
-    local rolepanel = cc.uiloader:seekNodeByName(self, "role")
-    local roleimg = display.newSprite("#role_anqi.png")
 
     local armature = ccs.Armature:create("ydfh")
     armature:setPosition(180,60)
@@ -29,8 +27,6 @@ function FightResultFailPopup:initUI()
     -- addChildCenter(armature, btnrevive)
     armature:getAnimation():play("ydfh" , -1, 1)
 
-    roleimg:scale(1.33)
-    addChildCenter(roleimg, rolepanel)
     btnback:setTouchEnabled(true)
     addBtnEventListener(btnback, function(event)
         if event.name=='began' then

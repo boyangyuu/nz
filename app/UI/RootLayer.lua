@@ -52,6 +52,8 @@ function RootLayer:showLoadLayer(type)
     self:clearCache()
 
     --addcache
+    self:addResPublic()
+
     if type == "home" then 
         self:addResHome()
     elseif type == "fight" then
@@ -63,18 +65,29 @@ function RootLayer:clearCache()
     display.removeUnusedSpriteFrames()
 end
 
+function RootLayer:addResPublic()
+    cc.FileUtils:getInstance():addSearchPath("res/public")
+    display.addSpriteFrames("commonPng0.plist", "commonPng0.png", handler(self, self.imageLoaded) ) 
+    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png", handler(self, self.imageLoaded))
+end
+
+function RootLayer:addSpriteFrames( ... )
+    display.addSpriteFrames("commonPng0.plist", "commonPng0.png", handler(self, self.imageLoaded) ) 
+end
+
 function RootLayer:addResHome()
     -- display.removeUnusedSpriteFrames()
     --sprite
     print("function RootLayer:addResHome()")
     cc.FileUtils:getInstance():addSearchPath("res/public")
-    display.addSpriteFrames("allImg0.plist", "allImg0.png" ,handler(self, self.imageLoaded))
-    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png" ,handler(self, self.imageLoaded))
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
 
-    local bossImgs = {"boss01","boss02","dzboss","renzb"}
- 
+    local bossImgs = {
+          "dzboss",
+         "boss01", "boss01_1", "boss01_2", 
+         "boss02", "boss02_1", "boss02_2",    
+         "renzb", }
     for i,v in ipairs(bossImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded)) 
@@ -186,10 +199,8 @@ end
 
 function RootLayer:addResFight()
     cc.FileUtils:getInstance():addSearchPath("res/public")    
-    display.addSpriteFrames("allImg0.plist", "allImg0.png", handler(self, self.imageLoaded) ) 
-    display.addSpriteFrames("role0.plist", "role0.png" ,handler(self, self.imageLoaded))   
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))
-    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png", handler(self, self.imageLoaded))
+
 
     --sound effect
     local uiEffects = {"jijia_open.wav", "jijia_close.wav", "glass.wav", "gold.wav", "golds.wav", "hzd.wav", 
@@ -202,10 +213,15 @@ function RootLayer:addResFight()
 
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
-    local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "boss01","boss02", "dunbing", 
-        "sanbing01", "daodan", "zpbing", "tieqiu", "shouleib", "shoulei", "hs","feiji","yyc",
-          "xiaorz", "boss02_1", "boss02_2",    
-        "renzb", "feibiao","dzboss","zzw",
+    local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
+        "sanbing01", "zpbing", "shouleib",  "hs","feiji","yyc",
+        "shoulei", "daodan", "tieqiu", 
+         "dzboss",
+         "boss01", "boss01_1", "boss01_2", 
+         "boss02", "boss02_1", "boss02_2",    
+         "renzb", 
+         "xiaorz", 
+         "feibiao","zzw",
         "qiqiu01", "qiqiu02", "qiqiu03"}
  
     for i,v in ipairs(enemyImgs) do
@@ -314,6 +330,7 @@ function RootLayer:addResFightMusic()
     -- local names = {}
 end
 
+--sprite
 function RootLayer:imageLoaded(plist, image)
     --todo 加个尾图 方便测试 例如ima ge == "res/ended.png"
     -- if image == "res/LevelMap/thj_bx/thj_bx0.png" then
@@ -329,6 +346,7 @@ function RootLayer:imageLoaded(plist, image)
     end
 end
 
+--armature
 function RootLayer:dataLoaded(percent)
     -- print(" dataLoaded() percent:"..percent)
     if percent == 1 then

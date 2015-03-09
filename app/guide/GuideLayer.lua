@@ -158,6 +158,8 @@ function GuideLayer:isTouchTarget(pos)
 end
 
 function GuideLayer:loadCCS()
+	cc.FileUtils:getInstance():addSearchPath("res/public")
+	display.addSpriteFrames("commonPng0.plist", "commonPng0.png") 
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 

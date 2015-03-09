@@ -137,10 +137,7 @@ function BaseEnemyView:playWalk()
     local widthOffset = define.kEnemyWalkWidth * isLeft * self:getScale()
     local isAble = self:checkPlace(widthOffset)
 
-    if not isAble then
-    	self:checkIdle() 
-    	return 
-    end
+    if not isAble then return end
 	self.armature:getAnimation():play("walk" , -1, 1)
 	local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
     local seq = cc.Sequence:create(action)	

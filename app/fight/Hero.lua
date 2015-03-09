@@ -57,6 +57,7 @@ function Hero:ctor(properties)
     self:initGuns()
     self.isReloading = false
     self.killCnt = 0
+    self.killKeepCnt = 0
     self.killGoldIndex = 1
 end
 
@@ -151,9 +152,10 @@ end
 
 function Hero:killEnemy(enemyPos, award)
     self.killCnt = self.killCnt + 1
+
     --check gold
     local curLimit = self:getCurGoldLimit()
-    if curLimit and self.killCnt ==  curLimit then 
+    if curLimit and self.killCnt == curLimit then 
         print("激活黄武")
         self.fightInlay:activeGold()
         self.killGoldIndex = self.killGoldIndex + 1
@@ -162,7 +164,7 @@ function Hero:killEnemy(enemyPos, award)
     self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
                         value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
-        enemyPos = enemyPos, award = award})    
+        enemyPos = enemyPos, award = award})
 end
 
 function Hero:getCurGoldLimit()
@@ -189,7 +191,6 @@ end
 function Hero:setIsReloading(isReloading)
     self.isReloading = isReloading
 end
-
 
 --镶嵌相关
 function Hero:getFightInlay()
@@ -307,7 +308,6 @@ function Hero:showTuhao()
                     deneyBuyFunc = handler(self, self.onDenyFullHp)}
                     ,"战斗界面_10%血")    
 end
-
 
 function Hero:onBuyFullHp()
     --clear pause
