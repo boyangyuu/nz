@@ -27,7 +27,7 @@ local waves = {
 				pos = {360},
 				property = {
 					placeName = "place5",  
-					startState = "rollleft",
+					startState = "rollright",
 					id = 1,
 				},
 			},
@@ -107,18 +107,18 @@ local waves = {
 					type = "dao",
 					missileId = 5,
 					missileType = "lei",
-					startState = "rollright",
+					startState = "rollleft",
 				},
 			},
 			{
 				time = 15,
 				num = 1,
 				delay = {0},
-				pos = {600},
+				pos = {760},
 				property = {
 					placeName = "place5",  
 					id = 1,
-					startState = "rollright",
+					startState = "rollleft",
 				},
 			},
 			{
@@ -132,26 +132,48 @@ local waves = {
 					startState = "rollright",
 				},
 			},
-		},
-	}, 
-	{
-		enemys = {
 			{
-				descId = "zpbing",               --简介
-				time = 3,
+				time = 19,
 				num = 1,
-				delay = {4},
-				pos = {500},
+				delay = {0},
+				pos = {650},
 				property = {
-					placeName = "place11",  
-					type = "dao",
-					id = 2,
-					missileId = 3,
-					missileType = "daodan",
+					placeName = "place9",  
+					id = 1,
+					startState = "rollleft",
+				},
+			},
+			{
+				time = 20,
+				num = 1,
+				delay = {0},
+				pos = {50},
+				property = {
+					placeName = "place5",  
+					id = 1,
+					startState = "rollright",
 				},
 			},
 		},
-	},
+	}, 
+	-- {
+	-- 	enemys = {
+	-- 		{
+	-- 			descId = "zpbing",               --简介
+	-- 			time = 3,
+	-- 			num = 1,
+	-- 			delay = {4},
+	-- 			pos = {500},
+	-- 			property = {
+	-- 				placeName = "place11",  
+	-- 				type = "dao",
+	-- 				id = 2,
+	-- 				missileId = 3,
+	-- 				missileType = "daodan",
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
 
 }
 --enemy的关卡配置
@@ -186,7 +208,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {7,65,120,180}   --黄武激活所需杀人个数
+	self.goldLimits = {300}   --备份数量7  黄武激活所需杀人个数
 
 end
 
