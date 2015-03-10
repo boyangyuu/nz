@@ -1,8 +1,8 @@
 
 local DialogConfigs = import(".DialogConfigs")
-
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 local DialogLayer = class("DialogLayer", function()
-    return display.newLayer()
+    return display.newColorLayer(LayerColor_BLACK)
 end)
 
 function DialogLayer:ctor()
@@ -65,7 +65,7 @@ end
 function DialogLayer:refreshUI()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
-	local levelId = "level"..fight:getLevelId()
+	local levelId = fight:getLevelId()
 	local appear  = self.dialog:getAppearType() 
 
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)

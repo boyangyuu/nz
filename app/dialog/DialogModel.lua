@@ -11,9 +11,9 @@ function Dialog:ctor(properties)
 	Dialog.super.ctor(self, properties)
 end
 
-local is = true
-function Dialog:check(appear)
+function Dialog:check(appear, callfunc)
 	assert(appear, "appearType is nil")
+	self.callfunc   = callfunc
 	self.appearType = appear
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
@@ -22,11 +22,10 @@ function Dialog:check(appear)
         levelId = tostring(levelId)
         levelId = string.gsub(levelId, "%.", "_")
 	end
-	levelId = "level"..levelId
 	local config = DialogConfigs.getConfig(groupId,levelId,appear)
 	-- dump(config, "config")
 	if config == nil then
-		self:finishDialog()
+		self.callfunc()
 	else
 		self:startDialog()
 	end
@@ -44,7 +43,6 @@ function Dialog:getDialogNum()
         levelId = tostring(levelId)
         levelId = string.gsub(levelId, "%.", "_")
 	end
-	levelId = "level"..levelId
 	local appear  = self:getAppearType()
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	assert(configs, "configs is nil")
@@ -54,9 +52,8 @@ end
 function Dialog:finishDialog()
 	--dispatch
 	-- print("function Dialog:finishDialog()")
+	self.callfunc()
 	self:dispatchEvent({name = Dialog.DIALOG_FINISH_EVENT})
-	local fight = md:getInstance("Fight")
-	fight:onFinishDialog(self.appearType)
 end
 
 function Dialog:startDialog()

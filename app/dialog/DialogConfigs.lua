@@ -1,8 +1,23 @@
 local DialogConfigs = class("DialogConfigs", cc.mvc.ModelBase)
 
-local configs = {}
+local kDialogConfig = {}
+kDialogConfig["group0"] = {
+	level0 = {
+		award = {
+			{role = "安琪儿",imgname = "role_anqi", msg = "敌人越来越多! 阿杰快坚持不住了! ", pos = "right"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了, 看你是新手的份上, 把我的枪借你一用!", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "多谢!", pos = "left"},
+		},	
 
-configs[1]  = {
+		after = {
+			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊!! 你开加特林的姿势真的真的好帅啊!! ", pos = "right"},		
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话, 谁开加特林都帅", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰, 想买这把酷酷的武器的话, 到武器商城就有卖哦!!", pos = "right"},		
+		},			
+	},
+}
+
+kDialogConfig["group1"]  = {
 	level1 = {
 		forward = {
 			{role = "安琪儿", imgname = "role_anqi",msg = "杰,敌人的弱点在头部,爆头会造成三倍伤害！", pos = "right"},
@@ -10,6 +25,7 @@ configs[1]  = {
 			{role = "杰",imgname = "role_jie", msg = "了解，看我黄金爆头！！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "加油，不要辱没了我们龙组的威名！", pos = "right"},
 		},
+
 	},
 	level2 = {
 		forward = {
@@ -18,6 +34,7 @@ configs[1]  = {
 			{role = "安琪儿",imgname = "role_anqi", msg = "手雷也是可以打掉的哦！", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "哈哈,全记住了,就是优先打弱点！", pos = "left"},		
 		},
+
 		after = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！后续敌人的弱点就靠你自己发现了", pos = "left"},
 		},	
@@ -27,8 +44,7 @@ configs[1]  = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！后续敌人的弱点就靠你自己发现了", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "杰，战斗结束后会产出大量的镶嵌道具！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "收到！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "太卑鄙了！", pos = "left"},
-		},
+		},		
 	},
 	level4 = {
 		forward = {
@@ -36,10 +52,6 @@ configs[1]  = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，装备镶嵌道具会大幅提升战斗力！",pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "全套黄金镶嵌才能触发黄金武器哦!", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "明白了,镶嵌完毕", pos = "left"},
-			-- {role = "鬼眼",imgname = "role_guiyan", msg = "将敌人抵挡在基地外", pos = "right"},
-			-- {role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
-			-- {role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
-			-- {role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
 		},
 	},
 	level5 = {
@@ -70,7 +82,7 @@ configs[1]  = {
 	},
 }
 
-configs[2]  = {
+kDialogConfig["group2"]  = {
 	level1 = {
 		forward = {
 			{role = "夜玫瑰", imgname = "role_yemeigui",msg = "沙漠深处发现鬼眼行踪！", pos = "left"},
@@ -122,12 +134,23 @@ configs[2]  = {
 }
 
 function DialogConfigs.getConfig(groupId,levelId,appear)
-	local gid = configs[groupId]
-	if gid == nil then return nil end
-	local lid = gid[levelId]
-	if lid == nil then return nil end
-	local dialogTable = lid[appear]
-	return dialogTable
+	-- print("groupId", groupId)
+	-- print("appear", appear)
+	-- print("levelId", levelId)
+	local configGroup = kDialogConfig["group" .. groupId]
+	-- dump(configGroup, 'configGroup')
+	if configGroup == nil then return 
+		nil 
+	end
+
+	local configLevel = configGroup["level" .. levelId]
+	-- dump(configLevel, 'configLevel')
+	if configLevel == nil then 
+		return nil 
+	end
+	local config = configLevel[appear]
+	-- dump(config, 'config')
+	return config
 end
 
 return DialogConfigs

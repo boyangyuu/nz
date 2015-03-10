@@ -5,10 +5,12 @@ local Define = class("Define", cc.mvc.ModelBase)
 --hero
 Define.kHeroBaseHp 				= 100.0  --角色血量
 Define.kHeroCritScale 			= 3.0  --暴击倍数
-
+Define.kHeroHpLess 				= 0.1  --血量剩下0.1的时候 飘红
 Define.kHeroHelper				= 0  --默认回血0/s
-
 Define.kCoolDownScale           = 1.0   --枪的冷却时间系数
+
+Define.kHeroKillKeepCnt			= 3 	--启动连杀动画
+Define.kHeroKillKeepCd			= 2.0 	--连杀cd 2秒清空连杀
 
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 5.0    --左右移动速度

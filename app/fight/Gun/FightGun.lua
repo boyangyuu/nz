@@ -12,19 +12,20 @@ end
 --枪械简介
 function FightGun:showGunIntro(gunData) -- showEnemyIntro
 	assert(gunData, "gunData is nil")
-	local function callfuncStart()
-		print("local function callfuncStart()")
+	local function callfuncDialogEnd()
 		self:dispatchEvent({name = FightGun.HELP_START_EVENT,
 			gunId = gunData.id})
 	end
 
-	local function callfuncEnd()
-		print("callfuncEnd")
-		self:dispatchEvent({name = FightGun.HELP_END_EVENT})
+
+	local function callfuncStart()
+		local fight = md:getInstance("Fight")
+		fight:pauseFight(true)
+	    local dialog = md:getInstance("DialogModel")
+	    dialog:check("award",  callfuncDialogEnd)   
 	end
 
 	scheduler.performWithDelayGlobal(callfuncStart, gunData.delay)
-	scheduler.performWithDelayGlobal(callfuncEnd, gunData.time)
 end
 
 function FightGun:changeHelpGun(id)

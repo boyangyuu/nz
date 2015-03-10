@@ -15,7 +15,7 @@ local Hero          = class("Hero", Actor)
 
 --effect
 Hero.EFFECT_HURT_BOMB_EVENT      = "EFFECT_HURT_BOMB_EVENT"    --效果_导弹炸屏幕
-
+Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    
 --skill
 Hero.SKILL_ROBOT_START_EVENT      = "SKILL_ROBOT_START_EVENT"    --机甲开启
 Hero.SKILL_DEFENCE_SWITCH_EVENT   = "SKILL_DEFENCE_SWITCH_EVENT" --护盾开启
@@ -43,8 +43,8 @@ Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 
 --hp
-Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 Hero.AWARD_GOLD_INCREASE_EVENT  = "AWARD_GOLD_INCREASE_EVENT"
+Hero.HP_STATE_EVENT             = "HP_STATE_EVENT"
 
 
 function Hero:ctor(properties)
@@ -59,6 +59,7 @@ function Hero:ctor(properties)
     self.killCnt = 0
     self.killKeepCnt = 0
     self.killGoldIndex = 1
+    self.isLessHp = false
 end
 
 
@@ -165,6 +166,26 @@ function Hero:killEnemy(enemyPos, award)
                         value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
         enemyPos = enemyPos, award = award})
+
+    --check keep kill
+    self:checkKeepKill()
+end
+
+function Hero:checkKeepKill()
+    if self.killKeepCnt >= define.kHeroKillKeepCnt then
+        print("连杀动画!!!!!")
+
+    end
+    self.killKeepCnt = self.killKeepCnt + 1
+    if self.keepKillHandler then 
+        scheduler.unscheduleGlobal(self.keepKillHandler)
+        self.keepKillHandler = nil
+    end
+    self.keepKillHandler = scheduler.scheduleGlobal(handler(self, self.restoreKeepKill), define.kHeroKillKeepCd)
+end
+
+function Hero:restoreKeepKill()
+    self.killKeepCnt = 0
 end
 
 function Hero:getCurGoldLimit()
@@ -260,6 +281,21 @@ function Hero:decreaseHp(hp)
     else
         Hero.super.decreaseHp(self, hp)
     end
+end
+
+function Hero:onHpChange()
+    local maxHp = self:getMaxHp()
+    local hp    = self:getHp()
+    local isLess = (hp / maxHp) < define.kHeroHpLess
+    if self.isLessHp ~= isLess then 
+        self.isLessHp = isLess
+        self:dispatchEvent({name = Hero.HP_STATE_EVENT, 
+            isLessHp = self.isLessHp})
+    end
+end
+
+function Hero:getIsLessHp()
+    return self.isLessHp
 end
 
 function Hero:getIsPause()
