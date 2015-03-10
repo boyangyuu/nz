@@ -164,7 +164,24 @@ local waves = {
 					startState = "enterleft",
 					lastTime = 40.0,		                                    --持续时间			
 				},
-			},	
+			},
+			-- {
+			-- 	descId = "yyc", --简介
+			-- 	time = 2,
+			-- 	num = 1,
+			-- 	pos = {200},
+			-- 	delay = {4},                            -- 吉普车
+			-- 	property = {
+			-- 		type = "jipu" ,
+			-- 		id = 12,
+			-- 		placeName = "place12",
+			-- 		missileId = 6,
+			-- 		missileType = "daodan",
+			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+			-- 		startState = "enterleft",
+			-- 		lastTime = 30.0,		--持续时间			
+			-- 	},
+			-- },		
 			{
 				time = 19,
 				num = 3,
