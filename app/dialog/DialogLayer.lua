@@ -1,8 +1,9 @@
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 
 local DialogConfigs = import(".DialogConfigs")
 
 local DialogLayer = class("DialogLayer", function()
-    return display.newLayer()
+	return display.newColorLayer(LayerColor_BLACK)
 end)
 
 function DialogLayer:ctor()

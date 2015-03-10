@@ -29,7 +29,11 @@ function PropModel:costProp(nameid,costNum)
 	local propnum = prop.num - costNum
 	data.prop[nameid].num = propnum
 	setUserData(data)
-    um:use(nameid, costNum, 0)   
+	if nameid == "lei" then
+		um:use("手雷", costNum, 0)
+	elseif nameid == "jijia" then
+		um:use("机甲", costNum, 0)
+	end
 end
 
 
