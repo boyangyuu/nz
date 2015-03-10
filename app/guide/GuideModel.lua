@@ -79,7 +79,7 @@ function Guide:doGuideNext()
 	end
 
 	-- --um start
-	um:startLevel("新手:" .. lastconfigStep["id"])
+	um:startLevel("新手:" .. self.curConfig["id"])
 
 	--update listenData
 	local id = configStep.id
