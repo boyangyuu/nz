@@ -1,3 +1,4 @@
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 
 local DialogConfigs = import(".DialogConfigs")
 local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
@@ -66,8 +67,11 @@ function DialogLayer:refreshUI()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
 	local levelId = fight:getLevelId()
+	if math.floor(levelId) < levelId then
+        levelId = tostring(levelId)
+        levelId = string.gsub(levelId, "%.", "_")
+	end
 	local appear  = self.dialog:getAppearType() 
-
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	local sentence = configs[self.index]
 	local role = sentence["role"]

@@ -21,7 +21,7 @@ local waves = {
 				},
 			},
             {
-				time = 6,	
+				time = 7,	
 				num = 4,
 				pos = {200,350,300,450,},
 				delay = {0.9,1.9,2.3,1.6},
@@ -32,7 +32,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 8,	
 				num = 2,
 				pos = {300,350},
 				delay = {0.5,1},
@@ -87,10 +87,10 @@ local waves = {
 				pos = {45},
 				property = { 
 					placeName = "place6",
-					id = 5,
+					id = 2,
 					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					missileId = 3,
+					missileType = "lei",
 				},
 			},
 			{
@@ -206,10 +206,10 @@ local waves = {
 				pos = {45},
 				property = { 
 					placeName = "place7",
-					id = 5,
+					id = 2,
 					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					missileId = 3,
+					missileType = "lei",
 				},
 			},
 			{
@@ -223,6 +223,17 @@ local waves = {
 					type = "dao",
 					missileId = 3,
 					missileType = "lei",
+				},
+			},
+			{
+				time = 9,	
+				num = 2,
+				pos = {180,500},
+				delay = {0.5,1},
+				property = { 
+					placeName = "place11",
+					startState = "rollright",                                    
+					id = 1,
 				},
 			},
 			{
@@ -250,18 +261,7 @@ local waves = {
 					missileId = 3,
 					missileType = "lei",
 				},
-			},
-			{
-				time = 11,	
-				num = 2,
-				pos = {180,500},
-				delay = {0.5,1},
-				property = { 
-					placeName = "place11",
-					startState = "rollright",                                    
-					id = 1,
-				},
-			},
+			},	
 		},
 	},
                                                                                        --第二波20个怪
@@ -283,7 +283,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 2.5,
 				num = 3,
 				pos = {300,450,750},                               
 				delay = {0.4,0.9,1.4},                            
@@ -297,7 +297,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
+				time = 3,
 				num = 3,
 				pos = {400,460,600},                               
 				delay = {0.2,1.5,4},                            
@@ -311,7 +311,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 5,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -374,22 +374,22 @@ local waves = {
 	    },		
 	}
 }
---enemy的关卡配置                        mp5伤害65  无镶嵌   3枪伤害195  4枪伤害260 dps<1
+--enemy的关卡配置                        mp5伤害65  青铜镶嵌   3枪伤害195  4枪伤害260 dps<1
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=2,hp=200,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=4,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=200,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
+	{id=2,image="shouleib",demage=0,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=4,hp=1,
+	{id=3,image="shoulei",demage=5,hp=1,
 	weak1=1},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=200,
+	{id=4,image="sanbing01",demage=0,hp=327,
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
@@ -414,7 +414,7 @@ local enemys = {
 
 	
 	--人质         type = "renzhi",                                             speakRate =120,speakCd = 2.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
+	{id=10,image="hs",demage=0,hp=1000,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
 	weak1=1},
 
 	--飞机         type = "feiji" ,

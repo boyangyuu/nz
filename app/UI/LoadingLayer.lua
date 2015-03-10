@@ -19,9 +19,8 @@ configs = {
 }
 
 function LoadingLayer:ctor()
-	self:loadCCS()
-	self:initUI()
-	-- self:changeHomeLayer()
+	-- self:loadCCS()
+	-- self:initUI()
     self:setNodeEventEnabled(true)
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_SHOW_EVENT, handler(self, self.onShow))
@@ -29,8 +28,14 @@ function LoadingLayer:ctor()
     self:setVisible(false)
 end
 
-function LoadingLayer:loadCCS()
+function LoadingLayer:loadHomeCCS()
     local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.json")
+    self:addChild(controlNode)
+end
+
+function LoadingLayer:loadFightCCS()
+    local rans = math.random(2,3)
+    local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")    
     self:addChild(controlNode)
 end
 
@@ -75,7 +80,17 @@ function LoadingLayer:showPercent()
     end
 end
 
+function LoadingLayer:loadCCS(type)
+    if type == "home"then
+        self:loadHomeCCS()
+    elseif type == "fight" then
+        self:loadFightCCS()
+    end
+end
+
 function LoadingLayer:onShow(event)
+    self:loadCCS(event.type)
+    self:initUI()
     self:setVisible(true)
     self:setDesc()
     self:playAnim()
