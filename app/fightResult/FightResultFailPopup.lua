@@ -53,6 +53,7 @@ function FightResultFailPopup:onClickRelive()
 end
 
 function FightResultFailPopup:onClickBackHome()
+    local buyModel = md:getInstance("BuyModel")
     local fight  = md:getInstance("Fight")
     fight:onGiveUp()
 
