@@ -60,7 +60,6 @@ function StoryLayer:initTouchEvent()
 				self.id = self.id + 1
 				self:changeTalk()
 			else
-
 				local data = getUserData()
 				data.guide.gamePre = true
 				setUserData(data)

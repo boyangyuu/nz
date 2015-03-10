@@ -55,7 +55,6 @@ function ChongBossView:playTieQiu()
 			missileType = "tie",
 			srcScale = self:getScale(), --导弹view用
 			demageScale = self.enemy:getDemageScale(),
-			animName = "bls",
 			destScale = 3.0,
 			id = self.property["qiuId"], 
 		}

@@ -1,9 +1,9 @@
 local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 
 local DialogConfigs = import(".DialogConfigs")
-
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 local DialogLayer = class("DialogLayer", function()
-	return display.newColorLayer(LayerColor_BLACK)
+    return display.newColorLayer(LayerColor_BLACK)
 end)
 
 function DialogLayer:ctor()
@@ -71,7 +71,6 @@ function DialogLayer:refreshUI()
         levelId = tostring(levelId)
         levelId = string.gsub(levelId, "%.", "_")
 	end
-	levelId = "level"..levelId
 	local appear  = self.dialog:getAppearType() 
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	local sentence = configs[self.index]

@@ -30,7 +30,6 @@ function HeroLayer:ctor(properties)
 
 	--events
 	cc.EventProxy.new(self.hero, self)
-		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnmeyGold))		
 		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
 	
@@ -130,34 +129,6 @@ function HeroLayer:onActiveGold(event)
     self.audioId =  audio.playSound(soundSrc,false)      
 end
 
-function HeroLayer:bloodBehurtEffect()
-	local strAnim = nil
-	if 1 >= math.random(0, 3) then 
-		strAnim = "blood1"
-	else
-		strAnim = "blood2"
-	end
-
-    local armature = ccs.Armature:create(strAnim)
-    local anim = armature:getAnimation()
-	anim:playWithIndex(0)
-    armature:setPosition(math.random(0, display.width1), math.random(0, display.height1))
-    anim:setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movementI ) 
-	    	if movementType == ccs.MovementEventType.complete then
-	    		armatureBack:stopAllActions()
-	    		armatureBack:removeFromParent() 
-	    	end 
-    	end
-    )
-    self:addChild(armature)
-end
-
-function HeroLayer:onHurtEffect(event)
-	self:screenHurtedEffect()
- 	self:bloodBehurtEffect()
-end
-
 function HeroLayer:updateHp(event)
 	if self.hpUpdateHandler then 
 		scheduler.unscheduleGlobal(self.hpUpdateHandler)
@@ -182,27 +153,19 @@ function HeroLayer:updateHp(event)
 			
 			return
 		end
+
+		--check hp
+		self.hero:onHpChange()
+
 		if value == 0 then return end
 		self.hero:increaseHp(value)
+
 	end
 	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
 end
 
---英雄受到伤害时,屏幕闪红效果
-function HeroLayer:screenHurtedEffect()
-	local armature = ccs.Armature:create("avatarhit")
-    local ani = armature:getAnimation()
-	ani:play("avatarhit" , -1, 1)
-    armature:setAnchorPoint(0, 0)
-    ani:setMovementEventCallFunc(
-    	function (armatureBack,movementType,movement) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		armatureBack:stopAllActions()
-	    		armatureBack:removeFromParent() 
-	    	end 
-    	end
-    )
-    self:addChild(armature)
+function HeroLayer:checkHpLess()
+	
 end
 
 function HeroLayer:effectGunReload(event)

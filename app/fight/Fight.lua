@@ -94,11 +94,11 @@ function Fight:refreshUm()
 end
 
 function Fight:willStartFight()
-    self:checkDialog("forward")
+    self:checkDialogForward()
 end
 
 function Fight:willEndFight()
-    self:checkDialog("after")
+    self:checkDialogAfter()
 end
 
 function Fight:startFight()
@@ -202,21 +202,20 @@ function Fight:isPauseFight()
     return self.isPause
 end
 
-function Fight:checkDialog(appearType)
+function Fight:checkDialogForward()
     local dialog = md:getInstance("DialogModel")
-    dialog:check(appearType)
+    dialog:check("forward", handler(self, self.startFight))     
+end
+ 
+function Fight:checkDialogAfter()
+    local dialog = md:getInstance("DialogModel")
+    dialog:check("after",  handler(self, self.endFight))
 end
 
-function Fight:onFinishDialog(appearType)
-    if appearType == "forward" then
-        self:startFight()
-    elseif appearType == "after" then
-        self:endFight()
-    elseif appearType == "middle" then
-        --
-    else 
-        assert(true, "invalid appearType :"..appearType)
-    end
+function Fight:checkDialogAward(callfunc)
+    local dialog = md:getInstance("DialogModel")
+    self:pauseFight(true)
+    dialog:check("award",  callfunc)    
 end
 
 ---- 关卡相关 ----

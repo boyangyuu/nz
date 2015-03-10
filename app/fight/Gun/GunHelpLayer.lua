@@ -67,12 +67,21 @@ function GunHelpLayer:onShow(event)
     local x,y = self.node:getPosition()
     self.node:setPositionY(display.height1)
     self.node:moveTo(1.0, x, y)
+
+    --pause
+    local fight = md:getInstance("Fight")
+    fight:pauseFight(true)    
 end
 
 function GunHelpLayer:onClickGet()
     print("function GunHelpLayer:onClickGet()")
     self.node:setVisible(false)
     self.fightGun:changeHelpGun(self.gunId)
+
+    --pause
+    local fight = md:getInstance("Fight")
+    fight:pauseFight(false)
+
     if self.gunId == 8 then
         print("function GunHelpLayer:onClickGe111")
         self:showHelpDesc()
