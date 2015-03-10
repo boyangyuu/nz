@@ -45,7 +45,7 @@ end
 
 function RootLayer:showLoadLayer(type)
     print("function RootLayer:showLoadLayer(type)")
-    ui:showLoad()
+    ui:showLoad(type)
 
     --clear
     self.isadded = false
@@ -66,20 +66,19 @@ function RootLayer:clearCache()
 end
 
 function RootLayer:addResPublic()
-    cc.FileUtils:getInstance():addSearchPath("res/public")
-    display.addSpriteFrames("commonPng0.plist", "commonPng0.png", handler(self, self.imageLoaded) ) 
-    display.addSpriteFrames("weaponicon0.plist", "weaponicon0.png", handler(self, self.imageLoaded))
+    display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/commonPNG/weaponicon0.plist", "res/commonPNG/weaponicon0.png", handler(self, self.imageLoaded))
 end
 
-function RootLayer:addSpriteFrames( ... )
-    display.addSpriteFrames("commonPng0.plist", "commonPng0.png", handler(self, self.imageLoaded) ) 
+function RootLayer:addSpriteFrames()
+    display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded))
 end
 
 function RootLayer:addResHome()
     -- display.removeUnusedSpriteFrames()
     --sprite
     print("function RootLayer:addResHome()")
-    cc.FileUtils:getInstance():addSearchPath("res/public")
+    cc.FileUtils:getInstance():addSearchPath("res/commonPNG")
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
 
@@ -198,7 +197,7 @@ function RootLayer:addResHome()
 end
 
 function RootLayer:addResFight()
-    cc.FileUtils:getInstance():addSearchPath("res/public")    
+    cc.FileUtils:getInstance():addSearchPath("res/commonPNG")    
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))
 
 
@@ -287,25 +286,25 @@ function RootLayer:addResFight()
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
 
-    local rwkssrc = "res/public/Anim/renwuks/renwuks.csb"
+    local rwkssrc = "res/Fight/uiAnim/renwuks/renwuks.csb"
     manager:addArmatureFileInfoAsync(rwkssrc,  handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/public/Anim/renwuks/renwuks0.plist", 
-        "res/public/Anim/renwuks/renwuks0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/Fight/uiAnim/renwuks/renwuks0.plist", 
+        "res/Fight/uiAnim/renwuks/renwuks0.png", handler(self, self.imageLoaded)) 
 
-    local drlxsrc = "res/public/Anim/direnlx/direnlx.csb"
+    local drlxsrc = "res/Fight/uiAnim/direnlx/direnlx.csb"
     manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/public/Anim/direnlx/direnlx0.plist", 
-        "res/public/Anim/direnlx/direnlx0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/Fight/uiAnim/direnlx/direnlx0.plist", 
+        "res/Fight/uiAnim/direnlx/direnlx0.png", handler(self, self.imageLoaded)) 
 
     local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.csb"
     manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/CommonPopup/animLayer/bossjj/bossjj0.plist", 
         "res/CommonPopup/animLayer/bossjj/bossjj0.png", handler(self, self.imageLoaded)) 
 
-    local qdcxsrc = "res/public/Anim/qiangdicx/qiangdicx.csb"
+    local qdcxsrc = "res/Fight/uiAnim/qiangdicx/qiangdicx.csb"
     manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/public/Anim/qiangdicx/qiangdicx0.plist", 
-        "res/public/Anim/qiangdicx/qiangdicx0.png", handler(self, self.imageLoaded))    
+    display.addSpriteFrames("res/Fight/uiAnim/qiangdicx/qiangdicx0.plist", 
+        "res/Fight/uiAnim/qiangdicx/qiangdicx0.png", handler(self, self.imageLoaded))    
 
    -- --music
    --  self:addResFightMusic()
