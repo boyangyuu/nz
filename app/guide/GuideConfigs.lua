@@ -39,6 +39,7 @@ configs["fight01_move"] = {
 --第0关 开火
 configs["fight01_fire"] = {
 	preGuideId = nil,
+	str = "第0关",
 	steps = {
 		{id = "fight_fire", msg = "", hand = "fire", rolepos = "hide"},
 	}

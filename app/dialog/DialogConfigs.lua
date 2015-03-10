@@ -19,27 +19,34 @@ configs[1]  = {
 			{role = "杰",imgname = "role_jie", msg = "哈哈,全记住了,就是优先打弱点！", pos = "left"},		
 		},
 		after = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！后续敌人的弱点就靠你自己发现了", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！以后敌人的弱点就靠你自己发现了", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "战斗结束后会奖励大量镶嵌道具！不用吝惜使用哦！！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "装备镶嵌道具能大幅提升战斗力！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "太好了,我这就去镶嵌一下！", pos = "left"},
 		},	
 	},
 	level3 = {
 		forward = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！后续敌人的弱点就靠你自己发现了", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "杰，战斗结束后会产出大量的镶嵌道具！", pos = "right"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "收到！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "太卑鄙了！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "哈哈,镶嵌之后强力了好多哦！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "高防御的近战兵会冲在最前面,他们身后藏着的手雷兵才是更大的威胁！！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "优先击杀后面的红衣手雷兵,他造成的伤害更高！", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "永远记住击杀敌人的顺序很重要！！", pos = "left"},
+		},
+	},
+	level3_1 = {
+		forward = {
+			{role = "鬼眼",imgname = "role_guiyan", msg = "将敌人抵挡在基地外", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
 		},
 	},
 	level4 = {
 		forward = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "敌人派出了一个巨大机械怪物-黑暗金刚！找到弱点,消灭它!", pos = "right"},
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，装备镶嵌道具会大幅提升战斗力！",pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，战斗前记得装备镶嵌道具！",pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "全套黄金镶嵌才能触发黄金武器哦!", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "明白了,镶嵌完毕", pos = "left"},
-			-- {role = "鬼眼",imgname = "role_guiyan", msg = "将敌人抵挡在基地外", pos = "right"},
-			-- {role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
-			-- {role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
-			-- {role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
 		},
 	},
 	level5 = {
@@ -64,8 +71,11 @@ configs[1]  = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "哼哼，想抓我？那就要看你的本事了！", pos = "right"},
 		},
 		after = {
-			{role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，找到我姐姐的下落！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，还挺能打，我还有更重要的事情，今天先放过你们。", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "别跑，我姐姐在哪里？", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "追。",pos = "right"},
+			-- {role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，找到我姐姐的下落！", pos = "left"},
+			-- {role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
 		},
 	},
 }
@@ -88,6 +98,14 @@ configs[2]  = {
 		},	
 	},
 	level3 = {
+		forward = {
+			{role = "杰",imgname = "role_jie", msg = "出来吧，鬼眼！我知道你在这！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，可爱的小朋友，又追来了，我忙着哪，没工夫陪你玩哦。", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "闭嘴！你被捕了！叛徒！", pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "哼哼，想抓我？那就要看你的本事了！", pos = "right"},
+		},
+	},
+	level3_1 = {
 		forward = {
 			{role = "杰",imgname = "role_jie", msg = "出来吧，鬼眼！我知道你在这！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，可爱的小朋友，又追来了，我忙着哪，没工夫陪你玩哦。", pos = "right"},

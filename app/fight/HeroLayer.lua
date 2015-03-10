@@ -21,19 +21,16 @@ local HeroLayer = class("HeroLayer", function()
 end)
 
 function HeroLayer:ctor(properties)
-
 	--instance
 	self.hero 	= md:getInstance("Hero")
 	self.guide 	= md:getInstance("Guide")
 	self.inlay 	= md:getInstance("FightInlay")
 	self.defence = md:getInstance("Defence")
 	self.keepKillPercent = 100
+
 	--events
 	cc.EventProxy.new(self.hero, self)
-
 		:addEventListener(Actor.HP_DECREASE_EVENT			, handler(self, self.onHurtEffect))
-	
-		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnemyCallBack))	
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnmeyGold))		
 		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
 	
@@ -45,8 +42,6 @@ function HeroLayer:ctor(properties)
 	
 	self:setTouchEnabled(false) 
 	self:setNodeEventEnabled(true)
-	--test
-
 end
 
 function HeroLayer:loadCCS()
@@ -55,9 +50,6 @@ function HeroLayer:loadCCS()
 end
 
 function HeroLayer:initUI()
-
-	self:initKillTimerNode()
-
 	--defence
 	local defenceNode = cc.uiloader:seekNodeByName(self.ui, "defenceNode")
 	local defenceView = DefenceView.new()
@@ -75,29 +67,10 @@ function HeroLayer:initUI()
 end
 
 function HeroLayer:initData()
-	--robot
-
-	--killtimer
-	self.killCntKeep = 0
-
 	--hp
 	self:updateHp()
 end
 
-function HeroLayer:initKillTimerNode()
-    self.killTimerBg = cc.uiloader:seekNodeByName(self.ui, "killTimerBg")
-    self.killTimerBg:setVisible(false)
-
-    self.killLabel = cc.uiloader:seekNodeByName(self.ui, "labelKillEnemyCount")
-    self.killLabel:setVisible(false)
-
-    self.killTimer = display.newProgressTimer("#huan_lv.png", display.PROGRESS_TIMER_RADIAL)
-    self.killTimerBg:addChild(self.killTimer)
-    self.killTimer:setReverseDirection(true)
-    self.killTimer:setAnchorPoint(0.0,0.0)
-    self.killTimer:setPercentage(100)
-    self.killTimer:setVisible(false)
-end
 
 --杀死敌人后跳出3金币
 function HeroLayer:killEnmeyGold(event)
@@ -157,62 +130,6 @@ function HeroLayer:onActiveGold(event)
     self.audioId =  audio.playSound(soundSrc,false)      
 end
 
---杀掉敌人后的回调
-function HeroLayer:killEnemyCallBack(event)
-	--is already gold
-	local inlay = md:getInstance("FightInlay")
-	local isGold = inlay:getIsActiveGold()
-	
-	--modified by yby 取消黄武需求
-	--[[
-	if not isGold then 
-		self:killEnemyKeep()
-	end
-	]]
-	self:killEnemyKeep()
-end
-
-function HeroLayer:killEnemyKeep()
-	--连杀
-	self.killLabel:setVisible(true)
-	self.killTimerBg	:setVisible(true)
-	self.killCntKeep  = self.killCntKeep + 1	
-	local strKillEnemyCount = string.format("X %d", self.killCntKeep)
-	self.killLabel:setString(strKillEnemyCount)
-
-	--触发黄金武器
-	if define.kGoldActivate <= self.killCntKeep then
-		self.killCntKeep = 0
-		self.inlay:activeGold()
-		return
-	end
-
-	-- body
-	local percent = self.keepKillPercent
-	self.killTimer:setVisible(true)
-	self.killTimer:setPercentage(100)
-	percent = 100
-
-	--如果发生连杀,在第二次倒计时的时候将上次倒计时的进度条关闭
-	if self.killTimerHandler then 
-		scheduler.unscheduleGlobal(self.killTimerHandler)
-		self.killTimerHandler = nil
-	end
-
-    local function tick(dt)
-        if 0 == percent then
-        	scheduler.unscheduleGlobal(self.killTimerHandler)
-        	self.killCntKeep = 0
-    		self.killLabel:setVisible(false)
-			self.killTimerBg:setVisible(false)
-        end
-        self.killTimer:setPercentage(percent - 1)
-        percent = percent - 1
-    end
-
-    self.killTimerHandler = scheduler.scheduleGlobal(tick, 0.03)	
-end
-
 function HeroLayer:bloodBehurtEffect()
 	local strAnim = nil
 	if 1 >= math.random(0, 3) then 
@@ -239,11 +156,6 @@ end
 function HeroLayer:onHurtEffect(event)
 	self:screenHurtedEffect()
  	self:bloodBehurtEffect()
-end
-
---手雷
-function HeroLayer:onThrowGrenade(event)
-
 end
 
 function HeroLayer:updateHp(event)
@@ -312,11 +224,6 @@ function HeroLayer:effectGunReload(event)
 end
 
 function HeroLayer:onCleanup()
-	-- HeroLayer.super.onCleanup(self)
-	if self.killTimerHandler then 
-		scheduler.unscheduleGlobal(self.killTimerHandler)
-		self.killTimerHandler = nil
-	end
 	if self.hpUpdateHandler then
 		scheduler.unscheduleGlobal(self.hpUpdateHandler)
 		self.hpUpdateHandler = nil

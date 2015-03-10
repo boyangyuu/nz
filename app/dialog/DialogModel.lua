@@ -45,6 +45,7 @@ function Dialog:getDialogNum()
         levelId = string.gsub(levelId, "%.", "_")
 	end
 	levelId = "level"..levelId
+
 	local appear  = self:getAppearType()
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	assert(configs, "configs is nil")
