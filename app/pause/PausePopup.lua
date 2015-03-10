@@ -59,7 +59,8 @@ function PausePopup:initButtons()
 	local musicplay = cc.uiloader:seekNodeByName(musicClosedBtn, "musicplay")
 	local musicclose = cc.uiloader:seekNodeByName(musicClosedBtn, "musicclose")
 
-	local isPlaying = audio.isMusicPlaying()
+	local userData = getUserData()
+	local isPlaying = userData.preference.isOpenMusic
 	if isPlaying then
 		musicplay:setVisible(false)
 		musicclose:setVisible(true)
@@ -76,18 +77,20 @@ function PausePopup:initButtons()
 		elseif event.name == 'ended' then 
 
 		self:btnColor(musicClosedBtn, false)
-			local isOpen = audio.isSwitchOpen()
+			-- local isOpen = audio.isSwitchOpen()
 			-- print("music is playing")
-			isOpen = not isOpen
+			local userData = getUserData()
+			local isOpen = userData.preference.isOpenMusic
+			print("isOpen : ", isOpen)
+			-- isOpen = not isOpen
 			musicplay:setVisible(isOpen)
 			musicclose:setVisible(not isOpen)
-			isPlaying = false
-			audio.switchAllMusicAndSounds(isOpen)
+			isPlaying = not isOpen
+			audio.switchAllMusicAndSounds(isPlaying)
 
 			--save
-		    local data = getUserData()
-		    data.preference["isOpenMusic"] = isPlaying
-		    setUserData(data)
+		    userData.preference["isOpenMusic"] = isPlaying
+		    setUserData(userData)
 			-- print("musicClosedBtn is pressed!")
 		end
 	end)
