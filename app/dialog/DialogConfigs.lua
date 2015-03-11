@@ -157,22 +157,21 @@ kDialogConfig["group2"]  = {
 }
 
 function DialogConfigs.getConfig(groupId,levelId,appear)
-	-- print("groupId", groupId)
-	-- print("appear", appear)
-	-- print("levelId", levelId)
 	local configGroup = kDialogConfig["group" .. groupId]
-	-- dump(configGroup, 'configGroup')
 	if configGroup == nil then return 
 		nil 
 	end
 
+	if math.floor(levelId) < levelId then
+        levelId = tostring(levelId)
+        levelId = string.gsub(levelId, "%.", "_")
+	end
+
 	local configLevel = configGroup["level" .. levelId]
-	-- dump(configLevel, 'configLevel')
 	if configLevel == nil then 
 		return nil 
 	end
 	local config = configLevel[appear]
-	-- dump(config, 'config')
 	return config
 end
 
