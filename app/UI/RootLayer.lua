@@ -179,7 +179,6 @@ function RootLayer:addResHome()
     local png   = "res/GiftBag/mrdl/mrdl0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-
     local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
     manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
         local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
@@ -305,6 +304,11 @@ function RootLayer:addResFight()
     manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/Fight/uiAnim/qiangdicx/qiangdicx0.plist", 
         "res/Fight/uiAnim/qiangdicx/qiangdicx0.png", handler(self, self.imageLoaded))    
+
+    local jinbijlsrc = "res/Fight/uiAnim/jinbijl/jinbijl.csb"
+    manager:addArmatureFileInfoAsync(jinbijlsrc, handler(self, self.dataLoaded))
+    display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
+        "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
    -- --music
    --  self:addResFightMusic()
