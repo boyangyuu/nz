@@ -107,7 +107,6 @@ function StartLayer:switchSound()
     setUserData(data)
 end
 
-
 function StartLayer:onEnter()
     self:playBgMusic() 
     local data = getUserData()

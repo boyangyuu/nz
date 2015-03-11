@@ -70,6 +70,11 @@ end
 
 function Robot:startRobot(time)
 	print("Robot:startRobot()")
+	--ju 
+    local levelModel = md:getInstance("LevelDetailModel")
+    local isju = levelModel:isJujiFight() 
+    if isju then return end
+
     --um
     local fight = md:getInstance("Fight")
     local levelInfo = fight:getLevelInfo() 
