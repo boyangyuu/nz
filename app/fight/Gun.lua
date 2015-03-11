@@ -32,7 +32,8 @@ function Gun:initConfig()
 	else
 		print("is help gun")
 	end
-	self.config = self.weaponModel:getFightWeaponValue(self.configId, isInBag)
+	
+	self.config = self.weaponModel:getFightWeaponValue(self.configId, isHelpGun)
 	-- dump(self.config, "self.config gun")
 end
 

@@ -69,7 +69,7 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 	elseif levelParam == "maxLevel" then
 		level = 10
 	elseif levelParam == "minLevel" then 
-		level = 1	
+		level = 0	
 	end
 	local growtableStr = "config/weapon_"..growTableName..".json"
 	local intenlevelData = getRecordByKey(growtableStr,"level",level)[1]
@@ -240,8 +240,8 @@ end
 	@param : 
 	@return: {demage = 100, }
 ]]
-function WeaponListModel:getFightWeaponValue(configId, isInBag)
-	local param = isInBag and nil or "minLevel"
+function WeaponListModel:getFightWeaponValue(configId, isHelpGun)
+	local param = isHelpGun and "minLevel" or nil 
 	local weaponValue = self:getWeaponProperity(configId, param) 
 	assert(weaponValue, "weaponValue is nil id :"..configId)
 	--cooldown
