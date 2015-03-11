@@ -22,7 +22,7 @@ function InfoLayer:ctor()
 		:addEventListener(Hero.GUN_BULLET_EVENT 	, handler(self, self.onRefreshBullet))	
 		:addEventListener(Hero.HP_INCREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.HP_DECREASE_EVENT	, handler(self, self.onHeroHpChange))
-		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.onKillEnemy))	
+		-- :addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.onKillEnemy))	
 	
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
@@ -136,11 +136,11 @@ function InfoLayer:onHeroHpChange(event)
     end			
 end
 
-function InfoLayer:onKillEnemy(event)
-	if self.isGolding then return end 
-	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
-	self.goldProgress:setPercent(per)
-end
+-- function InfoLayer:onKillEnemy(event)
+-- 	if self.isGolding then return end 
+-- 	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
+-- 	self.goldProgress:setPercent(per)
+-- end
 
 -- function InfoLayer:onActiveGold(event)
 -- 	self.isGolding = true

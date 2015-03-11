@@ -243,7 +243,6 @@ local waves = {
 					id = 1,
 				},
 			},
-
 		},
 	},
 
@@ -585,7 +584,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {300}   --黄武激活所需杀人个数  备份数量75,160,250
+
 end
 
 return waveClass
