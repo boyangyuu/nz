@@ -507,7 +507,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {300}   --备份数量48,95,160黄武激活所需杀人个数  本关共15+25+35=75个小怪
+
 end
 
 return waveClass

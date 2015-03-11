@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 
 local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
@@ -269,7 +268,7 @@ end
 
 function InlayModel:getInlayType(inlayid)
 	assert(inlayid, "inlayid")
-	dump(inlayid)
+	-- dump(inlayid)
 
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end

@@ -454,8 +454,13 @@ local enemys = {
 	{id=18,image="feibiao",demage=15,hp=8000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=40000},                             
+	{id=19,image="zzw",demage=10,hp=40000},       
+
+	--小蜘蛛   --type = "bao",
+	{id=20,image="xiaozz",demage=10,hp=400, speed=120,
+	weak1=2},   	                      
 }
+
 
 
 
@@ -512,7 +517,7 @@ local bosses = {
 			},	
 						
 		},
-		enemys1 = {                                                   --第一波召唤自爆兵
+		enemys1 = {                                                   --第一波召唤蜘蛛兵
 			{
 				time = 2,
 				num = 3,
@@ -521,7 +526,7 @@ local bosses = {
 				property = { 
 					placeName = "place6" ,
 					type = "bao",      --爆
-					id = 9,	
+					id = 20,	
 				},
 			},
 			{
@@ -532,7 +537,7 @@ local bosses = {
 				property = { 
 					placeName = "place5" ,
 					type = "bao",      --爆
-					id = 9,	
+					id = 20,	
 				},
 			},
 			{
@@ -543,7 +548,7 @@ local bosses = {
 				property = { 
 					placeName = "place4" ,
 					type = "bao",      --爆
-					id = 9,	
+					id = 20,	
 				},
 			},
 			
@@ -559,7 +564,7 @@ local bosses = {
 				property = { 
 					placeName = "place6" ,
 					type = "bao",      --爆
-					id = 9,	
+					id = 20,	
 				},
 			},
 			{
@@ -569,8 +574,8 @@ local bosses = {
 				pos = {333,666,777,999},
 				property = { 
 					placeName = "place5" ,
-					type = "jin",       --近
-					id = 7,
+					type = "bao",      --爆
+					id = 20,
 				},
 			},
 			{
@@ -580,8 +585,8 @@ local bosses = {
 				pos = {288,338,558,668,998},
 				property = { 
 					placeName = "place4" ,
-					type = "jin",       --盾
-					id = 8,
+					type = "bao",      --爆
+					id = 20,
 				},
 			},
 			
@@ -591,111 +596,76 @@ local bosses = {
 		enemys3 = {                                                   --第三波召唤的兵
 			{
 				time = 2,
-				num = 1,
-				pos = {400},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 120.0,		                                    --持续时间			
+				num = 3,
+				delay = {0.1,0.2,0.3},
+				pos = {390,540,888},
+				property = { 
+					placeName = "place6" ,
+					type = "bao",      --爆
+					id = 20,	
 				},
 			},
 			{
 				time = 5,
-				num = 2,
-				pos = {400,880},
-				delay = {0.3,0.9},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place9",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 120.0,		                                    --持续时间			
+				num = 4,
+				delay = {0.1,0.2,0.3,0.4},
+				pos = {333,666,777,999},
+				property = { 
+					placeName = "place5" ,
+					type = "bao",      --爆
+					id = 20,
 				},
 			},
 			{
 				time = 8,
-				num = 3,
-				pos = {200,550,920},
-				delay = {0.5,1.2,1.8},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 120.0,		--持续时间
-					--demageScale = 1.5                    --伤害翻1.5倍		
-
+				num = 5,
+				delay = {0.1,0.2,0.3,0.4,0.1},
+				pos = {288,338,558,668,998},
+				property = { 
+					placeName = "place4" ,
+					type = "bao",      --爆
+					id = 20,
+					--demageScale = 1.2                    --伤害翻1.5倍
 				},
 			},
 			
 		},	
 
-		enemys4 = {                                                   --第三波召唤的忍者兵
+		enemys4 = {                                                   --第三波召唤的兵
 			{
 				time = 2,
-				num = 1,
-				pos = {400},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 120.0,		                                    --持续时间
-					demageScale = 1.5                    --伤害翻1.5倍			
+				num = 3,
+				delay = {0.1,0.2,0.3},
+				pos = {390,540,888},
+				property = { 
+					placeName = "place6" ,
+					type = "bao",      --爆
+					id = 20,	
 				},
 			},
 			{
 				time = 5,
-				num = 2,
-				pos = {400,880},
-				delay = {0.3,0.9},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place9",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 120.0,		                                    --持续时间
-					--demageScale = 1.5                    --伤害翻1.5倍			
+				num = 4,
+				delay = {0.1,0.2,0.3,0.4},
+				pos = {333,666,777,999},
+				property = { 
+					placeName = "place5" ,
+					type = "bao",      --爆
+					id = 20,
 				},
 			},
 			{
 				time = 8,
-				num = 3,
-				pos = {200,550,920},
-				delay = {0.5,1.2,1.8},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 120.0,		--持续时间
-					--demageScale = 1.2                    --伤害翻1.5倍		
-
+				num = 5,
+				delay = {0.1,0.2,0.3,0.4,0.1},
+				pos = {288,338,558,668,998},
+				property = { 
+					placeName = "place4" ,
+					type = "bao",      --爆
+					id = 20,
+					--demageScale = 1.2                    --伤害翻1.5倍
 				},
 			},
-			
 		},													
 	},
 
@@ -709,7 +679,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {75,160,250}  --黄武激活所需杀人个数
+
 	
 end
 return waveClass

@@ -199,7 +199,6 @@ function waveClass:ctor()
 	self.mapId  = mapId
 	self.limit  = limit
 	self.isNotMoveMap = isNotMoveMap
-	self.goldLimits = {300}   --黄武激活所需杀人个数
 end
 
 return waveClass

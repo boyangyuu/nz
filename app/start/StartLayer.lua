@@ -75,8 +75,8 @@ function StartLayer:initMusicUI()
     btnMusic:setTouchEnabled(true)
     local play = cc.uiloader:seekNodeByName(btnMusic, "play")
     local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
-    play:setVisible(isOpenMusic)
-    stop:setVisible(not isOpenMusic)
+    play:setVisible(not isOpenMusic)
+    stop:setVisible(isOpenMusic)
     
     addBtnEventListener(btnMusic, function(event)
         if event.name == "began" then 
@@ -96,8 +96,8 @@ function StartLayer:switchSound()
     print("isPlaying", isPlaying)
     --switch
 
-    stop:setVisible(not isPlaying)
-    play:setVisible(isPlaying)
+    stop:setVisible(isPlaying)
+    play:setVisible(not isPlaying)
     audio.switchAllMusicAndSounds(isPlaying)
 
     --save

@@ -75,7 +75,7 @@ end
 
 function FightResultFailPopup:payReliveDone()
     local fight = md:getInstance("Fight")
-    fight:payReliveDone()
+    fight:onRelive()
 end
 
 return FightResultFailPopup

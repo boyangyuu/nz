@@ -82,9 +82,9 @@ configs["fight01_jijia"] = {
 configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把雷明顿!  ", skipDelay = 2.0 }, 
-		{id = "afterfight01_inlay", msg = "点击按钮 , 镶嵌道具", skipDelay = 2.0 },		
-		{id = "afterfight01_get", msg = "点击按钮 , 领取雷明顿和镶嵌道具", skipDelay = 2.0 },	
+		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把神狙雷明顿!  "}, 
+		-- {id = "afterfight01_inlay", msg = "点击按钮 , 镶嵌道具" },		
+		{id = "afterfight01_get", msg = "点击按钮 , 领取雷明顿和镶嵌道具"},	
 		{id = "afterfight01_jixu", msg = "点击按钮 , 进入下一关"}, 
 	}
 }
@@ -99,7 +99,7 @@ configs["prefight02"] = {
 		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen"},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
 		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", contentOffset = {x = 0, y = -180},rolepos = "right", },			
-		{id = "prefight02_equip", msg = "点击一键装备 , 装备黄金武器", },		
+		-- {id = "prefight02_equip", msg = "点击一键装备 , 装备黄金武器", },		
 		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
 	}
 }
@@ -130,9 +130,6 @@ configs["fight04"] = {
 		{id = "fight04_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}	
 }
-
-
-
 
 
 function GuideConfigs.getConfig(groupId)

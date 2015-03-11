@@ -13,74 +13,147 @@ local HeroAnimView = class("HeroAnimView", function()
 end)
 
 function HeroAnimView:ctor()
-	local Hero = md:getInstance("Hero")
-	cc.EventProxy.new(Hero, self)
-		:addEventListener(Hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb))	
-		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
-		:addEventListener(Hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
-		:addEventListener(Hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
+	self.hero   	 = md:getInstance("Hero")
+	local fightInlay = md:getInstance("FightInlay")
+	cc.EventProxy.new(self.hero, self)
+		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
+		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
+		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
+		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
+		:addEventListener(self.hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
+		:addEventListener(self.hero.HP_DECREASE_EVENT		, handler(self, self.playHitted))
+		:addEventListener(self.hero.HP_STATE_EVENT			, handler(self, self.playLessHp))
+		:addEventListener(self.hero.GUN_RELOAD_EVENT		, handler(self, self.playGunReload))
 
+	cc.EventProxy.new(fightInlay, self)
+		:addEventListener(fightInlay.INLAY_GOLD_BEGIN_EVENT , handler(self, self.playActiveGold))
+
+	self:loadCCS()
 end
 
-function HeroAnimView:playHurtedBomb(event)
-	-- print("HeroLayer:playHurtedBomb()")
-	local animName = event.animName
-	local armature = ccs.Armature:create(animName)
-	-- assert(armature, "armature os mil animName:"..bls)
-	self:addChild(armature)
-	armature:getAnimation():setMovementEventCallFunc(
-        	function ( armatureBack,movementType,movementId ) 
-    	    	if movementType == ccs.MovementEventType.loopComplete then
-    	    		armature:removeFromParent()
-    	    		armature = nil
-    	    	end
-	    	end)
-	armature:getAnimation():playWithIndex(0 , -1, 1)	
+function HeroAnimView:loadCCS()
+	--爆头
+	self.armatureHeadWind = ccs.Armature:create("btqpg")
+    self:addChild(self.armatureHeadWind) 
+    self.armatureHead = ccs.Armature:create("baotou")
+    self:addChild(self.armatureHead)
 
+    --玻璃碎
+    self.armatureBoli = ccs.Armature:create("bls")
+    self:addChild(self.armatureBoli)
+
+    --血量警告    
+	self.armatureScreenRed = ccs.Armature:create("avatarhit")
+    self:addChild(self.armatureScreenRed)   
+
+    --血花 
+    self.armatureBlood1 = ccs.Armature:create("blood1")
+    self:addChild(self.armatureBlood1) 
+    self.armatureBlood2 = ccs.Armature:create("blood2")
+    self:addChild(self.armatureBlood2)  
+
+    --黄武
+    self.armatureGold 	= ccs.Armature:create("hjwq")
+    self:addChild(self.armatureGold) 
+
+    --换子弹
+	self.armatureReload = ccs.Armature:create("huanzidan")    
+    self:addChild(self.armatureReload) 	
+end
+
+function HeroAnimView:playHurtedBomb_lei(event)
+	print("function HeroAnimView:playHurtedBomb_lei(event)")
+	-- --sound
+    local soundSrc  = "res/Music/fight/hd_bz.wav"
+    self.audioId1 =  audio.playSound(soundSrc,false)  	
+end
+
+function HeroAnimView:playHurtedBomb_boli(event)
+	print("function HeroAnimView:playHurtedBomb_boli(event)")
+	self.armatureBoli:getAnimation():playWithIndex(0 , -1, 0)	
+
+	--sound
+    local soundSrc  = "res/Music/fight/hd_bz.wav"
+    audio.playSound(soundSrc,false)  	
 end
 
 function HeroAnimView:playKillHead(event)
-	-- print("function HeroAnimView:playKillHead(event)")
-	local baotou = ccs.Armature:create("baotou")
-	baotou:getAnimation():play("baotou" , -1, 1)
-    baotou:getAnimation():setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movement) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		armatureBack:stopAllActions()
-	    		armatureBack:removeFromParent() 
-	    		armatureBack = nil
-	    	end 
-    	end
-    )
-    self:addChild(baotou)
+	self.armatureHead:getAnimation():play("baotou" , -1, 0)
 end
 
 function HeroAnimView:playWindEffect(event)
-	local armature = ccs.Armature:create("btqpg")
-	armature:getAnimation():play("btqpg" , -1, 1)
-    armature:getAnimation():setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movement) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		armatureBack:stopAllActions()
-	    		armatureBack:removeFromParent() 
-	    		armatureBack = nil
-	    	end 
-    	end
-    )
-    self:addChild(armature) 
+	self.armatureHeadWind:getAnimation():play("btqpg" , -1, 0)
 end
 
 function HeroAnimView:playEffectBling(event)
-	print("function HeroAnimView:playEffectBling(event)")
+	-- print("function HeroAnimView:playEffectBling(event)")
 	local armature = ccs.Armature:create("bossdies")
 	armature:getAnimation():play("shan" , -1, 1)
     self:addChild(armature) 
     local function endFunc()
-	    print("HeroAnimView endFunc")
+	    -- print("HeroAnimView endFunc")
     	armature:removeSelf()
     	armature = nil
     end
     self:performWithDelay(endFunc, 2.6)
+end
+
+function HeroAnimView:playkillKeep(num)
+	self.killKeepArmature = ccs.Armature:create("bossdies")
+	self.killKeepArmature:getAnimation():play("shan" , -1, 1)
+    self:addChild(self.killKeepArmature) 
+    local function endFunc()
+	    -- print("HeroAnimView endFunc")
+    	self.killKeepArmature:removeSelf()
+    	self.killKeepArmature = nil
+    end
+    self:performWithDelay(endFunc, 2.6)	
+end
+
+function HeroAnimView:playHitted(event)
+	self:playHpDecreaseEffect()
+	self:playHpAlertEffect()
+end
+
+function HeroAnimView:playLessHp(event)
+	print("playLessHp event.isLessHp", event.isLessHp)
+	local isLessHp = event.isLessHp
+	if isLessHp then
+		self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 1)
+	else
+		self.armatureScreenRed:getAnimation():stop()
+	end
+end
+
+function HeroAnimView:playHpAlertEffect()
+	if self.hero:getIsLessHp() then return end
+	self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 0)
+end
+
+function HeroAnimView:playHpDecreaseEffect()
+	local armature
+	if 1 == math.random(0, 1) then 
+		armature = self.armatureBlood1
+	else
+		armature = self.armatureBlood2
+	end
+	armature:getAnimation():playWithIndex(0 , -1, 0)
+    armature:setPosition(
+    	math.random(-display.width/2, display.width/2), 
+    	math.random(-display.height1/2, display.height1/2))
+end
+
+function HeroAnimView:playActiveGold(event)
+	print("function HeroAnimView:playActiveGold(event)")
+	self.armatureGold:getAnimation():playWithIndex(0 , -1, 0)
+
+    --sound
+    local soundSrc  = "res/Music/fight/hjwq.wav"
+    audio.playSound(soundSrc,false) 
+end
+
+function HeroAnimView:playGunReload()
+	self.armatureReload:getAnimation():playWithIndex(0 , -1, 0)
 end
 
 return HeroAnimView

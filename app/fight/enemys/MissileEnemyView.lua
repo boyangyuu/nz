@@ -36,8 +36,10 @@ end
 function MissileEnemyView:playFire()
     local missileType = self.property["missileType"] or "daodan"
     
-    if missileType == "daodan" or missileType == "tie" then 
+    if missileType == "daodan"  then 
         self:playDaoDanFire()
+    elseif  missileType == "tie" then 
+        self:playTieqiuFire()
     elseif missileType == "lei" then
         self:playLeiFire()
     elseif missileType == "feibiao" then
@@ -67,6 +69,27 @@ function MissileEnemyView:playDaoDanFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))
 end
 
+function MissileEnemyView:playTieqiuFire()
+    self.armature:setScale(self.srcScale)
+    local time = define.kMissileDaoTime    
+    local destScale = self.property["destScale"] or 1.0
+    local scaleAction = cc.ScaleTo:create(time, destScale)
+
+    --call end
+    local function callFunc()
+        self.armature:getAnimation():play("die" , -1, 1)  
+        self.enemy:hit(self.hero)   
+        self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOLI_EVENT})
+    end
+
+    --run
+    local offset = self.property.offset or cc.p(0.0,0.0)
+    self.armature:getAnimation():play("fire" , -1, 1) 
+    local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callFunc))
+    self.armature:runAction(seq)
+    self.armature:runAction(cc.MoveTo:create(time, offset))    
+end
+
 function MissileEnemyView:playLeiFire()
     self.armature:getAnimation():play("fire" , -1, 1)  
     local srcPos = self.property["srcPos"]
@@ -80,9 +103,7 @@ function MissileEnemyView:playLeiFire()
         self:playBomb()
     end
 
-    local seq =  cc.Sequence:create(
-                    action,
-                    cc.CallFunc:create(callFunc) )    
+    local seq =  cc.Sequence:create(action,cc.CallFunc:create(callFunc) )    
     self:runAction(seq)
     self.armature:setScale(0.05)
     self.armature:runAction(cc.ScaleTo:create(jumpTime, 2.0))
@@ -111,34 +132,20 @@ function MissileEnemyView:playFeibiaoFire()
 end
 
 function MissileEnemyView:playBomb()
-    local missileType = self.property["missileType"]
-
-    --sound
-    self:playSound()
-
     --kill
     self.armature:getAnimation():play("die" , -1, 1)  
-    
-    --bomb动画
-    if missileType == "tie" or missileType == "lei" then
-        self:playBombEffect()
-    end
     
     --demage
     self.enemy:hit(self.hero)   
 
     --屏幕爆炸效果
-    local animName = self.property.animName
-    if animName then 
-        self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT, 
-                animName = animName})
-    end
-
+    self:playBombEffect()
+    -- self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT})
 end
 
 --Attackable接口
 function MissileEnemyView:playHitted(event)
-
+    print("function MissileEnemyView:playHitted(event)")
 end
 
 function MissileEnemyView:playKill(event)
@@ -152,12 +159,6 @@ function MissileEnemyView:playKill(event)
 
     end     
     self.armature:stopAllActions()  
-end
-
-function MissileEnemyView:playSound()
-    --sound effect
-    local soundSrc  = "res/Music/fight/hd_bz.wav"
-    self.audioId1 =  audio.playSound(soundSrc,false)  
 end
 
 function MissileEnemyView:onHitted(targetData)

@@ -15,7 +15,7 @@ local Hero          = class("Hero", Actor)
 
 --effect
 Hero.EFFECT_HURT_BOMB_EVENT      = "EFFECT_HURT_BOMB_EVENT"    --效果_导弹炸屏幕
-
+Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    
 --skill
 Hero.SKILL_ROBOT_START_EVENT      = "SKILL_ROBOT_START_EVENT"    --机甲开启
 Hero.SKILL_DEFENCE_SWITCH_EVENT   = "SKILL_DEFENCE_SWITCH_EVENT" --护盾开启
@@ -43,8 +43,8 @@ Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 
 --hp
-Hero.BASE_HP_REFRESH_EVENT      = "BASE_HP_REFRESH_EVENT"
 Hero.AWARD_GOLD_INCREASE_EVENT  = "AWARD_GOLD_INCREASE_EVENT"
+Hero.HP_STATE_EVENT             = "HP_STATE_EVENT"
 
 
 function Hero:ctor(properties)
@@ -59,6 +59,7 @@ function Hero:ctor(properties)
     self.killCnt = 0
     self.killKeepCnt = 0
     self.killGoldIndex = 1
+    self.isLessHp = false
 end
 
 
@@ -153,25 +154,30 @@ end
 function Hero:killEnemy(enemyPos, award)
     self.killCnt = self.killCnt + 1
 
-    --check gold
-    local curLimit = self:getCurGoldLimit()
-    if curLimit and self.killCnt == curLimit then 
-        print("激活黄武")
-        self.fightInlay:activeGold()
-        self.killGoldIndex = self.killGoldIndex + 1
-    end
-    
     self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
                         value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
         enemyPos = enemyPos, award = award})
+
+    --check keep kill
+    self:checkKeepKill()
 end
 
-function Hero:getCurGoldLimit()
-    local map = md:getInstance("Map")
-    local waveConfig = map:getCurWaveConfig()    
-    local curLimit = waveConfig:getGoldLimit(self.killGoldIndex)
-    return curLimit
+function Hero:checkKeepKill()
+    if self.killKeepCnt >= define.kHeroKillKeepCnt then
+        print("连杀动画!!!!!")
+
+    end
+    self.killKeepCnt = self.killKeepCnt + 1
+    if self.keepKillHandler then 
+        scheduler.unscheduleGlobal(self.keepKillHandler)
+        self.keepKillHandler = nil
+    end
+    self.keepKillHandler = scheduler.scheduleGlobal(handler(self, self.restoreKeepKill), define.kHeroKillKeepCd)
+end
+
+function Hero:restoreKeepKill()
+    self.killKeepCnt = 0
 end
 
 function Hero:getKillCnt()
@@ -262,6 +268,21 @@ function Hero:decreaseHp(hp)
     end
 end
 
+function Hero:onHpChange()
+    local maxHp = self:getMaxHp()
+    local hp    = self:getHp()
+    local isLess = (hp / maxHp) < define.kHeroHpLess
+    if self.isLessHp ~= isLess then 
+        self.isLessHp = isLess
+        self:dispatchEvent({name = Hero.HP_STATE_EVENT, 
+            isLessHp = self.isLessHp})
+    end
+end
+
+function Hero:getIsLessHp()
+    return self.isLessHp
+end
+
 function Hero:getIsPause()
     return self.isPause or false
 end
@@ -289,6 +310,8 @@ end
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --暂停
+    if self.isHelped then return end 
+    self.isHelped = true
     print("function Hero:helpFullHp()")
     self.isPause = true
     local fight = md:getInstance("Fight")
