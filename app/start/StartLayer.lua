@@ -49,7 +49,7 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-            ui:showPopup("AboutPopup",{popupName = "bangzhu"})
+           ui:showPopup("AboutPopup",{popupName = "bangzhu"},{anim = false})
         end
     end)
 
@@ -99,6 +99,7 @@ function StartLayer:switchSound()
     stop:setVisible(isPlaying)
     play:setVisible(not isPlaying)
     audio.switchAllMusicAndSounds(isPlaying)
+    self:playBgMusic()
 
     --save
     local data = getUserData()
