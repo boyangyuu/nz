@@ -101,10 +101,10 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/map_shijie/shijiemap0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local dizuosrc = "res/LevelMap/gktb/gktb.csb"
-    manager:addArmatureFileInfoAsync(dizuosrc,  handler(self, self.dataLoaded))
-    local plist = "res/LevelMap/gktb/gktb0.plist"
-    local png   = "res/LevelMap/gktb/gktb0.png"
+    local tbtxsrc = "res/LevelMap/sjdt_tbtx/sjdt_tbtx.csb"
+    manager:addArmatureFileInfoAsync(tbtxsrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.plist"
+    local png   = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"

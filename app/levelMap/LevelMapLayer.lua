@@ -209,8 +209,9 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     self:addChild(self.levelBtnRootNode, Zorder_up)
 
     --btn
-    local levelBtn = {}
-    local levelDian = {}
+    local levelName = {}
+    local levelIcon = {}
+    local levelAnim = {}
     local panelBtn = {}
     local dian = {}
     local group,level = self.LevelMapModel:getConfig()
@@ -242,49 +243,46 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     end
 
     -- for i = 1, self.levelAmount[groupId] do
+    dump(groupInfo)
     for k,v in pairs(groupInfo) do
-        levelBtn[v]  = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "level_"..v)
-        levelDian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "dian_"..v)
         panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)
-        panelBtn[v]:setTouchEnabled(true)
     end
 
+    for k,v in pairs(panelBtn) do
+        levelName[k]  = cc.uiloader:seekNodeByName(v, "name")
+        levelIcon[k] = cc.uiloader:seekNodeByName(v, "icon")
+        levelAnim[k] = cc.uiloader:seekNodeByName(v, "anim")
+        levelIcon[k]:setTouchEnabled(true)
+    end
 
     for k,v in pairs(groupInfo) do
         local record = self.LevelDetailModel:getConfig(group,level)
         if  group > groupId or group == groupId and level > v then
 
-        elseif group == groupId and level == v then
-            levelDian[v]:setVisible(false)
-            
+        elseif group == groupId and level == v then            
             local action = transition.sequence({
-            cc.MoveTo:create(0.625, cc.p(levelBtn[v]:getPositionX() , levelBtn[v]:getPositionY()+ 15)), 
-            cc.MoveTo:create(0.625, cc.p(levelBtn[v]:getPositionX(), levelBtn[v]:getPositionY() - 15))})
-            levelBtn[v]:runAction(cc.RepeatForever:create(action))
+            cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX() , levelName[v]:getPositionY()+ 15)), 
+            cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX(), levelName[v]:getPositionY() - 15))})
+            levelName[v]:runAction(cc.RepeatForever:create(action))
 
-            -- end
-            local type = record["type"]
-            local armature = ccs.Armature:create("gktb")
-            armature:setScale(0.8)
-            armature:setPosition(panelBtn[v]:getContentSize().width/2,20)
-            panelBtn[level]:addChild(armature)
-
-            if type == "boss" or type == "juji" then
-                armature:getAnimation():play("dizuohong" , -1, 1)
-            elseif type == "jinbi" then
-                armature:getAnimation():play("dizuohuang" , -1, 1)
-            elseif type == "putong" or  type == "renzhi" then
-                armature:getAnimation():play("dizuolan" , -1, 1)
-            end
+            local armature = ccs.Armature:create("sjdt_tbtx")
+            levelAnim[level]:addChild(armature)
+            armature:getAnimation():play("kaishi" , -1, 0)
+            armature:getAnimation():setMovementEventCallFunc(
+            function ( armatureBack,movementType,movementId ) 
+                if movementType == ccs.MovementEventType.complete then
+                    armature:getAnimation():play("chixu" , -1, 1)
+                end
+            end)
         else       
             if device.platform ~= "windows" then
-                cc.ColorUtil:setGray(levelBtn[v])                 
-                cc.ColorUtil:setGray(levelDian[v]) 
+                cc.ColorUtil:setGray(levelName[v])                 
+                cc.ColorUtil:setGray(levelIcon[v]) 
             end                
         end
 
         -- add listener
-        panelBtn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+        levelIcon[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then
                 if  group > groupId or group == groupId and level >= v  then
                     local levelId = v
@@ -312,6 +310,7 @@ function LevelMapLayer:bgAction()
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
     self.animName = self.preGroupId.."_"..self.curGroupId
+    dump(self.animName)
     self.armature:getAnimation():play(self.animName , -1, 0)
 end
 
