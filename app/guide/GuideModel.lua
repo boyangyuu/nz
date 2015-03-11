@@ -104,6 +104,13 @@ end
 function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
+	local isUnMatchVesion = data.guide[groupId] == nil
+	local isAndroid = device.platform == "android" 
+	if isUnMatchVesion then 
+		assert(isAndroid, "invalid groupId",groupId )
+		print("isUnMatchVesion")
+		return true 
+	end
 	local isDone = data.guide[groupId] 
 	return isDone
 end
@@ -176,5 +183,18 @@ function Guide:clearData()
 	end
 	setUserData(data)
 end
+
+function Guide:fillData()
+	local data = getUserData()
+
+	--cur data
+	for k,v in pairs(data.guide) do
+		print(k,v)
+		data.guide[k] = true
+	end
+	setUserData(data)
+end
+
+
 
 return Guide

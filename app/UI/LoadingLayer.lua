@@ -34,6 +34,7 @@ function LoadingLayer:loadHomeCCS()
 end
 
 function LoadingLayer:loadFightCCS()
+    math.randomseed(os.time())
     local rans = math.random(2,3)
     local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")    
     self:addChild(controlNode)
@@ -75,13 +76,23 @@ function LoadingLayer:showPercent()
         function setString()
             self.loadpercent:setString(str.."%")
             str = str+1
+            if str > 100 then
+                transition.stopTarget(self.loadpercent)
+            end
+
         end
-        scheduler.performWithDelayGlobal(setString, i*0.03)
+        -- scheduler.performWithDelayGlobal(setString, i*0.03)
+        self.loadpercent:schedule(setString, i*0.03)
     end
 end
 
 function LoadingLayer:loadCCS(type)
-    if type == "home"then
+    local guide = md:getInstance("Guide")
+    local isNotDone = guide:isDone("xiangqian") == false
+
+    if isNotDone then
+        self:loadHomeCCS()
+    elseif type == "home"then
         self:loadHomeCCS()
     elseif type == "fight" then
         self:loadFightCCS()
@@ -100,6 +111,7 @@ end
 
 function LoadingLayer:onHide(event)
     self:setVisible(false)
+    self:removeAllChildren()
 end
 
 return LoadingLayer

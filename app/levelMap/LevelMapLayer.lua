@@ -77,7 +77,9 @@ function LevelMapLayer:initChooseLayer()
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
-
+    --todo delete
+    btnGold:setPosition(cc.p(0,150))
+    --todo end
 
     local armature = ccs.Armature:create("thj_bx")
     armature:setPosition(56,43)
