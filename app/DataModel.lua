@@ -26,13 +26,13 @@ function DataModel:setNewData()
     -- local level = data.currentlevel.level
     -- local levelDetailModel = md:getInstance("LevelDetailModel")
     -- local levelRecord = levelDetailModel:getConfig(group,level)
-    -- data.user = {level = levelRecord["userLevel"]}
+    data.user = {level = 1}
 
-    -- --引导fillData
-    -- local guideModel = md:getInstance("Guide")
-    -- guideModel:fillData()
-    -- setUserData(data)
-    -- dump(data)
+    --引导fillData
+    local guideModel = md:getInstance("Guide")
+    guideModel:fillData()
+    setUserData(data)
+    dump(data)
 end
 
 return DataModel

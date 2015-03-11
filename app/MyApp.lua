@@ -29,13 +29,14 @@ function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
-    datamodel:fillData()
+    
 end
 
 function MyApp:run()
     print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
-    self:enterScene("MainScene") 
+    self:enterScene("MainScene")
+    datamodel:fillData() 
 end
 
 function MyApp:initGameState()
@@ -64,7 +65,7 @@ function MyApp:initGameState()
         GameData=GameState.load()
     end
 
-    -- TalkingData 设置玩家账户及等级
+    -- um 设置玩家账户及等级
     um:setUserAccount()
 end
 
@@ -128,24 +129,24 @@ function MyApp:createGameStateFile()
                         group = 1,
                         level = 6,
             },
-            user = {
-                level = 1,
-            },
+            -- user = {
+            --     level = 1,
+            -- },
             guide = {
-                        gamePre         = true,
-                        fight01_move    = true,
-                        fight01_fire    = true,
-                        fight01_lei     = true,
-                        fight01_gold    = true,
-                        fight01_change  = true,
-                        fight01_jijia   = true,   
-                        afterfight01    = true,   
+                        gamePre         = false,
+                        fight01_move    = false,
+                        fight01_fire    = false,
+                        fight01_lei     = false,
+                        fight01_gold    = false,
+                        fight01_change  = false,
+                        fight01_jijia   = false,   
+                        afterfight01    = false,   
 
-                        prefight02      = true,
-                        afterfight02    = true,
+                        prefight02      = false,
+                        afterfight02    = false,
                         
-                        fight04         = true,
-                        xiangqian       = true,
+                        fight04         = false,
+                        xiangqian       = false,
             },
             isAwardGold     = false,
             fight = {

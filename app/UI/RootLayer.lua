@@ -310,6 +310,12 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
         "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
+        local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
+
    -- --music
    --  self:addResFightMusic()
 

@@ -143,6 +143,13 @@ function FightResultLayer:initUI()
     self.btngetall:setButtonLabel("normal" , lqsy)
     self.btnback:setButtonLabel("normal" , jx)
 
+    -- local inlayArmature = ccs.Armature:create("bt_yjzb")
+    -- local getallArmature = ccs.Armature:create("bt_yjzb")
+    -- addChildCenter(inlayArmature, self.btninlay)
+    -- addChildCenter(getallArmature, self.btngetall)
+    -- inlayArmature:getAnimation():play("yjzb" , -1, 1)
+    -- getallArmature:getAnimation():play("yjzb" , -1, 1)
+
 	-- self.btngetall:setButtonLabel("disabled" , lqcg)
 
     -- if self.grade == 5 then
