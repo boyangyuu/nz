@@ -45,17 +45,6 @@ function InfoLayer:loadCCS()
 	self.root = cc.uiloader:load("res/Fight/fightLayer/ui/infoUI.ExportJson")
 	self:addChild(self.root)
 
-	-- self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/heroBlood.ExportJson")
-	-- self:addChild(self.blood)
-	-- local bloodAnimNode = cc.uiloader:seekNodeByName(self.blood, "bloodAnimNode")
-	-- self.bloodAnim = ccs.Armature:create("xuetiao")
- -- 	bloodAnimNode:addChild(self.bloodAnim)
- 	-- self:rejustBloodAnim()
- 	-- self.bloodAnim:getAnimation():setMovementEventCallFunc(
- 	-- 	handler(self, self.onBloodMovementEvent)) 
- 	-- self.bloodAnim:getAnimation():play("chixu", -1, 1)
-
-
  	self.bloodNode  = cc.uiloader:seekNodeByName(self.root, "bloodNode")
  	self.blood2 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar1") 
  	self.blood1 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar2") 
@@ -66,12 +55,12 @@ function InfoLayer:loadCCS()
 	    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
 	end
     self.goldNode 	= cc.uiloader:seekNodeByName(self.root, "goldNode")
-    self.goldProgress = cc.uiloader:seekNodeByName(self.goldNode, "progressBar") 
+    self.goldProgress = cc.uiloader:seekNodeByName(self.goldNode, "progressBar1") 
     self.goldAnim 	= cc.uiloader:seekNodeByName(self.goldNode, "animNode") 
     self.goldProgress:setPercent(1)
 	self.goldAnim:setVisible(false)
 	self.goldProgress:setVisible(false)
-	
+
 	local displayHp = math.floor(self.hero:getHp() )
 	self.bloodLabel:setString(displayHp)
 end
