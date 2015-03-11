@@ -121,8 +121,8 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 2,
-                        level = 6,
+                        group = 1,
+                        level = 1,
             },
             user = {
                 level = 1,
@@ -137,11 +137,11 @@ function MyApp:createGameStateFile()
                         fight01_jijia   = false,   
                         afterfight01    = false,   
 
-                        prefight02      = false,
-                        afterfight02    = false,
+                        prefight02      = true,
+                        afterfight02    = true,
                         
-                        fight04         = false,
-                        xiangqian       = false,
+                        fight04         = true,
+                        xiangqian       = true,
             },
             isAwardGold     = false,
             fight = {

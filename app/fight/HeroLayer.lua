@@ -31,10 +31,6 @@ function HeroLayer:ctor(properties)
 	--events
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnmeyGold))		
-		:addEventListener(Hero.GUN_RELOAD_EVENT				, handler(self, self.effectGunReload))
-	
-	cc.EventProxy.new(self.inlay, self)
-		:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
 	self:loadCCS()
 	self:initUI()
 	self:initData()
@@ -108,27 +104,6 @@ function HeroLayer:killEnmeyGold(event)
 	end
 end
 
---触发黄金武器
-function HeroLayer:onActiveGold(event)
-	print("function HeroLayer:onActiveGold(event)")
-	local armature = ccs.Armature:create("hjwq")
-	addChildCenter(armature, self)
-    local anim = armature:getAnimation()
-	anim:play("hjwq" , -1, 1)
-    anim:setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movementId ) 
-    		print("movementType", movementType)
-	    	if movementType == ccs.MovementEventType.loopComplete then
-				armature:removeFromParent()
-	    	end 
-    	end
-    )
-
-    --sound
-    local soundSrc  = "res/Music/fight/hjwq.wav"
-    self.audioId =  audio.playSound(soundSrc,false)      
-end
-
 function HeroLayer:updateHp(event)
 	if self.hpUpdateHandler then 
 		scheduler.unscheduleGlobal(self.hpUpdateHandler)
@@ -164,27 +139,6 @@ function HeroLayer:updateHp(event)
 	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
 end
 
-function HeroLayer:checkHpLess()
-	
-end
-
-function HeroLayer:effectGunReload(event)
-	-- print("HeroLayer:effectGunReload()")
-	local armature = ccs.Armature:create("huanzidan")
-	armature:getAnimation():play("zidan" , -1, 1)
-    armature:setPosition(display.width / 2, display.height1 / 2)
-    armature:getAnimation():setSpeedScale(event.speedScale)
-    armature:getAnimation():setMovementEventCallFunc(
-    	function ( armatureBack,movementType,movement) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
-	    		-- print("HeroLayer:effectGunReload done()")
-	    		armatureBack:stopAllActions()
-	    		armatureBack:removeFromParent()
-	    	end 
-    	end
-    )
-    self:addChild(armature)	
-end
 
 function HeroLayer:onCleanup()
 	if self.hpUpdateHandler then

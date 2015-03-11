@@ -154,14 +154,6 @@ end
 function Hero:killEnemy(enemyPos, award)
     self.killCnt = self.killCnt + 1
 
-    --check gold
-    local curLimit = self:getCurGoldLimit()
-    if curLimit and self.killCnt == curLimit then 
-        print("激活黄武")
-        self.fightInlay:activeGold()
-        self.killGoldIndex = self.killGoldIndex + 1
-    end
-    
     self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
                         value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
@@ -186,13 +178,6 @@ end
 
 function Hero:restoreKeepKill()
     self.killKeepCnt = 0
-end
-
-function Hero:getCurGoldLimit()
-    local map = md:getInstance("Map")
-    local waveConfig = map:getCurWaveConfig()    
-    local curLimit = waveConfig:getGoldLimit(self.killGoldIndex)
-    return curLimit
 end
 
 function Hero:getKillCnt()
