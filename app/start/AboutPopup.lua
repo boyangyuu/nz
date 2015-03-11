@@ -82,7 +82,7 @@ function AboutPopup:initContent()
 	if self.popupName == "bangzhu" then
 		local textLabel = cc.uiloader:seekNodeByName(self.aboutNode, "context")
 		print(self.text)
-		-- textLabel:setString(self.text)
+		textLabel:setString(self.text)
 	end
 
 	if self.popupName == "guangyu" then

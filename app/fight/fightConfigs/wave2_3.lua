@@ -103,147 +103,128 @@ local waves = {
 			},
 		},
 	},
-
-	-- {
-	-- 	enemys = {
-
-	-- 		 {
-	-- 			time = 3,
-	-- 			num = 3,
-	-- 			delay = {0.1,0.9,1.5},
-	-- 			pos = {350,560,700},
-	-- 			property = { 
-	-- 				placeName = "place1" ,
-	-- 				type = "bao",                  --爆
-	-- 				id = 9,	
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 7,	
-	-- 			num = 5,
-	-- 			pos = {325,420,220,550,700},
-	-- 			delay = {0.4,1.2,2.5,3.3,1.8},
-	-- 			property = {
-	-- 				placeName = "place1" ,         --近
-	-- 				id = 7,
-	-- 				type = "jin",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 11,
-	-- 			num = 3,
-	-- 			delay = {0.5,2.5,1.3},
-	-- 			pos = {400,300,670},
-	-- 			property = { 
-	-- 				placeName = "place1" ,
-	-- 				type = "jin",                  --盾
-	-- 				id = 8,
-	-- 			},
-	-- 		},
-
-	-- 		{
-			    
-	-- 			time = 7,
-	-- 			num = 1,
-	-- 			pos = {450},
-	-- 			delay = {0.5},                         -- 飞机
-	-- 			property = {
-	-- 				type = "feiji" ,
-	-- 				id = 11,
-	-- 				placeName = "place11",
-	-- 				missileId = 6,
-	-- 				missileType = "daodan",
-	-- 				missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-	-- 				startState = "enterleft",
-	-- 				lastTime = 30.0,		                                    --持续时间			
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 15,
-	-- 			num = 3,
-	-- 			delay = {0.1,0.9,1.7},
-	-- 			pos = {250,460,600},
-	-- 			property = { 
-	-- 				placeName = "place1" ,
-	-- 				type = "bao",      --爆
-	-- 				id = 9,	
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 19,	
-	-- 			num = 5,
-	-- 			pos = {250,350,310,470,600},
-	-- 			delay = {0.4,0.9,0.5,0.8,1.5},
-	-- 			property = {
-	-- 				placeName = "place1" ,
-	-- 				id = 7,
-	-- 				type = "jin",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 23,
-	-- 			num = 3,
-	-- 			delay = {0.3,2.0,1.1},
-	-- 			pos = {300,460,560},
-	-- 			property = { 
-	-- 				placeName = "place1" ,
-	-- 				type = "jin",       --盾
-	-- 				id = 8,
-	-- 			},
-	-- 		},
-	-- 		{
-			    
-	-- 			time = 20,
-	-- 			num = 1,
-	-- 			pos = {550},
-	-- 			delay = {0.5},                         -- 飞机
-	-- 			property = {
-	-- 				type = "feiji" ,
-	-- 				id = 11,
-	-- 				placeName = "place10",
-	-- 				missileId = 6,
-	-- 				missileType = "daodan",
-	-- 				missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-	-- 				startState = "enterleft",
-	-- 				lastTime = 23.0,		                                    --持续时间			
-	-- 			},
-	-- 		},	
-	-- 		{
-			    
-	-- 			time = 23,
-	-- 			num = 1,
-	-- 			pos = {850},
-	-- 			delay = {0.5},                         -- 飞机
-	-- 			property = {
-	-- 				type = "feiji" ,
-	-- 				id = 11,
-	-- 				placeName = "place10",
-	-- 				missileId = 6,
-	-- 				missileType = "daodan",
-	-- 				missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-	-- 				startState = "enterleft",
-	-- 				lastTime = 20.0,		                                    --持续时间			
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 25,
-	-- 			num = 5,
-	-- 			delay = {0.7,1.4,3.5, 2.1,2.8},
-	-- 			pos = {350,550,600,800,950},					
-	-- 			property = {
-	-- 				placeName = "place1",  
-	-- 				type = "san",
-	-- 				id = 4,
-	-- 				enemyId = 1,
-	-- 			},                                                                            --60
-	-- 		},
-	-- 	},
-	-- },	
+	{
+		enemys = { 
+			{
+				time = 2,
+				num = 2,
+				delay = {0,0.5},
+				pos = {790,420},
+				property = { 
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
+				},
+			},
+			{
+				time = 5,
+				num = 3,
+				delay = {0,0.5,1},
+				pos = {640,900,320},
+				property = { 
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
+				},
+			},
+			{
+				time = 7,
+				num = 4,
+				delay = {0.4,0,0.8,1.3},
+				pos = {200,400,600,800},
+				property = { 
+					placeName = "place13" ,
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",           --导
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				pos = {450},
+				delay = {0.5},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place11",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 40.0,                                    --持续时间			
+				},
+			},	
+			{
+				time = 8.5,	
+				num = 3,
+				pos = {230,330,510},
+				delay = {0.5,0,1},
+				property = {
+					placeName = "place2" ,         --普
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 8.5,	
+				num = 2,
+				pos = {270,570},
+				delay = {0.5,0},
+				property = {
+					placeName = "place2" ,         --雷
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 9,	
+				num = 3,
+				pos = {1000,800,600},
+				delay = {0,0.5,1},
+				property = {
+					placeName = "place3" ,         --普
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 10,	
+				num = 3,
+				delay = {0.9,0.5,0},
+				pos = {970,870,570},
+				property = {
+					placeName = "place3" ,         --雷
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 11,
+				num = 10,
+				delay = {0,0.7,1.4,2.1,2.8,3.5,0,0.7,1.4,2.1},
+				pos = {220,300,380,460,540,620,700,780,860,940},
+				property = { 
+					placeName = "place1" ,
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},
+		},
+	},
 	{
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                              --boss
 			{
-				descId = "boss02",
+				descId = "boss02_2",
 				time = 3,	
 				num = 1,
 				pos = {450},
@@ -264,7 +245,7 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    白银镶嵌 MP5伤害90  dps大于等于3 怪物数据
+--enemy的关卡配置                                                    白银镶嵌 MP5伤害90  dps大于等于3,远程3近战3 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=12,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
@@ -316,7 +297,7 @@ local enemys = {
 	weak1=1},	
 
 	--BOSS铁球
-	{id=13,image="tieqiu",demage=20,hp=3760,
+	{id=13,image="tieqiu",demage=25,hp=3760,
 	weak1=1},
                           
 
@@ -330,12 +311,12 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		award = 25000,         --金币产出
+		award = 25000,         ----boss产出金币数量
 		image = "boss02_2",    --蓝boss基础上改的黄颜色boss
 		hp = 100000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 120,               --普攻频率
-		fireCd = 3,                     --普攻cd
+		fireRate = 60,               --普攻频率
+		fireCd = 2,                     --普攻cd
 
 		walkRate = 120,                    --移动频率
 		walkCd = 2,                         --移动cd
@@ -343,22 +324,21 @@ local bosses = {
 		chongfengDemage = 25,                --冲锋造成伤害
 
 		weak1 = 1.2,						--头 弱点伤害倍数
-		weak2 = 1.2,					--手 弱点伤害倍数
-		award = 1100,                   --boss产出金币数量
+		weak2 = 1.2,					--手 弱点伤害倍数               
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.80, 0.40, 
+				0.90, 0.50, 
 			},
 			moveRightFire = {
-				0.60,  0.20, 
+				0.70,  0.30, 
 			},
 			chongfeng = {
-			    0.95, 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15, 0.05,
+			    0.999,0.97, 0.86,0.83, 0.76,0.73, 0.66, 0.63 ,0.56, 0.53, 0.46, 0.43, 0.36, 0.33, 0.26,0.23, 0.16, 0.13, 0.05,
 			},
 			tieqiu = {
-				0.999,0.98,0.97, 0.85, 0.7, 0.50, 0.40, 0.20,
+				0.95, 0.80,  0.60, 0.40, 0.20,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40,                        
@@ -366,14 +346,14 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.60, 0.20,                      
 			},
-			demage100 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.99,
-			},	
-			demage150 = {  
-				0.80,
+			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.90,
 			},	
 			demage200 = {  
-				0.50,
+				0.70,
+			},	
+			demage300 = {  
+				0.40,
 			},						
 		},
 
