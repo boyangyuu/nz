@@ -111,7 +111,8 @@ function Defence:startDefence()
 
     --um
     local fight = md:getInstance("Fight")
-    local levelInfo = fight:getLevelInfo()  
+    local levelInfo = fight:getLevelInfo()
+    assert(levelInfo, "levelInfo is nil")
     local umData = {}
     umData[levelInfo] = "盾"
     um:event("关卡道具使用", umData) 

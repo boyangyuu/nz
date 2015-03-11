@@ -121,8 +121,8 @@ function PausePopup:btnEvent()
 
 	elseif self.popupName == "fightset" then
         local fight  = md:getInstance("Fight")
-        local groupid,levelid = fight:getCurGroupAndLevel()
-        local levelInfo = groupid.."-"..levelid
+        local levelInfo = fight:getLevelInfo()
+        assert(levelInfo, "levelInfo is nil")
 
         --um
         local umData = {}
