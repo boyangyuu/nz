@@ -12,7 +12,7 @@ LevelDetailModel.REFRESH_WEAPON_LISTVIEW = "REFRESH_WEAPON_LISTVIEW"
 
 function LevelDetailModel:ctor(properties)
 	LevelDetailModel.super.ctor(self, properties)
-	-- self:initConfigTable()
+	self:initConfigTable()
 	self.weaponListModel = md:getInstance("WeaponListModel")
 end
 
@@ -21,8 +21,7 @@ function LevelDetailModel:initConfigTable()
 end
 
 function LevelDetailModel:getConfig(groupId,levelId)
-	local config = getConfig("config/guanqia.json")
-	local records = getRecordFromTable(config,"groupId",groupId)
+	local records = getRecordFromTable(self.config,"groupId",groupId)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
 			if k1 == "levelId" and v1==levelId then

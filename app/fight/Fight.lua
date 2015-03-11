@@ -77,6 +77,7 @@ function Fight:refreshUm()
 
     local fGid, fLid = self:getCurGroupAndLevel()    
     local levelInfo = self:getLevelInfo()
+    assert(levelInfo, "levelInfo is nil")
     local str = nil
     if (fGid == curGid and fLid > curLid) or 
         (fGid > curGid) then 
@@ -90,6 +91,7 @@ function Fight:refreshUm()
 
     --任务统计
     local levelInfo = self:getLevelInfo()
+    assert(levelInfo, "levelInfo is nil")
     um:startLevel(levelInfo)
 end
 
@@ -124,8 +126,6 @@ end
 function Fight:endFight()
     self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
     ui:showPopup("FightResultPopup",{},{anim = false})
-
-    um:finishLevel(levelInfo)
 end
 
 function Fight:onWin()
@@ -137,9 +137,12 @@ function Fight:onWin()
     userModel:getUserLevel(self.groupId, self.levelId)
     self:setFightResult()
 
-    --um
-    local levelInfo = self:getLevelInfo()    
+    --um 任务
+    local levelInfo = self:getLevelInfo() 
+    assert(levelInfo, "levelInfo is nil")  
     um:finishLevel(levelInfo)
+
+    --um 关卡完成情况事件
     local umData = {}
     umData[levelInfo] = "关卡胜利"
     um:event("关卡完成情况", umData)
@@ -149,8 +152,9 @@ function Fight:onWin()
 end
 
 function Fight:onGiveUp()
-    --um
+     --um 关卡完成情况事件
     local levelInfo = self:getLevelInfo() 
+    assert(levelInfo, "levelInfo is nil")
     local umData = {}
     umData[levelInfo] = "关卡失败"    
     um:event("关卡完成情况", umData)
@@ -170,7 +174,8 @@ end
 
 function Fight:onRelive()
     --um
-    local levelInfo = self:getLevelInfo()  
+    local levelInfo = self:getLevelInfo()
+    assert(levelInfo, "levelInfo is nil")
     local umData = {}
     umData[levelInfo] = "复活"
     um:event("关卡道具使用", umData)

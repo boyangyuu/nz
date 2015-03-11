@@ -10,6 +10,7 @@ local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
 
+
 function HomeBarLayer:ctor(properties)
     self.usermodel   = md:getInstance("UserModel")
     self.storeModel  = md:getInstance("StoreModel")
@@ -25,17 +26,17 @@ function HomeBarLayer:ctor(properties)
     self:initData(self.properties)
     self:loadCCS()
     self:initHomeLayer()
-    -- self:popUpNextLevel(properties)
-    -- self:popUpWeaponGift(properties)
-    -- self:popUpGoldGift(properties)
-    -- self:initDailyLogin()
     self:refreshMoney()
-
     self:initGuideWeapon()
     self:initGuideInlay()
 
     self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
+end
+
+function HomeBarLayer:onEnter()
+    local startMusic = "res/Music/bg/bjyx.wav"
+    audio.playMusic(startMusic,true)    
 end
 
 function HomeBarLayer:popUpWeaponGift(properties)
@@ -221,7 +222,11 @@ function HomeBarLayer:homeBarAction()
 end
 
 function HomeBarLayer:onEnter()
-    self.guide:check("prefight02")
+    local fight = md:getInstance("Fight")
+    local lid, gid = fight:getCurGroupAndLevel()
+    if lid == 1 and gid == 1 then 
+        self.guide:check("prefight02")
+    end
 end
 
 function HomeBarLayer:onBtnStoreClicked()

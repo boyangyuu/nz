@@ -76,6 +76,21 @@ function FightDescLayer:onWaveStart(event)
     armature:getAnimation():play(animName , -1, 1)
 end
 
+function FightDescLayer:onGoldWaveStart(event)
+    self:setVisible(true)
+    local armature = ccs.Armature:create("jinbijl")
+    armature:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movementId ) 
+            if movementType == ccs.MovementEventType.loopComplete then
+                armature:removeFromParent()
+                armature = nil
+                self:setVisible(false)
+            end
+        end)
+    addChildCenter(armature, self.animPanl)
+    armature:getAnimation():play("jinbijl" , -1, 1)
+end
+
 function FightDescLayer:onShowEnemyIntro(event)
 
     self:setVisible(true)

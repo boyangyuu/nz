@@ -67,10 +67,6 @@ function DialogLayer:refreshUI()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
 	local levelId = fight:getLevelId()
-	if math.floor(levelId) < levelId then
-        levelId = tostring(levelId)
-        levelId = string.gsub(levelId, "%.", "_")
-	end
 	local appear  = self.dialog:getAppearType() 
 	local configs = DialogConfigs.getConfig(groupId,levelId,appear)
 	local sentence = configs[self.index]

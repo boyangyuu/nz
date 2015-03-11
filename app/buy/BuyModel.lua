@@ -81,9 +81,6 @@ function BuyModel:payDone(result)
 	local payDoneFunc = self.curBuyData.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
 
-    --um pay
-	um:onChargeSuccess(self.orderId)
-
 	--um event
 	local umData = {}
 	umData[self.strDesc] = "支付成功"

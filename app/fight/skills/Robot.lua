@@ -73,10 +73,11 @@ function Robot:startRobot(time)
     local levelModel = md:getInstance("LevelDetailModel")
     local isju = levelModel:isJujiFight() 
     if isju then return end	
-	
+    
     --um
     local fight = md:getInstance("Fight")
-    local levelInfo = fight:getLevelInfo()  
+    local levelInfo = fight:getLevelInfo() 
+    assert(levelInfo, "levelInfo is nil") 
     local umData = {}
     umData[levelInfo] = "机甲"
     um:event("关卡道具使用", umData) 	

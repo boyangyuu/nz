@@ -17,7 +17,6 @@ function FightGun:showGunIntro(gunData) -- showEnemyIntro
 			gunId = gunData.id})
 	end
 
-
 	local function callfuncStart()
 		local fight = md:getInstance("Fight")
 		fight:pauseFight(true)
