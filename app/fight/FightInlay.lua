@@ -42,9 +42,7 @@ function FightInlay:refreshUm()
 end
 
 function FightInlay:checkNativeGold()
-    print("FightInlay:checkNativeGold()")
     local isNativeGold = self:getIsNativeGold()
-    print("isNativeGold", isNativeGold)
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
         self:activeGoldOnCost()
@@ -82,7 +80,6 @@ function FightInlay:activeGold()
     --delay
     local kGoldTime = define.kGoldTime
     self:delayCallGoldEnd(kGoldTime)
-
     --
 end
 

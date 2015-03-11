@@ -170,9 +170,6 @@ function Fight:onFail()
     
     --clear
     self:clearFightData() 
-
-    --pause
-    self:pauseFight(true)    
 end
 
 function Fight:onRelive()
@@ -188,8 +185,7 @@ function Fight:onRelive()
     self.hero:doRelive()
     
     --clear
-    self.killRenzhiNum = 0
-    self.result = nil 
+    self:clearFightData()
 
     --gold
     self.inlayModel:equipGoldInlays(false)
@@ -198,9 +194,6 @@ function Fight:onRelive()
     --jijia
     local robot = md:getInstance("Robot")
     robot:startRobot(define.kRobotTimeRelieve)
-
-    --pause
-    self:pauseFight(false)
 end
 
 function Fight:pauseFight(isPause)
@@ -276,6 +269,8 @@ end
 
 function Fight:clearFightData()
     self.inlayModel:removeAllInlay()
+    self.killRenzhiNum = 0
+    self.result = nil     
 end
 
 function Fight:cleanModels()

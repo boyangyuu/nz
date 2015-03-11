@@ -101,10 +101,10 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/map_shijie/shijiemap0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local dizuosrc = "res/LevelMap/gktb/gktb.csb"
-    manager:addArmatureFileInfoAsync(dizuosrc,  handler(self, self.dataLoaded))
-    local plist = "res/LevelMap/gktb/gktb0.plist"
-    local png   = "res/LevelMap/gktb/gktb0.png"
+    local tbtxsrc = "res/LevelMap/sjdt_tbtx/sjdt_tbtx.csb"
+    manager:addArmatureFileInfoAsync(tbtxsrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.plist"
+    local png   = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
@@ -179,7 +179,6 @@ function RootLayer:addResHome()
     local png   = "res/GiftBag/mrdl/mrdl0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-
     local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
     manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
         local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
@@ -213,7 +212,7 @@ function RootLayer:addResFight()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-        "sanbing01", "zpbing", "shouleib",  "hs","feiji","yyc",
+        "sanbing01", "zpbing", "shouleib",  "hs","feiji","yyc","shangr",
         "shoulei", "daodan", "tieqiu", "xiaozz",
          "dzboss",
          "boss01", "boss01_1", "boss01_2", 
@@ -305,6 +304,11 @@ function RootLayer:addResFight()
     manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/Fight/uiAnim/qiangdicx/qiangdicx0.plist", 
         "res/Fight/uiAnim/qiangdicx/qiangdicx0.png", handler(self, self.imageLoaded))    
+
+    local jinbijlsrc = "res/Fight/uiAnim/jinbijl/jinbijl.csb"
+    manager:addArmatureFileInfoAsync(jinbijlsrc, handler(self, self.dataLoaded))
+    display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
+        "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
    -- --music
    --  self:addResFightMusic()
