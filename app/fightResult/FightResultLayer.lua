@@ -195,8 +195,6 @@ function FightResultLayer:onClickBtnNext()
 
 	if self.levelMapModel:isExistNextLevel(curGroup, curLevel) and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
-	elseif curGroup == 0 and curLevel == 0 then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
 	elseif curGroup == 1 and curLevel == 3 then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
 	else
@@ -465,7 +463,7 @@ function FightResultLayer:initGuide()
         groupId = "afterfight01",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			ui:changeLayer("HomeBarLayer",{groupId = 1})   
+			ui:changeLayer("HomeBarLayer",{groupId = 1,popWeaponGift = true})   
         end
      })    	
 end

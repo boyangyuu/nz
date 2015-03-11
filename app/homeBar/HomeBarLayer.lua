@@ -40,9 +40,8 @@ end
 
 function HomeBarLayer:popUpWeaponGift(properties)
     local buyModel = md:getInstance("BuyModel")
-    local isDone = self.guide:isDone("xiangqian")
     local isNotBought = buyModel:checkBought("weaponGiftBag") == false
-    if properties.popWeaponGift and isDone and isNotBought then
+    if properties.popWeaponGift and isNotBought then
         buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData)},"主界面_进游戏自动弹出")
     end
 end

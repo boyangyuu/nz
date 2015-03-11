@@ -118,15 +118,18 @@ end
 function StartLayer:beginGame()
     print("function StartLayer:beginGame()")
     self:initDailyLogin()       
+    local guide = md:getInstance("Guide")
 
     if self:isGuideDone() then
         local levelMapModel = md:getInstance("LevelMapModel")
         local groupId, levelId = levelMapModel:getConfig()
         -- print("groupId", groupId)
-        ui:changeLayer("HomeBarLayer",{groupId = groupId, popWeaponGift = true})
+        local isDone = guide:isDone("xiangqian")
+        if isDone then
+            ui:changeLayer("HomeBarLayer",{groupId = groupId, popWeaponGift = true})
+        end
     else
         --clear data
-        local guide = md:getInstance("Guide")
         guide:clearData()        
 
         --story
