@@ -145,7 +145,7 @@ end
 
 --Attackable接口
 function MissileEnemyView:playHitted(event)
-    
+    print("function MissileEnemyView:playHitted(event)")
 end
 
 function MissileEnemyView:playKill(event)

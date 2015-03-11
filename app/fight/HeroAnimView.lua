@@ -13,15 +13,20 @@ local HeroAnimView = class("HeroAnimView", function()
 end)
 
 function HeroAnimView:ctor()
-	self.hero = md:getInstance("Hero")
+	self.hero   	 = md:getInstance("Hero")
+	local fightInlay = md:getInstance("FightInlay")
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
 		:addEventListener(self.hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
-		:addEventListener(self.hero.HP_DECREASE_EVENT		, handler(self, self.onHitted))
-		:addEventListener(self.hero.HP_STATE_EVENT			, handler(self, self.onLessBlood))
+		:addEventListener(self.hero.HP_DECREASE_EVENT		, handler(self, self.playHitted))
+		:addEventListener(self.hero.HP_STATE_EVENT			, handler(self, self.playLessHp))
+		:addEventListener(self.hero.GUN_RELOAD_EVENT		, handler(self, self.playGunReload))
+
+	cc.EventProxy.new(fightInlay, self)
+		:addEventListener(fightInlay.INLAY_GOLD_BEGIN_EVENT , handler(self, self.playActiveGold))
 
 	self:loadCCS()
 end
@@ -44,18 +49,23 @@ function HeroAnimView:loadCCS()
     --血花 
     self.armatureBlood1 = ccs.Armature:create("blood1")
     self:addChild(self.armatureBlood1) 
-
     self.armatureBlood2 = ccs.Armature:create("blood2")
-    self:addChild(self.armatureBlood2)     
+    self:addChild(self.armatureBlood2)  
+
+    --黄武
+    self.armatureGold 	= ccs.Armature:create("hjwq")
+    self:addChild(self.armatureGold) 
+
+    --换子弹
+	self.armatureReload = ccs.Armature:create("huanzidan")    
+    self:addChild(self.armatureReload) 	
 end
 
 function HeroAnimView:playHurtedBomb_lei(event)
 	print("function HeroAnimView:playHurtedBomb_lei(event)")
-	-- self.armatureBomb:getAnimation():playWithIndex(0 , -1, 0)	
-
 	-- --sound
- --    local soundSrc  = "res/Music/fight/hd_bz.wav"
- --    self.audioId1 =  audio.playSound(soundSrc,false)  	
+    local soundSrc  = "res/Music/fight/hd_bz.wav"
+    self.audioId1 =  audio.playSound(soundSrc,false)  	
 end
 
 function HeroAnimView:playHurtedBomb_boli(event)
@@ -100,13 +110,13 @@ function HeroAnimView:playkillKeep(num)
     self:performWithDelay(endFunc, 2.6)	
 end
 
-function HeroAnimView:onHitted(event)
+function HeroAnimView:playHitted(event)
 	self:playHpDecreaseEffect()
 	self:playHpAlertEffect()
 end
 
-function HeroAnimView:onLessBlood(event)
-	print("onLessBlood event.isLessHp", event.isLessHp)
+function HeroAnimView:playLessHp(event)
+	print("playLessHp event.isLessHp", event.isLessHp)
 	local isLessHp = event.isLessHp
 	if isLessHp then
 		self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 1)
@@ -131,6 +141,19 @@ function HeroAnimView:playHpDecreaseEffect()
     armature:setPosition(
     	math.random(-display.width/2, display.width/2), 
     	math.random(-display.height1/2, display.height1/2))
+end
+
+function HeroAnimView:playActiveGold(event)
+	print("function HeroAnimView:playActiveGold(event)")
+	self.armatureGold:getAnimation():playWithIndex(0 , -1, 0)
+
+    --sound
+    local soundSrc  = "res/Music/fight/hjwq.wav"
+    audio.playSound(soundSrc,false) 
+end
+
+function HeroAnimView:playGunReload()
+	self.armatureReload:getAnimation():playWithIndex(0 , -1, 0)
 end
 
 return HeroAnimView

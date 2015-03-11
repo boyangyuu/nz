@@ -28,9 +28,9 @@ function InfoLayer:ctor()
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
 		:addEventListener(self.fight.INFO_SHOW_EVENT, handler(self, self.onShow))
 
-	cc.EventProxy.new(self.inlay, self)
-		:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
-		:addEventListener(self.inlay.INLAY_GOLD_END_EVENT	, handler(self, self.onActiveGoldEnd))
+	-- cc.EventProxy.new(self.inlay, self)
+	-- 	:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
+	-- 	:addEventListener(self.inlay.INLAY_GOLD_END_EVENT	, handler(self, self.onActiveGoldEnd))
 
 
 	self:loadCCS()
@@ -66,10 +66,12 @@ function InfoLayer:loadCCS()
 	    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)
 	end
     self.goldNode 	= cc.uiloader:seekNodeByName(self.root, "goldNode")
-    self.gold1    	= cc.uiloader:seekNodeByName(self.goldNode, "progressBar1") 
+    self.goldProgress = cc.uiloader:seekNodeByName(self.goldNode, "progressBar") 
     self.goldAnim 	= cc.uiloader:seekNodeByName(self.goldNode, "animNode") 
-    self.gold1:setPercent(1)
-
+    self.goldProgress:setPercent(1)
+	self.goldAnim:setVisible(false)
+	self.goldProgress:setVisible(false)
+	
 	local displayHp = math.floor(self.hero:getHp() )
 	self.bloodLabel:setString(displayHp)
 end
@@ -148,43 +150,43 @@ end
 function InfoLayer:onKillEnemy(event)
 	if self.isGolding then return end 
 	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
-	self.gold1:setPercent(per)
+	self.goldProgress:setPercent(per)
 end
 
-function InfoLayer:onActiveGold(event)
-	self.isGolding = true
-	self.gold1:setPercent(100)
-	print("循环播放激活动画")
-	if self.goldArmature then 
-		self.goldArmature:removeSelf()
-		self.goldArmature = nil
-	end
+-- function InfoLayer:onActiveGold(event)
+-- 	self.isGolding = true
+-- 	self.goldProgress:setPercent(100)
+-- 	print("循环播放激活动画")
+-- 	if self.goldArmature then 
+-- 		self.goldArmature:removeSelf()
+-- 		self.goldArmature = nil
+-- 	end
 
-	self.goldArmature = ccs.Armature:create("hjnlc")
-	self.goldArmature:setAnchorPoint(cc.p(0,0))
-	self.goldArmature:setPosition(cc.p(-22,-24))
-	self.goldAnim:addChild(self.goldArmature)
-	self.goldArmature:getAnimation():play("hjnlc_kaishi", -1, 1)
-	self.goldArmature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
-end
+-- 	self.goldArmature = ccs.Armature:create("hjnlc")
+-- 	self.goldArmature:setAnchorPoint(cc.p(0,0))
+-- 	self.goldArmature:setPosition(cc.p(-22,-24))
+-- 	self.goldAnim:addChild(self.goldArmature)
+-- 	self.goldArmature:getAnimation():play("hjnlc_kaishi", -1, 1)
+-- 	self.goldArmature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+-- end
 
-function InfoLayer:onActiveGoldEnd(event)
-	self.isGolding = false
-	self.gold1:setPercent(0)
-	-- print("function InfoLayer:onActiveGoldEnd(event)")
-	self.goldArmature:removeSelf()
-	self.goldArmature = nil
-end
+-- function InfoLayer:onActiveGoldEnd(event)
+-- 	self.isGolding = false
+-- 	self.goldProgress:setPercent(0)
+-- 	-- print("function InfoLayer:onActiveGoldEnd(event)")
+-- 	self.goldArmature:removeSelf()
+-- 	self.goldArmature = nil
+-- end
 
-function InfoLayer:animationEvent(armatureBack,movementType,movementID)
-    if armatureBack == nil then return end
-    if movementType == ccs.MovementEventType.loopComplete then
-        armatureBack:stopAllActions()
-        if movementID == "hjnlc_kaishi" then
-        	self.goldArmature:getAnimation():play("hjnlc_chixu", -1, 1)
-        end
-    end
-end
+-- function InfoLayer:animationEvent(armatureBack,movementType,movementID)
+--     if armatureBack == nil then return end
+--     if movementType == ccs.MovementEventType.loopComplete then
+--         armatureBack:stopAllActions()
+--         if movementID == "hjnlc_kaishi" then
+--         	self.goldArmature:getAnimation():play("hjnlc_chixu", -1, 1)
+--         end
+--     end
+-- end
 
 function InfoLayer:onShow(event)
 	self:setVisible(true)

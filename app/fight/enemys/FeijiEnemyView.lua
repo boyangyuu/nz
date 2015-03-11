@@ -224,7 +224,7 @@ function FeijiEnemyView:playWalkRight()
 end
 
 function FeijiEnemyView:playFire()
-	print("function FeijiEnemyView:playFire()")
+	-- print("function FeijiEnemyView:playFire()")
 	local name = self.direct == "right" and "fireright" or "fireleft"
 	self.armature:getAnimation():play(name , -1, 1)
 
@@ -254,7 +254,7 @@ function FeijiEnemyView:playFire()
 	        offset = offsetPoses[offsetIndex]
 	    }
 	    local function callfuncDaoDan()
-	    	print("local function callfuncDaoDan()")
+	    	-- print("local function callfuncDaoDan()")
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
@@ -275,6 +275,7 @@ function FeijiEnemyView:onHitted(targetData)
 	if self.isEntering or self.isExiting then 
 		return 
 	end
+	-- print("function FeijiEnemyView:onHitted(targetData)")
 	FeijiEnemyView.super.onHitted(self, targetData)
 end
 
