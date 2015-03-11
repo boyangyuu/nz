@@ -307,10 +307,8 @@ function LevelDetailLayer:onClickBtnGold()
 		self.alreadygold:setVisible(true)
 		self.btnGold:setVisible(false)	
     else
-		if isDone then  
-		    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
-		     "关卡详情_点击黄武按钮")
-		end
+	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+	     "关卡详情_点击黄武按钮")
 	end
 	--sound
 	playSoundBtn()	

@@ -35,6 +35,7 @@ function FightResultLayer:ctor(properties)
     local fightResult = self.fightModel:getFightResult()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
+    dump(fightResult["goldNum"])
     um:bonusVirtualCurrency(fightResult["goldNum"],4)
     self.grade = self:getGrade(fightResult["hpPercent"])
 
@@ -138,10 +139,18 @@ function FightResultLayer:initUI()
     jx:enableOutline(Color_BLACK,2)
 
     self.btninlay:setButtonLabel("disabled", xqwc)
-    self.btngetall:setButtonLabel("disabled" , lqcg)
     self.btninlay:setButtonLabel("normal", ksxq)
     self.btngetall:setButtonLabel("normal" , lqsy)
     self.btnback:setButtonLabel("normal" , jx)
+
+	-- self.btngetall:setButtonLabel("disabled" , lqcg)
+
+    -- if self.grade == 5 then
+    -- 	self.btngetall:setButtonLabel("disabled" , lqsy)
+    -- 	self.btngetall:setButtonEnabled(false)
+    -- else
+    -- 	self.btngetall:setButtonLabel("disabled" , lqcg)
+    -- end
 
 	function showButton()
 		self:startGuide()
@@ -168,8 +177,7 @@ function FightResultLayer:initUI()
         elseif event.name=='ended' then
 	        ui:showPopup("commonPopup",
 				 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
-				 callfuncCofirm =  handler(self, self.leftCard),
-	             callfuncClose  =  handler(self, self.cancel)},
+				 callfuncCofirm =  handler(self, self.leftCard)},
 				 {opacity = 155})
         end
     end)
