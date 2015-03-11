@@ -1,0 +1,17 @@
+diff a/app/fight/fightConfigs/wave0_0.lua b/app/fight/fightConfigs/wave0_0.lua	(rejected hunks)
+@@ -2,7 +2,14 @@
+ local waveClass = class("waveClass", BaseWave)
+ 
+ local waves = {
+-	{		
++	{	
++	-- 	--体验枪
++		gunData = 
++			{ 
++			    id = 8,    --枪id
++			    delay = 1, --10s之后出现
++			    dialogId = "award",
++		    },			
+ 		enemys = {                                          --1波1个
+ 			{
+ 				time = 1,
