@@ -48,11 +48,12 @@ local waves = {
 				delay = {0},
 				pos = {50},
 				property = {
-					placeName = "place10",  
+					placeName = "place10", 
 					id = 2,
 					type = "dao",
 					missileId = 3,
 					missileType = "lei",
+					startState = "",
 				},
 			},
 			{
@@ -63,10 +64,7 @@ local waves = {
 				property = {
 					placeName = "place9",  
 					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					id = 1,
 				},
 			},
 			{
@@ -127,6 +125,7 @@ local waves = {
 					type = "dao",
 					missileId = 3,
 					missileType = "lei",
+					startState = "",
 				},
 			},
 			{
@@ -193,11 +192,12 @@ local waves = {
 				delay = {0.4},
 				pos = {195},
 				property = {
-					placeName = "place14",  
+					placeName = "place14",
+					id = 2,
 					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
+					missileId = 3,
+					missileType = "lei",
+					startState = "",
 				},
 			}, 
 			{
@@ -206,11 +206,8 @@ local waves = {
 				delay = {0.4},
 				pos = {80},
 				property = {
-					placeName = "place12",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
+					placeName = "place12",
+					id = 1,
 				},
 			}, 
 			{
@@ -228,15 +225,14 @@ local waves = {
 				},
 			},
 		},
-	},
-			
+	},	
 	{
 		enemys = {
 		    {
-				time = 3,
+				time = 1,
 				num = 1,
 				pos = {700},
-				delay = {0.5},                         -- 飞机          
+				delay = {0},                         -- 飞机          
 				property = {
 					type = "feiji" ,
 					id = 11,

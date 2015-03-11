@@ -90,7 +90,7 @@ kDialogConfig["group1"]  = {
 		after = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，还挺能打，我还有更重要的事情，今天先放过你们。", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "别跑，我姐姐在哪里？", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "追。",pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼跑了,快追。",pos = "right"},
 			-- {role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，找到我姐姐的下落！", pos = "left"},
 			-- {role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
 		},
@@ -151,7 +151,7 @@ kDialogConfig["group2"]  = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "会场外又遭到了一个巨大机械怪物的袭击，消灭它。", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "这个BOSS好巨大啊，破坏力好恐怖！",pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "又是一场恶战，全员出击！", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "可恶的家伙，拼了！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "可恶的家伙，拼了！全员启用黄金武器！！", pos = "left"},
 		},
 	},
 }

@@ -137,6 +137,7 @@ end
 
 function AwardEnemyView:playKill(event)
 	--clear
+	self:stopAllActions()
 	self:clearPlayCache()
 	self.armature:stopAllActions()
 	if self.schRestore  then 

@@ -326,6 +326,31 @@ local waves = {
 				},
 			},
 			{
+				time = 10,
+				num = 1,
+				delay = {0.1},
+				pos = {0},                                 --不用改
+				property = {
+					placeName = "place3",
+					startState = "enterleft",
+					type = "award",	
+					id = 21,
+					award = "gold",
+					data = {
+						{
+							pos = 30,                  --第一次蹲下的位置
+							time = 5,                   --第一次蹲下的时间
+							direct = "right",           --往那面跑
+						},
+						{
+							pos = 500,
+							time = 3,
+							direct = "right",							
+						},	
+					},
+				},						
+			},
+			{
 				time = 12,
 				num = 10,
 				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
@@ -597,7 +622,10 @@ local enemys = {
 
 	--盾兵BOSS         --type = "jin",
 	{id=20,image="dunbing",demage=15,hp=35000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
-	weak1=2},                           
+	weak1=2},    
+
+	-- 商人
+	{id=21,image="shangr",hp=800, weak1=2},	--武器商人	                           
 }
 
 

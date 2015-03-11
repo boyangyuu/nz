@@ -23,6 +23,11 @@ Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
 Define.kJinEnemyScale	  		=  1.7		-- 狼牙棒兵 盾兵到身前的比例
 Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素(默认值)
 
+--伞兵
+Define.kSanEnemySpeed 		    =  50.0 	--伞兵降落速度
+
+
+
 --自爆兵
 Define.kBaoEnemyWalkSpeed 		=  70.0 	--自爆兵 每秒前进速度
 Define.kBaoEnemyScale	  		=  1.2		-- 自爆兵到身前的比例
@@ -35,8 +40,8 @@ Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2      --跑动时间
 Define.kRenzhiWalkTime			= 0.6      --行走时间
 
---奖励兵
-Define.kAwardSpeed				= 300		--武器商人跑动速度
+--武器商人黄
+Define.kAwardSpeed				= 200		--武器商人黄跑动速度
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
