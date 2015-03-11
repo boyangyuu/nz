@@ -65,17 +65,15 @@ function UserModel:setUserLevel(level)
 	--check
 	local data = getUserData()
 	local curLevel = data.user.level 
-	assert(level >= curLevel and level < curLevel + 2, "invalid level : " .. level)
+	-- assert(level >= curLevel and level < curLevel + 2, "invalid level : " .. level)
 	if level ~= curLevel + 1 then 
 		print("等级异常: 当前等级:" .. curLevel .. "目标等级:" .. level)
-		return 
 	end
 	
 	--save
 	data.user.level = level
 	setUserData(data)
 
-	dump(data)
 	--um
 	um:setLevel(level)	
 end

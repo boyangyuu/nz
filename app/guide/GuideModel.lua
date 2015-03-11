@@ -63,6 +63,7 @@ function Guide:doGuideNext()
 	if self.stepIndex ~= 0 then
 		local lastconfigStep = configGroup["steps"][self.stepIndex]	
 		--todo 改为自定义事件
+		assert(lastconfigStep["id"], "lastconfigStep is nil")
 		um:finishLevel("新手:" .. lastconfigStep["id"])
 	end
 	--next
@@ -79,6 +80,7 @@ function Guide:doGuideNext()
 	end
 
 	-- --um start
+	assert(self.curConfig["id"], "self.curConfig is nil")
 	um:startLevel("新手:" .. self.curConfig["id"])
 
 	--update listenData

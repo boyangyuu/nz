@@ -31,6 +31,7 @@ function FightInlay:refreshUm()
 
         --um
         local fight = md:getInstance("Fight")
+        assert(levelInfo, "levelInfo is nil")
         local levelInfo = fight:getLevelInfo()  
         local umData = {}
         umData[levelInfo] = name
@@ -62,7 +63,8 @@ function FightInlay:activeGoldOnCost()
 
     --um
     local fight = md:getInstance("Fight")
-    local levelInfo = fight:getLevelInfo()  
+    local levelInfo = fight:getLevelInfo()
+    assert(levelInfo, "levelInfo is nil") 
     local umData = {}
     umData[levelInfo] = "黄武"
     um:event("关卡道具使用", umData)    

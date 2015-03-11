@@ -28,13 +28,14 @@ function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
-    datamodel:fillData()
+    
 end
 
 function MyApp:run()
     print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
-    self:enterScene("MainScene") 
+    self:enterScene("MainScene")
+    datamodel:fillData() 
 end
 
 function MyApp:initGameState()
@@ -63,7 +64,7 @@ function MyApp:initGameState()
         GameData=GameState.load()
     end
 
-    -- TalkingData 设置玩家账户及等级
+    -- um 设置玩家账户及等级
     um:setUserAccount()
 end
 
@@ -127,9 +128,9 @@ function MyApp:createGameStateFile()
                         group = 1,
                         level = 1,
             },
-            user = {
-                level = 1,
-            },
+            -- user = {
+            --     level = 1,
+            -- },
             guide = {
                         gamePre         = false,
                         fight01_move    = false,

@@ -169,11 +169,18 @@ function UM:setUserAccount()
     if device.platform ~= "android" then
         return
     end    
+    --account
     TDGAAccount:setAccount(TalkingDataGA:getDeviceId())
     TDGAAccount:setAccountType(TDGAAccount.KAccountAnonymous)
+    
+    --level
     local data = getUserData()
-    local levelId = data.user.level
-    TDGAAccount:setLevel(levelId)
+    if data.user and data.user.level then 
+        local levelId = data.user.level
+        TDGAAccount:setLevel(levelId)
+    else
+        TDGAAccount:setLevel(1)
+    end
 end
 
 return UM
