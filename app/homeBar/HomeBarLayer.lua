@@ -47,6 +47,7 @@ function HomeBarLayer:popUpWeaponGift(properties)
     end
 end
 
+--todo 暂时保留计费点
 function HomeBarLayer:popUpGoldGift(properties)
     -- local buyModel = md:getInstance("BuyModel")
     -- local isDone = self.guide:isDone("xiangqian")
@@ -119,14 +120,21 @@ function HomeBarLayer:initHomeLayer()
     local zuanshi = cc.uiloader:seekNodeByName(self.homeRootNode, "Image_18")
     local jingbi = cc.uiloader:seekNodeByName(self.homeRootNode, "icon_jibi")
     self.panelUp = cc.uiloader:seekNodeByName(self.homeRootNode, "biaotou")
-
+    self.notiArsenal = cc.uiloader:seekNodeByName(self.homeRootNode, "notiarsenal")
+    self.notiStore = cc.uiloader:seekNodeByName(self.homeRootNode, "notistore")
 
     local btnarmature = ccs.Armature:create("sczg")
     btnarmature:setPosition(0,0)
     self.btnStore:addChild(btnarmature)
     btnarmature:getAnimation():play("sczg" , -1, 1)
 
-
+    local guide = md:getInstance("Guide")
+    local isNotDone = guide:isDone("xiangqian") == false
+    if isNotDone then
+        self.notiArsenal:setVisible(false)
+        self.notiStore:setVisible(false)
+    end
+    
     self.btnBack:setTouchEnabled(true)  
     self.btnSetting:setTouchEnabled(true)  
     self.btnBack:setVisible(false)
@@ -188,16 +196,7 @@ function HomeBarLayer:initHomeLayer()
         self:onBtnInlayClicked()
     end)
     self.btnStore:onButtonClicked(function()
-        local dianji = "res/Music/ui/dianji.wav"
-        audio.playSound(dianji,false)
-        self.btnSetting:setVisible(false)
-        self.btnBack:setVisible(true)
-        self:refreshCommonLayer("StoreLayer")
-
-        self.btnInlay:setButtonEnabled(true)
-        self.btnStore:setButtonEnabled(false)
-        self.btnArsenal:setButtonEnabled(true)
-
+        self:onBtnStoreClicked()
     end)
 end
 
@@ -226,6 +225,19 @@ function HomeBarLayer:onEnter()
     self.guide:check("prefight02")
 end
 
+function HomeBarLayer:onBtnStoreClicked()
+    self.notiStore:setVisible(false)
+    local dianji = "res/Music/ui/dianji.wav"
+    audio.playSound(dianji,false)
+    self.btnSetting:setVisible(false)
+    self.btnBack:setVisible(true)
+    self:refreshCommonLayer("StoreLayer")
+
+    self.btnInlay:setButtonEnabled(true)
+    self.btnStore:setButtonEnabled(false)
+    self.btnArsenal:setButtonEnabled(true)
+end
+
 function HomeBarLayer:onBtnInlayClicked()
     self.btnSetting:setVisible(false)
     self.btnBack:setVisible(true)
@@ -239,6 +251,7 @@ function HomeBarLayer:onBtnInlayClicked()
 end
 
 function HomeBarLayer:onBtnArsenalClicked()
+    self.notiArsenal:setVisible(false)
     self.btnSetting:setVisible(false)
     self.btnBack:setVisible(true)
     self:refreshCommonLayer("WeaponListLayer")
@@ -247,20 +260,16 @@ function HomeBarLayer:onBtnArsenalClicked()
     self.btnArsenal:setButtonEnabled(false)
     
     --sound
-    playSoundBtn()    
+    playSoundBtn()
 end
 
 function HomeBarLayer:onBtnBackClicked()
-    -- self.btnBack:runAction(cc.ScaleTo:create(0.05, 0.5027, 1))
     self.btnBack:setVisible(false)
     self.btnSetting:setVisible(true)
     self:refreshCommonLayer("levelMapLayer")
     self.btnInlay:setButtonEnabled(true)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(true)
-
-    --sound
-    playSoundBtn()
 end
 
 function HomeBarLayer:initGuideWeapon()

@@ -39,6 +39,7 @@ function RobotView:clearUI()
 end
 
 function RobotView:hideRobot(event)
+	self:stopFire()
 	self.armature:getAnimation():play("jijia_shou", -1, 1) --reverse
 
 	--effect
@@ -69,13 +70,16 @@ function RobotView:playStand()
 end
 
 function RobotView:playFire(event)
-	self.armature:getAnimation():play("jijia_fire", -1, 1)
-
 	local soundSrc  = "res/Music/fight/m134fire.wav"
 	self.audioId2 =  audio.playSound(soundSrc,false)	
+
+	if self.isFiring then return end
+	self.isFiring = true
+	self.armature:getAnimation():play("jijia_fire", -1, 1)
 end
 
 function RobotView:stopFire(event)
+	self.isFiring = false
 	print("function RobotView:stopFire(event)")
 	self:playStand()
 end

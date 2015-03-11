@@ -108,8 +108,8 @@ kDialogConfig["group2"]  = {
 	},
 	level2 = {
 		forward = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "幸好你来了，不然我也要被俘获了！！哭。。", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "额，我看够呛，会被你俘获才对！！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "幸好你来了，不然我也要被俘获了！！哭。。", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "你个笨笨，总让我为你操心！！", pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "敌人越来越多，快炸毁大门，挡住敌人。", pos = "left"},
 			{role = "杰",imgname = "role_jie", msg = "收到！", pos = "left"},
 		},	

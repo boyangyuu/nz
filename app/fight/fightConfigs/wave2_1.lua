@@ -636,7 +636,7 @@ local enemys = {
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=60,fireCd=2,
+	{id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
@@ -683,7 +683,7 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.goldLimits = {1000}   --黄武激活所需杀人个数
+
 end
 
 return waveClass

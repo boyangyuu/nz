@@ -53,9 +53,8 @@ function ChongBossView:playTieQiu()
 		local property = {
 			type = "missile",
 			missileType = "tie",
-			srcScale = self:getScale(), --导弹view用
+			srcScale = 0.3, 
 			demageScale = self.enemy:getDemageScale(),
-			destScale = 3.0,
 			id = self.property["qiuId"], 
 		}
 		local function callfuncAddDao()

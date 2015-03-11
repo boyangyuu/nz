@@ -36,12 +36,4 @@ function BaseWave:getEnemyNumLimit()
 	return self.limit or 10
 end
 
-function BaseWave:getGoldLimit(goldIndex)
-	if self.goldLimits == nil then 
-		return 100000
-	else
-		return self.goldLimits[goldIndex] or 100000
-	end
-end
-
 return BaseWave

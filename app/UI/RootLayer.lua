@@ -70,9 +70,9 @@ function RootLayer:addResPublic()
     display.addSpriteFrames("res/commonPNG/weaponicon0.plist", "res/commonPNG/weaponicon0.png", handler(self, self.imageLoaded))
 end
 
-function RootLayer:addSpriteFrames()
-    display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded))
-end
+-- function RootLayer:addSpriteFrames()
+--     display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded))
+-- end
 
 function RootLayer:addResHome()
     -- display.removeUnusedSpriteFrames()
@@ -214,7 +214,7 @@ function RootLayer:addResFight()
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
         "sanbing01", "zpbing", "shouleib",  "hs","feiji","yyc",
-        "shoulei", "daodan", "tieqiu", 
+        "shoulei", "daodan", "tieqiu", "xiaozz",
          "dzboss",
          "boss01", "boss01_1", "boss01_2", 
          "boss02", "boss02_1", "boss02_2",    

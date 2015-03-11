@@ -3,7 +3,7 @@
 DEBUG = 0
 
 -- display FPS stats on screen
-DEBUG_FPS = false
+DEBUG_FPS = true
 
 -- dump memory info every 10 seconds
 DEBUG_MEM = false

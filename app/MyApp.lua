@@ -6,6 +6,7 @@ local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
+local DataModel = require("app.DataModel")
 GameState = require("framework.cc.utils.GameState")
 local IAPsdk = require("app.SDK.IAPsdk")
 local MyApp = class("MyApp", cc.mvc.AppBase)
@@ -17,16 +18,18 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 
-ui      = UI.new()
-md      = MD.new()
-um      = UM.new()
-define  = Define.new()
-iap     = IAPsdk.new()
+ui        = UI.new()
+md        = MD.new()
+um        = UM.new()
+define    = Define.new()
+datamodel = DataModel.new()
+iap       = IAPsdk.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
+    datamodel:fillData()
 end
 
 function MyApp:run()
@@ -69,6 +72,7 @@ function MyApp:createGameStateFile()
     print("createGameStateFile")
     local data = GameData.data
     data = {
+            -- versionId = "1.1.1",
             weapons = {
                         bags = {
                                     {
@@ -121,27 +125,27 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 2,
-                        level = 6,
+                        group = 1,
+                        level = 1,
             },
             user = {
                 level = 1,
             },
             guide = {
-                        gamePre         = false,
-                        fight01_move    = false,
-                        fight01_fire    = false,
-                        fight01_lei     = false,
-                        fight01_gold    = false,
-                        fight01_change  = false,
-                        fight01_jijia   = false,   
-                        afterfight01    = false,   
+                        gamePre         = true,
+                        fight01_move    = true,
+                        fight01_fire    = true,
+                        fight01_lei     = true,
+                        fight01_gold    = true,
+                        fight01_change  = true,
+                        fight01_jijia   = true,   
+                        afterfight01    = true,   
 
-                        prefight02      = false,
-                        afterfight02    = false,
+                        prefight02      = true,
+                        afterfight02    = true,
                         
-                        fight04         = false,
-                        xiangqian       = false,
+                        fight04         = true,
+                        xiangqian       = true,
             },
             isAwardGold     = false,
             fight = {
