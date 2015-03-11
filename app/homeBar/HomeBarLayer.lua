@@ -221,7 +221,11 @@ function HomeBarLayer:homeBarAction()
 end
 
 function HomeBarLayer:onEnter()
-    self.guide:check("prefight02")
+    local fight = md:getInstance("Fight")
+    local lid, gid = fight:getCurGroupAndLevel()
+    if lid == 2 and gid == 0 then 
+        self.guide:check("prefight02")
+    end
 end
 
 function HomeBarLayer:onBtnStoreClicked()
