@@ -35,6 +35,9 @@ Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
 Define.kRenzhiRunTime			= 1.2      --跑动时间
 Define.kRenzhiWalkTime			= 0.6      --行走时间
 
+--奖励兵
+Define.kAwardSpeed				= 300		--武器商人跑动速度
+
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
 Define.kRenzheSpeed				= 600.0    --忍者跑动速度 像素/s

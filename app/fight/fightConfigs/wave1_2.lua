@@ -6,6 +6,36 @@ local waves = {
 		enemys = {
 			{
 				time = 1,
+				num = 1,
+				delay = {0.1},
+				pos = {0},
+				property = {
+					placeName = "place2",
+					startState = "enterleft",
+					type = "award",	
+					id = 11,
+					award = "gold",
+					data = {
+						{
+							pos = 200,
+							time = 5,
+							direct = "right",
+						},
+						{
+							pos = 900,
+							time = 6,
+							direct = "right",							
+						},
+						{
+							pos = 600,
+							time = 6,
+							direct = "left",							
+						},						
+					},
+				},
+			},		
+			{
+				time = 1,
 				num = 2,
 				delay = {0.1,0.6},
 				pos = {110,200},
@@ -469,7 +499,9 @@ local enemys = {
 	weak1=3},
 	-- 盾兵
 	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,scale = 2.0,
-	weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
+	weak1=3},	
+	-- 商人
+	{id=11,image="dunbing",hp=300, weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
 }
 
 local mapId = "map_1_3"

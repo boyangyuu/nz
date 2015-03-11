@@ -183,8 +183,7 @@ function Fight:onRelive()
     self.hero:doRelive()
     
     --clear
-    self.killRenzhiNum = 0
-    self.result = nil 
+    self:clearFightData()
 
     --gold
     self.inlayModel:equipGoldInlays(false)
@@ -271,6 +270,8 @@ end
 
 function Fight:clearFightData()
     self.inlayModel:removeAllInlay()
+    self.killRenzhiNum = 0
+    self.result = nil     
 end
 
 function Fight:cleanModels()
