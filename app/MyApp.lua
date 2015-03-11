@@ -6,6 +6,7 @@ local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
+local DataModel = require("app.DataModel")
 GameState = require("framework.cc.utils.GameState")
 local IAPsdk = require("app.SDK.IAPsdk")
 local MyApp = class("MyApp", cc.mvc.AppBase)
@@ -17,16 +18,18 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 
-ui      = UI.new()
-md      = MD.new()
-um      = UM.new()
-define  = Define.new()
-iap     = IAPsdk.new()
+ui        = UI.new()
+md        = MD.new()
+um        = UM.new()
+define    = Define.new()
+datamodel = DataModel.new()
+iap       = IAPsdk.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initGameState()    
+    datamodel:fillData()
 end
 
 function MyApp:run()
@@ -69,6 +72,7 @@ function MyApp:createGameStateFile()
     print("createGameStateFile")
     local data = GameData.data
     data = {
+            -- versionId = "1.1.1",
             weapons = {
                         bags = {
                                     {

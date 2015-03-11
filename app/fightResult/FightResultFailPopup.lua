@@ -1,5 +1,7 @@
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 200)
+
 local FightResultFailPopup = class("FightResultFailPopup", function()
-    return display.newLayer()
+    return display.newColorLayer(LayerColor_BLACK)
 end)
 
 function FightResultFailPopup:ctor()

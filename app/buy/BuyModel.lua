@@ -23,28 +23,28 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
-
 	local config  = BuyConfigs.getConfig(configId)
-	local isGift = config.isGift 
-
-	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configId})
-    else
-
-    	iap:pay(configId)
-    end
 
     --um pay
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configId) 
-    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
+    -- print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
     self.strDesc = buyConfig.name .. "__" ..strPos
     um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, "MM")
 	
     --um event
 	local umData = {}
 	umData[self.strDesc] = "展示付费点"
-	um:event("支付情况", umData)    
+	um:event("支付情况", umData)  
+
+	--pay
+	local isGift = config.isGift 
+	if isGift then
+        ui:showPopup("GiftBagPopup",{popupName = configId})
+    else
+
+    	iap:pay(configId)
+    end	  
 end
 
 function BuyModel:payGift()
