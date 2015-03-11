@@ -32,7 +32,11 @@ function AboutPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:closePopup("AboutPopup")
+			if self.popupName == "bangzhu" then
+				ui:closePopup("AboutPopup", {isCancelAnim = true})
+			else
+				ui:closePopup("AboutPopup")
+			end
 		end
 	end)
 end
