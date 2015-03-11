@@ -53,7 +53,8 @@ function FightProp:costLei(callfuncSuccess)
 
 	    --um
 	    local fight = md:getInstance("Fight")
-	    local levelInfo = fight:getLevelInfo()  
+	    local levelInfo = fight:getLevelInfo()
+	    assert(levelInfo, "levelInfo is nil")
 	    local umData = {}
 	    umData[levelInfo] = "手雷"
 	    um:event("关卡道具使用", umData) 		
