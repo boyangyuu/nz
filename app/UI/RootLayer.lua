@@ -213,7 +213,7 @@ function RootLayer:addResFight()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
     local enemyImgs = {"anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-        "sanbing01", "zpbing", "shouleib",  "hs","feiji","yyc",
+        "sanbing01", "zpbing", "shouleib",  "hs","feiji","yyc","shangr",
         "shoulei", "daodan", "tieqiu", "xiaozz",
          "dzboss",
          "boss01", "boss01_1", "boss01_2", 
