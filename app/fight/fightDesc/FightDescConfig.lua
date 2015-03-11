@@ -12,9 +12,49 @@ configs["boss02"] = {
 	playanim = "stand",
 }
 
+configs["boss02_1"] = {
+	title = "BOSS信息！",
+	name = "毁灭者三号",
+	spc = "技能：",
+	skill = {"粉碎投掷","野蛮冲撞","火箭弹"},
+	weakness = "头部，手部",
+	describe = "眼镜蛇研发的二代机甲战士，残酷冷血，据说有三兄弟。",
+	playanim = "stand",
+}
+
+configs["boss02_2"] = {
+	title = "BOSS信息！",
+	name = "毁灭者二号",
+	spc = "技能：",
+	skill = {"粉碎投掷","野蛮冲撞","火箭弹"},
+	weakness = "头部，手部",
+	describe = "眼镜蛇研发的二代机甲战士，残酷冷血，据说有三兄弟。",
+	playanim = "stand",
+}
+
 configs["boss01"] = {
 	title = "BOSS信息！",
 	name = "黑暗金刚",
+	spc = "技能：",
+	skill = {"狂热射击","召唤","连续飞弹"},
+	weakness = "头部，手部，腹部",
+	describe = "新型试验机甲的杰作，厚装甲护盾使其拥有超高的防御。",
+	playanim = "stand",
+}
+
+configs["boss01_1"] = {
+	title = "BOSS信息！",
+	name = "烈火金刚",
+	spc = "技能：",
+	skill = {"狂热射击","召唤","连续飞弹"},
+	weakness = "头部，手部，腹部",
+	describe = "新型试验机甲的杰作，厚装甲护盾使其拥有超高的防御。",
+	playanim = "stand",
+}
+
+configs["boss01_2"] = {
+	title = "BOSS信息！",
+	name = "地狱金刚",
 	spc = "技能：",
 	skill = {"狂热射击","召唤","连续飞弹"},
 	weakness = "头部，手部，腹部",

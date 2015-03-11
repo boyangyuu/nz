@@ -166,9 +166,6 @@ function Fight:onFail()
     
     --clear
     self:clearFightData() 
-
-    --pause
-    self:pauseFight(true)    
 end
 
 function Fight:onRelive()
@@ -192,9 +189,6 @@ function Fight:onRelive()
     --jijia
     local robot = md:getInstance("Robot")
     robot:startRobot(define.kRobotTimeRelieve)
-
-    --pause
-    self:pauseFight(false)
 end
 
 function Fight:pauseFight(isPause)
