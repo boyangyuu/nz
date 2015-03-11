@@ -41,17 +41,26 @@ end
 
 function PopupRootLayer:closePopup(event)
 	print(" PopupRootLayer:closePopup(event)")
-	transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
-    	delay = 0,
-    	easing = "In",
-    	onComplete = function() 
-	    	self.layers[event.layerId]:removeSelf()
-	    	self.layers[event.layerId] = nil
-	    	if table.nums(self.layers) == 0 then
-	    		self:setVisible(false)
-	    	end
-       end, 
-	})
+	local isCancelAnim = event.isCancelAnim
+	if isCancelAnim then
+		self.layers[event.layerId]:removeSelf()
+    	self.layers[event.layerId] = nil
+    	if table.nums(self.layers) == 0 then
+    		self:setVisible(false)
+    	end
+	else
+		transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
+	    	delay = 0,
+	    	easing = "In",
+	    	onComplete = function() 
+		    	self.layers[event.layerId]:removeSelf()
+		    	self.layers[event.layerId] = nil
+		    	if table.nums(self.layers) == 0 then
+		    		self:setVisible(false)
+		    	end
+	       end, 
+		})
+	end
 end
 
 

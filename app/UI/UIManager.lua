@@ -96,8 +96,12 @@ function UI:showPopup(layerId, properties, extra)
 	end
 end
 
-function UI:closePopup(layerId)
-	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId})
+function UI:closePopup(layerId,extra)
+	local isCancelAnim
+	if extra then
+		isCancelAnim = extra.isCancelAnim
+	end
+	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId, isCancelAnim = isCancelAnim})
 end
 
 function UI:getLayerCls(layerId)
