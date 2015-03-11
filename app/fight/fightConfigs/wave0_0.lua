@@ -495,7 +495,6 @@ local enemys = {
 	weak1=1},
 
 	--铁球
-
 	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
 	--手雷兵

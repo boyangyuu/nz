@@ -15,9 +15,9 @@ function StoryLayer:ctor(properties)
 end
 
 function StoryLayer:onEnter()
-	audio.stopMusic(false)
-				ui:changeLayer("FightPlayer", {groupId = 0, 
-					levelId = 0})		
+	-- audio.stopMusic(false)
+	-- ui:changeLayer("FightPlayer", {groupId = 0, 
+	-- 	levelId = 0})		
 end
 
 function StoryLayer:loadCCS()
@@ -38,7 +38,6 @@ function StoryLayer:initTalks()
 		local purson = cc.uiloader:seekNodeByName(talk, "purson"..i)
 		purson:setPosition(posSet[i], 240)
 		self.pursons["purson"..i] = purson
-
 	end
 	
 	self:changeTalk()
