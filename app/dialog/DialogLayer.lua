@@ -34,7 +34,7 @@ function DialogLayer:initUI()
 	local panldialog = cc.uiloader:seekNodeByName(self, "tappanl")
 	panldialog:setTouchEnabled(true)
 	panldialog:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then                
+        if event.name=='began' then
             return true
         elseif event.name=='ended' then
             if self.index > self.num then
@@ -84,7 +84,7 @@ function DialogLayer:refreshUI()
 		addChildCenter(roleimg, self.right)
 	end
 	self.msglabel:setString(msg)
-	-- self.msglabel:speak(0.1)
+	self.msglabel:speak(0.1)
 	self.index = self.index + 1
 end
 

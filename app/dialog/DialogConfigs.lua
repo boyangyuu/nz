@@ -4,15 +4,15 @@ local kDialogConfig = {}
 kDialogConfig["group0"] = {
 	level0 = {
 		award = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "敌人越来越多! 阿杰快坚持不住了! ", pos = "right"},
-			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了, 看你是新手的份上, 把我的枪借你一用!", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "多谢!", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "敌人越来越多！阿杰快坚持不住了！", pos = "right"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了，看你是新手的份上，把我的枪借你一用！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "多谢！", pos = "left"},
 		},	
 
 		after = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊!! 你开加特林的姿势真的真的好帅啊!! ", pos = "right"},		
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话, 谁开加特林都帅", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰, 想买这把酷酷的武器的话, 到武器商城就有卖哦!!", pos = "right"},		
+			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊！你开加特林的姿势真的真的好帅啊！！", pos = "right"},		
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话，谁开加特林都帅", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，想买这把酷酷的武器的话, 到武器商城就有卖哦!!", pos = "right"},		
 		},			
 	},
 }
@@ -20,8 +20,8 @@ kDialogConfig["group0"] = {
 kDialogConfig["group1"]  = {
 	level1 = {
 		forward = {
-			{role = "安琪儿", imgname = "role_anqi",msg = "杰,敌人的弱点在头部,爆头会造成三倍伤害！", pos = "right"},
-			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "优先击杀红衣手雷兵,他造成的伤害更高！", pos = "left"},
+			{role = "安琪儿", imgname = "role_anqi",msg = "杰，敌人的弱点在头部，爆头会造成三倍伤害！", pos = "right"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "优先击杀红衣手雷兵，他造成的伤害更高！", pos = "left"},
 			{role = "杰",imgname = "role_jie", msg = "了解，看我黄金爆头！！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "加油，不要辱没了我们龙组的威名！", pos = "right"},
 		},
