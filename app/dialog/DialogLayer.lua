@@ -37,15 +37,15 @@ function DialogLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            if self.index > self.num then
-            	self:finishDialog()
-            else
-            	if self.msglabel:isSpeaking() then
-            		self.msglabel:stopSpeak()
-            	else
+	    	if self.msglabel:isSpeaking() then
+	    		self.msglabel:stopSpeak()
+	    	else
+	            if self.index > self.num then
+	            	self:finishDialog()
+	            else
 		            self:refreshUI()
 		        end
-	        end
+        	end
         end
     end)
 end
