@@ -98,7 +98,6 @@ end
 
 
 function FightResultLayer:initUI()
-
     for i=1,5 do
     	self.star[i] = cc.uiloader:seekNodeByName(self, "panelstar"..i)
 	end
@@ -125,19 +124,25 @@ function FightResultLayer:initUI()
 	self.alreadygetall:setVisible(false)
 	self.btninlay:setOpacity(0)
 	self.btngetall:setOpacity(0)
+	self.btninlay:setButtonEnabled(false)
+	self.btngetall:setButtonEnabled(false)
 	self.btnback:setButtonEnabled(false)
 
-    -- local inlayArmature = ccs.Armature:create("bt_yjzb")
-    -- local getallArmature = ccs.Armature:create("bt_yjzb")
-    -- addChildCenter(inlayArmature, self.btninlay)
-    -- addChildCenter(getallArmature, self.btngetall)
-    -- inlayArmature:getAnimation():play("yjzb" , -1, 1)
-    -- getallArmature:getAnimation():play("yjzb" , -1, 1)
+    self.inlayArmature = ccs.Armature:create("bt_ksxq")
+    self.getallArmature = ccs.Armature:create("bt_ksxq")
+    self.btninlay:addChild(self.inlayArmature)
+    self.btngetall:addChild(self.getallArmature)
+    self.inlayArmature:getAnimation():play("yjzb" , -1, 1)
+    self.getallArmature:getAnimation():play("yjzb" , -1, 1)
 
 	function showButton()
 		self:startGuide()
-	    self.btngetall:runAction(cc.FadeIn:create(0.3))
+
+		self.btngetall:setButtonEnabled(true)
+		self.btninlay:setButtonEnabled(true)
+		self.btngetall:runAction(cc.FadeIn:create(0.3))
 		self.btninlay:runAction(cc.FadeIn:create(0.3))
+
 		if self.grade == 5 then
 			self.btngetall:setButtonEnabled(false)
 			self.alreadygetall:setVisible(true)
@@ -145,6 +150,7 @@ function FightResultLayer:initUI()
 			transition.execute(self.alreadygetall, cc.ScaleTo:create(0.2, 1), {
 					    easing = "Out",
 					})
+			self.getallArmature:removeFromParent()
 		end
 		self.btnback:setButtonEnabled(true)
 	end
@@ -163,7 +169,7 @@ function FightResultLayer:initUI()
 			transition.execute(self.alreadyinlay, cc.ScaleTo:create(0.2, 1), {
 					    easing = "Out",
 					})
-
+			self.inlayArmature:removeFromParent()
         end
     end)
 
@@ -422,6 +428,7 @@ function FightResultLayer:turnLeftCard()
 	transition.execute(self.alreadygetall, cc.ScaleTo:create(0.2, 1), {
 			    easing = "Out",
 			})
+	self.getallArmature:removeFromParent()
 
 end
 
@@ -491,6 +498,7 @@ function FightResultLayer:initGuide2()
 			transition.execute(self.alreadyinlay, cc.ScaleTo:create(0.2, 1), {
 					    easing = "Out",
 					})
+			self.inlayArmature:removeFromParent()
 
 			playSoundBtn()    
         end

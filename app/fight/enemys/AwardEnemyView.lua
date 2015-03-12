@@ -149,12 +149,17 @@ function AwardEnemyView:playKill(event)
 end
 
 function AwardEnemyView:sendAward()
+	local pWorld = self:convertToWorldSpace(cc.p(0,0))
+
 	--award
 	local awardType = self.property.award 
 	if awardType == "gold" then 
-		local fightInlay = md:getInstance("FightInlay")
-		fightInlay:activeGold()	
-	end 	
+		local map = md:getInstance("Map")
+		map:dispatchEvent({name = map.AWARD_GOLD_EVENT, pWorld = pWorld})	
+
+	
+	end
+
 end
 
 function AwardEnemyView:animationEvent(armatureBack,movementType,movementID)
