@@ -217,7 +217,7 @@ end
 
 function HomeBarLayer:homeBarAction()
     local changeTime = 0.2
-    local smallTime, bigTime = 0.7, 0.7
+    local smallTime, bigTime = 0.5, 0.5
     self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
     self.panelUp:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()

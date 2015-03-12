@@ -211,7 +211,6 @@ function FightResultLayer:onClickBtnNext()
 		print("0-0 OR 1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
     end
-	playSoundBtn()     
 end
 
 function FightResultLayer:initUIContent()

@@ -5,7 +5,7 @@ end)
 
 --------  Constants  ---------
 local Zorder_up, Zorder_bg = 10, 0
-local amplifyTimes, smallTime, bigTime = 2, 0.7, 0.7  --Amplify times and time of background
+local amplifyTimes, smallTime, bigTime = 2, 0.5, 0.5  --Amplify times and time of background
 
 function LevelMapLayer:ctor(properties)
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
