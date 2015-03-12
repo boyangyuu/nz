@@ -6,6 +6,13 @@ end)
 
 function FightResultFailPopup:ctor()
     self:initUI()
+    audio.stopMusic(false)
+    self:playSound()
+end
+
+function FightResultFailPopup:playSound()
+    local rwwc   = "res/Music/ui/rwsb.wav"
+    audio.playSound(rwwc,false)
 end
 
 function FightResultFailPopup:initUI()
@@ -76,6 +83,8 @@ end
 function FightResultFailPopup:payReliveDone()
     local fight = md:getInstance("Fight")
     fight:onRelive()
+    local src = "res/Music/bg/bjyx.wav"
+    audio.playMusic(src, true)
 end
 
 return FightResultFailPopup

@@ -16,6 +16,7 @@ GameData={}
 isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
+__versionId = "1.2"
 
 ui        = UI.new()
 md        = MD.new()
@@ -72,7 +73,7 @@ function MyApp:createGameStateFile()
     print("createGameStateFile")
     local data = GameData.data
     data = {
-            versionId = "1.1.1",
+            versionId = __versionId,
             weapons = {
                         bags = {
                                     {

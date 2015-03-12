@@ -7,7 +7,7 @@ end
 function DataModel:checkData()
 	local data = getUserData()
     -- dump(data)
-	if data.versionId ~= "1.1.1" then
+	if data.versionId ~= __versionId then
 		print(" function DataModel:checkData() unmatch!!!!!!!")
         self:setNewData()
     else
@@ -19,7 +19,7 @@ function DataModel:setNewData()
     local data = getUserData()
 
     --版本
-    data.versionId = "1.1.1"
+    data.versionId = __versionId
 
     --用户等级
     data.user = {level = 1}

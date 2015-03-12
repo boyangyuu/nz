@@ -67,13 +67,10 @@ function RootLayer:clearCache()
 end
 
 function RootLayer:addResPublic()
-    display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/commonPNG/role0.plist", "res/commonPNG/role0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/commonPNG/item0.plist", "res/commonPNG/item0.png", handler(self, self.imageLoaded)) 
     display.addSpriteFrames("res/commonPNG/weaponicon0.plist", "res/commonPNG/weaponicon0.png", handler(self, self.imageLoaded))
 end
-
--- function RootLayer:addSpriteFrames()
---     display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded))
--- end
 
 function RootLayer:addResHome()
     -- display.removeUnusedSpriteFrames()
