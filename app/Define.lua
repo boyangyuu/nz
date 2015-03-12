@@ -121,7 +121,8 @@ Define.kShouLeiCd    			= 0.5  --
 Define.kJuRange 				= 4.0
 
 --引导
-Define.kGuideActiveJijia	 	= 0.20  --boss还有百分之20血时 触发机甲
+Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之20血时 触发机甲
+
 
 function Define:ctor()
     Define.super.ctor(self) 

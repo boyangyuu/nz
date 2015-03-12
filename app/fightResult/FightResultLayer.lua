@@ -121,8 +121,8 @@ function FightResultLayer:initUI()
     self.alreadygetall = cc.uiloader:seekNodeByName(self, "alreadygetall")
     self.panlgetall = cc.uiloader:seekNodeByName(self, "panlgetall")
     self.btnback = cc.uiloader:seekNodeByName(self, "btnnext")
-	self.alreadyinlay:setOpacity(0)
-	self.alreadygetall:setOpacity(0)
+	self.alreadyinlay:setVisible(false)
+	self.alreadygetall:setVisible(false)
 	self.btninlay:setOpacity(0)
 	self.btngetall:setOpacity(0)
 	self.btnback:setButtonEnabled(false)
@@ -140,7 +140,11 @@ function FightResultLayer:initUI()
 		self.btninlay:runAction(cc.FadeIn:create(0.3))
 		if self.grade == 5 then
 			self.btngetall:setButtonEnabled(false)
-			self.alreadygetall:runAction(cc.FadeIn:create(0.3))
+			self.alreadygetall:setVisible(true)
+			self.alreadygetall:setScale(5)
+			transition.execute(self.alreadygetall, cc.ScaleTo:create(0.2, 1), {
+					    easing = "Out",
+					})
 		end
 		self.btnback:setButtonEnabled(true)
 	end
@@ -154,7 +158,12 @@ function FightResultLayer:initUI()
 				 {opacity = 155})				
         	self:quickInlay()
 	        self.btninlay:setButtonEnabled(false)
-	        self.alreadyinlay:runAction(cc.FadeIn:create(0.09))
+			self.alreadyinlay:setVisible(true)
+			self.alreadyinlay:setScale(5)
+			transition.execute(self.alreadyinlay, cc.ScaleTo:create(0.2, 1), {
+					    easing = "Out",
+					})
+
         end
     end)
 
@@ -408,7 +417,11 @@ function FightResultLayer:turnLeftCard()
 		end
 	end
 	self.btngetall:setButtonEnabled(false)
-	self.alreadygetall:runAction(cc.FadeIn:create(0.09))
+	self.alreadygetall:setVisible(true)
+	self.alreadygetall:setScale(5)
+	transition.execute(self.alreadygetall, cc.ScaleTo:create(0.2, 1), {
+			    easing = "Out",
+			})
 
 end
 
@@ -473,7 +486,11 @@ function FightResultLayer:initGuide2()
 				 {opacity = 155})
         	self:quickInlay()
 	        self.btninlay:setButtonEnabled(false)  
-        	self.alreadyinlay:runAction(cc.FadeIn:create(0.09))
+			self.alreadyinlay:setVisible(true)
+			self.alreadyinlay:setScale(5)
+			transition.execute(self.alreadyinlay, cc.ScaleTo:create(0.2, 1), {
+					    easing = "Out",
+					})
 
 			playSoundBtn()    
         end
