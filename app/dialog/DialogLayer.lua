@@ -66,7 +66,6 @@ function DialogLayer:finishDialog()
 	self.index = 1
 end
 
-
 function DialogLayer:refreshUI()
 	local fight  = md:getInstance("Fight") 	
 	local groupId = fight:getGroupId()
@@ -88,7 +87,7 @@ function DialogLayer:refreshUI()
 		addChildCenter(roleimg, self.right)
 	end
 	self.msglabel:setString(msg)
-	self.msglabel:speak(0.1)
+	self.msglabel:speak(0.03)
 	self.index = self.index + 1
 end
 

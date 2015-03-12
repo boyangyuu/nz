@@ -18,6 +18,8 @@ function HeroAnimView:ctor()
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
+		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
+		
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
 		:addEventListener(self.hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
@@ -59,6 +61,21 @@ function HeroAnimView:loadCCS()
     --换子弹
 	self.armatureReload = ccs.Armature:create("huanzidan")    
     self:addChild(self.armatureReload) 	
+
+    --连杀
+	self.armatureKeepKill = ccs.Armature:create("ls")
+	self.armatureKeepKill:setPosition(-390, 200)    
+    self:addChild(self.armatureKeepKill)
+	self.labelKeepKill = display.newBMFontLabel({ text = "11",font = "res/fnt/NO3.fnt"})
+	self.labelKeepKill:setPosition(-470, 170)  
+	self.labelKeepKill:setPosition(0, 170) 
+	self:addChild(self.labelKeepKill)
+	self.armatureKeepKill:getAnimation():setMovementEventCallFunc(
+        	function ( armatureBack,movementType,movementId ) 
+    	    	if movementType == ccs.MovementEventType.complete then
+					self.armatureKeepKill:setVisible(false)
+    	    	end
+	    	end)	
 end
 
 function HeroAnimView:playHurtedBomb_lei(event)
@@ -96,18 +113,6 @@ function HeroAnimView:playEffectBling(event)
     	armature = nil
     end
     self:performWithDelay(endFunc, 2.6)
-end
-
-function HeroAnimView:playkillKeep(num)
-	self.killKeepArmature = ccs.Armature:create("bossdies")
-	self.killKeepArmature:getAnimation():play("shan" , -1, 1)
-    self:addChild(self.killKeepArmature) 
-    local function endFunc()
-	    -- print("HeroAnimView endFunc")
-    	self.killKeepArmature:removeSelf()
-    	self.killKeepArmature = nil
-    end
-    self:performWithDelay(endFunc, 2.6)	
 end
 
 function HeroAnimView:playHitted(event)
@@ -154,6 +159,20 @@ end
 
 function HeroAnimView:playGunReload()
 	self.armatureReload:getAnimation():playWithIndex(0 , -1, 0)
+end
+
+function HeroAnimView:playKeepKill(event)
+	local count = event.counts
+	self.labelKeepKill:setString(count)
+	self.labelKeepKill:setVisible(true)
+
+	-- local curAnimName = self.armatureKeepKill:getAnimation():getCurrentMovementID()
+	-- if curAnimName == "ls" then  
+		self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
+
+	--label
+
+	
 end
 
 return HeroAnimView
