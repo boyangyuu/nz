@@ -446,7 +446,7 @@ local bosses = {
 	{
 		image = "boss01_2", --图片名字
 		-- hp = 150000,
-		award = 20000,                   --boss产出金币数量
+		award = 10000,                   --boss产出金币数量
 		hp = 60000,
 		demage = 5,                        --普通攻击伤害
 		fireRate = 30,
