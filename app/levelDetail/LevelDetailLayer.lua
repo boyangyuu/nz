@@ -310,8 +310,6 @@ function LevelDetailLayer:onClickBtnGold()
 	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
 	end
-	--sound
-	playSoundBtn()	
 end
 
 function LevelDetailLayer:onClickBtnJijia()
@@ -330,9 +328,6 @@ function LevelDetailLayer:onClickBtnJijia()
 	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
 		     "关卡详情_点击机甲按钮")
 	end
-
-	--sound
-	playSoundBtn()
 end
 
 ---- initData ----

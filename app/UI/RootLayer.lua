@@ -226,6 +226,7 @@ function RootLayer:addResFight()
         
         --导弹
         "shoulei", "daodan", "tieqiu", 
+       
 
         --boss
          "dzboss",
@@ -322,10 +323,10 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
         "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
-    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
-    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
-        local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
-    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
+    manager:addArmatureFileInfoAsync(ksxqsrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
+    local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
    -- --music
