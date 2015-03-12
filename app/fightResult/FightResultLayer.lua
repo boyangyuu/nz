@@ -115,33 +115,17 @@ function FightResultLayer:initUI()
     end
 
     self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
-    self.btnback = cc.uiloader:seekNodeByName(self, "btnnext")
     self.btngetall = cc.uiloader:seekNodeByName(self, "btngetall")
-	
+    self.panlinlay = cc.uiloader:seekNodeByName(self, "panlinlay")
+    self.alreadyinlay = cc.uiloader:seekNodeByName(self, "alreadyinlay")
+    self.alreadygetall = cc.uiloader:seekNodeByName(self, "alreadygetall")
+    self.panlgetall = cc.uiloader:seekNodeByName(self, "panlgetall")
+    self.btnback = cc.uiloader:seekNodeByName(self, "btnnext")
+	self.alreadyinlay:setOpacity(0)
+	self.alreadygetall:setOpacity(0)
 	self.btninlay:setOpacity(0)
 	self.btngetall:setOpacity(0)
 	self.btnback:setButtonEnabled(false)
-
-    local xqwc = cc.ui.UILabel.new({
-    UILabelType = 2, text = "镶嵌完成", size = 45})
-    local ksxq = cc.ui.UILabel.new({
-    UILabelType = 2, text = "快速镶嵌", size = 45})
-    local lqcg = cc.ui.UILabel.new({
-    UILabelType = 2, text = "领取成功", size = 45})
-    local lqsy = cc.ui.UILabel.new({
-    UILabelType = 2, text = "领取剩余", size = 45})
-    local jx = cc.ui.UILabel.new({
-    UILabelType = 2, text = "继续", size = 45})
-    xqwc:enableOutline(Color_BLACK,2)
-    lqcg:enableOutline(Color_BLACK,2)
-    ksxq:enableOutline(Color_BLACK,2)
-    lqsy:enableOutline(Color_BLACK,2)
-    jx:enableOutline(Color_BLACK,2)
-
-    self.btninlay:setButtonLabel("disabled", xqwc)
-    self.btninlay:setButtonLabel("normal", ksxq)
-    self.btngetall:setButtonLabel("normal" , lqsy)
-    self.btnback:setButtonLabel("normal" , jx)
 
     -- local inlayArmature = ccs.Armature:create("bt_yjzb")
     -- local getallArmature = ccs.Armature:create("bt_yjzb")
@@ -150,16 +134,14 @@ function FightResultLayer:initUI()
     -- inlayArmature:getAnimation():play("yjzb" , -1, 1)
     -- getallArmature:getAnimation():play("yjzb" , -1, 1)
 
-	-- self.btngetall:setButtonLabel("disabled" , lqcg)
-
-    if self.grade == 5 then
-    	self.btngetall:setButtonEnabled(false)
-    end
-
 	function showButton()
 		self:startGuide()
-	    self.btninlay:runAction(cc.FadeIn:create(0.3))
-		self.btngetall:runAction(cc.FadeIn:create(0.3))
+	    self.btngetall:runAction(cc.FadeIn:create(0.3))
+		self.btninlay:runAction(cc.FadeIn:create(0.3))
+		if self.grade == 5 then
+			self.btngetall:setButtonEnabled(false)
+			self.alreadygetall:runAction(cc.FadeIn:create(0.3))
+		end
 		self.btnback:setButtonEnabled(true)
 	end
 
@@ -172,6 +154,7 @@ function FightResultLayer:initUI()
 				 {opacity = 155})				
         	self:quickInlay()
 	        self.btninlay:setButtonEnabled(false)
+	        self.alreadyinlay:runAction(cc.FadeIn:create(0.09))
         end
     end)
 
@@ -425,6 +408,8 @@ function FightResultLayer:turnLeftCard()
 		end
 	end
 	self.btngetall:setButtonEnabled(false)
+	self.alreadygetall:runAction(cc.FadeIn:create(0.09))
+
 end
 
 function FightResultLayer:onEnter()
@@ -488,6 +473,8 @@ function FightResultLayer:initGuide2()
 				 {opacity = 155})
         	self:quickInlay()
 	        self.btninlay:setButtonEnabled(false)  
+        	self.alreadyinlay:runAction(cc.FadeIn:create(0.09))
+
 			playSoundBtn()    
         end
      }) 

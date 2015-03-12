@@ -85,7 +85,6 @@ function WeaponListLayer:initUI()
     self.buycost          = cc.uiloader:seekNodeByName(self, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self, "damagepluse")
     self.suipiannum       = cc.uiloader:seekNodeByName(self, "suipiannum")
-    self.suipiannum:setPosition(cc.p(670,310))
 
     local shanghai = cc.uiloader:seekNodeByName(self, "shanghai")
     local jingzhun = cc.uiloader:seekNodeByName(self, "jingzhun")
@@ -364,7 +363,7 @@ function WeaponListLayer:refreshComment()
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
     if self.weaponRecord["parts"] == 1 and not isGot then
         self.suipiannum:setVisible(true)
-        self.suipiannum:setString("LJ"..suipiannum.."/10")
+        self.suipiannum:setString("DSLJ"..suipiannum.."/10")
     elseif isGot then
         self.suipiannum:setVisible(false)
     end

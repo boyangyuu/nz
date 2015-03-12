@@ -32,7 +32,7 @@ function PropModel:costProp(nameid,costNum)
 	if nameid == "lei" then
 		um:use("手雷", costNum, 0)
 	elseif nameid == "jijia" then
-		um:use("机甲", costNum, 0)
+		um:use("无敌机甲", costNum, 0)
 	end
 end
 
