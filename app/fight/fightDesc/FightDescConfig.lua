@@ -138,6 +138,16 @@ configs["renzb"] = {
 	playanim = "stand",
 }
 
+configs["xiaorz"] = {
+	title = "出现新兵种！",
+	name = "伊贺忍者",
+	spc = "技能：",
+	skill = {"旋风斩","手里剑"},
+	weakness = "头部、腿部",
+	describe = "行动敏捷的伊贺忍者后裔，擅长伪装、暗杀。",
+	playanim = "stand",
+}
+
 configs["jinzhanb"] = {
 	title = "出现新兵种！",
 	name = "近战兵",

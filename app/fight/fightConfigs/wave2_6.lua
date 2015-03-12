@@ -33,36 +33,41 @@ local waves = {
 				},
 			},	
 			{
-				time = 14,	
+				time = 11,	
 				num = 5,
 				pos = {420,510,700,900,1050},
 				delay = {0.5,2,0,0.5,1.5},
 				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
+					placeName = "place4" ,         --普
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
-				time = 18,
+				time = 12,
 				num = 3,
 				delay = {0.1,0.5,1.2},
 				pos = {450,660,800},
 				property = { 
 					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
 				},
 			},			
 			{
-				time = 22,
+				time = 13,
 				num = 3,
 				delay = {0.1,0.6,1},
 				pos = {250,460,600},
 				property = { 
 					placeName = "place2" ,
-					type = "bao",                 --爆
-					id = 9,	
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
 				},
 			},
 			{
@@ -71,9 +76,9 @@ local waves = {
 				pos = {25,120,310,470,600},
 				delay = {0.1,0.6,1.5,1.8,0.8},
 				property = {
-					placeName = "place2" ,
-					id = 7,
-					type = "jin",
+					placeName = "place4" ,         --普
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
@@ -106,7 +111,7 @@ local waves = {
 				delay = {0,0.7,1.4},
 				pos = {700,900,1100},
 				property = { 
-					placeName = "place4" ,
+					placeName = "place3" ,
 					id = 1,
 					startState = "rollleft",	
 				},
@@ -165,21 +170,43 @@ local waves = {
 				},
 			},
 			{
+				time = 13,
+				num = 5,
+				delay = {0.7,1.4,1.8, 0.1,0.8},
+				pos = {350,450,550,650,750},					
+				property = {
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollright",
+				},
+			},	
+			{
 				time = 14,
+				num = 5,
+				delay = {0,0.7,1.4,1.8,0.5},
+				pos = {1000,900,800,700,600},					
+				property = {
+					placeName = "place4" ,
+					id = 1,
+					startState = "rollleft",
+				},
+			},
+			{
+				time = 16,
 				num = 3,
 				delay = {0.2,1.0,1.8},
 				pos = {200,380,560},
 				property = { 
 					placeName = "place2" ,
-					type = "jin",       --盾
+					type = "jin",                      --盾
 					id = 8,
 				},
 			},
 			{
-				time = 18,	
+				time = 20,	
 				num = 5,
 				pos = {25,120,310,470,600},
-				delay = {0.2,0.9,1.8,2.5,3.3},
+				delay = {0.2,0.9,1.8,2.5,3.3},              --近
 				property = {
 					placeName = "place2" ,
 					id = 7,
@@ -187,39 +214,37 @@ local waves = {
 				},
 			},
 			{
-				time = 22,
+				time = 24,
 				num = 3,
 				delay = {0.1,0.9,1.7},
 				pos = {250,460,600},
 				property = { 
 					placeName = "place2" ,
-					type = "bao",      --爆
+					type = "bao",                                --爆
 					id = 9,	
 				},
 			},
 			{
-				time = 23,
+				time = 25,
 				num = 5,
-				delay = {0.7,1.4,1.8, 2.1,2.8},
-				pos = {350,550,600,800,950},					
+				delay = {0.7,1.4,1.8, 0.1,0.8},
+				pos = {350,450,550,650,750},					
 				property = {
-					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},                                                                            --60
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollright",
+				},
 			},	
 			{
 				time = 26,
-				num = 4,
-				delay = {0,0.7,1.4,1.8},
-				pos = {600,500,400,300},					
+				num = 5,
+				delay = {0,0.7,1.4,1.8,0.5},
+				pos = {1000,900,800,700,600},					
 				property = {
-					placeName = "place2",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},                                                                            --60
+					placeName = "place4" ,
+					id = 1,
+					startState = "rollleft",
+				},
 			},	
 		},
 	},
@@ -246,7 +271,7 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于7  怪物数据
+--enemy的关卡配置                                                    黄金镶嵌  dps大于等于5  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=20,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
@@ -257,7 +282,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=234,
+	{id=3,image="shoulei",demage=20,hp=300,
 	weak1=1},
 
 	--伞兵       --type = "san",
@@ -269,7 +294,7 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=468,
+	{id=6,image="daodan",demage=10,hp=500,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
@@ -286,15 +311,15 @@ local enemys = {
 
 	
 	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
+	{id=10,image="hs",demage=0,hp=1,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=20000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=70000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=20000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=70000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -321,8 +346,8 @@ local enemys = {
 	{id=19,image="zzw",demage=10,hp=20000},       
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=10,hp=7000, speed=120,
-	weak1=2},   	                      
+	{id=20,image="xiaozz",demage=10,hp=7000, speed=150,
+	weak1=1},   	                      
 }
 
 
@@ -350,13 +375,13 @@ local bosses = {
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
 		wudiTime = 5.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
-			wudi = { 0.91, 0.71, 0.51 , 0.31, 0.16, 0.10 ,0.06               --无敌
+			wudi = { 0.90, 0.70, 0.50 , 0.30, 0.20, 0.10 ,0.06               --无敌
 			}, 
 
-			zhaohuan = { 0.90, 0.70, 0.50, 0.30                     --召唤小兵
+			zhaohuan = { 0.91, 0.71, 0.51, 0.31                     --召唤小兵
 			},   
 
-			wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
+			wang = { 0.999,0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15 ,0.05                    --网
 			},
 
 			-- yanwu = { 0.90,0.70,0.50,0.30,0.10                     --烟雾
@@ -364,176 +389,86 @@ local bosses = {
 
 
 
-			weak3 = { 0.85,0.65,0.45, 0.25,                                --右腿 技能触发(可以同时)          
+			weak3 = { 0.70, 0.40, 0.10,                                --右腿 技能触发(可以同时)          
 			},	
-			weak2 = { 0.80,0.60,0.40, 0.20,                                --左腿 技能触发(可以同时)	                      
+			weak2 = { 0.80, 0.60, 0.20,                                --左腿 技能触发(可以同时)	                      
 			},
-			weak1 = { 0.90,0.70,0.50,0.30,0.10                              --头 技能触发(可以同时)	                        
+			weak1 = { 0.90, 0.50, 0.30,                                --头 技能触发(可以同时)	                        
 			},
 			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.85,
+				0.90,
 			},	
 			demage250 = {  
-				0.60,
+				0.70,
 			},	
-			demage400 = {  
+			demage300 = {  
 				0.50,
-			},	
+			},
+			demage400 = {  
+				0.40,
+			},		
 						
 		},
 		enemys1 = {                                                   --第一波召唤蜘蛛兵
 			{
-				time = 2,
-				num = 3,
-				delay = {0.1,0.2,0.3},
-				pos = {350,600,1000},
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
 					id = 20,	
 				},
 			},
-			{
-				time = 5,
-				num = 4,
-				delay = {0.1,0.2,0.3,0.4},
-				pos = {300,600,750,1000},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,	
-				},
-			},
-			{
-				time = 8,
-				num = 5,
-				delay = {0.1,0.2,0.3,0.4,0.1},
-				pos = {280,410,580,750,940},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,	
-				},
-			},
-			
-
 		},	
 
 		enemys2 = {                                                   --第二波召唤盾兵
 			{
-				time = 2,
-				num = 3,
-				delay = {0.1,0.2,0.3},
-				pos = {390,540,888},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,	
-				},
-			},
-			{
-				time = 5,
-				num = 4,
-				delay = {0.1,0.2,0.3,0.4},
-				pos = {333,666,777,999},
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
 					id = 20,
+					demageScale = 1.5                    --伤害翻1.5倍	
 				},
 			},
-			{
-				time = 8,
-				num = 5,
-				delay = {0.1,0.2,0.3,0.4,0.1},
-				pos = {288,338,558,668,998},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-				},
-			},
-			
-
 	    },	
 
 		enemys3 = {                                                   --第三波召唤的兵
 			{
-				time = 2,
-				num = 3,
-				delay = {0.1,0.2,0.3},
-				pos = {390,540,888},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,	
-				},
-			},
-			{
-				time = 5,
-				num = 4,
-				delay = {0.1,0.2,0.3,0.4},
-				pos = {333,666,777,999},
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
 					id = 20,
+					demageScale = 2                    --伤害翻2倍	
 				},
 			},
-			{
-				time = 8,
-				num = 5,
-				delay = {0.1,0.2,0.3,0.4,0.1},
-				pos = {288,338,558,668,998},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-					--demageScale = 1.2                    --伤害翻1.5倍
-				},
-			},
-			
 		},	
 
-		enemys4 = {                                                   --第三波召唤的兵
+		enemys4 = {                                                   --第四波召唤的兵
 			{
-				time = 2,
-				num = 3,
-				delay = {0.1,0.2,0.3},
-				pos = {390,540,888},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,	
-				},
-			},
-			{
-				time = 5,
-				num = 4,
-				delay = {0.1,0.2,0.3,0.4},
-				pos = {333,666,777,999},
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
 					id = 20,
+					demageScale = 3	                     --伤害翻3倍
 				},
 			},
-			{
-				time = 8,
-				num = 5,
-				delay = {0.1,0.2,0.3,0.4,0.1},
-				pos = {288,338,558,668,998},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-					--demageScale = 1.2                    --伤害翻1.5倍
-				},
-			},
-		},													
+		},	
+
 	},
-
-
 }
 
 local mapId = "map_1_6"

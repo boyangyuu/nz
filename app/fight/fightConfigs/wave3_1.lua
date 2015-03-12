@@ -20,10 +20,10 @@ local waves = {
 			{
 				time = 2,
 				num = 1,
-				delay = {0.5},
-				pos = {800},
+				delay = {0,0.5},
+				pos = {700,800},
 				property = { 
-					placeName = "place1",
+					placeName = "place2",
 					id = 2,
 					startState = "rollleft",
 					type = "dao",
@@ -32,12 +32,12 @@ local waves = {
 				},
 			},
 			{
-				time = 2,
-				num = 1,
-				delay = {0.5},
-				pos = {250},
+				time = 2.5,
+				num = 2,
+				delay = {0,0.5},
+				pos = {250,350},
 				property = { 
-					placeName = "place1",
+					placeName = "place3",
 					id = 2,
 					startState = "rollright",
 					type = "dao",
@@ -46,12 +46,12 @@ local waves = {
 				},
 			},
 			{
-				time = 1,	
-				num = 2,
-				pos = {250,350},
-				delay = {0,1.5,0.8},
+				time = 3,	
+				num = 3,
+				pos = {250,350,450},
+				delay = {0,1.5,0.5},
 				property = { 
-					placeName = "place3",
+					placeName = "place4",
 					startState = "rollright",
 					id = 1,
 				},
@@ -63,16 +63,13 @@ local waves = {
 				pos = {850,770,700},
 				delay = {0,0.6,1.2},
 				property = { 
-					placeName = "place2",
+					placeName = "place3",
 					startState = "rollleft",
 					id = 1,
 				},
 			},
-
-						-- 以上是第一波第一批 11
-			
 			{
-				time = 5,	
+				time = 4,	
 				num = 3,
 				pos = {250,350,400},
 				delay = {0,1.5,0.8},
@@ -83,7 +80,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 8,	
+				time = 5,	
 				num = 3,
 				pos = {900,750,600},
 				delay = {0,0.6,1.3},
@@ -94,7 +91,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
+				time = 6,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {250,900},
@@ -108,7 +105,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 9,	
+				time = 7,	
 				num = 2,
 				pos = {880,950},
 				delay = {0,0.6},
@@ -118,11 +115,8 @@ local waves = {
 					id = 1,
 				},
 			},
-
-									-- 以上是第一波第二批 21
-
 			{
-				time = 5,	
+				time = 7,	
 				num = 3,
 				pos = {220,370,300},
 				delay = {0,1.5,0.8},
@@ -144,7 +138,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
+				time = 8,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {250,900},
@@ -179,7 +173,7 @@ local waves = {
 				time = 1,
 				num = 3,
 				delay = {0, 0.6, 1.5},
-				pos = {200,270,360,},	
+				pos = {200,270,360},	
 				property = { 
 					placeName = "place1", 
 					startState = "rollright",
@@ -307,7 +301,6 @@ local waves = {
 	{
 		enemys = { 
 			{
-				--descId = "yyc", --简介
 				time = 2,
 				num = 1,
 				pos = {200},
@@ -728,14 +721,14 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于7  怪物数据
+--enemy的关卡配置                                                     黄金镶嵌  dps大于等于6  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=21,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=21,hp=7000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=7000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
@@ -743,11 +736,11 @@ local enemys = {
 	weak1=1},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=10000,
+	{id=4,image="sanbing01",demage=0,hp=7000,
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=8000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
@@ -755,28 +748,28 @@ local enemys = {
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=30000,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=20,hp=21000,fireRate=180,fireCd=4,speed=40,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=90000,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=25,hp=70000,fireRate=180,fireCd=5,speed=35,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=8000,fireRate=30,speed=120,
 	weak1=2},	
 
 	
 	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
+	{id=10,image="hs",demage=0,hp=1,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
 	weak1=1},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=120000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=11,image="feiji",demage=0,hp=70000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=120000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=70000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -792,7 +785,7 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=40,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
@@ -817,7 +810,6 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = limit
-	self.goldLimits = {75,160,250}  --黄武激活所需杀人个数
 end
 
 return waveClass

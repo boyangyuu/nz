@@ -99,7 +99,6 @@ configs["prefight02"] = {
 		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen"},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
 		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "left", },			
-		-- {id = "prefight02_equip", msg = "点击一键装备 , 装备黄金武器", },		
 		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
 	}
 }
