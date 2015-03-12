@@ -4,11 +4,11 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = {
-		{
+			{
 				descId = "xiaorz", --简介
 				time = 3,	
 				num = 1,
-				pos = {640},
+				pos = {600},
 				delay = {4},
 				property = {
 					placeName = "place2" ,
@@ -19,723 +19,146 @@ local waves = {
 			},	
 		},
 	},
-
 	{
-		enemys = { 
-			
+		enemys = {
 			{
-				time = 10,	
-				num = 4,
-				pos = {180,250,320,450,},
-				delay = {0,1.5,0.8,2,},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-
-			{
-				time = 10,
+				time = 2,	
 				num = 1,
-				delay = {0,0.5},
-				pos = {700,800},
-				property = { 
-					placeName = "place2",
-					id = 2,
-					startState = "rollleft",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 10,
-				num = 2,
-				delay = {0,0.5},
-				pos = {250,350},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 10,	
-				num = 3,
-				pos = {250,350,450},
-				delay = {0,1.5,0.5},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-
-			{
-				time = 10,	
-				num = 3,
-				pos = {850,770,700},
-				delay = {0,0.6,1.2},
-				property = { 
-					placeName = "place3",
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 10,	
-				num = 3,
-				pos = {250,350,400},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 10,	
-				num = 3,
-				pos = {900,750,600},
-				delay = {0,0.6,1.3},
+				pos = {900},
+				delay = {0.1},
 				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 10,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},	
 			{
-				time = 11,	
-				num = 2,
-				pos = {880,950},
-				delay = {0,0.6},
+				time = 2.5,	
+				num = 1,
+				pos = {250},
+				delay = {0.1},
 				property = {
-					placeName = "place3", 
-					startState = "rollleft",
-					id = 1,
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},
 			{
-				time = 12,	
-				num = 3,
-				pos = {220,370,300},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
+				time = 3,	
+				num = 1,
+				pos = {600},
+				delay = {0.1},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},		
-			{
-				time = 13,	
-				num = 2,
-				pos = {1000,750},
-				delay = {0,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 14,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 15,	
-				num = 3,
-				pos = {800,910,980},
-				delay = {0,0.6,1.4},
-				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-		                                     	-- 以上是第一波第三批 31
 		},
-	},	
+	},
 	{
-		enemys = {                                           
-		                                                                -- 第二波
-
+		enemys = {
 			{
-				time = 1,
+				time = 2,
 				num = 3,
-				delay = {0, 0.6, 1.5},
-				pos = {200,270,360},	
+				delay = {0,1,0.5},
+				pos = {300,600,900},
 				property = { 
-					placeName = "place1", 
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 1.5,
-				num = 3,
-				delay = {0, 0.8, 1.5},
-				pos = {700,810,900},	
-				property = { 
-					placeName = "place1", 
-					startState = "rollleft",
-					id = 1,
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
 				},
 			},	
 			{
-				time = 3,
-				num = 3,
-				delay = {0.2,0.9, 1.6},
-				pos = {400,550,700},					
-				property = {
-					placeName = "place2",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},	
-			{
-				time = 1.2,	
+				time = 4,	
 				num = 1,
-				pos = {300},
-				delay = {0.5},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+				pos = {900},
+				delay = {0.1},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 4.5,	
+				num = 1,
+				pos = {250},
+				delay = {0.1},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},
-
-			                                          -- 以上是第二波第一批 10
+			{
+				time = 5,	
+				num = 1,
+				pos = {600},
+				delay = {0.1},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 5.5,	
+				num = 1,
+				pos = {400},
+				delay = {0.1},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
 			{
 				time = 6,	
-				num = 8,
-				pos = {300,350,400,450,550,600,700,850},
-				delay = {0,0.7,2.1,1.4,2.8,0.7,1.7,1},
-				property = { 
-					type = "san",
-					id = 4,
-					enemyId = 1,
-					placeName = "place2",
+				num = 1,
+				pos = {690},
+				delay = {0.1},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 6.5,	
+				num = 1,
+				pos = {230},
+				delay = {0.1},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},	
 			{
 				time = 7,	
-				num = 2,
-				pos = {350,700},
-				delay = {0.3,0.9},
-				property = { 
-					type = "san",
-					id = 4,
-					enemyId = 1,
-					placeName = "place3",
-				},
-			},
-			
-                                              -- 以上是第二波第二批 20
-			{
-				time = 10,
-				num = 3,
-				delay = {0, 1.6, 0.9},
-				pos = {180,250,330,},	
-				property = { 
-					placeName = "place1", 
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 11,
-				num = 3,
-				delay = {0, 1.3, 0.7},
-				pos = {700,830,900},	
-				property = { 
-					placeName = "place1", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},	
-			{
-				time = 12,
-				num = 3,
-				delay = {0.2,1.3, 0.9},
-				pos = {440,550,700},					
-				property = {
-					placeName = "place2",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},	
-			{
-				time = 13,	
 				num = 1,
-				pos = {300},
-				delay = {0.5},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+				pos = {420},
+				delay = {0.1},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
-			},
- 			                                       -- 以上是第二波第三批    30  
-
+			},	
 		},
-
 	},
-	{
-		enemys = { 
-			{
-				time = 2,
-				num = 1,
-				pos = {200},
-				delay = {4},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 50.0,		--持续时间			
-				},
-			},
-			{
-				time = 4,
-				num = 1,
-				pos = {450},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place11",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 50.0,		                                    --持续时间			
-				},
-			},
-			{
-				time = 7,
-				num = 1,
-				pos = {800},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 50.0,		                                    --持续时间			
-				},
-			},				
-			{
-				time = 6,
-				num = 1,
-				delay = {0.5},
-				pos = {800},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollleft",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 8,
-				num = 1,
-				delay = {0.5},
-				pos = {250},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 10,	
-				num = 2,
-				pos = {250,350},
-				delay = {0,1.5,1.8},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-
-			{
-				time = 13,	
-				num = 3,
-				pos = {830,780,700},
-				delay = {0,1.6,0.9},
-				property = { 
-					placeName = "place2",
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-
-						                                                       -- 以上是第三波第一批 11
-			
-			{
-				time = 15,	
-				num = 3,
-				pos = {220,360,300},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 18,	
-				num = 3,
-				pos = {820,750,650},
-				delay = {0,1.6,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 23,
-				num = 2,
-				delay = {0.2,0},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 29,	
-				num = 2,
-				pos = {700,950},
-				delay = {0,0.7},
-				property = {
-					placeName = "place3", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-
-									                                             -- 以上是第三波第二批 21
-
-			{
-				time = 35,	
-				num = 3,
-				pos = {190,450,300},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 38,	
-				num = 2,
-				pos = {1000,750},
-				delay = {0,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 37,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 39,	
-				num = 3,
-				pos = {760,910,980},
-				delay = {0,1.6,0.8},
-				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-		                                                                            	-- 以上是第三波第三批 31
-		},
-	},	
-	{                                                                                    --第四波
-		enemys = { 
-			{
-				time = 2,
-				num = 2,
-				pos = {200,550},
-				delay = {0.5,4.0},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 40.0,		--持续时间
-					--demageScale = 2                    --伤害翻1.5倍		
-
-				},
-			},
-
-			{
-				time = 4,
-				num = 1,
-				pos = {450},
-				delay = {0.2},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place11",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 40.0,		                                    --持续时间			
-				},
-			},	
-			{
-				time = 7,
-				num = 1,
-				pos = {850},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 40.0,		                                    --持续时间			
-				},
-			},			
-
-			{
-				time = 6,
-				num = 1,
-				delay = {0.5},
-				pos = {800},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollleft",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-					--demageScale = 2                    --伤害翻1.5倍
-				},
-			},
-			{
-				time = 8,
-				num = 1,
-				delay = {0.5},
-				pos = {250},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-			        --demageScale = 2                    --伤害翻1.5倍
-				},
-			},
-			{
-				time = 10,	
-				num = 2,
-				pos = {250,450},
-				delay = {0,1.8},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},
-
-			{
-				time = 13,	
-				num = 3,
-				pos = {820,760,550},
-				delay = {0,1.6,0.8},
-				property = { 
-					placeName = "place2",
-					startState = "rollleft",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},		                                                       -- 以上是第四波第一批 11
-			{
-				time = 15,	
-				num = 3,
-				pos = {250,450,330},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},		
-			{
-				time = 18,	
-				num = 3,
-				pos = {850,750,680},
-				delay = {0,0.6,1.3},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},
-			{
-				time = 23,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},	
-			{
-				time = 29,	
-				num = 2,
-				pos = {800,950},
-				delay = {0,0.6},
-				property = {
-					placeName = "place3", 
-					startState = "rollleft",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},					                                             -- 以上是第四波第二批 21
-			{
-				time = 35,	
-				num = 3,
-				pos = {250,350,430},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},		
-			{
-				time = 38,	
-				num = 2,
-				pos = {1000,750},
-				delay = {0,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},
-			{
-				time = 37,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},	
-			{
-				time = 39,	
-				num = 3,
-				pos = {700,840,980},
-				delay = {0,0.6,1.3},
-				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
-					--demageScale = 2                    --伤害翻1.2倍
-				},
-			},
-		                                                                            	-- 以上是第四波第三批 31
-		},
-	},	
-
-	
+		
 }
 
 
@@ -803,11 +226,11 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=3000}, 
+	{id=18,image="feibiao",demage=15,hp=7000}, 
 	
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=12500},  
