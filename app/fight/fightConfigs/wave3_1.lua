@@ -2,11 +2,29 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
+	{
+		enemys = {
+		{
+				descId = "xiaorz", --简介
+				time = 3,	
+				num = 1,
+				pos = {640},
+				delay = {4},
+				property = {
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+		},
+	},
 
 	{
 		enemys = { 
+			
 			{
-				time = 1,	
+				time = 10,	
 				num = 4,
 				pos = {180,250,320,450,},
 				delay = {0,1.5,0.8,2,},
@@ -18,7 +36,7 @@ local waves = {
 			},
 
 			{
-				time = 2,
+				time = 10,
 				num = 1,
 				delay = {0,0.5},
 				pos = {700,800},
@@ -32,7 +50,7 @@ local waves = {
 				},
 			},
 			{
-				time = 2.5,
+				time = 10,
 				num = 2,
 				delay = {0,0.5},
 				pos = {250,350},
@@ -46,7 +64,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 10,	
 				num = 3,
 				pos = {250,350,450},
 				delay = {0,1.5,0.5},
@@ -58,7 +76,7 @@ local waves = {
 			},
 
 			{
-				time = 3,	
+				time = 10,	
 				num = 3,
 				pos = {850,770,700},
 				delay = {0,0.6,1.2},
@@ -69,7 +87,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	
+				time = 10,	
 				num = 3,
 				pos = {250,350,400},
 				delay = {0,1.5,0.8},
@@ -80,7 +98,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 5,	
+				time = 10,	
 				num = 3,
 				pos = {900,750,600},
 				delay = {0,0.6,1.3},
@@ -91,7 +109,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 10,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {250,900},
@@ -105,7 +123,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 7,	
+				time = 11,	
 				num = 2,
 				pos = {880,950},
 				delay = {0,0.6},
@@ -116,7 +134,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 12,	
 				num = 3,
 				pos = {220,370,300},
 				delay = {0,1.5,0.8},
@@ -127,7 +145,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 8,	
+				time = 13,	
 				num = 2,
 				pos = {1000,750},
 				delay = {0,0.8},
@@ -138,7 +156,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 14,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {250,900},
@@ -152,7 +170,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 9,	
+				time = 15,	
 				num = 3,
 				pos = {800,910,980},
 				delay = {0,0.6,1.4},
@@ -721,7 +739,7 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                     黄金镶嵌  dps大于等于6  怪物数据
+--enemy的关卡配置                                                     黄金镶嵌M4A1满级1枪伤害621  dps大于等于6  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=21,hp=7000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
@@ -732,7 +750,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=211,
+	{id=3,image="shoulei",demage=28,hp=621,
 	weak1=1},
 
 	--伞兵       --type = "san",
@@ -789,7 +807,7 @@ local enemys = {
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=8000}, 
+	{id=18,image="feibiao",demage=15,hp=3000}, 
 	
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=12500},  
