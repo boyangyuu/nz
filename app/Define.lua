@@ -10,7 +10,7 @@ Define.kHeroHelper				= 0  --默认回血0/s
 Define.kCoolDownScale           = 1.0   --枪的冷却时间系数
 
 Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
-Define.kHeroKillKeepCd			= 10.0 	--连杀cd 2秒清空连杀
+Define.kHeroKillKeepCd			= 4.0 	--连杀cd 2秒清空连杀
 
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 5.0    --左右移动速度
@@ -26,8 +26,6 @@ Define.kJinEnemyTimeStart		=  0.01		--狼牙棒兵 盾兵 0.01秒后 前进
 
 --伞兵
 Define.kSanEnemySpeed 		    =  50.0 	--伞兵降落速度
-
-
 
 --自爆兵
 Define.kBaoEnemyWalkSpeed 		=  70.0 	--自爆兵 每秒前进速度
@@ -124,8 +122,6 @@ Define.kJuRange 				= 4.0
 
 --引导
 Define.kGuideActiveJijia	 	= 0.20  --boss还有百分之20血时 触发机甲
--- Define.kGuidebossHpScale		= 0.70  --引导的时候 boss的血量缩小0.7
-
 
 function Define:ctor()
     Define.super.ctor(self) 

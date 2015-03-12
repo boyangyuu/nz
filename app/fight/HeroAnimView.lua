@@ -64,10 +64,10 @@ function HeroAnimView:loadCCS()
 
     --连杀
 	self.armatureKeepKill = ccs.Armature:create("ls")
-	self.armatureKeepKill:setPosition(-390, 200)    
+	self.armatureKeepKill:setPosition(-390, 180)    
     self:addChild(self.armatureKeepKill)
 	self.labelKeepKill = display.newBMFontLabel({ text = "",font = "res/fnt/NO3.fnt"})
-	self.labelKeepKill:setPosition(-470, 170)  
+	self.labelKeepKill:setPosition(-470, 160)  
 	self:addChild(self.labelKeepKill)
 	self.armatureKeepKill:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
@@ -164,6 +164,12 @@ function HeroAnimView:playKeepKill(event)
 	local count = event.count
 	self.labelKeepKill:setString(count)
 	self.labelKeepKill:setVisible(true)
+	self.labelKeepKill:setScale(1.0)
+	local actionScale1 = cc.ScaleTo:create(0.2, 3.0)
+	local actionScale2 = cc.ScaleTo:create(0.1, 1.0)
+	local seq = cc.Sequence:create(actionScale1, actionScale2) 
+	transition.execute(self.labelKeepKill, seq, {easing = "Out",})
+	
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 end
 

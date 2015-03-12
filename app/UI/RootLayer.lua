@@ -221,7 +221,6 @@ function RootLayer:addResFight()
         
         --导弹
         "shoulei", "daodan", "tieqiu", 
-       
 
         --boss
          "dzboss",
