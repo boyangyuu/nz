@@ -85,7 +85,7 @@ function LoadingLayer:loadCCS()
     local isNotDone = guide:isDone("xiangqian") == false
 
     if isNotDone then
-        self:loadHomeCCS()
+        self:loadNomalCCS()
     elseif self.loadType == "home"then
         self:loadGiftCCS()
     elseif self.loadType == "fight" or self.loadType == "home_first" then

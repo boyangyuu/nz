@@ -107,12 +107,9 @@ function LevelMapLayer:initChooseLayer()
         buyModel:showBuy("novicesBag",{payDoneFunc = hideGiftIcon}, "主界面_点击新手礼包")
         end)
     
-    local action = transition.sequence({
-        cc.ScaleTo:create(0.5, 1.15),
-        cc.ScaleTo:create(0.5, 1),})
-    btnfirstgift:runAction(cc.RepeatForever:create(action))
-
-
+    local libaoArmature = ccs.Armature:create("libao")
+    btnfirstgift:addChild(libaoArmature)
+    libaoArmature:getAnimation():play("libao" , -1, 1)
 
     self.levelNum:setString(self.curGroupId)
 
