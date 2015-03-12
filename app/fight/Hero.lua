@@ -15,7 +15,9 @@ local Hero          = class("Hero", Actor)
 
 --effect
 Hero.EFFECT_HURT_BOMB_EVENT      = "EFFECT_HURT_BOMB_EVENT"    --效果_导弹炸屏幕
-Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    
+Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    --效果_玻璃
+Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
+
 --skill
 Hero.SKILL_ROBOT_START_EVENT      = "SKILL_ROBOT_START_EVENT"    --机甲开启
 Hero.SKILL_DEFENCE_SWITCH_EVENT   = "SKILL_DEFENCE_SWITCH_EVENT" --护盾开启
@@ -146,27 +148,28 @@ function Hero:setGun(bagIndex)
     self:setPreferBagIndex(bagIndex)
 end
 
-
 function Hero:getCooldown()
     return self.gun:getCooldown()
 end
 
-function Hero:killEnemy(enemyPos, award)
-    self.killCnt = self.killCnt + 1
-
+function Hero:killEnemyAward(enemyPos, award)
     self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
                         value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
         enemyPos = enemyPos, award = award})
+end
 
+function Hero:killEnemy()
     --check keep kill
-    self:checkKeepKill()
+    self.killCnt = self.killCnt + 1
+    self:checkKeepKill()    
 end
 
 function Hero:checkKeepKill()
     if self.killKeepCnt >= define.kHeroKillKeepCnt then
         print("连杀动画!!!!!")
-
+        self:dispatchEvent{name = Hero.EFFECT_KEEPKILL_EVENT, 
+            count = self.killKeepCnt}
     end
     self.killKeepCnt = self.killKeepCnt + 1
     if self.keepKillHandler then 

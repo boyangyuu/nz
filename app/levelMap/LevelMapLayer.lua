@@ -63,8 +63,7 @@ function LevelMapLayer:initChooseLayer()
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
     self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
-    local btnSale = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
-    btnSale:setVisible(false)
+    self.btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     local btnGold = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
     local btnTask = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_task")
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
@@ -72,9 +71,6 @@ function LevelMapLayer:initChooseLayer()
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
     self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
-    --todo delete
-    btnGold:setPosition(cc.p(0,150))
-    --todo end
 
     local armature = ccs.Armature:create("thj_bx")
     armature:setPosition(56,43)
@@ -98,6 +94,10 @@ function LevelMapLayer:initChooseLayer()
     if buyModel:checkBought("novicesBag") then
         self.panelGift:setVisible(false)
     end
+    if buyModel:checkBought("weaponGiftBag") then
+        self.btnWeapon:setVisible(false)
+    end
+
 
     function hideGiftIcon()
         self.panelGift:setVisible(false)
@@ -161,18 +161,16 @@ function LevelMapLayer:initChooseLayer()
         end
     end)
 
+    self.btnWeapon:setTouchEnabled(true)
+    addBtnEventListener(self.btnWeapon, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData)}, "主界面_点击武器大礼包")
+        end
+    end)
 
-    --todo 限时礼包，暂时隐藏
-
-    -- btnSale:setTouchEnabled(true)
-    -- addBtnEventListener(btnSale, function(event)
-    --     if event.name=='began' then
-    --         return true
-    --     elseif event.name=='ended' then
-    --         local buyModel = md:getInstance("BuyModel")
-    --         buyModel:showBuy("timeGiftBag", {}, "主界面_点击限时礼包")
-    --     end
-    -- end)
     btnGold:setTouchEnabled(true)
     addBtnEventListener(btnGold, function(event)
         if event.name=='began' then
@@ -195,7 +193,12 @@ function LevelMapLayer:initChooseLayer()
         ui:showPopup("commonPopup",{type = "style4",
                 opacity = 0})
     end)
+end
 
+function LevelMapLayer:refreshData()
+    local levelDetailModel = md:getInstance("LevelDetailModel")
+    levelDetailModel:reloadlistview()
+    self.btnWeapon:setVisible(false)
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)

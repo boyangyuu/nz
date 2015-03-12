@@ -11,6 +11,7 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.BOSSSHOW_ANIM_EVENT, handler(self, self.onBossStart))
         :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.onWaveStart))
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
+        :addEventListener(self.model.GOLDWAVE_ANIM_EVENT, handler(self, self.onGoldWaveStart))
 
 	self:loadCCS()
     self:setTouchSwallowEnabled(false)

@@ -78,7 +78,7 @@ function  DailyLoginModel:setGift(dailyID)
 		return true
 	elseif giftInfo["type"] == "jijia" then
 		propModel:buyProp("jijia",giftInfo["number"])
-		um:bonusProps("机甲", giftInfo["number"], 0, 3)
+		um:bonusProps("无敌机甲", giftInfo["number"], 0, 3)
 		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "goldweapon" then

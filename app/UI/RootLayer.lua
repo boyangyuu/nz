@@ -33,10 +33,11 @@ function RootLayer:switchLayer(event)
     local loadingType = event.loadingType
     local layerCls   = event.layerCls
     local properties = event.properties
-    if loadingType == "fight" or loadingType == "home" then 
+    if loadingType == "fight" or loadingType == "home" 
+         or loadingType == "home_first" then 
         self.waitLayerCls        = layerCls
         self.waitLayerProperties = properties
-        self:showLoadLayer(loadingType)
+        self:showLoadLayer(loadingType)       
     else
     	self.curLayer = layerCls.new(properties)
     	self:addChild(self.curLayer)
@@ -54,7 +55,7 @@ function RootLayer:showLoadLayer(type)
     --addcache
     self:addResPublic()
 
-    if type == "home" then 
+    if type == "home" or type == "home_first" then 
         self:addResHome()
     elseif type == "fight" then
         self:addResFight()
@@ -214,12 +215,13 @@ function RootLayer:addResFight()
     local enemyImgs = {
         --普通怪物
         "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-        "qiqiu01", "qiqiu02", "qiqiu03",
+        "qiqiu01", "qiqiu02", "qiqiu03", "xiaozz",
         "sanbing01", "zpbing", "shouleib",  "hs","feiji",
         "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
         
         --导弹
-        "shoulei", "daodan", "tieqiu", "xiaozz",
+        "shoulei", "daodan", "tieqiu", 
+       
 
         --boss
          "dzboss",
@@ -237,7 +239,7 @@ function RootLayer:addResFight()
     end
 
     local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
-        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc"}
+        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

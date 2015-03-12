@@ -164,6 +164,7 @@ function MapView:updateEnemys()
 			self:stopAllActions()			
 		else
 			assert(false, "")
+
 		end
 		return
 	end
@@ -494,7 +495,7 @@ function MapView:tick(dt)
 
 end
 function MapView:doKillAward(pos, award)
-	self.hero:killEnemy(pos, award)
+	self.hero:killEnemyAward(pos, award)
 end
 
 --[[
