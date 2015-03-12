@@ -87,7 +87,7 @@ function AboutPopup:initContent()
 
 	if self.popupName == "guangyu" then
 		local versionLabel = cc.uiloader:seekNodeByName(self.aboutNode, "version")
-		versionLabel:setString("1.1.1")
+		versionLabel:setString(__versionId)
 		local gameName = cc.uiloader:seekNodeByName(self.aboutNode, "gameName")
 		gameName:setString("全民突袭")
 		local gameType = cc.uiloader:seekNodeByName(self.aboutNode, "gameType")

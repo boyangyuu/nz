@@ -1,3 +1,4 @@
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
@@ -74,10 +75,13 @@ function HomeBarLayer:popUpNextLevel(properties)
 end
 
 function HomeBarLayer:mapPopUp(event)
-    self:popUpNextLevel(self.properties)
-    self:popUpGoldGift(self.properties)
-    self:popUpWeaponGift(self.properties)
-    self:initDailyLogin()
+    function delayPopUp()
+        self:popUpNextLevel(self.properties)
+        self:popUpGoldGift(self.properties)
+        self:popUpWeaponGift(self.properties)
+        self:initDailyLogin()        
+    end
+    scheduler.performWithDelayGlobal(delayPopUp, 1)
 end
 
 function HomeBarLayer:initDailyLogin()

@@ -17,6 +17,8 @@ Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
 Map.GUN_OPEN_JU_EVENT	  = "GUN_OPEN_JU_EVENT"
 Map.GUN_CLOSE_JU_EVENT    = "GUN_CLOSE_JU_EVENT"
 
+Map.AWARD_GOLD_EVENT 	  = "AWARD_GOLD_EVENT" 	  
+
 function Map:ctor()
     Map.super.ctor(self)
     self.isJuAble = true
