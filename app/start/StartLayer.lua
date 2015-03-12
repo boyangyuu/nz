@@ -127,6 +127,8 @@ function StartLayer:beginGame()
         local isDone = guide:isDone("xiangqian")
         if isDone then
             ui:changeLayer("HomeBarLayer",{groupId = groupId, popWeaponGift = true})
+        else
+            ui:changeLayer("HomeBarLayer",{groupId = groupId})
         end
     else
         --clear data

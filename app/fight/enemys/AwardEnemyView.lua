@@ -139,7 +139,7 @@ function AwardEnemyView:playKill(event)
 	--clear
 	self:stopAllActions()
 	self:clearPlayCache()
-	self.armature:stopAllActions()
+	self:stopAllActions()
 	if self.schRestore  then 
 		scheduler.unscheduleGlobal(self.schRestore)
 	end

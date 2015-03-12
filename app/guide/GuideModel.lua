@@ -38,7 +38,6 @@ function Guide:check(groupId)
 		isPreDone = self:isDone(preGroupId)
 	end
 	local isCurDone = self:isDone(groupId)
-	print("isCurDone", isCurDone)
 	if not isCurDone and isPreDone then 
 		self:startGuide(groupId)
 		return true
@@ -105,15 +104,10 @@ end
 
 function Guide:isDone(groupId)
 	--read userdata
+	print(" Guide:isDone groupId", groupId)
 	local data = getUserData()
-	local isUnMatchVesion = data.guide[groupId] == nil
-	local isAndroid = device.platform == "android" 
-	if isUnMatchVesion then 
-		assert(isAndroid, "invalid groupId",groupId )
-		print("isUnMatchVesion")
-		return true 
-	end
 	local isDone = data.guide[groupId] 
+	assert(isDone ~= nil, "no exist groupId:", groupId)
 	return isDone
 end
 
@@ -187,11 +181,16 @@ function Guide:clearData()
 end
 
 function Guide:fillData()
+	assert(false, "")
 	local data = getUserData()
 
 	--cur data
-	for k,v in pairs(data.guide) do
-		print(k,v)
+	local guideIds = {"gamePre", "fight01_move", "fight01_fire", "fight01_lei", 
+				"fight01_gold", "fight01_change", "fight01_jijia", "afterfight01", "prefight02",
+				"afterfight02", "xiangqian", "fight04"}
+	data.guide = {}
+	for k,v in pairs(guideIds) do
+		-- print(k,v)
 		data.guide[k] = true
 	end
 	setUserData(data)

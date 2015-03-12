@@ -98,15 +98,23 @@ configs["prefight02"] = {
 		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
 		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen"},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
-		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", contentOffset = {x = 0, y = -180},rolepos = "right", },			
+		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "left", },			
 		-- {id = "prefight02_equip", msg = "点击一键装备 , 装备黄金武器", },		
 		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
 	}
 }
 
+configs["afterfight02"] = {
+	preGuideId = "prefight02",
+	steps = {
+		{id = "afterfight02_inlay", msg = "点击按钮 , 镶嵌道具" },
+		{id = "afterfight02_next", msg = "点击按钮 , 回到主界面" },		
+	}
+}
+
 ---- 开启第3关之后  ----
 configs["xiangqian"] = {
-	preGuideId = "prefight02",
+	preGuideId = "afterfight02",
 	steps = {
 		--进镶嵌页面  一套青铜 
 		{id = "xiangqian_xiangqian", msg = "点击按钮进入镶嵌界面", }, 
@@ -116,7 +124,7 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌 , 镶嵌背包内最好的道具", },
 		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具 , 要节省使用哦", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
-		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关", },		
+		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关",  contentOffset = {x = 0, y = -165},},		
 	}
 }
 

@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 
 --[[--
 
@@ -69,7 +68,7 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 	elseif levelParam == "maxLevel" then
 		level = 10
 	elseif levelParam == "minLevel" then 
-		level = 0	
+		level = 3	
 	end
 	local growtableStr = "config/weapon_"..growTableName..".json"
 	local intenlevelData = getRecordByKey(growtableStr,"level",level)[1]

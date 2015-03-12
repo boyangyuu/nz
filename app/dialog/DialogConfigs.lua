@@ -22,17 +22,24 @@ kDialogConfig["group1"]  = {
 		forward = {
 			{role = "安琪儿", imgname = "role_anqi",msg = "杰,敌人的弱点在头部,爆头会造成三倍伤害！", pos = "right"},
 			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "优先击杀红衣手雷兵,他造成的伤害更高！", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "了解，看我黄金爆头！！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "了解，让敌人见识见识我的枪法!", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "加油，不要辱没了我们龙组的威名！", pos = "right"},
 		},
 
 	},
 	level2 = {
-		forward = {
+		forward = {	
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "所有敌人都有弱点,只是位置不同！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "伞兵的弱点在伞上！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "手雷也是可以打掉的哦！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "哈哈,全记住了,就是优先打弱点！", pos = "left"},		
+			{role = "杰",imgname = "role_jie", msg = "哈哈,全记住了,就是优先打弱点！", pos = "left"},			
+		},
+
+		middle1 = {	
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "注意 敌人中有个武器商人！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "黄金武器在他的身上！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "打死他! 抢走黄金武器!!", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "放心, 把他交给我吧!", pos = "left"},			
 		},
 
 		after = {
@@ -49,6 +56,20 @@ kDialogConfig["group1"]  = {
 			{role = "安琪儿",imgname = "role_anqi", msg = "优先击杀后面的红衣手雷兵,他造成的伤害更高！", pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "永远记住击杀敌人的顺序很重要！！", pos = "left"},
 		},
+
+		award = {
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "看把你累的, 枪法到底行不行啊!?", pos = "left"},		
+			{role = "杰",imgname = "role_jie", msg = "不是哥枪法不行, 是对面敌人太多, 我的枪太挫!!", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "没事, 姐姐把我的飓风之锤也借你玩玩", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "飓风之锤!? 是那把号称大杀器的霰弹枪么??", pos = "left"},
+		},	
+
+		after = {
+			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了!! 敌人还没来得及反应就被你给消灭了!", pos = "right"},		
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯, 飓风之锤是把好枪", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "飓风之锤的确好用啊! 怪不得号称大杀器!", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰, '飓风之锤'和'加特林'都在武器大礼包里哦!! 赶快领取吧!!", pos = "right"},
+		},						
 	},
 	level3_1 = {
 		forward = {
@@ -56,7 +77,7 @@ kDialogConfig["group1"]  = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
-		},
+		},	
 	},
 	level4 = {
 		forward = {
