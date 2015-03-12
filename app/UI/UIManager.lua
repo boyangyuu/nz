@@ -48,14 +48,15 @@ end
 
 function UI:changeLayer(layerId, properties)
 	print("function UI:changeLayer(layerId)")
-	local loadingType = nil
-	if layerId ==  "FightPlayer" then 
+	local loadingType = properties.loadingType
+	if loadingType == nil and layerId ==  "FightPlayer" then 
 		loadingType = "fight" 
-	elseif layerId == "HomeBarLayer" then 
+	elseif loadingType == nil and layerId == "HomeBarLayer" then 
 		loadingType = "home"
 	else
-		loadingType = nil
+		
 	end
+
 	local layerCls = self:getLayerCls(layerId)
 	self:dispatchEvent({name = UI.LAYER_CHANGE_EVENT, layerCls = layerCls,
 		 loadingType = loadingType, properties = properties})

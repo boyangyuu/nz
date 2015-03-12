@@ -152,16 +152,17 @@ function Hero:getCooldown()
     return self.gun:getCooldown()
 end
 
-function Hero:killEnemy(enemyPos, award)
-    self.killCnt = self.killCnt + 1
-
+function Hero:killEnemyAward(enemyPos, award)
     self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
                         value = award})
     self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
         enemyPos = enemyPos, award = award})
+end
 
+function Hero:killEnemy()
     --check keep kill
-    self:checkKeepKill()
+    self.killCnt = self.killCnt + 1
+    self:checkKeepKill()    
 end
 
 function Hero:checkKeepKill()

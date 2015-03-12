@@ -66,14 +66,13 @@ function HeroAnimView:loadCCS()
 	self.armatureKeepKill = ccs.Armature:create("ls")
 	self.armatureKeepKill:setPosition(-390, 200)    
     self:addChild(self.armatureKeepKill)
-	self.labelKeepKill = display.newBMFontLabel({ text = "11",font = "res/fnt/NO3.fnt"})
+	self.labelKeepKill = display.newBMFontLabel({ text = "",font = "res/fnt/NO3.fnt"})
 	self.labelKeepKill:setPosition(-470, 170)  
-	self.labelKeepKill:setPosition(0, 170) 
 	self:addChild(self.labelKeepKill)
 	self.armatureKeepKill:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
     	    	if movementType == ccs.MovementEventType.complete then
-					self.armatureKeepKill:setVisible(false)
+					self.labelKeepKill:setVisible(false)
     	    	end
 	    	end)	
 end
@@ -162,17 +161,10 @@ function HeroAnimView:playGunReload()
 end
 
 function HeroAnimView:playKeepKill(event)
-	local count = event.counts
+	local count = event.count
 	self.labelKeepKill:setString(count)
 	self.labelKeepKill:setVisible(true)
-
-	-- local curAnimName = self.armatureKeepKill:getAnimation():getCurrentMovementID()
-	-- if curAnimName == "ls" then  
-		self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
-
-	--label
-
-	
+	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 end
 
 return HeroAnimView
