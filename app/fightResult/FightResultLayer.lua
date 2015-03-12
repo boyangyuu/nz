@@ -432,7 +432,7 @@ end
 
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
-	-- self.guide:check("afterfight02")
+	self.guide:check("afterfight02")
 end
 
 function FightResultLayer:initGuide()
@@ -447,19 +447,6 @@ function FightResultLayer:initGuide()
         end
      })  
 
-    self.guide:addClickListener({
-        id = "afterfight01_inlay",
-        groupId = "afterfight01",
-        rect = self.btninlay:getCascadeBoundingBox(),
-        endfunc = function (touchEvent)
-	        ui:showPopup("commonPopup",
-				 {type = "style2", content = "镶嵌成功"},
-				 {opacity = 155})
-        	self:quickInlay()
-	        self.btninlay:setButtonEnabled(false)  
-			playSoundBtn()    
-        end
-     }) 
 
     self.guide:addClickListener({
         id = "afterfight01_get",
@@ -491,6 +478,20 @@ function FightResultLayer:setDailyPopup()
 end
 
 function FightResultLayer:initGuide2()
+    self.guide:addClickListener({
+        id = "afterfight02_inlay",
+        groupId = "afterfight02",
+        rect = self.btninlay:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+	        ui:showPopup("commonPopup",
+				 {type = "style2", content = "镶嵌成功"},
+				 {opacity = 155})
+        	self:quickInlay()
+	        self.btninlay:setButtonEnabled(false)  
+			playSoundBtn()    
+        end
+     }) 
+
     local isDone = self.guide:isDone("afterfight02")
     self.guide:addClickListener({
         id = "afterfight02_next",

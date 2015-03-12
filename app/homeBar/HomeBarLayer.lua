@@ -223,8 +223,9 @@ end
 
 function HomeBarLayer:onEnter()
     local fight = md:getInstance("Fight")
-    local lid, gid = fight:getCurGroupAndLevel()
-    if lid == 1 and gid == 1 then 
+    local levelModel = md:getInstance("LevelMapModel")
+    local gid, lid  = levelModel:getConfig()
+    if lid == 2 and gid == 1 then 
         self.guide:check("prefight02")
     end
 end

@@ -31,11 +31,6 @@ function LevelMapLayer:initData(properties)
 
     --config
     self.groupNum = self.LevelMapModel:getGroupNum()
-
-    -- self.levelAmount = {}
-    -- for i = 1, self.groupNum do
-    --     self.levelAmount[i] = self.LevelMapModel:getLevelNum(i)
-    -- end
 end
 
 
@@ -336,7 +331,7 @@ function LevelMapLayer:panelAction()
     local changeTime = 0.2
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
     self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelGift:getContentSize().width-25, 0)))
-    self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
+    self.panelDown:runAction(cc.MoveBy:create(cjchangeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
@@ -351,37 +346,33 @@ function LevelMapLayer:onEnter()
 end
 
 function LevelMapLayer:checkGuide()
-    local curGroupId, curLevelId = self.LevelMapModel:getConfig()
-
-    if curGroupId == 1 and curLevelId == 3 then 
-        local guide = md:getInstance("Guide")
-        guide:check("xiangqian")
-    end
+    local guide = md:getInstance("Guide")
+    guide:check("xiangqian")
 end
 
 function LevelMapLayer:initGuide()
     --开启第1关之后 点击进入下一关
-    local rect = cc.rect(95, 280, 120, 120)
+    local rect = cc.rect(175, 60, 130, 130)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "prefight02_nextlevel",
         groupId = "prefight02",
         rect = rect,
         endfunc = function (touchEvent)
-            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 1})
+            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
             playSoundBtn()
         end
      })   
 
     --镶嵌之后 点击进入下一关
-    local rect = cc.rect(650, 384, 130, 130)
+    local rect = cc.rect(320, 250, 130, 130)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "xiangqian_nextLevel",
         groupId = "xiangqian",
         rect = rect,
         endfunc = function (touchEvent)
-            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 5})
+            ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 3})
             playSoundBtn()
         end
      })       

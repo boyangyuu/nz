@@ -1,7 +1,7 @@
 
 --[[--
 
-“近战兵”的视图
+“自爆兵”的视图
 1. property desc: a.指定出生地和x坐标 x控制释放位置 b.开始释放 c.降落到出生地的y 则伞消失
 2. ..
 ]]
@@ -9,7 +9,6 @@
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
 local BaoEnemyView = class("BaoEnemyView", BaseEnemyView)  
-local kTimeStartAhead = 2.0
 
 function BaoEnemyView:ctor(property)
 	--instance
@@ -22,7 +21,7 @@ function BaoEnemyView:ctor(property)
     local callFuncAhead = function ()
         self:play("walk", handler(self, self.playAhead))
     end
-    local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, define.kBaoEnemyTimeStart)
     self:addScheduler(aheadScheduler)
 end
 

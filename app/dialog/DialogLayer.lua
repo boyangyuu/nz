@@ -40,7 +40,11 @@ function DialogLayer:initUI()
             if self.index > self.num then
             	self:finishDialog()
             else
-	            self:refreshUI()
+            	if self.msglabel:isSpeaking() then
+            		self.msglabel:stopSpeak()
+            	else
+		            self:refreshUI()
+		        end
 	        end
         end
     end)

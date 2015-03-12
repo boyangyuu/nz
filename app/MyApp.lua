@@ -21,7 +21,7 @@ ui        = UI.new()
 md        = MD.new()
 um        = UM.new()
 define    = Define.new()
-datamodel = DataModel.new()
+dataModel = DataModel.new()
 iap       = IAPsdk.new()
 
 function MyApp:ctor()
@@ -35,7 +35,7 @@ function MyApp:run()
     print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
-    datamodel:fillData() 
+    dataModel:checkData() 
 end
 
 function MyApp:initGameState()
@@ -72,7 +72,7 @@ function MyApp:createGameStateFile()
     print("createGameStateFile")
     local data = GameData.data
     data = {
-            -- versionId = "1.1.1",
+            versionId = "1.1.1",
             weapons = {
                         bags = {
                                     {
@@ -126,26 +126,31 @@ function MyApp:createGameStateFile()
             --开启的关卡
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 2,
             },
-            -- user = {
-            --     level = 1,
-            -- },
+            user = {
+                level = 1,
+            },
             guide = {
-                        gamePre         = false,
-                        fight01_move    = false,
-                        fight01_fire    = false,
-                        fight01_lei     = false,
-                        fight01_gold    = false,
-                        fight01_change  = false,
-                        fight01_jijia   = false,   
-                        afterfight01    = false,   
+                        --第一关
+                        gamePre         = true,
+                        fight01_move    = true,
+                        fight01_fire    = true,
+                        fight01_lei     = true,
+                        fight01_gold    = true,
+                        fight01_change  = true,
+                        fight01_jijia   = true,   
+                        afterfight01    = true,   
 
-                        prefight02      = false,
-                        afterfight02    = false,
+                        --第二关
+                        prefight02      = true,
+                        afterfight02    = true,
                         
-                        fight04         = false,
+                        --第三关
                         xiangqian       = false,
+
+                        --狙击关
+                        fight04         = false,                        
             },
             isAwardGold     = false,
             fight = {

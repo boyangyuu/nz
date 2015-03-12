@@ -135,7 +135,6 @@ local waves = {
 			{ 
 			    id = 3,    --枪id
 			    delay = 4, --10s之后出现
-			    time = 20,	--持续20s
 		    },		    
 		enemys = {
 			{
