@@ -409,6 +409,32 @@ local waves = {
 				},
 			},
 			{
+				time = 25,
+				num = 1,
+				delay = {0.1},
+				pos = {0},                                 --不用改
+				property = {
+					placeName = "place6",
+					startState = "enterleft",
+					type = "award",	
+					id = 11,
+					award = "gold",
+					data = {
+						{
+							pos = 680,                  --第一次蹲下的位置
+							time = 5,                   --第一次蹲下的时间
+							direct = "right",           --往那面跑
+						},
+						{
+							pos = 890,
+							time = 6,
+							direct = "right",							
+						},
+												
+					},
+				},						
+			},
+			{
 				time = 29,
 				num = 10,
 				delay = {0, 0, 0,0,0,0,0,0,0,0},
