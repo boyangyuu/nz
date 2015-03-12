@@ -138,10 +138,10 @@ end
 
 function BaseEnemy:onKill_(event)
     local image = self.config["image"]
-    local noKillImages = {"shoulei", "daodan", "tieqiu","zzw"}
+    local noKillImages = {"shoulei", "daodan", "tieqiu","zzw", "feibiao"}
     local isKill = true
     for i,v in ipairs(noKillImages) do
-        if v == noKillImages then 
+        if v == image then 
             isKill = false
         end
     end

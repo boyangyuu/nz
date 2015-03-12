@@ -32,20 +32,7 @@ function DuozuBossView:tick()
             self:play("walk", handler(self, self.playWalk))
             self.enemy:beginWalkCd()
         end
-    end
-
- 
-    -- --speak
-    -- local speakRate, isAble = self.enemy:getSpeakRate()
-    -- assert(speakRate > 1, "invalid speakRate")
-
-    -- if isAble then
-    --     local randomSeed = math.random(1, speakRate)
-    --     if randomSeed > speakRate - 1 then 
-    --         self:play("playSpeak", handler(self, self.playSpeak))
-    --         self.enemy:beginSpeakCd()
-    --     end
-    -- end     
+    end   
 end
 
 function DuozuBossView:onHitted(targetData )
@@ -88,13 +75,13 @@ function DuozuBossView:playSkill(skillName)
     -- print("DuozuBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "yanwu" then 
-        self:play("skillPre",handler(self, self.playSkillWu))
+        self:play("skill",handler(self, self.playSkillWu))
         return 
     elseif name == "wang" then 
-        self:play("skillPre",handler(self, self.playSkillWang))
+        self:play("skill",handler(self, self.playSkillWang))
         return 
     elseif name == "wudi" then 
-        self:play("skillPre",handler(self, self.playSkillWudi))
+        self:play("skill",handler(self, self.playSkillWudi))
         return         
     end    
     DuozuBossView.super.playSkill(self, skillName)
