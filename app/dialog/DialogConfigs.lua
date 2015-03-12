@@ -4,15 +4,15 @@ local kDialogConfig = {}
 kDialogConfig["group0"] = {
 	level0 = {
 		award = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "敌人越来越多! 阿杰快坚持不住了! ", pos = "right"},
-			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了, 看你是新手的份上, 把我的枪借你一用!", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "多谢!", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "敌人越来越多！阿杰快坚持不住了！", pos = "right"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了，看你是新手的份上，把我的枪借你一用！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "多谢！", pos = "left"},
 		},	
 
 		after = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊!! 你开加特林的姿势真的真的好帅啊!! ", pos = "right"},		
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话, 谁开加特林都帅", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰, 想买这把酷酷的武器的话, 到武器商城就有卖哦!!", pos = "right"},		
+			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊！你开加特林的姿势真的真的好帅啊！！", pos = "right"},		
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话，谁开加特林都帅", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，想买这把酷酷的武器的话，到武器商城就有卖哦！！", pos = "right"},		
 		},			
 	},
 }
@@ -20,55 +20,55 @@ kDialogConfig["group0"] = {
 kDialogConfig["group1"]  = {
 	level1 = {
 		forward = {
-			{role = "安琪儿", imgname = "role_anqi",msg = "杰,敌人的弱点在头部,爆头会造成三倍伤害！", pos = "right"},
-			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "优先击杀红衣手雷兵,他造成的伤害更高！", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "了解，让敌人见识见识我的枪法!", pos = "left"},
+			{role = "安琪儿", imgname = "role_anqi",msg = "杰，敌人的弱点在头部，爆头会造成三倍伤害！", pos = "right"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "优先击杀红衣手雷兵，他造成的伤害更高！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "了解，让敌人见识见识我的枪法！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "加油，不要辱没了我们龙组的威名！", pos = "right"},
 		},
 
 	},
 	level2 = {
 		forward = {	
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "所有敌人都有弱点,只是位置不同！", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "所有敌人都有弱点，只是位置不同！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "伞兵的弱点在伞上！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "手雷也是可以打掉的哦！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "哈哈,全记住了,就是优先打弱点！", pos = "left"},			
+			{role = "杰",imgname = "role_jie", msg = "哈哈，全记住了，就是优先打弱点！", pos = "left"},			
 		},
 
 		middle1 = {	
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "注意 敌人中有个武器商人！", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "注意！敌人中有个武器商人！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "黄金武器在他的身上！", pos = "right"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "打死他! 抢走黄金武器!!", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "放心, 把他交给我吧!", pos = "left"},			
+			{role = "安琪儿",imgname = "role_anqi", msg = "打死他！抢走黄金武器！！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "放心，把他交给我吧！", pos = "left"},			
 		},
 
 		after = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！以后敌人的弱点就靠你自己发现了", pos = "left"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "战斗结束后会奖励大量镶嵌道具！不用吝惜使用哦！！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "装备镶嵌道具能大幅提升战斗力！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "太好了,我这就去镶嵌一下！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "太好了，我这就去镶嵌一下！", pos = "left"},
 		},	
 	},
 	level3 = {
 		forward = {
-			{role = "杰",imgname = "role_jie", msg = "哈哈,镶嵌之后强力了好多哦！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "高防御的近战兵会冲在最前面,他们身后藏着的手雷兵才是更大的威胁！！", pos = "right"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "优先击杀后面的红衣手雷兵,他造成的伤害更高！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "哈哈，镶嵌之后强力了好多哦！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "高防御的近战兵会冲在最前面，他们身后藏着的手雷兵才是更大的威胁！！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "优先击杀后面的红衣手雷兵，他造成的伤害更高！", pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "永远记住击杀敌人的顺序很重要！！", pos = "left"},
 		},
 
 		award = {
-			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "看把你累的, 枪法到底行不行啊!?", pos = "left"},		
-			{role = "杰",imgname = "role_jie", msg = "不是哥枪法不行, 是对面敌人太多, 我的枪太挫!!", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "没事, 姐姐把我的飓风之锤也借你玩玩", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "飓风之锤!? 是那把号称大杀器的霰弹枪么??", pos = "left"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "看把你累的，枪法到底行不行啊！？", pos = "left"},		
+			{role = "杰",imgname = "role_jie", msg = "不是哥枪法不行，是对面敌人太多，我的枪太挫！！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "没事，姐姐把我的飓风之锤也借你玩玩", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "飓风之锤！？是那把号称大杀器的霰弹枪么？？", pos = "left"},
 		},	
 
 		after = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了!! 敌人还没来得及反应就被你给消灭了!", pos = "right"},		
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯, 飓风之锤是把好枪", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "飓风之锤的确好用啊! 怪不得号称大杀器!", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰, '飓风之锤'和'加特林'都在武器大礼包里哦!! 赶快领取吧!!", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了！！敌人还没来得及反应就被你给消灭了！", pos = "right"},		
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯，飓风之锤是把好枪", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "飓风之锤的确好用啊！ 怪不得号称大杀器！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，‘飓风之锤’和‘加特林’都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
 		},						
 	},
 	level3_1 = {
@@ -81,10 +81,10 @@ kDialogConfig["group1"]  = {
 	},
 	level4 = {
 		forward = {
-			{role = "鬼眼",imgname = "role_guiyan", msg = "敌人派出了一个巨大机械怪物-黑暗金刚！找到弱点,消灭它!", pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "敌人派出了一个巨大机械怪物-黑暗金刚！找到弱点，消灭它！", pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，战斗前记得装备镶嵌道具！",pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "全套黄金镶嵌才能触发黄金武器哦!", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "明白了,镶嵌完毕", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "全套黄金镶嵌才能触发黄金武器哦！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "明白了，镶嵌完毕", pos = "left"},
 		},
 	},
 	level5 = {
@@ -92,11 +92,11 @@ kDialogConfig["group1"]  = {
 			{role = "杰",imgname = "role_jie",  msg = "啊！是你抓走了我姐姐！！！！！鬼眼！你个叛徒！",pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，被发现也好，省的我费事了，都把命留下吧！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼绑架了很多人质，注意不要误伤人质！",  pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "真是无耻至极！!",  pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "真是无耻至极！！",  pos = "left"},
 		},
 		after = {
 			{role = "杰",imgname = "role_jie", msg = "我姐姐被你带到哪里去啦？",  pos = "left"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "你姐姐不识抬举，马上就要被我送到非洲了，哈哈!",  pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "你姐姐不识抬举，马上就要被我送到非洲了，哈哈！",  pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "杰，敌人援兵到了，快撤退。",  pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "非洲！？姐姐要坚持住啊！！",  pos = "left"},
 		},
@@ -111,7 +111,7 @@ kDialogConfig["group1"]  = {
 		after = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，还挺能打，我还有更重要的事情，今天先放过你们。", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "别跑，我姐姐在哪里？", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼跑了,快追。",pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼跑了，快追。",pos = "right"},
 			-- {role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，找到我姐姐的下落！", pos = "left"},
 			-- {role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
 		},
@@ -161,7 +161,7 @@ kDialogConfig["group2"]  = {
 	},
 	level5 = {
 		forward = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "全球反恐会议会场查到了有炸弹!",pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "全球反恐会议会场查到了有炸弹！",pos = "left"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "一级警报！清除炸弹，解救人质！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "龙组行动！",  pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "行动！",  pos = "left"},

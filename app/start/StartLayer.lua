@@ -132,7 +132,7 @@ function StartLayer:beginGame()
         end
     else
         --clear data
-        guide:clearData()        
+        guide:clearData()
 
         --story
         ui:changeLayer("storyLayer",{})
