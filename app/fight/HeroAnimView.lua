@@ -65,7 +65,7 @@ function HeroAnimView:playHurtedBomb_lei(event)
 	print("function HeroAnimView:playHurtedBomb_lei(event)")
 	-- --sound
     local soundSrc  = "res/Music/fight/hd_bz.wav"
-    self.audioId1 =  audio.playSound(soundSrc,false)  	
+    audio.playSound(soundSrc,false)  	
 end
 
 function HeroAnimView:playHurtedBomb_boli(event)
