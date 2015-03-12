@@ -174,14 +174,12 @@ end
 function Guide:clearData()
 	local data = getUserData()
 	for k,v in pairs(data.guide) do
-		print(k,v)
 		data.guide[k] = false
 	end
 	setUserData(data)
 end
 
 function Guide:fillData()
-	assert(false, "")
 	local data = getUserData()
 
 	--cur data
@@ -189,9 +187,9 @@ function Guide:fillData()
 				"fight01_gold", "fight01_change", "fight01_jijia", "afterfight01", "prefight02",
 				"afterfight02", "xiangqian", "fight04"}
 	data.guide = {}
-	for k,v in pairs(guideIds) do
+	for i,v in ipairs(guideIds) do
 		-- print(k,v)
-		data.guide[k] = true
+		data.guide[v] = true
 	end
 	setUserData(data)
 end

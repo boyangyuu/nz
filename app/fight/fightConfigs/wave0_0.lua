@@ -521,7 +521,8 @@ local bosses = {
 	{
 
 		image = "boss02", --图片名字
-		hp = 50000,
+		award = 1100,                   --boss产出金币数量
+		hp = 60000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 120,               --普攻频率
 		fireCd = 3,                     --普攻cd
@@ -533,7 +534,6 @@ local bosses = {
 
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数
-		award = 1100,                   --boss产出金币数量
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
