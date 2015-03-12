@@ -11,9 +11,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
 local JinEnemyView = class("JinEnemyView", BaseEnemyView)  
 
-local kAttackOffset = 2.0
-local kTimeStartAhead = 2.0
-
 function JinEnemyView:ctor(property)
 	--instance
 	JinEnemyView.super.ctor(self, property) 
@@ -26,7 +23,7 @@ function JinEnemyView:ctor(property)
     local callFuncAhead = function ()
         self:play("ahead", handler(self, self.playAhead))
     end
-    local aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, kTimeStartAhead)
+    local aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, define.kJinEnemyTimeStart)
     self:addScheduler(aheadHandler)
 
 end

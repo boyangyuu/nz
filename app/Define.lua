@@ -22,6 +22,7 @@ Define.kEnemyRollWidth 			= 280    --滚动距离
 Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
 Define.kJinEnemyScale	  		=  1.7		-- 狼牙棒兵 盾兵到身前的比例
 Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素(默认值)
+Define.kJinEnemyTimeStart		=  0.01		--狼牙棒兵 盾兵 0.01秒后 前进
 
 --自爆兵
 Define.kBaoEnemyWalkSpeed 		=  70.0 	--自爆兵 每秒前进速度
@@ -29,6 +30,7 @@ Define.kBaoEnemyScale	  		=  1.2		-- 自爆兵到身前的比例
 Define.kBaoDemageOtherEnemys 	= 10        --自爆兵伤害值
 Define.kBaoRangeW 				= 200	    --自爆兵范围
 Define.kBaoRangeH 				= 200	     --自爆兵范围
+Define.kBaoEnemyTimeStart       = 0.01      -- 0.01秒后 前进
 
 --人质兵
 Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
