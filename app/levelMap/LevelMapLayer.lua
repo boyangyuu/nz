@@ -15,11 +15,14 @@ function LevelMapLayer:ctor(properties)
     self.LevelDetailModel = md:getInstance("LevelDetailModel")
     
     self:initData(properties)
-    self:initBgLayer()
     self:initChooseLayer()
     self:refreshLevelLayer(self.curGroupId)
+  
     cc.EventProxy.new(self.FightResultModel, self)
         :addEventListener("POPUP_LEVELDETAIL", handler(self, self.popupLevelDetail))
+    cc.EventProxy.new(ui, self)
+        :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.initBgLayer))
+
     self:initGuide() 
 end
 
@@ -34,7 +37,7 @@ function LevelMapLayer:initData(properties)
 end
 
 
-function LevelMapLayer:initBgLayer()
+function LevelMapLayer:initBgLayer(event)
     -- bg starting animation   
 
     self.armature = ccs.Armature:create("shijiemap")

@@ -126,31 +126,31 @@ function MyApp:createGameStateFile()
             --开启的关卡
             currentlevel =  {
                         group = 1,
-                        level = 1,
+                        level = 5,
             },
             user = {
                 level = 1,
             },
             guide = {
                         --第一关
-                        gamePre         = false,
-                        fight01_move    = false,
-                        fight01_fire    = false,
-                        fight01_lei     = false,
-                        fight01_gold    = false,
-                        fight01_change  = false,
-                        fight01_jijia   = false,   
-                        afterfight01    = false,   
+                        gamePre         = true,
+                        fight01_move    = true,
+                        fight01_fire    = true,
+                        fight01_lei     = true,
+                        fight01_gold    = true,
+                        fight01_change  = true,
+                        fight01_jijia   = true,   
+                        afterfight01    = true,   
 
                         --第二关
-                        prefight02      = false,
-                        afterfight02    = false,
+                        prefight02      = true,
+                        afterfight02    = true,
                         
                         --第三关
-                        xiangqian       = false,
+                        xiangqian       = true,
 
                         --狙击关
-                        fight04         = false,                        
+                        fight04         = true,                        
             },
             fight = {
                isPreferBag1 = true,

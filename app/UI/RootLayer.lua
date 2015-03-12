@@ -247,7 +247,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz",}
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
