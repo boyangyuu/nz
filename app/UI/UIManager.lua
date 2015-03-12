@@ -48,7 +48,8 @@ end
 
 function UI:changeLayer(layerId, properties)
 	print("function UI:changeLayer(layerId)")
-	local loadingType = properties.loadingType
+	local loadingType = nil
+	if properties then loadingType = properties.loadingType end
 	if loadingType == nil and layerId ==  "FightPlayer" then 
 		loadingType = "fight" 
 	elseif loadingType == nil and layerId == "HomeBarLayer" then 
