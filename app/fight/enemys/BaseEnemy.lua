@@ -136,4 +136,22 @@ function BaseEnemy:getAward()
     return self.config["award"] or define.kKillEnemyAwardGold
 end
 
+function BaseEnemy:onKill_(event)
+    local image = self.config["image"]
+    local noKillImages = {"shoulei", "daodan", "tieqiu","zzw"}
+    local isKill = true
+    for i,v in ipairs(noKillImages) do
+        if v == noKillImages then 
+            isKill = false
+        end
+    end
+
+    --kill
+    if isKill then 
+        local hero = md:getInstance("Hero")
+        hero:killEnemy()
+    end
+    BaseEnemy.super.onKill_(self, event)
+end
+
 return BaseEnemy

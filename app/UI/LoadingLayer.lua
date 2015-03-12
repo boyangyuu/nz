@@ -14,8 +14,6 @@ configs = {
 }
 
 function LoadingLayer:ctor()
-	-- self:loadCCS()
-	-- self:initUI()
     self:setNodeEventEnabled(true)
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_SHOW_EVENT, handler(self, self.onShow))
@@ -23,14 +21,14 @@ function LoadingLayer:ctor()
     self:setVisible(false)
 end
 
-function LoadingLayer:loadHomeCCS()
+function LoadingLayer:loadGiftCCS()
     math.randomseed(os.time())
     local rans = math.random(2,3)
     local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")    
     self:addChild(controlNode)
 end
 
-function LoadingLayer:loadFightCCS()
+function LoadingLayer:loadNomalCCS()
     local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.json")
     self:addChild(controlNode)
 
@@ -82,21 +80,22 @@ function LoadingLayer:showPercent()
     end
 end
 
-function LoadingLayer:loadCCS(type)
+function LoadingLayer:loadCCS()
     local guide = md:getInstance("Guide")
     local isNotDone = guide:isDone("xiangqian") == false
 
     if isNotDone then
         self:loadHomeCCS()
-    elseif type == "home"then
-        self:loadHomeCCS()
-    elseif type == "fight" then
-        self:loadFightCCS()
+    elseif self.loadType == "home"then
+        self:loadGiftCCS()
+    elseif self.loadType == "fight" or self.loadType == "home_first" then
+        self:loadNomalCCS()
     end
 end
 
 function LoadingLayer:onShow(event)
-    self:loadCCS(event.type)
+    self.loadType = event.type
+    self:loadCCS()
     self:initUI()
     self:setVisible(true)
     self:setDesc()
