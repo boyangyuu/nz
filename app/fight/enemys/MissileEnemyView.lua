@@ -120,7 +120,8 @@ function MissileEnemyView:playFeibiaoFire()
     local function callMoveEnd()
         self.armature:getAnimation():play("die02", -1 , 1 )
         self.enemy:hit(self.hero) 
-        self:playSound()          
+        local soundSrc  = "res/Music/fight/hd_bz.wav"
+        audio.playSound(soundSrc,false)          
     end
 
     --run

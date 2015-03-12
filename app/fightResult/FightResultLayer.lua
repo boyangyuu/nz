@@ -32,7 +32,7 @@ function FightResultLayer:ctor(properties)
 
 	self.isDone = self.guide:isDone("afterfight02")
     
-    local fightResult = self.fightModel:getFightResult()
+    local fightResult = self.fightModel:getResultData()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
     dump(fightResult["goldNum"])
