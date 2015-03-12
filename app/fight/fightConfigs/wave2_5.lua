@@ -625,7 +625,7 @@ local enemys = {
 	weak1=2},    
 
 	-- 商人
-	{id=21,image="shangr",hp=800, weak1=2},	--武器商人	                           
+	{id=21,image="shangr_1",hp=800, weak1=2},	--武器商人	                           
 }
 
 

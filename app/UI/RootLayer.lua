@@ -214,7 +214,7 @@ function RootLayer:addResFight()
     local enemyImgs = {
         --普通怪物
         "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-        "qiqiu01", "qiqiu02", "qiqiu03"
+        "qiqiu01", "qiqiu02", "qiqiu03",
         "sanbing01", "zpbing", "shouleib",  "hs","feiji",
         "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
         
@@ -226,7 +226,7 @@ function RootLayer:addResFight()
          "boss01", "boss01_1", "boss01_2", 
          "boss02", "boss02_1", "boss02_2",    
          "renzb", 
-}
+    }
  
     for i,v in ipairs(enemyImgs) do
         local src = "res/Fight/enemys/"..v.."/"..v..".csb"

@@ -526,7 +526,7 @@ local enemys = {
 	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,scale = 2.0, --scale = 2.0,  近战走到屏幕最近放缩比例
 	weak1=3},	
 	-- 商人
-	{id=11,image="shangr",hp=300, weak1=3},	--武器商人	                                                    
+	{id=11,image="shangr_1",hp=300, weak1=3},	--武器商人	                                                    
 }
 
 local mapId = "map_1_3"

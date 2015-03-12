@@ -121,12 +121,12 @@ function MyApp:createGameStateFile()
             weaponsuipian = {},
 
             money = 10000000,
-            diamond = 8880,
+            diamond = 8000,
             
             --开启的关卡
             currentlevel =  {
-                        group = 1,
-                        level = 2,
+                        group = 3,
+                        level = 6,
             },
             user = {
                 level = 1,
@@ -147,10 +147,10 @@ function MyApp:createGameStateFile()
                         afterfight02    = true,
                         
                         --第三关
-                        xiangqian       = false,
+                        xiangqian       = true,
 
                         --狙击关
-                        fight04         = false,                        
+                        fight04         = true,                        
             },
             isAwardGold     = false,
             fight = {
