@@ -189,9 +189,14 @@ function RootLayer:addResHome()
 
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.csb"
     manager:addArmatureFileInfoAsync(thjbxsrc,  handler(self, self.dataLoaded))
-    
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
+
+    local libaosrc = "res/LevelMap/libao/libao.csb"
+    manager:addArmatureFileInfoAsync(libaosrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelMap/libao/libao0.plist"
+    local png   = "res/LevelMap/libao/libao0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
 end
