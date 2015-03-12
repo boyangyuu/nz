@@ -168,6 +168,8 @@ function MapView:updateEnemys()
 	--wave提示
 	if wave.waveType == "boss" then 
 		self.fightDescModel:bossShow()
+	elseif wave.waveType == "award" then  
+		self.fightDescModel:goldShow()
 	else 
 		self.fightDescModel:waveStart(self.waveIndex)
 	end

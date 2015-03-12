@@ -214,7 +214,7 @@ function RootLayer:addResFight()
     local enemyImgs = {
         --普通怪物
         "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-        "qiqiu01", "qiqiu02", "qiqiu03"
+        "qiqiu01", "qiqiu02", "qiqiu03",
         "sanbing01", "zpbing", "shouleib",  "hs","feiji",
         "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
         

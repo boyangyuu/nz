@@ -314,22 +314,6 @@ function LevelDetailLayer:onClickBtnGold()
 	playSoundBtn()	
 end
 
-function LevelDetailLayer:onClickGuideBtnGold()
-	self.alreadygold:setVisible(true)
-	self.btnGold:setVisible(false)	
-
-	local data = getUserData()
-	local isAwardGold = data.isAwardGold
-	if isAwardGold == false then 
-		self.inlayModel:equipGoldInlays()
-		data.isAwardGold = true
-		setUserData(data)
-	end
-
-	--sound
-	playSoundBtn()
-end
-
 function LevelDetailLayer:onClickBtnJijia()
 	local buyModel = md:getInstance("BuyModel")
 	function equipJijia()
@@ -362,17 +346,6 @@ function LevelDetailLayer:initGuide()
 	local guide = md:getInstance("Guide")
     local isDone = guide:isDone("prefight02")
     if isDone then return end
-
-    --点击装备黄金武器
-    guide:addClickListener({
-        id = "prefight02_equip",
-        groupId = "prefight02",
-        rect = cc.rect(400, 10, 340, 240),
-        endfunc = function (touchEvent)
-            self:onClickGuideBtnGold()
-        end
-     }) 	
-
     --点击进入战斗
     guide:addClickListener({
         id = "prefight02_enter",

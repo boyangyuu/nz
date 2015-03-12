@@ -241,9 +241,11 @@ local waves = {
 	-- 		}, 
 	-- 	},
 	-- }, 
-	                                                                            -- 金币气球
+	--                                                                             -- 金币气球
 	{
+		waveType = "award", 
 		enemys = {
+
 			{
 				time = 2,
 				num = 10,
