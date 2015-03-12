@@ -19,12 +19,12 @@ function FightDescModel:bossShow()
 	self:dispatchEvent({name = FightDescModel.BOSSSHOW_ANIM_EVENT})
 end
 
-function FightDescModel:waveStart(waveNum) -- startWave
-	self:dispatchEvent({name = FightDescModel.WAVESTART_ANIM_EVENT,waveNum = waveNum})
+function FightDescModel:goldShow()
+	self:dispatchEvent({name = FightDescModel.GOLDWAVE_ANIM_EVENT})
 end
 
-function FightDescModel:goldWave()
-	self:dispatchEvent({name = FightDescModel.GOLDWAVE_ANIM_EVENT})
+function FightDescModel:waveStart(waveNum) -- startWave
+	self:dispatchEvent({name = FightDescModel.WAVESTART_ANIM_EVENT,waveNum = waveNum})
 end
 
 --敌人简介

@@ -62,6 +62,7 @@ function Fight:refreshData(properties)
     self.isJujiFight = levelModel:isJujiFight()
     self.goldValue = 0.0
     self.result = nil
+    self.resultData = {}
     self.isPause = false
     self.killRenzhiNum  = 0
 end
@@ -152,6 +153,8 @@ function Fight:onWin()
 end
 
 function Fight:onGiveUp()
+    self.result = "fail"
+
      --um 关卡完成情况事件
     local levelInfo = self:getLevelInfo() 
     assert(levelInfo, "levelInfo is nil")
@@ -162,8 +165,7 @@ function Fight:onGiveUp()
 end
 
 function Fight:onFail()
-    if self.result then return end
-    self.result = "fail"   
+    if self.result then return end   
     local fightProp = md:getInstance("FightProp")
     fightProp:costReliveBag()
     ui:showPopup("FightResultFailPopup",{},{anim = false})
@@ -295,13 +297,16 @@ function Fight:setFightResult()
     local isGold = inlay:getIsNativeGold()
     local hpPercent = isGold and 1.00 or hpPercent
 
-    self.fightResult = {}
-    self.fightResult["goldNum"]   = self.goldValue
-    self.fightResult["hpPercent"] = hpPercent
+    self.resultData["goldNum"]   = self.goldValue
+    self.resultData["hpPercent"] = hpPercent
 end
 
-function Fight:getFightResult()
-    return self.fightResult
+function Fight:getResult()
+    return self.result
+end
+
+function Fight:getResultData()
+    return self.resultData
 end
 
 return Fight

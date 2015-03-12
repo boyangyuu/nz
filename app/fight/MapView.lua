@@ -156,7 +156,8 @@ function MapView:updateEnemys()
 	local wave = waveConfig:getWaves(self.waveIndex)
 	-- dump(wave, "wave")
 
-	if wave == nil then 
+	local result = self.fight:getResult()
+	if wave == nil and result then 
 		print("赢了")
 		local function win()
 			self.fight:onWin()			
@@ -168,6 +169,8 @@ function MapView:updateEnemys()
 	--wave提示
 	if wave.waveType == "boss" then 
 		self.fightDescModel:bossShow()
+	elseif wave.waveType == "award" then  
+		self.fightDescModel:goldShow()
 	else 
 		self.fightDescModel:waveStart(self.waveIndex)
 	end

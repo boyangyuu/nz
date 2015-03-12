@@ -32,7 +32,7 @@ function FightResultLayer:ctor(properties)
 
 	self.isDone = self.guide:isDone("afterfight02")
     
-    local fightResult = self.fightModel:getFightResult()
+    local fightResult = self.fightModel:getResultData()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
     dump(fightResult["goldNum"])
@@ -152,12 +152,9 @@ function FightResultLayer:initUI()
 
 	-- self.btngetall:setButtonLabel("disabled" , lqcg)
 
-    -- if self.grade == 5 then
-    -- 	self.btngetall:setButtonLabel("disabled" , lqsy)
-    -- 	self.btngetall:setButtonEnabled(false)
-    -- else
-    -- 	self.btngetall:setButtonLabel("disabled" , lqcg)
-    -- end
+    if self.grade == 5 then
+    	self.btngetall:setButtonEnabled(false)
+    end
 
 	function showButton()
 		self:startGuide()
@@ -472,8 +469,10 @@ end
 
 function FightResultLayer:setDailyPopup()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
+    local guide = md:getInstance("Guide")
 	local isGet = dailyLoginModel:isGet()
-	if isGet == false then
+	local isDone = guide:isDone("xiangqian")
+	if isGet == false and isDone then
 		dailyLoginModel:setPopup()
 	end
 end

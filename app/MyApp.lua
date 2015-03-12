@@ -152,7 +152,6 @@ function MyApp:createGameStateFile()
                         --狙击关
                         fight04         = true,                        
             },
-            isAwardGold     = false,
             fight = {
                isPreferBag1 = true,
             },
