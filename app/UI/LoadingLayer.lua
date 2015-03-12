@@ -24,15 +24,16 @@ function LoadingLayer:ctor()
 end
 
 function LoadingLayer:loadHomeCCS()
-    local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.json")
-    self:addChild(controlNode)
-end
-
-function LoadingLayer:loadFightCCS()
     math.randomseed(os.time())
     local rans = math.random(2,3)
     local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")    
     self:addChild(controlNode)
+end
+
+function LoadingLayer:loadFightCCS()
+    local controlNode = cc.uiloader:load("res/Loading/loading/loading_1.json")
+    self:addChild(controlNode)
+
 end
 
 function LoadingLayer:initUI()

@@ -48,7 +48,7 @@ function SanEnemyView:playFall()
 	self:setPositionY(display.height)
 
     --action
-	local speed = 60
+	local speed = define.kSanEnemySpeed
     local destPosY = self:getPlaceNode():getPositionY()
     local distance = display.height - destPosY
     local time = distance / speed 
