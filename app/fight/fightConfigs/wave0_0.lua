@@ -255,8 +255,8 @@ local waves = {
 				delay = {0,0.6,1.3},
 				property = { 
 					placeName = "place1",
-					id = 2,
-					type = "jin",
+					startState = "rollright",
+					id = 1,
 				},
 			},		
 			{
@@ -266,8 +266,8 @@ local waves = {
 				delay = {0,0.8},
 				property = {
 					placeName = "place2",
-					id = 2,
-					type = "jin",
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 			{
@@ -277,8 +277,8 @@ local waves = {
 				pos = {250,700},
 				property = { 
 					placeName = "place1",
-					id = 2,
-					type = "jin",
+					startState = "rollright",
+					id = 1,
 				},
 			},	
 			{
@@ -288,8 +288,8 @@ local waves = {
 				delay = {0,0.6,1.2},
 				property = {
 					placeName = "place2",
-					id = 2,
-					type = "jin",
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 		                                     	
@@ -478,7 +478,7 @@ local waves = {
 --enemy的关卡配置                           无镶嵌 MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=1,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=0.5,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--近战兵
@@ -494,13 +494,13 @@ local enemys = {
 	weak1=1},
 
 	--铁球
-	{id=5,image="tieqiu",demage=20,hp=1300,weak1=1},	
+	{id=5,image="tieqiu",demage=20,hp=2000,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 	--手雷
-	{id=7,image="shoulei",demage=1,hp=1,
+	{id=7,image="shoulei",demage=0.5,hp=1,
 	weak1=2},
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
