@@ -168,7 +168,7 @@ function FightResultLayer:initUI()
 	    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 		local levelInfo = curGroup.."_"..curLevel
 		local umData = {}
-	    umData[levelInfo] = "快速镶嵌未点击"
+	    umData[levelInfo] = "快速镶嵌展示"
 	    um:event("关卡结算_快速镶嵌", umData)
 
 	end
