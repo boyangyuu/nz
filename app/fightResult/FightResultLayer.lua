@@ -65,6 +65,13 @@ function FightResultLayer:loadCCS()
     local plist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
     local png = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
     display.addSpriteFrames(plist,png)
+
+    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
+    manager:addArmatureFileInfo(ksxqsrc)
+    local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
+    local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
+    display.addSpriteFrames(plist, png)          
+
 end
 
 local playStarHandler = nil
