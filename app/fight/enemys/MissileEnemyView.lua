@@ -141,7 +141,7 @@ function MissileEnemyView:playBomb()
 
     --屏幕爆炸效果
     self:playBombEffect()
-    -- self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT})
+    self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOMB_EVENT})
 end
 
 --Attackable接口
@@ -173,7 +173,6 @@ end
 function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
-
         if movementID ~= "die" and movementID ~= "die02" then
             local playCache = self:getPlayCache()
             if playCache then 

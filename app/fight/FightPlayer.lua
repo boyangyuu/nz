@@ -907,8 +907,9 @@ function FightPlayer:onEnter()
     end 
 end
 
-function FightPlayer:onCleanup()
+function FightPlayer:onExit()
     self:removeAllSchs()
+    audio:stopAllSounds()
 end
 
 function FightPlayer:onResultFail()

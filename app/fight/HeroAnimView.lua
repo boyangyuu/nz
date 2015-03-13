@@ -96,7 +96,7 @@ function HeroAnimView:playHurtedBomb_boli(event)
 	armatureBoli:getAnimation():playWithIndex(0)
 
 	--sound
-    local soundSrc  = "res/Music/fight/hd_bz.wav"
+    local soundSrc  = "res/Music/fight/glass.wav"
     audio.playSound(soundSrc,false)  	
 end
 
@@ -131,10 +131,14 @@ function HeroAnimView:playLessHp(event)
 	local isLessHp = event.isLessHp
 	if isLessHp then
 		self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 1)
+		-- local soundSrc  = "res/Music/fight/beng.wav"
+		-- self.soundBeng = audio.playSound(soundSrc, true) 
 	else
 		self.armatureScreenRed:getAnimation():stop()
+		-- audio.stopSound(self.soundBeng)
 	end
 end
+
 
 function HeroAnimView:playHpAlertEffect()
 	if self.hero:getIsLessHp() then return end
@@ -186,6 +190,10 @@ function HeroAnimView:playKeepKill(event)
 	transition.execute(self.labelKeepKill, seq, {easing = "Out",})
 	
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
+end
+
+function HeroAnimView:onExit()
+	-- audio.stopSound(self.soundBeng)
 end
 
 return HeroAnimView
