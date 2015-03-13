@@ -231,7 +231,7 @@ function FightResultLayer:onClickBtnNext()
 	elseif isCurLevel and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
 	else
-		print("0-0 OR 1-4.1 OR 通关")
+		print("1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
     end
 end
