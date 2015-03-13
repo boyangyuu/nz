@@ -33,7 +33,7 @@ end
 
 function Robot:getDemage()
 	assert(define.kRobotDemage, "demage is nil")
-	local fight = md:getInstance("")
+	local fight = md:getInstance("Fight")
 	local gid = fight:getGroupId()
 	local scale = gid > 2 and 2.0 or 1.0
 	return define.kRobotDemage * scale
