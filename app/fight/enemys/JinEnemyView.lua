@@ -46,8 +46,6 @@ end
 
 function JinEnemyView:onEnter()
     JinEnemyView.super.onEnter(self)
-    self:setVisible(false)
-    self:fadeIn(8.0)
 end
 
 function JinEnemyView:playKill(event)
