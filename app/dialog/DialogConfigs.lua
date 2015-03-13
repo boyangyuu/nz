@@ -5,8 +5,7 @@ kDialogConfig["group0"] = {
 	level0 = {
 		award = {
 			{role = "安琪儿",imgname = "role_anqi", msg = "敌人越来越多！阿杰快坚持不住了！", pos = "right"},
-			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了，看你是新手的份上，把我的枪借你一用！", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "多谢！", pos = "left"},
+			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "算了，看在你是新手的份上，把我的枪借你一用！", pos = "left"},
 		},	
 
 		after = {
@@ -60,7 +59,7 @@ kDialogConfig["group1"]  = {
 		award = {
 			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "看把你累的，枪法到底行不行啊！？", pos = "left"},		
 			{role = "杰",imgname = "role_jie", msg = "不是哥枪法不行，是对面敌人太多，我的枪太挫！！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "没事，姐姐把我的飓风之锤也借你玩玩", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "没事，把我的飓风之锤也借你！", pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "飓风之锤！？是那把号称大杀器的霰弹枪么？？", pos = "left"},
 		},	
 
@@ -89,16 +88,16 @@ kDialogConfig["group1"]  = {
 	},
 	level5 = {
 		forward = {
-			{role = "杰",imgname = "role_jie",  msg = "啊！是你抓走了我姐姐！！！！！鬼眼！你个叛徒！",pos = "left"},
+			{role = "杰",imgname = "role_jie",  msg = "啊！是你抓走了我师姐！！！！！鬼眼！你个叛徒！",pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，被发现也好，省的我费事了，都把命留下吧！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼绑架了很多人质，注意不要误伤人质！",  pos = "right"},
 			{role = "杰",imgname = "role_jie", msg = "真是无耻至极！！",  pos = "left"},
 		},
 		after = {
-			{role = "杰",imgname = "role_jie", msg = "我姐姐被你带到哪里去啦？",  pos = "left"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "你姐姐不识抬举，马上就要被我送到非洲了，哈哈！",  pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "我师姐被你带到哪里去啦？",  pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "你师姐不识抬举，马上就要被我送到非洲了，哈哈！",  pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "杰，敌人援兵到了，快撤退。",  pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "非洲！？姐姐要坚持住啊！！",  pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "非洲！？师姐要坚持住啊！！",  pos = "left"},
 		},
 	},
 	level6 = {
@@ -110,9 +109,9 @@ kDialogConfig["group1"]  = {
 		},
 		after = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，还挺能打，我还有更重要的事情，今天先放过你们。", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "别跑，我姐姐在哪里？", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "别跑，我师姐在哪里？", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "鬼眼跑了，快追。",pos = "right"},
-			-- {role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，找到我姐姐的下落！", pos = "left"},
+			-- {role = "杰",imgname = "role_jie", msg = "我要继续追踪鬼眼，找到我师姐的下落！", pos = "left"},
 			-- {role = "安琪儿",imgname = "role_anqi", msg = "好，我和你去。",pos = "right"},
 		},
 	},

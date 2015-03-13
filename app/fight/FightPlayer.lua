@@ -67,7 +67,6 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
-        :addEventListener(self.fight.FIGHT_RESTOREGUN_EVENT, handler(self, self.restoreGunPos))
        
     cc.EventProxy.new(self.fightProp, self)
         :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
@@ -214,6 +213,7 @@ end
 
 --启动盾牌恢复
 function FightPlayer:startDefenceResume(event)
+    print("unction FightPlayer:startDefenceResume(event)")
     self.labelDefenceResume:setVisible(true)
     
     --受伤
@@ -244,7 +244,9 @@ function FightPlayer:startDefenceResume(event)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
+
     local percent = event.percent * 100
+    print("FightPlayer:onDefenceBeHurt(event)", percent)
     self.defenceDemage:setPercent(percent)
 end
 
@@ -659,12 +661,6 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     self:moveGun(x - xOri,y - yOri)
 end
 
-function FightPlayer:restoreGunPos(event)
-    print("function FightPlayer:restoreGunPos(event)")
-    self.focusNode:setPosition(display.width1/2, display.height1/2)
-    self.layerGun:setPositionX(display.width1/2 + 220)
-end
-
 function FightPlayer:moveBgLayer(offsetX, offsetY)
     local map = md:getInstance("Map")
     local isNotMove = map:isNotMoveMap()
@@ -769,8 +765,7 @@ function FightPlayer:initGuide1()
     
     --move
     local function checkGuideFire()
-        self:onCancelledFire()   
-        self:restoreGunPos()        
+        self:onCancelledFire()       
         self.guide:check("fight01_fire")
     end
 

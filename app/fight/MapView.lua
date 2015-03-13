@@ -258,7 +258,6 @@ function MapView:checkGuide()
 		if isGuide then	
 			local comps = {btnLei = true, label_leiNum =  true,}
 			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})			
-			self.fight:dispatchEvent({name = self.fight.FIGHT_RESTOREGUN_EVENT})						
 			guide:check("fight01_lei") 
 		end
 	end
