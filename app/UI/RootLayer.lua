@@ -67,13 +67,10 @@ function RootLayer:clearCache()
 end
 
 function RootLayer:addResPublic()
-    display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/commonPNG/role0.plist", "res/commonPNG/role0.png", handler(self, self.imageLoaded)) 
+    display.addSpriteFrames("res/commonPNG/item0.plist", "res/commonPNG/item0.png", handler(self, self.imageLoaded)) 
     display.addSpriteFrames("res/commonPNG/weaponicon0.plist", "res/commonPNG/weaponicon0.png", handler(self, self.imageLoaded))
 end
-
--- function RootLayer:addSpriteFrames()
---     display.addSpriteFrames("res/commonPNG/commonPng0.plist", "res/commonPNG/commonPng0.png", handler(self, self.imageLoaded))
--- end
 
 function RootLayer:addResHome()
     -- display.removeUnusedSpriteFrames()
@@ -226,6 +223,7 @@ function RootLayer:addResFight()
         
         --导弹
         "shoulei", "daodan", "tieqiu", 
+       
 
         --boss
          "dzboss",
@@ -252,7 +250,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz",}
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
@@ -322,10 +320,10 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
         "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
-    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
-    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
-        local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
-    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
+    manager:addArmatureFileInfoAsync(ksxqsrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
+    local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
    -- --music

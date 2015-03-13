@@ -100,6 +100,13 @@ function InfoLayer:initBtns()
             	ui:showPopup("pausePopup",{popupName = "fightset"},{anim = true,isPauseScene = true})
             end
         end)
+
+	--guide
+	local fight = md:getInstance("Fight")
+	local gid, lid = fight:getCurGroupAndLevel()
+	if gid == 0 and lid == 0 then 
+		btnStop:setVisible(false)
+	end
 end
 
 function InfoLayer:onRefreshGun(event)

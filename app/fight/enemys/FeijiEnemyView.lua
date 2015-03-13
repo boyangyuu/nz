@@ -332,6 +332,8 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	end
 end
 
-
+function FeijiEnemyView:onExit()
+	audio.stopSound(self.audioId)
+end
 
 return FeijiEnemyView

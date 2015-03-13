@@ -854,29 +854,10 @@ function FightPlayer:initGuide4()
     })   
 end
 
--- function FightPlayer:initGuide2()
---     --check   
---     local isDone = self.guide:isDone("fight02_dun")
---     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
---     local isWillGuide = lid == 2 and gid == 1
---     if isDone or not isWillGuide then return end
-    
---     --盾
---     self.guide:addClickListener({
---         id = "fight02_dun",
---         groupId = "fight02_dun",
---         rect = self.btnDefence:getBoundingBox(),
---         endfunc = function (touchEvent)
---             self.defence:setIsAble(true) 
---             self.defence:startDefence()   
---         end
---     })    
--- end
-
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 4.1 and gid == 1
+    local isWillGuide = lid == 3.1 and gid == 1
     if isDone or not isWillGuide then return end   
 
     self.guide:addClickListener({

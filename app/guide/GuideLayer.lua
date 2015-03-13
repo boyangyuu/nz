@@ -159,7 +159,7 @@ end
 
 function GuideLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/commonPNG")
-	display.addSpriteFrames("commonPng0.plist", "commonPng0.png") 
+    display.addSpriteFrames("res/commonPNG/role0.plist", "res/commonPNG/role0.png") 
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 

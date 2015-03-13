@@ -16,6 +16,7 @@ function MapAnimView:ctor()
 	local map = md:getInstance("Map")
 	cc.EventProxy.new(map, self)
 		:addEventListener(map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
+		:addEventListener(map.AWARD_GOLD_EVENT, 	 handler(self, self.playAwardGold))	
 
 end
 
@@ -112,5 +113,27 @@ function MapAnimView:playEffectLeiBomb(event)
     local soundSrc  = "res/Music/fight/hd_bz.wav"
     audio.playSound(soundSrc,false) 	
 end
+
+function MapAnimView:playAwardGold(event)
+	local pWorld = event.pWorld
+	local pos 	 = self:convertToNodeSpace(pWorld)
+	local armature = ccs.Armature:create("dlhjak")
+	armature:setPosition(pos)
+
+	--scale 狙图特殊处理
+	local scale = self:getScaleByPos(pos)
+	armature:setScale(scale)	
+	self:addChild(armature)
+	armature:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+				armature:removeFromParent()
+				local fightInlay = md:getInstance("FightInlay")
+				fightInlay:activeGold()				
+	    	end 
+    	end)	
+	armature:getAnimation():playWithIndex(0 , -1, 1)	
+end
+
 
 return MapAnimView
