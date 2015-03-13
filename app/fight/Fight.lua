@@ -80,8 +80,7 @@ function Fight:refreshUm()
     local levelInfo = self:getLevelInfo()
     assert(levelInfo, "levelInfo is nil")
     local str = nil
-    if (fGid == curGid and fLid > curLid) or 
-        (fGid > curGid) then 
+    if fGid == curGid and curLid = fLid then 
         str = "关卡开始_新"
     else
         str = "关卡开始_旧" 

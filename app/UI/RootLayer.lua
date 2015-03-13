@@ -329,16 +329,16 @@ function RootLayer:addResFight()
    -- --music
    --  self:addResFightMusic()
 
-    local gunImgs = {"anim_ak", "anim_jfzc", "anim_lmd", "anim_m4", "anim_m134",
-        "anim_mp5", "anim_rpg", "anim_sy"}
-    for i,v in ipairs(gunImgs) do
-        local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
+    -- local gunImgs = {"anim_ak", "anim_jfzc", "anim_lmd", "anim_m4", "anim_m134",
+    --     "anim_mp5", "anim_rpg", "anim_sy"}
+    -- for i,v in ipairs(gunImgs) do
+    --     local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
 
-        local plist = "res/Fight/gunsAnim/"..v.."/"..v.."0.plist"
-        local png   = "res/Fight/gunsAnim/"..v.."/"..v.."0.png"
-        display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))  
-        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))                
-    end
+    --     local plist = "res/Fight/gunsAnim/"..v.."/"..v.."0.plist"
+    --     local png   = "res/Fight/gunsAnim/"..v.."/"..v.."0.png"
+    --     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))  
+    --     manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))                
+    -- end
 
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
