@@ -119,6 +119,11 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	--手雷*10
 	propModel:buyProp("lei",10)
 	storeModel:refreshInfo("prop")
+
+	ui:showPopup("commonPopup",
+	 {type = "style1",content = "请在武器库装备！"},
+	 {opacity = 0})
+
 end
 
 function BuyModel:buy_novicesBag( buydata )
@@ -206,11 +211,20 @@ function BuyModel:buy_unlockWeapon( buydata )
 	print("BuyModel:buy_unlockWeapon( buydata )")
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
+
+	ui:showPopup("commonPopup",
+	 {type = "style1",content = "请在武器库装备！"},
+	 {opacity = 0})
+
 end
 
 function BuyModel:buy_highgradeWeapon(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
+	
+	ui:showPopup("commonPopup",
+	 {type = "style1",content = "请在武器库装备！"},
+	 {opacity = 0})
 end
 
 function BuyModel:buy_goldWeapon( buydata )

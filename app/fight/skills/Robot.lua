@@ -33,7 +33,10 @@ end
 
 function Robot:getDemage()
 	assert(define.kRobotDemage, "demage is nil")
-	return define.kRobotDemage
+	local fight = md:getInstance("Fight")
+	local gid = fight:getGroupId()
+	local scale = gid > 2 and 2.0 or 1.0
+	return define.kRobotDemage * scale
 end
 
 function Robot:isCoolDownDone()
@@ -42,7 +45,7 @@ end
 
 function Robot:fire()
 	self:coolDownFire()
-	-- print("robot fire")
+
 	local soundSrc  = "res/Music/weapon/m134fire.wav"
 	self.audioId1 =  audio.playSound(soundSrc,false)	
 		

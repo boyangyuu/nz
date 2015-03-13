@@ -53,7 +53,7 @@ function FightResultLayer:ctor(properties)
 end
 
 function FightResultLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
+	cc.FileUtils:getInstance():addSearchPath("res/FightResult")
 	local controlNode = cc.uiloader:load("guanqiapingjia.ExportJson")
     self.ui = controlNode
     self:addChild(controlNode)
@@ -163,6 +163,14 @@ function FightResultLayer:initUI()
 			end
 		end
 		self.btnback:setButtonEnabled(true)
+
+
+	    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+		local levelInfo = curGroup.."_"..curLevel
+		local umData = {}
+	    umData[levelInfo] = "快速镶嵌未点击"
+	    um:event("关卡结算_快速镶嵌", umData)
+
 	end
 
     addBtnEventListener(self.btninlay, function(event)
@@ -393,7 +401,12 @@ function FightResultLayer:getGrade(LeftPersent)
 end
 
 function FightResultLayer:quickInlay()
-	 self.inlayModel:equipAllInlays()
+	self.inlayModel:equipAllInlays()
+    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+	local levelInfo = curGroup.."_"..curLevel
+	local umData = {}
+    umData[levelInfo] = "快速镶嵌点击"
+    um:event("关卡结算_快速镶嵌", umData)
 end
 
 function FightResultLayer:leftCard()
