@@ -49,7 +49,7 @@ configs["fight01_fire"] = {
 configs["fight01_lei"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_lei", msg = "在高亮区域点击 , 将会投掷手雷"},
+		{id = "fight_lei", msg = "在高亮区域点击，将会投掷手雷"},
 	}
 }
 
@@ -57,7 +57,7 @@ configs["fight01_lei"] = {
 configs["fight01_change"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_change", msg = "在高亮区域点击 , 将会更换枪械"},
+		{id = "fight_change", msg = "在高亮区域点击，将会更换枪械"},
 	}
 }
 
@@ -65,7 +65,7 @@ configs["fight01_change"] = {
 configs["fight01_gold"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_gold", msg = "敌人越来越多 , 快变身为黄金武器模式 ! "},
+		{id = "fight_gold", msg = "敌人越来越多，快变身为黄金武器模式 ! "},
 	}
 }
 
@@ -83,9 +83,9 @@ configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
 		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把神狙雷明顿!  "}, 
-		-- {id = "afterfight01_inlay", msg = "点击按钮 , 镶嵌道具" },		
-		{id = "afterfight01_get", msg = "点击按钮 , 领取雷明顿和镶嵌道具"},	
-		{id = "afterfight01_jixu", msg = "点击按钮 , 进入下一关"}, 
+		-- {id = "afterfight01_inlay", msg = "点击按钮，镶嵌道具" },		
+		{id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
+		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"}, 
 	}
 }
 
@@ -96,18 +96,18 @@ configs["prefight02"] = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
 		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
 		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
-		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！! ", skipMode = "clickScreen"},
+		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！ ", skipMode = "clickScreen"},
 		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
 		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "left", },			
-		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮 , 开始战斗！", },
+		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮，开始战斗！", },
 	}
 }
 
 configs["afterfight02"] = {
 	preGuideId = "prefight02",
 	steps = {
-		{id = "afterfight02_inlay", msg = "点击按钮 , 镶嵌道具" },
-		{id = "afterfight02_next", msg = "点击按钮 , 回到主界面" },		
+		{id = "afterfight02_inlay", msg = "点击按钮，镶嵌道具" },
+		{id = "afterfight02_next", msg = "点击按钮，回到主界面" },		
 	}
 }
 
@@ -120,8 +120,8 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择镶嵌属性", }, 
 		{id = "xiangqian_xiangqian2", msg = "点击购买",},
 		{id = "xiangqian_xiangqian3", msg = "点击装备", },
-		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌 , 镶嵌背包内最好的道具", },
-		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具 , 要节省使用哦", skipMode = "clickScreen" },
+		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌，镶嵌背包内最好的道具", },
+		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具，要节省使用哦", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
 		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关",  contentOffset = {x = 0, y = -165},},		
 	}
@@ -140,7 +140,7 @@ configs["fight04"] = {
 
 
 function GuideConfigs.getConfig(groupId)
-	assert(configs[groupId] , "configs is nil groupId: "..groupId )
+	assert(configs[groupId], "configs is nil groupId: "..groupId )
 	return configs[groupId]
 end
 
