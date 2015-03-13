@@ -18,7 +18,7 @@ local configs = {
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
 			isGift = false,
-			price = 1,
+			price = 6,
 			name = "新手礼包",
 	}, 
 	weaponGiftBag  = {           --武器大礼包
