@@ -40,9 +40,6 @@ function HeroAnimView:loadCCS()
     self.armatureHead = ccs.Armature:create("baotou")
     self:addChild(self.armatureHead)
 
-    --玻璃碎
-    self.armatureBoli = ccs.Armature:create("bls")
-    self:addChild(self.armatureBoli)
 
     --血量警告    
 	self.armatureScreenRed = ccs.Armature:create("avatarhit")
@@ -54,10 +51,6 @@ function HeroAnimView:loadCCS()
     self.armatureBlood2 = ccs.Armature:create("blood2")
     self:addChild(self.armatureBlood2)  
 
-    --黄武
-    self.armatureGold 	= ccs.Armature:create("hjwq")
-    self:addChild(self.armatureGold) 
-
     --换子弹
 	self.armatureReload = ccs.Armature:create("huanzidan")    
     self:addChild(self.armatureReload) 	
@@ -66,7 +59,13 @@ function HeroAnimView:loadCCS()
 	self.armatureKeepKill = ccs.Armature:create("ls")
 	self.armatureKeepKill:setPosition(-390, 180)    
     self:addChild(self.armatureKeepKill)
-	self.labelKeepKill = display.newBMFontLabel({ text = "",font = "res/fnt/NO3.fnt"})
+    local strRes
+    if device.platform == "android" then
+	    strRes = "res/NO3.fnt"
+	else
+		strRes = "res/fnt/NO3.fnt"
+	end
+	self.labelKeepKill = display.newBMFontLabel({ text = "",font = strRes})
 	self.labelKeepKill:setPosition(-470, 160)  
 	self:addChild(self.labelKeepKill)
 	self.armatureKeepKill:getAnimation():setMovementEventCallFunc(
@@ -85,8 +84,16 @@ function HeroAnimView:playHurtedBomb_lei(event)
 end
 
 function HeroAnimView:playHurtedBomb_boli(event)
-	print("function HeroAnimView:playHurtedBomb_boli(event)")
-	self.armatureBoli:getAnimation():playWithIndex(0 , -1, 0)	
+    --玻璃碎
+    local armatureBoli = ccs.Armature:create("bls")
+    self:addChild(armatureBoli)	
+	armatureBoli:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.complete then
+				armatureBack:removeFromParent()
+	    	end 
+    	end)	
+	armatureBoli:getAnimation():playWithIndex(0)
 
 	--sound
     local soundSrc  = "res/Music/fight/hd_bz.wav"
@@ -148,8 +155,16 @@ function HeroAnimView:playHpDecreaseEffect()
 end
 
 function HeroAnimView:playActiveGold(event)
-	print("function HeroAnimView:playActiveGold(event)")
-	self.armatureGold:getAnimation():playWithIndex(0 , -1, 0)
+    --黄武
+    local armatureGold 	= ccs.Armature:create("hjwq")
+    self:addChild(armatureGold) 
+	armatureGold:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.complete then
+				armatureBack:removeFromParent()
+	    	end 
+    	end)	
+	armatureGold:getAnimation():playWithIndex(0)
 
     --sound
     local soundSrc  = "res/Music/fight/hjwq.wav"

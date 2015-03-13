@@ -225,11 +225,11 @@ function RootLayer:addResFight()
         "shoulei", "daodan", "tieqiu", 
        
 
-        --boss
-         "dzboss",
-         "boss01", "boss01_1", "boss01_2", 
-         "boss02", "boss02_1", "boss02_2",    
-         "renzb", 
+        -- --boss
+        --  "dzboss",
+        --  "boss01", "boss01_1", "boss01_2", 
+        --  "boss02", "boss02_1", "boss02_2",    
+        --  "renzb", 
     }
  
     for i,v in ipairs(enemyImgs) do
@@ -320,25 +320,25 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
         "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
-    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
-    manager:addArmatureFileInfoAsync(ksxqsrc,  handler(self, self.dataLoaded))
-    local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
-    local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
-    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
+    -- local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
+    -- manager:addArmatureFileInfoAsync(ksxqsrc,  handler(self, self.dataLoaded))
+    -- local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
+    -- local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
+    -- display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
    -- --music
    --  self:addResFightMusic()
 
-    local gunImgs = {"anim_ak", "anim_jfzc", "anim_lmd", "anim_m4", "anim_m134",
-        "anim_mp5", "anim_rpg", "anim_sy"}
-    for i,v in ipairs(gunImgs) do
-        local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
+    -- local gunImgs = {"anim_ak", "anim_jfzc", "anim_lmd", "anim_m4", "anim_m134",
+    --     "anim_mp5", "anim_rpg", "anim_sy"}
+    -- for i,v in ipairs(gunImgs) do
+    --     local src = "res/Fight/gunsAnim/"..v.."/"..v..".csb"
 
-        local plist = "res/Fight/gunsAnim/"..v.."/"..v.."0.plist"
-        local png   = "res/Fight/gunsAnim/"..v.."/"..v.."0.png"
-        display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))  
-        manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))                
-    end
+    --     local plist = "res/Fight/gunsAnim/"..v.."/"..v.."0.plist"
+    --     local png   = "res/Fight/gunsAnim/"..v.."/"..v.."0.png"
+    --     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))  
+    --     manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))                
+    -- end
 
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"

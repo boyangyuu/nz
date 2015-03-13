@@ -65,6 +65,13 @@ function FightResultLayer:loadCCS()
     local plist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
     local png = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
     display.addSpriteFrames(plist,png)
+
+    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
+    manager:addArmatureFileInfo(ksxqsrc)
+    local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
+    local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
+    display.addSpriteFrames(plist, png)          
+
 end
 
 local playStarHandler = nil
@@ -143,14 +150,17 @@ function FightResultLayer:initUI()
 		self.btngetall:runAction(cc.FadeIn:create(0.3))
 		self.btninlay:runAction(cc.FadeIn:create(0.3))
 
-		if self.grade == 5 then
+		if table.nums(self.lockTable) == 0 then
 			self.btngetall:setButtonEnabled(false)
 			self.alreadygetall:setVisible(true)
 			self.alreadygetall:setScale(5)
 			transition.execute(self.alreadygetall, cc.ScaleTo:create(0.2, 1), {
 					    easing = "Out",
 					})
-			self.getallArmature:removeFromParent()
+			if self.getallArmature then
+				self.getallArmature:removeFromParent()
+				self.getallArmature = nil
+			end
 		end
 		self.btnback:setButtonEnabled(true)
 	end
@@ -169,7 +179,10 @@ function FightResultLayer:initUI()
 			transition.execute(self.alreadyinlay, cc.ScaleTo:create(0.2, 1), {
 					    easing = "Out",
 					})
-			self.inlayArmature:removeFromParent()
+			if self.inlayArmature then
+				self.inlayArmature:removeFromParent()
+				self.inlayArmature = nil
+			end
         end
     end)
 
@@ -394,9 +407,7 @@ end
 
 function FightResultLayer:turnLeftCard()
 	for k,v in pairs(self.lockTable) do
-            um:buy("翻拍", 1, 10)   
-
-
+        um:buy("翻拍", 1, 10)   
 		if v["falltype"] == "inlay" then
 			self.inlayModel:buyInlay(v["id"])
 			table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
@@ -427,8 +438,10 @@ function FightResultLayer:turnLeftCard()
 	transition.execute(self.alreadygetall, cc.ScaleTo:create(0.2, 1), {
 			    easing = "Out",
 			})
-	self.getallArmature:removeFromParent()
-
+	if self.getallArmature then
+		self.getallArmature:removeFromParent()
+		self.getallArmature = nil
+	end
 end
 
 function FightResultLayer:onEnter()
@@ -497,8 +510,10 @@ function FightResultLayer:initGuide2()
 			transition.execute(self.alreadyinlay, cc.ScaleTo:create(0.2, 1), {
 					    easing = "Out",
 					})
-			self.inlayArmature:removeFromParent()
-
+			if self.inlayArmature then
+				self.inlayArmature:removeFromParent()
+				self.inlayArmature = nil
+			end
 			playSoundBtn()    
         end
      }) 
