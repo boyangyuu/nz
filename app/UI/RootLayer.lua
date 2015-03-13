@@ -225,11 +225,11 @@ function RootLayer:addResFight()
         "shoulei", "daodan", "tieqiu", 
        
 
-        --boss
-         "dzboss",
-         "boss01", "boss01_1", "boss01_2", 
-         "boss02", "boss02_1", "boss02_2",    
-         "renzb", 
+        -- --boss
+        --  "dzboss",
+        --  "boss01", "boss01_1", "boss01_2", 
+        --  "boss02", "boss02_1", "boss02_2",    
+        --  "renzb", 
     }
  
     for i,v in ipairs(enemyImgs) do

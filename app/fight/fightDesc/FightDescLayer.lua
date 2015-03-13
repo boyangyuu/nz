@@ -136,10 +136,18 @@ function FightDescLayer:initEnemyIntro(enemyID)
     playanim:addChild(bossjjarm)
     bossjjarm:getAnimation():play("bossjj", -1, 1)
 
+    --load
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local src = "res/Fight/enemys/"..enemyID.."/"..enemyID..".csb"
+    local plist = "res/Fight/enemys/"..enemyID.."/"..enemyID.."0.plist"
+    local png   = "res/Fight/enemys/"..enemyID.."/"..enemyID.."0.png" 
+    manager:addArmatureFileInfo(src)
+    display.addSpriteFrames(plist, png)  
+
+    --add
     local armature = ccs.Armature:create(enemyID)
     addChildCenter(armature, playanim)
     armature:getAnimation():play(descConfig.playanim , -1, 1)
-
 end
 
 return FightDescLayer
