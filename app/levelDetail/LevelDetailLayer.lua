@@ -322,12 +322,8 @@ function LevelDetailLayer:onClickBtnJijia()
 	function deneyGoldGiftJijia()
 	    buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
 	end
-	
-	local isDone = self.guide:isDone("prefight02")
-	if isDone then
 	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
-		     "关卡详情_点击机甲按钮")
-	end
+	     "关卡详情_点击机甲按钮")
 end
 
 ---- initData ----
