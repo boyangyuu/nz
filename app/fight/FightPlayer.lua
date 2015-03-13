@@ -213,6 +213,7 @@ end
 
 --启动盾牌恢复
 function FightPlayer:startDefenceResume(event)
+    print("unction FightPlayer:startDefenceResume(event)")
     self.labelDefenceResume:setVisible(true)
     
     --受伤
@@ -243,7 +244,9 @@ function FightPlayer:startDefenceResume(event)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
+
     local percent = event.percent * 100
+    print("FightPlayer:onDefenceBeHurt(event)", percent)
     self.defenceDemage:setPercent(percent)
 end
 
