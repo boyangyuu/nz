@@ -6,169 +6,93 @@ local waves = {
 	{
 		enemys = { 
 			{
-				time = 1,	
-				num = 4,
-				pos = {180,250,320,450,},
-				delay = {0,1.5,0.8,2,},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-
-			{
 				time = 2,
-				num = 1,
-				delay = {0.5},
-				pos = {800},
+				num = 3,
+				delay = {0,1,0.5},
+				pos = {300,600,900},
 				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollleft",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
 				},
-			},
+			},	
 			{
-				time = 2,
+				time = 4,	
 				num = 1,
-				delay = {0.5},
+				pos = {900},
+				delay = {0.1},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
+				time = 4.5,	
+				num = 1,
 				pos = {250},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+				delay = {0.1},
+				property = {
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},
-			{
-				time = 1,	
-				num = 2,
-				pos = {250,350},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-
-			{
-				time = 3,	
-				num = 3,
-				pos = {850,770,700},
-				delay = {0,0.6,1.2},
-				property = { 
-					placeName = "place2",
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-
-						-- 以上是第一波第一批 11
-			
 			{
 				time = 5,	
-				num = 3,
-				pos = {250,350,400},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 8,	
-				num = 3,
-				pos = {900,750,600},
-				delay = {0,0.6,1.3},
+				num = 1,
+				pos = {600},
+				delay = {0.1},
 				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
+					placeName = "place2" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},
 			{
-				time = 7,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+				time = 5.5,	
+				num = 1,
+				pos = {400},
+				delay = {0.1},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},	
 			{
-				time = 9,	
-				num = 2,
-				pos = {880,950},
-				delay = {0,0.6},
+				time = 6,	
+				num = 1,
+				pos = {690},
+				delay = {0.1},
 				property = {
-					placeName = "place3", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-
-									-- 以上是第一波第二批 21
-
-			{
-				time = 5,	
-				num = 3,
-				pos = {220,370,300},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 8,	
-				num = 2,
-				pos = {1000,750},
-				delay = {0,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 7,
-				num = 2,
-				delay = {0.2,0.9},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place1" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},	
 			{
-				time = 9,	
-				num = 3,
-				pos = {800,910,980},
-				delay = {0,0.6,1.4},
+				time = 6,
+				num = 1,
+				pos = {450},
+				delay = {0.2},                         -- 飞机
 				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
+					type = "feiji" ,
+					id = 11,
+					placeName = "place11",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 40.0,		                                    --持续时间			
 				},
-			},
-		                                     	-- 以上是第一波第三批 31
+			},	
+
 		},
 	},	
 	{
