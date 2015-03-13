@@ -91,7 +91,7 @@ configs["afterfight01"] = {
 
 --- 开启第2关之后 ----
 configs["prefight02"] = {
-	preGuideId = "afterfight01",
+	preGuideId = "fight01_jijia",
 	steps = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
 		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
