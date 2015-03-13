@@ -319,7 +319,7 @@ local enemys = {
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage= 8 ,hp= 5000 },                             
+	{id=18,image="feibiao",demage= 8 ,hp= 1000 },                             
 
 
 
@@ -352,7 +352,7 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 
-			feibiao1 = { 0.80, 0.50, 0.20          --暴雨梨花针1
+			feibiao1 = { 0.99, 0.80 , 0.50,          --暴雨梨花针1
 			},
 			-- feibiao2 = {                --暴雨梨花针2
 			-- 	0.89,0.88,0.86,

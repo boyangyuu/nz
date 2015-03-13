@@ -21,7 +21,7 @@ local waves = {
 				time = 6,	
 				num = 4,
 				pos = {100,250,500,600},
-				delay = {0,0.6,0.3,1},
+				delay = {4,4.6,2.5,3},
 				property = {
 					placeName = "place2" ,
 					id = 9,
@@ -29,7 +29,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,		
+				time = 12,		
 				num = 3,
 				pos = {500,620,700},
 				delay = {0,0.5,1.1},
@@ -40,7 +40,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,		
+				time = 13,		
 				num = 2,
 				pos = {400,550},
 				delay = {0.8,0},
@@ -54,7 +54,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,		
+				time = 13,		
 				num = 4,
 				pos = {880,950,1100,1160},
 				delay = {0,0.7,1.2,0.6},
@@ -65,7 +65,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,		
+				time = 14,		
 				num = 2,
 				pos = {460,530},
 				delay = {0,0.8},
@@ -79,7 +79,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,		
+				time = 14,		
 				num = 3,
 				pos = {420,500,560},
 				delay = {0,0.9,0.5},
@@ -90,7 +90,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,		
+				time = 15,		
 				num = 2,
 				pos = {760,1030},
 				delay = {0,0.8},
@@ -104,7 +104,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,		
+				time = 15,		
 				num = 2,
 				pos = {350,550},
 				delay = {0.2,1.3},
@@ -118,7 +118,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,		
+				time = 16,		
 				num = 3,
 				pos = {910,970,1050},
 				delay = {0,0.7,1.4},
@@ -135,7 +135,7 @@ local waves = {
 			{
 				time = 2,
 				num = 5,
-				delay = {0.1,0.5,0.8,1.2,1.5},
+				delay = {5.1,2.5,1.5,4.2,3},
 				pos = {430,550,760,960,1050},
 				property = { 
 					placeName = "place3" ,
@@ -144,7 +144,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
+				time = 7,
 				num = 5,
 				delay = {0.7,1.4, 2.1,2.8,3.1},
 				pos = {470,600,670,750,820},					
@@ -156,7 +156,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 5,		
+				time = 8,		
 				num = 2,
 				pos = {400,480},
 				delay = {0.1,0.6},
@@ -170,7 +170,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 6,		
+				time = 9,		
 				num = 5,
 				pos = {350,430,510,400,460},
 				delay = {0.2,0.6,1.3,0.8,1.4},
@@ -181,7 +181,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
+				time = 10,
 				num = 5,
 				delay = {0.7,1.4, 2.1,2.8,3.2},
 				pos = {680,750,810,900,1000},					
@@ -193,7 +193,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,		
+				time = 11,		
 				num = 2,
 				pos = {560,730},
 				delay = {0.3,1},
@@ -207,7 +207,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,		
+				time = 12,		
 				num = 4,
 				pos = {600,830,920,1000},
 				delay = {0,0.6,1.3,1.0},
@@ -225,7 +225,7 @@ local waves = {
 			{
 				time = 2,
 				num = 5,
-				delay = {0.1,0.5,0.8,1.2,0.5},
+				delay = {4.1,2.5,3.8,2.2,3.5},
 				pos = {530,650,760,860,950},
 				property = { 
 					placeName = "place3" ,
@@ -234,7 +234,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 8,	
 				num = 5,
 				pos = {480,630,760,850,970},
 				delay = {0,0.5,1.2,0.9,1.1},
@@ -245,7 +245,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 12,
 				num = 3,
 				delay = {0,0.5,1},
 				pos = {480,680,960},
@@ -256,10 +256,10 @@ local waves = {
 				},
 			},
 			{
-				time = 14,
-				num = 10,
-				delay = {0,1.5,0.9,2.3,2.8,2.1,1.6,0.4,1,0.3},
-				pos = {450,560,600,1050,570,456,780,666,510,980},
+				time = 16,
+				num = 5,
+				delay = {0,1.5,0.9,1.6,0.4},
+				pos = {450,560,600,1050,570},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
@@ -444,7 +444,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		image = "boss01_2", --图片名字
+		image = "boss01", --图片名字
 		-- hp = 150000,
 		award = 10000,                   --boss产出金币数量
 		hp = 60000,
@@ -472,10 +472,10 @@ local bosses = {
 			zhaohuan = {0.95,0.65,0.35},                         --召唤小怪 
 
 			moveLeftFire = {
-				0.80, 0.40, 
+				0.80, 
 			},
 			moveRightFire = {
-				0.60, 0.20,
+				0.55, 0.20,
 			},
 			
 			daoDan = {                                            --两发导弹
@@ -518,9 +518,9 @@ local bosses = {
 			},
 			{
 				time = 5,	
-				num = 5,
-				pos = {400,480,660,860,1050},
-				delay = {0.1,0.2,0.6,0.4,0.2},
+				num = 4,
+				pos = {400,660,860,1050},
+				delay = {0.1,0.6,0.4,0.2},
 				property = {
 					placeName = "place3" ,
 					id = 16,
@@ -544,9 +544,9 @@ local bosses = {
 			},
 			{
 				time = 5,	
-				num = 5,
-				pos = {400,480,660,860,1050},
-				delay = {0.2,0.8,0.6,0.4,0.2},
+				num = 4,
+				pos = {400,660,860,1050},
+				delay = {0.2,0.6,0.4,0.2},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -580,17 +580,7 @@ local bosses = {
 					type = "bao",
 				},
 			},
-			{
-				time = 9,	
-				num = 5,
-				pos = {400,480,660,860,1050},
-				delay = {0.2,0.8,0.6,0.4,0.2},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "bao",
-				},
-			},
+			
 		},		
 
 		getMoveLeftAction = function ()

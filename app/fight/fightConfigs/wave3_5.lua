@@ -4,12 +4,11 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = {
-	
             {
 				time = 2,	
-				num = 4,
-				pos = {200,250,300,350,},
-				delay = {0,0.5,0.8,1,},
+				num = 3,
+				pos = {200,300,550,},
+				delay = {0,0.5,1,},
 				property = { 
 					placeName = "place2",
 					startState = "rollright",
@@ -17,12 +16,24 @@ local waves = {
 				},
 			},
 			{
+				time = 4,	
+				num = 1,
+				pos = {420},
+				delay = {0.5},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+			{
 				time = 5,	
 				num = 2,
-				pos = {300,350},
+				pos = {400,650},
 				delay = {0.5,1},
 				property = { 
-					placeName = "place1",
+					placeName = "place3",
 					startState = "rollleft",
 					id = 2,
 					type = "dao",
@@ -31,21 +42,21 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
-				num = 2,
-				delay = {0.2,1},
-				pos = {550,800},
+				time = 6,
+				num = 3,
+				delay = {0.2,1,1.5},
+				pos = {500,650,800},
 				property = { 
-					placeName = "place3",
+					placeName = "place4",
 					id = 1,
 					startState = "rollleft",	
 				},
 			},
 			{
-				time = 11,
+				time = 7,
 				num = 3,
 				delay = {0.2,1,1.5},
-				pos = {190,230,250},
+				pos = {190,300,450},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -53,7 +64,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,
+				time = 8,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -66,7 +77,7 @@ local waves = {
 				},
 			},
 			{
-				time = 17,
+				time = 9,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -79,10 +90,10 @@ local waves = {
 				},
 			},
 			{
-				time = 20,
+				time = 10,
 				num = 3,
 				delay = {0.5,1,2.5},
-				pos = {190,230,250},
+				pos = {190,330,550},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -90,7 +101,7 @@ local waves = {
 				},
 			},
 			{
-				time = 23,
+				time = 11,
 				num = 1,
 				delay = {1},
 				pos = {230},
@@ -104,9 +115,9 @@ local waves = {
 				},
 			},
 			{
-				time = 25,	
+				time = 12,	
 				num = 3,
-				pos = {200,300,350,},
+				pos = {250,360,450,},
 				delay = {0,0.5,1,},
 				property = { 
 					placeName = "place2",
@@ -121,7 +132,6 @@ local waves = {
 	{
 		enemys = {
 
-			
 			{
 				time = 3,
 				num = 4,
@@ -150,19 +160,19 @@ local waves = {
 				time = 9,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
-				pos = {300,500,550,600,1000},					
+				pos = {300,500,550,600,900},					
 				property = {
-					placeName = "place10",  
+					placeName = "place3",  
 					type = "san",
 					id = 4,
 					enemyId = 1,
 				},
 			},
 			{
-				time = 5,	
+				time = 2,	
 				num = 2,
 				pos = {350,600},
-				delay = {0.2,1.4},
+				delay = {0.2,1},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -172,7 +182,7 @@ local waves = {
 			},	
 
 			{
-				time = 12,
+				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -185,7 +195,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 5,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -198,7 +208,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 6,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -211,7 +221,7 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 7,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -224,7 +234,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,	
+				time = 8,	
 				num = 2,
 				pos = {180,200},
 				delay = {0.5,1},
@@ -237,7 +247,7 @@ local waves = {
 
 		},
 	},
-                                                                                       --第二波20个怪
+                                                       --第二波20个怪
 	{
 		enemys = {
  
@@ -254,7 +264,7 @@ local waves = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 20.0,		                                    --持续时间			
+					lastTime = 40.0,		                                    --持续时间			
 				},
 			},
 			{
@@ -285,9 +295,9 @@ local waves = {
 				time = 11,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
-				pos = {300,500,550,600,1000},					
+				pos = {300,500,550,600,700},					
 				property = {
-					placeName = "place10",  
+					placeName = "place3",  
 					type = "san",
 					id = 4,
 					enemyId = 1,
@@ -361,7 +371,7 @@ local waves = {
 			{
 				time = 30,	
 				num = 3,
-				pos = {350,530,600},
+				pos = {250,530,700},
 				delay = {0.2,1.4,0.9},
 				property = {
 					placeName = "place3" ,
@@ -376,7 +386,7 @@ local waves = {
 		enemys = {
 
 			{
-				time = 3,
+				time = 2,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -403,9 +413,9 @@ local waves = {
 				time = 9,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
-				pos = {300,500,550,600,1000},					
+				pos = {300,500,550,600,700},					
 				property = {
-					placeName = "place10",  
+					placeName = "place3",  
 					type = "san",
 					id = 4,
 					enemyId = 1,
@@ -413,18 +423,6 @@ local waves = {
 			},
 			{
 				time = 11,
-				num = 5,
-				delay = {0,0.7,1.4, 2.1,2.8},
-				pos = {300,500,550,600,1000},					
-				property = {
-					placeName = "place10",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 14,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -437,7 +435,7 @@ local waves = {
 				},
 			},
 			{
-				time = 17,
+				time = 13,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -450,7 +448,7 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 15,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -463,7 +461,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 17,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -525,7 +523,7 @@ local enemys = {
 	weak1=2},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=120000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=120000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
@@ -570,7 +568,6 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.renzhiLimit = 1   		--杀死人质上限
-	self.goldLimits = {75,160,250}   --黄武激活所需杀人个数
 
 
 end
