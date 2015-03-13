@@ -211,6 +211,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local levelIcon = {}
     local levelAnim = {}
     local panelBtn = {}
+    local panelGray = {}
     local dian = {}
     local group,level = self.LevelMapModel:getConfig()
 
@@ -244,6 +245,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     dump(groupInfo)
     for k,v in pairs(groupInfo) do
         panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)
+        panelGray[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "gray_"..v)
     end
 
     for k,v in pairs(panelBtn) do
@@ -257,7 +259,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         local record = self.LevelDetailModel:getConfig(group,level)
         if  group > groupId or group == groupId and level > v then
 
-        elseif group == groupId and level == v then            
+        elseif group == groupId and level == v then
+            panelGray[v]:setVisible(false)            
             local action = transition.sequence({
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX() , levelName[v]:getPositionY()+ 15)), 
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX(), levelName[v]:getPositionY() - 15))})
@@ -273,10 +276,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 end
             end)
         else       
-            if device.platform ~= "windows" then
-                cc.ColorUtil:setGray(levelName[v])                 
-                cc.ColorUtil:setGray(levelIcon[v]) 
-            end                
+            levelName[v]:setVisible(false)
+            levelIcon[v]:setVisible(false)
         end
 
         -- add listener

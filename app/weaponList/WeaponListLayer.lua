@@ -218,21 +218,19 @@ function WeaponListLayer:onClickBtnOncefull()
         self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
     end
     local guide = md:getInstance("Guide")
-    local isDone = guide:isDone("prefight02")
     local isBoughtWeapon = self.buyModel:checkBought("weaponGiftBag")
-    if not isBoughtWeapon and isDone then
+    if not isBoughtWeapon then
         self.buyModel:showBuy("weaponGiftBag",{
             payDoneFunc = handler(self, self.reloadlistview),
                                       deneyBuyFunc = deneyOncefull},"武器库界面_点击一键满级")
-    elseif isBoughtWeapon and isDone then
+    elseif isBoughtWeapon then
         self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
     end
 end
 
 function WeaponListLayer:onClickBtnBuy()
     local guide = md:getInstance("Guide")
-    -- local isDone = guide:isDone("prefight02")
-    if self.buyModel:checkBought("weaponGiftBag") == false  then
+    if self.buyModel:checkBought("weaponGiftBag") == false then
         self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
                                       deneyBuyFunc = handler(self, self.deneyBuyWeapon)}, 
                                        "武器库界面_点击解锁武器大礼包"..self.weaponRecord["name"])
