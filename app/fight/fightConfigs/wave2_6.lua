@@ -424,7 +424,7 @@ local bosses = {
 			},
 		},	
 
-		enemys2 = {                                                   --第二波召唤盾兵
+		enemys2 = {                                                   --第二波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -439,7 +439,7 @@ local bosses = {
 			},
 	    },	
 
-		enemys3 = {                                                   --第三波召唤的兵
+		enemys3 = {                                                   --第三波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -454,7 +454,7 @@ local bosses = {
 			},
 		},	
 
-		enemys4 = {                                                   --第四波召唤的兵
+		enemys4 = {                                                   --第四波召唤的蜘蛛兵
 			{
 				time = 0,
 				num = 20,

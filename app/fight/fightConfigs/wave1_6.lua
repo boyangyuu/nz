@@ -83,28 +83,6 @@ local waves = {
 					id = 9,	
 				},
 			},
-			-- {
-			-- 	time = 30,	
-			-- 	num = 5,
-			-- 	pos = {650,530,310,400,200},
-			-- 	delay = {1.3,0.9,2.4,3.0,1.8},
-			-- 	property = {
-			-- 		placeName = "place1" ,         --近
-			-- 		id = 7,
-			-- 		type = "jin",
-			-- 	},
-			-- },
-			-- {
-			-- 	time = 36,
-			-- 	num = 1,
-			-- 	delay = {0.6},
-			-- 	pos = {470},
-			-- 	property = { 
-			-- 		placeName = "place12" ,
-			-- 		type = "jin",                  --近boss                                 
-			-- 		id = 16,
-			-- 	},
-			-- },
 		},
 	},
 
@@ -177,40 +155,6 @@ local waves = {
 					id = 8,
 				},
 			},
-			-- {
-			    
-			-- 	time = 20,
-			-- 	num = 1,
-			-- 	pos = {550},
-			-- 	delay = {0.5},                         -- 飞机
-			-- 	property = {
-			-- 		type = "feiji" ,
-			-- 		id = 11,
-			-- 		placeName = "place10",
-			-- 		missileId = 6,
-			-- 		missileType = "daodan",
-			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-			-- 		startState = "enterleft",
-			-- 		lastTime = 23.0,		                                    --持续时间			
-			-- 	},
-			-- },	
-			-- {
-			    
-			-- 	time = 23,
-			-- 	num = 1,
-			-- 	pos = {850},
-			-- 	delay = {0.5},                         -- 飞机
-			-- 	property = {
-			-- 		type = "feiji" ,
-			-- 		id = 11,
-			-- 		placeName = "place10",
-			-- 		missileId = 6,
-			-- 		missileType = "daodan",
-			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-			-- 		startState = "enterleft",
-			-- 		lastTime = 20.0,		                                    --持续时间			
-			-- 	},
-			-- },	
 			{
 				time = 25,
 				num = 5,
@@ -228,7 +172,7 @@ local waves = {
 	},	
 	{
 	    waveType = "boss",                                      --强敌出现
-		enemys = {  --boss
+		enemys = { 
 			{
 				descId = "renzb", --简介
 				time = 2,	
@@ -319,7 +263,7 @@ local enemys = {
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage= 8 ,hp= 1000 },                             
+	{id=18,image="feibiao",demage= 8 ,hp= 1000 },
 
 
 
