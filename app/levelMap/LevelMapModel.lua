@@ -67,6 +67,20 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 	end
 end
 
+function LevelMapModel:isCureGroupAndLevel(groupId,levelId)
+	if self:isExistNextLevel(groupId,levelId) then
+		local curGroupId,curLevelId = self:getNextGroupAndLevel(groupId,levelId)
+		local curGroupId1,curLevelId1 = self:getConfig()
+		if curGroupId == curGroupId1 and curLevelId == curLevelId1 then
+			return true
+		else
+			return false
+		end
+	else
+		return false		
+	end
+end
+
 function LevelMapModel:isExistNextLevel(groupId, levelId)
 	assert(groupId, "groupId")
 	assert(levelId, "levelId")

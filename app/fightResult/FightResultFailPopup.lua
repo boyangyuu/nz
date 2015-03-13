@@ -69,6 +69,10 @@ function FightResultFailPopup:onClickBackHome()
     local groupid,levelid = fight:getCurGroupAndLevel()
     ui:closePopup("FightResultFailPopup")
     local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
+    if groupid == 0 and levelid == 0 then
+        ui:changeLayer("HomeBarLayer",{groupId = 1})
+        return
+    end
     if isBoughtWeapon == false and groupid == 1 and levelid == 3 then
         ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
         return
