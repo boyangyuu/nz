@@ -9,9 +9,6 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local Actor = class("Actor", cc.mvc.ModelBase)
 
---import
-import("..includes.functionUtils")
-
 -- 常量
 
 -- 定义事件
