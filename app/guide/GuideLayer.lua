@@ -273,6 +273,7 @@ function GuideLayer:refreshCommentUI()
 
 	--guide role
 	local image_role = cc.uiloader:seekNodeByName(self.guideNode, "image_role")
+	local isRight = cfg.rolepos == "right" 
 	image_role:setFlippedX(not isRight)
 	if cfg.rolepos == "right" then  
 		label_content:setPositionX(90)
