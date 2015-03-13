@@ -215,7 +215,7 @@ local enemys = {
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=90000,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=25,hp=90000,fireRate=180,fireCd=5,speed=40,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
