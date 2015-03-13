@@ -5,7 +5,6 @@ local FightResultLayer = class("FightResultLayer", function()
 end)
 
 function FightResultLayer:ctor(properties)
-	audio.stopMusic(false)
     self.fightModel 	  = md:getInstance("Fight")
 	self.weaponListModel  = md:getInstance("WeaponListModel")
 	self.guide      	  = md:getInstance("Guide")
@@ -44,12 +43,18 @@ function FightResultLayer:ctor(properties)
 	self:setDailyPopup()
 	self:initUI()
 	self:initUIContent()
+	self:playSound()
 
 	self:playstar(self.grade)
     self:setNodeEventEnabled(true)
 
 	self:initGuide()
 	self:initGuide2()
+end
+
+function FightResultLayer:playSound()
+    local rwwc   = "res/Music/ui/rwwc.wav"
+    audio.playSound(rwwc,false)
 end
 
 function FightResultLayer:loadCCS()
