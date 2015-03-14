@@ -311,7 +311,6 @@ function LevelMapLayer:bgAction()
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
     self.animName = self.preGroupId.."_"..self.curGroupId
-    dump(self.animName)
     self.armature:getAnimation():play(self.animName , -1, 0)
 end
 
