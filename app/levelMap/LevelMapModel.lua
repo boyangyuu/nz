@@ -2,8 +2,8 @@ import("..includes.functionUtils")
 
 local LevelMapModel = class("LevelMapModel", cc.mvc.ModelBase)
 
-function LevelMapModel:ctor(properties)
-
+function LevelMapModel:ctor(properties, events, callbacks)
+	LevelMapModel.super.ctor(self, properties)
 end
 
 function LevelMapModel:getConfig()
@@ -101,6 +101,10 @@ function LevelMapModel:isExistNextLevel(groupId, levelId)
 	else
 		return true
 	end	
+end
+
+function LevelMapModel:hideGiftBagIcon()
+	self:dispatchEvent({name = "HIDE_GIFTBAGICON_EVENT"})
 end
 
 function LevelMapModel:levelPass(groupId,levelId)

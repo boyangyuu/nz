@@ -22,6 +22,9 @@ function LevelMapLayer:ctor(properties)
         :addEventListener("POPUP_LEVELDETAIL", handler(self, self.popupLevelDetail))
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.initBgLayer))
+    cc.EventProxy.new(self.LevelMapModel, self)
+        :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.refreshData))
+
 
     self:initGuide() 
 end
@@ -100,7 +103,7 @@ function LevelMapLayer:initChooseLayer()
     if buyModel:checkBought("weaponGiftBag") then
         self.btnWeapon:setVisible(false)
     end
-
+    
 
     function hideGiftIcon()
         self.panelGift:setVisible(false)
