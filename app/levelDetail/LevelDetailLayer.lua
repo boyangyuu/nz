@@ -270,13 +270,10 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		local isDone = self.guide:isDone("weapon")
-		if isDone then
-			local buyModel = md:getInstance("BuyModel")
-	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
-	        deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
-	        	"关卡详情_点击必备按钮")
-		end
+		local buyModel = md:getInstance("BuyModel")
+        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
+        deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
+        	"关卡详情_点击必备按钮")
 	end
 end
 
