@@ -40,6 +40,8 @@ layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 
 -- pausePopup
 layerClasses["pausePopup"]           = import("..pause.PausePopup")
+-- homePopup
+layerClasses["homePopup"]            = import("..pause.HomePopup")
 
 
 function UI:ctor(properties)
