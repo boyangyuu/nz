@@ -6,7 +6,7 @@ end)
 
 function LevelDetailLayer:ctor(properties)
 	--instance
-	self.model 			 = md:getInstance("LevelDetailModel")
+	self.levelDetailModel 			 = md:getInstance("LevelDetailModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
 	self.inlayModel 	 = md:getInstance("InlayModel")
 	self.propModel       = md:getInstance("propModel")
@@ -97,7 +97,7 @@ function LevelDetailLayer:initUI()
 		self.labelget:setVisible(true)
 		self.panelbiaozhu:setVisible(true)
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
-			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/10")
+			.."零件1个，当前"..self.levelDetailModel:getSuiPianNum(DataTable["suipianid"]).."/10")
 	end
 	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
@@ -256,7 +256,7 @@ function LevelDetailLayer:onClickBtnStart()
 end
 
 function LevelDetailLayer:startGame()
-	self.model:setCurGroupAndLevel(self.groupId,self.levelId)
+	self.levelDetailModel:setCurGroupAndLevel(self.groupId,self.levelId)
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
 	self:onClickBtnOff()
@@ -282,10 +282,17 @@ function LevelDetailLayer:cancelWeaponBag()
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local rmbCost = weaponRecord["rmbCost"]
     if  rmbCost == 6 then
-        self.buyModel:showBuy("unlockWeapon",{weaponid = self.recomWeaponId}, "准备战斗界面_点击解锁"..self.recomWeaponId)
+        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.buyWeaponSucc),weaponid = self.recomWeaponId}, "准备战斗界面_点击解锁"..self.recomWeaponId)
     elseif rmbCost == 10 then
         self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "准备战斗界面_点击解锁高级武器"..self.recomWeaponId)
     end
+end
+
+function LevelDetailLayer:buyWeaponSucc()
+	self.levelDetailModel:reloadlistview()
+	self.weaponListModel:equipBag(self.recomWeaponId,1)
+	self.alreadybibei:setVisible(true)
+	self.btnBibei:setVisible(false)
 end
 
 function LevelDetailLayer:getWeaponBagSucc()
@@ -338,7 +345,7 @@ end
 function LevelDetailLayer:initData()
 	local groupId = self.groupId
 	local levelId = self.levelId
-	self.DataTable = self.model:getConfig(groupId,levelId)
+	self.DataTable = self.levelDetailModel:getConfig(groupId,levelId)
 end
 
 function LevelDetailLayer:initGuide()
@@ -355,5 +362,6 @@ function LevelDetailLayer:initGuide()
         end
      })     
 end
+
 
 return LevelDetailLayer
