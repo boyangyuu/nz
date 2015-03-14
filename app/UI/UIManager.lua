@@ -76,6 +76,7 @@ function UI:showPopup(layerId, properties, extra)
 		animName = extra.animName
 		isPauseScene = extra.isPauseScene
 		isPauseSecond = extra.isPauseSecond
+		isNotScrenCapture = extra.isNotScrenCapture
 		properties.isPauseScene = extra.isPauseScene
 		properties.isFight = extra.isFight
 	end
@@ -96,7 +97,7 @@ function UI:showPopup(layerId, properties, extra)
 		end
 		print(type(pauseScene))
 		self:dispatchEvent({name = UI.PAUSESCENE_SHOW_EVENT, layerCls = layerCls,
-			opacity = opacity, anim = anim,isPauseSecond = isPauseSecond,
+			opacity = opacity, anim = anim,isPauseSecond = isPauseSecond,isNotScrenCapture = isNotScrenCapture,
 			properties = properties})
 	end
 end

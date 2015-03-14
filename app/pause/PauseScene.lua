@@ -15,17 +15,20 @@ function PauseScene:ctor()
 end 
 
 function PauseScene:showPopup(event)
+	isShowPausescene = false
 	print("PauseScene:showPopup(event)")
 
 	print("event.isPauseSecond:",event.isPauseSecond)
 	if not event.isPauseSecond then
 	--jieping
+	if not event.isNotScrenCapture then 
 		local screenCapture = self:screenCapture()
 		local sprite = display.newSprite(screenCapture:getSprite():getTexture())
 		-- sprite:setPosition(display.width1/2, display.height1/2)
 		sprite:setAnchorPoint(0,0)
 		sprite:setFlippedY(true)
 		self:addChild(sprite, -1)
+	end
 
 
 		self:addBgLayer()
@@ -77,6 +80,7 @@ function PauseScene:closePopup(event)
 	-- })
 	-- if self.isChanging then return end 
 	-- self.isChanging = true
+	isShowPausescene = true
 	local director = cc.Director:getInstance()
 	director:popScene()
 	print("PauseScene:closePopup(event)")

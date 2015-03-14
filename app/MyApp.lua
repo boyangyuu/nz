@@ -17,6 +17,7 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 __versionId = "1.2"
+isShowPausescene = true
 
 ui        = UI.new()
 md        = MD.new()
@@ -184,6 +185,15 @@ end
 function MyApp:showError(debugInfo)
     local debug = md:getInstance("DebugModel")
     debug:showPopup(debugInfo)
+end
+
+function MyApp:onEnterBackground()
+    if isShowPausescene ~= true then return end
+    ui:showPopup("pausePopup",{popupName = "mapset"},{anim = true,isPauseScene = true,isNotScrenCapture = true})
+end
+
+function MyApp:onEnterForeground()
+   
 end
 
 return MyApp
