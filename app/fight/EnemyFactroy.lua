@@ -49,7 +49,7 @@ function EnemyFactory.createEnemy(property)
 		enemyView = MissileEnemyView.new(property)
 
 	--award
-	elseif type == "AwardSan" then
+	elseif type == "awardSan" then
 		enemyView = AwardSanEnemyView.new(property)	
 	 
 	--enemy		

@@ -38,6 +38,7 @@ end
 
 function AwardSanEnemyView:playFall()
     --start
+    self.isFalling = true
     self:setVisible(true)
     self:setPositionY(display.height)
 
@@ -57,8 +58,12 @@ function AwardSanEnemyView:playFall()
 end
 
 function AwardSanEnemyView:stopFall()
+    self.isFalling = false
     self:stopAllActions()
     self.armature:getAnimation():play("stand" , -1, 1) 
+
+    self:performWithDelay(handler(self, self.setWillRemoved), 
+        define.kAwardSanTime)
 end
 
 --Attackable interface
@@ -67,10 +72,15 @@ function AwardSanEnemyView:playHitted(event)
 end
 
 function AwardSanEnemyView:playKill(event)
-    self:setDeadDone()
+    --stop
+    self:stopAllActions()
 
-    --award
-    self:sendAward()
+    --play
+    if self.isFalling then 
+        self.armature:getAnimation():play("die1" , -1, 1) 
+    else
+        self.armature:getAnimation():play("die" , -1, 1) 
+    end
 end
 
 function AwardSanEnemyView:sendAward()
@@ -78,7 +88,7 @@ function AwardSanEnemyView:sendAward()
 
     --award
     local awardType = self.property.award 
-    if awardType == "gold" then 
+    if awardType == "goldWeapon" then 
         local map = md:getInstance("Map")
         map:dispatchEvent({name = map.AWARD_GOLD_EVENT, pWorld = pWorld})   
     end
@@ -103,7 +113,13 @@ function AwardSanEnemyView:onHitted(targetData)
 end
 
 function AwardSanEnemyView:animationEvent(armatureBack,movementType,movementID)
-
+    if movementType == ccs.MovementEventType.loopComplete 
+        or movementType ==  ccs.MovementEventType.complete then
+        if movementID == "die" or movementID == "die1" then 
+            self:setDeadDone()
+            self:sendAward()
+        end 
+    end
 end
 
 function AwardSanEnemyView:getModel(property)
