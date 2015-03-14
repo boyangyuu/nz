@@ -57,7 +57,12 @@ function BuyModel:payGift()
 end
 
 function BuyModel:iapPay()
+	display.pause()
 	iap:pay(self.curId)
+end
+
+function BuyModel:gameResume()
+	display.resume()
 end
 
 
@@ -74,6 +79,7 @@ function BuyModel:getRandomOrderId()
 end
 
 function BuyModel:payDone(result)
+	self:gameResume()
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuyData)
 
@@ -95,7 +101,11 @@ end
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
-	if deneyBuyFunc then  deneyBuyFunc() end
+	if deneyBuyFunc then  
+		deneyBuyFunc() 
+	else
+		self:gameResume()
+	end
 
 	-- um event
 	local umData = {}
