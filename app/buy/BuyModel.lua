@@ -99,11 +99,10 @@ end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
+	self:gameResume()
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
 	if deneyBuyFunc then  
 		deneyBuyFunc() 
-	else
-		self:gameResume()
 	end
 
 	-- um event
