@@ -449,72 +449,8 @@ local bosses = {
 					missileId = 18,
 				},
 			},
-		},	
-
-		-- enemys4 = {                                                   --第四波召唤的忍者兵
-		-- 	{
-		-- 		time = 2,	
-		-- 		num = 1,
-		-- 		pos = {400},
-		-- 		delay = {0.2},
-		-- 		property = {
-		-- 			placeName = "place1" ,
-		-- 			id = 17,
-		-- 			type = "renzhe",
-		-- 			missileId = 18,
-		-- 		},
-		-- 	},	
-		-- 	{
-		-- 		time = 2,	
-		-- 		num = 1,
-		-- 		pos = {1000},
-		-- 		delay = {0.2},
-		-- 		property = {
-		-- 			placeName = "place1" ,
-		-- 			id = 17,
-		-- 			type = "renzhe",
-		-- 			missileId = 18,
-		-- 		},
-		-- 	},
-		-- 	{
-		-- 		time = 2,	
-		-- 		num = 1,
-		-- 		pos = {550},
-		-- 		delay = {0.4},
-		-- 		property = {
-		-- 			placeName = "place2" ,
-		-- 			id = 17,
-		-- 			type = "renzhe",
-		-- 			missileId = 18,
-		-- 		},
-		-- 	},	
-		-- 	{
-		-- 		time = 2,	
-		-- 		num = 1,
-		-- 		pos = {850},
-		-- 		delay = {0.4},
-		-- 		property = {
-		-- 			placeName = "place2" ,
-		-- 			id = 17,
-		-- 			type = "renzhe",
-		-- 			missileId = 18,
-		-- 		},
-		-- 	},
-		-- 	{
-		-- 		time = 2,	
-		-- 		num = 1,
-		-- 		pos = {700},
-		-- 		delay = {0.6},
-		-- 		property = {
-		-- 			placeName = "place3" ,
-		-- 			id = 17,
-		-- 			type = "renzhe",
-		-- 			missileId = 18,
-		-- 		},
-		-- 	},
-  --       },
-
-
+			
+		},
 	},
 
 }

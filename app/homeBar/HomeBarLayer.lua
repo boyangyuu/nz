@@ -35,11 +35,6 @@ function HomeBarLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 end
 
-function HomeBarLayer:onEnter()
-    local startMusic = "res/Music/bg/bjyx.wav"
-    audio.playMusic(startMusic,true)    
-end
-
 function HomeBarLayer:popUpWeaponGift(properties)
     local buyModel = md:getInstance("BuyModel")
     local isNotBought = buyModel:checkBought("weaponGiftBag") == false
@@ -231,8 +226,17 @@ function HomeBarLayer:onEnter()
     local levelModel = md:getInstance("LevelMapModel")
     local gid, lid  = levelModel:getConfig()
     if lid == 2 and gid == 1 then 
+        self.guide:check("xiangqian")
+    end
+
+    if lid == 3 and gid == 1 then 
+        ui:closeAllPopups()
         self.guide:check("weapon")
     end
+
+    -- music
+    local startMusic = "res/Music/bg/bjyx.wav"
+    audio.playMusic(startMusic,true)        
 end
 
 function HomeBarLayer:onBtnStoreClicked()

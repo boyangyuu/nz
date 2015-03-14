@@ -228,8 +228,13 @@ function FightResultLayer:onClickBtnNext()
     
 	local isCurLevel = self.levelMapModel:isCureGroupAndLevel(curGroup, curLevel)
 
+	--check guide
+	local guide = md:getInstance("Guide")
+	local isGuidedWeapon = guide:isDone("weapon")
+	local isPopupNext = isGuidedWeapon and true or false
+
 	if isCurLevel then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
+		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = isPopupNext})
 	else
 		print("1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
@@ -468,7 +473,6 @@ end
 
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
-	-- self.guide:check("afterfight02")
 	self.guide:check("afterfight03")
 end
 
@@ -499,25 +503,10 @@ function FightResultLayer:initGuide()
         groupId = "afterfight01",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			ui:changeLayer("HomeBarLayer",{groupId = 1,popWeaponGift = true})   
+			ui:changeLayer("HomeBarLayer",{groupId = 1})   
         end
      })    	
 end
-
--- function FightResultLayer:initGuide2()
---     local isDone = self.guide:isDone("afterfight02")
---     if isDone then return end	
-
-
---     self.guide:addClickListener({
---         id = "afterfight02_next",
---         groupId = "afterfight02",
---         rect = self.btnback:getCascadeBoundingBox(),
---         endfunc = function (touchEvent)
--- 			self:onClickBtnNext()  
---         end
---      })       	
--- end
 
 function FightResultLayer:initGuide3()
     local isDone = self.guide:isDone("afterfight03")

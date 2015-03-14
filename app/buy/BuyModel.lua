@@ -42,19 +42,29 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
-
-    	iap:pay(configId)
+    	self:iapPay()
+    	
     end	  
 end
 
 function BuyModel:payGift()
-	iap:pay(self.curId)
+	self:iapPay()
 
 	--um
 	local umData = {}
 	umData[self.strDesc] = "点击购买礼包"
 	um:event("支付情况", umData)   	
 end
+
+function BuyModel:iapPay()
+	display.pause()
+	iap:pay(self.curId)
+end
+
+function BuyModel:gameResume()
+	display.resume()
+end
+
 
 -- 生成订单号
 function BuyModel:getRandomOrderId()
@@ -69,6 +79,7 @@ function BuyModel:getRandomOrderId()
 end
 
 function BuyModel:payDone(result)
+	self:gameResume()
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuyData)
 
@@ -89,8 +100,11 @@ end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
+	self:gameResume()
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
-	if deneyBuyFunc then  deneyBuyFunc() end
+	if deneyBuyFunc then  
+		deneyBuyFunc() 
+	end
 
 	-- um event
 	local umData = {}

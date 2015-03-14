@@ -330,7 +330,6 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self.levelNum:setString(self.curGroupId)
 
             self:refreshLevelLayer(self.curGroupId)
-            self:checkGuide()
         end
     end
 end
@@ -348,14 +347,8 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onEnter()   
-    self:checkGuide()
-    print("function LevelMapLayer:checkGuide()  ")
-end
-
-function LevelMapLayer:checkGuide()
-    local guide = md:getInstance("Guide")
-    guide:check("xiangqian")
+function LevelMapLayer:onEnter()  
+ 
 end
 
 function LevelMapLayer:initGuide()
