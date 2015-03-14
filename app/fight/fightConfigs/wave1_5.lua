@@ -4,7 +4,6 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = {
-
 			{
 				descId = "hs", --简介
 				time = 3,
@@ -21,23 +20,23 @@ local waves = {
 				},
 			},
             {
-				time = 7,	
-				num = 4,
-				pos = {200,350,300,450,},
-				delay = {0.9,1.9,2.3,1.6},
+				time = 9,	
+				num = 3,
+				pos = {200,350,450,},
+				delay = {0.9,1.9,2.3,},
 				property = { 
-					placeName = "place2",
+					placeName = "place1",
 					startState = "rollright",
 					id = 1,
 				},
 			},
 			{
-				time = 8,	
+				time = 10,	
 				num = 2,
-				pos = {300,350},
+				pos = {580,660},
 				delay = {0.5,1},
 				property = { 
-					placeName = "place1",
+					placeName = "place2",
 					startState = "rollleft",
 					id = 2,
 					type = "dao",
@@ -46,7 +45,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 11,
 				num = 2,
 				delay = {0.2,1},
 				pos = {550,800},
@@ -57,7 +56,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 12,
 				num = 3,
 				delay = {0.2,1,1.5},
 				pos = {150,230,450},
@@ -68,7 +67,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 13,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -81,7 +80,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 14,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -94,7 +93,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 15,
 				num = 3,
 				delay = {0.5,1,2.5},
 				pos = {130,330,550},
@@ -105,7 +104,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,
+				time = 16,
 				num = 1,
 				delay = {1},
 				pos = {230},
@@ -119,7 +118,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	
+				time = 17,	
 				num = 3,
 				pos = {200,300,350,},
 				delay = {0,0.5,1,},
@@ -134,12 +133,11 @@ local waves = {
 	
 	{
 		enemys = {
-
 			{
 				time = 2,
-				num = 2,
-				pos = {230,650},                               
-				delay = {0.4,1.5},                            
+				num = 1,
+				pos = {230},                               
+				delay = {0.4},                            
 				property = { 
 					id = 10,
 					type = "renzhi",
@@ -151,6 +149,30 @@ local waves = {
 			},
 			{
 				time = 2,
+				num = 1,
+				delay = {0.1},
+				pos = {0},                                 --不用改
+				property = {
+					placeName = "place10",
+					startState = "enterleft",
+					type = "shangren",	
+					id = 16,
+					data = {
+						{
+							pos = 230,                  --第一次蹲下的位置
+							time = 3,                   --第一次蹲下的时间
+							direct = "right",           --往那面跑
+						},
+						{
+							pos = 530,
+							time = 3,
+							direct = "right",							
+						},					
+					},
+				},
+			},	
+			{
+				time = 3,
 				num = 1,
 				pos = {500},                               
 				delay = {0.5},                            
@@ -270,37 +292,41 @@ local waves = {
 
 			{
 				time = 2,
-				num = 4,
-				pos = {230,550,600,750},                               
-				delay = {0.4,0.9,1.5,2},                            
+				num = 2,
+				pos = {230,850},                               
+				delay = {0.4,1.5,},                            
 				property = { 
 					id = 10,
 					type = "renzhi",
 					placeName = "place10",
 					startState = "enterleft", 
 					lastTime = 5,                       -- 人质离开时间
-					                    			   -- 人质
 				},
 			},
 			{
 				time = 2.5,
-				num = 3,
-				pos = {300,450,750},                               
-				delay = {0.4,0.9,1.4},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place4",
+				num = 1,
+				delay = {0},
+				pos = {0},                                 --不用改
+				property = {
+					placeName = "place10",
 					startState = "enterleft",
-					lastTime = 5,                       -- 人质离开时间 
-					                    			   -- 人质
+					type = "shangren",	
+					id = 16,
+					data = {
+						{
+							pos = 630,                  --第一次蹲下的位置
+							time = 3,                   --第一次蹲下的时间
+							direct = "right",           --往那面跑
+						},		
+					},
 				},
-			},
+			},	
 			{
 				time = 3,
-				num = 3,
-				pos = {400,460,600},                               
-				delay = {0.2,1.5,4},                            
+				num = 2,
+				pos = {400,600},                               
+				delay = {0.2,2},                            
 				property = { 
 					id = 10,
 					type = "renzhi",
@@ -310,6 +336,25 @@ local waves = {
 					                    			   -- 人质
 				},
 			},
+			{
+				time = 3.5,
+				num = 1,
+				delay = {0.1},
+				pos = {0},                                 --不用改
+				property = {                               --黄衣人质
+					placeName = "place11",
+					startState = "enterleft",
+					type = "shangren",	
+					id = 16,
+					data = {
+						{
+							pos = 1000,
+							time = 3,
+							direct = "right",							
+						},						
+					},
+				},
+			},	
 			{
 				time = 5,
 				num = 4,
@@ -433,6 +478,9 @@ local enemys = {
 
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=1,award = 30},	--award = 30  金币数量为30
+
+	--黄衣人质商人      type = "shangren",
+	{id=16,image="shangr_1",hp=1000, weak1=1},	--黄衣人质商人	                   
 
 
 	
