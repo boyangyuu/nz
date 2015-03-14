@@ -315,7 +315,7 @@ local waves = {
 				delay = {0, 0.7, 1.4},
 				pos = {800,650,900},	
 				property = { 
-					placeName = "place1", 
+					placeName = "place2", 
 					startState = "rollleft",
 					id = 1,
 				},
@@ -371,7 +371,7 @@ local waves = {
 					type = "san",
 					id = 3,
 					enemyId = 1,
-					placeName = "place2",
+					placeName = "place3",
 				},
 			},	
 			{
@@ -419,7 +419,51 @@ local waves = {
 				delay = {0, 0.3, 0.7},
 				pos = {760,820,900},	
 				property = { 
-					placeName = "place1", 
+					placeName = "place2", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 6,
+				num = 3,
+				delay = {0, 0.6, 1.3},
+				pos = {400,560,630,},	
+				property = { 
+					placeName = "place3", 
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 6,
+				num = 3,
+				delay = {0, 0.3, 0.7},
+				pos = {660,820,1100},	
+				property = { 
+					placeName = "place4", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},	
+			{
+				time = 7,
+				num = 3,
+				delay = {0, 0.3, 0.7},
+				pos = {460,520,670},	
+				property = { 
+					placeName = "place3", 
+					startState = "rollright",
+					id = 1,
+				},
+			},	
+			{
+				time = 7,
+				num = 3,
+				delay = {0, 0.3, 0.7},
+				pos = {660,820,900},	
+				property = { 
+					placeName = "place4", 
 					startState = "rollleft",
 					id = 1,
 				},
@@ -442,7 +486,7 @@ local waves = {
 				pos = {300},
 				delay = {0.5},
 				property = { 
-					placeName = "place1",
+					placeName = "place2",
 					id = 6,
 					startState = "rollright",
 					type = "dao",
@@ -478,7 +522,7 @@ local waves = {
 --enemy的关卡配置                           无镶嵌 MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=0.5,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=0.5,hp=105,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--近战兵
@@ -497,7 +541,7 @@ local enemys = {
 	{id=5,image="tieqiu",demage=20,hp=2000,weak1=1},	
 
 	--手雷兵
-	{id=6,image="shouleib",demage=0,hp=105,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=6,image="shouleib",demage=0,hp=105,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 	--手雷
 	{id=7,image="shoulei",demage=0.5,hp=1,
@@ -522,7 +566,7 @@ local bosses = {
 
 		image = "boss02", --图片名字
 		award = 1100,                   --boss产出金币数量
-		hp = 60000,
+		hp = 70000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 120,               --普攻频率
 		fireCd = 3,                     --普攻cd

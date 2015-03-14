@@ -136,13 +136,13 @@ function MyApp:createGameStateFile()
                         --记得和 filldata对应!
 
                         --第0-0关之内
-                        gamePre         = true,
-                        fight01_move    = true,
-                        fight01_fire    = true,
-                        fight01_lei     = true,
-                        fight01_gold    = true,
-                        fight01_change  = true,
-                        fight01_jijia   = true, 
+                        gamePre         = false,
+                        fight01_move    = false,
+                        fight01_fire    = false,
+                        fight01_lei     = false,
+                        fight01_gold    = false,
+                        fight01_change  = false,
+                        fight01_jijia   = false, 
 
                         --第0-0关之后  
                         afterfight01    = true,   -- 进入下一关
