@@ -28,9 +28,7 @@ function FightResultLayer:ctor(properties)
     self.lockTable = {}
 
     self.itemsTable = {}
-
-	self.isDone = self.guide:isDone("afterfight02")
-    
+ 
     local fightResult = self.fightModel:getResultData()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
@@ -49,7 +47,7 @@ function FightResultLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 
 	self:initGuide()
-	self:initGuide2()
+	-- self:initGuide2()
 	self:initGuide3()
 end
 
@@ -95,7 +93,7 @@ function FightResultLayer:playstar(numStar)
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
 		         		scheduler.performWithDelayGlobal(showButton, 1)
-		         		if self.isDone == true and self.isPop then
+		         		if self.isPop then
 			         		scheduler.performWithDelayGlobal(delaypop, 2)
 			     		end
 		         	end    
@@ -227,12 +225,10 @@ function FightResultLayer:onClickBtnNext()
     if curLevel == 6 and curGroup < 4 then
     	curGroup = curGroup + 1
     end
-	
-	local isDoneXiangqian = self.guide:isDone("xiangqian")
-
+    
 	local isCurLevel = self.levelMapModel:isCureGroupAndLevel(curGroup, curLevel)
 
-	if isCurLevel and isDoneXiangqian then
+	if isCurLevel then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
 	else
 		print("1-4.1 OR 通关")
@@ -310,7 +306,7 @@ function FightResultLayer:getinlayfall()
 
 	-- 狙击
 	
-    if self.isDone == false and self.curRecord["type"] == "boss" then
+    if  curGroup == 0 and curLevel == 0 and self.curRecord["type"] == "boss" then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
 	end
@@ -382,11 +378,6 @@ function FightResultLayer:getinlayfall()
 					 {opacity = 155})
 			end
 			self.isPop = true
-     		-- if self.isDone == true then
-       --   		scheduler.performWithDelayGlobal(delaypop, 4)
-     		-- end
-
-
 		end
 	end
 
@@ -466,21 +457,18 @@ end
 function FightResultLayer:onEnter()
 end
 
-
-
 function FightResultLayer:setDailyPopup()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
     local guide = md:getInstance("Guide")
 	local isGet = dailyLoginModel:isGet()
-	local isDone = guide:isDone("xiangqian")
-	if isGet == false and isDone then
+	if isGet == false then
 		dailyLoginModel:setPopup()
 	end
 end
 
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
-	self.guide:check("afterfight02")
+	-- self.guide:check("afterfight02")
 	self.guide:check("afterfight03")
 end
 
@@ -516,20 +504,20 @@ function FightResultLayer:initGuide()
      })    	
 end
 
-function FightResultLayer:initGuide2()
-    local isDone = self.guide:isDone("afterfight02")
-    if isDone then return end	
+-- function FightResultLayer:initGuide2()
+--     local isDone = self.guide:isDone("afterfight02")
+--     if isDone then return end	
 
 
-    self.guide:addClickListener({
-        id = "afterfight02_next",
-        groupId = "afterfight02",
-        rect = self.btnback:getCascadeBoundingBox(),
-        endfunc = function (touchEvent)
-			self:onClickBtnNext()  
-        end
-     })       	
-end
+--     self.guide:addClickListener({
+--         id = "afterfight02_next",
+--         groupId = "afterfight02",
+--         rect = self.btnback:getCascadeBoundingBox(),
+--         endfunc = function (touchEvent)
+-- 			self:onClickBtnNext()  
+--         end
+--      })       	
+-- end
 
 function FightResultLayer:initGuide3()
     local isDone = self.guide:isDone("afterfight03")

@@ -360,11 +360,11 @@ end
 
 function LevelMapLayer:initGuide()
     --开启第1关之后 点击进入下一关
-    local rect = cc.rect(175, 60, 130, 130)
+    local rect = cc.rect(190, 60, 130, 130)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
-        id = "prefight02_nextlevel",
-        groupId = "prefight02",
+        id = "xiangqian_nextLevel",
+        groupId = "weapon",
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
@@ -373,10 +373,10 @@ function LevelMapLayer:initGuide()
      })   
 
     --镶嵌之后 点击进入下一关
-    local rect = cc.rect(320, 250, 130, 130)
+    local rect = cc.rect(320, 240, 130, 130)
     local guide = md:getInstance("Guide")
     guide:addClickListener({
-        id = "xiangqian_nextLevel",
+        id = "weapon_nextlevel",
         groupId = "xiangqian",
         rect = rect,
         endfunc = function (touchEvent)

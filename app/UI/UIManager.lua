@@ -6,6 +6,7 @@ local PauseScene = require("app.pause.PauseScene")
 UI.LAYER_CHANGE_EVENT 	= "LAYER_CHANGE_EVENT"
 UI.POPUP_SHOW_EVENT   	= "POPUP_SHOW_EVENT"
 UI.POPUP_CLOSE_EVENT   	= "POPUP_CLOSE_EVENT"
+UI.POPUP_CLOSEALL_EVENT = "POPUP_CLOSEALL_EVENT"
 UI.LOAD_SHOW_EVENT 		= "LOAD_SHOW_EVENT"
 UI.LOAD_HIDE_EVENT 		= "LOAD_HIDE_EVENT"
 UI.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
@@ -106,6 +107,10 @@ function UI:closePopup(layerId,extra)
 		isCancelAnim = extra.isCancelAnim
 	end
 	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId, isCancelAnim = isCancelAnim})
+end
+
+function UI:closeAllPopups()
+	self:dispatchEvent({name = UI.POPUP_CLOSEALL_EVENT})
 end
 
 function UI:getLayerCls(layerId)

@@ -50,9 +50,12 @@ function Defence:setIsDefending(isDefending_)
 end
 
 function Defence:refreshHp()
-	-- print("function Defence:refreshHp()")
-	self.maxHp = define.kDefenceHp
-	self.hp = define.kDefenceHp
+	local fight = md:getInstance("Fight")
+	local gid, lid = fight:getCurGroupAndLevel()
+	local isGuide = gid == 0 and lid == 0 
+	local hp = isGuide and 1000 or define.kDefenceHp
+	self.maxHp = hp
+	self.hp = hp
 end
 
 function Defence:decreseHp(demage)
