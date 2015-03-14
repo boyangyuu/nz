@@ -102,7 +102,7 @@ Define.kLeiTime				    = 1.0	--手雷飞行时间
 
 --盾牌
 Define.cdTimes 					= 15.0   --十秒恢复完毕
-Define.kDefenceHp				= 65    --盾牌血量
+Define.kDefenceHp				= 5    --盾牌血量
 
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励

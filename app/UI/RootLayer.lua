@@ -262,7 +262,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
     end 
 
-    local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx"} 
+    local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx", "jiatl_zx"} 
     for i,v in ipairs(focusImgs) do
         local src = "res/Fight/focusAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))

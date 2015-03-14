@@ -141,7 +141,7 @@ end
 
 function StartLayer:isGuideDone()
     local guide = md:getInstance("Guide")
-    return guide:isDone("fight01_jijia")
+    return guide:isDone("afterfight01")
 end
 
 function StartLayer:initDailyLogin()
