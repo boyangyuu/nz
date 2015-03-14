@@ -172,17 +172,8 @@ local enemys = {
 	{id=3,image="shoulei",demage=2,hp=1,
 	weak1=1},
 
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=160,
-	weak1=2},	                                                           
-
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=160,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
-	weak1=2},
-
-    --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=3,hp=1,
-	weak1=1},	
+	
+ 
 }
 
 
