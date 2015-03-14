@@ -232,9 +232,7 @@ function FightResultLayer:onClickBtnNext()
 
 	local isCurLevel = self.levelMapModel:isCureGroupAndLevel(curGroup, curLevel)
 
-	if curGroup == 1 and curLevel == 3 then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
-	elseif isCurLevel and isDoneXiangqian then
+	if isCurLevel and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
 	else
 		print("1-4.1 OR 通关")

@@ -60,8 +60,8 @@ function HomeBarLayer:popUpGoldGift(properties)
 end
 
 function HomeBarLayer:refreshData()
-    local levelDetailModel = md:getInstance("LevelDetailModel")
-    levelDetailModel:reloadlistview()
+    local levelMapModel = md:getInstance("LevelMapModel")
+    levelMapModel:hideGiftBagIcon()
 end
 
 function HomeBarLayer:popUpNextLevel(properties)
