@@ -21,6 +21,7 @@ function FightInlay:ctor(properties)
     self.inlayModel = md:getInstance("InlayModel") 
     self.isNativeGold = false
     self.IsActiveGold = false
+    self.goldTimes    = 0
 end
 
 function FightInlay:refreshUm()
@@ -67,7 +68,15 @@ function FightInlay:activeGoldOnCost()
     assert(levelInfo, "levelInfo is nil") 
     local umData = {}
     umData[levelInfo] = "黄武"
-    um:event("关卡道具使用", umData)    
+    um:event("关卡道具使用", umData)   
+
+    --goldTimes
+    self.goldTimes = self.goldTimes + 1
+     print("self.goldTimes", self.goldTimes)
+end
+
+function FightInlay:getGoldCostTimes()
+    return self.goldTimes
 end
 
 function FightInlay:activeGold()
