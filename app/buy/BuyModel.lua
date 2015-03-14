@@ -42,19 +42,24 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
-
-    	iap:pay(configId)
+    	self:iapPay()
+    	
     end	  
 end
 
 function BuyModel:payGift()
-	iap:pay(self.curId)
+	self:iapPay()
 
 	--um
 	local umData = {}
 	umData[self.strDesc] = "点击购买礼包"
 	um:event("支付情况", umData)   	
 end
+
+function BuyModel:iapPay()
+	iap:pay(self.curId)
+end
+
 
 -- 生成订单号
 function BuyModel:getRandomOrderId()

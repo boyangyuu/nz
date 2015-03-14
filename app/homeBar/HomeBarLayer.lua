@@ -35,10 +35,6 @@ function HomeBarLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 end
 
-function HomeBarLayer:onEnter()
-
-end
-
 function HomeBarLayer:popUpWeaponGift(properties)
     local buyModel = md:getInstance("BuyModel")
     local isNotBought = buyModel:checkBought("weaponGiftBag") == false

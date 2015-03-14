@@ -30,11 +30,8 @@ function PausePopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then 
-			-- ui:closePopup("PausePopup")
 			director:popScene()
 			isShowPausescene = true
-
-			-- director:resume()
 			assert("gameContinue is pressed!")
 		end
 	end)
@@ -79,12 +76,9 @@ function PausePopup:initButtons()
 		elseif event.name == 'ended' then 
 
 		self:btnColor(musicClosedBtn, false)
-			-- local isOpen = audio.isSwitchOpen()
-			-- print("music is playing")
 			local userData = getUserData()
 			local isOpen = userData.preference.isOpenMusic
 			print("isOpen : ", isOpen)
-			-- isOpen = not isOpen
 			musicplay:setVisible(isOpen)
 			musicclose:setVisible(not isOpen)
 			isPlaying = not isOpen
@@ -93,7 +87,6 @@ function PausePopup:initButtons()
 			--save
 		    userData.preference["isOpenMusic"] = isPlaying
 		    setUserData(userData)
-			-- print("musicClosedBtn is pressed!")
 		end
 	end)
 

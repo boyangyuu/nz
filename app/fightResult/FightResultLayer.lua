@@ -473,7 +473,6 @@ end
 
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
-	-- self.guide:check("afterfight02")
 	self.guide:check("afterfight03")
 end
 

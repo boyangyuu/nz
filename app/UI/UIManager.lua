@@ -128,5 +128,9 @@ function UI:hideLoad()
 	self:dispatchEvent({name = UI.LOAD_HIDE_EVENT})
 end
 
+function UI:setIsPause()
+	self.isPauseScene
+end
+
 return UI
 
