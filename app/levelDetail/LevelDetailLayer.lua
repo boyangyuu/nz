@@ -11,6 +11,7 @@ function LevelDetailLayer:ctor(properties)
 	self.inlayModel 	 = md:getInstance("InlayModel")
 	self.propModel       = md:getInstance("propModel")
 	self.guide           = md:getInstance("Guide")
+	self.buyModel = md:getInstance("BuyModel")
 	self.groupId = properties.groupId
 	self.levelId = properties.levelId
 	self:initData()
@@ -270,24 +271,32 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		local isDone = self.guide:isDone("weapon")
-		if isDone then
-			local buyModel = md:getInstance("BuyModel")
-	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
-	        	"关卡详情_点击必备按钮")
-		end
+		
+        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
+        deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
+        	"关卡详情_点击必备按钮")
 	end
 end
 
-function LevelDetailLayer:reloadlistview()
-	self.model:reloadlistview()
+function LevelDetailLayer:cancelWeaponBag()
+	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local rmbCost = weaponRecord["rmbCost"]
+    if  rmbCost == 6 then
+        self.buyModel:showBuy("unlockWeapon",{weaponid = self.recomWeaponId}, "准备战斗界面_点击解锁"..self.recomWeaponId)
+    elseif rmbCost == 10 then
+        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "准备战斗界面_点击解锁高级武器"..self.recomWeaponId)
+    end
+end
+
+function LevelDetailLayer:getWeaponBagSucc()
+    local levelMapModel = md:getInstance("LevelMapModel")
+    levelMapModel:hideGiftBagIcon()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
 	self.alreadybibei:setVisible(true)
 	self.btnBibei:setVisible(false)
 end
 
 function LevelDetailLayer:onClickBtnGold()
-	local buyModel = md:getInstance("BuyModel")
 	function equipGold()
 		self.inlayModel:equipAllInlays(true)
 		self.alreadygold:setVisible(true)
@@ -295,7 +304,7 @@ function LevelDetailLayer:onClickBtnGold()
 	end
 	
 	function deneyGoldGift()
-	    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_黄武按钮取消土豪礼包")
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_黄武按钮取消土豪礼包")
 	end
 
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
@@ -307,22 +316,21 @@ function LevelDetailLayer:onClickBtnGold()
 		self.alreadygold:setVisible(true)
 		self.btnGold:setVisible(false)	
     else
-	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
 	end
 end
 
 function LevelDetailLayer:onClickBtnJijia()
-	local buyModel = md:getInstance("BuyModel")
 	function equipJijia()
 		self.alreadyjijia:setVisible(true)
 		self.btnJijia:setVisible(false)	
 	end
 
 	function deneyGoldGiftJijia()
-	    buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	    self.buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
 	end
-	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
+	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
 	     "关卡详情_点击机甲按钮")
 end
 

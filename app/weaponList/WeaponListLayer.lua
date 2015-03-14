@@ -13,7 +13,6 @@ local kMaxAccuracy = 100
 local kMaxSpeed = 1
 
 function WeaponListLayer:ctor()
-    print("function WeaponListLayer:ctor()")
     -- instance
     self.selectedContent = nil
     self.weaponId = 1
@@ -22,6 +21,7 @@ function WeaponListLayer:ctor()
     self.userModel = md:getInstance("UserModel")
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     self.buyModel = md:getInstance("BuyModel")
+    self.levelMapModel = md:getInstance("LevelMapModel")
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
@@ -29,8 +29,8 @@ function WeaponListLayer:ctor()
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
-    cc.EventProxy.new(self.levelDetailModel, self)
-        :addEventListener(self.levelDetailModel.REFRESH_WEAPON_LISTVIEW, handler(self, self.reloadlistview))
+    cc.EventProxy.new(self.levelMapModel, self)
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
     
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
@@ -150,7 +150,6 @@ function WeaponListLayer:initUI()
     self.btnEquiped:setTouchEnabled(true)
     addBtnEventListener(self.btnBuy, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnBuy()
@@ -158,7 +157,6 @@ function WeaponListLayer:initUI()
     end)
     addBtnEventListener(self.btnUpgrade, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             if self.userModel:costMoney(self.costupgrade) then
@@ -174,7 +172,6 @@ function WeaponListLayer:initUI()
     end)
     addBtnEventListener(self.btnOncefull, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnOncefull()
@@ -182,7 +179,6 @@ function WeaponListLayer:initUI()
     end)
     addBtnEventListener(self.btnEquip, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnEquip(self.weaponId)
@@ -191,7 +187,6 @@ function WeaponListLayer:initUI()
 
     addBtnEventListener(self.btnEquiped, function(event)
         if event.name=='began' then
-            print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
             self:onClickBtnEquip(self.weaponId)
@@ -221,7 +216,7 @@ function WeaponListLayer:onClickBtnOncefull()
     local isBoughtWeapon = self.buyModel:checkBought("weaponGiftBag")
     if not isBoughtWeapon then
         self.buyModel:showBuy("weaponGiftBag",{
-            payDoneFunc = handler(self, self.reloadlistview),
+            payDoneFunc = handler(self, self.getWeaponBagSucc),
                                       deneyBuyFunc = deneyOncefull},"武器库界面_点击一键满级")
     elseif isBoughtWeapon then
         self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
@@ -231,7 +226,7 @@ end
 function WeaponListLayer:onClickBtnBuy()
     local guide = md:getInstance("Guide")
     if self.buyModel:checkBought("weaponGiftBag") == false then
-        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),
+        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
                                       deneyBuyFunc = handler(self, self.deneyBuyWeapon)}, 
                                        "武器库界面_点击解锁武器大礼包"..self.weaponRecord["name"])
     end
@@ -263,6 +258,10 @@ function WeaponListLayer:reloadlistview(event)
     self:refreshComment()
 end
 
+function WeaponListLayer:getWeaponBagSucc()
+    self.levelMapModel:hideGiftBagIcon()
+end
+
 -------------- ListView  --------------
 -- 初始化ListView
 function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
@@ -290,7 +289,6 @@ function WeaponListLayer:touchListener(event)
 end
 
 function WeaponListLayer:refreshUI()
-    print("function WeaponListLayer:refreshUI(event)")
     self:refreshComment()
     self:refreshBtns()
     self:refreshStar()
@@ -360,8 +358,7 @@ function WeaponListLayer:refreshComment()
         cc.FadeIn:create(1),})
     self.damagepluse:runAction(cc.RepeatForever:create(action))
 
-    local leveldetailmodel = md:getInstance("LevelDetailModel")
-    local suipiannum = leveldetailmodel:getSuiPianNum(self.weaponId)
+    local suipiannum = self.levelDetailModel:getSuiPianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
     if self.weaponRecord["parts"] == 1 and not isGot then
         self.suipiannum:setVisible(true)
@@ -386,7 +383,6 @@ function WeaponListLayer:refreshComment()
 end
 ------------- 
 function WeaponListLayer:playOneStar(event)
-    print("function WeaponListLayer:playOneStar(event)")
     local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
 
     --hide
@@ -570,7 +566,6 @@ end
 
 --guide
 function WeaponListLayer:onEnter()
-    print("function WeaponListLayer:onEnter()")
     self.weaponId = 1
     self:refreshUI()   
 end
