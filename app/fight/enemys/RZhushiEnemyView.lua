@@ -15,6 +15,7 @@ local BaseEnemyView = import(".BaseEnemyView")
 local RZHushiEnemyView = class("RZHushiEnemyView", BaseEnemyView)  
 
 
+
 function RZHushiEnemyView:ctor(property)
 	--instance
 	RZHushiEnemyView.super.ctor(self, property) 

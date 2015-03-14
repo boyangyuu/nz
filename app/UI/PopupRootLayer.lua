@@ -16,6 +16,9 @@ function PopupRootLayer:ctor(properties)
 	cc.EventProxy.new(ui, self)
 		:addEventListener(ui.POPUP_SHOW_EVENT, handler(self, self.showPopup))	
 		:addEventListener(ui.POPUP_CLOSE_EVENT, handler(self, self.closePopup))
+		:addEventListener(ui.POPUP_CLOSEALL_EVENT, handler(self, self.closeAllPopup))
+
+
 end
 
 function PopupRootLayer:showPopup(event)
@@ -75,5 +78,10 @@ function PopupRootLayer:closePopup(event)
 	end
 end
 
+function PopupRootLayer:closeAllPopup(event)
+	print(" PopupRootLayer:closecloseAllPopupPopup(event)")
+	self:removeAllChildren()
+	self.layers = {}
+end
 
 return PopupRootLayer

@@ -222,7 +222,8 @@ function Fight:checkDialogAfter()
 end
 
 function Fight:onDialogAfterEnd()
-    local isAd = true
+    local isAd = self.groupId == 1 and self.levelId == 2
+        or self.groupId == 0 and self.levelId == 9
     if not isAd then 
         self:endFight()
         return 

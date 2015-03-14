@@ -108,7 +108,7 @@ function Guide:isDone(groupId)
 	print(" Guide:isDone groupId", groupId)
 	local data = getUserData()
 	local isDone = data.guide[groupId] 
-	assert(isDone ~= nil, "no exist groupId:", groupId)
+	assert(isDone ~= nil, "no exist groupId:".. groupId)
 	return isDone
 end
 
@@ -184,9 +184,11 @@ function Guide:fillData()
 	local data = getUserData()
 
 	--cur data
-	local guideIds = {"gamePre", "fight01_move", "fight01_fire", "fight01_lei", 
-				"fight01_gold", "fight01_change", "fight01_jijia", "afterfight01", "prefight02",
-				"afterfight02", "xiangqian", "afterfight03" ,"fight04"}
+	local guideIds = 
+	{"gamePre", "fight01_move", "fight01_fire", "fight01_lei", 
+	"fight01_gold", "fight01_change", "fight01_jijia", "afterfight01", 
+	"xiangqian", --镶嵌
+	"weapon", "afterfight03", "fight04"}
 	data.guide = {}
 	for i,v in ipairs(guideIds) do
 		-- print(k,v)

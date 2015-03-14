@@ -496,8 +496,7 @@ function FightPlayer:onTouchMoved(event)
         if isBtnTouchPoint == false then 
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
             local offsetX = x - prevX 
-            local offsetY = y - prevY  
-            print("offsetX", offsetX)          
+            local offsetY = y - prevY         
             --处理瞄准
             self:moveFocus(offsetX, offsetY)
             

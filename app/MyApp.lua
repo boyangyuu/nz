@@ -127,13 +127,15 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 6,
-                        level = 6,
+                        group = 1,
+                        level = 3,
             },
             user = {
                 level = 1,
             },
             guide = {
+                        --记得和 filldata对应!
+
                         --第0-0关之内
                         gamePre         = false,
                         fight01_move    = false,
@@ -144,18 +146,15 @@ function MyApp:createGameStateFile()
                         fight01_jijia   = false, 
 
                         --第0-0关之后  
-                        afterfight01    = false,   -- 进入下一关
-
+                        afterfight01    = true,   -- 进入下一关
+                     
                         --第1-2关之前
-                        prefight02      = false,   -- 升级武器
-                        afterfight02    = false,   -- 回到主界面
-                        
+                        xiangqian       = true,   --镶嵌一套青铜
+
                         --第1-3关之前
-                        xiangqian       = false,   --镶嵌一套青铜
-
-                        --第1-3关之后
-                        afterfight03    = false,   --镶嵌一套白银
-
+                        weapon          = true,   -- 升级武器
+                        afterfight03    = false,   -- 回到主界面
+                        
                         --第1-3.1关之内
                         fight04         = false,                        
             },

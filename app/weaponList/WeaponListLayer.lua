@@ -578,14 +578,14 @@ end
 function WeaponListLayer:initGuide()
     --check   
     local guide = md:getInstance("Guide")
-    local isDone = guide:isDone("prefight02")
+    local isDone = guide:isDone("weapon")
     if isDone then return end
 
     --点击左侧mp5
     local rect1 = cc.rect(50, 270, 240, 110)
     guide:addClickListener({
-        id = "prefight02_shengji1",
-        groupId = "prefight02",
+        id = "weapon_shengji1",
+        groupId = "weapon",
         rect = rect1,
         endfunc = function (touchEvent)
             self:touchListener({name = "clicked", itemPos = 2})
@@ -595,8 +595,8 @@ function WeaponListLayer:initGuide()
     --点击右侧升级
     local rect2 = cc.rect(945, 130, 131, 64)
     guide:addClickListener({
-        id = "prefight02_shengji2",
-        groupId = "prefight02",
+        id = "weapon_shengji2",
+        groupId = "weapon",
         rect = rect2,
         endfunc = function (touchEvent)
             if self.userModel:costMoney(self.costupgrade) then
@@ -607,8 +607,8 @@ function WeaponListLayer:initGuide()
 
     --祝贺
     guide:addClickListener({
-        id = "prefight02_shengji3",
-        groupId = "prefight02",
+        id = "weapon_shengji3",
+        groupId = "weapon",
         rect =  cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
 
