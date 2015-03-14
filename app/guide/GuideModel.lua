@@ -28,6 +28,7 @@ function Guide:ctor(properties)
 end
 
 function Guide:check(groupId)
+	assert(groupId, "groupId is nil")
 	if self.isGuiding then return end
 	
 	local configGroup =  GuideConfigs.getConfig(groupId)
@@ -185,7 +186,7 @@ function Guide:fillData()
 	--cur data
 	local guideIds = {"gamePre", "fight01_move", "fight01_fire", "fight01_lei", 
 				"fight01_gold", "fight01_change", "fight01_jijia", "afterfight01", "prefight02",
-				"afterfight02", "xiangqian", "fight04"}
+				"afterfight02", "xiangqian", "afterfight03" ,"fight04"}
 	data.guide = {}
 	for i,v in ipairs(guideIds) do
 		-- print(k,v)

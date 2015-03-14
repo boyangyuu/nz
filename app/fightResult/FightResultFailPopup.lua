@@ -73,12 +73,8 @@ function FightResultFailPopup:onClickBackHome()
         ui:changeLayer("HomeBarLayer",{groupId = 1})
         return
     end
-    if isBoughtWeapon == false and groupid == 1 and levelid == 3 then
-        ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
-        return
-    end
     if isBoughtWeapon then
-        ui:changeLayer("HomeBarLayer",{groupId = groupid,popGoldGift = true})
+        ui:changeLayer("HomeBarLayer",{groupId = groupid})
     else
         ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
     end

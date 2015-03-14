@@ -232,7 +232,6 @@ function FightPlayer:startDefenceResume(event)
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
             self.defence:setIsAble(true)
-            
             return
         end
         self.labelDefenceResume:setString(t1 - kResumeValue)
@@ -346,6 +345,7 @@ end
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
     --check
+    dump(event, "onMutiTouchBegin")
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
         local eventName = event.name 
@@ -496,7 +496,8 @@ function FightPlayer:onTouchMoved(event)
         if isBtnTouchPoint == false then 
             x, y, prevX, prevY = v.x, v.y, v.prevX, v.prevY
             local offsetX = x - prevX 
-            local offsetY = y - prevY            
+            local offsetY = y - prevY  
+            print("offsetX", offsetX)          
             --处理瞄准
             self:moveFocus(offsetX, offsetY)
             
@@ -908,8 +909,13 @@ function FightPlayer:onEnter()
 end
 
 function FightPlayer:onExit()
-    self:removeAllSchs()
-    audio:stopAllSounds()
+    
+end
+
+function FightPlayer:onCleanup()
+     audio:stopAllSounds()
+     self:removeAllSchs()
+     audio.stopMusic()
 end
 
 function FightPlayer:onResultFail()

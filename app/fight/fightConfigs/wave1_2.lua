@@ -3,537 +3,478 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {		
-			{
-				time = 1,
-				num = 2,
-				delay = {0.1,0.6},
-				pos = {110,200},
-				property = {
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 1.5,
-				num = 2,
-				delay = {0.3,0.8},
-				pos = {260,320},
-				property = {
-					placeName = "place2", 
-					startState = "rollright", 
-					id = 1,
-				},
-			},
-			{
-				time = 2,
-				num = 2,
-				delay = {0.1,0.6},
-				pos = {140,200},
-				property = {
-					placeName = "place4",  
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 2.5,
-				num = 1,
-				delay = {0},
-				pos = {50},					
-				property = {
-					placeName = "place3",   
-					id = 8,
-					startState = "",
-					type = "dao",
-					missileId = 9,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 3,
-				num = 1,
-				delay = {0.1},
-				pos = {250},
-				property = {
-					placeName = "place6",  
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 3,                                          --第一波10个怪
-				num = 2,
-				delay = {0,0.5},
-				pos = {800,400},					
-				property = {
-					placeName = "place5",   
-					id = 8,
-					startState = "rollright",
-					type = "dao",
-					missileId = 9,
-					missileType = "lei",
-				},
-			},					
-		},
-	},
-	                                                                -- 第二波15个怪	
-	{
 		enemys = {
+
 			{
-				time = 1,
+				time = 2,	
 				num = 2,
-				delay = {0.5,1.0},
-				pos = {250,350},
-				property = {
-					placeName = "place2",  
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 1.5,
-				num = 3,
-				delay = {0,0.5,1.1},
-				pos = {700,850,1000},
-				property = {
-					placeName = "place6",
-					startState = "rollleft",  
-					id = 1,
-				},
-			},
-			{
-				time = 2,
-				num = 1,
-				delay = {0.3},
-				pos = {50},					
-				property = {
-					placeName = "place3",   
-					id = 8,
-					startState = "",
-					type = "dao",
-					missileId = 9,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 2.5,
-				num = 1,
-				delay = {0},
-				pos = {120},					
-				property = {
-					placeName = "place1",   
-					id = 8,
-					startState = "rollright",
-					type = "dao",
-					missileId = 9,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 3,	
-				num = 3,
-				pos = {80,150,210},
-				delay = {0,0.5,1},
+				pos = {230,430},
+				delay = {0,0.8},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
 					placeName = "place1",
-				},
-			},	
-			{
-				time = 3.5,	
-				num = 1,
-				pos = {600},
-				delay = {0},
-				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
-					placeName = "place6",
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
 				time = 4,	
 				num = 2,
-				pos = {330,420},
+				pos = {960,670},
 				delay = {0,0.8},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
 					placeName = "place2",
-				},
-			},
-			{
-				time = 4.5,	
-				num = 2,
-				pos = {980,1050},
-				delay = {0,0.8},
-				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
-					placeName = "place5",
-				},
-			},												
-		},
-	},	
-	{
-		enemys = {
-			{
-				descId = "jinzhanb",  --简介
-				time = 3,
-				num = 1,
-				delay = {4},
-				pos = {580},
-				property = {
-					type = "jin",
-					placeName = "place2",  
-					id = 2,
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 			{
 				time = 5,
 				num = 1,
 				delay = {0.2},
-				pos = {340},
-				property = {
-					type = "jin",
-					placeName = "place2",  
-					id = 2,
+				pos = {250},
+				property = { 
+					placeName = "place1",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
-			}, 
+			},
 			{
 				time = 6,
-				num = 1,
-				delay = {0.5},
-				pos = {100},
-				property = {
-					type = "jin",
-					placeName = "place4",  
-					id = 2,
+				num = 2,
+				delay = {0,0.8},
+				pos = {350,450},
+				property = { 
+					placeName = "place2",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
-			}, 
+			},
 			{
 				time = 7,
 				num = 1,
-				delay = {0},
-				pos = {90},
-				property = {
-					type = "jin",
-					placeName = "place1",  
-					id = 2,
+				delay = {0.5},
+				pos = {880},
+				property = { 
+					placeName = "place3",
+					id = 6,
+					startState = "rollleft",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
-			}, 
+			},
 			{
-				time = 8,
-				num = 1,
-				delay = {0},
-				pos = {30},
-				property = {
-					type = "jin",
-					placeName = "place4",  
-					id = 2,
+				time = 8,	
+				num = 2,
+				pos = {270,370},
+				delay = {0.2,1},
+				property = { 
+					placeName = "place3",
+					startState = "rollright",
+					id = 1,
 				},
-			}, 
-		},
-	}, 
-                                                                             -- 金币气球
+			},
+			{
+				time = 9,	
+				num = 2,
+				pos = {820,660},
+				delay = {0,0.8},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},	
+			{
+				time = 10,	
+				num = 3,
+				pos = {250,350,470},
+				delay = {0,0.6,1.2},
+				property = { 
+					placeName = "place4",
+					startState = "rollright",
+					id = 1,
+				},
+			},	                                     	
+		},                                                              --21个
+	},	
 	{
-		waveType = "award", 
+	    --体验枪
+		gunData = 
+			{ 
+			    id = 3,    --枪id
+			    delay = 4, --10s之后出现
+		    },		    
 		enemys = {
-
 			{
-				time = 2,
-				num = 10,
-				delay = {0, 0, 0,0,0,0,0,0,0,0},
-				pos = {410,490,570,630,710,790,870,950,1030,1110},
-				property = {
-					type = "jinbi",
-					placeName = "place10",  
-					speed = 2,                                                    --2*60 / s   每秒移动60像素(右斜)
-					id = 7,
+				time = 1,	
+				num = 3,
+				pos = {230,430,500},
+				delay = {0,0.7,1.4},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
-				time = 3,
-				num = 10,
-				delay = {0, 3.0, 6.0,7.0,9.0,16.5,20.0,24,28,30},
-				pos = {500,900,650,720,690, 400,800,650,430,740},
-				property = {
-					type = "jinbi",
-					placeName = "place11", 
-					speed = 4.5, 
+				time = 3,	
+				num = 3,
+				pos = {960,800,670},
+				delay = {0,0.7,1.4},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 5,
+				num = 2,
+				delay = {0,0.5},
+				pos = {700,800},
+				property = { 
+					placeName = "place2",
 					id = 6,
+					startState = "rollleft",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},                                          
+			{
+				time = 7,	
+				num = 3,
+				pos = {200,430,540,},
+				delay = {0,0.5,1},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
 				},
 			},
-			                                                                                 -- 背景散飞蓝气球
 			{
-				time = 4,
-				num = 10,
-				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
-				pos = {1110,1030,950,870,790,710,630,570,490,410},
-				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --左斜
-					id = 6,
+				time = 8,	
+				num = 2,
+				pos = {250,350},
+				delay = {0,0.8},
+				property = { 
+					placeName = "place3",
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
-				time = 6,
-				num = 1,
-				delay = {0.1},
-				pos = {0},                                 --不用改
-				property = {
-					placeName = "place6",
-					startState = "enterleft",
-					type = "award",	
-					id = 11,
-					award = "gold",
-					data = {
-						{
-							pos = 330,                  --第一次蹲下的位置
-							time = 5,                   --第一次蹲下的时间
-							direct = "right",           --往那面跑
-						},
-						{
-							pos = 730,
-							time = 6,
-							direct = "right",							
-						},
-						{
-							pos = 500,
-							time = 6,
-							direct = "left",							
-						},						
-					},
-				},						
+				time = 9,	
+				num = 3,
+				pos = {820,750,660},
+				delay = {0,0.6,1.2},
+				property = { 
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 9,	
+				num = 3,
+				pos = {240,370,300},
+				delay = {0,0.5,1.3},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
+				},
 			},
 			{
 				time = 10,
-				num = 10,
-				delay = {0, 1.5, 3.0,5.0,9.0,13.5,15,20,25,28},
-				pos = {450,750,650,700,800, 1000,800,350,666,888},                                    
-				                                                                          -- 黄气球
+				num = 2,
+				delay = {0.2,0.8},
+				pos = {250,350},
+				property = { 
+					placeName = "place3",
+					id = 6,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 10,	                                         --给体验枪飓风之锤
+				num = 3,
+				pos = {800,650,700},
+				delay = {0,0.6,1.2},
 				property = {
-					type = "jinbi",
-					placeName = "place11", 
-					speed = 5, 
-					id = 5,
+					placeName = "place4", 
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 			{
 				time = 11,
-				num = 10,
-				delay = {1, 3.7, 5.4,7,8.7,9.5,14.2,16,21,26},
-				pos = {750,450,600,380,800,550,750,350,870,666},
-				property = {
-					type = "jinbi",
-					placeName = "place11",  
-					speed = 3.5,
-					id = 7,
+				num = 2,
+				delay = {0.2,1},
+				pos = {250,900},
+				property = { 
+					placeName = "place3",
+					startState = "rollright",
+					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
-			},                                                                                -- 背景散飞绿气球
+			},	
+			{
+				time = 11,	
+				num = 2,
+				pos = {870,950},
+				delay = {0,0.6},
+				property = {
+					placeName = "place4", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},	
+			{
+				time = 12,	
+				num = 2,
+				pos = {1000,750},
+				delay = {0,0.8},
+				property = {
+					placeName = "place2",
+					startState = "rollleft",
+					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
+				},
+			},
 			{
 				time = 12,
-				num = 10,
-				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
-				pos = {410,490,570,630,710,790,870,950,1030,1110},
+				num = 2,
+				delay = {0.2,0.7},
+				pos = {250,700},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
+				},
+			},	                                                   --第二波25个                                  	
+		},
+	},	
+	{
+		enemys = {                            --第三波
+
+			{
+				descId = "dunbing",  --简介
+				time = 3,
+				num = 1,
+				delay = {4},
+				pos = {600},
 				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --右斜
-					id = 7,
+					placeName = "place1", 
+					type = "jin", 
+					id = 11,
 				},
 			},
 			{
-				time = 17,
-				num = 10,
-				delay = {0, 0, 0,0,0,0,0,0,0,0},
-				pos = {1110,1030,950,870,790,710,630,570,490,410},
+				time = 11,
+				num = 3,
+				delay = {0.1,0.7, 1.5},
+				pos = {270,400,700},					
 				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --横
+					placeName = "place1",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 4,
+				delay = {0.1,0.7,1.2,1.8},
+				pos = {510,630,820,970},					
+				property = {
+					placeName = "place2",  
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{                                                       --黄武触发位置
+				time = 13,
+				num = 2,
+				delay = {0.2,0.9},
+				pos = {333,700},
+				property = {
+					placeName = "place2",
+					startState = "rollleft",
 					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
 			},
 			{
-				time = 17.5,
-				num = 10,
-				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
-				pos = {1110,1030,950,870,790,710,630,570,490,410},
+				time = 14,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
 				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --左斜
-					id = 7,
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 16,
+				num = 3,
+				delay = {0.2,0,0.2},
+				pos = {400,600,830},
+				property = {
+					placeName = "place2", 
+					type = "jin", 
+					id = 11,
 				},
 			},
 			{
 				time = 18,
-				num = 5,
-				delay = {1, 4, 7,11,15},
-				pos = {400, 500, 350, 300, 550},
+				num = 3,
+				delay = {0.1,0.7,1.2},
+				pos = {470,550,620},					
 				property = {
-					type = "jinbi",
 					placeName = "place2",  
-					speed = 3.5,
+					startState = "rollleft",
 					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
 			},
 			{
-				time = 19,
-				num = 5,
-				delay = {1, 4, 7,11,15},
-				pos = {40, 50, 55, 280, 300},
+				time = 20,
+				num = 3,
+				delay = {0, 0.6, 1.3},
+				pos = {300,460,530},	
+				property = { 
+					placeName = "place3", 
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 22,
+				num = 3,
+				delay = {0, 0.6, 1.3},
+				pos = {760,820,900},	
+				property = { 
+					placeName = "place2", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},	
+			{
+				time = 24,
+				num = 3,
+				delay = {0.2,0.9, 1.4},
+				pos = {580,650,800},					
 				property = {
-					type = "jinbi",
-					placeName = "place4",  
-					speed = 3.5,
-					id = 7,
+					placeName = "place2",
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 			{
-				time = 23.5,
-				num = 10,
-				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
-				pos = {1110,1030,950,870,790,710,630,570,490,410},
+				time = 26,
+				num = 2,
+				delay = {0.2,0.9},
+				pos = {580,750},					
 				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --左斜
-					id = 7,
+					placeName = "place2",  
+					startState = "rollleft",
+					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
-			},
+			},	
 			{
-				time = 25,
+				time = 27,	
 				num = 1,
-				delay = {0.1},
-				pos = {0},                                 --不用改
-				property = {
-					placeName = "place6",
-					startState = "enterleft",
-					type = "award",	
-					id = 11,
-					award = "gold",
-					data = {
-						{
-							pos = 680,                  --第一次蹲下的位置
-							time = 5,                   --第一次蹲下的时间
-							direct = "right",           --往那面跑
-						},
-						{
-							pos = 890,
-							time = 6,
-							direct = "right",							
-						},
-												
-					},
-				},						
-			},
-			{
-				time = 29,
-				num = 10,
-				delay = {0, 0, 0,0,0,0,0,0,0,0},
-				pos = {1110,1030,950,870,790,710,630,570,490,410},
-				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --横
+				pos = {300},
+				delay = {0.5},
+				property = { 
+					placeName = "place1",
 					id = 6,
-				},
-			},
-			{
-				time = 30,
-				num = 10,
-				delay = {0, 0.5, 1.0,1.5,2.0,2.5,3.0,3.5,4.0,4.5},
-				pos = {410,490,570,630,710,790,870,950,1030,1110},
-				property = {
-					type = "jinbi",
-					placeName = "place5",  
-					speed = 3,                                                    --右斜
-					id = 7,
-				},
-			},
-			{
-				time = 34,
-				num = 12,
-				delay = {0,0,0,0.7,0.7,0.7,0.7,0.7,1.4,1.4,1.4,2.1},
-				pos = {650,750,850,550,650,750,850,950,650,750,850,750},                                    
-				                                                                          -- 绿气球
-				property = {
-					type = "jinbi",
-					placeName = "place11", 
-					speed = 3, 
-					id = 7,
-				},
-			},
-			{
-				time = 38,
-				num = 6,
-				delay = {1,1.5,1.8,2.0,2.5,3},
-				pos = {780,660,830,550,666,888},                                    
-				                                                                          -- 黄气球
-				property = {
-					type = "jinbi",
-					placeName = "place11", 
-					speed = 5, 
-					id = 5,
+					startState = "rollright",
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",                   --第三波35个
 				},
 			},
 		},
-		
-	},		
+	},
+
+
 }
 
---enemy的关卡配置                    无镶嵌 MP5伤害65  dps大于等于1 怪物数据
+--enemy的关卡配置                           青铜镶嵌 飓风之龙伤害100  dps大于等于1 怪物数据
 local enemys = {
-
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=2,hp=195,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-		weak1=3},
+	{id=1,image="anim_enemy_002",demage=5,hp=300,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	weak1=3},
 
 	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=585,fireRate=180,fireCd=3,speed=40,
-		weak1=3},
+	{id=2,image="jinzhanb",demage=5,hp=1108,fireRate=180,fireCd=3,speed=40,scale = 1.6,
+	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=195,
-	weak1=3},
+	{id=3,image="sanbing01",demage=0,hp=300,
+	weak1=2},	             
 
-	--自爆兵
-	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,fireCd=4,speed=120,
-	weak1=2},	
+    --导弹          --missileType = "daodan",
+	{id=4,image="daodan",demage=3,hp=1,
+	weak1=1},
 
-	--金币黄气球
-	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 40},	
+	--铁球
 
-	--金币蓝气球
-	{id=6,image="qiqiu02",demage=10,hp=1,weak1=3,award = 20},	
+	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
 
-	--金币绿气球
-	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 10},
 	--手雷兵
-	{id=8,image="shouleib",demage=0,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
-	weak1=3},	
-	--手雷
-	{id=9,image="shoulei",demage=3,hp=1,
+	{id=6,image="shouleib",demage=0,hp=300,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=3},
+	--手雷
+	{id=7,image="shoulei",demage=6,hp=1,
+	weak1=2},
+	--BOSS导弹          --missileType = "daodan",
+	{id=8,image="daodan",demage=5,hp=120,
+	weak1=1},
+
+	--飞机         type = "feiji" ,
+	{id=9,image="feiji",demage=0,hp=1, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	weak1=2,    award = 60},
+
+	--越野车       type = "jipu" ,
+	{id=10,image="yyc",demage=0,hp=1,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=240, fireCd=5.0,
+	weak1=2,    award = 60},
 	-- 盾兵
-	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,scale = 2.0, --scale = 2.0,  近战走到屏幕最近放缩比例
-	weak1=3},	
-	-- 商人
-	{id=11,image="shangr_1",hp=300, weak1=3},	--武器商人	                                                    
+	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,--scale = 2.0,
+	weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
+
 }
 
-local mapId = "map_1_3"
-local limit = 10   				--此关敌人上限
 
+
+local mapId = "map_1_2"
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
@@ -543,6 +484,5 @@ function waveClass:ctor()
 	self.limit  = limit
 
 end
-
 
 return waveClass

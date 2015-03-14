@@ -479,7 +479,7 @@ local bosses = {
 			},
 			
 			daoDan = {                                            --两发导弹
-				0.99,0.85,0.75, 0.45, 0.34, 0.22,
+				0.99,0.85,0.75, 0.45, 0.25, 0.20,
 			},
 			weak1 = {
 				0.70,0.60,0.30,
@@ -507,20 +507,9 @@ local bosses = {
 		enemys1 = {                                                   --第一波召唤的自爆兵
 			{
 				time = 0,	
-				num = 3,
-				pos = {460,660,860},
-				delay = {0.1,0.1,0.1},
-				property = {
-					placeName = "place3" ,
-					id = 16,
-					type = "bao",
-				},
-			},
-			{
-				time = 5,	
 				num = 4,
-				pos = {400,660,860,1050},
-				delay = {0.1,0.6,0.4,0.2},
+				pos = {360,660,860,1100},
+				delay = {0.7,0,1.4,0.7},
 				property = {
 					placeName = "place3" ,
 					id = 16,
@@ -533,20 +522,9 @@ local bosses = {
 		enemys2 = {                                                      --第二波召唤的兵
 			{
 				time = 0,	
-				num = 3,
-				pos = {560,660,760},
-				delay = {0.2,0.4,0.5},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "bao",
-				},
-			},
-			{
-				time = 5,	
-				num = 4,
-				pos = {400,660,860,1050},
-				delay = {0.2,0.6,0.4,0.2},
+				num = 5,
+				pos = {250,360,560,860,1050},
+				delay = {0,1.4,0,0.7,1.4},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -560,20 +538,9 @@ local bosses = {
 		enemys3 = {                                                      --第三波召唤的兵
 			{
 				time = 0,	
-				num = 3,
-				pos = {560,660,760},
-				delay = {0.2,0.4,0.5},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "bao",
-				},
-			},
-			{
-				time = 5,	
-				num = 4,
-				pos = {520,620,830,950},
-				delay = {0.8,0.6,0.4,0.2},
+				num = 6,
+				pos = {260,420,620,830,920,1100,},
+				delay = {0,1.4,0,0.7,1.4,0.7,},
 				property = {
 					placeName = "place3" ,
 					id = 17,

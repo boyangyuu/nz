@@ -27,28 +27,6 @@ kDialogConfig["group1"]  = {
 
 	},
 	level2 = {
-		forward = {	
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "所有敌人都有弱点，只是位置不同！", pos = "left"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "伞兵的弱点在伞上！", pos = "right"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "手雷也是可以打掉的哦！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "哈哈，全记住了，就是优先打弱点！", pos = "left"},			
-		},
-
-		middle1 = {	
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "注意！敌人中有个武器商人！", pos = "left"},
-			{role = "鬼眼",imgname = "role_guiyan", msg = "黄金武器在他的身上！", pos = "right"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "打死他！抢走黄金武器！！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "放心，把他交给我吧！", pos = "left"},			
-		},
-
-		after = {
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！以后敌人的弱点就靠你自己发现了", pos = "left"},
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "战斗结束后会奖励大量镶嵌道具！不用吝惜使用哦！！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "装备镶嵌道具能大幅提升战斗力！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "太好了，我这就去镶嵌一下！", pos = "left"},
-		},	
-	},
-	level3 = {
 		forward = {
 			{role = "杰",imgname = "role_jie", msg = "哈哈，镶嵌之后强力了好多哦！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "高防御的近战兵会冲在最前面，他们身后藏着的手雷兵才是更大的威胁！！", pos = "right"},
@@ -69,6 +47,28 @@ kDialogConfig["group1"]  = {
 			{role = "杰",imgname = "role_jie", msg = "飓风之锤的确好用啊！ 怪不得号称大杀器！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，飓风之锤和加特林都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
 		},						
+	},	
+	level3 = {
+		forward = {	
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "所有敌人都有弱点，只是位置不同！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "伞兵的弱点在伞上！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "手雷也是可以打掉的哦！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "哈哈，全记住了，就是优先打弱点！", pos = "left"},			
+		},
+
+		middle1 = {	
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "注意！敌人中有个武器商人！", pos = "left"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "黄金武器在他的身上！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "打死他！抢走黄金武器！！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "放心，把他交给我吧！", pos = "left"},			
+		},
+
+		after = {
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！以后敌人的弱点就靠你自己发现了", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "战斗结束后会奖励大量镶嵌道具！不用吝惜使用哦！！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "装备镶嵌道具能大幅提升战斗力！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "太好了，我这就去镶嵌一下！", pos = "left"},
+		},	
 	},
 	level3_1 = {
 		forward = {

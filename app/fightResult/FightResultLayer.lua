@@ -50,6 +50,7 @@ function FightResultLayer:ctor(properties)
 
 	self:initGuide()
 	self:initGuide2()
+	self:initGuide3()
 end
 
 function FightResultLayer:playSound()
@@ -231,9 +232,7 @@ function FightResultLayer:onClickBtnNext()
 
 	local isCurLevel = self.levelMapModel:isCureGroupAndLevel(curGroup, curLevel)
 
-	if curGroup == 1 and curLevel == 3 then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup,popWeaponGift = true})
-	elseif isCurLevel and isDoneXiangqian then
+	if isCurLevel and isDoneXiangqian then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = true})
 	else
 		print("1-4.1 OR 通关")
@@ -467,9 +466,22 @@ end
 function FightResultLayer:onEnter()
 end
 
+
+
+function FightResultLayer:setDailyPopup()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    local guide = md:getInstance("Guide")
+	local isGet = dailyLoginModel:isGet()
+	local isDone = guide:isDone("xiangqian")
+	if isGet == false and isDone then
+		dailyLoginModel:setPopup()
+	end
+end
+
 function FightResultLayer:startGuide()
 	self.guide:check("afterfight01")	
 	self.guide:check("afterfight02")
+	self.guide:check("afterfight03")
 end
 
 function FightResultLayer:initGuide()
@@ -504,20 +516,27 @@ function FightResultLayer:initGuide()
      })    	
 end
 
-function FightResultLayer:setDailyPopup()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-	local isGet = dailyLoginModel:isGet()
-	local isDone = guide:isDone("xiangqian")
-	if isGet == false and isDone then
-		dailyLoginModel:setPopup()
-	end
+function FightResultLayer:initGuide2()
+    local isDone = self.guide:isDone("afterfight02")
+    if isDone then return end	
+
+
+    self.guide:addClickListener({
+        id = "afterfight02_next",
+        groupId = "afterfight02",
+        rect = self.btnback:getCascadeBoundingBox(),
+        endfunc = function (touchEvent)
+			self:onClickBtnNext()  
+        end
+     })       	
 end
 
-function FightResultLayer:initGuide2()
+function FightResultLayer:initGuide3()
+    local isDone = self.guide:isDone("afterfight03")
+    if isDone then return end
     self.guide:addClickListener({
-        id = "afterfight02_inlay",
-        groupId = "afterfight02",
+        id = "afterfight03_inlay",
+        groupId = "afterfight03",
         rect = self.btninlay:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
 	        ui:showPopup("commonPopup",
@@ -534,14 +553,23 @@ function FightResultLayer:initGuide2()
 				self.inlayArmature:removeFromParent()
 				self.inlayArmature = nil
 			end
+
+			--镶嵌
+           self.inlayModel:buyInlay(2,false,1) 
+           self.inlayModel:buyInlay(5,false,1) 
+           self.inlayModel:buyInlay(8,false,1) 
+           self.inlayModel:buyInlay(11,false,1) 
+           self.inlayModel:buyInlay(14,false,1) 
+           self.inlayModel:buyInlay(17,true,1) 
+           self.inlayModel:equipAllInlays(true)
+
 			playSoundBtn()    
         end
      }) 
 
-    local isDone = self.guide:isDone("afterfight02")
     self.guide:addClickListener({
-        id = "afterfight02_next",
-        groupId = "afterfight02",
+        id = "afterfight03_next",
+        groupId = "afterfight03",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
 			self:onClickBtnNext()  

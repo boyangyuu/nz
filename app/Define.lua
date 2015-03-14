@@ -65,6 +65,9 @@ Define.kjipuSpeed				= 400.0  --速度
 Define.kjipuRunTime 			= 1.0	 --大范围移动时间
 Define.kjipuWalkTime			= 0.6    --小范围移动时间
 
+--奖励兵
+Define.kAwardSanTime			= 5.0    --箱子落地持续时间
+
 --导弹
 Define.kMissileDaoTime				= 2.5    --导弹，铁球飞行时间 
 Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
@@ -102,7 +105,7 @@ Define.kLeiTime				    = 1.0	--手雷飞行时间
 
 --盾牌
 Define.cdTimes 					= 15.0   --十秒恢复完毕
-Define.kDefenceHp				= 65    --盾牌血量
+Define.kDefenceHp				= 5    --盾牌血量
 
 --奖励
 Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
