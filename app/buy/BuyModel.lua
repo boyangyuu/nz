@@ -40,7 +40,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	--pay
 	local isGift = config.isGift 
 	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configId})
+        ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
 
     	iap:pay(configId)

@@ -11,7 +11,7 @@ kDialogConfig["group0"] = {
 		after = {
 			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊！你开加特林的姿势真的真的好帅啊！！", pos = "right"},		
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话，谁开加特林都帅", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，想买这把酷酷的武器的话，到武器商城就有卖哦！！", pos = "right"},		
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，想得到这把酷酷的武器的话，到武器商城领取哦！！", pos = "right"},		
 		},			
 	},
 }
@@ -64,10 +64,10 @@ kDialogConfig["group1"]  = {
 		},	
 
 		after = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了！！敌人还没来得及反应就被你给消灭了！", pos = "right"},		
+			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了！！敌人还没来得及反应就被你消灭了！", pos = "right"},		
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯，飓风之锤是把好枪", pos = "left"},
 			{role = "杰",imgname = "role_jie", msg = "飓风之锤的确好用啊！ 怪不得号称大杀器！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，‘飓风之锤’和‘加特林’都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，飓风之锤和加特林都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
 		},						
 	},
 	level3_1 = {

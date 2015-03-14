@@ -66,11 +66,13 @@ end
 function UI:showPopup(layerId, properties, extra)
 	local opacity 
 	local anim
+	local animName
 	local isPauseScene
 	local isPauseSecond
 	if extra then 
 		opacity = extra.opacity
 		anim = extra.anim
+		animName = extra.animName
 		isPauseScene = extra.isPauseScene
 		isPauseSecond = extra.isPauseSecond
 		properties.isPauseScene = extra.isPauseScene
@@ -84,7 +86,7 @@ function UI:showPopup(layerId, properties, extra)
 	if not isPauseScene then
 		print("1UI:showPopup isPauseScene:",isPauseScene)
 		self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
-			opacity = opacity, anim = anim, 
+			opacity = opacity, anim = anim, animName = animName,
 			properties = properties})
 	else
 		print("2UI:showPopup isPauseScene:",isPauseScene)

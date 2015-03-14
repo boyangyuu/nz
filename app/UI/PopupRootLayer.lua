@@ -35,7 +35,19 @@ function PopupRootLayer:showPopup(event)
 	if event.anim == false then
 		layer:scale(1)
 	else
-		layer:scaleTo(0.3, 1)
+		local animName = event.animName
+		if animName == nil then
+			animName = "Scale"
+		end
+		if animName == "Scale" then
+			layer:scaleTo(0.3, 1)
+		elseif animName == "Shake" then
+			layer:scale(0.8)
+			local act1 = cc.ScaleTo:create(0.1, 1.1)
+			local act2 = cc.ScaleTo:create(0.1, 0.8)
+			local act3 = cc.ScaleTo:create(0.1, 1)
+			layer:runAction(cc.Sequence:create(act1,act2, act3))
+		end
 	end
 end
 

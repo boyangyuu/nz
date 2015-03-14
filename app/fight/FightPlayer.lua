@@ -217,11 +217,11 @@ function FightPlayer:startDefenceResume(event)
     self.labelDefenceResume:setVisible(true)
     
     --受伤
-    self.defenceDemage:setPercent(0)
+    self.defenceDemage:setPercentH(0)
 
     --恢复
     self.defenceBar:setVisible(true)
-
+    self.defenceBar:setPercentage(100)
     local kResumeValue = 1  --每次恢复点数
     local function tick(dt)
         local t = self.defenceBar:getPercentage()
@@ -247,7 +247,7 @@ function FightPlayer:onDefenceBeHurt(event)
 
     local percent = event.percent * 100
     print("FightPlayer:onDefenceBeHurt(event)", percent)
-    self.defenceDemage:setPercent(percent)
+    self.defenceDemage:setPercentH(percent)
 end
 
 function FightPlayer:onHeroKill(event)
@@ -292,16 +292,15 @@ end
 
 function FightPlayer:initDefence()
     --受伤
-    --defence demage self.defenceDemage
     self.defenceDemage = cc.uiloader:seekNodeByName(self, "loadingBarDefenceHp")
-    
+
     --恢复
     self.labelDefenceResume = cc.uiloader:seekNodeByName(self, "labelDefenceHp")
     self.labelDefenceResume:setVisible(false)
 
     self.defenceBar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
     self.btnDefence:addChild(self.defenceBar)
-    self.defenceBar:setOpacity(130)
+    self.defenceBar:setOpacity(170)
     self.defenceBar:setAnchorPoint(0.0,0.0)
     self.defenceBar:setReverseDirection(true)
     self.defenceBar:setScale(2)
@@ -908,8 +907,9 @@ function FightPlayer:onEnter()
     end 
 end
 
-function FightPlayer:onCleanup()
+function FightPlayer:onExit()
     self:removeAllSchs()
+    audio:stopAllSounds()
 end
 
 function FightPlayer:onResultFail()

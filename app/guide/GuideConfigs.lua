@@ -65,7 +65,7 @@ configs["fight01_change"] = {
 configs["fight01_gold"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_gold", msg = "敌人越来越多，快变身为黄金武器模式 ! "},
+		{id = "fight_gold", msg = "敌人越来越多，快使用黄金武器 ! "},
 	}
 }
 
@@ -74,7 +74,7 @@ configs["fight01_jijia"] = {
 	preGuideId = nil,
 	steps = {
 		--毁灭者掉剩下10% 血 机甲开
-		{id = "fight01_jijia", msg = "开启机甲模式和毁灭者决一死战！！", }, 
+		{id = "fight01_jijia", msg = "开启无敌机甲和毁灭者决一死战！！", }, 
 	}
 }
 

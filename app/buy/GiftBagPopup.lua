@@ -69,7 +69,7 @@ function GiftBagPopup:initButtons()
 end
 
 function GiftBagPopup:close()
-	ui:closePopup("GiftBagPopup")
+	ui:closePopup("GiftBagPopup",{isCancelAnim = true})
 end
 
 return GiftBagPopup

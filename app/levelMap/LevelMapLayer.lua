@@ -213,6 +213,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local panelBtn = {}
     local panelGray = {}
     local dian = {}
+    local imgIcon = {}
     local group,level = self.LevelMapModel:getConfig()
 
 
@@ -253,6 +254,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         levelIcon[k] = cc.uiloader:seekNodeByName(v, "icon")
         levelAnim[k] = cc.uiloader:seekNodeByName(v, "anim")
         levelIcon[k]:setTouchEnabled(true)
+        imgIcon[k] = cc.uiloader:seekNodeByName(v, "iconimg")
     end
 
     for k,v in pairs(groupInfo) do
@@ -276,8 +278,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 end
             end)
         else       
-            levelName[v]:setVisible(false)
-            levelIcon[v]:setVisible(false)
+            levelName[v]:setOpacity(0)
+            imgIcon[v]:setOpacity(0)
         end
 
         -- add listener
@@ -309,7 +311,6 @@ function LevelMapLayer:bgAction()
     self.btnPre:setTouchEnabled(false)
     self.levelBtnRootNode:removeFromParent()
     self.animName = self.preGroupId.."_"..self.curGroupId
-    dump(self.animName)
     self.armature:getAnimation():play(self.animName , -1, 0)
 end
 
