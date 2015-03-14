@@ -135,29 +135,29 @@ function MyApp:createGameStateFile()
             },
             guide = {
                         --第0-0关之内
-                        gamePre         = true,
-                        fight01_move    = true,
-                        fight01_fire    = true,
-                        fight01_lei     = true,
-                        fight01_gold    = true,
-                        fight01_change  = true,
-                        fight01_jijia   = true, 
+                        gamePre         = false,
+                        fight01_move    = false,
+                        fight01_fire    = false,
+                        fight01_lei     = false,
+                        fight01_gold    = false,
+                        fight01_change  = false,
+                        fight01_jijia   = false, 
 
                         --第0-0关之后  
-                        afterfight01    = true,   -- 进入下一关
+                        afterfight01    = false,   -- 进入下一关
 
                         --第1-2关之前
-                        prefight02      = true,   -- 升级武器
-                        afterfight02    = true,   -- 回到主界面
+                        prefight02      = false,   -- 升级武器
+                        afterfight02    = false,   -- 回到主界面
                         
                         --第1-3关之前
-                        xiangqian       = true,   --镶嵌一套青铜
+                        xiangqian       = false,   --镶嵌一套青铜
 
                         --第1-3关之后
-                        afterfight03    = true,   --镶嵌一套白银
+                        afterfight03    = false,   --镶嵌一套白银
 
                         --第1-3.1关之内
-                        fight04         = true,                        
+                        fight04         = false,                        
             },
             fight = {
                isPreferBag1 = true,
