@@ -7,7 +7,8 @@ local BaoEnemyView 		= import(".enemys.BaoEnemyView")
 local DaoEnemyView 		= import(".enemys.DaoEnemyView")
 local CommonEnemyView	= import(".enemys.CommonEnemyView")
 local JinbiEnemyView  	= import(".enemys.JinbiEnemyView")
-local RenzhiEnemyView 	= import(".enemys.RenzhiEnemyView")
+local RZHushiEnemyView 	= import(".enemys.RZHushiEnemyView")
+local RZShangrenEnemyView 	= import(".enemys.RZShangrenEnemyView")
 local FeijiEnemyView    = import(".enemys.FeijiEnemyView")
 local RenEnemyView   	= import(".enemys.RenEnemyView")
 local AwardEnemyView   	= import(".enemys.AwardEnemyView")
@@ -53,7 +54,9 @@ function EnemyFactory.createEnemy(property)
 	elseif type == "jinbi" then
 		enemyView = JinbiEnemyView.new(property)
 	elseif type == "renzhi" then
-		enemyView = RenzhiEnemyView.new(property)							
+		enemyView = RZHushiEnemyView.new(property)
+	elseif type == "shangren" then
+		enemyView = RZShangrenEnemyView.new(property)									
 	elseif type == "feiji" or type == "jipu" then
 		enemyView = FeijiEnemyView.new(property)							
 	elseif type == "renzhe" then

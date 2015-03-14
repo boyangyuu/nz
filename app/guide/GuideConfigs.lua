@@ -83,7 +83,6 @@ configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
 		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把神狙雷明顿!  "}, 
-		-- {id = "afterfight01_inlay", msg = "点击按钮，镶嵌道具" },		
 		{id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
 		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"}, 
 	}
@@ -91,7 +90,7 @@ configs["afterfight01"] = {
 
 --- 开启第2关之后 ----
 configs["prefight02"] = {
-	preGuideId = "fight01_jijia",
+	preGuideId = "afterfight01",
 	steps = {
 		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
 		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
@@ -106,8 +105,7 @@ configs["prefight02"] = {
 configs["afterfight02"] = {
 	preGuideId = "prefight02",
 	steps = {
-		{id = "afterfight02_inlay", msg = "点击按钮，镶嵌道具" },
-		{id = "afterfight02_next", msg = "点击按钮，回到主界面" },		
+		{id = "afterfight02_next", msg = "点击按钮，进入下一关" },		
 	}
 }
 
@@ -121,9 +119,17 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian2", msg = "点击购买",},
 		{id = "xiangqian_xiangqian3", msg = "点击装备", },
 		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌，镶嵌背包内最好的道具", },
-		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具，要节省使用哦", skipMode = "clickScreen" },
+		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具哦！", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
 		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关",  contentOffset = {x = 0, y = -165},},		
+	}
+}
+
+configs["afterfight03"] = {
+	preGuideId = "xiangqian",
+	steps = {
+		{id = "afterfight03_inlay", msg = "点击按钮，镶嵌道具" },
+		{id = "afterfight03_next", msg = "点击按钮，进入下一关" },		
 	}
 }
 

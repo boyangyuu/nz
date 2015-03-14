@@ -12,12 +12,12 @@ local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
-local RenzhiEnemyView = class("RenzhiEnemyView", BaseEnemyView)  
+local RZHushiEnemyView = class("RZHushiEnemyView", BaseEnemyView)  
 
 
-function RenzhiEnemyView:ctor(property)
+function RZHushiEnemyView:ctor(property)
 	--instance
-	RenzhiEnemyView.super.ctor(self, property) 
+	RZHushiEnemyView.super.ctor(self, property) 
 
     -- --events
     cc.EventProxy.new(self.enemy, self)
@@ -33,7 +33,7 @@ function RenzhiEnemyView:ctor(property)
     self:addScheduler(sch)        
 end
 
-function RenzhiEnemyView:tick()
+function RZHushiEnemyView:tick()
 	--change state
 	local walkRate, isAble = self.enemy:getWalkRate()
 	assert(walkRate > 1, "invalid walkRate")
@@ -72,7 +72,7 @@ function RenzhiEnemyView:tick()
 	end		
 end
 
-function RenzhiEnemyView:playStartState(state)
+function RZHushiEnemyView:playStartState(state)
 	print("playStartState")
 	if state == "enterleft" then 
 		self:playEnter("left")
@@ -83,7 +83,7 @@ function RenzhiEnemyView:playStartState(state)
 	end
 end
 
-function RenzhiEnemyView:playEnter(direct)
+function RZHushiEnemyView:playEnter(direct)
 	self.isEntering = true
 	local isLeft = direct == "left" 
 	self.armature:getAnimation():play("runright" , -1, 1) 
@@ -111,7 +111,7 @@ function RenzhiEnemyView:playEnter(direct)
     		cc.CallFunc:create(callfunc)))		
 end
 
-function RenzhiEnemyView:exit()
+function RZHushiEnemyView:exit()
 	if self.enemy:isDead() then return end
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
@@ -127,13 +127,13 @@ function RenzhiEnemyView:exit()
     		cc.CallFunc:create(callfunc)))	
 end
 
-function RenzhiEnemyView:playSpeak()
+function RZHushiEnemyView:playSpeak()
 	local randomSeed = math.random(1, 2)
 	local animName = "speak"..randomSeed
 	self.armature:getAnimation():play(animName , -1, 1) 
 end
 
-function RenzhiEnemyView:playRun()
+function RZHushiEnemyView:playRun()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then 
 		self:playRunAction(1, false)
@@ -142,7 +142,7 @@ function RenzhiEnemyView:playRun()
 	end
 end
 
-function RenzhiEnemyView:playRoll()
+function RZHushiEnemyView:playRoll()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then 
 		self:playRunAction(1, true)
@@ -151,8 +151,8 @@ function RenzhiEnemyView:playRoll()
 	end
 end
 
-function RenzhiEnemyView:playRunAction(direct, isRoll)
-	print("function RenzhiEnemyView:playRunLeft():",isRoll)
+function RZHushiEnemyView:playRunAction(direct, isRoll)
+	print("function RZHushiEnemyView:playRunLeft():",isRoll)
 	local speed = define.kRenzhiSpeed
 	local time 
 	if isRoll then 
@@ -182,21 +182,21 @@ function RenzhiEnemyView:playRunAction(direct, isRoll)
     self.audioId =  audio.playSound(soundSrc,false)   
 end
 
-function RenzhiEnemyView:getIsWudi()
+function RZHushiEnemyView:getIsWudi()
 	return self.isEntering or self.isExiting
 end
 
-function RenzhiEnemyView:onHitted(targetData)
+function RZHushiEnemyView:onHitted(targetData)
 	if self:getIsWudi() then 
 		return
 	end
-	RenzhiEnemyView.super.onHitted(self, targetData)
+	RZHushiEnemyView.super.onHitted(self, targetData)
     --sound
     local soundSrc  = "res/Music/fight/rz_bj.wav"
 	audio.playSound(soundSrc,false)  	
 end
 
-function RenzhiEnemyView:playKill(event)
+function RZHushiEnemyView:playKill(event)
 	--clear
 	self:clearPlayCache()
 	self.armature:stopAllActions()
@@ -210,7 +210,7 @@ function RenzhiEnemyView:playKill(event)
     local audioId =  audio.playSound(soundSrc,false)   	
 end
 
-function RenzhiEnemyView:animationEvent(armatureBack,movementType,movementID)
+function RZHushiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then 
 		print("self.isEntering or self.isExiting")
 		return 
@@ -243,4 +243,4 @@ end
 
 
 
-return RenzhiEnemyView
+return RZHushiEnemyView

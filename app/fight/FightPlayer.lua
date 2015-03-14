@@ -232,7 +232,6 @@ function FightPlayer:startDefenceResume(event)
             self.labelDefenceResume:setVisible(false)
             self.labelDefenceResume:setString(90)
             self.defence:setIsAble(true)
-            
             return
         end
         self.labelDefenceResume:setString(t1 - kResumeValue)
@@ -908,8 +907,13 @@ function FightPlayer:onEnter()
 end
 
 function FightPlayer:onExit()
-    self:removeAllSchs()
-    audio:stopAllSounds()
+    
+end
+
+function FightPlayer:onCleanup()
+     audio:stopAllSounds()
+     self:removeAllSchs()
+     audio.stopMusic()
 end
 
 function FightPlayer:onResultFail()
