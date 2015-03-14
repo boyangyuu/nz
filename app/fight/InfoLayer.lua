@@ -143,47 +143,6 @@ function InfoLayer:onHeroHpChange(event)
     end			
 end
 
--- function InfoLayer:onKillEnemy(event)
--- 	if self.isGolding then return end 
--- 	local per = self.hero:getKillCnt() / self.hero:getCurGoldLimit() * 100
--- 	self.goldProgress:setPercent(per)
--- end
-
--- function InfoLayer:onActiveGold(event)
--- 	self.isGolding = true
--- 	self.goldProgress:setPercent(100)
--- 	print("循环播放激活动画")
--- 	if self.goldArmature then 
--- 		self.goldArmature:removeSelf()
--- 		self.goldArmature = nil
--- 	end
-
--- 	self.goldArmature = ccs.Armature:create("hjnlc")
--- 	self.goldArmature:setAnchorPoint(cc.p(0,0))
--- 	self.goldArmature:setPosition(cc.p(-22,-24))
--- 	self.goldAnim:addChild(self.goldArmature)
--- 	self.goldArmature:getAnimation():play("hjnlc_kaishi", -1, 1)
--- 	self.goldArmature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
--- end
-
--- function InfoLayer:onActiveGoldEnd(event)
--- 	self.isGolding = false
--- 	self.goldProgress:setPercent(0)
--- 	-- print("function InfoLayer:onActiveGoldEnd(event)")
--- 	self.goldArmature:removeSelf()
--- 	self.goldArmature = nil
--- end
-
--- function InfoLayer:animationEvent(armatureBack,movementType,movementID)
---     if armatureBack == nil then return end
---     if movementType == ccs.MovementEventType.loopComplete then
---         armatureBack:stopAllActions()
---         if movementID == "hjnlc_kaishi" then
---         	self.goldArmature:getAnimation():play("hjnlc_chixu", -1, 1)
---         end
---     end
--- end
-
 function InfoLayer:onShow(event)
 	self:setVisible(true)
 end

@@ -6,7 +6,6 @@
 2. 左右移动范围大
 ]]
 
-
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
@@ -16,7 +15,7 @@ local RZHushiEnemyView = class("RZHushiEnemyView", BaseEnemyView)
 
 
 function RZHushiEnemyView:ctor(property)
-	--instance
+	--instance11
 	RZHushiEnemyView.super.ctor(self, property) 
 
     -- --events

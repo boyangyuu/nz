@@ -164,11 +164,6 @@ function commonPopup:onClickCofirm()
 end
 
 function commonPopup:onClickClose()
-	-- if self.properties.type == "style3" and self.properties.isPauseScene then 
-	-- 	cc.Director:getInstance():popScene()
-	-- else
-		
-	-- end	
 	ui:closePopup("commonPopup")
 	local func =  self.properties.callfuncClose
 	if func ~= nil then

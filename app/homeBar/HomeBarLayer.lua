@@ -35,11 +35,6 @@ function HomeBarLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 end
 
-function HomeBarLayer:onEnter()
-    local startMusic = "res/Music/bg/bjyx.wav"
-    audio.playMusic(startMusic,true)    
-end
-
 function HomeBarLayer:popUpWeaponGift(properties)
     local buyModel = md:getInstance("BuyModel")
     local isNotBought = buyModel:checkBought("weaponGiftBag") == false
@@ -50,10 +45,8 @@ end
 
 --todo 暂时保留计费点
 function HomeBarLayer:popUpGoldGift(properties)
-    -- local buyModel = md:getInstance("BuyModel")
-    -- local isDone = self.guide:isDone("xiangqian")
     -- local isBoughtWeapon = buyModel:checkBought("weaponGiftBag") == false
-    -- if properties.popGoldGift and isDone then
+    -- if properties.popGoldGift then
     --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData)},
     --      "主界面_战斗失败购买过武包")
     -- end
@@ -87,7 +80,10 @@ end
 function HomeBarLayer:initDailyLogin()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
     local guide = md:getInstance("Guide")
-    local isDone = guide:isDone("afterfight02")
+
+    --
+    local userModel = md:getInstance("UserModel")
+    local isDone = userModel:getUserLevel() >= 4
     if dailyLoginModel:checkPop() and isDone then
         ui:showPopup("DailyLoginLayer", {})
         dailyLoginModel:donotPop()
@@ -230,8 +226,17 @@ function HomeBarLayer:onEnter()
     local levelModel = md:getInstance("LevelMapModel")
     local gid, lid  = levelModel:getConfig()
     if lid == 2 and gid == 1 then 
-        self.guide:check("prefight02")
+        self.guide:check("xiangqian")
     end
+
+    if lid == 3 and gid == 1 then 
+        ui:closeAllPopups()
+        self.guide:check("weapon")
+    end
+
+    -- music
+    local startMusic = "res/Music/bg/bjyx.wav"
+    audio.playMusic(startMusic,true)        
 end
 
 function HomeBarLayer:onBtnStoreClicked()
@@ -282,14 +287,14 @@ function HomeBarLayer:onBtnBackClicked()
 end
 
 function HomeBarLayer:initGuideWeapon()
-    local isDone = self.guide:isDone("prefight02")
+    local isDone = self.guide:isDone("weapon")
     if isDone then return end
 
     print("function HomeBarLayer:initGuide()")
 
     self.guide:addClickListener({
-        id = "prefight02_wuqiku",
-        groupId = "prefight02",
+        id = "weapon_wuqiku",
+        groupId = "weapon",
         rect = self.btnArsenal:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
             self:onBtnArsenalClicked()
@@ -297,8 +302,8 @@ function HomeBarLayer:initGuideWeapon()
      })    
 
     self.guide:addClickListener({
-        id = "prefight02_back",
-        groupId = "prefight02",
+        id = "weapon_back",
+        groupId = "weapon",
         rect = self.btnBack:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
             self:onBtnBackClicked()

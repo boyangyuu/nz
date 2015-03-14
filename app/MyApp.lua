@@ -17,6 +17,7 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 __versionId = "1.2"
+isShowPausescene = true
 
 ui        = UI.new()
 md        = MD.new()
@@ -126,13 +127,15 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 6,
-                        level = 6,
+                        group = 1,
+                        level = 1,
             },
             user = {
                 level = 1,
             },
             guide = {
+                        --记得和 filldata对应!
+
                         --第0-0关之内
                         gamePre         = false,
                         fight01_move    = false,
@@ -144,17 +147,14 @@ function MyApp:createGameStateFile()
 
                         --第0-0关之后  
                         afterfight01    = false,   -- 进入下一关
-
+                     
                         --第1-2关之前
-                        prefight02      = false,   -- 升级武器
-                        afterfight02    = false,   -- 回到主界面
-                        
-                        --第1-3关之前
                         xiangqian       = false,   --镶嵌一套青铜
 
-                        --第1-3关之后
-                        afterfight03    = false,   --镶嵌一套白银
-
+                        --第1-3关之前
+                        weapon          = false,   -- 升级武器
+                        afterfight03    = false,   -- 回到主界面
+                        
                         --第1-3.1关之内
                         fight04         = false,                        
             },
@@ -185,6 +185,16 @@ end
 function MyApp:showError(debugInfo)
     local debug = md:getInstance("DebugModel")
     debug:showPopup(debugInfo)
+end
+
+function MyApp:onEnterBackground()
+    if isShowPausescene ~= true then return end
+    ui:showPopup("pausePopup",{popupName = "mapset"},
+        {anim = true,isPauseScene = true,isNotScrenCapture = true})
+end
+
+function MyApp:onEnterForeground()
+   
 end
 
 return MyApp

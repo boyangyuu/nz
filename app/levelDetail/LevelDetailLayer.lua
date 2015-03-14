@@ -243,7 +243,7 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-    -- local isDone = self.guide:isDone("prefight02")
+    -- local isDone = self.guide:isDone("weapon")
 	-- if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
 	--     local buyModel = md:getInstance("BuyModel")
 	    -- buyModel:showBuy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
@@ -270,7 +270,7 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		local isDone = self.guide:isDone("prefight02")
+		local isDone = self.guide:isDone("weapon")
 		if isDone then
 			local buyModel = md:getInstance("BuyModel")
 	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
@@ -299,7 +299,7 @@ function LevelDetailLayer:onClickBtnGold()
 	end
 
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
-	local isDone = self.guide:isDone("prefight02")
+	local isDone = self.guide:isDone("weapon")
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
         self.storeModel  = md:getInstance("StoreModel")
@@ -335,12 +335,12 @@ end
 
 function LevelDetailLayer:initGuide()
 	local guide = md:getInstance("Guide")
-    local isDone = guide:isDone("prefight02")
+    local isDone = guide:isDone("weapon")
     if isDone then return end
     --点击进入战斗
     guide:addClickListener({
-        id = "prefight02_enter",
-        groupId = "prefight02",
+        id = "weapon_enter",
+        groupId = "weapon",
         rect = self.btnStart:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
             self:onClickBtnStart()

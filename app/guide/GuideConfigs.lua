@@ -88,50 +88,45 @@ configs["afterfight01"] = {
 	}
 }
 
---- 开启第2关之后 ----
-configs["prefight02"] = {
-	preGuideId = "afterfight01",
-	steps = {
-		{id = "prefight02_wuqiku", msg = "点击按钮进入武器界面", }, 
-		{id = "prefight02_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
-		{id = "prefight02_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
-		{id = "prefight02_shengji3", msg = "恭喜杰哥 ， 升级成功！ ", skipMode = "clickScreen"},
-		{id = "prefight02_back", msg = "点击按钮返回大地图",rolepos = "right", },		
-		{id = "prefight02_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "left", },			
-		{id = "prefight02_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮，开始战斗！", },
-	}
-}
-
-configs["afterfight02"] = {
-	preGuideId = "prefight02",
-	steps = {
-		{id = "afterfight02_next", msg = "点击按钮，进入下一关" },		
-	}
-}
-
----- 开启第3关之后  ----
+---- 开启第2关之后  ----
 configs["xiangqian"] = {
-	preGuideId = "afterfight02",
+	preGuideId = "afterfight01",
 	steps = {
 		--进镶嵌页面  一套青铜 
 		{id = "xiangqian_xiangqian", msg = "点击按钮进入镶嵌界面", }, 
-		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择镶嵌属性", }, 
+		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择镶嵌属性", rolepos = "right"}, 
 		{id = "xiangqian_xiangqian2", msg = "点击购买",},
 		{id = "xiangqian_xiangqian3", msg = "点击装备", },
 		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌，镶嵌背包内最好的道具", },
-		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具哦！", skipMode = "clickScreen" },
+		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具哦！", rolepos = "right", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
-		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关",  contentOffset = {x = 0, y = -165},},		
+		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关",  contentOffset = {x = 0, y = 0},},		
+	}
+}
+
+--- 开启第3关之后 ----
+configs["weapon"] = {
+	preGuideId = "xiangqian",
+	steps = {
+		{id = "weapon_wuqiku", msg = "点击按钮进入武器界面", }, 
+		{id = "weapon_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"}, 
+		{id = "weapon_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
+		{id = "weapon_shengji3", msg = "恭喜杰哥 ， 升级成功！ ", skipMode = "clickScreen"},
+		{id = "weapon_back", msg = "点击按钮返回大地图",rolepos = "right", },		
+		{id = "weapon_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "left", contentOffset = {x = 0, y = -100}},			
+		{id = "weapon_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮，开始战斗！", },
 	}
 }
 
 configs["afterfight03"] = {
-	preGuideId = "xiangqian",
+	preGuideId = "weapon",
 	steps = {
 		{id = "afterfight03_inlay", msg = "点击按钮，镶嵌道具" },
 		{id = "afterfight03_next", msg = "点击按钮，进入下一关" },		
 	}
 }
+
+
 
 ---- 第四关战斗开始之后 ----
 configs["fight04"] = {
