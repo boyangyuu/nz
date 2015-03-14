@@ -282,9 +282,9 @@ function LevelDetailLayer:cancelWeaponBag()
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local rmbCost = weaponRecord["rmbCost"]
     if  rmbCost == 6 then
-        self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponRecord["name"])
+        self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "准备战斗界面_点击解锁"..self.weaponId)
     elseif rmbCost == 10 then
-        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
+        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "准备战斗界面_点击解锁高级武器"..self.weaponId)
     end
 end
 
