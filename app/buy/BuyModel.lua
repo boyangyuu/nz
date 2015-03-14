@@ -129,9 +129,6 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	inlayModel:buyGoldsInlay(3)
     inlayModel:refreshInfo("speed")
 
-
-	--手雷*10
-	propModel:buyProp("lei",10)
 	storeModel:refreshInfo("prop")
 
 	ui:showPopup("commonPopup",

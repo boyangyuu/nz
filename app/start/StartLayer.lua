@@ -112,7 +112,6 @@ function StartLayer:onEnter()
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
-    local data = getUserData()
 end
 
 function StartLayer:beginGame()

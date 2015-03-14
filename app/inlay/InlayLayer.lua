@@ -7,6 +7,7 @@ end)
 function InlayLayer:ctor()
     self.storeModel = md:getInstance("StoreModel")
     self.inlayModel = md:getInstance("InlayModel")
+    self.buyModel = md:getInstance("BuyModel")
 
     cc.EventProxy.new(self.inlayModel , self)
         :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
@@ -92,10 +93,9 @@ function InlayLayer:initUI()
                     self:playSoundxqcg()
                 end
                 function deneyGoldGift()
-                    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
+                    self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
                 end
-                local buyModel = md:getInstance("BuyModel")
-                buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+                self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
                      "镶嵌页面_点击一键黄武")
             end
         end

@@ -273,14 +273,26 @@ function LevelDetailLayer:onClickBtnBibei()
 		local isDone = self.guide:isDone("weapon")
 		if isDone then
 			local buyModel = md:getInstance("BuyModel")
-	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
+	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
+	        deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
 	        	"关卡详情_点击必备按钮")
 		end
 	end
 end
 
-function LevelDetailLayer:reloadlistview()
-	self.model:reloadlistview()
+function LevelDetailLayer:cancelWeaponBag()
+	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local rmbCost = weaponRecord["rmbCost"]
+    if  rmbCost == 6 then
+        self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponRecord["name"])
+    elseif rmbCost == 10 then
+        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
+    end
+end
+
+function LevelDetailLayer:getWeaponBagSucc()
+    local levelMapModel = md:getInstance("LevelMapModel")
+    levelMapModel:hideGiftBagIcon()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
 	self.alreadybibei:setVisible(true)
 	self.btnBibei:setVisible(false)
