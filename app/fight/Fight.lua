@@ -223,7 +223,7 @@ end
 
 function Fight:onDialogAfterEnd()
     local isAd = self.groupId == 1 and self.levelId == 2
-        or self.groupId == 0 and self.levelId == 9
+        or self.groupId == 0 and self.levelId == 0
     if not isAd then 
         self:endFight()
         return 
