@@ -33,13 +33,14 @@ end
 -- @param level 关卡,如果level == NULL 则为当前关卡
 -- @return void
 -- cc.UMAnalytics:failLevel("1-1")
-function UM:failLevel( level )
+function UM:failLevel( level, cause)
     if device.platform ~= "android" then
         return
     end
 
     -- TalkingData
-    TDGAMission:onFailed(level, "角色死亡" )
+    local cause = cause or "其他原因"
+    TDGAMission:onFailed(level, cause )
 end
 
 ------ 支付相关 -------
