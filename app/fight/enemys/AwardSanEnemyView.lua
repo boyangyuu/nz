@@ -78,7 +78,7 @@ function AwardSanEnemyView:sendAward()
 
     --award
     local awardType = self.property.award 
-    if awardType == "gold" then 
+    if awardType == "goldWeapon" then 
         local map = md:getInstance("Map")
         map:dispatchEvent({name = map.AWARD_GOLD_EVENT, pWorld = pWorld})   
     end

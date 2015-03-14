@@ -131,20 +131,9 @@ local waves = {
 					startState = "rollright",
 					id = 1,
 				},
-			},
-			{
-				time = 3.5,
-				num = 1,
-				delay = {0.5},
-				pos = {50},
-				property = { 
-					placeName = "place3",
-					id = 1,
-					startState = "rollright",
-				},
 			},						
 			{
-				time = 4,
+				time = 3.5,
 				num = 2,
 				delay = {0, 0.3},
 				pos = {170,330},
