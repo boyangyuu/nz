@@ -357,7 +357,7 @@ function LevelMapLayer:initGuide()
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "xiangqian_nextLevel",
-        groupId = "weapon",
+        groupId = "xiangqian",
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
@@ -370,7 +370,7 @@ function LevelMapLayer:initGuide()
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "weapon_nextlevel",
-        groupId = "xiangqian",
+        groupId = "weapon",
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 3})

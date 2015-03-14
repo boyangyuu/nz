@@ -43,8 +43,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
     	self:iapPay()
-    	
-    end	  
+    end
 end
 
 function BuyModel:payGift()
