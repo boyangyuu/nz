@@ -209,12 +209,35 @@ end
 
 function Fight:checkDialogForward()
     local dialog = md:getInstance("DialogModel")
-    dialog:check("forward", handler(self, self.startFight))     
+    dialog:check("forward", handler(self, self.onDialogForwardEnd))     
+end
+
+function Fight:onDialogForwardEnd()
+    self:startFight()
 end
  
 function Fight:checkDialogAfter()
     local dialog = md:getInstance("DialogModel")
-    dialog:check("after",  handler(self, self.endFight))
+    dialog:check("after",  handler(self, self.onDialogAfterEnd))
+end
+
+function Fight:onDialogAfterEnd()
+    local isAd = true
+    if not isAd then 
+        self:endFight()
+        return 
+    end
+
+    --ad
+    local buyModel = md:getInstance("BuyModel")
+    if not buyModel:checkBought("weaponGiftBag") then 
+        buyModel:showBuy("weaponGiftBag", {
+            payDoneFunc = handler(self, self.endFight),
+            deneyBuyFunc = handler(self, self.endFight)},
+            "主界面_点击武器大礼包")
+    else
+        self:endFight()
+    end
 end
 
 function Fight:checkDialogAward(callfunc)

@@ -61,9 +61,7 @@ function AwardSanEnemyView:stopFall()
     self.isFalling = false
     self:stopAllActions()
     self.armature:getAnimation():play("stand" , -1, 1) 
-
-    self:performWithDelay(handler(self, self.setWillRemoved), 
-        define.kAwardSanTime)
+    self:setWillRemoved(define.kAwardSanTime)
 end
 
 --Attackable interface
