@@ -474,6 +474,7 @@ local bosses = {
 }
 
 local mapId = "map_1_6"
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
