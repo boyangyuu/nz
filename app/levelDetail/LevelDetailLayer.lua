@@ -363,5 +363,4 @@ function LevelDetailLayer:initGuide()
      })     
 end
 
-
 return LevelDetailLayer

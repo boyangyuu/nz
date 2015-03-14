@@ -31,6 +31,8 @@ function WeaponListLayer:ctor()
 
     cc.EventProxy.new(self.levelMapModel, self)
         :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
+    cc.EventProxy.new(self.levelDetailModel, self)
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
     
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
