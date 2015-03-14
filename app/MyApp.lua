@@ -153,7 +153,7 @@ function MyApp:createGameStateFile()
                         xiangqian       = true,   --镶嵌一套青铜
 
                         --第1-3关之后
-                        afterfight03    = false,   --镶嵌一套白银
+                        afterfight03    = true,   --镶嵌一套白银
 
                         --第1-3.1关之内
                         fight04         = true,                        
