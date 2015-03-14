@@ -32,6 +32,7 @@ function PausePopup:initButtons()
 		elseif event.name == 'ended' then 
 			-- ui:closePopup("PausePopup")
 			director:popScene()
+			isShowPausescene = true
 
 			-- director:resume()
 			assert("gameContinue is pressed!")
@@ -49,6 +50,7 @@ function PausePopup:initButtons()
 			self.isChanging = true
 			self:btnColor(backBtn, false)
 			director:popScene()
+			isShowPausescene = true
 			-- ui:closePopup("PausePopup")
 			self:btnEvent()
 			print("homeBackBtn is pressed!")
@@ -102,6 +104,7 @@ function PausePopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			director:popScene()
+			isShowPausescene = true
 		end
 	end)
 end
