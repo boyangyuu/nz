@@ -228,7 +228,7 @@ function WeaponListLayer:onClickBtnBuy()
     if self.buyModel:checkBought("weaponGiftBag") == false then
         self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
                                       deneyBuyFunc = handler(self, self.deneyBuyWeapon)}, 
-                                       "武器库界面_点击解锁武器大礼包"..self.weaponRecord["name"])
+                                       "武器库界面_点击解锁武器"..self.weaponRecord["name"])
     end
 end
 
@@ -242,7 +242,7 @@ function WeaponListLayer:deneyBuyWeapon()
     else
         local rmbCost = self.weaponRecord["rmbCost"]
         if  rmbCost == 6 then
-            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁"..self.weaponRecord["name"])
+            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁武器"..self.weaponRecord["name"])
         elseif rmbCost == 10 then
             self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
         end
