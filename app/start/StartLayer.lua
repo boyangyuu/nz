@@ -112,7 +112,6 @@ function StartLayer:onEnter()
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
-    local data = getUserData()
 end
 
 function StartLayer:beginGame()
@@ -124,12 +123,11 @@ function StartLayer:beginGame()
         local levelMapModel = md:getInstance("LevelMapModel")
         local groupId, levelId = levelMapModel:getConfig()
         -- print("groupId", groupId)
-        local isDone = guide:isDone("xiangqian")
-        if isDone then
-            ui:changeLayer("HomeBarLayer",{groupId = groupId, popWeaponGift = true, loadingType = "home_first"})
-        else
-            ui:changeLayer("HomeBarLayer",{groupId = groupId, loadingType = "home_first"})
-        end
+
+        local userModel = md:getInstance("UserModel")
+        local isDone = userModel:getUserLevel() >= 4
+        ui:changeLayer("HomeBarLayer",{groupId = groupId,popWeaponGift = isDone, 
+            loadingType = "home_first"})
     else
         --clear data
         guide:clearData()

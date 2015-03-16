@@ -43,8 +43,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
     	self:iapPay()
-    	
-    end	  
+    end
 end
 
 function BuyModel:payGift()
@@ -57,7 +56,12 @@ function BuyModel:payGift()
 end
 
 function BuyModel:iapPay()
+	display.pause()
 	iap:pay(self.curId)
+end
+
+function BuyModel:gameResume()
+	display.resume()
 end
 
 
@@ -74,6 +78,7 @@ function BuyModel:getRandomOrderId()
 end
 
 function BuyModel:payDone(result)
+	self:gameResume()
 	local funcStr = "buy_"..self.curId
 	self[funcStr](self, self.curBuyData)
 
@@ -94,8 +99,11 @@ end
 
 function BuyModel:deneyPay()
 	print("function BuyModel:deneyBuy()"..self.curId)
+	self:gameResume()
 	local deneyBuyFunc = self.curBuyData.deneyBuyFunc
-	if deneyBuyFunc then  deneyBuyFunc() end
+	if deneyBuyFunc then  
+		deneyBuyFunc() 
+	end
 
 	-- um event
 	local umData = {}
@@ -120,9 +128,6 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	inlayModel:buyGoldsInlay(3)
     inlayModel:refreshInfo("speed")
 
-
-	--手雷*10
-	propModel:buyProp("lei",10)
 	storeModel:refreshInfo("prop")
 
 	ui:showPopup("commonPopup",
@@ -216,20 +221,11 @@ function BuyModel:buy_unlockWeapon( buydata )
 	print("BuyModel:buy_unlockWeapon( buydata )")
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
-
-	ui:showPopup("commonPopup",
-	 {type = "style1",content = "请在武器库装备！"},
-	 {opacity = 0})
-
 end
 
 function BuyModel:buy_highgradeWeapon(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
-	
-	ui:showPopup("commonPopup",
-	 {type = "style1",content = "请在武器库装备！"},
-	 {opacity = 0})
 end
 
 function BuyModel:buy_goldWeapon( buydata )

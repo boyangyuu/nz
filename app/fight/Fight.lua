@@ -160,7 +160,15 @@ function Fight:onGiveUp()
     local umData = {}
     umData[levelInfo] = "关卡失败"    
     um:event("关卡完成情况", umData)
-    um:failLevel(levelInfo)
+
+    local failCause = self:getFailCause()
+    um:failLevel(levelInfo, failCause)
+end
+
+function Fight:getFailCause()
+    local goldCostTimes = self.inlay:getGoldCostTimes()
+    print("goldCostTimes", goldCostTimes)
+    return "黄金武器消耗次数: " .. goldCostTimes
 end
 
 function Fight:onFail()
@@ -195,6 +203,10 @@ function Fight:onRelive()
     --jijia
     local robot = md:getInstance("Robot")
     robot:startRobot(define.kRobotTimeRelieve)
+
+    --refresh
+    local fightProp = md:getInstance("FightProp")
+    fightProp:refreshData()
 end
 
 function Fight:pauseFight(isPause)
@@ -302,7 +314,7 @@ function Fight:cleanModels()
     md:deleteInstance("Hero")
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")
-    md:deleteInstance("Robot")  
+    md:deleteInstance("Robot")
 end
 
 function Fight:setGoldValue(goldValue_)

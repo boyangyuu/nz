@@ -6,11 +6,12 @@ end)
 
 function LevelDetailLayer:ctor(properties)
 	--instance
-	self.model 			 = md:getInstance("LevelDetailModel")
+	self.levelDetailModel 			 = md:getInstance("LevelDetailModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
 	self.inlayModel 	 = md:getInstance("InlayModel")
 	self.propModel       = md:getInstance("propModel")
 	self.guide           = md:getInstance("Guide")
+	self.buyModel = md:getInstance("BuyModel")
 	self.groupId = properties.groupId
 	self.levelId = properties.levelId
 	self:initData()
@@ -96,7 +97,7 @@ function LevelDetailLayer:initUI()
 		self.labelget:setVisible(true)
 		self.panelbiaozhu:setVisible(true)
 		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
-			.."零件1个，当前"..self.model:getSuiPianNum(DataTable["suipianid"]).."/10")
+			.."零件1个，当前"..self.levelDetailModel:getSuiPianNum(DataTable["suipianid"]).."/10")
 	end
 	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
@@ -255,7 +256,7 @@ function LevelDetailLayer:onClickBtnStart()
 end
 
 function LevelDetailLayer:startGame()
-	self.model:setCurGroupAndLevel(self.groupId,self.levelId)
+	self.levelDetailModel:setCurGroupAndLevel(self.groupId,self.levelId)
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
 	self:onClickBtnOff()
@@ -270,24 +271,39 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadybibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		local isDone = self.guide:isDone("weapon")
-		if isDone then
-			local buyModel = md:getInstance("BuyModel")
-	        buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.reloadlistview),  }, 
-	        	"关卡详情_点击必备按钮")
-		end
+		
+        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
+        deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
+        	"关卡详情_点击必备按钮")
 	end
 end
 
-function LevelDetailLayer:reloadlistview()
-	self.model:reloadlistview()
+function LevelDetailLayer:cancelWeaponBag()
+	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local rmbCost = weaponRecord["rmbCost"]
+    if  rmbCost == 6 then
+        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.buyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..self.recomWeaponId)
+    elseif rmbCost == 10 then
+        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..self.recomWeaponId)
+    end
+end
+
+function LevelDetailLayer:buyWeaponSucc()
+	self.levelDetailModel:reloadlistview()
+	self.weaponListModel:equipBag(self.recomWeaponId,1)
+	self.alreadybibei:setVisible(true)
+	self.btnBibei:setVisible(false)
+end
+
+function LevelDetailLayer:getWeaponBagSucc()
+    local levelMapModel = md:getInstance("LevelMapModel")
+    levelMapModel:hideGiftBagIcon()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
 	self.alreadybibei:setVisible(true)
 	self.btnBibei:setVisible(false)
 end
 
 function LevelDetailLayer:onClickBtnGold()
-	local buyModel = md:getInstance("BuyModel")
 	function equipGold()
 		self.inlayModel:equipAllInlays(true)
 		self.alreadygold:setVisible(true)
@@ -295,7 +311,7 @@ function LevelDetailLayer:onClickBtnGold()
 	end
 	
 	function deneyGoldGift()
-	    buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_黄武按钮取消土豪礼包")
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_黄武按钮取消土豪礼包")
 	end
 
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
@@ -307,22 +323,21 @@ function LevelDetailLayer:onClickBtnGold()
 		self.alreadygold:setVisible(true)
 		self.btnGold:setVisible(false)	
     else
-	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
 	end
 end
 
 function LevelDetailLayer:onClickBtnJijia()
-	local buyModel = md:getInstance("BuyModel")
 	function equipJijia()
 		self.alreadyjijia:setVisible(true)
 		self.btnJijia:setVisible(false)	
 	end
 
 	function deneyGoldGiftJijia()
-	    buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	    self.buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
 	end
-	    buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
+	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
 	     "关卡详情_点击机甲按钮")
 end
 
@@ -330,7 +345,7 @@ end
 function LevelDetailLayer:initData()
 	local groupId = self.groupId
 	local levelId = self.levelId
-	self.DataTable = self.model:getConfig(groupId,levelId)
+	self.DataTable = self.levelDetailModel:getConfig(groupId,levelId)
 end
 
 function LevelDetailLayer:initGuide()

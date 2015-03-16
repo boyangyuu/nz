@@ -23,7 +23,7 @@ function LevelMapLayer:ctor(properties)
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.initBgLayer))
     cc.EventProxy.new(self.LevelMapModel, self)
-        :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.refreshData))
+        :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.hideWeaponGiftBag))
 
 
     self:initGuide() 
@@ -199,8 +199,10 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:refreshData()
-    local levelDetailModel = md:getInstance("LevelDetailModel")
-    levelDetailModel:reloadlistview()
+    self.LevelMapModel:hideGiftBagIcon()
+end
+
+function LevelMapLayer:hideWeaponGiftBag(event)
     self.btnWeapon:setVisible(false)
 end
 
@@ -357,7 +359,7 @@ function LevelMapLayer:initGuide()
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "xiangqian_nextLevel",
-        groupId = "weapon",
+        groupId = "xiangqian",
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
@@ -370,7 +372,7 @@ function LevelMapLayer:initGuide()
     local guide = md:getInstance("Guide")
     guide:addClickListener({
         id = "weapon_nextlevel",
-        groupId = "xiangqian",
+        groupId = "weapon",
         rect = rect,
         endfunc = function (touchEvent)
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 3})

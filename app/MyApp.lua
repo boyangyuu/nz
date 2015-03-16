@@ -189,7 +189,7 @@ end
 
 function MyApp:onEnterBackground()
     if isShowPausescene ~= true then return end
-    ui:showPopup("pausePopup",{popupName = "mapset"},
+    ui:showPopup("homePopup",{popupName = "mapset"},
         {anim = true,isPauseScene = true,isNotScrenCapture = true})
 end
 

@@ -103,8 +103,12 @@ function LevelMapModel:isExistNextLevel(groupId, levelId)
 	end	
 end
 
+
+--隐藏主界面武器大礼包按钮和刷新武器列表
 function LevelMapModel:hideGiftBagIcon()
+	print("LevelMapModel:hideGiftBagIcon()")
 	self:dispatchEvent({name = "HIDE_GIFTBAGICON_EVENT"})
+	self:dispatchEvent({name = "REFRESH_WEAPON_LISTVIEW"})
 end
 
 function LevelMapModel:levelPass(groupId,levelId)
