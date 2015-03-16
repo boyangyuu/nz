@@ -31,6 +31,8 @@ function WeaponListLayer:ctor()
 
     cc.EventProxy.new(self.levelMapModel, self)
         :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
+    cc.EventProxy.new(self.levelDetailModel, self)
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
     
     -- ui
 	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
@@ -359,10 +361,11 @@ function WeaponListLayer:refreshComment()
     self.damagepluse:runAction(cc.RepeatForever:create(action))
 
     local suipiannum = self.levelDetailModel:getSuiPianNum(self.weaponId)
+    local needSuipianNum = self.levelDetailModel:getNeedSuipianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
-    if self.weaponRecord["parts"] == 1 and not isGot then
+    if self.weaponRecord["partNum"] ~= nil and not isGot then
         self.suipiannum:setVisible(true)
-        self.suipiannum:setString("DSLJ"..suipiannum.."/10")
+        self.suipiannum:setString("DSLJ"..suipiannum.."/"..needSuipianNum)
     elseif isGot then
         self.suipiannum:setVisible(false)
     end
