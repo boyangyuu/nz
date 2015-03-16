@@ -96,8 +96,11 @@ function LevelDetailLayer:initUI()
 	if DataTable["type"] == "boss" and isWeaponAlreadyTogether == false then
 		self.labelget:setVisible(true)
 		self.panelbiaozhu:setVisible(true)
-		self.labelget:setString("本关卡可获得"..self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
-			.."零件1个，当前"..self.levelDetailModel:getSuiPianNum(DataTable["suipianid"]).."/10")
+		local needWeaponNum = self.levelDetailModel:getNeedSuipianNum(DataTable["suipianid"])
+		local alreadyGetNum = self.levelDetailModel:getSuiPianNum(DataTable["suipianid"])
+		local suipianName = self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
+		self.labelget:setString("本关卡可获得"..suipianName
+			.."零件1个，当前"..alreadyGetNum.."/"..needWeaponNum)
 	end
 	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
