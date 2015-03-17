@@ -101,10 +101,6 @@ function BaseEnemyView:showAlert()
     --add
     local bone = self.armature:getBone("alert")
     local posBone =  bone:convertToWorldSpace(cc.p(0.0,0.0))
-    -- dump(posBone, "posBone")
-    
-    -- local destPos = self.armature:convertToNodeSpace(posBone)
-    -- armature:setAnchorPoint(cc.p(0.0,0.0))
     local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
     local destPos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)    
     armature:setPosition(destPos)

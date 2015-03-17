@@ -25,6 +25,7 @@ function Attackable:ctor(property)
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
 	self:addChild(self.armature)
+	self.armature:setScale(1/0.7)
     self:setScale(property.scale or 1.0)
     
     --events
@@ -297,7 +298,7 @@ function Attackable:clearPlayCache()
 end
 
 function Attackable:getScale()
-	return self:getScaleX()
+	return self:getScaleX() * 2.0
 end
 
 function Attackable:removeAllSchedulers()
@@ -402,6 +403,7 @@ function Attackable:getEnemyArmature()
     --isBoss
     local armature
     local isBoss = self.enemy:getId() == "boss"
+    isBoss = true
     if isBoss then 
 	    local manager = ccs.ArmatureDataManager:getInstance()
         local src = "res/Fight/enemys/"..imgName.."/"..imgName..".csb"
