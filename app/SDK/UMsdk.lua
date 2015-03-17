@@ -53,11 +53,6 @@ end
 function UM:onChargeSuccess(orderid)
     if device.platform ~= "android" then
         return
-    end
-
-    -- body
-    if device.platform ~= "android" then
-        return
     end    
     TDGAVirtualCurrency:onChargeSuccess(orderid)
 end

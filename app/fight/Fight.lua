@@ -167,7 +167,7 @@ end
 
 function Fight:getFailCause()
     local goldCostTimes = self.inlay:getGoldCostTimes()
-    print("goldCostTimes", goldCostTimes)
+    -- print("goldCostTimes", goldCostTimes)
     return "黄金武器消耗次数: " .. goldCostTimes
 end
 
@@ -247,7 +247,7 @@ function Fight:onDialogAfterEnd()
         buyModel:showBuy("weaponGiftBag", {
             payDoneFunc = handler(self, self.endFight),
             deneyBuyFunc = handler(self, self.endFight)},
-            "主界面_点击武器大礼包")
+            "战斗结束_自动弹出武器大礼包")
     else
         self:endFight()
     end
