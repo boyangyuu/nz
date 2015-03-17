@@ -6,7 +6,7 @@ end)
 
 function LevelDetailLayer:ctor(properties)
 	--instance
-	self.levelDetailModel 			 = md:getInstance("LevelDetailModel")
+	self.levelDetailModel = md:getInstance("LevelDetailModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
 	self.inlayModel 	 = md:getInstance("InlayModel")
 	self.propModel       = md:getInstance("propModel")
@@ -33,10 +33,10 @@ function LevelDetailLayer:loadCCS()
 	-- seek label
 	self.labelTitle    = cc.uiloader:seekNodeByName(self, "label_title")
 	self.labelId       = cc.uiloader:seekNodeByName(self, "label_id")
-	self.labeldesc     = cc.uiloader:seekNodeByName(self, "label_desc")
+	self.labelDesc     = cc.uiloader:seekNodeByName(self, "label_desc")
 	self.labelTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
-	self.labelget = cc.uiloader:seekNodeByName(self, "levelget")
-	self.panelbiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
+	self.labelGet = cc.uiloader:seekNodeByName(self, "levelget")
+	self.panelBiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
 	self.target    = cc.uiloader:seekNodeByName(self, "target")
 	self.yijiana    = cc.uiloader:seekNodeByName(self, "yijiana")
 	self.yijianb    = cc.uiloader:seekNodeByName(self, "yijianb")
@@ -55,9 +55,9 @@ function LevelDetailLayer:loadCCS()
 	self.panlEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")   
 
 	-- seek already image
-	self.alreadybibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
-	self.alreadygold   = cc.uiloader:seekNodeByName(self, "alreadygold")
-	self.alreadyjijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
+	self.alreadyBibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
+	self.alreadyGold   = cc.uiloader:seekNodeByName(self, "alreadygold")
+	self.alreadyJijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
 
     -- anim
     local src = "res/LevelDetail/btequipanim/bt_yjzb.csb"
@@ -88,19 +88,19 @@ function LevelDetailLayer:initUI()
 	self.labelTitle:setString(DataTable["name"])
 	self.labelId:setString(DataTable["groupId"].."-"..DataTable["levelId"])
 	self.target:setString(DataTable["taskDesc"])
-	self.labeldesc:setString(DataTable["desc"])
+	self.labelDesc:setString(DataTable["desc"])
 	self.labelTasktype:setString(DataTable["taskTypeDesc"])
-	self.labelget:setVisible(false)
-	self.panelbiaozhu:setVisible(false)
+	self.labelGet:setVisible(false)
+	self.panelBiaozhu:setVisible(false)
 	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(DataTable["suipianid"])
 	if DataTable["type"] == "boss" and isWeaponAlreadyTogether == false then
-		self.labelget:setVisible(true)
-		self.panelbiaozhu:setVisible(true)
+		self.labelGet:setVisible(true)
+		self.panelBiaozhu:setVisible(true)
 		local needWeaponNum = self.levelDetailModel:getNeedSuipianNum(DataTable["suipianid"])
 		local alreadyGetNum = self.levelDetailModel:getSuiPianNum(DataTable["suipianid"])
 		local suipianName = self.weaponListModel:getWeaponNameByID(DataTable["suipianid"])
-		self.labelget:setString("本关卡可获得"..suipianName
-			.."零件1个，当前"..alreadyGetNum.."/"..needWeaponNum)
+		self.labelGet:setString("本关卡可获得"..suipianName
+					.."零件1个，当前"..alreadyGetNum.."/"..needWeaponNum)
 	end
 	if DataTable["type"] == "boss" then
 		local armature = ccs.Armature:create(DataTable["enemyPlay"])
@@ -108,7 +108,6 @@ function LevelDetailLayer:initUI()
 		addChildCenter(armature, self.panlEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
 	end
-
 
 	self:initMapUI(DataTable["mapImg"])
 	self.recomWeaponId = DataTable["weapon"]
@@ -120,7 +119,6 @@ function LevelDetailLayer:initUI()
 
 	-- init btn
 	self:initBtns()
-
 end
 
 function LevelDetailLayer:initMapUI(mapName)
@@ -129,16 +127,12 @@ function LevelDetailLayer:initMapUI(mapName)
 	local mapSrcName = mapName..".jpg"   -- todo 外界
 	local mapimg = cc.ui.UIImage.new(mapSrcName)
 
-	-- local map = cc.uiloader:load(mapSrcName)
-	-- local mapimg = cc.uiloader:seekNodeByName(map, "bg")
-
 	local mapNode = cc.uiloader:seekNodeByName(self, "mapimage")
 	local mapPanlSize = mapNode:getContentSize()
 	local mapImgSize = mapimg:getBoundingBox()
 	mapimg:setScale(mapPanlSize.width/mapImgSize.width,mapPanlSize.height/mapImgSize.height)
 	-- map:setAnchorPoint(0.5,0.5)
 	addChildCenter(mapimg, mapNode)
-
 
 	--clear
 	local index = 1
@@ -186,15 +180,15 @@ function LevelDetailLayer:initBtns()
     bibeiarmature:getAnimation():play("yjzb" , -1, 1)
 
 	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
-		self.alreadybibei:setVisible(true)
+		self.alreadyBibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	end
 	if self.inlayModel:isGetAllGold() then
-		self.alreadygold:setVisible(true)
+		self.alreadyGold:setVisible(true)
 		self.btnGold:setVisible(false)
 	end
 	if self.propModel:getPropNum("jijia") > 0 then
-		self.alreadyjijia:setVisible(true)
+		self.alreadyJijia:setVisible(true)
 		self.btnJijia:setVisible(false)
 	end
 
@@ -247,15 +241,7 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
-    -- local isDone = self.guide:isDone("weapon")
-	-- if isDone and self.groupId == 1 and self.levelId > 4 or self.groupId > 1 then
-	--     local buyModel = md:getInstance("BuyModel")
-	    -- buyModel:showBuy("changshuang", {deneyBuyFunc = handler(self,self.startGame),
-					-- 	    	payDoneFunc = handler(self, self.startGame)}, 
-					-- 	    	"关卡详情_点击开始按钮")
-	-- else
-		self:startGame()
-	-- end
+	self:startGame()
 end
 
 function LevelDetailLayer:startGame()
@@ -271,10 +257,9 @@ function LevelDetailLayer:onClickBtnBibei()
 		else
 			self.weaponListModel:equipBag(self.recomWeaponId,1)
 		end
-		self.alreadybibei:setVisible(true)
+		self.alreadyBibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-		
         self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
         deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
         	"关卡详情_点击必备按钮")
@@ -294,7 +279,7 @@ end
 function LevelDetailLayer:buyWeaponSucc()
 	self.levelDetailModel:reloadlistview()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	self.alreadybibei:setVisible(true)
+	self.alreadyBibei:setVisible(true)
 	self.btnBibei:setVisible(false)
 end
 
@@ -302,14 +287,14 @@ function LevelDetailLayer:getWeaponBagSucc()
     local levelMapModel = md:getInstance("LevelMapModel")
     levelMapModel:hideGiftBagIcon()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	self.alreadybibei:setVisible(true)
+	self.alreadyBibei:setVisible(true)
 	self.btnBibei:setVisible(false)
 end
 
 function LevelDetailLayer:onClickBtnGold()
 	function equipGold()
 		self.inlayModel:equipAllInlays(true)
-		self.alreadygold:setVisible(true)
+		self.alreadyGold:setVisible(true)
 		self.btnGold:setVisible(false)	
 	end
 	
@@ -323,7 +308,7 @@ function LevelDetailLayer:onClickBtnGold()
         self.inlayModel:equipAllInlays()
         self.storeModel  = md:getInstance("StoreModel")
         self.storeModel:refreshInfo("prop")
-		self.alreadygold:setVisible(true)
+		self.alreadyGold:setVisible(true)
 		self.btnGold:setVisible(false)	
     else
 	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
@@ -333,7 +318,7 @@ end
 
 function LevelDetailLayer:onClickBtnJijia()
 	function equipJijia()
-		self.alreadyjijia:setVisible(true)
+		self.alreadyJijia:setVisible(true)
 		self.btnJijia:setVisible(false)	
 	end
 
