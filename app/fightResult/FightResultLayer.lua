@@ -278,7 +278,6 @@ function FightResultLayer:initUIContent()
     for i=1,table.nums(self.giveTable) do
     	self.lock[i]:setVisible(false)
     end
-
 end
 
 function FightResultLayer:playCard()
@@ -369,11 +368,7 @@ function FightResultLayer:getinlayfall()
 		if v["falltype"] == "inlay" then
 			self.inlayModel:buyInlay(v["id"])
 		elseif v["falltype"] == "gun" then
-			self.weaponListModel:buyWeapon(v["id"])
-			self.weaponListModel:equipBag(v["id"], 3)
-			ui:showPopup("commonPopup",
-				 {type = "style2", content = "恭喜获得雷明顿！",delay = 0.5},
-				 {opacity = 155})
+			--掉落雷明顿，turnLeftCard弹出提示
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
 			local name = self.weaponListModel:getWeaponNameByID(v["id"])
@@ -436,10 +431,10 @@ function FightResultLayer:turnLeftCard()
 			end
 			scheduler.performWithDelayGlobal(delaypopgun, 0.5)
 		elseif v["falltype"] == "suipian" then
-			self.levelDetailModel:setsuipian(v["id"])
-			ui:showPopup("commonPopup",
-				 {type = "style2", content = "获得"..name.."零件 X1！",delay = 0.5},
-				 {opacity = 155})
+			-- self.levelDetailModel:setsuipian(v["id"])
+			-- ui:showPopup("commonPopup",
+			-- 	 {type = "style2", content = "获得"..name.."零件 X1！",delay = 0.5},
+			-- 	 {opacity = 155})
 		end
 	end
 	for k,v in pairs(self.lock) do
