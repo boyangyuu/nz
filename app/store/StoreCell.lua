@@ -138,7 +138,6 @@ function StoreCell:initCellData()
         self.price:setString(self.record["price"])
 
         if self.record["price"] == 1 then
-            -- discountlabel:setVisible(false)
             discount:setVisible(false)
             self.redline:setVisible(false)
         end

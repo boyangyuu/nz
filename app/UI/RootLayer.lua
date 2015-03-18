@@ -93,7 +93,7 @@ function RootLayer:addResHome()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
     end
 
-    local mapsrc = "res/LevelMap/map_shijie/shijiemap.csb"
+    local mapsrc = "res/LevelMap/map_shijie/shijiemap.ExportJson"
     manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/map_shijie/shijiemap0.plist"
     local png   = "res/LevelMap/map_shijie/shijiemap0.png"
@@ -203,7 +203,7 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))  
 
     --armature
-    -- local manager = ccs.ArmatureDataManager:getInstance()
+    local manager = ccs.ArmatureDataManager:getInstance()
     -- local enemyImgs = {
     --     --普通怪物
     --     "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
