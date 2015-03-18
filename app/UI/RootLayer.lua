@@ -203,7 +203,7 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))  
 
     --armature
-    -- local manager = ccs.ArmatureDataManager:getInstance()
+    local manager = ccs.ArmatureDataManager:getInstance()
     -- local enemyImgs = {
     --     --普通怪物
     --     "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
