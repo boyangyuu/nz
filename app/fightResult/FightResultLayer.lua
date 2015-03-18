@@ -93,9 +93,6 @@ function FightResultLayer:playstar(numStar)
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
 		         		scheduler.performWithDelayGlobal(showButton, 1)
-		         		if self.isPop then
-			         		scheduler.performWithDelayGlobal(delaypop, 2)
-			     		end
 		         	end    
 	            end)
 		    end
@@ -219,13 +216,11 @@ end
 
 function FightResultLayer:onClickBtnNext()
     local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
-    -- dump(curGroup)
 
     --todo
     if curLevel == 6 and curGroup < 4 then
     	curGroup = curGroup + 1
     end
-    
 	local isCurLevel = self.levelMapModel:isCureGroupAndLevel(curGroup, curLevel)
 
 	--check guide
@@ -289,6 +284,14 @@ function FightResultLayer:playCard()
 			self.card[k]:runAction(cc.ScaleTo:create(0.3,0,1))
 		end
 		scheduler.performWithDelayGlobal(delayturn, delay)
+	end
+	for k,v in pairs(self.giveTable) do
+		if v.falltype == "suipian" then
+			function popUpNoti()
+				self:popSuipianNotify(self.suipianName)
+			end
+			scheduler.performWithDelayGlobal(popUpNoti, 1.5)
+		end
 	end
 end
 
@@ -362,7 +365,6 @@ function FightResultLayer:getinlayfall()
 	end
 	self.giveTable = giveTable
 	self.lockTable = lockTable
-	self.isPop = false -- ak掉落提示
 	for k,v in pairs(giveTable) do
 		table.insert(self.itemsTable,v)
 		if v["falltype"] == "inlay" then
@@ -371,20 +373,19 @@ function FightResultLayer:getinlayfall()
 			--掉落雷明顿，turnLeftCard弹出提示
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
-			local name = self.weaponListModel:getWeaponNameByID(v["id"])
-			function delaypop( )
-				ui:showPopup("commonPopup",
-					 {type = "style2", content = "恭喜获得"..name.."零件 X1！",delay = 0.5},
-					 {opacity = 155})
-			end
-			self.isPop = true
+			self.suipianName = self.weaponListModel:getWeaponNameByID(v["id"])
 		end
 	end
-
 	for k,v in pairs(lockTable) do
 		table.insert(self.itemsTable,v)
 	end
 	dump(self.itemsTable)
+end
+
+function FightResultLayer:popSuipianNotify(name)
+	ui:showPopup("commonPopup",
+		 {type = "style2", content = "恭喜获得"..name.."零件 X1！",delay = 0.5},
+		 {opacity = 155})
 end
 
 function FightResultLayer:getGrade(LeftPersent)
@@ -431,10 +432,6 @@ function FightResultLayer:turnLeftCard()
 			end
 			scheduler.performWithDelayGlobal(delaypopgun, 0.5)
 		elseif v["falltype"] == "suipian" then
-			-- self.levelDetailModel:setsuipian(v["id"])
-			-- ui:showPopup("commonPopup",
-			-- 	 {type = "style2", content = "获得"..name.."零件 X1！",delay = 0.5},
-			-- 	 {opacity = 155})
 		end
 	end
 	for k,v in pairs(self.lock) do
