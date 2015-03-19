@@ -18,28 +18,27 @@ function InlayLayer:ctor()
     self.icon = {}
     self.typeId = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
+end
 
-	self:loadCCS()
-	self:initUI()
+function InlayLayer:onEnter()
+    self:loadCCS()
+    self:initUI()
     self:initGuide()
-    self:onEnter()
     self:refreshBtnIcon({typename = "speed"})
     self:refreshListView("speed")
     self:refreshAvatar()
-
-
 end
 
 function InlayLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/InlayShop")
     local controlNode = cc.uiloader:load("xiangqian.ExportJson")
+    if self.ui then
+        return
+    end
     self.ui = controlNode
     self:addChild(controlNode)
 
     display.addSpriteFrames("xiangqian0.plist", "xiangqian0.png")
-end
-
-function InlayLayer:onEnter()
 end
 
 function InlayLayer:refreshInlay(event)

@@ -34,13 +34,30 @@ function WeaponListLayer:ctor()
     cc.EventProxy.new(self.levelDetailModel, self)
         :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
     
-    -- ui
-	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
-	self:loadCCS()
-	self:initUI()
+ --    -- ui
+	-- cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
+	-- self:loadCCS()
+	-- self:initUI()
+
+ --    -- 点开页面默认选择某个武器
+ --    self:initGuide()
+end
+
+--guide
+function WeaponListLayer:onEnter()
+    self.weaponId = 1
+ 
+
+    --init ui
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
+    self:loadCCS()
+    self:initUI()
 
     -- 点开页面默认选择某个武器
     self:initGuide()
+
+    --refersh
+    self:refreshUI() 
 end
 
 -- loadCCS
@@ -48,6 +65,9 @@ function WeaponListLayer:loadCCS()
     -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
     local controlNode = cc.uiloader:load("wuqiku.ExportJson")
+    if self.ui then
+        return
+    end
     self.ui = controlNode
     self:addChild(controlNode)
 
@@ -563,14 +583,6 @@ end
 
 function WeaponListLayer:closePopup()
     ui:closePopup("commonPopup")
-end
-
-
-
---guide
-function WeaponListLayer:onEnter()
-    self.weaponId = 1
-    self:refreshUI()   
 end
 
 function WeaponListLayer:initGuide()
