@@ -9,11 +9,17 @@ function StartLayer:ctor()
 	self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
+    self:playSound()
 end
 
 function StartLayer:playBgMusic()
     local startMusic = "res/Music/bg/bjyx.wav"
     audio.playMusic(startMusic,true)
+end
+
+function StartLayer:playSound()
+    local soundSrc  = "res/Music/ui/dl_logo.wav"
+    audio.playSound(soundSrc,false)  
 end
 
 function StartLayer:loadCCS()
