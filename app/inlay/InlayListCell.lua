@@ -1,6 +1,6 @@
-local ScrollViewCell = import("..includes.ScrollViewCell")
-
-local InlayListCell = class("InlayListCell", ScrollViewCell)
+local InlayListCell = class("InlayListCell", function()
+    return display.newNode()
+end)
 
 function InlayListCell:ctor(record)
     self.inlayModel = md:getInstance("InlayModel")

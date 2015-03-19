@@ -209,35 +209,32 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local levelAnim = {}
     local panelBtn = {}
     local panelGray = {}
-    local dian = {}
+    -- local dian = {}
     local imgIcon = {}
     local group,level = self.LevelMapModel:getConfig()
-
-
     local groupInfo = self.LevelMapModel:getGroupInfo(self.curGroupId)
 
+    -- for k,v in pairs(groupInfo) do
+    --     if k ~= #groupInfo then
+    --         dian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..v.."_0")
+    --     end
+    -- end
 
-    for k,v in pairs(groupInfo) do
-        if k ~= #groupInfo then
-            dian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..v.."_0")
-        end
-    end
-
-    if group > groupId then
-        for k,v in pairs(dian) do
-            dian[k]:setVisible(true)
-        end
-    elseif group == groupId then
-        for k,v in pairs(groupInfo) do
-            if v >= level and k ~= #groupInfo then
-                dian[v]:setVisible(false)
-            end
-        end
-    else
-        for k,v in pairs(dian) do
-            dian[k]:setVisible(false)
-        end
-    end
+    -- if group > groupId then
+    --     for k,v in pairs(dian) do
+    --         dian[k]:setVisible(true)
+    --     end
+    -- elseif group == groupId then
+    --     for k,v in pairs(groupInfo) do
+    --         if v >= level and k ~= #groupInfo then
+    --             dian[v]:setVisible(false)
+    --         end
+    --     end
+    -- else
+    --     for k,v in pairs(dian) do
+    --         dian[k]:setVisible(false)
+    --     end
+    -- end
 
     -- for i = 1, self.levelAmount[groupId] do
     dump(groupInfo)
