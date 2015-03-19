@@ -30,10 +30,8 @@ end
 function WeaponListModel:getIntenlevel(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weapons.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == weaponid then
-				return v["intenlevel"]
-			end
+		if v.weaponid == weaponid then
+			return v["intenlevel"]
 		end
 	end
 	return 0
@@ -98,15 +96,13 @@ end
 function WeaponListModel:intensify(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weapons.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == weaponid then
-				if data.weapons.bags[k].intenlevel < 10 then
-					--todo 成长表
-					data.weapons.bags[k].intenlevel = data.weapons.bags[k].intenlevel + 1
-				    setUserData(data)
-			    else
-			    	print("已满级")
-				end
+		if v.weaponid == weaponid then
+			if data.weapons.bags[k].intenlevel < 10 then
+				--todo 成长表
+				data.weapons.bags[k].intenlevel = data.weapons.bags[k].intenlevel + 1
+			    setUserData(data)
+		    else
+		    	print("已满级")
 			end
 		end
 	end
@@ -118,15 +114,13 @@ function WeaponListModel:onceFull(weaponId)
 	local data = getUserData()
 	local lastLevel
 	for k,v in pairs(data.weapons.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == weaponId then
-				if data.weapons.bags[k].intenlevel < 10 then
-					lastLevel = data.weapons.bags[k].intenlevel
-					data.weapons.bags[k].intenlevel = 10
-					setUserData(data)
-				else
-			    	print("已满级")
-				end
+		if v.weaponid == weaponId then
+			if data.weapons.bags[k].intenlevel < 10 then
+				lastLevel = data.weapons.bags[k].intenlevel
+				data.weapons.bags[k].intenlevel = 10
+				setUserData(data)
+			else
+		    	print("已满级")
 			end
 		end
 	end
@@ -139,10 +133,8 @@ end
 function WeaponListModel:isWeaponExist(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weapons.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == weaponid then
-				return true
-			end
+		if v.weaponid == weaponid then
+			return true
 		end
 	end
 	return false
@@ -179,11 +171,9 @@ function WeaponListModel:isFull(weaponid)
 	local data = getUserData()
 	local kFullLevel = 10
 	for k,v in pairs(data.weapons.bags) do
-		for k1,v1 in pairs(v) do
-			if k1 == "weaponid" and v1 == weaponid then
-				if data.weapons.bags[k].intenlevel == kFullLevel then
-			    	return true
-				end
+		if v.weaponid == weaponid then
+			if data.weapons.bags[k].intenlevel == kFullLevel then
+		    	return true
 			end
 		end
 	end
@@ -208,18 +198,16 @@ function WeaponListModel:equipBag( weaponid, index )
 	local data = getUserData()
 	if self:getWeaponStatus(weaponid) == 0 then
 		for k,v in pairs(data.weapons.bags) do
-			for k1,v1 in pairs(v) do
-				if k1 == "weaponid" and v1 == weaponid then
-					if index == 1 then
-						data.weapons.weaponed.bag1 = v
-					elseif index == 2 then
-						data.weapons.weaponed.bag2 = v
-					elseif index == 3 then
-						data.weapons.weaponed.bag3 = v
-					end
-					setUserData(data)
-					dump(data)
+			if v.weaponid == weaponid then
+				if index == 1 then
+					data.weapons.weaponed.bag1 = v
+				elseif index == 2 then
+					data.weapons.weaponed.bag2 = v
+				elseif index == 3 then
+					data.weapons.weaponed.bag3 = v
 				end
+				setUserData(data)
+				dump(data)
 			end
 		end
 	elseif self:getWeaponStatus(weaponid) == index then

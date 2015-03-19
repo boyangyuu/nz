@@ -1,3 +1,5 @@
+local scheduler          = require(cc.PACKAGE_NAME .. ".scheduler")
+
 local StartLayer = class("StartLayer", function()
 	return display.newLayer()
 end)
@@ -5,6 +7,7 @@ end)
 function StartLayer:ctor()
 	self:loadCCS()
 	self:initUI()
+    self:initMusicUI()
     self:setNodeEventEnabled(true)
 end
 
@@ -20,11 +23,50 @@ function StartLayer:loadCCS()
 end
 
 function StartLayer:initUI()
-    self:initMusicUI()
+    local panlAnim = cc.uiloader:seekNodeByName(self, "panlAnim")
+    local src = "res/Start/caidantx/caidantx.csb"
+    local logosrc = "res/Start/dl_logo/dl_logo.ExportJson"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+    manager:addArmatureFileInfo(logosrc)
 
-    local btnBegin = cc.uiloader:seekNodeByName(self, "beginbtn")
-    btnBegin:setTouchEnabled(true)
-    addBtnEventListener(btnBegin, function(event)
+    local plist = "res/Start/caidantx/caidantx0.plist"
+    local png = "res/Start/caidantx/caidantx0.png"
+    display.addSpriteFrames(plist,png)
+    local plist = "res/Start/dl_logo/dl_logo0.plist"
+    local png = "res/Start/dl_logo/dl_logo0.png"
+    display.addSpriteFrames(plist,png)
+
+    local armature = ccs.Armature:create("caidantx")
+    armature:setPosition(cc.p(568,320))
+    self:addChild(armature,100)
+    armature:getAnimation():play("caidantx" , -1, 1)
+
+    local dlArmature = ccs.Armature:create("dl_logo")
+    dlArmature:getAnimation():setMovementEventCallFunc(   
+         function ( armatureBack,movementType,movement) 
+            if movementType == ccs.MovementEventType.complete then
+                dlArmature:getAnimation():play("chixu" , -1, 1)
+            end 
+        end)
+
+    panlAnim:addChild(dlArmature)
+    dlArmature:getAnimation():play("start" , -1, 0)
+
+    scheduler.performWithDelayGlobal(handler(self, self.menuAnim), 1.9)
+
+    self.btnBegin = cc.uiloader:seekNodeByName(self, "btnBegin")
+    self.btnAbout = cc.uiloader:seekNodeByName(self, "btnAbout")
+    self.btnHelp = cc.uiloader:seekNodeByName(self, "btnHelp")
+    self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
+    self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
+    self.imgBegin = cc.uiloader:seekNodeByName(self, "imgbegin")
+    self.imgBegin:setScale(5)
+    self.imgBegin:setVisible(false)
+    
+
+    self.btnBegin:setTouchEnabled(true)
+    addBtnEventListener(self.btnBegin, function(event)
         if event.name == 'began' then
             print("btnBegin is begining!")
             return true
@@ -33,9 +75,8 @@ function StartLayer:initUI()
         end
     end)
 
-    local btnAbout = cc.uiloader:seekNodeByName(self, "beginbtn_2")
-    btnAbout:setTouchEnabled(true)
-    addBtnEventListener(btnAbout, function( event )
+    self.btnAbout:setTouchEnabled(true)
+    addBtnEventListener(self.btnAbout, function( event )
         if event.name == 'began' then
             return true
         elseif event.name == 'ended' then
@@ -43,42 +84,53 @@ function StartLayer:initUI()
         end
     end)
 
-    local btnHelp = cc.uiloader:seekNodeByName(self, "beginbtn_1")
-    btnHelp:setTouchEnabled(true)
-    addBtnEventListener(btnHelp, function( event )
+    self.btnHelp:setTouchEnabled(true)
+    addBtnEventListener(self.btnHelp, function( event )
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
            ui:showPopup("AboutPopup",{popupName = "bangzhu"},{anim = false})
         end
     end)
+end
 
-    local src = "res/Start/caidantx/caidantx.csb"
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)
+function StartLayer:menuAnim()
+    local i = 1
+    local btnKeys = {"btnActivate", "btnAbout","btnHelp","btnMusic","btnBegin"}
+    for i,v in ipairs(btnKeys) do
+        local delay = i * 0.1
+        function delayMoveBy()
+            local action = cc.MoveBy:create(0.2, cc.p(-450,0))
+            self[v]:runAction(action)
+        end
+        i= i+1
+        scheduler.performWithDelayGlobal(delayMoveBy, delay)
+    end
 
-    local plist = "res/Start/caidantx/caidantx0.plist"
-    local png = "res/Start/caidantx/caidantx0.png"
-    display.addSpriteFrames(plist,png)
+    function delayScaleTo()
+        self.imgBegin:setVisible(true)
+        local sequence = transition.sequence({
+            cc.ScaleTo:create(0.2, 1.5),
+            cc.ScaleTo:create(0.1, 1.7),
+            cc.ScaleTo:create(0.1, 1.5),
+        })
 
-    local armature = ccs.Armature:create("caidantx")
-    armature:setPosition(cc.p(568,320))
-    self:addChild(armature,100)
-    armature:getAnimation():play("caidantx" , -1, 1)
+        transition.execute(self.imgBegin, sequence)
+    end
+    scheduler.performWithDelayGlobal(delayScaleTo, 0.7)
 end
 
 function StartLayer:initMusicUI()
     local data = getUserData()
     local isOpenMusic = data.preference["isOpenMusic"]
 
-    local btnMusic = cc.uiloader:seekNodeByName(self, "btnmusic")
-    btnMusic:setTouchEnabled(true)
-    local play = cc.uiloader:seekNodeByName(btnMusic, "play")
-    local stop = cc.uiloader:seekNodeByName(btnMusic, "stop")
+    self.btnMusic:setTouchEnabled(true)
+    local play = cc.uiloader:seekNodeByName(self.btnMusic, "play")
+    local stop = cc.uiloader:seekNodeByName(self.btnMusic, "stop")
     play:setVisible(not isOpenMusic)
     stop:setVisible(isOpenMusic)
     
-    addBtnEventListener(btnMusic, function(event)
+    addBtnEventListener(self.btnMusic, function(event)
         if event.name == "began" then 
             return true
         elseif event.name == "ended" then
@@ -88,9 +140,8 @@ function StartLayer:initMusicUI()
 end
 
 function StartLayer:switchSound()
-    local btnMusic  = cc.uiloader:seekNodeByName(self, "btnmusic")
-    local play      = cc.uiloader:seekNodeByName(btnMusic, "play")
-    local stop      = cc.uiloader:seekNodeByName(btnMusic, "stop")    
+    local play      = cc.uiloader:seekNodeByName(self.btnMusic, "play")
+    local stop      = cc.uiloader:seekNodeByName(self.btnMusic, "stop")    
     local isPlaying = audio.isSwitchOpen()
     isPlaying = not isPlaying
     print("isPlaying", isPlaying)
