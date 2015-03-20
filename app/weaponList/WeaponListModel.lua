@@ -90,7 +90,7 @@ function WeaponListModel:buyWeapon(weaponid)
 	    setUserData(data)
 	    -- dump(GameState.load())
     end 
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
+	-- self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
 end
 
 function WeaponListModel:intensify(weaponid)
@@ -106,7 +106,7 @@ function WeaponListModel:intensify(weaponid)
 			end
 		end
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	-- self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_ONE_EVENT})
 end
 
@@ -124,7 +124,7 @@ function WeaponListModel:onceFull(weaponId)
 			end
 		end
 	end
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+	-- self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_FULL_EVENT, 
 		lastLevel = lastLevel, weaponId = weaponId})
 end
@@ -219,10 +219,13 @@ function WeaponListModel:equipBag( weaponid, index )
 		data.weapons.weaponed.bag2 = x
 	end
 
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT,star =false})
+	-- self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
 	-- dump(data)
 end
 
+function WeaponListModel:refreshInfo()
+	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+end
 --[[
 	@param : 
 	@return: {demage = 100, }

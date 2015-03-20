@@ -65,7 +65,6 @@ function  DailyLoginModel:setGift(dailyID)
 	local UserModel = md:getInstance("UserModel")
 	local propModel = md:getInstance("propModel")
 	local InlayModel = md:getInstance("InlayModel")
-	local StoreModel = md:getInstance("StoreModel")
 	if giftInfo["type"] == "gold" then
 		UserModel:addMoney(giftInfo["number"])
 	    um:bonusVirtualCurrency(giftInfo["number"],3)
@@ -73,18 +72,14 @@ function  DailyLoginModel:setGift(dailyID)
 	elseif giftInfo["type"] == "lei" then
 		propModel:buyProp("lei",giftInfo["number"])
 		um:bonusProps("手雷", giftInfo["number"], 0, 3)
-		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "jijia" then
 		propModel:buyProp("jijia",giftInfo["number"])
 		um:bonusProps("无敌机甲", giftInfo["number"], 0, 3)
-		StoreModel:refreshInfo("prop")
 		return true
 	elseif giftInfo["type"] == "goldweapon" then
 		InlayModel:buyGoldsInlay(giftInfo["number"])
 		um:bonusProps("黄金武器", giftInfo["number"], 0, 3)
-		StoreModel:refreshInfo("prop")
-		InlayModel:refreshInfo("speed")
 		return true
 	end
 	return false

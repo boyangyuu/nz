@@ -9,21 +9,10 @@ function StartLayer:ctor()
 	self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
-    self:playSound()
-end
-
-function StartLayer:playBgMusic()
-    local startMusic = "res/Music/bg/bjyx.wav"
-    audio.playMusic(startMusic,true)
-end
-
-function StartLayer:playSound()
-    local soundSrc  = "res/Music/ui/dl_logo.wav"
-    audio.playSound(soundSrc,false)  
 end
 
 function StartLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/Start")
+    cc.FileUtils:getInstance():addSearchPath("res/Start")
     local controlNode = cc.uiloader:load("zhucaidan_1.json")
     self:addChild(controlNode)
 end
@@ -59,8 +48,7 @@ function StartLayer:initUI()
     panlAnim:addChild(dlArmature)
     dlArmature:getAnimation():play("start" , -1, 0)
 
-    scheduler.performWithDelayGlobal(handler(self, self.menuAnim), 1.9)
-
+    scheduler.performWithDelayGlobal(handler(self, self.playEnterAnim), 1.9) 
     self.btnBegin = cc.uiloader:seekNodeByName(self, "btnBegin")
     self.btnAbout = cc.uiloader:seekNodeByName(self, "btnAbout")
     self.btnHelp = cc.uiloader:seekNodeByName(self, "btnHelp")
@@ -77,7 +65,7 @@ function StartLayer:initUI()
             print("btnBegin is begining!")
             return true
         elseif event.name == 'ended' then
-        	self:beginGame()
+            self:onClickBegan()
         end
     end)
 
@@ -100,7 +88,36 @@ function StartLayer:initUI()
     end)
 end
 
-function StartLayer:menuAnim()
+function StartLayer:initMusicUI()
+    local data = getUserData()
+    local isOpenMusic = data.preference["isOpenMusic"]
+
+    self.btnMusic:setTouchEnabled(true)
+    local play = cc.uiloader:seekNodeByName(self.btnMusic, "play")
+    local stop = cc.uiloader:seekNodeByName(self.btnMusic, "stop")
+    play:setVisible(not isOpenMusic)
+    stop:setVisible(isOpenMusic)
+    
+    addBtnEventListener(self.btnMusic, function(event)
+        if event.name == "began" then 
+            return true
+        elseif event.name == "ended" then
+            self:switchSound()
+        end
+    end)    
+end
+
+function StartLayer:playBgMusic()
+    local startMusic = "res/Music/bg/bjyx.wav"
+    audio.playMusic(startMusic,true)
+end
+
+function StartLayer:playEnterSound()
+    local soundSrc  = "res/Music/ui/dl_logo.wav"
+    audio.playSound(soundSrc,false)  
+end
+
+function StartLayer:playEnterAnim()
     local i = 1
     local btnKeys = {"btnActivate", "btnAbout","btnHelp","btnMusic","btnBegin"}
     for i,v in ipairs(btnKeys) do
@@ -126,33 +143,14 @@ function StartLayer:menuAnim()
     scheduler.performWithDelayGlobal(delayScaleTo, 0.7)
 end
 
-function StartLayer:initMusicUI()
-    local data = getUserData()
-    local isOpenMusic = data.preference["isOpenMusic"]
-
-    self.btnMusic:setTouchEnabled(true)
-    local play = cc.uiloader:seekNodeByName(self.btnMusic, "play")
-    local stop = cc.uiloader:seekNodeByName(self.btnMusic, "stop")
-    play:setVisible(not isOpenMusic)
-    stop:setVisible(isOpenMusic)
-    
-    addBtnEventListener(self.btnMusic, function(event)
-        if event.name == "began" then 
-            return true
-        elseif event.name == "ended" then
-            self:switchSound()
-        end
-    end)    
-end
 
 function StartLayer:switchSound()
     local play      = cc.uiloader:seekNodeByName(self.btnMusic, "play")
     local stop      = cc.uiloader:seekNodeByName(self.btnMusic, "stop")    
     local isPlaying = audio.isSwitchOpen()
     isPlaying = not isPlaying
-    print("isPlaying", isPlaying)
+    
     --switch
-
     stop:setVisible(isPlaying)
     play:setVisible(not isPlaying)
     audio.switchAllMusicAndSounds(isPlaying)
@@ -165,15 +163,22 @@ function StartLayer:switchSound()
 end
 
 function StartLayer:onEnter()
+    --music 
     self:playBgMusic() 
+    self:playEnterSound()
+    
+    --set sound
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
+
+    --init daily login
+    self:initDailyLogin() 
 end
 
-function StartLayer:beginGame()
-    print("function StartLayer:beginGame()")
-    self:initDailyLogin()       
+function StartLayer:onClickBegan()
+    print("function StartLayer:onClickBegan()")
+          
     local guide = md:getInstance("Guide")
 
     if self:isGuideDone() then
@@ -208,7 +213,6 @@ function StartLayer:initDailyLogin()
         dailyLoginModel:setGet(false)
     end
     dailyLoginModel:setTime()
-
 end
 
 return StartLayer

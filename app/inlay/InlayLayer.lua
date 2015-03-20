@@ -5,7 +5,6 @@ local InlayLayer = class("InlayLayer", function()
 end)
 
 function InlayLayer:ctor()
-    self.storeModel = md:getInstance("StoreModel")
     self.inlayModel = md:getInstance("InlayModel")
     self.buyModel = md:getInstance("BuyModel")
 
@@ -24,7 +23,7 @@ function InlayLayer:onEnter()
     self:loadCCS()
     self:initUI()
     self:initGuide()
-    self:refreshBtnIcon({typename = "speed"})
+    self:refreshBtnIcon()
     self:refreshListView("speed")
     self:refreshAvatar()
 end
@@ -54,6 +53,31 @@ function InlayLayer:initUI()
     local yijianxiangqian = cc.uiloader:seekNodeByName(self, "yijianxiangqian")
     yijianxiangqian:enableOutline(cc.c4b(140, 49, 2,255), 2)
 
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
+    manager:addArmatureFileInfo(inlaybtnsrc)
+    local plist = "res/InlayShop/xqan_hjwq/xqan_hjwq0.plist"
+    local png   = "res/InlayShop/xqan_hjwq/xqan_hjwq0.png"
+    display.addSpriteFrames(plist, png)          
+
+    local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.csb"
+    manager:addArmatureFileInfo(hjwqbssrc)
+    local plist = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.plist"
+    local png   = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.png"
+    display.addSpriteFrames(plist, png)          
+
+    local xqtbsrc = "res/InlayShop/xqtb/xqtb.csb"
+    manager:addArmatureFileInfo(xqtbsrc)
+    local plist = "res/InlayShop/xqtb/xqtb0.plist"
+    local png   = "res/InlayShop/xqtb/xqtb0.png"
+    display.addSpriteFrames(plist, png)          
+
+    local xqzbsrc = "res/InlayShop/xqzb/xqzb.csb"
+    manager:addArmatureFileInfo(xqzbsrc)
+    local plist = "res/InlayShop/xqzb/xqzb0.plist"
+    local png   = "res/InlayShop/xqzb/xqzb0.png"
+    display.addSpriteFrames(plist, png)
+
     self.iconarm = ccs.Armature:create("xqtb")
     local armature = ccs.Armature:create("xqan_hjwq")
     addChildCenter(armature, goldWeaponBtn)
@@ -70,22 +94,17 @@ function InlayLayer:initUI()
         elseif event.name=='ended' then
             self:playSoundxqcg()
             self.inlayModel:equipAllInlays()
-            self.storeModel:refreshInfo("prop")
         end
     end)
 
     addBtnEventListener(goldWeaponBtn, function(event)
         if event.name=='began' then
-            -- print("offbtn is begining!")
             return true
         elseif event.name=='ended' then
-            -- self.inlayModel:equipGoldInlays(true)
-            -- self.storeModel:refreshInfo("prop")
             local goldweaponNum = self.inlayModel:getGoldWeaponNum()
             if goldweaponNum > 0 then
                 self.inlayModel:equipAllInlays()
                 self:playSoundxqcg()
-                self.storeModel:refreshInfo("prop")
             else
                 function equipGold()
                     self.inlayModel:equipAllInlays(true)
