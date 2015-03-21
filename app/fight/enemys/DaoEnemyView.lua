@@ -72,16 +72,14 @@ function DaoEnemyView:playFire()
     -- print("发射")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
-    -- pWorldBone = self.armature:convertToWorldSpace(cc.p(0,0))
-    -- dump(self.property, "self.property")
     local property = {
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,
         destPos = pWorldBone,
-        type = "dao_wu",
+        type = "missile",
         id = self.property["missileId"],
         demageScale = self.enemy:getDemageScale(),
-        -- missileType = self.property["missileType"],
+        missileType = self.property["missileType"],
     }
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
