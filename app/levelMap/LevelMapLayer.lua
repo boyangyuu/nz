@@ -5,7 +5,7 @@ end)
 
 --------  Constants  ---------
 local Zorder_up, Zorder_bg = 10, 0
-local amplifyTimes, smallTime, bigTime = 2, 0.5, 0.5  --Amplify times and time of background
+local smallTime, bigTime = 0.5, 0.5  --Amplify times and time of background
 
 function LevelMapLayer:ctor(properties)
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
@@ -17,14 +17,13 @@ function LevelMapLayer:ctor(properties)
     self:initData(properties)
     self:initChooseLayer()
     self:refreshLevelLayer(self.curGroupId)
-  
+
     cc.EventProxy.new(self.FightResultModel, self)
         :addEventListener("POPUP_LEVELDETAIL", handler(self, self.popupLevelDetail))
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.initBgLayer))
     cc.EventProxy.new(self.LevelMapModel, self)
         :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.hideWeaponGiftBag))
-
 
     self:initGuide() 
 end
@@ -41,15 +40,14 @@ end
 
 
 function LevelMapLayer:initBgLayer(event)
-    -- bg starting animation   
-
+    -- bg starting animation
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
     self.armature:setAnchorPoint(0.5,0.5)
     self.armature:setPosition(display.width/2,display.height1/2)
-
     self:addChild(self.armature)
     -- addChildCenter(self.armature, self)
+    
     print("self.curGroupId", self.curGroupId)
     if self.curGroupId == 0 then
         self.curGroupId = 1
@@ -83,18 +81,13 @@ function LevelMapLayer:initChooseLayer()
     btnGold:addChild(armature) 
     armature:getAnimation():play("thj_bx" , -1, 1)
 
-
-
     btnTask:setVisible(false)
     -- modified by lpf
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 
-
     local armature = ccs.Armature:create("guang")
-    -- armature:setPosition(-240,0)
     armature:setScale(2)
     addChildCenter(armature, self.panelGift)
-    -- self.panelGift:addChild(armature)
     armature:getAnimation():play("guangtx" , -1, 1)
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
@@ -102,8 +95,7 @@ function LevelMapLayer:initChooseLayer()
     end
     if buyModel:checkBought("weaponGiftBag") then
         self.btnWeapon:setVisible(false)
-    end
-    
+    end    
 
     function hideGiftIcon()
         self.panelGift:setVisible(false)
@@ -217,35 +209,32 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local levelAnim = {}
     local panelBtn = {}
     local panelGray = {}
-    local dian = {}
+    -- local dian = {}
     local imgIcon = {}
     local group,level = self.LevelMapModel:getConfig()
-
-
     local groupInfo = self.LevelMapModel:getGroupInfo(self.curGroupId)
 
+    -- for k,v in pairs(groupInfo) do
+    --     if k ~= #groupInfo then
+    --         dian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..v.."_0")
+    --     end
+    -- end
 
-    for k,v in pairs(groupInfo) do
-        if k ~= #groupInfo then
-            dian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..v.."_0")
-        end
-    end
-
-    if group > groupId then
-        for k,v in pairs(dian) do
-            dian[k]:setVisible(true)
-        end
-    elseif group == groupId then
-        for k,v in pairs(groupInfo) do
-            if v >= level and k ~= #groupInfo then
-                dian[v]:setVisible(false)
-            end
-        end
-    else
-        for k,v in pairs(dian) do
-            dian[k]:setVisible(false)
-        end
-    end
+    -- if group > groupId then
+    --     for k,v in pairs(dian) do
+    --         dian[k]:setVisible(true)
+    --     end
+    -- elseif group == groupId then
+    --     for k,v in pairs(groupInfo) do
+    --         if v >= level and k ~= #groupInfo then
+    --             dian[v]:setVisible(false)
+    --         end
+    --     end
+    -- else
+    --     for k,v in pairs(dian) do
+    --         dian[k]:setVisible(false)
+    --     end
+    -- end
 
     -- for i = 1, self.levelAmount[groupId] do
     dump(groupInfo)

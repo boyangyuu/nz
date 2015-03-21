@@ -14,7 +14,7 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 GameData={}
 
 isFree = true       --付费免费
-isTest  = true     --战斗的各种框     
+isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 __versionId = "1.2"
 isShowPausescene = true
@@ -127,8 +127,8 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 1,
-                        level = 1,
+                        group = 10,
+                        level = 6,
             },
             user = {
                 level = 1,
@@ -161,7 +161,7 @@ function MyApp:createGameStateFile()
                         fight04         = true,                        
             },
             fight = {
-               isPreferBag1 = true,
+               isPreferBag1 = false,
             },
 
             -- 礼包购买状态

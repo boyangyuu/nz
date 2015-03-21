@@ -30,17 +30,26 @@ function WeaponListLayer:ctor()
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
     cc.EventProxy.new(self.levelMapModel, self)
-        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
     cc.EventProxy.new(self.levelDetailModel, self)
-        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadlistview))
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
     
-    -- ui
-	cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
-	self:loadCCS()
-	self:initUI()
+end
+
+--guide
+function WeaponListLayer:onEnter()
+    self.weaponId = 1
+ 
+    --init ui
+    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
+    self:loadCCS()
+    self:initUI()
 
     -- 点开页面默认选择某个武器
     self:initGuide()
+
+    --refersh
+    self:refreshUI() 
 end
 
 -- loadCCS
@@ -48,6 +57,9 @@ function WeaponListLayer:loadCCS()
     -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
     local controlNode = cc.uiloader:load("wuqiku.ExportJson")
+    if self.ui then
+        return
+    end
     self.ui = controlNode
     self:addChild(controlNode)
 
@@ -63,6 +75,12 @@ function WeaponListLayer:loadCCS()
     local starplist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
     local starpng = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
     display.addSpriteFrames(starplist,starpng)
+
+    local wqsjsrc = "res/WeaponList/wqsj/wqsj.csb"
+    manager:addArmatureFileInfo(wqsjsrc)
+    local plist = "res/WeaponList/wqsj/wqsj0.plist"
+    local png   = "res/WeaponList/wqsj/wqsj0.png"
+    display.addSpriteFrames(plist, png)          
 
 end
 
@@ -143,8 +161,7 @@ function WeaponListLayer:initUI()
     self.equipedju:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    local configTab = getConfig("config/weapon_weapon.json")
-    self:loadWeaponList(self.weaponLV, configTab)
+    self:reloadListView()
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
@@ -211,15 +228,12 @@ function WeaponListLayer:onClickBtnEquip(weaponid)
 end
 
 function WeaponListLayer:onClickBtnOncefull()
-    function deneyOncefull()
-        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
-    end
     local guide = md:getInstance("Guide")
     local isBoughtWeapon = self.buyModel:checkBought("weaponGiftBag")
     if not isBoughtWeapon then
         self.buyModel:showBuy("weaponGiftBag",{
-            payDoneFunc = handler(self, self.getWeaponBagSucc),
-                                      deneyBuyFunc = deneyOncefull},"武器库界面_点击一键满级")
+            payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+                                      deneyBuyFunc = handler(self, self.onCancelOncefull)},"武器库界面_点击一键满级")
     elseif isBoughtWeapon then
         self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
     end
@@ -228,17 +242,23 @@ end
 function WeaponListLayer:onClickBtnBuy()
     local guide = md:getInstance("Guide")
     if self.buyModel:checkBought("weaponGiftBag") == false then
-        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
-                                      deneyBuyFunc = handler(self, self.deneyBuyWeapon)}, 
+        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+                                      deneyBuyFunc = handler(self, self.onCancelWeaponGift)}, 
                                        "武器库界面_点击解锁武器"..self.weaponRecord["name"])
     end
 end
 
-function WeaponListLayer:deneyBuyWeapon()
+-- 升级事件
+function WeaponListLayer:onClickBtnUpgrade(event)
+    self.weaponListModel:intensify(self.weaponId)
+    self.weaponListModel:refreshInfo()
+end
+
+function WeaponListLayer:onCancelWeaponGift()
     if self.userModel:getDiamond() >= self.weaponRecord["cost"] then
         ui:showPopup("commonPopup",
             {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."钻石升级购买该武器？",
-             callfuncCofirm =  handler(self, self.buyWeapon),
+             callfuncCofirm =  handler(self, self.onBuyWeaponSucc),
              callfuncClose  =  handler(self, self.closePopup)},
              { opacity = 155})
     else
@@ -251,17 +271,38 @@ function WeaponListLayer:deneyBuyWeapon()
     end
 end
 
------------
-function WeaponListLayer:reloadlistview(event)
+function WeaponListLayer:onCancelOncefull()
+    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
+end
+
+function WeaponListLayer:onBuyWeaponGiftSucc()
+    self.levelMapModel:hideGiftBagIcon()
+end
+
+-- 购买事件
+function WeaponListLayer:onBuyWeaponSucc()
+    ui:closePopup("commonPopup")
+    if self.userModel:costDiamond(self.weaponRecord["cost"]) then
+        self.weaponListModel:buyWeapon(self.weaponId)
+        self.weaponListModel:refreshInfo()
+        if self.weapontype == "ju" then
+            self.weaponListModel:equipBag(self.weaponId,3)
+            self.weaponListModel:refreshInfo()
+        end
+        local gmcg   = "res/Music/ui/gmcg.wav"
+        audio.playSound(gmcg,false)
+    end
+end
+
+function WeaponListLayer:reloadListView(event)
+    if not self.weaponLV then
+        return
+    end
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
     self:loadWeaponList(self.weaponLV,configTab)
     self.selectedContent = nil
     self:refreshComment()
-end
-
-function WeaponListLayer:getWeaponBagSucc()
-    self.levelMapModel:hideGiftBagIcon()
 end
 
 -------------- ListView  --------------
@@ -540,37 +581,8 @@ function WeaponListLayer:refreshBtns()
     end
 end              
 
--- 购买事件
-function WeaponListLayer:buyWeapon(event)
-    ui:closePopup("commonPopup")
-    if self.userModel:costDiamond(self.weaponRecord["cost"]) then
-        function delay()
-            self.weaponListModel:buyWeapon(self.weaponId)
-            if self.weapontype == "ju" then
-                self.weaponListModel:equipBag(self.weaponId,3)
-            end
-            local gmcg   = "res/Music/ui/gmcg.wav"
-            audio.playSound(gmcg,false)
-        end
-        scheduler.performWithDelayGlobal(delay, 0.4)
-    end
-end
-
--- 升级事件
-function WeaponListLayer:onClickBtnUpgrade(event)
-    self.weaponListModel:intensify(self.weaponId)
-end
-
 function WeaponListLayer:closePopup()
     ui:closePopup("commonPopup")
-end
-
-
-
---guide
-function WeaponListLayer:onEnter()
-    self.weaponId = 1
-    self:refreshUI()   
 end
 
 function WeaponListLayer:initGuide()

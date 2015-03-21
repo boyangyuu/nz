@@ -1,6 +1,6 @@
-local ScrollViewCell = import("..includes.ScrollViewCell")
-
-local InlayListCell = class("InlayListCell", ScrollViewCell)
+local InlayListCell = class("InlayListCell", function()
+    return display.newNode()
+end)
 
 function InlayListCell:ctor(record)
     self.inlayModel = md:getInstance("InlayModel")
@@ -76,8 +76,6 @@ function InlayListCell:initCellUI(record)
                 buyModel:showBuy("goldGiftBag",{payDoneFunc = refresh,deneyBuyFunc = deneyGoldGift},
                      "镶嵌页面_购买单个镶嵌金币不足")
             end
-            local storeModel = md:getInstance("StoreModel")
-            storeModel:refreshInfo("prop")
         end)
         :pos(10, -36)
         :addTo(self)

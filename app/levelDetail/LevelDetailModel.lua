@@ -21,11 +21,9 @@ end
 function LevelDetailModel:getConfig(groupId,levelId)
 	local records = getRecordFromTable(self.config,"groupId",groupId)
 	for k,v in pairs(records) do
-		for k1,v1 in pairs(v) do
-			if k1 == "levelId" and v1==levelId then
-				return v
-			end
-		end	
+		if v.levelId == levelId then
+			return v
+		end
 	end
 	return nil
 end

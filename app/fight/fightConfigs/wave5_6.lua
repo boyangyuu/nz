@@ -169,7 +169,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=3000,
+	{id=3,image="shoulei",demage=28,hp=2000,
 	weak1=1},
 
 	--伞兵       --type = "san",
@@ -193,7 +193,7 @@ local enemys = {
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
 	weak1=2},	
 
 	
@@ -223,24 +223,24 @@ local enemys = {
 
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="xiaorz",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
-	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, 
+	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, 
 	weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=8000}, 
+	{id=18,image="feibiao",demage=15,hp=5000}, 
 	
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=20000},  
 
     --BOSS导弹        --missileType = "daodan",
-	{id=20,image="daodan",demage=35,hp=3000,
+	{id=20,image="daodan",demage=35,hp=5000,
 	weak1=1},
 
 	--BOSS铁球
-	{id=21,image="tieqiu",demage=35,hp=15000,weak1=1},
+	{id=21,image="tieqiu",demage=35,hp=8000,weak1=1},
 
 	--小蜘蛛   --type = "bao",
-	{id=22,image="xiaozz",demage=20,hp=7000, speed=120,
+	{id=22,image="xiaozz",demage=20,hp=5000, speed=120,
 	weak1=1},  
 
 }

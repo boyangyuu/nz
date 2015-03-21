@@ -1,6 +1,6 @@
-local ScrollViewCell = import("..includes.ScrollViewCell")
-
-local StoreCell = class("StoreCell", ScrollViewCell)
+local StoreCell = class("StoreCell", function()
+    return display.newNode()
+end)
 
 function StoreCell:ctor(parameter)
     self.inlayModel = md:getInstance("InlayModel")
@@ -18,6 +18,13 @@ function StoreCell:ctor(parameter)
 end
 
 function StoreCell:initCellUI()
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    manager:addArmatureFileInfo(yjzbsrc)
+    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    display.addSpriteFrames(plist, png)          
+
     local panl_xuanze = display.newScale9Sprite("#panl_xuanze.png",3,0,cc.size(735,157),cc.rect(169,0,1,1))
     self:addChild(panl_xuanze)
     local jinbidi = display.newSprite("#jinbidi.png",0,25)
@@ -167,7 +174,6 @@ function StoreCell:addBtnEvent()
                 self:playSound()
                 if self.record["nameid"] == "goldweapon" then
                     self.inlayModel:buyGoldsInlay(self.record["buynum"])
-                    self.inlayModel:refreshInfo("speed")
                 else
                     self.propModel:buyProp(self.record["nameid"],self.record["buynum"])
                 end

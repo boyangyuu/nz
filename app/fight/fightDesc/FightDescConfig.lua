@@ -2,7 +2,7 @@ local EnemyDescConfig = class("EnemyDescConfig", cc.mvc.ModelBase)
 
 local configs = {}
 
-configs["boss02"] = {
+configs["boss02"] = {                  --蓝色
 	title = "BOSS信息！",
 	name = "毁灭者",
 	spc = "技能：",
@@ -12,7 +12,7 @@ configs["boss02"] = {
 	playanim = "stand",
 }
 
-configs["boss02_1"] = {
+configs["boss02_1"] = {                  --cf肌肉男
 	title = "BOSS信息！",
 	name = "毁灭者三号",
 	spc = "技能：",
@@ -22,7 +22,7 @@ configs["boss02_1"] = {
 	playanim = "stand",
 }
 
-configs["boss02_2"] = {
+configs["boss02_2"] = {                --黄色
 	title = "BOSS信息！",
 	name = "毁灭者二号",
 	spc = "技能：",
@@ -42,7 +42,7 @@ configs["boss01"] = {
 	playanim = "stand",
 }
 
-configs["boss01_1"] = {
+configs["boss01_1"] = {                            --黄色
 	title = "BOSS信息！",
 	name = "烈火金刚",
 	spc = "技能：",
@@ -52,7 +52,7 @@ configs["boss01_1"] = {
 	playanim = "stand",
 }
 
-configs["boss01_2"] = {
+configs["boss01_2"] = {                            --红色
 	title = "BOSS信息！",
 	name = "地狱金刚",
 	spc = "技能：",

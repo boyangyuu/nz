@@ -17,21 +17,21 @@ local waves = {
 			},					
 		},
 	},
-	{
-		enemys = {                                          --2波2个
-			{
-				time = 1,
-				num = 2,
-				delay ={0, 0.2},
-				pos = {10,120},		
-				property = { 
-					placeName = "place14",
-					startState = "",
-					id = 1,
-				},
-			},					
-		},
-	},
+	-- {
+	-- 	enemys = {                                          --2波2个
+	-- 		{
+	-- 			time = 1,
+	-- 			num = 2,
+	-- 			delay ={0, 0.2},
+	-- 			pos = {10,120},		
+	-- 			property = { 
+	-- 				placeName = "place14",
+	-- 				startState = "",
+	-- 				id = 1,
+	-- 			},
+	-- 		},					
+	-- 	},
+	-- },
 	--[引导] 3波 3个敌人,扔雷	
 	{
 		enemys = {                                          
@@ -67,9 +67,9 @@ local waves = {
 		enemys = {                                           --4波换枪 mp5
 			{
 				time = 1,	
-				num = 4,
-				pos = {200,260,330,440},
-				delay = {0,0.5,1,1.5},
+				num = 2,
+				pos = {200,440},
+				delay = {0,1},
 				property = { 
 					placeName = "place1",
 					startState = "rollright",
@@ -106,9 +106,9 @@ local waves = {
 			},
 			{
 				time = 2.5,	
-				num = 2,
-				pos = {250,350},
-				delay = {1,1.8},
+				num = 1,
+				pos = {350},
+				delay = {0.5},
 				property = { 
 					placeName = "place3",
 					startState = "rollright",
@@ -118,9 +118,9 @@ local waves = {
 
 			{
 				time = 3,	
-				num = 3,
-				pos = {820,750,660},
-				delay = {0,0.6,1.2},
+				num = 1,
+				pos = {820},
+				delay = {0},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -136,7 +136,7 @@ local waves = {
 		gunData = 
 			{ 
 			    id = 8,    --枪id
-			    delay = 10, --10s之后出现
+			    delay = 5, --5s之后出现
 		    },		    
 		enemys = {
 
