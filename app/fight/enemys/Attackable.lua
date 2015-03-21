@@ -25,7 +25,7 @@ function Attackable:ctor(property)
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
 	self:addChild(self.armature)
-	self.armature:setScale(1/0.7)
+	-- self.armature:setScale(1/0.7)
     self:setScale(property.scale or 1.0)
     
     --events
@@ -298,7 +298,7 @@ function Attackable:clearPlayCache()
 end
 
 function Attackable:getScale()
-	return self:getScaleX() * 2.0
+	return self:getScaleX()
 end
 
 function Attackable:removeAllSchedulers()

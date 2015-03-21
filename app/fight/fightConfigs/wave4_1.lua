@@ -53,42 +53,24 @@ local waves = {
 		enemys = { 
 			{
 				time = 2,
-				num = 1,
-				pos = {500},
-				delay = {0.1},                            -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 50.0,		--持续时间			
-				},
-			},
-			{
-				time = 5,
 				num = 20,
 				delay = {0.5,1.2,0,0.4,0.9,1.1,1.2,1.3,1.4,1.5,2.4,2.3,2.2,2.1,2.5,3.9,3.5,3.0,3.5,3.0},
 				pos = {180,300,550,750,930,850,250,550,200,400,180,300,550,750,930,850,250,550,200,400},
 				property = { 
 					placeName = "place2" ,
 					type = "bao",      --爆
-					id = 20,
-					--demageScale = 1.5                    --伤害翻1.5倍	
+					id = 20,	
 				},
 			},
 			{
-				time = 10,
+				time = 6,
 				num = 20,
 				delay = {0.5,1.2,0,0.4,0.9,1.1,1.2,1.3,1.4,1.5,2.4,2.3,2.2,2.1,2.5,3.9,3.5,3.0,3.5,3.0},
 				pos = {180,300,550,750,930,850,250,550,200,400,180,300,550,750,930,850,250,550,200,400},
 				property = { 
 					placeName = "place2" ,
 					type = "bao",      --爆
-					id = 20,
-					--demageScale = 1.5                    --伤害翻1.5倍	
+					id = 20,	
 				},
 			},
 		},
@@ -184,7 +166,7 @@ local enemys = {
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=3000,
+	{id=3,image="shoulei",demage=28,hp=2000,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -196,7 +178,7 @@ local enemys = {
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=35,hp=3000,
+	{id=6,image="daodan",demage=35,hp=5000,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
@@ -204,11 +186,11 @@ local enemys = {
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=90000,fireRate=180,fireCd=5,speed=35,
+	{id=8,image="dunbing",demage=25,hp=70000,fireRate=180,fireCd=5,speed=35,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
 	weak1=3},	
 
 	
@@ -244,10 +226,10 @@ local enemys = {
 	{id=18,image="feibiao",demage=15,hp=5000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=30000},  
+	{id=19,image="zzw",demage=10,hp=20000},  
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=10,hp=6000, speed=120,
+	{id=20,image="xiaozz",demage=10,hp=5000, speed=120,
 	weak1=1},
 }
 

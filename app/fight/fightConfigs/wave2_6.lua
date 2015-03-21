@@ -341,13 +341,13 @@ local enemys = {
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=8000}, 
+	{id=18,image="feibiao",demage=15,hp=5000}, 
 	
 	--蜘蛛网
 	{id=19,image="zzw",demage=10,hp=20000},       
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=10,hp=7000, speed=150,
+	{id=20,image="xiaozz",demage=10,hp=5000, speed=150,
 	weak1=1},   	                      
 }
 
