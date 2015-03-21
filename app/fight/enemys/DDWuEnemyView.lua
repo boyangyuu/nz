@@ -11,12 +11,13 @@ local Enemy = import(".Enemy")
 local Hero = import("..Hero")
 local Actor = import("..Actor")   
 
-local WangEnemyView = class("WangEnemyView", Attackable)
+local DDWuEnemyView = class("DDWuEnemyView", Attackable)
 
 ---- event ----
-function WangEnemyView:ctor(property)  
+function DDWuEnemyView:ctor(property)  
     --instance
-    WangEnemyView.super.ctor(self, property)   
+    DDWuEnemyView.super.ctor(self, property)   
+    dump(property, "property")
     self.srcPos = property.srcPos
     self.destPos = property.destPos
     self.srcScale = property.srcScale
@@ -29,47 +30,51 @@ function WangEnemyView:ctor(property)
     self:playFire() 
 end
 
-function WangEnemyView:tick()
+function DDWuEnemyView:tick()
     
 end
 
-function WangEnemyView:playFire()
+function DDWuEnemyView:playFire()
     --scale
     self.armature:setScale(self.srcScale)
-    local time = define.kMissileWangTime    
-    local destScale = 1.3
+    local time = define.kMissileDaoTime    
+    local destScale = self.property["destScale"] or 1.0
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
-    --call end
-    local function callMoveEnd()
-        self.armature:getAnimation():play("stand", -1 , 1)
-        self:playSkillHit()        
-    end
-
     --run
-    self.armature:getAnimation():play("fly" , -1, 1) 
-    local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
+    local offset = self.property.offset or cc.p(0.0,0.0)
+    self.armature:getAnimation():play("fire" , -1, 1) 
+    local seq = cc.Sequence:create(scaleAction, 
+        cc.CallFunc:create(handler(self, self.playAheadEnd)))
     self.armature:runAction(seq)
+    self.armature:runAction(cc.MoveTo:create(time, offset)) 
 end
 
-function WangEnemyView:playSkillHit()
-	local function callfuncHit()
-		self.enemy:hit(self.hero) 
-	end  
-	self:schedule(callfuncHit, define.kMissileWangHitTime)
+function DDWuEnemyView:playAheadEnd()
+   --kill
+    self.armature:getAnimation():play("die" , -1, 1)  
+    
+    --demage
+    self.enemy:hit(self.hero) 
+
+    --dispatch 
+    local hero = md:getInstance("Hero")
+    self.hero:dispatchEvent({name = hero.EFFECT_HURT_YAN_EVENT})
 end
 
 --Attackable接口
-function WangEnemyView:playHitted(event)
-	self:playHittedEffect()
+function DDWuEnemyView:playHitted(event)
+    
 end
 
-function WangEnemyView:playKill(event)
+function DDWuEnemyView:playKill(event)
+    --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
+    self:playBombEffect()
     self.armature:stopAllActions()  
 end
 
-function WangEnemyView:onHitted(targetData)
+function DDWuEnemyView:onHitted(targetData)
     local demage     = targetData.demage
     local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType or "body"
@@ -77,11 +82,9 @@ function WangEnemyView:onHitted(targetData)
     self.enemy:decreaseHp(demage * scale)
 end
 
-function WangEnemyView:animationEvent(armatureBack,movementType,movementID)
-    -- print("animationEvent id ", movementID)
+function DDWuEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
-
-        if movementID ~= "die" and movementID ~= "die02" then
+        if movementID ~= "die" then
             local playCache = self:getPlayCache()
             if playCache then 
                 playCache()
@@ -92,8 +95,8 @@ function WangEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function WangEnemyView:getModel(property)
+function DDWuEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
-return WangEnemyView
+return DDWuEnemyView

@@ -108,7 +108,6 @@ function PausePopup:btnColor(btn,isPress)
 	else 
 		btn:setColor(cc.c3b(0, 0, 0))
 	end
-
 end
 
 function PausePopup:btnEvent()

@@ -132,6 +132,8 @@ function MyApp:createGameStateFile()
             },
             user = {
                 level = 1,
+                fightedGroupId = 0, --打过的最远的关卡groupId
+                fightedlevelId = 0, --打过的最远的关卡levelId
             },
             guide = {
                         --记得和 filldata对应!
@@ -149,14 +151,14 @@ function MyApp:createGameStateFile()
                         afterfight01    = false,   -- 进入下一关
                      
                         --第1-2关之前
-                        xiangqian       = false,   --镶嵌一套青铜
+                        xiangqian       = true,   --镶嵌一套青铜
 
                         --第1-3关之前
-                        weapon          = false,   -- 升级武器
-                        afterfight03    = false,   -- 回到主界面
+                        weapon          = true,   -- 升级武器
+                        afterfight03    = true,   -- 回到主界面
                         
                         --第1-3.1关之内
-                        fight04         = false,                        
+                        fight04         = true,                        
             },
             fight = {
                isPreferBag1 = true,

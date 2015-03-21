@@ -200,31 +200,31 @@ end
 
 function RootLayer:addResFight()
     cc.FileUtils:getInstance():addSearchPath("res/commonPNG")    
-    display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", handler(self, self.imageLoaded))  
+    display.addSpriteFrames("res/Fight/public/public0.plist", "res/Fight/public/public0.png", 
+        handler(self, self.imageLoaded))  
 
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
-    -- local enemyImgs = {
-    --     --普通怪物
-    --     "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-    --     "qiqiu01", "qiqiu02", "qiqiu03", "xiaozz",
-    --     "sanbing01", "zpbing", "shouleib",  "hs","feiji",
-    --     "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
-    --     "dl_xz",
-    --     --导弹
-    --     "shoulei", "daodan", "tieqiu", "daodan02",
-    -- }
- 
-    -- for i,v in ipairs(enemyImgs) do
-    --     local src = "res/Fight/enemys/"..v.."/"..v..".csb"
-    --     manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
-    --     local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
-    --     local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
-    --     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
-    -- end
+    local enemyImgs = {
+        --普通怪物
+        "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
+        "qiqiu01", "qiqiu02", "qiqiu03", "xiaozz",
+        "sanbing01", "zpbing", "shouleib",  "hs","feiji",
+        "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
+        "dl_xz",
+        --导弹
+        "shoulei", "daodan", "tieqiu", "daodan02",
+    }
+    for i,v in ipairs(enemyImgs) do
+        local src = "res/Fight/enemys/"..v.."/"..v..".csb"
+        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+        local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
+        display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
+    end
 
     local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
-        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls"}
+        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
