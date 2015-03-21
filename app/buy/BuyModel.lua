@@ -126,9 +126,6 @@ function BuyModel:buy_weaponGiftBag(buydata)
 
 	--黄武*3
 	inlayModel:buyGoldsInlay(3)
-    inlayModel:refreshInfo("speed")
-
-	storeModel:refreshInfo("prop")
 
 	ui:showPopup("commonPopup",
 	 {type = "style1",content = "请在武器库装备！"},
@@ -143,12 +140,10 @@ function BuyModel:buy_novicesBag( buydata )
 	local propModel = md:getInstance("propModel")
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
-    inlayModel:refreshInfo("speed")
 	--机甲*3
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
-	storeModel:refreshInfo("prop")
 	self:setBought("novicesBag")
 end
 
@@ -159,13 +154,11 @@ function BuyModel:buy_goldGiftBag( buydata )
 	local propModel = md:getInstance("propModel")
 	--黄武*15
 	inlayModel:buyGoldsInlay(15)
-    inlayModel:refreshInfo("speed")
 
 	--机甲*15
 	propModel:buyProp("jijia",15)
 	--手雷*30
 	propModel:buyProp("lei",30)
-	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_changshuang( buydata )
@@ -174,12 +167,10 @@ function BuyModel:buy_changshuang( buydata )
 	local propModel = md:getInstance("propModel")
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
-    inlayModel:refreshInfo("speed")
 	--机甲*3
 	propModel:buyProp("jijia",3)
 	--手雷*10
 	propModel:buyProp("lei",10)
-	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_timeGiftBag( buydata )
@@ -189,7 +180,6 @@ function BuyModel:buy_timeGiftBag( buydata )
 	local userModel = md:getInstance("UserModel")
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
-    inlayModel:refreshInfo("speed")
 	--机甲*3
 	propModel:buyProp("jijia",3)
 	--手雷*10
@@ -198,7 +188,6 @@ function BuyModel:buy_timeGiftBag( buydata )
 	--zuanshi*260
 	userModel:buyDiamond(260)
 	userModel:addMoney(188888)
-	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_handGrenade( buydata )
@@ -206,7 +195,6 @@ function BuyModel:buy_handGrenade( buydata )
 	local storeModel = md:getInstance("StoreModel")
 	--手雷*20
 	propModel:buyProp("lei",20)
-	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_armedMecha( buydata )
@@ -214,7 +202,6 @@ function BuyModel:buy_armedMecha( buydata )
 	local storeModel = md:getInstance("StoreModel")
 	--jijia*2
 	propModel:buyProp("jijia",2)
-	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_unlockWeapon( buydata )
@@ -235,8 +222,6 @@ function BuyModel:buy_goldWeapon( buydata )
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
 	inlayModel:buyGoldsInlay(2)
-	inlayModel:refreshInfo("speed")
-	storeModel:refreshInfo("prop")
 end
 
 function BuyModel:buy_onceFull( buydata )

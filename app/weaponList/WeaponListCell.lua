@@ -1,11 +1,12 @@
 import("..includes.functionUtils")
 
-local ScrollViewCell = import("..includes.ScrollViewCell")
 local Color_GRAY = cc.c3b(150, 150, 150)
 local Color_YELLOW = cc.c3b(255, 195, 0)
 local Color_RED = cc.c3b(255, 0, 24)
 
-local WeaponListCell = class("listCell", ScrollViewCell)
+local WeaponListCell = class("listCell",  function()
+	return display.newNode()
+end)
 
 function WeaponListCell:ctor(properties)
 	-- local weaponRecord = properties.weaponRecord

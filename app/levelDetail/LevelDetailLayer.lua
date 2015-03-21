@@ -38,21 +38,23 @@ function LevelDetailLayer:loadCCS()
 	self.labelGet = cc.uiloader:seekNodeByName(self, "levelget")
 	self.panelBiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
 	self.target    = cc.uiloader:seekNodeByName(self, "target")
-	self.yijiana    = cc.uiloader:seekNodeByName(self, "yijiana")
-	self.yijianb    = cc.uiloader:seekNodeByName(self, "yijianb")
-	self.yijianc    = cc.uiloader:seekNodeByName(self, "yijianc")
+	cc.uiloader:seekNodeByName(self, "yijiana")
+		:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	cc.uiloader:seekNodeByName(self, "yijianb")
+		:enableOutline(cc.c4b(0, 0, 0,255), 2)
+	cc.uiloader:seekNodeByName(self, "yijianc")
+		:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.startlabel    = cc.uiloader:seekNodeByName(self, "startlabel")
-	self.yijiana:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	self.yijianb:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	self.yijianc:enableOutline(cc.c4b(0, 0, 0,255), 2)
+
 	self.labelTitle:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.labelId:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.target:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.startlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
+	
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
 	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")    
-	self.panlEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")   
+	self.layerEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")   
 
 	-- seek already image
 	self.alreadyBibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
@@ -103,9 +105,18 @@ function LevelDetailLayer:initUI()
 					.."零件1个，当前"..alreadyGetNum.."/"..needWeaponNum)
 	end
 	if DataTable["type"] == "boss" then
-		local armature = ccs.Armature:create(DataTable["enemyPlay"])
+		local enemyPlay = DataTable["enemyPlay"]
+		dump(enemyPlay)
+		local manager = ccs.ArmatureDataManager:getInstance()
+        local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".csb"
+        manager:addArmatureFileInfo(src) 
+        local plist = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.plist"
+        local png   = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.png"
+        display.addSpriteFrames(plist, png)          
+
+		local armature = ccs.Armature:create(enemyPlay)
 		armature:setScale(DataTable["scale"])
-		addChildCenter(armature, self.panlEnemy)
+		addChildCenter(armature, self.layerEnemy)
 		armature:getAnimation():play("stand" , -1, 1)
 	end
 
@@ -235,20 +246,19 @@ function LevelDetailLayer:initBtns()
     end)
 end
 
-----btn----
+function LevelDetailLayer:startGame()
+	self.levelDetailModel:setCurGroupAndLevel(self.groupId,self.levelId)
+	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
+		levelId = self.levelId})
+	self:onClickBtnOff()
+end
+
 function LevelDetailLayer:onClickBtnOff()
     ui:closePopup("LevelDetailLayer")
 end
 
 function LevelDetailLayer:onClickBtnStart()
 	self:startGame()
-end
-
-function LevelDetailLayer:startGame()
-	self.levelDetailModel:setCurGroupAndLevel(self.groupId,self.levelId)
-	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
-		levelId = self.levelId})
-	self:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnBibei()
@@ -260,35 +270,23 @@ function LevelDetailLayer:onClickBtnBibei()
 		self.alreadyBibei:setVisible(true)
 		self.btnBibei:setVisible(false)
 	else
-        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.getWeaponBagSucc),
-        deneyBuyFunc = handler(self,self.cancelWeaponBag)}, 
+        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+        deneyBuyFunc = handler(self,self.onCancelWeaponGift)}, 
         	"关卡详情_点击必备按钮")
 	end
 end
 
-function LevelDetailLayer:cancelWeaponBag()
-	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
-	local rmbCost = weaponRecord["rmbCost"]
-    if  rmbCost == 6 then
-        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.buyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..self.recomWeaponId)
-    elseif rmbCost == 10 then
-        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..self.recomWeaponId)
-    end
-end
+function LevelDetailLayer:onClickBtnJijia()
+	function equipJijia()
+		self.alreadyJijia:setVisible(true)
+		self.btnJijia:setVisible(false)	
+	end
 
-function LevelDetailLayer:buyWeaponSucc()
-	self.levelDetailModel:reloadlistview()
-	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	self.alreadyBibei:setVisible(true)
-	self.btnBibei:setVisible(false)
-end
-
-function LevelDetailLayer:getWeaponBagSucc()
-    local levelMapModel = md:getInstance("LevelMapModel")
-    levelMapModel:hideGiftBagIcon()
-	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	self.alreadyBibei:setVisible(true)
-	self.btnBibei:setVisible(false)
+	function deneyGoldGiftJijia()
+	    self.buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	end
+	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
+	     "关卡详情_点击机甲按钮")
 end
 
 function LevelDetailLayer:onClickBtnGold()
@@ -306,8 +304,6 @@ function LevelDetailLayer:onClickBtnGold()
 	local isDone = self.guide:isDone("weapon")
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
-        self.storeModel  = md:getInstance("StoreModel")
-        self.storeModel:refreshInfo("prop")
 		self.alreadyGold:setVisible(true)
 		self.btnGold:setVisible(false)	
     else
@@ -316,18 +312,31 @@ function LevelDetailLayer:onClickBtnGold()
 	end
 end
 
-function LevelDetailLayer:onClickBtnJijia()
-	function equipJijia()
-		self.alreadyJijia:setVisible(true)
-		self.btnJijia:setVisible(false)	
-	end
-
-	function deneyGoldGiftJijia()
-	    self.buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
-	end
-	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
-	     "关卡详情_点击机甲按钮")
+function LevelDetailLayer:onCancelWeaponGift()
+	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local rmbCost = weaponRecord["rmbCost"]
+    if  rmbCost == 6 then
+        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.onBuyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..self.recomWeaponId)
+    elseif rmbCost == 10 then
+        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..self.recomWeaponId)
+    end
 end
+
+function LevelDetailLayer:onBuyWeaponGiftSucc()
+    local levelMapModel = md:getInstance("LevelMapModel")
+    levelMapModel:hideGiftBagIcon()
+	self.weaponListModel:equipBag(self.recomWeaponId,1)
+	self.alreadyBibei:setVisible(true)
+	self.btnBibei:setVisible(false)
+end
+
+function LevelDetailLayer:onBuyWeaponSucc()
+	self.levelDetailModel:reloadlistview()
+	self.weaponListModel:equipBag(self.recomWeaponId,1)
+	self.alreadyBibei:setVisible(true)
+	self.btnBibei:setVisible(false)
+end
+
 
 ---- initData ----
 function LevelDetailLayer:initData()

@@ -14,7 +14,6 @@ end)
 
 function HomeBarLayer:ctor(properties)
     self.usermodel   = md:getInstance("UserModel")
-    self.storeModel  = md:getInstance("StoreModel")
     self.guide       = md:getInstance("Guide")
 
     cc.EventProxy.new(self.usermodel , self)
@@ -164,13 +163,14 @@ function HomeBarLayer:initHomeLayer()
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            self.storeModel:refreshInfo("bank")
             self.btnSetting:setVisible(false)
             self.btnBack:setVisible(true)
             self:refreshCommonLayer("StoreLayer")
             self.btnInlay:setButtonEnabled(true)
             self.btnStore:setButtonEnabled(false)
             self.btnArsenal:setButtonEnabled(true)
+            local storeModel  = md:getInstance("StoreModel")
+            storeModel:refreshInfo("bank")
         end
     end)
 

@@ -20,6 +20,11 @@ function DailyLoginLayer:loadCCS()
     local png   = "res/GiftBag/lb_ljlq/lb_ljlq0.png"
     display.addSpriteFrames(plist, png)          
 
+    local mrdlsrc = "res/GiftBag/mrdl/mrdl.csb"
+    manager:addArmatureFileInfo(mrdlsrc)
+    local plist = "res/GiftBag/mrdl/mrdl0.plist"
+    local png   = "res/GiftBag/mrdl/mrdl0.png"
+    display.addSpriteFrames(plist, png)          
 end
 
 function DailyLoginLayer:initUI()

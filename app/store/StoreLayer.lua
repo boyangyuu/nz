@@ -13,16 +13,20 @@ function StoreLayer:ctor()
     
     cc.EventProxy.new(self.storeModel , self)
         :addEventListener("REFRESH_STORE_EVENT", handler(self, self.refresh))
+end
 
-	self:loadCCS()
-	self:initUI()
+function StoreLayer:onEnter()
+    self:loadCCS()
+    self:initUI()
     self:setSelect("prop")
 end
 
 function StoreLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/Store")
 	local controlNode = cc.uiloader:load("shangcheng.ExportJson")
-    -- local cellNode = cc.uiloader:load("cellstore.ExportJson")
+    if self.ui then
+        return
+    end
     self.ui = controlNode
     self:addChild(controlNode)
 
