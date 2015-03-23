@@ -350,8 +350,12 @@ local enemys = {
 	--小蜘蛛   --type = "bao",
 	{id=20,image="xiaozz",demage=10,hp=5000, speed=150,weak1=1}, 
 
-	--烟雾导弹 
-	{id=21,image="daodan03",demage=10,hp=50, weak1=1},   	  	                      
+	--烟雾导弹
+	{id=21,image="daodan03",demage=10,hp=50, weak1=1},   
+
+	--大导弹          --missileType = "daodan",
+	{id=22,image="daodan01",demage=10,hp=500, weak1=1},	
+
 }
 
 
