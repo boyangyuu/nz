@@ -76,7 +76,7 @@ function WeaponListLayer:loadCCS()
     local starpng = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
     display.addSpriteFrames(starplist,starpng)
 
-    local wqsjsrc = "res/WeaponList/wqsj/wqsj.csb"
+    local wqsjsrc = "res/WeaponList/wqsj/wqsj.ExportJson"
     manager:addArmatureFileInfo(wqsjsrc)
     local plist = "res/WeaponList/wqsj/wqsj0.plist"
     local png   = "res/WeaponList/wqsj/wqsj0.png"

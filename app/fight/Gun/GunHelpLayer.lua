@@ -15,10 +15,10 @@ end
 
 function GunHelpLayer:loadCCS()
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saos/yd_saos.csb")
+    manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saos/yd_saos.ExportJson")
     display.addSpriteFrames("res/Fight/uiAnim/yd_saos/yd_saos0.plist", 
         "res/Fight/uiAnim/yd_saos/yd_saos0.png")     
-    manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saosan/yd_saosan.csb")
+    manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saosan/yd_saosan.ExportJson")
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
         "res/Fight/uiAnim/yd_saosan/yd_saosan0.png")     
 
