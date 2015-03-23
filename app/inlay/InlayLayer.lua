@@ -92,8 +92,7 @@ function InlayLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self:playSoundxqcg()
-            self.inlayModel:equipAllInlays()
+            self:onClickOneForAllBtn()
         end
     end)
 
@@ -101,21 +100,7 @@ function InlayLayer:initUI()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local goldweaponNum = self.inlayModel:getGoldWeaponNum()
-            if goldweaponNum > 0 then
-                self.inlayModel:equipAllInlays()
-                self:playSoundxqcg()
-            else
-                function equipGold()
-                    self.inlayModel:equipAllInlays(true)
-                    self:playSoundxqcg()
-                end
-                function deneyGoldGift()
-                    self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
-                end
-                self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
-                     "镶嵌页面_点击一键黄武")
-            end
+            self:onClickGoldWeaponBtn()
         end
     end)
 
@@ -131,6 +116,31 @@ function InlayLayer:initUI()
             end
         end)
     end
+end
+
+function InlayLayer:onClickOneForAllBtn()
+    self:playSoundxqcg()
+    self.inlayModel:equipAllInlays()
+    self.inlayModel:refreshInfo("speed",true)
+end
+
+function InlayLayer:onClickGoldWeaponBtn()
+    local goldweaponNum = self.inlayModel:getGoldWeaponNum()
+    if goldweaponNum > 0 then
+        self.inlayModel:equipAllInlays()
+        self:playSoundxqcg()
+    else
+        function equipGold()
+            self.inlayModel:equipAllInlays(true)
+            self:playSoundxqcg()
+        end
+        function deneyGoldGift()
+            self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
+        end
+        self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+             "镶嵌页面_点击一键黄武")
+    end
+    self.inlayModel:refreshInfo("speed",true)
 end
 
 function InlayLayer:playSoundxqcg()

@@ -64,8 +64,8 @@ function WeaponListLayer:loadCCS()
     self:addChild(controlNode)
 
     -- anim
-    local src = "res/WeaponList/btbuyanim/bt_goumai.csb"
-    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.csb"
+    local src = "res/WeaponList/btbuyanim/bt_goumai.ExportJson"
+    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     manager:addArmatureFileInfo(starsrc)
@@ -272,7 +272,8 @@ function WeaponListLayer:onCancelWeaponGift()
 end
 
 function WeaponListLayer:onCancelOncefull()
-    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
+    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId,
+            payDoneFunc = handler(self,self.refreshUI)}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
 end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()

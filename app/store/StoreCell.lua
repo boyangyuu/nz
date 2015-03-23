@@ -19,7 +19,7 @@ end
 
 function StoreCell:initCellUI()
     local manager = ccs.ArmatureDataManager:getInstance()
-    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
     manager:addArmatureFileInfo(yjzbsrc)
     local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
     local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
@@ -185,7 +185,6 @@ function StoreCell:addBtnEvent()
                     self.ownnumber:setString(self.propModel:getPropNum(self.record["nameid"]))
                 end
             else
-
                 if self.record["nameid"] == "goldweapon" then
                     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.playSound),
                         deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_黄武钻石不够")

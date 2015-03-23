@@ -19,7 +19,7 @@ end
 
 function StartLayer:initUI()
     local panlAnim = cc.uiloader:seekNodeByName(self, "panlAnim")
-    local src = "res/Start/caidantx/caidantx.csb"
+    local src = "res/Start/caidantx/caidantx.ExportJson"
     local logosrc = "res/Start/dl_logo/dl_logo.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
