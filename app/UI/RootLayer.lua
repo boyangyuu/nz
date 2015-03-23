@@ -80,13 +80,10 @@ function RootLayer:addResHome()
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
 
-    local mapsrc = "res/LevelMap/map_shijie/shijiemap.ExportJson"
+    local mapsrc = "res/LevelMap/shijiemap/shijiemap.ExportJson"
     manager:addArmatureFileInfoAsync(mapsrc,  handler(self, self.dataLoaded))
-    local plist = "res/LevelMap/map_shijie/shijiemap0.plist"
-    local png   = "res/LevelMap/map_shijie/shijiemap0.png"
-    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local tbtxsrc = "res/LevelMap/sjdt_tbtx/sjdt_tbtx.csb"
+    local tbtxsrc = "res/LevelMap/sjdt_tbtx/sjdt_tbtx.ExportJson"
     manager:addArmatureFileInfoAsync(tbtxsrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.plist"
     local png   = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.png"
@@ -98,13 +95,13 @@ function RootLayer:addResHome()
     local png   = "res/Store/guang/guang0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local sczgsrc = "res/Store/sczg/sczg.csb"
+    local sczgsrc = "res/Store/sczg/sczg.ExportJson"
     manager:addArmatureFileInfoAsync(sczgsrc,  handler(self, self.dataLoaded))
     local plist = "res/Store/sczg/sczg0.plist"
     local png   = "res/Store/sczg/sczg0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local leidasrc = "res/LevelMap/leida/leida.csb"
+    local leidasrc = "res/LevelMap/leida/leida.ExportJson"
     manager:addArmatureFileInfoAsync(leidasrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/leida/leida0.plist"
     local png   = "res/LevelMap/leida/leida0.png"
@@ -116,19 +113,19 @@ function RootLayer:addResHome()
     local png   = "res/HomeBarLayer/jbs/jbs0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local zssrc = "res/HomeBarLayer/zss/zss.csb"
+    local zssrc = "res/HomeBarLayer/zss/zss.ExportJson"
     manager:addArmatureFileInfoAsync(zssrc,  handler(self, self.dataLoaded))
     local plist = "res/HomeBarLayer/zss/zss0.plist"
     local png   = "res/HomeBarLayer/zss/zss0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local libaosrc = "res/LevelMap/libao/libao.csb"
+    local libaosrc = "res/LevelMap/libao/libao.ExportJson"
     manager:addArmatureFileInfoAsync(libaosrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/libao/libao0.plist"
     local png   = "res/LevelMap/libao/libao0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.csb"
+    local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.ExportJson"
     manager:addArmatureFileInfoAsync(thjbxsrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
@@ -208,7 +205,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))         
     end 
 
-    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.csb"
+    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.ExportJson"
     manager:addArmatureFileInfoAsync(ydfhsrc,  handler(self, self.dataLoaded))
     local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
     local png   = "res/FightResult/anim/ydfh/ydfh0.png"

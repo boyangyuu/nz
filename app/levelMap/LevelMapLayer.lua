@@ -43,6 +43,13 @@ function LevelMapLayer:initBgLayer(event)
     -- bg starting animation
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
+    
+    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/shijiemap")
+    local mapSrcName = "map_shijie.jpg"
+    local skin = ccs.Skin:create(mapSrcName)
+    self.armature:getBone("map_shijie"):addDisplay(skin, 1)
+    self.armature:getBone("map_shijie"):changeDisplayWithIndex(1, true)
+
     self.armature:setAnchorPoint(0.5,0.5)
     self.armature:setPosition(display.width/2,display.height1/2)
     self:addChild(self.armature)

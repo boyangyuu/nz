@@ -172,10 +172,10 @@ function GuideLayer:checkFirstGuide()
 	self.isFirst = true
 	--res
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo("res/xinshou/xinsyd/xinsyd.csb")
+    manager:addArmatureFileInfo("res/xinshou/xinsyd/xinsyd.ExportJson")
     display.addSpriteFrames("res/xinshou/xinsyd/xinsyd.plist", 
         "res/xinshou/yd_zyhua/yd_zyhua0.png")     
-    manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.csb")
+    manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.ExportJson")
     display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
         "res/xinshou/yd_dianji/yd_dianji0.png")	
 
