@@ -203,8 +203,6 @@ function BaseBossView:playSkill(skillName)
 		-- print(" demage num", num)
 		local per = num / 100
 		self.enemy:setDemageScale(per)	
-
-	
 	elseif string.sub(skillName, 1, 6) == "daoDan" then 
         local function callfuncDao()
             self:playDaoDan(skillName)
@@ -338,8 +336,9 @@ function BaseBossView:playDaoDan(skillName)
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     
     --play
+    local delay = define.daoDanTimeOffset or 0.6
     for i=1, #config.offsetPoses do
-        local delay = 0.6 + 0.20 * i 
+        local delay =  + 0.20 * i 
         local property = {
             srcPos = pWorldBone,
             srcScale = self:getScale() * 0.4,
