@@ -110,7 +110,7 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/leida/leida0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-    local jbsrc = "res/HomeBarLayer/jbs/jbs.csb"
+    local jbsrc = "res/HomeBarLayer/jbs/jbs.ExportJson"
     manager:addArmatureFileInfoAsync(jbsrc,  handler(self, self.dataLoaded))
     local plist = "res/HomeBarLayer/jbs/jbs0.plist"
     local png   = "res/HomeBarLayer/jbs/jbs0.png"
@@ -235,7 +235,7 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/uiAnim/qiangdicx/qiangdicx0.plist", 
         "res/Fight/uiAnim/qiangdicx/qiangdicx0.png", handler(self, self.imageLoaded))    
 
-    local jinbijlsrc = "res/Fight/uiAnim/jinbijl/jinbijl.csb"
+    local jinbijlsrc = "res/Fight/uiAnim/jinbijl/jinbijl.ExportJson"
     manager:addArmatureFileInfoAsync(jinbijlsrc, handler(self, self.dataLoaded))
     display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
         "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
