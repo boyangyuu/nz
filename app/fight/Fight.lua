@@ -72,27 +72,41 @@ function Fight:refreshUm()
     self.inlay:refreshUm()
 
     --事件统计_关卡开始
-    local data = getUserData()
-    local curGid = data.currentlevel.group
-    local curLid = data.currentlevel.level
-
-    local fGid, fLid = self:getCurGroupAndLevel()    
-    local levelInfo = self:getLevelInfo()
-    assert(levelInfo, "levelInfo is nil")
-    local str = nil
-    if fGid == curGid and curLid == fLid then 
-        str = "关卡开始_新"
-    else
-        str = "关卡开始_旧" 
-    end
-    local umData = {}
-    umData[levelInfo] = str
-    um:event("关卡次数情况", umData)       
+    self:refreshUmFightTimesEvent()
 
     --任务统计
     local levelInfo = self:getLevelInfo()
     assert(levelInfo, "levelInfo is nil")
+    print(" um:startLevel(levelInfo)", levelInfo)
     um:startLevel(levelInfo)
+end
+
+function Fight:refreshUmFightTimesEvent()
+    local data = getUserData()
+
+    local fightedGid = data.user.fightedGroupId
+    local fightedLid = data.user.fightedlevelId
+
+    local fGid, fLid = self:getCurGroupAndLevel()    
+    local isUnFighted = fightedGid <= fGid 
+                and fightedLid < fLid
+    local str = nil
+    if isUnFighted then
+        data.user.fightedGroupId = fGid
+        data.user.fightedlevelId = fLid
+        setUserData(data)
+        print("关卡开始_首次进入")
+        dump(data, "data")
+        str = "关卡开始_首次进入"
+    else
+         print("关卡开始_重复进入")
+        str = "关卡开始_重复进入" 
+    end
+
+    local umData = {}
+    local levelInfo = self:getLevelInfo()
+    umData[levelInfo] = str
+    um:event("关卡次数情况", umData)        
 end
 
 function Fight:willStartFight()
@@ -140,6 +154,7 @@ function Fight:onWin()
     --um 任务
     local levelInfo = self:getLevelInfo() 
     assert(levelInfo, "levelInfo is nil")  
+    print(" um:finishLevel(levelInfo)", levelInfo)
     um:finishLevel(levelInfo)
 
     --um 关卡完成情况事件

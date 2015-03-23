@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
+--[[	{
 		enemys = { 
 			{
 				descId = "yyc", --简介
@@ -247,7 +247,7 @@ local waves = {
 				},
 			},	
 		},
-	},
+	},]]
 	{
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                                 --boss
@@ -262,6 +262,7 @@ local waves = {
 					placeName = "place1",
 					wangId    = 19,
 					missileId = 6, 
+					yanwuId   = 21,
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
 					id = 1,
 				},
@@ -347,8 +348,10 @@ local enemys = {
 	{id=19,image="zzw",demage=10,hp=20000},       
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=10,hp=5000, speed=150,
-	weak1=1},   	                      
+	{id=20,image="xiaozz",demage=10,hp=5000, speed=150,weak1=1}, 
+
+	--烟雾导弹 
+	{id=21,image="daodan03",demage=10,hp=50, weak1=1},   	  	                      
 }
 
 
@@ -382,13 +385,11 @@ local bosses = {
 			zhaohuan = { 0.95, 0.71, 0.51, 0.31                                   --召唤小兵
 			},   
 
-			wang = { 0.999,0.91,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15 ,0.05                    --网
+			wang = { 0.99,0.91,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15 ,0.05                    --网
 			},
 
-			-- yanwu = { 0.90,0.70,0.50,0.30,0.10                     --烟雾
-			-- },  
-
-
+			yanwu = { 0.98,0.78,0.58,0.38,0.18                     --烟雾
+			},  
 
 			weak3 = { 0.70, 0.40, 0.10,                                --右腿 技能触发(可以同时)          
 			},	

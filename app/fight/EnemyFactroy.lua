@@ -1,9 +1,10 @@
 local EnemyFactory = class("EnemyFactory",cc.mvc.ModelBase)
 
 --missile
-local MissileEnemyView = import(".enemys.MissileEnemyView")
+local DDNormalEnemyView = import(".enemys.DDNormalEnemyView")
 local DaoEnemyView 		= import(".enemys.DaoEnemyView")
-local WangEnemyView		= import(".enemys.WangEnemyView")
+local DDWangEnemyView	= import(".enemys.DDWangEnemyView")
+local DDWuEnemyView		= import(".enemys.DDWuEnemyView")
 
 local SanEnemyView 		= import(".enemys.SanEnemyView")
 local JinEnemyView 		= import(".enemys.JinEnemyView")
@@ -44,9 +45,11 @@ function EnemyFactory.createEnemy(property)
 
 	--dao
 	elseif type == "dao_wang" then
-		enemyView = WangEnemyView.new(property)
+		enemyView = DDWangEnemyView.new(property)
 	elseif type == "missile" then
-		enemyView = MissileEnemyView.new(property)
+		enemyView = DDNormalEnemyView.new(property)
+	elseif type == "dao_wu" then 
+		enemyView = DDWuEnemyView.new(property)
 
 	--award
 	elseif type == "awardSan" then

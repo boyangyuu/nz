@@ -25,7 +25,7 @@ function Attackable:ctor(property)
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
 	self:addChild(self.armature)
-	-- self.armature:setScale(1/0.7)
+	self.armature:setScale(1/0.7)
     self:setScale(property.scale or 1.0)
     
     --events
@@ -160,9 +160,6 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
     enemyBound.x = pWorld2.x
     enemyBound.y = pWorld2.y    
     
-    -- dump(bound, "bound ------")
-    -- dump(enemyBound, "enemyBound -------")    
-    -- self:test()
     return cc.rectIntersectsRect(bound, enemyBound)
 end
 
@@ -402,16 +399,13 @@ function Attackable:getEnemyArmature()
 
     --isBoss
     local armature
-    local isBoss = self.enemy:getId() == "boss"
-    isBoss = true
-    if isBoss then 
-	    local manager = ccs.ArmatureDataManager:getInstance()
-        local src = "res/Fight/enemys/"..imgName.."/"..imgName..".csb"
-        local plist = "res/Fight/enemys/"..imgName.."/"..imgName.."0.plist"
-        local png   = "res/Fight/enemys/"..imgName.."/"..imgName.."0.png" 
-	    manager:addArmatureFileInfo(src)
-	    display.addSpriteFrames(plist, png)       	
-    end
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local src = "res/Fight/enemys/"..imgName.."/"..imgName..".csb"
+    local plist = "res/Fight/enemys/"..imgName.."/"..imgName.."0.plist"
+    local png   = "res/Fight/enemys/"..imgName.."/"..imgName.."0.png" 
+    manager:addArmatureFileInfo(src)
+    display.addSpriteFrames(plist, png)    
+
     armature = ccs.Armature:create(imgName)
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature		
