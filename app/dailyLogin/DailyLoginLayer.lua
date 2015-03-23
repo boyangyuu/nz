@@ -13,14 +13,14 @@ function DailyLoginLayer:loadCCS()
 	local controlNode = cc.uiloader:load("res/GiftBag/GiftBag/GiftBag_LoginGiftBag.json")
     self:addChild(controlNode)
 
-    local src = "res/GiftBag/lb_ljlq/lb_ljlq.csb"
+    local src = "res/GiftBag/lb_ljlq/lb_ljlq.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     local plist = "res/GiftBag/lb_ljlq/lb_ljlq0.plist"
     local png   = "res/GiftBag/lb_ljlq/lb_ljlq0.png"
     display.addSpriteFrames(plist, png)          
 
-    local mrdlsrc = "res/GiftBag/mrdl/mrdl.csb"
+    local mrdlsrc = "res/GiftBag/mrdl/mrdl.ExportJson"
     manager:addArmatureFileInfo(mrdlsrc)
     local plist = "res/GiftBag/mrdl/mrdl0.plist"
     local png   = "res/GiftBag/mrdl/mrdl0.png"

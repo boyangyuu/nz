@@ -22,7 +22,7 @@ function GiftBagPopup:loadCCS()
 	local giftBagNode = cc.uiloader:load(title.ccsPath)
     self:addChild(giftBagNode)
 
-    local src = "res/GiftBag/lb_ljgm/lb_ljgm.csb"
+    local src = "res/GiftBag/lb_ljgm/lb_ljgm.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     local plist = "res/GiftBag/lb_ljgm/lb_ljgm0.plist"
