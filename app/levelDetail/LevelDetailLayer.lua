@@ -62,7 +62,7 @@ function LevelDetailLayer:loadCCS()
 	self.alreadyJijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
 
     -- anim
-    local src = "res/LevelDetail/btequipanim/bt_yjzb.csb"
+    local src = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
@@ -190,19 +190,19 @@ function LevelDetailLayer:initBtns()
     jijiaarmature:getAnimation():play("yjzb" , -1, 1)
     bibeiarmature:getAnimation():play("yjzb" , -1, 1)
 
-	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
-		self.alreadyBibei:setVisible(true)
-		self.btnBibei:setVisible(false)
-	end
-	if self.inlayModel:isGetAllGold() then
-		self.alreadyGold:setVisible(true)
-		self.btnGold:setVisible(false)
-	end
-	if self.propModel:getPropNum("jijia") > 0 then
-		self.alreadyJijia:setVisible(true)
-		self.btnJijia:setVisible(false)
-	end
-
+	-- if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
+	-- 	self.alreadyBibei:setVisible(true)
+	-- 	self.btnBibei:setVisible(false)
+	-- end
+	-- if self.inlayModel:isGetAllGold() then
+	-- 	self.alreadyGold:setVisible(true)
+	-- 	self.btnGold:setVisible(false)
+	-- end
+	-- if self.propModel:getPropNum("jijia") > 0 then
+	-- 	self.alreadyJijia:setVisible(true)
+	-- 	self.btnJijia:setVisible(false)
+	-- end
+	self:refreshBtns()
 	------ on btn clicked
 	--offbtn
 	addBtnEventListener(self.btnOff, function(event)
@@ -267,19 +267,25 @@ function LevelDetailLayer:onClickBtnBibei()
 		else
 			self.weaponListModel:equipBag(self.recomWeaponId,1)
 		end
-		self.alreadyBibei:setVisible(true)
-		self.btnBibei:setVisible(false)
+		-- self.alreadyBibei:setVisible(true)
+		-- self.btnBibei:setVisible(false)
+			self:refreshBtns()
+
 	else
         self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
         deneyBuyFunc = handler(self,self.onCancelWeaponGift)}, 
         	"关卡详情_点击必备按钮")
 	end
+		self:refreshBtns()
+
 end
 
 function LevelDetailLayer:onClickBtnJijia()
 	function equipJijia()
-		self.alreadyJijia:setVisible(true)
-		self.btnJijia:setVisible(false)	
+		-- self.alreadyJijia:setVisible(true)
+		-- self.btnJijia:setVisible(false)	
+			self:refreshBtns()
+
 	end
 
 	function deneyGoldGiftJijia()
@@ -292,8 +298,10 @@ end
 function LevelDetailLayer:onClickBtnGold()
 	function equipGold()
 		self.inlayModel:equipAllInlays(true)
-		self.alreadyGold:setVisible(true)
-		self.btnGold:setVisible(false)	
+		-- self.alreadyGold:setVisible(true)
+		-- self.btnGold:setVisible(false)
+			self:refreshBtns()
+	
 	end
 	
 	function deneyGoldGift()
@@ -304,8 +312,10 @@ function LevelDetailLayer:onClickBtnGold()
 	local isDone = self.guide:isDone("weapon")
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
-		self.alreadyGold:setVisible(true)
-		self.btnGold:setVisible(false)	
+		-- self.alreadyGold:setVisible(true)
+		-- self.btnGold:setVisible(false)	
+			self:refreshBtns()
+
     else
 	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
@@ -326,15 +336,19 @@ function LevelDetailLayer:onBuyWeaponGiftSucc()
     local levelMapModel = md:getInstance("LevelMapModel")
     levelMapModel:hideGiftBagIcon()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	self.alreadyBibei:setVisible(true)
-	self.btnBibei:setVisible(false)
+	-- self.alreadyBibei:setVisible(true)
+	-- self.btnBibei:setVisible(false)
+		self:refreshBtns()
+
 end
 
 function LevelDetailLayer:onBuyWeaponSucc()
 	self.levelDetailModel:reloadlistview()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	self.alreadyBibei:setVisible(true)
-	self.btnBibei:setVisible(false)
+	-- self.alreadyBibei:setVisible(true)
+	-- self.btnBibei:setVisible(false)
+		self:refreshBtns()
+
 end
 
 
@@ -358,6 +372,21 @@ function LevelDetailLayer:initGuide()
             self:onClickBtnStart()
         end
      })     
+end
+
+function LevelDetailLayer:refreshBtns()
+	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId ) then
+		self.alreadyBibei:setVisible(true)
+		self.btnBibei:setVisible(false)
+	end
+	if self.inlayModel:isGetAllGold() then
+		self.alreadyGold:setVisible(true)
+		self.btnGold:setVisible(false)
+	end
+	if self.propModel:getPropNum("jijia") > 0 then
+		self.alreadyJijia:setVisible(true)
+		self.btnJijia:setVisible(false)
+	end
 end
 
 return LevelDetailLayer

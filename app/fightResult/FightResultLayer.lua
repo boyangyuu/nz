@@ -63,14 +63,14 @@ function FightResultLayer:loadCCS()
     self:addChild(controlNode)
 
     --anim
-    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.csb"
+    local starsrc = "res/FightResult/anim/gkjs_xing/gkjs_xing.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(starsrc)
     local plist = "res/FightResult/anim/gkjs_xing/gkjs_xing0.plist"
     local png = "res/FightResult/anim/gkjs_xing/gkjs_xing0.png"
     display.addSpriteFrames(plist,png)
 
-    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.csb"
+    local ksxqsrc = "res/LevelDetail/bt_ksxq/bt_ksxq.ExportJson"
     manager:addArmatureFileInfo(ksxqsrc)
     local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
     local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
@@ -201,7 +201,7 @@ function FightResultLayer:initUI()
         elseif event.name=='ended' then
 	        ui:showPopup("commonPopup",
 				 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
-				 callfuncCofirm =  handler(self, self.leftCard)},
+				 callfuncCofirm =  handler(self, self.onCofirmLeftCard)},
 				 {opacity = 155})
         end
     end)
@@ -407,12 +407,13 @@ function FightResultLayer:quickInlay()
     um:event("关卡结算_快速镶嵌", umData)
 end
 
-function FightResultLayer:leftCard()
+function FightResultLayer:onCofirmLeftCard()
 	if self.userModel:costDiamond(10) then
 		self:turnLeftCard()
 	else
         local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("stone120",{}, "战斗结算界面_点击翻牌")
+        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.turnLeftCard)},
+         "战斗结算界面_点击翻牌")
 	end
 end
 

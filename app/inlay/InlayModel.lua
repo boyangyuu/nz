@@ -30,8 +30,8 @@ function InlayModel:getInlayNum(inlayid)
 	end
 end
 
-function InlayModel:refreshInfo(typename)
-	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = typename})
+function InlayModel:refreshInfo(typename,isall)
+	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = typename,isall = isall})
 end
 
 function InlayModel:buyGoldsInlay(buynumber)
@@ -186,10 +186,10 @@ function InlayModel:equipAllInlays(isRefresh)
 			self:equipInlay(v, false)
 		end
 	end
-	if isRefresh == nil then isRefresh = true end
-	if isRefresh == true then
-	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = "speed",isall = true})
-	end
+	-- if isRefresh == nil then isRefresh = true end
+	-- if isRefresh == true then
+	-- self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = "speed",isall = true})
+	-- end
 end
 
 function InlayModel:equipAllBestInlays(table)

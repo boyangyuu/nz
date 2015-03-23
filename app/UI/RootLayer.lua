@@ -92,7 +92,7 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
 
-    local guangsrc = "res/Store/guang/guang.csb"
+    local guangsrc = "res/Store/guang/guang.ExportJson"
     manager:addArmatureFileInfoAsync(guangsrc,  handler(self, self.dataLoaded))
     local plist = "res/Store/guang/guang0.plist"
     local png   = "res/Store/guang/guang0.png"
@@ -220,12 +220,12 @@ function RootLayer:addResFight()
     display.addSpriteFrames("res/Fight/uiAnim/renwuks/renwuks0.plist", 
         "res/Fight/uiAnim/renwuks/renwuks0.png", handler(self, self.imageLoaded)) 
 
-    local drlxsrc = "res/Fight/uiAnim/direnlx/direnlx.csb"
+    local drlxsrc = "res/Fight/uiAnim/direnlx/direnlx.ExportJson"
     manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/Fight/uiAnim/direnlx/direnlx0.plist", 
         "res/Fight/uiAnim/direnlx/direnlx0.png", handler(self, self.imageLoaded)) 
 
-    local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.csb"
+    local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.ExportJson"
     manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/CommonPopup/animLayer/bossjj/bossjj0.plist", 
         "res/CommonPopup/animLayer/bossjj/bossjj0.png", handler(self, self.imageLoaded)) 
