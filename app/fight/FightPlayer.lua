@@ -75,8 +75,7 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
 
-    self:setNodeEventEnabled(true)
-    
+    self:setNodeEventEnabled(true)   
 end
 
 function FightPlayer:setPause(event)
@@ -586,7 +585,7 @@ function FightPlayer:onCancelledFire()
     --robot ju
     local robot         = md:getInstance("Robot")
     local isRobot       = robot:getIsRoboting()
-    if  isRobot then
+    if isRobot then
         robot:stopFire()
     else
         self.gunView:stopFire()
@@ -635,7 +634,11 @@ end
 function FightPlayer:onHeroFire(event)
     local focusRangeNode = self.focusView:getFocusRange()
     self.focusView:playFire()
-    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,focusRangeNode = focusRangeNode})    
+
+    --gun 
+    local pWorldGun = self.layerGun:convertToWorldSpace(cc.p(0,0))
+    self.hero:dispatchEvent({name = self.hero.GUN_FIRE_EVENT,
+        focusRangeNode = focusRangeNode, pWorldGun = pWorldGun})    
 end
 
 ----move----
@@ -824,30 +827,6 @@ function FightPlayer:initGuide1()
     })     
 end
 
-function FightPlayer:initGuide4()
-    --check     
-    local isDone = self.guide:isDone("fight01_jijia")
-    local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 0 and gid == 0
-    if isDone or not isWillGuide then return end
-
-    --机甲
-    self.btnRobot:setVisible(false)
-    self.label_jijiaNum:setVisible(false)
-    
-    --btn
-    self.guide:addClickListener({
-        id = "fight01_jijia",
-        groupId = "fight01_jijia",
-        rect = self.btnRobot:getBoundingBox(),
-        endfunc = function (touchEvent)
-            addBtnEffect(self.btnRobot)
-            local robot = md:getInstance("Robot")
-            robot:startRobot()  
-        end
-    })   
-end
-
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fight04")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
@@ -893,6 +872,30 @@ function FightPlayer:initGuide3()
             self:onCancelledFire()    
         end
      })        
+end
+
+function FightPlayer:initGuide4()
+    --check     
+    local isDone = self.guide:isDone("fight01_jijia")
+    local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 0 and gid == 0
+    if isDone or not isWillGuide then return end
+
+    --机甲
+    self.btnRobot:setVisible(false)
+    self.label_jijiaNum:setVisible(false)
+    
+    --btn
+    self.guide:addClickListener({
+        id = "fight01_jijia",
+        groupId = "fight01_jijia",
+        rect = self.btnRobot:getBoundingBox(),
+        endfunc = function (touchEvent)
+            addBtnEffect(self.btnRobot)
+            local robot = md:getInstance("Robot")
+            robot:startRobot()  
+        end
+    })   
 end
 
 function FightPlayer:onEnter()

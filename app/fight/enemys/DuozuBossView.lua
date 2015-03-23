@@ -98,7 +98,7 @@ function DuozuBossView:playFire()
         local delay = 0.3 + 0.10 * i 
         local property = {
             type = "missile",
-            srcScale = self:getScale() * 0.3, --导弹view用
+            srcScale = self:getScale() * 0.3, 
             id = self.property["missileId"], 
             demageScale = self.enemy:getDemageScale(),
             offset = self.property["missileOffsets"][i],
@@ -118,8 +118,6 @@ end
 function DuozuBossView:playSkillWu()
     --烟雾弹
     self.armature:getAnimation():play("fire1" , -1, 1) 
-
-    -- print("发射烟雾弹")
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     local delay = 0.6
@@ -128,10 +126,9 @@ function DuozuBossView:playSkillWu()
         srcScale = self:getScale() * 0.4,
         destScale = 1.5,
         destPos = pWorldBone,
-        type = "missile",
-        id = self.property["missileId"],
-        demageScale = self.enemy:getDemageScale(),
-        -- missileType = "yanwu",
+        type = "dao_wu",
+        id = self.property["yanwuId"],
+        demageScale = self.enemy:getDemageScale(), 
     }
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})

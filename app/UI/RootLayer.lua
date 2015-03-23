@@ -160,7 +160,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
     end
 
-    local heroImgs = {"avatarhit", "blood1", "blood2","hjwq", "jijia", 
+    local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
         "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
@@ -170,7 +170,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak"}
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak", "dandao"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
@@ -179,7 +179,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))       
     end
 
-    local uiImgs = {"baotou", "huanzidan", "ruodiangj", "tanhao",
+    local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "xuetiao", "baozha4",
         "effect_gun_kaiqiang", "wdhd"}
     for i,v in ipairs(uiImgs) do

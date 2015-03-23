@@ -108,13 +108,12 @@ function HeroAnimView:playHurtedBomb_yan(event)
 	armatureYan:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
-				if movementId == "start" then 
+				if movementId == "yanwu" then 
 					armatureYan:removeFromParent()
 				end
 	    	end 
     	end)	
-	armatureYan:getAnimation():play("start" , -1, 1)
-
+	armatureYan:getAnimation():play("yanwu" , -1, 1)
 end
 
 function HeroAnimView:playKillHead(event)
