@@ -400,7 +400,7 @@ function Attackable:getEnemyArmature()
     --isBoss
     local armature
     local manager = ccs.ArmatureDataManager:getInstance()
-    local src = "res/Fight/enemys/"..imgName.."/"..imgName..".csb"
+    local src = "res/Fight/enemys/"..imgName.."/"..imgName..".ExportJson"
     local plist = "res/Fight/enemys/"..imgName.."/"..imgName.."0.plist"
     local png   = "res/Fight/enemys/"..imgName.."/"..imgName.."0.png" 
     manager:addArmatureFileInfo(src)
