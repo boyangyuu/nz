@@ -21,7 +21,7 @@ local AwardEnemyView   	= import(".enemys.AwardEnemyView")
 local AwardSanEnemyView	= import(".enemys.AwardSanEnemyView")
 
 --boss
-local BaseBossView 		= import(".enemys.BaseBossView")
+local SaosheBossView 	= import(".enemys.SaosheBossView")
 local ChongBossView 	= import(".enemys.ChongBossView")
 local RenBossView 		= import(".enemys.RenBossView")
 local DuozuBossView		= import(".enemys.DuozuBossView")
@@ -35,7 +35,7 @@ function EnemyFactory.createEnemy(property)
 	local type = property.type
 	-- print("function EnemyFactory.createEnemy(property)"，type)	
 	if type == "boss" then 
-		enemyView = BaseBossView.new(property)
+		enemyView = SaosheBossView.new(property)
 	elseif type == "chongBoss" then
 		enemyView = ChongBossView.new(property)		
 	elseif type == "renzheBoss" then

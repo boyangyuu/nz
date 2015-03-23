@@ -162,11 +162,14 @@ end
 
 function RenBossView:playFeibiao(skillName)
     assert(skillName, "playFeibiao index is nil")
-
-    local config = self.config[skillName] 
     self.armature:getAnimation():play("fire" , -1, 1) 
+
+    --pos
+    local config = self.config[skillName] 
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
+    
+    --play
     for i=1,#config.offsetPoses do
         local delay = 0.6 + 0.20 * i 
         local property = {

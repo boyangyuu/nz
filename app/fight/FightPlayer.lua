@@ -344,7 +344,6 @@ end
 ---- touch and btn----
 function FightPlayer:onMutiTouchBegin(event)
     --check
-    dump(event, "onMutiTouchBegin")
     if event.points == nil then return false end
     for id, point in pairs(event.points) do
         local eventName = event.name 

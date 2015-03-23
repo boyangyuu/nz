@@ -491,6 +491,7 @@ local bosses = {
 		walkRate = 120,
 		walkCd = 1,         --移动cd	
 		wudiTime = 5 , 	    --无敌时间
+		daoDanTimeOffset = 0.6, --群发导弹间隔时间
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 5, 			--一次扫射5下
 		weak1 = 1.2,					--手  弱点伤害倍数
@@ -510,7 +511,7 @@ local bosses = {
 			moveLeftFire = { 0.80 , 0.55, 0.20 },
 			-- moveRightFire = { 0.55, 0.20 },
 			
-			daoDan = {                                            --两发导弹
+			daoDan1 = {                                            --两发导弹
 				0.99,0.85,0.75, 0.45, 0.10,
 			},
 
@@ -537,6 +538,13 @@ local bosses = {
 			},							
 		},
 
+		daoDan1 = {
+			offsetPoses = {
+               cc.p(0, 200), cc.p(-200, 0), cc.p(0, -200), cc.p(200, 0), 
+               cc.p(300, -300), cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300),
+               cc.p(-400, 0), cc.p(0, 400), cc.p(400, 0), cc.p(0, -400),
+           }               
+		}
 		enemys1 = {                                                   --第一波召唤的自爆兵
 			{
 				time = 0,	
