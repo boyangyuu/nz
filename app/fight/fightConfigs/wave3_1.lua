@@ -231,12 +231,7 @@ local enemys = {
 
 	--飞镖
 	{id=18,image="feibiao",demage=15,hp=7000}, 
-	
-	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=12500},  
-	--盾兵BOSS         --type = "jin",
-	{id=20,image="dunbing",demage=21,hp=90000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
-	weak1=2},                           
+                           
 }
 
 

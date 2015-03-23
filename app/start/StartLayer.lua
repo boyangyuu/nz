@@ -48,7 +48,10 @@ function StartLayer:initUI()
     panlAnim:addChild(dlArmature)
     dlArmature:getAnimation():play("start" , -1, 0)
 
-    scheduler.performWithDelayGlobal(handler(self, self.playEnterAnim), 1.9) 
+    --test
+    -- scheduler.performWithDelayGlobal(handler(self, self.playEnterAnim), 1.9) 
+    scheduler.performWithDelayGlobal(handler(self, self.playEnterAnim), 0.1) 
+
     self.btnBegin = cc.uiloader:seekNodeByName(self, "btnBegin")
     self.btnAbout = cc.uiloader:seekNodeByName(self, "btnAbout")
     self.btnHelp = cc.uiloader:seekNodeByName(self, "btnHelp")

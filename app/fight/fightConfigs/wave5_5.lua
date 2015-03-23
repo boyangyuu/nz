@@ -195,7 +195,7 @@ local enemys = {
 	weak1=3},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=3000,
+	{id=3,image="shoulei",demage=28,hp=2000,
 	weak1=3},
 
 	--伞兵       --type = "san",
@@ -215,11 +215,11 @@ local enemys = {
 	weak1=3},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=30,hp=90000,fireRate=180,fireCd=5,speed=40,
+	{id=8,image="dunbing",demage=30,hp=70000,fireRate=180,fireCd=5,speed=40,
 	weak1=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
 	weak1=3},	
 
 	
@@ -249,16 +249,16 @@ local enemys = {
 
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="xiaorz",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
-	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=3},	
+	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=3},	
 
 	--飞镖
 	{id=18,image="feibiao",demage=15,hp=5000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=30000},  
+	{id=19,image="zzw",demage=10,hp=20000},  
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=20,hp=7000, speed=120,
+	{id=20,image="xiaozz",demage=20,hp=5000, speed=120,
 	weak1=1},
 }
 

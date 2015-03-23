@@ -11,12 +11,12 @@ local Enemy = import(".Enemy")
 local Hero = import("..Hero")
 local Actor = import("..Actor")   
 
-local MissileEnemyView = class("MissileEnemyView", Attackable)
+local DDNormalEnemyView = class("DDNormalEnemyView", Attackable)
 
 ---- event ----
-function MissileEnemyView:ctor(property)  
+function DDNormalEnemyView:ctor(property)  
     --instance
-    MissileEnemyView.super.ctor(self, property)   
+    DDNormalEnemyView.super.ctor(self, property)   
     self.srcPos = property.srcPos
     self.destPos = property.destPos
     self.srcScale = property.srcScale
@@ -29,11 +29,11 @@ function MissileEnemyView:ctor(property)
     self:playFire() 
 end
 
-function MissileEnemyView:tick()
+function DDNormalEnemyView:tick()
     
 end
 
-function MissileEnemyView:playFire()
+function DDNormalEnemyView:playFire()
     local missileType = self.property["missileType"] or "daodan"
     
     if missileType == "daodan"  then 
@@ -49,7 +49,7 @@ function MissileEnemyView:playFire()
     end 
 end
 
-function MissileEnemyView:playDaoDanFire()
+function DDNormalEnemyView:playDaoDanFire()
     --scale
     self.armature:setScale(self.srcScale)
     local time = define.kMissileDaoTime    
@@ -69,7 +69,7 @@ function MissileEnemyView:playDaoDanFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))
 end
 
-function MissileEnemyView:playTieqiuFire()
+function DDNormalEnemyView:playTieqiuFire()
     self.armature:setScale(self.srcScale)
     local time = define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0
@@ -90,7 +90,7 @@ function MissileEnemyView:playTieqiuFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))    
 end
 
-function MissileEnemyView:playLeiFire()
+function DDNormalEnemyView:playLeiFire()
     self.armature:getAnimation():play("fire" , -1, 1)  
     local srcPos = self.property["srcPos"]
     local destPos = cc.p(srcPos.x - 90, 20)
@@ -109,7 +109,7 @@ function MissileEnemyView:playLeiFire()
     self.armature:runAction(cc.ScaleTo:create(jumpTime, 2.0))
 end
 
-function MissileEnemyView:playFeibiaoFire()
+function DDNormalEnemyView:playFeibiaoFire()
     --scale
     self.armature:setScale(self.srcScale)
     local time = define.kMissileFeibiaTime    
@@ -132,7 +132,7 @@ function MissileEnemyView:playFeibiaoFire()
     self.armature:runAction(cc.MoveTo:create(time, offset))
 end
 
-function MissileEnemyView:playBomb()
+function DDNormalEnemyView:playBomb()
     --kill
     self.armature:getAnimation():play("die" , -1, 1)  
     
@@ -145,11 +145,11 @@ function MissileEnemyView:playBomb()
 end
 
 --Attackable接口
-function MissileEnemyView:playHitted(event)
-    print("function MissileEnemyView:playHitted(event)")
+function DDNormalEnemyView:playHitted(event)
+    print("function DDNormalEnemyView:playHitted(event)")
 end
 
-function MissileEnemyView:playKill(event)
+function DDNormalEnemyView:playKill(event)
     --bomb动画
     self.armature:getAnimation():play("die" , -1, 1)
     
@@ -162,7 +162,7 @@ function MissileEnemyView:playKill(event)
     self.armature:stopAllActions()  
 end
 
-function MissileEnemyView:onHitted(targetData)
+function DDNormalEnemyView:onHitted(targetData)
     local demage     = targetData.demage
     local scale      = targetData.demageScale or 1.0
     local demageType = targetData.demageType or "body"
@@ -170,7 +170,7 @@ function MissileEnemyView:onHitted(targetData)
     self.enemy:decreaseHp(demage * scale)
 end
 
-function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
+function DDNormalEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         if movementID ~= "die" and movementID ~= "die02" then
@@ -184,8 +184,8 @@ function MissileEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function MissileEnemyView:getModel(property)
+function DDNormalEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
-return MissileEnemyView
+return DDNormalEnemyView

@@ -621,15 +621,19 @@ function MapView:onHeroFire(event)
 	end
 
 	--pos
-	local pWorld1 = focusRangeNode:convertToWorldSpace(cc.p(0,0))
+	local pWorldFocus = focusRangeNode:convertToWorldSpace(cc.p(0,0))
 	local box = focusRangeNode:getBoundingBox()
-	pWorld1.x, pWorld1.y = pWorld1.x + box.width/2, pWorld1.y + box.height/2
+	pWorldFocus.x, pWorldFocus.y = pWorldFocus.x + box.width/2, pWorldFocus.y + box.height/2
 
 	--effect
 	local isHitted = not (#datas == 0)
 	-- print("isHitted", isHitted)
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
-		pWorld= pWorld1})
+		pWorld = pWorldFocus})
+
+	--effect bullet
+	-- self.mapAnim:playEffectBullet({pWorldFocus = pWorldFocus, 
+	-- 	pWorldGun = event.pWorldGun})
 end
 
 function MapView:mutiFire(datas)

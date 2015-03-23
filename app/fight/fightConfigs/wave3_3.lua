@@ -685,7 +685,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=211,
+	{id=3,image="shoulei",demage=28,hp=2000,
 	weak1=1},
 
 	--伞兵       --type = "san",
@@ -697,7 +697,7 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=35,hp=5000,
+	{id=6,image="daodan",demage=35,hp=3000,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
@@ -705,11 +705,11 @@ local enemys = {
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=90000,fireRate=180,fireCd=5,speed= 40,
+	{id=8,image="dunbing",demage=25,hp=70000,fireRate=180,fireCd=5,speed= 40,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=20000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
 	weak1=2},	
 
 	
@@ -739,18 +739,18 @@ local enemys = {
 
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="xiaorz",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
-	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
+	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=8000}, 
+	{id=18,image="feibiao",demage=15,hp=5000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=12500},  
+	{id=19,image="zzw",demage=10,hp=20000},  
 	--盾兵BOSS         --type = "jin",
 	{id=20,image="dunbing",demage=21,hp=100000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
 	weak1=2},     
 	-- 金武箱子奖励  type = "awardSan",
-	{id=11,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励                       
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励                       
 }
 
 

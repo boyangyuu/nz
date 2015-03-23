@@ -30,17 +30,17 @@ function JinbiEnemyView:ctor(property)
 end
 
 function JinbiEnemyView:tick()
-    if self.isFlying then 
-        local enemy = self.armature:getBone("body1"):getDisplayRenderNode()
-        local pWorld = enemy:convertToWorldSpace(cc.p(0,0))
+    -- if self.isFlying then 
+    --     local enemy = self.armature:getBone("body1"):getDisplayRenderNode()
+    --     local pWorld = enemy:convertToWorldSpace(cc.p(0,0))
 
-        local placeNode = self:getParent()
-        local pWorld2 = placeNode:convertToWorldSpace(cc.p(0,0))
-        if pWorld.y >= display.height then 
-            self.isFlying = false
-            self:stopFly()
-        end
-    end
+    --     local placeNode = self:getParent()
+    --     local pWorld2 = placeNode:convertToWorldSpace(cc.p(0,0))
+    --     if pWorld.y >= display.height then 
+    --         self.isFlying = false
+    --         self:stopFly()
+    --     end
+    -- end
 end
 
 function JinbiEnemyView:playFly()

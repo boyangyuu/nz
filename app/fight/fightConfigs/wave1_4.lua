@@ -256,6 +256,18 @@ local waves = {
 				},
 			},
 			{
+				time = 13,	                                               --金武奖励箱子
+				num = 1,
+				pos = {930},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 20,
+					award = "goldWeapon",
+					placeName = "place3",
+				},
+			},
+			{
 				time = 16,
 				num = 5,
 				delay = {0,1.5,0.9,1.6,0.4},
@@ -338,6 +350,28 @@ local waves = {
 					missileType = "lei",	                                        
 				},
 			},
+			{
+				time = 24,
+				num = 4,
+				delay = {0,0.5,1.5,1},
+				pos = {350,420,550,630},
+				property = { 
+					placeName = "place2" ,
+					startState = "rollright",
+					id = 1,
+				},                                                          
+			},	
+			{
+				time = 24,
+				num = 2,
+				delay = {0.2,1},
+				pos = {900,1020},
+				property = { 
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollleft",	
+				},                                                          
+			},	
 		},
 	},	
 
@@ -436,6 +470,9 @@ local enemys = {
 	--boss导弹          --missileType = "daodan",
 	{id=19,image="daodan",demage=10,hp=200,
 	weak1=1},
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 	
 
 }
@@ -466,21 +503,17 @@ local bosses = {
 			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
 			-- },                                        
 
-			saoShe = { 0.90, 0.70, 0.50, 0.30 , 0.10     --调用普通攻击的伤害  扫射
-			}, 
+			saoShe = { 0.90, 0.70, 0.40 },                --调用普通攻击的伤害  扫射 
 
-			zhaohuan = {0.95,0.65,0.35},                         --召唤小怪 
+			zhaohuan = {0.95, 0.65, 0.25 },                         --召唤小怪 
 
-			moveLeftFire = {
-				0.80, 
-			},
-			moveRightFire = {
-				0.55, 0.20,
-			},
+			moveLeftFire = { 0.80 , 0.55, 0.20 },
+			-- moveRightFire = { 0.55, 0.20 },
 			
 			daoDan = {                                            --两发导弹
-				0.99,0.85,0.75, 0.45, 0.25, 0.20,
+				0.99,0.85,0.75, 0.45, 0.10,
 			},
+
 			weak1 = {
 				0.70,0.60,0.30,
 			},	
@@ -539,16 +572,16 @@ local bosses = {
 			{
 				time = 0,	
 				num = 6,
-				pos = {260,420,620,830,920,1100,},
-				delay = {0,1.4,0,0.7,1.4,0.7,},
+				pos = {260,420,620,830,920,1100},
+				delay = {0,1.4,0,0.7,1.4,0.7},
 				property = {
 					placeName = "place3" ,
 					id = 17,
 					type = "bao",
 				},
-			},
-			
-		},		
+			},	
+		},	
+
 
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))

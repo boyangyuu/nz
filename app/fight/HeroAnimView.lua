@@ -17,6 +17,7 @@ function HeroAnimView:ctor()
 	local fightInlay = md:getInstance("FightInlay")
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
+		:addEventListener(self.hero.EFFECT_HURT_YAN_EVENT	, handler(self, self.playHurtedBomb_yan))	
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
 		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
 		
@@ -98,6 +99,21 @@ function HeroAnimView:playHurtedBomb_boli(event)
 	--sound
     local soundSrc  = "res/Music/fight/glass.wav"
     audio.playSound(soundSrc,false)  	
+end
+
+function HeroAnimView:playHurtedBomb_yan(event)
+    --烟雾
+    local armatureYan = ccs.Armature:create("yw")
+    self:addChild(armatureYan)	
+	armatureYan:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+				if movementId == "yanwu" then 
+					armatureYan:removeFromParent()
+				end
+	    	end 
+    	end)	
+	armatureYan:getAnimation():play("yanwu" , -1, 1)
 end
 
 function HeroAnimView:playKillHead(event)
