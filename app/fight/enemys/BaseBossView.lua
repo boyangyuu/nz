@@ -336,9 +336,9 @@ function BaseBossView:playDaoDan(skillName)
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     
     --play
-    local offset = define.daoDanTimeOffset or 0.6
+    local offset = self.config.daoDanTimeOffset or 0.6
     for i=1, #config.offsetPoses do
-        local delay = offset + 0.20 * i 
+        local delay = offset * i 
         local property = {
             srcPos = pWorldBone,
             srcScale = self:getScale() * 0.4,

@@ -2,378 +2,378 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
-		enemys = { 
-			{
-				descId = "zibaob", --简介
-				time = 3,	
-				num = 1,
-				pos = {380},
-				delay = {4},
-				property = {
-					placeName = "place2" ,
-					id = 9,
-					type = "bao",
-				},
-			},
-			{
+	-- {
+	-- 	enemys = { 
+	-- 		{
+	-- 			descId = "zibaob", --简介
+	-- 			time = 3,	
+	-- 			num = 1,
+	-- 			pos = {380},
+	-- 			delay = {4},
+	-- 			property = {
+	-- 				placeName = "place2" ,
+	-- 				id = 9,
+	-- 				type = "bao",
+	-- 			},
+	-- 		},
+	-- 		{
 			
-				time = 6,	
-				num = 4,
-				pos = {100,250,500,600},
-				delay = {4,4.6,2.5,3},
-				property = {
-					placeName = "place2" ,
-					id = 9,
-					type = "bao",
-				},
-			},
-			{
-				time = 12,		
-				num = 3,
-				pos = {500,620,700},
-				delay = {0,0.5,1.1},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 13,		
-				num = 2,
-				pos = {400,550},
-				delay = {0.8,0},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},
-			},
-			{
-				time = 13,		
-				num = 4,
-				pos = {880,950,1100,1160},
-				delay = {0,0.7,1.2,0.6},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 1,	
-				},
-			},
-			{
-				time = 14,		
-				num = 2,
-				pos = {460,530},
-				delay = {0,0.8},
-				property = { 
-					placeName = "place2",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                       
-				},
-			},
-			{
-				time = 14,		
-				num = 3,
-				pos = {420,500,560},
-				delay = {0,0.9,0.5},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 15,		
-				num = 2,
-				pos = {760,1030},
-				delay = {0,0.8},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                       
-				},
-			},
-			{
-				time = 15,		
-				num = 2,
-				pos = {350,550},
-				delay = {0.2,1.3},
-				property = { 
-					placeName = "place2",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},
-			},
-			{
-				time = 16,		
-				num = 3,
-				pos = {910,970,1050},
-				delay = {0,0.7,1.4},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 1,	
-				},
-			},
-		},                                                               --第25个怪
-	},
-	{
-		enemys = {
-			{
-				time = 2,
-				num = 5,
-				delay = {5.1,2.5,1.5,4.2,3},
-				pos = {430,550,760,960,1050},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 7,
-				num = 5,
-				delay = {0.7,1.4, 2.1,2.8,3.1},
-				pos = {470,600,670,750,820},					
-				property = {
-					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},	
-			{
-				time = 8,		
-				num = 2,
-				pos = {400,480},
-				delay = {0.1,0.6},
-				property = { 
-					placeName = "place2",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},
-			},	
-			{
-				time = 9,		
-				num = 5,
-				pos = {350,430,510,400,460},
-				delay = {0.2,0.6,1.3,0.8,1.4},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 1,                                        
-				},
-			},
-			{
-				time = 10,
-				num = 5,
-				delay = {0.7,1.4, 2.1,2.8,3.2},
-				pos = {680,750,810,900,1000},					
-				property = {
-					placeName = "place4",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 11,		
-				num = 2,
-				pos = {560,730},
-				delay = {0.3,1},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                        
-				},
-			},
-			{
-				time = 12,		
-				num = 4,
-				pos = {600,830,920,1000},
-				delay = {0,0.6,1.3,1.0},
-				property = { 
-					placeName = "place3",
-					startState = "rollleft",
-					id = 1,                                        
-				},
-			},                                                                        --24个怪
-		},
-	},
-	{
-		enemys = { 
+	-- 			time = 6,	
+	-- 			num = 4,
+	-- 			pos = {100,250,500,600},
+	-- 			delay = {4,4.6,2.5,3},
+	-- 			property = {
+	-- 				placeName = "place2" ,
+	-- 				id = 9,
+	-- 				type = "bao",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,		
+	-- 			num = 3,
+	-- 			pos = {500,620,700},
+	-- 			delay = {0,0.5,1.1},
+	-- 			property = { 
+	-- 				placeName = "place3",
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 13,		
+	-- 			num = 2,
+	-- 			pos = {400,550},
+	-- 			delay = {0.8,0},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 13,		
+	-- 			num = 4,
+	-- 			pos = {880,950,1100,1160},
+	-- 			delay = {0,0.7,1.2,0.6},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollleft",
+	-- 				id = 1,	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 14,		
+	-- 			num = 2,
+	-- 			pos = {460,530},
+	-- 			delay = {0,0.8},
+	-- 			property = { 
+	-- 				placeName = "place2",
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                       
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 14,		
+	-- 			num = 3,
+	-- 			pos = {420,500,560},
+	-- 			delay = {0,0.9,0.5},
+	-- 			property = { 
+	-- 				placeName = "place3",
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 15,		
+	-- 			num = 2,
+	-- 			pos = {760,1030},
+	-- 			delay = {0,0.8},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                       
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 15,		
+	-- 			num = 2,
+	-- 			pos = {350,550},
+	-- 			delay = {0.2,1.3},
+	-- 			property = { 
+	-- 				placeName = "place2",
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 16,		
+	-- 			num = 3,
+	-- 			pos = {910,970,1050},
+	-- 			delay = {0,0.7,1.4},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollleft",
+	-- 				id = 1,	
+	-- 			},
+	-- 		},
+	-- 	},                                                               --第25个怪
+	-- },
+	-- {
+	-- 	enemys = {
+	-- 		{
+	-- 			time = 2,
+	-- 			num = 5,
+	-- 			delay = {5.1,2.5,1.5,4.2,3},
+	-- 			pos = {430,550,760,960,1050},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "bao",                  --爆
+	-- 				id = 9,	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 7,
+	-- 			num = 5,
+	-- 			delay = {0.7,1.4, 2.1,2.8,3.1},
+	-- 			pos = {470,600,670,750,820},					
+	-- 			property = {
+	-- 				placeName = "place3",  
+	-- 				type = "san",
+	-- 				id = 4,
+	-- 				enemyId = 1,
+	-- 			},
+	-- 		},	
+	-- 		{
+	-- 			time = 8,		
+	-- 			num = 2,
+	-- 			pos = {400,480},
+	-- 			delay = {0.1,0.6},
+	-- 			property = { 
+	-- 				placeName = "place2",
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	
+	-- 			},
+	-- 		},	
+	-- 		{
+	-- 			time = 9,		
+	-- 			num = 5,
+	-- 			pos = {350,430,510,400,460},
+	-- 			delay = {0.2,0.6,1.3,0.8,1.4},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollright",
+	-- 				id = 1,                                        
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 10,
+	-- 			num = 5,
+	-- 			delay = {0.7,1.4, 2.1,2.8,3.2},
+	-- 			pos = {680,750,810,900,1000},					
+	-- 			property = {
+	-- 				placeName = "place4",  
+	-- 				type = "san",
+	-- 				id = 4,
+	-- 				enemyId = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 11,		
+	-- 			num = 2,
+	-- 			pos = {560,730},
+	-- 			delay = {0.3,1},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                        
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,		
+	-- 			num = 4,
+	-- 			pos = {600,830,920,1000},
+	-- 			delay = {0,0.6,1.3,1.0},
+	-- 			property = { 
+	-- 				placeName = "place3",
+	-- 				startState = "rollleft",
+	-- 				id = 1,                                        
+	-- 			},
+	-- 		},                                                                        --24个怪
+	-- 	},
+	-- },
+	-- {
+	-- 	enemys = { 
 
-			{
-				time = 2,
-				num = 5,
-				delay = {4.1,2.5,3.8,2.2,3.5},
-				pos = {530,650,760,860,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 8,	
-				num = 5,
-				pos = {480,630,760,850,970},
-				delay = {0,0.5,1.2,0.9,1.1},
-				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 12,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {480,680,960},
-				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾 15
-					id = 8,
-				},
-			},
-			{
-				time = 13,	                                               --金武奖励箱子
-				num = 1,
-				pos = {930},
-				delay = {0},
-				property = { 
-					type = "awardSan",
-					id = 20,
-					award = "goldWeapon",
-					placeName = "place3",
-				},
-			},
-			{
-				time = 16,
-				num = 5,
-				delay = {0,1.5,0.9,1.6,0.4},
-				pos = {450,560,600,1050,570},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 18,
-				num = 1,
-				delay = {1.6},
-				pos = {670},
-				property = { 
-					placeName = "place11" ,
-					type = "bao",                  --自爆boss                                 
-					id = 18,
-				},
-			},
-			{
-				time = 18,
-				num = 4,
-				delay = {0,0.5,1.5,1},
-				pos = {350,420,550,630},
-				property = { 
-					placeName = "place2" ,
-					startState = "rollright",
-					id = 1,
-				},                                                          
-			},	
-			{
-				time = 21,
-				num = 2,
-				delay = {0.2,1},
-				pos = {900,1020},
-				property = { 
-					placeName = "place3" ,
-					id = 1,
-					startState = "rollleft",	
-				},                                                          
-			},	
-			{
-				time = 23,		
-				num = 2,
-				pos = {360,530},
-				delay = {0.3,1},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                        
-				},
-			},
-			{
-				time = 23,
-				num = 3,
-				delay = {0.1,0.6,1.5},
-				pos = {870,930,1090},
-				property = { 
-					placeName = "place4" ,
-					id = 1,
-					startState = "rollleft",	
-				},                                                          --30
-			},
-			{
-				time = 23,		
-				num = 2,
-				pos = {460,530},
-				delay = {0.3,1},
-				property = { 
-					placeName = "place2",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                        
-				},
-			},
-			{
-				time = 24,
-				num = 4,
-				delay = {0,0.5,1.5,1},
-				pos = {350,420,550,630},
-				property = { 
-					placeName = "place2" ,
-					startState = "rollright",
-					id = 1,
-				},                                                          
-			},	
-			{
-				time = 24,
-				num = 2,
-				delay = {0.2,1},
-				pos = {900,1020},
-				property = { 
-					placeName = "place3" ,
-					id = 1,
-					startState = "rollleft",	
-				},                                                          
-			},	
-		},
-	},	
+	-- 		{
+	-- 			time = 2,
+	-- 			num = 5,
+	-- 			delay = {4.1,2.5,3.8,2.2,3.5},
+	-- 			pos = {530,650,760,860,950},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "bao",                  --爆
+	-- 				id = 9,	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 8,	
+	-- 			num = 5,
+	-- 			pos = {480,630,760,850,970},
+	-- 			delay = {0,0.5,1.2,0.9,1.1},
+	-- 			property = {
+	-- 				placeName = "place3" ,         --近
+	-- 				id = 7,
+	-- 				type = "jin",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,
+	-- 			num = 3,
+	-- 			delay = {0,0.5,1},
+	-- 			pos = {480,680,960},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "jin",                  --盾 15
+	-- 				id = 8,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 13,	                                               --金武奖励箱子
+	-- 			num = 1,
+	-- 			pos = {930},
+	-- 			delay = {0},
+	-- 			property = { 
+	-- 				type = "awardSan",
+	-- 				id = 20,
+	-- 				award = "goldWeapon",
+	-- 				placeName = "place3",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 16,
+	-- 			num = 5,
+	-- 			delay = {0,1.5,0.9,1.6,0.4},
+	-- 			pos = {450,560,600,1050,570},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "bao",      --爆
+	-- 				id = 9,	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 18,
+	-- 			num = 1,
+	-- 			delay = {1.6},
+	-- 			pos = {670},
+	-- 			property = { 
+	-- 				placeName = "place11" ,
+	-- 				type = "bao",                  --自爆boss                                 
+	-- 				id = 18,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 18,
+	-- 			num = 4,
+	-- 			delay = {0,0.5,1.5,1},
+	-- 			pos = {350,420,550,630},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},                                                          
+	-- 		},	
+	-- 		{
+	-- 			time = 21,
+	-- 			num = 2,
+	-- 			delay = {0.2,1},
+	-- 			pos = {900,1020},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				id = 1,
+	-- 				startState = "rollleft",	
+	-- 			},                                                          
+	-- 		},	
+	-- 		{
+	-- 			time = 23,		
+	-- 			num = 2,
+	-- 			pos = {360,530},
+	-- 			delay = {0.3,1},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                        
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 23,
+	-- 			num = 3,
+	-- 			delay = {0.1,0.6,1.5},
+	-- 			pos = {870,930,1090},
+	-- 			property = { 
+	-- 				placeName = "place4" ,
+	-- 				id = 1,
+	-- 				startState = "rollleft",	
+	-- 			},                                                          --30
+	-- 		},
+	-- 		{
+	-- 			time = 23,		
+	-- 			num = 2,
+	-- 			pos = {460,530},
+	-- 			delay = {0.3,1},
+	-- 			property = { 
+	-- 				placeName = "place2",
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                        
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 24,
+	-- 			num = 4,
+	-- 			delay = {0,0.5,1.5,1},
+	-- 			pos = {350,420,550,630},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},                                                          
+	-- 		},	
+	-- 		{
+	-- 			time = 24,
+	-- 			num = 2,
+	-- 			delay = {0.2,1},
+	-- 			pos = {900,1020},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				id = 1,
+	-- 				startState = "rollleft",	
+	-- 			},                                                          
+	-- 		},	
+	-- 	},
+	-- },	
 
 	{
 		waveType = "boss",                                      --强敌出现
@@ -468,7 +468,7 @@ local enemys = {
 	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=110,scale = 3.0,
 	weak1=2},	                                                --scale = 3.0,  近战走到屏幕最近放缩比例	 
 	--boss导弹          --missileType = "daodan",
-	{id=19,image="daodan",demage=10,hp=200,
+	{id=19,image="daodan",demage=10,hp=10,
 	weak1=1},
 
 	-- 金武箱子奖励  type = "awardSan",
@@ -491,16 +491,14 @@ local bosses = {
 		walkRate = 120,
 		walkCd = 1,         --移动cd	
 		wudiTime = 5 , 	    --无敌时间
-		daoDanTimeOffset = 0.6, --群发导弹间隔时间
+		daoDanTimeOffset = 0.1,                --群发导弹间隔时间
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 5, 			--一次扫射5下
 		weak1 = 1.2,					--手  弱点伤害倍数
 		weak2 = 1.2,					--腹  弱点伤害倍数
 		weak3 = 1.2,					--头  弱点伤害倍数
 		skilltrigger = {   			   --技能触发(可以同时)
-
-
-                                    
+                       
 			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
 			-- },                                        
 
@@ -513,21 +511,28 @@ local bosses = {
 			
 
 			daoDan1 = {                                            --两发导弹
-				0.99,0.85,0.75, 0.45, 0.10,
+				0.99, 0.45, 
+			},
+
+			daoDan2 = {                                            --两发导弹
+				0.85, 0.30,
+			},
+
+			daoDan3 = {                                            --两发导弹
+				0.75, 0.10,
 			},
 
 			weak1 = {
 				0.60,
 			},	
 			weak2 = {
-				0.80,0.20,
+				0.40,
 			},	
 			weak3 = {
-				0.40,
+				0.80,0.20,
 			},
 
 			
-
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
@@ -541,9 +546,17 @@ local bosses = {
 
 		daoDan1 = {
 			offsetPoses = {
-               cc.p(0, 200), cc.p(-200, 0), cc.p(0, -200), cc.p(200, 0), 
-               cc.p(300, -300), cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300),
-               cc.p(-400, 0), cc.p(0, 400), cc.p(400, 0), cc.p(0, -400),
+                cc.p(-300, 0), cc.p(300, 0), 
+           }               
+		},
+		daoDan2 = {
+			offsetPoses = {
+                cc.p(0, 0), cc.p(0, -500), 
+           }               
+		},
+		daoDan3 = {
+			offsetPoses = {
+                cc.p(-300, -300), cc.p(300, -300), 
            }               
 		},
 		enemys1 = {                                                   --第一波召唤的自爆兵
