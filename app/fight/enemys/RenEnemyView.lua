@@ -231,7 +231,8 @@ function RenEnemyView:playShan()
         self.armature:getAnimation():play("shanru" , -1, 1) 
         self.isShaning = false
     end
-    scheduler.performWithDelayGlobal(shanru, define.kRenzheShanTime)
+    local sch = scheduler.performWithDelayGlobal(shanru, define.kRenzheShanTime)
+    self:addScheduler(sch)
 end
 
 function RenEnemyView:playRunAction(direct, isRun)

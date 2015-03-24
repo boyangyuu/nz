@@ -361,6 +361,7 @@ local bosses = {
 		wudiTime = 6 , 	
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 10, 			--一次扫射10下
+		daoDanTimeOffset = 0.1,                --群发导弹间隔时间
 		weak1 = 1.1,					--手  弱点伤害倍数
 		weak2 = 1.1,					--腹  弱点伤害倍数
 		weak3 = 1.1,					--头  弱点伤害倍数
@@ -383,8 +384,16 @@ local bosses = {
 			-- 	0.60,
 			-- },
 			
-			daoDan = {                                   --两发导弹
-				0.95,0.80,0.64, 0.45, 0.34, 0.22,
+			daoDan1 = {                                            --两发导弹
+				0.95, 0.45, 
+			},
+
+			daoDan2 = {                                            --两发导弹
+				0.80, 0.34,
+			},
+
+			daoDan3 = {                                            --两发导弹
+				0.64, 0.22,
 			},
 
 			weak1 = {
@@ -408,6 +417,21 @@ local bosses = {
 			demage400 = {  
 				0.40,
 			},							
+		},
+		daoDan1 = {
+			offsetPoses = {
+                cc.p(-300, 0), cc.p(300, 0), 
+           }               
+		},
+		daoDan2 = {
+			offsetPoses = {
+                cc.p(0, 0), cc.p(0, -500), 
+           }               
+		},
+		daoDan3 = {
+			offsetPoses = {
+                cc.p(-300, -300), cc.p(300, -300), 
+           }               
 		},
 
 		getMoveLeftAction = function ()

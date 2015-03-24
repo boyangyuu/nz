@@ -260,9 +260,9 @@ local waves = {
 				property = { 
 					type = "duozuBoss",
 					placeName = "place1",
-					wangId    = 19,
-					missileId = 22, 
-					yanwuId   = 21,
+					wangId    = 19,        --网
+					yanwuId   = 21,        --烟雾弹
+					missileId = 22,        --大导弹
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
 					id = 1,
 				},
@@ -345,13 +345,13 @@ local enemys = {
 	{id=18,image="feibiao",demage=15,hp=5000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=20000},       
+	{id=19,image="zzw",demage=10,hp=10000},       
 
 	--小蜘蛛   --type = "bao",
 	{id=20,image="xiaozz",demage=10,hp=5000, speed=150,weak1=1}, 
 
 	--烟雾导弹
-	{id=21,image="daodan03",demage=10,hp=50, weak1=1},   
+	{id=21,image="daodan03",demage=1,hp=5000, weak1=1},   
 
 	--大导弹          --missileType = "daodan",
 	{id=22,image="daodan02",demage=10,hp=500, weak1=1},	
@@ -371,29 +371,29 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "dzboss", --图片名字
-		hp = 250000,
+		hp = 200000,
 		award = 30000,
-		fireRate = 60,                  --普攻频率
+		fireRate = 180,                  --普攻频率
 		fireCd = 4,                     --普攻cd
-		demage = 0,  				    --
-		walkRate = 180,                    --移动频率
+		demage = 0,
+		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
 		weak1 = 1.1,						--头 弱点伤害倍数
 		weak2 = 1.1,					--左腿 弱点伤害倍数
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
 		wudiTime = 5.0,					--无敌时间
-		skilltrigger = {   			          --技能触发(可以同时)
+		skilltrigger = {   			 --技能触发(可以同时)
 			wudi = { 0.90, 0.70, 0.50 , 0.30, 0.20, 0.10 ,0.06               --无敌
 			}, 
 
+			yanwu = { 0.98,0.78,0.58,0.38,0.18                     --烟雾
+			},
 			zhaohuan = { 0.95, 0.71, 0.51, 0.31                                   --召唤小兵
 			},   
 
 			wang = { 0.99,0.91,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15 ,0.05                    --网
 			},
 
-			yanwu = { 0.98,0.78,0.58,0.38,0.18                     --烟雾
-			},  
 
 			weak3 = { 0.70, 0.40, 0.10,                                --右腿 技能触发(可以同时)          
 			},	

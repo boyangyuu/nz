@@ -224,7 +224,7 @@ local waves = {
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                              --boss
 			{
-				descId = "boss02_2",
+				descId = "boss02_1",
 				time = 3,	
 				num = 1,
 				pos = {450},
@@ -312,8 +312,8 @@ local bosses = {
 	--第一个出场的boss
 	{
 		award = 25000,         ----boss产出金币数量
-		image = "boss02_1",    --蓝boss基础上改的黄颜色boss
-		hp = 100000,
+		image = "boss02_1",    --蓝boss基础上改的肌肉boss
+		hp = 150000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 60,               --普攻频率
 		fireCd = 2,                     --普攻cd

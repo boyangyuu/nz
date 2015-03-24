@@ -128,8 +128,8 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 10,
-                        level = 6,
+                        group = 1,
+                        level = 1,
             },
             user = {
                 level = 1,
@@ -151,6 +151,10 @@ function MyApp:createGameStateFile()
                         --第0-0关之后  
                         afterfight01    = false,   -- 进入下一关
                      
+                        --第1-1之内
+                        fight_change    = false,
+                        fight_dun       = false,
+
                         --第1-2关之前
                         xiangqian       = false,   --镶嵌一套青铜
 
@@ -177,7 +181,7 @@ function MyApp:createGameStateFile()
                         dailyid = 0,
             },
             preference = {
-                isOpenMusic = true
+                isOpenMusic = false
             },
             
     }

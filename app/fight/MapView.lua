@@ -251,31 +251,34 @@ function MapView:checkGuide()
 	--guide
 	local guide = md:getInstance("Guide")
 	local gid, lid = self.fight:getCurGroupAndLevel()
-	local isGuide = gid == 0 and lid == 0
-	if self.waveIndex == 3 then	
-		--visible
-		print("function MapView:checkGuide() 3")
-		if isGuide then	
-			local comps = {btnLei = true, label_leiNum =  true,}
-			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})			
-			guide:check("fight01_lei") 
-		end
+	if gid == 0 and lid == 0 then 
+		self:checkGuide0_0()
+	elseif gid == 1 and lid == 1 then
+		self:checkGuide1_1()
 	end
-	if self.waveIndex == 4 then 
-		--visible	
-		if isGuide then	
-			local comps = {btnChange = true}
-			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
-			guide:check("fight01_change") 
-		end
-	end	
-	if self.waveIndex == 6 then 
-		--visible	
-		if isGuide then	
-			local comps = {btnGold = true, label_gold = true}
-			self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
-			guide:check("fight01_gold") 
-		end
+end
+
+function MapView:checkGuide0_0()
+	local guide = md:getInstance("Guide")
+	-- if self.waveIndex == 2 then	
+	-- 	local comps = {btnLei = true, label_leiNum =  true,}
+	-- 	self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})			
+	-- 	guide:check("fight01_lei") 
+	-- end
+	if self.waveIndex == 5 then 
+		local comps = {btnGold = true, label_gold = true}
+		self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
+		guide:check("fight01_gold") 
+	end		
+end
+
+function MapView:checkGuide1_1()
+	local guide = md:getInstance("Guide")
+	if self.waveIndex == 2 then	
+		guide:check("fight_change") 
+	end
+	if self.waveIndex == 3 then 
+		guide:check("fight_dun") 
 	end		
 end
 
@@ -675,10 +678,17 @@ function MapView:enemysHittedInRange(event)
 end
 
 function MapView:onThrowGrenade(event)
-	--	effect
+	--effect
 	local soundSrc  = "res/Music/fight/rengsl.wav"
 	self.audioId =  audio.playSound(soundSrc,false)		
 
+	--add res
+    local src = "res/Fight/enemys/shoulei/shoulei.ExportJson"
+    local plist = "res/Fight/enemys/shoulei/shoulei0.plist"
+    local png   = "res/Fight/enemys/shoulei/shoulei0.png"	
+    display.addSpriteFrames(plist, png)
+    local manager = ccs.ArmatureDataManager:getInstance()
+	manager:addArmatureFileInfo(src)
 	local armature = ccs.Armature:create("shoulei")
 	self.mapAnim:addChild(armature, kEffectZorder)
 	armature:setPosition(display.width / 2, 0)

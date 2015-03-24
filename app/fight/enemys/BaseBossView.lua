@@ -227,7 +227,6 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--向左出发
 	local bound = self.armature:getCascadeBoundingBox() 
 	local pos = self:getPosInMapBg()
-	dump(pos, "pos")
 	local disOut = isLeft and  -bound.width or 1560
 	local time = math.abs(posOri.x - disOut) / speed
 	local desPos = cc.p(disOut, posOri.y)
@@ -336,9 +335,9 @@ function BaseBossView:playDaoDan(skillName)
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     
     --play
-    local offset = define.daoDanTimeOffset or 0.6
+    local offset = self.config.daoDanTimeOffset or 0.6
     for i=1, #config.offsetPoses do
-        local delay = offset + 0.20 * i 
+        local delay = offset * i 
         local property = {
             srcPos = pWorldBone,
             srcScale = self:getScale() * 0.4,
