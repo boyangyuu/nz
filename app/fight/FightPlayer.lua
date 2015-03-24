@@ -205,7 +205,7 @@ function FightPlayer:initUI()
 
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide1), 0.1)
-    -- scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
+    scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide4), 0.1)    
 end
@@ -762,12 +762,18 @@ function FightPlayer:initGuide1()
     --touch
     self.guide:setTouchSwallow(false)
 
-    --prepare gun
-    
     --move
     local function checkGuideFire()
         self:onCancelledFire()       
         self.guide:check("fight01_fire")
+        local comps = {btnLei = true, label_leiNum =  true,}
+        self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,
+            comps = comps})           
+        
+        local ox, oy = self.focusNode:getPosition()
+        local offsetX, offsetY = 536 - ox , 225 - oy
+        self:moveFocus(offsetX/ KFightConfig.scaleMoveFocus,
+         offsetY / KFightConfig.scaleMoveFocus)
     end
 
     self.guide:addClickListener({
@@ -802,18 +808,6 @@ function FightPlayer:initGuide1()
                     focusWorld = pWorld})
         end
     })  
-
-    --换枪
-    self.guide:addClickListener( {
-        id = "fight_change",
-        groupId = "fight01_change",
-        rect = self.btnChange:getBoundingBox(),
-        endfunc = function (touchEvent)
-            for id, point in pairs(touchEvent.points) do
-                self:checkBtnChange(point)
-            end
-        end
-    })     
     
     --黄金武器
     self.guide:addClickListener( {
@@ -822,6 +816,39 @@ function FightPlayer:initGuide1()
         rect = self.btnGold:getBoundingBox(),
         endfunc = function (touchEvent)
             self.inlay:activeGoldOnCost()
+        end
+    })     
+end
+
+function FightPlayer:initGuide2()
+    local isDone = self.guide:isDone("fight_change")
+    local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 1 and gid == 1
+    if isDone or not isWillGuide then 
+        return 
+    end    
+
+    --换枪
+    self.guide:addClickListener( {
+        id = "fight_change",
+        groupId = "fight_change",
+        rect = self.btnChange:getBoundingBox(),
+        endfunc = function (touchEvent)
+            for id, point in pairs(touchEvent.points) do
+                self:checkBtnChange(point)
+            end
+        end
+    })  
+
+    --开盾
+    self.guide:addClickListener( {
+        id = "fight_dun",
+        groupId = "fight_dun",
+        rect = self.btnDefence:getBoundingBox(),
+        endfunc = function (touchEvent)
+            for id, point in pairs(touchEvent.points) do
+                self:checkbtnDefence(point)
+            end
         end
     })     
 end

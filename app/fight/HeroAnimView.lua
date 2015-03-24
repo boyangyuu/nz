@@ -78,7 +78,6 @@ function HeroAnimView:loadCCS()
 end
 
 function HeroAnimView:playHurtedBomb_lei(event)
-	print("function HeroAnimView:playHurtedBomb_lei(event)")
 	-- --sound
     local soundSrc  = "res/Music/fight/hd_bz.wav"
     audio.playSound(soundSrc,false)  	
@@ -125,12 +124,10 @@ function HeroAnimView:playWindEffect(event)
 end
 
 function HeroAnimView:playEffectBling(event)
-	-- print("function HeroAnimView:playEffectBling(event)")
 	local armature = ccs.Armature:create("bossdies")
 	armature:getAnimation():play("shan" , -1, 1)
     self:addChild(armature) 
     local function endFunc()
-	    -- print("HeroAnimView endFunc")
     	armature:removeSelf()
     	armature = nil
     end
@@ -143,7 +140,6 @@ function HeroAnimView:playHitted(event)
 end
 
 function HeroAnimView:playLessHp(event)
-	print("playLessHp event.isLessHp", event.isLessHp)
 	local isLessHp = event.isLessHp
 	if isLessHp then
 		self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 1)

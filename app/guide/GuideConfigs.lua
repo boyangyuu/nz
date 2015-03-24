@@ -39,27 +39,21 @@ configs["fight01_move"] = {
 --第0关 开火
 configs["fight01_fire"] = {
 	preGuideId = nil,
-	str = "第0关",
 	steps = {
-		{id = "fight_fire", msg = "", hand = "fire", rolepos = "hide"},
-	}
-}
-
----- 第0关 扔雷----
-configs["fight01_lei"] = {
-	preGuideId = nil,
-	steps = {
+		{id = "fight_fire", msg = "点击按钮，开火射击！", skipDelay = 2.0,rolepos = "left"},
 		{id = "fight_lei", msg = "在高亮区域点击，将会投掷手雷"},
 	}
 }
 
----- 第0关 换枪(rpg)----
-configs["fight01_change"] = {
-	preGuideId = nil,
-	steps = {
-		{id = "fight_change", msg = "在高亮区域点击，将会更换枪械"},
-	}
-}
+---- 第0关 扔雷----
+-- configs["fight01_lei"] = {
+-- 	preGuideId = nil,
+-- 	steps = {
+		
+-- 	}
+-- }
+
+
 
 ---- 第0关 黄金枪----
 configs["fight01_gold"] = {
@@ -82,9 +76,25 @@ configs["fight01_jijia"] = {
 configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "afterfight01_award", msg = "中大奖了 ! 掉落了一把神狙雷明顿!  "}, 
+		{id = "afterfight01_award", msg = "中大奖了！掉落了一把神狙雷明顿!  "}, 
 		{id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
 		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"}, 
+	}
+}
+
+---- 第1-1关 引导换枪 ----
+configs["fight_change"] = {
+	preGuideId = "fight01_jijia",
+	steps = {
+		{id = "fight_change", msg = "在高亮区域点击，将会更换武器！"}, 
+	}
+}
+
+---- 第1-1关 引导开盾 ----
+configs["fight_dun"] = {
+	preGuideId = "fight_change",
+	steps = {
+		{id = "fight_dun", msg = "敌人越来越多，快使用警用盾牌！"}, 
 	}
 }
 

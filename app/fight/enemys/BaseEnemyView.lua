@@ -143,7 +143,6 @@ end
 
 function BaseEnemyView:playHitted(event)
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	print("function BaseEnemyView:playHitted(event)")
 	--飘红
 	self:playHittedEffect()
 

@@ -56,18 +56,7 @@ function RenBossView:tick()
             self.enemy:beginRollCd()
         end
     end 
- 
-    -- --speak
-    -- local speakRate, isAble = self.enemy:getSpeakRate()
-    -- assert(speakRate > 1, "invalid speakRate")
-
-    -- if isAble then
-    --     local randomSeed = math.random(1, speakRate)
-    --     if randomSeed > speakRate - 1 then 
-    --         self:play("playSpeak", handler(self, self.playSpeak))
-    --         self.enemy:beginSpeakCd()
-    --     end
-    -- end     
+      
 end
 
 function RenBossView:onHitted(targetData )
