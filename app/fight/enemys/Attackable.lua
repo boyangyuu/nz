@@ -149,7 +149,7 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
 	local enemyBound = enemyRange:getBoundingBox()
 	
 	-- dump(enemyBound, "enemyBound")
-	local scale = self:getScale() * self.hero:getMapZoom()
+	local scale = self:getScale() * self.hero:getMapZoom() * (1/0.7)
 	enemyBound.width = enemyBound.width * scale
 	enemyBound.height = enemyBound.height * scale
     -- dump(enemyBound, "enemyBound2")
@@ -400,7 +400,7 @@ function Attackable:getEnemyArmature()
     --isBoss
     local armature
     local manager = ccs.ArmatureDataManager:getInstance()
-    local src = "res/Fight/enemys/"..imgName.."/"..imgName..".csb"
+    local src = "res/Fight/enemys/"..imgName.."/"..imgName..".ExportJson"
     local plist = "res/Fight/enemys/"..imgName.."/"..imgName.."0.plist"
     local png   = "res/Fight/enemys/"..imgName.."/"..imgName.."0.png" 
     manager:addArmatureFileInfo(src)

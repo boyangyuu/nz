@@ -24,12 +24,11 @@ function BaseBossView:ctor(property)
 	-- dump(property, "property")
 	local index = property.id
 	local waveConfig = FightConfigs:getWaveConfig()
-	self.config  = waveConfig:getBoss(index)
-	-- dump(self.config, "self.config")
     
     --blood
     self:initBlood()
-    self.isRed = false
+    self.config  	= waveConfig:getBoss(index)
+    self.isRed 		= false
     self.isUnhurted = false
 
 	--play
@@ -120,11 +119,6 @@ function BaseBossView:playStand()
 	self.armature:getAnimation():play(animName , -1, 1)
 end
 
-function BaseBossView:playFire()
-	self.armature:getAnimation():play("fire" , -1, 1) 
-	self.enemy:hit(self.hero)	
-end
-
 function BaseBossView:playHitted(event)
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
@@ -190,10 +184,6 @@ function BaseBossView:playSkill(skillName)
 		self:play("skill", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
 		self:play("skill", handler(self, self.playMoveRightDaoFire))
-	elseif skillName == "saoShe" then
-		self:play("skill", handler(self, self.playSaoShe))
-	elseif skillName == "daoDan" then
-		self:play("skill", handler(self, self.playDaoDan))
 	elseif skillName == "chongfeng" then
 		self:play("skill", handler(self, self.playChongfeng))
 	elseif skillName == "tieqiu" then
@@ -213,6 +203,11 @@ function BaseBossView:playSkill(skillName)
 		-- print(" demage num", num)
 		local per = num / 100
 		self.enemy:setDemageScale(per)	
+	elseif string.sub(skillName, 1, 6) == "daoDan" then 
+        local function callfuncDao()
+            self:playDaoDan(skillName)
+        end
+        self:play("skillPre",callfuncDao)	
 	end
 end
 
@@ -264,14 +259,14 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--到右屏幕之前
 	local callfuncBeforeRight = function ()
 		self.armature:getAnimation():play("ksmoveright" , -1, 1) 
-		self:playDaoDan1()
+		self:playMoveDaoDan()
 	end
 	local beforeRightCall = cc.CallFunc:create(callfuncBeforeRight)
    
 	--到左屏幕之前
 	local callfuncBeforeLeft = function ()
 		self.armature:getAnimation():play("ksmoveleft" , -1, 1)
-		self:playDaoDan1()
+		self:playMoveDaoDan()
 	end
 	local beforeLeftCall = cc.CallFunc:create(callfuncBeforeRight)
 
@@ -307,29 +302,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	self:runAction(seq)
 end
 
-function BaseBossView:playSaoShe()
-	self.armature:getAnimation():play("saoshe" , -1, 1)
-
-	--持续开枪 0.1
-	local fireOffset = self.config["saoFireOffset"]
-	local fireTimes = self.config["saoFireTimes"]
-	self:continueFire(fireTimes, fireOffset)
-end
-
-function BaseBossView:continueFire(sumTimes, fireOffset)
-	local handler = nil
-	local sumTimes = sumTimes
-	function saosheFire()
-		if sumTimes == 0 then 
-			scheduler.unscheduleGlobal(handler)
-		end
-		self.enemy:hit(self.hero)
-		sumTimes = sumTimes - 1
-	end
-	handler = scheduler.scheduleGlobal(saosheFire, fireOffset)
-end
-
-function BaseBossView:playDaoDan1()
+function BaseBossView:playMoveDaoDan()
 	--导弹
 	for i=1,4 do
 		local delay = 0.8 + 0.15 * i
@@ -353,32 +326,36 @@ function BaseBossView:playDaoDan1()
 	end
 end
 
-function BaseBossView:playDaoDan()
+function BaseBossView:playDaoDan(skillName)
+	print("function BaseBossView:playDaoDan(skillName)")
 	self.armature:getAnimation():play("daodan", -1, 1)
 
-	local kDelayAnim = 0.6 		-- 导弹动画播放0.6s 再发导弹
-	--导弹
-	for i=1,2 do
-		print("BaseBossView :getDemageScale(),",self.enemy:getDemageScale())
-		local boneName = "dao"..i
-		local bone = self.armature:getBone(boneName):getDisplayRenderNode()
-		local delay = kDelayAnim
-		local property = {
-			type = "missile",
-			srcScale = self:getScale() * 0.3, --导弹view用
-			demageScale = self.enemy:getDemageScale(),
-			id = self.property["missileId"], 
-		}
-		local function callfuncAddDao()
-			local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))
-			property.srcPos = srcPos
-			property.destPos = srcPos			
-			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
-				property = property})
-		end
-		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
-	    self:addScheduler(sch)    
-	end	
+    --pos
+    local config = self.config[skillName] 
+    local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
+    local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
+    
+    --play
+    local offset = define.daoDanTimeOffset or 0.6
+    for i=1, #config.offsetPoses do
+        local delay = offset + 0.20 * i 
+        local property = {
+            srcPos = pWorldBone,
+            srcScale = self:getScale() * 0.4,
+            destScale = 1.5,
+            destPos = pWorldBone,
+            offset = config.offsetPoses[i],
+            type = "missile",
+            id = self.property["missileId"],
+            demageScale = self.enemy:getDemageScale(),
+            missileType = "daodan",
+        }
+        local function callfuncDaoDan()
+             self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+        end
+        local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
+        self:addScheduler(sch)         
+    end 
 end
 
 function BaseBossView:playChongfeng()
@@ -433,7 +410,6 @@ function BaseBossView:zhaohuan()
 		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}
 		self.enemysCallNum = self.enemysCallNum + group.num
 	end
-	print("self.enemysCallNum", self.enemysCallNum)
 
 	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
 		waveData = waveData})
@@ -451,7 +427,7 @@ function BaseBossView:onKillCall(event)
 end
 
 function BaseBossView:onKillLastCall()
-	-- self:setUnhurted(false)	
+
 end
 
 function BaseBossView:setUnhurted(isUnhurted)
@@ -573,19 +549,10 @@ function BaseBossView:checkSkill(demage)
 	local persentC = hp
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
-		-- print("skillName：", skillName)
-		-- print("persents", persents)
 
 		for i, v in ipairs(persents) do
-			-- print("i:"..i.."	v:"..v)
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
-				-- print("v", v)
-
-				-- print("persentC", persentC)
-				-- print("persentO", persentO)
-
-				-- print("playSKill:"..skillName)
 				local function callfuncSkill()
 					self:playSkill(skillName)
 				end
@@ -596,7 +563,7 @@ function BaseBossView:checkSkill(demage)
 end
 
 function BaseBossView:canHitted()
-	if self.isUnhurted  then 
+	if self.isUnhurted then 
 		return false
 	end
 	return true
@@ -623,9 +590,6 @@ function BaseBossView:onHitted(targetData)
 	--血量触发技能
 	self:checkSkill(destDemage)
 	
-
-	--check guide
-	-- print("persent", persent)
 	if persent < define.kGuideActiveJijia then self:checkGuide1() end
 
 	--red
@@ -703,27 +667,9 @@ end
 
 function BaseBossView:onEnter()
 	BaseBossView.super:onEnter(self)
-	-- local sch = scheduler.performWithDelayGlobal(handler(self, self.checkGuide), 2.0)
-	-- self:addScheduler(sch)
 end
 
--- function BaseBossView:checkGuide()
--- 	local guide = md:getInstance("Guide")
--- 	if not guide:isDone("fight02_dun") and not self.isGuidedDun then 
--- 		local isStart = guide:check("fight02_dun")
--- 		if not isStart then return end
--- 		self.isGuidedDun = true
--- 		local fight = md:getInstance("Fight")
--- 		fight:stopFire()
--- 		-- local scale = define.kGuidebossHpScale
--- 		local maxHp = self.enemy:getMaxHp()
--- 		self.enemy:setMaxHp(maxHp * 1)
--- 		self.enemy:setFullHp()
--- 	end
--- end
-
 function BaseBossView:checkGuide1()
-	print("function BaseBossView:checkGuide1()")
 	local guide = md:getInstance("Guide")
 	local fight = md:getInstance("Fight")
 	local gid = fight:getGroupId()
@@ -731,10 +677,8 @@ function BaseBossView:checkGuide1()
 	local isGuideLevel = gid == 0 and lid == 0
 	if not guide:isDone("fight01_jijia") and not self.isGuidedJijia 
 		and isGuideLevel then 
-		print("function BaseBossView:checkGuide1()1111")
 		local isWillGuide = guide:check("fight01_jijia")
 		if isWillGuide then
-			print("function BaseBossView:checkGuide1()1111") 
 			self.isGuidedJijia = true
 			local fight = md:getInstance("Fight")
 			fight:stopFire()	

@@ -27,7 +27,6 @@ function LevelDetailLayer:loadCCS()
 	-- load control bar
 	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
 	local controlNode = cc.uiloader:load("guanqiakaishi.ExportJson")
-    self.ui = controlNode
     self:addChild(controlNode)
 
 	-- seek label
@@ -108,7 +107,7 @@ function LevelDetailLayer:initUI()
 		local enemyPlay = DataTable["enemyPlay"]
 		dump(enemyPlay)
 		local manager = ccs.ArmatureDataManager:getInstance()
-        local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".csb"
+        local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".ExportJson"
         manager:addArmatureFileInfo(src) 
         local plist = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.plist"
         local png   = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.png"

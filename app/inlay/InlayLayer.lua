@@ -54,25 +54,25 @@ function InlayLayer:initUI()
     yijianxiangqian:enableOutline(cc.c4b(140, 49, 2,255), 2)
 
     local manager = ccs.ArmatureDataManager:getInstance()
-    local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.csb"
+    local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.ExportJson"
     manager:addArmatureFileInfo(inlaybtnsrc)
     local plist = "res/InlayShop/xqan_hjwq/xqan_hjwq0.plist"
     local png   = "res/InlayShop/xqan_hjwq/xqan_hjwq0.png"
     display.addSpriteFrames(plist, png)          
 
-    local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.csb"
+    local hjwqbssrc = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs.ExportJson"
     manager:addArmatureFileInfo(hjwqbssrc)
     local plist = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.plist"
     local png   = "res/InlayShop/xqan_hjwqbs/xqan_hjwqbs0.png"
     display.addSpriteFrames(plist, png)          
 
-    local xqtbsrc = "res/InlayShop/xqtb/xqtb.csb"
+    local xqtbsrc = "res/InlayShop/xqtb/xqtb.ExportJson"
     manager:addArmatureFileInfo(xqtbsrc)
     local plist = "res/InlayShop/xqtb/xqtb0.plist"
     local png   = "res/InlayShop/xqtb/xqtb0.png"
     display.addSpriteFrames(plist, png)          
 
-    local xqzbsrc = "res/InlayShop/xqzb/xqzb.csb"
+    local xqzbsrc = "res/InlayShop/xqzb/xqzb.ExportJson"
     manager:addArmatureFileInfo(xqzbsrc)
     local plist = "res/InlayShop/xqzb/xqzb0.plist"
     local png   = "res/InlayShop/xqzb/xqzb0.png"

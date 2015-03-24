@@ -42,7 +42,7 @@ function LoadingLayer:initUI()
     self.describe = cc.uiloader:seekNodeByName(self, "describe")
 
     self.loadpercent:enableOutline(cc.c3b( 0, 0, 0), 2)
-	local yuansrc = "res/Loading/loading_yuan/loading_yuan.csb"
+	local yuansrc = "res/Loading/loading_yuan/loading_yuan.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(yuansrc)
 
