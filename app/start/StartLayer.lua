@@ -38,8 +38,9 @@ function StartLayer:initUI()
     armature:getAnimation():play("caidantx" , -1, 1)
 
     local dlArmature = ccs.Armature:create("dl_logo")
+    dlArmature:setScale(1.3)
     dlArmature:getAnimation():setMovementEventCallFunc(   
-         function ( armatureBack,movementType,movement) 
+         function (armatureBack,movementType,movement) 
             if movementType == ccs.MovementEventType.complete then
                 dlArmature:getAnimation():play("chixu" , -1, 1)
             end 
