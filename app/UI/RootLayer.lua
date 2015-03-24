@@ -125,11 +125,17 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/libao/libao0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
+    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
+
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.ExportJson"
     manager:addArmatureFileInfoAsync(thjbxsrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
-    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded)) 
 end
 
 function RootLayer:addResFight()

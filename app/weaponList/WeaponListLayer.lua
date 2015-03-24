@@ -38,15 +38,16 @@ end
 
 --guide
 function WeaponListLayer:onEnter()
-    self.weaponId = 1
- 
-    --init ui
-    cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
-    self:loadCCS()
-    self:initUI()
+     if self.ui == nil then
+        self.weaponId = 1
+        --init ui
+        cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
+        self:loadCCS()
+        self:initUI()
 
-    -- 点开页面默认选择某个武器
-    self:initGuide()
+        -- 点开页面默认选择某个武器
+        self:initGuide()
+    end
 
     --refersh
     self:refreshUI() 

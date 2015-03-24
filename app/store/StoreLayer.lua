@@ -16,8 +16,10 @@ function StoreLayer:ctor()
 end
 
 function StoreLayer:onEnter()
-    self:loadCCS()
-    self:initUI()
+    if self.ui == nil then
+        self:loadCCS()
+        self:initUI()
+    end
     self:setSelect("prop")
 end
 
@@ -35,10 +37,12 @@ function StoreLayer:loadCCS()
 end
 
 function StoreLayer:initUI()
-	self.listview = cc.uiloader:seekNodeByName(self, "listview")
-	self.btnprop = cc.uiloader:seekNodeByName(self, "btnprop")
-	self.btnbank = cc.uiloader:seekNodeByName(self, "btnbank")
-	self.btninlay = cc.uiloader:seekNodeByName(self, "btninlay")
+    local panelBtn = cc.uiloader:seekNodeByName(self, "panelbtn")
+    local panelListView = cc.uiloader:seekNodeByName(self, "panellistview")
+	self.listview = cc.uiloader:seekNodeByName(panelListView, "listview")
+	self.btnprop = cc.uiloader:seekNodeByName(panelBtn, "btnprop")
+	self.btnbank = cc.uiloader:seekNodeByName(panelBtn, "btnbank")
+	self.btninlay = cc.uiloader:seekNodeByName(panelBtn, "btninlay")
 	self.btnprop:setTouchEnabled(true)
 	self.btnbank:setTouchEnabled(true)
 	self.btninlay:setTouchEnabled(true)

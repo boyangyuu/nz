@@ -1,7 +1,5 @@
 local UI = class("UIManager",cc.mvc.ModelBase)
 
-local PauseScene = require("app.pause.PauseScene")
-
 -- 定义事件
 UI.LAYER_CHANGE_EVENT 	= "LAYER_CHANGE_EVENT"
 UI.POPUP_SHOW_EVENT   	= "POPUP_SHOW_EVENT"
@@ -38,11 +36,6 @@ layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 -- giftBag
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 
--- pausePopup
-layerClasses["pausePopup"]           = import("..pause.PausePopup")
--- homePopup
-layerClasses["homePopup"]            = import("..pause.HomePopup")
-
 
 function UI:ctor(properties)
     UI.super.ctor(self, properties) 
@@ -76,32 +69,14 @@ function UI:showPopup(layerId, properties, extra)
 		opacity = extra.opacity
 		anim = extra.anim
 		animName = extra.animName
-		isPauseScene = extra.isPauseScene
-		isPauseSecond = extra.isPauseSecond
-		isNotScrenCapture = extra.isNotScrenCapture
-		properties.isPauseScene = extra.isPauseScene
-		properties.isFight = extra.isFight
 	end
 
 	local layerCls = self:getLayerCls(layerId)
 
-	print("UI:showPopup(layerId, properties, extra)")
-	
-	if not isPauseScene then
-		print("1UI:showPopup isPauseScene:",isPauseScene)
-		self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
-			opacity = opacity, anim = anim, animName = animName,
-			properties = properties})
-	else
-		print("2UI:showPopup isPauseScene:",isPauseScene)
-		if not isPauseSecond then 
-			local pauseScene = PauseScene.new()
-		end
-		print(type(pauseScene))
-		self:dispatchEvent({name = UI.PAUSESCENE_SHOW_EVENT, layerCls = layerCls,
-			opacity = opacity, anim = anim,isPauseSecond = isPauseSecond,isNotScrenCapture = isNotScrenCapture,
-			properties = properties})
-	end
+	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
+		opacity = opacity, anim = anim, animName = animName,
+		properties = properties})
+
 end
 
 function UI:closePopup(layerId,extra)
