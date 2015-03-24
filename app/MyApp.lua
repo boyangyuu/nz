@@ -191,7 +191,7 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-     pm:showPopup("homePopup",{},
+     pm:showPopup("HomePausePopup",{},
         {anim = true,isNotScrenCapture = true})
 end
 

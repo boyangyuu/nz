@@ -1,20 +1,20 @@
 
 
-local FightPopup = class("FightPopup", function( )
+local FightPausePopup = class("FightPausePopup", function( )
 	return display.newLayer()
 end)
 
-function FightPopup:ctor()
+function FightPausePopup:ctor()
 	self:loadCCS()
 	self:initButtons()
 end
 
-function FightPopup:loadCCS()
+function FightPausePopup:loadCCS()
 	local pauseNode = cc.uiloader:load("res/help/bangzhu/fightSet.ExportJson")
 	self:addChild(pauseNode)
 end
 
-function FightPopup:initButtons()
+function FightPausePopup:initButtons()
 	-- 继续游戏
 	local gameContinue = cc.uiloader:seekNodeByName(self, "Panel_GameContinue")
 	gameContinue:setTouchEnabled(true)
@@ -38,6 +38,7 @@ function FightPopup:initButtons()
 	        local groupid,levelid = fight:getCurGroupAndLevel()
 	        local levelInfo = groupid.."-"..levelid
 	        print("levelInfo ",levelInfo)
+
 	        --um
 	        local umData = {}
 	    	umData[levelInfo] = "中途退出"
@@ -102,13 +103,17 @@ function FightPopup:initButtons()
 	end)
 end
 
-function FightPopup:onEnter()
+function FightPausePopup:onEnter()
 	local fight = md:getInstance("Fight")
 	fight:pauseFight(true)
 end
 
-function FightPopup:close()
-
+function FightPausePopup:btnColor(btn,isPress)
+	if isPress then 
+		btn:setColor(cc.c3b(150, 150, 150))
+	else 
+		btn:setColor(cc.c3b(0, 0, 0))
+	end
 end
 
-return FightPopup
+return FightPausePopup
