@@ -179,7 +179,7 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            ui:showPopup("pausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
+            pm:showPopup("pausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
         end
     end)
     addBtnEventListener(self.btnBack, function(event)

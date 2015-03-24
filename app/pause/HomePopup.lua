@@ -1,11 +1,10 @@
-local LayerColor_BLACK = cc.c4b(0, 0, 0, 0)
-local kOpacity = 200.0
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 255)
 
 local HomePopup = class("HomePopup", function()
     return display.newColorLayer(LayerColor_BLACK)
 end)
 
-function HomePopup:ctor()
+function HomePopup:ctor(properties)
 	self:initLayer()
 end
 
@@ -20,9 +19,7 @@ function HomePopup:initLayer()
 				print("btncall is pressed!")
 				return true
 			elseif event.name == "ended" then
-				local director = cc.Director:getInstance()
-				director:popScene()
-				isShowPausescene = true
+				pm:closePopup()
 			end
 		end)
 end

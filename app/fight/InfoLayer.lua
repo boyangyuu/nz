@@ -97,7 +97,7 @@ function InfoLayer:initBtns()
             if event.name =='began' then                
                 return true
             elseif event.name =='ended' then
-            	ui:showPopup("pausePopup",{popupName = "fightset"},{anim = true,isPauseScene = true})
+            	pm:showPopup("pausePopup",{popupName = "fightset"},{anim = true,isPauseScene = true})
             end
         end)
 
