@@ -138,7 +138,7 @@ function RootLayer:addResFight()
         handler(self, self.imageLoaded))  
 
     --armature
-    -- local manager = ccs.ArmatureDataManager:getInstance()
+    local manager = ccs.ArmatureDataManager:getInstance()
     -- local enemyImgs = {
     --     --普通怪物
     --     "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
