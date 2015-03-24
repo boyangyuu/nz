@@ -37,15 +37,15 @@ kDialogConfig["group1"]  = {
 		award = {
 			{role = "夜玫瑰", imgname = "role_yemeigui", msg = "看把你累的，枪法到底行不行啊！？", pos = "left"},		
 			{role = "杰",imgname = "role_jie", msg = "不是哥枪法不行，是对面敌人太多，我的枪太挫！！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "没事，把我的飓风之锤也借你！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "飓风之锤！？是那把号称大杀器的霰弹枪么？？", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "没事，把我的打击者也借你！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "打击者！？是那把号称大杀器的霰弹枪么？？", pos = "left"},
 		},	
 
 		after = {
 			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了！！敌人还没来得及反应就被你消灭了！", pos = "right"},		
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯，飓风之锤是把好枪", pos = "left"},
-			{role = "杰",imgname = "role_jie", msg = "飓风之锤的确好用啊！ 怪不得号称大杀器！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，飓风之锤和加特林都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯，打击者是把好枪", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "打击者的确好用啊！ 怪不得号称大杀器！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，打击者和加特林都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
 		},						
 	},	
 	level3 = {
