@@ -1,41 +1,34 @@
 
-local dir = "res/help/bangzhu/"
-local postfix = ".ExportJson"
-local config = {}
-
-config["mapset"]      = dir.."homeSet"..postfix
-config["fightset"]    = dir.."fightSet"..postfix
-
-local PausePopup = class("PausePopup",function()
+local MapPausePopup = class("MapPausePopup",function()
 	return display.newLayer()
 end)
 
 local director = cc.Director:getInstance()
 
-function PausePopup:ctor(properties)
-	self.popupName = properties.popupName
+function MapPausePopup:ctor(properties)
 	self:loadCCS()
 	self:initButtons()
 end
 
-function PausePopup:loadCCS()
-	local pauseNode = cc.uiloader:load(config[self.popupName])
+function MapPausePopup:loadCCS()
+	local pauseNode = cc.uiloader:load("res/help/bangzhu/homeSet.ExportJson")
 	self:addChild(pauseNode) 
 end
 
-function PausePopup:initButtons()
+function MapPausePopup:initButtons()
+	--继续游戏
 	local gameContinueBtn = cc.uiloader:seekNodeByName(self, "Panel_GameContinue")
 	gameContinueBtn:setTouchEnabled(true)
 	addBtnEventListener(gameContinueBtn, function( event )
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then 
-			director:popScene()
-			isShowPausescene = true
+			pm:closePopup()
 			assert("gameContinue is pressed!")
 		end
 	end)
 
+	--返回登陆页
 	local backBtn = cc.uiloader:seekNodeByName(self, "Panel_HomeBack")
 	backBtn:setTouchEnabled(true)
 	addBtnEventListener(backBtn, function( event )
@@ -46,18 +39,16 @@ function PausePopup:initButtons()
 			if self.isChanging then return end 
 			self.isChanging = true
 			self:btnColor(backBtn, false)
-			director:popScene()
-			isShowPausescene = true
-			-- ui:closePopup("PausePopup")
-			self:btnEvent()
+			pm:closePopup()
+			ui:changeLayer("StartLayer", {})
 			print("homeBackBtn is pressed!")
 		end
 	end)
 
+	--音乐开关
 	local musicClosedBtn = cc.uiloader:seekNodeByName(self, "Panel_MusicClosed")
 	local musicplay = cc.uiloader:seekNodeByName(musicClosedBtn, "musicplay")
 	local musicclose = cc.uiloader:seekNodeByName(musicClosedBtn, "musicclose")
-
 	local userData = getUserData()
 	local isPlaying = userData.preference.isOpenMusic
 	if isPlaying then
@@ -67,7 +58,6 @@ function PausePopup:initButtons()
 		musicplay:setVisible(true)
 		musicclose:setVisible(false)
 	end
-	
 	musicClosedBtn:setTouchEnabled(true)
 	addBtnEventListener(musicClosedBtn, function( event )
 		if event.name == 'began' then
@@ -90,19 +80,19 @@ function PausePopup:initButtons()
 		end
 	end)
 
+	--关闭按钮
 	local closeBtn = cc.uiloader:seekNodeByName(self, "Panel_Close")
 	closeBtn:setTouchEnabled(true)
 	addBtnEventListener(closeBtn, function( event )
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			director:popScene()
-			isShowPausescene = true
+			pm:closePopup()
 		end
 	end)
 end
 
-function PausePopup:btnColor(btn,isPress)
+function MapPausePopup:btnColor(btn,isPress)
 	if isPress then 
 		btn:setColor(cc.c3b(150, 150, 150))
 	else 
@@ -110,21 +100,4 @@ function PausePopup:btnColor(btn,isPress)
 	end
 end
 
-function PausePopup:btnEvent()
-	if self.popupName == "mapset" then
-		ui:changeLayer("StartLayer", {})
-
-	elseif self.popupName == "fightset" then
-        local fight  = md:getInstance("Fight")
-        local groupid,levelid = fight:getCurGroupAndLevel()
-        local levelInfo = groupid.."-"..levelid
-
-        --um
-        local umData = {}
-    	umData[levelInfo] = "中途退出"
-    	um:event("关卡完成情况", umData)
-		ui:changeLayer("HomeBarLayer",{groupId = groupid})
-	end
-end
-
-return PausePopup
+return MapPausePopup
