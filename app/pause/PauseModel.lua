@@ -4,9 +4,9 @@ PauseModel.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
 PauseModel.PAUSESCENE_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
 
 local layerClasses = {}
-layerClasses["FightPopup"] 		 = import("..pause.FightPopup")
-layerClasses["homePopup"] 		 = import("..pause.HomePopup")
-layerClasses["pausePopup"]       = import("..pause.PausePopup")
+layerClasses["FightPausePopup"] 		 = import("..pause.FightPausePopup")
+layerClasses["HomePausePopup"] 		 = import("..pause.HomePausePopup")
+layerClasses["MapPausePopup"]       = import("..pause.MapPausePopup")
 
 function PauseModel:ctor(properties)
     PauseModel.super.ctor(self, properties) 
