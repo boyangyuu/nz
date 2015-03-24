@@ -59,15 +59,6 @@ function LevelDetailLayer:loadCCS()
 	self.alreadyBibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
 	self.alreadyGold   = cc.uiloader:seekNodeByName(self, "alreadygold")
 	self.alreadyJijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
-
-    -- anim
-    local src = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)
-    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
-    local png = "res/LevelDetail/btequipanim/bt_yjzb0.png"
-    display.addSpriteFrames(plist,png)
-
 end
 
 function LevelDetailLayer:initUI()
