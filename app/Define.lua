@@ -118,13 +118,13 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 --子弹
 
 --手雷
-Define.kShouLeiCd    			= 0.5  -- 
+Define.kShouLeiCd    			= 0.5  -- 手雷cd
 
 --狙击枪
-Define.kJuRange 				= 4.0
+Define.kJuRange 				= 4.0  -- 狙击镜放大的范围
 
 --引导
-Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之20血时 触发机甲
+Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之30血时 触发机甲
 
 
 function Define:ctor()
