@@ -261,7 +261,7 @@ local waves = {
 					type = "duozuBoss",
 					placeName = "place1",
 					wangId    = 19,
-					missileId = 6, 
+					missileId = 22, 
 					yanwuId   = 21,
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
 					id = 1,
@@ -354,7 +354,7 @@ local enemys = {
 	{id=21,image="daodan03",demage=10,hp=50, weak1=1},   
 
 	--大导弹          --missileType = "daodan",
-	{id=22,image="daodan01",demage=10,hp=500, weak1=1},	
+	{id=22,image="daodan02",demage=10,hp=500, weak1=1},	
 
 }
 
