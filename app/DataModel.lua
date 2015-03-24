@@ -22,9 +22,11 @@ function DataModel:setNewData()
     data.versionId = __versionId
 
     --用户等级
-    data.user = {level = 1}
+    data.user = {level = 1, 
+    fightedGroupId = 0, 
+    fightedlevelId = 0}
 
-    --引导fillData
+    --引导
     local guideModel = md:getInstance("Guide")
     guideModel:fillData()
     setUserData(data)

@@ -27,7 +27,6 @@ function LevelDetailLayer:loadCCS()
 	-- load control bar
 	cc.FileUtils:getInstance():addSearchPath("res/LevelDetail")
 	local controlNode = cc.uiloader:load("guanqiakaishi.ExportJson")
-    self.ui = controlNode
     self:addChild(controlNode)
 
 	-- seek label
@@ -60,15 +59,6 @@ function LevelDetailLayer:loadCCS()
 	self.alreadyBibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
 	self.alreadyGold   = cc.uiloader:seekNodeByName(self, "alreadygold")
 	self.alreadyJijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
-
-    -- anim
-    local src = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)
-    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
-    local png = "res/LevelDetail/btequipanim/bt_yjzb0.png"
-    display.addSpriteFrames(plist,png)
-
 end
 
 function LevelDetailLayer:initUI()
@@ -108,7 +98,7 @@ function LevelDetailLayer:initUI()
 		local enemyPlay = DataTable["enemyPlay"]
 		dump(enemyPlay)
 		local manager = ccs.ArmatureDataManager:getInstance()
-        local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".csb"
+        local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".ExportJson"
         manager:addArmatureFileInfo(src) 
         local plist = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.plist"
         local png   = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.png"

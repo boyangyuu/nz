@@ -16,8 +16,10 @@ function StoreLayer:ctor()
 end
 
 function StoreLayer:onEnter()
-    self:loadCCS()
-    self:initUI()
+    if self.ui == nil then
+        self:loadCCS()
+        self:initUI()
+    end
     self:setSelect("prop")
 end
 

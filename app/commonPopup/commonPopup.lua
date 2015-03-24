@@ -34,9 +34,7 @@ end
 function commonPopup:loadCCS(typeName)
     cc.FileUtils:getInstance():addSearchPath("res/CommonPopup/erjijiemian")
     local controlNode = cc.uiloader:load(typeName..".ExportJson")
-    self.ui = controlNode
     self:addChild(controlNode)
-
 end
 
 function commonPopup:initUI(properties)

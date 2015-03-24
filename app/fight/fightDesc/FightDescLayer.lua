@@ -138,7 +138,7 @@ function FightDescLayer:initEnemyIntro(enemyID)
 
     --load
     local manager = ccs.ArmatureDataManager:getInstance()
-    local src = "res/Fight/enemys/"..enemyID.."/"..enemyID..".csb"
+    local src = "res/Fight/enemys/"..enemyID.."/"..enemyID..".ExportJson"
     local plist = "res/Fight/enemys/"..enemyID.."/"..enemyID.."0.plist"
     local png   = "res/Fight/enemys/"..enemyID.."/"..enemyID.."0.png" 
     manager:addArmatureFileInfo(src)

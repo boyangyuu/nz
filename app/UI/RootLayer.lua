@@ -125,11 +125,17 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/libao/libao0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
+    manager:addArmatureFileInfoAsync(yjzbsrc,  handler(self, self.dataLoaded))
+    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
+
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.ExportJson"
     manager:addArmatureFileInfoAsync(thjbxsrc,  handler(self, self.dataLoaded))
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
-    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
+    display.addSpriteFrames(plist, png, handler(self, self.imageLoaded)) 
 end
 
 function RootLayer:addResFight()
@@ -139,23 +145,23 @@ function RootLayer:addResFight()
 
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
-    local enemyImgs = {
-        --普通怪物
-        "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-        "qiqiu01", "qiqiu02", "qiqiu03", "xiaozz",
-        "sanbing01", "zpbing", "shouleib",  "hs","feiji",
-        "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
-        "dl_xz",
-        --导弹
-        "shoulei", "daodan", "tieqiu", "daodan02",
-    }
-    for i,v in ipairs(enemyImgs) do
-        local src = "res/Fight/enemys/"..v.."/"..v..".csb"
-        manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
-        local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
-        local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
-        display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
-    end
+    -- local enemyImgs = {
+    --     --普通怪物
+    --     "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
+    --     "qiqiu01", "qiqiu02", "qiqiu03", "xiaozz",
+    --     "sanbing01", "zpbing", "shouleib",  "hs","feiji",
+    --     "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
+    --     "dl_xz",
+    --     --导弹
+    --     "shoulei", "daodan", "tieqiu", "daodan02",
+    -- }
+    -- for i,v in ipairs(enemyImgs) do
+    --     local src = "res/Fight/enemys/"..v.."/"..v..".csb"
+    --     manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
+    --     local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+    --     local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
+    --     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
+    -- end
 
     local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
         "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw"}

@@ -59,7 +59,6 @@ end
 function FightResultLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/FightResult")
 	local controlNode = cc.uiloader:load("guanqiapingjia.ExportJson")
-    self.ui = controlNode
     self:addChild(controlNode)
 
     --anim

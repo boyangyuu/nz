@@ -17,12 +17,16 @@ function InlayLayer:ctor()
     self.icon = {}
     self.typeId = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
+
+    self:setNodeEventEnabled(true)
 end
 
 function InlayLayer:onEnter()
-    self:loadCCS()
-    self:initUI()
-    self:initGuide()
+    if self.ui == nil then
+        self:loadCCS()
+        self:initUI()
+        self:initGuide()
+    end
     self:refreshBtnIcon()
     self:refreshListView("speed")
     self:refreshAvatar()
@@ -49,7 +53,7 @@ end
 function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
     self.oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
-    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
+    self.goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
     local yijianxiangqian = cc.uiloader:seekNodeByName(self, "yijianxiangqian")
     yijianxiangqian:enableOutline(cc.c4b(140, 49, 2,255), 2)
 
@@ -79,15 +83,15 @@ function InlayLayer:initUI()
     display.addSpriteFrames(plist, png)
 
     self.iconarm = ccs.Armature:create("xqtb")
-    local armature = ccs.Armature:create("xqan_hjwq")
-    addChildCenter(armature, goldWeaponBtn)
-    armature:getAnimation():play("Animation1" , -1, 1)
+    self.goldBtnArmature = ccs.Armature:create("xqan_hjwq")
+    addChildCenter(self.goldBtnArmature, self.goldWeaponBtn)
+    self.goldBtnArmature:getAnimation():play("Animation1" , -1, 1)
 
 
     self.goldgun = cc.uiloader:seekNodeByName(self, "d")
     self.goldgun:setVisible(false)
     self.oneForAllBtn:setTouchEnabled(true)
-    goldWeaponBtn:setTouchEnabled(true)
+    self.goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(self.oneForAllBtn, function(event)
         if event.name=='began' then
             return true
@@ -96,7 +100,7 @@ function InlayLayer:initUI()
         end
     end)
 
-    addBtnEventListener(goldWeaponBtn, function(event)
+    addBtnEventListener(self.goldWeaponBtn, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
