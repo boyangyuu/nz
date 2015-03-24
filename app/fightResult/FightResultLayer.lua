@@ -301,7 +301,6 @@ function FightResultLayer:getinlayfall()
     local config = getConfig("config/inlayfall.json")
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	self.curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
-	-- dump(self.curRecord)
 	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(self.curRecord["suipianid"])
 	
 	-- 武器碎片
@@ -311,7 +310,6 @@ function FightResultLayer:getinlayfall()
 	end
 
 	-- 狙击
-	
     if  curGroup == 0 and curLevel == 0 and self.curRecord["type"] == "boss" then
 	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
 	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
@@ -495,7 +493,7 @@ function FightResultLayer:initGuide()
         groupId = "afterfight01",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			ui:changeLayer("HomeBarLayer",{groupId = 1})   
+			ui:changeLayer("HomeBarLayer",{groupId = 1,isPopupNext = isPopupNext})   
         end
      })    	
 end

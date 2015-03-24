@@ -44,8 +44,6 @@ function Fight:beginFight()
 end
 
 function Fight:refreshData(properties)
-    print("function Fight:refreshData()")
-
     self.groupId = properties.groupId
     self.levelId = properties.levelId   
 
@@ -95,11 +93,8 @@ function Fight:refreshUmFightTimesEvent()
         data.user.fightedGroupId = fGid
         data.user.fightedlevelId = fLid
         setUserData(data)
-        print("关卡开始_首次进入")
-        dump(data, "data")
         str = "关卡开始_首次进入"
     else
-         print("关卡开始_重复进入")
         str = "关卡开始_重复进入" 
     end
 

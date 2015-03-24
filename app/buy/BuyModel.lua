@@ -115,10 +115,9 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
-	-- local weapontable = weaponListModel:getAllWeapon()
 	local propModel = md:getInstance("propModel")
-	local weapontable = {3,4,5,7,8}
-	for k,v in pairs(weapontable) do
+	local weaponIds = {3,4,5,7,8}
+	for k,v in pairs(weaponIds) do
 		weaponListModel:buyWeapon(v)
 		weaponListModel:onceFull(v)
 	end

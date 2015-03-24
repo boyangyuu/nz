@@ -227,7 +227,6 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	--向左出发
 	local bound = self.armature:getCascadeBoundingBox() 
 	local pos = self:getPosInMapBg()
-	dump(pos, "pos")
 	local disOut = isLeft and  -bound.width or 1560
 	local time = math.abs(posOri.x - disOut) / speed
 	local desPos = cc.p(disOut, posOri.y)

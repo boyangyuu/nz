@@ -29,21 +29,36 @@ function LevelDetailLayer:loadCCS()
 	local controlNode = cc.uiloader:load("guanqiakaishi.ExportJson")
     self:addChild(controlNode)
 
+    --seek panels
+	self.panelDetail  = cc.uiloader:seekNodeByName(self, "paneldetail")
+	self.panelJijia  = cc.uiloader:seekNodeByName(self, "paneljijia")
+	self.panelGoldWeapon  = cc.uiloader:seekNodeByName(self, "panelgoldweapon")
+	self.panelRecommend  = cc.uiloader:seekNodeByName(self, "panelrecommend")
+	self.panelDescribe = cc.uiloader:seekNodeByName(self.panelDetail, "paneldescribe")
+	self.panelmap = cc.uiloader:seekNodeByName(self.panelDetail, "panelmap")
+
+    -- seek btns
+	self.btnOff   = cc.uiloader:seekNodeByName(self.panelDetail, "btn_off")
+	self.btnStart = cc.uiloader:seekNodeByName(self.panelDetail, "btnbegin")
+	self.btnBibei = cc.uiloader:seekNodeByName(self.panelRecommend, "btn_bibei")
+	self.btnGold  = cc.uiloader:seekNodeByName(self.panelGoldWeapon, "btn_gold")
+	self.btnJijia = cc.uiloader:seekNodeByName(self.panelJijia, "btn_jijia")
+
 	-- seek label
-	self.labelTitle    = cc.uiloader:seekNodeByName(self, "label_title")
-	self.labelId       = cc.uiloader:seekNodeByName(self, "label_id")
-	self.labelDesc     = cc.uiloader:seekNodeByName(self, "label_desc")
-	self.labelTasktype = cc.uiloader:seekNodeByName(self, "label_tasktype")
-	self.labelGet = cc.uiloader:seekNodeByName(self, "levelget")
-	self.panelBiaozhu = cc.uiloader:seekNodeByName(self, "panelbiaozhu")
-	self.target    = cc.uiloader:seekNodeByName(self, "target")
-	cc.uiloader:seekNodeByName(self, "yijiana")
+	self.labelTitle    = cc.uiloader:seekNodeByName(self.panelDescribe, "label_title")
+	self.labelId       = cc.uiloader:seekNodeByName(self.panelDescribe, "label_id")
+	self.labelDesc     = cc.uiloader:seekNodeByName(self.panelDescribe, "label_desc")
+	self.labelTasktype = cc.uiloader:seekNodeByName(self.panelDescribe, "label_tasktype")
+	self.labelGet = cc.uiloader:seekNodeByName(self.panelDescribe, "levelget")
+	self.panelBiaozhu = cc.uiloader:seekNodeByName(self.panelDescribe, "panelbiaozhu")
+	self.target    = cc.uiloader:seekNodeByName(self.panelDescribe, "target")
+	cc.uiloader:seekNodeByName(self.btnBibei, "yijiana")
 		:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	cc.uiloader:seekNodeByName(self, "yijianb")
+	cc.uiloader:seekNodeByName(self.btnGold, "yijianb")
 		:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	cc.uiloader:seekNodeByName(self, "yijianc")
+	cc.uiloader:seekNodeByName(self.btnJijia, "yijianc")
 		:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	self.startlabel    = cc.uiloader:seekNodeByName(self, "startlabel")
+	self.startlabel    = cc.uiloader:seekNodeByName(self.btnStart, "startlabel")
 
 	self.labelTitle:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.labelId:enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -51,37 +66,22 @@ function LevelDetailLayer:loadCCS()
 	self.startlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 	
 	-- seek layer for image
-	self.layerMap   = cc.uiloader:seekNodeByName(self, "mapimage")
-	self.layerBibei = cc.uiloader:seekNodeByName(self, "bibeiimg")    
-	self.layerEnemy = cc.uiloader:seekNodeByName(self, "panlenemy")   
+	self.layerMap   = cc.uiloader:seekNodeByName(self.panelmap, "mapimage")
+	self.layerBibei = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")    
+	self.layerEnemy = cc.uiloader:seekNodeByName(self.panelmap, "panlenemy")   
 
 	-- seek already image
-	self.alreadyBibei   = cc.uiloader:seekNodeByName(self, "alreadybibei")
-	self.alreadyGold   = cc.uiloader:seekNodeByName(self, "alreadygold")
-	self.alreadyJijia   = cc.uiloader:seekNodeByName(self, "alreadyjijia")
-
-    -- anim
-    local src = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)
-    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
-    local png = "res/LevelDetail/btequipanim/bt_yjzb0.png"
-    display.addSpriteFrames(plist,png)
-
+	self.alreadyBibei   = cc.uiloader:seekNodeByName(self.panelRecommend, "alreadybibei")
+	self.alreadyGold   = cc.uiloader:seekNodeByName(self.panelGoldWeapon, "alreadygold")
+	self.alreadyJijia   = cc.uiloader:seekNodeByName(self.panelJijia, "alreadyjijia")
 end
 
 function LevelDetailLayer:initUI()
 	
     --三个推荐
-	local dansedijj = cc.uiloader:seekNodeByName(self, "dansedijj")
-	local dansejj = cc.uiloader:seekNodeByName(self, "dansejj")	
-	local dansedihw = cc.uiloader:seekNodeByName(self, "dansedihw")
-	local dansehw = cc.uiloader:seekNodeByName(self, "dansehw")
-	local danseditj = cc.uiloader:seekNodeByName(self, "danseditj")
-	local dansetj = cc.uiloader:seekNodeByName(self, "dansetj")
-	dansedijj:setColor(cc.c3b(249,0,255))
-	dansedihw:setColor(cc.c3b(255,208,0))
-	danseditj:setColor(cc.c3b(0,255,198))
+	cc.uiloader:seekNodeByName(self.panelJijia, "dansedijj"):setColor(cc.c3b(249,0,255))
+	cc.uiloader:seekNodeByName(self.panelGoldWeapon, "dansedihw"):setColor(cc.c3b(255,208,0))
+	cc.uiloader:seekNodeByName(self.panelRecommend, "danseditj"):setColor(cc.c3b(0,255,198))
 
     --content
 	local DataTable = self.DataTable
@@ -124,7 +124,7 @@ function LevelDetailLayer:initUI()
 	local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local weaponimg = display.newSprite("#icon_"..recomWeapon["imgName"]..".png")
 	weaponimg:setScale(0.4)
-	local bibeiimg = cc.uiloader:seekNodeByName(self, "bibeiimg")
+	local bibeiimg = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")
 	addChildCenter(weaponimg, bibeiimg) 
 
 	-- init btn
@@ -143,33 +143,9 @@ function LevelDetailLayer:initMapUI(mapName)
 	mapimg:setScale(mapPanlSize.width/mapImgSize.width,mapPanlSize.height/mapImgSize.height)
 	-- map:setAnchorPoint(0.5,0.5)
 	addChildCenter(mapimg, mapNode)
-
-	--clear
-	local index = 1
-    while true do
-    	local name = "place" .. index
-    	local placeNode = cc.uiloader:seekNodeByName(map, name)
-    	local scaleNode = cc.uiloader:seekNodeByName(placeNode, "scale")
-    	--clear scaleNode
-    	if scaleNode then scaleNode:setVisible(false) end
-        if placeNode == nil then
-            break
-        end
-
-        --clear colorNode
-    	local colorNode = cc.uiloader:seekNodeByName(placeNode, "color")
-        colorNode:setVisible(false)
-
-        index = index + 1
-    end
 end
 
 function LevelDetailLayer:initBtns()
-	self.btnOff   = cc.uiloader:seekNodeByName(self, "btn_off")
-	self.btnStart = cc.uiloader:seekNodeByName(self, "btnbegin")
-	self.btnBibei = cc.uiloader:seekNodeByName(self, "btn_bibei")
-	self.btnGold  = cc.uiloader:seekNodeByName(self, "btn_gold")
-	self.btnJijia = cc.uiloader:seekNodeByName(self, "btn_jijia")
 
 	-- set touch enable
 	self.btnOff   :setTouchEnabled(true)

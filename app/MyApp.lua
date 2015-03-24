@@ -8,6 +8,7 @@ local Define = require("app.Define")
 local DataModel = require("app.DataModel")
 GameState = require("framework.cc.utils.GameState")
 local IAPsdk = require("app.SDK.IAPsdk")
+local PauseModel = require("app.pause.PauseModel")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
@@ -17,7 +18,6 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 __versionId = "1.2"
-isShowPausescene = true
 
 ui        = UI.new()
 md        = MD.new()
@@ -25,6 +25,7 @@ um        = UM.new()
 define    = Define.new()
 dataModel = DataModel.new()
 iap       = IAPsdk.new()
+pm        = PauseModel.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -127,8 +128,8 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 10,
-                        level = 6,
+                        group = 1,
+                        level = 1,
             },
             user = {
                 level = 1,
@@ -150,6 +151,10 @@ function MyApp:createGameStateFile()
                         --第0-0关之后  
                         afterfight01    = false,   -- 进入下一关
                      
+                        --第1-1之内
+                        fight_change    = false,
+                        fight_dun       = false,
+
                         --第1-2关之前
                         xiangqian       = false,   --镶嵌一套青铜
 
@@ -176,7 +181,7 @@ function MyApp:createGameStateFile()
                         dailyid = 0,
             },
             preference = {
-                isOpenMusic = true
+                isOpenMusic = false
             },
             
     }
@@ -190,9 +195,8 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-    if isShowPausescene ~= true then return end
-    ui:showPopup("homePopup",{popupName = "mapset"},
-        {anim = true,isPauseScene = true,isNotScrenCapture = true})
+     pm:showPopup("HomePausePopup",{},
+        {anim = true,isNotScrenCapture = true})
 end
 
 function MyApp:onEnterForeground()

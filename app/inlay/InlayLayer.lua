@@ -17,12 +17,16 @@ function InlayLayer:ctor()
     self.icon = {}
     self.typeId = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
+
+    self:setNodeEventEnabled(true)
 end
 
 function InlayLayer:onEnter()
-    self:loadCCS()
-    self:initUI()
-    self:initGuide()
+    if self.ui == nil then
+        self:loadCCS()
+        self:initUI()
+        self:initGuide()
+    end
     self:refreshBtnIcon()
     self:refreshListView("speed")
     self:refreshAvatar()
@@ -47,11 +51,13 @@ function InlayLayer:refreshInlay(event)
 end
 
 function InlayLayer:initUI()
-    self.rootListView = cc.uiloader:seekNodeByName(self, "listview")
-    self.oneForAllBtn = cc.uiloader:seekNodeByName(self, "btnforall")
-    local goldWeaponBtn = cc.uiloader:seekNodeByName(self, "btngoldweapon")
-    local yijianxiangqian = cc.uiloader:seekNodeByName(self, "yijianxiangqian")
-    yijianxiangqian:enableOutline(cc.c4b(140, 49, 2,255), 2)
+    self.panelInlay = cc.uiloader:seekNodeByName(self, "panelinlay")
+    self.panelListView = cc.uiloader:seekNodeByName(self, "panellistview")
+    self.rootListView = cc.uiloader:seekNodeByName(self.panelListView, "listview")
+    self.oneForAllBtn = cc.uiloader:seekNodeByName(self.panelInlay, "btnforall")
+    self.goldWeaponBtn = cc.uiloader:seekNodeByName(self.panelInlay, "btngoldweapon")
+    cc.uiloader:seekNodeByName(self.oneForAllBtn, "yijianxiangqian")
+            :enableOutline(cc.c4b(140, 49, 2,255), 2)
 
     local manager = ccs.ArmatureDataManager:getInstance()
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.ExportJson"
@@ -79,15 +85,15 @@ function InlayLayer:initUI()
     display.addSpriteFrames(plist, png)
 
     self.iconarm = ccs.Armature:create("xqtb")
-    local armature = ccs.Armature:create("xqan_hjwq")
-    addChildCenter(armature, goldWeaponBtn)
-    armature:getAnimation():play("Animation1" , -1, 1)
+    self.goldBtnArmature = ccs.Armature:create("xqan_hjwq")
+    addChildCenter(self.goldBtnArmature, self.goldWeaponBtn)
+    self.goldBtnArmature:getAnimation():play("Animation1" , -1, 1)
 
 
-    self.goldgun = cc.uiloader:seekNodeByName(self, "d")
+    self.goldgun = cc.uiloader:seekNodeByName(self.panelInlay, "d")
     self.goldgun:setVisible(false)
     self.oneForAllBtn:setTouchEnabled(true)
-    goldWeaponBtn:setTouchEnabled(true)
+    self.goldWeaponBtn:setTouchEnabled(true)
     addBtnEventListener(self.oneForAllBtn, function(event)
         if event.name=='began' then
             return true
@@ -96,7 +102,7 @@ function InlayLayer:initUI()
         end
     end)
 
-    addBtnEventListener(goldWeaponBtn, function(event)
+    addBtnEventListener(self.goldWeaponBtn, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -105,8 +111,8 @@ function InlayLayer:initUI()
     end)
 
     for k,v in pairs(self.typeId) do
-        self.btn[v] = cc.uiloader:seekNodeByName(self, "panel"..v)
-        self.icon[v] = cc.uiloader:seekNodeByName(self, "icon"..v)
+        self.btn[v] = cc.uiloader:seekNodeByName(self.panelInlay, "panel"..v)
+        self.icon[v] = cc.uiloader:seekNodeByName(self.panelInlay, "icon"..v)
         self.btn[v]:setTouchEnabled(true)
         self.btn[v]:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then                
