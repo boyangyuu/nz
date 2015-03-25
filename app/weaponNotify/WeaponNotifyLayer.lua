@@ -24,8 +24,6 @@ function WeaponNotifyLayer:loadCCS()
 end
 
 function WeaponNotifyLayer:initUI(properties)
-
-
     local btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
     local labelName = cc.uiloader:seekNodeByName(self, "labelName")
     local panelAnim = cc.uiloader:seekNodeByName(self, "panelAnim")
@@ -80,6 +78,7 @@ function WeaponNotifyLayer:initUI(properties)
 	    armature:getAnimation():play("start02" , -1, 0)
 
 		local weaponName = self.weaponListModel:getWeaponNameByID(properties.weaponId)
+		labelName:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	    labelName:setString(weaponName.."零件")
 	end
 
