@@ -71,7 +71,7 @@ function ChongBossView:animationEvent(armatureBack,movementType,movementID)
 			return 
 		end		
 		if movementID ~= "die" then
-			self:doNextPlay()	
+			self:doNextPlay()
     	elseif movementID == "die" then  
     		self:setDeadDone(true)
     	end 

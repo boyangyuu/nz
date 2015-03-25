@@ -98,18 +98,11 @@ function RenEnemyView:tick()
             self.enemy:beginRollCd()
         end
     end 
+end
 
-    -- --speak
-    -- local speakRate, isAble = self.enemy:getSpeakRate()
-    -- assert(speakRate > 1, "invalid speakRate")
-
-    -- if isAble then
-    --     local randomSeed = math.random(1, speakRate)
-    --     if randomSeed > speakRate - 1 then 
-    --         self:play("playSpeak", handler(self, self.playSpeak))
-    --         self.enemy:beginSpeakCd()
-    --     end
-    -- end     
+function RenEnemyView:playKill(event)
+    RenEnemyView.super.playKill(self, event)
+    self.armature:getAnimation():play("die" ,-1 , 1)
 end
 
 function RenEnemyView:beginChongCd()
@@ -185,8 +178,8 @@ function RenEnemyView:playChongfeng()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
+    self:setPauseOtherAnim(true)
     self:runAction(seq)
-
     self:runAction(actionScale) 
 end
 
@@ -217,7 +210,6 @@ function RenEnemyView:playShan()
                             define.kRenzheShanOffsetMax)   
                          * self:getScale() * isLeft
     if not self:checkPlace(offset) then 
-        self:checkIdle()
         return 
     end 
     --
@@ -236,15 +228,11 @@ function RenEnemyView:playShan()
 end
 
 function RenEnemyView:playRunAction(direct, isRun)
-    -- print("function RenEnemyView:playRunAction():",isRun)
     local speed = isRun and define.kRenzheSpeed  or define.kRenzheWalkSpeed
     local time = isRoll and define.kRenzheRunTime or define.kRenzheWalkTime
 
-    -- print("time"..time)
     local width = speed * time * self:getScale() * direct
-    -- print("width", width)
     if not self:checkPlace(width) then 
-        self:checkIdle()
         return 
     end
     
@@ -257,7 +245,8 @@ function RenEnemyView:playRunAction(direct, isRun)
 
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(cc.Sequence:create(action, 
+    self:setPauseOtherAnim(true)
+    self:runAction(cc.Sequence:create(action, 
         cc.CallFunc:create(handler(self, self.restoreStand))
         ))  
 end
@@ -272,7 +261,7 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
-        if self:getPauseOtherAnim() then
+        if self:getPauseOtherAnim() and movementID ~= "die" then
             return 
         end        
         armatureBack:stopAllActions()
@@ -281,7 +270,7 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
             return
         end
 
-        if movementID == "die02" then
+        if movementID == "die" then
             self:setDeadDone()
             return
         end

@@ -59,7 +59,6 @@ function DuozuBossView:playWalkAction(direct)
     local width = speed * time * self:getScale() * direct
     print("width", width)
     if not self:checkPlace(width) then 
-        self:checkIdle()
         return 
     end
     
@@ -193,7 +192,7 @@ function DuozuBossView:animationEvent(armatureBack,movementType,movementID)
     if self.isWudi then return end
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        if self:getPauseOtherAnim() then
+        if self:getPauseOtherAnim() and movementID ~= "die" then
             return 
         end
 

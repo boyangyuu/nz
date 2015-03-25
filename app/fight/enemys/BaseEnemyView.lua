@@ -155,17 +155,7 @@ function BaseEnemyView:playHitted(event)
 end
 
 function BaseEnemyView:playKill(event)
-	--clear
-	self:clearPlayCache()
-	self.armature:stopAllActions()
-	self:setPause({isPause = true})
-
-	--以防万一
-	if self and self.setDeadDone then 
-		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
-	end
-
-	self.armature:getAnimation():play("die" ,-1 , 1)
+	BaseEnemyView.super.playKill(self, event)
 end
 
 function BaseEnemyView:onHitted(targetData)

@@ -50,7 +50,8 @@ end
 
 function JinEnemyView:playKill(event)
     JinEnemyView.super.playKill(self,event)
-
+    self:stopAllActions()
+    self.armature:getAnimation():play("die" ,-1 , 1)
     --sound
     local soundSrc  = "res/Music/fight/die02.wav"
     self.audioId =  audio.playSound(soundSrc,false) 

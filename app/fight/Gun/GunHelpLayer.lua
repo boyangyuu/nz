@@ -53,9 +53,6 @@ function GunHelpLayer:onShow(event)
     local record = getRecordByKey("config/weapon_weapon.json", "id", self.gunId)[1]
     assert(record, "record is nil id is "..self.gunId)
     local icon = display.newSprite("#icon_"..record["imgName"]..".png")    
-    icon:setScaleX(0.2)
-    icon:setScaleY(0.2)
-    icon:scaleTo(0.7, 1.0)
     addChildCenter(icon, self.gunDisplay)    
 
     --gun name 

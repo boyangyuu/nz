@@ -285,15 +285,8 @@ function FeijiEnemyView:playHitted(event)
 end
 
 function FeijiEnemyView:playKill(event)
+	FeijiEnemyView.super.playKill(self, event)	
 	local name = self.direct == "right" and "dieright" or "dieleft"
-	
-
-	--clear
-	self.armature:stopAllActions()
-	if self.schRestore  then 
-		scheduler.unscheduleGlobal(self.schRestore)
-	end
-
 	--anim
 	self.armature:getAnimation():play(name , -1, 1)
 	self:playBombEffects()

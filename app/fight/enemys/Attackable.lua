@@ -21,7 +21,7 @@ function Attackable:ctor(property)
 	self.playCache = {}
 	self.isRed = false
 	self.isPauseOtherAnim = false
-
+	self.isWillDie = false
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -211,7 +211,7 @@ function Attackable:setDeadDone()
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
 	end
-	-- self:stopAllActions()
+	self:setPauseOtherAnim(true)
 	self.deadDone = true
 end
 
@@ -223,7 +223,7 @@ function Attackable:setWillRemoved(time)
 	if self.removeAllSchedulers then	
 		self:removeAllSchedulers()	
 	end
-	self:stopAllActions()
+	self:setPauseOtherAnim(true)
 	local function callFunc()
 		self.willRemoved = true
 	end 
@@ -276,6 +276,7 @@ function Attackable:play(state, handlerFunc)
 end
 
 function Attackable:insertCache(play, state)
+	if self.isWillDie then return end
 	local index = #self.playCache + 1
 	if state == "skillPre" then  --高于技能
 		table.insert(self.playCache, 1, {func = play, state = state})
@@ -292,6 +293,7 @@ function Attackable:getPlayCache()
 end
 
 function Attackable:doNextPlay()
+	if self:getPauseOtherAnim() then return end
 	local playCache = self:getPlayCache()		
 	if playCache then 
 		playCache()
@@ -299,8 +301,6 @@ function Attackable:doNextPlay()
 		self:playStand()
 	end
 end
-
-
 
 function Attackable:clearPlayCache()
 	self.playCache = {}
@@ -328,7 +328,7 @@ function Attackable:playHittedEffect()
 	local function callfunc()
 		if self.isRed then 
 			-- print("回复")
-			self.armature:setColor(cc.c3b(255,255,255))
+			self:restoreRedEffect()
 		end
 	end
 
@@ -346,14 +346,20 @@ function Attackable:playHittedEffect()
 	self:addScheduler(sch2)
 end
 
+function Attackable:restoreRedEffect()
+	self.armature:setColor(cc.c3b(255,255,255))
+end
+
 function Attackable:playBombEffect()
 	local bone = self.armature:getBone("bomb")
 	if bone == nil then return end
 	assert(bone, "bomb bone is nil")
 	local node = bone:getDisplayRenderNode()
+	assert(node, "node")
 	if node == nil then return end
 	local box = node:getBoundingBox()
-	-- local box = self.armature:getBoundingBox()
+	box.width  = box.width / define.kEnemyAnimScale
+	box.height = box.height / define.kEnemyAnimScale
 	local bomb = ccs.Armature:create("baozha4")
 	bomb:setAnchorPoint(0.5,0.5)
 	-- dump(box, "box")
@@ -387,17 +393,10 @@ end
 function Attackable:checkAnim()
 	-- return
 	if self.enemy:isDead() then return end
+	if self:getPauseOtherAnim() then return end
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	if currentName == "" or currentName == nil then 
-		print("ttackable:checkAnim()")	
-		self:playStand()
-	end
-end
-
-function Attackable:checkIdle()
-	if 1== 1 then return end
-	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	if currentName == "" then		
+		-- print("attackable:checkAnim()")	
 		self:playStand()
 	end
 end
@@ -484,18 +483,19 @@ function Attackable:playStand()
 end
 
 function Attackable:playKill(event)
+	self.isWillDie = true
 	self:clearPlayCache()
 	self.armature:stopAllActions()
+	self:stopAllActions()
 	self:setPauseOtherAnim(true)
-	self:setPause({isPause = true})	
+	self:setWillRemoved(4.0)
+	self:restoreRedEffect()
 end
 
 function Attackable:onEnter()
 	local fight = md:getInstance("Fight")
 	local isPause = fight:isPauseFight()
-	    -- print("function Fight:isPauseFight()"..isPause)
 	if isPause then 
-		-- print("self:setPause(true) ")
 		self:setPause({isPause = true}) 
 	end
 end

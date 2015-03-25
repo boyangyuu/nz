@@ -136,16 +136,9 @@ function RZShangrenEnemyView:playHitted(event)
 end
 
 function RZShangrenEnemyView:playKill(event)
-	--clear
-	self:stopAllActions()
-	self:clearPlayCache()
-	self:stopAllActions()
-	if self.schRestore  then 
-		scheduler.unscheduleGlobal(self.schRestore)
-	end
+	RZShangrenEnemyView.super.playKill(self, event)
 	self.armature:getAnimation():play("die" ,-1 , 1) 
 end
-
 
 function RZShangrenEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete 
