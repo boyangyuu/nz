@@ -487,32 +487,31 @@ function FightResultLayer:setDailyPopup()
 end
 
 function FightResultLayer:startGuide()
-	self.guide:check("afterfight01")	
-	self.guide:check("afterfight03")
+	
 end
 
 function FightResultLayer:initGuide()
     local isDone = self.guide:isDone("afterfight01")
     if isDone then return end
-    self.guide:addClickListener({
-        id = "afterfight01_award",
-        groupId = "afterfight01",
-       rect = cc.rect(0, 0, display.width1, display.height1),
-        endfunc = function (touchEvent)
-        	playSoundBtn()
-        end
-     })  
+--     self.guide:addClickListener({
+--         id = "afterfight01_award",
+--         groupId = "afterfight01",
+--        rect = cc.rect(0, 0, display.width1, display.height1),
+--         endfunc = function (touchEvent)
+--         	playSoundBtn()
+--         end
+--      })  
 
+   --  self.guide:addClickListener({
+   --      id = "afterfight01_get",
+   --      groupId = "afterfight01",
+   --      rect = self.btngetall:getCascadeBoundingBox(),
+   --      endfunc = function (touchEvent)
+			-- self:turnLeftCard()   
+			-- playSoundBtn()    
+   --      end
+   --   })   
 
-    self.guide:addClickListener({
-        id = "afterfight01_get",
-        groupId = "afterfight01",
-        rect = self.btngetall:getCascadeBoundingBox(),
-        endfunc = function (touchEvent)
-			self:turnLeftCard()   
-			playSoundBtn()    
-        end
-     })   
     self.guide:addClickListener({
         id = "afterfight01_jixu",
         groupId = "afterfight01",
