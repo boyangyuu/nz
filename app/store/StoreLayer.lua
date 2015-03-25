@@ -10,9 +10,6 @@ end)
 
 function StoreLayer:ctor()
     self.storeModel = md:getInstance("StoreModel")
-    
-    cc.EventProxy.new(self.storeModel , self)
-        :addEventListener("REFRESH_STORE_EVENT", handler(self, self.refresh))
 end
 
 function StoreLayer:onEnter()
@@ -21,6 +18,8 @@ function StoreLayer:onEnter()
         self:initUI()
     end
     self:setSelect("prop")
+    cc.EventProxy.new(self.storeModel , self)
+        :addEventListener("REFRESH_STORE_EVENT", handler(self, self.refresh))
 end
 
 function StoreLayer:loadCCS()
