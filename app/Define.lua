@@ -69,7 +69,8 @@ Define.kjipuWalkTime			= 0.6    --小范围移动时间
 Define.kAwardSanTime			= 5.0    --箱子落地持续时间
 
 --导弹
-Define.kMissileDaoTime				= 2.5    --导弹，铁球飞行时间 
+Define.kMissileDaoTime				= 2.5    --导弹，铁球飞行时间
+Define.kMissileTieqiuTime       = 1.8
 Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
 
 --飞镖

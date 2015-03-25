@@ -51,6 +51,7 @@ function StoryLayer:initTalks()
 		end
 		self.talks[fileName..i] = talk
 		local purson = cc.uiloader:seekNodeByName(talk, "purson"..i)
+		purson:setScale(1.43)
 		purson:setPosition(posSet[i], 240)
 		self.pursons["purson"..i] = purson
 	end

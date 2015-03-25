@@ -116,7 +116,7 @@ function InfoLayer:onRefreshGun(event)
 	local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 	icon:setScaleX(0.05)
 	icon:setScaleY(0.05)
-	icon:scaleTo(0.20, 0.20)
+	icon:scaleTo(0.20, 0.35)
 	addChildCenter(icon, self.gunDisplay)
 end
 
@@ -128,10 +128,6 @@ end
 
 function InfoLayer:onHeroHpChange(event)
 	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
-	-- print("self.hero:getMaxHp()", self.hero:getMaxHp())
-	-- print("self.hero:getHp()", self.hero:getHp())
-	-- print("event.name", event.name)
-
 	local displayHp = math.floor(self.hero:getHp() )
 	self.bloodLabel:setString(displayHp)
 	if event.name == "HP_DECREASE_EVENT" then 

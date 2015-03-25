@@ -121,11 +121,17 @@ function HeroAnimView:playHurtedBomb_yan(event)
 end
 
 function HeroAnimView:playKillHead(event)
-	self.armatureHead:getAnimation():play("baotou" , -1, 0)
+	local currentName = self.armatureHead:getAnimation():getCurrentMovementID()
+	if currentName == "" or currentName == nil then 
+		self.armatureHead:getAnimation():play("baotou" , -1, 0)
+	end
 end
 
 function HeroAnimView:playWindEffect(event)
-	self.armatureHeadWind:getAnimation():play("btqpg" , -1, 0)
+	local currentName = self.armatureHeadWind:getAnimation():getCurrentMovementID()
+	if currentName == "" or currentName == nil then 
+		self.armatureHeadWind:getAnimation():play("btqpg" , -1, 0)
+	end	
 end
 
 function HeroAnimView:playEffectBling(event)

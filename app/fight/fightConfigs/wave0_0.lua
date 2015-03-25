@@ -447,7 +447,7 @@ local enemys = {
 	weak1=1},
 
 	--铁球
-	{id=5,image="tieqiu",demage=20,hp=10000,weak1=1},	
+	{id=5,image="qiche",demage=20,hp=10000,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=70,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
@@ -455,6 +455,7 @@ local enemys = {
 	--手雷
 	{id=7,image="shoulei",demage=0.5,hp=1,
 	weak1=2},
+
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
 	weak1=1},

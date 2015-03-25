@@ -315,10 +315,13 @@ function Fight:addKillRenzhiNum()
 end
 
 function Fight:killRenzhiOver()
-    -- self.hero:doKill()
-    -- self:onFail()
-
     self:dispatchEvent({name = Fight.FIGHT_TIPS_EVENT , failType = "renzhi"})
+    scheduler.performWithDelayGlobal(handler(self, self.doFail), 2.5)    
+end
+
+function Fight:doFail()
+    self.hero:doKill()
+    self:onFail()
 end
 
 function Fight:clearFightData()

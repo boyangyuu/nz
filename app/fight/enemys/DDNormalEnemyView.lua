@@ -71,7 +71,7 @@ end
 
 function DDNormalEnemyView:playTieqiuFire()
     self.armature:setScale(self.srcScale / 0.7)
-    local time = define.kMissileDaoTime    
+    local time = define.kMissileTieqiuTime    
     local destScale = self.property["destScale"] or 1.0
     local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
 
@@ -83,7 +83,7 @@ function DDNormalEnemyView:playTieqiuFire()
     end
 
     --run
-    local offset = self.property.offset or cc.p(0.0,0.0)
+    local offset = self.property.offset or cc.p(0.0,-80)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callFunc))
     self.armature:runAction(seq)

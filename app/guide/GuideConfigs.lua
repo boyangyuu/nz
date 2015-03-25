@@ -45,15 +45,6 @@ configs["fight01_fire"] = {
 	}
 }
 
----- 第0关 扔雷----
--- configs["fight01_lei"] = {
--- 	preGuideId = nil,
--- 	steps = {
-		
--- 	}
--- }
-
-
 
 ---- 第0关 黄金枪----
 configs["fight01_gold"] = {
@@ -72,12 +63,12 @@ configs["fight01_jijia"] = {
 	}
 }
 
----- 第0关结算之后 ----
+-- ---- 第0关结算之后 ----
 configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "afterfight01_award", msg = "中大奖了！掉落了一把神狙雷明顿!  "}, 
-		{id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
+-- 		{id = "afterfight01_award", msg = "中大奖了！掉落了一把神狙雷明顿!  "}, 
+		-- {id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
 		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"}, 
 	}
 }
