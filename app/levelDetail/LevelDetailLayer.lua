@@ -234,15 +234,18 @@ end
 
 function LevelDetailLayer:onClickBtnStart()
 	local data = getUserData()
-	dump(data.inlay.inlayed)
+	local userModel = md:getInstance("UserModel")
+    local isDone = userModel:getUserLevel() >= 4
 	if table.nums(data.inlay.inlayed) ~= 0 then
 		self:startGame()
-	else
+	elseif isDone then
 		ui:showPopup("commonPopup",
 			 {type = "style5",
 			 callfuncQuickInlay = handler(self,self.onClickQuickInlay),
 			 callfuncGoldWeapon = handler(self,self.onClickGoldWeapon),
 			 callfuncClose = handler(self,self.startGame)})
+	else
+		self:startGame()
 	end
 end
 
