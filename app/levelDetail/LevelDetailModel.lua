@@ -69,7 +69,7 @@ function LevelDetailModel:setsuipian(weaponId)
 	else
 		if self:isBagsExistSuipian(weaponId)  then
 			for k,v in pairs(data.weaponsuipian) do
-				if v.weaponId == weaponId then
+				if v.weaponid == weaponId then
 					data.weaponsuipian[k].number = data.weaponsuipian[k].number + 1
 					if data.weaponsuipian[k].number == needNum then
 						self:weapontogether(weaponId)
