@@ -39,7 +39,7 @@ function WeaponNotifyLayer:initUI(properties)
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     local plist = "res/WeaponNotify/hdxkwq/hdxkwq0.plist"
-    local png = "WeaponNotify/Start/hdxkwq/hdxkwq0.png"
+    local png = "res/WeaponNotify/hdxkwq/hdxkwq0.png"
     display.addSpriteFrames(plist,png)
 
     local armature = ccs.Armature:create("hdxkwq")
