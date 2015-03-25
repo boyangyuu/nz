@@ -103,32 +103,7 @@ local waves = {
 					missileType = "lei",	                                       
 				},
 			},
-			{
-				time = 15,		
-				num = 2,
-				pos = {350,550},
-				delay = {0.2,1.3},
-				property = { 
-					placeName = "place2",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},
-			},
-			{
-				time = 16,		
-				num = 3,
-				pos = {910,970,1050},
-				delay = {0,0.7,1.4},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 1,	
-				},
-			},
-		},                                                               --第25个怪
+		},                                                               --第20个怪
 	},
 	{
 		enemys = {
@@ -171,9 +146,9 @@ local waves = {
 			},	
 			{
 				time = 9,		
-				num = 5,
-				pos = {350,430,510,400,460},
-				delay = {0.2,0.6,1.3,0.8,1.4},
+				num = 3,
+				pos = {510,400,460},
+				delay = {0.3,1.3,0.8},
 				property = { 
 					placeName = "place4",
 					startState = "rollright",
@@ -194,9 +169,9 @@ local waves = {
 			},
 			{
 				time = 11,		
-				num = 2,
-				pos = {560,730},
-				delay = {0.3,1},
+				num = 1,
+				pos = {730},
+				delay = {0.3},
 				property = { 
 					placeName = "place4",
 					startState = "rollleft",
@@ -208,15 +183,15 @@ local waves = {
 			},
 			{
 				time = 12,		
-				num = 4,
-				pos = {600,830,920,1000},
-				delay = {0,0.6,1.3,1.0},
+				num = 3,
+				pos = {830,920,1000},
+				delay = {0,0.6,1.3},
 				property = { 
 					placeName = "place3",
 					startState = "rollleft",
 					id = 1,                                        
 				},
-			},                                                                        --24个怪
+			},                                                                        --20个怪
 		},
 	},
 	{
@@ -459,10 +434,10 @@ local enemys = {
 	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
 
 	--boss召唤第一波自爆兵        --type = "bao",
-	{id=16,image="zibaob",demage=10,hp=504,fireRate=30,speed=120,
+	{id=16,image="zibaob",demage=12,hp=504,fireRate=30,speed=120,
 	weak1=2},
 	--boss召唤第二波自爆兵        --type = "bao",	
-	{id=17,image="zibaob",demage=15,hp=756,fireRate=30,speed=120,
+	{id=17,image="zibaob",demage=17,hp=756,fireRate=30,speed=120,
 	weak1=2},
 	--自爆兵BOSS        --type = "bao",自爆boss
 	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=110,scale = 3.0,
@@ -502,24 +477,24 @@ local bosses = {
 			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
 			-- },                                        
 
-			saoShe = { 0.90, 0.70, 0.40 },                --调用普通攻击的伤害  扫射 
+			saoShe = { 0.90, 0.65, 0.35 },                --调用普通攻击的伤害  扫射 
 
-			zhaohuan = {0.95, 0.65, 0.25 },                         --召唤小怪 
+			zhaohuan = {0.95, 0.70, 0.40 },                         --召唤小怪 
 
-			moveLeftFire = { 0.80 , 0.55, 0.20 },
-			-- moveRightFire = { 0.55, 0.20 },
+			moveLeftFire = { 0.85 , 0.30 },
+			moveRightFire = { 0.60, },
 			
 
 			daoDan1 = {                                            --两发导弹
-				0.99, 0.45, 
+				0.99, 0.45, 0.10
 			},
 
 			daoDan2 = {                                            --两发导弹
-				0.85, 0.30,
+				0.80, 0.50, 0.20
 			},
 
 			daoDan3 = {                                            --两发导弹
-				0.75, 0.10,
+				0.75, 0.25, 0.15
 			},
 
 			weak1 = {

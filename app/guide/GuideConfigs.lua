@@ -85,7 +85,7 @@ configs["fight_change"] = {
 configs["fight_dun"] = {
 	preGuideId = "fight_change",
 	steps = {
-		{id = "fight_dun", msg = "敌人越来越多，快使用警用盾牌！"}, 
+		{id = "fight_dun", msg = "使用盾牌可以抵挡大量伤害！"}, 
 	}
 }
 

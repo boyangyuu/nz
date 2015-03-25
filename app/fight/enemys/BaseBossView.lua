@@ -293,7 +293,7 @@ end
 function BaseBossView:playMoveDaoDan()
 	--导弹
 	for i=1,4 do
-		local delay = 0.8 + 0.15 * i
+		local delay = 0.6 + 0.10 * i
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用
