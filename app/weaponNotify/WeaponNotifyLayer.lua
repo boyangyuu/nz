@@ -87,6 +87,11 @@ end
 
 function WeaponNotifyLayer:onBtnGetClicked()
 	ui:closePopup("WeaponNotifyLayer")
+
+	--guide
+	local guide = md:getInstance("Guide")
+	guide:check("afterfight01")	
+	guide:check("afterfight03")	
 end
 
 return WeaponNotifyLayer

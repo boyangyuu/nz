@@ -455,7 +455,7 @@ local enemys = {
 	--手雷
 	{id=7,image="shoulei",demage=0.5,hp=1,
 	weak1=2},
-	
+
 	--BOSS导弹          --missileType = "daodan",
 	{id=8,image="daodan",demage=5,hp=120,
 	weak1=1},

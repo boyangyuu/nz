@@ -116,7 +116,7 @@ function MyApp:createGameStateFile()
                         },
             },
             prop = {
-                        lei = {num = 5},
+                        lei = {num = 10},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
             },
