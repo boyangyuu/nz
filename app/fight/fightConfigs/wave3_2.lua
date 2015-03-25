@@ -166,7 +166,28 @@ local waves = {
 				},
 			},                                                                       	-- 以上是第三波第三批 31
 		},
+	},
+	{
+		waveType = "boss",                                      --强敌出现
+		enemys = {  
+			--   蓝boss 白银 （2条）   
+			--  		黄金 （3条）      血量（100）
+			{
+				time = 3,	
+				num = 1,
+				pos = {450},
+				delay = {0.4},
+				property = { 
+					type = "chongBoss",
+					placeName = "place8",
+					missileId = 6,                 --导弹id        
+					qiuId = 19,                   --铁球id
+					id = 2,
+				},
+			},
+		},
 	},	
+
 	{                                                                                    --第四波
 		enemys = { 
 			{
@@ -362,27 +383,6 @@ local waves = {
 		},
 	},	
 
-
-	{
-		waveType = "boss",                                      --强敌出现
-		enemys = {  
-			--   蓝boss 白银 （2条）   
-			--  		黄金 （3条）      血量（100）
-			{
-				time = 3,	
-				num = 1,
-				pos = {450},
-				delay = {0.4},
-				property = { 
-					type = "chongBoss",
-					placeName = "place8",
-					missileId = 6,                 --导弹id        
-					qiuId = 19,                   --铁球id
-					id = 2,
-				},
-			},
-		},
-	},
 	{
 		enemys = {  
 			-- 忍者 白银 （3条）      血量（ -100 - 100）
@@ -669,7 +669,7 @@ local bosses = {
 	},
 	{
 
-		image = "boss02_1", --图片名字
+		image = "boss02_2", --图片名字
 		hp = 150000,
 		award = 20000,                   --boss产出金币数量
 		demage = 3, 			--这个是没用的 需要告诉俊松
