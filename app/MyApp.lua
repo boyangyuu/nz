@@ -159,14 +159,14 @@ function MyApp:createGameStateFile()
                         xiangqian       = false,   --镶嵌一套青铜
 
                         --第1-3关之前
-                        weapon          = false,   -- 升级武器
-                        afterfight03    = false,   -- 回到主界面
+                        weapon          = true,   -- 升级武器
+                        afterfight03    = true,   -- 回到主界面
                         
                         --第1-3.1关之内
-                        fight04         = false,                        
+                        fight04         = true,                        
             },
             fight = {
-               isPreferBag1 = false,
+               isPreferBag1 = true,
             },
 
             -- 礼包购买状态

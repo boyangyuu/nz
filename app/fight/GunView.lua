@@ -160,7 +160,7 @@ function GunView:refreshGun()
 	
 	--armature
 	local animName = config.animName --动作特效
-    local src = "res/Fight/gunsAnim/"..animName.."/"..animName..".csb"
+    local src = "res/Fight/gunsAnim/"..animName.."/"..animName..".ExportJson"
 
     local plist = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.plist"
     local png   = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.png"

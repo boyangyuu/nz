@@ -35,7 +35,7 @@ function RenBossView:tick()
         end
     end 
 
-    --walk
+    -- walk
     local walkRate, isAble = self.enemy:getWalkRate()
     if isAble then
         assert(walkRate > 1, "invalid walkRate")
@@ -128,10 +128,11 @@ function RenBossView:playRunAction(direct, isRun)
     else
         animName = "walk"
     end
-    print("RenBossView:playRunAc")
+    print("RenBossView:playRunAction")
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
-    self.armature:runAction(cc.Sequence:create(action, 
+    self:setPauseOtherAnim(true)
+    self:runAction(cc.Sequence:create(action, 
         cc.CallFunc:create(handler(self, self.restoreStand))
         ))   
 end
@@ -222,10 +223,7 @@ end
 function RenBossView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        if movementID == "runleft" 
-                or movementID == "runright" 
-                or movementID == "walk" 
-                or movementID == "chongfeng"  then
+        if  self:setPauseOtherAnim(true)  then
             return 
         end
 
@@ -241,12 +239,7 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
         end
 
         if movementID == "stand" then 
-            local playCache = self:getPlayCache()
-            if playCache then 
-                playCache()
-            else                    
-                self:playStand()
-            end
+            self:doNextPlay()
         else 
             self:playStand()
         end 

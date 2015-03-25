@@ -264,37 +264,15 @@ end
 
 --Attackable interface
 function RenEnemyView:playHitted(event)
-    -- self.armature:getAnimation():play("hit" , -1, 1) 
-
     --飘红
     self:playHittedEffect()
-end
-
-function RenEnemyView:playKill()
-    --clear
-    self:clearPlayCache()
-    self.armature:stopAllActions()
-    self:setPause({isPause = true})
-
-    --以防万一
-    if self and self.setDeadDone then 
-        scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
-    end
-    self.armature:getAnimation():play("die02" ,-1 , 1)
-    
-    --sound
-    local soundSrc  = "res/Music/fight/die.wav"
-    self.audioId =  audio.playSound(soundSrc,false)     
 end
 
 function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
-        if movementID == "runleft" 
-            or movementID == "runright" 
-            or movementID == "walk" 
-            or movementID == "chongfeng" then
+        if self:getPauseOtherAnim() then
             return 
         end        
         armatureBack:stopAllActions()
@@ -309,12 +287,7 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
         end
 
         if movementID == "stand" then 
-            local playCache = self:getPlayCache()           
-            if playCache then 
-                playCache()
-            else                    
-                self:playStand()
-            end
+            self:doNextPlay()
         else 
             self:playStand()
         end 

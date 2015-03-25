@@ -66,6 +66,7 @@ function DuozuBossView:playWalkAction(direct)
     local animName = direct == 1 and "walkleft" or "walkright"
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
+    self:setPauseOtherAnim(true) 
     self.armature:runAction(cc.Sequence:create(action, 
         cc.CallFunc:create(handler(self, self.restoreStand))
         ))  
@@ -192,8 +193,7 @@ function DuozuBossView:animationEvent(armatureBack,movementType,movementID)
     if self.isWudi then return end
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        print("animationEvent id ", movementID)
-        if movementID == "runleft"  or movementID == "runright" then
+        if self:getPauseOtherAnim() then
             return 
         end
 
@@ -204,12 +204,7 @@ function DuozuBossView:animationEvent(armatureBack,movementType,movementID)
         end
 
         if movementID == "stand" then 
-            local playCache = self:getPlayCache()
-            if playCache then 
-                playCache()
-            else                    
-                self:playStand()
-            end
+            self:doNextPlay()
         else 
             self:playStand()
         end 

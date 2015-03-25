@@ -14,6 +14,7 @@ Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
 
 Fight.FIGHT_START_EVENT  = "FIGHT_START_EVENT"
 Fight.FIGHT_END_EVENT    = "FIGHT_END_EVENT"
+Fight.FIGHT_TIPS_EVENT   = "FIGHT_TIPS_EVENT"   
 Fight.GUN_RELOAD_EVENT    = "GUN_RELOAD_EVENT"
 
 Fight.CONTROL_HIDE_EVENT     = "CONTROL_HIDE_EVENT"
@@ -309,9 +310,15 @@ function Fight:addKillRenzhiNum()
     local waveConfig    = fightConfigs:getWaveConfig()
     local limit         = waveConfig:getRenzhiLimit()
     if self.killRenzhiNum >= limit then
-        self.hero:doKill()
-        self:onFail()
+        self:killRenzhiOver()
     end
+end
+
+function Fight:killRenzhiOver()
+    -- self.hero:doKill()
+    -- self:onFail()
+
+    self:dispatchEvent({name = Fight.FIGHT_TIPS_EVENT , failType = "renzhi"})
 end
 
 function Fight:clearFightData()

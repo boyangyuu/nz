@@ -164,9 +164,9 @@ function RootLayer:addResFight()
     -- end
 
     local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
-        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw"}
+        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw", "shiBaiTiShi"}
     for i,v in ipairs(heroImgs) do
-        local src = "res/Fight/heroAnim/"..v.."/"..v..".csb"
+        local src = "res/Fight/heroAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
         local plist = "res/Fight/heroAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/heroAnim/"..v.."/"..v.."0.png"
@@ -175,7 +175,7 @@ function RootLayer:addResFight()
 
     local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak", "dandao"}
     for i,v in ipairs(mapImgs) do
-        local src = "res/Fight/mapAnim/"..v.."/"..v..".csb"
+        local src = "res/Fight/mapAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
         local plist = "res/Fight/mapAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/mapAnim/"..v.."/"..v.."0.png"
@@ -183,10 +183,11 @@ function RootLayer:addResFight()
     end
 
     local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
-        "gold", "danke", "baozhasl_y", "xuetiao", "baozha4",
-        "effect_gun_kaiqiang", "wdhd"}
+        "gold", "danke", "baozhasl_y", "baozha4",
+        "effect_gun_kaiqiang", "wdhd", 
+        "direnlx", "renwuks", "qiangdicx", "jinbijl"}
     for i,v in ipairs(uiImgs) do
-        local src = "res/Fight/uiAnim/"..v.."/"..v..".csb"
+        local src = "res/Fight/uiAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
         local plist = "res/Fight/uiAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/uiAnim/"..v.."/"..v.."0.png"
@@ -195,7 +196,7 @@ function RootLayer:addResFight()
 
     local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
     for i,v in ipairs(jqkImgs) do
-        local src = "res/Fight/jqkAnim/"..v.."/"..v..".csb"
+        local src = "res/Fight/jqkAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
         local plist = "res/Fight/jqkAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/jqkAnim/"..v.."/"..v.."0.png"
@@ -217,31 +218,10 @@ function RootLayer:addResFight()
     local png   = "res/FightResult/anim/ydfh/ydfh0.png"
     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))          
 
-
-    local rwkssrc = "res/Fight/uiAnim/renwuks/renwuks.csb"
-    manager:addArmatureFileInfoAsync(rwkssrc,  handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/Fight/uiAnim/renwuks/renwuks0.plist", 
-        "res/Fight/uiAnim/renwuks/renwuks0.png", handler(self, self.imageLoaded)) 
-
-    local drlxsrc = "res/Fight/uiAnim/direnlx/direnlx.ExportJson"
-    manager:addArmatureFileInfoAsync(drlxsrc,  handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/Fight/uiAnim/direnlx/direnlx0.plist", 
-        "res/Fight/uiAnim/direnlx/direnlx0.png", handler(self, self.imageLoaded)) 
-
     local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.ExportJson"
     manager:addArmatureFileInfoAsync(bossjjsrc,  handler(self, self.dataLoaded))
     display.addSpriteFrames("res/CommonPopup/animLayer/bossjj/bossjj0.plist", 
         "res/CommonPopup/animLayer/bossjj/bossjj0.png", handler(self, self.imageLoaded)) 
-
-    local qdcxsrc = "res/Fight/uiAnim/qiangdicx/qiangdicx.csb"
-    manager:addArmatureFileInfoAsync(qdcxsrc,  handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/Fight/uiAnim/qiangdicx/qiangdicx0.plist", 
-        "res/Fight/uiAnim/qiangdicx/qiangdicx0.png", handler(self, self.imageLoaded))    
-
-    local jinbijlsrc = "res/Fight/uiAnim/jinbijl/jinbijl.ExportJson"
-    manager:addArmatureFileInfoAsync(jinbijlsrc, handler(self, self.dataLoaded))
-    display.addSpriteFrames("res/Fight/uiAnim/jinbijl/jinbijl0.plist", 
-        "res/Fight/uiAnim/jinbijl/jinbijl0.png", handler(self, self.imageLoaded))    
 
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"

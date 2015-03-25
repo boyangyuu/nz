@@ -319,13 +319,7 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 		end
 
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
-	  		local playCache = self:getPlayCache()
-			if playCache then
-				-- print("playCache") 
-				playCache()
-			else 					
-				self:playStand()
-			end
+			self:doNextPlay()
     	elseif movementID == "dieright" or movementID == "dieleft" then 
     		self:setDeadDone()
     	end 

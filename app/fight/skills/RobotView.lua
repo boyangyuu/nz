@@ -48,7 +48,6 @@ function RobotView:hideRobot(event)
 end
 
 function RobotView:showRobot(event)
-	print("function RobotView:showRobot()")
 	self:clearUI()
 	self:setVisible(true)
 	self.armature:getAnimation():play("jijia", -1, 1)
@@ -80,17 +79,14 @@ end
 
 function RobotView:stopFire(event)
 	self.isFiring = false
-	print("function RobotView:stopFire(event)")
 	self:playStand()
 end
 
 function RobotView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("movementID"..movementID)
     	if movementID == "jijia_shou" then
 			self:clearUI()
 		elseif movementID ~= "jijia_fire" then
-			print("self.armature:getAnimation():play")
 			self:playStand() 
 		end 
 	end

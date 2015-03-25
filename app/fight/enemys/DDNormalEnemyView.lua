@@ -51,10 +51,10 @@ end
 
 function DDNormalEnemyView:playDaoDanFire()
     --scale
-    self.armature:setScale(self.srcScale)
+    self.armature:setScale(self.srcScale / 0.7)
     local time = define.kMissileDaoTime    
-    local destScale = self.property["destScale"] or 1.0
-    local scaleAction = cc.ScaleTo:create(time, destScale)
+    local destScale = self.property["destScale"]or 1.0 
+    local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
 
     --call end
     local function callMoveEnd()
@@ -70,10 +70,10 @@ function DDNormalEnemyView:playDaoDanFire()
 end
 
 function DDNormalEnemyView:playTieqiuFire()
-    self.armature:setScale(self.srcScale)
+    self.armature:setScale(self.srcScale / 0.7)
     local time = define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0
-    local scaleAction = cc.ScaleTo:create(time, destScale)
+    local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
 
     --call end
     local function callFunc()
@@ -111,10 +111,10 @@ end
 
 function DDNormalEnemyView:playFeibiaoFire()
     --scale
-    self.armature:setScale(self.srcScale)
+    self.armature:setScale(self.srcScale / 0.7)
     local time = define.kMissileFeibiaTime    
     local destScale = define.kMissileFeibiaScale 
-    local scaleAction = cc.ScaleTo:create(time, destScale)
+    local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
 
     --call end
     local function callMoveEnd()
@@ -146,7 +146,7 @@ end
 
 --Attackable接口
 function DDNormalEnemyView:playHitted(event)
-    print("function DDNormalEnemyView:playHitted(event)")
+
 end
 
 function DDNormalEnemyView:playKill(event)
@@ -174,10 +174,7 @@ function DDNormalEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         if movementID ~= "die" and movementID ~= "die02" then
-            local playCache = self:getPlayCache()
-            if playCache then 
-                playCache()
-            end
+            
         else
              self:setWillRemoved()
         end
