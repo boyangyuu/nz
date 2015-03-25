@@ -199,7 +199,7 @@ function BaseBossView:playSkill(skillName)
         local function callfuncDao()
             self:playDaoDan(skillName)
         end
-        self:play("skillPre",callfuncDao)	
+        self:play("skill",callfuncDao)	
 	end
 end
 
