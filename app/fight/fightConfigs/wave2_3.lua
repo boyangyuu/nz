@@ -293,11 +293,11 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--BOSS导弹          --missileType = "daodan",
-	{id=12,image="daodan",demage=15,hp=302,
+	{id=12,image="daodan",demage=15,hp=1000,
 	weak1=1},	
 
 	--BOSS铁球
-	{id=13,image="tieqiu",demage=25,hp=3760,
+	{id=13,image="tieqiu",demage=25,hp=5000,
 	weak1=1},
                           
 
@@ -316,7 +316,7 @@ local bosses = {
 		hp = 150000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 60,               --普攻频率
-		fireCd = 3,                     --普攻cd
+		fireCd = 2,                     --普攻cd
 
 		walkRate = 120,                    --移动频率
 		walkCd = 2,                         --移动cd
@@ -335,26 +335,26 @@ local bosses = {
 				0.70, 0.30,
 			},
 			chongfeng = {
-			    0.999, 0.85, 0.65, 0.45, 0.25,
+			    0.999, 0.85, 0.65, 0.45, 0.25, 0.15,
 			},
 			tieqiu = {
 				0.80, 0.60, 0.40, 0.20,
 			},	
-			
+
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40,                        
 			},
 			weak1 = {                               --头 技能触发(可以同时)
 				0.60, 0.20,                      
 			},
-			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage200 = {  
-				0.70,
-			},	
 			demage300 = {  
-				0.50,
+				0.60,
+			},	
+			demage400 = {  
+				0.40,
 			},						
 		},
 
