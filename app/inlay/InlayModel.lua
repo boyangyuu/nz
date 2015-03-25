@@ -186,10 +186,6 @@ function InlayModel:equipAllInlays(isRefresh)
 			self:equipInlay(v, false)
 		end
 	end
-	-- if isRefresh == nil then isRefresh = true end
-	-- if isRefresh == true then
-	-- self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = "speed",isall = true})
-	-- end
 end
 
 function InlayModel:equipAllBestInlays(table)
