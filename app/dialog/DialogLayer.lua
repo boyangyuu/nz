@@ -78,7 +78,7 @@ function DialogLayer:refreshUI()
 	local imgname = sentence["imgname"]
 	local pos = sentence["pos"]
 	local roleimg = display.newSprite("#"..imgname..".png")
-	roleimg:setScale(1.33)
+	roleimg:setScale(1.9)
 	self.left:removeAllChildren()
 	self.right:removeAllChildren()
 	if pos == "left" then
