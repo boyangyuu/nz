@@ -11,7 +11,6 @@ local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
 local CommonEnemyView = class("CommonEnemyView", BaseEnemyView)
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 function CommonEnemyView:ctor(property)
 	CommonEnemyView.super.ctor(self, property) 

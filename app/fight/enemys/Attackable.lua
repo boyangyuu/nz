@@ -340,10 +340,8 @@ function Attackable:playHittedEffect()
 	-- print("变红")
 	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
-	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
-	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
-	self:addScheduler(sch1)
-	self:addScheduler(sch2)
+	self:performWithDelay(callfunc, 20/60)
+	self:performWithDelay(callfuncRestore, 60/60)
 end
 
 function Attackable:restoreRedEffect()
@@ -353,9 +351,7 @@ end
 function Attackable:playBombEffect()
 	local bone = self.armature:getBone("bomb")
 	if bone == nil then return end
-	assert(bone, "bomb bone is nil")
 	local node = bone:getDisplayRenderNode()
-	assert(node, "node")
 	if node == nil then return end
 	local box = node:getBoundingBox()
 	box.width  = box.width / define.kEnemyAnimScale
@@ -485,6 +481,7 @@ end
 function Attackable:playKill(event)
 	self.isWillDie = true
 	self:clearPlayCache()
+	self:removeAllSchedulers()
 	self.armature:stopAllActions()
 	self:stopAllActions()
 	self:setPauseOtherAnim(true)
