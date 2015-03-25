@@ -240,7 +240,7 @@ function FightResultLayer:initUIContent()
     		local record = self.weaponListModel:getWeaponRecord(v["id"])
 			self.cardlabel[k]:setString(record["name"])
 			local icon = display.newSprite("#icon_"..record["imgName"]..".png")
-			icon:setScale(0.27)
+			icon:setScale(0.39)
 			icon:setRotation(39)
 			addChildCenter(icon, self.cardicon[k])
     	elseif v["falltype"] == "inlay" then
