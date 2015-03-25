@@ -153,7 +153,6 @@ function BaseBossView:playKill(event)
 	BaseBossView.super.playKill(self, event)
 
 	self:clearWeak()
-	--play dead
 	self.armature:getAnimation():play("die" ,-1 , 1)
 
 	--bomb
@@ -163,15 +162,12 @@ function BaseBossView:playKill(event)
 	
 	--blood
 	self.blood:setVisible(false)
-
-	self:setWillRemoved(5.0)
 end
 
 function BaseBossView:playBombEffects()
-	for i=1,32 do
-		local sch = scheduler.performWithDelayGlobal(
-			handler(self, self.playBombEffect), i * 0.05)
-		self:addScheduler(sch)
+	for i=1, 20 do
+		self:performWithDelay(handler(self, self.playBombEffect), 
+			i * 0.08)
 	end
 end
 
@@ -293,7 +289,7 @@ end
 function BaseBossView:playMoveDaoDan()
 	--导弹
 	for i=1,4 do
-		local delay = 0.8 + 0.15 * i
+		local delay = 0.6 + 0.10 * i
 		local property = {
 			type = "missile",
 			srcScale = self:getScale() * 0.3, --导弹view用

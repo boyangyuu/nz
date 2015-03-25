@@ -53,8 +53,8 @@ function DDNormalEnemyView:playDaoDanFire()
     --scale
     self.armature:setScale(self.srcScale / 0.7)
     local time = define.kMissileDaoTime    
-    local destScale = self.property["destScale"]or 1.0 
-    local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
+    local destScale = self.property["destScale"] or 1.0 
+    local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
     local function callMoveEnd()
@@ -150,16 +150,19 @@ function DDNormalEnemyView:playHitted(event)
 end
 
 function DDNormalEnemyView:playKill(event)
-    --bomb动画
+    DDNormalEnemyView.super.playKill(self, event)
     self.armature:getAnimation():play("die" , -1, 1)
-    
     local missileType = self.property["missileType"]
     if missileType == "tie" or missileType == "lei" then
-        self:playBombEffect()
-    else
-
+        self:playBombEffects()
     end     
-    self.armature:stopAllActions()  
+end
+
+function DDNormalEnemyView:playBombEffects()
+    for i=1, 8 do
+        self:performWithDelay(handler(self, self.playBombEffect), 
+            i * 0.1)
+    end    
 end
 
 function DDNormalEnemyView:onHitted(targetData)
@@ -171,12 +174,11 @@ function DDNormalEnemyView:onHitted(targetData)
 end
 
 function DDNormalEnemyView:animationEvent(armatureBack,movementType,movementID)
-    -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         if movementID ~= "die" and movementID ~= "die02" then
             
         else
-             self:setWillRemoved()
+            self:setDeadDone()
         end
     end
 end

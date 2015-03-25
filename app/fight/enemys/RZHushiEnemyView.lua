@@ -163,7 +163,6 @@ function RZHushiEnemyView:playRunAction(direct, isRoll)
 	local width = speed * time * self:getScale() * direct
 	print("width", width)
 	if not self:checkPlace(width) then 
-		self:checkIdle()
 		return 
 	end
 
@@ -197,13 +196,8 @@ end
 
 function RZHushiEnemyView:playKill(event)
 	--clear
-	self:clearPlayCache()
-	self.armature:stopAllActions()
-	if self.schRestore  then 
-		scheduler.unscheduleGlobal(self.schRestore)
-	end
+	RZHushiEnemyView.super.playKill(self, event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
-
 	--sound
     local soundSrc  = "res/Music/fight/rz_die.wav"
     local audioId =  audio.playSound(soundSrc,false)   	

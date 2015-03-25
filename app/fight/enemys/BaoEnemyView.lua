@@ -6,7 +6,6 @@
 2. ..
 ]]
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
 local BaoEnemyView = class("BaoEnemyView", BaseEnemyView)  
 
@@ -21,8 +20,7 @@ function BaoEnemyView:ctor(property)
     local callFuncAhead = function ()
         self:play("walk", handler(self, self.playAhead))
     end
-    local aheadScheduler = scheduler.performWithDelayGlobal(callFuncAhead, define.kBaoEnemyTimeStart)
-    self:addScheduler(aheadScheduler)
+    self:performWithDelay(callFuncAhead, define.kBaoEnemyTimeStart)
 end
 
 function BaoEnemyView:playAhead()
@@ -56,19 +54,15 @@ end
 
 function BaoEnemyView:playKill(event)
     BaoEnemyView.super.playKill(self,event)
+    self.armature:getAnimation():play("die" ,-1 , 1)
     self:playBombEffects()
 end
 
 function BaoEnemyView:playBombEffects()
-    for i=1,6 do
-        local sch  = scheduler.performWithDelayGlobal(
-            handler(self, self.playBombEffect), i * 0.1)
-        self:addScheduler(sch)
+    for i=1,3 do
+        self:performWithDelay( handler(self, self.playBombEffect), i * 0.1)
     end
-    local sch1 = scheduler.performWithDelayGlobal(
-        handler(self, self.demageOthers), 0.3)
-    
-    self:addScheduler(sch1)    
+    self:performWithDelay( handler(self, self.demageOthers), 0.3)  
 end
 
 function BaoEnemyView:playHitted(event)
@@ -87,7 +81,7 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
-        if movementID ~= "die" then
+        if movementID ~= "die" and not self:getPauseOtherAnim() then
             if self.isAheading then 
                 self.armature:getAnimation():play("walk" , -1, 1) 
                 return 

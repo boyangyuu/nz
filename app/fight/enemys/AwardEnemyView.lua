@@ -91,8 +91,10 @@ function AwardEnemyView:playMoveToNext(direct)
 	local time = distance / define.kAwardSpeed
 	local action = cc.MoveTo:create(time, cc.p(destPos, self:getPositionY()))
 	local callfunc = function ()
+		self:restoreStand()
 		self:playHide()
 	end
+	self:setPauseOtherAnim(true)
     self:runAction(cc.Sequence:create(action, 
     		cc.CallFunc:create(callfunc)))
 end
@@ -136,15 +138,8 @@ function AwardEnemyView:playHitted(event)
 end
 
 function AwardEnemyView:playKill(event)
-	--clear
-	self:stopAllActions()
-	self:clearPlayCache()
-	self:stopAllActions()
-	if self.schRestore  then 
-		scheduler.unscheduleGlobal(self.schRestore)
-	end
+	AwardEnemyView.super.playKill(self, event)
 	self.armature:getAnimation():play("die" ,-1 , 1) 
-
   	self:performWithDelay(handler(self, self.sendAward), 0.1)
 end
 
@@ -167,11 +162,9 @@ function AwardEnemyView:animationEvent(armatureBack,movementType,movementID)
 		or movementType ==  ccs.MovementEventType.complete then
 		-- print("animationEvent id ", movementID)
 		if movementID == "dunxia" then return end
-		if movementID == "runleft" 
-			or movementID == "runright"  then
-				self.armature:getAnimation():play(movementID , -1, 1)
-			return 
-		end
+        if  self:getPauseOtherAnim() and  movementID ~= "die"  then
+            return 
+        end
 
 		if movementID == "hit" then
 			if self.playAnimId ~= nil then 

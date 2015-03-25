@@ -65,8 +65,8 @@ function DDWangEnemyView:playHitted(event)
 end
 
 function DDWangEnemyView:playKill(event)
+    DDWangEnemyView.super.playKill(self, event)    
     self.armature:getAnimation():play("die" , -1, 1)
-    self.armature:stopAllActions()  
 end
 
 function DDWangEnemyView:onHitted(targetData)

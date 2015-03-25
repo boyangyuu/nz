@@ -10,7 +10,6 @@
 ]]
 
 --import
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
@@ -23,6 +22,7 @@ function BaseEnemyView:ctor(property)
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
+    
     self:setNodeEventEnabled(true)
 
     local function callStart()
@@ -30,7 +30,7 @@ function BaseEnemyView:ctor(property)
     	self:playStartState(property.startState)
     end
     self:setVisible(false)
-    scheduler.performWithDelayGlobal(callStart, 0.01)    
+    self:performWithDelay(callStart, 0.01)
 end
 
 --ui
@@ -90,8 +90,7 @@ function BaseEnemyView:playAfterAlert(type,handler)
 	local alertAfterFunc = function ()
 		self:play(type, handler)
 	end
-	self.alertAfter = scheduler.performWithDelayGlobal(alertAfterFunc, 2.0)
-	self:addScheduler(self.alertAfter)
+	self:performWithDelay(alertAfterFunc, 2.0)
 end
 
 function BaseEnemyView:showAlert()
@@ -155,17 +154,7 @@ function BaseEnemyView:playHitted(event)
 end
 
 function BaseEnemyView:playKill(event)
-	--clear
-	self:clearPlayCache()
-	self.armature:stopAllActions()
-	self:setPause({isPause = true})
-
-	--以防万一
-	if self and self.setDeadDone then 
-		scheduler.performWithDelayGlobal(handler(self, self.setDeadDone), 3.0)
-	end
-
-	self.armature:getAnimation():play("die" ,-1 , 1)
+	BaseEnemyView.super.playKill(self, event)
 end
 
 function BaseEnemyView:onHitted(targetData)

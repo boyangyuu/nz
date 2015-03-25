@@ -5,7 +5,6 @@
 1. desc: a.发射攻击物品 (导弹 斧头 煤气罐  )
 ]]
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
@@ -84,13 +83,12 @@ function DaoEnemyView:playFire()
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
-    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.3)
-    self:addScheduler(sch)    
+    self:performWithDelay(callfuncDaoDan, 0.3)   
 end
 
 function DaoEnemyView:playKill(event)
     DaoEnemyView.super.playKill(self, event)
-
+    self.armature:getAnimation():play("die" ,-1 , 1)
     --sound
     local soundSrc  = "res/Music/fight/die02.wav"
     self.audioId =  audio.playSound(soundSrc,false) 
@@ -110,7 +108,6 @@ end
 
 function DaoEnemyView:playRollLeft()
     if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then 
-        self:checkIdle()
         return
     end
 
@@ -125,7 +122,6 @@ end
 
 function DaoEnemyView:playRollRight()
     if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then 
-        self:checkIdle() 
         return
     end
 
