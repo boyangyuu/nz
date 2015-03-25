@@ -447,7 +447,7 @@ local enemys = {
 	weak1=1},
 
 	--汽车
-	{id=5,image="qiche",demage=20,hp=7000,weak1=1},	
+	{id=5,image="qiche",demage=20,hp=4000,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=70,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
@@ -487,15 +487,15 @@ local bosses = {
 
 		
 		skilltrigger = {   			          --技能触发(可以同时)
-			-- moveRightFire = {
-			-- 	0.70,  0.30, 
-			-- },
 
+			moveRightFire = {
+				0.73, 0.33, 
+			},
 			moveLeftFire = {
-				0.93, 0.67, 0.47, 0.27,
+				0.93, 0.53,
 			},
 			chongfeng = {
-				0.86, 0.73, 0.53, 0.33, 0.13,
+				0.86, 0.66, 0.46, 0.26, 0.13,
 			},
 			tieqiu = {
 				0.999, 0.80, 0.60, 0.40, 0.20,
