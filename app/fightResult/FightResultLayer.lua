@@ -306,25 +306,30 @@ function FightResultLayer:getinlayfall()
     local config = getConfig("config/inlayfall.json")
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	self.curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
-dump(self.curRecord)
-dump(self.curRecord["suipianid"])
+
 	-- 武器碎片
 	if self.curRecord["suipianid"] ~= "null" then
 		local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(self.curRecord["suipianid"])
 		if isWeaponAlreadyTogether == false then
 			table.insert(probaTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
 			table.insert(giveTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
+
 		end
 	end
-	
 
 	-- 狙击 & MP5
+
     if  curGroup == 0 and curLevel == 0 then
 	    table.insert(probaTable,{id = 2, falltype = "gun"}) 
 	    table.insert(giveTable,{id = 2, falltype = "gun"})
+		self.fightResultModel:setAwardedId(2)
+
     elseif curGroup == 1 and curLevel == 3 then
-    	table.insert(probaTable,{id = 6, falltype = "gun"}) 
-	    table.insert(giveTable,{id = 6, falltype = "gun"})
+    	if not self.fightResultModel:isGetAwarded(6) then
+	    	table.insert(probaTable,{id = 6, falltype = "gun"}) 
+		    table.insert(giveTable,{id = 6, falltype = "gun"})
+			self.fightResultModel:setAwardedId(6)
+		end
 	end
 
 	-- 黄金镶嵌
@@ -390,7 +395,6 @@ dump(self.curRecord["suipianid"])
 	for k,v in pairs(lockTable) do
 		table.insert(self.itemsTable,v)
 	end
-	dump(self.itemsTable)
 end
 
 function FightResultLayer:popSuipianNotify(suipianId)
