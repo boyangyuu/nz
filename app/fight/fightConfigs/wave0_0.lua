@@ -447,7 +447,7 @@ local enemys = {
 	weak1=1},
 
 	--铁球
-	{id=5,image="tieqiu",demage=20,hp=2000,weak1=1},	
+	{id=5,image="tieqiu",demage=20,hp=10000,weak1=1},	
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=70,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
@@ -496,7 +496,7 @@ local bosses = {
 				0.90, 0.70, 0.50, 0.30, 0.10,
 			},
 			tieqiu = {
-				0.999, 0.95, 0.80, 0.60, 0.40, 0.20,
+				0.999, 0.80, 0.60, 0.40, 0.20,
 			},	
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40,                        
