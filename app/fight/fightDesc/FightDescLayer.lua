@@ -146,6 +146,7 @@ function FightDescLayer:initEnemyIntro(enemyID)
 
     --add
     local armature = ccs.Armature:create(enemyID)
+    armature:setScale(define.kEnemyAnimScale)
     addChildCenter(armature, playanim)
     armature:getAnimation():play(descConfig.playanim , -1, 1)
 end

@@ -240,7 +240,7 @@ function FightResultLayer:initUIContent()
     		local record = self.weaponListModel:getWeaponRecord(v["id"])
 			self.cardlabel[k]:setString(record["name"])
 			local icon = display.newSprite("#icon_"..record["imgName"]..".png")
-			icon:setScale(0.27)
+			icon:setScale(0.39)
 			icon:setRotation(39)
 			addChildCenter(icon, self.cardicon[k])
     	elseif v["falltype"] == "inlay" then
@@ -285,10 +285,16 @@ function FightResultLayer:playCard()
 	end
 	for k,v in pairs(self.giveTable) do
 		if v.falltype == "suipian" then
-			function popUpNoti()
+			function popUpSuipianNoti()
 				self:popSuipianNotify(self.suipianId)
 			end
-			scheduler.performWithDelayGlobal(popUpNoti, 1.5)
+			scheduler.performWithDelayGlobal(popUpSuipianNoti, 1.5)
+		elseif v.falltype == "gun" then
+			function popUpGunNoti()
+				self:popGunNotify(self.weaponId)
+			end
+			scheduler.performWithDelayGlobal(popUpGunNoti, 1.5)
+
 		end
 	end
 end
@@ -300,13 +306,17 @@ function FightResultLayer:getinlayfall()
     local config = getConfig("config/inlayfall.json")
 	local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
 	self.curRecord = self.levelDetailModel:getConfig(curGroup, curLevel)
-	local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(self.curRecord["suipianid"])
-	
+dump(self.curRecord)
+dump(self.curRecord["suipianid"])
 	-- 武器碎片
-	if self.curRecord["type"] == "boss" and isWeaponAlreadyTogether == false then
-		table.insert(probaTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
-		table.insert(giveTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
+	if self.curRecord["suipianid"] ~= "null" then
+		local isWeaponAlreadyTogether = self.weaponListModel:isWeaponExist(self.curRecord["suipianid"])
+		if isWeaponAlreadyTogether == false then
+			table.insert(probaTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
+			table.insert(giveTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
+		end
 	end
+	
 
 	-- 狙击 & MP5
     if  curGroup == 0 and curLevel == 0 then
@@ -370,6 +380,7 @@ function FightResultLayer:getinlayfall()
 			self.inlayModel:buyInlay(v["id"])
 		elseif v["falltype"] == "gun" then
 			--掉落雷明顿，turnLeftCard弹出提示
+			self.weaponId = v["id"]
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
 			-- self.suipianName = self.weaponListModel:getWeaponNameByID(v["id"])
@@ -386,9 +397,14 @@ function FightResultLayer:popSuipianNotify(suipianId)
 	-- ui:showPopup("commonPopup",
 	-- 	 {type = "style2", content = "恭喜获得"..name.."零件 X1！",delay = 0.5},
 	-- 	 {opacity = 155})
-		ui:showPopup("WeaponNotifyLayer",
-			 {type = "suipian",weaponId = suipianId})
+	ui:showPopup("WeaponNotifyLayer",
+		 {type = "suipian",weaponId = suipianId})
 
+end
+
+function FightResultLayer:popGunNotify(weaponId)
+	ui:showPopup("WeaponNotifyLayer",
+		 {type = "gun",weaponId = weaponId})
 end
 
 function FightResultLayer:getGrade(LeftPersent)

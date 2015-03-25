@@ -276,7 +276,7 @@ function InlayLayer:initGuide()
         groupId = "xiangqian",
         rect = cc.rect(940, 70, 140, 50),
         endfunc = function (touchEvent)
-            self.inlayModel:equipInlay(7,true) 
+            self.inlayModel:equipInlay(6,true) 
 
             playSoundBtn()
         end
