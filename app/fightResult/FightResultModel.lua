@@ -15,13 +15,4 @@ function FightResultModel:popuplevelDetail(group,level)
     self:dispatchEvent({name = "POPUP_LEVELDETAIL",gid = group,lid = level})
 end
 
-function FightResultModel:giftInlay(quality)
-	local config = getConfig("config/items_xq.json")
-	local giftTable = getRecordFromTable(config, "property", quality) or {}
-	for k,v in pairs(giftTable) do
-		local inlaymodel = md:getInstance("InlayModel")
-		inlaymodel:buyInlay(v["id"],false,1)
-	end
-end
-
 return FightResultModel

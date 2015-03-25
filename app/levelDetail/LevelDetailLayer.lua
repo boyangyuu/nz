@@ -233,7 +233,37 @@ function LevelDetailLayer:onClickBtnOff()
 end
 
 function LevelDetailLayer:onClickBtnStart()
+	local data = getUserData()
+	dump(data.inlay.inlayed)
+	if table.nums(data.inlay.inlayed) ~= 0 then
+		self:startGame()
+	else
+		ui:showPopup("commonPopup",
+			 {type = "style5",
+			 callfuncQuickInlay = handler(self,self.onClickQuickInlay),
+			 callfuncGoldWeapon = handler(self,self.onClickGoldWeapon),
+			 callfuncClose = handler(self,self.startGame)})
+	end
+end
+
+function LevelDetailLayer:onClickQuickInlay()
+	self.inlayModel:equipAllInlays()
 	self:startGame()
+end
+
+function LevelDetailLayer:onClickGoldWeapon()
+	function confirmPopGoldGift()
+		self:equipGold()
+		self:startGame()
+	end
+	function deneyPopGoldGift()
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
+	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情_提示未镶嵌点击单个黄武")
+	end
+
+    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
+    	deneyBuyFunc = handler(self, self.startGame)},
+	     "关卡详情_提示未镶嵌点击黄武按钮")
 end
 
 function LevelDetailLayer:onClickBtnBibei()
@@ -270,17 +300,15 @@ function LevelDetailLayer:onClickBtnJijia()
 	     "关卡详情_点击机甲按钮")
 end
 
+function LevelDetailLayer:equipGold()
+	self.inlayModel:equipAllInlays(true)
+	self:refreshBtns()	
+end
+
 function LevelDetailLayer:onClickBtnGold()
-	function equipGold()
-		self.inlayModel:equipAllInlays(true)
-		-- self.alreadyGold:setVisible(true)
-		-- self.btnGold:setVisible(false)
-			self:refreshBtns()
-	
-	end
 	
 	function deneyGoldGift()
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "关卡详情_黄武按钮取消土豪礼包")
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self, self.equipGold)}, "关卡详情_黄武按钮取消土豪礼包")
 	end
 
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
@@ -292,7 +320,7 @@ function LevelDetailLayer:onClickBtnGold()
 			self:refreshBtns()
 
     else
-	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
+	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self, self.equipGold),deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
 	end
 end

@@ -1,4 +1,4 @@
--- local LayerColor_WHITE = cc.c4b(0, 0, 0, 0)
+-- local LayerColor_WHITE = cc.c4b(0, 0, 0, 180)
 local commonPopup = class("commonPopup",function()
 	return display.newLayer()
 	-- return display.newColorLayer(LayerColor_WHITE)
@@ -165,9 +165,8 @@ function commonPopup:initUI(properties)
 	    addBtnEventListener(btnfalse, function(event)
 	        if event.name=='began' then
 	            return true
-	        elseif event.name=='ended' then		
-
-		     self:onClickClose()
+	        elseif event.name=='ended' then
+			    self:onClickClose()
 	        end
 	    end)
 	    addBtnEventListener(btnQuickInlay, function(event)

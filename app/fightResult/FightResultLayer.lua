@@ -47,7 +47,6 @@ function FightResultLayer:ctor(properties)
     self:setNodeEventEnabled(true)
 
 	self:initGuide()
-	-- self:initGuide2()
 	self:initGuide3()
 end
 
@@ -309,10 +308,13 @@ function FightResultLayer:getinlayfall()
 		table.insert(giveTable,{id = self.curRecord["suipianid"],falltype = "suipian"})
 	end
 
-	-- 狙击
-    if  curGroup == 0 and curLevel == 0 and self.curRecord["type"] == "boss" then
-	    table.insert(probaTable,{id = 6, falltype = "gun"}) 
-	    table.insert(lockTable,{id = 6, falltype = "gun"}) 
+	-- 狙击 & MP5
+    if  curGroup == 0 and curLevel == 0 then
+	    table.insert(probaTable,{id = 2, falltype = "gun"}) 
+	    table.insert(giveTable,{id = 2, falltype = "gun"})
+    elseif curGroup == 1 and curLevel == 3 then
+    	table.insert(probaTable,{id = 6, falltype = "gun"}) 
+	    table.insert(giveTable,{id = 6, falltype = "gun"})
 	end
 
 	-- 黄金镶嵌
