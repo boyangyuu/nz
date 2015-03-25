@@ -53,8 +53,8 @@ function DDNormalEnemyView:playDaoDanFire()
     --scale
     self.armature:setScale(self.srcScale / 0.7)
     local time = define.kMissileDaoTime    
-    local destScale = self.property["destScale"]or 1.0 
-    local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
+    local destScale = self.property["destScale"] or 1.0 
+    local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
     local function callMoveEnd()
