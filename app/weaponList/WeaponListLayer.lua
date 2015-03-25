@@ -241,7 +241,9 @@ function WeaponListLayer:onClickBtnOncefull()
             payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
                                       deneyBuyFunc = handler(self, self.onCancelOncefull)},"武器库界面_点击一键满级")
     elseif isBoughtWeapon then
-        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
+        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId,
+            payDoneFunc = handler(self, self.onBuyOnceFull)},
+             "武器库界面_点击一键满级"..self.weaponRecord["name"])
     end
 end
 
@@ -270,7 +272,9 @@ function WeaponListLayer:onCancelWeaponGift()
     else
         local rmbCost = self.weaponRecord["rmbCost"]
         if  rmbCost == 6 then
-            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁武器"..self.weaponRecord["name"])
+            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
+                payDoneFunc = handler(self, self.onBuyWeaponSucc)
+                }, "武器库界面_点击解锁武器"..self.weaponRecord["name"])
         elseif rmbCost == 10 then
             self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
         end
@@ -285,6 +289,7 @@ end
 function WeaponListLayer:onBuyWeaponGiftSucc()
     self.levelMapModel:hideGiftBagIcon()
     self.weaponListModel:refreshInfo()
+
 end
 
 -- 购买事件
@@ -300,6 +305,10 @@ function WeaponListLayer:onBuyWeaponSucc()
         local gmcg   = "res/Music/ui/gmcg.wav"
         audio.playSound(gmcg,false)
     end
+end
+
+function WeaponListLayer:onBuyOnceFull()
+    self.weaponListModel:refreshInfo()
 end
 
 function WeaponListLayer:reloadListView(event)

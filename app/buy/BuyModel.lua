@@ -116,8 +116,8 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	local weaponIds = {3,4,5,7,8}
-	for k,v in pairs(weaponIds) do
+	self.weaponIds = {3,4,5,7,8}
+	for k,v in pairs(self.weaponIds) do
 		weaponListModel:buyWeapon(v)
 		weaponListModel:onceFull(v)
 	end
@@ -126,11 +126,26 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	--黄武*3
 	inlayModel:buyGoldsInlay(3)
 
-	ui:showPopup("commonPopup",
-	 {type = "style1",content = "请在武器库装备！"},
-	 {opacity = 0})
+    self.weaponIndex = 1
+    self:showWeaponNotify()
+
 
 end
+
+function BuyModel:showWeaponNotify()
+    local weaponId = self.weaponIds[self.weaponIndex]
+    if weaponId == nil then 
+		ui:showPopup("commonPopup",
+		 {type = "style1",content = "请在武器库装备！"},
+		 {opacity = 0})
+		return 
+	end
+    print("weaponId",weaponId)
+    ui:showPopup("WeaponNotifyLayer",
+     {type = "gun",weaponId = weaponId, onCloseFunc = handler(self, self.showWeaponNotify)})  
+    self.weaponIndex = self.weaponIndex + 1
+end 
+
 
 function BuyModel:buy_novicesBag( buydata )
 	print("BuyModel:buy_novicesBag(buydata)")
