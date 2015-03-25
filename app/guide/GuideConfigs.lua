@@ -68,7 +68,7 @@ configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
 -- 		{id = "afterfight01_award", msg = "中大奖了！掉落了一把神狙雷明顿!  "}, 
-		{id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
+		-- {id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
 		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"}, 
 	}
 }
