@@ -8,8 +8,6 @@ function InlayLayer:ctor()
     self.inlayModel = md:getInstance("InlayModel")
     self.buyModel = md:getInstance("BuyModel")
 
-    cc.EventProxy.new(self.inlayModel , self)
-        :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
 
    self.selectarm = nil
 
@@ -30,6 +28,10 @@ function InlayLayer:onEnter()
     self:refreshBtnIcon()
     self:refreshListView("speed")
     self:refreshAvatar()
+
+    cc.EventProxy.new(self.inlayModel , self)
+    :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
+
 end
 
 function InlayLayer:loadCCS()

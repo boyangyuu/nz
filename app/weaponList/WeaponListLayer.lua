@@ -22,17 +22,6 @@ function WeaponListLayer:ctor()
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     self.buyModel = md:getInstance("BuyModel")
     self.levelMapModel = md:getInstance("LevelMapModel")
-    --events
-    cc.EventProxy.new(self.weaponListModel, self)
-        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
-        :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT, handler(self, self.playOneStar))
-        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
-        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
-
-    cc.EventProxy.new(self.levelMapModel, self)
-        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
-    cc.EventProxy.new(self.levelDetailModel, self)
-        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
     
 end
 
@@ -51,6 +40,18 @@ function WeaponListLayer:onEnter()
 
     --refersh
     self:refreshUI() 
+    
+    --events
+    cc.EventProxy.new(self.weaponListModel, self)
+        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
+        :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT, handler(self, self.playOneStar))
+        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
+        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
+
+    cc.EventProxy.new(self.levelMapModel, self)
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
+    cc.EventProxy.new(self.levelDetailModel, self)
+        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
 end
 
 -- loadCCS
@@ -259,7 +260,7 @@ end
 -- 升级事件
 function WeaponListLayer:onClickBtnUpgrade(event)
     self.weaponListModel:intensify(self.weaponId)
-    self.weaponListModel:refreshInfo()
+    -- self.weaponListModel:refreshInfo()
 end
 
 function WeaponListLayer:onCancelWeaponGift()
@@ -288,7 +289,7 @@ end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()
     self.levelMapModel:hideGiftBagIcon()
-    self.weaponListModel:refreshInfo()
+    -- self.weaponListModel:refreshInfo()
 
 end
 
@@ -297,10 +298,10 @@ function WeaponListLayer:onBuyWeaponSucc()
     ui:closePopup("commonPopup")
     if self.userModel:costDiamond(self.weaponRecord["cost"]) then
         self.weaponListModel:buyWeapon(self.weaponId)
-        self.weaponListModel:refreshInfo()
+        -- self.weaponListModel:refreshInfo()
         if self.weapontype == "ju" then
             self.weaponListModel:equipBag(self.weaponId,3)
-            self.weaponListModel:refreshInfo()
+            -- self.weaponListModel:refreshInfo()
         end
         local gmcg   = "res/Music/ui/gmcg.wav"
         audio.playSound(gmcg,false)
@@ -308,7 +309,7 @@ function WeaponListLayer:onBuyWeaponSucc()
 end
 
 function WeaponListLayer:onBuyOnceFull()
-    self.weaponListModel:refreshInfo()
+    -- self.weaponListModel:refreshInfo()
 end
 
 function WeaponListLayer:reloadListView(event)
