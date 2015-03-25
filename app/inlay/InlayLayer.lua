@@ -264,7 +264,7 @@ function InlayLayer:initGuide()
         groupId = "xiangqian",
         rect = cc.rect(780, 70, 140, 50),
         endfunc = function (touchEvent)
-            self.inlayModel:buyInlay(7,true,1) 
+            self.inlayModel:buyInlay(6,false,1) 
 
             playSoundBtn()
         end
@@ -293,8 +293,9 @@ function InlayLayer:initGuide()
            self.inlayModel:buyInlay(9,false,1) 
            self.inlayModel:buyInlay(12,false,1) 
            self.inlayModel:buyInlay(15,false,1) 
-           self.inlayModel:buyInlay(18,true,1) 
+           self.inlayModel:buyInlay(18,false,1) 
            self.inlayModel:equipAllInlays(true)
+           self.inlayModel:refreshInfo("speed",true)
 
            playSoundBtn()
         end

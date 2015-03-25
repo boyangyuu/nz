@@ -1,4 +1,4 @@
--- local LayerColor_WHITE = cc.c4b(0, 0, 0, 0)
+-- local LayerColor_WHITE = cc.c4b(0, 0, 0, 180)
 local commonPopup = class("commonPopup",function()
 	return display.newLayer()
 	-- return display.newColorLayer(LayerColor_WHITE)
@@ -19,8 +19,14 @@ end)
 			 {opacity = 0})
 	style4:仨按钮, 确定取消打电话
 		ui:showPopup("commonPopup",
-			 {type = "style4",opacity = 0}
-		)
+			 {type = "style4"},
+			 {opacity = 0})
+	style5:仨按钮：快速镶嵌，黄金武器，关闭
+		ui:showPopup("commonPopup",
+			 {type = "style5",
+			 callfuncQuickInlay = handler(self,self.****),
+			 callfuncGoldWeapon = handler(self,self.****)},
+			 {opacity = 0})
 ]]
 function commonPopup:ctor(properties)
 	self.commonPopModel = md:getInstance("commonPopModel")
@@ -148,7 +154,35 @@ function commonPopup:initUI(properties)
 				end
 			end
 		end)
+	elseif typeName == "style5" then
+		local btnQuickInlay = cc.uiloader:seekNodeByName(self, "btnquickinlay")
+		local btnGoldWeapon = cc.uiloader:seekNodeByName(self, "btngoldweapon")
+	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
+	    btnfalse:setTouchEnabled(true)
+	    btnQuickInlay:setTouchEnabled(true)
+	    btnGoldWeapon:setTouchEnabled(true)
 
+	    addBtnEventListener(btnfalse, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then
+			    self:onClickClose()
+	        end
+	    end)
+	    addBtnEventListener(btnQuickInlay, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then
+			    self:onClickQuickInlay()
+	        end
+	    end)
+	    addBtnEventListener(btnGoldWeapon, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then
+	            self:onClickGoldWeapon()
+	        end
+	    end)
 	end
 end
 
@@ -168,6 +202,24 @@ function commonPopup:onClickClose()
 		print("callfuncClose")  
 		func()
 	end	
+end
+
+function commonPopup:onClickQuickInlay()
+	ui:closePopup("commonPopup")
+	local func =  self.properties.callfuncQuickInlay
+	if func ~= nil then
+		print("callfuncClose")  
+		func()
+	end
+end
+
+function commonPopup:onClickGoldWeapon()
+	ui:closePopup("commonPopup")
+	local func =  self.properties.callfuncGoldWeapon
+	if func ~= nil then
+		print("callfuncClose")  
+		func()
+	end
 end
 
 return commonPopup
