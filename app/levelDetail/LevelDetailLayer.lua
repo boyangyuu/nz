@@ -123,7 +123,7 @@ function LevelDetailLayer:initUI()
 	self.recomWeaponId = DataTable["weapon"]
 	local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local weaponimg = display.newSprite("#icon_"..recomWeapon["imgName"]..".png")
-	weaponimg:setScale(0.4)
+	weaponimg:setScale(0.57)
 	local bibeiimg = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")
 	addChildCenter(weaponimg, bibeiimg) 
 

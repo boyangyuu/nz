@@ -354,6 +354,7 @@ function WeaponListLayer:refreshComment()
     self.buycost:setString(self.weaponRecord["cost"])
     self.labelDescribe:setString(self.weaponRecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponRecord["imgName"]..".png")
+    weaponImg:setScale(1.43)
     addChildCenter(weaponImg, self.layerGun)
     local imageName = self.weaponRecord["imgName"]
     local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")

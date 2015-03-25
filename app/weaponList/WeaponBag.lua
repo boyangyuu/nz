@@ -142,14 +142,14 @@ function WeaponBag:refreshData(bag)
     local img2rec = getRecordByKey("config/weapon_weapon.json", "id", self.weaponed[2]["weaponid"])
     local img1 = display.newSprite("#icon_"..img1rec[1]["imgName"]..".png")
     local img2 = display.newSprite("#icon_"..img2rec[1]["imgName"]..".png")
-    img1:setScale(0.35)
-    img2:setScale(0.35)
+    img1:setScale(0.5)
+    img2:setScale(0.5)
     addChildCenter(img1, self.weapon1)
     addChildCenter(img2, self.weapon2)
     if table.nums(self.weaponed) == 3 then
         local img3rec = getRecordByKey("config/weapon_weapon.json", "id", self.weaponed[3]["weaponid"])
         local img3 = display.newSprite("#icon_"..img3rec[1]["imgName"]..".png")
-        img3:setScale(0.35)
+        img3:setScale(0.5)
         addChildCenter(img3, self.weapon3)
     end
 end

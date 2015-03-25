@@ -287,7 +287,7 @@ function FightResultLayer:playCard()
 	for k,v in pairs(self.giveTable) do
 		if v.falltype == "suipian" then
 			function popUpNoti()
-				self:popSuipianNotify(self.suipianName)
+				self:popSuipianNotify(self.suipianId)
 			end
 			scheduler.performWithDelayGlobal(popUpNoti, 1.5)
 		end
@@ -370,7 +370,8 @@ function FightResultLayer:getinlayfall()
 			--掉落雷明顿，turnLeftCard弹出提示
 		elseif v["falltype"] == "suipian" then
 			self.levelDetailModel:setsuipian(v["id"])
-			self.suipianName = self.weaponListModel:getWeaponNameByID(v["id"])
+			-- self.suipianName = self.weaponListModel:getWeaponNameByID(v["id"])
+			self.suipianId = v["id"]
 		end
 	end
 	for k,v in pairs(lockTable) do
@@ -379,10 +380,13 @@ function FightResultLayer:getinlayfall()
 	dump(self.itemsTable)
 end
 
-function FightResultLayer:popSuipianNotify(name)
-	ui:showPopup("commonPopup",
-		 {type = "style2", content = "恭喜获得"..name.."零件 X1！",delay = 0.5},
-		 {opacity = 155})
+function FightResultLayer:popSuipianNotify(suipianId)
+	-- ui:showPopup("commonPopup",
+	-- 	 {type = "style2", content = "恭喜获得"..name.."零件 X1！",delay = 0.5},
+	-- 	 {opacity = 155})
+		ui:showPopup("WeaponNotifyLayer",
+			 {type = "suipian",weaponId = suipianId})
+
 end
 
 function FightResultLayer:getGrade(LeftPersent)
@@ -424,9 +428,12 @@ function FightResultLayer:turnLeftCard()
 			self.weaponListModel:buyWeapon(v["id"])
 			self.weaponListModel:equipBag(v["id"],3)
 			function delaypopgun()
-				ui:showPopup("commonPopup",
-					 {type = "style2", content = "恭喜获得雷明顿！",delay = 0.5},
-					 {opacity = 155})
+				-- ui:showPopup("commonPopup",
+				-- 	 {type = "style2", content = "恭喜获得雷明顿！",delay = 0.5},
+				-- 	 {opacity = 155})
+				ui:showPopup("WeaponNotifyLayer",
+					 {type = "gun",weaponId = v["id"]})
+
 			end
 			scheduler.performWithDelayGlobal(delaypopgun, 0.5)
 		elseif v["falltype"] == "suipian" then

@@ -43,6 +43,12 @@ function WeaponListModel:getWeaponNameByID(weaponid)
 	return WeaponName
 end
 
+function WeaponListModel:getWeaponImgByID(weaponid)
+	local record = getRecordByKey("config/weapon_weapon.json", "id", weaponid)
+	local imgName = record[1]["imgName"]
+	return imgName
+end
+
 --[[
 	@param : weaponid
 	@param : levelParam ("nextLevel" or "maxLevel" or "minLevel", nil)
