@@ -88,9 +88,8 @@ function SanEnemyView:playHitted(event)
 end
 
 function SanEnemyView:playKill(event)
+    SanEnemyView.super.playKill(self, event)
     self:setDeadDone()
-
-    --屏幕动画
 end
 
 function SanEnemyView:onHitted(targetData)

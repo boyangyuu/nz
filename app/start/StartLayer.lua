@@ -9,6 +9,8 @@ function StartLayer:ctor()
 	self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
+    self:playEnterSound()
+
 end
 
 function StartLayer:loadCCS()
@@ -118,7 +120,7 @@ end
 
 function StartLayer:playEnterSound()
     local soundSrc  = "res/Music/ui/dl_logo.wav"
-    audio.playSound(soundSrc,false)  
+    self.enterSound = audio.playSound(soundSrc,false)  
 end
 
 function StartLayer:playEnterAnim()
@@ -158,6 +160,7 @@ function StartLayer:switchSound()
     stop:setVisible(isPlaying)
     play:setVisible(not isPlaying)
     audio.switchAllMusicAndSounds(isPlaying)
+    audio.stopSound(self.enterSound)
     self:playBgMusic()
 
     --save
@@ -169,7 +172,6 @@ end
 function StartLayer:onEnter()
     --music 
     self:playBgMusic() 
-    self:playEnterSound()
     
     --set sound
     local data = getUserData()

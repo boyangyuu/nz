@@ -56,11 +56,12 @@ end
 
 function BaoEnemyView:playKill(event)
     BaoEnemyView.super.playKill(self,event)
+    self.armature:getAnimation():play("die" ,-1 , 1)
     self:playBombEffects()
 end
 
 function BaoEnemyView:playBombEffects()
-    for i=1,6 do
+    for i=1,3 do
         local sch  = scheduler.performWithDelayGlobal(
             handler(self, self.playBombEffect), i * 0.1)
         self:addScheduler(sch)
@@ -87,7 +88,8 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
-        if movementID ~= "die" then
+        if movementID ~= "die" and not self:getPauseOtherAnim() then
+
             if self.isAheading then 
                 self.armature:getAnimation():play("walk" , -1, 1) 
                 return 

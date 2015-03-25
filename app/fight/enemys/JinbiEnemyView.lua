@@ -30,17 +30,7 @@ function JinbiEnemyView:ctor(property)
 end
 
 function JinbiEnemyView:tick()
-    -- if self.isFlying then 
-    --     local enemy = self.armature:getBone("body1"):getDisplayRenderNode()
-    --     local pWorld = enemy:convertToWorldSpace(cc.p(0,0))
 
-    --     local placeNode = self:getParent()
-    --     local pWorld2 = placeNode:convertToWorldSpace(cc.p(0,0))
-    --     if pWorld.y >= display.height then 
-    --         self.isFlying = false
-    --         self:stopFly()
-    --     end
-    -- end
 end
 
 function JinbiEnemyView:playFly()
@@ -61,16 +51,10 @@ function JinbiEnemyView:stopFly()
     self:setWillRemoved()
 end
 
-
 function JinbiEnemyView:playKill(event)
+    JinbiEnemyView.super.playKill(self, event)    
     self.armature:getAnimation():play("die" , -1, 1)
-    print("JinbiEnemyView elsplayKill") 
     self.isFlying  = false
-    --屏幕动画
-
-    -- local soundSrc  = "res/Music/fight/golds.wav"
-    -- self.audioId =  audio.playSound(soundSrc,false)  
-
 end
 
 function JinbiEnemyView:playHitted(event)

@@ -91,7 +91,6 @@ function RenBossView:playShan()
                             define.kRenzheShanOffsetMax)   
                          * self:getScale() * isLeft
     if not self:checkPlace(offset) then 
-        self:checkIdle()
         return 
     end 
 
@@ -118,7 +117,6 @@ function RenBossView:playRunAction(direct, isRun)
     local width = speed * time * self:getScale() * direct
     -- print("width", width)
     if not self:checkPlace(width) then 
-        self:checkIdle()
         return 
     end
     
@@ -223,7 +221,7 @@ end
 function RenBossView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
-        if  self:setPauseOtherAnim(true)  then
+        if  self:getPauseOtherAnim() and  movementID ~= "die"  then
             return 
         end
 

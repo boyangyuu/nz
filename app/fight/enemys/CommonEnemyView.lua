@@ -29,8 +29,9 @@ function CommonEnemyView:playStartState(state)
 end
 
 function CommonEnemyView:playKill(event)
-	CommonEnemyView.super.playKill(self,event)
-
+	CommonEnemyView.super.playKill(self, event)
+	self.armature:getAnimation():play("die" ,-1 , 1)
+	
 	--sound
 	local soundSrc  = "res/Music/fight/die.wav"
 	self.audioId =  audio.playSound(soundSrc,false)	
@@ -101,7 +102,6 @@ function CommonEnemyView:tick(t)
 
 	--roll
 	local rollRate, isAble = self.enemy:getRollRate()
-	
 	if isAble then 
 		assert(rollRate > 1, "invalid rollRate")
 		randomSeed =  math.random(1, rollRate)
@@ -114,27 +114,22 @@ end
 --throw 
 function CommonEnemyView:canHitted()
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	
 	--无敌
 	if currentName == "rollleft" 
 		or currentName == "rollright" then 
 		return false
 	end
-
 	return true
 end
 
 function CommonEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-		-- print("animationEvent id ", movementID)
 		armatureBack:stopAllActions()
-		if movementID ~= "die" then
+		if movementID ~= "die" and not self:getPauseOtherAnim() then
 			self:doNextPlay()
     	elseif movementID == "die" then 
     		self:setDeadDone()
     	end 
 	end
 end
-
-
 return CommonEnemyView

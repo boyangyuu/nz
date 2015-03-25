@@ -70,8 +70,7 @@ function AwardSanEnemyView:playHitted(event)
 end
 
 function AwardSanEnemyView:playKill(event)
-    --stop
-    self:stopAllActions()
+    AwardSanEnemyView.super.playKill(self, event)
 
     --play
     if self.isFalling then 
@@ -113,10 +112,14 @@ end
 function AwardSanEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or movementType ==  ccs.MovementEventType.complete then
+
         if movementID == "die" or movementID == "die1" then 
             self:setDeadDone()
             self:sendAward()
         end 
+        if  self:getPauseOtherAnim() then
+            return 
+        end        
     end
 end
 

@@ -260,11 +260,7 @@ end
 
 function MapView:checkGuide0_0()
 	local guide = md:getInstance("Guide")
-	-- if self.waveIndex == 2 then	
-	-- 	local comps = {btnLei = true, label_leiNum =  true,}
-	-- 	self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})			
-	-- 	guide:check("fight01_lei") 
-	-- end
+
 	if self.waveIndex == 5 then 
 		local comps = {btnGold = true, label_gold = true}
 		self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
@@ -287,7 +283,8 @@ function MapView:getLeftEnemyNum()
 	for i,enemyView in ipairs(self.enemys) do
 		local type = enemyView:getEnemyType()
 		if type ~= "missile" and type ~= "renzhi" 
-			and type ~= "jinbi" and type ~= "dao_wang" then 
+			and type ~= "jinbi" and type ~= "dao_wang"
+			and type ~= "dao_wu" then 
 			num = num + 1
 		end
 	end

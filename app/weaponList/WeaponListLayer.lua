@@ -284,6 +284,7 @@ end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()
     self.levelMapModel:hideGiftBagIcon()
+    self.weaponListModel:refreshInfo()
 end
 
 -- 购买事件

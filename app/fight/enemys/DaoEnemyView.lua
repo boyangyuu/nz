@@ -90,7 +90,7 @@ end
 
 function DaoEnemyView:playKill(event)
     DaoEnemyView.super.playKill(self, event)
-
+    self.armature:getAnimation():play("die" ,-1 , 1)
     --sound
     local soundSrc  = "res/Music/fight/die02.wav"
     self.audioId =  audio.playSound(soundSrc,false) 
@@ -110,7 +110,6 @@ end
 
 function DaoEnemyView:playRollLeft()
     if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then 
-        self:checkIdle()
         return
     end
 
@@ -125,7 +124,6 @@ end
 
 function DaoEnemyView:playRollRight()
     if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then 
-        self:checkIdle() 
         return
     end
 
