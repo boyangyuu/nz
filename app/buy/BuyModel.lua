@@ -68,7 +68,7 @@ end
 -- 生成订单号
 function BuyModel:getRandomOrderId()
 	local deviceId = "windows"
-	if device.platform == "android" then 
+	if device.platform == "android" and not isAnalytics then 
 		deviceId = TalkingDataGA:getDeviceId()
 	end
 	local osTime = os.time()

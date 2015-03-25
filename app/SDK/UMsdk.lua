@@ -6,7 +6,7 @@ local UM = class("UMsdk",cc.mvc.ModelBase)
 -- @return void
 -- cc.UMAnalytics:startLevel("1-2")
 function UM:startLevel( level )
-	if device.platform ~= "android" then
+	if device.platform ~= "android" and not isAnalytics then
 	    return
 	end
 
@@ -19,7 +19,7 @@ end
 -- @return void
 -- cc.UMAnalytics:finishLevel("1-2")
 function UM:finishLevel(level)
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
 
@@ -34,7 +34,7 @@ end
 -- @return void
 -- cc.UMAnalytics:failLevel("1-1")
 function UM:failLevel( level, cause)
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
 
@@ -51,7 +51,7 @@ end
 -- @param amount 道具数量
 -- @param price 道具单价
 function UM:onChargeSuccess(orderid)
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end    
     TDGAVirtualCurrency:onChargeSuccess(orderid)
@@ -64,7 +64,7 @@ end
 -- @param amount 道具数量
 -- @param price 道具单价
 function UM:onChargeRequest(orderId, iapId, currencyAmount, currencyType, virtualCurrencyAmount, paymentType)
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
     TDGAVirtualCurrency:onChargeRequest(orderId, iapId, currencyAmount, currencyType, virtualCurrencyAmount, paymentType)
@@ -78,7 +78,7 @@ end
 -- @return void
 -- cc.UMAnalytics:use("prop_1", 1, 50)
 function UM:use( item,amount,price )
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
 
@@ -93,7 +93,7 @@ end
 -- @return void
 -- cc.UMAnalytics:buy("prop_1", 2, 50)
 function UM:buy( item,amount,price )
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
     -- TalkingData
@@ -106,7 +106,7 @@ end
 -- @return void
 -- cc.UMAnalytics:bonusVirtualCurrency(100, 21)
 function UM:bonusVirtualCurrency( coin ,source)
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
 
@@ -138,7 +138,7 @@ end
 -- @return void.
 -- cc.UMAnalytics:event("1-1")
 function UM:event( eventId, eventData )
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end
 
@@ -154,7 +154,7 @@ end
 -- @param  levelId 玩家等级
 function UM:setLevel( levelId )
     -- body
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end    
     print("设置玩家等级:",levelId)
@@ -162,7 +162,7 @@ function UM:setLevel( levelId )
 end
 
 function UM:setUserAccount()
-    if device.platform ~= "android" then
+    if device.platform ~= "android" and not isAnalytics then
         return
     end    
     --account
