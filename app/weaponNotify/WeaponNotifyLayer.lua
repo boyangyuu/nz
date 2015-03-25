@@ -25,7 +25,8 @@ end
 
 function WeaponNotifyLayer:initUI(properties)
     local btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
-    local labelName = cc.uiloader:seekNodeByName(self, "labelName")
+    local labelSuipian = cc.uiloader:seekNodeByName(self, "labelSuipian")
+    local labelGun = cc.uiloader:seekNodeByName(self, "labelGun")
     local panelAnim = cc.uiloader:seekNodeByName(self, "panelAnim")
     btnGet:onButtonClicked(function()
         self:onBtnGetClicked()
@@ -47,6 +48,7 @@ function WeaponNotifyLayer:initUI(properties)
 
 	if properties.type == "gun" then
 		local imgName = self.weaponListModel:getWeaponImgByID(properties.weaponId)
+		local weaponName = self.weaponListModel:getWeaponNameByID(properties.weaponId)
 		local skin = ccs.Skin:createWithSpriteFrameName("icon_"..imgName..".png")
 	    armature:getBone("icon_wuqi"):addDisplay(skin, 1)
 	    armature:getBone("icon_wuqi"):changeDisplayWithIndex(1, true)
@@ -60,7 +62,9 @@ function WeaponNotifyLayer:initUI(properties)
         end)
 	    armature:getAnimation():play("start" , -1, 0)
 
-	    labelName:setVisible(false)
+		labelGun:enableOutline(cc.c4b(0, 0, 0,255), 1)
+		labelGun:setString(weaponName)
+	    labelSuipian:setVisible(false)
 
 	elseif properties.type == "suipian" then
 		math.randomseed(os.time())
@@ -78,19 +82,22 @@ function WeaponNotifyLayer:initUI(properties)
 	    armature:getAnimation():play("start02" , -1, 0)
 
 		local weaponName = self.weaponListModel:getWeaponNameByID(properties.weaponId)
-		labelName:enableOutline(cc.c4b(0, 0, 0,255), 1)
-	    labelName:setString(weaponName.."零件")
+		labelSuipian:enableOutline(cc.c4b(0, 0, 0,255), 1)
+	    labelSuipian:setString(weaponName.."零件")
+	    labelGun:setVisible(false)
 	end
 
 end
 
 function WeaponNotifyLayer:onBtnGetClicked()
-	ui:closePopup("WeaponNotifyLayer")
-
 	--guide
 	local guide = md:getInstance("Guide")
 	guide:check("afterfight01")	
 	guide:check("afterfight03")	
+
+	local onCloseFunc = self.properties["onCloseFunc"]
+	dump(self.properties, "self.properties")
+	ui:closePopup("WeaponNotifyLayer", {onCloseFunc = onCloseFunc})
 end
 
 return WeaponNotifyLayer

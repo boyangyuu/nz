@@ -6,8 +6,6 @@
 2. ..
 ]]
 
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseEnemyView = import(".BaseEnemyView")
 local JinEnemyView = class("JinEnemyView", BaseEnemyView)  
 
@@ -23,9 +21,7 @@ function JinEnemyView:ctor(property)
     local callFuncAhead = function ()
         self:play("ahead", handler(self, self.playAhead))
     end
-    local aheadHandler = scheduler.performWithDelayGlobal(callFuncAhead, define.kJinEnemyTimeStart)
-    self:addScheduler(aheadHandler)
-
+    self:performWithDelay(callFuncAhead, define.kJinEnemyTimeStart)
 end
 
 function JinEnemyView:tick(t)
@@ -49,9 +45,10 @@ function JinEnemyView:onEnter()
 end
 
 function JinEnemyView:playKill(event)
-    JinEnemyView.super.playKill(self,event)
+    JinEnemyView.super.playKill(self, event)
     self:stopAllActions()
     self.armature:getAnimation():play("die" ,-1 , 1)
+
     --sound
     local soundSrc  = "res/Music/fight/die02.wav"
     self.audioId =  audio.playSound(soundSrc,false) 
@@ -113,7 +110,6 @@ function JinEnemyView:animationEvent(armatureBack,movementType,movementID)
                 self:playStand()
             end
         elseif movementID == "die" then
-            -- print("self:setDeadDone()") 
             self:setDeadDone()          
         end 
     end

@@ -136,13 +136,12 @@ function RenBossView:playRunAction(direct, isRun)
 end
 
 function RenBossView:playSkill(skillName)
-    -- print("RenBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "feibiao" then 
         local function callfuncFeibiao()
             self:playFeibiao(skillName)
         end
-        self:play("skillPre",callfuncFeibiao)
+        self:play("skill",callfuncFeibiao)
         return 
     end
     RenBossView.super.playSkill(self, skillName)
