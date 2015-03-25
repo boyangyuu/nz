@@ -88,16 +88,11 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" then
-            local playCache = self:getPlayCache()
             if self.isAheading then 
                 self.armature:getAnimation():play("walk" , -1, 1) 
                 return 
             end
-            if playCache then 
-                playCache()
-            else                    
-                self:playStand()
-            end
+            self:doNextPlay()   
         elseif movementID == "die" then 
             self:setDeadDone()
         end 

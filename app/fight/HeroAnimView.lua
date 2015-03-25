@@ -14,12 +14,14 @@ end)
 
 function HeroAnimView:ctor()
 	self.hero   	 = md:getInstance("Hero")
+	self.fight       = md:getInstance("Fight")
 	local fightInlay = md:getInstance("FightInlay")
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
 		:addEventListener(self.hero.EFFECT_HURT_YAN_EVENT	, handler(self, self.playHurtedBomb_yan))	
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
 		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
+		
 		
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
@@ -30,6 +32,9 @@ function HeroAnimView:ctor()
 
 	cc.EventProxy.new(fightInlay, self)
 		:addEventListener(fightInlay.INLAY_GOLD_BEGIN_EVENT , handler(self, self.playActiveGold))
+	
+	cc.EventProxy.new(self.fight, self)
+:addEventListener(self.fight.FIGHT_TIPS_EVENT		, handler(self, self.playFailTips))
 
 	self:loadCCS()
 end
@@ -204,8 +209,23 @@ function HeroAnimView:playKeepKill(event)
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 end
 
+function HeroAnimView:playFailTips(event)
+	local failType = event.failType
+	assert(failType, "failType is nil")
+
+	local armature 	= ccs.Armature:create("shiBaiTiShi")
+	armature:getAnimation():play(failType , -1, 0)
+	armature:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.complete then
+				armatureBack:removeFromParent()
+				armatureBack = nil
+	    	end 
+    	end)		
+	self:addChild(armature)
+end
+
 function HeroAnimView:onExit()
-	-- audio.stopSound(self.soundBeng)
 end
 
 return HeroAnimView

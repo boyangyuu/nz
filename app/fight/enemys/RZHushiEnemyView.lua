@@ -231,7 +231,7 @@ function RZHushiEnemyView:animationEvent(armatureBack,movementType,movementID)
 		end
 
 		if movementID ~= "die" then
-			self:playNextAnimCache()
+			self:doNextPlay()
     	elseif movementID == "die" then 
     		self:setDeadDone()
     		local fight = md:getInstance("Fight")

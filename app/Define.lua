@@ -126,6 +126,9 @@ Define.kJuRange 				= 4.0  -- 狙击镜放大的范围
 --引导
 Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之30血时 触发机甲
 
+--enenmy动画缩放比例
+Define.kEnemyAnimScale      	= 1/0.7
+
 
 function Define:ctor()
     Define.super.ctor(self) 

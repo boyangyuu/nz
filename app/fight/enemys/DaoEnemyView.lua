@@ -152,12 +152,7 @@ function DaoEnemyView:animationEvent(armatureBack,movementType,movementID)
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" then
-            local playCache = self:getPlayCache()
-            if playCache then 
-                playCache()
-            else                    
-                self:playStand()
-            end
+            self:doNextPlay()
         elseif movementID == "die" then 
             self:setDeadDone()
         end 

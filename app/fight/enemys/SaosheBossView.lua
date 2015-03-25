@@ -45,4 +45,17 @@ function SaosheBossView:continueFire(sumTimes, fireOffset)
 	self:addScheduler(handler)  
 end
 
+function SaosheBossView:animationEvent(armatureBack,movementType,movementID)
+	if movementType == ccs.MovementEventType.loopComplete then
+		if self:getPauseOtherAnim() and movementID ~= "die" then 
+			return 
+		end		
+		if movementID ~= "die" then
+			self:doNextPlay()	
+    	elseif movementID == "die" then  
+    		self:setDeadDone(true)
+    	end 
+	end
+end
+
 return SaosheBossView

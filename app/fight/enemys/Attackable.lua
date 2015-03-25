@@ -20,12 +20,13 @@ function Attackable:ctor(property)
 	self.schedulers = {}
 	self.playCache = {}
 	self.isRed = false
+	self.isPauseOtherAnim = false
 
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
 	self:addChild(self.armature)
-	self.armature:setScale(1/0.7)
+	self.armature:setScale(define.kEnemyAnimScale)
     self:setScale(property.scale or 1.0)
     
     --events
@@ -149,7 +150,7 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
 	local enemyBound = enemyRange:getBoundingBox()
 	
 	-- dump(enemyBound, "enemyBound")
-	local scale = self:getScale() * self.hero:getMapZoom() * (1/0.7)
+	local scale = self:getScale() * self.hero:getMapZoom() * (define.kEnemyAnimScale)
 	enemyBound.width = enemyBound.width * scale
 	enemyBound.height = enemyBound.height * scale
     -- dump(enemyBound, "enemyBound2")
@@ -290,6 +291,17 @@ function Attackable:getPlayCache()
 	return self.playCache[1].func
 end
 
+function Attackable:doNextPlay()
+	local playCache = self:getPlayCache()		
+	if playCache then 
+		playCache()
+	else 					
+		self:playStand()
+	end
+end
+
+
+
 function Attackable:clearPlayCache()
 	self.playCache = {}
 end
@@ -356,24 +368,34 @@ function Attackable:playBombEffect()
 end
 
 function Attackable:restoreStand()
-	-- print("Attackable restoreStand")
-	self.playAnimId = nil --todo!!!
+	print("function Attackable:restoreStand()")
+	self.playAnimId = nil 
 	self.armature:stopAllActions()	
 	self.armature:getAnimation():stop()
-	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	self:setPauseOtherAnim(false)
+
+end
+
+function Attackable:setPauseOtherAnim(isPause)
+	self.isPauseOtherAnim = isPause
+end
+
+function Attackable:getPauseOtherAnim()
+	return self.isPauseOtherAnim
 end
 
 function Attackable:checkAnim()
 	-- return
 	if self.enemy:isDead() then return end
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	if currentName == "" or currentName == nil then 	
-		-- print("Attackable checkAnim:" .. self:getEnemyType())	
+	if currentName == "" or currentName == nil then 
+		print("ttackable:checkAnim()")	
 		self:playStand()
 	end
 end
 
 function Attackable:checkIdle()
+	if 1== 1 then return end
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	if currentName == "" then		
 		self:playStand()
@@ -455,6 +477,17 @@ end
 
 function Attackable:getModel(id)
 	assert("required method, must implement me")	
+end
+
+function Attackable:playStand()
+	assert("required method, must implement me")
+end
+
+function Attackable:playKill(event)
+	self:clearPlayCache()
+	self.armature:stopAllActions()
+	self:setPauseOtherAnim(true)
+	self:setPause({isPause = true})	
 end
 
 function Attackable:onEnter()

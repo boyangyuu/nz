@@ -85,10 +85,7 @@ end
 function DDWuEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         if movementID ~= "die" then
-            local playCache = self:getPlayCache()
-            if playCache then 
-                playCache()
-            end
+
         else
              self:setWillRemoved()
         end

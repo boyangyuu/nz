@@ -181,7 +181,7 @@ function AwardEnemyView:animationEvent(armatureBack,movementType,movementID)
 		end
 
 		if movementID ~= "die" then
-			self:playNextAnimCache()
+			self:doNextPlay()
     	elseif movementID == "die" then 
     		self:setDeadDone()
     	end 

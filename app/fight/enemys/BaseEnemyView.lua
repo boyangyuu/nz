@@ -67,6 +67,8 @@ function BaseEnemyView:setBlood(per)
 	-- --value
 	local bloodUp 	= cc.uiloader:seekNodeByName(self.blood, "bloodUp")
 	local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
+
+	per = per * define.kEnemyAnimScale
 	bloodUp:setScaleX(per/100)
 	transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})
 
@@ -191,15 +193,6 @@ function BaseEnemyView:onHitted(targetData)
 	local maxHp = self.enemy:getMaxHp()
 	local hp = self.enemy:getHp()
 	self:setBlood(hp/maxHp * 100)
-end
-
-function BaseEnemyView:playNextAnimCache()
-	local playCache = self:getPlayCache()
-	if playCache then 
-		playCache()
-	else 				
-		self:playStand()
-	end
 end
 
 function BaseEnemyView:getModel(property)

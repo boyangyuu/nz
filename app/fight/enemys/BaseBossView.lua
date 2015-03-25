@@ -21,14 +21,12 @@ function BaseBossView:ctor(property)
 	--config
 	self.attackType = "weak"
 	self.zhaohuanIndex  = 1
-	-- dump(property, "property")
 	local index = property.id
 	local waveConfig = FightConfigs:getWaveConfig()
     
     --blood
     self:initBlood()
     self.config  	= waveConfig:getBoss(index)
-    self.isRed 		= false
     self.isUnhurted = false
 
 	--play
@@ -59,8 +57,9 @@ function BaseBossView:initBlood()
     local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
     self.blood:setPosition(destpos.x, destpos.y)
     self.armature:addChild(self.blood)
-    
+
     --value
+    print("self.blood scale", self.blood:getScale())
     self:setBlood(1.0)
 end
 
@@ -109,7 +108,7 @@ function BaseBossView:setBlood(scale)
 		node1:setVisible(false)
 	    node2:setVisible(false)
     end
-
+    newScale = newScale * define.kEnemyAnimScale
     bloodUp:setScaleX(newScale)
     transition.scaleTo(bloodDown, {scaleX = newScale, time = 0.1})
 end
@@ -125,7 +124,7 @@ function BaseBossView:playHitted(event)
 	self:setBlood(hp/maxHp)	
 end
 
-function BaseBossView:playMove()  
+function BaseBossView:playMove() 
 	local pos = self:getPosInMapBg()
 	local isLeft = math.random(1, 2)
 	local time   = define.kBlueBossWalkTime	
@@ -144,18 +143,16 @@ function BaseBossView:playMove()
 	end	
 
 	self.enemy:beginWalkCd()
-    self.armature:runAction(cc.Sequence:create(action, 
+    self:runAction(cc.Sequence:create(action, 
     	cc.CallFunc:create(handler(self, self.restoreStand))
-    	))	
+    	))
+	self:setPauseOtherAnim(true)    		
 end
 
 function BaseBossView:playKill(event)
-	--clear TODO
-	self:clearPlayCache()
-	self.armature:stopAllActions()
-	self:clearWeak()
-	self:setPause({isPause = true})
+	BaseBossView.super.playKill(self, event)
 
+	self:clearWeak()
 	--play dead
 	self.armature:getAnimation():play("die" ,-1 , 1)
 
@@ -179,7 +176,6 @@ function BaseBossView:playBombEffects()
 end
 
 function BaseBossView:playSkill(skillName)
-	print("BaseBossView:playSkill: "..skillName)
 	if skillName == "moveLeftFire" then 
 		self:play("skill", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
@@ -224,7 +220,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
 
-	--向左出发
+	--向左/右出发
 	local bound = self.armature:getCascadeBoundingBox() 
 	local pos = self:getPosInMapBg()
 	local disOut = isLeft and  -bound.width or 1560
@@ -232,25 +228,26 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local desPos = cc.p(disOut, posOri.y)
 	local actionOut = cc.MoveTo:create(time, desPos)
 
-	--到右屏幕
-	desPos = cc.p(1660 + bound.width, posOri.y)
-	local time = math.abs(1660 + 2 * bound.width) / speed
-	local actionScreen1 = cc.MoveTo:create(time, desPos)
+	--到右屏幕 (isLeft)
+	local desPosRight = cc.p(1560 + bound.width, posOri.y)
+	local time = math.abs(1560 + bound.width) / speed
+	local actionScreen1 = cc.MoveTo:create(time, desPosRight)
 
-	--到左屏幕
-	desPos = cc.p(- bound.width - 200, posOri.y)
-	local time = math.abs(1660 + 2 * bound.width) / speed	
-	local actionScreen2 = cc.MoveTo:create(time, desPos)
+	--到左屏幕 (not isLeft)
+	local desPosLeft = cc.p(- bound.width - 200, posOri.y)
+	local time = math.abs(1560 + bound.width) / speed	
+	local actionScreen2 = cc.MoveTo:create(time, desPosLeft)
 
 	--返回
-	local time = math.abs(posOri.x - desPos.x) / speed
+	local fromPos = isLeft and desPosRight or desPosLeft
+	local time = math.abs(posOri.x - fromPos.x) / speed
 	local actionBack = cc.MoveTo:create(time, posOri)
 	local seq = nil
 
 	--出发之前
 	local callfuncBeforeOut = function ()
 		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
-		self.pauseOtherAnim = true
+		self:setPauseOtherAnim(true)
 		self:setUnhurted(true)
 	end
 	local beforeOutCall = cc.CallFunc:create(callfuncBeforeOut)
@@ -269,34 +266,26 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	end
 	local beforeLeftCall = cc.CallFunc:create(callfuncBeforeRight)
 
-	--回去之前
-	local callfuncBeforeBack = function ()
-		self.armature:getAnimation():play("moveright" , -1, 1)
-	end
-	local beforeBackCall = cc.CallFunc:create(callfuncBeforeBack)
-
 	--回去之后
-	local callfuncAfterLeft = function ()
-		self.pauseOtherAnim = false
+	local callfuncAfterBack = function ()
+		self:setPauseOtherAnim(false)
 		self:setUnhurted(false)
 	end	
-	local afterLeftCall = cc.CallFunc:create(callfuncAfterLeft)
+	local afterBackCall = cc.CallFunc:create(callfuncAfterBack)
 
 	--play
 	if isLeft then 
 		seq = cc.Sequence:create(
 		beforeOutCall, actionOut,
 		beforeRightCall, actionScreen1, 
-		cc.DelayTime:create(2.0),
-		beforeLeftCall, actionScreen2, 
-		beforeBackCall, actionBack, afterLeftCall)	
+		cc.DelayTime:create(1.0),
+		actionBack, afterBackCall)	
 	else 
 		seq = cc.Sequence:create(
 		beforeOutCall, actionOut,
-		beforeRightCall, actionScreen2, 
-		cc.DelayTime:create(2.0),
-		beforeLeftCall, actionScreen1, 
-		beforeBackCall, actionBack, afterLeftCall)	
+		beforeLeftCall, actionScreen2, 
+		cc.DelayTime:create(1.0),
+		actionBack, afterBackCall)	
 	end
 	self:runAction(seq)
 end
@@ -326,7 +315,6 @@ function BaseBossView:playMoveDaoDan()
 end
 
 function BaseBossView:playDaoDan(skillName)
-	print("function BaseBossView:playDaoDan(skillName)")
 	self.armature:getAnimation():play("daodan", -1, 1)
 
     --pos
@@ -364,20 +352,16 @@ function BaseBossView:playChongfeng()
     local speed = 400
     local desY = -180
     local scale = 2.0
-
     local pWorld = self:convertToWorldSpace(cc.p(0,0))
-    -- dump(pWorld, "pWorld")
     local posOri = cc.p(self:getPositionX(), self:getPositionY())
-    
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
     local actionScale = cc.ScaleBy:create(time, scale)
 
-    --
+    --callfunc
     local aheadEndFunc = function ()
-        print("ahead end")
   		--demage
         local destDemage = self.config["chongfengDemage"] 
         	* self.enemy:getDemageScale()
@@ -387,12 +371,13 @@ function BaseBossView:playChongfeng()
         local map = md:getInstance("Map")
         map:playEffect("shake")
         --restore
-	    self:playStand()
+	    self:restoreStand()
     end
+
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
     self:runAction(seq)
-
+    self:setPauseOtherAnim(true)
     self:runAction(actionScale)	
 end
 
@@ -420,7 +405,6 @@ function BaseBossView:onKillCall(event)
 	if self.enemysCallNum == nil then return end --todo 需要修改
 	self.enemysCallNum = self.enemysCallNum  - 1
 	if self.enemysCallNum == 0 then 
-		-- print("取消无敌")
 		self:onKillLastCall()
 	end
 end
@@ -485,35 +469,7 @@ function BaseBossView:playWeak(index)
 end
 
 
---接口 BaseBossView:
-function BaseBossView:animationEvent(armatureBack,movementType,movementID)
-	if movementType == ccs.MovementEventType.loopComplete then
-		if self.pauseOtherAnim and movementID ~= "die" then 
-			return 
-		end		
-
-		-- print("animationEvent id ", movementID)
-		armatureBack:stopAllActions()
-        if  movementID == "chongfeng"  then
-            self.armature:getAnimation():play(movementID , -1, 1)
-            return 
-        end
-
-		if movementID ~= "die" then
-			local playCache = self:getPlayCache()		
-			if playCache then 
-				playCache()
-			else 					
-				self:playStand()
-			end
-    	elseif movementID == "die" then 
-    		self:setDeadDone(true)
-    	end 
-	end
-end
-
 function BaseBossView:tick(t)
-	if self.pauseOtherAnim or self.isUnhurted then return end 
 	--change state
 	local randomSeed 
 
