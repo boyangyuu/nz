@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 local scheduler          = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local WeaponListCell = import(".WeaponListCell")
@@ -22,7 +21,6 @@ function WeaponListLayer:ctor()
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     self.buyModel = md:getInstance("BuyModel")
     self.levelMapModel = md:getInstance("LevelMapModel")
-    
 end
 
 --guide
