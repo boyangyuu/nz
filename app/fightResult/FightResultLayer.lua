@@ -228,6 +228,8 @@ function FightResultLayer:onClickBtnNext()
 
 	if isCurLevel then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = isPopupNext})
+	elseif curGroup == 0 then
+		ui:changeLayer("HomeBarLayer",{groupId = curGroup})
 	else
 		print("1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
@@ -288,12 +290,12 @@ function FightResultLayer:playCard()
 			function popUpSuipianNoti()
 				self:popSuipianNotify(self.suipianId)
 			end
-			scheduler.performWithDelayGlobal(popUpSuipianNoti, 1.5)
+			scheduler.performWithDelayGlobal(popUpSuipianNoti, 1)
 		elseif v.falltype == "gun" then
 			function popUpGunNoti()
 				self:popGunNotify(self.weaponId)
 			end
-			scheduler.performWithDelayGlobal(popUpGunNoti, 1.5)
+			scheduler.performWithDelayGlobal(popUpGunNoti, 1)
 
 		end
 	end
