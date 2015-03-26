@@ -124,7 +124,7 @@ function DuozuBossView:playSkillWu()
     local property = {
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.4,
-        destScale = 1.5,
+        destScale = 1.0,
         destPos = pWorldBone,
         type = "dao_wu",
         id = self.property["yanwuId"],
