@@ -125,11 +125,9 @@ function BuyModel:buy_weaponGiftBag(buydata)
 
 	--黄武*3
 	inlayModel:buyGoldsInlay(3)
-	if buydata.popFiveWeapon == false then return end
+	if buydata.isNotPopFiveWeapon == true then return end
     self.weaponIndex = 1
     self:showWeaponNotify()
-
-
 end
 
 function BuyModel:showWeaponNotify()

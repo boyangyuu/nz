@@ -628,12 +628,10 @@ function MapView:onHeroFire(event)
 	--effect
 	local isHitted = not (#datas == 0)
 	-- print("isHitted", isHitted)
+
+	--todo 气球判断
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld = pWorldFocus})
-
-	--effect bullet
-	-- self.mapAnim:playEffectBullet({pWorldFocus = pWorldFocus, 
-	-- 	pWorldGun = event.pWorldGun})
 end
 
 function MapView:mutiFire(datas)

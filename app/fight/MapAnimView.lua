@@ -71,22 +71,6 @@ function MapAnimView:playEffectShooted(event)
 	end
 end
 
--- function MapAnimView:playEffectBullet(event)
--- 	local pWorldFocus = event.pWorldFocus
--- 	local pWorldGun   = event.pWorldGun
--- 	local posOri      = self:convertToNodeSpace(cc.p(pWorldGun.x, pWorldGun.y))
--- 	local posDest     = self:convertToNodeSpace(cc.p(pWorldFocus.x, pWorldFocus.y))
--- 	local armature    = ccs.Armature:create("dandao")
--- 	armature:getAnimation():playWithIndex(0 , -1, 0)
--- 	dump(posOri, "posOri")
--- 	dump(posDest, "posDest")
-
--- 	armature:setPosition(posOri.x - 200, posOri.y + 200)
--- 	armature:moveTo(1.0, posDest.x - 100 + 240 , posDest.y - 80)
--- 	-- armature:setSkew
--- 	self:addChild(armature)
--- end
-
 function MapAnimView:addShootedArmature(animName, pos)
 	-- print("function MapAnimView:addShootedArmature(animName, pos)")
 	local armature = ccs.Armature:create(animName)
