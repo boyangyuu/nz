@@ -212,7 +212,6 @@ function WeaponListModel:equipBag( weaponid, index )
 					data.weapons.weaponed.bag3 = v
 				end
 				setUserData(data)
-				dump(data)
 			end
 		end
 	elseif self:getWeaponStatus(weaponid) == index then
