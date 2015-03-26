@@ -259,7 +259,7 @@ function Fight:onDialogAfterEnd()
             popFiveWeapon = false,
             payDoneFunc = handler(self, self.endFight),
             deneyBuyFunc = handler(self, self.endFight)},
-            "战斗结束_自动弹出武器大礼包")
+            self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
     else
         self:endFight()
     end

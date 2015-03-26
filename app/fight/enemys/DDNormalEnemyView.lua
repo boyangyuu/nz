@@ -77,7 +77,7 @@ function DDNormalEnemyView:playTieqiuFire()
 
     --call end
     local function callFunc()
-        self.armature:getAnimation():play("die" , -1, 1)  
+        self:setDeadDone()
         self.enemy:hit(self.hero)   
         self.hero:dispatchEvent({name = Hero.EFFECT_HURT_BOLI_EVENT})
     end

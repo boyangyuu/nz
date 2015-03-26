@@ -173,13 +173,11 @@ function RenEnemyView:playChongfeng()
         self:scaleBy(0.01, 1/scale)
         local map = md:getInstance("Map")
         map:playEffect("shake")
-        --restore
-        self:playStand()
+        self:restoreStand()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
-    local seq = cc.Sequence:create(actionAhead, afterAhead)
     self:setPauseOtherAnim(true)
-    self:runAction(seq)
+    self:runAction(cc.Sequence:create(actionAhead, afterAhead))
     self:runAction(actionScale) 
 end
 
@@ -223,8 +221,7 @@ function RenEnemyView:playShan()
         self.armature:getAnimation():play("shanru" , -1, 1) 
         self.isShaning = false
     end
-    local sch = scheduler.performWithDelayGlobal(shanru, define.kRenzheShanTime)
-    self:addScheduler(sch)
+    self:performWithDelay(shanru, define.kRenzheShanTime)
 end
 
 function RenEnemyView:playRunAction(direct, isRun)
@@ -268,17 +265,11 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
         if movementID == "shanchu" then 
             self:setVisible(false)
             return
-        end
-
-        if movementID == "die" then
+        elseif movementID == "die" then
             self:setDeadDone()
             return
-        end
-
-        if movementID == "stand" then 
+        else
             self:doNextPlay()
-        else 
-            self:playStand()
         end 
     end
 end
