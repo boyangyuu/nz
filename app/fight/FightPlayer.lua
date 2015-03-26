@@ -205,7 +205,8 @@ function FightPlayer:initUI()
 
     --guide
     scheduler.performWithDelayGlobal(handler(self, self.initGuide1), 0.1)
-    scheduler.performWithDelayGlobal(handler(self, self.initGuide2), 0.1)    
+    scheduler.performWithDelayGlobal(handler(self, self.initGuideChange), 0.1)    
+    scheduler.performWithDelayGlobal(handler(self, self.initGuideDun), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide4), 0.1)    
 end
@@ -356,7 +357,7 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkbtnRobot(point)
         if isTouch then return true end
 
-        isTouch = self:checkbtnDefence(point)
+        isTouch = self:checkBtnDefence(point)
         if isTouch then return true end 
 
         isTouch = self:checkBtnLei(point)
@@ -460,7 +461,8 @@ function FightPlayer:refreshPropData(event)
     self.label_gold:setString(numGold)
 end
 
-function FightPlayer:checkbtnDefence(point)
+function FightPlayer:checkBtnDefence(point)
+
     if not self.btnDefence:isVisible() then return end
     local rect = self.btnDefence:getCascadeBoundingBox()
     local isTouch = cc.rectContainsPoint(rect, point)
@@ -820,7 +822,7 @@ function FightPlayer:initGuide1()
     })     
 end
 
-function FightPlayer:initGuide2()
+function FightPlayer:initGuideChange()
     local isDone = self.guide:isDone("fight_change")
     local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 1 and gid == 1
@@ -839,18 +841,27 @@ function FightPlayer:initGuide2()
             end
         end
     })  
+end
 
-    --开盾
+function FightPlayer:initGuideDun()
+    local isDone = self.guide:isDone("fight_dun")
+    local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 1 and gid == 1
+    if isDone or not isWillGuide then 
+        return 
+    end 
+
+    --盾牌 
     self.guide:addClickListener( {
         id = "fight_dun",
         groupId = "fight_dun",
         rect = self.btnDefence:getBoundingBox(),
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
-                self:checkbtnDefence(point)
+                self:checkBtnDefence(point)
             end
         end
-    })     
+    }) 
 end
 
 function FightPlayer:initGuide3()
