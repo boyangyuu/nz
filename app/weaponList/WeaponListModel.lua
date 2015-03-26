@@ -126,6 +126,7 @@ function WeaponListModel:onceFull(weaponId)
 				setUserData(data)
 			else
 		    	print("已满级")
+		    	lastLevel = 10
 			end
 		end
 	end

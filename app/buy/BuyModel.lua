@@ -133,8 +133,6 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	end
     self.weaponIndex = 1
     self:showWeaponNotify()
-
-
 end
 
 function BuyModel:showWeaponNotify()
