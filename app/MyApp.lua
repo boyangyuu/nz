@@ -124,8 +124,8 @@ function MyApp:createGameStateFile()
        
             weaponsuipian = {},
 
-            money = 10000000,
-            diamond = 8000,
+            money = 2000,
+            diamond = 0,
             
             --开启的关卡
             currentlevel =  {
@@ -160,11 +160,11 @@ function MyApp:createGameStateFile()
                         xiangqian       = false,   --镶嵌一套青铜
 
                         --第1-3关之前
-                        weapon          = true,   -- 升级武器
-                        afterfight03    = true,   -- 回到主界面
+                        weapon          = false,   -- 升级武器
+                        afterfight03    = false,   -- 回到主界面
                         
                         --第1-3.1关之内
-                        fight04         = true,                        
+                        fight04         = false,                        
             },
             fight = {
                isPreferBag1 = true,
