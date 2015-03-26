@@ -2,7 +2,7 @@ local EnemyDescConfig = class("EnemyDescConfig", cc.mvc.ModelBase)
 
 local configs = {}
 
-configs["boss02"] = {                  --蓝色
+configs["boss02"] = {                  --蓝色(扔汽车)
 	title = "BOSS信息！",
 	name = "毁灭者",
 	spc = "技能：",
@@ -12,7 +12,7 @@ configs["boss02"] = {                  --蓝色
 	playanim = "stand",
 }
 
-configs["boss02_1"] = {                  --cf肌肉男
+configs["boss02_1"] = {                  --cf红色肌肉男(扔铁球)
 	title = "BOSS信息！",
 	name = "毁灭者三号",
 	spc = "技能：",
@@ -22,7 +22,7 @@ configs["boss02_1"] = {                  --cf肌肉男
 	playanim = "stand",
 }
 
-configs["boss02_2"] = {                --黄色
+configs["boss02_2"] = {                --黄色(扔汽油桶)
 	title = "BOSS信息！",
 	name = "毁灭者二号",
 	spc = "技能：",
@@ -32,7 +32,7 @@ configs["boss02_2"] = {                --黄色
 	playanim = "stand",
 }
 
-configs["boss01"] = {
+configs["boss01"] = {                              --盾牌红boss原型
 	title = "BOSS信息！",
 	name = "黑暗金刚",
 	spc = "技能：",
@@ -42,9 +42,9 @@ configs["boss01"] = {
 	playanim = "stand",
 }
 
-configs["boss01_1"] = {                            --黄色
+configs["boss01_1"] = {                            --银灰冷色终结者
 	title = "BOSS信息！",
-	name = "烈火金刚",
+	name = "地狱金刚",
 	spc = "技能：",
 	skill = {"狂热射击","召唤","连续飞弹"},
 	weakness = "头部，手部，腹部",
@@ -52,9 +52,9 @@ configs["boss01_1"] = {                            --黄色
 	playanim = "stand",
 }
 
-configs["boss01_2"] = {                            --红色
+configs["boss01_2"] = {                            --红色机甲开枪为主
 	title = "BOSS信息！",
-	name = "地狱金刚",
+	name = "烈火金刚",
 	spc = "技能：",
 	skill = {"狂热射击","召唤","连续飞弹"},
 	weakness = "头部，手部，腹部",
