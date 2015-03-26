@@ -153,16 +153,16 @@ local waves = {
 			},	
 			{
 				time = 9,	
-				num = 3,
-				pos = {720,800,980},
-				delay = {0,0.6,1},
+				num = 1,
+				pos = {980},
+				delay = {0,},
 				property = {
 					placeName = "place2", 
 					startState = "rollleft",
 					id = 1,
 				},
 			},
-		                                     	-- 以上是第一波第三批 32
+		                                     	-- 以上是第一波第三批 30
 		},
 	},	
 	{
@@ -266,9 +266,9 @@ local waves = {
 			},
 			{
 				time = 11,
-				num = 3,
-				delay = {0.2,1.0, 1.6},
-				pos = {350,550,700},					
+				num = 2,
+				delay = {0.2,1.0},
+				pos = {550,700},					
 				property = {
 					placeName = "place3",  
 					startState = "rollleft",
@@ -287,7 +287,7 @@ local waves = {
 					placeName = "place2",
 				},
 			},		
- 			                                       -- 以上是第二波第三批    31  
+ 			                                       -- 以上是第二波第三批    30
 		},
 
 	},
@@ -454,166 +454,6 @@ local waves = {
 		                                                                            	-- 以上是第三波第三批 30
 		},
 	},	
-	-- {                                                                                    --第四波
-	-- 	enemys = { 
-	-- 		{
-	-- 			time = 2,
-	-- 			num = 1,
-	-- 			delay = {0.5},
-	-- 			pos = {800},
-	-- 			property = { 
-	-- 				placeName = "place1",
-	-- 				id = 2,
-	-- 				startState = "rollleft",
-	-- 				type = "dao",
-	-- 				missileId = 3,
-	-- 				missileType = "lei",
-	-- 				--demageScale = 2                    --伤害翻1.5倍
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 3,
-	-- 			num = 1,
-	-- 			delay = {0.5},
-	-- 			pos = {250},
-	-- 			property = { 
-	-- 				placeName = "place2",
-	-- 				id = 2,
-	-- 				startState = "rollright",
-	-- 				type = "dao",
-	-- 				missileId = 3,
-	-- 				missileType = "lei",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 4,	
-	-- 			num = 2,
-	-- 			pos = {250,450},
-	-- 			delay = {0,0.8},
-	-- 			property = { 
-	-- 				placeName = "place3",
-	-- 				startState = "rollright",
-	-- 				id = 1,
-	-- 				--demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 5,	
-	-- 			num = 3,
-	-- 			pos = {910,750,650},
-	-- 			delay = {0,0.5,1},
-	-- 			property = { 
-	-- 				placeName = "place4",
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 				--demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 6,	
-	-- 			num = 3,
-	-- 			pos = {250,350,440},
-	-- 			delay = {0,0.5,1},
-	-- 			property = { 
-	-- 				placeName = "place1",
-	-- 				startState = "rollright",
-	-- 				id = 1,
-	-- 				--demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},		
-	-- 		{
-	-- 			time = 7,	
-	-- 			num = 3,
-	-- 			pos = {800,750,650},
-	-- 			delay = {0,0.6,1},
-	-- 			property = {
-	-- 				placeName = "place4", 
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 				--demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 8,
-	-- 			num = 2,
-	-- 			delay = {0.5,0},
-	-- 			pos = {250,900},
-	-- 			property = { 
-	-- 				placeName = "place3",
-	-- 				id = 2,
-	-- 				startState = "",
-	-- 				type = "dao",
-	-- 				missileId = 3,
-	-- 				missileType = "lei",
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 9,	
-	-- 			num = 2,
-	-- 			pos = {780,950},
-	-- 			delay = {0,0.6},
-	-- 			property = {
-	-- 				placeName = "place2", 
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 				--demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 10,	
-	-- 			num = 3,
-	-- 			pos = {250,350,430},
-	-- 			delay = {0,0.5,1},
-	-- 			property = { 
-	-- 				placeName = "place1",
-	-- 				startState = "rollright",
-	-- 				id = 1,
-	-- 				-- demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},		
-	-- 		{
-	-- 			time = 11,	
-	-- 			num = 2,
-	-- 			pos = {1000,750},
-	-- 			delay = {0,0.5},
-	-- 			property = {
-	-- 				placeName = "place4", 
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 				-- demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 12,
-	-- 			num = 2,
-	-- 			delay = {0.5,0},
-	-- 			pos = {250,900},
-	-- 			property = { 
-	-- 				placeName = "place3",
-	-- 				id = 2,
-	-- 				startState = "rollright",
-	-- 				type = "dao",
-	-- 				missileId = 3,
-	-- 				missileType = "lei",
-	-- 				-- demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 13,	
-	-- 			num = 3,
-	-- 			pos = {520,810,980},
-	-- 			delay = {0,0.5,1},
-	-- 			property = {
-	-- 				placeName = "place2", 
-	-- 				startState = "rollleft",
-	-- 				id = 1,
-	-- 				-- demageScale = 2                    --伤害翻1.2倍
-	-- 			},
-	-- 		},
-	-- 	                                                                            	-- 以上是第四波第三批 31
-	-- 	},
-	-- },	
-
 	
 }
 
