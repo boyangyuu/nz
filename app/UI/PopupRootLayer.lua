@@ -17,8 +17,6 @@ function PopupRootLayer:ctor(properties)
 		:addEventListener(ui.POPUP_SHOW_EVENT, handler(self, self.showPopup))	
 		:addEventListener(ui.POPUP_CLOSE_EVENT, handler(self, self.closePopup))
 		:addEventListener(ui.POPUP_CLOSEALL_EVENT, handler(self, self.closeAllPopup))
-
-
 end
 
 function PopupRootLayer:showPopup(event)
@@ -58,13 +56,13 @@ function PopupRootLayer:closePopup(event)
 	print(" PopupRootLayer:closePopup(event)")
 	local eventData = event.eventData
 	local isCancelAnim = eventData ~= nil and eventData.isCancelAnim
-	local onCloseFunc   = eventData ~= nil and eventData.onCloseFunc
+	local onCloseFunc  = eventData ~= nil and eventData.onCloseFunc
 	if isCancelAnim then
 		self.layers[event.layerId]:removeSelf()
     	self.layers[event.layerId] = nil
+    	if onCloseFunc then onCloseFunc() end
     	if table.nums(self.layers) == 0 then
     		self:setVisible(false)
-    		if onCloseFunc then onCloseFunc() end
     	end
 	else
 		transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.3, 0.0), {
@@ -73,9 +71,9 @@ function PopupRootLayer:closePopup(event)
 	    	onComplete = function() 
 		    	self.layers[event.layerId]:removeSelf()
 		    	self.layers[event.layerId] = nil
+		    	if onCloseFunc then onCloseFunc() end
 		    	if table.nums(self.layers) == 0 then
 		    		self:setVisible(false)
-		    		if onCloseFunc then onCloseFunc() end
 		    	end
 	       end, 
 		})
