@@ -127,7 +127,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	inlayModel:buyGoldsInlay(3)
 	if buydata.isNotPopFiveWeapon == true then
 		ui:showPopup("commonPopup",
-		 {type = "style1",content = "请在武器库装备！"},
+		 {type = "style1",content = "购买成功，请在武器库装备！"},
 		 {opacity = 0})
 		return 
 	end
