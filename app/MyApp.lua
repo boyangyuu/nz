@@ -18,7 +18,7 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 isAnalytics = false --统计功能开关
-__versionId = "1.2"
+__versionId = "1.2.0"
 
 ui        = UI.new()
 md        = MD.new()
@@ -182,7 +182,7 @@ function MyApp:createGameStateFile()
                         dailyid = 0,
             },
             preference = {
-                isOpenMusic = false
+                isOpenMusic = true
             },
             
     }
