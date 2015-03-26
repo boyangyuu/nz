@@ -101,7 +101,7 @@ Define.kBaoRangeH 				= 200	--自爆范围高
 --角色扔的手雷
 Define.kLeiRangeW 				= 150	--手雷范围宽
 Define.kLeiRangeH 				= 150	--手雷范围高
-Define.kLeiDemage 				= 2500.0	--手雷伤害
+Define.kLeiDemage 				= 3500.0	--手雷伤害
 Define.kLeiTime				    = 1.0	--手雷飞行时间
 
 --盾牌
