@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 
 local LevelDetailLayer = class("LevelDetailLayer", function()
 	return display.newLayer()
@@ -275,12 +274,9 @@ function LevelDetailLayer:onClickBtnBibei()
 		else
 			self.weaponListModel:equipBag(self.recomWeaponId,1)
 		end
-		-- self.alreadyBibei:setVisible(true)
-		-- self.btnBibei:setVisible(false)
-			self:refreshBtns()
-
+		self:refreshBtns()
 	else
-        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+        self.buyModel:showBuy("weaponGiftBag",{ payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
         deneyBuyFunc = handler(self,self.onCancelWeaponGift)}, 
         	"关卡详情_点击必备按钮")
 	end
@@ -289,11 +285,8 @@ function LevelDetailLayer:onClickBtnBibei()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
-	function equipJijia()
-		-- self.alreadyJijia:setVisible(true)
-		-- self.btnJijia:setVisible(false)	
-			self:refreshBtns()
-
+	function equipJijia()	
+		self:refreshBtns()
 	end
 
 	function deneyGoldGiftJijia()
@@ -317,11 +310,8 @@ function LevelDetailLayer:onClickBtnGold()
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	local isDone = self.guide:isDone("weapon")
 	if goldweaponNum > 0 then
-        self.inlayModel:equipAllInlays()
-		-- self.alreadyGold:setVisible(true)
-		-- self.btnGold:setVisible(false)	
-			self:refreshBtns()
-
+        self.inlayModel:equipAllInlays()	
+		self:refreshBtns()
     else
 	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self, self.equipGold),deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
@@ -342,21 +332,14 @@ function LevelDetailLayer:onBuyWeaponGiftSucc()
     local levelMapModel = md:getInstance("LevelMapModel")
     levelMapModel:hideGiftBagIcon()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	-- self.alreadyBibei:setVisible(true)
-	-- self.btnBibei:setVisible(false)
-		self:refreshBtns()
-
+	self:refreshBtns()
 end
 
 function LevelDetailLayer:onBuyWeaponSucc()
 	self.levelDetailModel:reloadlistview()
 	self.weaponListModel:equipBag(self.recomWeaponId,1)
-	-- self.alreadyBibei:setVisible(true)
-	-- self.btnBibei:setVisible(false)
-		self:refreshBtns()
-
+	self:refreshBtns()
 end
-
 
 ---- initData ----
 function LevelDetailLayer:initData()

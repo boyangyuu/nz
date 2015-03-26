@@ -1,4 +1,3 @@
-import("..includes.functionUtils")
 local scheduler          = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local WeaponListCell = import(".WeaponListCell")
@@ -22,7 +21,6 @@ function WeaponListLayer:ctor()
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     self.buyModel = md:getInstance("BuyModel")
     self.levelMapModel = md:getInstance("LevelMapModel")
-    
 end
 
 --guide
@@ -40,7 +38,7 @@ function WeaponListLayer:onEnter()
 
     --refersh
     self:refreshUI() 
-    
+
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
@@ -295,7 +293,6 @@ end
 
 -- 购买事件
 function WeaponListLayer:onBuyWeaponSucc()
-    ui:closePopup("commonPopup")
     if self.userModel:costDiamond(self.weaponRecord["cost"]) then
         self.weaponListModel:buyWeapon(self.weaponId)
         -- self.weaponListModel:refreshInfo()
@@ -481,6 +478,7 @@ function WeaponListLayer:playOneStar(event)
 end
 
 function WeaponListLayer:playFullStar(event)
+    dump(event.lastLevel)
     local destWeaponId = event.weaponId
     if destWeaponId ~= self.weaponId then return end
     local lastLevel = event.lastLevel

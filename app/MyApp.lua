@@ -18,7 +18,7 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 isAnalytics = false --统计功能开关
-__versionId = "1.2"
+__versionId = "1.2.0"
 
 ui        = UI.new()
 md        = MD.new()
@@ -124,8 +124,8 @@ function MyApp:createGameStateFile()
        
             weaponsuipian = {},
 
-            money = 10000000,
-            diamond = 8000,
+            money = 2000,
+            diamond = 0,
             
             --开启的关卡
             currentlevel =  {
@@ -160,11 +160,11 @@ function MyApp:createGameStateFile()
                         xiangqian       = false,   --镶嵌一套青铜
 
                         --第1-3关之前
-                        weapon          = true,   -- 升级武器
-                        afterfight03    = true,   -- 回到主界面
+                        weapon          = false,   -- 升级武器
+                        afterfight03    = false,   -- 回到主界面
                         
                         --第1-3.1关之内
-                        fight04         = true,                        
+                        fight04         = false,                        
             },
             fight = {
                isPreferBag1 = true,
@@ -182,7 +182,7 @@ function MyApp:createGameStateFile()
                         dailyid = 0,
             },
             preference = {
-                isOpenMusic = false
+                isOpenMusic = true
             },
             
     }
