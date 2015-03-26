@@ -373,7 +373,7 @@ function MapView:getSortedObjects()
 		}
 		--todo
 		local enemyType = v:getProperty()["type"]
-		local isunChecked =  enemyType =="missile"
+		local isunChecked =  enemyType =="missile" or enemyType == "dao_wu"
 		if not isunChecked then 
 			objects[#objects + 1] = object 
 		end

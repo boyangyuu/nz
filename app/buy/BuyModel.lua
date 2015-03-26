@@ -19,12 +19,12 @@ function BuyModel:clearData()
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
+	print("BuyModel:showBuy", strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
-	local config  = BuyConfigs.getConfig(configId)
-
+    
     --um pay
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configId) 
@@ -38,7 +38,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	um:event("支付情况", umData)  
 
 	--pay
-	local isGift = config.isGift 
+	local isGift = buyConfig.isGift 
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
@@ -127,7 +127,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	inlayModel:buyGoldsInlay(3)
 	if buydata.isNotPopFiveWeapon == true then
 		ui:showPopup("commonPopup",
-		 {type = "style1",content = "请在武器库装备！"},
+		 {type = "style1",content = "购买成功，请在武器库装备！"},
 		 {opacity = 0})
 		return 
 	end
@@ -136,6 +136,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 end
 
 function BuyModel:showWeaponNotify()
+	print("self.weaponIndex", self.weaponIndex)
     local weaponId = self.weaponIds[self.weaponIndex]
     if weaponId == nil then 
 		ui:showPopup("commonPopup",

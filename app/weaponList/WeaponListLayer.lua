@@ -44,7 +44,6 @@ function WeaponListLayer:onEnter()
         :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
         :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT, handler(self, self.playOneStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
-        :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
     cc.EventProxy.new(self.levelMapModel, self)
         :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
@@ -500,7 +499,7 @@ function WeaponListLayer:playFullStar(event)
             local zx = "res/Music/ui/zx.wav"
             audio.playSound(zx,false)
             --show
-            self.stars[i]:setVisible(true)
+            -- self.stars[i]:setVisible(true)
         end
         scheduler.performWithDelayGlobal(delayStar, delay)
     end
