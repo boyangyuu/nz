@@ -256,8 +256,7 @@ function Fight:onDialogAfterEnd()
     local buyModel = md:getInstance("BuyModel")
     if not buyModel:checkBought("weaponGiftBag") then 
         buyModel:showBuy("weaponGiftBag", {
-            isNotPopFiveWeapon = true,
-            payDoneFunc = handler(self, self.endFight),
+            closeAllFunc = handler(self, self.endFight),
             deneyBuyFunc = handler(self, self.endFight)},
             self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
     else
