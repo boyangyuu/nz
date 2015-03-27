@@ -7,8 +7,6 @@
 ]]
 
 --import
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
@@ -305,8 +303,7 @@ function BaseBossView:playMoveDaoDan()
 			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
 				property = property})
 		end
-		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
-	    self:addScheduler(sch)    
+		self:performWithDelay(callfuncAddDao, delay)  
 	end
 end
 
@@ -336,8 +333,7 @@ function BaseBossView:playDaoDan(skillName)
         local function callfuncDaoDan()
              self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
         end
-        local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
-        self:addScheduler(sch)         
+        self:performWithDelay(callfuncDaoDan, delay)       
     end 
 end
 
@@ -507,7 +503,7 @@ function BaseBossView:checkSkill(demage)
 				local function callfuncSkill()
 					self:playSkill(skillName)
 				end
-				scheduler.performWithDelayGlobal(callfuncSkill, 0.01)
+				self:performWithDelay(callfuncSkill, 0.01)
 			end
 		end
 	end 
@@ -560,10 +556,8 @@ function BaseBossView:onHitted(targetData)
 	-- print("变红")
 	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
-	local sch1 = scheduler.performWithDelayGlobal(callfunc, 20/60)
-	local sch2 = scheduler.performWithDelayGlobal(callfuncRestore, 60/60)
-	self:addScheduler(sch1)
-	self:addScheduler(sch2)
+	self:performWithDelay(callfunc, 20/60)
+	self:performWithDelay(callfuncRestore, 60/60)
 end
 
 function BaseBossView:initBody()

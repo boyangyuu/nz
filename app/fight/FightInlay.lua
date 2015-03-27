@@ -52,7 +52,6 @@ end
 
 function FightInlay:activeGoldOnCost()
     self:setIsActiveGold(true)
-    print("FightInlay:activeGoldOnCost()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
 
@@ -82,7 +81,6 @@ end
 function FightInlay:activeGold()
     if self:getIsNativeGold() then return end
     self:setIsActiveGold(true)   
-    print("FightInlay:activeGold()") 
     --dispatch
     self:dispatchEvent({name = FightInlay.INLAY_GOLD_BEGIN_EVENT})
     
@@ -105,7 +103,6 @@ end
 
 function FightInlay:setIsActiveGold(IsActiveGold_)
     self.IsActiveGold = IsActiveGold_ 
-    print("function FightInlay:setIsActiveGold",IsActiveGold_)
 end
 
 function FightInlay:getIsActiveGold()
@@ -127,7 +124,6 @@ end
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
-    -- return 0,true
     local record = nil
     local isGoldForbid = type == "blood" or type == "helper" or type == "bullet"
     local isGoldForbid = type == "blood" or type == "bullet"

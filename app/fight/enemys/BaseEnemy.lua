@@ -54,7 +54,11 @@ function BaseEnemy:beginFireCd()
     local function resumeCd()
         self.isFireCd = false
     end
-    scheduler.performWithDelayGlobal(resumeCd, fireCd)
+    if self.resumeFireSch then 
+        scheduler.unscheduleGlobal(self.resumeFireSch)
+    end
+    self.resumeFireSch = scheduler.performWithDelayGlobal(
+        resumeCd, fireCd)
 end
 
 function BaseEnemy:getWalkRate()
@@ -70,7 +74,11 @@ function BaseEnemy:beginWalkCd()
     local function resumeCd()
         self.isWalkCd = false
     end
-    scheduler.performWithDelayGlobal(resumeCd, walkCd)
+    if self.resumeWalkSch then 
+        scheduler.unscheduleGlobal(self.resumeWalkSch)
+    end    
+    self.resumeWalkSch = scheduler.performWithDelayGlobal(
+        resumeCd, walkCd)
 end
 
 function BaseEnemy:getRollRate()
@@ -86,7 +94,11 @@ function BaseEnemy:beginRollCd()
     local function resumeCd()
         self.isRollCd = false
     end
-    scheduler.performWithDelayGlobal(resumeCd, rollCd)
+    if self.resumeRollSch then 
+        scheduler.unscheduleGlobal(self.resumeRollSch)
+    end    
+    self.resumeRollSch = scheduler.performWithDelayGlobal(
+        resumeCd, rollCd)
 end
 
 function BaseEnemy:getSpeakRate()
@@ -103,7 +115,10 @@ function BaseEnemy:beginSpeakCd()
     local function resumeCd()
         self.isSpeakCd = false
     end
-    scheduler.performWithDelayGlobal(resumeCd, speakCd)
+    if self.resumeSpeakSch then 
+        scheduler.unscheduleGlobal(self.resumeSpeakSch)
+    end    
+    self.resumeSpeakSch = scheduler.performWithDelayGlobal(resumeCd, speakCd)
 end
 
 function BaseEnemy:getShanRate()
@@ -120,7 +135,10 @@ function BaseEnemy:beginShanCd()
     local function resumeCd()
         self.isShanCd = false
     end
-    scheduler.performWithDelayGlobal(resumeCd, shanCd)
+    if self.resumeShanSch then 
+        scheduler.unscheduleGlobal(self.resumeShanSch)
+    end    
+    self.resumeShanSch = scheduler.performWithDelayGlobal(resumeCd, shanCd)
 end
 
 function BaseEnemy:getWeakScale(rangeStr)
