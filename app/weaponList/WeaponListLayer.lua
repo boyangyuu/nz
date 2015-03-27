@@ -43,7 +43,7 @@ function WeaponListLayer:onEnter()
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
-        :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.reloadListView))
+        -- :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.reloadListView))
         :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT , handler(self, self.playOneStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 end
@@ -286,15 +286,12 @@ function WeaponListLayer:onBuyWeaponSucc()
         if self.weapontype == "ju" then
             self.weaponListModel:equipBag(self.weaponId,3)
         end
-        local gmcg   = "res/Music/ui/gmcg.wav"
+        local gmcg = "res/Music/ui/gmcg.wav"
         audio.playSound(gmcg,false)
     end
 end
 
 function WeaponListLayer:reloadListView(event)
-    if not self.weaponLV then
-        return
-    end
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
     self:loadWeaponList(self.weaponLV,configTab)
@@ -302,13 +299,11 @@ function WeaponListLayer:reloadListView(event)
     self:refreshComment()
 end
 
--------------- ListView  --------------
 -- 初始化ListView
 function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	for i=1, #weaponTable do
 		local weaponRecord = self.weaponListModel:getWeaponRecord(i)
         local item = weaponListView:newItem()
-		-- local item
 		local content
 		if weaponTable[i] then
 			content = WeaponListCell.new({weaponRecord = weaponRecord})
@@ -332,7 +327,6 @@ function WeaponListLayer:refreshUI()
     self:refreshComment()
     self:refreshBtns()
     self:refreshStar()
-    self:refreshLists()
 end
 
 function WeaponListLayer:refreshLists()

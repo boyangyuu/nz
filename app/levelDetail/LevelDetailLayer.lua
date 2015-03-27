@@ -23,6 +23,7 @@ function LevelDetailLayer:ctor(properties)
 	--ui
 	self:loadCCS()
 	self:initUI()
+	self:initBtns()
 
     self:initGuide()
 
