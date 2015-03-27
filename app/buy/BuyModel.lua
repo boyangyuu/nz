@@ -31,7 +31,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
     -- print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
     self.strDesc = buyConfig.name .. "__" ..strPos
     self.iap = md:getInstance("IAPsdk")
-    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, iap.telecomOperator)
+    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, self.iap.telecomOperator)
 	
     --um event
 	local umData = {}
