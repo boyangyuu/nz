@@ -179,7 +179,8 @@ function HomeBarLayer:initHomeLayer()
             return true
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
-            pm:showPopup("MapPausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
+            local pauseModel = md:getInstance("PauseModel")
+            pauseModel:showPopup("MapPausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
         end
     end)
     addBtnEventListener(self.btnBack, function(event)

@@ -8,6 +8,7 @@ function PauseScene:ctor()
  	-- body
  	self.layer = nil
  	self:addBgLayer()
+ 	local pm = md:getInstance("PauseModel")
  	cc.EventProxy.new(pm, self)
 		:addEventListener(pm.PAUSESCENE_SHOW_EVENT, handler(self, self.showPopup))	
 		:addEventListener(pm.PAUSESCENE_CLOSE_EVENT, handler(self, self.closePopup))

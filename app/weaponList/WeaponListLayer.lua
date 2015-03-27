@@ -487,7 +487,7 @@ function WeaponListLayer:playFullStar(event)
             local zx = "res/Music/ui/zx.wav"
             audio.playSound(zx,false)
             --show
-            self.stars[i]:setVisible(true)
+            -- self.stars[i]:setVisible(true)
         end
         scheduler.performWithDelayGlobal(delayStar, delay)
     end

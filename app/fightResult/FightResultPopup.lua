@@ -14,7 +14,7 @@ function FightResultPopup:loadCCS()
 
     local animLayer = cc.uiloader:seekNodeByName(self, "animlayer")
 
-    local src = "res/FightResult/anim/renwuwc/renwuwc.csb"
+    local src = "res/FightResult/anim/renwuwc/renwuwc.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
     local plist = "res/FightResult/anim/renwuwc/renwuwc0.plist"
