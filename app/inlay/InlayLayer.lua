@@ -30,7 +30,7 @@ function InlayLayer:onEnter()
     self:refreshAvatar()
 
     cc.EventProxy.new(self.inlayModel , self)
-    :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshInlay))
+    :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshUI))
 
 end
 
@@ -46,7 +46,7 @@ function InlayLayer:loadCCS()
     display.addSpriteFrames("xiangqian0.plist", "xiangqian0.png")
 end
 
-function InlayLayer:refreshInlay(event)
+function InlayLayer:refreshUI(event)
     self:refreshBtnIcon(event)
     self:refreshListView(event.typename)
     self:refreshAvatar()
@@ -176,7 +176,6 @@ function InlayLayer:refreshListView(index)
     self.selectarm = ccs.Armature:create("xqtb")
     addChildCenter(self.selectarm, self.icon[index])
     self.selectarm:getAnimation():play("xqtb",-1,1)
-
 end
 
 function InlayLayer:refreshAvatar()
