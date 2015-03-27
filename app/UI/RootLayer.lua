@@ -205,7 +205,7 @@ function RootLayer:addResFight()
 
     local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx", "jiatl_zx"} 
     for i,v in ipairs(focusImgs) do
-        local src = "res/Fight/focusAnim/"..v.."/"..v..".csb"
+        local src = "res/Fight/focusAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
         local plist = "res/Fight/focusAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/focusAnim/"..v.."/"..v.."0.png"
