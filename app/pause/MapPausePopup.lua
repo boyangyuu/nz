@@ -23,7 +23,7 @@ function MapPausePopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then 
-			pm:closePopup()
+			self:closePopup()
 			assert("gameContinue is pressed!")
 		end
 	end)
@@ -39,7 +39,7 @@ function MapPausePopup:initButtons()
 			if self.isChanging then return end 
 			self.isChanging = true
 			self:btnColor(backBtn, false)
-			pm:closePopup()
+			self:closePopup()
 			ui:changeLayer("StartLayer", {})
 			print("homeBackBtn is pressed!")
 		end
@@ -87,9 +87,14 @@ function MapPausePopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			pm:closePopup()
+			self:closePopup()
 		end
 	end)
+end
+
+function MapPausePopup:closePopup()
+	local pauseModel = md:getInstance("PauseModel")
+    pauseModel:closePopup()
 end
 
 function MapPausePopup:btnColor(btn,isPress)

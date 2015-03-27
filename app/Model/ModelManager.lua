@@ -1,8 +1,4 @@
 
-
-
-
-
 local ModelManager = class("ModelManager", cc.mvc.ModelBase)
 local modelClasses = {}
 local needCreateClasses = {}
@@ -40,6 +36,12 @@ modelClasses["DebugModel"]          = import("..debug.DebugModel")
 
 --buy
 modelClasses["BuyModel"]            = import("..buy.BuyModel")
+
+--PauseScene
+modelClasses["PauseModel"]          = import("..pause.PauseModel")
+
+-- IAPsdk
+modelClasses["IAPsdk"]              = import("..SDK.IAPsdk")
 
 --need create
 needCreateClasses["Hero"] = true

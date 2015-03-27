@@ -7,8 +7,6 @@ local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 local DataModel = require("app.DataModel")
 GameState = require("framework.cc.utils.GameState")
-local IAPsdk = require("app.SDK.IAPsdk")
-local PauseModel = require("app.pause.PauseModel")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
@@ -25,8 +23,6 @@ md        = MD.new()
 um        = UM.new()
 define    = Define.new()
 dataModel = DataModel.new()
-iap       = IAPsdk.new()
-pm        = PauseModel.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
@@ -195,7 +191,8 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-     pm:showPopup("HomePausePopup",{},
+    local pauseModel = md:getInstance("PauseModel")
+    pauseModel:showPopup("HomePausePopup",{},
         {anim = true,isNotScrenCapture = true})
 end
 

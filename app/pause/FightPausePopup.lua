@@ -22,7 +22,7 @@ function FightPausePopup:initButtons()
 		if event.name == 'began' then 
 			return true
 		elseif event.name == 'ended' then 
-			pm:closePopup()
+			self:closePopup()
 		end
 	end)
 
@@ -47,7 +47,7 @@ function FightPausePopup:initButtons()
 			print("中途退出")
 
 			--pauseModel
-			pm:closePopup()
+			self:closePopup()
 			
 		end
 	end)
@@ -98,9 +98,14 @@ function FightPausePopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 
-			pm:closePopup()
+			self:closePopup()
 		end
 	end)
+end
+
+function FightPausePopup:closePopup()
+	local pauseModel = md:getInstance("PauseModel")
+    pauseModel:closePopup()
 end
 
 function FightPausePopup:onEnter()

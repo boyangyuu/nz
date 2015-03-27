@@ -8,7 +8,7 @@ local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 
 -- 定义事件
 function BuyModel:ctor(properties)
-    BuyModel.super.ctor(self, properties) 
+    BuyModel.super.ctor(self, properties)
 end
 
 function BuyModel:clearData()
@@ -30,7 +30,8 @@ function BuyModel:showBuy(configId, buyData, strPos)
     local buyConfig = BuyConfigs.getConfig(configId) 
     -- print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
     self.strDesc = buyConfig.name .. "__" ..strPos
-    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, "MM")
+    self.iap = md:getInstance("IAPsdk")
+    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, iap.telecomOperator)
 	
     --um event
 	local umData = {}
@@ -57,7 +58,7 @@ end
 
 function BuyModel:iapPay()
 	display.pause()
-	iap:pay(self.curId)
+	self.iap:pay(self.curId)
 end
 
 function BuyModel:gameResume()
