@@ -71,7 +71,7 @@ function WeaponBag:initUI()
         elseif event.name=='ended' then
             print("ended")
             self.weaponListModel:equipBag(self.weaponid,1)
-            self.weaponListModel:refreshInfo()
+            self.weaponListModel:refreshData()
             self:refreshData("bag1")
         end
         local data = getUserData()
@@ -84,7 +84,7 @@ function WeaponBag:initUI()
         elseif event.name=='ended' then
             print("ended")
             self.weaponListModel:equipBag(self.weaponid,2)
-            self.weaponListModel:refreshInfo()
+            self.weaponListModel:refreshData()
             self:refreshData("bag2")
         end
             local data = getUserData()
@@ -98,7 +98,7 @@ function WeaponBag:initUI()
         elseif event.name=='ended' then
             print("ended")
             self.weaponListModel:equipBag(self.weaponid,3)
-            self.weaponListModel:refreshInfo()
+            self.weaponListModel:refreshData()
             self:refreshData("bag3")
         end
         local data = getUserData()
