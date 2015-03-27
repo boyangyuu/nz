@@ -1,5 +1,3 @@
-local scheduler          = require(cc.PACKAGE_NAME .. ".scheduler")
-
 local WeaponListCell = import(".WeaponListCell")
 local WeaponBag = import(".WeaponBag")
 
@@ -43,7 +41,7 @@ function WeaponListLayer:onEnter()
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
-        -- :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.reloadListView))
+        -- :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshListView))
         :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT , handler(self, self.playOneStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 end
@@ -158,7 +156,7 @@ function WeaponListLayer:initUI()
     self.equipedju:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    self:reloadListView()
+    self:refreshListView()
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
@@ -291,7 +289,7 @@ function WeaponListLayer:onBuyWeaponSucc()
     end
 end
 
-function WeaponListLayer:reloadListView(event)
+function WeaponListLayer:refreshListView(event)
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
     self:loadWeaponList(self.weaponLV,configTab)
@@ -442,7 +440,7 @@ function WeaponListLayer:playOneStar(event)
         --show
         self.stars[curLevel]:setVisible(true)
     end
-    scheduler.performWithDelayGlobal(delayStar, delay)
+    self:performWithDelay(delayStar, delay)
 
     --weapon anim
     local armature = ccs.Armature:create("wqsj")
@@ -483,7 +481,7 @@ function WeaponListLayer:playFullStar(event)
             --show
             -- self.stars[i]:setVisible(true)
         end
-        scheduler.performWithDelayGlobal(delayStar, delay)
+        self:performWithDelay(delayStar, delay)
     end
 
     local armature = ccs.Armature:create("wqsj")

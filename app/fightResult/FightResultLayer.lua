@@ -1,4 +1,3 @@
-local scheduler			 = require(cc.PACKAGE_NAME .. ".scheduler")
 local Color_BLACK = cc.c3b(0, 0, 0)
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
@@ -76,7 +75,6 @@ function FightResultLayer:loadCCS()
 
 end
 
--- local playStarHandler = nil
 function FightResultLayer:playstar(numStar)
 	local posXinterval = 112
 	for i=1,numStar do
@@ -90,7 +88,6 @@ function FightResultLayer:playstar(numStar)
 		    		function(armatureBack,movementType,movementId ) 
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
-		         		-- scheduler.performWithDelayGlobal(showButton, 1)
 		         		self:performWithDelay(showButton, 1)
 		         	end    
 	            end)
@@ -99,7 +96,6 @@ function FightResultLayer:playstar(numStar)
 		    local zx = "res/Music/ui/zx.wav"
 		    audio.playSound(zx,false)
 		end
-		-- playStarHandler = scheduler.performWithDelayGlobal(starcall, delay)
 		self:performWithDelay(starcall, delay)
 	end
 end
@@ -285,7 +281,6 @@ function FightResultLayer:playCard()
 			self.cardover[k]:runAction(sequence)
 			self.card[k]:runAction(cc.ScaleTo:create(0.3,0,1))
 		end
-		-- scheduler.performWithDelayGlobal(delayturn, delay)
 		self:performWithDelay(delayturn, delay)
 	end
 	for k,v in pairs(self.giveTable) do
@@ -293,13 +288,11 @@ function FightResultLayer:playCard()
 			function popUpSuipianNoti()
 				self:popSuipianNotify(self.suipianId)
 			end
-			-- scheduler.performWithDelayGlobal(popUpSuipianNoti, 1)
 			self:performWithDelay(popUpSuipianNoti, 1)
 		elseif v.falltype == "gun" then
 			function popUpGunNoti()
 				self:popGunNotify(self.weaponId)
 			end
-			-- scheduler.performWithDelayGlobal(popUpGunNoti, 1)
 			self:performWithDelay(popUpGunNoti, 1)
 		end
 	end

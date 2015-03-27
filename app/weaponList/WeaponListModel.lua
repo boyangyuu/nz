@@ -1,9 +1,3 @@
-
---[[--
-
-“武器库”类
-
-]]
 local WeaponListModel = class("WeaponListModel", cc.mvc.ModelBase)
 
 WeaponListModel.WEAPON_UPDATE_EVENT 	= "WEAPON_UPDATE_EVENT"

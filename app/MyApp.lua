@@ -99,7 +99,7 @@ function MyApp:createGameStateFile()
                                         weaponid   = 6,
                                         },
                         },
-                        awardedIds = {    
+                        awardedIds = {
                         }
             }, 
             inlay = {
