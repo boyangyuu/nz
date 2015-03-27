@@ -6,9 +6,10 @@
 ]]
 local WeaponListModel = class("WeaponListModel", cc.mvc.ModelBase)
 
-WeaponListModel.REFRESHBTN_EVENT = "REFRESHBTN_EVENT"
-WeaponListModel.WEAPON_STAR_ONE_EVENT = "WEAPON_STAR_ONE_EVENT"
-WeaponListModel.WEAPON_STAR_FULL_EVENT = "WEAPON_STAR_FULL_EVENT"
+WeaponListModel.WEAPON_UPDATE_EVENT 	= "WEAPON_UPDATE_EVENT"
+WeaponListModel.WEAPON_STAR_ONE_EVENT   = "WEAPON_STAR_ONE_EVENT"
+WeaponListModel.WEAPON_STAR_FULL_EVENT  = "WEAPON_STAR_FULL_EVENT"
+WeaponListModel.REFRESH_WEAPON_LISTVIEW  = "REFRESH_WEAPON_LISTVIEW"
 
 function WeaponListModel:ctor(properties, events, callbacks)
 	WeaponListModel.super.ctor(self, properties)
@@ -95,7 +96,7 @@ function WeaponListModel:buyWeapon(weaponid)
 	    table.insert(data.weapons.bags, intensify)
 	    setUserData(data)
     end
-    self:refreshInfo()
+    self:refreshData()
 end
 
 function WeaponListModel:intensify(weaponid)
@@ -111,7 +112,7 @@ function WeaponListModel:intensify(weaponid)
 			end
 		end
 	end
-	self:refreshInfo()
+	self:refreshData()
 	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_ONE_EVENT})
 end
 
@@ -130,7 +131,7 @@ function WeaponListModel:onceFull(weaponId)
 			end
 		end
 	end
-	self:refreshInfo()
+	self:refreshData()
 	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_FULL_EVENT, 
 		lastLevel = lastLevel, weaponId = weaponId})
 end
@@ -223,11 +224,12 @@ function WeaponListModel:equipBag( weaponid, index )
 		data.weapons.weaponed.bag1 = data.weapons.weaponed.bag2
 		data.weapons.weaponed.bag2 = x
 	end
-	self:refreshInfo()
+
+	self:refreshData()
 end
 
-function WeaponListModel:refreshInfo()
-	self:dispatchEvent({name = WeaponListModel.REFRESHBTN_EVENT})
+function WeaponListModel:refreshData()
+	self:dispatchEvent({name = WeaponListModel.WEAPON_UPDATE_EVENT})
 end
 --[[
 	@param : 

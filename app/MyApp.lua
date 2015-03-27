@@ -15,7 +15,7 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 GameData={}
 
 isFree = true       --付费免费
-isTest  = false     --战斗的各种框     
+isTest  = true     --战斗的各种框     
 isDebug = true      --debug页面
 isAnalytics = false --统计功能开关
 __versionId = "1.2.0"

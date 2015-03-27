@@ -119,7 +119,7 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 --子弹
 
 --手雷
-Define.kShouLeiCd    			= 0.5  -- 手雷cd
+Define.kShouLeiCd    			= 0.2  -- 手雷cd
 
 --狙击枪
 Define.kJuRange 				= 4.0  -- 狙击镜放大的范围

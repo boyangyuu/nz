@@ -145,23 +145,6 @@ function RootLayer:addResFight()
 
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
-    -- local enemyImgs = {
-    --     --普通怪物
-    --     "anim_enemy_002", "jinzhanb", "zibaob", "dunbing", 
-    --     "qiqiu01", "qiqiu02", "qiqiu03", "xiaozz",
-    --     "sanbing01", "zpbing", "shouleib",  "hs","feiji",
-    --     "yyc","shangr","shangr_1", "xiaorz",  "feibiao","zzw",
-    --     "dl_xz",
-    --     --导弹
-    --     "shoulei", "daodan", "tieqiu", "daodan02",
-    -- }
-    -- for i,v in ipairs(enemyImgs) do
-    --     local src = "res/Fight/enemys/"..v.."/"..v..".csb"
-    --     manager:addArmatureFileInfoAsync(src, handler(self, self.dataLoaded))
-    --     local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
-    --     local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
-    --     display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
-    -- end
 
     local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
         "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw", "shiBaiTiShi"}
@@ -205,7 +188,7 @@ function RootLayer:addResFight()
 
     local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx", "jiatl_zx"} 
     for i,v in ipairs(focusImgs) do
-        local src = "res/Fight/focusAnim/"..v.."/"..v..".csb"
+        local src = "res/Fight/focusAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
         local plist = "res/Fight/focusAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/focusAnim/"..v.."/"..v.."0.png"

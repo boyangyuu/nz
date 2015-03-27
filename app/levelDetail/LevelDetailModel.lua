@@ -10,6 +10,10 @@ local LevelDetailModel = class("LevelDetailModel", cc.mvc.ModelBase)
 
 function LevelDetailModel:ctor(properties)
 	LevelDetailModel.super.ctor(self, properties)
+	self.config 	= nil 
+	self.curGroupId = nil 
+	self.curLevelId = nil
+
 	self:initConfigTable()
 	self.weaponListModel = md:getInstance("WeaponListModel")
 end
@@ -19,23 +23,23 @@ function LevelDetailModel:initConfigTable()
 end
 
 function LevelDetailModel:getConfig(groupId,levelId)
-	local records = getRecordFromTable(self.config,"groupId",groupId)
+	assert(groupId and levelId, "param is nil")
+	local config = nil
+	local records = getRecordFromTable(self.config, "groupId", groupId)
 	for k,v in pairs(records) do
 		if v.levelId == levelId then
-			return v
+			config = v
 		end
 	end
-	return nil
+	assert(config, "config is nil groupId is " .. groupId .. 
+			"levelId is " .. levelId)
+	return config
 end
 
 function LevelDetailModel:setCurGroupAndLevel(gid, lid)
 	print("gid"..gid)
 	self.curGroupId = gid
 	self.curLevelId = lid
-end
-
-function LevelDetailModel:getCurGroupAndLevel()
-	return self.curGroupId, self.curLevelId
 end
 
 function LevelDetailModel:getCurLevelType()
@@ -48,7 +52,6 @@ function LevelDetailModel:getCurLevelType()
 end
 
 function LevelDetailModel:isJujiFight()
-	-- return false
     return self:getCurLevelType() == "juji"
 end
 
@@ -72,7 +75,7 @@ function LevelDetailModel:setsuipian(weaponId)
 				if v.weaponid == weaponId then
 					data.weaponsuipian[k].number = data.weaponsuipian[k].number + 1
 					if data.weaponsuipian[k].number == needNum then
-						self:weapontogether(weaponId)
+						self:setWeaponTogether(weaponId)
 					end
 				end
 			end
@@ -108,7 +111,7 @@ function LevelDetailModel:getSuiPianNum(weaponid)
 	end
 end
 
-function LevelDetailModel:weapontogether(weaponid)
+function LevelDetailModel:setWeaponTogether(weaponid)
 	local data = getUserData()
 	for k,v in pairs(data.weaponsuipian) do
 		if v.weaponid == weaponid then
@@ -116,10 +119,6 @@ function LevelDetailModel:weapontogether(weaponid)
 			self.weaponListModel:buyWeapon(weaponid)
 		end
 	end
-end
-
-function LevelDetailModel:reloadlistview()
-	self:dispatchEvent({name = "REFRESH_WEAPON_LISTVIEW"})
 end
 
 return LevelDetailModel
