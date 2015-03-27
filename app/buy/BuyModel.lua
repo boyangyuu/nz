@@ -133,16 +133,18 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		return 
 	end
     self.weaponIndex = 1
-    self:showWeaponNotify()
+    local closeAllFunc = buydata.closeAllFunc
+    self:showWeaponNotify(closeAllFunc)
 end
 
-function BuyModel:showWeaponNotify()
+function BuyModel:showWeaponNotify(closeAllFunc)
 	print("self.weaponIndex", self.weaponIndex)
     local weaponId = self.weaponIds[self.weaponIndex]
     if weaponId == nil then 
 		ui:showPopup("commonPopup",
 		 {type = "style1",content = "请在武器库装备！"},
 		 {opacity = 0})
+		closeAllFunc()
 		return 
 	end
     print("weaponId",weaponId)

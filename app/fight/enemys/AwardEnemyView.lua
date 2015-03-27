@@ -5,8 +5,6 @@
 1. 杀死获得指定奖励(黄武 手雷 金币 钻石 武器等)
 ]]
 
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
