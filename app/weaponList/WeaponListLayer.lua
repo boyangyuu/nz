@@ -269,8 +269,7 @@ function WeaponListLayer:onCancelWeaponGift()
 end
 
 function WeaponListLayer:onCancelOncefull()
-    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId,
-            payDoneFunc = handler(self,self.refreshUI)}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
+    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId}, "武器库界面_点击一键满级"..self.weaponRecord["name"])
 end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()
@@ -321,7 +320,7 @@ function WeaponListLayer:touchListener(event)
     end
 end
 
-function WeaponListLayer:refreshUI()
+function WeaponListLayer:refreshUI(event)
     self:refreshComment()
     self:refreshBtns()
     self:refreshStar()
