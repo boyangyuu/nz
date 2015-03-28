@@ -15,8 +15,8 @@ GameData={}
 isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
-isAnalytics = false --统计功能开关
-__versionId = "1.2.0"
+isAnalytics = nil --统计功能开关
+__versionId = nil
 
 ui        = UI.new()
 md        = MD.new()
@@ -26,9 +26,13 @@ dataModel = DataModel.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
+    self:initVersionId()
+    self:initIsAnalytics()
     self.objects_ = {}
     self:initGameState()    
-    
+
+    -- um 设置玩家账户及等级
+    um:setUserAccount()
 end
 
 function MyApp:run()
@@ -66,6 +70,31 @@ function MyApp:initGameState()
 
     -- um 设置玩家账户及等级
     um:setUserAccount()
+end
+
+function MyApp:initVersionId()
+    if device.platform ~= "android" then return end
+    local className = "com/hgtt/com/Ccn"
+    local sig = "()Ljava/lang/String;"
+    local result,versionId = luaj.callStaticMethod(className,"getVersionName",{},sig)
+    if versionId then 
+        __versionId = versionId 
+    else
+        __versionId = "unknown"
+    end
+end
+
+function MyApp:initIsAnalytics()
+    if device.platform ~= "android" then return end
+    local className = "com/hgtt/com/Ccn"
+    local sig = "(Ljava/lang/String;)Z"
+    local result, analytics = luaj.callStaticMethod(className,"getAppMetaData",{"ISANALYTICS"},sig)
+    print("analytics :" ,analytics)
+    if analytics == "true"then
+        isAnalytics = analytics
+    else
+        isAnalytics = analytics
+    end
 end
 
 function MyApp:createGameStateFile()

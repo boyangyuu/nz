@@ -99,7 +99,7 @@ end
 function IAPsdk:pay(name)
 	-- print(name)
 	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
-	if isFree or telecomOperator == nil then
+	if isFree or self.telecomOperator == nil then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")
 	else
