@@ -149,8 +149,6 @@ function AwardEnemyView:sendAward()
 	if awardType == "gold" then 
 		local map = md:getInstance("Map")
 		map:dispatchEvent({name = map.AWARD_GOLD_EVENT, pWorld = pWorld})	
-
-	
 	end
 
 end

@@ -120,7 +120,6 @@ function MapAnimView:playAwardGold(event)
 	local armature = ccs.Armature:create("dlhjak")
 	armature:setPosition(pos)
 
-	--scale 狙图特殊处理
 	local scale = self:getScaleByPos(pos)
 	armature:setScale(scale)	
 	self:addChild(armature)
