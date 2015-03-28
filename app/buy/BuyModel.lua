@@ -180,6 +180,8 @@ function BuyModel:buy_goldGiftBag( buydata )
 	propModel:buyProp("jijia",15)
 	--手雷*30
 	propModel:buyProp("lei",30)
+
+	ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
 end
 
 function BuyModel:buy_changshuang( buydata )

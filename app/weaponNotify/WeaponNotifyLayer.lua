@@ -85,8 +85,27 @@ function WeaponNotifyLayer:initUI(properties)
 		labelSuipian:enableOutline(cc.c4b(0, 0, 0,255), 1)
 	    labelSuipian:setString(weaponName.."零件")
 	    labelGun:setVisible(false)
+    elseif properties.type == "goldGift" then
+    	labelSuipian:setVisible(false)
+    	labelGun:setVisible(false)
+		cc.FileUtils:getInstance():addSearchPath("res/GiftBag/GiftBag")
+		local skin1 = ccs.Skin:create("icon_libao2.png")
+		local skin2 = ccs.Skin:create("icon_libao1.png")
+		local skin3 = ccs.Skin:create("icon_libao3.png")
+	    armature:getBone("icon_libao1"):addDisplay(skin1, 1)
+	    armature:getBone("icon_libao2"):addDisplay(skin2, 1)
+	    armature:getBone("icon_libao3"):addDisplay(skin3, 1)
+	    armature:getBone("icon_libao1"):changeDisplayWithIndex(1, true)
+	    armature:getBone("icon_libao2"):changeDisplayWithIndex(1, true)
+	    armature:getBone("icon_libao3"):changeDisplayWithIndex(1, true)
+		armature:getAnimation():setMovementEventCallFunc(   
+         function (armatureBack,movementType,movement) 
+            if movementType == ccs.MovementEventType.complete then
+                armature:getAnimation():play("chixu03" , -1, 1)
+            end
+        end)
+	    armature:getAnimation():play("start03" , -1, 0)
 	end
-
 end
 
 function WeaponNotifyLayer:onBtnGetClicked()

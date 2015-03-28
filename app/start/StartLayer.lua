@@ -133,7 +133,7 @@ function StartLayer:playEnterAnim()
             self[v]:runAction(action)
         end
         i= i+1
-        self:performWithDelay(handler(delayMoveBy, delay) 
+        self:performWithDelay(delayMoveBy, delay) 
     end
 
     function delayScaleTo()
@@ -146,7 +146,7 @@ function StartLayer:playEnterAnim()
 
         transition.execute(self.imgBegin, sequence)
     end
-    self:performWithDelay(handler(delayScaleTo, 0.7) 
+    self:performWithDelay(delayScaleTo, 0.7) 
 end
 
 
