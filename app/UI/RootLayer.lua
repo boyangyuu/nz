@@ -177,7 +177,7 @@ function RootLayer:addResFight()
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))         
     end
 
-    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
+    local jqkImgs = {"jtlqk","effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".ExportJson"
         manager:addArmatureFileInfoAsync(src,  handler(self, self.dataLoaded))
