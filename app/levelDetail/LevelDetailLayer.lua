@@ -250,7 +250,7 @@ function LevelDetailLayer:onClickGoldWeapon()
 	end
 
     self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
-    	deneyBuyFunc = handler(self, self.startGame)},
+    	deneyBuyFunc = handler(self, self.startGame), isNotPopup = true},
 	     "关卡详情_提示未镶嵌点击黄武按钮")
 end
 
