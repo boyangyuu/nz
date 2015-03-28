@@ -25,7 +25,9 @@ function BaseEnemyView:ctor(property)
     
     local function callStart()
     	self:playStartState(property.startState)
+    	self:setVisible(true)
     end
+    self:setVisible(false)
     self:performWithDelay(callStart, 0.01)
 end
 
