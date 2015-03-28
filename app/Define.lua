@@ -103,6 +103,7 @@ Define.kLeiRangeW 				= 300	--手雷范围宽
 Define.kLeiRangeH 				= 150	--手雷范围高
 Define.kLeiDemage 				= 3500.0	--手雷伤害
 Define.kLeiTime				    = 1.0	--手雷飞行时间
+Define.kShouLeiCd    			= 0.2  -- 手雷cd
 
 --盾牌
 Define.cdTimes 					= 15.0   --十秒恢复完毕
@@ -117,9 +118,6 @@ Define.kBuyFullHpTime 			= 0.11  -- 10%血
 
 --手打黄武
 --子弹
-
---手雷
-Define.kShouLeiCd    			= 0.2  -- 手雷cd
 
 --狙击枪
 Define.kJuRange 				= 4.0  -- 狙击镜放大的范围
