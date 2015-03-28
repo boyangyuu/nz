@@ -134,6 +134,18 @@ local waves = {
 				},
 			},
 			{
+				time = 19,	                                               --金武奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					award = "goldWeapon",
+					placeName = "place2",
+				},
+			},
+			{
 				time = 22,
 				num = 3,
 				delay = {0.1,0.6,1.3},
@@ -253,6 +265,9 @@ local enemys = {
 
 	--飞镖
 	{id=18,image="feibiao",demage= 8 ,hp= 1000 },
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 
 
 

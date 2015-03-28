@@ -127,12 +127,14 @@ function MapAnimView:playAwardGold(event)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
-				armature:removeFromParent()
-				local fightInlay = md:getInstance("FightInlay")
-				fightInlay:activeGold()				
+				armature:removeFromParent()			
 	    	end 
     	end)	
 	armature:getAnimation():playWithIndex(0 , -1, 1)	
+
+	--gold
+	local fightInlay = md:getInstance("FightInlay")
+	fightInlay:activeGold()		
 end
 
 
