@@ -14,7 +14,10 @@ end
 
 function FightResultFailPopup:onEnter()
     local guide = md:getInstance("Guide")
-    guide:check("fightRelive")
+    local fight = md:getInstance("Fight")
+    local groupId,levelId = fight:getCurGroupAndLevel()
+    local isWillGuide =  groupId == 1 and levelId == 4
+    if isWillGuide then guide:check("fightRelive") end
 end
 
 function FightResultFailPopup:playSound()

@@ -631,6 +631,10 @@ function BaseBossView:checkGuide1()
 			--show jijia
 			local data = {label_jijiaNum = true,  btnRobot = true}
 			fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})			
+		
+			--show guide
+			local hero = md:getInstance("Hero")
+			hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "wudi"})
 		end		
 	end
 end

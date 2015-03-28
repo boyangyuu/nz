@@ -407,7 +407,19 @@ end
 
 function FightResultLayer:popGunNotify(weaponId)
 	ui:showPopup("WeaponNotifyLayer",
-		 {type = "gun",weaponId = weaponId})
+		 {type = "gun",weaponId = weaponId, onCloseFunc = handler(self, self.checkGuide)})
+end
+
+function FightResultLayer:checkGuide()
+	local guide 		= md:getInstance("Guide")
+	local levelMapModel = md:getInstance("LevelMapModel")
+	local curGroup, curLevel = levelMapModel:getConfig()
+	if curGroup == 1 and curLevel == 1 then 
+		guide:check("afterfight01")	
+	end
+	if curGroup == 1 and curLevel == 4 then 
+		guide:check("afterfight03")	
+	end
 end
 
 function FightResultLayer:getGrade(LeftPersent)
@@ -485,25 +497,6 @@ end
 function FightResultLayer:initGuide()
     local isDone = self.guide:isDone("afterfight01")
     if isDone then return end
---     self.guide:addClickListener({
---         id = "afterfight01_award",
---         groupId = "afterfight01",
---        rect = cc.rect(0, 0, display.width1, display.height1),
---         endfunc = function (touchEvent)
---         	playSoundBtn()
---         end
---      })  
-
-   --  self.guide:addClickListener({
-   --      id = "afterfight01_get",
-   --      groupId = "afterfight01",
-   --      rect = self.btngetall:getCascadeBoundingBox(),
-   --      endfunc = function (touchEvent)
-			-- self:turnLeftCard()   
-			-- playSoundBtn()    
-   --      end
-   --   })   
-
     self.guide:addClickListener({
         id = "afterfight01_jixu",
         groupId = "afterfight01",

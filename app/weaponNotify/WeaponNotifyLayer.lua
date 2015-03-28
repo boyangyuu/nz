@@ -44,8 +44,6 @@ function WeaponNotifyLayer:initUI(properties)
     local armature = ccs.Armature:create("hdxkwq")
     panelAnim:addChild(armature,100)
 
-
-
 	if properties.type == "gun" then
 		local imgName = self.weaponListModel:getWeaponImgByID(properties.weaponId)
 		local weaponName = self.weaponListModel:getWeaponNameByID(properties.weaponId)
@@ -109,13 +107,7 @@ function WeaponNotifyLayer:initUI(properties)
 end
 
 function WeaponNotifyLayer:onBtnGetClicked()
-	--guide
-	local guide = md:getInstance("Guide")
-	guide:check("afterfight01")	
-	guide:check("afterfight03")	
-
 	local onCloseFunc = self.properties["onCloseFunc"]
-	dump(self.properties, "self.properties")
 	ui:closePopup("WeaponNotifyLayer", {onCloseFunc = onCloseFunc})
 end
 

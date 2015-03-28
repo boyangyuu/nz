@@ -14,10 +14,7 @@ function GunHelpLayer:ctor()
 end
 
 function GunHelpLayer:loadCCS()
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saos/yd_saos.ExportJson")
-    display.addSpriteFrames("res/Fight/uiAnim/yd_saos/yd_saos0.plist", 
-        "res/Fight/uiAnim/yd_saos/yd_saos0.png")     
+    local manager = ccs.ArmatureDataManager:getInstance() 
     manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saosan/yd_saosan.ExportJson")
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
         "res/Fight/uiAnim/yd_saosan/yd_saosan0.png")     
@@ -81,21 +78,10 @@ function GunHelpLayer:onClickGet()
 
     if self.gunId == 8 then
         print("function GunHelpLayer:onClickGe111")
-        self:showHelpDesc()
+        local hero = md:getInstance("Hero")
+        hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
     end
 end
 
-function GunHelpLayer:showHelpDesc()
-    local armature = ccs.Armature:create("yd_saos")
-    armature:setPosition(cc.p(690, 465))
-    armature:getAnimation():play("shan", -1, 1)
-    self:addChild(armature, 10)
-
-    local removeFunc = function ()
-        armature:removeSelf()
-        armature = nil
-    end
-    self:performWithDelay(removeFunc, 10.0)
-end
 
 return GunHelpLayer
