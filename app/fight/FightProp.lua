@@ -31,7 +31,7 @@ function FightProp:costRobot(callfuncSuccess)
 			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData)}, "战斗界面_点击机甲")
 		end 
 		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc}, "战斗界面_点击机甲")
+						deneyBuyFunc = deneyBuyFunc, isNotPopup = true}, "战斗界面_点击机甲")
 	end
 	self:refreshData()
 end
@@ -61,7 +61,7 @@ function FightProp:costLei(callfuncSuccess)
 						, "战斗界面_点击手雷")
 		end 		
 		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc}
+						deneyBuyFunc = deneyBuyFunc, isNotPopup = true}
 						, "战斗界面_点击手雷")
 	end
 	self:refreshData()
@@ -89,7 +89,7 @@ function FightProp:costGoldWeapon()
 				, "战斗界面_点击黄武")
 		end 		
 		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
-						deneyBuyFunc = deneyBuyFunc}
+						deneyBuyFunc = deneyBuyFunc, isNotPopup = true}
 						, "战斗界面_点击黄武")	
 	end
 	self:refreshData()

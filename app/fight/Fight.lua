@@ -183,13 +183,12 @@ function Fight:getFailCause()
 end
 
 function Fight:onFail()
-    if self.result then return end   
+    if self.result then return end
+    self.result = "willFail"
+    self.inlayModel:removeAllInlay()
     local fightProp = md:getInstance("FightProp")
     fightProp:costReliveBag()
-    ui:showPopup("FightResultFailPopup",{},{anim = false})
-    
-    --clear
-    self:clearFightData() 
+    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
 end
 
 function Fight:onRelive()

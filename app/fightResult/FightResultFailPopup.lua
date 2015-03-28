@@ -5,14 +5,16 @@ local FightResultFailPopup = class("FightResultFailPopup", function()
 end)
 
 function FightResultFailPopup:ctor()
+    print("function FightResultFailPopup:ctor()")
     self:initUI()
     audio.stopMusic(false)
     self:playSound()
-    self:initGuide()
     self:setNodeEventEnabled(true)
 end
 
 function FightResultFailPopup:onEnter()
+    self:initGuide()
+
     local guide = md:getInstance("Guide")
     local fight = md:getInstance("Fight")
     local groupId,levelId = fight:getCurGroupAndLevel()
@@ -67,7 +69,7 @@ end
 function FightResultFailPopup:onClickRelive()
     local buyModel = md:getInstance("BuyModel")
     buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
-        deneyBuyFunc = handler(self,self.onCancelGoldGift)},
+        deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true},
      "失败页面_点击复活按钮")
 end
 
