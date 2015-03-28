@@ -52,8 +52,8 @@ function StartLayer:initUI()
     dlArmature:getAnimation():play("start" , -1, 0)
 
     --test
-    scheduler.performWithDelayGlobal(handler(self, self.playEnterAnim), 1.9) 
-    -- scheduler.performWithDelayGlobal(handler(self, self.playEnterAnim), 0.1) 
+    self:performWithDelay(handler(self, self.playEnterAnim), 1.9) 
+    -- self:performWithDelay(handler(self, self.playEnterAnim), 0.1) 
 
     self.btnBegin = cc.uiloader:seekNodeByName(self, "btnBegin")
     self.btnAbout = cc.uiloader:seekNodeByName(self, "btnAbout")
@@ -133,7 +133,7 @@ function StartLayer:playEnterAnim()
             self[v]:runAction(action)
         end
         i= i+1
-        scheduler.performWithDelayGlobal(delayMoveBy, delay)
+        self:performWithDelay(handler(delayMoveBy, delay) 
     end
 
     function delayScaleTo()
@@ -146,7 +146,7 @@ function StartLayer:playEnterAnim()
 
         transition.execute(self.imgBegin, sequence)
     end
-    scheduler.performWithDelayGlobal(delayScaleTo, 0.7)
+    self:performWithDelay(handler(delayScaleTo, 0.7) 
 end
 
 

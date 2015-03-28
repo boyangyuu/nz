@@ -23,7 +23,6 @@ function LevelDetailLayer:ctor(properties)
 	--ui
 	self:loadCCS()
 	self:initUI()
-	self:initBtns()
 
     self:initGuide()
 
@@ -130,6 +129,8 @@ function LevelDetailLayer:initUI()
 	weaponimg:setScale(0.57)
 	local bibeiimg = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")
 	addChildCenter(weaponimg, bibeiimg) 
+
+	self:initBtns()
 end
 
 function LevelDetailLayer:initMapUI(mapName)
