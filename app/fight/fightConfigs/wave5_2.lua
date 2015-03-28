@@ -382,9 +382,18 @@ local bosses = {
 			-- 	0.60,
 			-- },
 			
-			daoDan = {                                   --两发导弹
-				0.95,0.80,0.64, 0.45, 0.34, 0.22,
+			daoDan1 = {                                            --两发导弹
+				0.99, 0.45, 0.10
 			},
+
+			daoDan2 = {                                            --两发导弹
+				0.80, 0.50, 0.20
+			},
+
+			daoDan3 = {                                            --两发导弹
+				0.75, 0.25, 0.15
+			},
+
 
 			weak1 = {
 				0.70,0.50,0.10
@@ -409,6 +418,22 @@ local bosses = {
 			},							
 		},
 
+		daoDan1 = {
+			offsetPoses = {
+                cc.p(-300, 0), cc.p(300, 0), 
+           }               
+		},
+		daoDan2 = {
+			offsetPoses = {
+                cc.p(0, 0), cc.p(0, -500), 
+           }               
+		},
+		daoDan3 = {
+			offsetPoses = {
+                cc.p(-300, -300), cc.p(300, -300), 
+           }               
+		},
+
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
 			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
@@ -429,7 +454,7 @@ local bosses = {
 	},
 	--第2个出场的boss
 	{
-		image = "dzboss", --图片名字
+		image = "dzboss_1", --图片名字
 		award = 50000,                   --boss产出金币数量
 		hp = 250000,
 		fireRate = 60,                  --普攻频率
