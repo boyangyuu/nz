@@ -29,7 +29,7 @@ function IAPsdk:initConfigs()
 	local config = self.config
 	-- assert(telecomOperator, "telecomOperator:")
 	if self.telecomOperator == "mobile" then
-		--移动商用计费代码
+		--移动商用计费代码 3月28日检查 无错误
 		--礼包
 		config["novicesBag"]       = "30000883682311"		--新手礼包
 		config["weaponGiftBag"]    = "30000883682317"		--武器到礼包
@@ -51,26 +51,26 @@ function IAPsdk:initConfigs()
 		config["unlockWeapon"] 	   = "30000883682323"       --武器购买
 
 	elseif self.telecomOperator == "unicom" then
-		--联通商用计费代码
+		--联通商用计费代码 3月28日检查 无错误
 		--礼包
-		config["novicesBag"]       = "017"		--新手礼包
-		config["weaponGiftBag"]    = "018"		--武器到礼包
-		config["goldGiftBag"]      = "019"		--土豪金礼包
+		config["novicesBag"]       = "017"		--新手礼包1
+		config["weaponGiftBag"]    = "018"		--武器到礼包1
+		config["goldGiftBag"]      = "019"		--土豪金礼包1
 
 		--单件
 		config["goldWeapon"]       = "006"		--黄武
 		config["handGrenade"]      = "007"		--手雷
-		config["armedMecha"]       = "020"		--机甲
-		config["onceFull"]         = "021"		--一键满级
-		config["resurrection"]     = "022"	    --复活送黄武
+		config["armedMecha"]       = "020"		--机甲1
+		config["onceFull"]         = "021"		--一键满级1
+		config["resurrection"]     = "022"	    --复活送黄武1
 		config["stone120"]         = "013"		--一麻袋宝石
 		config["stone260"]         = "014"		--一箱子宝石
 		config["stone450"]         = "015"		--堆成山的宝石
-		config["unlockWeapon"]     = "024"       --武器购买
-		config["highgradeWeapon"]  = "023"		--高级武器一把
+		config["unlockWeapon"]     = "024"       --武器购买1
+		config["highgradeWeapon"]  = "023"		--高级武器一把1
 
 	elseif self.telecomOperator == "telecom" then
-		-- 电信外放计费代码
+		-- 电信外放计费代码 3月28日检查 无错误
 		--礼包
 		config["novicesBag"]       = "5156711"		--新手礼包
 		config["weaponGiftBag"]    = "5156712"		--武器到礼包
