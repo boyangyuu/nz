@@ -139,7 +139,7 @@ configs["fightJu"] = {
 configs["fightRelive"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fightRelive_relive", msg = "不要怕，信春哥，满状态复活！！", }, 
+		{id = "fightRelive_relive", msg = "失败不要怕，信春哥，满状态复活！！", }, 
 	}		
 
 }

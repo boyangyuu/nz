@@ -89,21 +89,7 @@ local waves = {
 					id = 1,
 				},
 			},
-			{
-				time = 15,		
-				num = 2,
-				pos = {760,1030},
-				delay = {0,0.8},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                       
-				},
-			},
-		},                                                               --第15个怪
+		},                                                               --第13个怪
 	},
 	{
 		enemys = {
