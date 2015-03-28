@@ -183,13 +183,12 @@ function Fight:getFailCause()
 end
 
 function Fight:onFail()
-    if self.result then return end   
+    if self.result then return end
+    self.result = "willFail"
+    self.inlayModel:removeAllInlay()
     local fightProp = md:getInstance("FightProp")
     fightProp:costReliveBag()
-    ui:showPopup("FightResultFailPopup",{},{anim = false})
-    
-    --clear
-    self:clearFightData() 
+    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
 end
 
 function Fight:onRelive()
@@ -316,7 +315,7 @@ end
 
 function Fight:killRenzhiOver()
     self:dispatchEvent({name = Fight.FIGHT_TIPS_EVENT , failType = "renzhi"})
-    scheduler.performWithDelayGlobal(handler(self, self.doFail), 2.5)    
+    scheduler.performWithDelayGlobal(handler(self, self.doFail), 1.5)    
 end
 
 function Fight:doFail()

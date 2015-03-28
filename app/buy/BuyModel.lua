@@ -181,7 +181,9 @@ function BuyModel:buy_goldGiftBag( buydata )
 	--手雷*30
 	propModel:buyProp("lei",30)
 
-	ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+	if not buydata.isNotPopup then 
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+	end
 end
 
 function BuyModel:buy_changshuang( buydata )
@@ -201,14 +203,17 @@ function BuyModel:buy_timeGiftBag( buydata )
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
 	local userModel = md:getInstance("UserModel")
+
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
+
 	--机甲*3
 	propModel:buyProp("jijia",3)
+
 	--手雷*10
 	propModel:buyProp("lei",10)
+
 	--金币*188888
-	--zuanshi*260
 	userModel:buyDiamond(260)
 	userModel:addMoney(188888)
 end
@@ -216,6 +221,7 @@ end
 function BuyModel:buy_handGrenade( buydata )
 	local propModel = md:getInstance("propModel")
 	local storeModel = md:getInstance("StoreModel")
+	
 	--手雷*20
 	propModel:buyProp("lei",20)
 end

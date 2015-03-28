@@ -21,11 +21,12 @@ function HeroAnimView:ctor()
 		:addEventListener(self.hero.EFFECT_HURT_YAN_EVENT	, handler(self, self.playHurtedBomb_yan))	
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
 		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
-		
+		:addEventListener(self.hero.EFFECT_GUIDE_EVENT		, handler(self, self.playAnimGuide))
 		
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
 		:addEventListener(self.hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
+		
 		:addEventListener(self.hero.HP_DECREASE_EVENT		, handler(self, self.playHitted))
 		:addEventListener(self.hero.HP_STATE_EVENT			, handler(self, self.playLessHp))
 		:addEventListener(self.hero.GUN_RELOAD_EVENT		, handler(self, self.playGunReload))
@@ -154,14 +155,10 @@ function HeroAnimView:playLessHp(event)
 	local isLessHp = event.isLessHp
 	if isLessHp then
 		self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 1)
-		-- local soundSrc  = "res/Music/fight/beng.wav"
-		-- self.soundBeng = audio.playSound(soundSrc, true) 
 	else
 		self.armatureScreenRed:getAnimation():stop()
-		-- audio.stopSound(self.soundBeng)
 	end
 end
-
 
 function HeroAnimView:playHpAlertEffect()
 	if self.hero:getIsLessHp() then return end
@@ -211,7 +208,6 @@ function HeroAnimView:playKeepKill(event)
 	local actionScale2 = cc.ScaleTo:create(0.1, 1.0)
 	local seq = cc.Sequence:create(actionScale1, actionScale2) 
 	transition.execute(self.labelKeepKill, seq, {easing = "Out",})
-	
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 end
 
@@ -231,7 +227,26 @@ function HeroAnimView:playFailTips(event)
 	self:addChild(armature)
 end
 
+function HeroAnimView:playAnimGuide(event)   
+	--add res 
+	local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo("res/Fight/heroAnim/yd_saos/yd_saos.ExportJson")
+    display.addSpriteFrames("res/Fight/heroAnim/yd_saos/yd_saos0.plist", 
+        "res/Fight/heroAnim/yd_saos/yd_saos0.png") 
+
+    local armature = ccs.Armature:create("yd_saos")
+    local animName = event.animName
+    armature:getAnimation():play(animName, -1, 1)
+    self:addChild(armature, 10)
+    local removeFunc = function ()
+        armature:removeSelf()
+        armature = nil
+    end
+    self:performWithDelay(removeFunc, 10.0)	
+end
+
 function HeroAnimView:onExit()
+
 end
 
 return HeroAnimView

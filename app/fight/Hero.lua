@@ -18,6 +18,7 @@ Hero.EFFECT_HURT_BOMB_EVENT      = "EFFECT_HURT_BOMB_EVENT"    --效果_导弹�
 Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    --效果_玻璃
 Hero.EFFECT_HURT_YAN_EVENT       = "EFFECT_HURT_YAN_EVENT"     --效果_烟雾
 Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
+Hero.EFFECT_GUIDE_EVENT          = "EFFECT_GUIDE_EVENT"        --效果_引导
 
 --skill
 Hero.SKILL_ROBOT_START_EVENT      = "SKILL_ROBOT_START_EVENT"    --机甲开启
@@ -254,6 +255,7 @@ function Hero:getMaxHp()
 end
 
 function Hero:decreaseHp(hp)
+    if self:isDead() then return end
     if self:getIsPause() then 
         return 
     end
@@ -332,7 +334,7 @@ end
 function Hero:showTuhao()
     local buyModel = md:getInstance("BuyModel")
     buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyFullHp),
-                    deneyBuyFunc = handler(self, self.onDenyFullHp)}
+                    deneyBuyFunc = handler(self, self.onDenyFullHp), isNotPopup = true}
                     ,"战斗界面_10%血")    
 end
 
