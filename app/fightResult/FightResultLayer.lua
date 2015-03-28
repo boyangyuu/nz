@@ -538,15 +538,21 @@ function FightResultLayer:initGuide3()
 			end
 
 			--镶嵌
-           self.inlayModel:buyInlay(2,false,1) 
-           self.inlayModel:buyInlay(5,false,1) 
-           self.inlayModel:buyInlay(8,false,1) 
-           self.inlayModel:buyInlay(11,false,1) 
-           self.inlayModel:buyInlay(14,false,1) 
-           self.inlayModel:buyInlay(17,true,1) 
-           self.inlayModel:equipAllInlays(true)
+            self.inlayModel:buyInlay(2,false,1) 
+            self.inlayModel:buyInlay(5,false,1) 
+            self.inlayModel:buyInlay(8,false,1) 
+            self.inlayModel:buyInlay(11,false,1) 
+            self.inlayModel:buyInlay(14,false,1) 
+            self.inlayModel:buyInlay(17,true,1) 
 
-			playSoundBtn()    
+            self.inlayModel:equipInlay(2, false)
+            self.inlayModel:equipInlay(5, false)
+            self.inlayModel:equipInlay(8, false)
+            self.inlayModel:equipInlay(11, false)
+            self.inlayModel:equipInlay(14, false)
+            self.inlayModel:equipInlay(17, false)
+
+		    playSoundBtn()    
         end
      }) 
 

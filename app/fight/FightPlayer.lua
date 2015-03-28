@@ -865,14 +865,14 @@ function FightPlayer:initGuideDun()
 end
 
 function FightPlayer:initGuide3()
-    local isDone = self.guide:isDone("fight04")
+    local isDone = self.guide:isDone("fightJu")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
     local isWillGuide = lid == 3.1 and gid == 1
     if isDone or not isWillGuide then return end   
 
     self.guide:addClickListener({
-        id = "fight04_open",
-        groupId = "fight04",
+        id = "fightJu_open",
+        groupId = "fightJu",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             local map = md:getInstance("Map")
@@ -881,8 +881,8 @@ function FightPlayer:initGuide3()
      })    
 
     self.guide:addClickListener({
-        id = "fight04_fire",
-        groupId = "fight04",
+        id = "fightJu_fire",
+        groupId = "fightJu",
         rect = self.btnFire:getBoundingBox(),
         endfunc = function (touchEvent)
             self.gunView:fire()
@@ -892,8 +892,8 @@ function FightPlayer:initGuide3()
      })    
 
     self.guide:addClickListener({
-        id = "fight04_close",
-        groupId = "fight04",
+        id = "fightJu_close",
+        groupId = "fightJu",
         rect = self.btnJu:getBoundingBox(),
         endfunc = function (touchEvent)
             local map = md:getInstance("Map")
@@ -902,8 +902,8 @@ function FightPlayer:initGuide3()
      })    
 
     self.guide:addClickListener({
-        id = "fight04_finish",
-        groupId = "fight04",
+        id = "fightJu_finish",
+        groupId = "fightJu",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent) 
             self:onCancelledFire()    

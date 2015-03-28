@@ -128,7 +128,7 @@ function MyApp:createGameStateFile()
             --开启的关卡
             currentlevel =  {
                         group = 1,
-                        level = 6,
+                        level = 4,
             },
             user = {
                 level = 1,
@@ -162,7 +162,10 @@ function MyApp:createGameStateFile()
                         afterfight03    = true,   -- 回到主界面
                         
                         --第1-3.1关之内
-                        fight04         = true,                        
+                        fightJu         = true,  
+
+                        --第1-4失败之后
+                        fightRelive     = false,                      
             },
             fight = {
                isPreferBag1 = true,
