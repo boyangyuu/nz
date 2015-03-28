@@ -67,8 +67,6 @@ configs["fight01_jijia"] = {
 configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
--- 		{id = "afterfight01_award", msg = "中大奖了！掉落了一把神狙雷明顿!  "}, 
-		-- {id = "afterfight01_get", msg = "点击按钮，领取雷明顿和镶嵌道具"},	
 		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"}, 
 	}
 }
@@ -127,19 +125,24 @@ configs["afterfight03"] = {
 	}
 }
 
-
-
 ---- 第四关战斗开始之后 ----
-configs["fight04"] = {
+configs["fightJu"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight04_open", msg = "         点击开镜", }, 
-		{id = "fight04_fire", msg = "         点击开火", }, 
-		{id = "fight04_close", msg = "         点击关镜", }, 
-		{id = "fight04_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
+		{id = "fightJu_open", msg = "         点击开镜", }, 
+		{id = "fightJu_fire", msg = "         点击开火", }, 
+		{id = "fightJu_close", msg = "         点击关镜", }, 
+		{id = "fightJu_finish", msg = "消灭剩下来的敌人", skipMode = "clickScreen", opacity = 0.0},
 	}	
 }
 
+configs["fightRelive"] = {
+	preGuideId = nil,
+	steps = {
+		{id = "fightRelive_relive", msg = "不要怕，信春哥，满状态复活！！", }, 
+	}		
+
+}
 
 function GuideConfigs.getConfig(groupId)
 	assert(configs[groupId], "configs is nil groupId: "..groupId )

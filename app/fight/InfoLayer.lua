@@ -1,7 +1,4 @@
 
-
-
-local scheduler = require("framework.scheduler")
 local Hero 		= import(".Hero")
 local Fight 	= import(".Fight")
 
@@ -22,20 +19,13 @@ function InfoLayer:ctor()
 		:addEventListener(Hero.GUN_BULLET_EVENT 	, handler(self, self.onRefreshBullet))	
 		:addEventListener(Hero.HP_INCREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.HP_DECREASE_EVENT	, handler(self, self.onHeroHpChange))
-		-- :addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT, handler(self, self.onKillEnemy))	
 	
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
 		:addEventListener(self.fight.INFO_SHOW_EVENT, handler(self, self.onShow))
 
-	-- cc.EventProxy.new(self.inlay, self)
-	-- 	:addEventListener(self.inlay.INLAY_GOLD_BEGIN_EVENT	, handler(self, self.onActiveGold))
-	-- 	:addEventListener(self.inlay.INLAY_GOLD_END_EVENT	, handler(self, self.onActiveGoldEnd))
-
-
 	self:loadCCS()
 	self:initUI()
-	-- self:initGuide()
 	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
 	self:setTouchSwallowEnabled(false) 
@@ -97,7 +87,8 @@ function InfoLayer:initBtns()
             if event.name =='began' then                
                 return true
             elseif event.name =='ended' then
-            	pm:showPopup("FightPausePopup",{},{anim = true,isPauseScene = true})
+            	local pauseModel = md:getInstance("PauseModel")
+			    pauseModel:showPopup("FightPausePopup",{},{anim = true,isPauseScene = true})
             end
         end)
 

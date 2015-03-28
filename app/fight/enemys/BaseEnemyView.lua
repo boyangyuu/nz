@@ -23,13 +23,9 @@ function BaseEnemyView:ctor(property)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
     
-    self:setNodeEventEnabled(true)
-
     local function callStart()
-    	self:setVisible(true)
     	self:playStartState(property.startState)
     end
-    self:setVisible(false)
     self:performWithDelay(callStart, 0.01)
 end
 
@@ -196,7 +192,6 @@ end
 
 function BaseEnemyView:canHitted()
 	return true
-	-- assert("required method, must implement me")
 end
 
 --required

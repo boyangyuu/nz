@@ -8,7 +8,7 @@ local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 
 -- 定义事件
 function BuyModel:ctor(properties)
-    BuyModel.super.ctor(self, properties) 
+    BuyModel.super.ctor(self, properties)
 end
 
 function BuyModel:clearData()
@@ -30,7 +30,8 @@ function BuyModel:showBuy(configId, buyData, strPos)
     local buyConfig = BuyConfigs.getConfig(configId) 
     -- print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
     self.strDesc = buyConfig.name .. "__" ..strPos
-    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, "MM")
+    self.iap = md:getInstance("IAPsdk")
+    um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, self.iap.telecomOperator)
 	
     --um event
 	local umData = {}
@@ -57,7 +58,7 @@ end
 
 function BuyModel:iapPay()
 	display.pause()
-	iap:pay(self.curId)
+	self.iap:pay(self.curId)
 end
 
 function BuyModel:gameResume()
@@ -68,7 +69,7 @@ end
 -- 生成订单号
 function BuyModel:getRandomOrderId()
 	local deviceId = "windows"
-	if device.platform == "android" and not isAnalytics then 
+	if device.platform == "android" and isAnalytics then 
 		deviceId = TalkingDataGA:getDeviceId()
 	end
 	local osTime = os.time()
@@ -116,8 +117,9 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("propModel")
-	self.weaponIds = {3,4,5,7,8}
-	for k,v in pairs(self.weaponIds) do
+	local weaponIds = {3,4,5,7,8}
+	local weaponIndex = 1
+	for k,v in pairs(weaponIds) do
 		weaponListModel:buyWeapon(v)
 		weaponListModel:onceFull(v)
 	end
@@ -131,25 +133,26 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		 {opacity = 0})
 		return 
 	end
-    self.weaponIndex = 1
-    self:showWeaponNotify()
+ 
+    local closeAllFunc = buydata.closeAllFunc
+
+    local function showWeaponNotify()
+		print("weaponIndex", weaponIndex)
+	    local weaponId = weaponIds[weaponIndex]
+	    if weaponId == nil then 
+			ui:showPopup("commonPopup",
+			 {type = "style1",content = "武器已购买，请在武器库装备！"},
+			 {opacity = 0})
+			if closeAllFunc then  closeAllFunc() end
+			return 
+		end
+	    print("weaponId",weaponId)
+	    ui:showPopup("WeaponNotifyLayer",
+	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify})  
+	    weaponIndex = weaponIndex + 1    	
+    end
+    showWeaponNotify()
 end
-
-function BuyModel:showWeaponNotify()
-	print("self.weaponIndex", self.weaponIndex)
-    local weaponId = self.weaponIds[self.weaponIndex]
-    if weaponId == nil then 
-		ui:showPopup("commonPopup",
-		 {type = "style1",content = "请在武器库装备！"},
-		 {opacity = 0})
-		return 
-	end
-    print("weaponId",weaponId)
-    ui:showPopup("WeaponNotifyLayer",
-     {type = "gun",weaponId = weaponId, onCloseFunc = handler(self, self.showWeaponNotify)})  
-    self.weaponIndex = self.weaponIndex + 1
-end 
-
 
 function BuyModel:buy_novicesBag( buydata )
 	print("BuyModel:buy_novicesBag(buydata)")
@@ -226,11 +229,16 @@ function BuyModel:buy_unlockWeapon( buydata )
 	print("BuyModel:buy_unlockWeapon( buydata )")
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
+	 ui:showPopup("WeaponNotifyLayer",
+     {type = "gun",weaponId = buydata.weaponid})
+
 end
 
 function BuyModel:buy_highgradeWeapon(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
+	 ui:showPopup("WeaponNotifyLayer",
+     {type = "gun",weaponId = buydata.weaponid})
 end
 
 function BuyModel:buy_goldWeapon( buydata )

@@ -128,7 +128,7 @@ function Fight:startFight()
         end, 0.0)       
     elseif self.groupId == 1 and self.levelId == 3.1 then 
         scheduler.performWithDelayGlobal(function()
-            guide:check("fight04")
+            guide:check("fightJu")
         end, 0.0)   
     end
 end
@@ -256,8 +256,7 @@ function Fight:onDialogAfterEnd()
     local buyModel = md:getInstance("BuyModel")
     if not buyModel:checkBought("weaponGiftBag") then 
         buyModel:showBuy("weaponGiftBag", {
-            isNotPopFiveWeapon = true,
-            payDoneFunc = handler(self, self.endFight),
+            closeAllFunc = handler(self, self.endFight),
             deneyBuyFunc = handler(self, self.endFight)},
             self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
     else

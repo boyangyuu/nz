@@ -199,7 +199,7 @@ function commonPopup:onClickClose()
 	ui:closePopup("commonPopup")
 	local func =  self.properties.callfuncClose
 	if func ~= nil then
-		print("callfuncClose")  
+		print("callfuncClose")
 		func()
 	end	
 end

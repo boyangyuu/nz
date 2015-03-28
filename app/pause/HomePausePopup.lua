@@ -19,7 +19,8 @@ function HomePausePopup:initLayer()
 				print("btncall is pressed!")
 				return true
 			elseif event.name == "ended" then
-				pm:closePopup()
+				local pauseModel = md:getInstance("PauseModel")
+			    pauseModel:closePopup()
 			end
 		end)
 end

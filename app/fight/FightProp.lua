@@ -4,9 +4,6 @@
 
 ]]
 
---import
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
 local FightProp  = class("FightProp", cc.mvc.ModelBase)
 
 --events

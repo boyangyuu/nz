@@ -30,7 +30,7 @@ Actor.schema["nickname"] = {"string"} -- 字符串类型，没有默认值
 Actor.schema["level"]    = {"number", 1} -- 数值类型，默认值 1
 Actor.schema["hp"]       = {"number", 1}
 Actor.schema["maxHp"]    = {"number", 1}
-Actor.schema["demage"] = {"number", 0.2} 
+Actor.schema["demage"]   = {"number", 0.2} 
 Actor.schema["cooldown"] = {"number", 0.2} 
 
 function Actor:ctor(properties, events, callbacks)

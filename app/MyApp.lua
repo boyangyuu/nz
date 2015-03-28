@@ -7,32 +7,32 @@ local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 local DataModel = require("app.DataModel")
 GameState = require("framework.cc.utils.GameState")
-local IAPsdk = require("app.SDK.IAPsdk")
-local PauseModel = require("app.pause.PauseModel")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
 
 isFree = true       --付费免费
-isTest  = false     --战斗的各种框     
+isTest  = true     --战斗的各种框     
 isDebug = true      --debug页面
-isAnalytics = false --统计功能开关
-__versionId = "1.2.0"
+isAnalytics = nil --统计功能开关
+__versionId = nil
 
 ui        = UI.new()
 md        = MD.new()
 um        = UM.new()
 define    = Define.new()
 dataModel = DataModel.new()
-iap       = IAPsdk.new()
-pm        = PauseModel.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
+    self:initVersionId()
+    self:initIsAnalytics()
     self.objects_ = {}
     self:initGameState()    
-    
+
+    -- um 设置玩家账户及等级
+    um:setUserAccount()
 end
 
 function MyApp:run()
@@ -72,6 +72,31 @@ function MyApp:initGameState()
     um:setUserAccount()
 end
 
+function MyApp:initVersionId()
+    if device.platform ~= "android" then return end
+    local className = "com/hgtt/com/Ccn"
+    local sig = "()Ljava/lang/String;"
+    local result,versionId = luaj.callStaticMethod(className,"getVersionName",{},sig)
+    if versionId then 
+        __versionId = versionId 
+    else
+        __versionId = "unknown"
+    end
+end
+
+function MyApp:initIsAnalytics()
+    if device.platform ~= "android" then return end
+    local className = "com/hgtt/com/Ccn"
+    local sig = "(Ljava/lang/String;)Z"
+    local result, analytics = luaj.callStaticMethod(className,"getAppMetaData",{"ISANALYTICS"},sig)
+    print("analytics :" ,analytics)
+    if analytics == "true"then
+        isAnalytics = analytics
+    else
+        isAnalytics = analytics
+    end
+end
+
 function MyApp:createGameStateFile()
     print("createGameStateFile")
     local data = GameData.data
@@ -103,6 +128,8 @@ function MyApp:createGameStateFile()
                                         weaponid   = 6,
                                         },
                         },
+                        awardedIds = {
+                        }
             }, 
             inlay = {
                         bags = {}, --{inlayid = 1,ownednum = 1}
@@ -129,8 +156,8 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 2,
-                        level = 6,
+                        group = 1,
+                        level = 4,
             },
             user = {
                 level = 1,
@@ -164,7 +191,10 @@ function MyApp:createGameStateFile()
                         afterfight03    = true,   -- 回到主界面
                         
                         --第1-3.1关之内
-                        fight04         = true,                        
+                        fightJu         = true,  
+
+                        --第1-4失败之后
+                        fightRelive     = false,                      
             },
             fight = {
                isPreferBag1 = true,
@@ -195,7 +225,8 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-     pm:showPopup("HomePausePopup",{},
+    local pauseModel = md:getInstance("PauseModel")
+    pauseModel:showPopup("HomePausePopup",{},
         {anim = true,isNotScrenCapture = true})
 end
 
