@@ -123,9 +123,18 @@ configs["dzboss"] = {
 	title = "BOSS信息！",
 	name = "巨炮泰坦",
 	spc = "技能：",
-	skill = {"烟雾弹","召唤","恐怖蛛网"},
+	skill = {"烟雾弹","蜘蛛海"},
 	weakness = "头部、手部、腹部",
 	describe = "行动缓慢，暴力伤害的象征。",
+	playanim = "stand",
+}
+configs["dzboss_1"] = {
+	title = "BOSS信息！",
+	name = "剧毒之牙",
+	spc = "技能：",
+	skill = {"烟雾弹","召唤蛛海","恐怖蛛网"},
+	weakness = "头部、手部、腹部",
+	describe = "蜘蛛的毒液是致命的。",
 	playanim = "stand",
 }
 configs["renzb"] = {
