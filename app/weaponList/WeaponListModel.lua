@@ -3,7 +3,6 @@ local WeaponListModel = class("WeaponListModel", cc.mvc.ModelBase)
 WeaponListModel.WEAPON_UPDATE_EVENT 	= "WEAPON_UPDATE_EVENT"
 WeaponListModel.WEAPON_STAR_ONE_EVENT   = "WEAPON_STAR_ONE_EVENT"
 WeaponListModel.WEAPON_STAR_FULL_EVENT  = "WEAPON_STAR_FULL_EVENT"
-WeaponListModel.REFRESH_WEAPON_LISTVIEW  = "REFRESH_WEAPON_LISTVIEW"
 
 function WeaponListModel:ctor(properties, events, callbacks)
 	WeaponListModel.super.ctor(self, properties)
