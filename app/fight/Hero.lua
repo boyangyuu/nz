@@ -255,6 +255,7 @@ function Hero:getMaxHp()
 end
 
 function Hero:decreaseHp(hp)
+    if self:isDead() then return end
     if self:getIsPause() then 
         return 
     end
