@@ -358,6 +358,10 @@ function Attackable:playBombEffect()
 
 	self.armature:addChild(bomb, 100)
 	bomb:getAnimation():play("baozha4", -1, 0) 
+
+	--play
+    local src = "res/Music/fight/bossbz.wav"
+    audio.playSound(src, false)
 end
 
 function Attackable:restoreStand()
