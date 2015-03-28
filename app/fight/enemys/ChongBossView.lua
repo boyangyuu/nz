@@ -1,4 +1,3 @@
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseBossView = import(".BaseBossView")
 local FightConfigs = import("..fightConfigs.FightConfigs")
 local ChongBossView = class("ChongBossView", BaseBossView)
@@ -32,8 +31,7 @@ function ChongBossView:playFire()
 			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
 				property = property})
 		end
-		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
-	    self:addScheduler(sch)
+		self:performWithDelay(callfuncAddDao, delay)
 	end
 end
 
@@ -48,8 +46,8 @@ function ChongBossView:playTieQiu()
 		local delay = kDelayAnim
 		local property = {
 			type = "missile",
-			missileType = "tie",
-			srcScale = 0.3, 
+			-- missileType = "tie",
+			srcScale = self:getScale() * 0.3, 
 			demageScale = self.enemy:getDemageScale(),
 			id = self.property["qiuId"], 
 		}
@@ -60,8 +58,7 @@ function ChongBossView:playTieQiu()
 			self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
 				property = property})
 		end
-		local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
-	    self:addScheduler(sch)    
+	    self:performWithDelay(callfuncAddDao, delay)
 	end		
 end
 

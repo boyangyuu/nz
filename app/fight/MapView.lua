@@ -703,7 +703,10 @@ function MapView:onThrowGrenade(event)
 		map:dispatchEvent({name = map.EFFECT_LEI_BOMB_EVENT,
 			destPos = destPos})
 	end
-	local time = define.kLeiTime	
+	local gid = self.fight:getGroupId()
+	local scale = gid > 2 and 1.0 or 1.0	
+	local time = define.kLeiTime
+	local leiDemage = define.kLeiDemage * scale
 	local seq =  cc.Sequence:create(
 					cc.Spawn:create(cc.ScaleTo:create(time, 0.3),
 					 				cc.JumpTo:create(time, destPos, 300, 1)),

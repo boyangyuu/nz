@@ -1,5 +1,3 @@
-local scheduler          = require(cc.PACKAGE_NAME .. ".scheduler")
-
 local WeaponListCell = import(".WeaponListCell")
 local WeaponBag = import(".WeaponBag")
 
@@ -15,6 +13,7 @@ function WeaponListLayer:ctor()
     -- instance
     self.selectedContent = nil
     self.weaponId = 1
+
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.commonPopModel = md:getInstance("commonPopModel")
     self.userModel = md:getInstance("UserModel")
@@ -41,26 +40,19 @@ function WeaponListLayer:onEnter()
 
     --events
     cc.EventProxy.new(self.weaponListModel, self)
-        :addEventListener(self.weaponListModel.REFRESHBTN_EVENT     , handler(self, self.refreshUI))
-        :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT, handler(self, self.playOneStar))
+        :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
+        -- :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshListView))
+        :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT , handler(self, self.playOneStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
-
-    cc.EventProxy.new(self.levelMapModel, self)
-        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
-    cc.EventProxy.new(self.levelDetailModel, self)
-        :addEventListener("REFRESH_WEAPON_LISTVIEW", handler(self, self.reloadListView))
 end
 
 -- loadCCS
 function WeaponListLayer:loadCCS()
     -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
-    local controlNode = cc.uiloader:load("wuqiku.ExportJson")
-    if self.ui then
-        return
-    end
-    self.ui = controlNode
-    self:addChild(controlNode)
+    self.ui = cc.uiloader:load("wuqiku.ExportJson")
+    assert(self.ui , "self.ui  is nil")
+    self:addChild(self.ui)
 
     -- anim
     local src = "res/WeaponList/btbuyanim/bt_goumai.ExportJson"
@@ -80,7 +72,6 @@ function WeaponListLayer:loadCCS()
     local plist = "res/WeaponList/wqsj/wqsj0.plist"
     local png   = "res/WeaponList/wqsj/wqsj0.png"
     display.addSpriteFrames(plist, png)          
-
 end
 
 function WeaponListLayer:initUI()
@@ -165,7 +156,7 @@ function WeaponListLayer:initUI()
     self.equipedju:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    self:reloadListView()
+    self:refreshListView()
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
@@ -228,7 +219,6 @@ end
 -- 装备事件
 function WeaponListLayer:onClickBtnEquip(weaponid)
     ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 150})
-
 end
 
 function WeaponListLayer:onClickBtnOncefull()
@@ -239,8 +229,7 @@ function WeaponListLayer:onClickBtnOncefull()
             payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
                                       deneyBuyFunc = handler(self, self.onCancelOncefull)},"武器库界面_点击一键满级")
     elseif isBoughtWeapon then
-        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId,
-            payDoneFunc = handler(self, self.onBuyOnceFull)},
+        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
     end
 end
@@ -286,32 +275,21 @@ end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()
     self.levelMapModel:hideGiftBagIcon()
-    -- self.weaponListModel:refreshInfo()
-
 end
 
 -- 购买事件
 function WeaponListLayer:onBuyWeaponSucc()
     if self.userModel:costDiamond(self.weaponRecord["cost"]) then
         self.weaponListModel:buyWeapon(self.weaponId)
-        -- self.weaponListModel:refreshInfo()
         if self.weapontype == "ju" then
             self.weaponListModel:equipBag(self.weaponId,3)
-            -- self.weaponListModel:refreshInfo()
         end
-        local gmcg   = "res/Music/ui/gmcg.wav"
+        local gmcg = "res/Music/ui/gmcg.wav"
         audio.playSound(gmcg,false)
     end
 end
 
-function WeaponListLayer:onBuyOnceFull()
-    -- self.weaponListModel:refreshInfo()
-end
-
-function WeaponListLayer:reloadListView(event)
-    if not self.weaponLV then
-        return
-    end
+function WeaponListLayer:refreshListView(event)
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
     self:loadWeaponList(self.weaponLV,configTab)
@@ -319,13 +297,11 @@ function WeaponListLayer:reloadListView(event)
     self:refreshComment()
 end
 
--------------- ListView  --------------
 -- 初始化ListView
 function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
 	for i=1, #weaponTable do
 		local weaponRecord = self.weaponListModel:getWeaponRecord(i)
         local item = weaponListView:newItem()
-		-- local item
 		local content
 		if weaponTable[i] then
 			content = WeaponListCell.new({weaponRecord = weaponRecord})
@@ -349,6 +325,10 @@ function WeaponListLayer:refreshUI()
     self:refreshComment()
     self:refreshBtns()
     self:refreshStar()
+end
+
+function WeaponListLayer:refreshLists()
+    
 end
 
 function WeaponListLayer:refreshComment()
@@ -460,7 +440,7 @@ function WeaponListLayer:playOneStar(event)
         --show
         self.stars[curLevel]:setVisible(true)
     end
-    scheduler.performWithDelayGlobal(delayStar, delay)
+    self:performWithDelay(delayStar, delay)
 
     --weapon anim
     local armature = ccs.Armature:create("wqsj")
@@ -501,7 +481,7 @@ function WeaponListLayer:playFullStar(event)
             --show
             -- self.stars[i]:setVisible(true)
         end
-        scheduler.performWithDelayGlobal(delayStar, delay)
+        self:performWithDelay(delayStar, delay)
     end
 
     local armature = ccs.Armature:create("wqsj")

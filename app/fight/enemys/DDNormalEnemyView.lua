@@ -51,7 +51,7 @@ end
 
 function DDNormalEnemyView:playDaoDanFire()
     --scale
-    self.armature:setScale(self.srcScale / 0.7)
+    self:setScale(self.srcScale)
     local time = define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0 
     local scaleAction = cc.ScaleTo:create(time, destScale)
@@ -65,15 +65,15 @@ function DDNormalEnemyView:playDaoDanFire()
     local offset = self.property.offset or cc.p(0.0,0.0)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
-    self.armature:runAction(seq)
-    self.armature:runAction(cc.MoveTo:create(time, offset))
+    self:runAction(seq)
+    self:runAction(cc.MoveTo:create(time, offset))
 end
 
 function DDNormalEnemyView:playTieqiuFire()
-    self.armature:setScale(self.srcScale / 0.7)
+    self:setScale(self.srcScale)
     local time = define.kMissileTieqiuTime    
     local destScale = self.property["destScale"] or 1.0
-    local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
+    local scaleAction = cc.ScaleTo:create(time, destScale)
 
     --call end
     local function callFunc()
@@ -83,11 +83,11 @@ function DDNormalEnemyView:playTieqiuFire()
     end
 
     --run
-    local offset = self.property.offset or cc.p(0.0,-80)
+    local offset = self.property.offset or cc.p(0.0, -80)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callFunc))
-    self.armature:runAction(seq)
-    self.armature:runAction(cc.MoveTo:create(time, offset))    
+    self:runAction(seq)
+    self:runAction(cc.MoveTo:create(time, offset))    
 end
 
 function DDNormalEnemyView:playLeiFire()
@@ -105,8 +105,8 @@ function DDNormalEnemyView:playLeiFire()
 
     local seq =  cc.Sequence:create(action,cc.CallFunc:create(callFunc) )    
     self:runAction(seq)
-    self.armature:setScale(0.05)
-    self.armature:runAction(cc.ScaleTo:create(jumpTime, 2.0))
+    self:setScale(0.05)
+    self:runAction(cc.ScaleTo:create(jumpTime, 2.0))
 end
 
 function DDNormalEnemyView:playFeibiaoFire()

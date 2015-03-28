@@ -13,7 +13,7 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 GameData={}
 
 isFree = true       --付费免费
-isTest  = false     --战斗的各种框     
+isTest  = true     --战斗的各种框     
 isDebug = true      --debug页面
 isAnalytics = nil --统计功能开关
 __versionId = nil
@@ -128,6 +128,8 @@ function MyApp:createGameStateFile()
                                         weaponid   = 6,
                                         },
                         },
+                        awardedIds = {
+                        }
             }, 
             inlay = {
                         bags = {}, --{inlayid = 1,ownednum = 1}
@@ -154,7 +156,7 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 2,
+                        group = 1,
                         level = 6,
             },
             user = {

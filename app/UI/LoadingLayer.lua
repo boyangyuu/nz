@@ -77,7 +77,6 @@ function LoadingLayer:showPercent()
             end
 
         end
-        -- scheduler.performWithDelayGlobal(setString, i*0.03)
         self.loadpercent:schedule(setString, i*0.05)
     end
 end

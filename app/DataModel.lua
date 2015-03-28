@@ -26,6 +26,8 @@ function DataModel:setNewData()
     fightedGroupId = 0, 
     fightedlevelId = 0}
 
+    data.weapons.awardedIds = {}
+
     --引导
     local guideModel = md:getInstance("Guide")
     guideModel:fillData()

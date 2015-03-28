@@ -10,18 +10,19 @@ end)
 
 ---- event ----
 function Attackable:ctor(property)
-	-- dump(property, "Attackable property")
 	--instance
     self.hero = md:getInstance("Hero")	
     self.fight = md:getInstance("Fight")
 	self.enemy = self:getModel(property)
 	self.property = property
-	self.deadDone = false
 	self.schedulers = {}
 	self.playCache = {}
+	self.isDead = false
 	self.isRed = false
 	self.isPauseOtherAnim = false
 	self.isWillDie = false
+	self.isWillRemove = false
+
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -168,23 +169,13 @@ end
 	@param rectName {"weak1", "body1"..}
 	@return rect, isValid[是否当前有效]
 ]]
-
---为boss设计的
 function Attackable:getRange(rectName)
 	assert(rectName, "invalid param")
-
 	local armature = self:getEnemyArmature()
 	local bone = armature:getBone(rectName)
 	if not bone then return nil, false end
 	local node = bone:getDisplayRenderNode() 
 	return node, true
-end
-
-function Attackable:getBodyBox()
-	local armature = self:getEnemyArmature()
-	local box = armature:getBone("body1"):getDisplayRenderNode():getBoundingBox()
-	if not box then return end
-	return box
 end
 
 function Attackable:getPlaceBound()
@@ -204,7 +195,7 @@ function Attackable:getProperty()
 end
 
 function Attackable:getDeadDone()
-	return self.deadDone or false 
+	return self.isDead
 end
 
 function Attackable:setDeadDone()
@@ -212,11 +203,11 @@ function Attackable:setDeadDone()
 		self:removeAllSchedulers()	
 	end
 	self:setPauseOtherAnim(true)
-	self.deadDone = true
+	self.isDead = true
 end
 
 function Attackable:getWillRemoved()
-	return self.willRemoved or false 
+	return self.isWillRemove
 end
 
 function Attackable:setWillRemoved(time)
@@ -225,7 +216,7 @@ function Attackable:setWillRemoved(time)
 	end
 	self:setPauseOtherAnim(true)
 	local function callFunc()
-		self.willRemoved = true
+		self.isWillRemove = true
 	end 
 	if time then 
 		self:performWithDelay(callFunc, time)
@@ -387,12 +378,10 @@ function Attackable:getPauseOtherAnim()
 end
 
 function Attackable:checkAnim()
-	-- return
 	if self.enemy:isDead() then return end
 	if self:getPauseOtherAnim() then return end
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	if currentName == "" or currentName == nil then 
-		-- print("attackable:checkAnim()")	
 		self:playStand()
 	end
 end
