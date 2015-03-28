@@ -8,6 +8,13 @@ function FightResultFailPopup:ctor()
     self:initUI()
     audio.stopMusic(false)
     self:playSound()
+    self:initGuide()
+    self:setNodeEventEnabled(true)
+end
+
+function FightResultFailPopup:onEnter()
+    local guide = md:getInstance("Guide")
+    guide:check("fightRelive")
 end
 
 function FightResultFailPopup:playSound()
@@ -22,12 +29,12 @@ function FightResultFailPopup:initUI()
     self:addChild(controlNode)
 
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
-    local btnrevive = cc.uiloader:seekNodeByName(self, "btnrevive")
+    self.btnRevive = cc.uiloader:seekNodeByName(self, "btnrevive")
 
     local armature = ccs.Armature:create("ydfh")
     armature:setPosition(180,60)
-    btnrevive:addChild(armature)
-    -- addChildCenter(armature, btnrevive)
+     self.btnRevive:addChild(armature)
+    -- addChildCenter(armature,  self.btnRevive)
     armature:getAnimation():play("ydfh" , -1, 1)
 
     btnback:setTouchEnabled(true)
@@ -38,8 +45,8 @@ function FightResultFailPopup:initUI()
             self:onClickBackHome()
         end
     end)
-    btnrevive:setTouchEnabled(true)
-    addBtnEventListener(btnrevive, function(event)
+     self.btnRevive:setTouchEnabled(true)
+    addBtnEventListener( self.btnRevive, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
@@ -66,17 +73,17 @@ function FightResultFailPopup:onClickBackHome()
     local fight  = md:getInstance("Fight")
     fight:onGiveUp()
 
-    local groupid,levelid = fight:getCurGroupAndLevel()
+    local groupId,levelId = fight:getCurGroupAndLevel()
     ui:closePopup("FightResultFailPopup")
     local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
-    if groupid == 0 and levelid == 0 then
+    if groupId == 0 and levelId == 0 then
         ui:changeLayer("HomeBarLayer",{groupId = 1})
         return
     end
     if isBoughtWeapon then
-        ui:changeLayer("HomeBarLayer",{groupId = groupid})
+        ui:changeLayer("HomeBarLayer",{groupId = groupId})
     else
-        ui:changeLayer("HomeBarLayer",{groupId = groupid,popWeaponGift = true})
+        ui:changeLayer("HomeBarLayer",{groupId = groupId,popWeaponGift = true})
     end
 end
 
@@ -85,6 +92,25 @@ function FightResultFailPopup:payReliveDone()
     fight:onRelive()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
+end
+
+function FightResultFailPopup:initGuide()
+    local fight = md:getInstance("Fight")
+    local guide = md:getInstance("Guide")
+    local groupId,levelId = fight:getCurGroupAndLevel()
+    local isGuided        = guide:isDone("fightRelive")
+    local isWillGuide =  groupId == 1 and levelId == 4 and not isGuided 
+    if isWillGuide == false then return end
+
+    --add guide
+    guide:addClickListener({
+        id = "fightRelive_relive",
+        groupId = "fightRelive",
+        rect = self.btnRevive:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self:payReliveDone()
+        end
+    })     
 end
 
 return FightResultFailPopup
