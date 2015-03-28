@@ -30,9 +30,9 @@ local waves = {
 			},
 			{
 				time = 12,		
-				num = 3,
-				pos = {500,620,700},
-				delay = {0,0.5,1.1},
+				num = 2,
+				pos = {500,700},
+				delay = {0,1.1},
 				property = { 
 					placeName = "place3",
 					startState = "rollright",
@@ -55,9 +55,9 @@ local waves = {
 			},
 			{
 				time = 13,		
-				num = 4,
-				pos = {880,950,1100,1160},
-				delay = {0,0.7,1.2,0.6},
+				num = 1,
+				pos = {1160},
+				delay = {0.7},
 				property = { 
 					placeName = "place4",
 					startState = "rollleft",
@@ -66,9 +66,9 @@ local waves = {
 			},
 			{
 				time = 14,		
-				num = 2,
-				pos = {460,530},
-				delay = {0,0.8},
+				num = 1,
+				pos = {530},
+				delay = {0},
 				property = { 
 					placeName = "place2",
 					startState = "rollleft",
@@ -80,9 +80,9 @@ local waves = {
 			},
 			{
 				time = 14,		
-				num = 3,
-				pos = {420,500,560},
-				delay = {0,0.9,0.5},
+				num = 2,
+				pos = {420,560},
+				delay = {0,0.9},
 				property = { 
 					placeName = "place3",
 					startState = "rollright",
@@ -103,7 +103,7 @@ local waves = {
 					missileType = "lei",	                                       
 				},
 			},
-		},                                                               --第20个怪
+		},                                                               --第15个怪
 	},
 	{
 		enemys = {
@@ -210,9 +210,9 @@ local waves = {
 			},
 			{
 				time = 8,	
-				num = 5,
-				pos = {480,630,760,850,970},
-				delay = {0,0.5,1.2,0.9,1.1},
+				num = 3,
+				pos = {480,760,970},
+				delay = {0,0.5,1.2},
 				property = {
 					placeName = "place3" ,         --近
 					id = 7,
@@ -223,7 +223,7 @@ local waves = {
 				time = 12,
 				num = 3,
 				delay = {0,0.5,1},
-				pos = {480,680,960},
+				pos = {400,680,960},
 				property = { 
 					placeName = "place3" ,
 					type = "jin",                  --盾 15
@@ -244,9 +244,9 @@ local waves = {
 			},
 			{
 				time = 16,
-				num = 5,
-				delay = {0,1.5,0.9,1.6,0.4},
-				pos = {450,560,600,1050,570},
+				num = 4,
+				delay = {0,0.9,1.6,0.4},
+				pos = {450,600,1050,570},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
@@ -266,9 +266,9 @@ local waves = {
 			},
 			{
 				time = 18,
-				num = 4,
-				delay = {0,0.5,1.5,1},
-				pos = {350,420,550,630},
+				num = 2,
+				delay = {0,0.5},
+				pos = {350,630},
 				property = { 
 					placeName = "place2" ,
 					startState = "rollright",
@@ -283,7 +283,7 @@ local waves = {
 				property = { 
 					placeName = "place3" ,
 					id = 1,
-					startState = "rollleft",	
+					startState = "rollleft",
 				},                                                          
 			},	
 			{
@@ -309,7 +309,7 @@ local waves = {
 					placeName = "place4" ,
 					id = 1,
 					startState = "rollleft",	
-				},                                                          --30
+				},                                                        
 			},
 			{
 				time = 23,		
@@ -327,24 +327,13 @@ local waves = {
 			},
 			{
 				time = 24,
-				num = 4,
-				delay = {0,0.5,1.5,1},
-				pos = {350,420,550,630},
+				num = 2,
+				delay = {0,1},
+				pos = {350,630},
 				property = { 
 					placeName = "place2" ,
-					startState = "rollright",
+					startState = "rollright",                   --29
 					id = 1,
-				},                                                          
-			},	
-			{
-				time = 24,
-				num = 2,
-				delay = {0.2,1},
-				pos = {900,1020},
-				property = { 
-					placeName = "place3" ,
-					id = 1,
-					startState = "rollleft",	
 				},                                                          
 			},	
 		},
@@ -441,7 +430,8 @@ local enemys = {
 	weak1=2},
 	--自爆兵BOSS        --type = "bao",自爆boss
 	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=110,scale = 3.0,
-	weak1=2},	                                                --scale = 3.0,  近战走到屏幕最近放缩比例	 
+	weak1=2},	
+	                                                --scale = 3.0,  近战走到屏幕最近放缩比例	 
 	--boss导弹          --missileType = "daodan",
 	{id=19,image="daodan",demage=10,hp=10,
 	weak1=1},
@@ -468,7 +458,7 @@ local bosses = {
 		wudiTime = 5 , 	    --无敌时间
 		daoDanTimeOffset = 0.1,                --群发导弹间隔时间
 		saoFireOffset = 0.1, 		--扫射时间间隔
-		saoFireTimes = 5, 			--一次扫射5下
+		saoFireTimes = 15, 			--一次扫射5下
 		weak1 = 1.2,					--手  弱点伤害倍数
 		weak2 = 1.2,					--腹  弱点伤害倍数
 		weak3 = 1.2,					--头  弱点伤害倍数
@@ -477,7 +467,7 @@ local bosses = {
 			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
 			-- },                                        
 
-			saoShe = { 0.90, 0.65, 0.35 },                --调用普通攻击的伤害  扫射 
+			saoShe = { 0.90, 0.63, 0.35 },                --调用普通攻击的伤害  扫射 
 
 			zhaohuan = {0.95, 0.70, 0.40 },                         --召唤小怪 
 
@@ -511,10 +501,10 @@ local bosses = {
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage200 = {  
-				0.60,
-			},	
 			demage300 = {  
+				0.65,
+			},	
+			demage400 = {  
 				0.30,
 			},							
 		},

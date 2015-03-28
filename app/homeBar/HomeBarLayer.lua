@@ -73,7 +73,7 @@ function HomeBarLayer:mapPopUp(event)
         self:popUpWeaponGift(self.properties)
         self:initDailyLogin()        
     end
-    scheduler.performWithDelayGlobal(delayPopUp, 1)
+    self:performWithDelay(delayPopUp, 1)
 end
 
 function HomeBarLayer:initDailyLogin()

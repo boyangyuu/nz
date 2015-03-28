@@ -19,9 +19,9 @@ local waves = {
 			},
 			{
 				time = 6,	
-				num = 5,
-				pos = {250,330,510,600,700},
-				delay = {0.2,1.2,0.6,0.8,1.5},
+				num = 3,
+				pos = {250,510,700},
+				delay = {0.2,0.8,1.5},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -35,7 +35,7 @@ local waves = {
 				pos = {350,650},
 				property = { 
 					placeName = "place1" ,
-					type = "jin",                  --盾 15
+					type = "jin",                  --盾 
 					id = 8,
 				},
 			},
@@ -46,40 +46,29 @@ local waves = {
 				pos = {900},
 				property = { 
 					placeName = "place2" ,
-					type = "jin",                  --盾 15
+					type = "jin",                  --盾
 					id = 8,
 				},
 			},
 			{
 				time = 18,
-				num = 5,
-				delay = {0.2,1.0,1.3,0.8,1.6},
-				pos = {220,350,480,600,700},
+				num = 4,
+				delay = {0.2,1.3,0.8,1.6},
+				pos = {220,480,600,700},
 				property = { 
 					placeName = "place1" ,
-					type = "bao",      --爆
+					type = "bao",                 --爆
 					id = 9,	
 				},
 			},
 			{
-				time = 22,	
-				num = 5,
-				pos = {250,330,510,600,700},
-				delay = {0.4,1.5,2.3,3.8,3.2},
-				property = {
-					placeName = "place1" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 26,
+				time = 24,
 				num = 5,
 				delay = {0.6,1.5,1.1,0.3,0.8},
 				pos = {290,350,460,600,680},
 				property = { 
 					placeName = "place1" ,
-					type = "bao",      --爆
+					type = "bao",                    --爆20个
 					id = 9,	
 				},
 			},
@@ -102,9 +91,9 @@ local waves = {
 			},
 			{
 				time = 6,	
-				num = 5,
-				delay = {0.1,1,1.5,0.5,0.8},
-				pos = {325,420,220,550,700},
+				num = 3,
+				delay = {0.1,1.5,0.8},
+				pos = {325,420,550},
 				property = {
 					placeName = "place1" ,         --近
 					id = 7,
@@ -135,9 +124,9 @@ local waves = {
 			},
 			{
 				time = 18,	
-				num = 5,
-				delay = {0,0.9,0.5,0.8,1.5},
-				pos = {250,350,410,570,700},
+				num = 3,
+				delay = {0,0.9,1.5},
+				pos = {350,410,700},
 				property = {
 					placeName = "place1" ,
 					id = 7,
@@ -165,7 +154,7 @@ local waves = {
 					type = "san",
 					id = 4,
 					enemyId = 1,
-				},                                                                            --60
+				},                                                                            --23
 			},	
 			
 		},
