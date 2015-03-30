@@ -5,17 +5,23 @@ function BaseWave:getWaves(waveIndex)
 	return self.waves[waveIndex] 
 end
 
+function BaseWave:getConfigById(id)
+	for i,enemy in ipairs(self.enemys) do
+		if id == enemy.id then 
+			return enemy
+		end
+	end
+	assert(false, "no id in this waveConfig", id)
+end
+
 function BaseWave:getEnemys(id)
 	id = tonumber(id)
-	-- dump(self.enemys, "self.enemys")
-	assert(self.enemys[id], "config in wave is nil! id is: "..id)
-	-- dump(self.enemys[id], "self.enemys[id]")
-	return self.enemys[id]
+	return self:getConfigById(id)
 end
 
 function BaseWave:getBoss(id)
 	id = tonumber(id)
-	assert(self.bosses[id], "config in wave is nil! id is: "..id)
+	assert(self.bosses[id], "config in wave is nil! id is: "..id)	
 	return self.bosses[id] 
 end
 
