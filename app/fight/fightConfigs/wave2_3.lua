@@ -376,20 +376,42 @@ local bosses = {
 		},
 
 		daoDan1 = {
+		    id = 21,                                  --烟雾
+			type = "dao_wu",                  
 			offsetPoses = {
                 cc.p(-300, 0), cc.p(300, 0), 
            }               
 		},
 		daoDan2 = {
+			id = 19,                                 --boss导弹
+			type = "missile",
 			offsetPoses = {
                 cc.p(0, 0), cc.p(0, -500), 
            }               
 		},
 		daoDan3 = {
+			id = 22,                                 --大黑导弹
+			type = "missile",                        
 			offsetPoses = {
                 cc.p(-300, -300), cc.p(300, -300), 
            }               
 		},
+
+		-- daoDan1 = {
+		-- 	offsetPoses = {
+  --               cc.p(-300, 0), cc.p(300, 0), 
+  --          }               
+		-- },
+		-- daoDan2 = {
+		-- 	offsetPoses = {
+  --               cc.p(0, 0), cc.p(0, -500), 
+  --          }               
+		-- },
+		-- daoDan3 = {
+		-- 	offsetPoses = {
+  --               cc.p(-300, -300), cc.p(300, -300), 
+  --          }               
+		-- },
 
 
 		getMoveLeftAction = function ()

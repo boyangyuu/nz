@@ -419,16 +419,22 @@ local bosses = {
 		},
 
 		daoDan1 = {
+		    id = 20,                                 --boss导弹
+			type = "missile",                  
 			offsetPoses = {
                 cc.p(-300, 0), cc.p(300, 0), 
            }               
 		},
 		daoDan2 = {
+			id = 20,                                 --boss导弹
+			type = "missile",
 			offsetPoses = {
                 cc.p(0, 0), cc.p(0, -500), 
            }               
 		},
 		daoDan3 = {
+			id = 20,                                 --boss导弹
+			type = "missile",                        
 			offsetPoses = {
                 cc.p(-300, -300), cc.p(300, -300), 
            }               
