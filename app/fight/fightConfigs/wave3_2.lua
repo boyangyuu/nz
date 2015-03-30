@@ -480,6 +480,15 @@ local enemys = {
 	--铁球
 	{id=19,image="tieqiu",demage=20,hp=8000},
 
+	--小蜘蛛   --type = "bao",
+	{id=20,image="xiaozz",demage=15,hp=5000, speed=150,weak1=1}, 
+
+	--烟雾导弹
+	{id=21,image="daodan03",demage=1,hp=8000, weak1=1},   
+
+	--大导弹          --missileType = "daodan",
+	{id=22,image="daodan02",demage=10,hp=500, weak1=1},	
+
 }
 
 
@@ -502,9 +511,9 @@ local bosses = {
 		shanCd	= 2,					
 
 		chongfengDemage = 40,                --冲锋造成伤害
-		weak1 = 1.1,						--头 弱点伤害倍数
-		weak2 = 1.1,					--左腿 弱点伤害倍数
-		weak3 = 1.1,					--右腿 弱点伤害倍数	
+		weak1 = 1.2,						--头 弱点伤害倍数
+		weak2 = 1.2,					--左腿 弱点伤害倍数
+		weak3 = 1.2,					--右腿 弱点伤害倍数	
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 
