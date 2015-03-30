@@ -6,7 +6,6 @@
 2. 左右移动范围大
 ]]
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
@@ -28,8 +27,7 @@ function RZHushiEnemyView:ctor(property)
     self.isExiting  = false
     self.playAnimId = nil
     local lastTime = self.property["lastTime"] or 1.0
-    local sch = scheduler.performWithDelayGlobal(handler(self, self.exit), lastTime)
-    self:addScheduler(sch)        
+    self:performWithDelay(handler(self, self.exit), lastTime)      
 end
 
 function RZHushiEnemyView:tick()

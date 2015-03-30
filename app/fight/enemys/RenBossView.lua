@@ -1,6 +1,4 @@
 
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseBossView = import(".BaseBossView")
 local FightConfigs = import("..fightConfigs.FightConfigs")
 local RenBossView = class("RenBossView", BaseBossView)
@@ -105,7 +103,7 @@ function RenBossView:playShan()
         self.armature:getAnimation():play("shanru" , -1, 1) 
         self.isShaning = false
     end
-    scheduler.performWithDelayGlobal(shanru, define.kRenzheShanTime)
+    self:performWithDelay(shanru, define.kRenzheShanTime)
 end
 
 function RenBossView:playRunAction(direct, isRun)
@@ -173,8 +171,7 @@ function RenBossView:playFeibiao(skillName)
         local function callfuncDaoDan()
              self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
         end
-        local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
-        self:addScheduler(sch)         
+        self:performWithDelay(callfuncDaoDan, delay)     
     end    
 end
 
@@ -200,8 +197,7 @@ function RenBossView:playFire()
         local function callfuncDaoDan()
              self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
         end
-        local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
-        self:addScheduler(sch)         
+        self:performWithDelay(callfuncDaoDan, delay)        
     end
 end
 

@@ -4,9 +4,6 @@
 “地图效果”的视图
 
 ]]
-local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
---events
-
 
 local HeroAnimView = class("HeroAnimView", function()
     return display.newNode()
