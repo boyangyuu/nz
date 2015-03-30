@@ -160,6 +160,10 @@ function BaseBossView:playKill(event)
 	
 	--blood
 	self.blood:setVisible(false)
+
+	--sound
+    local src = "res/Music/fight/bossbz.wav"
+    audio.playSound(src, false)	
 end
 
 function BaseBossView:playBombEffects()
