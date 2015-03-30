@@ -6,8 +6,6 @@
 ]]
 
 --import
-import("..includes.functionUtils")
-local scheduler = require("framework.scheduler")
 local FightConfigs = import(".fightConfigs.FightConfigs")
 local Gun = import(".Gun")
 

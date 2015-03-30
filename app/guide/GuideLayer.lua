@@ -1,7 +1,6 @@
 
 
 local LayerColor_BLACK = cc.c4b(255, 0, 0, 0)
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Guide = import(".GuideModel")
 local GuideLayer = class("GuideLayer", function()
 	local layer = display.newColorLayer(LayerColor_BLACK)
@@ -136,7 +135,7 @@ function GuideLayer:hideForTime(event)
 	self.bg:setVisible(false)
 
 	--restore after time
-	scheduler.performWithDelayGlobal(restoreFunc, delay)	
+	self:performWithDelay(restoreFunc, delay)	
 end
 
 function GuideLayer:getTargetRect()

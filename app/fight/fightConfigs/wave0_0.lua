@@ -465,7 +465,7 @@ local enemys = {
 	weak1=2,    award = 60},
 }
 
-	--boss的关卡配置
+--boss的关卡配置
 local bosses = {
 	--第一个出场的boss
 	{
@@ -540,16 +540,25 @@ local bosses = {
 	},
 }
 
-local mapId = "map_1_2"
-local limit = 10   				--此关敌人上限
-
 function waveClass:ctor()
 	self.waves  = waves
 	self.enemys = enemys
 	self.bosses = bosses
-	self.mapId  = mapId
-	self.limit  = limit
+	self.mapId  = "map_1_2"
+	self.limit  = 10
 	self.isNotMoveMap = true    --此关不能移动
+	
+	self.fightMode =  {
+		type 	  = "puTong",
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,
+
+		-- type 	  = "xianShi",
+		-- time 	  = 2 * 60 + 30,
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,
+	}
 
 end
 

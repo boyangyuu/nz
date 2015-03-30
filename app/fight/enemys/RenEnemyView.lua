@@ -5,7 +5,6 @@
 1. desc: a.发射攻击物品 ()
 ]]
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
@@ -113,7 +112,7 @@ function RenEnemyView:beginChongCd()
     local function resumeCd()
         self.isChongCd = false
     end
-    scheduler.performWithDelayGlobal(resumeCd, chongCd)
+    self:performWithDelay(resumeCd, chongCd)
 end
 
 function RenEnemyView:playEnter()
@@ -140,8 +139,7 @@ function RenEnemyView:playFire()
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
-    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.8)
-    self:addScheduler(sch)    
+    self:performWithDelay(callfuncDaoDan, 0.8)   
 end
 
 function RenEnemyView:playChongfeng()

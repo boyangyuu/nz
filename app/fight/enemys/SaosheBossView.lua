@@ -1,6 +1,5 @@
 
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseBossView = import(".BaseBossView")
 local FightConfigs = import("..fightConfigs.FightConfigs")
 local SaosheBossView = class("SaosheBossView", BaseBossView)
@@ -36,13 +35,12 @@ function SaosheBossView:continueFire(sumTimes, fireOffset)
 	local handler = nil
 	function saosheFire()
 		if sumTimes == 0 then 
-			scheduler.unscheduleGlobal(handler)
+			transition.removeAction(handler)
 		end
 		self.enemy:hit(self.hero)
 		sumTimes = sumTimes - 1
 	end
-	handler =  scheduler.scheduleGlobal(saosheFire, fireOffset)
-	self:addScheduler(handler)  
+	handler = self:schedule(saosheFire, fireOffset)
 end
 
 function SaosheBossView:animationEvent(armatureBack,movementType,movementID)

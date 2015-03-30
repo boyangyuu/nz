@@ -29,11 +29,14 @@ end
 
 function BaseWave:getRenzhiLimit()
 	return self.renzhiLimit
-	-- return 10000
 end
 
 function BaseWave:getEnemyNumLimit()
 	return self.limit or 10
+end
+
+function BaseWave:getFightModeType()
+	return self.mode or "normal"
 end
 
 return BaseWave

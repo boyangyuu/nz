@@ -27,6 +27,7 @@ modelClasses["Defence"]             = import("..fight.skills.Defence")
 modelClasses["Robot"]               = import("..fight.skills.Robot")
 modelClasses["FightConfigs"]        = import("..fight.fightConfigs.FightConfigs")
 modelClasses["FightDescModel"]      = import("..fight.fightDesc.FightDescModel")
+modelClasses["FightMode"]           = import("..fight.fightMode.FightMode")
 
 --guide
 modelClasses["Guide"]               = import("..guide.GuideModel")

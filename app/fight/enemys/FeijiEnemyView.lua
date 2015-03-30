@@ -7,9 +7,6 @@
 3. 
 ]]
 
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
@@ -258,8 +255,7 @@ function FeijiEnemyView:playFire()
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
-	    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, 0.5)
-	    self:addScheduler(sch)  
+	    self:performWithDelay(callfuncDaoDan, 0.5)
 	end
 end
 
@@ -297,9 +293,8 @@ end
 
 function FeijiEnemyView:playBombEffects()
     for i=1,8 do
-        local sch  = scheduler.performWithDelayGlobal(
+        self:performWithDelay(
             handler(self, self.playBombEffect), i * 0.1)
-        self:addScheduler(sch)
     end
 end
 

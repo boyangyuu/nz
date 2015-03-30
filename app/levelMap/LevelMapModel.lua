@@ -108,7 +108,6 @@ end
 function LevelMapModel:hideGiftBagIcon()
 	print("LevelMapModel:hideGiftBagIcon()")
 	self:dispatchEvent({name = "HIDE_GIFTBAGICON_EVENT"})
-	self:dispatchEvent({name = "REFRESH_WEAPON_LISTVIEW"})
 end
 
 function LevelMapModel:levelPass(groupId,levelId)

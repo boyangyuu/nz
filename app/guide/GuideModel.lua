@@ -5,7 +5,6 @@
 
 ]]
 
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Actor = import("..fight.Actor")
 local GuideConfigs = import(".GuideConfigs")
 local Guide = class("Guide", cc.mvc.ModelBase)
