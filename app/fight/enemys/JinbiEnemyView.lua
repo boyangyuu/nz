@@ -6,8 +6,6 @@
 2. 伞兵落地 换为enemyview
 ]]
 
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")

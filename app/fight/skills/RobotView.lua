@@ -4,7 +4,6 @@
 “枪”的视图
 
 ]]
-local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
 local Robot   = import(".Robot") 
 
 local RobotView = class("RobotView", function()

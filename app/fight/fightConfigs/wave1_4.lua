@@ -418,13 +418,18 @@ local enemys = {
 	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=110,scale = 3.0,
 	weak1=2},	
 	                                                --scale = 3.0,  近战走到屏幕最近放缩比例	 
-	--boss导弹          --missileType = "daodan",
+	--boss导弹          type = "missile",
 	{id=19,image="daodan",demage=10,hp=10,
 	weak1=1},
 
-	-- 金武箱子奖励  type = "awardSan",
+	-- 金武箱子奖励     type = "awardSan",
 	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
-	
+
+	--烟雾导弹             type = "dao_wu", 
+	{id=21,image="daodan03",demage=1,hp=800, weak1=1},
+
+	--大导弹          type = "missile",
+	{id=22,image="daodan02",demage=10,hp=500, weak1=1},
 
 }
 
@@ -496,20 +501,27 @@ local bosses = {
 		},
 
 		daoDan1 = {
+		    id = 21,                                  --烟雾
+			type = "dao_wu",                  
 			offsetPoses = {
                 cc.p(-300, 0), cc.p(300, 0), 
            }               
 		},
 		daoDan2 = {
+			id = 19,                                 --boss导弹
+			type = "missile",
 			offsetPoses = {
                 cc.p(0, 0), cc.p(0, -500), 
            }               
 		},
 		daoDan3 = {
+			id = 22,                                 --大黑导弹
+			type = "missile",                        
 			offsetPoses = {
                 cc.p(-300, -300), cc.p(300, -300), 
            }               
 		},
+
 		enemys1 = {                                                   --第一波召唤的自爆兵
 			{
 				time = 0,	
@@ -523,7 +535,6 @@ local bosses = {
 				},
 			},
 		},
-
 
 		enemys2 = {                                                      --第二波召唤的兵
 			{

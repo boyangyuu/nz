@@ -71,7 +71,7 @@ function FightInlay:activeGoldOnCost()
 
     --goldTimes
     self.goldTimes = self.goldTimes + 1
-     print("self.goldTimes", self.goldTimes)
+    print("self.goldTimes", self.goldTimes)
 end
 
 function FightInlay:getGoldCostTimes()

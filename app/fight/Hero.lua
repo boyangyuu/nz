@@ -66,7 +66,6 @@ function Hero:ctor(properties)
     self.isLessHp = false
 end
 
-
 --枪械相关
 function Hero:initGuns()
     self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
@@ -351,6 +350,13 @@ function Hero:onBuyFullHp()
     --refresh 买礼包时候需要刷新
     local fightProp = md:getInstance("FightProp")
     fightProp:refreshData()
+
+    --um
+    local fight = md:getInstance("Fight")
+    local levelInfo = fight:getLevelInfo()    
+    local umData = {}
+    umData[levelInfo] = "满血"
+    um:event("关卡道具使用", umData)    
 end
 
 function Hero:onDenyFullHp()

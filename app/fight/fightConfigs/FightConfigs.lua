@@ -45,9 +45,4 @@ function FightConfigs:getBossConfig(configName)
 	-- dump(config, "getBossConfig")	
 	return config
 end
-
-function FightConfigs:getFocusRange()
-	return 20
-end
-
 return FightConfigs

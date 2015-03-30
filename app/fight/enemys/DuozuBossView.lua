@@ -1,6 +1,4 @@
 
-
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local BaseBossView = import(".BaseBossView")
 local FightConfigs = import("..fightConfigs.FightConfigs")
 local DuozuBossView = class("DuozuBossView", BaseBossView)
@@ -110,8 +108,7 @@ function DuozuBossView:playFire()
             self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, 
                 property = property})
         end
-        local sch = scheduler.performWithDelayGlobal(callfuncAddDao, delay)
-        self:addScheduler(sch)
+        self:performWithDelay(callfuncAddDao, delay)
     end
 end
 
@@ -133,8 +130,7 @@ function DuozuBossView:playSkillWu()
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
-    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
-    self:addScheduler(sch)   
+    self:performWithDelay(callfuncDaoDan, delay)
 end
 
 function DuozuBossView:playSkillWang()
@@ -157,8 +153,7 @@ function DuozuBossView:playSkillWang()
     local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
     end
-    local sch = scheduler.performWithDelayGlobal(callfuncDaoDan, delay)
-    self:addScheduler(sch)   
+    self:performWithDelay(callfuncDaoDan, delay)
 end
 
 function DuozuBossView:playSkillWudi()

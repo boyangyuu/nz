@@ -321,6 +321,8 @@ function BaseBossView:playDaoDan(skillName)
     
     --play
     local offset = self.config.daoDanTimeOffset or 0.6
+    local id     = config.id
+    local type   = config.type
     for i=1, #config.offsetPoses do
         local delay = offset * i 
         local property = {
@@ -329,10 +331,9 @@ function BaseBossView:playDaoDan(skillName)
             destScale = 1.5,
             destPos = pWorldBone,
             offset = config.offsetPoses[i],
-            type = "missile",
-            id = self.property["missileId"],
+            id = id,
+            type = type,
             demageScale = self.enemy:getDemageScale(),
-            missileType = "daodan",
         }
         local function callfuncDaoDan()
              self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})

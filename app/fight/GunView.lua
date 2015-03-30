@@ -117,7 +117,7 @@ function GunView:playReload()
 		self.hero:setIsReloading(false)
 		self.gun:setFullBulletNum()
 	end
-	scheduler.performWithDelayGlobal(reloadDone, reloadTime)
+	self:performWithDelay(reloadDone, reloadTime)
 	
 	--hero层reload动画
 	-- print("GunView:playReload()")
@@ -239,13 +239,13 @@ function GunView:onActiveGold(event)
 	-- print("GunView:onActiveGold(event)")
 	self.isGolding = true
 	self.gun:setFullBulletNum()
-	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
+	self:performWithDelay(handler(self, self.playChange), 0.6)
 end
 
 function GunView:onActiveGoldEnd(event)
 	self.isGolding = false
 	self.gun:setFullBulletNum()
-	scheduler.performWithDelayGlobal(handler(self, self.playChange), 0.6)
+	self:performWithDelay(handler(self, self.playChange), 0.6)
 end
 
 function GunView:animationEvent(armatureBack,movementType,movementID)

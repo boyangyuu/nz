@@ -1,6 +1,4 @@
 
-local scheduler = require("framework.scheduler")
-
 --[[
 	Attackable
 ]]
@@ -15,7 +13,6 @@ function Attackable:ctor(property)
     self.fight = md:getInstance("Fight")
 	self.enemy = self:getModel(property)
 	self.property = property
-	self.schedulers = {}
 	self.playCache = {}
 	self.isDead = false
 	self.isRed = false
@@ -199,9 +196,6 @@ function Attackable:getDeadDone()
 end
 
 function Attackable:setDeadDone()
-	if self.removeAllSchedulers then	
-		self:removeAllSchedulers()	
-	end
 	self:setPauseOtherAnim(true)
 	self.isDead = true
 end
@@ -211,9 +205,6 @@ function Attackable:getWillRemoved()
 end
 
 function Attackable:setWillRemoved(time)
-	if self.removeAllSchedulers then	
-		self:removeAllSchedulers()	
-	end
 	self:setPauseOtherAnim(true)
 	local function callFunc()
 		self.isWillRemove = true
@@ -299,17 +290,6 @@ end
 
 function Attackable:getScale()
 	return self:getScaleX()
-end
-
-function Attackable:removeAllSchedulers()
-	for i,v in ipairs(self.schedulers) do
-		scheduler.unscheduleGlobal(v)
-		v = nil
-	end
-end
-
-function Attackable:addScheduler(scheduler)
-	self.schedulers[#self.schedulers + 1] = scheduler
 end
 
 --飘红 飘血
@@ -470,7 +450,6 @@ end
 function Attackable:playKill(event)
 	self.isWillDie = true
 	self:clearPlayCache()
-	self:removeAllSchedulers()
 	self.armature:stopAllActions()
 	self:stopAllActions()
 	self:setPauseOtherAnim(true)
@@ -490,7 +469,6 @@ function Attackable:onCleanup()
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end
-	self:removeAllSchedulers()  
 end
 
 return Attackable
