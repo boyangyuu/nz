@@ -29,7 +29,7 @@ configs["day5"] = {
 
 configs["day6"] = {
 	type = "lei",
-	number = 10,
+	number = 20,
 }
 
 configs["day7"] = {

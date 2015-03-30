@@ -1,4 +1,3 @@
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local LoadingLayer = class("LoadingLayer", function()
 	return display.newLayer()
 end)

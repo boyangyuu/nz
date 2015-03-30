@@ -207,7 +207,7 @@ function Fight:onRelive()
     self:clearFightData()
 
     --gold
-    self.inlayModel:equipGoldInlays(false)
+    self.inlayModel:equipGoldInlays()
     self.inlay:checkNativeGold()
 
     --jijia

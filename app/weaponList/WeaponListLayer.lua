@@ -23,7 +23,7 @@ function WeaponListLayer:ctor()
 end
 
 --guide
-function WeaponListLayer:onEnter()
+function WeaponListLayer:onShow()
      if self.ui == nil then
         self.weaponId = 1
         --init ui
@@ -41,7 +41,7 @@ function WeaponListLayer:onEnter()
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
-        -- :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshListView))
+        :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshLists))
         :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT , handler(self, self.playOneStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 end
@@ -156,7 +156,7 @@ function WeaponListLayer:initUI()
     self.equipedju:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    self:refreshListView()
+    self:initListView()
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
@@ -288,28 +288,25 @@ function WeaponListLayer:onBuyWeaponSucc()
     end
 end
 
-function WeaponListLayer:refreshListView(event)
+function WeaponListLayer:initListView(event)
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
-    self:loadWeaponList(self.weaponLV,configTab)
+   
+    for i=1, #configTab do
+        local weaponRecord = self.weaponListModel:getWeaponRecord(i)
+        local item = self.weaponLV:newItem()
+        local content
+        if configTab[i] then
+            content = WeaponListCell.new({weaponRecord = weaponRecord})
+        end
+        item:addContent(content)
+        item:setItemSize(280, 140)
+        self.weaponLV:addItem(item)
+    end
+    self.weaponLV:reload()
+
     self.selectedContent = nil
     self:refreshComment()
-end
-
--- 初始化ListView
-function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
-	for i=1, #weaponTable do
-		local weaponRecord = self.weaponListModel:getWeaponRecord(i)
-        local item = weaponListView:newItem()
-		local content
-		if weaponTable[i] then
-			content = WeaponListCell.new({weaponRecord = weaponRecord})
-		end
-		item:addContent(content)
-		item:setItemSize(280, 140)
-		weaponListView:addItem(item)
-	end
-	weaponListView:reload()
 end
 
 -- ListView 点击事件
@@ -327,7 +324,10 @@ function WeaponListLayer:refreshUI(event)
 end
 
 function WeaponListLayer:refreshLists()
-    
+    for k,item in pairs(self.weaponLV.items_) do
+        local content = item:getContent()
+        content:setOwned()
+    end
 end
 
 function WeaponListLayer:refreshComment()

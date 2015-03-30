@@ -207,7 +207,6 @@ function LevelDetailLayer:initBtns()
 end
 
 function LevelDetailLayer:startGame()
-	self.levelDetailModel:setCurGroupAndLevel(self.groupId,self.levelId)
 	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
 		levelId = self.levelId})
 	self:onClickBtnOff()
@@ -281,7 +280,7 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 function LevelDetailLayer:equipGold()
-	self.inlayModel:equipAllInlays(true)
+	self.inlayModel:equipAllInlays()
 	self:refreshUI()	
 end
 

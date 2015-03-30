@@ -54,8 +54,8 @@ function WeaponListCell:setSelected(isSelected)
 	-- visiable
 end
 
-function WeaponListCell:setOwned(weaponid)
-	local isOwned = self.weaponListModel:isWeaponExist(weaponid)
+function WeaponListCell:setOwned()
+	local isOwned = self.weaponListModel:isWeaponExist(self.id)
 	if isOwned == false then
 		self:setOpacity(130)
 	else
