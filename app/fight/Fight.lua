@@ -58,7 +58,7 @@ function Fight:refreshData(properties)
     self.inlay      = self.hero:getFightInlay()
 
     local levelModel = md:getInstance("LevelDetailModel")
-    self.isJujiFight = levelModel:isJujiFight()
+    self.isJujiFight = levelModel:isJujiFight(self.groupId,self.levelId)
     self.goldValue = 0.0
     self.result = nil
     self.resultData = {}
