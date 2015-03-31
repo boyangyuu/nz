@@ -31,7 +31,6 @@ function FightResultLayer:ctor(properties)
     local fightResult = self.fightModel:getResultData()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
-    dump(fightResult["goldNum"])
     um:bonusVirtualCurrency(fightResult["goldNum"],4)
     self.grade = self:getGrade(fightResult["hpPercent"])
 
@@ -253,7 +252,6 @@ function FightResultLayer:initUIContent()
 				self.cardsilver[k]:setVisible(false)
 			elseif record["property"] == 3 then
 				self.cardgold[k]:setVisible(false)
-				dump(k)
 				self.cardbronze[k]:setVisible(false)
 			elseif record["property"] == 4 then
 				self.cardsilver[k]:setVisible(false)

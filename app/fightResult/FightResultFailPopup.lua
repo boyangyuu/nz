@@ -76,7 +76,7 @@ end
 function FightResultFailPopup:onClickBackHome()
     local buyModel = md:getInstance("BuyModel")
     local fight  = md:getInstance("Fight")
-    fight:onGiveUp()
+    fight:doGiveUp()
 
     local groupId,levelId = fight:getCurGroupAndLevel()
     ui:closePopup("FightResultFailPopup")
@@ -94,7 +94,7 @@ end
 
 function FightResultFailPopup:payReliveDone()
     local fight = md:getInstance("Fight")
-    fight:onRelive()
+    fight:doRelive()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
 end

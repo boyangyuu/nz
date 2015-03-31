@@ -160,17 +160,12 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=2,hp=1,
 	weak1=1},
-
-	
- 
 }
 
 
 local mapId = "map_1_7"
 
 local isNotMoveMap = true  		--此关不能移动 
-
-local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
@@ -182,15 +177,8 @@ function waveClass:ctor()
 
 	
 	self.fightMode =  {
-		type 	  = "puTong",
-		-- type 	  = "renZhi",
-		-- saveNums  = 4,
-
 		type 	  = "xianShi",
-		limitTime = 2 * 60 + 30,
-
-		-- type 	  = "taoFan"
-		-- limitNums = 5,
+		limitTime = 1 * 60 + 10,
 	}
 	
 end

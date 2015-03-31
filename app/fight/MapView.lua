@@ -158,11 +158,10 @@ function MapView:updateEnemys()
 	if wave == nil  then 
 		print("赢了")
 		if result == nil then 
-			self.fight:onWin()
+			self.fight:doWin()
 			self:stopAllActions()			
 		else
 			assert(false, "")
-
 		end
 		return
 	end

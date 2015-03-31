@@ -226,8 +226,8 @@ function RZHushiEnemyView:animationEvent(armatureBack,movementType,movementID)
 			self:doNextPlay()
     	elseif movementID == "die" then 
     		self:setDeadDone()
-    		local fight = md:getInstance("Fight")
-    		fight:killRenzhiOver()
+    		local fightMode = md:getInstance("FightMode")
+    		fightMode:willFail({type = "renzhi"})
     	end 
 	end
 end

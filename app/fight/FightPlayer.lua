@@ -64,8 +64,6 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
         :addEventListener(self.fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
         :addEventListener(self.fight.CONTROL_SET_EVENT,  handler(self, self.setComponentVisible))
-        :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
-        :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
        
@@ -245,9 +243,7 @@ function FightPlayer:startDefenceResume(event)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
-
     local percent = event.percent * 100
-    print("FightPlayer:onDefenceBeHurt(event)", percent)
     self.defenceDemage:setPercentH(percent)
 end
 
@@ -256,7 +252,7 @@ function FightPlayer:onHeroKill(event)
     self:onCancelledFire()
 
     --fight 
-    self.fight:onFail()
+    self.fight:endFightFail()
 end
 
 function FightPlayer:initTouchArea()
@@ -951,22 +947,10 @@ function FightPlayer:onEnter()
     end 
 end
 
-function FightPlayer:onExit()
-    
-end
-
 function FightPlayer:onCleanup()
      audio:stopAllSounds()
      self:removeAllSchs()
      audio.stopMusic()
-end
-
-function FightPlayer:onResultFail()
-    self:removeAllSchs()
-end
-
-function FightPlayer:onResultWin()
-    self:removeAllSchs()
 end
 
 function FightPlayer:removeAllSchs()

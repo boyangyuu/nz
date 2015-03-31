@@ -106,9 +106,4 @@ function FightProp:startGoldWeapon()
 	self:refreshData()
 end
 
-function FightProp:costReliveBag()
-	
-end
-
-
 return FightProp
