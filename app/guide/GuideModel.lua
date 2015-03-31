@@ -88,13 +88,13 @@ function Guide:doGuideNext()
 	self.curData = listenData
 
 	--dispatch
-	print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
+	-- print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
 	self:dispatchEvent({name = Guide.GUIDE_START_EVENT, 
 				groupId = self.groupId})	
 end
 
 function Guide:startGuide(groupId)
-	print("function Guide:startGuide(groupId)", groupId)
+	-- print("function Guide:startGuide(groupId)", groupId)
 	self.isGuiding = true
 	assert(self:isDone(groupId) == false , "no exist groupId"..groupId)
 	self.groupId = groupId
@@ -106,7 +106,7 @@ function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
 	local isDone = data.guide[groupId]
-	print(" Guide:isDone groupId " .. groupId .. "isDone:", isDone) 
+	-- print(" Guide:isDone groupId " .. groupId .. "isDone:", isDone) 
 	assert(isDone ~= nil, "no exist groupId:".. groupId)
 	return isDone
 end
@@ -139,7 +139,7 @@ function Guide:finishGuide()
 				groupId = self.groupId})
 
 	--clear
-	print("function Guide:finishGuide()")
+	-- print("function Guide:finishGuide()")
 	self.stepIndex = 0
 	self.isGuiding = false	
 	self.groupId = nil	

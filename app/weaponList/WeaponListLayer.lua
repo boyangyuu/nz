@@ -22,33 +22,31 @@ function WeaponListLayer:ctor()
     self.levelMapModel = md:getInstance("LevelMapModel")
 end
 
---guide
-function WeaponListLayer:onEnter()
+function WeaponListLayer:onShow()
      if self.ui == nil then
         self.weaponId = 1
         --init ui
         cc.FileUtils:getInstance():addSearchPath("res/WeaponList/")
         self:loadCCS()
         self:initUI()
-
-        -- 点开页面默认选择某个武器
-        self:initGuide()
+        self:initListView()
     end
-
+    
     --refersh
     self:refreshUI() 
 
     --events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
-        -- :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshListView))
+        :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshLists))
         :addEventListener(self.weaponListModel.WEAPON_STAR_ONE_EVENT , handler(self, self.playOneStar))
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
+
+    --guide
+    self:initGuide()        
 end
 
--- loadCCS
 function WeaponListLayer:loadCCS()
-    -- load control bar
     cc.FileUtils:getInstance():addSearchPath("res/WeaponList")
     self.ui = cc.uiloader:load("wuqiku.ExportJson")
     assert(self.ui , "self.ui  is nil")
@@ -75,9 +73,8 @@ function WeaponListLayer:loadCCS()
 end
 
 function WeaponListLayer:initUI()
-    self.panellist        = cc.uiloader:seekNodeByName(self, "panellist")
-    self.weaponLV         = cc.uiloader:seekNodeByName(self.panellist, "listviewweapon")
-    self.layerbutton      = cc.uiloader:seekNodeByName(self, "panelbutton")
+    self.weaponLV         = cc.uiloader:seekNodeByName(self, "listviewweapon")
+    local layerBtn        = cc.uiloader:seekNodeByName(self, "panelbutton")
     self.paneldetail      = cc.uiloader:seekNodeByName(self, "paneldetail")
     self.panelDamage      = cc.uiloader:seekNodeByName(self, "Panel_damage")
     self.panelAccuracy    = cc.uiloader:seekNodeByName(self, "panelaccuracy")
@@ -87,17 +84,17 @@ function WeaponListLayer:initUI()
     self.layerGun         = cc.uiloader:seekNodeByName(self.paneldetail, "imgweapon")
 
     self.labelPercent     = cc.uiloader:seekNodeByName(self.panelDamage, "labelpercent")
-    self.btnEquiped       = cc.uiloader:seekNodeByName(self.layerbutton, "btnequiped")
-    self.btnEquip         = cc.uiloader:seekNodeByName(self.layerbutton, "btnequip")
-    self.btnUpgrade       = cc.uiloader:seekNodeByName(self.layerbutton, "btnupgrade")
-    self.btnFull          = cc.uiloader:seekNodeByName(self.layerbutton, "btnfull")
-    self.btnOncefull      = cc.uiloader:seekNodeByName(self.layerbutton, "btnoncefull")
-    self.btnBuy           = cc.uiloader:seekNodeByName(self.layerbutton, "btnbuy")
-    self.equipedone       = cc.uiloader:seekNodeByName(self.layerbutton, "bag1")
-    self.equipedtwo       = cc.uiloader:seekNodeByName(self.layerbutton, "bag2")
-    self.equipedju        = cc.uiloader:seekNodeByName(self.layerbutton, "bag3")
-    self.upgradecost      = cc.uiloader:seekNodeByName(self.layerbutton, "upgradecost")
-    self.buycost          = cc.uiloader:seekNodeByName(self.layerbutton, "buycost")
+    self.btnEquiped       = cc.uiloader:seekNodeByName(layerBtn, "btnequiped")
+    self.btnEquip         = cc.uiloader:seekNodeByName(layerBtn, "btnequip")
+    self.btnUpgrade       = cc.uiloader:seekNodeByName(layerBtn, "btnupgrade")
+    self.btnFull          = cc.uiloader:seekNodeByName(layerBtn, "btnfull")
+    self.btnOncefull      = cc.uiloader:seekNodeByName(layerBtn, "btnoncefull")
+    self.btnBuy           = cc.uiloader:seekNodeByName(layerBtn, "btnbuy")
+    self.equipedone       = cc.uiloader:seekNodeByName(layerBtn, "bag1")
+    self.equipedtwo       = cc.uiloader:seekNodeByName(layerBtn, "bag2")
+    self.equipedju        = cc.uiloader:seekNodeByName(layerBtn, "bag3")
+    self.upgradecost      = cc.uiloader:seekNodeByName(layerBtn, "upgradecost")
+    self.buycost          = cc.uiloader:seekNodeByName(layerBtn, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self.panelDamage, "damagepluse")
     self.suipiannum       = cc.uiloader:seekNodeByName(self.paneldetail, "suipiannum")
 
@@ -109,15 +106,15 @@ function WeaponListLayer:initUI()
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
     cc.uiloader:seekNodeByName(self.panelBullet, "danjia")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
-    cc.uiloader:seekNodeByName(self.layerbutton, "zhuangbei")
+    cc.uiloader:seekNodeByName(layerBtn, "zhuangbei")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
-    cc.uiloader:seekNodeByName(self.layerbutton, "yimanji")
+    cc.uiloader:seekNodeByName(layerBtn, "yimanji")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
-    cc.uiloader:seekNodeByName(self.layerbutton, "shengji")
+    cc.uiloader:seekNodeByName(layerBtn, "shengji")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
-    cc.uiloader:seekNodeByName(self.layerbutton, "goumai")
+    cc.uiloader:seekNodeByName(layerBtn, "goumai")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
-    cc.uiloader:seekNodeByName(self.layerbutton, "yijianmanji")
+    cc.uiloader:seekNodeByName(layerBtn, "yijianmanji")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.buycost:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.upgradecost:enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -156,7 +153,6 @@ function WeaponListLayer:initUI()
     self.equipedju:setVisible(false)
     
     self.weaponLV:onTouch(handler(self,self.touchListener))
-    self:refreshListView()
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
     self.btnOncefull:setTouchEnabled(true)
@@ -216,7 +212,6 @@ function WeaponListLayer:initUI()
     oncearmature:getAnimation():play("yjmj" , -1, 1)
 end
 
--- 装备事件
 function WeaponListLayer:onClickBtnEquip(weaponid)
     ui:showPopup("WeaponBag",{weaponid = weaponid},{opacity = 150})
 end
@@ -243,10 +238,8 @@ function WeaponListLayer:onClickBtnBuy()
     end
 end
 
--- 升级事件
 function WeaponListLayer:onClickBtnUpgrade(event)
     self.weaponListModel:intensify(self.weaponId)
-    -- self.weaponListModel:refreshInfo()
 end
 
 function WeaponListLayer:onCancelWeaponGift()
@@ -276,7 +269,6 @@ function WeaponListLayer:onBuyWeaponGiftSucc()
     self.levelMapModel:hideGiftBagIcon()
 end
 
--- 购买事件
 function WeaponListLayer:onBuyWeaponSucc()
     if self.userModel:costDiamond(self.weaponRecord["cost"]) then
         self.weaponListModel:buyWeapon(self.weaponId)
@@ -288,28 +280,24 @@ function WeaponListLayer:onBuyWeaponSucc()
     end
 end
 
-function WeaponListLayer:refreshListView(event)
+function WeaponListLayer:initListView()
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
-    self:loadWeaponList(self.weaponLV,configTab)
-    self.selectedContent = nil
-    self:refreshComment()
-end
+   
+    for i=1, #configTab do
+        local weaponRecord = self.weaponListModel:getWeaponRecord(i)
+        local item = self.weaponLV:newItem()
+        local content
+        if configTab[i] then
+            content = WeaponListCell.new({weaponRecord = weaponRecord})
+        end
+        item:addContent(content)
+        item:setItemSize(280, 140)
+        self.weaponLV:addItem(item)
+    end
+    self.weaponLV:reload()
 
--- 初始化ListView
-function WeaponListLayer:loadWeaponList(weaponListView, weaponTable)
-	for i=1, #weaponTable do
-		local weaponRecord = self.weaponListModel:getWeaponRecord(i)
-        local item = weaponListView:newItem()
-		local content
-		if weaponTable[i] then
-			content = WeaponListCell.new({weaponRecord = weaponRecord})
-		end
-		item:addContent(content)
-		item:setItemSize(280, 140)
-		weaponListView:addItem(item)
-	end
-	weaponListView:reload()
+    self.selectedContent = nil
 end
 
 -- ListView 点击事件
@@ -327,7 +315,10 @@ function WeaponListLayer:refreshUI(event)
 end
 
 function WeaponListLayer:refreshLists()
-    
+    for k,item in pairs(self.weaponLV.items_) do
+        local content = item:getContent()
+        content:setOwned()
+    end
 end
 
 function WeaponListLayer:refreshComment()
@@ -419,7 +410,7 @@ function WeaponListLayer:refreshComment()
     itemContent:setSelected(true)
 
 end
-------------- 
+
 function WeaponListLayer:playOneStar(event)
     local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
 
@@ -460,10 +451,7 @@ function WeaponListLayer:playFullStar(event)
     local destWeaponId = event.weaponId
     if destWeaponId ~= self.weaponId then return end
     local lastLevel = event.lastLevel
-    -- assert(lastLevel, "lastLevel")
     local fromStar, toStar = lastLevel + 1, 10
-    -- print("fromStar", fromStar)  
-    -- print("toStar"  , toStar)    
     local delay = 0
 
     for i= fromStar, toStar do
@@ -477,8 +465,6 @@ function WeaponListLayer:playFullStar(event)
             self.starArmature:getAnimation():play("gkjs_xing" , -1, 0)
             local zx = "res/Music/ui/zx.wav"
             audio.playSound(zx,false)
-            --show
-            -- self.stars[i]:setVisible(true)
         end
         self:performWithDelay(delayStar, delay)
     end
@@ -499,13 +485,11 @@ end
 
 function WeaponListLayer:refreshStar()
     self:hideStars()
-
     for k,v in pairs(self.panlStars) do
         if self.starArmature then
             v:removeAllChildren()
         end
     end
-
     local curLevel = tonumber(self.weaponListModel:getIntenlevel(self.weaponId))
     for k,v in pairs(self.stars) do
         if k < curLevel + 1 then
@@ -520,7 +504,6 @@ function WeaponListLayer:hideStars()
     end    
 end
 
--- 从数据获取当前weapon装备状态判断显示button
 function WeaponListLayer:refreshBtns()
     local weaponid = self.weaponId
     self.btnEquiped:setVisible(false)

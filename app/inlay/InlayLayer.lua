@@ -15,23 +15,24 @@ function InlayLayer:ctor()
     self.icon = {}
     self.typeId = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
-
-    self:setNodeEventEnabled(true)
 end
 
-function InlayLayer:onEnter()
+function InlayLayer:onShow()
+    -- load and init
     if self.ui == nil then
         self:loadCCS()
         self:initUI()
         self:initGuide()
     end
+
+    -- refresh
     self:refreshBtnIcon()
     self:refreshListView("speed")
     self:refreshAvatar()
 
+    -- event
     cc.EventProxy.new(self.inlayModel , self)
-    :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshUI))
-
+     :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshUI))
 end
 
 function InlayLayer:loadCCS()
@@ -42,8 +43,6 @@ function InlayLayer:loadCCS()
     end
     self.ui = controlNode
     self:addChild(controlNode)
-
-    display.addSpriteFrames("xiangqian0.plist", "xiangqian0.png")
 end
 
 function InlayLayer:refreshUI(event)
@@ -139,7 +138,7 @@ function InlayLayer:onClickGoldWeaponBtn()
         self:playSoundxqcg()
     else
         function equipGold()
-            self.inlayModel:equipAllInlays(true)
+            self.inlayModel:equipAllInlays()
             self:playSoundxqcg()
         end
         function deneyGoldGift()
@@ -265,7 +264,7 @@ function InlayLayer:initGuide()
         groupId = "xiangqian",
         rect = cc.rect(780, 70, 140, 50),
         endfunc = function (touchEvent)
-            self.inlayModel:buyInlay(6,false,1) 
+            self.inlayModel:buyInlay(6,1) 
 
             playSoundBtn()
         end
@@ -277,7 +276,7 @@ function InlayLayer:initGuide()
         groupId = "xiangqian",
         rect = cc.rect(940, 70, 140, 50),
         endfunc = function (touchEvent)
-            self.inlayModel:equipInlay(6,true) 
+            self.inlayModel:equipInlay(6) 
 
             playSoundBtn()
         end
@@ -289,13 +288,13 @@ function InlayLayer:initGuide()
         groupId = "xiangqian",
         rect = self.oneForAllBtn:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-           self.inlayModel:buyInlay(3,false,1) 
-           self.inlayModel:buyInlay(6,false,1) 
-           self.inlayModel:buyInlay(9,false,1) 
-           self.inlayModel:buyInlay(12,false,1) 
-           self.inlayModel:buyInlay(15,false,1) 
-           self.inlayModel:buyInlay(18,false,1) 
-           self.inlayModel:equipAllInlays(true)
+           self.inlayModel:buyInlay(3,1) 
+           self.inlayModel:buyInlay(6,1) 
+           self.inlayModel:buyInlay(9,1) 
+           self.inlayModel:buyInlay(12,1) 
+           self.inlayModel:buyInlay(15,1) 
+           self.inlayModel:buyInlay(18,1) 
+           self.inlayModel:equipAllInlays()
            self.inlayModel:refreshInfo("speed",true)
 
            playSoundBtn()

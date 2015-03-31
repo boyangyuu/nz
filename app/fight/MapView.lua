@@ -64,9 +64,7 @@ function MapView:ctor()
         :addEventListener(self.mapModel.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
         :addEventListener(self.mapModel.EFFECT_JUSHAKE_EVENT	, handler(self, self.playEffectJuShaked))
 		
-	self:setNodeEventEnabled(true)
-
-	self:schedule(handler(self, self.checkNumLimit),  1)	
+	self:setNodeEventEnabled(true)	
 end
 
 function MapView:loadCCS()
@@ -160,11 +158,10 @@ function MapView:updateEnemys()
 	if wave == nil  then 
 		print("赢了")
 		if result == nil then 
-			self.fight:onWin()
+			self.fight:doWin()
 			self:stopAllActions()			
 		else
 			assert(false, "")
-
 		end
 		return
 	end

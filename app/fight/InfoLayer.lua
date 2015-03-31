@@ -1,7 +1,7 @@
 
-local Hero 		= import(".Hero")
-local Fight 	= import(".Fight")
-
+local Hero 				= import(".Hero")
+local Fight 		    = import(".Fight")
+local ModeViewFactory    = import(".fightMode.ModeViewFactory")
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
 end)
@@ -35,11 +35,17 @@ function InfoLayer:loadCCS()
 	self.root = cc.uiloader:load("res/Fight/fightLayer/ui/infoUI.ExportJson")
 	self:addChild(self.root)
 
+	--modeView
+	local fightModeView = ModeViewFactory.getModeView()
+	self:addChild(fightModeView)
+
+	--blood
  	self.bloodNode  = cc.uiloader:seekNodeByName(self.root, "bloodNode")
  	self.blood2 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar1") 
  	self.blood1 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar2") 
  	self.bloodLabel = cc.uiloader:seekNodeByName(self.bloodNode, "labelValue") 
 	
+	--gold
 	if device.platform ~= "windows" then
 		self.bloodLabel :enableShadow(cc.c4b(0, 0, 0,255), cc.size(2,-2))
 	    self.bloodLabel :enableOutline(cc.c4b(255, 255, 255,255), 2)

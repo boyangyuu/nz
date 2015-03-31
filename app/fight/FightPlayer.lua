@@ -48,6 +48,7 @@ function FightPlayer:ctor(properties)
     self.infoLayer      = InfoLayer.new() 
     self.gunHelpLayer   = GunHelpLayer.new()
     self.isControlVisible = true
+    
     --ui
     self:initUI()
 
@@ -63,8 +64,6 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.CONTROL_HIDE_EVENT, handler(self, self.hideControl))
         :addEventListener(self.fight.CONTROL_SHOW_EVENT, handler(self, self.showControl))
         :addEventListener(self.fight.CONTROL_SET_EVENT,  handler(self, self.setComponentVisible))
-        :addEventListener(self.fight.RESULT_WIN_EVENT,  handler(self, self.onResultWin))
-        :addEventListener(self.fight.RESULT_FAIL_EVENT, handler(self, self.onResultFail))
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
        
@@ -126,7 +125,8 @@ function FightPlayer:showControl(event)
     self.label_leiNum:setVisible(true)
 
     local levelModel = md:getInstance("LevelDetailModel")
-    local isju = levelModel:isJujiFight()
+    local gid, lid= self.fight:getCurGroupAndLevel()
+    local isju = levelModel:isJujiFight(gid, lid)
     if isju then 
         self.btnChange:setVisible(false) 
     end
@@ -243,9 +243,7 @@ function FightPlayer:startDefenceResume(event)
 end
 
 function FightPlayer:onDefenceBeHurt(event)
-
     local percent = event.percent * 100
-    print("FightPlayer:onDefenceBeHurt(event)", percent)
     self.defenceDemage:setPercentH(percent)
 end
 
@@ -254,7 +252,7 @@ function FightPlayer:onHeroKill(event)
     self:onCancelledFire()
 
     --fight 
-    self.fight:onFail()
+    self.fight:endFightFail()
 end
 
 function FightPlayer:initTouchArea()
@@ -526,7 +524,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         end
         if self.touchFireId == id and not isend then
             self.hero.fsm__:doEvent("ready")
-            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.05)
+            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.01)
         end
     end
    
@@ -541,7 +539,8 @@ end
 function FightPlayer:checkJuFire()
     --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
     local levelModel = md:getInstance("LevelDetailModel")
-    local isJuLevel = levelModel:isJujiFight()
+    local gid, lid= self.fight:getCurGroupAndLevel()
+    local isJuLevel = levelModel:isJujiFight(gid, lid)
     local map           = md:getInstance("Map")
     local isOpenJu      = map:getIsOpenJu()
 
@@ -939,30 +938,19 @@ function FightPlayer:onEnter()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
 
+    local gid, lid= self.fight:getCurGroupAndLevel()
     local levelModel = md:getInstance("LevelDetailModel")
-    local isju = levelModel:isJujiFight()
+    local isju = levelModel:isJujiFight(gid, lid)
     if isju then 
         self.btnRobot:setVisible(false)
         self.label_jijiaNum:setVisible(false)       
     end 
 end
 
-function FightPlayer:onExit()
-    
-end
-
 function FightPlayer:onCleanup()
      audio:stopAllSounds()
      self:removeAllSchs()
      audio.stopMusic()
-end
-
-function FightPlayer:onResultFail()
-    self:removeAllSchs()
-end
-
-function FightPlayer:onResultWin()
-    self:removeAllSchs()
 end
 
 function FightPlayer:removeAllSchs()

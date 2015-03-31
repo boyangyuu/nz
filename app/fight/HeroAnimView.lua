@@ -13,6 +13,7 @@ function HeroAnimView:ctor()
 	self.hero   	 = md:getInstance("Hero")
 	self.fight       = md:getInstance("Fight")
 	local fightInlay = md:getInstance("FightInlay")
+	local fightMode  = md:getInstance("FightMode")
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
 		:addEventListener(self.hero.EFFECT_HURT_YAN_EVENT	, handler(self, self.playHurtedBomb_yan))	
@@ -31,8 +32,8 @@ function HeroAnimView:ctor()
 	cc.EventProxy.new(fightInlay, self)
 		:addEventListener(fightInlay.INLAY_GOLD_BEGIN_EVENT , handler(self, self.playActiveGold))
 	
-	cc.EventProxy.new(self.fight, self)
-:addEventListener(self.fight.FIGHT_TIPS_EVENT		, handler(self, self.playFailTips))
+	cc.EventProxy.new(fightMode, self)
+		:addEventListener(fightMode.FightMODE_TIPS_EVENT	, handler(self, self.playFightTips))
 
 	self:loadCCS()
 end
@@ -208,7 +209,7 @@ function HeroAnimView:playKeepKill(event)
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 end
 
-function HeroAnimView:playFailTips(event)
+function HeroAnimView:playFightTips(event)
 	local failType = event.failType
 	assert(failType, "failType is nil")
 

@@ -31,7 +31,6 @@ function FightResultLayer:ctor(properties)
     local fightResult = self.fightModel:getResultData()
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
-    dump(fightResult["goldNum"])
     um:bonusVirtualCurrency(fightResult["goldNum"],4)
     self.grade = self:getGrade(fightResult["hpPercent"])
 
@@ -253,7 +252,6 @@ function FightResultLayer:initUIContent()
 				self.cardsilver[k]:setVisible(false)
 			elseif record["property"] == 3 then
 				self.cardgold[k]:setVisible(false)
-				dump(k)
 				self.cardbronze[k]:setVisible(false)
 			elseif record["property"] == 4 then
 				self.cardsilver[k]:setVisible(false)
@@ -531,19 +529,19 @@ function FightResultLayer:initGuide3()
 			end
 
 			--镶嵌
-            self.inlayModel:buyInlay(2,false,1) 
-            self.inlayModel:buyInlay(5,false,1) 
-            self.inlayModel:buyInlay(8,false,1) 
-            self.inlayModel:buyInlay(11,false,1) 
-            self.inlayModel:buyInlay(14,false,1) 
-            self.inlayModel:buyInlay(17,true,1) 
+            self.inlayModel:buyInlay(2,1) 
+            self.inlayModel:buyInlay(5,1) 
+            self.inlayModel:buyInlay(8,1) 
+            self.inlayModel:buyInlay(11,1) 
+            self.inlayModel:buyInlay(14,1) 
+            self.inlayModel:buyInlay(17,1) 
 
-            self.inlayModel:equipInlay(2, false)
-            self.inlayModel:equipInlay(5, false)
-            self.inlayModel:equipInlay(8, false)
-            self.inlayModel:equipInlay(11, false)
-            self.inlayModel:equipInlay(14, false)
-            self.inlayModel:equipInlay(17, false)
+            self.inlayModel:equipInlay(2)
+            self.inlayModel:equipInlay(5)
+            self.inlayModel:equipInlay(8)
+            self.inlayModel:equipInlay(11)
+            self.inlayModel:equipInlay(14)
+            self.inlayModel:equipInlay(17)
 
 		    playSoundBtn()    
         end

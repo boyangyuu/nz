@@ -39,12 +39,12 @@ function InlayListCell:initCellUI(record)
         UILabelType = 2, text = record["describe1"].." "..record["valueDisplay"], size = 28})
     :align(display.CENTER, 0, 16)
     :addTo(self)
-    local num = self.inlayModel:getInlayNum(record["id"])
-    local ownnumber = cc.ui.UILabel.new({
-        UILabelType = 2, text = num, size = 25})
+    self.num = self.inlayModel:getInlayNum(record["id"])
+    self.ownNumber = cc.ui.UILabel.new({
+        UILabelType = 2, text = self.num, size = 25})
     :align(display.CENTER, 220, 48)
     :addTo(self)
-    ownnumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.ownNumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
     local buy = cc.ui.UILabel.new({text = "购买",size = 30})
     buy:enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -61,27 +61,10 @@ function InlayListCell:initCellUI(record)
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function()
-            local dianji = "res/Music/ui/dianji.wav"
-            audio.playSound(dianji,false)
-            if self.userModel:costMoney(record["goldPrice"]) then
-                local gmcg = "res/Music/ui/gmcg.wav"
-                audio.playSound(gmcg,false)
-
-                num = num + 1
-                ownnumber:setString(num)
-                self.inlayModel:buyInlay(record["id"],false)
-                um:buy(record["describe2"], 1, record["goldPrice"])   
-            else
-                local buyModel = md:getInstance("BuyModel")
-                buyModel:showBuy("goldGiftBag",{payDoneFunc = refresh,deneyBuyFunc = deneyGoldGift},
-                     "镶嵌页面_购买单个镶嵌金币不足")
-            end
+            self:onClickBtnBuy(record)
         end)
         :pos(10, -36)
         :addTo(self)
-    function refresh()
-        self.inlayModel:refreshInfo(record["type"])
-    end
     function deneyGoldGift()
         ui:showPopup("commonPopup",
             {type = "style2",content = "您的金币不足"},
@@ -97,14 +80,41 @@ function InlayListCell:initCellUI(record)
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function()
-            local dianji = "res/Music/ui/dianji.wav"
-            audio.playSound(dianji,false)
-            local xqcg = "res/Music/ui/xqcg.wav"
-            audio.playSound(xqcg,false)
-            self.inlayModel:equipInlay(record["id"],true)
+            self:onClickBtnEquip(record)
         end)
         :pos(170, -36)
         :addTo(self)
+end
+
+function InlayListCell:onClickBtnBuy(record)
+    local dianji = "res/Music/ui/dianji.wav"
+    audio.playSound(dianji,false)
+
+    function refresh()
+        self.inlayModel:refreshInfo(record["type"])
+    end
+
+    if self.userModel:costMoney(record["goldPrice"]) then
+        local gmcg = "res/Music/ui/gmcg.wav"
+        audio.playSound(gmcg,false)
+
+        self.num = self.num + 1
+        self.ownNumber:setString(self.num)
+        self.inlayModel:buyInlay(record["id"])
+        um:buy(record["describe2"],1, record["goldPrice"])   
+    else
+        local buyModel = md:getInstance("BuyModel")
+        buyModel:showBuy("goldGiftBag",{payDoneFunc = refresh,deneyBuyFunc = deneyGoldGift},
+             "镶嵌页面_购买单个镶嵌金币不足")
+    end
+end
+
+function InlayListCell:onClickBtnEquip(record)
+    local dianji = "res/Music/ui/dianji.wav"
+    audio.playSound(dianji,false)
+    local xqcg = "res/Music/ui/xqcg.wav"
+    audio.playSound(xqcg,false)
+    self.inlayModel:equipInlay(record["id"])
 end
 
 return InlayListCell

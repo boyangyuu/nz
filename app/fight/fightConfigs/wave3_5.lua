@@ -567,9 +567,6 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.renzhiLimit = 1   		--杀死人质上限
-
-
 end
 
 return waveClass
