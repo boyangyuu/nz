@@ -127,7 +127,8 @@ function FightPlayer:showControl(event)
     self.label_leiNum:setVisible(true)
 
     local levelModel = md:getInstance("LevelDetailModel")
-    local isju = levelModel:isJujiFight()
+    local gid, lid= self.fight:getCurGroupAndLevel()
+    local isju = levelModel:isJujiFight(gid, lid)
     if isju then 
         self.btnChange:setVisible(false) 
     end
@@ -542,7 +543,8 @@ end
 function FightPlayer:checkJuFire()
     --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
     local levelModel = md:getInstance("LevelDetailModel")
-    local isJuLevel = levelModel:isJujiFight()
+    local gid, lid= self.fight:getCurGroupAndLevel()
+    local isJuLevel = levelModel:isJujiFight(gid, lid)
     local map           = md:getInstance("Map")
     local isOpenJu      = map:getIsOpenJu()
 
@@ -940,8 +942,9 @@ function FightPlayer:onEnter()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
 
+    local gid, lid= self.fight:getCurGroupAndLevel()
     local levelModel = md:getInstance("LevelDetailModel")
-    local isju = levelModel:isJujiFight()
+    local isju = levelModel:isJujiFight(gid, lid)
     if isju then 
         self.btnRobot:setVisible(false)
         self.label_jijiaNum:setVisible(false)       

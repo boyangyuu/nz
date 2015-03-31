@@ -1,8 +1,6 @@
 import("..includes.functionUtils")
 
 local StoreCell = import(".StoreCell")
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
 
 local StoreLayer = class("StoreLayer", function()
     return display.newLayer()
@@ -12,12 +10,17 @@ function StoreLayer:ctor()
     self.storeModel = md:getInstance("StoreModel")
 end
 
-function StoreLayer:onEnter()
+function StoreLayer:onShow()
+    --load ccs
     if self.ui == nil then
         self:loadCCS()
         self:initUI()
     end
-    self:setSelect("prop")
+
+    -- refresh
+    self:refreshUI("prop")
+    
+    --event
     cc.EventProxy.new(self.storeModel , self)
         :addEventListener("REFRESH_STORE_EVENT", handler(self, self.refresh))
 end
@@ -49,28 +52,28 @@ function StoreLayer:initUI()
             if event.name=='began' then                
                 return true
             elseif event.name=='ended' then
-                self:setSelect("prop")
+                self:refreshUI("prop")
             end
         end)
      self.btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then 
             return true
         elseif event.name=='ended' then
-            self:setSelect("bank")
+            self:refreshUI("bank")
         end
     end)
      self.btninlay:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            self:setSelect("inlay")
+            self:refreshUI("inlay")
         end
     end)
 end
 
 function StoreLayer:refresh(event)
     local type = event.typename
-    self:setSelect(type)
+    self:refreshUI(type)
 end
 
 function StoreLayer:refreshListView(type)
@@ -83,10 +86,10 @@ function StoreLayer:refreshListView(type)
         item:setItemSize(758, 165)
         self.listview:addItem(item)
     end
-    self.listview:reload()    
+    self.listview:reload()
 end
 
-function StoreLayer:setSelect(type)
+function StoreLayer:refreshUI(type)
     self:refreshListView(type)
     self.btnprop:setColor(cc.c3b(80, 80, 80))
     self.btnbank:setColor(cc.c3b(80, 80, 80))

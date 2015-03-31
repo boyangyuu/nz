@@ -73,7 +73,9 @@ function Hero:initGuns()
 
     --ju
     local levelModel = md:getInstance("LevelDetailModel")
-    local isJuLevel = levelModel:isJujiFight()
+    local fight = md:getInstance("Fight")
+    local gid,lid = fight:getCurGroupAndLevel()
+    local isJuLevel = levelModel:isJujiFight(gid,lid)
     if isJuLevel then 
         self.bags["bag1"] = Gun.new({bagIndex = "bag3"}) 
         self.bags["bag2"] = Gun.new({bagIndex = "bag3"})

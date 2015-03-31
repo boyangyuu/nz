@@ -345,8 +345,8 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onEnter()  
- 
+function LevelMapLayer:onShow()  
+
 end
 
 function LevelMapLayer:initGuide()
@@ -361,7 +361,7 @@ function LevelMapLayer:initGuide()
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 2})
             playSoundBtn()
         end
-     })   
+     })
 
     --镶嵌之后 点击进入下一关
     local rect = cc.rect(320, 240, 130, 130)

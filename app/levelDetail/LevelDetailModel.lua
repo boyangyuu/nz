@@ -11,8 +11,8 @@ local LevelDetailModel = class("LevelDetailModel", cc.mvc.ModelBase)
 function LevelDetailModel:ctor(properties)
 	LevelDetailModel.super.ctor(self, properties)
 	self.config 	= nil 
-	self.curGroupId = 0 
-	self.curLevelId = 0
+	-- self.curGroupId = 0 
+	-- self.curLevelId = 0
 
 	self:initConfigTable()
 	self.weaponListModel = md:getInstance("WeaponListModel")
@@ -39,13 +39,13 @@ function LevelDetailModel:getConfig(groupId,levelId)
 	return config
 end
 
-function LevelDetailModel:setCurGroupAndLevel(gid, lid)
-	print("gid"..gid)
-	self.curGroupId = gid
-	self.curLevelId = lid
-end
+-- function LevelDetailModel:setCurGroupAndLevel(gid, lid)
+-- 	print("gid"..gid)
+-- 	self.curGroupId = gid
+-- 	self.curLevelId = lid
+-- end
 
-function LevelDetailModel:getCurLevelType()
+function LevelDetailModel:getCurLevelType(groupId,levelId)
     local record = self:getConfig(self.curGroupId, self.curLevelId)
     -- assert(record, "")
     if record == nil then return nil end
@@ -54,8 +54,9 @@ function LevelDetailModel:getCurLevelType()
     return type	
 end
 
-function LevelDetailModel:isJujiFight()
-    return self:getCurLevelType() == "juji"
+function LevelDetailModel:isJujiFight(groupId,levelId)
+	assert(groupId and levelId, "groupId or levelId is nil")
+    return self:getCurLevelType(groupId,levelId) == "juji"
 end
 
 function LevelDetailModel:getNeedSuipianNum(weaponId)

@@ -1,5 +1,3 @@
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-
 local LevelMapLayer = import("..levelMap.LevelMapLayer")
 local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
@@ -205,7 +203,7 @@ function HomeBarLayer:refreshCommonLayer(layer)
     for k,v in pairs(self.commonlayers) do
         if k == layer then
             v:setVisible(true)
-            v:onEnter()
+            v:onShow()
         else
             v:setVisible(false)
         end
