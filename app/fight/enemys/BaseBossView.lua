@@ -320,7 +320,7 @@ function BaseBossView:playDaoDan(skillName)
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     
     --play
-    local offset = self.config.daoDanTimeOffset or 0.6
+    local offset = config.timeOffset or 0.1
     local id     = config.id
     local type   = config.type
     for i=1, #config.offsetPoses do
@@ -328,7 +328,7 @@ function BaseBossView:playDaoDan(skillName)
         local property = {
             srcPos = pWorldBone,
             srcScale = self:getScale() * 0.4,
-            destScale = 1.5,
+            destScale = 1.0,
             destPos = pWorldBone,
             offset = config.offsetPoses[i],
             id = id,

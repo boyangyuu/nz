@@ -447,7 +447,7 @@ local bosses = {
 		walkRate = 120,
 		walkCd = 1,         --移动cd	
 		wudiTime = 5 , 	    --无敌时间
-		daoDanTimeOffset = 0.1,                --群发导弹间隔时间
+		
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 15, 			--一次扫射5下
 		weak1 = 1.2,					--手  弱点伤害倍数
@@ -501,6 +501,7 @@ local bosses = {
 		},
 
 		daoDan1 = {
+		
 		    id = 19,                                 --boss导弹
 			type = "missile",                  
 			offsetPoses = {
