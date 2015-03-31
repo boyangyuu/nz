@@ -165,6 +165,8 @@ function LevelDetailLayer:initBtns()
     goldarmature:getAnimation():play("yjzb" , -1, 1)
     jijiaarmature:getAnimation():play("yjzb" , -1, 1)
     bibeiarmature:getAnimation():play("yjzb" , -1, 1)
+
+    --addEvents
 	addBtnEventListener(self.btnOff, function(event)
         if event.name=='began' then
             return true
@@ -172,7 +174,6 @@ function LevelDetailLayer:initBtns()
             self:onClickBtnOff()
         end
     end)
-    --startbtn
     addBtnEventListener(self.btnStart, function(event)
         if event.name=='began' then
             return true
@@ -180,7 +181,6 @@ function LevelDetailLayer:initBtns()
             self:onClickBtnStart()
         end
     end)
-    --bibei
     addBtnEventListener(self.btnBibei, function(event)
         if event.name=='began' then
             return true
@@ -188,7 +188,6 @@ function LevelDetailLayer:initBtns()
             self:onClickBtnBibei()
         end
     end)
-    --gold
     addBtnEventListener(self.btnGold, function(event)
         if event.name=='began' then
             return true
@@ -196,7 +195,6 @@ function LevelDetailLayer:initBtns()
             self:onClickBtnGold()
         end
     end)
-    --jijia
     addBtnEventListener(self.btnJijia, function(event)
         if event.name=='began' then
             return true
@@ -332,6 +330,7 @@ function LevelDetailLayer:initGuide()
 	local guide = md:getInstance("Guide")
     local isDone = guide:isDone("weapon")
     if isDone then return end
+    
     --点击进入战斗
     guide:addClickListener({
         id = "weapon_enter",
