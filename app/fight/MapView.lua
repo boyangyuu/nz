@@ -64,9 +64,7 @@ function MapView:ctor()
         :addEventListener(self.mapModel.EFFECT_SHAKE_EVENT	, handler(self, self.playEffectShaked))
         :addEventListener(self.mapModel.EFFECT_JUSHAKE_EVENT	, handler(self, self.playEffectJuShaked))
 		
-	self:setNodeEventEnabled(true)
-
-	self:schedule(handler(self, self.checkNumLimit),  1)	
+	self:setNodeEventEnabled(true)	
 end
 
 function MapView:loadCCS()

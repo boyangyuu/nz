@@ -1,7 +1,7 @@
 
-local Hero 		= import(".Hero")
-local Fight 	= import(".Fight")
-
+local Hero 				= import(".Hero")
+local Fight 		    = import(".Fight")
+local FightModeView    = import(".fightMode.FightModeView")
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
 end)
@@ -34,6 +34,9 @@ end
 function InfoLayer:loadCCS()
 	self.root = cc.uiloader:load("res/Fight/fightLayer/ui/infoUI.ExportJson")
 	self:addChild(self.root)
+
+	self.fightMode = FightModeView.new()
+	self:addChild(self.fightMode)
 
  	self.bloodNode  = cc.uiloader:seekNodeByName(self.root, "bloodNode")
  	self.blood2 	= cc.uiloader:seekNodeByName(self.bloodNode, "progressBar1") 

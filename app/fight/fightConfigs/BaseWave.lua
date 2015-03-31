@@ -41,8 +41,9 @@ function BaseWave:getEnemyNumLimit()
 	return self.limit or 10
 end
 
-function BaseWave:getFightModeType()
-	return self.mode or "normal"
+function BaseWave:getFightMode()
+	assert(self.fightMode, "self.fightMode is nil")
+	return self.fightMode
 end
 
 return BaseWave

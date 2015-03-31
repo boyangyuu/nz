@@ -48,6 +48,7 @@ function FightPlayer:ctor(properties)
     self.infoLayer      = InfoLayer.new() 
     self.gunHelpLayer   = GunHelpLayer.new()
     self.isControlVisible = true
+    
     --ui
     self:initUI()
 
@@ -526,7 +527,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         end
         if self.touchFireId == id and not isend then
             self.hero.fsm__:doEvent("ready")
-            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.05)
+            self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.01)
         end
     end
    

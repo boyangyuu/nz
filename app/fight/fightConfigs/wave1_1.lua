@@ -177,8 +177,22 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.limit  = limit
+	self.limit  = 10
 	self.isNotMoveMap = isNotMoveMap
+
+	
+	self.fightMode =  {
+		type 	  = "puTong",
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,
+
+		type 	  = "xianShi",
+		limitTime = 2 * 60 + 30,
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,
+	}
+	
 end
 
 return waveClass

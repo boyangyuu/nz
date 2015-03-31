@@ -63,7 +63,6 @@ function Fight:refreshData(properties)
     self.result = nil
     self.resultData = {}
     self.isPause = false
-    self.killRenzhiNum  = 0
 end
 
 function Fight:refreshUm()
@@ -302,17 +301,6 @@ function Fight:stopFire()
     self:dispatchEvent({name = Fight.FIGHT_FIRE_PAUSE_EVENT})
 end
 
-function Fight:addKillRenzhiNum()
-    self.killRenzhiNum = self.killRenzhiNum + 1
-
-    local fightConfigs  = md:getInstance("FightConfigs")
-    local waveConfig    = fightConfigs:getWaveConfig()
-    local limit         = waveConfig:getRenzhiLimit()
-    if self.killRenzhiNum >= limit then
-        self:killRenzhiOver()
-    end
-end
-
 function Fight:killRenzhiOver()
     self:dispatchEvent({name = Fight.FIGHT_TIPS_EVENT , failType = "renzhi"})
     scheduler.performWithDelayGlobal(handler(self, self.doFail), 1.5)    
@@ -325,7 +313,6 @@ end
 
 function Fight:clearFightData()
     self.inlayModel:removeAllInlay()
-    self.killRenzhiNum = 0
     self.result = nil     
 end
 

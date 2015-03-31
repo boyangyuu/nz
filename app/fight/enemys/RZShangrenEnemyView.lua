@@ -161,7 +161,7 @@ function RZShangrenEnemyView:animationEvent(armatureBack,movementType,movementID
     	elseif movementID == "die" then 
     		self:setDeadDone()
     		local fight = md:getInstance("Fight")
-    		fight:addKillRenzhiNum()    		
+    		fight:killRenzhiOver()    		
     	end 
 	end
 end

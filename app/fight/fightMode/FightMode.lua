@@ -6,12 +6,12 @@ function FightMode:ctor(properties)
 	FightMode.super.ctor(self, properties)
 end
 
-function FightMode:getMode()
+function FightMode:getModeConfig()
 	local map 		 = md:getInstance("Map")
-	local waveConfig = map: getCurWaveConfig()
-	local type 		 = waveConfig:getFightModeType()
-	assert(type, "type is nil")
-	return type
+	local waveConfig = map:getCurWaveConfig()
+	local modeConfig = waveConfig:getFightMode()
+	assert(modeConfig, "modeConfig is nil")
+	return modeConfig
 end
 
 
