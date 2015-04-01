@@ -11,8 +11,6 @@ local LevelDetailModel = class("LevelDetailModel", cc.mvc.ModelBase)
 function LevelDetailModel:ctor(properties)
 	LevelDetailModel.super.ctor(self, properties)
 	self.config 	= nil 
-	-- self.curGroupId = 0 
-	-- self.curLevelId = 0
 
 	self:initConfigTable()
 	self.weaponListModel = md:getInstance("WeaponListModel")
@@ -25,7 +23,6 @@ end
 function LevelDetailModel:getConfig(groupId,levelId)
 	print("groupId", groupId)
 	print("levelId", levelId)
-
 	assert(groupId and levelId, "param is nil")
 	local config = nil
 	local records = getRecordFromTable(self.config, "groupId", groupId)
@@ -38,12 +35,6 @@ function LevelDetailModel:getConfig(groupId,levelId)
 			"levelId is " .. levelId)
 	return config
 end
-
--- function LevelDetailModel:setCurGroupAndLevel(gid, lid)
--- 	print("gid"..gid)
--- 	self.curGroupId = gid
--- 	self.curLevelId = lid
--- end
 
 function LevelDetailModel:getCurLevelType(groupId,levelId)
     local record = self:getConfig(groupId, levelId)

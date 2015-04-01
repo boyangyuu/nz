@@ -10,27 +10,26 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
-Fight.PAUSE_SWITCH_EVENT = "PAUSE_SWITCH_EVENT"
+Fight.PAUSE_SWITCH_EVENT   = "PAUSE_SWITCH_EVENT"
 
-Fight.FIGHT_START_EVENT  = "FIGHT_START_EVENT"
-Fight.FIGHT_END_EVENT    = "FIGHT_END_EVENT"
-Fight.FIGHT_TIPS_EVENT   = "FIGHT_TIPS_EVENT"   
-Fight.GUN_RELOAD_EVENT    = "GUN_RELOAD_EVENT"
+Fight.FIGHT_START_EVENT      = "FIGHT_START_EVENT"
+Fight.FIGHT_WIN_EVENT        = "FIGHT_WIN_EVENT"
+Fight.FIGHT_FAIL_EVENT       = "FIGHT_FAIL_EVENT"
+Fight.FIGHT_RELIVE_EVENT     = "FIGHT_RELIVE_EVENT"
+Fight.FIGHT_FIRE_PAUSE_EVENT = "FIGHT_FIRE_PAUSE_EVENT"
+Fight.FIGHT_RESUMEPOS_EVENT  = "FIGHT_RESUMEPOS_EVENT"
+
+Fight.GUN_RELOAD_EVENT       = "GUN_RELOAD_EVENT"
 
 Fight.CONTROL_HIDE_EVENT     = "CONTROL_HIDE_EVENT"
 Fight.CONTROL_SHOW_EVENT     = "CONTROL_SHOW_EVENT"
 Fight.CONTROL_SET_EVENT      = "CONTROL_SET_EVENT"
-Fight.FIGHT_RESTOREGUN_EVENT = "FIGHT_RESTOREGUN_EVENT"
-
-Fight.FIGHT_FIRE_PAUSE_EVENT = "FIGHT_FIRE_PAUSE_EVENT"
 
 Fight.INFO_HIDE_EVENT = "INFO_HIDE_EVENT"
 Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
 
 Fight.RESULT_WIN_EVENT   = "RESULT_WIN_EVENT"
 Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
-
-Fight.FIGHT_RESUMEPOS_EVENT  = "FIGHT_RESUMEPOS_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
@@ -63,7 +62,6 @@ function Fight:refreshData(properties)
     self.result = nil
     self.resultData = {}
     self.isPause = false
-    self.killRenzhiNum  = 0
 end
 
 function Fight:refreshUm()
@@ -75,7 +73,6 @@ function Fight:refreshUm()
 
     --任务统计
     local levelInfo = self:getLevelInfo()
-    assert(levelInfo, "levelInfo is nil")
     print(" um:startLevel(levelInfo)", levelInfo)
     um:startLevel(levelInfo)
 end
@@ -109,10 +106,6 @@ function Fight:willStartFight()
     self:checkDialogForward()
 end
 
-function Fight:willEndFight()
-    self:checkDialogAfter()
-end
-
 function Fight:startFight()
     self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
     self.inlay:checkNativeGold()
@@ -133,14 +126,30 @@ function Fight:startFight()
     end
 end
 
-function Fight:endFight()
-    self:dispatchEvent({name = Fight.FIGHT_END_EVENT})
+function Fight:endFightWin()
+    self:dispatchEvent({name = Fight.FIGHT_WIN_EVENT})
+    self:checkDialogAfter()
+
+    self:clearFightData()
+end
+
+function Fight:endFightFail()
+print("function Fight:endFightFail()")
+    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
+    self.inlayModel:removeAllInlay()
+    local fightProp = md:getInstance("FightProp")
+    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
+    self:clearFightData()
+end
+
+function Fight:startFightResult()
     ui:showPopup("FightResultPopup",{},{anim = false})
 end
 
-function Fight:onWin()
+function Fight:doWin()
     if self.result then return end
     self.result = "win" 
+
     local levelMapModel = md:getInstance("LevelMapModel")
     local userModel = md:getInstance("UserModel")
     levelMapModel:levelPass(self.groupId, self.levelId)
@@ -149,8 +158,6 @@ function Fight:onWin()
 
     --um 任务
     local levelInfo = self:getLevelInfo() 
-    assert(levelInfo, "levelInfo is nil")  
-    print(" um:finishLevel(levelInfo)", levelInfo)
     um:finishLevel(levelInfo)
 
     --um 关卡完成情况事件
@@ -158,16 +165,22 @@ function Fight:onWin()
     umData[levelInfo] = "关卡胜利"
     um:event("关卡完成情况", umData)
 
-    self:willEndFight()  
-    self:clearFightData()  
+    self:endFightWin()  
 end
 
-function Fight:onGiveUp()
+function Fight:doFail()
+    if self.result then return end
     self.result = "fail"
+
+    self.hero:doKill()
+    self:endFightFail()
+end
+
+function Fight:doGiveUp()
+    self.result = "giveUp"
 
      --um 关卡完成情况事件
     local levelInfo = self:getLevelInfo() 
-    assert(levelInfo, "levelInfo is nil")
     local umData = {}
     umData[levelInfo] = "关卡失败"    
     um:event("关卡完成情况", umData)
@@ -176,25 +189,9 @@ function Fight:onGiveUp()
     um:failLevel(levelInfo, failCause)
 end
 
-function Fight:getFailCause()
-    local goldCostTimes = self.inlay:getGoldCostTimes()
-    -- print("goldCostTimes", goldCostTimes)
-    return "黄金武器消耗次数: " .. goldCostTimes
-end
-
-function Fight:onFail()
-    if self.result then return end
-    self.result = "willFail"
-    self.inlayModel:removeAllInlay()
-    local fightProp = md:getInstance("FightProp")
-    fightProp:costReliveBag()
-    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
-end
-
-function Fight:onRelive()
+function Fight:doRelive()
     --um
     local levelInfo = self:getLevelInfo()
-    assert(levelInfo, "levelInfo is nil")
     local umData = {}
     umData[levelInfo] = "复活"
     um:event("关卡道具使用", umData)
@@ -206,6 +203,13 @@ function Fight:onRelive()
     --clear
     self:clearFightData()
 
+    self:equipReliveAward()
+
+    --relive
+    self:dispatchEvent({name = Fight.FIGHT_RELIVE_EVENT})
+end
+
+function Fight:equipReliveAward()
     --gold
     self.inlayModel:equipGoldInlays()
     self.inlay:checkNativeGold()
@@ -247,7 +251,7 @@ function Fight:onDialogAfterEnd()
     local isAd = self.groupId == 1 and self.levelId == 2
         or self.groupId == 0 and self.levelId == 0
     if not isAd then 
-        self:endFight()
+        self:startFightResult()
         return 
     end
 
@@ -255,11 +259,11 @@ function Fight:onDialogAfterEnd()
     local buyModel = md:getInstance("BuyModel")
     if not buyModel:checkBought("weaponGiftBag") then 
         buyModel:showBuy("weaponGiftBag", {
-            closeAllFunc = handler(self, self.endFight),
-            deneyBuyFunc = handler(self, self.endFight)},
+            closeAllFunc = handler(self, self.startFightResult),
+            deneyBuyFunc = handler(self, self.startFightResult)},
             self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
     else
-        self:endFight()
+        self:startFightResult()
     end
 end
 
@@ -270,6 +274,11 @@ function Fight:checkDialogAward(callfunc)
 end
 
 ---- 关卡相关 ----
+function Fight:getFailCause()
+    local goldCostTimes = self.inlay:getGoldCostTimes()
+    return "黄金武器消耗次数: " .. goldCostTimes
+end
+
 function Fight:getGroupId()
     return self.groupId
 end
@@ -283,7 +292,9 @@ function Fight:getCurGroupAndLevel()
 end
 
 function Fight:getLevelInfo()
-    return self.groupId.."-"..self.levelId
+    local str = self.groupId.."-"..self.levelId 
+    assert(str, "str is nil")
+    return str
 end
 
 function Fight:checkJuContorlType()
@@ -302,30 +313,8 @@ function Fight:stopFire()
     self:dispatchEvent({name = Fight.FIGHT_FIRE_PAUSE_EVENT})
 end
 
-function Fight:addKillRenzhiNum()
-    self.killRenzhiNum = self.killRenzhiNum + 1
-
-    local fightConfigs  = md:getInstance("FightConfigs")
-    local waveConfig    = fightConfigs:getWaveConfig()
-    local limit         = waveConfig:getRenzhiLimit()
-    if self.killRenzhiNum >= limit then
-        self:killRenzhiOver()
-    end
-end
-
-function Fight:killRenzhiOver()
-    self:dispatchEvent({name = Fight.FIGHT_TIPS_EVENT , failType = "renzhi"})
-    scheduler.performWithDelayGlobal(handler(self, self.doFail), 1.5)    
-end
-
-function Fight:doFail()
-    self.hero:doKill()
-    self:onFail()
-end
-
 function Fight:clearFightData()
     self.inlayModel:removeAllInlay()
-    self.killRenzhiNum = 0
     self.result = nil     
 end
 

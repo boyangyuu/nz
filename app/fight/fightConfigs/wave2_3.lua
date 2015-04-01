@@ -232,7 +232,7 @@ local waves = {
 				property = { 
 					type = "chongBoss",
 					placeName = "place8",
-					missileId = 14,                 --导弹id        
+					missileId = 19,                 --导弹id        
 					qiuId = 13,                   --铁球id
 					id = 1,
 				},
@@ -292,19 +292,19 @@ local enemys = {
 	{id=11,image="feiji",demage=0,hp=16000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
-	--BOSS导弹          --missileType = "daodan",
-	{id=12,image="daodan",demage=15,hp=1000,
-	weak1=1},	
-
 	--BOSS铁球
-	{id=13,image="tieqiu",demage=25,hp=5000,
+	{id=13,image="tieqiu",demage= 50,hp=8000,
 	weak1=1},
 
-	--烟雾导弹
-	{id=14,image="daodan03",demage=10,hp=5000, weak1=1},   
+	--BOSS导弹          type = "missile",
+	{id=19,image="daodan",demage=15,hp=1000,
+	weak1=1},	
 
-	--大导弹          --missileType = "daodan",
-	{id=15,image="daodan02",demage=10,hp=5000, weak1=1},	
+	--烟雾导弹           type = "dao_wu",
+	{id=21,image="daodan03",demage=10,hp=6670, weak1=1},   
+
+	--大黑导弹          type = "missile",
+	{id=22,image="daodan02",demage=10,hp=1000, weak1=1},	
                           
 
 
@@ -319,12 +319,12 @@ local bosses = {
 	{
 		award = 25000,         ----boss产出金币数量
 		image = "boss02_1",    --蓝boss基础上改的肌肉boss
-		hp = 150000,
+		hp = 250000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 60,               --普攻频率
-		fireCd = 2,                     --普攻cd
+		fireRate = 120,               --普攻频率
+		fireCd = 3,                     --普攻cd
 
-		walkRate = 120,                    --移动频率
+		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd
 
 		chongfengDemage = 25,                --冲锋造成伤害
@@ -335,28 +335,25 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 			moveLeftFire = {
-				0.90, 0.50, 0.10,
+				0.90, 0.40,
 			},
 			moveRightFire = {
-				0.70, 0.30,
+				0.60, 0.20,
 			},
 			chongfeng = {
-			    0.999, 0.85, 0.65, 0.45, 0.25, 0.15,
+			    0.85, 0.70, 0.50, 0.30, 0.10,
 			},
 			tieqiu = {
-				0.80, 0.60, 0.40, 0.20,
+				0.999, 0.80, 0.65, 0.45, 0.25, 0.05,
 			},	
-			daoDan1 = {                                            --两发导弹
-				0.99, 0.45, 0.10
+			daoDan1 = {                                            --烟雾导弹
+				0.95, 0.75, 0.55, 0.35, 0.15,
 			},
 
-			daoDan2 = {                                            --两发导弹
-				0.80, 0.50, 0.20
-			},
+			-- daoDan2 = {                                            --暴雨梨花弹
+			-- 	0.70, 0.30,
+			-- },
 
-			daoDan3 = {                                            --两发导弹
-				0.75, 0.25, 0.15
-			},
 
 			weak2 = {                               --手 技能触发(可以同时)
 				0.80, 0.40,                        
@@ -368,28 +365,56 @@ local bosses = {
 				0.90,
 			},	
 			demage300 = {  
-				0.60,
+				0.70,
 			},	
 			demage400 = {  
-				0.40,
+				0.50,
 			},						
 		},
 
 		daoDan1 = {
+		    id = 21,                                  --烟雾
+			type = "dao_wu",  
+			timeOffset = 0.06,                        --导弹间隔时间                   
 			offsetPoses = {
-                cc.p(-300, 0), cc.p(300, 0), 
+            cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300), cc.p(300, -300), 
            }               
 		},
-		daoDan2 = {
-			offsetPoses = {
-                cc.p(0, 0), cc.p(0, -500), 
-           }               
-		},
-		daoDan3 = {
-			offsetPoses = {
-                cc.p(-300, -300), cc.p(300, -300), 
-           }               
-		},
+		-- daoDan2 = {
+		-- 	id = 19,                                 --boss导弹
+		-- 	type = "missile",
+		-- 	timeOffset = 0.08,                       --导弹间隔时间
+		-- 	offsetPoses = {
+  --           	cc.p(0, 300), cc.p(-300, 0), cc.p(0, -300), cc.p(300, 0), 
+		-- 		cc.p(300, -300), cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300),
+		-- 		cc.p(-300, 0), cc.p(0, 300), cc.p(300, 0), cc.p(0, -300),
+  --          }               
+		-- },
+
+
+		-- daoDan1 = {
+		--     id = 21,                                  --烟雾
+		-- 	type = "dao_wu",                  
+		-- 	offsetPoses = {
+  --               cc.p(-300, 0), cc.p(300, 0), 
+  --          }               
+		-- },
+		-- daoDan2 = {
+		-- 	id = 19,                                 --boss导弹
+		-- 	type = "missile",
+		-- 	offsetPoses = {
+  --               cc.p(0, 0), cc.p(0, -500), 
+  --          }               
+		-- },
+		-- daoDan3 = {
+		-- 	id = 22,                                 --大黑导弹
+		-- 	type = "missile",                        
+		-- 	offsetPoses = {
+  --               cc.p(-300, -300), cc.p(300, -300), 
+  --          }               
+		-- },
+
+
 
 
 		getMoveLeftAction = function ()

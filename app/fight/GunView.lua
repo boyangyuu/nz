@@ -30,7 +30,6 @@ function GunView:ctor()
 end
 
 function GunView:playIdle()
-	--等动画播放完 todo
 	self.armature:getAnimation():play("stand" , -1, 1) 
 end
 
@@ -38,9 +37,6 @@ function GunView:fire()
 	--bullet
 	local num = self.gun:getCurBulletNum() - 1
 	self.gun:setCurBulletNum(num)
-
-	-- print("function GunView:playFire()")
-	--枪火
 	self.jqk   :setVisible(true)
 	self.jqkzd :setVisible(true)
 	self.dk    :setVisible(true)
@@ -57,7 +53,6 @@ function GunView:fire()
 end
 
 function GunView:onHeroFire(event)
-	-- print("function GunView:onHeroFire(event)")
 	self:fire()
 end
 
@@ -66,7 +61,6 @@ function GunView:stopFire()
 	self.jqkzd:setVisible(false)
 	self.dk   :setVisible(false)
 	self:playIdle()
-	-- audio.pauseSound(self.audioId)
 end
 
 function GunView:playChange(event)
