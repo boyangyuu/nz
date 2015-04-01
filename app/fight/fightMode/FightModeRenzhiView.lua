@@ -11,6 +11,12 @@ local FightModeRenzhiView = class("FightModeRenzhiView", FightModeBaseView)
 function FightModeRenzhiView:ctor()
 	FightModeRenzhiView.super.ctor(self)
 	self.curSaveNum = 0
+	self.labelSave  = nil
+
+ 	cc.EventProxy.new(self.fightMode, self)
+	 	:addEventListener(self.fightMode.FightMODE_RENZHI_SAVE_EVENT  ,
+	 		 handler(self, self.OnRenzhiSave))	 	
+
 end
 
 function FightModeRenzhiView:refreshUI()
@@ -26,7 +32,19 @@ function FightModeRenzhiView:getLabelStr()
 end
 
 function FightModeRenzhiView:onFightStart(event)
-	
+	self:refreshUI()
+end
+
+function FightModeRenzhiView:OnRenzhiSave(event)
+	self.curSaveNum = self.curSaveNum + 1
+	self:checkRenzhiLimit()
+	self:refreshUI()
+end
+
+function FightModeRenzhiView:checkRenzhiLimit()
+	if self.curSaveNum >= self.modeConfig.saveNums then 
+		self.fightMode:willWin()
+	end
 end
 
 function FightModeRenzhiView:onFightRelive(event)

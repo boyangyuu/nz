@@ -19,7 +19,8 @@ function Attackable:ctor(property)
 	self.isPauseOtherAnim = false
 	self.isWillDie = false
 	self.isWillRemove = false
-
+	self.enemyM = md:getInstance("EnemyManager") 
+	
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -69,7 +70,6 @@ end
 ]]
 
 function Attackable:getTargetData(focusNode)
-
 	local isHitedWeak, targetDataWeak = self:checkWeak(focusNode)
 	local isHitedBody, targetDataBody = self:checkBody(focusNode)
 	
@@ -159,7 +159,11 @@ function Attackable:rectIntersectsRectInWorld(node, enemyRange)
     enemyBound.x = pWorld2.x
     enemyBound.y = pWorld2.y    
     
-    return cc.rectIntersectsRect(bound, enemyBound)
+    return self:rectIntersectsRect(bound, enemyBound)
+end
+
+function Attackable:rectIntersectsRect(focusBound, enemyBound)
+	return cc.rectIntersectsRect(focusBound, enemyBound)
 end
 
 --[[
