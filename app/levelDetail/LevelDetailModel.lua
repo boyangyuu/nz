@@ -46,7 +46,7 @@ end
 -- end
 
 function LevelDetailModel:getCurLevelType(groupId,levelId)
-    local record = self:getConfig(self.curGroupId, self.curLevelId)
+    local record = self:getConfig(groupId, levelId)
     -- assert(record, "")
     if record == nil then return nil end
     local type = record["type"]

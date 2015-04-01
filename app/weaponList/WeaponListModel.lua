@@ -180,11 +180,9 @@ function WeaponListModel:isFull(weaponid)
 	return false
 end
 
-
 ----- weaponBag 
 function WeaponListModel:getWeaponInBag()
 	local data = getUserData()
-	-- dump(data)
 	local threeWeapon={}
 	table.insert(threeWeapon,data.weapons.weaponed.bag1)
 	table.insert(threeWeapon,data.weapons.weaponed.bag2)
@@ -194,7 +192,7 @@ function WeaponListModel:getWeaponInBag()
 	return threeWeapon
 end
 
-function WeaponListModel:equipBag( weaponid, index )
+function WeaponListModel:equipBag(weaponid, index)
 	local data = getUserData()
 	if self:getWeaponStatus(weaponid) == 0 then
 		for k,v in pairs(data.weapons.bags) do
