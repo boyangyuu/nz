@@ -271,7 +271,6 @@ function FeijiEnemyView:onHitted(targetData)
 	if self.isEntering or self.isExiting then 
 		return 
 	end
-	-- print("function FeijiEnemyView:onHitted(targetData)")
 	FeijiEnemyView.super.onHitted(self, targetData)
 end
 

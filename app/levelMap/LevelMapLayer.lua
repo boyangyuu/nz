@@ -4,7 +4,7 @@ local LevelMapLayer = class("LevelMapLayer", function()
 end)
 
 --------  Constants  ---------
-local Zorder_up, Zorder_bg = 10, 0
+local Zorder_up = 10
 local smallTime, bigTime = 0.5, 0.5  --Amplify times and time of background
 
 function LevelMapLayer:ctor(properties)
@@ -89,9 +89,7 @@ function LevelMapLayer:initChooseLayer()
     armature:getAnimation():play("thj_bx" , -1, 1)
 
     btnTask:setVisible(false)
-    -- modified by lpf
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
-
     local armature = ccs.Armature:create("guang")
     armature:setScale(2)
     addChildCenter(armature, self.panelGift)
@@ -133,7 +131,6 @@ function LevelMapLayer:initChooseLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            
             if self.curGroupId >= self.groupNum then
                 self.curGroupId = 1
                 self.preGroupId = self.groupNum
@@ -146,6 +143,7 @@ function LevelMapLayer:initChooseLayer()
             self.UserModel:panelAction()
         end
     end)
+
     addBtnEventListener(self.btnPre, function(event)
         if event.name=='began' then
             return true
@@ -207,7 +205,6 @@ end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
     self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".ExportJson")
-    self.levelBtnRootNode:setPosition(0, 0)
     self:addChild(self.levelBtnRootNode, Zorder_up)
 
     --btn
@@ -221,30 +218,6 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local group,level = self.LevelMapModel:getConfig()
     local groupInfo = self.LevelMapModel:getGroupInfo(self.curGroupId)
 
-    -- for k,v in pairs(groupInfo) do
-    --     if k ~= #groupInfo then
-    --         dian[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_g"..v.."_0")
-    --     end
-    -- end
-
-    -- if group > groupId then
-    --     for k,v in pairs(dian) do
-    --         dian[k]:setVisible(true)
-    --     end
-    -- elseif group == groupId then
-    --     for k,v in pairs(groupInfo) do
-    --         if v >= level and k ~= #groupInfo then
-    --             dian[v]:setVisible(false)
-    --         end
-    --     end
-    -- else
-    --     for k,v in pairs(dian) do
-    --         dian[k]:setVisible(false)
-    --     end
-    -- end
-
-    -- for i = 1, self.levelAmount[groupId] do
-    dump(groupInfo)
     for k,v in pairs(groupInfo) do
         panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)
         panelGray[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "gray_"..v)
@@ -326,7 +299,6 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self:addChild(self.ldArmature)
             self.ldArmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.curGroupId)
-
             self:refreshLevelLayer(self.curGroupId)
         end
     end
@@ -346,7 +318,6 @@ function LevelMapLayer:panelAction()
 end
 
 function LevelMapLayer:onShow()  
-
 end
 
 function LevelMapLayer:initGuide()

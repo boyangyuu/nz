@@ -179,6 +179,7 @@ function InlayModel:equipAllInlays()
 			self:equipInlay(v,true)
 		end
 	end
+	self:refreshInfo("speed",true)
 end
 
 function InlayModel:equipAllBestInlays(table)

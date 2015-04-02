@@ -1,6 +1,43 @@
 local BaseWave = import(".BaseWave")
 local waveClass = class("waveExample", BaseWave)
 
+
+-- 绑架人质配置 --
+	{
+		time = 1,
+		num = 1,
+		delay = {0},
+		pos = {130},
+		property = { 
+			placeName = "place6",
+			type = "bangfei",
+			renzhiName = "1",
+			id = 1,
+		},
+	},
+	{
+		time = 1,
+		num = 1,
+		delay = {0},
+		pos = {130},
+		property = { 
+			placeName = "place6",
+			type = "bangren",
+			renzhiName = "1",
+			id = 4,
+		},
+	},
+	--普通兵                                      140--左右移动距离       280--滚动距离
+	{id=1,image="tufeib",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
+	weak1=3},
+
+	--绑人         --type = "bangren",
+	{id=4,image="hs",demage=2,hp=111, weak1=1},	
+
+-- 绑架人质配置结束 --
+
+
+
 --enemy的关卡配置                                                    白银难度对应怪物属性
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离

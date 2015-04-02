@@ -2,6 +2,8 @@ import("..includes.functionUtils")
 
 local PropModel = class("PropModel", cc.mvc.ModelBase)
 
+PropModel.REFRESH_PROP_EVENT = "REFRESH_PROP_EVENT"
+
 function PropModel:ctor(properties, events, callbacks)
 	PropModel.super.ctor(self, properties)
 end
@@ -20,6 +22,7 @@ function PropModel:buyProp(nameid,buyNum)
 	local propnum = prop.num + buyNum
 	data.prop[nameid].num = propnum
     setUserData(data)
+    self:refreshInfo()
 end
 
 function PropModel:costProp(nameid,costNum)
@@ -36,5 +39,8 @@ function PropModel:costProp(nameid,costNum)
 	end
 end
 
+function PropModel:refreshInfo()
+	self:dispatchEvent({name = PropModel.REFRESH_PROP_EVENT})
+end
 
 return PropModel
