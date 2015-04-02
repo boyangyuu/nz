@@ -17,7 +17,10 @@ function LevelDetailLayer:ctor(properties)
 	--events
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
-
+    cc.EventProxy.new(self.propModel, self)
+        :addEventListener(self.propModel.REFRESH_PROP_EVENT   , handler(self, self.refreshUI))
+    cc.EventProxy.new(self.inlayModel, self)
+        :addEventListener("REFRESH_INLAY_EVENT",handler(self, self.refreshUI))
 	self:initData()
 	
 	--ui
@@ -266,20 +269,15 @@ function LevelDetailLayer:onClickBtnBibei()
 end
 
 function LevelDetailLayer:onClickBtnJijia()
-	function equipJijia()	
-		self:refreshUI()
-	end
-
 	function deneyGoldGiftJijia()
-	    self.buyModel:showBuy("armedMecha",{payDoneFunc = equipJijia}, "关卡详情_点击机甲按钮")
+	    self.buyModel:showBuy("armedMecha",{}, "关卡详情_点击机甲按钮")
 	end
-	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipJijia,deneyBuyFunc = deneyGoldGiftJijia},
+	    self.buyModel:showBuy("goldGiftBag",{deneyBuyFunc = deneyGoldGiftJijia},
 	     "关卡详情_点击机甲按钮")
 end
 
 function LevelDetailLayer:equipGold()
 	self.inlayModel:equipAllInlays()
-	self:refreshUI()	
 end
 
 function LevelDetailLayer:onClickBtnGold()
@@ -292,7 +290,6 @@ function LevelDetailLayer:onClickBtnGold()
 	local isDone = self.guide:isDone("weapon")
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()	
-		self:refreshUI()
     else
 	    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self, self.equipGold),deneyBuyFunc = deneyGoldGift},
 	     "关卡详情_点击黄武按钮")
