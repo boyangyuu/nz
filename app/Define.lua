@@ -39,7 +39,7 @@ Define.kHushiSpeed				= 550.0    --人质跑动速度 像素/s
 Define.kHushiRunTime			= 1.2      --跑动时间
 Define.kHushiWalkTime			= 0.6      --行走时间
 
---人质 武器商人黄
+--人质 黄人
 Define.kShangrenSpeed			= 200		--武器商人黄跑动速度
 
 --土匪兵
@@ -50,7 +50,7 @@ Define.kTufeiWalkTime			= 0.6      --行走时间
 Define.kTufeiSpeed				= 600	   --逃跑速度
 
 --囚犯兵
-Define.kqQufanSpeed             = 300
+Define.kqQufanSpeed             = 300       --逃跑速度
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s

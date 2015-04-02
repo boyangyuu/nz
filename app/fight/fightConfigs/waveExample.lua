@@ -11,7 +11,7 @@ local waveClass = class("waveExample", BaseWave)
 		property = { 
 			placeName = "place6",
 			type = "bangfei",
-			renzhiName = "1",
+			renzhiName = "人质1",--  一组统一标示
 			id = 1,
 		},
 	},
@@ -23,7 +23,7 @@ local waveClass = class("waveExample", BaseWave)
 		property = { 
 			placeName = "place6",
 			type = "bangren",
-			renzhiName = "1",
+			renzhiName = "人质1",     --  一组统一标示
 			id = 4,
 		},
 	},
@@ -46,13 +46,17 @@ local waveClass = class("waveExample", BaseWave)
 			type = "taofan_qiu",
 			placeName = "place6",
 			id = 4,
-			startState = "san",  --伞
+			startState = "san",  --从伞进入
 			data = {
-				direct = "left",
+				direct = "left", --向左逃跑
 				{
-					pos = -200,  --第一次藏身处 在出生place的位置 - 200
+					pos = -200,  --第一次藏身处 在出生的位置 - 200
 					time = 3,	 --隐藏时间 3s													
-				},						
+				},	
+				{
+					pos = -600,  --第2次藏身处 在出生的位置 - 600
+					time = 4,	 --隐藏时间 4s													
+				},											
 			},					
 		},
 	},
@@ -65,11 +69,11 @@ local waveClass = class("waveExample", BaseWave)
 			type = "taofan_qiu", 
 			placeName = "place5",
 			id = 4,
-			startState = "enterleft",
+			startState = "enterleft", --从屏幕左侧进入
 			data = {
-				direct = "right",
+				direct = "right", --向右逃跑
 				{
-					pos = 600,  --第一次藏身处 在出生place的位置 + 600
+					pos = 600,  --第一次藏身处 在出生的位置 + 600
 					time = 3,   --隐藏时间 3s	
 				},						
 			},						
