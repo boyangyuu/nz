@@ -11,7 +11,6 @@ local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local SanEnemyView = class("SanEnemyView", Attackable)  
 
-
 function SanEnemyView:ctor(property)
 	--instance
 	SanEnemyView.super.ctor(self, property) 

@@ -14,6 +14,7 @@ local CommonEnemyView = class("CommonEnemyView", BaseEnemyView)
 
 function CommonEnemyView:ctor(property)
 	CommonEnemyView.super.ctor(self, property) 
+	self.isSaning = false
 end
 
 ---- state ----
@@ -22,6 +23,8 @@ function CommonEnemyView:playStartState(state)
 		self:playRollLeft()
 	elseif state == "rollright" then
 		self:playRollRight()	
+	elseif state == "san" then 
+		self:playSan()
 	else 
 		self:playStand()
 	end
@@ -40,6 +43,31 @@ function CommonEnemyView:playThrow()
 	self.armature:getAnimation():play("throw", -1, 1)
 	local pos = cc.p(self:getPositionX(), self:getPositionY() + 220)
 	self.enemy:hit(self.hero)
+end
+
+function CommonEnemyView:playSan()
+	self.isSaning = true
+    self:setPositionY(display.height)
+
+    --action
+    local speed = define.kSanEnemySpeed 
+    local destPosY = self:getPlaceNode():getPositionY()
+    local distance = display.height - destPosY
+    local time = distance / speed 
+    local action = cc.MoveBy:create(time, cc.p(0, -distance))
+
+    local function fallEnd()
+    	self:restoreStand()
+    	self.isSaning = false	
+    end
+    local seq = cc.Sequence:create(action, 
+        cc.CallFunc:create(fallEnd))    
+    self:runAction(seq)
+
+    --play
+    self.armature:getAnimation():play("jiangluo" , -1, 1) 
+
+    self:setPauseOtherAnim(true) 
 end
 
 function CommonEnemyView:playRoll()
@@ -107,6 +135,18 @@ function CommonEnemyView:tick(t)
 		if randomSeed > rollRate - 1 then 
 			self:playRoll()
 		end
+	end
+end
+
+function CommonEnemyView:playHitted(event)
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	--飘红
+	self:playHittedEffect()
+
+	--不重复播放
+	if not self.enemy:isDead() and currentName ~= "hit"
+		and not self.isSaning then
+		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
 end
 

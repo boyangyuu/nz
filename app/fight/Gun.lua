@@ -48,6 +48,26 @@ function Gun:getCooldown()
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
 	local value = scale * baseValue
+
+	local value = self:justCooldownValue(value)
+	return value
+end
+
+function Gun:justCooldownValue(value)
+	if device.platform ~= "android" then 
+		return value
+	end
+	-- print("justCooldownValue value:", value)
+	local scale = 1.0
+	if 0.1 < value and value <= 0.15 then 
+		scale = 0.7 
+	elseif 0.08 < value and value < 0.1 then 
+		scale = 0.6 
+	elseif value < 0.08 then 
+		scale = 0.5
+	end
+	local value = value * scale
+	-- print("value ".. value)
 	return value
 end
 
