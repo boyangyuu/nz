@@ -67,7 +67,6 @@ function TFQiuEnemyView:playMoveToNext()
 
     --action
     local distance = math.abs(posOffset)
-    print("distance", distance)
     local time = distance / define.kqQufanSpeed
     local action = cc.MoveBy:create(time, cc.p(posOffset, 0))
     local callfunc = function ()
