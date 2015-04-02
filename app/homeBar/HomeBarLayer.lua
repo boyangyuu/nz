@@ -40,15 +40,6 @@ function HomeBarLayer:popUpWeaponGift(properties)
     end
 end
 
---todo 暂时保留计费点
-function HomeBarLayer:popUpGoldGift(properties)
-    -- local isBoughtWeapon = buyModel:checkBought("weaponGiftBag") == false
-    -- if properties.popGoldGift then
-    --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData)},
-    --      "主界面_战斗失败购买过武包")
-    -- end
-end
-
 function HomeBarLayer:refreshData()
     local levelMapModel = md:getInstance("LevelMapModel")
     levelMapModel:hideGiftBagIcon()
@@ -67,7 +58,6 @@ end
 function HomeBarLayer:mapPopUp(event)
     function delayPopUp()
         self:popUpNextLevel(self.properties)
-        self:popUpGoldGift(self.properties)
         self:popUpWeaponGift(self.properties)
         self:initDailyLogin()        
     end
@@ -77,8 +67,6 @@ end
 function HomeBarLayer:initDailyLogin()
     local dailyLoginModel = md:getInstance("DailyLoginModel")
     local guide = md:getInstance("Guide")
-
-    --
     local userModel = md:getInstance("UserModel")
     local isDone = userModel:getUserLevel() >= 4
     if dailyLoginModel:checkPop() and isDone then
@@ -245,7 +233,6 @@ function HomeBarLayer:onBtnStoreClicked()
     self.btnSetting:setVisible(false)
     self.btnBack:setVisible(true)
     self:refreshCommonLayer("StoreLayer")
-
     self.btnInlay:setButtonEnabled(true)
     self.btnStore:setButtonEnabled(false)
     self.btnArsenal:setButtonEnabled(true)
@@ -258,8 +245,6 @@ function HomeBarLayer:onBtnInlayClicked()
     self.btnInlay:setButtonEnabled(false)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(true)
-
-    --sound
     playSoundBtn()    
 end
 
@@ -271,8 +256,6 @@ function HomeBarLayer:onBtnArsenalClicked()
     self.btnInlay:setButtonEnabled(true)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(false)
-    
-    --sound
     playSoundBtn()
 end
 

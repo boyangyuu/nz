@@ -10,7 +10,6 @@ function LevelMapModel:getConfig()
 	local data = getUserData()
 	local group = data.currentlevel.group
 	local level = data.currentlevel.level
-	-- dump(data, "data")
 	assert(group, "group is nil")
 	assert(level, "level is nil")
 	return group,level
@@ -19,8 +18,6 @@ end
 function LevelMapModel:getLevelNum(gid)
     local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
     local recordnum = #recordsGroup
-    -- local maxLevel = recordsGroup[recordnum]
-    -- local levelNum = maxLevel["levelId"]
     return recordnum
 end
 
@@ -45,7 +42,6 @@ function LevelMapModel:getNextGroupAndLevel(gid, lid)
 	assert(lid, "levelId")
 
 	local lid1, gid1
-	-- local detailTable = getConfig("config/guanqia.json")
 	local recordsGroup = getRecordByKey("config/guanqia.json","groupId",gid)
 	local maxLevelRecord = recordsGroup[#recordsGroup]
 	local maxLevel = maxLevelRecord["levelId"]
@@ -103,10 +99,7 @@ function LevelMapModel:isExistNextLevel(groupId, levelId)
 	end	
 end
 
-
---隐藏主界面武器大礼包按钮和刷新武器列表
 function LevelMapModel:hideGiftBagIcon()
-	print("LevelMapModel:hideGiftBagIcon()")
 	self:dispatchEvent({name = "HIDE_GIFTBAGICON_EVENT"})
 end
 
