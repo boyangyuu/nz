@@ -2,7 +2,168 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
+	{
+		enemys = { 
+			{
+				descId = "zpbing",               --简介
+				time = 2,
+				num = 1,
+				delay = {4},
+				pos = {370},
+				property = {
+					placeName = "place13",  
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0.5},
+				pos = {800},
+				property = { 
+					placeName = "place1",
+					id = 2,
+					startState = "rollleft",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 9,
+				num = 2,
+				delay = {0.5,1.6},
+				pos = {250,560},
+				property = { 
+					placeName = "place2",
+					id = 2,
+					startState = "rollright",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 10,	
+				num = 2,
+				pos = {250,450},
+				delay = {0,1.5,0.8},
+				property = { 
+					placeName = "place3",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 11,	
+				num = 3,
+				pos = {730,800,920},
+				delay = {0,0.5,0.8},
+				property = { 
+					placeName = "place4",
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 11,	
+				num = 3,
+				pos = {250,430,510},
+				delay = {0,1.5,0.8},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
+				},
+			},		
+			{
+				time = 12,	
+				num = 3,
+				pos = {600,710,900},
+				delay = {0,0.6,0.8},
+				property = {
+					placeName = "place4", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 2,
+				delay = {0.5,1.0},
+				pos = {250,400},
+				property = { 
+					placeName = "place3",
+					id = 2,
+					startState = "rollright",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},	
+			{
+				time = 13,	
+				num = 2,
+				pos = {800,950},
+				delay = {0,0.6},
+				property = {
+					placeName = "place2", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 14,	
+				num = 3,
+				pos = {250,330,410},
+				delay = {0,1.5,0.8},
+				property = { 
+					placeName = "place1",
+					startState = "rollright",
+					id = 1,
+				},
+			},		
+			{
+				time = 15,	
+				num = 3,
+				pos = {1000,750,550},
+				delay = {0,0.6,1.1},
+				property = {
+					placeName = "place2", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 16,
+				num = 2,
+				delay = {0.5,0},
+				pos = {250,900},
+				property = { 
+					placeName = "place3",
+					id = 2,
+					startState = "rollright",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},	
+			{
+				time = 17,	
+				num = 3,
+				pos = {820,910,980},
+				delay = {0,0.6,0.8},
+				property = {
+					placeName = "place4", 
+					startState = "rollleft",
+					id = 1,
+				},
+			},                                                                            	-- 以上是第三波第三批 30
+		},
+	},
 	{
 		enemys = { 
 			{
@@ -161,8 +322,7 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},
-		                                     	-- 以上是第一波第三批 30
+			},                                  	-- 以上是第一波第三批 30
 		},
 	},	
 	{
@@ -286,174 +446,9 @@ local waves = {
 					enemyId = 1,
 					placeName = "place2",
 				},
-			},		
- 			                                       -- 以上是第二波第三批    30
+			},	                                       -- 以上是第二波第三批    30
 		},
-
 	},
-	{
-		enemys = { 
-			{
-				descId = "zpbing",               --简介
-				time = 3,
-				num = 1,
-				delay = {4},
-				pos = {370},
-				property = {
-					placeName = "place13",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},
-			},
-			{
-				time = 8,
-				num = 1,
-				delay = {0.5},
-				pos = {800},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollleft",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 8,
-				num = 2,
-				delay = {0.5,1.6},
-				pos = {250,560},
-				property = { 
-					placeName = "place2",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 9,	
-				num = 2,
-				pos = {250,450},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 9,	
-				num = 3,
-				pos = {730,800,920},
-				delay = {0,0.5,0.8},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 10,	
-				num = 3,
-				pos = {250,430,510},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 11,	
-				num = 3,
-				pos = {600,710,900},
-				delay = {0,0.6,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 12,
-				num = 2,
-				delay = {0.5,1.0},
-				pos = {250,400},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 13,	
-				num = 2,
-				pos = {800,950},
-				delay = {0,0.6},
-				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 14,	
-				num = 3,
-				pos = {250,330,410},
-				delay = {0,1.5,0.8},
-				property = { 
-					placeName = "place1",
-					startState = "rollright",
-					id = 1,
-				},
-			},		
-			{
-				time = 15,	
-				num = 3,
-				pos = {1000,750,550},
-				delay = {0,0.6,1.1},
-				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 16,
-				num = 2,
-				delay = {0.5,0},
-				pos = {250,900},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 17,	
-				num = 3,
-				pos = {820,910,980},
-				delay = {0,0.6,0.8},
-				property = {
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-		                                                                            	-- 以上是第三波第三批 30
-		},
-	},	
 	
 }
 
@@ -523,6 +518,18 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.fightMode =  {
+		type 	  = "puTong",
+
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		-- type 	  = "xianShi",
+		-- limitTime = 60,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
+	}
 
 end
 

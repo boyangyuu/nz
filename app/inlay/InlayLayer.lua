@@ -128,7 +128,6 @@ end
 function InlayLayer:onClickOneForAllBtn()
     self:playSoundxqcg()
     self.inlayModel:equipAllInlays()
-    self.inlayModel:refreshInfo("speed",true)
 end
 
 function InlayLayer:onClickGoldWeaponBtn()
@@ -147,7 +146,6 @@ function InlayLayer:onClickGoldWeaponBtn()
         self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
              "镶嵌页面_点击一键黄武")
     end
-    self.inlayModel:refreshInfo("speed",true)
 end
 
 function InlayLayer:playSoundxqcg()
@@ -295,7 +293,6 @@ function InlayLayer:initGuide()
            self.inlayModel:buyInlay(15,1) 
            self.inlayModel:buyInlay(18,1) 
            self.inlayModel:equipAllInlays()
-           self.inlayModel:refreshInfo("speed",true)
 
            playSoundBtn()
         end

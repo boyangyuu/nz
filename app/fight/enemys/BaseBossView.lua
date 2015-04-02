@@ -390,7 +390,7 @@ end
 
 function BaseBossView:zhaohuan()
 	local waveData = self.config["enemys"..self.zhaohuanIndex]
-	assert(waveData, "config is invalid, no enemys")
+	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. self.zhaohuanIndex)
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
 		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}

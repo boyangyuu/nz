@@ -13,7 +13,7 @@ Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
 
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 5.0    --左右移动速度
-Define.kEnemyWalkWidth 			= 140 * 1	 --左右移动距离
+Define.kEnemyWalkWidth 			= 200 * 1	 --左右移动距离原来140改为200
 Define.kEnemyRollSpeed 			= 12.0	 --滚动速度 每帧率
 Define.kEnemyRollWidth 			= 280* 1   --滚动距离
 
@@ -79,7 +79,7 @@ Define.kAwardSanTime			= 5.0    --箱子落地持续时间
 
 --导弹
 Define.kMissileDaoTime				= 2.5    --导弹飞行时间
-Define.kMissileTieqiuTime       = 1.8          --铁球和汽车飞行时间
+Define.kMissileTieqiuTime           = 2.0    --铁球和汽车飞行时间
 Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
 
 --飞镖
