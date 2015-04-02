@@ -54,16 +54,22 @@ function RZBangrenEnemyView:playStand()
 end
 
 function RZBangrenEnemyView:playRun()
-    local random = math.random(1, 2) 
-    local direct = random == 1 and -1 or 1
-    local speed = 600
-    local time = 4
-    local width = speed * time * self:getScale() * direct
+    local posInMapx = self:getPosInMap().x
+    local direct = posInMapx <= display.width/2 and -1 or 1
+    local speed = define.kTufeiSpeed 
+    local width ,time
+    if direct == -1 then 
+        width = -posInMapx - 300
+        time = -width / speed
+    else
+        width = display.width  - posInMapx + 300
+        time = width / speed
+    end
+
     local animName = direct == 1 and "runright" or "runleft"
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
     self:setPauseOtherAnim(true)
-
     local callfunc = function ()
         self:setWillRemoved()
     end
@@ -93,7 +99,7 @@ function RZBangrenEnemyView:animationEvent(armatureBack,movementType,movementID)
         elseif movementID == "die" then 
             self:setDeadDone()
             local fightMode = md:getInstance("FightMode")
-            fightMode:willFail({type = "renzhi"})            
+            fightMode:willFail({type = "renZhi"})            
         end 
     end
 end

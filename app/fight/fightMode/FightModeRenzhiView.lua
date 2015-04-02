@@ -20,19 +20,27 @@ function FightModeRenzhiView:ctor()
 end
 
 function FightModeRenzhiView:refreshUI()
-	local labelSave = cc.uiloader:seekNodeByName(self.ui, "labelSave") 
+	local label = cc.uiloader:seekNodeByName(self.ui, "labelSave") 
 	local str   	= self:getLabelStr()
-	labelSave:setString(str)
+	label:setString(str)
+
+	--action
+	local actionScale1 = cc.ScaleTo:create(0.2, 3.0)
+	local actionScale2 = cc.ScaleTo:create(0.1, 1.0)
+	local seq = cc.Sequence:create(actionScale1, actionScale2) 
+	label:runAction(seq)
 end
 
 function FightModeRenzhiView:getLabelStr()
 	local maxNum = self.modeConfig.saveNums
-	local str = "解救人质 " .. self.curSaveNum .. "/" .. maxNum
+	local str = self.curSaveNum .. "/" .. maxNum
 	return str
 end
 
 function FightModeRenzhiView:onFightStart(event)
-	self:refreshUI()
+	local label = cc.uiloader:seekNodeByName(self.ui, "labelSave") 
+	local str   	= self:getLabelStr()
+	label:setString(str)
 end
 
 function FightModeRenzhiView:OnRenzhiSave(event)

@@ -4,7 +4,7 @@ local FightMode = class("FightMode", cc.mvc.ModelBase)
 
 FightMode.FightMODE_TIPS_EVENT		  = "FightMODE_TIPS_EVENT"
 FightMode.FightMODE_RENZHI_SAVE_EVENT = "FightMODE_RENZHI_SAVE_EVENT"
-
+FightMode.FightMODE_TAOFAN_TAO_EVENT  = "FightMODE_TAOFAN_TAO_EVENT"
 
 FightMode.kModeTypes = {
 	xianShi = "xianshi",
@@ -27,10 +27,10 @@ end
 
 function FightMode:willFail(failData)
 	local type = failData.type
-
-	--tips
-    self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
-    	failType = type})
+	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
+	-- --tips
+ --    self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
+ --    	failType = type})
 
     --fight
     local fight = md:getInstance("Fight")
@@ -38,7 +38,8 @@ function FightMode:willFail(failData)
 end
 
 function FightMode:willWin(winData)
-	-- local type = winData.type
+	local type = winData.type
+	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
     -- self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
     -- 	failType = type})
 

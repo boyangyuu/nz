@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveExample", BaseWave)
 
 
--- 绑架人质配置 --
+---------- 绑架人质配置 --------------------------------
 	{
 		time = 1,
 		num = 1,
@@ -27,6 +27,8 @@ local waveClass = class("waveExample", BaseWave)
 			id = 4,
 		},
 	},
+
+	
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="tufeib",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
 	weak1=3},
@@ -34,7 +36,49 @@ local waveClass = class("waveExample", BaseWave)
 	--绑人         --type = "bangren",
 	{id=4,image="hs",demage=2,hp=111, weak1=1},	
 
--- 绑架人质配置结束 --
+---------- 逃犯配置 -----------------------------
+	{ 
+		time = 1,
+		num = 1,
+		delay = {0},
+		pos = {330},
+		property = { 
+			type = "taofan_qiu",
+			placeName = "place6",
+			id = 4,
+			startState = "san",  --伞
+			data = {
+				direct = "left",
+				{
+					pos = -200,  --第一次藏身处 在出生place的位置 - 200
+					time = 3,	 --隐藏时间 3s													
+				},						
+			},					
+		},
+	},
+	{
+		time = 1,
+		num = 1,
+		delay = {0.5},
+		pos = {335},
+		property = {
+			type = "taofan_qiu", 
+			placeName = "place5",
+			id = 4,
+			startState = "enterleft",
+			data = {
+				direct = "right",
+				{
+					pos = 600,  --第一次藏身处 在出生place的位置 + 600
+					time = 3,   --隐藏时间 3s	
+				},						
+			},						
+		},
+	},	
+
+	--囚犯            --startState = "san",
+	{id=4,image="qiufan",demage=21,hp=11,
+	weak1=1},	
 
 
 

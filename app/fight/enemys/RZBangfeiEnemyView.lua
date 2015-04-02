@@ -75,8 +75,8 @@ end
 
 function RZBangfeiEnemyView:playWalkLeft()
     if self.walkPos == -1 then return end
-    local speed = 200
-    local time = 0.6
+    local speed = define.kTufeiSpeed
+    local time = define.kTufeiWalkTime
     local width = speed * time * self:getScale() * -1
     self.armature:getAnimation():play("walk" , -1, 1) 
     self.walkPos = self.walkPos - 1
@@ -89,8 +89,8 @@ end
 
 function RZBangfeiEnemyView:playWalkRight()
     if self.walkPos == 1 then return end
-    local speed = 200
-    local time = 0.6
+    local speed = define.kTufeiSpeed
+    local time  = define.kTufeiWalkTime
     local width = speed * time * self:getScale() * 1
     self.armature:getAnimation():play("walk" , -1, 1) 
     self.walkPos = self.walkPos + 1
