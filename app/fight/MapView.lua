@@ -586,6 +586,7 @@ end
 
 function MapView:callfuncAddMissile(event)
 	local property = event.property
+	
 	--pos
 	local enemyView = EnemyFactroy.createEnemy(property)
 	local pWorld = property.srcPos

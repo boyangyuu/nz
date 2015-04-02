@@ -60,20 +60,16 @@ function TFQiuEnemyView:playMoveToNext()
     
     --armature
     local animName = "run" .. direct
-    print("animName", animName)
     self.armature:getAnimation():play(animName , -1, 1) 
 
-    --dest pos
-    local posPlace = self:getPlaceNode():getPositionX()
-    local destPos = posPlace + data["pos"]
-    print("posPlace:", posPlace)
-    print("data[pos]:", data["pos"])
+    --posOffset
+    local posOffset = data["pos"]
 
     --action
-    local distance = math.abs(destPos - self:getPositionX())
+    local distance = math.abs(posOffset)
     print("distance", distance)
     local time = distance / define.kqQufanSpeed
-    local action = cc.MoveTo:create(time, cc.p(destPos, self:getPositionY()))
+    local action = cc.MoveBy:create(time, cc.p(posOffset, 0))
     local callfunc = function ()
         self:playHide()
     end
