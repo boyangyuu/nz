@@ -50,7 +50,7 @@ local waveClass = class("waveExample", BaseWave)
 			data = {
 				direct = "left",
 				{
-					pos = -200,  --第一次藏身处 在出生place的位置 - 200
+					pos = -200,  --第一次藏身处 移动 -200
 					time = 3,	 --隐藏时间 3s													
 				},						
 			},					
@@ -69,10 +69,17 @@ local waveClass = class("waveExample", BaseWave)
 			data = {
 				direct = "right",
 				{
-					pos = 600,  --第一次藏身处 在出生place的位置 + 600
+					pos = 300,  --第一次藏身处 移动 600
 					time = 3,   --隐藏时间 3s	
 				},						
-			},						
+			},	
+			data = {
+				direct = "right",
+				{
+					pos = 200,  --第一次藏身处 移动 200
+					time = 3,   --隐藏时间 3s	
+				},						
+			},									
 		},
 	},	
 
