@@ -3,6 +3,124 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
+		enemys = {
+		    {   
+		    	descId = "feiji", --简介
+				time = 2,
+				num = 1,
+				pos = {670},
+				delay = {2},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place10",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 60.0,		                                    --持续时间			
+				},
+			},
+			{
+				time = 10,
+				num = 4,
+				delay = {0.5,1,0,1.5},
+				pos = {480,680,850,1050},
+				property = { 
+					placeName = "place3" ,
+					type = "jin",                  --盾
+					id = 8,
+				},
+			},
+			{
+				time = 15,	
+				num = 5,
+				pos = {355,420,510,770,900},
+				delay = {0,0.9,0.5,0.6,1.5},
+				property = {
+					placeName = "place3" ,         --近
+					id = 7,
+					type = "jin",
+				},
+			},
+			{
+				time = 18,
+				num = 5,
+				delay = {1.1,0.6,1.7,0.3,1.8},
+				pos = {350,550,660,760,1050},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",                  --爆
+					id = 9,	
+				},
+			},
+			{
+				time = 20,
+				num = 10,
+				delay = {0.2,0.9,1.7,2.5,3.3,0.3,1.8,4.0,4.5,5.1},
+				pos = {350,460,600,1050,570,456,780,666,510,980},
+				property = { 
+					placeName = "place3" ,
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},	
+			{
+				time = 22,
+				num = 2,
+				delay = {0.5,1},
+				pos = {250,320},
+				property = { 
+					placeName = "place3" ,
+					startState = "rollright",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",	
+				},                                                          
+			},	
+			{
+				time = 23,
+				num = 2,
+				delay = {0.5,1},
+				pos = {980,1100},
+				property = { 
+					placeName = "place4" ,
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},                                                          
+			},
+			{
+				time = 24,
+				num = 3,
+				delay = {0.5,1,0},
+				pos = {450,560,690},
+				property = { 
+					placeName = "place4" ,
+					id = 1,
+					startState = "rollright",	
+				},                                                          --90
+			},
+			{
+				time = 25,
+				num = 3,
+				delay = {0.5,1.5,1},
+				pos = {220,550,600},
+				property = { 
+					placeName = "place2" ,
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},                                                          
+			},
+		},
+	},	
+	{
 		enemys = { 
 			{
 				time = 2,	
@@ -16,7 +134,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 5,
 				num = 3,
 				delay = {0.1,0.5,1.2},
 				pos = {450,660,800},
@@ -27,7 +145,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 8,
 				num = 3,
 				delay = {0,1.1,0.5},
 				pos = {400,680,960},
@@ -38,7 +156,7 @@ local waves = {
 				},
 			},			
 			{
-				time = 14,
+				time = 12,
 				num = 3,
 				delay = {0.1,0.6,1},
 				pos = {250,460,600},
@@ -95,7 +213,7 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 22,
 				num = 2,
 				delay = {0,0.6},
 				pos = {380,560},
@@ -206,125 +324,6 @@ local waves = {
 			},	
 		},
 	},
-
-	{
-		enemys = {
-		    {   
-		    	descId = "feiji", --简介
-				time = 3,
-				num = 1,
-				pos = {670},
-				delay = {4},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		                                    --持续时间			
-				},
-			},
-			{
-				time = 8,
-				num = 4,
-				delay = {0.5,1,0,1.5},
-				pos = {480,680,850,1050},
-				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},
-			{
-				time = 12,	
-				num = 5,
-				pos = {355,420,510,770,900},
-				delay = {0,0.9,0.5,0.6,1.5},
-				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 16,
-				num = 5,
-				delay = {0.1,0.9,1.7,2.5,3.1},
-				pos = {350,550,660,760,1050},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 17,
-				num = 10,
-				delay = {0.2,0.9,1.7,2.5,3.3,0.3,1.8,4.0,4.5,5.1},
-				pos = {350,460,600,1050,570,456,780,666,510,980},
-				property = { 
-					placeName = "place3" ,
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 19,
-				num = 3,
-				delay = {0.5,1.5,1},
-				pos = {220,550,600},
-				property = { 
-					placeName = "place2" ,
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},                                                          
-			},	
-			{
-				time = 20,
-				num = 2,
-				delay = {0.5,1},
-				pos = {250,320},
-				property = { 
-					placeName = "place3" ,
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},                                                          
-			},	
-			{
-				time = 20,
-				num = 2,
-				delay = {0.5,1},
-				pos = {980,1100},
-				property = { 
-					placeName = "place4" ,
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},                                                          
-			},
-			{
-				time = 22,
-				num = 3,
-				delay = {0.5,1,0},
-				pos = {450,560,690},
-				property = { 
-					placeName = "place4" ,
-					id = 1,
-					startState = "rollright",	
-				},                                                          --90
-			},
-		},
-	},	
 	
 }
 
@@ -358,7 +357,7 @@ local enemys = {
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵  近战兵到身前的比例
-	{id=7,image="jinzhanb",demage=9,hp=857,fireRate=180,fireCd=3,speed=60,
+	{id=7,image="jinzhanb",demage=9,hp=857,fireRate=180,fireCd=3,speed=40,
 	weak1=2},
 
 	--盾兵         --type = "jin",
@@ -409,6 +408,18 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.fightMode =  {
+		-- type 	  = "puTong",
+
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		type 	  = "xianShi",
+		limitTime = 60,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
+	}
 
 end
 return waveClass

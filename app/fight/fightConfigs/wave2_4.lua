@@ -245,6 +245,18 @@ local waves = {
 				},
 			},
 			{
+				time = 8,	                                               --金武奖励箱子
+				num = 1,
+				pos = {680},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 20,
+					award = "goldWeapon",
+					placeName = "place9",
+				},
+			},
+			{
 				time = 10,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
@@ -346,7 +358,10 @@ local enemys = {
 	{id=18,image="feibiao",demage=15,hp=8000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=12500},                             
+	{id=19,image="zzw",demage=10,hp=12500},    
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励                           
 }
 
 
@@ -362,6 +377,18 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.fightMode =  {
+		type 	  = "puTong",
+
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		-- type 	  = "xianShi",
+		-- limitTime = 40,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
+	}
 
 end
 return waveClass

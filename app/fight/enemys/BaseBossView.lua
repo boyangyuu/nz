@@ -324,9 +324,14 @@ function BaseBossView:playDaoDan(skillName)
     local id     = config.id
     local type   = config.type
     for i=1, #config.offsetPoses do
+    	local srcPos = cc.p(0,0)
+    	if config.srcPoses then 
+    		srcPos = config.srcPoses[i]
+    	end
+
         local delay = offset * i 
         local property = {
-            srcPos = pWorldBone,
+            srcPos = cc.pAdd(pWorldBone ,srcPos),
             srcScale = self:getScale() * 0.4,
             destScale = 1.0,
             destPos = pWorldBone,
@@ -385,7 +390,7 @@ end
 
 function BaseBossView:zhaohuan()
 	local waveData = self.config["enemys"..self.zhaohuanIndex]
-	assert(waveData, "config is invalid, no enemys")
+	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. self.zhaohuanIndex)
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
 		group.property["deadEventData"] = {name = "ENEMY_KILL_CALL_EVENT"}

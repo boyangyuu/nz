@@ -175,10 +175,17 @@ function waveClass:ctor()
 	self.limit  = 10
 	self.isNotMoveMap = isNotMoveMap
 
-	
 	self.fightMode =  {
-		type 	  = "xianShi",
-		limitTime = 1 * 60 + 10,
+		type 	  = "puTong",
+
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		-- type 	  = "xianShi",
+		-- limitTime = 40,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
 	}
 	
 end
