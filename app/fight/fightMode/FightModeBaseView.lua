@@ -23,8 +23,6 @@ function FightModeBaseView:ctor()
 	self:initUI()
 
 	--events
- 	self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))	
- 	
  	cc.EventProxy.new(self.fight, self)
 	 	:addEventListener(self.fight.FIGHT_START_EVENT  , handler(self, self.onFightStart))	 	
 	 	:addEventListener(self.fight.FIGHT_START_EVENT  , handler(self, self.onShow))	 	
@@ -33,10 +31,6 @@ function FightModeBaseView:ctor()
 	 	:addEventListener(self.fight.FIGHT_RELIVE_EVENT	, handler(self, self.onFightRelive))	 	
 
  	self:setVisible(false)
-end
-
-function FightModeBaseView:tick(dt)
-	self:refreshUI()
 end
 
 function FightModeBaseView:initUI()
@@ -54,14 +48,12 @@ function FightModeBaseView:onFightStart(event)
 end
 
 function FightModeBaseView:onFightEnd(event)
-	print("!!!!!!!!!!!")
 	assert(false, "must override me")
 end
 
 function FightModeBaseView:onFightRelive(event)
 	assert(false, "must override me")
 end
-
 
 function FightModeBaseView:refreshUI()
 	assert(false, "must override me")

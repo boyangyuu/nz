@@ -34,13 +34,23 @@ Define.kBaoRangeW 				= 200	    --自爆兵范围
 Define.kBaoRangeH 				= 200	     --自爆兵范围
 Define.kBaoEnemyTimeStart       = 0.01      -- 0.01秒后 前进
 
---人质兵
-Define.kRenzhiSpeed				= 550.0    --人质跑动速度 像素/s
-Define.kRenzhiRunTime			= 1.2      --跑动时间
-Define.kRenzhiWalkTime			= 0.6      --行走时间
+--人质 护士
+Define.kHushiSpeed				= 550.0    --人质跑动速度 像素/s
+Define.kHushiRunTime			= 1.2      --跑动时间
+Define.kHushiWalkTime			= 0.6      --行走时间
 
---武器商人黄
-Define.kAwardSpeed				= 200		--武器商人黄跑动速度
+--人质 武器商人黄
+Define.kShangrenSpeed			= 200		--武器商人黄跑动速度
+
+--土匪兵
+Define.kTufeiSpeed				= 200	   --行走速度
+Define.kTufeiWalkTime			= 0.6      --行走时间
+
+--人质 被绑架的人
+Define.kTufeiSpeed				= 600	   --逃跑速度
+
+--囚犯兵
+Define.kqQufanSpeed             = 300
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s

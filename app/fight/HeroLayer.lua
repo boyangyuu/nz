@@ -79,7 +79,7 @@ function HeroLayer:killEnmeyGold(event)
 	local isMany = num > 3
 	local w = isMany and 5 or 5
 	local d = 0.1
-	local destPos = cc.p(664, 604)
+	local destPos = cc.p(744, 592)
 	for i = 1, num do
 		local direct = i % 2 == 1 and -1 or 1
 		local xIndex = (num + i * direct) 

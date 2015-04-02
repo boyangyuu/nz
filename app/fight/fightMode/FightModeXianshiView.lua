@@ -15,7 +15,7 @@ function FightModeXianshiView:ctor()
 end
 
 function FightModeXianshiView:refreshUI()
-
+	
 end
 
 function FightModeXianshiView:onFightStart(event)

@@ -24,6 +24,9 @@ local RZShangrenEnemyView 	= import(".enemys.RZShangrenEnemyView")
 local RZBangfeiEnemyView 	= import(".enemys.RZBangfeiEnemyView")
 local RZBangrenEnemyView 	= import(".enemys.RZBangrenEnemyView")
 
+--taofan
+local TFQiuEnemyView 	= import(".enemys.TFQiuEnemyView")
+
 --boss
 local SaosheBossView 	= import(".enemys.SaosheBossView")
 local ChongBossView 	= import(".enemys.ChongBossView")
@@ -68,6 +71,10 @@ function EnemyFactory.createEnemy(property)
 		enemyView = RZBangfeiEnemyView.new(property)	
 	elseif type == "bangren" then
 		enemyView = RZBangrenEnemyView.new(property)
+
+	--taofan
+	elseif type == "taofan_qiu" then
+		enemyView = TFQiuEnemyView.new(property)
 
 	--enemy		
 	elseif type == "san" then

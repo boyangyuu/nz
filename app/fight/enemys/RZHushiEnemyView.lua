@@ -97,7 +97,7 @@ function RZHushiEnemyView:playEnter(direct)
 	end
 
 	self:setPositionX(srcPosX)
-	local time = (toPosx - srcPosX) / define.kRenzhiSpeed
+	local time = (toPosx - srcPosX) / define.kHushiSpeed
 	local action = cc.MoveTo:create(time, cc.p(toPosx, self:getPositionY()))
 	local callfunc = function ()
 		self.isEntering = false
@@ -113,7 +113,7 @@ function RZHushiEnemyView:exit()
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	self.isExiting = true
-	local speed = define.kRenzhiSpeed * self:getScale()
+	local speed = define.kHushiSpeed * self:getScale()
 	local width = display.width * 1.0
 	local action = cc.MoveBy:create(width/speed, cc.p(width, 0))
 	local callfunc = function ()
@@ -150,12 +150,12 @@ end
 
 function RZHushiEnemyView:playRunAction(direct, isRoll)
 	print("function RZHushiEnemyView:playRunLeft():",isRoll)
-	local speed = define.kRenzhiSpeed
+	local speed = define.kHushiSpeed
 	local time 
 	if isRoll then 
-		time = define.kRenzhiRunTime
+		time = define.kHushiRunTime
 	else
-		time = define.kRenzhiWalkTime
+		time = define.kHushiWalkTime
 	end
 	print("time"..time)
 	local width = speed * time * self:getScale() * direct
@@ -227,7 +227,7 @@ function RZHushiEnemyView:animationEvent(armatureBack,movementType,movementID)
     	elseif movementID == "die" then 
     		self:setDeadDone()
     		local fightMode = md:getInstance("FightMode")
-    		fightMode:willFail({type = "renzhi"})
+    		fightMode:willFail({type = "renZhi"})
     	end 
 	end
 end

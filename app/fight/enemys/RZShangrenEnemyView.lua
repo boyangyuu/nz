@@ -16,11 +16,6 @@ function RZShangrenEnemyView:ctor(property)
 	--instance
 	RZShangrenEnemyView.super.ctor(self, property) 
 
-    -- --events
-    cc.EventProxy.new(self.enemy, self)
-        :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
-        :addEventListener(Actor.KILL_EVENT, 	   handler(self, self.playKill)) 
-
     self.posIndex = 0
     self.posDatas = property.data
 end
@@ -45,7 +40,6 @@ function RZShangrenEnemyView:playEnter(direct)
 	local isLeft = direct == "left" 
 	
 	local toPosx = self:getPositionX()
-	print("toPosx", toPosx)
 	local posInMapx = self:getPosInMap().x
 	local srcPosX = 0 
 	if isLeft then 
@@ -53,15 +47,13 @@ function RZShangrenEnemyView:playEnter(direct)
 	else
 		srcPosX = toPosx + (display.width - posInMapx) + 300
 	end
-	print("srcPosX", srcPosX)
 	self:setPositionX(srcPosX)
 
 	--藏身处
 	self:playMoveToNext()
-
 end
 
-function RZShangrenEnemyView:playMoveToNext(direct)
+function RZShangrenEnemyView:playMoveToNext()
 	self.posIndex = self.posIndex + 1
 	--check next
 	local data = self.posDatas[self.posIndex]
@@ -75,7 +67,6 @@ function RZShangrenEnemyView:playMoveToNext(direct)
 	local animName = "run" .. data["direct"]
 	print("animName", animName)
 	self.armature:getAnimation():play(animName , -1, 1) 
-	self.direct = direct
 
 	--dest pos
 	local posPlace = self:getPlaceNode():getPositionX()
@@ -86,7 +77,7 @@ function RZShangrenEnemyView:playMoveToNext(direct)
 	--action
 	local distance = math.abs(destPos - self:getPositionX())
 	print("distance", distance)
-	local time = distance / define.kAwardSpeed
+	local time = distance / define.kShangrenSpeed
 	local action = cc.MoveTo:create(time, cc.p(destPos, self:getPositionY()))
 	local callfunc = function ()
 		self:playHide()
@@ -96,7 +87,6 @@ function RZShangrenEnemyView:playMoveToNext(direct)
 end
 
 function RZShangrenEnemyView:playHide()
-	print("self:playHide()")
 	self.armature:getAnimation():play("dunxia" , -1, 1) 
 
 	--move next
@@ -111,9 +101,8 @@ end
 function RZShangrenEnemyView:exit()
 	if self.enemy:isDead() then return end
 	self.armature:getAnimation():play("runright" , -1, 1) 
-	self.direct = "right"
 	self.isExiting = true
-	local speed = define.kAwardSpeed
+	local speed = define.kShangrenSpeed
 	local width = display.width
 	local action = cc.MoveBy:create(width/speed, cc.p(width, 0))
 	local callfunc = function ()
@@ -161,7 +150,7 @@ function RZShangrenEnemyView:animationEvent(armatureBack,movementType,movementID
     	elseif movementID == "die" then 
     		self:setDeadDone()
     		local fightMode = md:getInstance("FightMode")
-    		fightMode:doFail({f})    		
+    		fightMode:willFail({type = "renZhi"})  		
     	end 
 	end
 end
