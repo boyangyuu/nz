@@ -324,9 +324,14 @@ function BaseBossView:playDaoDan(skillName)
     local id     = config.id
     local type   = config.type
     for i=1, #config.offsetPoses do
+    	local srcPos = cc.p(0,0)
+    	if config.srcPoses then 
+    		srcPos = config.srcPoses[i]
+    	end
+
         local delay = offset * i 
         local property = {
-            srcPos = pWorldBone,
+            srcPos = cc.pAdd(pWorldBone ,srcPos),
             srcScale = self:getScale() * 0.4,
             destScale = 1.0,
             destPos = pWorldBone,

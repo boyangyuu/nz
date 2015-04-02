@@ -134,7 +134,7 @@ function Fight:endFightWin()
 end
 
 function Fight:endFightFail()
-print("function Fight:endFightFail()")
+    print("function Fight:endFightFail()")
     self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
     self.inlayModel:removeAllInlay()
     local fightProp = md:getInstance("FightProp")
@@ -148,6 +148,7 @@ end
 
 function Fight:doWin()
     if self.result then return end
+    print("")
     self.result = "win" 
 
     local levelMapModel = md:getInstance("LevelMapModel")
@@ -203,6 +204,8 @@ function Fight:doRelive()
     --clear
     self:clearFightData()
 
+    self.result = nil
+    
     self:equipReliveAward()
 
     --relive
@@ -315,7 +318,7 @@ end
 
 function Fight:clearFightData()
     self.inlayModel:removeAllInlay()
-    self.result = nil     
+         
 end
 
 function Fight:cleanModels()

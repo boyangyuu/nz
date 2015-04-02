@@ -11,14 +11,18 @@ local JinEnemyView 		= import(".enemys.JinEnemyView")
 local BaoEnemyView 		= import(".enemys.BaoEnemyView")
 local CommonEnemyView	= import(".enemys.CommonEnemyView")
 local JinbiEnemyView  	= import(".enemys.JinbiEnemyView")
-local RZHushiEnemyView 	= import(".enemys.RZHushiEnemyView")
-local RZShangrenEnemyView 	= import(".enemys.RZShangrenEnemyView")
 local FeijiEnemyView    = import(".enemys.FeijiEnemyView")
 local RenEnemyView   	= import(".enemys.RenEnemyView")
 local AwardEnemyView   	= import(".enemys.AwardEnemyView")
 
 --award
 local AwardSanEnemyView	= import(".enemys.AwardSanEnemyView")
+
+--renzhi
+local RZHushiEnemyView 	= import(".enemys.RZHushiEnemyView")
+local RZShangrenEnemyView 	= import(".enemys.RZShangrenEnemyView")
+local RZBangfeiEnemyView 	= import(".enemys.RZBangfeiEnemyView")
+local RZBangrenEnemyView 	= import(".enemys.RZBangrenEnemyView")
 
 --boss
 local SaosheBossView 	= import(".enemys.SaosheBossView")
@@ -54,7 +58,17 @@ function EnemyFactory.createEnemy(property)
 	--award
 	elseif type == "awardSan" then
 		enemyView = AwardSanEnemyView.new(property)	
-	 
+
+	--renzhi
+	elseif type == "renzhi" then
+		enemyView = RZHushiEnemyView.new(property)
+	elseif type == "shangren" then
+		enemyView = RZShangrenEnemyView.new(property)	
+	elseif type == "bangfei" then
+		enemyView = RZBangfeiEnemyView.new(property)	
+	elseif type == "bangren" then
+		enemyView = RZBangrenEnemyView.new(property)
+
 	--enemy		
 	elseif type == "san" then
 		enemyView = SanEnemyView.new(property)
@@ -66,10 +80,6 @@ function EnemyFactory.createEnemy(property)
 		enemyView = DaoEnemyView.new(property)	
 	elseif type == "jinbi" then
 		enemyView = JinbiEnemyView.new(property)
-	elseif type == "renzhi" then
-		enemyView = RZHushiEnemyView.new(property)
-	elseif type == "shangren" then
-		enemyView = RZShangrenEnemyView.new(property)									
 	elseif type == "feiji" or type == "jipu" then
 		enemyView = FeijiEnemyView.new(property)							
 	elseif type == "renzhe" then
