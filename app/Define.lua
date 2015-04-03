@@ -12,10 +12,10 @@ Define.kHeroKillKeepCnt			= 1 	--启动连杀动画
 Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
 
 --手雷兵 远程兵 
-Define.kEnemyWalkSpeed 			= 5.0    --左右移动速度
-Define.kEnemyWalkWidth 			= 200 * 1	 --左右移动距离原来140改为200
-Define.kEnemyRollSpeed 			= 12.0	 --滚动速度 每帧率
-Define.kEnemyRollWidth 			= 280* 1   --滚动距离
+Define.kEnemyWalkSpeed 			= 5.0       --左右移动速度
+Define.kEnemyWalkWidth 			= 200 * 1	--左右移动距离原来140改为200
+Define.kEnemyRollSpeed 			= 20.0	   --滚动速度 每帧率
+Define.kEnemyRollWidth 			= 400* 1   --滚动距离
 
 --近战兵
 Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
