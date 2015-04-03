@@ -350,7 +350,6 @@ function Attackable:restoreStand()
 	self.armature:stopAllActions()	
 	self.armature:getAnimation():stop()
 	self:setPauseOtherAnim(false)
-
 end
 
 function Attackable:setPauseOtherAnim(isPause)

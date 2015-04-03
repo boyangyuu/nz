@@ -185,7 +185,7 @@ function GunView:refreshGun()
     self.jqk:setPosition(destpos.x, destpos.y)
     armature:addChild(self.jqk, -1)
 
-    --枪火遮挡
+    -- --枪火遮挡
     self.jqkzd = ccs.Armature:create(config.jqkzdName)
     self.jqkzd:setVisible(false)
    	self.jqkzd:setPosition(destpos.x, destpos.y)

@@ -37,7 +37,7 @@ function TFQiuEnemyView:playEnter(direct)
     local posInMapx = self:getPosInMap().x
     local srcPosX = 0 
     if isLeft then 
-        srcPosX =  toPosx - posInMapx - 300
+        srcPosX = toPosx - posInMapx - 300
     else
         srcPosX = toPosx + (display.width - posInMapx) + 300
     end
@@ -139,7 +139,6 @@ function TFQiuEnemyView:playSan()
     local time = distance / speed 
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
     
-
     local seq = cc.Sequence:create(action, 
         cc.CallFunc:create(handler(self, self.playMoveToNext)))    
     self:runAction(seq)
