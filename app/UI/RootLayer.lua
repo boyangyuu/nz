@@ -244,17 +244,15 @@ end
 
 function RootLayer:addArmatureRes(src)
     local manager = ccs.ArmatureDataManager:getInstance()
-    if Async then
+    if isAsync then
         manager:addArmatureFileInfoAsync(src,handler(self, self.dataLoaded))
     else
         manager:addArmatureFileInfo(src)
     end
-
-
 end
 
 function RootLayer:addFrameRes(plist,png)
-    if Async then
+    if isAsync then
         display.addSpriteFrames(plist, png, handler(self, self.imageLoaded))
     else
         display.addSpriteFrames(plist, png)
@@ -271,9 +269,7 @@ function RootLayer:addFrameRes(plist,png)
             self.isLoadedArma = true 
             self:onloadDone()
         end
-    end
-
-            
+    end  
 end
 
 function RootLayer:onloadDone()

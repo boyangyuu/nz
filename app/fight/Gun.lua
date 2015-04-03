@@ -59,15 +59,16 @@ function Gun:justCooldownValue(value)
 	end
 	-- print("justCooldownValue value:", value)
 	local scale = 1.0
+	if 0.15 < value and value <= 0.5 then 
+		scale = 0.95 	
 	if 0.1 < value and value <= 0.15 then 
-		scale = 0.7 
-	elseif 0.08 < value and value < 0.1 then 
-		scale = 0.6 
-	elseif value < 0.08 then 
-		scale = 0.5
+		scale = 0.9 
+	elseif 0.06 < value and value <= 0.1 then 
+		scale = 0.85 
+	elseif value <= 0.06 then 
+		scale = 0.80
 	end
 	local value = value * scale
-	-- print("value ".. value)
 	return value
 end
 

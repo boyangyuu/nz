@@ -16,7 +16,7 @@ isFree = true       --付费免费
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面
 isAnalytics = nil --统计功能开关
-isAsync = true
+isAsync = false
 __versionId = nil
 
 ui        = UI.new()
