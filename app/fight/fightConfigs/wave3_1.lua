@@ -2,63 +2,63 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
-		enemys = {
-			{
-				descId = "xiaorz", --简介
-				time = 3,	
-				num = 1,
-				pos = {600},
-				delay = {4},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-		},
-	},
-	{
-		enemys = {
-			{
-				time = 2,	
-				num = 1,
-				pos = {900},
-				delay = {0.1},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 2.5,	
-				num = 1,
-				pos = {250},
-				delay = {0.1},
-				property = {
-					placeName = "place1" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 3,	
-				num = 1,
-				pos = {600},
-				delay = {0.1},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},		
-		},
-	},
+	-- {
+	-- 	enemys = {
+	-- 		{
+	-- 			descId = "xiaorz", --简介
+	-- 			time = 3,	
+	-- 			num = 1,
+	-- 			pos = {600},
+	-- 			delay = {4},
+	-- 			property = {
+	-- 				placeName = "place2" ,
+	-- 				id = 17,
+	-- 				type = "renzhe",
+	-- 				missileId = 18,
+	-- 			},
+	-- 		},	
+	-- 	},
+	-- },
+	-- {
+	-- 	enemys = {
+	-- 		{
+	-- 			time = 2,	
+	-- 			num = 1,
+	-- 			pos = {900},
+	-- 			delay = {0.1},
+	-- 			property = {
+	-- 				placeName = "place3" ,
+	-- 				id = 17,
+	-- 				type = "renzhe",
+	-- 				missileId = 18,
+	-- 			},
+	-- 		},	
+	-- 		{
+	-- 			time = 2.5,	
+	-- 			num = 1,
+	-- 			pos = {250},
+	-- 			delay = {0.1},
+	-- 			property = {
+	-- 				placeName = "place1" ,
+	-- 				id = 17,
+	-- 				type = "renzhe",
+	-- 				missileId = 18,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 3,	
+	-- 			num = 1,
+	-- 			pos = {600},
+	-- 			delay = {0.1},
+	-- 			property = {
+	-- 				placeName = "place2" ,
+	-- 				id = 17,
+	-- 				type = "renzhe",
+	-- 				missileId = 18,
+	-- 			},
+	-- 		},		
+	-- 	},
+	-- },
 	{
 		enemys = {
 			{
@@ -72,90 +72,90 @@ local waves = {
 					id = 8,
 				},
 			},	
-			{
-				time = 4,	
-				num = 1,
-				pos = {900},
-				delay = {0.1},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 4.5,	
-				num = 1,
-				pos = {250},
-				delay = {0.1},
-				property = {
-					placeName = "place1" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 5,	
-				num = 1,
-				pos = {600},
-				delay = {0.1},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 5.5,	
-				num = 1,
-				pos = {400},
-				delay = {0.1},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 6,	
-				num = 1,
-				pos = {690},
-				delay = {0.1},
-				property = {
-					placeName = "place1" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 6.5,	
-				num = 1,
-				pos = {230},
-				delay = {0.1},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 7,	
-				num = 1,
-				pos = {420},
-				delay = {0.1},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
+			-- {
+			-- 	time = 4,	
+			-- 	num = 1,
+			-- 	pos = {900},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place3" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
+			-- {
+			-- 	time = 4.5,	
+			-- 	num = 1,
+			-- 	pos = {250},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place1" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },
+			-- {
+			-- 	time = 5,	
+			-- 	num = 1,
+			-- 	pos = {600},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place2" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },
+			-- {
+			-- 	time = 5.5,	
+			-- 	num = 1,
+			-- 	pos = {400},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place3" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
+			-- {
+			-- 	time = 6,	
+			-- 	num = 1,
+			-- 	pos = {690},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place1" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
+			-- {
+			-- 	time = 6.5,	
+			-- 	num = 1,
+			-- 	pos = {230},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place2" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
+			-- {
+			-- 	time = 7,	
+			-- 	num = 1,
+			-- 	pos = {420},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place2" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
 		},
 	},
 		
@@ -165,31 +165,31 @@ local waves = {
 --enemy的关卡配置                                                     黄金镶嵌M4A1满级1枪伤害621  dps大于等于6  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=21,hp=7000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=21,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=7000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=621,
+	{id=3,image="shoulei",demage=28,hp=1000,
 	weak1=1},
 
 	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=7000,
+	{id=4,image="sanbing01",demage=0,hp=10000,
 	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=8000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=35,hp=1000,
+	{id=6,image="daodan",demage=35,hp=3000,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=21000,fireRate=180,fireCd=4,speed=40,
+	{id=7,image="jinzhanb",demage=20,hp=25000,fireRate=180,fireCd=4,speed=40,
 	weak1=2},
 
 	--盾兵         --type = "jin",
@@ -197,7 +197,7 @@ local enemys = {
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=8000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
 	weak1=2},	
 
 	
@@ -226,11 +226,11 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=5000}, 
+	{id=18,image="feibiao",demage=15,hp=5000},
                            
 }
 

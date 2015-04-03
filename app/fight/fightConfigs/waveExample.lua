@@ -11,7 +11,7 @@ local waveClass = class("waveExample", BaseWave)
 		property = { 
 			placeName = "place6",
 			type = "bangfei",
-			renzhiName = "人质1",--  一组统一标示
+			renzhiName = "人质1",      --  一组统一标示
 			id = 1,
 		},
 	},
@@ -29,12 +29,11 @@ local waveClass = class("waveExample", BaseWave)
 	},
 
 	
-	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="tufeib",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
-	weak1=3},
+	--绑匪                                     140--左右移动距离       280--滚动距离
+	{id=1,image="tufeib",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3, weak1=3},
 
-	--绑人         --type = "bangren",
-	{id=4,image="hs",demage=2,hp=111, weak1=1},	
+	--被绑架人        --type = "bangren",
+	{id=4,image="hs", hp=111, weak1=1},	
 
 ---------- 逃犯配置 -----------------------------
 	{ 
@@ -87,9 +86,8 @@ local waveClass = class("waveExample", BaseWave)
 		},
 	},	
 
-	--囚犯            --startState = "san",
-	{id=4,image="qiufan",demage=21,hp=11,
-	weak1=1},	
+	--囚犯            type = "taofan_qiu",
+	{id=4,image="qiufan",demage=21,hp=11, weak1=1},	
 
 
 
