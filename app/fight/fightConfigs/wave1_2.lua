@@ -430,37 +430,16 @@ local waves = {
 local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=5,hp=300,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=3},
-
-	--近战兵
-	{id=2,image="jinzhanb",demage=5,hp=1108,fireRate=180,fireCd=3,speed=40,scale = 1.6,
-	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
-             
-    --导弹          --missileType = "daodan",
-	{id=4,image="daodan",demage=3,hp=1,
-	weak1=1},
-
-	--铁球
-
-	{id=5,image="tieqiu",demage=20,hp=3760,weak1=1},	
+	weak1=3},s
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=300,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=3},
+
 	--手雷
 	{id=7,image="shoulei",demage=6,hp=1,
 	weak1=2},
-	--BOSS导弹          --missileType = "daodan",
-	{id=8,image="daodan",demage=5,hp=120,
-	weak1=1},
 
-	--飞机         type = "feiji" ,
-	{id=9,image="feiji",demage=0,hp=1, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
-	weak1=2,    award = 60},
-
-	--越野车       type = "jipu" ,
-	{id=10,image="yyc",demage=0,hp=1,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=240, fireCd=5.0,
-	weak1=2,    award = 60},
 	-- 盾兵
 	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,--scale = 2.0,
 	weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
