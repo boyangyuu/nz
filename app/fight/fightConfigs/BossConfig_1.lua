@@ -4,7 +4,6 @@
 
 
 local BossConfig = class("BossConfig_1", cc.mvc.ModelBase)
-local FightConfigs = import(".FightConfigs")
 
 function BossConfig:getMoveLeftAction(scale)
 	local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))

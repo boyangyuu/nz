@@ -7,7 +7,7 @@ FightMode.FightMODE_RENZHI_SAVE_EVENT = "FightMODE_RENZHI_SAVE_EVENT"
 FightMode.FightMODE_TAOFAN_TAO_EVENT  = "FightMODE_TAOFAN_TAO_EVENT"
 
 FightMode.kModeTypes = {
-	xianShi = "xianshi",
+	xianShi = "xianShi",
 	renZhi  = "renZhi",
 	taoFan  = "taoFan",
 	puTong  = "puTong",

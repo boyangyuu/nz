@@ -30,19 +30,25 @@ function FightConfigs:getWaveConfig()
 	return waveFight
 end
 
---[[
-	@param configName : boss配置表名
-	@return boss的固定配置(boss分为固定配置和关卡配置)
-]]
-function FightConfigs:getBossConfig(configName)
-	self.fight = md:getInstance("Fight")
-	local group = self.fight:getGroupId()
-	local level = self.fight:getLevelId()
+function FightConfigs:getWaveImages(gid, lid)
+    if math.floor(lid) < lid then
+        lid = tostring(lid)
+        lid = string.gsub(lid, "%.", "_")
+    end
 
-	local name_lua = "wave"..group.."_"..level
+	local images = {}
+	local name_lua = "wave"..gid.."_"..lid
 	local str_src = "."..name_lua
-	local config = require(p..str_src)
-	-- dump(config, "getBossConfig")	
-	return config
+	local waveConfig = require(p..str_src).new()	
+	for i,config in ipairs(waveConfig.enemys) do
+		images[#images + 1] = config["image"]
+	end
+
+	for i,config in ipairs(waveConfig.bosses) do
+		images[#images + 1] = config["image"]
+	end
+
+	return images
 end
+
 return FightConfigs
