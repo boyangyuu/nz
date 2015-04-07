@@ -282,9 +282,9 @@ local waves = {
 				pos = {470,550,700},					
 				property = {
 					placeName = "place2",  
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 				},
 			},
 			{
@@ -293,9 +293,9 @@ local waves = {
 				pos = {300,360,430,500,560,620,700,850},
 				delay = {0,0.7,1.4,2.1,3.5,2.9,2.1,1.5},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 					placeName = "place3",
 				},
 			},			
@@ -305,9 +305,9 @@ local waves = {
 				pos = {350,700},
 				delay = {0.3,0.9},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 					placeName = "place3",
 				},
 			},
@@ -384,9 +384,9 @@ local waves = {
 				pos = {480,550,700},					
 				property = {
 					placeName = "place2",  
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 				},
 			},	
 			{
@@ -437,11 +437,7 @@ local enemys = {
 	--近战兵
 	{id=2,image="jinzhanb",demage=3,hp=70,fireRate=180,fireCd=3,speed=40,scale = 1.4,
 	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
-
-	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=70,
-	weak1=2},	             
-
+           
     --导弹          --missileType = "daodan",
 	{id=4,image="daodan",demage=1,hp=1,
 	weak1=1},

@@ -124,7 +124,7 @@ local waves = {
 					renzhiName = "人质4",     --  一组统一标示
 					type = "bangren",
 					placeName = "place10",
-					id = 16,
+					id = 6,
 				},
 			},
 			{
@@ -486,6 +486,7 @@ local enemys = {
 
 	--绑匪                                     140--左右移动距离       280--滚动距离
 	{id=5,image="tufeib",demage=4,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+
 	--被绑架人        --type = "bangren",
 	{id=6,image="hs", hp=1000, weak1=1},	 
 
