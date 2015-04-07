@@ -435,11 +435,7 @@ local enemys = {
 	--近战兵
 	{id=2,image="jinzhanb",demage=5,hp=1108,fireRate=180,fireCd=3,speed=40,scale = 1.6,
 	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
-
-	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=300,
-	weak1=2},	             
-
+             
     --导弹          --missileType = "daodan",
 	{id=4,image="daodan",demage=3,hp=1,
 	weak1=1},

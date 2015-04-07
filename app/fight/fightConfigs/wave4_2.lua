@@ -53,9 +53,9 @@ local waves = {
 				delay = {0,0.7,2.1,1.4,2.8,0.7,1.7,1,3,3.5},
 				property = {
 					placeName = "place2",
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 				},
 			},
 		},
@@ -181,11 +181,7 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=28,hp=2000,
 	weak1=3},
-
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=10000,
-	weak1=3},	                                                           
-
+                                                        
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},

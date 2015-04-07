@@ -137,9 +137,9 @@ local waves = {
 				pos = {80,150,210},
 				delay = {0,0.5,1},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 					placeName = "place1",
 				},
 			},	
@@ -149,9 +149,9 @@ local waves = {
 				pos = {600},
 				delay = {0},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 					placeName = "place6",
 				},
 			},
@@ -161,9 +161,9 @@ local waves = {
 				pos = {330,420},
 				delay = {0,0.8},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 					placeName = "place2",
 				},
 			},
@@ -173,9 +173,9 @@ local waves = {
 				pos = {980,1050},
 				delay = {0,0.8},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 					placeName = "place5",
 				},
 			},												
@@ -469,10 +469,6 @@ local enemys = {
 	--近战兵
 	{id=2,image="jinzhanb",demage=3,hp=585,fireRate=180,fireCd=3,speed=40,
 		weak1=3},
-
-	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=195,
-	weak1=3},
 
 	--自爆兵
 	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,fireCd=4,speed=120,

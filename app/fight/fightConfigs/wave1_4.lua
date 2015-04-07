@@ -111,9 +111,9 @@ local waves = {
 				pos = {470,600,670,750,820},					
 				property = {
 					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 				},
 			},	
 			{
@@ -148,9 +148,9 @@ local waves = {
 				pos = {680,750,810,900,1000},					
 				property = {
 					placeName = "place4",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common"
+					startState = "san",
+					id = 1,
 				},
 			},
 			{
@@ -361,10 +361,6 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=4,hp=1,
 	weak1=1},
-
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=378,
-	weak1=2},	                                                           
 
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=504,walkRate=180,walkCd=2,fireRate=240,fireCd=5,
