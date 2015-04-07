@@ -866,7 +866,7 @@ end
 function FightPlayer:initGuide3()
     local isDone = self.guide:isDone("fightJu")
     local gid, lid = self.fight:getGroupId(), self.fight:getLevelId()
-    local isWillGuide = lid == 3.1 and gid == 1
+    local isWillGuide = lid == 5 and gid == 1
     if isDone or not isWillGuide then return end   
 
     self.guide:addClickListener({

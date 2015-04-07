@@ -29,7 +29,8 @@ end)
 			 {opacity = 0})
 	style6:关闭按钮，确定按钮，输入框，激活码
 		ui:showPopup("commonPopup",
-			 {type = "style6"})
+			 {type = "style6"},
+			 {opacity = 0})
 ]]
 function commonPopup:ctor(properties)
 	self.commonPopModel = md:getInstance("commonPopModel")
@@ -188,7 +189,7 @@ function commonPopup:initUI(properties)
 	    end)
     elseif typeName == "style6" then
     	local content = cc.uiloader:seekNodeByName(self, "content")
-		content:setString(properties.content)
+		-- content:setString(properties.content)
 	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
 	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
     	btntrue:setTouchEnabled(true)

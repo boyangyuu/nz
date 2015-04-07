@@ -191,7 +191,7 @@ function MyApp:createGameStateFile()
                         weapon          = true,   -- 升级武器
                         afterfight03    = true,   -- 回到主界面
                         
-                        --第1-3.1关之内
+                        --第1-5关之内
                         fightJu         = true,  
 
                         --第1-4失败之后
