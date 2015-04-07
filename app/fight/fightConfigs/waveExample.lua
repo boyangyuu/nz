@@ -104,11 +104,7 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=20,hp=375,
 	weak1=3},
-
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=562,
-	weak1=3},	                                                           
-
+	                                                           
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=562,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},

@@ -357,9 +357,9 @@ local waves = {
 				pos = {450,550,650},					
 				property = {
 					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},	
 			{
@@ -382,9 +382,9 @@ local waves = {
 				pos = {350,550,750},
 				delay = {0,0.5,1.0},
 				property = { 
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place4",
 				},
 			},                                 
@@ -441,9 +441,9 @@ local waves = {
 				pos = {300,350,400,450,550,600,700,850},
 				delay = {3.5,3,2.5,2,1.5,1,0.5,0},
 				property = { 
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place2",
 				},
 			},	                                       -- 以上是第二波第三批    30
@@ -466,10 +466,7 @@ local enemys = {
 	{id=3,image="shoulei",demage=8,hp=1,
 	weak1=1},
 
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=403,
-	weak1=2},	                                                           
-
+                                                          
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
 	weak1=2},
