@@ -23,8 +23,8 @@ function FightResultFailPopup:onEnter()
 end
 
 function FightResultFailPopup:playSound()
-    local rwwc   = "res/Music/ui/rwsb.wav"
-    audio.playSound(rwwc,false)
+    local rwsb   = "res/Music/ui/rwsb.wav"
+    audio.playSound(rwsb,false)
 end
 
 function FightResultFailPopup:initUI()
@@ -36,9 +36,7 @@ function FightResultFailPopup:initUI()
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     self.btnRevive = cc.uiloader:seekNodeByName(self, "btnrevive")
 
-    local armature = ccs.Armature:create("ydfh")
-    armature:setPosition(180,60)
-    self.btnRevive:addChild(armature)
+    
 
     --add res
     local manager = ccs.ArmatureDataManager:getInstance()
@@ -47,6 +45,11 @@ function FightResultFailPopup:initUI()
     local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
     local png   = "res/FightResult/anim/ydfh/ydfh0.png"
     display.addSpriteFrames(plist, png)
+    
+    local armature = ccs.Armature:create("ydfh")
+    armature:setPosition(180,60)
+    self.btnRevive:addChild(armature)
+
     armature:getAnimation():play("ydfh" , -1, 1)
 
     btnback:setTouchEnabled(true)

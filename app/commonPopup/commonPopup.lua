@@ -189,11 +189,13 @@ function commonPopup:initUI(properties)
 	    end)
     elseif typeName == "style6" then
     	local content = cc.uiloader:seekNodeByName(self, "content")
-		-- content:setString(properties.content)
 	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
 	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
     	btntrue:setTouchEnabled(true)
     	btnfalse:setTouchEnabled(true)
+    	content:addEventListener(function(editbox, eventType)
+			print("CCSSample2Scene editbox input")
+		end)
     	addBtnEventListener(btntrue, function(event)
 	        if event.name=='began' then
 	            return true

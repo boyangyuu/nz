@@ -97,10 +97,16 @@ function StartLayer:initUI()
             return true
         elseif event.name == "ended" then 
            ui:showPopup("commonPopup",
-             {type = "style6"},
+             {type = "style6",callfuncCofirm = handler(self,self.checkActivateCode)},
              {opacity = 0})
         end
     end)
+end
+
+function StartLayer:checkActivateCode()
+    ui:showPopup("commonPopup",
+             {type = "style2", content = "激活码错误！", delay = 0.8},
+             {opacity = 0})
 end
 
 function StartLayer:initMusicUI()
