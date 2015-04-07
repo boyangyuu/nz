@@ -454,7 +454,7 @@ local waves = {
 
 --enemy的关卡配置                                        青铜镶嵌 MP5伤害80  dps大于等于2 怪物数据
 local enemys = {
-	--普通兵                                      140--左右移动距离       280--滚动距离
+	--普通兵        type = "common",                           140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage= 4,hp=403,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1= 2},
 
@@ -474,31 +474,6 @@ local enemys = {
     --导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=10,hp=150,
 	weak1=1},	
-
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=3,hp=806,fireRate=120,fireCd=3,speed=60,
-	weak1=2},
-
-	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=4,hp=4030,fireRate=180,fireCd=4,speed=40,
-	weak1=2},
-
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=10,hp=403,fireRate=30,speed=120,
-	weak1=2},	
-
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
-	weak1=1},
-
-	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=12000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
-	weak1=2,    award = 60},
-
-	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=12000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
-	weak1=2,    award = 60},
 
 
 

@@ -364,32 +364,9 @@ local enemys = {
 	{id=9,image="zibaob",demage=15,hp=571,fireRate=30,speed=120,
 	weak1=2},	
 
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
-	weak1=2},
-
 	--飞机         type = "feiji" ,
 	{id=11,image="feiji",demage=0,hp=12800, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=3.0,
-	weak1=2,    award = 60},
-
-
-	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=12800,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
-	weak1=2,    award = 60},
-
-	--金币绿气球   type = "jinbi",
-	{id=13,image="qiqiu03",hp=1,weak1=2,award = 9},	--award = 9   金币数量为9	
-
-	--金币蓝气球   type = "jinbi",
-	{id=14,image="qiqiu02",hp=1,weak1=2,award = 15},	--award = 15  金币数量为15
-
-	--金币黄气球   type = "jinbi",
-	{id=15,image="qiqiu01",hp=1,weak1=2,award = 30},	--award = 30  金币数量为30
-	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=8,hp=20000,fireRate=180,fireCd=3,speed=40,scale = 3.0,
-	weak1=2},                                                               --scale = 3.0,  近战走到屏幕最近放缩比例
-
+	weak1=2,    award = 60},                                                              --scale = 3.0,  近战走到屏幕最近放缩比例
 
 }
 

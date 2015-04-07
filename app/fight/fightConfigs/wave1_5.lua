@@ -156,46 +156,19 @@ local waves = {
 			},
 		},
 	}, 
-	-- {
-	-- 	enemys = {
-	-- 		{
-	-- 			descId = "zpbing",               --简介
-	-- 			time = 3,
-	-- 			num = 1,
-	-- 			delay = {4},
-	-- 			pos = {500},
-	-- 			property = {
-	-- 				placeName = "place11",  
-	-- 				type = "dao",
-	-- 				id = 2,
-	-- 				missileId = 3,
-	-- 				missileType = "daodan",
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
 
 }
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4,
-	weak1=3},
-
-	--导弹兵
-	{id=2,image="zpbing",demage=0,hp=1150,walkRate=120,walkCd=2.0,fireRate=180,fireCd=4,
-	weak1=3},		
-
-	--导弹
-	{id=3,image="daodan",demage=8,hp=1,
-	weak1=3},
+	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4, weak1=3},
 
 	--手雷兵
-	{id=4,image="shouleib",demage=0,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=5,
-	weak1=3},	
+	{id=4,image="shouleib",demage=0,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=5, weak1=3},	
+
 	--手雷
-	{id=5,image="shoulei",demage=4,hp=1,
-	weak1=3,},	
+	{id=5,image="shoulei",demage=4,hp=1, weak1=3,},
+		
 }
 local mapId = "map_1_4"
 

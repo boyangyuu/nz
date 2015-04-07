@@ -248,63 +248,36 @@ local waves = {
 --enemy的关卡配置                                                    白银镶嵌 MP5伤害90  dps大于等于3,远程3近战3 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=12,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=2},
+	{id=1,image="anim_enemy_002",demage=12,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4, weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
-	weak1=2},
+	{id=2,image="shouleib",demage=0,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4, weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=1,
-	weak1=1},
+	{id=3,image="shoulei",demage=12,hp=1, weak1=1},
 	                                                           
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=749,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
-	weak1=2},
+	{id=5,image="zpbing",demage=0,hp=749,walkRate=120,walkCd=2,fireRate=240,fireCd=5, weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=1,
-	weak1=1},	
-
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=12,hp=1123,fireRate=180,fireCd=4,speed=40,
-	weak1=2},
+	{id=6,image="daodan",demage=15,hp=1, weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=5616,fireRate=180,fireCd=5,speed=35,
-	weak1=2},
-
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=749,fireRate=30,speed=100,
-	weak1=2},	
-
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
-	weak1=1},
+	{id=8,image="dunbing",demage=15,hp=5616,fireRate=180,fireCd=5,speed=35, weak1=2},
 
 	--飞机         type = "feiji" ,
 	{id=11,image="feiji",demage=0,hp=16000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--BOSS铁球
-	{id=13,image="tieqiu",demage= 50,hp=9000,
-	weak1=1},
+	{id=13,image="tieqiu",demage= 50,hp=9000, weak1=1},
 
 	--BOSS导弹          type = "missile",
-	{id=19,image="daodan",demage=15,hp=1000,
-	weak1=1},	
+	{id=19,image="daodan",demage=15,hp=1000, weak1=1},	
 
 	--烟雾导弹           type = "dao_wu",
-	{id=21,image="daodan03",demage=10,hp=6000, weak1=1},   
-
-	--大黑导弹          type = "missile",
-	{id=22,image="daodan02",demage=10,hp=1000, weak1=1},	
-                          
-
-
-
+	{id=21,image="daodan03",demage=10,hp=6000, weak1=1},
+	
 }
 
 
