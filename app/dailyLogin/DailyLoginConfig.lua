@@ -4,27 +4,27 @@ local configs = {}
 
 configs["day1"] = {
 	type = "gold",
-	number = 1000,
+	number = 3000,
 }
 
 configs["day2"] = {
 	type = "lei",
-	number = 10,
+	number = 20,
 }
 
 configs["day3"] = {
-	type = "gold",
-	number = 5000
-}
-
-configs["day4"] = {
 	type = "jijia",
 	number = 1,
 }
 
+configs["day4"] = {
+	type = "gold",
+	number = 5000
+}
+
 configs["day5"] = {
-	type = "goldweapon",
-	number = 1,
+	type = "suipian",
+	id = 4,
 }
 
 configs["day6"] = {
@@ -33,8 +33,8 @@ configs["day6"] = {
 }
 
 configs["day7"] = {
-	type = "gold",
-	number = 10000,
+	type = "gun",
+	id = 4,
 }
 
 function DailyLoginConfig.getConfig(dailyID)

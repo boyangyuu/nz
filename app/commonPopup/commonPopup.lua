@@ -27,6 +27,9 @@ end)
 			 callfuncQuickInlay = handler(self,self.****),
 			 callfuncGoldWeapon = handler(self,self.****)},
 			 {opacity = 0})
+	style6:关闭按钮，确定按钮，输入框，激活码
+		ui:showPopup("commonPopup",
+			 {type = "style6"})
 ]]
 function commonPopup:ctor(properties)
 	self.commonPopModel = md:getInstance("commonPopModel")
@@ -181,6 +184,28 @@ function commonPopup:initUI(properties)
 	            return true
 	        elseif event.name=='ended' then
 	            self:onClickGoldWeapon()
+	        end
+	    end)
+    elseif typeName == "style6" then
+    	local content = cc.uiloader:seekNodeByName(self, "content")
+		content:setString(properties.content)
+	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
+	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
+    	btntrue:setTouchEnabled(true)
+    	btnfalse:setTouchEnabled(true)
+    	addBtnEventListener(btntrue, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then		
+		        self:onClickCofirm()
+
+	        end
+	    end)
+    	addBtnEventListener(btnfalse, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then		
+		        self:onClickClose()
 	        end
 	    end)
 	end
