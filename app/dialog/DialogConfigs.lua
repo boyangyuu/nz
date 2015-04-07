@@ -70,14 +70,6 @@ kDialogConfig["group1"]  = {
 			{role = "杰",imgname = "role_jie", msg = "太好了，我这就去镶嵌一下！", pos = "left"},
 		},	
 	},
-	level3_1 = {
-		forward = {
-			{role = "鬼眼",imgname = "role_guiyan", msg = "将敌人抵挡在基地外", pos = "right"},
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
-		},	
-	},
 	level4 = {
 		forward = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "敌人派出了一个巨大机械怪物-黑暗金刚！找到弱点，消灭它！", pos = "right"},
@@ -86,7 +78,17 @@ kDialogConfig["group1"]  = {
 			{role = "杰",imgname = "role_jie", msg = "明白了，镶嵌完毕", pos = "left"},
 		},
 	},
+
 	level5 = {
+		forward = {
+			{role = "鬼眼",imgname = "role_guiyan", msg = "将敌人抵挡在基地外", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，占据制高点，使用狙击枪秒杀他们！",pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "哈哈，用狙击枪还是看我的吧", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "切", pos = "left"},
+		},	
+	},
+
+	level6 = {
 		forward = {
 			{role = "杰",imgname = "role_jie",  msg = "啊！是你抓走了我师姐！！！！！鬼眼！你个叛徒！",pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，被发现也好，省的我费事了，都把命留下吧！", pos = "right"},
@@ -100,7 +102,7 @@ kDialogConfig["group1"]  = {
 			{role = "杰",imgname = "role_jie", msg = "非洲！？师姐要坚持住啊！！",  pos = "left"},
 		},
 	},
-	level6 = {
+	level7 = {
 		forward = {
 			{role = "杰",imgname = "role_jie", msg = "出来吧，鬼眼！我知道你在这！", pos = "left"},
 			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，可爱的小朋友，又追来了，我忙着哪，没工夫陪你玩哦。", pos = "right"},

@@ -90,6 +90,17 @@ function StartLayer:initUI()
            ui:showPopup("AboutPopup",{popupName = "bangzhu"},{anim = false})
         end
     end)
+
+    self.btnActivate:setTouchEnabled(true)
+    addBtnEventListener(self.btnActivate, function( event )
+        if event.name == "began" then
+            return true
+        elseif event.name == "ended" then 
+           ui:showPopup("commonPopup",
+             {type = "style6"},
+             {opacity = 0})
+        end
+    end)
 end
 
 function StartLayer:initMusicUI()
