@@ -106,6 +106,30 @@ local waves = {
 			{
 				time = 16,
 				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质4",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place10",
+					id = 5,
+				},
+			},
+			{
+				time = 16,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质4",     --  一组统一标示
+					type = "bangren",
+					placeName = "place10",
+					id = 16,
+				},
+			},
+			{
+				time = 17,
+				num = 1,
 				delay = {1},
 				pos = {230},
 				property = { 
@@ -130,25 +154,39 @@ local waves = {
 			},
 		},
 	},
+
 	
 	{
 		enemys = {
+
 			{
 				time = 2,
 				num = 1,
-				pos = {230},                               
-				delay = {0.4},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place10",
-					startState = "enterleft", 
-					lastTime = 7,                       -- 人质离开时间
-					                    			   -- 人质
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质1",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place11",
+					id = 5,
 				},
 			},
 			{
 				time = 2,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质1",     --  一组统一标示
+					type = "bangren",
+					placeName = "place11",
+					id = 6,
+				},
+			},	
+
+
+			{
+				time = 3,
 				num = 1,
 				delay = {0.1},
 				pos = {0},                                 --不用改
@@ -172,21 +210,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 3,
-				num = 1,
-				pos = {500},                               
-				delay = {0.5},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place11",
-					startState = "enterleft", 
-					lastTime = 7,                       -- 人质离开时间
-					                    			   -- 人质
-				},
-			},
-			{
-				time = 2,
+				time = 4,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -197,30 +221,7 @@ local waves = {
 					enemyId = 1,
 				},
 			},	
-			{
-				time = 4,
-				num = 4,
-				delay = {0.7,1.4, 2.1,2.8},
-				pos = {300,400,600,700},					
-				property = {
-					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},
-			{
-				time = 6,
-				num = 5,
-				delay = {0,0.7,1.4, 2.1,2.8},
-				pos = {300,500,550,600,1000},					
-				property = {
-					placeName = "place4",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
-				},
-			},
+
 			{
 				time = 7,
 				num = 1,
@@ -259,7 +260,19 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 10,
+				num = 4,
+				delay = {0.7,1.4, 2.1,2.8},
+				pos = {300,400,600,700},					
+				property = {
+					placeName = "place3",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},
+			{
+				time = 11,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -272,7 +285,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 12,
 				num = 1,
 				delay = {0.5},
 				pos = {45},
@@ -284,25 +297,48 @@ local waves = {
 					missileType = "lei",
 				},
 			},	
+			{
+				time = 13,
+				num = 5,
+				delay = {0,0.7,1.4, 2.1,2.8},
+				pos = {300,500,550,600,1000},					
+				property = {
+					placeName = "place4",  
+					type = "san",
+					id = 4,
+					enemyId = 1,
+				},
+			},
 		},
 	},
                                                                                        --第二波20个怪
 	{
 		enemys = {
-
 			{
 				time = 2,
-				num = 2,
-				pos = {230,850},                               
-				delay = {0.4,1.5,},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place10",
-					startState = "enterleft", 
-					lastTime = 5,                       -- 人质离开时间
+				num = 1,
+				delay = {0},
+				pos = {300},
+				property = {
+					renzhiName = "人质2",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place4",
+					id = 5,
 				},
 			},
+			{
+				time = 2,
+				num = 1,
+				delay = {0},
+				pos = {300},
+				property = {
+					renzhiName = "人质2",     --  一组统一标示
+					type = "bangren",
+					placeName = "place4",
+					id = 6,
+				},
+			},
+
 			{
 				time = 2.5,
 				num = 1,
@@ -322,20 +358,7 @@ local waves = {
 					},
 				},
 			},	
-			{
-				time = 3,
-				num = 2,
-				pos = {400,600},                               
-				delay = {0.2,2},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place11",
-					startState = "enterleft", 
-					lastTime = 5,                       -- 人质离开时间
-					                    			   -- 人质
-				},
-			},
+
 			{
 				time = 3.5,
 				num = 1,
@@ -377,6 +400,30 @@ local waves = {
 					type = "san",
 					id = 4,
 					enemyId = 1,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {960},
+				property = {
+					renzhiName = "人质3",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place10",
+					id = 5,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {960},
+				property = {
+					renzhiName = "人质3",     --  一组统一标示
+					type = "bangren",
+					placeName = "place10",
+					id = 6,
 				},
 			},
 			{
@@ -435,52 +482,21 @@ local enemys = {
 
 	--伞兵       --type = "san",
 	{id=4,image="sanbing01",demage=0,hp=327,
-	weak1=2},	                                                           
-
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=270,walkRate=180,walkCd=2,fireRate=180,fireCd=5,
 	weak1=2},
 
-    --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=4,hp=1,
-	weak1=1},	
+	--绑匪                                     140--左右移动距离       280--滚动距离
+	{id=5,image="tufeib",demage=4,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+	--被绑架人        --type = "bangren",
+	{id=6,image="hs", hp=1000, weak1=1},	 
 
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=3,hp=810,fireRate=180,fireCd=3,speed=60,
-	weak1=2},
-
-	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=4,hp=4050,fireRate=180,fireCd=4,speed=40,
-	weak1=2},
-
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=30,hp=405,fireRate=30,speed=120,
-	weak1=2},	
-
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 2.0,人质喊话cd
+	--女人质         type = "renzhi",                                             speakRate =120,speakCd = 2.0,人质喊话cd
 	{id=10,image="hs",demage=0,hp=1000,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
 	weak1=1},
 
-	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=6540, walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=5.0,
-	weak1=2,    award = 60},
-
-	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=6540,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=5.0,
-	weak1=2,    award = 60},
-
-	--金币绿气球   type = "jinbi",
-	{id=13,image="qiqiu03",hp=1,weak1=1,award = 9},	--award = 9   金币数量为9	
-
-	--金币蓝气球   type = "jinbi",
-	{id=14,image="qiqiu02",hp=1,weak1=1,award = 15},	--award = 15  金币数量为15
-
-	--金币黄气球   type = "jinbi",
-	{id=15,image="qiqiu01",hp=1,weak1=1,award = 30},	--award = 30  金币数量为30
-
 	--黄衣人质商人      type = "shangren",
-	{id=16,image="shangr_1",hp=1000, weak1=1},	--黄衣人质商人	                   
+	{id=16,image="shangr_1",hp=1000, weak1=1},	--黄衣人质商人	 
+
+                 
 
 
 	
@@ -497,10 +513,10 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.fightMode =  {
-		type 	  = "puTong",
+		-- type 	  = "puTong",
 
-		-- type 	  = "renZhi",
-		-- saveNums  = 4,                 --解救人质数量
+		type 	  = "renZhi",
+		saveNums  = 3,                 --解救人质数量
 
 		-- type 	  = "xianShi",
 		-- limitTime = 40,                   --限时模式时长
