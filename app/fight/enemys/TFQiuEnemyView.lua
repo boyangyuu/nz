@@ -15,6 +15,7 @@ function TFQiuEnemyView:ctor(property)
     TFQiuEnemyView.super.ctor(self, property) 
     self.posIndex = 0
     self.posDatas = property.data
+    self.isSaning = false
 end
 
 function TFQiuEnemyView:playStartState(state)
@@ -117,6 +118,11 @@ end
 
 function TFQiuEnemyView:playKill(event)
     TFQiuEnemyView.super.playKill(self, event)
+    if self.isSaning then 
+        self:setDeadDone()
+        return 
+    end
+
     self.armature:getAnimation():play("die" ,-1 , 1)
     
     --sound
@@ -130,6 +136,7 @@ function TFQiuEnemyView:playKill(event)
 end
 
 function TFQiuEnemyView:playSan()
+    self.isSaning = true
     self:setPositionY(display.height)
 
     --action
@@ -139,6 +146,11 @@ function TFQiuEnemyView:playSan()
     local time = distance / speed 
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
     
+    local function callfunc()
+        self.isSaning = false
+        self:playMoveToNext()
+    end
+
     local seq = cc.Sequence:create(action, 
         cc.CallFunc:create(handler(self, self.playMoveToNext)))    
     self:runAction(seq)

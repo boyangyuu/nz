@@ -34,6 +34,7 @@ function RootLayer:switchLayer(event)
     local loadingType = event.loadingType
     local layerCls   = event.layerCls
     local properties = event.properties
+
     if loadingType == "fight" or loadingType == "home" 
          or loadingType == "home_first" then 
         self.waitLayerCls        = layerCls
@@ -142,12 +143,24 @@ function RootLayer:addResHome()
     self:onloadDone()
 end
 
-function RootLayer:addResFight()
-    cc.FileUtils:getInstance():addSearchPath("res/commonPNG")    
+function RootLayer:addResFight() 
+    local gid, lid = self.waitLayerProperties["groupId"], self.waitLayerProperties["levelId"]
+
     self:addFrameRes("res/Fight/public/public0.plist", "res/Fight/public/public0.png")  
 
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
+
+    --enemys
+    local fightConfigs  = md:getInstance("FightConfigs")
+    local enemyImages = fightConfigs:getWaveImages(gid, lid)
+    for i,v in ipairs(enemyImages) do
+        local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
+        self:addArmatureRes(src)
+        local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
+        local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
+        self:addFrameRes(plist, png)        
+    end    
 
     local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
         "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw", "shiBaiTiShi"}
@@ -159,7 +172,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak", "dandao"}
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
@@ -198,12 +211,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)         
     end 
 
-    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.ExportJson"
-    self:addArmatureRes(ydfhsrc)
-    local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
-    local png   = "res/FightResult/anim/ydfh/ydfh0.png"
-    self:addFrameRes(plist, png)          
-
+    
     local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.ExportJson"
     self:addArmatureRes(bossjjsrc)
     self:addFrameRes("res/CommonPopup/animLayer/bossjj/bossjj0.plist", 

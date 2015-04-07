@@ -1,7 +1,6 @@
 
 
 local BaseBossView = import(".BaseBossView")
-local FightConfigs = import("..fightConfigs.FightConfigs")
 local SaosheBossView = class("SaosheBossView", BaseBossView)
 
 function SaosheBossView:ctor(property)

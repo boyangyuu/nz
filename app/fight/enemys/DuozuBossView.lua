@@ -1,6 +1,5 @@
 
 local BaseBossView = import(".BaseBossView")
-local FightConfigs = import("..fightConfigs.FightConfigs")
 local DuozuBossView = class("DuozuBossView", BaseBossView)
 
 function DuozuBossView:ctor(property)

@@ -38,8 +38,15 @@ function FightResultFailPopup:initUI()
 
     local armature = ccs.Armature:create("ydfh")
     armature:setPosition(180,60)
-     self.btnRevive:addChild(armature)
-    -- addChildCenter(armature,  self.btnRevive)
+    self.btnRevive:addChild(armature)
+
+    --add res
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.ExportJson"
+    manager:addArmatureFileInfo(ydfhsrc)
+    local plist = "res/FightResult/anim/ydfh/ydfh0.plist"
+    local png   = "res/FightResult/anim/ydfh/ydfh0.png"
+    display.addSpriteFrames(plist, png)
     armature:getAnimation():play("ydfh" , -1, 1)
 
     btnback:setTouchEnabled(true)

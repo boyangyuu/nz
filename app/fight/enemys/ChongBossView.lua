@@ -1,5 +1,4 @@
 local BaseBossView = import(".BaseBossView")
-local FightConfigs = import("..fightConfigs.FightConfigs")
 local ChongBossView = class("ChongBossView", BaseBossView)
 
 function ChongBossView:ctor(property)

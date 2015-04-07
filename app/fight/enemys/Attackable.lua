@@ -123,7 +123,6 @@ function Attackable:checkWeak(focusNode)
 	local targetData = {}
 	targetData.demage = self.hero:getDemage()	
 	while true do
-		
 		i = i + 1
 		local rangeStr = "weak"..i
 		local enemyRange, isValid = self:getRange(rangeStr)
@@ -387,15 +386,7 @@ function Attackable:getEnemyArmature()
     local imgName = config["image"]
 
     --isBoss
-    local armature
-    local manager = ccs.ArmatureDataManager:getInstance()
-    local src = "res/Fight/enemys/"..imgName.."/"..imgName..".ExportJson"
-    local plist = "res/Fight/enemys/"..imgName.."/"..imgName.."0.plist"
-    local png   = "res/Fight/enemys/"..imgName.."/"..imgName.."0.png" 
-    manager:addArmatureFileInfo(src)
-    display.addSpriteFrames(plist, png)    
-
-    armature = ccs.Armature:create(imgName)
+    local armature = ccs.Armature:create(imgName)
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     return armature		
 end

@@ -66,7 +66,7 @@ function Gun:justCooldownValue(value)
 	elseif 0.08 < value and value <= 0.1 then 
 		scale = 0.80 
 	elseif 0.06 < value and value <= 0.08 then 
-		scale = 0.77
+		scale = 0.75
 	elseif  value <= 0.06 then 
 		scale = 0.75
 	end

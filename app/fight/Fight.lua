@@ -84,8 +84,8 @@ function Fight:refreshUmFightTimesEvent()
     local fightedLid = data.user.fightedlevelId
 
     local fGid, fLid = self:getCurGroupAndLevel()    
-    local isUnFighted = fightedGid <= fGid 
-                and fightedLid < fLid
+    local isUnFighted = (fightedGid <= fGid and fightedLid < fLid) 
+                        or (fightedGid < fGid)
     local str = nil
     if isUnFighted then
         data.user.fightedGroupId = fGid

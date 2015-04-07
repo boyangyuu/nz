@@ -33,10 +33,6 @@ function BaseWave:getIsNotMoveMap()
 	return self.isNotMoveMap or false
 end
 
-function BaseWave:getRenzhiLimit()
-	return self.renzhiLimit
-end
-
 function BaseWave:getEnemyNumLimit()
 	return self.limit or 10
 end
