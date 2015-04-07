@@ -14,9 +14,13 @@ end)
 function GunView:ctor()
 	--instance
 	-- dump(properties, "GunView properties")
-	self.hero = md:getInstance("Hero")
+	self.hero  = md:getInstance("Hero")
 	self.inlay = md:getInstance("FightInlay")
 	self.isChanging = false
+	self.gun   = nil
+	self.jqk   = nil
+	self.qkzd = nil
+	self.dk    = nil
 	self:refreshGun()
 
 	--event
@@ -37,12 +41,21 @@ function GunView:fire()
 	--bullet
 	local num = self.gun:getCurBulletNum() - 1
 	self.gun:setCurBulletNum(num)
-	self.jqk   :setVisible(true)
-	self.jqkzd :setVisible(true)
-	self.dk    :setVisible(true)
-	self.jqk:getAnimation()	 :play("fire" , -1, 0)
-	self.jqkzd:getAnimation():play("qkzd" , -1, 0)
-	self.dk:getAnimation()	 :play("danke", -1, 0)
+	if self.jqk then 
+		self.jqk   :setVisible(true)
+		self.jqk:getAnimation()	 :play("fire" , -1, 0)
+	end
+
+	if self.qkzd then
+		self.qkzd :setVisible(true)
+		self.qkzd:getAnimation():play("qkzd" , -1, 0)
+	end
+
+	if self.dk then 
+		self.dk    :setVisible(true)
+		self.dk:getAnimation()	 :play("danke", -1, 0)
+	end
+
 	self.armature:getAnimation():play("fire" , -1, 0)	
 
 	--sound
@@ -52,14 +65,83 @@ function GunView:fire()
 	self.audioId =  audio.playSound(soundSrc,false)		
 end
 
+--hero层 发送换枪
+function GunView:refreshGun()
+	self.gun  = self.hero:getGun()
+	--clear
+	if self.armature then 
+		self.armature:removeFromParent() 
+	end
+
+	--gun
+	local config = self.gun:getConfig()
+	-- dump(config, "config")
+	
+	--armature
+	local animName = config.animName --动作特效
+    local src = "res/Fight/gunsAnim/"..animName.."/"..animName..".ExportJson"
+    local plist = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.plist"
+    local png   = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.png"
+    display.addSpriteFrames(plist, png)  
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)                
+
+	local armature = ccs.Armature:create(animName)
+    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+	self.armature = armature
+	self:playIdle()	
+	self:addChild(armature)
+
+	--isGold
+	local isNativeGold = self.inlay:getIsNativeGold()
+	local isGold = self.isGolding
+	self:setGoldGun(isGold)
+
+    local boneQk = armature:getBone("qk")
+    local posBone = boneQk:convertToWorldSpace(cc.p(0, 0))
+    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
+	local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+
+    --枪火
+    local jqkName = config.jqkName --机枪口特效
+    print("jqkName", jqkName)
+    if jqkName ~= "null" then 
+	    self.jqk = ccs.Armature:create(jqkName)
+	    self.jqk:setVisible(false)
+	    self.jqk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
+	    self.jqk:setPosition(destpos.x, destpos.y)
+	    armature:addChild(self.jqk, -1)
+	end
+
+    --枪火遮挡
+    local jqkzdName = config.jqkzdName
+    if jqkzdName ~= "null" then 
+	    self.qkzd = ccs.Armature:create(jqkzdName)
+	    self.qkzd:setVisible(false)
+	   	self.qkzd:setPosition(destpos.x, destpos.y)
+	    armature:addChild(self.qkzd , 1)
+	    self.qkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
+    end
+
+    --蛋壳
+    self:addDanke()
+end
+
 function GunView:onHeroFire(event)
 	self:fire()
 end
 
 function GunView:stopFire()
-	self.jqk  :setVisible(false)
-	self.jqkzd:setVisible(false)
-	self.dk   :setVisible(false)
+	if self.jqk then 
+		self.jqk :setVisible(false)
+	end
+	if self.qkzd then 
+		self.qkzd:setVisible(false)
+	end
+	if self.dk then
+		self.dk  :setVisible(false)
+	end
+
 	self:playIdle()
 end
 
@@ -137,69 +219,9 @@ function GunView:setCoolDown(time)
 	self.hero:setCooldown(time)
 end
 
---hero层 发送换枪
-function GunView:refreshGun()
-	
-	
-	print("refreshGun")
-	self.gun  = self.hero:getGun()
-	--clear
-	if self.armature then 
-		self.armature:removeFromParent() 
-	end
-
-	--gun
-	local config = self.gun:getConfig()
-	-- dump(config, "config")
-	
-	--armature
-	local animName = config.animName --动作特效
-    local src = "res/Fight/gunsAnim/"..animName.."/"..animName..".ExportJson"
-
-    local plist = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.plist"
-    local png   = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.png"
-    display.addSpriteFrames(plist, png)  
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)                
-
-	local armature = ccs.Armature:create(animName)
-    armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	self.armature = armature
-	self:playIdle()	
-	self:addChild(armature)
-
-	--isGold
-	local isNativeGold = self.inlay:getIsNativeGold()
-	local isGold = self.isGolding
-	self:setGoldGun(isGold)
-
-    --枪火 todo放在fp里
-    local jqkName = config.jqkName --机枪口特效
-    self.jqk = ccs.Armature:create(jqkName)
-    self.jqk:setVisible(false)
-    self.jqk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
-    local boneQk = armature:getBone("qk")
-    local posBone = boneQk:convertToWorldSpace(cc.p(0, 0))
-    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
-	local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
-    self.jqk:setPosition(destpos.x, destpos.y)
-    armature:addChild(self.jqk, -1)
-
-    -- --枪火遮挡
-    self.jqkzd = ccs.Armature:create(config.jqkzdName)
-    self.jqkzd:setVisible(false)
-   	self.jqkzd:setPosition(destpos.x, destpos.y)
-    armature:addChild(self.jqkzd , 1)
-    self.jqkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
-    
-    --蛋壳
-    self:addDanke()
-end
-
 function GunView:addDanke()
 	self.dk = ccs.Armature:create("danke")
 	self.dk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
-	--todo
 
 	--special check
 	local config = self.gun:getConfig()
