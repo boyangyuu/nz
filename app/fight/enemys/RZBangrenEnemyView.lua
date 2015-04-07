@@ -56,7 +56,7 @@ end
 function RZBangrenEnemyView:playRun()
     local posInMapx = self:getPosInMap().x
     local direct = posInMapx <= display.width/2 and -1 or 1
-    local speed = define.kTufeiSpeed 
+    local speed = define.kBangrenSpeed 
     local width ,time
     if direct == -1 then 
         width = -posInMapx - 300

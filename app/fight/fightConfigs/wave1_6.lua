@@ -264,7 +264,7 @@ local enemys = {
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage= 8 ,hp= 1000 },
+	{id=18,image="feibiao",demage= 7 ,hp= 1000 },
 
 	-- 金武箱子奖励  type = "awardSan",
 	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
