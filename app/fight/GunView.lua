@@ -67,13 +67,17 @@ end
 
 --hero层 发送换枪
 function GunView:refreshGun()
-	self.gun  = self.hero:getGun()
 	--clear
 	if self.armature then 
 		self.armature:removeFromParent() 
-	end
+	end	
+	self.gun   = nil
+	self.jqk   = nil
+	self.qkzd = nil
+	self.dk    = nil
 
 	--gun
+	self.gun  = self.hero:getGun()
 	local config = self.gun:getConfig()
 	-- dump(config, "config")
 	
@@ -104,7 +108,6 @@ function GunView:refreshGun()
 
     --枪火
     local jqkName = config.jqkName --机枪口特效
-    print("jqkName", jqkName)
     if jqkName ~= "null" then 
 	    self.jqk = ccs.Armature:create(jqkName)
 	    self.jqk:setVisible(false)
