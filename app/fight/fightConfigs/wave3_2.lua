@@ -6,9 +6,9 @@ local waves = {
 		enemys = { 
 			{
 				time = 2,
-				num = 2,
-				pos = {200,600},
-				delay = {0,0.5},                            -- 吉普车
+				num = 1,
+				pos = {400,},
+				delay = {0,},                            -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
@@ -172,9 +172,9 @@ local waves = {
 		enemys = { 
 			{
 				time = 2,
-				num = 2,
-				pos = {200,550},
-				delay = {0.5,1},                            -- 吉普车
+				num = 1,
+				pos = {550},
+				delay = {0.5,},                            -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
@@ -413,11 +413,11 @@ local enemys = {
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=12,hp=30000,fireRate=180,fireCd=4,speed=80,
+	{id=7,image="jinzhanb",demage=12,hp=25000,fireRate=180,fireCd=4,speed=80,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=70000,fireRate=180,fireCd=5,speed=60,
+	{id=8,image="dunbing",demage=15,hp=50000,fireRate=180,fireCd=5,speed=60,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
@@ -430,11 +430,11 @@ local enemys = {
 	weak1=2},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=100000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=11,image="feiji",demage=0,hp=80000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=80000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--金币绿气球   type = "jinbi",
@@ -450,14 +450,14 @@ local enemys = {
 	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=35,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=35,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖
 	{id=18,image="feibiao",demage=10,hp=5000},                             
 
 	--铁球
-	{id=19,image="tieqiu",demage=20,hp=8000},
+	{id=19,image="tieqiu",demage=20,hp=9000},
 
 	--小蜘蛛   --type = "bao",
 	{id=20,image="xiaozz",demage=15,hp=5000, speed=150,weak1=1}, 
@@ -534,34 +534,38 @@ local bosses = {
 
 		feibiao1 = {     --srcPoses= 初始位置       --offsetPoses =偏移                   --暴雨梨花针1
 			srcPoses = {
-						cc.p(0, 150), cc.p(-130, 130), cc.p(-150, 0), cc.p(-130, -130),
-						cc.p(0, -150), cc.p(130, -130), cc.p(150, 0), cc.p(130, 130),            
+						cc.p(0, 150), cc.p(-105, 105), cc.p(-150, 0), cc.p(-105, -105),
+						cc.p(0, -150), cc.p(105, -105), cc.p(150, 0), cc.p(105, 105), 
+						cc.p(0, 150), cc.p(-105, 105), cc.p(-150, 0), cc.p(-105, -105),           
 			}, 
 			offsetPoses = {
-			            cc.p(0, 300), cc.p(-260, 260), cc.p(-300, 0), cc.p(-260, -260),
-						cc.p(0, -300), cc.p(260, -260), cc.p(300, 0), cc.p(260, 260),
+			            cc.p(0, 200), cc.p(-140, 140), cc.p(-200, 0), cc.p(-140, -140),
+						cc.p(0, -200), cc.p(140, -140), cc.p(200, 0), cc.p(140, 140),
+						cc.p(0, 200), cc.p(-140, 140), cc.p(-200, 0), cc.p(-140, -140),
 			},               
 		},
 
 		feibiao2 = {
 			srcPoses = {
-						cc.p(150, 0), cc.p(130, 130), cc.p(0, -150),  cc.p(-130, -130), 
-						cc.p(-150, 0),  cc.p(-130, 130), cc.p(0, 150), cc.p(130, -130),      
+						cc.p(150, 0), cc.p(105, 105), cc.p(0, -150),  cc.p(-105, -105), 
+						cc.p(-150, 0),  cc.p(-105, 105), cc.p(0, 150), cc.p(105, -105), 
+						cc.p(150, 0), cc.p(105, 105), cc.p(0, -150),  cc.p(-105, -105),      
 			}, 
 			offsetPoses = {
-			            cc.p(300, 0), cc.p(260, -260), cc.p(0, -300), cc.p(-260, -260),
-			            cc.p(-300, 0), cc.p(-260, 260), cc.p(0, 300), cc.p(260, 260),			
+			            cc.p(210, 0), cc.p(147, -147), cc.p(0, -210), cc.p(-147, -147),
+			            cc.p(-210, 0), cc.p(-147, 147), cc.p(0, 210), cc.p(147, 147),
+			            cc.p(210, 0), cc.p(147, -147), cc.p(0, -210), cc.p(-147, -147),			
 			},               
 		},
 
 		feibiao3 = {
 			srcPoses = {
-						cc.p(-200, 50), cc.p(-100, 50), cc.p(0, 50), cc.p(100, 50), cc.p(200, 50),
-						cc.p(-200, -50), cc.p(-100, -50), cc.p(0, -50), cc.p(100, -50), cc.p(200, -50),       
+						cc.p(-250, 50), cc.p(-200, 50), cc.p(-100, 50), cc.p(0, 50), cc.p(100, 50), cc.p(200, 50),
+						cc.p(-250, -50),cc.p(-200, -50), cc.p(-100, -50), cc.p(0, -50), cc.p(100, -50), cc.p(200, -50),       
 			}, 
 			offsetPoses = {
-			            cc.p(-250, 200), cc.p(-150, 200), cc.p(50, 200), cc.p(150, 200), cc.p(250, 200),
-						cc.p(-250, -200), cc.p(-150, -200), cc.p(50, -200), cc.p(150, -200), cc.p(250, -200),
+			            cc.p(-300, 200), cc.p(-250, 200), cc.p(-150, 200), cc.p(50, 200), cc.p(150, 200), cc.p(250, 200),
+						cc.p(-300, -200),cc.p(-250, -200), cc.p(-150, -200), cc.p(50, -200), cc.p(150, -200), cc.p(250, -200),
 			}, 
 		},
 

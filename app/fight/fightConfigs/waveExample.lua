@@ -11,7 +11,7 @@ local waveClass = class("waveExample", BaseWave)
 		property = { 
 			placeName = "place6",
 			type = "bangfei",
-			renzhiName = "1",
+			renzhiName = "人质1",      --  一组统一标示
 			id = 1,
 		},
 	},
@@ -23,18 +23,17 @@ local waveClass = class("waveExample", BaseWave)
 		property = { 
 			placeName = "place6",
 			type = "bangren",
-			renzhiName = "1",
+			renzhiName = "人质1",     --  一组统一标示
 			id = 4,
 		},
 	},
 
 	
-	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="tufeib",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
-	weak1=3},
+	--绑匪                                     140--左右移动距离       280--滚动距离
+	{id=1,image="tufeib",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3, weak1=3},
 
-	--绑人         --type = "bangren",
-	{id=4,image="hs",demage=2,hp=111, weak1=1},	
+	--被绑架人        --type = "bangren",
+	{id=4,image="hs", hp=111, weak1=1},	
 
 ---------- 逃犯配置 -----------------------------
 	{ 
@@ -46,13 +45,17 @@ local waveClass = class("waveExample", BaseWave)
 			type = "taofan_qiu",
 			placeName = "place6",
 			id = 4,
-			startState = "san",  --伞
+			startState = "san",  --从伞进入
 			data = {
-				direct = "left",
+				direct = "left", --向左逃跑
 				{
 					pos = -200,  --第一次藏身处 移动 -200
 					time = 3,	 --隐藏时间 3s													
-				},						
+				},	
+				{
+					pos = -600,  --第2次藏身处 移动 - 600
+					time = 4,	 --隐藏时间 4s													
+				},											
 			},					
 		},
 	},
@@ -65,9 +68,9 @@ local waveClass = class("waveExample", BaseWave)
 			type = "taofan_qiu", 
 			placeName = "place5",
 			id = 4,
-			startState = "enterleft",
+			startState = "enterleft", --从屏幕左侧进入
 			data = {
-				direct = "right",
+				direct = "right", --向右逃跑
 				{
 					pos = 300,  --第一次藏身处 移动 600
 					time = 3,   --隐藏时间 3s	
@@ -83,9 +86,8 @@ local waveClass = class("waveExample", BaseWave)
 		},
 	},	
 
-	--囚犯            --startState = "san",
-	{id=4,image="qiufan",demage=21,hp=11,
-	weak1=1},	
+	--囚犯            type = "taofan_qiu",
+	{id=4,image="qiufan",demage=21,hp=11, weak1=1},	
 
 
 

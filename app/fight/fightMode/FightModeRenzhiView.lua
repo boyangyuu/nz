@@ -51,7 +51,7 @@ end
 
 function FightModeRenzhiView:checkRenzhiLimit()
 	if self.curSaveNum >= self.modeConfig.saveNums then 
-		self.fightMode:willWin()
+		self.fightMode:willWin({type = self.fightMode.kModeTypes["renZhi"]})
 	end
 end
 

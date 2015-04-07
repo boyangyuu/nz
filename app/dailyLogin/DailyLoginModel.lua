@@ -81,6 +81,12 @@ function  DailyLoginModel:setGift(dailyID)
 		InlayModel:buyGoldsInlay(giftInfo["number"])
 		um:bonusProps("黄金武器", giftInfo["number"], 0, 3)
 		return true
+	elseif giftInfo["type"] == "suipian" then
+		local levelDetailModel = md:getInstance("LevelDetailModel")
+		levelDetailModel:setsuipian(giftInfo["id"])
+	elseif giftInfo["type"] == "gun" then
+		local weaponListModel = md:getInstance("WeaponListModel")
+		weaponListModel:buyWeapon(giftInfo["id"])
 	end
 	return false
 end
