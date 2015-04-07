@@ -111,7 +111,7 @@ local waves = {
 				pos = {470,600,670,750,820},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -148,7 +148,7 @@ local waves = {
 				pos = {680,750,810,900,1000},					
 				property = {
 					placeName = "place4",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},

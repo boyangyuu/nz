@@ -139,7 +139,7 @@ local waves = {
 				pos = {300,350,400,600},					
 				property = {
 					placeName = "place2",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -151,7 +151,7 @@ local waves = {
 				pos = {300,400,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -163,7 +163,7 @@ local waves = {
 				pos = {300,500,550,600,900},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -274,7 +274,7 @@ local waves = {
 				pos = {300,350,400,600},					
 				property = {
 					placeName = "place2",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -286,7 +286,7 @@ local waves = {
 				pos = {300,400,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -298,7 +298,7 @@ local waves = {
 				pos = {300,500,550,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -392,7 +392,7 @@ local waves = {
 				pos = {300,350,400,600},					
 				property = {
 					placeName = "place2",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -404,7 +404,7 @@ local waves = {
 				pos = {300,400,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
@@ -416,7 +416,7 @@ local waves = {
 				pos = {300,500,550,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},

@@ -53,7 +53,7 @@ local waves = {
 				delay = {0,0.7,2.1,1.4,2.8,0.7,1.7,1,3,3.5},
 				property = {
 					placeName = "place2",
-					type = "common"
+					type = "common",
 					startState = "san",
 					id = 1,
 				},
