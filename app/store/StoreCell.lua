@@ -94,6 +94,18 @@ function StoreCell:initCellUI()
     -- btnarmature:setScale(1.2)
     self.btnbuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
+
+    local sctbsrc = "res/Store/shangchengz_tb/shangchengz_tb.ExportJson"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(sctbsrc)
+    local plist = "res/Store/shangchengz_tb/shangchengz_tb0.plist"
+    local png = "res/Store/shangchengz_tb/shangchengz_tb0.png"
+    display.addSpriteFrames(plist,png)
+
+    local armature = ccs.Armature:create("shangchengz_tb")
+    armature:setPosition(-230,0)
+    self:addChild(armature)
+    armature:getAnimation():play("die" , -1, 1)
 end
 
 function StoreCell:initCellData()
