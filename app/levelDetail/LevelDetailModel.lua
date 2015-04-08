@@ -21,8 +21,8 @@ function LevelDetailModel:initConfigTable()
 end
 
 function LevelDetailModel:getConfig(groupId,levelId)
-	print("groupId", groupId)
-	print("levelId", levelId)
+	-- print("groupId", groupId)
+	-- print("levelId", levelId)
 	assert(groupId and levelId, "param is nil")
 	local config = nil
 	local records = getRecordFromTable(self.config, "groupId", groupId)

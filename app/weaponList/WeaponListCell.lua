@@ -9,7 +9,6 @@ local WeaponListCell = class("listCell",  function()
 end)
 
 function WeaponListCell:ctor(properties)
-	-- local weaponRecord = properties.weaponRecord
     self.weaponListModel = md:getInstance("WeaponListModel")
     self.id = properties.weaponRecord["id"]
 	self:initCellUI(properties)
@@ -50,8 +49,6 @@ function WeaponListCell:setSelected(isSelected)
 		self.panlwanggekuangtiao:setColor(Color_RED)
 		self:setOwned(self.id)
 	end
-	-- seekNodeByName(parent, name)
-	-- visiable
 end
 
 function WeaponListCell:setOwned()

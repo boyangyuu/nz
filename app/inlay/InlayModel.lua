@@ -1,6 +1,9 @@
 
 local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
+--events
+InlayModel.REFRESH_INLAY_EVENT = "REFRESH_INLAY_EVENT"
+
 function InlayModel:ctor(properties, events, callbacks)
 	InlayModel.super.ctor(self, properties)
 	self:initConfigTable()
@@ -30,17 +33,16 @@ function InlayModel:getInlayNum(inlayid)
 	end
 end
 
-function InlayModel:refreshInfo(typename,isall)
-	self:dispatchEvent({name = "REFRESH_INLAY_EVENT",typename = typename,isall = isall})
+function InlayModel:refreshInfo(typeName, isAll)
+	self:dispatchEvent({name = InlayModel.REFRESH_INLAY_EVENT, typeName = typeName
+		, isAll = isAll})
 end
 
 function InlayModel:buyGoldsInlay(buynumber)
-	-- dump(buynumber)
 	local goldtable = self:getConfigTable("property", 4)
 	for k,v in pairs(goldtable) do
 		self:buyInlay(v["id"],buynumber)
 	end
-	-- self:refreshInfo(typename)
 end
 
 function InlayModel:buyInlay(inlayid,buyNum)
@@ -66,7 +68,6 @@ function InlayModel:buyInlay(inlayid,buyNum)
 	    table.insert(data.inlay.bags, inlay)
 	end
     setUserData(data)
-	-- self:refreshInfo(self:getInlayType(inlayid))
 end
 
 function InlayModel:equipInlay(inlayid,isNotRefresh)
@@ -179,7 +180,7 @@ function InlayModel:equipAllInlays()
 			self:equipInlay(v,true)
 		end
 	end
-	self:refreshInfo("speed",true)
+	self:refreshInfo("speed", true)
 end
 
 function InlayModel:equipAllBestInlays(table)
