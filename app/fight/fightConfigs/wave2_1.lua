@@ -4,22 +4,9 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
+
 			{
-				descId = "zpbing",               --简介
 				time = 2,
-				num = 1,
-				delay = {4},
-				pos = {370},
-				property = {
-					placeName = "place13",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},
-			},
-			{
-				time = 8,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -33,7 +20,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 3,
 				num = 2,
 				delay = {0.5,1.6},
 				pos = {250,560},
@@ -47,7 +34,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 4,	
 				num = 2,
 				pos = {250,450},
 				delay = {0,1.5,0.8},
@@ -55,6 +42,32 @@ local waves = {
 					placeName = "place3",
 					startState = "rollright",
 					id = 1,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0.5},
+				pos = {200},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+							direct = "right", --向右逃跑
+								{
+								pos = 300,  --第一次藏身处 移动 600
+								time = 3,   --隐藏时间 3s	
+							},						
+						},	
+					data = {
+							direct = "right",
+								{
+								pos = 300,  --第一次藏身处 移动 200
+								time = 2,   --隐藏时间 3s	
+						},						
+					},									
 				},
 			},
 			{
@@ -228,15 +241,15 @@ local waves = {
 					data = {
 							direct = "right", --向右逃跑
 								{
-								pos = 300,  --第一次藏身处 移动 600
-								time = 3,   --隐藏时间 3s	
+								pos = 500,  --第一次藏身处 移动 600
+								time = 2,   --隐藏时间 3s	
 							},						
 						},	
 					data = {
 							direct = "right",
 								{
-								pos = 200,  --第一次藏身处 移动 200
-								time = 3,   --隐藏时间 3s	
+								pos = 800,  --第一次藏身处 移动 200
+								time = 2,   --隐藏时间 3s	
 						},						
 					},									
 				},
@@ -300,14 +313,14 @@ local waves = {
 					data = {
 							direct = "left", --向右逃跑
 								{
-								pos = 300,  --第一次藏身处 移动 600
+								pos = 400,  --第一次藏身处 移动 600
 								time = 2,   --隐藏时间 3s	
 							},						
 						},	
 					data = {
 							direct = "left",
 								{
-								pos = 200,  --第一次藏身处 移动 200
+								pos = 700,  --第一次藏身处 移动 200
 								time = 2,   --隐藏时间 3s	
 						},						
 					},									
@@ -529,7 +542,7 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=21,hp=11, weak1=1},
+	{id=4,image="qiufan",demage=21,hp=5000, weak1=1},
 
                                                           
 	--导弹兵      --type = "dao",
