@@ -96,23 +96,21 @@ function Attackable:checkBody(focusNode)
 	local targetData = {}
 	targetData.demage = self.hero:getDemage()		
 	local i = 0
-	while true do
-	
+	while i < 5 do
 		i = i + 1
 		local rangeStr = "body"..i
-		-- print("rangeStr", rangeStr)
 		local enemyRange = self:getRange(rangeStr)
-		if enemyRange == nil then break end 	
-		local isInRange = self:rectIntersectsRectInWorld(focusNode,
-				 enemyRange)
-		-- print(isInRange, "isInRange")
-		if isInRange then 
-			local isHited = isInRange 
-			targetData.demageScale = 1.0
-			targetData.demageType = "body"
-			targetData.enemy = self
-			return isHited,  targetData
-		end
+		if enemyRange then  	
+			local isInRange = self:rectIntersectsRectInWorld(focusNode,
+					 enemyRange)
+			if isInRange then 
+				local isHited = isInRange 
+				targetData.demageScale = 1.0
+				targetData.demageType = "body"
+				targetData.enemy = self
+				return isHited,  targetData
+			end
+		end 
 	end		
 	return false, nil
 end
@@ -122,22 +120,21 @@ function Attackable:checkWeak(focusNode)
 	local i = 0
 	local targetData = {}
 	targetData.demage = self.hero:getDemage()	
-	while true do
+	while i < 5 do
 		i = i + 1
 		local rangeStr = "weak"..i
 		local enemyRange, isValid = self:getRange(rangeStr)
-		if enemyRange == nil then break end 
-	
-		local isInRange = self:rectIntersectsRectInWorld(focusNode,
-				 enemyRange)
-		if isInRange and isValid then 
-			local isHited = isInRange 
-			targetData.demageScale = self.enemy:getWeakScale(rangeStr)
-			-- print("targetData.demageScale", targetData.demageScale)
-			targetData.demageType = "head"
-			targetData.enemy = self
-			return isHited,  targetData
-		end
+		if enemyRange then  
+			local isInRange = self:rectIntersectsRectInWorld(focusNode,
+					 enemyRange)
+			if isInRange and isValid then 
+				local isHited = isInRange 
+				targetData.demageScale = self.enemy:getWeakScale(rangeStr)
+				targetData.demageType = "head"
+				targetData.enemy = self
+				return isHited,  targetData
+			end
+		end 
 	end	
 	return false, nil
 end
