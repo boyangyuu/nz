@@ -122,6 +122,12 @@ end
 function BaseEnemyView:playFire()
 	self.armature:getAnimation():play("fire" , -1, 1) 
 	self.enemy:hit(self.hero)
+
+	--effect dandao
+	local map = md:getInstance("Map")
+	local pWorld = self:getRange("weak1"):convertToWorldSpace(cc.p(0,0))
+	map:dispatchEvent({name = map.EFFECT_DANDAO_EVENT, enemyPos = 
+		pWorld})
 end
 
 function BaseEnemyView:playWalk()

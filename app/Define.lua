@@ -47,7 +47,7 @@ Define.kTufeiSpeed				= 200	   --行走速度
 Define.kTufeiWalkTime			= 0.6      --行走时间
 
 --人质 被绑架的人
-Define.kBangrenSpeed			= 600	   --逃跑速度
+Define.kBangrenSpeed			= 200	   --逃跑速度
 
 --囚犯兵
 Define.kqQufanSpeed             = 300       --逃跑速度
