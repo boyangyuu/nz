@@ -192,20 +192,56 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			{
-				time = 3,
-				num = 1,
-				delay = {0.5},
-				pos = {650},
+			{ 
+				time = 1,
+				num = 3,
+				delay = {0,0.7,1.4},
+				pos = {400,600,800},
 				property = { 
+					type = "taofan_qiu",
 					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "left", --向左逃跑
+						{
+							pos = -200,  --第一次藏身处 移动 -200 
+							time = 3,	 --隐藏时间 3s													
+						},	
+						{
+							pos = -600,  --第2次藏身处 移动 - 600
+							time = 4,	 --隐藏时间 4s																							
+						},					
+					},
 				},
 			},
+			{
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {335},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+							direct = "right", --向右逃跑
+								{
+								pos = 300,  --第一次藏身处 移动 600
+								time = 3,   --隐藏时间 3s	
+							},						
+						},	
+					data = {
+							direct = "right",
+								{
+								pos = 200,  --第一次藏身处 移动 200
+								time = 3,   --隐藏时间 3s	
+						},						
+					},									
+				},
+			},
+
 			{
 				time = 3,	
 				num = 3,
@@ -249,6 +285,32 @@ local waves = {
 					placeName = "place4", 
 					startState = "rollleft",
 					id = 1,
+				},
+			},
+			{
+				time = 7,
+				num = 1,
+				delay = {0.5},
+				pos = {335},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterright", --从屏幕左侧进入
+					data = {
+							direct = "left", --向右逃跑
+								{
+								pos = 300,  --第一次藏身处 移动 600
+								time = 2,   --隐藏时间 3s	
+							},						
+						},	
+					data = {
+							direct = "left",
+								{
+								pos = 200,  --第一次藏身处 移动 200
+								time = 2,   --隐藏时间 3s	
+						},						
+					},									
 				},
 			},
 			{
@@ -466,6 +528,9 @@ local enemys = {
 	{id=3,image="shoulei",demage=8,hp=1,
 	weak1=1},
 
+	--囚犯            type = "taofan_qiu",
+	{id=4,image="qiufan",demage=21,hp=11, weak1=1},
+
                                                           
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
@@ -491,7 +556,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.fightMode =  {
-		type 	  = "puTong",
+		-- type 	  = "puTong",
 
 		-- type 	  = "renZhi",
 		-- saveNums  = 4,                 --解救人质数量
@@ -499,8 +564,8 @@ function waveClass:ctor()
 		-- type 	  = "xianShi",
 		-- limitTime = 60,                   --限时模式时长
 
-		-- type 	  = "taoFan"
-		-- limitNums = 5,                      --逃跑逃犯数量
+		type 	  = "taoFan",
+		limitNums = 5,                      --逃跑逃犯数量
 	}
 
 end

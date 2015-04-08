@@ -42,7 +42,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 11,
 				num = 1,
 				delay = {0},
 				pos = {370},
@@ -54,7 +54,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 11,
 				num = 1,
 				delay = {0},
 				pos = {370},
@@ -63,21 +63,6 @@ local waves = {
 					type = "bangren",
 					placeName = "place9",
 					id = 8,
-				},
-			},
-			{
-				
-				time = 11,
-				num = 1,
-				delay = {0},
-				pos = {50},
-				property = {
-					placeName = "place10", 
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-					startState = "",
 				},
 			},
 			{
@@ -94,9 +79,9 @@ local waves = {
 			{
 				
 				time = 17,
-				num = 2,
-				delay = {0.3,1.6},
-				pos = {90,280},
+				num = 1,
+				delay = {0.3,},
+				pos = {280},
 				property = {
 					placeName = "place16",
 					id = 5,
@@ -116,7 +101,7 @@ local waves = {
 					id = 2,
 					type = "dao",
 					missileId = 3,
-					missileType = "lei",                                         --10
+					missileType = "lei",                                         --8
 				},
 			},	
 		},
@@ -128,7 +113,7 @@ local waves = {
 			{
 				time = 3,
 				num = 1,
-				delay = {4},
+				delay = {0},
 				pos = {500},
 				property = {
 					placeName = "place11",  
@@ -180,27 +165,26 @@ local waves = {
 				delay = {0},
 				pos = {666},
 				property = {
-					placeName = "place5",  
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-					startState = "rollright",
+					renzhiName = "人质2",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place5",
+					id = 7,
+				},
+			},
+			{
+				time = 15,
+				num = 1,
+				delay = {0},
+				pos = {666},
+				property = {
+					renzhiName = "人质2",     --  一组统一标示
+					type = "bangren",
+					placeName = "place5",
+					id = 8,
 				},
 			},
 			{
 				time = 18,
-				num = 1,
-				delay = {0},
-				pos = {600},
-				property = {
-					placeName = "place5",  
-					id = 1,
-					startState = "rollright",
-				},
-			},
-			{
-				time = 21,
 				num = 1,
 				delay = {0},
 				pos = {95},
@@ -211,7 +195,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 21,
 				num = 1,
 				delay = {0.4},
 				pos = {195},
@@ -225,7 +209,7 @@ local waves = {
 				},
 			}, 
 			{
-				time = 27,
+				time = 24,
 				num = 1,
 				delay = {0.4},
 				pos = {80},
@@ -235,7 +219,7 @@ local waves = {
 				},
 			}, 
 			{
-				time = 30,
+				time = 27,
 				num = 1,
 				delay = {0},
 				pos = {500},
@@ -281,6 +265,30 @@ local waves = {
 				},
 			},
 			{
+				time = 5,
+				num = 1,
+				delay = {0},
+				pos = {570},
+				property = {
+					renzhiName = "人质3",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place3",
+					id = 7,
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				delay = {0},
+				pos = {570},
+				property = {
+					renzhiName = "人质3",     --  一组统一标示
+					type = "bangren",
+					placeName = "place3",
+					id = 8,
+				},
+			},
+			{
 				time = 10,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
@@ -294,9 +302,9 @@ local waves = {
 			},	
 			{
 				time = 15,
-				num = 5,
-				delay = {0,0.7,1.4, 2.1,2.8},
-				pos = {380,490,570,660,700},					
+				num = 3,
+				delay = {0, 1.4, 2.8},
+				pos = {380,570,700},					
 				property = {
 					placeName = "place9",  
 					type = "common",
