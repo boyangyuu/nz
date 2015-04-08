@@ -63,7 +63,7 @@ local waveClass = class("waveExample", BaseWave)
 		time = 1,
 		num = 1,
 		delay = {0.5},
-		pos = {335},
+		pos = {0},
 		property = {
 			type = "taofan_qiu", 
 			placeName = "place5",
@@ -75,9 +75,6 @@ local waveClass = class("waveExample", BaseWave)
 					pos = 300,  --第一次藏身处 移动 600
 					time = 3,   --隐藏时间 3s	
 				},						
-			},	
-			data = {
-				direct = "right",
 				{
 					pos = 200,  --第一次藏身处 移动 200
 					time = 3,   --隐藏时间 3s	
