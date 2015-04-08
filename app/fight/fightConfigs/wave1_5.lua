@@ -60,9 +60,23 @@ local waves = {
 	},
 	{
 		enemys = {
+			{
+				descId = "zpbing",               --简介
+				time = 2,
+				num = 1,
+				delay = {4},
+				pos = {450},
+				property = {
+					placeName = "place11",  
+					type = "dao",
+					id = 2,
+					missileId = 3,
+					missileType = "daodan",
+				},
+			},
 			
 			{
-				time = 3,
+				time = 8,
 				num = 1,
 				delay = {0},
 				pos = {50},
@@ -75,7 +89,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 11,
 				num = 1,
 				delay = {0},
 				pos = {116},
@@ -86,7 +100,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 14,
 				num = 1,
 				delay = {0},
 				pos = {100},
@@ -97,7 +111,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 17,
 				num = 1,
 				delay = {0},
 				pos = {666},
@@ -111,7 +125,7 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 20,
 				num = 1,
 				delay = {0},
 				pos = {760},
@@ -122,7 +136,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,
+				time = 23,
 				num = 1,
 				delay = {0},
 				pos = {570},
@@ -133,7 +147,7 @@ local waves = {
 				},
 			},
 			{
-				time = 19,
+				time = 26,
 				num = 1,
 				delay = {0},
 				pos = {650},
@@ -144,7 +158,7 @@ local waves = {
 				},
 			},
 			{
-				time = 20,
+				time = 30,
 				num = 1,
 				delay = {0},
 				pos = {50},
@@ -156,46 +170,27 @@ local waves = {
 			},
 		},
 	}, 
-	-- {
-	-- 	enemys = {
-	-- 		{
-	-- 			descId = "zpbing",               --简介
-	-- 			time = 3,
-	-- 			num = 1,
-	-- 			delay = {4},
-	-- 			pos = {500},
-	-- 			property = {
-	-- 				placeName = "place11",  
-	-- 				type = "dao",
-	-- 				id = 2,
-	-- 				missileId = 3,
-	-- 				missileType = "daodan",
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
 
 }
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4, weak1=3},
+
+	--导弹兵      --type = "dao",
+	{id=2,image="zpbing",demage=0,hp=700,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
 	weak1=3},
 
-	--导弹兵
-	{id=2,image="zpbing",demage=0,hp=1150,walkRate=120,walkCd=2.0,fireRate=180,fireCd=4,
-	weak1=3},		
-
-	--导弹
-	{id=3,image="daodan",demage=8,hp=1,
-	weak1=3},
+    --导弹          --missileType = "daodan",
+	{id=3,image="daodan",demage=10,hp=1,
+	weak1=1},
 
 	--手雷兵
-	{id=4,image="shouleib",demage=0,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=5,
-	weak1=3},	
+	{id=4,image="shouleib",demage=0,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=5, weak1=3},	
+
 	--手雷
-	{id=5,image="shoulei",demage=4,hp=1,
-	weak1=3,},	
+	{id=5,image="shoulei",demage=4,hp=1, weak1=3,},
+		
 }
 local mapId = "map_1_4"
 

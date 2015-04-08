@@ -137,9 +137,9 @@ local waves = {
 				pos = {80,150,210},
 				delay = {0,0.5,1},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place1",
 				},
 			},	
@@ -149,9 +149,9 @@ local waves = {
 				pos = {600},
 				delay = {0},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place6",
 				},
 			},
@@ -161,9 +161,9 @@ local waves = {
 				pos = {330,420},
 				delay = {0,0.8},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place2",
 				},
 			},
@@ -173,9 +173,9 @@ local waves = {
 				pos = {980,1050},
 				delay = {0,0.8},
 				property = { 
-					type = "san",
-					id = 3,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place5",
 				},
 			},												
@@ -468,15 +468,7 @@ local enemys = {
 
 	--近战兵
 	{id=2,image="jinzhanb",demage=3,hp=585,fireRate=180,fireCd=3,speed=40,
-		weak1=3},
-
-	--伞兵
-	{id=3,image="sanbing01",demage=0,hp=195,
-	weak1=3},
-
-	--自爆兵
-	{id=4,image="zibaob",demage=10,hp=400,fireRate=100,fireCd=4,speed=120,
-	weak1=2},	
+		weak1=3},	
 
 	--金币黄气球
 	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 40},	
@@ -486,15 +478,15 @@ local enemys = {
 
 	--金币绿气球
 	{id=7,image="qiqiu03",demage=10,hp=1,weak1=3,award = 10},
+
 	--手雷兵
 	{id=8,image="shouleib",demage=0,hp=130,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=360,fireCd=5,
-	weak1=3},	
+	weak1=3},
+		
 	--手雷
 	{id=9,image="shoulei",demage=3,hp=1,
 	weak1=3},
-	-- 盾兵
-	{id=10,image="dunbing",demage=3,hp=3000,fireRate=400,fireCd=5,speed=35,scale = 2.0, --scale = 2.0,  近战走到屏幕最近放缩比例
-	weak1=3},	
+	
 	-- 金武箱子奖励  type = "awardSan",
 	{id=11,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励    
 

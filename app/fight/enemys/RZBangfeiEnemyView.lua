@@ -27,6 +27,7 @@ function RZBangfeiEnemyView:playStartState(state)
 end
 
 function RZBangfeiEnemyView:playKill(event)
+    print("function RZBangfeiEnemyView:playKill(event)")
     RZBangfeiEnemyView.super.playKill(self, event)
     self.armature:getAnimation():play("die" ,-1 , 1)
     

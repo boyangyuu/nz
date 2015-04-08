@@ -10,6 +10,8 @@ local Map = class("Map", cc.mvc.ModelBase)
 Map.EFFECT_LEI_BOMB_EVENT = "EFFECT_LEI_BOMB_EVENT"
 Map.EFFECT_SHAKE_EVENT 	  = "EFFECT_SHAKE_EVENT"
 Map.EFFECT_JUSHAKE_EVENT 	  = "EFFECT_JUSHAKE_EVENT"
+Map.EFFECT_DANDAO_EVENT 	  = "EFFECT_DANDAO_EVENT"
+
 
 Map.MAP_ZOOM_OPEN_EVENT   = "MAP_ZOOM_OPEN_EVENT"
 Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
@@ -63,7 +65,8 @@ end
 function Map:changeJuStatus()
 	self.isJu = not self.isJu
 	local fight = md:getInstance("Fight")
-	local data = {gunView = not self.isJu }
+	local data = {gunView = not self.isJu, btnLei = not self.isJu, 
+			label_leiNum = not self.isJu }
 	fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})
 end
 

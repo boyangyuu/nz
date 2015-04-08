@@ -4,22 +4,9 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
+
 			{
-				descId = "zpbing",               --简介
 				time = 2,
-				num = 1,
-				delay = {4},
-				pos = {370},
-				property = {
-					placeName = "place13",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},
-			},
-			{
-				time = 8,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -33,7 +20,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 3,
 				num = 2,
 				delay = {0.5,1.6},
 				pos = {250,560},
@@ -47,7 +34,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 4,	
 				num = 2,
 				pos = {250,450},
 				delay = {0,1.5,0.8},
@@ -55,6 +42,32 @@ local waves = {
 					placeName = "place3",
 					startState = "rollright",
 					id = 1,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0.5},
+				pos = {200},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+							direct = "right", --向右逃跑
+								{
+								pos = 300,  --第一次藏身处 移动 600
+								time = 3,   --隐藏时间 3s	
+							},						
+						},	
+					data = {
+							direct = "right",
+								{
+								pos = 300,  --第一次藏身处 移动 200
+								time = 2,   --隐藏时间 3s	
+						},						
+					},									
 				},
 			},
 			{
@@ -192,20 +205,56 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			{
-				time = 3,
-				num = 1,
-				delay = {0.5},
-				pos = {650},
+			{ 
+				time = 1,
+				num = 3,
+				delay = {0,0.7,1.4},
+				pos = {400,600,800},
 				property = { 
+					type = "taofan_qiu",
 					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "left", --向左逃跑
+						{
+							pos = -200,  --第一次藏身处 移动 -200 
+							time = 3,	 --隐藏时间 3s													
+						},	
+						{
+							pos = -600,  --第2次藏身处 移动 - 600
+							time = 4,	 --隐藏时间 4s																							
+						},					
+					},
 				},
 			},
+			{
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {335},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+							direct = "right", --向右逃跑
+								{
+								pos = 500,  --第一次藏身处 移动 600
+								time = 2,   --隐藏时间 3s	
+							},						
+						},	
+					data = {
+							direct = "right",
+								{
+								pos = 800,  --第一次藏身处 移动 200
+								time = 2,   --隐藏时间 3s	
+						},						
+					},									
+				},
+			},
+
 			{
 				time = 3,	
 				num = 3,
@@ -249,6 +298,32 @@ local waves = {
 					placeName = "place4", 
 					startState = "rollleft",
 					id = 1,
+				},
+			},
+			{
+				time = 7,
+				num = 1,
+				delay = {0.5},
+				pos = {335},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterright", --从屏幕左侧进入
+					data = {
+							direct = "left", --向右逃跑
+								{
+								pos = 400,  --第一次藏身处 移动 600
+								time = 2,   --隐藏时间 3s	
+							},						
+						},	
+					data = {
+							direct = "left",
+								{
+								pos = 700,  --第一次藏身处 移动 200
+								time = 2,   --隐藏时间 3s	
+						},						
+					},									
 				},
 			},
 			{
@@ -357,9 +432,9 @@ local waves = {
 				pos = {450,550,650},					
 				property = {
 					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},	
 			{
@@ -382,9 +457,9 @@ local waves = {
 				pos = {350,550,750},
 				delay = {0,0.5,1.0},
 				property = { 
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place4",
 				},
 			},                                 
@@ -441,9 +516,9 @@ local waves = {
 				pos = {300,350,400,450,550,600,700,850},
 				delay = {3.5,3,2.5,2,1.5,1,0.5,0},
 				property = { 
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 					placeName = "place2",
 				},
 			},	                                       -- 以上是第二波第三批    30
@@ -454,7 +529,7 @@ local waves = {
 
 --enemy的关卡配置                                        青铜镶嵌 MP5伤害80  dps大于等于2 怪物数据
 local enemys = {
-	--普通兵                                      140--左右移动距离       280--滚动距离
+	--普通兵        type = "common",                           140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage= 4,hp=403,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1= 2},
 
@@ -466,10 +541,10 @@ local enemys = {
 	{id=3,image="shoulei",demage=8,hp=1,
 	weak1=1},
 
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=403,
-	weak1=2},	                                                           
+	--囚犯            type = "taofan_qiu",
+	{id=4,image="qiufan",demage=21,hp=5000, weak1=1},
 
+                                                          
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
 	weak1=2},
@@ -477,31 +552,6 @@ local enemys = {
     --导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=10,hp=150,
 	weak1=1},	
-
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=3,hp=806,fireRate=120,fireCd=3,speed=60,
-	weak1=2},
-
-	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=4,hp=4030,fireRate=180,fireCd=4,speed=40,
-	weak1=2},
-
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=10,hp=403,fireRate=30,speed=120,
-	weak1=2},	
-
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
-	weak1=1},
-
-	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=12000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
-	weak1=2,    award = 60},
-
-	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=12000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
-	weak1=2,    award = 60},
 
 
 
@@ -519,7 +569,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.fightMode =  {
-		type 	  = "puTong",
+		-- type 	  = "puTong",
 
 		-- type 	  = "renZhi",
 		-- saveNums  = 4,                 --解救人质数量
@@ -527,8 +577,8 @@ function waveClass:ctor()
 		-- type 	  = "xianShi",
 		-- limitTime = 60,                   --限时模式时长
 
-		-- type 	  = "taoFan"
-		-- limitNums = 5,                      --逃跑逃犯数量
+		type 	  = "taoFan",
+		limitNums = 5,                      --逃跑逃犯数量
 	}
 
 end

@@ -124,7 +124,7 @@ local waves = {
 					renzhiName = "人质4",     --  一组统一标示
 					type = "bangren",
 					placeName = "place10",
-					id = 16,
+					id = 6,
 				},
 			},
 			{
@@ -216,9 +216,9 @@ local waves = {
 				pos = {300,350,400,600},					
 				property = {
 					placeName = "place2",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},	
 
@@ -266,9 +266,9 @@ local waves = {
 				pos = {300,400,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},
 			{
@@ -304,9 +304,9 @@ local waves = {
 				pos = {300,500,550,600,1000},					
 				property = {
 					placeName = "place4",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},
 		},
@@ -385,9 +385,9 @@ local waves = {
 				pos = {300,350,400,600},					
 				property = {
 					placeName = "place2",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},	
 			{
@@ -397,12 +397,13 @@ local waves = {
 				pos = {300,400,600,700},					
 				property = {
 					placeName = "place3",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},
 			{
+
 				time = 8,
 				num = 1,
 				delay = {0},
@@ -433,9 +434,9 @@ local waves = {
 				pos = {300,500,550,600,1000},					
 				property = {
 					placeName = "place4",  
-					type = "san",
-					id = 4,
-					enemyId = 1,
+					type = "common",
+					startState = "san",
+					id = 1,
 				},
 			},
 			{
@@ -480,12 +481,9 @@ local enemys = {
 	{id=3,image="shoulei",demage=5,hp=1,
 	weak1=1},
 
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=327,
-	weak1=2},
-
 	--绑匪                                     140--左右移动距离       280--滚动距离
 	{id=5,image="tufeib",demage=4,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+
 	--被绑架人        --type = "bangren",
 	{id=6,image="hs", hp=1000, weak1=1},	 
 
@@ -495,11 +493,6 @@ local enemys = {
 
 	--黄衣人质商人      type = "shangren",
 	{id=16,image="shangr_1",hp=1000, weak1=1},	--黄衣人质商人	 
-
-                 
-
-
-	
 
 }
 

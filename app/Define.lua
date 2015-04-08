@@ -25,6 +25,7 @@ Define.kJinEnemyTimeStart		=  0.01		--狼牙棒兵 盾兵 0.01秒后 前进
 
 --伞兵
 Define.kSanEnemySpeed 		    =  50.0 	--伞兵降落速度
+Define.kSanTufeiSpeed 		    =  50.0 	--土匪兵降落速度
 
 --自爆兵
 Define.kBaoEnemyWalkSpeed 		=  70.0 	--自爆兵 每秒前进速度
@@ -35,7 +36,7 @@ Define.kBaoRangeH 				= 200	     --自爆兵范围
 Define.kBaoEnemyTimeStart       = 0.01      -- 0.01秒后 前进
 
 --人质 护士
-Define.kHushiSpeed				= 550.0    --人质跑动速度 像素/s
+Define.kHushiSpeed				= 350.0    --人质跑动速度 像素/s
 Define.kHushiRunTime			= 1.2      --跑动时间
 Define.kHushiWalkTime			= 0.6      --行走时间
 
@@ -47,7 +48,7 @@ Define.kTufeiSpeed				= 200	   --行走速度
 Define.kTufeiWalkTime			= 0.6      --行走时间
 
 --人质 被绑架的人
-Define.kBangrenSpeed			= 600	   --逃跑速度
+Define.kBangrenSpeed			= 200	   --逃跑速度
 
 --囚犯兵
 Define.kqQufanSpeed             = 300       --逃跑速度

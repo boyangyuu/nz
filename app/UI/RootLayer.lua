@@ -193,7 +193,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)         
     end
 
-    local jqkImgs = {"jtlqk","effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
+    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)

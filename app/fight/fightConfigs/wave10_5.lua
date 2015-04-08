@@ -688,10 +688,6 @@ local enemys = {
 	{id=3,image="shoulei",demage=28,hp=2000,
 	weak1=1},
 
-	--伞兵       --type = "san",
-	{id=4,image="sanbing01",demage=0,hp=10000,
-	weak1=2},	                                                           
-
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
