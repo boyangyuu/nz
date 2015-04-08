@@ -2,7 +2,7 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
+--[[
 	{
 		enemys = { 
 
@@ -170,7 +170,7 @@ local waves = {
 			},	
 			
 		},
-	},
+	},]]
 	{
 	    waveType = "boss",                                      --强敌出现
 		enemys = { 
@@ -190,10 +190,7 @@ local waves = {
 			},
 		},
 	},
-
 }
-
-
 
 
 --enemy的关卡配置                                                    青铜镶嵌 MP5伤害80  dps大于等于2 怪物数据
@@ -232,7 +229,7 @@ local bosses = {
 	{
 
 		award = 25000,
-		image = "renzb",                       --图片名字
+		image = "nvrenzb",                       --图片名字
 		hp = 100000,
 		fireRate = 60,               --普攻频率
 		fireCd = 4,                     --普攻cd

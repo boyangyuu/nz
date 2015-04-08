@@ -76,7 +76,9 @@ function RZBangrenEnemyView:playRun()
     local callfunc = function ()
         self:setWillRemoved()
     end
-    self:runAction(cc.Sequence:create(action, 
+    self:runAction(cc.Sequence:create(
+        cc.DelayTime:create(0.5),
+        action, 
         cc.CallFunc:create(callfunc)))
 end
 

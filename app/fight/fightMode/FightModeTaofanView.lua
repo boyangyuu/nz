@@ -67,4 +67,9 @@ function FightModeTaofanView:onFightEnd(event)
 	self.isPause = true
 end
 
+function FightModeTaofanView:onFightPause(event)
+
+end
+
+
 return FightModeTaofanView

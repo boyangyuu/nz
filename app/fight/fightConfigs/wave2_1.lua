@@ -55,19 +55,16 @@ local waves = {
 					id = 4,
 					startState = "enterleft", --从屏幕左侧进入
 					data = {
-							direct = "right", --向右逃跑
-								{
-								pos = 300,  --第一次藏身处 移动 600
-								time = 3,   --隐藏时间 3s	
-							},						
+						direct = "right", --向左逃跑
+						{
+							pos = 300,  --
+							time = 3,	 --隐藏时间 3s													
 						},	
-					data = {
-							direct = "right",
-								{
-								pos = 300,  --第一次藏身处 移动 200
-								time = 2,   --隐藏时间 3s	
-						},						
-					},									
+						{
+							pos = 300,  --
+							time = 4,	 --隐藏时间 4s													
+						},											
+					},		
 				},
 			},
 			{
