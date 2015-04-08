@@ -65,7 +65,8 @@ end
 function Map:changeJuStatus()
 	self.isJu = not self.isJu
 	local fight = md:getInstance("Fight")
-	local data = {gunView = not self.isJu }
+	local data = {gunView = not self.isJu, btnLei = not self.isJu, 
+			label_leiNum = not self.isJu }
 	fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})
 end
 

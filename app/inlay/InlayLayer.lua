@@ -13,7 +13,7 @@ function InlayLayer:ctor()
 
 	self.btn = {}
     self.icon = {}
-    self.typeId = {"speed", "crit", "clip", "bullet", 
+    self.typeIds = {"speed", "crit", "clip", "bullet", 
     "helper", "blood",}
 end
 
@@ -32,7 +32,7 @@ function InlayLayer:onShow()
 
     -- event
     cc.EventProxy.new(self.inlayModel , self)
-     :addEventListener("REFRESH_INLAY_EVENT", handler(self, self.refreshUI))
+     :addEventListener(self.inlayModel.REFRESH_INLAY_EVENT, handler(self, self.refreshUI))
 end
 
 function InlayLayer:loadCCS()
@@ -47,7 +47,7 @@ end
 
 function InlayLayer:refreshUI(event)
     self:refreshBtnIcon(event)
-    self:refreshListView(event.typename)
+    self:refreshListView(event.typeName)
     self:refreshAvatar()
 end
 
@@ -111,7 +111,7 @@ function InlayLayer:initUI()
         end
     end)
 
-    for k,v in pairs(self.typeId) do
+    for k,v in pairs(self.typeIds) do
         self.btn[v] = cc.uiloader:seekNodeByName(self.panelInlay, "panel"..v)
         self.icon[v] = cc.uiloader:seekNodeByName(self.panelInlay, "icon"..v)
         self.btn[v]:setTouchEnabled(true)
@@ -201,7 +201,6 @@ function InlayLayer:refreshBtnIcon(event)
     for k,v in pairs(self.btn) do
         self.btn[k]:removeAllChildren()
     end
-    dump(allInlayed, "allInlayed")
     for k,v in pairs(allInlayed) do
         local table = self.inlayModel:getConfigTable("id", v)
         local img =  display.newSprite("#"..table[1]["imgname"]..".png")
@@ -209,7 +208,7 @@ function InlayLayer:refreshBtnIcon(event)
     end
 
     if event then    
-        if event.isall then
+        if event.isAll then
             for k,v in pairs(allInlayed) do
                 local equiparm = ccs.Armature:create("xqzb")
                 equiparm:getAnimation():setMovementEventCallFunc(
@@ -222,7 +221,7 @@ function InlayLayer:refreshBtnIcon(event)
                 equiparm:getAnimation():play("Animation1" , -1, 0)
             end
             return
-        elseif event.typename then
+        elseif event.typeName then
             local equiparm = ccs.Armature:create("xqzb")
             equiparm:getAnimation():setMovementEventCallFunc(
                 function ( armatureBack,movementType,movementId ) 
@@ -230,7 +229,7 @@ function InlayLayer:refreshBtnIcon(event)
                         armatureBack:removeSelf()
                     end
                 end)
-            addChildCenter(equiparm, self.btn[event.typename])
+            addChildCenter(equiparm, self.btn[event.typeName])
             equiparm:getAnimation():play("Animation1" , -1, 0)
         end
     end
@@ -240,9 +239,6 @@ function InlayLayer:initGuide()
     local guide = md:getInstance("Guide")
     local isDone = guide:isDone("xiangqian")
     if isDone then return end
-
-    --点击镶嵌
-    local usermodel = md:getInstance("UserModel")
     
     --click
     guide:addClickListener({

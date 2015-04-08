@@ -18,9 +18,9 @@ function LevelDetailLayer:ctor(properties)
     cc.EventProxy.new(self.weaponListModel, self)
         :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
     cc.EventProxy.new(self.propModel, self)
-        :addEventListener(self.propModel.REFRESH_PROP_EVENT   , handler(self, self.refreshUI))
+        :addEventListener(self.propModel.REFRESH_PROP_EVENT 	     , handler(self, self.refreshUI))
     cc.EventProxy.new(self.inlayModel, self)
-        :addEventListener("REFRESH_INLAY_EVENT",handler(self, self.refreshUI))
+        :addEventListener(self.inlayModel.REFRESH_INLAY_EVENT	     , handler(self, self.refreshUI))
 	self:initData()
 	
 	--ui
@@ -340,7 +340,7 @@ function LevelDetailLayer:initGuide()
      })     
 end
 
-function LevelDetailLayer:refreshUI()
+function LevelDetailLayer:refreshUI(event)
 	if self.weaponListModel:isRecomWeaponed(self.recomWeaponId) then
 		self.alreadyBibei:setVisible(true)
 		self.btnBibei:setVisible(false)
