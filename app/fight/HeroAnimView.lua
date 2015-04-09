@@ -213,7 +213,7 @@ function HeroAnimView:playFightTips(event)
 	local failType = event.failType
 	assert(failType, "failType is nil")
 
-	local armature 	= ccs.Armature:create("shiBaiTiShi")
+	local armature 	= ccs.Armature:create("tishi")
 	armature:getAnimation():play(failType , -1, 0)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
