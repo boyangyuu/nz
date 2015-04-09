@@ -36,7 +36,15 @@ function FightDescLayer:onFightStart(event)
             end
         end)
     addChildCenter(armature, self.animPanl)
-    armature:getAnimation():play("renwuks" , -1, 1)
+    if event.fightType == "puTong" then
+        armature:getAnimation():play("renwuks" , -1, 1)
+    elseif event.fightType == "renZhi" then
+        armature:getAnimation():play("jiejiurz" , -1, 1)
+    elseif event.fightType == "xianShi" then
+        armature:getAnimation():play("jianchi" , -1, 1)
+    elseif event.fightType == "taoFan" then
+        armature:getAnimation():play("zuzhi" , -1, 1)
+    end
     local letsgo   = "res/Music/ui/letsgo.wav"
     audio.playSound(letsgo,false)
 end
