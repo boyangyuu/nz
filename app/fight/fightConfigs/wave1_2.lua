@@ -441,8 +441,8 @@ local enemys = {
 	weak1=2},
 
 	-- 盾兵
-	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,--scale = 2.0,
-	weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
+	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
+	weak1=3},		                                                           --scale = 2.0,  近战走到屏幕最近放缩比例
 
 }
 

@@ -17,7 +17,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,
+				time = 3,
 				num = 1,
 				delay = {0.5},
 				pos = {800},
@@ -31,7 +31,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
+				time = 4,
 				num = 1,
 				delay = {0.5},
 				pos = {0},
@@ -41,20 +41,16 @@ local waves = {
 					id = 4,
 					startState = "enterleft", --从屏幕左侧进入
 					data = {
-						direct = "right", --向左逃跑
-						{
-							pos = 300,  --
-							time = 3,	 --隐藏时间 3s													
-						},	
-						{
-							pos = 300,  --
-							time = 4,	 --隐藏时间 4s													
+						direct = "right", --向右逃跑
+							{
+							pos = 500,  --第一次藏身处 移动 600
+							time = 2,   --隐藏时间 3s	
 						},											
-					},		
+					},									
 				},
 			},
 			{
-				time = 6,	
+				time = 5,	
 				num = 3,
 				pos = {730,800,920},
 				delay = {0,0.5,0.8},
@@ -65,7 +61,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 6,	
 				num = 3,
 				pos = {250,430,510},
 				delay = {0,1.5,0.8},
@@ -76,7 +72,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 12,
+				time = 7,
 				num = 2,
 				delay = {0.5,1.0},
 				pos = {250,400},
@@ -90,7 +86,26 @@ local waves = {
 				},
 			},	
 			{
-				time = 13,	
+				time = 8,
+				num = 1,
+				delay = {0.5},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterright", --从屏幕左侧进入
+					data = {
+						direct = "left", --向右逃跑
+							{
+							pos = 800,  --第一次藏身处 移动 600
+							time = 2,   --隐藏时间 3s	
+						},											
+					},									
+				},
+			},
+			{
+				time = 9,	
 				num = 2,
 				pos = {800,950},
 				delay = {0,0.6},
@@ -101,7 +116,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	
+				time = 10,	
 				num = 3,
 				pos = {250,330,410},
 				delay = {0,1.5,0.8},
@@ -112,18 +127,26 @@ local waves = {
 				},
 			},		
 			{
-				time = 15,	
-				num = 3,
-				pos = {1000,750,550},
-				delay = {0,0.6,1.1},
+				time = 11,
+				num = 1,
+				delay = {0.5},
+				pos = {0},
 				property = {
-					placeName = "place2", 
-					startState = "rollleft",
-					id = 1,
+					type = "taofan_qiu", 
+					placeName = "place4",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+							{
+							pos = 400,  --第一次藏身处 移动 600
+							time = 2,   --隐藏时间 3s	
+						},											
+					},									
 				},
 			},
 			{
-				time = 16,
+				time = 12,
 				num = 2,
 				delay = {0.5,0},
 				pos = {250,900},
@@ -137,7 +160,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 17,	
+				time = 13,	
 				num = 3,
 				pos = {820,910,980},
 				delay = {0,0.6,0.8},
@@ -146,7 +169,7 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},                                                                            	-- 以上是第三波第三批 30
+			},                  
 		},
 	},
 	{
@@ -177,7 +200,7 @@ local waves = {
 				},
 			},
 			{ 
-				time = 2,
+				time = 3,
 				num = 3,
 				delay = {0,0.7,1.4},
 				pos = {400,600,800},
@@ -194,13 +217,13 @@ local waves = {
 						},	
 						{
 							pos = -600,  --第2次藏身处 移动 - 600
-							time = 4,	 --隐藏时间 4s																							
+							time = 2,	 --隐藏时间 4s																							
 						},					
 					},
 				},
 			},
 			{
-				time = 3,	
+				time = 4,	
 				num = 3,
 				pos = {250,350,500},
 				delay = {0,1.5,0.8},
@@ -211,7 +234,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	
+				time = 5,	
 				num = 3,
 				pos = {980,850,650},
 				delay = {0,0.4,0.8},
@@ -222,7 +245,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,	
+				time = 6,	
 				num = 3,
 				pos = {250,370,480},
 				delay = {0,1.5,0.8},
@@ -233,7 +256,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 6,	
+				time = 7,	
 				num = 3,
 				pos = {1030,930,790},
 				delay = {0,0.6,1.6},
@@ -244,7 +267,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 8,
 				num = 1,
 				delay = {0.5},
 				pos = {0},
@@ -268,7 +291,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
+				time = 9,
 				num = 2,
 				delay = {0.5,0},
 				pos = {350,600},
@@ -282,7 +305,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 8,	
+				time = 10,	
 				num = 2,
 				pos = {1000,850},
 				delay = {0,0.6},
@@ -293,7 +316,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 11,	
 				num = 3,
 				pos = {250,350,480},
 				delay = {0,1.5,0.8},
@@ -304,7 +327,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 9,	
+				time = 12,	
 				num = 2,
 				pos = {1000,750},
 				delay = {0,0.8},
@@ -315,7 +338,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 13,
 				num = 1,
 				delay = {0.5},
 				pos = {0},
@@ -334,7 +357,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 14,
 				num = 2,
 				delay = {0.5,0},
 				pos = {250,600},
@@ -348,7 +371,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 9,	
+				time = 15,	
 				num = 1,
 				pos = {980},
 				delay = {0,},
@@ -357,7 +380,7 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},                                  	-- 以上是第一波第三批 30
+			},                                 
 		},
 	},	
 	{
@@ -399,13 +422,13 @@ local waves = {
 						direct = "right", --向右逃跑
 							{
 							pos = 400,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 1.5,   --隐藏时间 3s	
 						},						
 					},									
 				},
 			},	
 			{
-				time = 3,
+				time = 4,
 				num = 3,
 				delay = {0,0.7, 1.4},
 				pos = {450,550,650},					
@@ -417,7 +440,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 4,	
+				time = 5,	
 				num = 1,
 				pos = {300},
 				delay = {0.5},
@@ -431,7 +454,7 @@ local waves = {
 				},
 			},                                        
 			{
-				time = 8,	
+				time = 6,	
 				num = 3,
 				pos = {350,550,750},
 				delay = {0,0.5,1.0},
@@ -443,7 +466,7 @@ local waves = {
 				},
 			},                                 
 			{
-				time = 8,
+				time = 7,
 				num = 3,
 				delay = {0, 0.6, 1.4},
 				pos = {260,340,430,},	
@@ -454,7 +477,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,
+				time = 8,
 				num = 3,
 				delay = {0, 1.4, 0.7},
 				pos = {770,850,970},	
@@ -465,7 +488,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 9,	
 				num = 1,
 				pos = {300},
 				delay = {0.5},
@@ -479,7 +502,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 10,
 				num = 2,
 				delay = {0.2,1.0},
 				pos = {550,700},					
@@ -491,28 +514,35 @@ local waves = {
 			},
 			{ 
 				time = 12,
-				num = 8,
-				pos = {300,350,400,450,550,600,700,850},
-				delay = {3.5,3,2.5,2,1.5,1,0.5,0},
+				num = 4,
+				pos = {350,450,600,850},
+				delay = {3,2,1,0},
 				property = { 
 					type = "taofan_qiu",
 					placeName = "place2",
 					id = 4,
 					startState = "san",  --从伞进入                          伞落下的逃犯
 					data = {
-						direct = "left", --向左逃跑
+						direct = "right", --向左逃跑
 						{
-							pos = -300,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							pos = 50,  --第一次藏身处 移动 -200 
+							time = 1.5,	 --隐藏时间 3s													
 						},						
 					},
 				},
 			},
-
-
-
-
-
+			{ 
+				time = 12,
+				num = 4,
+				pos = {300,400,550,700},
+				delay = {3.5,2.5,1.5,0.5,},
+				property = { 
+					type = "common",
+					startState = "san",
+					id = 1,
+					placeName = "place2",
+				},
+			},
 		},
 	},
 	
@@ -533,16 +563,16 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=21,hp=5000, weak1=1},
+	{id=4,image="qiufan",demage=5,hp=2500, weak1=2,},
 
                                                           
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
-	weak1=2},
+	-- --导弹兵      --type = "dao",
+	-- {id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
+	-- weak1=2},
 
-    --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=150,
-	weak1=1},	
+ --    --导弹          --missileType = "daodan",
+	-- {id=6,image="daodan",demage=10,hp=150,
+	-- weak1=1},	
 
 
 
@@ -561,7 +591,7 @@ function waveClass:ctor()
 	self.mapId  = mapId
 	self.fightMode =  {
 		type 	  = "taoFan",
-		limitNums = 3,                      --逃跑逃犯数量
+		limitNums = 6,                      --逃跑逃犯数量
 	}
 
 end

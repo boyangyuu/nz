@@ -11,8 +11,8 @@ function FightDescModel:ctor(properties)
 	FightDescModel.super.ctor(self, properties)
 end
 
-function FightDescModel:start()
-	self:dispatchEvent({name = FightDescModel.START_ANIM_EVENT})
+function FightDescModel:start(fightType)
+	self:dispatchEvent({name = FightDescModel.START_ANIM_EVENT,fightType = fightType})
 end
 
 function FightDescModel:bossShow()

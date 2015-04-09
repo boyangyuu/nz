@@ -399,31 +399,10 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=27,hp=1000,
 	weak1=1},
-	                                                           
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
-	weak1=2},
-
+	                                                          
     --导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=35,hp=3000,
 	weak1=1},	
-
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=12,hp=25000,fireRate=180,fireCd=4,speed=80,
-	weak1=2},
-
-	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=50000,fireRate=180,fireCd=5,speed=60,
-	weak1=2},
-
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=5000,fireRate=30,speed=100,
-	weak1=2},	
-
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
-	weak1=2},
 
 	--飞机         type = "feiji" ,
 	{id=11,image="feiji",demage=0,hp=80000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
@@ -433,36 +412,12 @@ local enemys = {
 	{id=12,image="yyc",demage=0,hp=80000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
-	--金币绿气球   type = "jinbi",
-	{id=13,image="qiqiu03",hp=1,weak1=2,award = 9},	--award = 9   金币数量为9	
-
-	--金币蓝气球   type = "jinbi",
-	{id=14,image="qiqiu02",hp=1,weak1=2,award = 15},	--award = 15  金币数量为15
-
-	--金币黄气球   type = "jinbi",
-	{id=15,image="qiqiu01",hp=1,weak1=2,award = 30},	--award = 30  金币数量为30
-	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=9,hp=100000,fireRate=120,fireCd=3,speed=40,scale = 2.5 ,
-	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
-
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="xiaorz",demage=35,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖
 	{id=18,image="feibiao",demage=10,hp=5000},                             
-
-	--铁球
-	{id=19,image="tieqiu",demage=20,hp=9000},
-
-	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=15,hp=5000, speed=150,weak1=1}, 
-
-	--烟雾导弹
-	{id=21,image="daodan03",demage=1,hp=8000, weak1=1},   
-
-	--大导弹          --missileType = "daodan",
-	{id=22,image="daodan02",demage=10,hp=500, weak1=1},	
 
 }
 
@@ -472,7 +427,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		image = "renzb",                       --图片名字         红衣女忍者
+		image = "nvrenzb",                       --图片名字         红衣女忍者
 		award = 40000,                   --boss产出金币数量
 		hp = 200000,
 		fireRate = 120,               --普攻频率
@@ -695,71 +650,7 @@ local bosses = {
 			},
 		},	
 	},
-	-- {
 
-	-- 	image = "boss02_2", --图片名字
-	-- 	hp = 150000,
-	-- 	award = 20000,                   --boss产出金币数量
-	-- 	demage = 3, 			--这个是没用的 需要告诉俊松
-	-- 	fireRate = 100,               --普攻频率
-	-- 	fireCd = 3,                     --普攻cd
-
-	-- 	walkRate = 120,                    --移动频率
-	-- 	walkCd = 2,                         --移动cd
-	-- 	chongfengDemage = 25,                --冲锋造成伤害
-	-- 	weak1 = 1.2,						--头 弱点伤害倍数
-	-- 	weak2 = 1.2,					--手 弱点伤害倍数
-
-		
-	-- 	skilltrigger = {   			          --技能触发(可以同时)
-	-- 		moveLeftFire = {
-	-- 			0.80, 0.40,
-	-- 		},
-	-- 		moveRightFire = {
-	-- 			0.60, 0.20, 
-	-- 		},
-	-- 		chongfeng = {
-	-- 		    0.95,0.90,0.85,0.70,0.55,0.50, 0.35, 0.10
-	-- 		},
-	-- 		tieqiu = {
-	-- 		    0.99,0.75, 0.65,0.45, 0.30,
-	-- 		},	
-
-
-	-- 		weak2 = {                               --手 技能触发(可以同时)
-	-- 			0.80,0.40,                       
-	-- 		},
-	-- 		weak1 = {                               --头 技能触发(可以同时)
-	-- 			0.60,0.20,                       
-	-- 		},
-	-- 		demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-	-- 			0.85,
-	-- 		},	
-	-- 		demage250 = {  
-	-- 			0.60,
-	-- 		},	
-	-- 		demage300 = {  
-	-- 			0.50,
-	-- 		},						
-	-- 	},
-	-- 	getMoveLeftAction = function ()
-	-- 		local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
-	-- 		local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
-	-- 		local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
-	-- 		local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
-	-- 		local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
-	-- 		return cc.Sequence:create(move1, move2, move3, move4, move5)
-	-- 	end,
-
-	-- 	getMoveRightAction = function ()
-	-- 		local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
-	-- 		local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
-	-- 		local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
-	-- 		local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
-	-- 		local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
-	-- 		return cc.Sequence:create(move1, move2, move3, move4, move5)
-	-- 	end,
-	-- },
 }
 
 local mapId = "map_1_2"

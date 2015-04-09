@@ -103,7 +103,8 @@ function StoreCell:initCellUI()
     display.addSpriteFrames(plist,png)
 
     local armature = ccs.Armature:create("shangchengz_tb")
-    armature:setPosition(-230,0)
+    armature:setPosition(-238,0)
+    armature:setScale(0.8)
     self:addChild(armature)
     armature:getAnimation():play("die" , -1, 1)
 end

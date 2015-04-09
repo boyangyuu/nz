@@ -263,7 +263,7 @@ function LevelDetailLayer:onClickBtnBibei()
 		end
 	else
         self.buyModel:showBuy("weaponGiftBag",{ payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-        deneyBuyFunc = handler(self,self.onCancelWeaponGift)}, 
+        deneyBuyFunc = handler(self,self.onCancelWeaponGift),isNotPopKefu = true}, 
         	"关卡详情_点击必备按钮")
 	end
 end

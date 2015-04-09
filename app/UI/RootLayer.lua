@@ -163,7 +163,7 @@ function RootLayer:addResFight()
     end    
 
     local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
-        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw", "shiBaiTiShi"}
+        "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw", "tishi"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)

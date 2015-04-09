@@ -36,7 +36,7 @@ function HomeBarLayer:popUpWeaponGift(properties)
     local buyModel = md:getInstance("BuyModel")
     local isNotBought = buyModel:checkBought("weaponGiftBag") == false
     if properties.popWeaponGift and isNotBought then
-        buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData)},"主界面_进游戏自动弹出")
+        buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
     end
 end
 
