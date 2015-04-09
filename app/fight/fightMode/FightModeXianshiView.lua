@@ -35,6 +35,15 @@ function FightModeXianshiView:onFightEnd(event)
 	transition.pauseTarget(self)
 end
 
+function FightModeXianshiView:onFightPause(event)
+	local isPause = event.isPause
+	if isPause then 
+		transition.pauseTarget(self)
+	else
+		transition.resumeTarget(self)
+	end
+end
+
 function FightModeXianshiView:decreaseTime()
 	self.curLeftTime = self.curLeftTime - 1
 	if self.curLeftTime == 0 then 

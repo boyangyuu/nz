@@ -430,7 +430,7 @@ local waves = {
 local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=5,hp=300,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=3},s
+	weak1=3},
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=300,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
@@ -441,8 +441,8 @@ local enemys = {
 	weak1=2},
 
 	-- 盾兵
-	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,--scale = 2.0,
-	weak1=3},		                                                     --scale = 2.0,  近战走到屏幕最近放缩比例
+	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
+	weak1=3},		                                                           --scale = 2.0,  近战走到屏幕最近放缩比例
 
 }
 

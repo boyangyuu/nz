@@ -91,9 +91,21 @@ local waves = {
 			},
 			{
 				time = 11,
-				num = 10,
-				delay = {0,0.7,1.4,2.1,2.8,3.5,0,0.7,1.4,2.1},
-				pos = {220,300,380,460,540,620,700,780,860,940},
+				num = 5,
+				delay = {0,0.7,1.4,2.1,2.8,},
+				pos = {220,300,380,460,540,},
+				property = { 
+					placeName = "place1" ,
+					type = "common",
+					startState = "san",
+					id = 1,
+				},
+			},
+			{
+				time = 13,
+				num = 5,
+				delay = {3.5,0,0.7,1.4,2.1},
+				pos = {620,700,780,860,940},
 				property = { 
 					placeName = "place1" ,
 					type = "common",

@@ -61,10 +61,16 @@ end
 function FightModeTaofanView:onFightRelive(event)
 	self.curTaoNum = 0
 	self:refreshUI()
+	self.isPause = false
 end
 
 function FightModeTaofanView:onFightEnd(event)
 	self.isPause = true
 end
+
+function FightModeTaofanView:onFightPause(event)
+
+end
+
 
 return FightModeTaofanView
