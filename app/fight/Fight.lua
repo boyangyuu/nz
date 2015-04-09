@@ -128,6 +128,7 @@ end
 
 function Fight:endFightWin()
     self:dispatchEvent({name = Fight.FIGHT_WIN_EVENT})
+    self:pauseFight(true)
     self:checkDialogAfter()
 
     self:clearFightData()

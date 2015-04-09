@@ -2,7 +2,6 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
 	{
 		enemys = { 
 
@@ -190,10 +189,7 @@ local waves = {
 			},
 		},
 	},
-
 }
-
-
 
 
 --enemy的关卡配置                                                    青铜镶嵌 MP5伤害80  dps大于等于2 怪物数据
@@ -219,9 +215,6 @@ local enemys = {
 
 	-- 金武箱子奖励  type = "awardSan",
 	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
-
-
-
 }
 
 
@@ -230,7 +223,6 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-
 		award = 25000,
 		image = "renzb",                       --图片名字
 		hp = 100000,
@@ -250,7 +242,6 @@ local bosses = {
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
 		
 		skilltrigger = {   			          --技能触发(可以同时)
-
 			feibiao1 = { 0.95,                --暴雨梨花针1
 			},
 			feibiao2 = { 0.75,                --暴雨梨花针2	
@@ -261,7 +252,6 @@ local bosses = {
 			},                                           
 			chongfeng = { 0.99, 0.80,0.65, 0.55, 0.45, 0.35, 0.25, 0.15     --冲锋
 			},
-
 
 			weak3 = {                               --右腿 技能触发(可以同时)
 				0.70,0.40,0.10,                       
@@ -444,15 +434,6 @@ function waveClass:ctor()
 	self.limit  = limit
 	self.fightMode =  {
 		type 	  = "puTong",
-
-		-- type 	  = "renZhi",
-		-- saveNums  = 4,                 --解救人质数量
-
-		-- type 	  = "xianShi",
-		-- limitTime = 40,                   --限时模式时长
-
-		-- type 	  = "taoFan"
-		-- limitNums = 5,                      --逃跑逃犯数量
 	}
 
 end

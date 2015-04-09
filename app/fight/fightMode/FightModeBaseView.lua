@@ -29,6 +29,7 @@ function FightModeBaseView:ctor()
 	 	:addEventListener(self.fight.FIGHT_WIN_EVENT	, handler(self, self.onFightEnd))	 	
 	 	:addEventListener(self.fight.FIGHT_FAIL_EVENT	, handler(self, self.onFightEnd))	 	
 	 	:addEventListener(self.fight.FIGHT_RELIVE_EVENT	, handler(self, self.onFightRelive))	 	
+	 	:addEventListener(self.fight.PAUSE_SWITCH_EVENT	, handler(self, self.onFightPause))	 	
 
  	self:setVisible(false)
 end
@@ -52,6 +53,10 @@ function FightModeBaseView:onFightEnd(event)
 end
 
 function FightModeBaseView:onFightRelive(event)
+	assert(false, "must override me")
+end
+
+function FightModeBaseView:onFightPause(event)
 	assert(false, "must override me")
 end
 
