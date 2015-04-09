@@ -15,6 +15,8 @@ function WeaponNotifyLayer:ctor(properties)
 	self.properties = properties
 	self:loadCCS()
 	self:initUI(properties)
+
+	self:setLocalZOrder(100)
 end
 
 function WeaponNotifyLayer:loadCCS()
@@ -31,7 +33,6 @@ function WeaponNotifyLayer:initUI(properties)
     btnGet:onButtonClicked(function()
         self:onBtnGetClicked()
     end)
-
 
 	-- Anim
     local src = "res/WeaponNotify/hdxkwq/hdxkwq.ExportJson"

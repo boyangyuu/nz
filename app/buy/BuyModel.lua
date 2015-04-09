@@ -65,7 +65,6 @@ function BuyModel:gameResume()
 	display.resume()
 end
 
-
 -- 生成订单号
 function BuyModel:getRandomOrderId()
 	local deviceId = "windows"
@@ -91,6 +90,12 @@ function BuyModel:payDone(result)
 	-- dump(self.curBuyData, "self.curBuyData")
 	local payDoneFunc = self.curBuyData.payDoneFunc
 	if payDoneFunc then payDoneFunc() end
+
+	local isNotPopKefu = self.curBuyData.isNotPopKefu
+	if not isNotPopKefu then 
+		ui:showPopup("commonPopup",{type = "style4",
+                opacity = 0})
+	end
 
 	--um event
 	local umData = {}

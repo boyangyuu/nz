@@ -167,7 +167,8 @@ function LevelMapLayer:initChooseLayer()
             return true
         elseif event.name=='ended' then
             local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData)}, "主界面_点击武器大礼包")
+            buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),
+                isNotPopKefu = true}, "主界面_点击武器大礼包")
         end
     end)
 

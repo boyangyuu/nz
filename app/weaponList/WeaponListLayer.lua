@@ -222,7 +222,7 @@ function WeaponListLayer:onClickBtnOncefull()
     if not isBoughtWeapon then
         self.buyModel:showBuy("weaponGiftBag",{
             payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-                                      deneyBuyFunc = handler(self, self.onCancelOncefull)},"武器库界面_点击一键满级")
+            deneyBuyFunc = handler(self, self.onCancelOncefull),isNotPopKefu = true},"武器库界面_点击一键满级")
     elseif isBoughtWeapon then
         self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
@@ -233,7 +233,7 @@ function WeaponListLayer:onClickBtnBuy()
     local guide = md:getInstance("Guide")
     if self.buyModel:checkBought("weaponGiftBag") == false then
         self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-                                      deneyBuyFunc = handler(self, self.onCancelWeaponGift)}, 
+          deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
                                        "武器库界面_点击解锁武器"..self.weaponRecord["name"])
     end
 end
@@ -277,6 +277,9 @@ function WeaponListLayer:onBuyWeaponSucc()
         end
         local gmcg = "res/Music/ui/gmcg.wav"
         audio.playSound(gmcg,false)
+
+        ui:showPopup("WeaponNotifyLayer",
+         {type = "gun",weaponId = self.weaponId})
     end
 end
 
