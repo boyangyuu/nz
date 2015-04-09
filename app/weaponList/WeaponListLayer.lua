@@ -253,8 +253,8 @@ function WeaponListLayer:onCancelWeaponGift()
         local rmbCost = self.weaponRecord["rmbCost"]
         if  rmbCost == 6 then
             self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
-                payDoneFunc = handler(self, self.onBuyWeaponSucc)
-                }, "武器库界面_点击解锁武器"..self.weaponRecord["name"])
+                payDoneFunc = handler(self, self.onBuyWeaponSucc)},
+                 "武器库界面_点击解锁武器"..self.weaponRecord["name"])
         elseif rmbCost == 10 then
             self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
         end
