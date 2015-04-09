@@ -62,6 +62,14 @@ function Map:getIsJuAble()
 	return self.isJuAble
 end
 
+function Map:getIsJuMap()
+	local fight 	 = md:getInstance("Fight")
+	local levelModel = md:getInstance("LevelModel")
+    local gid,lid 	 = fight:getCurGroupAndLevel()
+    local isju 	     = levelModel:isJujiFight(gid,lid) 
+    return isju
+end
+
 function Map:changeJuStatus()
 	self.isJu = not self.isJu
 	local fight = md:getInstance("Fight")

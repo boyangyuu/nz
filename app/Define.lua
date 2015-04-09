@@ -21,7 +21,6 @@ Define.kEnemyRollWidth 			= 300 * 1   --滚动距离
 Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
 Define.kJinEnemyScale	  		=  1.7		-- 狼牙棒兵 盾兵到身前的比例
 Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素(默认值)
-Define.kJinEnemyTimeStart		=  0.01		--狼牙棒兵 盾兵 0.01秒后 前进
 
 --伞兵
 Define.kSanEnemySpeed 		    =  50.0 	--伞兵降落速度
@@ -33,7 +32,6 @@ Define.kBaoEnemyScale	  		=  1.2		-- 自爆兵到身前的比例
 Define.kBaoDemageOtherEnemys 	= 10        --自爆兵伤害值
 Define.kBaoRangeW 				= 200	    --自爆兵范围
 Define.kBaoRangeH 				= 200	     --自爆兵范围
-Define.kBaoEnemyTimeStart       = 0.01      -- 0.01秒后 前进
 
 --人质 护士
 Define.kHushiSpeed				= 350.0    --人质跑动速度 像素/s
@@ -91,8 +89,11 @@ Define.kMissileFeibiaScale      = 1.5        --飞镖飞到屏幕的大小
 Define.kMissileWangTime			= 1    --飞过来的时间
 Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
+
+---------------其他-----------------------------------------------------------
+------------------------------------------------------------------------------
+
 --黄金武器
-Define.kGoldActivate 			= 1500    --黄金武器激活
 Define.kGoldTime 				= 8     --黄金武器激活时间
 
 --机甲
@@ -126,9 +127,6 @@ Define.kGoldCoinValue			= 3.33		--单个金币值为3
 --购买相关
 Define.kBuyFullHpTime 			= 0.11  -- 10%血  
 
---手打黄武
---子弹
-
 --狙击枪
 Define.kJuRange 				= 4.0  -- 狙击镜放大的范围
 
@@ -136,8 +134,7 @@ Define.kJuRange 				= 4.0  -- 狙击镜放大的范围
 Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之30血时 触发机甲
 
 --enenmy动画缩放比例
-Define.kEnemyAnimScale      	= 1/0.7
-
+Define.kEnemyAnimScale      	= 1 / 0.7
 
 function Define:ctor()
     Define.super.ctor(self) 

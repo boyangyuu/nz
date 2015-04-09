@@ -34,13 +34,11 @@ function TFQiuEnemyView:playEnter(direct)
     --setPos
     local isLeft = direct == "left" 
     
-    local toPosx = self:getPositionX()
-    local posInMapx = self:getPosInMap().x
     local srcPosX = 0 
     if isLeft then 
-        srcPosX = toPosx - posInMapx - 300
+        srcPosX = - 300
     else
-        srcPosX = toPosx + (display.width - posInMapx) + 300
+        srcPosX = display.width + 300
     end
     self:setPositionX(srcPosX)
 
@@ -63,13 +61,21 @@ function TFQiuEnemyView:playMoveToNext()
     local animName = "run" .. direct
     self.armature:getAnimation():play(animName , -1, 1) 
 
-    --posOffset
-    local posOffset = data["pos"]
+    --pos
+    local place = self:getPlaceNode()
+    local destPosX, destPosY = place:getPositionX(), place:getPositionY()
+    for i=1,self.posIndex do
+        destPosX = destPosX + self.posDatas[i].pos
+    end
 
     --action
-    local distance = math.abs(posOffset)
-    local time = distance / define.kqQufanSpeed
-    local action = cc.MoveBy:create(time, cc.p(posOffset, 0))
+    local distance = math.abs(data.pos)
+    local map      = md:getInstance("Map")
+    local isJu     = map:getIsJuMap()
+    local speed = isJu and (define.kqQufanSpeed /define.kJuRange) 
+                or define.kqQufanSpeed 
+    local time = distance / speed
+    local action = cc.MoveTo:create(time, cc.p(destPosX, destPosY))
     local callfunc = function ()
         self:playHide()
     end

@@ -1,9 +1,6 @@
 
 --[[--
-
 “自爆兵”的视图
-1. property desc: a.指定出生地和x坐标 x控制释放位置 b.开始释放 c.降落到出生地的y 则伞消失
-2. ..
 ]]
 
 local BaseEnemyView = import(".BaseEnemyView")
@@ -13,19 +10,42 @@ function BaoEnemyView:ctor(property)
 	--instance
 	BaoEnemyView.super.ctor(self, property) 
     self.hero = md:getInstance("Hero")
-    self.isAheading = false
-    self.isAheaded = false
+end
 
-    --前进
-    local callFuncAhead = function ()
-        self:play("walk", handler(self, self.playAhead))
+function BaoEnemyView:playStartState(state)
+    if state == "san" then 
+        self:playSan()
+    else 
+        self:playAhead()
     end
-    self:performWithDelay(callFuncAhead, define.kBaoEnemyTimeStart)
+end
+
+function BaoEnemyView:playSan()
+    self:setPositionY(display.height1)
+
+    --action
+    local speed = define.kSanEnemySpeed 
+    local destPosY = self:getPlaceNode():getPositionY()
+    local distance = display.height - destPosY
+    local time = distance / speed 
+    local action = cc.MoveBy:create(time, cc.p(0, -distance))
+
+    local function fallEnd()
+        self:restoreStand()
+        self:playAhead()   
+    end
+    local seq = cc.Sequence:create(action, 
+        cc.CallFunc:create(fallEnd))    
+    self:runAction(seq)
+
+    --play
+    self.armature:getAnimation():play("jiangluo" , -1, 1) 
+
+    self:setPauseOtherAnim(true) 
 end
 
 function BaoEnemyView:playAhead()
     --前进
-    self.isAheading = true
     self.armature:getAnimation():play("walk" , -1, 1)
     local configEnemy = self.enemy:getConfig()
     local speed = configEnemy["speed"] or define.kBaoEnemyWalkSpeed
@@ -40,29 +60,32 @@ function BaoEnemyView:playAhead()
 
     --
     local aheadEndFunc = function ()
-        print("aheadEnd")
-         self.isAheading = false
-         self.isAheaded  = true
-        --自爆攻击
-        self:playKill()
+        self:playAheadEnd()
+        self:restoreStand()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
     transition.execute(self, seq, {easing = "sineIn",})
     transition.execute(self, actionScale, {easing = "sineIn",})
+    self:setPauseOtherAnim(true)
 end
 
 function BaoEnemyView:playKill(event)
     BaoEnemyView.super.playKill(self,event)
     self.armature:getAnimation():play("die" ,-1 , 1)
+    self:demageOthers()
+    self:playBombEffects()
+end
+
+function BaoEnemyView:playAheadEnd()
+    BaoEnemyView.super.playKill(self,event)
     self:playBombEffects()
 end
 
 function BaoEnemyView:playBombEffects()
     for i=1,3 do
         self:performWithDelay( handler(self, self.playBombEffect), i * 0.1)
-    end
-    self:performWithDelay( handler(self, self.demageOthers), 0.3)  
+    end 
 end
 
 function BaoEnemyView:playHitted(event)
@@ -73,20 +96,13 @@ function BaoEnemyView:playHitted(event)
 end
 
 function BaoEnemyView:tick(t)
-    --change state
-    if self.isAheading then return end
 end
 
 function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
-        -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
         if movementID ~= "die" and not self:getPauseOtherAnim() then
-            if self.isAheading then 
-                self.armature:getAnimation():play("walk" , -1, 1) 
-                return 
-            end
-            self:doNextPlay()   
+            self:doNextPlay()
         elseif movementID == "die" then 
             self:setDeadDone()
         end 
@@ -94,20 +110,15 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
 end
 
 function BaoEnemyView:demageOthers()
-    if self.isAheaded then
-        --伤害hero
-        self.enemy:hit(self.hero)
-    else
-        --伤害enemys
-        print("成功摧毁")
-        local destRect = self:getBaoRect()
-        local targetData = {demage = define.kBaoDemageOtherEnemys, 
-                            demageScale = 1, 
-                            demageType = "bao",
-                            }
-        self.hero:dispatchEvent({name = self.hero.ENEMY_ATTACK_MUTI_EVENT, 
-          targetData = targetData,destRect = destRect}) 
-    end   
+    --伤害enemys
+    print("成功摧毁")
+    local destRect = self:getBaoRect()
+    local targetData = {demage = define.kBaoDemageOtherEnemys, 
+                        demageScale = 1, 
+                        demageType = "bao",
+                        }
+    self.hero:dispatchEvent({name = self.hero.ENEMY_ATTACK_MUTI_EVENT, 
+      targetData = targetData,destRect = destRect})  
 end
 
 function BaoEnemyView:getBaoRect()

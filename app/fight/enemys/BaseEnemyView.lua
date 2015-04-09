@@ -18,6 +18,9 @@ local BaseEnemyView = class("BaseEnemyView", Attackable)
 function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
 	
+	--instance
+	self.isSaning = false
+
 	--play
     cc.EventProxy.new(self.enemy, self)
     	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
@@ -66,7 +69,6 @@ function BaseEnemyView:setBlood(per)
 	local bloodUp 	= cc.uiloader:seekNodeByName(self.blood, "bloodUp")
 	local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
 
-	per = per * define.kEnemyAnimScale
 	bloodUp:setScaleX(per/100)
 	transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})
 
@@ -80,7 +82,6 @@ function BaseEnemyView:setBlood(per)
 		self.blood:setVisible(false)
 	end
 	self.bloodAction = self.blood:performWithDelay(hide, 1.0)
-
 end
 
 function BaseEnemyView:playAfterAlert(type,handler)
@@ -114,7 +115,6 @@ function BaseEnemyView:showAlert()
     armature:getAnimation():setMovementEventCallFunc(alertAnimEvent)    
 end
 
----- state ----
 function BaseEnemyView:playStand()
 	self.armature:getAnimation():play("stand" , -1, 1)  
 end
@@ -174,7 +174,6 @@ function BaseEnemyView:onHitted(targetData)
 	--爆头
 	if self.enemy:getHp() == 0 then 
 		if demageType == "head" then 
-			-- print("爆头")
 			local soundSrc  = "res/Music/fight/btts.wav"
 			audio.playSound(soundSrc,false)				
 			self.hero:dispatchEvent({
@@ -188,12 +187,6 @@ function BaseEnemyView:onHitted(targetData)
 	self:setBlood(hp/maxHp * 100)
 end
 
-function BaseEnemyView:getModel(property)
-	return Enemy.new(property)
-end
-
---BaseEnemyView interface
---not required
 function BaseEnemyView:playStartState(state)
 	self:playStand()
 end
@@ -203,6 +196,10 @@ function BaseEnemyView:canHitted()
 end
 
 --required
+function BaseEnemyView:getModel(property)
+	return Enemy.new(property)
+end
+
 function BaseEnemyView:tick(t)
 	assert("required method, must implement me")	
 end

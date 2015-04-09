@@ -281,7 +281,7 @@ function MapView:getLeftEnemyNum()
 		local type = enemyView:getEnemyType()
 		if type ~= "missile" and type ~= "renzhi" 
 			and type ~= "jinbi" and type ~= "dao_wang"
-			and type ~= "dao_wu" then 
+			and type ~= "dao_wu" and type ~= "bangren" then 
 			num = num + 1
 		end
 	end

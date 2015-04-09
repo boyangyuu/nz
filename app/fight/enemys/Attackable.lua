@@ -341,7 +341,6 @@ function Attackable:playBombEffect()
 end
 
 function Attackable:restoreStand()
-	-- print("function Attackable:restoreStand()")
 	self.playAnimId = nil 
 	self.armature:stopAllActions()	
 	self.armature:getAnimation():stop()
