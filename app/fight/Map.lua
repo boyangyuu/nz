@@ -64,7 +64,7 @@ end
 
 function Map:getIsJuMap()
 	local fight 	 = md:getInstance("Fight")
-	local levelModel = md:getInstance("LevelModel")
+	local levelModel = md:getInstance("LevelDetailModel")
     local gid,lid 	 = fight:getCurGroupAndLevel()
     local isju 	     = levelModel:isJujiFight(gid,lid) 
     return isju

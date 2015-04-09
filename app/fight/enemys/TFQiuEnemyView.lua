@@ -70,10 +70,7 @@ function TFQiuEnemyView:playMoveToNext()
 
     --action
     local distance = math.abs(data.pos)
-    local map      = md:getInstance("Map")
-    local isJu     = map:getIsJuMap()
-    local speed = isJu and (define.kqQufanSpeed /define.kJuRange) 
-                or define.kqQufanSpeed 
+    local speed = self:getSpeed()
     local time = distance / speed
     local action = cc.MoveTo:create(time, cc.p(destPosX, destPosY))
     local callfunc = function ()
@@ -102,7 +99,7 @@ function TFQiuEnemyView:exit()
     local direct  = self.posDatas["direct"]
     self.armature:getAnimation():play("run" .. direct , -1, 1) 
     self.isExiting   = true
-    local speed      = define.kqQufanSpeed
+    local speed      = self:getSpeed()
     local posInMapx  = self:getPosInMap().x
     local width 
     if direct == "right" then 
@@ -173,6 +170,14 @@ end
 
 function TFQiuEnemyView:canHitted()
     return true
+end
+
+function TFQiuEnemyView:getSpeed()
+    local map      = md:getInstance("Map")
+    local isJu     = map:getIsJuMap()
+    local speed = isJu and (define.kqQufanSpeed / 2) 
+                or define.kqQufanSpeed    
+    return speed
 end
 
 function TFQiuEnemyView:animationEvent(armatureBack,movementType,movementID)
