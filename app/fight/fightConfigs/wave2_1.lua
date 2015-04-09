@@ -97,7 +97,7 @@ local waves = {
 					startState = "enterright", --从屏幕左侧进入
 					data = {
 						direct = "left", --向右逃跑
-							{
+						{
 							pos = 800,  --第一次藏身处 移动 600
 							time = 2,   --隐藏时间 3s	
 						},											
@@ -563,7 +563,7 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=5,hp=2500, weak1=2,},
+	{id=4,image="qiufan",demage=5,hp=2500, weak1=2, weak4= 4,},
 
                                                           
 	-- --导弹兵      --type = "dao",

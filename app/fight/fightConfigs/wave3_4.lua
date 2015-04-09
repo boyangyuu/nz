@@ -27,53 +27,71 @@ local waves = {
 					},									
 				},
 			},
-			-- {
-			-- 	time = 6,
-			-- 	num = 1,
-			-- 	delay = {0.5},
-			-- 	pos = {0},
-			-- 	property = {
-			-- 		type = "taofan_qiu", 
-			-- 		placeName = "place9",
-			-- 		id = 4,
-			-- 		startState = "enterleft", --从屏幕左侧进入
-			-- 		data = {
-			-- 			direct = "right", --向右逃跑
-			-- 			{
-			-- 				pos = 300,  --第一次藏身处 移动 600
-			-- 				time = 3,   --隐藏时间 3s	
-			-- 			},
-			-- 			{
-			-- 				pos = 300,  --第一次藏身处 移动 600
-			-- 				time = 3,   --隐藏时间 3s	
-			-- 			},
-			-- 		},
-			-- 	},
-			-- },
-			-- {
-			-- 	time = 10,
-			-- 	num = 1,
-			-- 	delay = {0.5},
-			-- 	pos = {0},
-			-- 	property = {
-			-- 		type = "taofan_qiu", 
-			-- 		placeName = "place11",
-			-- 		id = 4,
-			-- 		startState = "enterright", --从屏幕左侧进入
-			-- 		data = {
-			-- 			direct = "left", --向右逃跑
-			-- 			{
-			-- 				pos = 650,  --第一次藏身处 移动 600
-			-- 				time = 3,   --隐藏时间 3s	
-			-- 			},
-			-- 			{
-			-- 				pos = 300,  --第一次藏身处 移动 600
-			-- 				time = 3,   --隐藏时间 3s	
-			-- 			},
-			-- 		},
-			-- 	},
-			-- },
-			
+			{
+				time = 6,
+				num = 1,
+				delay = {0.5},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place9",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 300,  --第一次藏身处 移动 600
+							time = 3,   --隐藏时间 3s	
+						},
+						{
+							pos = 300,  --第一次藏身处 移动 600
+							time = 3,   --隐藏时间 3s	
+						},
+					},
+				},
+			},
+			{
+				time = 10,
+				num = 1,
+				delay = {0.5},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place11",
+					id = 4,
+					startState = "enterright", --从屏幕左侧进入
+					data = {
+						direct = "left", --向右逃跑
+						{
+							pos = 650,  --第一次藏身处 移动 600
+							time = 3,   --隐藏时间 3s	
+						},
+						{
+							pos = 300,  --第一次藏身处 移动 600
+							time = 3,   --隐藏时间 3s	
+						},
+					},
+				},
+			},
+			{ 
+				time = 13,
+				num = 3,
+				delay = {0,0.7,1.4},
+				pos = {300,500,700},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place9",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 3,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
 
 		},
 	},
@@ -284,7 +302,8 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=5,hp=2500, weak1=2,},
+	{id=4,image="qiufan",demage=5,hp=2500,
+	weak1=2, weak4=4},
                                                         
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=5000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
