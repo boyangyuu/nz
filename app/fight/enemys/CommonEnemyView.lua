@@ -171,4 +171,5 @@ function CommonEnemyView:animationEvent(armatureBack,movementType,movementID)
     	end 
 	end
 end
+
 return CommonEnemyView

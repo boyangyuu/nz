@@ -49,7 +49,8 @@ Define.kTufeiWalkTime			= 0.6      --行走时间
 Define.kBangrenSpeed			= 200	   --逃跑速度
 
 --囚犯兵
-Define.kqQufanSpeed             = 200       --逃跑速度
+Define.kQiufanSpeed             = 200       --逃跑速度
+Define.kQiufanJuSpeed           = 80        --逃跑速度
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
