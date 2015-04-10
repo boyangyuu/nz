@@ -187,6 +187,17 @@ function Attackable:getPlaceNode()
 	return self.property["placeNode"]
 end
 
+function Attackable:getPlaceOffsetX()
+	assert(self.property["offsetX"], "self.property offsetX is nil")
+	return self.property["offsetX"]
+end
+
+function Attackable:getOriginPosInMap()
+	local posPlaceX, posPlaceY = self:getPlaceNode():getPosition()
+	local oriPos = cc.p(posPlaceX + self:getPlaceOffsetX(), posPlaceY)
+	return oriPos
+end
+
 function Attackable:getProperty()
 	return self.property
 end

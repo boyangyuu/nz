@@ -65,6 +65,8 @@ function BaseBossView:initBlood()
     self:setBlood(1.0)
 end
 function BaseBossView:setBlood(scale)
+	if scale == 0 then return end
+
 	--init
 	for i=1, kBloodMaxN do
 		local node = cc.uiloader:seekNodeByName(self.blood, "blood" .. i)
@@ -92,58 +94,7 @@ function BaseBossView:setBlood(scale)
     bloodUp:setScaleX(nodeScale)
     transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})	
 end
---[[
-function BaseBossView:setBlood(scale)
-	if scale == 0 then 
-		self.blood:setVisible(false)
-		return
-	end
 
-    local bloodUp, bloodDown = nil, nil
-    local newScale = nil
-
-    --visible
-    local node1 = cc.uiloader:seekNodeByName(self.blood, "blood1")
-    local node2 = cc.uiloader:seekNodeByName(self.blood, "blood2")
-    local node3 = cc.uiloader:seekNodeByName(self.blood, "blood3")
-    node1:setVisible(true)
-    node2:setVisible(true)
-    node3:setVisible(true) 
-    
-    -- 0.75 - 1
-    if scale > 0.75 then
-    	local node = node1
-    	node1:setVisible(true)
-    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
-    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = (scale - 0.75) / (1 - 0.75)
-    	node3:setVisible(false)
-    	
-    -- 0.40 - 0.75
-    elseif scale > 0.40 and scale <= 0.75 then
-    	local node = node2
-    	node2:setVisible(true)
-    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
-    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = (scale - 0.40) / (0.75 - 0.40)
-	    node1:setVisible(false)
-    	
-    -- 0 - 0.40
-    else
-    	local node = node3
-    	node3:setVisible(true)
-    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
-    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = scale / 0.40
-		node1:setVisible(false)
-	    node2:setVisible(false)
-    end
-
-    newScale = newScale * define.kEnemyAnimScale
-    bloodUp:setScaleX(newScale)
-    transition.scaleTo(bloodDown, {scaleX = newScale, time = 0.1})
-end
-]]
 function BaseBossView:playStand()
 	local animName = self.isUnhurted and "stand02" or "stand"
 	self.armature:getAnimation():play(animName , -1, 1)

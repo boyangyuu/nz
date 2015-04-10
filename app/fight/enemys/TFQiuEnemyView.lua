@@ -62,17 +62,16 @@ function TFQiuEnemyView:playMoveToNext()
     self.armature:getAnimation():play(animName , -1, 1) 
 
     --pos
-    local place = self:getPlaceNode()
-    local destPosX, destPosY = place:getPositionX(), place:getPositionY()
+    local destPos = self:getOriginPosInMap()
     for i=1,self.posIndex do
-        destPosX = destPosX + self.posDatas[i].pos
+        destPos.x = destPos.x + self.posDatas[i].pos
     end
 
     --action
-    local distance = math.abs(data.pos)
+    local distance = math.abs(self:getPositionX() - destPos.x)
     local speed = self:getSpeed()
     local time = distance / speed
-    local action = cc.MoveTo:create(time, cc.p(destPosX, destPosY))
+    local action = cc.MoveTo:create(time, destPos)
     local callfunc = function ()
         self:playHide()
     end
@@ -81,7 +80,6 @@ function TFQiuEnemyView:playMoveToNext()
 end
 
 function TFQiuEnemyView:playHide()
-    print("self:playHide()")
     self.armature:getAnimation():play("dunxiasj" , -1, 1) 
     self.enemy:hit(self.hero)
 
@@ -177,6 +175,7 @@ function TFQiuEnemyView:getSpeed()
     local isJu     = map:getIsJuMap()
     local speed = isJu and (define.kqQufanSpeed / 2) 
                 or define.kqQufanSpeed    
+    print("speed", speed)
     return speed
 end
 
@@ -185,6 +184,8 @@ function TFQiuEnemyView:animationEvent(armatureBack,movementType,movementID)
         armatureBack:stopAllActions()
         if movementID == "die" then 
             self:setDeadDone()
+        elseif movementID ~= "die" and not self:getPauseOtherAnim() then
+            self:doNextPlay()
         end 
     end
 end
