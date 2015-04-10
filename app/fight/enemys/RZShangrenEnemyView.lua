@@ -69,12 +69,15 @@ function RZShangrenEnemyView:playMoveToNext()
 	self.armature:getAnimation():play(animName , -1, 1) 
 
 	--dest pos
-	local posOffset = data["pos"]
+    local destPos = self:getOriginPosInMap()
+    for i=1,self.posIndex do
+        destPos.x = destPos.x + self.posDatas[i].pos
+    end
 
-	--action
-	local distance = math.abs(posOffset)
+    --action
+    local distance = math.abs(self:getPositionX() - destPos.x)
 	local time = distance / define.kShangrenSpeed
-	local action = cc.MoveBy:create(time, cc.p(posOffset, 0))
+	local action = cc.MoveBy:create(time, destPos)
 	local callfunc = function ()
 		self:playHide()
 	end
