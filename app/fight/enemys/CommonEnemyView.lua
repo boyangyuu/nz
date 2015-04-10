@@ -50,7 +50,7 @@ function CommonEnemyView:playSan()
     self:setPositionY(display.height)
 
     --action
-    local speed = define.kSanEnemySpeed 
+    local speed = define.kLeiEnemySanSpeed 
     local destPosY = self:getPlaceNode():getPositionY()
     local distance = display.height - destPosY
     local time = distance / speed 

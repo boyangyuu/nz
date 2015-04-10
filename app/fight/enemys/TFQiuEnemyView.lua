@@ -142,7 +142,7 @@ function TFQiuEnemyView:playSan()
     self:setPositionY(display.height)
 
     --action
-    local speed = define.kSanTufeiSpeed
+    local speed = define.kTufeiSanSpeed
     local destPosY = self:getPlaceNode():getPositionY()
     local distance = display.height - destPosY
     local time = distance / speed 

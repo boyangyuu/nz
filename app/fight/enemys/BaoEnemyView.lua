@@ -24,7 +24,7 @@ function BaoEnemyView:playSan()
     self:setPositionY(display.height1)
 
     --action
-    local speed = define.kSanEnemySpeed 
+    local speed = define.kBaoEnemySanSpeed 
     local destPosY = self:getPlaceNode():getPositionY()
     local distance = display.height - destPosY
     local time = distance / speed 
