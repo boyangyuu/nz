@@ -64,9 +64,12 @@ function TFQiuEnemyView:playMoveToNext()
 
     --pos
     local destPos = self:getOriginPosInMap()
+    dump(destPos, "or destPos")
     for i=1,self.posIndex do
         destPos.x = destPos.x + self.posDatas[i].pos
     end
+
+    dump(destPos, "destPos")
 
     --action
     local distance = math.abs(self:getPositionX() - destPos.x)
@@ -94,6 +97,11 @@ function TFQiuEnemyView:playHide()
 end
 
 function TFQiuEnemyView:exit()
+    if self.property["exit"] == "middle" then 
+        self:onTao()
+        return
+    end
+
     if self.enemy:isDead() then return end
     local direct  = self.posDatas["direct"]
     self.armature:getAnimation():play("run" .. direct , -1, 1) 
