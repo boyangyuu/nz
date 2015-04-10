@@ -88,6 +88,7 @@ function RZBangfeiEnemyView:playWalkLeft()
         ))      
 end
 
+
 function RZBangfeiEnemyView:playWalkRight()
     if self.walkPos == 1 then return end
     local speed = define.kTufeiSpeed * self:getScale()

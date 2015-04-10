@@ -283,7 +283,7 @@ function MapView:getLeftEnemyNum()
 		local type = enemyView:getEnemyType()
 		if type ~= "missile" and type ~= "renzhi" 
 			and type ~= "jinbi" and type ~= "dao_wang"
-			and type ~= "dao_wu" then 
+			and type ~= "dao_wu" and type ~= "bangren" and type ~= "bangfei" then 
 			num = num + 1
 		end
 	end
@@ -490,10 +490,12 @@ function MapView:tick(dt)
 
 	--检查zorder
 	self:checkZorder()
-
 end
+
 function MapView:doKillAward(pos, award)
-	self.hero:killEnemyAward(pos, award)
+	if award then 
+		self.hero:killEnemyAward(pos, award)
+	end
 end
 
 --[[
@@ -701,7 +703,7 @@ function MapView:onThrowGrenade(event)
 	local function playBombEffect()
 		local map = md:getInstance("Map")
 		map:dispatchEvent({name = map.EFFECT_LEI_BOMB_EVENT,
-			destPos = destPos})
+			pWorld = focusWorld})
 	end
 	local gid = self.fight:getGroupId()
 	local scale = gid > 2 and 1.0 or 1.0	

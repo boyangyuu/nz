@@ -29,8 +29,6 @@ function RZBangrenEnemyView:playKill(event)
     self.isWillDead = true
     RZBangrenEnemyView.super.playKill(self, event)
     self.armature:getAnimation():play("die" ,-1 , 1)
-
-    print("function RZBangrenEnemyView:playKill(event)")
 end
 
 function RZBangrenEnemyView:tick(t)
@@ -43,7 +41,7 @@ function RZBangrenEnemyView:onKillFei(event)
     end
     local renzhiName = event.renzhiName
     if self.property.renzhiName == renzhiName then 
-        self:playRun()
+        self:onJiejiu()
         --event
         local mode = md:getInstance("FightMode")
         mode:dispatchEvent({name = mode.FightMODE_RENZHI_SAVE_EVENT})
@@ -52,6 +50,15 @@ end
 
 function RZBangrenEnemyView:playStand()
     self.armature:getAnimation():play("stand" , -1, 1) 
+end
+
+function RZBangrenEnemyView:onJiejiu()
+    if self.property["exit"] == "middle" then 
+        self:playStand()
+        self:setWillRemoved(1.0)
+    else
+        self:playRun()
+    end
 end
 
 function RZBangrenEnemyView:playRun()
@@ -67,8 +74,6 @@ function RZBangrenEnemyView:playRun()
         time = width / speed
     end
 
-    print("width", width)
-    print("time", time)
     local animName = direct == 1 and "runright" or "runleft"
     self.armature:getAnimation():play(animName , -1, 1) 
     local action = cc.MoveBy:create(time, cc.p(width, 0))
@@ -83,9 +88,6 @@ function RZBangrenEnemyView:playRun()
 end
 
 function RZBangrenEnemyView:canHitted()
-    if self:getPauseOtherAnim() then 
-        return false
-    end
     return true
 end
 
@@ -104,8 +106,7 @@ function RZBangrenEnemyView:animationEvent(armatureBack,movementType,movementID)
         elseif movementID == "die" then 
             self:setDeadDone()
             local fightMode = md:getInstance("FightMode")
-            fightMode:willFail({type = "renZhi"})  
-            print("RZBangrenEnemyView:animationEvent")          
+            fightMode:willFail({type = "renZhi"})        
         end 
     end
 end

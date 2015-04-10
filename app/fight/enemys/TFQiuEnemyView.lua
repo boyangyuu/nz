@@ -16,6 +16,7 @@ function TFQiuEnemyView:ctor(property)
     self.posIndex = 0
     self.posDatas = property.data
     self.isSaning = false
+    self:setPauseOtherAnim(true) 
 end
 
 function TFQiuEnemyView:playStartState(state)
@@ -34,13 +35,11 @@ function TFQiuEnemyView:playEnter(direct)
     --setPos
     local isLeft = direct == "left" 
     
-    local toPosx = self:getPositionX()
-    local posInMapx = self:getPosInMap().x
     local srcPosX = 0 
     if isLeft then 
-        srcPosX = toPosx - posInMapx - 300
+        srcPosX = - 300
     else
-        srcPosX = toPosx + (display.width - posInMapx) + 300
+        srcPosX = display.width + 300
     end
     self:setPositionX(srcPosX)
 
@@ -63,13 +62,17 @@ function TFQiuEnemyView:playMoveToNext()
     local animName = "run" .. direct
     self.armature:getAnimation():play(animName , -1, 1) 
 
-    --posOffset
-    local posOffset = data["pos"]
-
+    --pos
+    local destPos = self:getOriginPosInMap()
+    for i=1,self.posIndex do
+        destPos.x = destPos.x + self.posDatas[i].pos
+    end
+    
     --action
-    local distance = math.abs(posOffset)
-    local time = distance / define.kqQufanSpeed
-    local action = cc.MoveBy:create(time, cc.p(posOffset, 0))
+    local distance = math.abs(self:getPositionX() - destPos.x)
+    local speed = self:getSpeed()
+    local time = distance / speed
+    local action = cc.MoveTo:create(time, destPos)
     local callfunc = function ()
         self:playHide()
     end
@@ -78,7 +81,6 @@ function TFQiuEnemyView:playMoveToNext()
 end
 
 function TFQiuEnemyView:playHide()
-    print("self:playHide()")
     self.armature:getAnimation():play("dunxiasj" , -1, 1) 
     self.enemy:hit(self.hero)
 
@@ -92,11 +94,16 @@ function TFQiuEnemyView:playHide()
 end
 
 function TFQiuEnemyView:exit()
+    if self.property["exit"] == "middle" then 
+        self:onTao()
+        return
+    end
+
     if self.enemy:isDead() then return end
     local direct  = self.posDatas["direct"]
     self.armature:getAnimation():play("run" .. direct , -1, 1) 
     self.isExiting   = true
-    local speed      = define.kqQufanSpeed
+    local speed      = self:getSpeed()
     local posInMapx  = self:getPosInMap().x
     local width 
     if direct == "right" then 
@@ -140,7 +147,7 @@ function TFQiuEnemyView:playSan()
     self:setPositionY(display.height)
 
     --action
-    local speed = define.kSanTufeiSpeed
+    local speed = define.kTufeiSanSpeed
     local destPosY = self:getPlaceNode():getPositionY()
     local distance = display.height - destPosY
     local time = distance / speed 
@@ -156,9 +163,7 @@ function TFQiuEnemyView:playSan()
     self:runAction(seq)
 
     --play
-    self.armature:getAnimation():play("jiangluo" , -1, 1) 
-
-    self:setPauseOtherAnim(true)    
+    self.armature:getAnimation():play("jiangluo" , -1, 1)    
 end
 
 function TFQiuEnemyView:playHitted()
@@ -169,11 +174,20 @@ function TFQiuEnemyView:canHitted()
     return true
 end
 
+function TFQiuEnemyView:getSpeed()
+    local map      = md:getInstance("Map")
+    local isJu     = map:getIsJuMap()
+    local speed = isJu and define.kQiufanJuSpeed or define.kQiufanSpeed
+    return speed
+end
+
 function TFQiuEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete then
         armatureBack:stopAllActions()
         if movementID == "die" then 
             self:setDeadDone()
+        elseif movementID ~= "die" and not self:getPauseOtherAnim() then
+            self:doNextPlay()
         end 
     end
 end

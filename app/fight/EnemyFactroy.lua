@@ -6,9 +6,12 @@ local DaoEnemyView 		= import(".enemys.DaoEnemyView")
 local DDWangEnemyView	= import(".enemys.DDWangEnemyView")
 local DDWuEnemyView		= import(".enemys.DDWuEnemyView")
 
-local SanEnemyView 		= import(".enemys.SanEnemyView")
 local JinEnemyView 		= import(".enemys.JinEnemyView")
+
+--bao
 local BaoEnemyView 		= import(".enemys.BaoEnemyView")
+local BaoTongEnemyView	= import(".enemys.BaoTongEnemyView")
+
 local CommonEnemyView	= import(".enemys.CommonEnemyView")
 local JinbiEnemyView  	= import(".enemys.JinbiEnemyView")
 local FeijiEnemyView    = import(".enemys.FeijiEnemyView")
@@ -77,12 +80,14 @@ function EnemyFactory.createEnemy(property)
 		enemyView = TFQiuEnemyView.new(property)
 
 	--enemy		
-	elseif type == "san" then
-		enemyView = SanEnemyView.new(property)
 	elseif type == "jin" then
 		enemyView = JinEnemyView.new(property)
+
 	elseif type == "bao" then
 		enemyView = BaoEnemyView.new(property)	
+	elseif type == "bao_tong" then 
+		enemyView = BaoTongEnemyView.new(property)
+
 	elseif type == "dao" then
 		enemyView = DaoEnemyView.new(property)	
 	elseif type == "jinbi" then

@@ -94,7 +94,8 @@ function MapAnimView:addShootedArmature(animName, pos)
 end
 
 function MapAnimView:playEffectLeiBomb(event)
-	local destPos = event.destPos
+	local pWorld = event.pWorld
+	local destPos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	local armature = ccs.Armature:create("baozhasl_y")
 	armature:setPosition(destPos)
 
@@ -138,53 +139,89 @@ function MapAnimView:playAwardGold(event)
 end
 
 function MapAnimView:playEffectDandao(event)
-	local pos       = event.enemyPos
-	local srcPos    = self:convertToNodeSpace(cc.p(pos.x, pos.y))
-
-	local direct    = math.random(-1, 1)
-	local destPos = self:getDandaoPos(direct)
-	-- dump(srcPos, "srcPos")
-	local angle  = math.atan2(srcPos.y - destPos.y, 
-		srcPos.x - destPos.x)
-
-	local distance = cc.pGetDistance(destPos, srcPos)
-	local speed    = 1000
-	local time     = distance / speed
-	local rotate = 180 - (angle / math.pi * 180 )
-	-- print("angle", angle)
-	-- print("rotate", rotate)
-	local effect  = cc.ui.UIImage.new("res/dd_huo.png")
-
-	effect:setRotation(rotate)
-	effect:setPosition(srcPos)
-	effect:setScale(0.3)
-	effect:runAction(cc.Sequence:create(
-		cc.MoveTo:create(time, destPos),
-		cc.CallFunc:create(
-			function () 
-				effect:removeFromParent()
-				effect = nil
-		 	end
-		)))
-	effect:scaleTo(time, 2.0)
-	self:addChild(effect)
+	local pos           = event.enemyPos
+	local srcPos    	= self:convertToNodeSpace(cc.p(pos.x, pos.y))
+	local rotate, scale = self:getDandaoRotate(srcPos)
+	local armature = ccs.Armature:create("difang_dandao")
+	armature:setPosition(srcPos)
+	armature:setRotation(rotate)
+	armature:setScale(scale)
+	armature:getAnimation():playWithIndex(0 , -1, 1)
+	self:addChild(armature)
+	armature:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+				armature:removeFromParent()			
+	    	end 
+    	end)	
 end
 
-function MapAnimView:getDandaoPos(direct)
-	-- direct：  -1(左侧) 0(中间) 1(右侧)
-	local x, y 
-	if direct == -1 then 
-		x = 0
-		y = math.random(0, 150) 
-	elseif direct == 0 then 
-		x = math.random(0, display.width)
-		y = 0
-	elseif direct == 1 then 
-		x = display.width
-		y = math.random(0, 150)   
+function MapAnimView:getDandaoRotate(enemyPos)
+	--rotate
+	local rotateRight = math.random(15, 50)
+	local rotateLeft  = math.random(130, 165)	
+	local rotate
+	if enemyPos.x < display.width / 2 then 
+		rotate = rotateRight
+	else
+		rotate = rotateLeft
 	end
-	return cc.p(x, y)
 
+	--scale
+	local scale = 0.5 + 0.5 * 
+		(display.height - enemyPos.y) / display.height
+	scale = 1.0
+	return rotate, scale
 end
+
+-- function MapAnimView:playEffectDandao(event)
+-- 	local pos       = event.enemyPos
+-- 	local srcPos    = self:convertToNodeSpace(cc.p(pos.x, pos.y))
+
+-- 	local direct    = math.random(-1, 1)
+-- 	local destPos = self:getDandaoPos(direct)
+-- 	-- dump(srcPos, "srcPos")
+-- 	local angle  = math.atan2(srcPos.y - destPos.y, 
+-- 		srcPos.x - destPos.x)
+
+-- 	local distance = cc.pGetDistance(destPos, srcPos)
+-- 	local speed    = 1000
+-- 	local time     = distance / speed
+-- 	local rotate = 180 - (angle / math.pi * 180 )
+-- 	-- print("angle", angle)
+-- 	-- print("rotate", rotate)
+-- 	local effect  = cc.ui.UIImage.new("res/dd_huo.png")
+
+-- 	effect:setRotation(rotate)
+-- 	effect:setPosition(srcPos)
+-- 	effect:setScale(0.3)
+-- 	effect:runAction(cc.Sequence:create(
+-- 		cc.MoveTo:create(time, destPos),
+-- 		cc.CallFunc:create(
+-- 			function () 
+-- 				effect:removeFromParent()
+-- 				effect = nil
+-- 		 	end
+-- 		)))
+-- 	effect:scaleTo(time, 2.0)
+-- 	self:addChild(effect)
+-- end
+
+-- function MapAnimView:getDandaoPos(direct)
+-- 	-- direct：  -1(左侧) 0(中间) 1(右侧)
+-- 	local x, y 
+-- 	if direct == -1 then 
+-- 		x = 0
+-- 		y = math.random(0, 150) 
+-- 	elseif direct == 0 then 
+-- 		x = math.random(0, display.width)
+-- 		y = 0
+-- 	elseif direct == 1 then 
+-- 		x = display.width
+-- 		y = math.random(0, 150)   
+-- 	end
+-- 	return cc.p(x, y)
+
+-- end
 
 return MapAnimView

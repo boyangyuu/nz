@@ -13,6 +13,8 @@ local Boss = import(".Boss")
 local FightConfigs = import("..fightConfigs.FightConfigs")
 local BaseBossView = class("BaseBossView", Attackable)
 
+local kBloodMaxN = 6
+
 function BaseBossView:ctor(property)
 	BaseBossView.super.ctor(self, property) 
 
@@ -21,6 +23,7 @@ function BaseBossView:ctor(property)
 	self.zhaohuanIndex  = 1
 	local index = property.id
 	local waveConfig = FightConfigs:getWaveConfig()
+	self.bloodNum = 4
     
     --blood
     self:initBlood()
@@ -45,6 +48,8 @@ end
 
 --ui
 function BaseBossView:initBlood()
+	assert(self.bloodNum <= kBloodMaxN, "self.bloodNum is beyoud limit")
+    
     --add blood
 	self.blood = cc.uiloader:load("res/Fight/fightLayer/fightBlood/bossBlood.ExportJson")    
     
@@ -57,58 +62,37 @@ function BaseBossView:initBlood()
     self.armature:addChild(self.blood)
 
     --value
-    print("self.blood scale", self.blood:getScale())
     self:setBlood(1.0)
 end
-
 function BaseBossView:setBlood(scale)
-	if scale == 0 then 
-		self.blood:setVisible(false)
-		return
+	if scale == 0 then return end
+
+	--init
+	for i=1, kBloodMaxN do
+		local node = cc.uiloader:seekNodeByName(self.blood, "blood" .. i)
+		node:setVisible(false)
 	end
 
-    local bloodUp, bloodDown = nil, nil
-    local newScale = nil
+	--data
+	local offset    = 1.00 / self.bloodNum
+	local bloodUp, bloodDown
+	local showNum   = math.ceil(scale / offset) 
+	print("showNum", showNum)
+	local nodeScale = (scale - (showNum - 1) * offset ) / offset
+	assert(showNum >= 1 and showNum <= kBloodMaxN)
 
-    --visible
-    local node1 = cc.uiloader:seekNodeByName(self.blood, "blood1")
-    local node2 = cc.uiloader:seekNodeByName(self.blood, "blood2")
-    local node3 = cc.uiloader:seekNodeByName(self.blood, "blood3")
-    node1:setVisible(true)
-    node2:setVisible(true)
-    node3:setVisible(true) 
-    
-    -- 0.75 - 1
-    if scale > 0.75 then
-    	local node = node1
-    	node1:setVisible(true)
-    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
-    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = (scale - 0.75) / (1 - 0.75)
-    	node3:setVisible(false)
-    	
-    -- 0.40 - 0.75
-    elseif scale > 0.40 and scale <= 0.75 then
-    	local node = node2
-    	node2:setVisible(true)
-    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
-    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = (scale - 0.40) / (0.75 - 0.40)
-	    node1:setVisible(false)
-    	
-    -- 0 - 0.40
-    else
-    	local node = node3
-    	node3:setVisible(true)
-    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
-    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")
-    	newScale   = scale / 0.40
-		node1:setVisible(false)
-	    node2:setVisible(false)
-    end
-    newScale = newScale * define.kEnemyAnimScale
-    bloodUp:setScaleX(newScale)
-    transition.scaleTo(bloodDown, {scaleX = newScale, time = 0.1})
+	for i = 1, showNum do
+		local node = cc.uiloader:seekNodeByName(self.blood, "blood" .. i)
+		node:setVisible(true)
+		if i == showNum then 
+	    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
+	    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")			
+    	end	
+	end
+    print("nodeScale", nodeScale)
+    print("offset", offset)
+    bloodUp:setScaleX(nodeScale)
+    transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})	
 end
 
 function BaseBossView:playStand()
