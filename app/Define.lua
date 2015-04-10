@@ -48,8 +48,8 @@ Define.kTufeiWalkTime			= 0.6      --行走时间
 --人质 被绑架的人
 Define.kBangrenSpeed			= 200	   --逃跑速度
 
---囚犯兵
-Define.kqQufanSpeed             = 200       --逃跑速度
+--逃犯兵
+Define.kqQufanSpeed             = 200       --逃跑速度      狙击图速度是正常图速度的一半
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s

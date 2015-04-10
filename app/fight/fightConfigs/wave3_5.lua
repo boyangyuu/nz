@@ -111,6 +111,7 @@ local waves = {
 					type = "bangren",
 					placeName = "place6",
 					id = 8,
+					exit = "middle",
 				},
 			},
 			{
@@ -213,6 +214,7 @@ local waves = {
 					type = "bangren",
 					placeName = "place7",
 					id = 8,
+					exit = "middle",
 				},
 			},
 			{
@@ -335,29 +337,15 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
-				num = 1,
-				delay = {0.5},
-				pos = {45},
-				property = { 
-					placeName = "place6",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 14,
-				num = 1,
-				delay = {0.5},
-				pos = {45},
-				property = { 
-					placeName = "place5",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+				time = 12,	
+				num = 3,
+				pos = {250,530,700},
+				delay = {0.2,1.4,0.9},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
 				},
 			},
 			{
@@ -375,6 +363,32 @@ local waves = {
 			},
 			{
 				time = 18,
+				num = 1,
+				delay = {0.5},
+				pos = {45},
+				property = { 
+					placeName = "place5",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 20,
+				num = 1,
+				delay = {0.5},
+				pos = {45},
+				property = { 
+					placeName = "place6",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 22,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
 				pos = {300,400,500,600,700},					
@@ -386,7 +400,7 @@ local waves = {
 				},
 			},
 			{
-				time = 20,	
+				time = 24,	
 				num = 2,
 				pos = {280,400},
 				delay = {0.5,1},
@@ -396,20 +410,9 @@ local waves = {
 					id = 1,
 				},
 			},
+
 			{
-				time = 22,	
-				num = 3,
-				pos = {250,530,700},
-				delay = {0.2,1.4,0.9},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 26,
+				time = 30,
 				num = 1,
 				delay = {0},
 				pos = {600},
@@ -421,7 +424,7 @@ local waves = {
 				},
 			},
 			{
-				time = 26,
+				time = 30,
 				num = 1,
 				delay = {0},
 				pos = {600},

@@ -10,15 +10,13 @@ local waves = {
 				delay = {1.0,0,0.5},
 				pos = {400,680,960},
 				property = { 
-					placeName = "place5" ,
+					placeName = "place4" ,
 					type = "jin",                   --盾
-					id = 8,
-					startState = "san", 
+					id = 8,	 
 				},
 			},
-
 			{
-				time = 3,	
+				time = 4,	
 				num = 5,
 				pos = {120,210,300,400,550},
 				delay = {0.5,2,0,0.5,1.5},
@@ -29,7 +27,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,
+				time = 5,
 				num = 3,
 				delay = {0.1,0.5,1.2},
 				pos = {450,660,900},
@@ -41,14 +39,26 @@ local waves = {
 					missileId = 3,
 					missileType = "lei",              --雷
 				},
-			},			
+			},	
 			{
-				time = 6,
+				time = 6,	
+				num = 10,
+				pos = {400,550,700,850,1000,250,900,750,600,350},              --自爆
+				delay = {0,0.5,1.5,1,2,2.5,3,3.5,4,4.5},
+				property = {
+					placeName = "place3" ,
+					id = 9,
+					type = "bao",
+					startState = "san",
+				},
+			},		
+			{
+				time = 7,
 				num = 3,
 				delay = {0.1,0.6,1},
 				pos = {250,460,800},
 				property = { 
-					placeName = "place3" ,
+					placeName = "place4" ,
 					id = 5,
 					type = "dao",
 					missileId = 6,
@@ -56,7 +66,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 8,	
 				num = 5,
 				pos = {250,320,410,470,600},
 				delay = {0.1,0.6,1.5,1.8,0.8},
@@ -72,10 +82,9 @@ local waves = {
 				delay = {0,1.1,0.5},
 				pos = {400,680,960},
 				property = { 
-					placeName = "place5" ,
+					placeName = "place4" ,
 					type = "jin",                        --盾
 					id = 8,
-					startState = "san",
 				},
 			},
 			{
@@ -98,7 +107,7 @@ local waves = {
 				delay = {0,0.7,1.4},
 				pos = {700,900,1100},
 				property = { 
-					placeName = "place3" ,             --导弹
+					placeName = "place4" ,             --导弹
 					id = 5,
 					type = "dao",
 					missileId = 6,
@@ -106,17 +115,15 @@ local waves = {
 				},
 			},
 			{
-				time = 13,                               --雷
-				num = 2,
-				delay = {0,0.6},
-				pos = {380,560},
-				property = { 
-					placeName = "place4" ,
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+				time = 13,	
+				num = 4,
+				pos = {100,250,500,600},              --自爆
+				delay = {0,0.5,1.5,1},
+				property = {
+					placeName = "place3" ,
+					id = 9,
+					type = "bao",
+					startState = "san",
 				},
 			},
 			{
@@ -162,7 +169,7 @@ local waves = {
 				delay = {1.0,0,0.5},
 				pos = {400,680,960},
 				property = { 
-					placeName = "place3" ,
+					placeName = "place4" ,
 					type = "jin",                  --盾
 					id = 8,
 				},
@@ -207,7 +214,7 @@ local waves = {
 				delay = {0,1.1,0.5},
 				pos = {400,680,960},
 				property = { 
-					placeName = "place3" ,
+					placeName = "place4" ,
 					type = "jin",                  --盾
 					id = 8,
 				},
@@ -242,7 +249,7 @@ local waves = {
 				delay = {0,0.7,1.4},
 				pos = {700,900,1100},
 				property = { 
-					placeName = "place3" ,
+					placeName = "place4" ,
 					id = 1,
 					startState = "rollleft",	
 				},
@@ -314,11 +321,11 @@ local enemys = {
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=50000,fireRate=180,fireCd=5,speed=35, scale = 1.8 ,
+	{id=8,image="dunbing",demage=25,hp=50000,fireRate=180,fireCd=5,speed=40, scale = 1.8 ,
 	weak1=2, weak4=4},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=130,
 	weak1=2},	
 
 	
