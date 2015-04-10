@@ -10,13 +10,15 @@ local waves = {
 				delay = {1.0,0,0.5},
 				pos = {400,680,960},
 				property = { 
-					placeName = "place3" ,
+					placeName = "place5" ,
 					type = "jin",                   --盾
 					id = 8,
+					startState = "san", 
 				},
-			},	
+			},
+
 			{
-				time = 4,	
+				time = 3,	
 				num = 5,
 				pos = {120,210,300,400,550},
 				delay = {0.5,2,0,0.5,1.5},
@@ -27,7 +29,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,
+				time = 4,
 				num = 3,
 				delay = {0.1,0.5,1.2},
 				pos = {450,660,900},
@@ -70,9 +72,10 @@ local waves = {
 				delay = {0,1.1,0.5},
 				pos = {400,680,960},
 				property = { 
-					placeName = "place3" ,
+					placeName = "place5" ,
 					type = "jin",                        --盾
 					id = 8,
+					startState = "san",
 				},
 			},
 			{
@@ -312,7 +315,7 @@ local enemys = {
 
 	--盾兵         --type = "jin",
 	{id=8,image="dunbing",demage=25,hp=50000,fireRate=180,fireCd=5,speed=35, scale = 1.8 ,
-	weak1=2},
+	weak1=2, weak4=4},
 
 	--自爆兵        --type = "bao",
 	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
