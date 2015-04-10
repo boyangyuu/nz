@@ -77,7 +77,7 @@ function RZShangrenEnemyView:playMoveToNext()
     --action
     local distance = math.abs(self:getPositionX() - destPos.x)
 	local time = distance / define.kShangrenSpeed
-	local action = cc.MoveBy:create(time, destPos)
+	local action = cc.MoveTo:create(time, destPos)
 	local callfunc = function ()
 		self:playHide()
 	end

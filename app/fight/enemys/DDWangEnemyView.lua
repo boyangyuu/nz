@@ -80,9 +80,7 @@ end
 function DDWangEnemyView:animationEvent(armatureBack,movementType,movementID)
     -- print("animationEvent id ", movementID)
     if movementType == ccs.MovementEventType.loopComplete then
-
         if movementID ~= "die" and movementID ~= "die02" then
-
         else
             self:setWillRemoved()
         end

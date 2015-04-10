@@ -25,6 +25,7 @@ local waveClass = class("waveExample", BaseWave)
 			type = "bangren",
 			renzhiName = "人质1",     --  一组统一标示
 			id = 4,
+			exit = "middle", --在屏幕中消失 不填表示屏幕外消失
 		},
 	},
 
@@ -56,7 +57,8 @@ local waveClass = class("waveExample", BaseWave)
 					pos = -600,  --第2次藏身处 移动 - 600
 					time = 4,	 --隐藏时间 4s													
 				},											
-			},					
+			},		
+			exit = "middle", --在屏幕中消失 不填表示屏幕外消失			
 		},
 	},
 	{
@@ -85,6 +87,25 @@ local waveClass = class("waveExample", BaseWave)
 
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=21,hp=11, weak1=1},	
+
+---------- 汽油桶配置 -----------------------------
+			{
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {335},
+				property = { 
+					placeName = "place5",
+					type = "bao_tong",
+					id = 4,
+				},
+			},	
+
+	--汽油桶           --type = "bao_tong",
+	{id=4,image="qyt_01",demage=21111,hp=1,
+	weak1=1},
+
+
 
 
 

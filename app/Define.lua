@@ -32,6 +32,10 @@ Define.kBaoDemageOtherEnemys 	= 10        --伤害值
 Define.kBaoRangeW 				= 200	    --自爆范围
 Define.kBaoRangeH 				= 200	     --自爆范围
 
+--汽油桶
+Define.kBaoTongRangeW 			= 300	    --自爆范围
+Define.kBaoTongRangeH 			= 300	     --自爆范围
+
 --人质 护士
 Define.kHushiSpeed				= 350.0    --人质跑动速度 像素/s
 Define.kHushiRunTime			= 1.2      --跑动时间
