@@ -16,6 +16,7 @@ function TFQiuEnemyView:ctor(property)
     self.posIndex = 0
     self.posDatas = property.data
     self.isSaning = false
+    self:setPauseOtherAnim(true) 
 end
 
 function TFQiuEnemyView:playStartState(state)
@@ -141,7 +142,7 @@ function TFQiuEnemyView:playSan()
     self:setPositionY(display.height)
 
     --action
-    local speed = define.kSanTufeiSpeed
+    local speed = define.kTufeiSanSpeed
     local destPosY = self:getPlaceNode():getPositionY()
     local distance = display.height - destPosY
     local time = distance / speed 
@@ -157,9 +158,7 @@ function TFQiuEnemyView:playSan()
     self:runAction(seq)
 
     --play
-    self.armature:getAnimation():play("jiangluo" , -1, 1) 
-
-    self:setPauseOtherAnim(true)    
+    self.armature:getAnimation():play("jiangluo" , -1, 1)    
 end
 
 function TFQiuEnemyView:playHitted()
@@ -173,9 +172,7 @@ end
 function TFQiuEnemyView:getSpeed()
     local map      = md:getInstance("Map")
     local isJu     = map:getIsJuMap()
-    local speed = isJu and (define.kqQufanSpeed / 2) 
-                or define.kqQufanSpeed    
-    print("speed", speed)
+    local speed = isJu and define.kQiufanJuSpeed or define.kQiufanSpeed
     return speed
 end
 

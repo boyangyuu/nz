@@ -16,22 +16,21 @@ Define.kEnemyWalkSpeed 			= 5.0       --左右移动速度
 Define.kEnemyWalkWidth 			= 200 * 1	--左右移动距离原来140改为200
 Define.kEnemyRollSpeed 			= 15.0	   --滚动速度 每帧率
 Define.kEnemyRollWidth 			= 300 * 1   --滚动距离
+Define.kLeiEnemySanSpeed 		    = 50.0 		--伞速
 
---近战兵
-Define.kJinEnemyWalkPos  		=- 180		-- 相对地图的y轴位置
-Define.kJinEnemyScale	  		=  1.7		-- 狼牙棒兵 盾兵到身前的比例
-Define.kJinEnemyWalkSpeed 		=  80.0 	--狼牙棒兵 盾兵 每秒前进像素(默认值)
-
---伞兵
-Define.kSanEnemySpeed 		    =  50.0 	--伞兵降落速度
-Define.kSanTufeiSpeed 		    =  50.0 	--土匪兵降落速度
+--近战兵(狼牙棒兵 盾兵)
+Define.kJinEnemyWalkPos  		= -180		-- 相对地图的y轴位置
+Define.kJinEnemyScale	  		= 1.7		-- 到身前的比例
+Define.kJinEnemyWalkSpeed 		= 80.0 		--每秒前进像素(默认值)
+Define.kJinEnemySanSpeed        = 100   	--伞速
 
 --自爆兵
-Define.kBaoEnemyWalkSpeed 		=  70.0 	--自爆兵 每秒前进速度
-Define.kBaoEnemyScale	  		=  1.2		-- 自爆兵到身前的比例
-Define.kBaoDemageOtherEnemys 	= 10        --自爆兵伤害值
-Define.kBaoRangeW 				= 200	    --自爆兵范围
-Define.kBaoRangeH 				= 200	     --自爆兵范围
+Define.kBaoEnemyWalkSpeed 		= 70.0 		--每秒前进速度
+Define.kBaoEnemyScale	  		= 1.2		-- 到身前的比例
+Define.kBaoEnemySanSpeed	  	= 100.0		-- 伞降落速度
+Define.kBaoDemageOtherEnemys 	= 10        --伤害值
+Define.kBaoRangeW 				= 200	    --自爆范围
+Define.kBaoRangeH 				= 200	     --自爆范围
 
 --人质 护士
 Define.kHushiSpeed				= 350.0    --人质跑动速度 像素/s
@@ -44,12 +43,15 @@ Define.kShangrenSpeed			= 200		--武器商人黄跑动速度
 --土匪兵 绑架
 Define.kTufeiSpeed				= 200	   --行走速度
 Define.kTufeiWalkTime			= 0.6      --行走时间
+Define.kTufeiSanSpeed 		    = 50.0 	--土匪兵降落速度
 
 --人质 被绑架的人
 Define.kBangrenSpeed			= 200	   --逃跑速度
 
---逃犯兵
-Define.kqQufanSpeed             = 200       --逃跑速度      狙击图速度是正常图速度的一半
+--囚犯兵
+Define.kQiufanSpeed             = 200       --逃跑速度
+Define.kQiufanJuSpeed           = 80        --狙击图逃跑速度
+
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s
@@ -74,7 +76,8 @@ Define.kjipuRunTime 			= 1.0	 --大范围移动时间
 Define.kjipuWalkTime			= 0.6    --小范围移动时间
 
 --奖励兵
-Define.kAwardSanTime			= 5.0    --箱子落地持续时间
+Define.kAwardSanTime			= 5.0    	--箱子落地持续时间
+Define.kAwardEnemySanSpeed		= 50.0      --伞速
 
 --导弹
 Define.kMissileDaoTime				= 2.5    --导弹飞行时间
