@@ -8,7 +8,6 @@ function StartLayer:ctor()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
     self:playEnterSound()
-
 end
 
 function StartLayer:loadCCS()

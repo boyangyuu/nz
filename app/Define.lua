@@ -13,10 +13,10 @@ Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
 
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 5.0       --左右移动速度
-Define.kEnemyWalkWidth 			= 200 * 1	--左右移动距离原来140改为200
+Define.kEnemyWalkWidth 			= 300 * 1	--左右移动距离原来140改为200
 Define.kEnemyRollSpeed 			= 15.0	   --滚动速度 每帧率
-Define.kEnemyRollWidth 			= 300 * 1   --滚动距离
-Define.kLeiEnemySanSpeed 		    = 50.0 		--伞速
+Define.kEnemyRollWidth 			= 500 * 1   --滚动距离
+Define.kLeiEnemySanSpeed 	    = 50.0 		--伞速
 
 --近战兵(狼牙棒兵 盾兵)
 Define.kJinEnemyWalkPos  		= -180		-- 相对地图的y轴位置
@@ -42,20 +42,19 @@ Define.kHushiRunTime			= 1.2      --跑动时间
 Define.kHushiWalkTime			= 0.6      --行走时间
 
 --人质 黄人
-Define.kShangrenSpeed			= 200		--武器商人黄跑动速度
+Define.kShangrenSpeed			= 250		--武器商人黄跑动速度
 
 --土匪兵 绑架
 Define.kTufeiSpeed				= 200	   --行走速度
 Define.kTufeiWalkTime			= 0.6      --行走时间
-Define.kTufeiSanSpeed 		    = 50.0 	--土匪兵降落速度
 
 --人质 被绑架的人
 Define.kBangrenSpeed			= 200	   --逃跑速度
 
---囚犯兵
+--逃犯兵
 Define.kQiufanSpeed             = 200       --逃跑速度
-Define.kQiufanJuSpeed           = 80        --狙击图逃跑速度
-
+Define.kQiufanJuSpeed           = 80        --逃跑速度
+Define.kQiufanSanSpeed 		    = 50.0 		--伞降落速度
 
 --忍者兵
 Define.kRenzheWalkSpeed			= 200.0    --忍者移动速度 像素/s

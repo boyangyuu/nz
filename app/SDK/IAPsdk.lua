@@ -32,10 +32,8 @@ function IAPsdk:initConfigs()
 		--移动商用计费代码 3月28日检查 无错误
 		--礼包
 		config["novicesBag"]       = "30000883682311"		--新手礼包
-		config["weaponGiftBag"]    = "30000883682317"		--武器到礼包
+		config["weaponGiftBag"]    = "30000883682317"		--武器礼包
 		config["goldGiftBag"]      = "30000883682318"		--土豪金礼包
-		config["timeGiftBag"]      = "30000883682304"		--限时特价
-		config["changshuang"]      = "30000883682305"		--畅爽礼包
 
 		--单件
 		config["goldWeapon"]       = "30000883682306"		--黄武

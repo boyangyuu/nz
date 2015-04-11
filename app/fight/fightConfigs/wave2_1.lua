@@ -4,36 +4,11 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
-
 			{
-				time = 2,	
-				num = 2,
-				pos = {250,450},
-				delay = {0,1.5},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 3,
+				descId = "qiufan",               --简介
+				time = 2,
 				num = 1,
-				delay = {0.5},
-				pos = {800},
-				property = { 
-					placeName = "place1",
-					id = 2,
-					startState = "rollleft",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 4,
-				num = 1,
-				delay = {0.5},
+				delay = {4},
 				pos = {0},
 				property = {
 					type = "taofan_qiu", 
@@ -50,7 +25,32 @@ local waves = {
 				},
 			},
 			{
-				time = 5,	
+				time = 6,	
+				num = 2,
+				pos = {250,450},
+				delay = {0,1.5},
+				property = { 
+					placeName = "place3",
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 7,
+				num = 1,
+				delay = {0.5},
+				pos = {800},
+				property = { 
+					placeName = "place1",
+					id = 2,
+					startState = "rollleft",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 8,	
 				num = 3,
 				pos = {730,800,920},
 				delay = {0,0.5,0.8},
@@ -61,7 +61,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 9,	
 				num = 3,
 				pos = {250,430,510},
 				delay = {0,1.5,0.8},
@@ -72,7 +72,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 7,
+				time = 10,
 				num = 2,
 				delay = {0.5,1.0},
 				pos = {250,400},
@@ -86,26 +86,30 @@ local waves = {
 				},
 			},	
 			{
-				time = 8,
+				time = 10,
 				num = 1,
 				delay = {0.5},
 				pos = {0},
 				property = {
 					type = "taofan_qiu", 
-					placeName = "place4",
+					placeName = "place5",
 					id = 4,
 					startState = "enterright", --从屏幕左侧进入
 					data = {
 						direct = "left", --向右逃跑
 						{
-							pos = 800,  --第一次藏身处 移动 600
+							pos = 700,  --第一次藏身处 移动 600
 							time = 2,   --隐藏时间 3s	
-						},											
+						},	
+						{
+							pos = -300,  --第一次藏身处 移动 600
+							time = 2,   --隐藏时间 3s
+						},										
 					},									
 				},
 			},
 			{
-				time = 9,	
+				time = 11,	
 				num = 2,
 				pos = {800,950},
 				delay = {0,0.6},
@@ -116,7 +120,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 12,	
 				num = 3,
 				pos = {250,330,410},
 				delay = {0,1.5,0.8},
@@ -127,7 +131,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 11,
+				time = 13,
 				num = 1,
 				delay = {0.5},
 				pos = {0},
@@ -146,7 +150,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 14,
 				num = 2,
 				delay = {0.5,0},
 				pos = {250,900},
@@ -160,7 +164,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 13,	
+				time = 15,	
 				num = 3,
 				pos = {820,910,980},
 				delay = {0,0.6,0.8},
