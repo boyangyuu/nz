@@ -91,7 +91,6 @@ function StoreCell:initCellUI()
 
     local btnarmature = ccs.Armature:create("bt_yjzb")
     btnarmature:setPosition(2,3)
-    -- btnarmature:setScale(1.2)
     self.btnbuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
 
@@ -103,8 +102,7 @@ function StoreCell:initCellUI()
     display.addSpriteFrames(plist,png)
 
     local armature = ccs.Armature:create("shangchengz_tb")
-    armature:setPosition(-238,0)
-    armature:setScale(0.8)
+    armature:setPosition(-220,0)
     self:addChild(armature)
     armature:getAnimation():play("die" , -1, 1)
 end
