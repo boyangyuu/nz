@@ -101,6 +101,16 @@ configs["hs"] = {
 	describe = "不要打我的脸！人家很爱漂亮的！",
 	playanim = "speak1",
 }
+
+configs["qiufan"] = {
+	title = "击毙逃犯",
+	name = "逃犯",
+	spc = "特性：",
+	skill = {"逃犯逃走会任务失败"},
+	weakness = "头部",
+	describe = "越狱的逃犯",
+	playanim = "runright",
+}
 configs["feiji"] = {
 	title = "出现新兵种！",
 	name = "飞机",

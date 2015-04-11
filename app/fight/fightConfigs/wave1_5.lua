@@ -24,10 +24,10 @@ local waves = {
 				time = 3,
 				num = 1,
 				delay = {0},
-				pos = {360},
+				pos = {310},
 				property = {
 					placeName = "place5",  
-					startState = "rollright",
+					startState = "rollleft",
 					id = 1,
 				},
 			},
@@ -44,9 +44,33 @@ local waves = {
 					missileId = 5,
 					missileType = "lei",
 				},
+			},	
+			{
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {600},
+				property = {
+					renzhiName = "人质1",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place9",
+					id = 7,
+				},
 			},
 			{
 				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {600},
+				property = {
+					renzhiName = "人质1",     --  一组统一标示
+					type = "bangren",
+					placeName = "place9",
+					id = 8,
+				},
+			},
+			{
+				time = 12,
 				num = 1,
 				delay = {0},
 				pos = {400},
@@ -55,7 +79,7 @@ local waves = {
 					startState = "rollright",
 					id = 1,	
 				},
-			},	
+			},
 		},
 	},
 	{
@@ -128,6 +152,30 @@ local waves = {
 				time = 20,
 				num = 1,
 				delay = {0},
+				pos = {350},
+				property = {
+					renzhiName = "人质2",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place3",
+					id = 7,
+				},
+			},
+			{
+				time = 20,
+				num = 1,
+				delay = {0},
+				pos = {350},
+				property = {
+					renzhiName = "人质2",     --  一组统一标示
+					type = "bangren",
+					placeName = "place3",
+					id = 8,
+				},
+			},
+			{
+				time = 23,
+				num = 1,
+				delay = {0},
 				pos = {760},
 				property = {
 					placeName = "place5",  
@@ -136,7 +184,7 @@ local waves = {
 				},
 			},
 			{
-				time = 23,
+				time = 26,
 				num = 1,
 				delay = {0},
 				pos = {570},
@@ -147,7 +195,7 @@ local waves = {
 				},
 			},
 			{
-				time = 26,
+				time = 29,
 				num = 1,
 				delay = {0},
 				pos = {650},
@@ -158,7 +206,7 @@ local waves = {
 				},
 			},
 			{
-				time = 30,
+				time = 32,
 				num = 1,
 				delay = {0},
 				pos = {50},
@@ -190,6 +238,12 @@ local enemys = {
 
 	--手雷
 	{id=5,image="shoulei",demage=4,hp=1, weak1=3,},
+
+	--绑匪                                     140--左右移动距离       280--滚动距离
+	{id=7,image="tufeib",demage=3,hp=220,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+
+	--被绑架人        --type = "bangren",
+	{id=8,image="hs", hp=500, weak1=1},	
 		
 }
 local mapId = "map_1_4"
