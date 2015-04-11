@@ -72,14 +72,14 @@ end
 
 function FightResultFailPopup:onCancelGoldGift()
     local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone)},
+    buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
      "战斗失败页面_原地复活取消土豪")
 end
 
 function FightResultFailPopup:onClickRelive()
     local buyModel = md:getInstance("BuyModel")
     buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
-        deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true},
+        deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true,isNotPopKefu = true},
      "失败页面_点击复活按钮")
 end
 

@@ -28,10 +28,11 @@ function FightProp:costRobot(callfuncSuccess)
 	else
 		--buy
 		local function deneyBuyFunc()
-			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData)}, "战斗界面_点击机甲")
+			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
+				isNotPopKefu = true}, "战斗界面_点击机甲")
 		end 
 		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc, isNotPopup = true}, "战斗界面_点击机甲")
+						deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击机甲")
 	end
 	self:refreshData()
 end
@@ -57,11 +58,11 @@ function FightProp:costLei(callfuncSuccess)
 	    um:event("关卡道具使用", umData) 		
 	else
 		local function deneyBuyFunc()
-			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData)}
-						, "战斗界面_点击手雷")
+			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
+						isNotPopKefu = true}, "战斗界面_点击手雷")
 		end 		
 		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc, isNotPopup = true}
+						deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}
 						, "战斗界面_点击手雷")
 	end
 	self:refreshData()
@@ -85,12 +86,11 @@ function FightProp:costGoldWeapon()
 		fightInlay:checkNativeGold()
 	else
 		local function deneyBuyFunc()
-			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon)}
-				, "战斗界面_点击黄武")
+			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon),
+						isNotPopKefu = true}, "战斗界面_点击黄武")
 		end 		
 		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
-						deneyBuyFunc = deneyBuyFunc, isNotPopup = true}
-						, "战斗界面_点击黄武")	
+				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击黄武")	
 	end
 	self:refreshData()
 end

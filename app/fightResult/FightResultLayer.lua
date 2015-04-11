@@ -225,7 +225,7 @@ function FightResultLayer:onClickBtnNext()
 	if isCurLevel then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = isPopupNext})
 	elseif curGroup == 0 then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup})
+		ui:changeLayer("HomeBarLayer",{groupId = 1})
 	else
 		print("1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})

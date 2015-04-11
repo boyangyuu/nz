@@ -264,7 +264,8 @@ function Fight:onDialogAfterEnd()
     if not buyModel:checkBought("weaponGiftBag") then 
         buyModel:showBuy("weaponGiftBag", {
             closeAllFunc = handler(self, self.startFightResult),
-            deneyBuyFunc = handler(self, self.startFightResult)},
+            deneyBuyFunc = handler(self, self.startFightResult),
+            isNotPopKefu = true},
             self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
     else
         self:startFightResult()
