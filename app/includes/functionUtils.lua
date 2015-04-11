@@ -174,3 +174,14 @@ function addBtnEffect(btn)
     
     sch = scheduler.performWithDelayGlobal(restore, 0.1)   
 end
+
+
+function isDefendMM()
+    local time = os.time()
+    print("time", time)
+    local year  = tonumber(os.date("%Y", time))
+    local month = tonumber(os.date("%m", time))
+    local day   = tonumber(os.date("%d", time))
+    local isDefend =  year <= 2015 and month <= 4 and day <= 16 
+    return isDefend
+end

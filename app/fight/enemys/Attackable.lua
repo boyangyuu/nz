@@ -427,6 +427,11 @@ function Attackable:getEnemyModel()
 	return self.enemy
 end
 
+function Attackable:onIncreaseHp(event)
+	local addHp = event.addHp
+end
+
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	

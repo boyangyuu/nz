@@ -1,23 +1,19 @@
 local BuyConfigs = class("BuyConfigs", cc.mvc.ModelBase)
 
 local dir = "res/GiftBag/GiftBag/GiftBag_"
+
+local isGiftDefend = isDefendMM()
+
 local configs = {
-	changshuang    = {				--畅爽
-			ccsPath = dir.."ChangShuang.json",
-			isGift = true,
-			price = 6,
-			name = "畅爽礼包",
-			
-	},
 	goldGiftBag    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag.json",
-			isGift = false,
+			isGift = isGiftDefend,
 			price = 30,
 			name = "土豪金礼包",
 	},
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
-			isGift = false,
+			isGift = isGiftDefend,
 			price = 6,
 			name = "新手礼包",
 	}, 
@@ -26,12 +22,6 @@ local configs = {
 			isGift = true,
 			price = 20,
 			name = "武器大礼包",
-	},
-	timeGiftBag= {           	  --限时大礼包
-			ccsPath = dir.."TimeGiftBag.json",
-			isGift = true,
-			price = 25,
-			name = "限时大礼包",
 	},
 	armedMecha     = {				--机甲
 			isGift = false,
@@ -68,16 +58,6 @@ local configs = {
 			isGift = false,
 			price = 2,
 			name = "复活1次",
-	},
-	stone10         = {
-			isGift = false,
-			price = 1,
-			name = "钻石10个",
-	},
-	stone45         = {
-			isGift = false,
-			price = 4,
-			name = "钻石45个",
 	},
 	stone120         = {
 			isGift = false,
