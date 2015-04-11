@@ -13,8 +13,6 @@ local FightConfigs = import("..fightConfigs.FightConfigs")
 function BaseEnemy:ctor(actor_property, enemy_property)
     --super
     BaseEnemy.super.ctor(self, actor_property) 
-
-    -- dump(enemy_property, "enemy_property")
     local demageScale = enemy_property["demageScale"] or 1.0
     self:setDemageScale(demageScale)
     self.isFireCd = false
@@ -27,18 +25,14 @@ end
 function BaseEnemy:getDemage()
     local baseDemage = self.config.demage or 1.0
     local scale = self:getDemageScale()
-    -- print("baseDemage", baseDemage)
-    -- print("scale", scale)
     return baseDemage * scale
 end
 
 function BaseEnemy:setDemageScale(scale)
-    -- print("function BaseEnemy:setDemageScale(scale)  "..scale)
     self.demageScale = scale
 end
 
 function BaseEnemy:getDemageScale()
-     -- print("function BaseEnemy:getDemageScale(scale): "..self.demageScale)
     return self.demageScale or 1.0
 end
 
@@ -68,7 +62,6 @@ end
 
 function BaseEnemy:beginWalkCd()
     self.isWalkCd = true
-    -- assert(self.config["walkCd"] , "config walkCd is nil")
     local walkCd = self.config["walkCd"] or 3.0
 
     local function resumeCd()
@@ -88,7 +81,6 @@ end
 
 function BaseEnemy:beginRollCd()
     self.isRollCd = true
-    -- assert(self.config["rollCd"] , "config rollCd is nil")
     local rollCd = self.config["rollCd"] or 3.0
 
     local function resumeCd()
@@ -131,7 +123,6 @@ function BaseEnemy:beginShanCd()
     self.isShanCd = true
     assert(self.config["shanCd"] , "config shanCd is nil")
     local shanCd = self.config["shanCd"]
-    -- print("shanCd", shanCd)
     local function resumeCd()
         self.isShanCd = false
     end
@@ -142,7 +133,6 @@ function BaseEnemy:beginShanCd()
 end
 
 function BaseEnemy:getWeakScale(rangeStr)
-    -- print(rangeStr, "rangeStr")
     return self.config[rangeStr]
 end
 
@@ -151,25 +141,30 @@ function BaseEnemy:getConfig()
 end
 
 function BaseEnemy:getAward()
-    return self.config["award"] or define.kKillEnemyAwardGold
+    if  self:isKillAward() then 
+        return self.config["award"] or define.kKillEnemyAwardGold
+    else
+        return nil
+    end
 end
 
 function BaseEnemy:onKill_(event)
-    local image = self.config["image"]
-    local noKillImages = {"shoulei", "daodan", "tieqiu","zzw", "feibiao"}
-    local isKill = true
-    for i,v in ipairs(noKillImages) do
-        if v == image then 
-            isKill = false
-        end
-    end
-
-    --kill
-    if isKill then 
+    if self:isKillAward() then 
         local hero = md:getInstance("Hero")
         hero:killEnemy()
     end
     BaseEnemy.super.onKill_(self, event)
+end
+
+function BaseEnemy:isKillAward()
+    local image = self.config["image"]
+    local images = {"qyt_01", "shoulei", "daodan", "tieqiu", "zzw", "feibiao"}
+    for i,v in ipairs(images) do
+        if v == image then 
+            return false
+        end
+    end  
+    return true  
 end
 
 return BaseEnemy

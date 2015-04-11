@@ -191,38 +191,6 @@ function BuyModel:buy_goldGiftBag( buydata )
 	end
 end
 
-function BuyModel:buy_changshuang( buydata )
-	local inlayModel = md:getInstance("InlayModel")
-	local storeModel = md:getInstance("StoreModel")
-	local propModel = md:getInstance("propModel")
-	--黄武*4
-	inlayModel:buyGoldsInlay(4)
-	--机甲*3
-	propModel:buyProp("jijia",3)
-	--手雷*10
-	propModel:buyProp("lei",10)
-end
-
-function BuyModel:buy_timeGiftBag( buydata )
-	local inlayModel = md:getInstance("InlayModel")
-	local storeModel = md:getInstance("StoreModel")
-	local propModel = md:getInstance("propModel")
-	local userModel = md:getInstance("UserModel")
-
-	--黄武*4
-	inlayModel:buyGoldsInlay(4)
-
-	--机甲*3
-	propModel:buyProp("jijia",3)
-
-	--手雷*10
-	propModel:buyProp("lei",10)
-
-	--金币*188888
-	userModel:buyDiamond(260)
-	userModel:addMoney(188888)
-end
-
 function BuyModel:buy_handGrenade( buydata )
 	local propModel = md:getInstance("propModel")
 	local storeModel = md:getInstance("StoreModel")
@@ -273,14 +241,6 @@ function BuyModel:buy_resurrection( buydata )
 	--yby todo
 end
 
-function BuyModel:buy_stone10( buydata )
-	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(10)
-end
-function BuyModel:buy_stone45( buydata )
-	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(45)
-end
 function BuyModel:buy_stone120( buydata )
 	local userModel = md:getInstance("UserModel")
 	userModel:buyDiamond(120)

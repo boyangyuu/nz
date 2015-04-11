@@ -64,13 +64,10 @@ function TFQiuEnemyView:playMoveToNext()
 
     --pos
     local destPos = self:getOriginPosInMap()
-    dump(destPos, "or destPos")
     for i=1,self.posIndex do
         destPos.x = destPos.x + self.posDatas[i].pos
     end
-
-    dump(destPos, "destPos")
-
+    
     --action
     local distance = math.abs(self:getPositionX() - destPos.x)
     local speed = self:getSpeed()

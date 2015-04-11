@@ -13,14 +13,15 @@ function LevelDetailLayer:ctor(properties)
 	self.buyModel 		 = md:getInstance("BuyModel")
 	self.groupId 		 = properties.groupId
 	self.levelId 		 = properties.levelId
+	self.levelInfo       = self.groupId.."_"..self.levelId
 
 	--events
     cc.EventProxy.new(self.weaponListModel, self)
-        :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT   , handler(self, self.refreshUI))
+        :addEventListener(self.weaponListModel.WEAPON_UPDATE_EVENT , handler(self, self.refreshUI))
     cc.EventProxy.new(self.propModel, self)
-        :addEventListener(self.propModel.REFRESH_PROP_EVENT 	     , handler(self, self.refreshUI))
+        :addEventListener(self.propModel.REFRESH_PROP_EVENT 	   , handler(self, self.refreshUI))
     cc.EventProxy.new(self.inlayModel, self)
-        :addEventListener(self.inlayModel.REFRESH_INLAY_EVENT	     , handler(self, self.refreshUI))
+        :addEventListener(self.inlayModel.REFRESH_INLAY_EVENT      , handler(self, self.refreshUI))
 	self:initData()
 	
 	--ui
@@ -228,15 +229,26 @@ function LevelDetailLayer:onClickBtnStart()
 			 {type = "style5",
 			 callfuncQuickInlay = handler(self,self.onClickQuickInlay),
 			 callfuncGoldWeapon = handler(self,self.onClickGoldWeapon),
-			 callfuncClose = handler(self,self.startGame)})
+			 callfuncClose = handler(self,self.onClickCloseInlayNoti)})
 	else
 		self:startGame()
 	end
 end
 
+function LevelDetailLayer:onClickCloseInlayNoti()
+	self:startGame()
+	local umData = {}
+	umData[self.levelInfo] = "关闭镶嵌提示进战斗"
+	um:event("关卡提示未镶嵌", umData)   
+end
+
 function LevelDetailLayer:onClickQuickInlay()
 	self.inlayModel:equipAllInlays()
-	self:startGame()
+	self:startGame() 
+
+	local umData = {}
+	umData[self.levelInfo] = "点击快速镶嵌"
+	um:event("关卡提示未镶嵌", umData)   
 end
 
 function LevelDetailLayer:onClickGoldWeapon()
@@ -246,12 +258,16 @@ function LevelDetailLayer:onClickGoldWeapon()
 	end
 	function deneyPopGoldGift()
 	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情_提示未镶嵌点击单个黄武")
+	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
 	end
 
     self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
     	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
-	     "关卡详情_提示未镶嵌点击黄武按钮")
+	     "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
+
+    local umData = {}
+	umData[self.levelInfo] = "点击黄金武器"
+	um:event("关卡提示未镶嵌", umData)
 end
 
 function LevelDetailLayer:onClickBtnBibei()

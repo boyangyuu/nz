@@ -172,7 +172,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak"}
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak", "difang_dandao"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
