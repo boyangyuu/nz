@@ -349,7 +349,7 @@ function FightResultLayer:onCofirmLeftCard()
 		self:onTurnLeftCard()
 	else
         local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard)},
+        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard),isNotPopKefu = true},
          "战斗结算界面_点击翻牌")
 	end
 end
