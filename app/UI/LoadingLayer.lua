@@ -49,17 +49,12 @@ function LoadingLayer:initUI()
     local yuanpng = "res/Loading/loading_yuan/loading_yuan0.png"
     display.addSpriteFrames(yuanplist,yuanpng)
 
-    --anim    
-    -- self.quanarmature = ccs.Armature:create("loading_yuan")
-    -- self.quanarmature:setAnchorPoint(0.5,0.5)
-    -- addChildCenter(self.quanarmature, quan)
     self.img1 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_di02.png")
     self.img2 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_wai.png")
     self.img3 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_zhong.png")
     addChildCenter(self.img1,quan)
     addChildCenter(self.img2,quan)
     addChildCenter(self.img3,quan)
-
 end
 
 function LoadingLayer:setDesc()
@@ -69,9 +64,6 @@ function LoadingLayer:setDesc()
 end
 
 function LoadingLayer:playAnim()
-    -- self.quanarmature:getAnimation():play("loading_z")
-
-
     local action1 = cc.RotateTo:create(0.5, -180)
     local action2 = cc.RotateTo:create(0.5, -360)
     local action3 = cc.RotateTo:create(0.5,  180)

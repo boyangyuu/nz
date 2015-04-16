@@ -51,6 +51,10 @@ function DailyLoginLayer:initUI()
 			bg[i]:setColor(cc.c3b(135,0,153))
 		elseif giftInfo["type"] == "goldweapon" then
 			bg[i]:setColor(cc.c3b(156,98,0))
+        elseif giftInfo["type"] == "suipian" then
+            bg[i]:setColor(cc.c3b(156,98,0))
+        elseif giftInfo["type"] == "gun" then
+            bg[i]:setColor(cc.c3b(156,98,0))
 		end
     end
     self.already = {}

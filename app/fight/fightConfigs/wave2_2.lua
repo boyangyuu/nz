@@ -33,7 +33,19 @@ local waves = {
 				},
 			},
 			{
-				time = 11,	
+				time = 10,
+				num = 5,
+				delay = {1.1,0.6,1.7,0.3,1.8},
+				pos = {350,550,660,760,1050},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",                  --爆
+					id = 9,
+					startState = "san",	
+				},
+			},
+			{
+				time = 13,	
 				num = 5,
 				pos = {355,420,510,770,900},
 				delay = {0,0.9,0.5,0.6,1.5},
@@ -44,30 +56,19 @@ local waves = {
 				},
 			},
 			{
-				time = 14,
-				num = 5,
-				delay = {1.1,0.6,1.7,0.3,1.8},
-				pos = {350,550,660,760,1050},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 17,
+				time = 15,
 				num = 10,
 				delay = {0.2,0.9,1.7,2.5,3.3,0.3,1.8,4.0,4.5,5.1},
 				pos = {350,460,600,1050,570,456,780,666,510,980},
 				property = { 
 					placeName = "place3" ,
-					type = "common",
-					startState = "san",
-					id = 1,
+					type = "bao",                  --爆
+					id = 9,
+					startState = "san",	
 				},
 			},	
 			{
-				time = 20,
+				time = 16,
 				num = 2,
 				delay = {0.5,1},
 				pos = {250,320},
@@ -81,7 +82,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 22,
+				time = 17,
 				num = 2,
 				delay = {0.5,1},
 				pos = {980,1100},
@@ -95,7 +96,7 @@ local waves = {
 				},                                                          
 			},
 			{
-				time = 24,
+				time = 18,
 				num = 3,
 				delay = {0.5,1,0},
 				pos = {450,560,690},
@@ -103,10 +104,10 @@ local waves = {
 					placeName = "place4" ,
 					id = 1,
 					startState = "rollright",	
-				},                                                          --90
+				},                                                     
 			},
 			{
-				time = 25,
+				time = 19,
 				num = 3,
 				delay = {0.5,1.5,1},
 				pos = {220,550,600},
@@ -118,34 +119,8 @@ local waves = {
 					missileType = "daodan",
 				},                                                          
 			},
-		},
-	},	
-	{
-		enemys = { 
 			{
-				time = 2,	
-				num = 5,
-				pos = {420,510,700,900,1050},
-				delay = {0.5,2,0,0.5,1.5},
-				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 5,
-				num = 3,
-				delay = {0.1,0.5,1.2},
-				pos = {450,660,800},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 8,
+				time = 20,
 				num = 3,
 				delay = {0,1.1,0.5},
 				pos = {400,680,960},
@@ -154,86 +129,21 @@ local waves = {
 					type = "jin",                  --盾
 					id = 8,
 				},
-			},			
-			{
-				time = 11,
-				num = 3,
-				delay = {0.1,0.6,1},
-				pos = {250,460,600},
-				property = { 
-					placeName = "place2" ,
-					type = "bao",                 --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 14,	
-				num = 5,
-				pos = {25,120,310,470,600},
-				delay = {0.1,0.6,1.5,1.8,0.8},
-				property = {
-					placeName = "place2" ,
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 17,
-				num = 3,
-				delay = {0,1.0,1.5},
-				pos = {410,710,1000},
-				property = { 
-					placeName = "place3" ,
-					type = "dao",      --导
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},                                                          
-			},	
-			{
-				time = 20,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {300,370,440},
-				property = { 
-					placeName = "place3" ,
-					id = 1,
-					startState = "rollright",	
-				},                                                          
-			},	
-			{
-				time = 21,
-				num = 3,
-				delay = {0,0.7,1.4},
-				pos = {700,900,1100},
-				property = { 
-					placeName = "place4" ,
-					id = 1,
-					startState = "rollleft",	
-				},
 			},
 			{
 				time = 22,
-				num = 2,
-				delay = {0,0.6},
-				pos = {380,560},
+				num = 10,
+				delay = {0.2,0.9,1.7,2.5,3.3,0.3,1.8,4.0,4.5,5.1},
+				pos = {350,460,600,1050,570,456,780,666,510,980},
 				property = { 
-					placeName = "place4" ,
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place3" ,
+					type = "bao",                  --爆
+					id = 9,
+					startState = "san",	
 				},
-			},
-		},
-	},
-
-	{
-		enemys = {
-		    
+			},	
 			{
-				time = 2,	
+				time = 24,	
 				num = 5,
 				pos = {420,560,700,880,990},
 				delay = {1.4,0.6,0,1,2.1},
@@ -244,62 +154,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
-				num = 3,
-				delay = {0.5,0,1.3},
-				pos = {450,660,800},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 8,
-				num = 3,
-				delay = {0.5,0,1.2},
-				pos = {300,680,960},
-				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},		
-			{
-				time = 11,
-				num = 3,
-				delay = {0.1,0.9,1.7},
-				pos = {250,460,600},
-				property = { 
-					placeName = "place2" ,
-					type = "bao",      --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 14,	
-				num = 5,
-				pos = {25,120,310,470,600},
-				delay = {0.2,0.9,1.8,2.5,3.3},
-				property = {
-					placeName = "place2" ,
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 17,
-				num = 3,
-				delay = {0.2,1.0,1.8},
-				pos = {200,380,560},
-				property = { 
-					placeName = "place2" ,
-					type = "jin",       --盾
-					id = 8,
-				},
-			},
-			{
-				time = 20,
+				time = 26,
 				num = 5,
 				delay = {0.7,1.4,1.8, 2.1,2.8},
 				pos = {350,550,600,800,950},					
@@ -308,10 +163,10 @@ local waves = {
 					type = "common",
 					startState = "san",
 					id = 1,
-				},                                                                            --60
+				},                                                                          
 			},	
 			{
-				time = 23,
+				time = 30,
 				num = 4,
 				delay = {0,0.7,1.4,1.8},
 				pos = {600,500,400,300},					
@@ -320,10 +175,12 @@ local waves = {
 					type = "common",
 					startState = "san",
 					id = 1,
-				},                                                                            --60
+				},                                                                     
 			},	
 		},
-	},
+	},	
+
+
 	
 }
 

@@ -4,16 +4,26 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
-
 			{
 				time = 2,
-				num = 5,
-				delay = {0.1,0.6,1,0.3,1.7},
-				pos = {230,330,500,590,690},
+				num = 2,
+				delay = {0.2,1.3},
+				pos = {350,650},
 				property = { 
 					placeName = "place1" ,
-					type = "bao",                  --爆
-					id = 9,	
+					type = "jin",                  --盾 
+					id = 8,
+				},
+			},
+			{
+				time = 3,
+				num = 1,
+				delay = {0.8},
+				pos = {900},
+				property = { 
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
 				},
 			},
 			{
@@ -27,41 +37,44 @@ local waves = {
 					type = "jin",
 				},
 			},
+
 			{
-				time = 10,
-				num = 2,
-				delay = {0.2,1.3},
-				pos = {350,650},
+				time = 7,
+				num = 5,
+				delay = {0.1,0.6,1,2.3,1.7},
+				pos = {230,330,500,590,690},
 				property = { 
 					placeName = "place1" ,
-					type = "jin",                  --盾 
-					id = 8,
+					type = "bao",                  --爆
+					id = 9,	
+					startState = "san",
 				},
 			},
 			{
-				time = 14,
-				num = 1,
-				delay = {0.8},
-				pos = {900},
+				time = 9,
+				num = 3,
+				delay = {0.2,0.7,1.3},
+				pos = {500,300,700},
 				property = { 
-					placeName = "place2" ,
+					placeName = "place1" ,
 					type = "jin",                  --盾
 					id = 8,
 				},
 			},
 			{
-				time = 18,
+				time = 11,
 				num = 4,
-				delay = {0.2,1.3,0.8,1.6},
+				delay = {0,2,0.8,1.6},
 				pos = {220,480,600,700},
 				property = { 
 					placeName = "place1" ,
 					type = "bao",                 --爆
 					id = 9,	
+					startState = "san",
 				},
 			},
 			{
-				time = 24,
+				time = 13,
 				num = 5,
 				delay = {0.6,1.5,1.1,0.3,0.8},
 				pos = {290,350,460,600,680},
@@ -76,16 +89,15 @@ local waves = {
 
 	{
 		enemys = {
-
 			{
 				time = 2,
 				num = 3,
-				delay = {0.1,0.5,1},
-				pos = {350,560,700},
+				delay = {0.2,0.7,1.3},
+				pos = {500,300,700},
 				property = { 
 					placeName = "place1" ,
-					type = "bao",                  --爆
-					id = 9,	
+					type = "jin",                  --盾
+					id = 8,
 				},
 			},
 			{
@@ -100,29 +112,18 @@ local waves = {
 				},
 			},
 			{
-				time = 10,
+				time = 8,
 				num = 3,
-				delay = {0.2,0.7,1.3},
-				pos = {500,300,700},
+				delay = {0.1,0.5,1},
+				pos = {350,560,700},
 				property = { 
 					placeName = "place1" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},
-			{
-				time = 14,
-				num = 3,
-				delay = {0.1,0.9,0.7},
-				pos = {250,460,600},
-				property = { 
-					placeName = "place1" ,
-					type = "bao",      --爆
+					type = "bao",                  --爆
 					id = 9,	
 				},
 			},
 			{
-				time = 18,	
+				time = 10,	
 				num = 3,
 				delay = {0,0.9,1.5},
 				pos = {350,410,700},
@@ -133,7 +134,19 @@ local waves = {
 				},
 			},
 			{
-				time = 19,	                                               --金武奖励箱子
+				time = 12,
+				num = 3,
+				delay = {0.1,0.9,0.7},
+				pos = {250,460,600},
+				property = { 
+					placeName = "place1" ,
+					type = "bao",      --爆
+					id = 9,	
+					startState = "san",
+				},
+			},
+			{
+				time = 14,	                                               --金武奖励箱子
 				num = 1,
 				pos = {900},
 				delay = {0},
@@ -145,7 +158,7 @@ local waves = {
 				},
 			},
 			{
-				time = 22,
+				time = 16,
 				num = 3,
 				delay = {0.1,0.6,1.3},
 				pos = {350,650,900},
@@ -156,17 +169,29 @@ local waves = {
 				},
 			},
 			{
-				time = 25,
+				time = 18,
 				num = 5,
 				delay = {0.7,1.4,3.5, 2.1,2.8},
-				pos = {350,550,600,800,950},					
+				pos = {1050,760,630,500,320,},					
 				property = {
 					placeName = "place1",  
 					type = "common",
 					startState = "san",
 					id = 1,
-				},                                                                            --23
-			},	
+				},
+			},
+			{
+				time = 20,
+				num = 5,
+				delay = {0.7,1.4,3.5, 2.1,2.8},
+				pos = {350,550,600,800,950},					
+				property = {
+					placeName = "place1",  
+					type = "bao",      --爆
+					id = 9,	
+					startState = "san",
+				},
+			},
 			
 		},
 	},

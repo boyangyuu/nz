@@ -93,19 +93,19 @@ local waves = {
 				time = 11,
 				num = 5,
 				delay = {0,0.7,1.4,2.1,2.8,},
-				pos = {220,300,380,460,540,},
+				pos = {220,300,500,700,900,},
 				property = { 
-					placeName = "place1" ,
-					type = "common",
+					placeName = "place2" ,
+					type = "bao",
 					startState = "san",
-					id = 1,
+					id = 4,
 				},
 			},
 			{
 				time = 13,
 				num = 5,
 				delay = {3.5,0,0.7,1.4,2.1},
-				pos = {620,700,780,860,940},
+				pos = {300,450,600,750,940},
 				property = { 
 					placeName = "place1" ,
 					type = "common",
@@ -267,6 +267,10 @@ local enemys = {
 
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=12,hp=1, weak1=1},
+
+	--自爆兵        --type = "bao",
+	{id=4,image="zibaob",demage=15,hp=571,fireRate=30,speed=130,
+	weak1=2},	
 	                                                           
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=749,walkRate=120,walkCd=2,fireRate=240,fireCd=5, weak1=2},

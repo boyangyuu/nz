@@ -244,7 +244,7 @@ function InlayLayer:initGuide()
     guide:addClickListener({
         id = "xiangqian_xiangqian1",
         groupId = "xiangqian",
-        rect = self.btn["clip"]:getCascadeBoundingBox(),
+        rect = cc.rect(35,227,117,90),
         endfunc = function (touchEvent)
             self:refreshListView("clip")
 
@@ -280,7 +280,7 @@ function InlayLayer:initGuide()
     guide:addClickListener({
         id = "xiangqian_xiangqian4",
         groupId = "xiangqian",
-        rect = self.oneForAllBtn:getCascadeBoundingBox(),
+        rect = cc.rect(155,28,230,62),
         endfunc = function (touchEvent)
            self.inlayModel:buyInlay(3,1) 
            self.inlayModel:buyInlay(6,1) 
