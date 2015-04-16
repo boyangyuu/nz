@@ -474,7 +474,7 @@ function MapView:tick(dt)
 			local award = enemyModel:getAward()
 			self:doKillAward(pos, award)
 			--remove
-			enemy:removeFromParent()			
+			enemy:removeFromParent()
 			table.remove(self.enemys, i)
 			enemy = nil
 		elseif enemy and enemy:getWillRemoved() then

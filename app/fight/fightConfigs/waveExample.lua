@@ -106,7 +106,43 @@ local waveClass = class("waveExample", BaseWave)
 	weak1=1},
 
 
+---------- 狙击兵配置 -----------------------------
+			{
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {135},
+				property = { 
+					placeName = "place1",
+					type = "juji",
+					startState = "rollright",
+					id = 5,
+				},
+			},
+	--狙击兵      --type = "juji",
+	{id=5,image="jujib",demage=20,hp=1120,rollRate=180,rollCd=3,fireRate=2, fireCd = 3,
+	weak1=3},
 
+
+---------- 医疗兵配置 -----------------------------
+			{
+				time = 1,
+				num = 1,
+				delay = {0},
+				pos = {330},
+				property = { 
+					placeName = "place1",
+					type = "yiliao",
+					startState = "enterleft",
+					skillCd = 2.0,
+					skillValue = 30,
+					id = 4,
+				},
+			},	
+
+	--医疗兵      --type = "yiliao",
+	{id=4,image="hs",demage=20,hp=1110,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=3},
 
 
 --enemy的关卡配置                                                    白银难度对应怪物属性

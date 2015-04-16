@@ -196,7 +196,6 @@ function Actor:decreaseHp(hp)
     if newhp <= 0 then
         newhp = 0
     end
-
     -- if newhp < self.hp_ then
         self.hp_ = newhp
         self:dispatchEvent({name = Actor.HP_DECREASE_EVENT})
