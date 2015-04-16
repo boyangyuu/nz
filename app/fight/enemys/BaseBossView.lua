@@ -607,7 +607,7 @@ function BaseBossView:getModel(property)
 end
 
 function BaseBossView:onEnter()
-	BaseBossView.super:onEnter(self)
+	BaseBossView.super.onEnter(self)
 end
 
 function BaseBossView:checkGuide1()

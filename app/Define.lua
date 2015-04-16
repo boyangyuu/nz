@@ -18,6 +18,9 @@ Define.kEnemyRollSpeed 			= 15.0	   --滚动速度 每帧率
 Define.kEnemyRollWidth 			= 500 * 1   --滚动距离
 Define.kLeiEnemySanSpeed 	    = 50.0 		--伞速
 
+--狙击兵
+Define.kJujiEnemyFocusTime 		    = 1.0 		--狙击兵瞄准时间
+
 --近战兵(狼牙棒兵 盾兵)
 Define.kJinEnemyWalkPos  		= -180		-- 相对地图的y轴位置
 Define.kJinEnemyScale	  		= 1.7		-- 到身前的比例

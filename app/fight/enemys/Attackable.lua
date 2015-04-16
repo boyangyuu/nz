@@ -20,7 +20,7 @@ function Attackable:ctor(property)
 	self.isWillDie = false
 	self.isWillRemove = false
 	self.enemyM = md:getInstance("EnemyManager") 
-	
+	print("self.enemyM !!")
 	--init armature
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -32,7 +32,7 @@ function Attackable:ctor(property)
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.fight, self)
     	:addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.setPause))
-    	
+   
     self:scheduleUpdate()  
     self:schedule(handler(self, self.checkAnim), 0.1)
     self:setNodeEventEnabled(true)	
@@ -314,20 +314,15 @@ function Attackable:playHittedEffect()
 		end
 	end
 
-	local function callfuncRestore()
-		-- print("callfuncRestore")
-		self.isRed = false
-	end
-
 	-- print("变红")
 	self.isRed = true
 	self.armature:setColor(cc.c3b(255,50,5))
-	self:performWithDelay(callfunc, 20/60)
-	self:performWithDelay(callfuncRestore, 60/60)
+	self:performWithDelay(callfunc, 0.2)
 end
 
 function Attackable:restoreRedEffect()
 	self.armature:setColor(cc.c3b(255,255,255))
+	self.isRed = false
 end
 
 function Attackable:playBombEffect()
@@ -427,10 +422,9 @@ function Attackable:getEnemyModel()
 	return self.enemy
 end
 
-function Attackable:onIncreaseHp(event)
-	local addHp = event.addHp
+function Attackable:playBuff(buffName)
+	
 end
-
 
 --接口
 function Attackable:tick(t)
@@ -445,7 +439,7 @@ function Attackable:animationEvent()
 	assert("required method, must implement me")	
 end
 
-function Attackable:getModel(id)
+function Attackable:getModel(property)
 	assert("required method, must implement me")	
 end
 
@@ -469,9 +463,15 @@ function Attackable:onEnter()
 	if isPause then 
 		self:setPause({isPause = true}) 
 	end
+
+	--add enemy
+	self.enemyM:addEnemy(self)
 end
 
 function Attackable:onCleanup()
+	--remove enemy
+	self.enemyM:removeEnemy(self)
+
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end

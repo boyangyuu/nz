@@ -225,7 +225,7 @@ function FightResultLayer:onClickBtnNext()
 	if isCurLevel then
 		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = isPopupNext})
 	elseif curGroup == 0 then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup})
+		ui:changeLayer("HomeBarLayer",{groupId = 1})
 	else
 		print("1-4.1 OR 通关")
     	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
@@ -349,7 +349,7 @@ function FightResultLayer:onCofirmLeftCard()
 		self:onTurnLeftCard()
 	else
         local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard)},
+        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard),isNotPopKefu = true},
          "战斗结算界面_点击翻牌")
 	end
 end

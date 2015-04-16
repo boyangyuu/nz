@@ -73,7 +73,7 @@ end
 function BaoEnemyView:playKill(event)
     BaoEnemyView.super.playKill(self,event)
     self.armature:getAnimation():play("die" ,-1 , 1)
-    self:demageOthers()
+    -- self:demageOthers()
     self:playBombEffects()
 end
 
