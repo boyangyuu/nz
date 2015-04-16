@@ -17,9 +17,10 @@ local DDNormalEnemyView = class("DDNormalEnemyView", Attackable)
 function DDNormalEnemyView:ctor(property)  
     --instance
     DDNormalEnemyView.super.ctor(self, property)   
-    self.srcPos = property.srcPos
-    self.destPos = property.destPos
-    self.srcScale = property.srcScale
+    self.srcPos    = property.srcPos
+    self.destPos   = property.destPos
+    self.srcScale  = property.srcScale
+    self.offsetPos = property.offset or cc.p(0.0,0.0) 
 
     --events
     cc.EventProxy.new(self.enemy, self)
@@ -52,7 +53,8 @@ end
 function DDNormalEnemyView:playDaoDanFire()
     --scale
     self:setScale(self.srcScale)
-    local time = define.kMissileDaoTime    
+    -- print("self.property flyTime" .. self.property["flyTime"] )
+    local time = self.property["flyTime"] or define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0 
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
@@ -62,16 +64,15 @@ function DDNormalEnemyView:playDaoDanFire()
     end
 
     --run
-    local offset = self.property.offset or cc.p(0.0,0.0)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
     self:runAction(seq)
-    self:runAction(cc.MoveTo:create(time, offset))
+    self:runAction(cc.MoveTo:create(time, self.offsetPos))
 end
 
 function DDNormalEnemyView:playTieqiuFire()
     self:setScale(self.srcScale)
-    local time = define.kMissileTieqiuTime    
+    local time = self.property["flyTime"] or define.kMissileTieqiuTime    
     local destScale = self.property["destScale"] or 1.0
     local scaleAction = cc.ScaleTo:create(time, destScale)
 
@@ -83,18 +84,17 @@ function DDNormalEnemyView:playTieqiuFire()
     end
 
     --run
-    local offset = self.property.offset or cc.p(0.0, -80)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callFunc))
     self:runAction(seq)
-    self:runAction(cc.MoveTo:create(time, offset))    
+    self:runAction(cc.MoveTo:create(time, self.offsetPos))    
 end
 
 function DDNormalEnemyView:playLeiFire()
     self.armature:getAnimation():play("fire" , -1, 1)  
     local srcPos = self.property["srcPos"]
     local destPos = cc.p(srcPos.x - 90, 20)
-    local jumpTime = define.kMissileLeiTime
+    local jumpTime = self.property["flyTime"] or define.kMissileLeiTime
     local jumpH = 300.0
     local moveAction = cc.JumpTo:create(jumpTime, destPos, jumpH, 1)
     local action = transition.newEasing(moveAction,"in", jumpTime)   
@@ -112,7 +112,7 @@ end
 function DDNormalEnemyView:playFeibiaoFire()
     --scale
     self.armature:setScale(self.srcScale / 0.7)
-    local time = define.kMissileFeibiaTime    
+    local time = self.property["flyTime"] or define.kMissileFeibiaTime    
     local destScale = define.kMissileFeibiaScale 
     local scaleAction = cc.ScaleTo:create(time, destScale / 0.7)
 
@@ -125,11 +125,10 @@ function DDNormalEnemyView:playFeibiaoFire()
     end
 
     --run
-    local offset = self.property.offset or cc.p(0.0,0.0)
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callMoveEnd))
     self.armature:runAction(seq)
-    self.armature:runAction(cc.MoveTo:create(time, offset))
+    self.armature:runAction(cc.MoveTo:create(time, self.offsetPos))
 end
 
 function DDNormalEnemyView:playBomb()

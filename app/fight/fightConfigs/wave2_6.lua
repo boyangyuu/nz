@@ -33,7 +33,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 11,	
+				time = 12,	
 				num = 5,
 				pos = {420,510,700,900,1050},
 				delay = {0.5,2,0,0.5,1.5},
@@ -44,7 +44,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 13,
 				num = 3,
 				delay = {0.1,0.5,1.2},
 				pos = {450,660,800},
@@ -58,7 +58,7 @@ local waves = {
 				},
 			},			
 			{
-				time = 13,
+				time = 14,
 				num = 3,
 				delay = {0.1,0.6,1},
 				pos = {250,460,600},
@@ -71,18 +71,19 @@ local waves = {
 				},
 			},
 			{
-				time = 26,	
+				time = 16,	
 				num = 5,
 				pos = {25,120,310,470,600},
 				delay = {0.1,0.6,1.5,1.8,0.8},
 				property = {
-					placeName = "place4" ,         --普
+					placeName = "place4" ,        
 					startState = "rollright",
 					id = 1,
+					startState = "san",
 				},
 			},
 			{
-				time = 23,
+				time = 18,
 				num = 3,
 				delay = {0,1.0,1.5},
 				pos = {250,410,510},
@@ -95,7 +96,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 24,
+				time = 20,
 				num = 3,
 				delay = {0,0.5,1},
 				pos = {300,370,440},
@@ -106,7 +107,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 25,
+				time = 22,
 				num = 3,
 				delay = {0,0.7,1.4},
 				pos = {700,900,1100},
@@ -117,7 +118,7 @@ local waves = {
 				},
 			},
 			{
-				time = 26,
+				time = 24,
 				num = 2,
 				delay = {0,0.6},
 				pos = {380,560},
@@ -166,11 +167,12 @@ local waves = {
 				property = { 
 					placeName = "place3" ,
 					type = "bao",                  --爆
-					id = 9,	
+					id = 9,
+					startState = "san",
 				},
 			},
 			{
-				time = 13,
+				time = 12,
 				num = 5,
 				delay = {0.7,1.4,1.8, 0.1,0.8},
 				pos = {350,450,550,650,750},					
@@ -221,7 +223,8 @@ local waves = {
 				property = { 
 					placeName = "place2" ,
 					type = "bao",                                --爆
-					id = 9,	
+					id = 9,
+					startState = "san",
 				},
 			},
 			{
@@ -244,6 +247,7 @@ local waves = {
 					placeName = "place4" ,
 					id = 1,
 					startState = "rollleft",
+					startState = "san",
 				},
 			},	
 		},
@@ -265,13 +269,10 @@ local waves = {
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
 					id = 1,
 				},
-			},
+			},		
 		},
-	},	
-
+	},
 }
-
-
 --enemy的关卡配置                                                    黄金镶嵌  dps大于等于5  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
@@ -304,7 +305,7 @@ local enemys = {
 
 	--自爆兵        --type = "bao",
 	{id=9,image="zibaob",demage=25,hp=7000,fireRate=30,speed=120,
-	weak1=2},	
+	weak1=2, weak4=3 },	
 
 	--越野车       type = "jipu" ,
 	{id=12,image="yyc",demage=0,hp=70000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,

@@ -77,7 +77,6 @@ function BaseBossView:setBlood(scale)
 	local offset    = 1.00 / self.bloodNum
 	local bloodUp, bloodDown
 	local showNum   = math.ceil(scale / offset) 
-	print("showNum", showNum)
 	local nodeScale = (scale - (showNum - 1) * offset ) / offset
 	assert(showNum >= 1 and showNum <= kBloodMaxN)
 
@@ -89,8 +88,6 @@ function BaseBossView:setBlood(scale)
 	    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")			
     	end	
 	end
-    print("nodeScale", nodeScale)
-    print("offset", offset)
     bloodUp:setScaleX(nodeScale)
     transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})	
 end
@@ -308,6 +305,7 @@ function BaseBossView:playDaoDan(skillName)
     local id     = config.id
     local type   = config.type
     for i=1, #config.offsetPoses do
+
     	local srcPos = cc.p(0,0)
     	if config.srcPoses then 
     		srcPos = config.srcPoses[i]
@@ -320,6 +318,7 @@ function BaseBossView:playDaoDan(skillName)
             destScale = 1.0,
             destPos = pWorldBone,
             offset = config.offsetPoses[i],
+            flyTime = config.flyTime,
             id = id,
             type = type,
             demageScale = self.enemy:getDemageScale(),

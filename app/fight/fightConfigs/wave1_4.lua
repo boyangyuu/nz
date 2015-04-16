@@ -4,9 +4,22 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
+-------------- 汽油桶配置 ----------------------
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {250},
+				property = { 
+					placeName = "place2",
+					type = "bao_tong",
+					id = 4,
+				},
+			},
+----------------------------------------------	
 			{
 				descId = "zibaob", --简介
-				time = 3,	
+				time = 2,	
 				num = 1,
 				pos = {380},
 				delay = {4},
@@ -29,7 +42,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,		
+				time = 9,		
 				num = 2,
 				pos = {500,700},
 				delay = {0,1.1},
@@ -40,7 +53,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,		
+				time = 12,		
 				num = 2,
 				pos = {400,550},
 				delay = {0.8,0},
@@ -79,7 +92,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,		
+				time = 15,		
 				num = 2,
 				pos = {420,560},
 				delay = {0,0.9},
@@ -89,124 +102,12 @@ local waves = {
 					id = 1,
 				},
 			},
-		},                                                               --第13个怪
-	},
-	{
-		enemys = {
-			{
-				time = 2,
-				num = 5,
-				delay = {5.1,2.5,1.5,4.2,3},
-				pos = {430,550,760,960,1050},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 7,
-				num = 5,
-				delay = {0.7,1.4, 2.1,2.8,3.1},
-				pos = {470,600,670,750,820},					
-				property = {
-					placeName = "place3",  
-					type = "common",
-					startState = "san",
-					id = 1,
-				},
-			},	
-			{
-				time = 8,		
-				num = 2,
-				pos = {400,480},
-				delay = {0.1,0.6},
-				property = { 
-					placeName = "place2",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},
-			},	
-			{
-				time = 9,		
-				num = 3,
-				pos = {510,400,460},
-				delay = {0.3,1.3,0.8},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 1,                                        
-				},
-			},
-			{
-				time = 10,
-				num = 5,
-				delay = {0.7,1.4, 2.1,2.8,3.2},
-				pos = {680,750,810,900,1000},					
-				property = {
-					placeName = "place4",  
-					type = "common",
-					startState = "san",
-					id = 1,
-				},
-			},
-			{
-				time = 11,		
-				num = 1,
-				pos = {730},
-				delay = {0.3},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                        
-				},
-			},
-			{
-				time = 12,		
-				num = 3,
-				pos = {830,920,1000},
-				delay = {0,0.6,1.3},
-				property = { 
-					placeName = "place3",
-					startState = "rollleft",
-					id = 1,                                        
-				},
-			},                                                                        --20个怪
-		},
+		},                                                         
 	},
 	{
 		enemys = { 
-
 			{
 				time = 2,
-				num = 5,
-				delay = {4.1,2.5,3.8,2.2,3.5},
-				pos = {530,650,760,860,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 8,	
-				num = 3,
-				pos = {480,760,970},
-				delay = {0,0.5,1.2},
-				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 12,
 				num = 3,
 				delay = {0,0.5,1},
 				pos = {400,680,960},
@@ -214,6 +115,29 @@ local waves = {
 					placeName = "place3" ,
 					type = "jin",                  --盾 15
 					id = 8,
+				},
+			},
+			{
+				time = 5,
+				num = 5,
+				delay = {4.1,2.5,3.8,2.2,3.5},
+				pos = {500,650,760,860,950},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",                   --爆
+					id = 9,
+					startState = "san",	
+				},
+			},
+			{
+				time = 6,	
+				num = 3,
+				pos = {480,760,970},
+				delay = {0,0.5,1.2},
+				property = {
+					placeName = "place3" ,         --近
+					id = 7,
+					type = "jin",
 				},
 			},
 			{
@@ -232,7 +156,7 @@ local waves = {
 				time = 16,
 				num = 4,
 				delay = {0,0.9,1.6,0.4},
-				pos = {450,600,1050,570},
+				pos = {350,600,1050,870},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
@@ -262,7 +186,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 21,
+				time = 19,
 				num = 2,
 				delay = {0.2,1},
 				pos = {900,1020},
@@ -273,7 +197,7 @@ local waves = {
 				},                                                          
 			},	
 			{
-				time = 23,		
+				time = 20,		
 				num = 2,
 				pos = {360,530},
 				delay = {0.3,1},
@@ -287,23 +211,23 @@ local waves = {
 				},
 			},
 			{
-				time = 23,
+				time = 21,
 				num = 3,
 				delay = {0.1,0.6,1.5},
 				pos = {870,930,1090},
 				property = { 
-					placeName = "place4" ,
+					placeName = "place3" ,
 					id = 1,
 					startState = "rollleft",	
 				},                                                        
 			},
 			{
-				time = 23,		
+				time = 22,		
 				num = 2,
 				pos = {460,530},
 				delay = {0.3,1},
 				property = { 
-					placeName = "place2",
+					placeName = "place4",
 					startState = "rollleft",
 					id = 2,
 					type = "dao",
@@ -312,7 +236,7 @@ local waves = {
 				},
 			},
 			{
-				time = 24,
+				time = 23,
 				num = 2,
 				delay = {0,1},
 				pos = {350,630},
@@ -362,8 +286,12 @@ local enemys = {
 	{id=3,image="shoulei",demage=4,hp=1,
 	weak1=1},
 
+	--汽油桶         --type = "bao_tong",
+	{id=4,image="qyt_01",demage=3500,hp=1,
+	weak1=1},
+
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=4.5,hp=545,fireRate=120,fireCd=3,speed=60,
+	{id=7,image="jinzhanb",demage=4.5,hp=545,fireRate=120,fireCd=3,speed=50,
 	weak1=2},
 
 	--盾兵         --type = "jin",
