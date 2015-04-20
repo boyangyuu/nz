@@ -147,7 +147,7 @@ function MapView:startFight(event)
 	local fightModel = md:getInstance("FightMode")
 	local modeConfig = fightModel:getModeConfig()
 	self.fightDescModel:start(modeConfig.type)
-	self:performWithDelay(handler(self, self.updateEnemys), 2.0)
+	self:performWithDelay(handler(self, self.updateEnemys), 3.0)
 end
 
 function MapView:updateEnemys()

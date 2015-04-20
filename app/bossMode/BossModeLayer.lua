@@ -93,23 +93,24 @@ function BossModeLayer:initUI()
 end
 
 function BossModeLayer:refreshUI(event)
-	local actionDown = cc.MoveBy:create(0.3, cc.p(0,-300))
-	local actionUp = cc.MoveBy:create(0.3, cc.p(0,300))
+	local actionDown = cc.MoveBy:create(0.3, cc.p(0,-200))
+	local actionUp = cc.MoveBy:create(0.3, cc.p(0,200))
+ 	local actionNext = cc.MoveBy:create(0.3, cc.p(-1136,0))
+	local actionNextChange = cc.MoveBy:create(0, cc.p(1136*2,0))
+ 	local actionPre = cc.MoveBy:create(0.3, cc.p(1136,0))
+	local actionPreChange = cc.MoveBy:create(0, cc.p(-1136*2,0))
+
 	if self.toward == "next" then
-	 	local actionNext = cc.MoveBy:create(0.3, cc.p(-1136,0))
-		local actionChange = cc.MoveBy:create(0, cc.p(1136*2,0))
 		self.panelMain:runAction(
-			transition.sequence({actionNext, actionChange,
+			transition.sequence({actionNext, actionNextChange,
 				cc.CallFunc:create(function()
 					self:refreshContent()
 					end),actionNext}))
 		self.panelDown:runAction(
 			transition.sequence({actionDown,actionUp}))
 	elseif self.toward == "pre" then
-	 	local actionPre = cc.MoveBy:create(0.3, cc.p(1136,0))
-		local actionChange = cc.MoveBy:create(0, cc.p(-1136*2,0))
 		self.panelMain:runAction(
-			transition.sequence({actionPre, actionChange,
+			transition.sequence({actionPre, actionPreChange,
 				cc.CallFunc:create(function()
 					self:refreshContent()
 					end),actionPre}))
