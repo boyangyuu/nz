@@ -112,6 +112,16 @@ configs["hs"] = {
 	playanim = "speak1",
 }
 
+configs["yiliaob"] = {
+	title = "解救人质！",
+	name = "人质",
+	spc = "特性：",
+	skill = {"不要误伤人质！"},
+	weakness = "胸",
+	describe = "不要打我的脸！人家很爱漂亮的！",
+	playanim = "speak1",
+}
+
 configs["qiufan"] = {
 	title = "击毙逃犯",
 	name = "逃犯",

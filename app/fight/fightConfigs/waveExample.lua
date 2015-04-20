@@ -141,7 +141,7 @@ local waveClass = class("waveExample", BaseWave)
 			},	
 
 	--医疗兵      --type = "yiliao",
-	{id=4,image="hs",demage=20,hp=1110,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=4,image="yiliaob",demage=20,hp=1110,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=3},
 
 
