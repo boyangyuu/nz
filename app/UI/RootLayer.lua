@@ -184,7 +184,7 @@ function RootLayer:addResFight()
     local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "baozha4",
         "effect_gun_kaiqiang", "wdhd", 
-        "direnlx", "renwuks", "qiangdicx", "jinbijl"}
+        "direnlx", "renwuks", "qiangdicx", "jinbijl", "jiaxue"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
@@ -199,8 +199,8 @@ function RootLayer:addResFight()
         self:addArmatureRes(src)
         local plist = "res/Fight/jqkAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/jqkAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)          
-    end 
+        self:addFrameRes(plist, png)
+    end
 
     local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx", "jiatl_zx"} 
     for i,v in ipairs(focusImgs) do
@@ -265,13 +265,7 @@ function RootLayer:addFrameRes(plist,png)
     else
         display.addSpriteFrames(plist, png)
 
-        local lastImage
-        if device.platform == "windows" or  device.platform == "mac" then 
-            lastImage = "res/LevelMap/thj_bx/thj_bx0.png"
-        else
-            lastImage =  "res/thj_bx0.png"
-        end    
-        
+        local lastImage = "res/LevelMap/thj_bx/thj_bx0.png"        
         if png == lastImage then
             self.isLoadImage  = true
             self.isLoadedArma = true 

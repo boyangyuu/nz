@@ -15,6 +15,7 @@ modelClasses["InlayModel"]          = import("..inlay.InlayModel")
 modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
 modelClasses["commonPopModel"]      = import("..commonPopup.commonPopModel")
 modelClasses["DailyLoginModel"]     = import("..dailyLogin.DailyLoginModel")
+modelClasses["BossModeModel"]       = import("..bossMode.BossModeModel")
 
 --fight
 modelClasses["Fight"]               = import("..fight.Fight")
