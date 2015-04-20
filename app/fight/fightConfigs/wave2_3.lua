@@ -5,6 +5,21 @@ local waves = {
 	{
 		enemys = { 
 			{
+				descId = "yiliaob", --简介
+				time = 2,
+				num = 1,
+				delay = {4},
+				pos = {630},
+				property = { 
+					placeName = "place2",
+					type = "yiliao",
+					startState = "enterright",
+					skillCd = 2.0,
+					skillValue = 30,
+					id = 25,
+				},
+			},	
+			{
 				time = 2,
 				num = 2,
 				delay = {0,0.5},
@@ -294,6 +309,10 @@ local enemys = {
 
 	--烟雾导弹           type = "dao_wu",
 	{id=21,image="daodan03",demage=10,hp=5600, weak1=1},--打击者金武平均伤害5558
+
+	--医疗兵      --type = "yiliao",
+	{id=25,image="yiliaob",demage=12,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=3},
 	
 }
 
