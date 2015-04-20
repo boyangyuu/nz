@@ -265,13 +265,7 @@ function RootLayer:addFrameRes(plist,png)
     else
         display.addSpriteFrames(plist, png)
 
-        local lastImage
-        if device.platform == "windows" or  device.platform == "mac" then 
-            lastImage = "res/LevelMap/thj_bx/thj_bx0.png"
-        else
-            lastImage =  "res/thj_bx0.png"
-        end    
-        
+        local lastImage = "res/LevelMap/thj_bx/thj_bx0.png"        
         if png == lastImage then
             self.isLoadImage  = true
             self.isLoadedArma = true 
