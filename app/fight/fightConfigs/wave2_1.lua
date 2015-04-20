@@ -595,7 +595,7 @@ function waveClass:ctor()
 	self.mapId  = mapId
 	self.fightMode =  {
 		type 	  = "taoFan",
-		limitNums = 6,                      --逃跑逃犯数量
+		limitNums = 5,                      --逃跑逃犯数量
 	}
 
 end

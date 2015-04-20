@@ -85,7 +85,7 @@ local waves = {
 	{
 		enemys = {
 			{
-				descId = "zpbing",               --简介
+				descId = "zpbing",               --简介重炮兵
 				time = 2,
 				num = 1,
 				delay = {4},
@@ -98,7 +98,19 @@ local waves = {
 					missileType = "daodan",
 				},
 			},
-			
+			-- {
+			-- 	descId = "jujib",               --简介狙击兵
+			-- 	time = 2,
+			-- 	num = 1,
+			-- 	delay = {4},
+			-- 	pos = {450},
+			-- 	property = {
+			-- 		placeName = "place11",
+			-- 		type = "juji",
+			-- 		startState = "rollright",
+			-- 		id = 6,
+			-- 	},
+			-- },
 			{
 				time = 8,
 				num = 1,
@@ -238,6 +250,10 @@ local enemys = {
 
 	--手雷
 	{id=5,image="shoulei",demage=4,hp=1, weak1=3,},
+
+	--狙击兵      --type = "juji",
+	{id=6,image="jujib",demage=10,hp=700,rollRate=180,rollCd=3,fireRate=120, fireCd = 3,
+	weak1=3},
 
 	--绑匪                                     140--左右移动距离       280--滚动距离
 	{id=7,image="tufeib",demage=3,hp=220,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
