@@ -18,6 +18,9 @@ Define.kEnemyRollSpeed 			= 15.0	   --滚动速度 每帧率
 Define.kEnemyRollWidth 			= 500 * 1   --滚动距离
 Define.kLeiEnemySanSpeed 	    = 50.0 		--伞速
 
+--狙击兵
+Define.kJujiEnemyFocusTime 		    = 1.0 		--狙击兵瞄准时间
+
 --近战兵(狼牙棒兵 盾兵)
 Define.kJinEnemyWalkPos  		= -180		-- 相对地图的y轴位置
 Define.kJinEnemyScale	  		= 1.7		-- 到身前的比例
@@ -33,8 +36,8 @@ Define.kBaoRangeW 				= 200	    --自爆范围
 Define.kBaoRangeH 				= 200	     --自爆范围
 
 --汽油桶
-Define.kBaoTongRangeW 			= 300	    --自爆范围
-Define.kBaoTongRangeH 			= 300	     --自爆范围
+Define.kBaoTongRangeW 			= 500	    --自爆范围
+Define.kBaoTongRangeH 			= 500	     --自爆范围
 
 --人质 护士
 Define.kHushiSpeed				= 350.0    --人质跑动速度 像素/s

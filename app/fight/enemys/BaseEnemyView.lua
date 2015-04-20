@@ -127,7 +127,7 @@ function BaseEnemyView:playFire()
 	local map = md:getInstance("Map")
 	local pWorld = self:getRange("weak1"):convertToWorldSpace(cc.p(0,0))
 	map:dispatchEvent({name = map.EFFECT_DANDAO_EVENT, enemyPos = 
-		pWorld})
+		pWorld, effectName = "dandao_putong"})
 end
 
 function BaseEnemyView:playWalk()

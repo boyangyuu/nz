@@ -1,15 +1,16 @@
 local EnemyFactory = class("EnemyFactory",cc.mvc.ModelBase)
 
---missile
+--导弹
 local DDNormalEnemyView = import(".enemys.DDNormalEnemyView")
 local DaoEnemyView 		= import(".enemys.DaoEnemyView")
 local DDWangEnemyView	= import(".enemys.DDWangEnemyView")
 local DDWuEnemyView		= import(".enemys.DDWuEnemyView")
 
+--近战
 local JinEnemyView 		= import(".enemys.JinEnemyView")
-
---bao
 local BaoEnemyView 		= import(".enemys.BaoEnemyView")
+
+--爆炸物
 local BaoTongEnemyView	= import(".enemys.BaoTongEnemyView")
 
 local CommonEnemyView	= import(".enemys.CommonEnemyView")
@@ -18,17 +19,23 @@ local FeijiEnemyView    = import(".enemys.FeijiEnemyView")
 local RenEnemyView   	= import(".enemys.RenEnemyView")
 local AwardEnemyView   	= import(".enemys.AwardEnemyView")
 
---award
+--奖励
 local AwardSanEnemyView	= import(".enemys.AwardSanEnemyView")
 
---renzhi
-local RZHushiEnemyView 	= import(".enemys.RZHushiEnemyView")
+--人质
+local RZHushiEnemyView 		= import(".enemys.RZHushiEnemyView")
 local RZShangrenEnemyView 	= import(".enemys.RZShangrenEnemyView")
 local RZBangfeiEnemyView 	= import(".enemys.RZBangfeiEnemyView")
 local RZBangrenEnemyView 	= import(".enemys.RZBangrenEnemyView")
 
---taofan
+--逃犯
 local TFQiuEnemyView 	= import(".enemys.TFQiuEnemyView")
+
+--医疗兵
+local DoctorEnemyView 	= import(".enemys.DoctorEnemyView")
+
+--狙击兵
+local JuEnemyView 		= import(".enemys.JuEnemyView")
 
 --boss
 local SaosheBossView 	= import(".enemys.SaosheBossView")
@@ -61,6 +68,10 @@ function EnemyFactory.createEnemy(property)
 	elseif type == "dao_wu" then 
 		enemyView = DDWuEnemyView.new(property)
 
+	--juji
+	elseif type == "juji" then 
+		enemyView = JuEnemyView.new(property)	
+
 	--award
 	elseif type == "awardSan" then
 		enemyView = AwardSanEnemyView.new(property)	
@@ -82,11 +93,16 @@ function EnemyFactory.createEnemy(property)
 	--enemy		
 	elseif type == "jin" then
 		enemyView = JinEnemyView.new(property)
-
 	elseif type == "bao" then
 		enemyView = BaoEnemyView.new(property)	
+
+	--爆炸
 	elseif type == "bao_tong" then 
 		enemyView = BaoTongEnemyView.new(property)
+
+	--医疗兵
+	elseif type == "yiliao" then 
+		enemyView = DoctorEnemyView.new(property)	
 
 	elseif type == "dao" then
 		enemyView = DaoEnemyView.new(property)	

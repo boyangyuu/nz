@@ -9,9 +9,9 @@ local Map = class("Map", cc.mvc.ModelBase)
 --events
 Map.EFFECT_LEI_BOMB_EVENT = "EFFECT_LEI_BOMB_EVENT"
 Map.EFFECT_SHAKE_EVENT 	  = "EFFECT_SHAKE_EVENT"
-Map.EFFECT_JUSHAKE_EVENT 	  = "EFFECT_JUSHAKE_EVENT"
-Map.EFFECT_DANDAO_EVENT 	  = "EFFECT_DANDAO_EVENT"
-
+Map.EFFECT_JUSHAKE_EVENT  = "EFFECT_JUSHAKE_EVENT"
+Map.EFFECT_DANDAO_EVENT   = "EFFECT_DANDAO_EVENT"
+Map.EFFECT_FOCUS_EVENT 	  = "EFFECT_FOCUS_EVENT"
 
 Map.MAP_ZOOM_OPEN_EVENT   = "MAP_ZOOM_OPEN_EVENT"
 Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
@@ -97,6 +97,20 @@ end
 
 function Map:setMapBgNode(mapBgNode)
 	self.mapBgNode = mapBgNode
+end
+
+function Map:getDaodaoRotate(enemyPos)
+	--rotate
+	local rotateRight = math.random(15, 50)
+	local rotateLeft  = math.random(130, 165)	
+	local rotate
+	if enemyPos.x < display.width / 2 then 
+		rotate = rotateRight
+	else
+		rotate = rotateLeft
+	end
+
+	return rotate	
 end
 
 return Map

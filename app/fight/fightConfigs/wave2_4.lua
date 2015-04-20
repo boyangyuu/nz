@@ -5,6 +5,30 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
+-------------- 汽油桶配置 ----------------------
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {100},
+				property = { 
+					placeName = "place5",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {550},
+				property = { 
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+----------------------------------------------
 			{
 				time = 0,
 				num = 1,
@@ -104,6 +128,30 @@ local waves = {
 
 	{
 		enemys = { 
+-------------------- 汽油桶配置 -----------------------------
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {450},
+				property = { 
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = { 
+					placeName = "place3",
+					type = "bao_tong",
+					id = 1,
+				},
+			},	
+----------------------------------------------
 			{ 
 				time = 0,
 				num = 2,
@@ -224,6 +272,30 @@ local waves = {
 		
 	{
 		enemys = {
+-------------------- 汽油桶配置 -----------------------------
+			{
+				time = 0,
+				num = 2,
+				delay = {0,0},
+				pos = {450, 650 },
+				property = { 
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {770},
+				property = { 
+					placeName = "place3",
+					type = "bao_tong",
+					id = 1,
+				},
+			},	
+----------------------------------------------
 		    {
 				time = 0,
 				num = 1,
@@ -317,8 +389,7 @@ local waves = {
 					},
 				},
 			},
-
-
+			
 		},
 	},
 
@@ -329,6 +400,9 @@ local waves = {
 --enemy的关卡配置                                  青铜难度 狙击枪630伤害 1枪  880         dps大于等于5
 local enemys = {
 
+	--汽油桶         --type = "bao_tong",
+	{id=1,image="qyt_01",demage=2000,hp=1,
+	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=5,hp=880,

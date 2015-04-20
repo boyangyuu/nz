@@ -42,9 +42,9 @@ configs["boss01"] = {                              --盾牌红boss原型
 	playanim = "stand",
 }
 
-configs["boss01_1"] = {                            --银灰冷色终结者
+configs["boss01_1"] = {                            --红色机甲开枪为主
 	title = "BOSS信息！",
-	name = "地狱金刚",
+	name = "烈火金刚",
 	spc = "技能：",
 	skill = {"狂热射击","召唤","连续飞弹"},
 	weakness = "头部，手部，腹部",
@@ -52,9 +52,9 @@ configs["boss01_1"] = {                            --银灰冷色终结者
 	playanim = "stand",
 }
 
-configs["boss01_2"] = {                            --红色机甲开枪为主
+configs["boss01_2"] = {                            --银灰冷色终结者            
 	title = "BOSS信息！",
-	name = "烈火金刚",
+	name = "地狱金刚",
 	spc = "技能：",
 	skill = {"狂热射击","召唤","连续飞弹"},
 	weakness = "头部，手部，腹部",

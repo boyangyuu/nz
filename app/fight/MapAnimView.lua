@@ -4,7 +4,6 @@
 “地图效果”的视图
 
 ]]
-local scheduler  = require(cc.PACKAGE_NAME .. ".scheduler")
 --events
 
 
@@ -13,12 +12,12 @@ local MapAnimView = class("MapAnimView", function()
 end)
 
 function MapAnimView:ctor()
-	local map = md:getInstance("Map")
-	cc.EventProxy.new(map, self)
-		:addEventListener(map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
-		:addEventListener(map.AWARD_GOLD_EVENT, 	 handler(self, self.playAwardGold))	
-		:addEventListener(map.EFFECT_DANDAO_EVENT, 	 handler(self, self.playEffectDandao))	
-
+	self.map = md:getInstance("Map")
+	cc.EventProxy.new(self.map, self)
+		:addEventListener(self.map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
+		:addEventListener(self.map.AWARD_GOLD_EVENT, 	  handler(self, self.playAwardGold))	
+		:addEventListener(self.map.EFFECT_DANDAO_EVENT,   handler(self, self.playEffectDandao))	
+		:addEventListener(self.map.EFFECT_FOCUS_EVENT, 	  handler(self, self.playEffectFocus))	
 end
 
 function MapAnimView:getScaleByPos(pos)
@@ -140,13 +139,14 @@ end
 
 function MapAnimView:playEffectDandao(event)
 	local pos           = event.enemyPos
+	local effectName    = event.effectName
 	local srcPos    	= self:convertToNodeSpace(cc.p(pos.x, pos.y))
-	local rotate, scale = self:getDandaoRotate(srcPos)
+
+	local rotate 	    = self.map:getDandaoRotate(srcPos)
 	local armature = ccs.Armature:create("difang_dandao")
 	armature:setPosition(srcPos)
 	armature:setRotation(rotate)
-	armature:setScale(scale)
-	armature:getAnimation():playWithIndex(0 , -1, 1)
+	armature:getAnimation():play(effectName , -1, 1)
 	self:addChild(armature)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
@@ -156,72 +156,25 @@ function MapAnimView:playEffectDandao(event)
     	end)	
 end
 
-function MapAnimView:getDandaoRotate(enemyPos)
-	--rotate
-	local rotateRight = math.random(15, 50)
-	local rotateLeft  = math.random(130, 165)	
-	local rotate
-	if enemyPos.x < display.width / 2 then 
-		rotate = rotateRight
-	else
-		rotate = rotateLeft
-	end
+function MapAnimView:playEffectFocus(event)
+	local pos           = event.enemyPos
+	local time 			= event.time
+	local srcPos    	= self:convertToNodeSpace(cc.p(pos.x, pos.y))
+	local rotate 		= self.map:getDaodaoRotate(srcPos)
+	local armature = ccs.Armature:create("difang_dandao")
+	armature:setPosition(srcPos)
+	armature:setRotation(rotate)
 
-	--scale
-	local scale = 0.5 + 0.5 * 
-		(display.height - enemyPos.y) / display.height
-	scale = 1.0
-	return rotate, scale
+	armature:getAnimation():play("miaozhun" , -1, 1)
+	self:addChild(armature)
+	local seq = transition.sequence({
+			-- cc.RotateBy:create(time, -60),
+			cc.DelayTime:create(time),
+			cc.CallFunc:create(function ()
+				armature:removeFromParent()
+			end),
+		})
+	armature:runAction(seq)
 end
-
--- function MapAnimView:playEffectDandao(event)
--- 	local pos       = event.enemyPos
--- 	local srcPos    = self:convertToNodeSpace(cc.p(pos.x, pos.y))
-
--- 	local direct    = math.random(-1, 1)
--- 	local destPos = self:getDandaoPos(direct)
--- 	-- dump(srcPos, "srcPos")
--- 	local angle  = math.atan2(srcPos.y - destPos.y, 
--- 		srcPos.x - destPos.x)
-
--- 	local distance = cc.pGetDistance(destPos, srcPos)
--- 	local speed    = 1000
--- 	local time     = distance / speed
--- 	local rotate = 180 - (angle / math.pi * 180 )
--- 	-- print("angle", angle)
--- 	-- print("rotate", rotate)
--- 	local effect  = cc.ui.UIImage.new("res/dd_huo.png")
-
--- 	effect:setRotation(rotate)
--- 	effect:setPosition(srcPos)
--- 	effect:setScale(0.3)
--- 	effect:runAction(cc.Sequence:create(
--- 		cc.MoveTo:create(time, destPos),
--- 		cc.CallFunc:create(
--- 			function () 
--- 				effect:removeFromParent()
--- 				effect = nil
--- 		 	end
--- 		)))
--- 	effect:scaleTo(time, 2.0)
--- 	self:addChild(effect)
--- end
-
--- function MapAnimView:getDandaoPos(direct)
--- 	-- direct：  -1(左侧) 0(中间) 1(右侧)
--- 	local x, y 
--- 	if direct == -1 then 
--- 		x = 0
--- 		y = math.random(0, 150) 
--- 	elseif direct == 0 then 
--- 		x = math.random(0, display.width)
--- 		y = 0
--- 	elseif direct == 1 then 
--- 		x = display.width
--- 		y = math.random(0, 150)   
--- 	end
--- 	return cc.p(x, y)
-
--- end
 
 return MapAnimView

@@ -169,7 +169,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 8.5,	
+				time = 9,	
 				num = 3,
 				pos = {230,330,510},
 				delay = {0.5,0,1},
@@ -180,38 +180,13 @@ local waves = {
 				},
 			},
 			{
-				time = 8.5,	
+				time = 10,	
 				num = 2,
 				pos = {270,570},
 				delay = {0.5,0},
 				property = {
 					placeName = "place2" ,         --雷
 					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 9,	
-				num = 3,
-				pos = {1000,800,600},
-				delay = {0,0.5,1},
-				property = {
-					placeName = "place3" ,         --普
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 10,	
-				num = 3,
-				delay = {0.9,0.5,0},
-				pos = {970,870,570},
-				property = {
-					placeName = "place3" ,         --雷
-					startState = "rollleft",
 					id = 2,
 					type = "dao",
 					missileId = 3,
@@ -230,6 +205,32 @@ local waves = {
 					id = 1,
 				},
 			},
+			{
+				time = 12,	
+				num = 3,
+				pos = {1000,800,600},
+				delay = {0,0.5,1},
+				property = {
+					placeName = "place3" ,         --普
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 3,
+				delay = {0.9,0.5,0},
+				pos = {970,870,570},
+				property = {
+					placeName = "place3" ,         --雷
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+
 		},
 	},
 	{
@@ -292,7 +293,7 @@ local enemys = {
 	{id=19,image="daodan",demage=15,hp=1000, weak1=1},	
 
 	--烟雾导弹           type = "dao_wu",
-	{id=21,image="daodan03",demage=10,hp=6000, weak1=1},
+	{id=21,image="daodan03",demage=10,hp=5600, weak1=1},--打击者金武平均伤害5558
 	
 }
 
