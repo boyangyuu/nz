@@ -35,7 +35,9 @@ function BaseBossView:ctor(property)
 
     --event
     cc.EventProxy.new(self.enemy, self)
-    	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
+    	:addEventListener(Actor.HP_INCREASE_EVENT, handler(self, self.refreshBlood)) 
+    	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.refreshBlood)) 
+
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
         :addEventListener(Actor.FIRE_EVENT, handler(self, self.playFire))  
     cc.EventProxy.new(self.hero, self)
@@ -62,10 +64,17 @@ function BaseBossView:initBlood()
     self.armature:addChild(self.blood)
 
     --value
-    self:setBlood(1.0)
+    self:refreshBlood({})
 end
-function BaseBossView:setBlood(scale)
-	if scale == 0 then return end
+function BaseBossView:refreshBlood(event)
+	local maxHp = self.enemy:getMaxHp()
+	local hp = self.enemy:getHp()
+	local persent = hp/maxHp
+
+	if persent == 0 then return end
+
+	--guide
+	if persent < define.kGuideActiveJijia then self:checkGuide1() end
 
 	--init
 	for i=1, kBloodMaxN do
@@ -76,9 +85,8 @@ function BaseBossView:setBlood(scale)
 	--data
 	local offset    = 1.00 / self.bloodNum
 	local bloodUp, bloodDown
-	local showNum   = math.ceil(scale / offset) 
-	print("showNum", showNum)
-	local nodeScale = (scale - (showNum - 1) * offset ) / offset
+	local showNum   = math.ceil(persent / offset) 
+	local nodeScale = (persent - (showNum - 1) * offset ) / offset
 	assert(showNum >= 1 and showNum <= kBloodMaxN)
 
 	for i = 1, showNum do
@@ -89,10 +97,14 @@ function BaseBossView:setBlood(scale)
 	    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")			
     	end	
 	end
-    print("nodeScale", nodeScale)
-    print("offset", offset)
-    bloodUp:setScaleX(nodeScale)
-    transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})	
+
+    if event.name == Actor.HP_INCREASE_EVENT  then 
+	    bloodDown:setScaleX(nodeScale)
+	    transition.scaleTo(bloodUp, {scaleX = nodeScale, time = 0.1})
+	else
+	    bloodUp:setScaleX(nodeScale)
+	    transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})			
+    end	    	
 end
 
 function BaseBossView:playStand()
@@ -101,9 +113,7 @@ function BaseBossView:playStand()
 end
 
 function BaseBossView:playHitted(event)
-	local maxHp = self.enemy:getMaxHp()
-	local hp = self.enemy:getHp()
-	self:setBlood(hp/maxHp)	
+
 end
 
 function BaseBossView:playMove() 
@@ -526,16 +536,9 @@ function BaseBossView:onHitted(targetData)
 	end
 	self.enemy:decreaseHp(destDemage)
 
-	local maxHp = self.enemy:getMaxHp()
-	local hp = self.enemy:getHp()
-	local persent = hp/maxHp
-	self:setBlood(persent)
-
 	--血量触发技能
 	self:checkSkill(destDemage)
 	
-	if persent < define.kGuideActiveJijia then self:checkGuide1() end
-
 	--red
 	if self.isRed then return end
 	local function callfunc()

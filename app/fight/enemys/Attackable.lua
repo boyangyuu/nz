@@ -9,9 +9,10 @@ end)
 ---- event ----
 function Attackable:ctor(property)
 	--instance
-    self.hero = md:getInstance("Hero")	
-    self.fight = md:getInstance("Fight")
-	self.enemy = self:getModel(property)
+    self.hero   = md:getInstance("Hero")	
+    self.fight  = md:getInstance("Fight")
+    self.enemyM = md:getInstance("EnemyManager") 
+	self.enemy  = self:getModel(property)
 	self.property = property
 	self.playCache = {}
 	self.isDead = false
@@ -19,15 +20,10 @@ function Attackable:ctor(property)
 	self.isPauseOtherAnim = false
 	self.isWillDie = false
 	self.isWillRemove = false
-	self.enemyM = md:getInstance("EnemyManager") 
-	print("self.enemyM !!")
-	--init armature
-	self.armature = self:getEnemyArmature()
-	assert(self.armature)
-	self:addChild(self.armature)
-	self.armature:setScale(define.kEnemyAnimScale)
-    self:setScale(property.scale or 1.0)
-    
+
+	self:initArmature()
+	self:initBuff()
+  
     --events
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
     cc.EventProxy.new(self.fight, self)
@@ -38,6 +34,26 @@ function Attackable:ctor(property)
     self:setNodeEventEnabled(true)	
 
     self:test()
+end
+
+function Attackable:initArmature()
+	self.armature = self:getEnemyArmature()
+	assert(self.armature)
+	self:addChild(self.armature)
+	self.armature:setScale(define.kEnemyAnimScale)
+    self:setScale(self.property.scale or 1.0)
+end
+
+function Attackable:initBuff()
+    local boneBuff = self.armature:getBone("buff")
+    if boneBuff == nil then return end
+    local posBone = boneBuff:convertToWorldSpace(cc.p(0, 0))
+    local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+
+	self.buffArmature = ccs.Armature:create("jiaxue")
+	self.buffArmature:setPosition(destpos)
+	self.armature:addChild(self.buffArmature, 30) 			
 end
 
 function Attackable:setPause(event)
@@ -423,7 +439,9 @@ function Attackable:getEnemyModel()
 end
 
 function Attackable:playBuff(buffName)
-	
+	if self.buffArmature then
+		self.buffArmature:getAnimation():play("jiaxue", -1, 0)
+	end
 end
 
 --接口

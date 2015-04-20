@@ -23,21 +23,17 @@ function DoctorEnemyView:ctor(property)
 end
 
 function DoctorEnemyView:tick()
-	--change state
-	local walkRate, isAble = self.enemy:getWalkRate()
-	assert(walkRate > 1, "invalid walkRate")
-
-	--walk
-	if isAble then
-		local randomSeed = math.random(1, walkRate)
-		if randomSeed > walkRate - 1 then 
-			self:play("walk", handler(self, self.playRun))
-			self.enemy:beginWalkCd()
-		end
-	end
-
 	local rollRate, isAble = self.enemy:getRollRate()
-	assert(rollRate > 1, "invalid rollRate") 	
+	assert(rollRate > 1, "invalid rollRate")	
+
+	--roll
+	if isAble then
+		local randomSeed = math.random(1, rollRate)
+		if randomSeed > rollRate - 1 then 
+			self:play("roll", handler(self, self.playRun))
+			self.enemy:beginRollCd()
+		end
+	end	
 end
 
 function DoctorEnemyView:playStartState(state)
@@ -56,10 +52,14 @@ end
 
 function DoctorEnemyView:playEnter(direct)
 	local isLeft = direct == "left" 
-	self.armature:getAnimation():play("runright" , -1, 1) 
-	self.direct = "right"
+	local animName
+	if isLeft then 
+		animName = "runright"
+	else
+		animName = "runleft"
+	end
+	self.armature:getAnimation():play(animName , -1, 1) 
 	local toPosx = self:getPositionX()
-	print("toPosx", toPosx)
 
 	local posInMapx = self:getPosInMap().x
 	local srcPosX = 0 
@@ -70,7 +70,8 @@ function DoctorEnemyView:playEnter(direct)
 	end
 
 	self:setPositionX(srcPosX)
-	local time = (toPosx - srcPosX) / define.kHushiSpeed
+	local distance = math.abs(toPosx - srcPosX)
+	local time = distance / define.kHushiSpeed
 	local action = cc.MoveTo:create(time, cc.p(toPosx, self:getPositionY()))
 	local callfunc = function ()
 		self:restoreStand()
@@ -84,7 +85,7 @@ function DoctorEnemyView:playSkillAddHp()
 	local value = self.property["skillValue"]
 	local buffData = {
 		name  = "jiaxue",
-		value = 10000,
+		value = value,
 		time  = nil,
 	}
 	self.enemyM:doBuffAll_increaseHp(buffData)
@@ -103,17 +104,13 @@ function DoctorEnemyView:playRunAction(direct)
 	print("function DoctorEnemyView:playRunLeft():")
 	local speed = define.kHushiSpeed
 	local time = define.kHushiWalkTime
-	print("time"..time)
 	local width = speed * time * self:getScale() * direct
-	print("width", width)
 	if not self:checkPlace(width) then 
 		return 
 	end
 
 	local animName = direct == 1 and "runright" or "runleft"
 	self.armature:getAnimation():play(animName , -1, 1) 
-	print("self.playAnimId = "..animName)
-	self.playAnimId = animName
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
     self.armature:runAction(cc.Sequence:create(action, 
     	cc.CallFunc:create(handler(self, self.restoreStand))
@@ -127,10 +124,15 @@ function DoctorEnemyView:onHitted(targetData)
 	audio.playSound(soundSrc,false)  	
 end
 
+function DoctorEnemyView:playHitted(event)
+	self:playHittedEffect()
+end
+
 function DoctorEnemyView:playKill(event)
 	--clear
 	DoctorEnemyView.super.playKill(self, event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
+
 	--sound
     local soundSrc  = "res/Music/fight/rz_die.wav"
     local audioId =  audio.playSound(soundSrc,false)   	

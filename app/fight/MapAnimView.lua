@@ -160,7 +160,7 @@ function MapAnimView:playEffectFocus(event)
 	local pos           = event.enemyPos
 	local time 			= event.time
 	local srcPos    	= self:convertToNodeSpace(cc.p(pos.x, pos.y))
-	local rotate 		= self.map:getDaodaoRotate(srcPos)
+	local rotate 		= self.map:getDandaoRotate(srcPos)
 	local armature = ccs.Armature:create("difang_dandao")
 	armature:setPosition(srcPos)
 	armature:setRotation(rotate)

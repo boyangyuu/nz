@@ -99,7 +99,7 @@ function Map:setMapBgNode(mapBgNode)
 	self.mapBgNode = mapBgNode
 end
 
-function Map:getDaodaoRotate(enemyPos)
+function Map:getDandaoRotate(enemyPos)
 	--rotate
 	local rotateRight = math.random(15, 50)
 	local rotateLeft  = math.random(130, 165)	
