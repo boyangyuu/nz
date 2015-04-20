@@ -21,12 +21,12 @@ function SaosheBossView:playSaoShe()
 	self:continueFire(fireTimes, fireOffset)
 end
 
-function SaosheBossView:playSkill(skillName)
+function SaosheBossView:playSkill(skillName, index)
 	if skillName == "saoShe" then
 		self:play("skill", handler(self, self.playSaoShe))
         return 
     end
-    SaosheBossView.super.playSkill(self, skillName)
+    SaosheBossView.super.playSkill(self, skillName, index)
 end
 
 function SaosheBossView:continueFire(sumTimes, fireOffset)

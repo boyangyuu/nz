@@ -167,7 +167,7 @@ function BaseBossView:playBombEffects()
 	end
 end
 
-function BaseBossView:playSkill(skillName)
+function BaseBossView:playSkill(skillName, index)
 	if skillName == "moveLeftFire" then 
 		self:play("skill", handler(self, self.playMoveLeftDaoFire))
 	elseif skillName == "moveRightFire" then 
@@ -177,7 +177,10 @@ function BaseBossView:playSkill(skillName)
 	elseif skillName == "tieqiu" then
 		self:play("skill", handler(self, self.playTieQiu))
 	elseif skillName == "zhaohuan" then
-		self:play("skill", handler(self, self.playZhanHuan))
+		local function zhanHuanCallfunc()
+			self:playZhanHuan(index)
+		end
+		self:play("skill", zhanHuanCallfunc)
 	elseif skillName == "wudi" then
 		self:play("skill", handler(self, self.playWudi))		
 				
@@ -379,14 +382,14 @@ function BaseBossView:playChongfeng()
     self:runAction(actionScale)	
 end
 
-function BaseBossView:playZhanHuan()
+function BaseBossView:playZhanHuan(index)
 	self.armature:getAnimation():play("zhaohuan", -1, 1)
-	self:zhaohuan()
+	self:zhaohuan(index)
 end
 
-function BaseBossView:zhaohuan()
-	local waveData = self.config["enemys"..self.zhaohuanIndex]
-	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. self.zhaohuanIndex)
+function BaseBossView:zhaohuan(index)
+	local waveData = self.config["enemys"..index]
+	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. index)
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
 		local bossId = self.property["id"]
@@ -397,8 +400,6 @@ function BaseBossView:zhaohuan()
 
 	self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
 		waveData = waveData})
-
-	self.zhaohuanIndex = self.zhaohuanIndex + 1
 end
 
 function BaseBossView:onKillCall(event)
@@ -505,12 +506,11 @@ function BaseBossView:checkSkill(demage)
 	local persentC = hp
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
-
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
 				local function callfuncSkill()
-					self:playSkill(skillName)
+					self:playSkill(skillName, i)
 				end
 				self:performWithDelay(callfuncSkill, 0.01)
 			end
