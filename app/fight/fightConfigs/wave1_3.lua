@@ -3,7 +3,20 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {		
+		enemys = {
+-------------- 汽油桶配置 ----------------------
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {450},
+				property = { 
+					placeName = "place2",
+					type = "bao_tong",
+					id = 4,
+				},
+			},
+----------------------------------------------	
 			{
 				time = 1,
 				num = 2,
@@ -469,6 +482,10 @@ local enemys = {
 	--近战兵
 	{id=2,image="jinzhanb",demage=3,hp=585,fireRate=180,fireCd=3,speed=40,
 		weak1=3},	
+
+	--汽油桶         --type = "bao_tong",
+	{id=4,image="qyt_01",demage=2000,hp=1,
+	weak1=1},
 
 	--金币黄气球
 	{id=5,image="qiqiu01",demage=10,hp=1,weak1=3,award = 40},	

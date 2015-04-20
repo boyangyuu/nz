@@ -217,7 +217,6 @@ function HomeBarLayer:onEnter()
     end
 
     if lid == 3 and gid == 1 then 
-        ui:closeAllPopups()
         self.guide:check("weapon")
     end
 

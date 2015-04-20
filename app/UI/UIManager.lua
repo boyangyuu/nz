@@ -30,6 +30,7 @@ layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
+layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
 
 -- 关于Popup
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
