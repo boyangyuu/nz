@@ -367,10 +367,11 @@ local waves = {
 		waveType = "boss",                                      --强敌出现
 		enemys = {  
 			{
-				time = 3,	
+				descId = "nvrenzb", --简介
+				time = 2,	
 				num = 1,
 				pos = {368},
-				delay = {0.4},
+				delay = {4},
 				property = { 
 					type = "renzheBoss",
 					placeName = "place13",

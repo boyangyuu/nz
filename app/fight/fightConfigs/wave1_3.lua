@@ -19,9 +19,9 @@ local waves = {
 ----------------------------------------------	
 			{
 				time = 1,
-				num = 2,
-				delay = {0.1,0.6},
-				pos = {110,200},
+				num = 1,
+				delay = {0.1},
+				pos = {110},
 				property = {
 					placeName = "place1",
 					startState = "rollright",
@@ -30,9 +30,9 @@ local waves = {
 			},
 			{
 				time = 1.5,
-				num = 2,
-				delay = {0.3,0.8},
-				pos = {260,320},
+				num = 1,
+				delay = {0.3},
+				pos = {260,},
 				property = {
 					placeName = "place2", 
 					startState = "rollright", 
@@ -41,9 +41,9 @@ local waves = {
 			},
 			{
 				time = 2,
-				num = 2,
-				delay = {0.1,0.6},
-				pos = {140,200},
+				num = 1,
+				delay = {0.1,},
+				pos = {140,},
 				property = {
 					placeName = "place4",  
 					startState = "rollleft",
