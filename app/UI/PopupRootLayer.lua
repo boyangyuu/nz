@@ -84,6 +84,7 @@ function PopupRootLayer:closeAllPopup(event)
 	print(" PopupRootLayer:closecloseAllPopupPopup(event)")
 	self:removeAllChildren()
 	self.layers = {}
+	self:setVisible(false)
 end
 
 return PopupRootLayer
