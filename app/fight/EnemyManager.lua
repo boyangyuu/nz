@@ -30,13 +30,15 @@ function EnemyManager:getEnemysByBuff(name)
 end
 
 function EnemyManager:doBuffAll_increaseHp(buffData)
-	local value = buffData.value
+	local value   = buffData.value
 	local time  = buffData.time
 	local name  = buffData.name
 
 	local enemys = self:getEnemysByBuff(name)
 	for i,enemy in ipairs(enemys) do
 		local enemyModel =  enemy:getEnemyModel()
+		local maxhp      = enemyModel:getMaxHp()
+		local value      = maxhp * value
 		enemyModel:increaseHp(value)
 		enemy:playBuff(name)
 		local name = enemy:getNickname() 
