@@ -5,8 +5,8 @@ function ChongBossView:ctor(property)
 	ChongBossView.super.ctor(self, property) 
 end
 
-function ChongBossView:playSkill(skillName)
-    ChongBossView.super.playSkill(self, skillName)
+function ChongBossView:playSkill(skillName, index)
+    ChongBossView.super.playSkill(self, skillName, index)
 end
 
 function ChongBossView:playFire()

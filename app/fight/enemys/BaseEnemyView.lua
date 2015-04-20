@@ -23,7 +23,9 @@ function BaseEnemyView:ctor(property)
 
 	--play
     cc.EventProxy.new(self.enemy, self)
-    	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
+    	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted))
+    	:addEventListener(Actor.HP_INCREASE_EVENT, handler(self, self.refreshBlood)) 
+    	:addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.refreshBlood))  
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill))  
     
     local function callStart()
@@ -55,11 +57,15 @@ function BaseEnemyView:initBlood()
     self.armature:addChild(self.blood)
     
     --set
-    self:setBlood(100)
+    self:refreshBlood({})
     self.blood:setVisible(false)
 end
 
-function BaseEnemyView:setBlood(per)
+function BaseEnemyView:refreshBlood(event)
+	local maxHp = self.enemy:getMaxHp()
+	local hp = self.enemy:getHp()
+	local per = hp/maxHp * 100
+
 	if per == 0 then 
 		self.blood:setVisible(false) 
 		return
@@ -68,9 +74,6 @@ function BaseEnemyView:setBlood(per)
 	-- --value
 	local bloodUp 	= cc.uiloader:seekNodeByName(self.blood, "bloodUp")
 	local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
-
-	bloodUp:setScaleX(per/100)
-	transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})
 
 	--visible
 	if self.bloodAction then 
@@ -82,6 +85,19 @@ function BaseEnemyView:setBlood(per)
 		self.blood:setVisible(false)
 	end
 	self.bloodAction = self.blood:performWithDelay(hide, 1.0)
+	self.blood:setVisible(true)
+	local function hide()
+		self.blood:setVisible(false)
+	end
+	self.bloodAction = self.blood:performWithDelay(hide, 1.0)
+
+    if event.name == Actor.HP_INCREASE_EVENT  then 
+		bloodUp:setScaleX(per/100)
+		transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})    	
+	else
+		bloodDown:setScaleX(per/100)
+		transition.scaleTo(bloodUp, {scaleX = per/100, time = 0.1})			
+    end	
 end
 
 function BaseEnemyView:playAfterAlert(type,handler)
@@ -180,11 +196,6 @@ function BaseEnemyView:onHitted(targetData)
 				name = self.hero.ENEMY_KILL_HEAD_EVENT})
 		end
 	end
-
-	--hp
-	local maxHp = self.enemy:getMaxHp()
-	local hp = self.enemy:getHp()
-	self:setBlood(hp/maxHp * 100)
 end
 
 function BaseEnemyView:playStartState(state)

@@ -68,7 +68,7 @@ function DuozuBossView:playWalkAction(direct)
         ))  
 end
 
-function DuozuBossView:playSkill(skillName)
+function DuozuBossView:playSkill(skillName, index)
     -- print("DuozuBossView:playSkill: "..skillName)
     local name = string.sub(skillName, 1, 7)
     if name == "yanwu" then 
@@ -81,7 +81,7 @@ function DuozuBossView:playSkill(skillName)
         self:play("skill",handler(self, self.playSkillWudi))
         return         
     end    
-    DuozuBossView.super.playSkill(self, skillName)
+    DuozuBossView.super.playSkill(self, skillName, index)
 end
 
 function DuozuBossView:playFire()

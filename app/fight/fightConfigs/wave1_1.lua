@@ -11,7 +11,7 @@ local waves = {
 				pos = {330},
 				property = { 
 					placeName = "place6",
-					startState = "san",
+					startState = "rollleft",
 					id = 1,
 				},
 			},
@@ -150,8 +150,8 @@ local waves = {
 --enemy的关卡配置                         无镶嵌 mp5伤害55  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=1,hp=1600,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
-	weak1=3, weak2 = 100},
+	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
+	weak1=3},
 
 	--手雷兵      --type = "dao",
 	{id=2,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
@@ -160,6 +160,7 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=2,hp=1,
 	weak1=1},
+
 }
 
 

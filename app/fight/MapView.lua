@@ -628,13 +628,15 @@ function MapView:onHeroFire(event)
 	pWorldFocus.x, pWorldFocus.y = pWorldFocus.x + box.width/2, pWorldFocus.y + box.height/2
 
 	--effect
+	-- local isFleshEnemy = self:
 	local isHitted = not (#datas == 0)
-	-- print("isHitted", isHitted)
 
 	--todo 气球判断
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld = pWorldFocus})
 end
+
+
 
 function MapView:mutiFire(datas)
 	for i,data in ipairs(datas) do

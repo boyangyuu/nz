@@ -16,7 +16,7 @@ configs["boss02_1"] = {                  --cf红色肌肉男(扔铁球)
 	title = "BOSS信息！",
 	name = "毁灭者三号",
 	spc = "技能：",
-	skill = {"粉碎投掷","野蛮冲撞","火箭弹"},
+	skill = {"铁球投掷","野蛮冲撞","战争迷雾"},
 	weakness = "头部，手部",
 	describe = "眼镜蛇研发的二代机甲战士，残酷冷血，据说有三兄弟。",
 	playanim = "stand",
@@ -72,6 +72,16 @@ configs["zpbing"] = {
 	playanim = "stand",
 }
 
+configs["jujib"] = {
+	title = "出现新兵种！",
+	name = "狙击兵",
+	spc = "特性：",
+	skill = {"攻击慢","伤害高"},
+	weakness = "头部",
+	describe = "伤害恐怖的远程兵种",
+	playanim = "stand",
+}
+
 configs["dunbing"] = {
 	title = "出现新兵种！",
 	name = "盾牌兵",
@@ -100,6 +110,16 @@ configs["hs"] = {
 	weakness = "胸",
 	describe = "不要打我的脸！人家很爱漂亮的！",
 	playanim = "speak1",
+}
+
+configs["yiliaob"] = {
+	title = "出现新兵种！",
+	name = "医疗兵",
+	spc = "特性：",
+	skill = {"恢复生命"},
+	weakness = "头部",
+	describe = "不要打我的脸！人家很爱漂亮的！",
+	playanim = "stand",
 }
 
 configs["qiufan"] = {
@@ -154,6 +174,15 @@ configs["renzb"] = {
 	skill = {"影分身","旋风斩","风魔手里剑"},
 	weakness = "头部、腿部",
 	describe = "行动敏捷的伊贺忍者后裔，眼镜蛇三号人物。擅长伪装、暗杀。",
+	playanim = "stand",
+}
+configs["nvrenzb"] = {
+	title = "BOSS信息！",
+	name = "魔女贝娜",
+	spc = "技能：",
+	skill = {"召唤","旋风斩","漫花飞舞"},
+	weakness = "头部、腿部",
+	describe = "鬼眼的义女,美颜值爆表的伊贺上忍。",
 	playanim = "stand",
 }
 

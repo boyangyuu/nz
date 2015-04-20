@@ -176,9 +176,9 @@ local waves = {
 			},
 			{
 				time = 18,
-				num = 2,
-				delay = {0,0.5},
-				pos = {350,630},
+				num = 1,
+				delay = {0,},
+				pos = {350,},
 				property = { 
 					placeName = "place2" ,
 					startState = "rollright",
@@ -187,9 +187,9 @@ local waves = {
 			},	
 			{
 				time = 19,
-				num = 2,
-				delay = {0.2,1},
-				pos = {900,1020},
+				num = 1,
+				delay = {0.2,},
+				pos = {900,},
 				property = { 
 					placeName = "place3" ,
 					id = 1,
@@ -198,9 +198,9 @@ local waves = {
 			},	
 			{
 				time = 20,		
-				num = 2,
-				pos = {360,530},
-				delay = {0.3,1},
+				num = 1,
+				pos = {360,},
+				delay = {0.3,},
 				property = { 
 					placeName = "place4",
 					startState = "rollright",
@@ -212,9 +212,9 @@ local waves = {
 			},
 			{
 				time = 21,
-				num = 3,
-				delay = {0.1,0.6,1.5},
-				pos = {870,930,1090},
+				num = 2,
+				delay = {0.1,0.6,},
+				pos = {870,1090},
 				property = { 
 					placeName = "place3" ,
 					id = 1,
@@ -223,9 +223,9 @@ local waves = {
 			},
 			{
 				time = 22,		
-				num = 2,
-				pos = {460,530},
-				delay = {0.3,1},
+				num = 1,
+				pos = {460,},
+				delay = {0.3,},
 				property = { 
 					placeName = "place4",
 					startState = "rollleft",
@@ -237,9 +237,9 @@ local waves = {
 			},
 			{
 				time = 23,
-				num = 2,
-				delay = {0,1},
-				pos = {350,630},
+				num = 1,
+				delay = {0},
+				pos = {350,},
 				property = { 
 					placeName = "place2" ,
 					startState = "rollright",                   --29
