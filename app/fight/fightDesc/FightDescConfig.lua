@@ -113,13 +113,13 @@ configs["hs"] = {
 }
 
 configs["yiliaob"] = {
-	title = "解救人质！",
-	name = "人质",
+	title = "出现新兵种！",
+	name = "医疗兵",
 	spc = "特性：",
-	skill = {"不要误伤人质！"},
-	weakness = "胸",
+	skill = {"恢复生命"},
+	weakness = "头部",
 	describe = "不要打我的脸！人家很爱漂亮的！",
-	playanim = "speak1",
+	playanim = "stand",
 }
 
 configs["qiufan"] = {

@@ -9,18 +9,18 @@ local waves = {
 				time = 2,
 				num = 1,
 				delay = {4},
-				pos = {630},
+				pos = {430},
 				property = { 
 					placeName = "place2",
 					type = "yiliao",
-					startState = "enterright",
-					skillCd = 2.0,
-					skillValue = 30,
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
 					id = 25,
 				},
 			},	
 			{
-				time = 2,
+				time = 6,
 				num = 2,
 				delay = {0,0.5},
 				pos = {790,420},
@@ -31,7 +31,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
+				time = 8,
 				num = 3,
 				delay = {0,0.5,1},
 				pos = {640,900,320},
@@ -42,20 +42,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
-				num = 4,
-				delay = {0.4,0,0.8,1.3},
-				pos = {200,400,600,800},
-				property = { 
-					placeName = "place13" ,
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",           --导
-				},
-			},
-			{
-				time = 8,	
+				time = 9,	
 				num = 3,
 				pos = {230,330,510},
 				delay = {0.5,0,1},
@@ -66,7 +53,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 10,	
 				num = 2,
 				pos = {270,570},
 				delay = {0.5,0},
@@ -80,7 +67,7 @@ local waves = {
 				},
 			},
 			{
-				time = 9,	
+				time = 11,	
 				num = 3,
 				pos = {1000,800,600},
 				delay = {0,0.5,1},
@@ -91,7 +78,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	
+				time = 12,	
 				num = 3,
 				delay = {0.9,0.5,0},
 				pos = {970,870,570},
@@ -105,7 +92,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 13,
 				num = 5,
 				delay = {0,0.7,1.4,2.1,2.8,},
 				pos = {220,300,500,700,900,},
@@ -117,7 +104,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,
+				time = 14,
 				num = 5,
 				delay = {3.5,0,0.7,1.4,2.1},
 				pos = {300,450,600,750,940},
@@ -156,17 +143,31 @@ local waves = {
 			},
 			{
 				time = 7,
-				num = 4,
-				delay = {0.4,0,0.8,1.3},
-				pos = {200,400,600,800},
+				num = 1,
+				delay = {0},
+				pos = {630},
 				property = { 
-					placeName = "place13" ,
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",           --导
+					placeName = "place2",
+					type = "yiliao",                --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 25,
 				},
 			},
+			-- {
+			-- 	time = 7,
+			-- 	num = 4,
+			-- 	delay = {0.4,0,0.8,1.3},
+			-- 	pos = {200,400,600,800},
+			-- 	property = { 
+			-- 		placeName = "place13" ,
+			-- 		type = "dao",
+			-- 		id = 5,
+			-- 		missileId = 6,
+			-- 		missileType = "daodan",           --导
+			-- 	},
+			-- },
 			{
 				time = 8,
 				num = 1,
@@ -218,6 +219,20 @@ local waves = {
 					type = "common",
 					startState = "san",
 					id = 1,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {800},
+				property = { 
+					placeName = "place3",
+					type = "yiliao",                --医疗兵
+					startState = "enterright",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 25,
 				},
 			},
 			{
