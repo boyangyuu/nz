@@ -86,9 +86,8 @@ function getConfig( configFileDir )
     local fileUtil = cc.FileUtils:getInstance()
     local fullPath = fileUtil:fullPathForFilename(configFileDir)
     local jsonStr = fileUtil:getStringFromFile(fullPath)
-    local configTb = json.decode(jsonStr)
-    --
-    -- print("function getConfig( configFileDir ).."..configFileDir)
+    local decodeJsonStr = crypto.decodeBase64(jsonStr)
+    local configTb = json.decode(decodeJsonStr)
     assert(configTb, "config is nil , name:"..configFileDir)
     return configTb
 end
@@ -100,7 +99,6 @@ function getRecordByID( configFileDir, tableID)
         "invalid tableID configFileDir:"..configFileDir)
 
     local configTable = getConfig(configFileDir)
-    -- dump(configTable, "configTable")
     for k,v in pairs(configTable) do
         if v["id"] == tableID then
             -- dump(v)

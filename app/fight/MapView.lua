@@ -22,9 +22,13 @@ local kEffectZorder = 10000001
 local kDefine = {
 	orderMax 		 = 29,  --敌人同时出场最大序号
 	zorderOffset	 = 30, 	--不同y坐标的
-	feijiZorder 	 = 30 * 30 + 500,
-	sanZorder 	 	 = 30 * 30 + 1000,	
-	missileZorder 	 = 30 * 30 + 2000,	
+	flyZorder 	 	 = 30 * 30 + 500,
+	missileZorder    = 30 * 30 + 1000,
+}
+
+local kNotFleshEnemyTypes = {
+	dao = true, dao_wang = true, missile = true, dao_wu = true, 
+	awardSan = true, bao_tong = true, jinbi = true, award = true
 }
 
 --① 敌人先后顺序不对 , ② 近战兵 自爆兵 的到达 ③ 导弹兵 伞兵 飞机兵分层
@@ -147,7 +151,7 @@ function MapView:startFight(event)
 	local fightModel = md:getInstance("FightMode")
 	local modeConfig = fightModel:getModeConfig()
 	self.fightDescModel:start(modeConfig.type)
-	self:performWithDelay(handler(self, self.updateEnemys), 2.0)
+	self:performWithDelay(handler(self, self.updateEnemys), 3.0)
 end
 
 function MapView:updateEnemys()
@@ -349,13 +353,13 @@ function MapView:checkZorder()
 			curPosy = posy
 			zIndex = zIndex + 1
 		end
-
-		if object["type"] == "enemy" then 
-			typeOrder = kDefine[object.enemyType .. "Zorder"] or 0
+		local flyOrder =  0
+		if object["type"] == "enemy" and node:getIsFlying() then 
+			flyOrder = kDefine["flyZorder"]
 		end
 
 		--zorder
-		local zorder = zIndex * offset - appearorder + typeOrder
+		local zorder = zIndex * offset - appearorder + flyOrder
 		node:setLocalZOrder(zorder) 
 	end
 end
@@ -367,7 +371,6 @@ function MapView:getSortedObjects()
 			posy  		= v:getPositionY(),
 			appearorder = v:getProperty()["order"] or 0,
 			type        = "enemy",
-			enemyType   = v:getProperty()["type"],
 			node        = v,
 		}
 		--todo
@@ -513,7 +516,9 @@ function MapView:getTargetDatas(focusNode)
 		local isCovered = self:isCovered(enemy, focusNode)
 		if not isCovered then 
 			local isHited, targetData = enemy:getTargetData(focusNode)
-			if isHited then targetDatas[#targetDatas + 1] = targetData end
+			if isHited then 
+				targetDatas[#targetDatas + 1] = targetData 
+			end
 		end
 	end
 	return targetDatas 
@@ -561,9 +566,11 @@ function MapView:getEnemysInRect(rect)
 			local scale = enemy:getScale()
 			local pos = armature:convertToWorldSpace(cc.p(0,0))
 			pos = cc.p(pos.x - box.width/2 * scale, pos.y)  --pos 为左下角
-			-- dump(pos, "pos")
 			local enemyRect = cc.rect(pos.x, pos.y, 
-				box.width * scale, box.height * scale)   --有scale问题
+				box.width * scale, box.height * scale)   
+
+			dump(rect, "rect")
+			dump(enemyRect, "enemyRect")
 			if cc.rectIntersectsRect(rect, enemyRect) then
 				enemys[#enemys + 1] = enemy
 			end
@@ -628,15 +635,18 @@ function MapView:onHeroFire(event)
 	pWorldFocus.x, pWorldFocus.y = pWorldFocus.x + box.width/2, pWorldFocus.y + box.height/2
 
 	--effect
-	-- local isFleshEnemy = self:
 	local isHitted = not (#datas == 0)
-
-	--todo 气球判断
+	for i,data in ipairs(datas) do
+		local enemy = data["enemy"]
+		local type  = enemy:getEnemyType()
+		if kNotFleshEnemyTypes[type] then 
+			isHitted = false 
+			break
+		end
+	end
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld = pWorldFocus})
 end
-
-
 
 function MapView:mutiFire(datas)
 	for i,data in ipairs(datas) do

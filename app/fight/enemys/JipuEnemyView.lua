@@ -1,7 +1,7 @@
 
 --[[--
 
-“飞机兵”的视图
+“吉普兵”的视图
 1. 临时兵种 指定时间离开屏幕
 2. 有进入屏幕动画
 3. 
@@ -10,11 +10,11 @@
 local Actor = import("..Actor")
 local Enemy = import(".Enemy")
 local BaseEnemyView = import(".BaseEnemyView")
-local FeijiEnemyView = class("FeijiEnemyView", BaseEnemyView)  
+local JipuEnemyView = class("JipuEnemyView", BaseEnemyView)  
 
-function FeijiEnemyView:ctor(property)
+function JipuEnemyView:ctor(property)
 	--instance
-	FeijiEnemyView.super.ctor(self, property) 
+	JipuEnemyView.super.ctor(self, property) 
 
     -- --events
     cc.EventProxy.new(self.enemy, self)
@@ -26,20 +26,17 @@ function FeijiEnemyView:ctor(property)
     self.isExiting  = false
     local lastTime = self.property["lastTime"]
     self:schedule(handler(self, self.playExit), lastTime)
-    
-    self:setIsFlying(true)
-
     self:setData()
 end
 
-function FeijiEnemyView:setData()
+function JipuEnemyView:setData()
 	local type 		= self.property["type"]
 	self.speed 		= define["k"..type.."Speed"]
 	self.runTime 	= define["k"..type.."RunTime"]
 	self.walkTime 	= define["k"..type.."WalkTime"]
 end
 
-function FeijiEnemyView:playStartState(state)
+function JipuEnemyView:playStartState(state)
 	if state == "enterleft" then 
 		self:playEnter("left")
 	elseif state == "enterright" then
@@ -49,7 +46,7 @@ function FeijiEnemyView:playStartState(state)
 	end
 end
 
-function FeijiEnemyView:tick()
+function JipuEnemyView:tick()
 	--change state
 	if self.isExiting or self.isEntering then return end
 
@@ -85,7 +82,7 @@ function FeijiEnemyView:tick()
 	end
 end
 
-function FeijiEnemyView:playEnter(direct)
+function JipuEnemyView:playEnter(direct)
 	self.isEntering = true
 	local isLeft = direct == "left" 
 	self.armature:getAnimation():play("runright" , -1, 1) 
@@ -112,13 +109,9 @@ function FeijiEnemyView:playEnter(direct)
 
     self:runAction(cc.Sequence:create(action, 
     		cc.CallFunc:create(callfunc)))	
-
-    --sound
-    local soundSrc  = "res/Music/fight/plane.wav"
-    self.audioId =  audio.playSound(soundSrc,true) 
 end
 
-function FeijiEnemyView:playExit()
+function JipuEnemyView:playExit()
 	if self.enemy:isDead() then return end
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
@@ -136,7 +129,7 @@ function FeijiEnemyView:playExit()
     		cc.CallFunc:create(callfunc)))	
 end
 
-function FeijiEnemyView:playRun()
+function JipuEnemyView:playRun()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then
 		self:play("playRunLeft", handler(self, self.playRunLeft))
@@ -145,7 +138,7 @@ function FeijiEnemyView:playRun()
 	end
 end
 
-function FeijiEnemyView:playRunLeft()
+function JipuEnemyView:playRunLeft()
 	local speed = self.speed * self:getScale()
 	local time  = self.runTime
 	local width = speed * time 
@@ -153,7 +146,6 @@ function FeijiEnemyView:playRunLeft()
 	if not self:checkPlace(-width) then return end
 	self.direct = "left"
 	self.armature:getAnimation():play("runleft" , -1, 1) 
-	-- print("width", width)
 	local action = cc.MoveBy:create(time, cc.p(-width, 0))
     self.armature:runAction(cc.Sequence:create(action, 
     	cc.CallFunc:create(handler(self, self.restoreStand))
@@ -161,13 +153,12 @@ function FeijiEnemyView:playRunLeft()
 	self.enemy:beginRollCd()
 end
 
-function FeijiEnemyView:playRunRight()
+function JipuEnemyView:playRunRight()
 	local speed = self.speed * self:getScale()
 	local time  = self.runTime
 	local width = speed * time 
 
 	if not self:checkPlace(width) then return end
-	-- print("width", width)
 	self.armature:getAnimation():play("runright" , -1, 1) 
 	self.direct = "right"
 	local action = cc.MoveBy:create(time, cc.p(width, 0))
@@ -177,7 +168,7 @@ function FeijiEnemyView:playRunRight()
 	self.enemy:beginRollCd()	
 end
 
-function FeijiEnemyView:playWalk()
+function JipuEnemyView:playWalk()
 	local randomSeed = math.random(1, 2)
 	if randomSeed == 1 then
 		self:play("playWalkLeft", handler(self, self.playWalkLeft))
@@ -186,11 +177,10 @@ function FeijiEnemyView:playWalk()
 	end
 end
 
-function FeijiEnemyView:playWalkLeft()
+function JipuEnemyView:playWalkLeft()
 	local speed = self.speed * self:getScale()
 	local time  = self.walkTime
 	local width = speed * time 
-	-- print()
 	if not self:checkPlace(-width) then return end
 
 	self.direct = "left"
@@ -204,7 +194,7 @@ function FeijiEnemyView:playWalkLeft()
 	self.enemy:beginWalkCd()    
 end
 
-function FeijiEnemyView:playWalkRight()
+function JipuEnemyView:playWalkRight()
 	local speed = self.speed * self:getScale()
 	local time  = self.walkTime
 	local width = speed * time
@@ -222,8 +212,7 @@ function FeijiEnemyView:playWalkRight()
 	self.enemy:beginWalkCd()    	
 end
 
-function FeijiEnemyView:playFire()
-	-- print("function FeijiEnemyView:playFire()")
+function JipuEnemyView:playFire()
 	local name = self.direct == "right" and "fireright" or "fireleft"
 	self.armature:getAnimation():play(name , -1, 1)
 
@@ -237,7 +226,6 @@ function FeijiEnemyView:playFire()
 		local name = "dao"..index
 	    local boneDao = self.armature:getBone(name)
 	    if boneDao == nil then break end
-	    -- print("playFire index"..index)
 	    local boneImage = boneDao:getDisplayRenderNode()
 	    
 	    local pWorldBone = boneImage:convertToWorldSpace(cc.p(0, 0))
@@ -246,14 +234,12 @@ function FeijiEnemyView:playFire()
 	        srcPos = pWorldBone,
 	        srcScale = self:getScale() * 0.3,
 	        destPos = pWorldBone,
-	        type = "missile",
+	        type = self.property["missileType"],
 	        id = self.property["missileId"],
 	        demageScale = self.enemy:getDemageScale(),
-	        missileType = self.property["missileType"],
 	        offset = offsetPoses[offsetIndex]
 	    }
 	    local function callfuncDaoDan()
-	    	-- print("local function callfuncDaoDan()")
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
@@ -261,7 +247,7 @@ function FeijiEnemyView:playFire()
 	end
 end
 
-function FeijiEnemyView:playStand()
+function JipuEnemyView:playStand()
 	if self.direct == "left" then 
 		self.armature:getAnimation():play("standleft" , -1, 1)
 	else 
@@ -269,44 +255,39 @@ function FeijiEnemyView:playStand()
 	end
 end
 
-function FeijiEnemyView:onHitted(targetData)
+function JipuEnemyView:onHitted(targetData)
 	if self.isEntering or self.isExiting then 
 		return 
 	end
-	FeijiEnemyView.super.onHitted(self, targetData)
+	JipuEnemyView.super.onHitted(self, targetData)
 end
 
-function FeijiEnemyView:playHitted(event)
+function JipuEnemyView:playHitted(event)
 	--飘红
 	self:playHittedEffect()
 end
 
-function FeijiEnemyView:playKill(event)
-	FeijiEnemyView.super.playKill(self, event)	
+function JipuEnemyView:playKill(event)
+	JipuEnemyView.super.playKill(self, event)	
 	local name = self.direct == "right" and "dieright" or "dieleft"
 	--anim
 	self.armature:getAnimation():play(name , -1, 1)
 	self:playBombEffects()
-
-	--sound
-	audio.stopSound(self.audioId)
 end
 
-function FeijiEnemyView:playBombEffects()
+function JipuEnemyView:playBombEffects()
     for i=1,8 do
         self:performWithDelay(
             handler(self, self.playBombEffect), i * 0.1)
     end
 end
 
-function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
+function JipuEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		-- print("animationEvent id ", movementID)
 		if movementID == "runright" or movementID == "runleft" then 
 			return 
 		end
-
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			self:doNextPlay()
     	elseif movementID == "dieright" or movementID == "dieleft" then 
@@ -315,8 +296,4 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	end
 end
 
-function FeijiEnemyView:onExit()
-	audio.stopSound(self.audioId)
-end
-
-return FeijiEnemyView
+return JipuEnemyView
