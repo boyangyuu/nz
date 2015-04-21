@@ -284,7 +284,7 @@ function RootLayer:onloadDone()
         local function hide()
             ui:hideLoad()
         end
-        self:performWithDelay(hide, 0.5)
+        self:performWithDelay(hide, 2)
     end
 end
 
