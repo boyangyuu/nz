@@ -14,7 +14,7 @@ local waves = {
 					type = "jipu" ,
 					id = 12,
 					placeName = "place1",
-					missileId = 6,
+					missileId = 4,
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
@@ -293,7 +293,10 @@ local enemys = {
 
     --导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=10,hp=500,
-	weak1=1},	
+	weak1=1},
+
+	--吉普车烟雾导弹          type = "dao_wu",
+	{id=4,image="daodan03",demage=10,hp=3000, weak1=1}, 	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
 	{id=7,image="jinzhanb",demage=20,hp=18000,fireRate=180,fireCd=4,speed=60,
@@ -317,7 +320,7 @@ local enemys = {
 	--小蜘蛛   --type = "bao",
 	{id=20,image="xiaozz",demage=15,hp=5000, speed=120,weak1=1}, 
 
-	--烟雾导弹          type = "dao_wu",
+	--boss烟雾导弹          type = "dao_wu",
 	{id=21,image="daodan03",demage=10,hp=6000, weak1=1},   
 
 	--BOSS导弹          type = "missile",

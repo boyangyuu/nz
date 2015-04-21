@@ -61,6 +61,10 @@ function ChongBossView:playTieQiu()
 	end		
 end
 
+function ChongBossView:playZhanHuan(index)
+    self:zhaohuan(index)
+end
+
 function ChongBossView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
 		if self:getPauseOtherAnim() and movementID ~= "die" then 

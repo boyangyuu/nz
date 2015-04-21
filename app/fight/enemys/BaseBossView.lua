@@ -29,7 +29,8 @@ function BaseBossView:ctor(property)
     self:initBlood()
     self.config  	= waveConfig:getBoss(index)
     self.isUnhurted = false
-
+    self.zhaohuans = {}
+    
 	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
@@ -388,7 +389,11 @@ function BaseBossView:playZhanHuan(index)
 end
 
 function BaseBossView:zhaohuan(index)
-	local waveData = self.config["enemys"..index]
+	local name     = "enemys"..index
+	if self.zhaohuans[name] then return end
+
+	self.zhaohuans[name] = true
+	local waveData = self.config[name]
 	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. index)
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
