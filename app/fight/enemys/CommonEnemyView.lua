@@ -47,6 +47,7 @@ end
 
 function CommonEnemyView:playSan()
 	self.isSaning = true
+	self:setIsFlying(true)
     self:setPositionY(display.height)
 
     --action
@@ -59,6 +60,7 @@ function CommonEnemyView:playSan()
     local function fallEnd()
     	self:restoreStand()
     	self.isSaning = false	
+    	self:setIsFlying(false)
     end
     local seq = cc.Sequence:create(action, 
         cc.CallFunc:create(fallEnd))    
@@ -167,6 +169,7 @@ function CommonEnemyView:animationEvent(armatureBack,movementType,movementID)
 		if movementID ~= "die" and not self:getPauseOtherAnim() then
 			self:doNextPlay()
     	elseif movementID == "die" then 
+    		print("CommonEnemyView die")
     		self:setDeadDone()
     	end 
 	end

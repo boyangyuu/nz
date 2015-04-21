@@ -20,6 +20,7 @@ function Attackable:ctor(property)
 	self.isPauseOtherAnim = false
 	self.isWillDie = false
 	self.isWillRemove = false
+	self.isFlying = false
 
 	self:initArmature()
 	self:initBuff()
@@ -225,6 +226,7 @@ end
 function Attackable:setDeadDone()
 	self:setPauseOtherAnim(true)
 	self.isDead = true
+	self:setVisible(false)
 end
 
 function Attackable:getWillRemoved()
@@ -442,6 +444,14 @@ function Attackable:playBuff(buffName)
 	if self.buffArmature then
 		self.buffArmature:getAnimation():play("jiaxue", -1, 0)
 	end
+end
+
+function Attackable:setIsFlying(isFlying)
+	self.isFlying = isFlying
+end
+
+function Attackable:getIsFlying()
+	return self.isFlying 
 end
 
 --接口

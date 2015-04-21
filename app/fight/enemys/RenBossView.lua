@@ -201,9 +201,9 @@ function RenBossView:playFire()
     end
 end
 
-function RenBossView:playZhanHuan()
+function RenBossView:playZhanHuan(index)
     self.armature:getAnimation():play("zhaohuan", -1, 1)
-    self:zhaohuan()
+    self:zhaohuan(index)
     self.isShaning = true
 end
 

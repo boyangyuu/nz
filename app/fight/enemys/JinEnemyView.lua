@@ -24,6 +24,7 @@ end
 
 function JinEnemyView:playSan()
     self:setPositionY(display.height1)
+    self:setIsFlying(true)
 
     --action
     local speed = define.kJinEnemySanSpeed 
@@ -33,6 +34,7 @@ function JinEnemyView:playSan()
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
 
     local function fallEnd()
+        self:setIsFlying(false)
         self:restoreStand()  
         self:playAhead()
     end
