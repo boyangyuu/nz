@@ -5,25 +5,22 @@ local BossConfigs = {}
 BossConfigs["chapter1"] = {
 	name = "丛林野战",
 	desc = "决战吧！@小骚辉",
-	weaponid = 2,
+	weaponId = 9,
 	weaponSkill = "多重攻击",
-	weaponSkillDesc = "weaponSkill!!!adifgaiousgfagiuawrfvbasg",
 }
 
 BossConfigs["chapter2"] = {
 	name = "野战",
 	desc = "决战吧！@大骚辉",
-	weaponid = 3,
+	weaponId = 10,
 	weaponSkill = "多重攻击",
-	weaponSkillDesc = "ll!!!adifgaiousgfagiuawrfvbasg",
 }
 
 BossConfigs["chapter3"] = {
 	name = "丛林",
 	desc = "决战吧！@老骚辉",
-	weaponid = 6,
+	weaponId = 11,
 	weaponSkill = "多重攻击",
-	weaponSkillDesc = "weSkill!!!adifgaiousgfagiuawrfvbasg",
 }
  
 function BossModeConfigs.getConfig(chapterId)

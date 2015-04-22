@@ -41,6 +41,12 @@ function BossModeLayer:initUI()
 		self.partsImg[v] = cc.uiloader:seekNodeByName(panelWeapon, "panel"..v)
 	end
 
+	--label
+	self.skillName = cc.uiloader:seekNodeByName(self.panelMain, "skillName")
+	self.weaponDesc = cc.uiloader:seekNodeByName(self.panelMain, "weaponDesc")
+	self.name = cc.uiloader:seekNodeByName(self.panelMain, "name")
+	self.desc = cc.uiloader:seekNodeByName(self.panelMain, "desc")
+
 	--btn
 	local btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
 	local btnStart = cc.uiloader:seekNodeByName(self, "btnStart")
@@ -132,7 +138,7 @@ function BossModeLayer:refreshContent()
 
 	--gun
 	self.panelGun:removeAllChildren()
-	local weaponId = self.choseInfo["weaponid"]
+	local weaponId = self.choseInfo["weaponId"]
 	local imgName = self.weaponListModel:getWeaponImgByID(weaponId)
 
 
@@ -146,6 +152,12 @@ function BossModeLayer:refreshContent()
 	self.panelChapter:removeAllChildren()
     local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
     self.panelChapter:addChild(bossBtnNode)
+
+    --boss
+    self.skillName:setString(self.choseInfo["weaponSkill"])
+    self.weaponDesc:setString(self.choseInfo["weaponSkill"])
+    self.name:setString(self.choseInfo["name"])
+    self.desc:setString(self.choseInfo["desc"])
 end
 
 function BossModeLayer:onClickBtnClose()
