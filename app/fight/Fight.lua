@@ -339,6 +339,7 @@ function Fight:cleanModels()
     md:deleteInstance("FightInlay")  
     md:deleteInstance("Defence")
     md:deleteInstance("Robot")
+    md:deleteInstance("FightConfigs")
 end
 
 function Fight:setGoldValue(goldValue_)

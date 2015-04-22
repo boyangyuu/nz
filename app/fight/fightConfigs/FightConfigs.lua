@@ -42,7 +42,6 @@ function FightConfigs:getWaveImages(gid, lid)
 	local str_src = "."..name_lua
 	local waveConfig = require(p..str_src).new()
 	-- waveConfig = require(p..".bossWave.bossWave1_1").new()
-	print("p..str_src", p..str_src)	
 	for i,config in ipairs(waveConfig.enemys) do
 		images[#images + 1] = config["image"]
 	end
