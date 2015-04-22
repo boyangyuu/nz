@@ -454,6 +454,11 @@ function Attackable:getIsFlying()
 	return self.isFlying 
 end
 
+function Attackable:getCurrentMovementID()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	return currentName
+end
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	

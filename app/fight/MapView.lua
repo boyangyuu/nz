@@ -161,13 +161,11 @@ function MapView:updateEnemys()
 	-- dump(wave, "wave")
 
 	local result = self.fight:getResult()
-	if wave == nil  then 
+	if wave == nil then 
 		print("赢了")
 		if result == nil then 
-			self.fight:doWin()
+			self.fight:willWin(0.0)
 			self:stopAllActions()			
-		else
-			assert(false, "")
 		end
 		return
 	end

@@ -252,7 +252,7 @@ function FightPlayer:onHeroKill(event)
     self:onCancelledFire()
 
     --fight 
-    self.fight:endFightFail()
+    self.fight:willFail(0.0)
 end
 
 function FightPlayer:initTouchArea()

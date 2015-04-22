@@ -546,25 +546,26 @@ function BaseBossView:onHitted(targetData)
 	--血量触发技能
 	self:checkSkill(destDemage)
 	
-	--red
-	if self.isRed then return end
-	local function callfunc()
-		if self.isRed then 
-			-- print("回复")
-			self.armature:setColor(cc.c3b(255,255,255))
+	self:playHittedEffect()
+	-- --red
+	-- if self.isRed then return end
+	-- local function callfunc()
+	-- 	if self.isRed then 
+	-- 		-- print("回复")
+	-- 		self.armature:setColor(cc.c3b(255,255,255))
 			
-		end
-	end
+	-- 	end
+	-- end
 
-	local function callfuncRestore()
-		self.isRed = false
-	end
+	-- local function callfuncRestore()
+	-- 	self.isRed = false
+	-- end
 
-	-- print("变红")
-	self.isRed = true
-	self.armature:setColor(cc.c3b(255,50,5))
-	self:performWithDelay(callfunc, 20/60)
-	self:performWithDelay(callfuncRestore, 60/60)
+	-- -- print("变红")
+	-- self.isRed = true
+	-- self.armature:setColor(cc.c3b(255,50,5))
+	-- self:performWithDelay(callfunc, 20/60)
+	-- self:performWithDelay(callfuncRestore, 60/60)
 end
 
 function BaseBossView:initBody()
