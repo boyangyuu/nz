@@ -165,15 +165,15 @@ end
 function Fight:willWin(time)
     if self:getResult() ~= nil then return end
     local delay = time or 1.0
-    self:setResult("win")   
-    scheduler.performWithDelayGlobal(handler(self, self.doWin), delay) 
+    self:setResult("win")
+    scheduler.performWithDelayGlobal(handler(self, self.doWin), delay)
 end
 
 function Fight:willFail(time)
     if self:getResult() ~= nil then return end
     local delay = time or 2.0
     self:setResult("fail")    
-    scheduler.performWithDelayGlobal(handler(self, self.doFail), delay)     
+    scheduler.performWithDelayGlobal(handler(self, self.doFail), delay)
 end
 
 function Fight:doWin()
