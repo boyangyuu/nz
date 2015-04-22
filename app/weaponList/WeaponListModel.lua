@@ -246,4 +246,19 @@ function WeaponListModel:getAllWeapon()
 	return weapontable
 end
 
+function WeaponListModel:getWeaponPartById(PartId)
+	assert(PartId,"PartId is nil")
+	if PartId == 1 then
+		return "Zhuti"
+	elseif PartId == 2 then
+		return "Guan"
+	elseif PartId == 3 then
+		return "Danjia"
+	elseif PartId == 4 then
+		return "Tuo"
+	elseif PartId == 5 then
+		return "Miaozhun"
+	end
+end
+
 return WeaponListModel

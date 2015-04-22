@@ -3,21 +3,27 @@ local BossModeConfigs = class("BossModeConfigs", cc.mvc.ModelBase)
 local BossConfigs = {}
 
 BossConfigs["chapter1"] = {
-	bossplay = "boss02_1",
-	desc = "第一章",
+	name = "丛林野战",
+	desc = "决战吧！@小骚辉",
 	weaponid = 2,
+	weaponSkill = "多重攻击",
+	weaponSkillDesc = "weaponSkill!!!adifgaiousgfagiuawrfvbasg",
 }
 
 BossConfigs["chapter2"] = {
-	bossplay = "boss01_2",
-	desc = "第二章",
+	name = "野战",
+	desc = "决战吧！@大骚辉",
 	weaponid = 3,
+	weaponSkill = "多重攻击",
+	weaponSkillDesc = "ll!!!adifgaiousgfagiuawrfvbasg",
 }
 
 BossConfigs["chapter3"] = {
-	bossplay = "dzboss",
-	desc = "第三章",
-	weaponid = 4,
+	name = "丛林",
+	desc = "决战吧！@老骚辉",
+	weaponid = 6,
+	weaponSkill = "多重攻击",
+	weaponSkillDesc = "weSkill!!!adifgaiousgfagiuawrfvbasg",
 }
  
 function BossModeConfigs.getConfig(chapterId)
