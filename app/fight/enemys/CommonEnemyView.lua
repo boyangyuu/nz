@@ -14,7 +14,6 @@ local CommonEnemyView = class("CommonEnemyView", BaseEnemyView)
 
 function CommonEnemyView:ctor(property)
 	CommonEnemyView.super.ctor(self, property) 
-	self.isSaning = false
 end
 
 ---- state ----
@@ -46,7 +45,6 @@ function CommonEnemyView:playThrow()
 end
 
 function CommonEnemyView:playSan()
-	self.isSaning = true
 	self:setIsFlying(true)
     self:setPositionY(display.height)
 
@@ -58,8 +56,7 @@ function CommonEnemyView:playSan()
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
 
     local function fallEnd()
-    	self:restoreStand()
-    	self.isSaning = false	
+    	self:restoreStand()	
     	self:setIsFlying(false)
     end
     local seq = cc.Sequence:create(action, 
@@ -141,23 +138,22 @@ function CommonEnemyView:tick(t)
 end
 
 function CommonEnemyView:playHitted(event)
-	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	local curID = self:getCurrentMovementID()
 	--飘红
 	self:playHittedEffect()
 
 	--不重复播放
-	if not self.enemy:isDead() and currentName ~= "hit"
-		and not self.isSaning then
+	if not self.enemy:isDead() and curID ~= "hit"
+		and not self:getIsFlying() then
 		self.armature:getAnimation():play("hit" ,-1 , 1)
 	end
 end
 
 --throw 
 function CommonEnemyView:canHitted()
-	local currentName = self.armature:getAnimation():getCurrentMovementID()
-	--无敌
-	if currentName == "rollleft" 
-		or currentName == "rollright" then 
+	local curID = self:getCurrentMovementID()	--无敌
+	if curID == "rollleft" 
+		or curID == "rollright" then 
 		return false
 	end
 	return true

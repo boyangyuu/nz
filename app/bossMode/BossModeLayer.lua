@@ -29,20 +29,23 @@ function BossModeLayer:initUI()
 	self.panelMain = cc.uiloader:seekNodeByName(self, "panelMain")
 	self.panelDown = cc.uiloader:seekNodeByName(self, "panelDown")
 
-	local panelWeapon = cc.uiloader:seekNodeByName(self, "panelWeapon")
-	self.panelChapter = cc.uiloader:seekNodeByName(self, "panelChapter")
-
-	--boss
-	self.panelBoss = cc.uiloader:seekNodeByName(self, "panelBoss")
+	local panelWeapon = cc.uiloader:seekNodeByName(self.panelDown, "panelWeapon")
+	self.panelChapter = cc.uiloader:seekNodeByName(self.panelMain, "panelChapter")
 
 	--gun
-	self.panelGun = cc.uiloader:seekNodeByName(panelWeapon, "panelGun")
+	self.panelGun = cc.uiloader:seekNodeByName(self.panelMain, "panelGun")
 
 	local parts = {"Danjia","Zhuti","Guan","Tuo","Miaozhun"}
 	self.partsImg = {}
 	for k,v in pairs(parts) do
 		self.partsImg[v] = cc.uiloader:seekNodeByName(panelWeapon, "panel"..v)
 	end
+
+	--label
+	self.skillName = cc.uiloader:seekNodeByName(self.panelMain, "skillName")
+	self.weaponDesc = cc.uiloader:seekNodeByName(self.panelMain, "weaponDesc")
+	self.name = cc.uiloader:seekNodeByName(self.panelMain, "name")
+	self.desc = cc.uiloader:seekNodeByName(self.panelMain, "desc")
 
 	--btn
 	local btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
@@ -93,11 +96,11 @@ function BossModeLayer:initUI()
 end
 
 function BossModeLayer:refreshUI(event)
-	local actionDown = cc.MoveBy:create(0.3, cc.p(0,-200))
-	local actionUp = cc.MoveBy:create(0.3, cc.p(0,200))
- 	local actionNext = cc.MoveBy:create(0.3, cc.p(-1136,0))
+	local actionDown = cc.MoveBy:create(0.2, cc.p(0,-200))
+	local actionUp = cc.MoveBy:create(0.2, cc.p(0,200))
+ 	local actionNext = cc.MoveBy:create(0.2, cc.p(-1136,0))
 	local actionNextChange = cc.MoveBy:create(0, cc.p(1136*2,0))
- 	local actionPre = cc.MoveBy:create(0.3, cc.p(1136,0))
+ 	local actionPre = cc.MoveBy:create(0.2, cc.p(1136,0))
 	local actionPreChange = cc.MoveBy:create(0, cc.p(-1136*2,0))
 
 	if self.toward == "next" then
@@ -135,30 +138,26 @@ function BossModeLayer:refreshContent()
 
 	--gun
 	self.panelGun:removeAllChildren()
-	local weaponId = self.choseInfo["weaponid"]
+	local weaponId = self.choseInfo["weaponId"]
 	local imgName = self.weaponListModel:getWeaponImgByID(weaponId)
+
+
 	local weaponImg = display.newSprite("#icon_"..imgName..".png")
+	weaponImg:setFlippedX(true)
+	weaponImg:setRotation(-10)
+	weaponImg:setScale(1.1)
 	addChildCenter(weaponImg, self.panelGun)
-
-	--bossPlay
-	self.panelBoss:removeAllChildren()
-	local armature = nil
-	local enemyPlay = self.choseInfo["bossplay"]
-	local manager = ccs.ArmatureDataManager:getInstance()
-    local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".ExportJson"
-    manager:addArmatureFileInfo(src)
-    local plist = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.plist"
-    local png   = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.png"
-    display.addSpriteFrames(plist, png)          
-
-	armature = ccs.Armature:create(enemyPlay)
-	addChildCenter(armature, self.panelBoss)
-	armature:getAnimation():play("stand" , -1, 1)
 
 	--
 	self.panelChapter:removeAllChildren()
     local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
     self.panelChapter:addChild(bossBtnNode)
+
+    --boss
+    self.skillName:setString(self.choseInfo["weaponSkill"])
+    self.weaponDesc:setString(self.choseInfo["weaponSkill"])
+    self.name:setString(self.choseInfo["name"])
+    self.desc:setString(self.choseInfo["desc"])
 end
 
 function BossModeLayer:onClickBtnClose()

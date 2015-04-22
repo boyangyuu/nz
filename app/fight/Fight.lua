@@ -130,33 +130,7 @@ function Fight:endFightWin()
     self:dispatchEvent({name = Fight.FIGHT_WIN_EVENT})
     self:pauseFight(true)
     self:checkDialogAfter()
-
     self:clearFightData()
-end
-
-function Fight:endFightFail()
-    print("function Fight:endFightFail()")
-    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
-    self.inlayModel:removeAllInlay()
-    local fightProp = md:getInstance("FightProp")
-    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
-    self:clearFightData()
-end
-
-function Fight:startFightResult()
-    ui:showPopup("FightResultPopup",{},{anim = false})
-end
-
-function Fight:doWin()
-    if self.result then return end
-    print("")
-    self.result = "win" 
-
-    local levelMapModel = md:getInstance("LevelMapModel")
-    local userModel = md:getInstance("UserModel")
-    levelMapModel:levelPass(self.groupId, self.levelId)
-    userModel:getUserLevel(self.groupId, self.levelId)
-    self:setFightResult()
 
     --um 任务
     local levelInfo = self:getLevelInfo() 
@@ -167,13 +141,49 @@ function Fight:doWin()
     umData[levelInfo] = "关卡胜利"
     um:event("关卡完成情况", umData)
 
+    --level
+    local levelMapModel = md:getInstance("LevelMapModel")
+    local userModel = md:getInstance("UserModel")
+    levelMapModel:levelPass(self.groupId, self.levelId)
+    userModel:getUserLevel(self.groupId, self.levelId)
+        
+end
+
+function Fight:endFightFail()
+    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
+    self:pauseFight(true)
+    self.inlayModel:removeAllInlay()
+    local fightProp = md:getInstance("FightProp")
+    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
+    self:clearFightData()
+end
+
+function Fight:startFightResult()
+    ui:showPopup("FightResultPopup",{},{anim = false})
+end
+
+function Fight:willWin(time)
+    if self:getResult() ~= nil then return end
+    local delay = time or 1.0
+    self:setResult("win")
+    scheduler.performWithDelayGlobal(handler(self, self.doWin), delay)
+end
+
+function Fight:willFail(time)
+    if self:getResult() ~= nil then return end
+    local delay = time or 2.0
+    self:setResult("fail")    
+    scheduler.performWithDelayGlobal(handler(self, self.doFail), delay)
+end
+
+function Fight:doWin()
+    assert(self.result)
+    self:setFightResult()
     self:endFightWin()  
 end
 
 function Fight:doFail()
-    if self.result then return end
-    self.result = "fail"
-
+    assert(self.result)
     self.hero:doKill()
     self:endFightFail()
 end
@@ -211,6 +221,7 @@ function Fight:doRelive()
 
     --relive
     self:dispatchEvent({name = Fight.FIGHT_RELIVE_EVENT})
+    self:pauseFight(false)
 end
 
 function Fight:equipReliveAward()
@@ -351,6 +362,10 @@ end
 
 function Fight:getResult()
     return self.result
+end
+
+function Fight:setResult(result)
+    self.result = result
 end
 
 function Fight:getResultData()

@@ -80,7 +80,8 @@ function LevelMapLayer:initChooseLayer()
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
-    self.panelGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
+    self.panelLeft = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
+    self.panelgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
     local armature = ccs.Armature:create("thj_bx")
@@ -93,18 +94,18 @@ function LevelMapLayer:initChooseLayer()
     local btnboss = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnboss")
     local armature = ccs.Armature:create("guang")
     armature:setScale(2)
-    addChildCenter(armature, self.panelGift)
+    addChildCenter(armature, self.panelgift)
     armature:getAnimation():play("guangtx" , -1, 1)
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
-        self.panelGift:setVisible(false)
+        self.panelgift:setVisible(false)
     end
     if buyModel:checkBought("weaponGiftBag") then
         self.btnWeapon:setVisible(false)
     end    
 
     function hideGiftIcon()
-        self.panelGift:setVisible(false)
+        self.panelgift:setVisible(false)
     end
 
     btnfirstgift:onButtonClicked(function()
@@ -318,12 +319,12 @@ end
 function LevelMapLayer:panelAction()
     local changeTime = 0.2
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
-    self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelGift:getContentSize().width-25, 0)))
+    self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelLeft:getContentSize().width-25, 0)))
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
-                self.panelGift:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelGift:getContentSize().width+25, 0)))
+                self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelLeft:getContentSize().width+25, 0)))
                 self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height+5)))
             end)}))
 end

@@ -227,6 +227,9 @@ function Attackable:setDeadDone()
 	self:setPauseOtherAnim(true)
 	self.isDead = true
 	self:setVisible(false)
+
+	--remove enemy
+	self.enemyM:removeEnemy(self)
 end
 
 function Attackable:getWillRemoved()
@@ -237,6 +240,8 @@ function Attackable:setWillRemoved(time)
 	self:setPauseOtherAnim(true)
 	local function callFunc()
 		self.isWillRemove = true
+		--remove enemy
+		self.enemyM:removeEnemy(self)		
 	end 
 	if time then 
 		self:performWithDelay(callFunc, time)
@@ -454,6 +459,11 @@ function Attackable:getIsFlying()
 	return self.isFlying 
 end
 
+function Attackable:getCurrentMovementID()
+	local currentName = self.armature:getAnimation():getCurrentMovementID()
+	return currentName
+end
+
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	
@@ -497,9 +507,6 @@ function Attackable:onEnter()
 end
 
 function Attackable:onCleanup()
-	--remove enemy
-	self.enemyM:removeEnemy(self)
-
 	if self.property["deadEventData"] then 
 		self.hero:dispatchEvent(self.property["deadEventData"])
 	end

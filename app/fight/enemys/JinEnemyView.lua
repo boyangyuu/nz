@@ -104,7 +104,11 @@ function JinEnemyView:playAttack()
     self.enemy:hit(self.hero)
 end
 
-function JinEnemyView:playHitted(event)  
+function JinEnemyView:playHitted(event) 
+    local curID = self:getCurrentMovementID()
+    if curID ~= "hit" and not self:getPauseOtherAnim() then
+        self.armature:getAnimation():play("hit" ,-1 , 1)
+    end
     self:playHittedEffect()
 end
 

@@ -41,13 +41,6 @@ function LoadingLayer:initUI()
     self.describe = cc.uiloader:seekNodeByName(self, "describe")
 
     self.loadpercent:enableOutline(cc.c3b( 0, 0, 0), 2)
-	local yuansrc = "res/Loading/loading_yuan/loading_yuan.ExportJson"
-    local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(yuansrc)
-
-    local yuanplist = "res/Loading/loading_yuan/loading_yuan0.plist"
-    local yuanpng = "res/Loading/loading_yuan/loading_yuan0.png"
-    display.addSpriteFrames(yuanplist,yuanpng)
 
     self.img1 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_di02.png")
     self.img2 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_wai.png")

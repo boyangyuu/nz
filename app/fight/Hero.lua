@@ -319,7 +319,6 @@ function Hero:helpFullHp()
     --暂停
     if self.isHelped then return end 
     self.isHelped = true
-    print("function Hero:helpFullHp()")
     self.isPause = true
     local fight = md:getInstance("Fight")
     fight:stopFire()

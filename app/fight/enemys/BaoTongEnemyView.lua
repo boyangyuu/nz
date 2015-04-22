@@ -87,11 +87,8 @@ function BaoTongEnemyView:getBaoRect()
     pWorld.y = pWorld.y + bound.height / 2 * self:getScale()  --获得中心位置
 
     --create 群伤范围和位置
-    local map = md:getInstance("Map")
-    local scale = map:getIsJuMap() and 1.5 or 1.0
-
-    local rangeW = define.kBaoTongRangeW * scale
-    local rangeH = define.kBaoTongRangeH * scale
+    local rangeW = define.kBaoTongRangeW 
+    local rangeH = define.kBaoTongRangeH 
     local pos = cc.p(pWorld.x - rangeW / 2 ,
                  pWorld.y - rangeH / 2)
     local rect = cc.rect(pos.x, pos.y, rangeW, rangeH)

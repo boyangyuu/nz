@@ -113,6 +113,7 @@ end
 
 function JuEnemyView:playHitted(event)
 	--飘红
+	
 	self:playHittedEffect()
 end
 

@@ -161,13 +161,11 @@ function MapView:updateEnemys()
 	-- dump(wave, "wave")
 
 	local result = self.fight:getResult()
-	if wave == nil  then 
+	if wave == nil then 
 		print("赢了")
 		if result == nil then 
-			self.fight:doWin()
+			self.fight:willWin(0.0)
 			self:stopAllActions()			
-		else
-			assert(false, "")
 		end
 		return
 	end
@@ -679,6 +677,14 @@ end
 function MapView:enemysHittedInRange(event)
 	-- target
 	assert(event.destRect, "event destRect is nil")
+	
+	--scale
+    local map = md:getInstance("Map")
+    local scale = map:getIsOpenJu() and define.kJuRange or 1.0
+    event.destRect.width  = event.destRect.width * scale
+    event.destRect.height = event.destRect.height * scale	
+	
+    --enemys
 	local enemys = self:getEnemysInRect(event.destRect)
 	for i,enemy in ipairs(enemys) do
 		local targetData = event.targetData

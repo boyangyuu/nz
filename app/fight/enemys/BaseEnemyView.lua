@@ -17,9 +17,6 @@ local BaseEnemyView = class("BaseEnemyView", Attackable)
 
 function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
-	
-	--instance
-	self.isSaning = false
 
 	--play
     cc.EventProxy.new(self.enemy, self)
