@@ -1,235 +1,430 @@
+
 local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {
-		    {   
-		    	descId = "feiji", --简介
-				time = 2,
+		enemys = { 
+-------------- 汽油桶配置 ----------------------
+			{
+				time = 0,
 				num = 1,
-				pos = {670},
-				delay = {2},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place10",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		                                    --持续时间			
+				delay = {0},
+				pos = {100},
+				property = { 
+					placeName = "place5",
+					type = "bao_tong",
+					id = 1,
 				},
 			},
 			{
-				time = 8,
-				num = 4,
-				delay = {0.5,1,0,1.5},
-				pos = {480,680,850,1050},
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {550},
 				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾
-					id = 8,
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+----------------------------------------------
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place5",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 160,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},	
+						{
+							pos = 500,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s
+						},										
+					},									
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place3",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 300,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+						{
+							pos = 300,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+					},
 				},
 			},
 			{
 				time = 10,
-				num = 5,
-				delay = {1.1,0.6,1.7,0.3,1.8},
-				pos = {350,550,660,760,1050},
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place11",
+					id = 4,
+					startState = "enterright", --从屏幕右侧进入
+					data = {
+						direct = "left", --向左逃跑
+						{
+							pos = 650,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+						{
+							pos = -300,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s
+						},
+						{
+							pos = -350,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s
+						},
+					},
+					exit = "middle" ,  --消失
+				},
+			},
+			{ 
+				time = 15,
+				num = 3,
+				delay = {0,0.7,1.4},
+				pos = {200,400,600},
 				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,
-					startState = "san",	
+					type = "taofan_qiu",
+					placeName = "place9",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+
+		},
+	},
+
+	{
+		enemys = { 
+-------------------- 汽油桶配置 -----------------------------
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {450},
+				property = { 
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
 				},
 			},
 			{
-				time = 13,	
-				num = 5,
-				pos = {355,420,510,770,900},
-				delay = {0,0.9,0.5,0.6,1.5},
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = { 
+					placeName = "place3",
+					type = "bao_tong",
+					id = 1,
+				},
+			},	
+----------------------------------------------
+			{ 
+				time = 0,
+				num = 2,
+				delay = {0,0.7,},
+				pos = {350,500,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place9",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				delay = {0},
+				pos = {0},
 				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
+					type = "taofan_qiu", 
+					placeName = "place11",
+					id = 4,
+					startState = "enterright", --从屏幕右侧进入
+					data = {
+						direct = "left", --向左逃跑
+						{
+							pos = 500,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+						{
+							pos = -300,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+						{
+							pos = -250,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s
+						},
+					},
+					exit = "middle" ,  --消失
+				},
+			},
+			{
+				time = 10,
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place5",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 275,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},	
+						{
+							pos = 400,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s
+						},										
+					},									
 				},
 			},
 			{
 				time = 15,
-				num = 10,
-				delay = {0.2,0.9,1.7,2.5,3.3,0.3,1.8,4.0,4.5,5.1},
-				pos = {350,460,600,1050,570,456,780,666,510,980},
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place3",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 200,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+						{
+							pos = 350,  --第一次藏身处 移动 600
+							time = 4,   --隐藏时间 3s	
+						},
+					},
+				},
+			},
+			{ 
+				time = 15,
+				num = 1,
+				delay = {0,},
+				pos = {15,},
 				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,
-					startState = "san",	
+					type = "taofan_qiu",
+					placeName = "place2",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+
+
+
+		},
+	},
+		
+	{
+		enemys = {
+-------------------- 汽油桶配置 -----------------------------
+			{
+				time = 0,
+				num = 2,
+				delay = {0,0},
+				pos = {450, 650 },
+				property = { 
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {770},
+				property = { 
+					placeName = "place3",
+					type = "bao_tong",
+					id = 1,
 				},
 			},	
-			{
-				time = 16,
-				num = 2,
-				delay = {0.5,1},
-				pos = {250,320},
-				property = { 
-					placeName = "place3" ,
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	
-				},                                                          
-			},	
-			{
-				time = 17,
-				num = 2,
-				delay = {0.5,1},
-				pos = {980,1100},
-				property = { 
-					placeName = "place4" ,
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},                                                          
-			},
-			{
-				time = 18,
-				num = 3,
-				delay = {0.5,1,0},
-				pos = {450,560,690},
-				property = { 
-					placeName = "place4" ,
-					id = 1,
-					startState = "rollright",	
-				},                                                     
-			},
-			{
-				time = 19,
-				num = 3,
-				delay = {0.5,1.5,1},
-				pos = {220,550,600},
-				property = { 
-					placeName = "place2" ,
-					type = "dao",
-					id = 5,
+----------------------------------------------
+		    {
+				time = 0,
+				num = 1,
+				pos = {700},
+				delay = {0},                         -- 飞机          
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place17",
 					missileId = 6,
 					missileType = "daodan",
-				},                                                          
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 40.0,		                                    --持续时间			
+				},
 			},
-			{
-				time = 20,
+			{ 
+				time = 5,
+				num = 2,
+				delay = {0,0.7,},
+				pos = {350,500,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place9",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+			{ 
+				time = 8,
+				num = 2,
+				delay = {0,0.7,},
+				pos = {200,500,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place3",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+			{ 
+				time = 10,
+				num = 2,
+				delay = {0,0.7,},
+				pos = {260,500,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place11",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+
+			{ 
+				time = 15,
 				num = 3,
-				delay = {0,1.1,0.5},
-				pos = {400,680,960},
+				delay = {0,0.7,1.4},
+				pos = {10,280,640,},
 				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾
-					id = 8,
+					type = "taofan_qiu",
+					placeName = "place5",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 4,	 --隐藏时间 3s													
+						},					
+					},
 				},
 			},
-			{
-				time = 22,
-				num = 10,
-				delay = {0.2,0.9,1.7,2.5,3.3,0.3,1.8,4.0,4.5,5.1},
-				pos = {350,460,600,1050,570,456,780,666,510,980},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                  --爆
-					id = 9,
-					startState = "san",	
-				},
-			},	
-			{
-				time = 24,	
-				num = 5,
-				pos = {420,560,700,880,990},
-				delay = {1.4,0.6,0,1,2.1},
-				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 26,
-				num = 5,
-				delay = {0.7,1.4,1.8, 2.1,2.8},
-				pos = {350,550,600,800,950},					
-				property = {
-					placeName = "place3",  
-					type = "common",
-					startState = "san",
-					id = 1,
-				},                                                                          
-			},	
-			{
-				time = 30,
-				num = 4,
-				delay = {0,0.7,1.4,1.8},
-				pos = {600,500,400,300},					
-				property = {
-					placeName = "place2",  
-					type = "common",
-					startState = "san",
-					id = 1,
-				},                                                                     
-			},	
+			
 		},
-	},	
+	},
 
-
-	
 }
 
 
 
-
---enemy的关卡配置                                                    青铜镶嵌 MP5伤害85  dps大于等于2 远程2近战3 怪物数据 
+--enemy的关卡配置                                  青铜难度 狙击枪630伤害 1枪  880         dps大于等于5
 local enemys = {
-	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=8,hp=428,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=2},
 
-	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=428,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=2},
-
-	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=8,hp=1,
+	--汽油桶         --type = "bao_tong",
+	{id=1,image="qyt_01",demage=2000,hp=1,
 	weak1=1},
 
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=571,walkRate=120,walkCd=2,fireRate=240,fireCd=4,
-	weak1=2},
+	--囚犯            type = "taofan_qiu",
+	{id=4,image="qiufan",demage=5,hp=880,
+	weak1=2, weak4=4},
 
-    --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=12,hp=150,
-	weak1=1},	
-
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵  近战兵到身前的比例
-	{id=7,image="jinzhanb",demage=9,hp=857,fireRate=180,fireCd=3,speed=40,
-	weak1=2},
-
-	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=9,hp=4284,fireRate=180,fireCd=3,speed=40, scale = 1.8,--盾兵到身前的比例
-	weak1=2},
-
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=571,fireRate=30,speed=120,
-	weak1=2},	
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=12800, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=3.0,
-	weak1=2,    award = 60},                                                              --scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=11,image="feiji",demage=0,hp=2600, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	weak1=2.0,    award = 60},
+
+	--导弹          --missileType = "daodan",
+	{id=6,image="daodan",demage=5,hp=1,
+	weak1=1},
+
 
 }
 
 
 
-local mapId = "map_1_6"
+
+
+local mapId = "map_1_4"
 
 local limit = 10   				--此关敌人上限
 
@@ -244,12 +439,11 @@ function waveClass:ctor()
 		-- type 	  = "renZhi",
 		-- saveNums  = 4,                 --解救人质数量
 
-		type 	  = "xianShi",
-		limitTime = 60,                   --限时模式时长
+		-- type 	  = "xianShi",
+		-- limitTime = 60,                   --限时模式时长
 
-		-- type 	  = "taoFan"
-		-- limitNums = 5,                      --逃跑逃犯数量
+		type 	  = "taoFan",
+		limitNums = 5,                      --逃跑逃犯数量
 	}
-
 end
 return waveClass

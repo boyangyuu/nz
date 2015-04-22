@@ -225,7 +225,7 @@ function JipuEnemyView:playFire()
 		index = index + 2
 		local name = "dao"..index
 	    local boneDao = self.armature:getBone(name)
-	    if boneDao == nil then break end
+	    if offsetIndex > 2 then break end
 	    local boneImage = boneDao:getDisplayRenderNode()
 	    
 	    local pWorldBone = boneImage:convertToWorldSpace(cc.p(0, 0))
