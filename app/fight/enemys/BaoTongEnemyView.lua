@@ -88,7 +88,7 @@ function BaoTongEnemyView:getBaoRect()
 
     --create 群伤范围和位置
     local rangeW = define.kBaoTongRangeW 
-    local rangeH = define.kBaoTongRangeH
+    local rangeH = define.kBaoTongRangeH 
     local pos = cc.p(pWorld.x - rangeW / 2 ,
                  pWorld.y - rangeH / 2)
     local rect = cc.rect(pos.x, pos.y, rangeW, rangeH)

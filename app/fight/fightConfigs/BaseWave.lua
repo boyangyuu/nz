@@ -47,4 +47,9 @@ function BaseWave:getFightMode()
 	return self.fightMode
 end
 
+function BaseWave:randomWaves()
+	local waves = {}
+	
+end
+
 return BaseWave

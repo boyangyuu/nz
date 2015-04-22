@@ -677,6 +677,14 @@ end
 function MapView:enemysHittedInRange(event)
 	-- target
 	assert(event.destRect, "event destRect is nil")
+	
+	--scale
+    local map = md:getInstance("Map")
+    local scale = map:getIsOpenJu() and define.kJuRange or 1.0
+    event.destRect.width  = event.destRect.width * scale
+    event.destRect.height = event.destRect.height * scale	
+	
+    --enemys
 	local enemys = self:getEnemysInRect(event.destRect)
 	for i,enemy in ipairs(enemys) do
 		local targetData = event.targetData
