@@ -29,7 +29,8 @@ function BaseBossView:ctor(property)
     self:initBlood()
     self.config  	= waveConfig:getBoss(index)
     self.isUnhurted = false
-
+    self.zhaohuans = {}
+    
 	--play
 	self.armature:getAnimation():play("stand" , -1, 1) 
 
@@ -388,7 +389,11 @@ function BaseBossView:playZhanHuan(index)
 end
 
 function BaseBossView:zhaohuan(index)
-	local waveData = self.config["enemys"..index]
+	local name     = "enemys"..index
+	if self.zhaohuans[name] then return end
+
+	self.zhaohuans[name] = true
+	local waveData = self.config[name]
 	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. index)
 	self.enemysCallNum = 0
 	for i,group in ipairs(waveData) do
@@ -541,25 +546,26 @@ function BaseBossView:onHitted(targetData)
 	--血量触发技能
 	self:checkSkill(destDemage)
 	
-	--red
-	if self.isRed then return end
-	local function callfunc()
-		if self.isRed then 
-			-- print("回复")
-			self.armature:setColor(cc.c3b(255,255,255))
+	self:playHittedEffect()
+	-- --red
+	-- if self.isRed then return end
+	-- local function callfunc()
+	-- 	if self.isRed then 
+	-- 		-- print("回复")
+	-- 		self.armature:setColor(cc.c3b(255,255,255))
 			
-		end
-	end
+	-- 	end
+	-- end
 
-	local function callfuncRestore()
-		self.isRed = false
-	end
+	-- local function callfuncRestore()
+	-- 	self.isRed = false
+	-- end
 
-	-- print("变红")
-	self.isRed = true
-	self.armature:setColor(cc.c3b(255,50,5))
-	self:performWithDelay(callfunc, 20/60)
-	self:performWithDelay(callfuncRestore, 60/60)
+	-- -- print("变红")
+	-- self.isRed = true
+	-- self.armature:setColor(cc.c3b(255,50,5))
+	-- self:performWithDelay(callfunc, 20/60)
+	-- self:performWithDelay(callfuncRestore, 60/60)
 end
 
 function BaseBossView:initBody()

@@ -135,7 +135,7 @@ configs["feiji"] = {
 	title = "出现新兵种！",
 	name = "飞机",
 	spc = "特性：",
-	skill = {"移动快","空投伞兵","发射导弹"},
+	skill = {"空投伞兵","发射导弹"},
 	weakness = "螺旋桨",
 	describe = "高机动,高伤害。",
 	playanim = "fireright",
@@ -144,7 +144,7 @@ configs["yyc"] = {
 	title = "出现新兵种！",
 	name = "越野车",
 	spc = "特性：",
-	skill = {"飞弹","运输兵","血量高"},
+	skill = {"烟雾弹"},
 	weakness = "导弹发射器",
 	describe = "攻击高,血量高。",
 	playanim = "fireright",
@@ -182,7 +182,7 @@ configs["nvrenzb"] = {
 	spc = "技能：",
 	skill = {"召唤","旋风斩","漫花飞舞"},
 	weakness = "头部、腿部",
-	describe = "鬼眼的义女,美颜值爆表的伊贺上忍。",
+	describe = "鬼眼的义女,美颜值爆表的伊贺女忍。",
 	playanim = "stand",
 }
 

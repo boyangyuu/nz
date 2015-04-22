@@ -6,7 +6,20 @@ local waves = {
 	{
 		enemys = { 
 			{
+				descId = "jujib", --简介
 				time = 2,
+				num = 1,
+				delay = {4},
+				pos = {50},
+				property = {
+					placeName = "place10",  
+					type = "juji",
+					startState = "rollright",
+					id = 4,
+				},
+			},
+			{
+				time = 7,
 				num = 2,
 				delay = {0.3,1.0},
 				pos = {300,550},
@@ -17,7 +30,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,
+				time = 10,
 				num = 1,
 				delay = {0.5},
 				pos = {360},
@@ -28,7 +41,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 13,
 				num = 1,
 				delay = {0},
 				pos = {500},
@@ -42,7 +55,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 15,
 				num = 1,
 				delay = {0},
 				pos = {370},
@@ -54,7 +67,7 @@ local waves = {
 				},
 			},
 			{
-				time = 11,
+				time = 15,
 				num = 1,
 				delay = {0},
 				pos = {370},
@@ -66,7 +79,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,
+				time = 17,
 				num = 1,
 				delay = {0},
 				pos = {500},
@@ -84,26 +97,37 @@ local waves = {
 				pos = {280},
 				property = {
 					placeName = "place16",
-					id = 5,
-					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					type = "juji",
+					startState = "rollright",
+					id = 4,
 				},
 			},
 			{
 				time = 21,
-				num = 2,
-				delay = {0.6,1.1},
-				pos = {300,500},
+				num = 1,
+				delay = {0.6,},
+				pos = {300,},
 				property = {
 					placeName = "place9",  
 					startState = "rollright",
 					id = 2,
 					type = "dao",
 					missileId = 3,
-					missileType = "lei",                                         --8
+					missileType = "lei",
 				},
 			},	
+			{
+				time = 23,
+				num = 1,
+				delay = {0},
+				pos = {20},
+				property = {
+					placeName = "place15",  
+					type = "juji",
+					startState = "rollright",
+					id = 4,
+				},
+			},
 		},
 	},
 
@@ -117,10 +141,9 @@ local waves = {
 				pos = {500},
 				property = {
 					placeName = "place11",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
+					type = "juji",
+					startState = "rollright",
+					id = 4,
 				},
 			}, 
 			{
@@ -152,11 +175,12 @@ local waves = {
 				time = 12,
 				num = 1,
 				delay = {0},
-				pos = {100},
+				pos = {20},
 				property = {
-					placeName = "place2",  
+					placeName = "place15",  
+					type = "juji",
 					startState = "rollright",
-					id = 1,
+					id = 4,
 				},
 			},
 			{
@@ -225,11 +249,9 @@ local waves = {
 				pos = {500},
 				property = {
 					placeName = "place9",  
+					type = "juji",
 					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					id = 4,
 				},
 			},
 		},
@@ -332,10 +354,10 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=28,hp=1,
 	weak1=1},
-	                                                           
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=2000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
-	weak1=2},
+
+	--狙击兵      --type = "juji",
+	{id=4,image="jujib",demage=30,hp=1000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
+	weak1=3},
 
     --导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=35,hp=1,

@@ -28,23 +28,27 @@ end
 function FightMode:willFail(failData)
 	local type = failData.type
 	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
-	-- --tips
- --    self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
- --    	failType = type})
+
+	--tips
+	local animName
+	if failData.type == "renZhi" then 
+    	self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
+	    	animName = "wusharz"})
+	elseif failData.type == "taoFan" then
+		self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
+	    	animName = "taofantp"})
+	end
 
     --fight
     local fight = md:getInstance("Fight")
-    scheduler.performWithDelayGlobal(handler(fight, fight.doFail), 1.5)    	
+    fight:willFail(2.0)
 end
 
 function FightMode:willWin(winData)
 	local type = winData.type
 	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
-    -- self:dispatchEvent({name = FightMode.FightMODE_TIPS_EVENT , 
-    -- 	failType = type})
-
     local fight = md:getInstance("Fight")
-    scheduler.performWithDelayGlobal(handler(fight, fight.doWin), 3.0) 
+    scheduler.performWithDelayGlobal(handler(fight, fight.willWin), 2.0)    	
 end
 
 return FightMode

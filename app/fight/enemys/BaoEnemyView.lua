@@ -22,6 +22,7 @@ end
 
 function BaoEnemyView:playSan()
     self:setPositionY(display.height1)
+    self:setIsFlying(true)
 
     --action
     local speed = define.kBaoEnemySanSpeed 
@@ -31,6 +32,7 @@ function BaoEnemyView:playSan()
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
 
     local function fallEnd()
+        self:setIsFlying(false)
         self:restoreStand()
         self:playAhead()   
     end
@@ -61,7 +63,6 @@ function BaoEnemyView:playAhead()
     --
     local aheadEndFunc = function ()
         self:playAheadEnd()
-        self:restoreStand()
     end
     local afterAhead = cc.CallFunc:create(aheadEndFunc)
     local seq = cc.Sequence:create(actionAhead, afterAhead)
@@ -73,13 +74,13 @@ end
 function BaoEnemyView:playKill(event)
     BaoEnemyView.super.playKill(self,event)
     self.armature:getAnimation():play("die" ,-1 , 1)
-    -- self:demageOthers()
     self:playBombEffects()
 end
 
 function BaoEnemyView:playAheadEnd()
-    BaoEnemyView.super.playKill(self,event)
-    self:playBombEffects()
+    print("BaoEnemyView:playAheadEnd()")
+    self:playKill()  
+    self.enemy:hit(self.hero)
 end
 
 function BaoEnemyView:playBombEffects()
@@ -107,18 +108,6 @@ function BaoEnemyView:animationEvent(armatureBack,movementType,movementID)
             self:setDeadDone()
         end 
     end
-end
-
-function BaoEnemyView:demageOthers()
-    --伤害enemys
-    print("成功摧毁")
-    local destRect = self:getBaoRect()
-    local targetData = {demage = define.kBaoDemageOtherEnemys, 
-                        demageScale = 1, 
-                        demageType = "bao",
-                        }
-    self.hero:dispatchEvent({name = self.hero.ENEMY_ATTACK_MUTI_EVENT, 
-      targetData = targetData,destRect = destRect})  
 end
 
 function BaoEnemyView:getBaoRect()

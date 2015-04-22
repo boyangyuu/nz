@@ -136,8 +136,11 @@ end
 
 --Attackable interface
 function DaoEnemyView:playHitted(event)
-    -- self.armature:getAnimation():play("hit" , -1, 1) 
-
+    local curID = self:getCurrentMovementID()
+    if curID ~= "hit" and not self:getPauseOtherAnim() then
+        self.armature:getAnimation():play("hit" ,-1 , 1)
+    end
+    
     --飘红
     self:playHittedEffect()
 end

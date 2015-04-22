@@ -210,11 +210,11 @@ function HeroAnimView:playKeepKill(event)
 end
 
 function HeroAnimView:playFightTips(event)
-	local failType = event.failType
-	assert(failType, "failType is nil")
+	local animName = event.animName
+	assert(animName, "animName is nil")
 
 	local armature 	= ccs.Armature:create("tishi")
-	armature:getAnimation():play(failType , -1, 0)
+	armature:getAnimation():play(animName , -1, 0)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.complete then

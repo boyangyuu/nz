@@ -15,7 +15,6 @@ function TFQiuEnemyView:ctor(property)
     TFQiuEnemyView.super.ctor(self, property) 
     self.posIndex = 0
     self.posDatas = property.data
-    self.isSaning = false
     self:setPauseOtherAnim(true) 
 end
 
@@ -117,15 +116,17 @@ function TFQiuEnemyView:exit()
             cc.CallFunc:create(handler(self, self.onTao))))  
 end
 
-function TFQiuEnemyView:onTao()
-    self:setWillRemoved()
+function TFQiuEnemyView:onTao()    
     local fightMode = md:getInstance("FightMode")
     fightMode:dispatchEvent({name = fightMode.FightMODE_TAOFAN_TAO_EVENT})
+    
+    --要滞后 否则可能会先赢
+    self:setWillRemoved()
 end
 
 function TFQiuEnemyView:playKill(event)
     TFQiuEnemyView.super.playKill(self, event)
-    if self.isSaning then 
+    if self:getIsFlying() then 
         self:setDeadDone()
         return 
     end
@@ -143,7 +144,7 @@ function TFQiuEnemyView:playKill(event)
 end
 
 function TFQiuEnemyView:playSan()
-    self.isSaning = true
+    self:setIsFlying(true)
     self:setPositionY(display.height)
 
     --action
@@ -154,7 +155,7 @@ function TFQiuEnemyView:playSan()
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
     
     local function callfunc()
-        self.isSaning = false
+        self:setIsFlying(false)
         self:playMoveToNext()
     end
 

@@ -190,7 +190,7 @@ function GunView:playReload()
 	self.audioId =  audio.playSound(soundSrc,false)	
 
 	--回调 子弹full
-	local reloadTime = self.gun:getReloadTime() / 2 
+	local reloadTime = self.gun:getReloadTime()
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
 		self.hero:setIsReloading(false)
@@ -206,12 +206,12 @@ end
 
 function GunView:canShot() 
 	--bullets
-	if self.gun:getCurBulletNum() <= 0 then 
+	if self.gun:getCurBulletNum() == 1 then 
 		self:stopFire()
 		self:playReload()
 		local fight = md:getInstance("Fight")
 		fight:dispatchEvent({name = fight.GUN_RELOAD_EVENT})
-		return false 
+		return true 
 	end
 	
 	--is changing

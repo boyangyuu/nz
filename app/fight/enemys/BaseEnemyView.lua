@@ -17,9 +17,6 @@ local BaseEnemyView = class("BaseEnemyView", Attackable)
 
 function BaseEnemyView:ctor(property)
 	BaseEnemyView.super.ctor(self, property) 
-	
-	--instance
-	self.isSaning = false
 
 	--play
     cc.EventProxy.new(self.enemy, self)
@@ -71,7 +68,7 @@ function BaseEnemyView:refreshBlood(event)
 		return
 	end
 
-	-- --value
+	--value
 	local bloodUp 	= cc.uiloader:seekNodeByName(self.blood, "bloodUp")
 	local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
 
@@ -85,12 +82,7 @@ function BaseEnemyView:refreshBlood(event)
 		self.blood:setVisible(false)
 	end
 	self.bloodAction = self.blood:performWithDelay(hide, 1.0)
-	self.blood:setVisible(true)
-	local function hide()
-		self.blood:setVisible(false)
-	end
-	self.bloodAction = self.blood:performWithDelay(hide, 1.0)
-
+	
     if event.name == Actor.HP_INCREASE_EVENT  then 
 		bloodUp:setScaleX(per/100)
 		transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})    	

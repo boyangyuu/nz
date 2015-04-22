@@ -101,10 +101,7 @@ local waves = {
 							pos = 700,  --第一次藏身处 移动 600
 							time = 2,   --隐藏时间 3s	
 						},	
-						{
-							pos = -300,  --第一次藏身处 移动 600
-							time = 2,   --隐藏时间 3s
-						},										
+																
 					},									
 				},
 			},
@@ -142,10 +139,7 @@ local waves = {
 					startState = "enterleft", --从屏幕左侧进入
 					data = {
 						direct = "right", --向右逃跑
-							{
-							pos = 400,  --第一次藏身处 移动 600
-							time = 2,   --隐藏时间 3s	
-						},											
+																		
 					},									
 				},
 			},
@@ -215,14 +209,7 @@ local waves = {
 					startState = "san",  --从伞进入                          伞落下的逃犯
 					data = {
 						direct = "left", --向左逃跑
-						{
-							pos = -200,  --第一次藏身处 移动 -200 
-							time = 3,	 --隐藏时间 3s													
-						},	
-						{
-							pos = -600,  --第2次藏身处 移动 - 600
-							time = 2,	 --隐藏时间 4s																							
-						},					
+											
 					},
 				},
 			},
@@ -281,16 +268,7 @@ local waves = {
 					id = 4,
 					startState = "enterleft", --从屏幕左侧进入
 					data = {
-						direct = "right", --向右逃跑
-							{
-							pos = 400,  --第一次藏身处 移动 600
-							time = 2,   --隐藏时间 3s	
-						},						
-						direct = "right",
-							{
-							pos = 450,  --第一次藏身处 移动 200
-							time = 2,   --隐藏时间 3s	
-						},						
+						direct = "right", --向右逃跑						
 					},									
 				},
 			},
@@ -353,10 +331,7 @@ local waves = {
 					startState = "enterright", --从屏幕左侧进入
 					data = {
 						direct = "left", --向右逃跑
-							{
-							pos = 550,  --第一次藏身处 移动 600
-							time = 2,   --隐藏时间 3s	
-						},												
+																	
 					},									
 				},
 			},
@@ -424,10 +399,7 @@ local waves = {
 					startState = "enterleft", --从屏幕左侧进入
 					data = {
 						direct = "right", --向右逃跑
-							{
-							pos = 400,  --第一次藏身处 移动 600
-							time = 1.5,   --隐藏时间 3s	
-						},						
+												
 					},									
 				},
 			},	
@@ -518,9 +490,9 @@ local waves = {
 			},
 			{ 
 				time = 12,
-				num = 4,
-				pos = {350,450,600,850},
-				delay = {3,2,1,0},
+				num = 2,
+				pos = {450,850},
+				delay = {2,0},
 				property = { 
 					type = "taofan_qiu",
 					placeName = "place2",
@@ -528,10 +500,23 @@ local waves = {
 					startState = "san",  --从伞进入                          伞落下的逃犯
 					data = {
 						direct = "right", --向左逃跑
-						{
-							pos = 50,  --第一次藏身处 移动 -200 
-							time = 1.5,	 --隐藏时间 3s													
-						},						
+											
+					},
+				},
+			},
+			{ 
+				time = 12,
+				num = 2,
+				pos = {350,600,},
+				delay = {3,1,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place2",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "left", --向右逃跑
+											
 					},
 				},
 			},

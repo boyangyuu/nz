@@ -24,6 +24,7 @@ end
 
 function JinEnemyView:playSan()
     self:setPositionY(display.height1)
+    self:setIsFlying(true)
 
     --action
     local speed = define.kJinEnemySanSpeed 
@@ -33,6 +34,7 @@ function JinEnemyView:playSan()
     local action = cc.MoveBy:create(time, cc.p(0, -distance))
 
     local function fallEnd()
+        self:setIsFlying(false)
         self:restoreStand()  
         self:playAhead()
     end
@@ -102,7 +104,11 @@ function JinEnemyView:playAttack()
     self.enemy:hit(self.hero)
 end
 
-function JinEnemyView:playHitted(event)  
+function JinEnemyView:playHitted(event) 
+    local curID = self:getCurrentMovementID()
+    if curID ~= "hit" and not self:getPauseOtherAnim() then
+        self.armature:getAnimation():play("hit" ,-1 , 1)
+    end
     self:playHittedEffect()
 end
 

@@ -171,9 +171,9 @@ function DuozuBossView:endWudi()
     self.wudiAnim:removeSelf()    
 end
 
-function DuozuBossView:playZhanHuan()
+function DuozuBossView:playZhanHuan(index)
     self.armature:getAnimation():play("zhaohuan", -1, 1)
-    self:zhaohuan()
+    self:zhaohuan(index)
 end
 
 

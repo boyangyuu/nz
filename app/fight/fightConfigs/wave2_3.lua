@@ -2,267 +2,254 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	{
-		enemys = { 
-			{
-				descId = "yiliaob", --简介
-				time = 2,
-				num = 1,
-				delay = {4},
-				pos = {430},
-				property = { 
-					placeName = "place2",
-					type = "yiliao",
-					startState = "enterleft",       --从左面跑出来
-					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
-					id = 25,
-				},
-			},	
-			{
-				time = 6,
-				num = 2,
-				delay = {0,0.5},
-				pos = {790,420},
-				property = { 
-					placeName = "place2" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},
-			{
-				time = 8,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {640,900,320},
-				property = { 
-					placeName = "place2" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},
-			{
-				time = 9,	
-				num = 3,
-				pos = {230,330,510},
-				delay = {0.5,0,1},
-				property = {
-					placeName = "place2" ,         --普
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 10,	
-				num = 2,
-				pos = {270,570},
-				delay = {0.5,0},
-				property = {
-					placeName = "place2" ,         --雷
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 11,	
-				num = 3,
-				pos = {1000,800,600},
-				delay = {0,0.5,1},
-				property = {
-					placeName = "place3" ,         --普
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 12,	
-				num = 3,
-				delay = {0.9,0.5,0},
-				pos = {970,870,570},
-				property = {
-					placeName = "place3" ,         --雷
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 13,
-				num = 5,
-				delay = {0,0.7,1.4,2.1,2.8,},
-				pos = {220,300,500,700,900,},
-				property = { 
-					placeName = "place2" ,
-					type = "bao",
-					startState = "san",
-					id = 4,
-				},
-			},
-			{
-				time = 14,
-				num = 5,
-				delay = {3.5,0,0.7,1.4,2.1},
-				pos = {300,450,600,750,940},
-				property = { 
-					placeName = "place1" ,
-					type = "common",
-					startState = "san",
-					id = 1,
-				},
-			},
-		},
-	},
-	{
-		enemys = { 
-			{
-				time = 2,
-				num = 2,
-				delay = {0,0.5},
-				pos = {790,420},
-				property = { 
-					placeName = "place2" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},
-			{
-				time = 5,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {640,900,320},
-				property = { 
-					placeName = "place2" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},
-			{
-				time = 7,
-				num = 1,
-				delay = {0},
-				pos = {630},
-				property = { 
-					placeName = "place2",
-					type = "yiliao",                --医疗兵
-					startState = "enterleft",       --从左面跑出来
-					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
-					id = 25,
-				},
-			},
-			-- {
-			-- 	time = 7,
-			-- 	num = 4,
-			-- 	delay = {0.4,0,0.8,1.3},
-			-- 	pos = {200,400,600,800},
-			-- 	property = { 
-			-- 		placeName = "place13" ,
-			-- 		type = "dao",
-			-- 		id = 5,
-			-- 		missileId = 6,
-			-- 		missileType = "daodan",           --导
-			-- 	},
-			-- },
-			{
-				time = 8,
-				num = 1,
-				pos = {450},
-				delay = {0.5},                         -- 飞机
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place11",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 40.0,                                    --持续时间			
-				},
-			},	
-			{
-				time = 9,	
-				num = 3,
-				pos = {230,330,510},
-				delay = {0.5,0,1},
-				property = {
-					placeName = "place2" ,         --普
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 10,	
-				num = 2,
-				pos = {270,570},
-				delay = {0.5,0},
-				property = {
-					placeName = "place2" ,         --雷
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 11,
-				num = 10,
-				delay = {0,0.7,1.4,2.1,2.8,3.5,0,0.7,1.4,2.1},
-				pos = {220,300,380,460,540,620,700,780,860,940},
-				property = { 
-					placeName = "place1" ,
-					type = "common",
-					startState = "san",
-					id = 1,
-				},
-			},
-			{
-				time = 12,
-				num = 1,
-				delay = {0},
-				pos = {800},
-				property = { 
-					placeName = "place3",
-					type = "yiliao",                --医疗兵
-					startState = "enterright",       --从左面跑出来
-					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
-					id = 25,
-				},
-			},
-			{
-				time = 12,	
-				num = 3,
-				pos = {1000,800,600},
-				delay = {0,0.5,1},
-				property = {
-					placeName = "place3" ,         --普
-					startState = "rollleft",
-					id = 1,
-				},
-			},
-			{
-				time = 12,
-				num = 3,
-				delay = {0.9,0.5,0},
-				pos = {970,870,570},
-				property = {
-					placeName = "place3" ,         --雷
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
+	-- {
+	-- 	enemys = { 
+	-- 		{
+	-- 			descId = "yiliaob", --简介
+	-- 			time = 2,
+	-- 			num = 1,
+	-- 			delay = {4},
+	-- 			pos = {430},
+	-- 			property = { 
+	-- 				placeName = "place2",
+	-- 				type = "yiliao",
+	-- 				startState = "enterleft",       --从左面跑出来
+	-- 				skillCd = 6.0,                  --回血cd
+	-- 				skillValue = 0.1,               --回血百分比
+	-- 				id = 25,
+	-- 			},
+	-- 		},	
+	-- 		{
+	-- 			time = 6,
+	-- 			num = 2,
+	-- 			delay = {0,0.5},
+	-- 			pos = {790,420},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				type = "jin",                  --盾
+	-- 				id = 8,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 9,
+	-- 			num = 3,
+	-- 			delay = {0,0.5,1},
+	-- 			pos = {640,900,320},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				type = "jin",                  --盾
+	-- 				id = 8,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 11,	
+	-- 			num = 3,
+	-- 			pos = {230,330,510},
+	-- 			delay = {0.5,0,1},
+	-- 			property = {
+	-- 				placeName = "place2" ,         --普
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,	
+	-- 			num = 2,
+	-- 			pos = {270,570},
+	-- 			delay = {0.5,0},
+	-- 			property = {
+	-- 				placeName = "place2" ,         --雷
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,
+	-- 			num = 5,
+	-- 			delay = {0,0.7,1.4,2.1,2.8,},
+	-- 			pos = {220,300,500,700,900,},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				type = "bao",
+	-- 				startState = "san",
+	-- 				id = 4,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 13,
+	-- 			num = 5,
+	-- 			delay = {3.5,0,0.7,1.4,2.1},
+	-- 			pos = {300,450,600,750,940},
+	-- 			property = { 
+	-- 				placeName = "place1" ,
+	-- 				type = "common",
+	-- 				startState = "san",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 14,	
+	-- 			num = 3,
+	-- 			pos = {1000,800,600},
+	-- 			delay = {0,0.5,1},
+	-- 			property = {
+	-- 				placeName = "place3" ,         --普
+	-- 				startState = "rollleft",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 15,	
+	-- 			num = 3,
+	-- 			delay = {0.9,0.5,0},
+	-- 			pos = {970,870,570},
+	-- 			property = {
+	-- 				placeName = "place3" ,         --雷
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",
+	-- 			},
+	-- 		},
+	-- 	},
+	-- },
+	-- {
+	-- 	enemys = { 
+	-- 		{
+	-- 			time = 2,
+	-- 			num = 2,
+	-- 			delay = {0,0.5},
+	-- 			pos = {790,420},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				type = "jin",                  --盾
+	-- 				id = 8,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 5,
+	-- 			num = 3,
+	-- 			delay = {0,0.5,1},
+	-- 			pos = {640,900,320},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				type = "jin",                  --盾
+	-- 				id = 8,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 7,
+	-- 			num = 1,
+	-- 			delay = {0},
+	-- 			pos = {630},
+	-- 			property = { 
+	-- 				placeName = "place2",
+	-- 				type = "yiliao",                --医疗兵
+	-- 				startState = "enterleft",       --从左面跑出来
+	-- 				skillCd = 6.0,                  --回血cd
+	-- 				skillValue = 0.1,               --回血百分比
+	-- 				id = 25,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 8,
+	-- 			num = 1,
+	-- 			pos = {450},
+	-- 			delay = {0.5},                         -- 飞机
+	-- 			property = {
+	-- 				type = "feiji" ,
+	-- 				id = 11,
+	-- 				placeName = "place11",
+	-- 				missileId = 6,
+	-- 				missileType = "daodan",
+	-- 				missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+	-- 				startState = "enterleft",
+	-- 				lastTime = 40.0,                                    --持续时间			
+	-- 			},
+	-- 		},	
+	-- 		{
+	-- 			time = 9,	
+	-- 			num = 3,
+	-- 			pos = {230,330,510},
+	-- 			delay = {0.5,0,1},
+	-- 			property = {
+	-- 				placeName = "place2" ,         --普
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 10,	
+	-- 			num = 2,
+	-- 			pos = {270,570},
+	-- 			delay = {0.5,0},
+	-- 			property = {
+	-- 				placeName = "place2" ,         --雷
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 11,
+	-- 			num = 10,
+	-- 			delay = {0,0.7,1.4,2.1,2.8,3.5,0,0.7,1.4,2.1},
+	-- 			pos = {220,300,380,460,540,620,700,780,860,940},
+	-- 			property = { 
+	-- 				placeName = "place1" ,
+	-- 				type = "common",
+	-- 				startState = "san",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,
+	-- 			num = 1,
+	-- 			delay = {0},
+	-- 			pos = {800},
+	-- 			property = { 
+	-- 				placeName = "place3",
+	-- 				type = "yiliao",                --医疗兵
+	-- 				startState = "enterright",       --从左面跑出来
+	-- 				skillCd = 6.0,                  --回血cd
+	-- 				skillValue = 0.1,               --回血百分比
+	-- 				id = 25,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 12,	
+	-- 			num = 3,
+	-- 			pos = {1000,800,600},
+	-- 			delay = {0,0.5,1},
+	-- 			property = {
+	-- 				placeName = "place3" ,         --普
+	-- 				startState = "rollleft",
+	-- 				id = 1,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 13,
+	-- 			num = 3,
+	-- 			delay = {0.9,0.5,0},
+	-- 			pos = {970,870,570},
+	-- 			property = {
+	-- 				placeName = "place3" ,         --雷
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",
+	-- 			},
+	-- 		},
 
-		},
-	},
+	-- 	},
+	-- },
 	{
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                              --boss
@@ -301,10 +288,7 @@ local enemys = {
 
 	--自爆兵        --type = "bao",
 	{id=4,image="zibaob",demage=15,hp=571,fireRate=30,speed=130,
-	weak1=2},	
-	                                                           
-	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=749,walkRate=120,walkCd=2,fireRate=240,fireCd=5, weak1=2},
+	weak1=2},
 
     --导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=15,hp=1, weak1=1},
@@ -326,8 +310,8 @@ local enemys = {
 	{id=21,image="daodan03",demage=10,hp=5600, weak1=1},--打击者金武平均伤害5558
 
 	--医疗兵      --type = "yiliao",
-	{id=25,image="yiliaob",demage=12,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
-	weak1=3},
+	{id=25,image="yiliaob",demage=12,hp=1000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
 	
 }
 
@@ -341,8 +325,8 @@ local bosses = {
 		image = "boss02_1",    --蓝boss基础上改的肌肉boss
 		hp = 250000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 120,               --普攻频率
-		fireCd = 3,                     --普攻cd
+		fireRate = 180,               --普攻频率
+		fireCd = 4,                     --普攻cd
 
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd
@@ -369,13 +353,11 @@ local bosses = {
 			},
 			tieqiu = {
 				0.80, 0.60, 0.40, 0.20, 0.05,
-			},	
+			},
+			-- zhaohuan = { 0.90,                      --召唤小兵
+			-- },	
 			
 
-
-			-- daoDan2 = {                                            --暴雨梨花弹
-			-- 	0.70, 0.30,
-			-- },
 
 
 			weak2 = {                               --手 技能触发(可以同时)
@@ -402,43 +384,38 @@ local bosses = {
 			offsetPoses = {                  --目标点
             cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300), cc.p(300, -300), 
            },
-           -- 	srcPoses =    {--起始点
-           --  cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300), cc.p(300, -300), 
-           -- }, 
-
 		},
-		-- daoDan2 = {
-		-- 	id = 19,                                 --boss导弹
-		-- 	type = "missile",
-		-- 	timeOffset = 0.08,                       --导弹间隔时间
-		-- 	offsetPoses = {
-  --           	cc.p(0, 300), cc.p(-300, 0), cc.p(0, -300), cc.p(300, 0), 
-		-- 		cc.p(300, -300), cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300),
-		-- 		cc.p(-300, 0), cc.p(0, 300), cc.p(300, 0), cc.p(0, -300),
-  --          }               
-		-- },
 
+		-- enemys1 = {                                                   --第一波召唤医疗兵
+		-- 	{
+		-- 		time = 0,
+		-- 		num = 1,
+		-- 		delay = {0,},
+		-- 		pos = {380,},
+		-- 		property = { 
+		-- 			placeName = "place4" ,
+		-- 			type = "yiliao",     --医疗兵
+		-- 			startState = "enterleft",       --从左面跑出来
+		-- 			skillCd = 6.0,                  --回血cd
+		-- 			skillValue = 1,               --回血百分比
+		-- 			id = 25,	
+		-- 		},
+		-- 	},
+		-- 	{
+		-- 		time = 0,
+		-- 		num = 1,
+		-- 		delay = {0,},
+		-- 		pos = {980,},
+		-- 		property = { 
+		-- 			placeName = "place4" ,
+		-- 			type = "yiliao",     --医疗兵
+		-- 			startState = "enterright",       --从右面跑出来
+		-- 			skillCd = 6.0,                  --回血cd
+		-- 			skillValue = 1,               --回血百分比
+		-- 			id = 25,	
+		-- 		},
+		-- 	},
 
-		-- daoDan1 = {
-		--     id = 21,                                  --烟雾
-		-- 	type = "dao_wu",                  
-		-- 	offsetPoses = {
-  --               cc.p(-300, 0), cc.p(300, 0), 
-  --          }               
-		-- },
-		-- daoDan2 = {
-		-- 	id = 19,                                 --boss导弹
-		-- 	type = "missile",
-		-- 	offsetPoses = {
-  --               cc.p(0, 0), cc.p(0, -500), 
-  --          }               
-		-- },
-		-- daoDan3 = {
-		-- 	id = 22,                                 --大黑导弹
-		-- 	type = "missile",                        
-		-- 	offsetPoses = {
-  --               cc.p(-300, -300), cc.p(300, -300), 
-  --          }               
 		-- },
 
 
