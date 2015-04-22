@@ -48,7 +48,7 @@ function BaseWave:getFightMode()
 end
 
 function BaseWave:randomWaves()
-	local waves = clone(self.waves)
+	local waves = {}
 	
 end
 
