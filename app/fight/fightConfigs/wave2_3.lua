@@ -312,7 +312,10 @@ local enemys = {
 	--医疗兵      --type = "yiliao",
 	{id=25,image="yiliaob",demage=12,hp=1000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
-	
+
+	--boss召唤医疗兵      --type = "yiliao",
+	{id=26,image="yiliaob",demage=12,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
 }
 
 
@@ -325,8 +328,8 @@ local bosses = {
 		image = "boss02_1",    --蓝boss基础上改的肌肉boss
 		hp = 250000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
-		fireRate = 180,               --普攻频率
-		fireCd = 4,                     --普攻cd
+		fireRate = 120,               --普攻频率
+		fireCd = 3,                     --普攻cd
 
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd
@@ -339,9 +342,9 @@ local bosses = {
 		
 		skilltrigger = {   			          --技能触发(可以同时)
 
-			daoDan1 = {                                            --烟雾导弹
-				0.95, 0.70, 0.50, 0.30, 0.15,
-			},
+			-- daoDan1 = {                                            --烟雾导弹
+			-- 	0.95, 0.70, 0.50, 0.30, 0.15,
+			-- },
 			moveLeftFire = {
 				0.90, 0.55,
 			},
@@ -354,8 +357,8 @@ local bosses = {
 			tieqiu = {
 				0.80, 0.60, 0.40, 0.20, 0.05,
 			},
-			-- zhaohuan = { 0.90,                      --召唤小兵
-			-- },	
+			zhaohuan = { 0.95, 0.70, 0.50, 0.30,                      --召唤小兵
+			},	
 			
 
 
@@ -369,54 +372,143 @@ local bosses = {
 			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {  
-				0.70,
+			demage300 = {
+				0.60,
 			},	
-			demage400 = {  
-				0.50,
+			demage400 = {
+				0.30,
 			},						
 		},
 
-		daoDan1 = {
-		    id = 21,                                  --烟雾
-			type = "dao_wu",  
-			timeOffset = 0.06,                        --导弹间隔时间                 
-			offsetPoses = {                  --目标点
-            cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300), cc.p(300, -300), 
-           },
-		},
-
-		-- enemys1 = {                                                   --第一波召唤医疗兵
-		-- 	{
-		-- 		time = 0,
-		-- 		num = 1,
-		-- 		delay = {0,},
-		-- 		pos = {380,},
-		-- 		property = { 
-		-- 			placeName = "place4" ,
-		-- 			type = "yiliao",     --医疗兵
-		-- 			startState = "enterleft",       --从左面跑出来
-		-- 			skillCd = 6.0,                  --回血cd
-		-- 			skillValue = 1,               --回血百分比
-		-- 			id = 25,	
-		-- 		},
-		-- 	},
-		-- 	{
-		-- 		time = 0,
-		-- 		num = 1,
-		-- 		delay = {0,},
-		-- 		pos = {980,},
-		-- 		property = { 
-		-- 			placeName = "place4" ,
-		-- 			type = "yiliao",     --医疗兵
-		-- 			startState = "enterright",       --从右面跑出来
-		-- 			skillCd = 6.0,                  --回血cd
-		-- 			skillValue = 1,               --回血百分比
-		-- 			id = 25,	
-		-- 		},
-		-- 	},
-
+		-- daoDan1 = {
+		--     id = 21,                                  --烟雾
+		-- 	type = "dao_wu",  
+		-- 	timeOffset = 0.06,                        --导弹间隔时间                 
+		-- 	offsetPoses = {                  --目标点
+  --           cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300), cc.p(300, -300), 
+  --          },
 		-- },
+
+		enemys1 = {                                                   --第1波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {800,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {350,},
+				property = { 
+					placeName = "place4" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+		enemys2 = {                                                   --第2波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {260,},
+				property = { 
+					placeName = "place3" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {860,},
+				property = { 
+					placeName = "place2" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+		enemys3 = {                                                   --第3波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {470,},
+				property = { 
+					placeName = "place3" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {900,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+		enemys4 = {                                                   --第4波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {370,},
+				property = { 
+					placeName = "place3" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {950,},
+				property = { 
+					placeName = "place2" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
 
 
 

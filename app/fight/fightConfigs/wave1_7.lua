@@ -232,11 +232,11 @@ local enemys = {
 	{id=9,image="zibaob",demage=15,hp=403,fireRate=30,speed=100, weak1=2},	 --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=35,hp=15000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=30,hp=15000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage= 7 ,hp= 1000 },
+	{id=18,image="feibiao",demage= 5 ,hp= 500 },
 
 	-- 金武箱子奖励  type = "awardSan",
 	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
@@ -261,7 +261,7 @@ local bosses = {
 		shanRate = 180, 				--瞬移
 		shanCd	= 2,					
 
-		chongfengDemage = 40,                --冲锋造成伤害
+		chongfengDemage = 35,                --冲锋造成伤害
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--左腿 弱点伤害倍数
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
