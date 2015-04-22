@@ -1,4 +1,4 @@
-local BaseWave = import(".BaseWave")
+local BaseWave = import("..BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
@@ -381,8 +381,10 @@ function waveClass:ctor()
 		type 	  = "puTong",
 	}
 
-	self.randomWaveLists = {
+	self.randomWaveOrders = {
 		{1, 2},
+		{2, 1},
+		{2, 1},
 		{2, 1},
 	}
 	self:randomWaves()

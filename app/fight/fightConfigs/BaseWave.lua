@@ -49,7 +49,17 @@ end
 
 function BaseWave:randomWaves()
 	local waves = {}
-	
+
+	-- random
+	local num   = #self.randomWaveOrders
+	local index = math.random(1, num)
+	local order = self.randomWaveOrders[index]  
+	dump(order, "order")
+
+	for i,index in ipairs(order) do
+		waves[i] = self.waves[index]
+	end
+	self.waves = waves
 end
 
 return BaseWave
