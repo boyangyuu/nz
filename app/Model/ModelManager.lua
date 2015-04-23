@@ -89,7 +89,6 @@ function ModelManager:getInstance(clsName)
 end
 
 function ModelManager:createInstance(clsName)
-
     print("create clsName"..clsName)
     -- clear
     self.objects_[clsName] = nil
@@ -102,7 +101,6 @@ end
 
 function ModelManager:deleteInstance(clsName)
     self.objects_[clsName] = nil
-    -- print("self:removeObject(clsName)", clsName)
 end
 
 return ModelManager

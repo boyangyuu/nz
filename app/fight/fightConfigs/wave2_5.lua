@@ -45,9 +45,23 @@ local waves = {
 			},
 			{
 				time = 5,
-				num = 3,
-				delay = {0,0.5,0.9},
-				pos = {125,250,333},					
+				num = 1,
+				delay = {0},
+				pos = {340},
+				property = { 
+					placeName = "place2",
+					type = "yiliao",                --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 25,
+				},
+			},
+			{
+				time = 5,
+				num = 2,
+				delay = {0,0.9},
+				pos = {125,333},					
 				property = {
 					placeName = "place1",   
 					id = 1,
@@ -109,9 +123,9 @@ local waves = {
 			},
 			{
 				time = 9,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {550,650,750},					
+				num = 2,
+				delay = {0,1},
+				pos = {550,750},					
 				property = {
 					placeName = "place3", 
 					startState = "rollleft",
@@ -138,9 +152,9 @@ local waves = {
 		enemys = {
             {
 				time = 2,	
-				num = 4,
-				pos = {200,260,320,400},
-				delay = {0,0.5,0.8,1,},
+				num = 2,
+				pos = {200,400},
+				delay = {0,1,},
 				property = { 
 					placeName = "place2",
 					startState = "rollright",
@@ -174,9 +188,23 @@ local waves = {
 			},
 			{
 				time = 5,
-				num = 3,
-				delay = {0,1,1.5},
-				pos = {190,270,350},
+				num = 1,
+				delay = {0},
+				pos = {330},
+				property = { 
+					placeName = "place2",
+					type = "yiliao",                --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 25,
+				},
+			},
+			{
+				time = 5,
+				num = 2,
+				delay = {0,1,},
+				pos = {190,350},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -211,9 +239,9 @@ local waves = {
 			},
 			{
 				time = 8,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {790,900,1050},
+				num = 2,
+				delay = {0,1},
+				pos = {790,1050},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -235,10 +263,24 @@ local waves = {
 				},
 			},
 			{
+				time = 10,
+				num = 1,
+				delay = {0},
+				pos = {850},
+				property = { 
+					placeName = "place4",
+					type = "yiliao",                --医疗兵
+					startState = "enterright",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 25,
+				},
+			},
+			{
 				time = 10,	
-				num = 3,
-				delay = {0,0.5,1,},
-				pos = {200,300,350,},
+				num = 2,
+				delay = {0,0.5,},
+				pos = {200,350,},
 				property = { 
 					placeName = "place2",
 					startState = "rollright",                                          --第二波20个怪
@@ -570,7 +612,11 @@ local enemys = {
 	{id=15,image="qiqiu01",hp=1,weak1=1,award = 80},	--award = 30  金币数量为30
 
 	-- 金武箱子奖励  type = "awardSan",
-	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 	                           
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 	     
+
+	--医疗兵      --type = "yiliao",
+	{id=25,image="yiliaob",demage=12,hp=1000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},                      
 }
 
 
