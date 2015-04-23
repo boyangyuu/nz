@@ -48,7 +48,7 @@ function BossModeLayer:initUI()
 	self.desc = cc.uiloader:seekNodeByName(self.panelMain, "desc")
 
 	--btn
-	local btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
+	self.btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
 	local btnStart = cc.uiloader:seekNodeByName(self, "btnStart")
 	self.btnPre = cc.uiloader:seekNodeByName(self, "btnPre")
 	self.btnNext = cc.uiloader:seekNodeByName(self, "btnNext")
@@ -57,7 +57,7 @@ function BossModeLayer:initUI()
 	self.btnPre:setTouchEnabled(true)
 	btnClose:setTouchEnabled(true)
 	btnStart:setTouchEnabled(true)
-	btnGet:setTouchEnabled(true)
+	self.btnGet:setTouchEnabled(true)
 	addBtnEventListener(btnClose, function(event)
 		if event.name == 'began' then
 			return true
@@ -86,7 +86,7 @@ function BossModeLayer:initUI()
 			self:onClickBtnStart()
 		end
 	end)
-	addBtnEventListener(btnGet, function(event)
+	addBtnEventListener(self.btnGet, function(event)
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
@@ -153,11 +153,30 @@ function BossModeLayer:refreshContent()
     local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
     self.panelChapter:addChild(bossBtnNode)
 
-    --boss
+    --label
     self.skillName:setString(self.choseInfo["weaponSkill"])
     self.weaponDesc:setString(self.choseInfo["weaponSkill"])
+	local info = self.weaponListModel:getWeaponRecord(self.choseInfo["weaponId"])
+	local descString = info["describe"]
+    self.weaponDesc:setString(descString)
     self.name:setString(self.choseInfo["name"])
     self.desc:setString(self.choseInfo["desc"])
+
+    --lingjian
+    for k,v in pairs(self.partsImg) do
+    	local lingjianId = self.weaponListModel:getPartIdByName(k)
+    	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..lingjianId..".png")
+    	dump(k)
+    	-- lingjianImg:setColor(cc.c3b(100, 100, 100))
+    	lingjianImg:setScale(1.2)
+    	addChildCenter(lingjianImg,v)
+    end
+
+    --btn
+    local isGetWeapon = self.weaponListModel:isWeaponExist(self.choseInfo["weaponId"])
+    if isGetWeapon then
+    	self.btnGet:setButtonEnabled(false)
+    end
 end
 
 function BossModeLayer:onClickBtnClose()
@@ -182,6 +201,8 @@ end
 
 function BossModeLayer:onClickBtnGet()
 
+	--todo
+	self.weaponListModel:setWeaponPart(9,5)
 end
 
 

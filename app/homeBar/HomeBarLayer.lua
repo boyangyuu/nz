@@ -55,11 +55,18 @@ function HomeBarLayer:popUpNextLevel(properties)
     end
 end
 
+function HomeBarLayer:popUpBossMode(properties)
+    if properties.isPopupBossMode then
+        ui:showPopup("BossModeLayer")
+    end
+end
+
 function HomeBarLayer:mapPopUp(event)
     function delayPopUp()
         self:popUpNextLevel(self.properties)
         self:popUpWeaponGift(self.properties)
-        self:initDailyLogin()        
+        self:popUpBossMode(self.properties)
+        self:initDailyLogin()
     end
     self:performWithDelay(delayPopUp, 1)
 end
