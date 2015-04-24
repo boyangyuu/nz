@@ -1,7 +1,7 @@
 local PauseModel = class("PauseModel",cc.mvc.ModelBase)
 
-PauseModel.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
-PauseModel.PAUSESCENE_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
+PauseModel.PAUSELAYER_SHOW_EVENT     = "SCENE_SHOW_EVENT"
+PauseModel.PAUSELAYER_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
 
 local layerClasses = {}
 layerClasses["FightPausePopup"] 		 = import("..pause.FightPausePopup")
@@ -15,7 +15,6 @@ function PauseModel:ctor(properties)
 end
 
 function PauseModel:showPopup(layerId, properties, extra)
-	self:initPauseScene()
 	local opacity 
 	local anim
 	local animName
@@ -28,30 +27,20 @@ function PauseModel:showPopup(layerId, properties, extra)
 
 	local layerCls = self:getLayerCls(layerId)
 	
-	self:dispatchEvent({name = PauseModel.PAUSESCENE_SHOW_EVENT, layerCls = layerCls,
-		opacity = opacity, anim = anim,isNotScrenCapture = isNotScrenCapture,
-		properties = properties})
+	self:dispatchEvent({name = PauseModel.PAUSELAYER_SHOW_EVENT, layerCls = layerCls,
+		opacity = opacity, anim = anim, properties = properties})
 
 end
 
 function PauseModel:closePopup()
-	print(" PauseModel:closePopup()")
 	self.isShowPauseScene = true
-	self:dispatchEvent({name = PauseModel.PAUSESCENE_CLOSE_EVENT})
+	self:dispatchEvent({name = PauseModel.PAUSELAYER_CLOSE_EVENT})
 end
 
 function PauseModel:getLayerCls(layerId)
 	local cls = layerClasses[layerId]
 	assert(cls, "cls is nil cls id:"..layerId)
 	return cls
-end
-
-function PauseModel:initPauseScene()
-	if not self.isShowPauseScene then return end
-	self.isShowPauseScene = false
-	local pauseScene = require("app.pause.PauseScene").new()
-	local director = cc.Director:getInstance()
-	director:pushScene(pauseScene)
 end
 
 
