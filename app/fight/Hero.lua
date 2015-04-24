@@ -171,7 +171,6 @@ end
 
 function Hero:checkKeepKill()
     if self.killKeepCnt >= define.kHeroKillKeepCnt then
-        print("连杀动画!!!!!")
         self:dispatchEvent{name = Hero.EFFECT_KEEPKILL_EVENT, 
             count = self.killKeepCnt}
     end

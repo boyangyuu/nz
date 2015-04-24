@@ -21,12 +21,15 @@ Map.GUN_CLOSE_JU_EVENT    = "GUN_CLOSE_JU_EVENT"
 
 Map.AWARD_GOLD_EVENT 	  = "AWARD_GOLD_EVENT" 	  
 
+Map.WAVE_UPDATE_EVENT 	  = "WAVE_UPDATE_EVENT" 
+
 function Map:ctor()
     Map.super.ctor(self)
-    self.isJuAble = true
+    self.isJuAble  = true
     self.isOpenJu_ = false
+    self.waveIndex = 1
     local fightFactory  = md:getInstance("FightFactory")
-    self.fight 		 = fightFactory:getFight()
+    self.fight 		    = fightFactory:getFight()
     self:setCurWaveConfig()
 end
 
@@ -38,6 +41,17 @@ end
 
 function Map:getCurWaveConfig()
 	return self.curWaveCfg 
+end
+
+function Map:setWaveIndex(index)
+	assert(index)
+	self.waveIndex = index
+	self:dispatchEvent({name = Map.WAVE_UPDATE_EVENT, 
+		waveIndex = self.waveIndex})
+end
+
+function Map:getWaveIndex()
+	return self.waveIndex
 end
 
 function Map:setIsOpenJu(isOpenJu_)

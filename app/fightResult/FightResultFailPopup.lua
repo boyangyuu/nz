@@ -89,7 +89,7 @@ function FightResultFailPopup:onClickBackHome()
     local fightFactory =     md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     fight:doGiveUp()
-
+    local result = fight:getResultData()
     local groupId,levelId = fight:getCurGroupAndLevel()
     ui:closePopup("FightResultFailPopup")
     local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
@@ -98,9 +98,9 @@ function FightResultFailPopup:onClickBackHome()
         return
     end
     if isBoughtWeapon then
-        ui:changeLayer("HomeBarLayer",{groupId = groupId})
+        ui:changeLayer("HomeBarLayer",{groupId = groupId, fightResultData = result})
     else
-        ui:changeLayer("HomeBarLayer",{groupId = groupId,popWeaponGift = true})
+        ui:changeLayer("HomeBarLayer",{groupId = groupId, popWeaponGift = true, fightData = result})
     end
 end
 

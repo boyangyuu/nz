@@ -30,7 +30,6 @@ function FightResultLayer:ctor(properties)
     self.itemsTable = {}
  
     local fightResult = self.fightModel:getResultData()
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!")
     dump(fightResult)
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])

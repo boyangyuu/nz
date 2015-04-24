@@ -36,11 +36,10 @@ function MapView:ctor()
 	self.hero 			= md:getInstance("Hero")
     local fightFactory  = md:getInstance("FightFactory")
     self.fight 			= fightFactory:getFight()
-	self.mapModel 		= md:getInstance("Map")
+	self.mapModel 			= md:getInstance("Map")
 	self.enemys 		= {}
 	self.missileNum     = 0
 	self.cacheEnemys    = {}
-	self.waveIndex 		= 1
 	self.isPause 		= false
 	self.isZooming 		= false
 	self.fightDescModel = md:getInstance("FightDescModel")
@@ -157,7 +156,8 @@ end
 function MapView:updateEnemys()
 	--wave config
 	local waveConfig = self.mapModel:getCurWaveConfig()
-	local wave = waveConfig:getWaves(self.waveIndex)
+	local waveIndex = self.mapModel:getWaveIndex()
+	local wave = waveConfig:getWaves(waveIndex)
 	-- dump(wave, "wave")
 
 	local result = self.fight:getResult()
@@ -176,7 +176,7 @@ function MapView:updateEnemys()
 	elseif wave.waveType == "award" then  
 		self.fightDescModel:goldShow()
 	else 
-		self.fightDescModel:waveStart(self.waveIndex)
+		self.fightDescModel:waveStart(waveIndex)
 	end
 
 	--gunData
@@ -234,12 +234,13 @@ end
 
 function MapView:checkWave()
 	local function checkEnemysEmpty()
-		local leftnum =  self:getLeftEnemyNum()
-		local cachenum = #self.cacheEnemys
+		local leftnum   =  self:getLeftEnemyNum()
+		local cachenum  = #self.cacheEnemys
+		
 		if leftnum == 0 and cachenum == 0 then 
-			print("第"..self.waveIndex.."波怪物消灭完毕")
-			self.waveIndex = self.waveIndex + 1
-
+			local waveIndex = self.mapModel:getWaveIndex() 
+			print("第"..waveIndex.."波怪物消灭完毕")
+			self.mapModel:setWaveIndex(waveIndex + 1)
 			self:checkGuide()
 			self:updateEnemys()
 			transition.removeAction(self.checkEnemysEmptyHandler)
@@ -261,8 +262,9 @@ end
 
 function MapView:checkGuide0_0()
 	local guide = md:getInstance("Guide")
+	local waveIndex = self.mapModel:getWaveIndex()
 
-	if self.waveIndex == 5 then 
+	if waveIndex == 5 then 
 		local comps = {btnGold = true, label_gold = true}
 		self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = comps})					
 		guide:check("fight01_gold") 
@@ -271,10 +273,11 @@ end
 
 function MapView:checkGuide1_1()
 	local guide = md:getInstance("Guide")
-	if self.waveIndex == 2 then	
+	local waveIndex = self.mapModel:getWaveIndex()
+	if waveIndex == 2 then	
 		guide:check("fight_change") 
 	end
-	if self.waveIndex == 3 then 
+	if waveIndex == 3 then 
 		guide:check("fight_dun") 
 	end		
 end
@@ -303,8 +306,9 @@ function MapView:addEnemy(property)
 	property.placeNode  = placeNode
 
 	--scale
+	local waveIndex = self.mapModel:getWaveIndex()
 	local scale = cc.uiloader:seekNodeByName(placeNode, "scale")
-	assert(scale, "scale is nil wave index"..self.waveIndex)
+	assert(scale, "scale is nil wave index"..waveIndex)
 	property.scale = scale:getScaleX() 
 	
 	--create

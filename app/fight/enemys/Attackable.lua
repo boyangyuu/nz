@@ -38,6 +38,7 @@ function Attackable:ctor(property)
     self:test()
 end
 
+
 function Attackable:initArmature()
 	self.armature = self:getEnemyArmature()
 	assert(self.armature)
@@ -448,7 +449,13 @@ end
 
 function Attackable:playBuff(buffName)
 	if self.buffArmature then
-		self.buffArmature:getAnimation():play("jiaxue", -1, 0)
+		self.buffArmature:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+				self.buffArmature:getAnimation():stop()		
+	    	end 
+    	end)	
+		self.buffArmature:getAnimation():play("jiaxue", -1, 1)
 	end
 end
 
@@ -506,6 +513,8 @@ function Attackable:onEnter()
 
 	--add enemy
 	self.enemyM:addEnemy(self)
+
+	-- self:playBuff()
 end
 
 function Attackable:onCleanup()

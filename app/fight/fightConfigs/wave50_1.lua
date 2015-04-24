@@ -107,7 +107,7 @@ local bosses = {
 	{
 		image = "boss01_1", --图片名字
 		award = 50000,                   --boss产出金币数量
-		hp = 160000,
+		hp = 160,
 		demage = 4,
 		fireRate = 60,
 		fireCd = 3,  		
@@ -243,7 +243,7 @@ local bosses = {
 	{
 		image = "dzboss_1", --图片名字
 		award = 50000,                   --boss产出金币数量
-		hp = 250000,
+		hp = 250,
 		fireRate = 60,                  --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				    --
@@ -378,7 +378,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.fightMode =  {
-		type 	  = "puTong",
+		type 	  = "bossContest",
 	}
 
 	self.randomWaveOrders = {

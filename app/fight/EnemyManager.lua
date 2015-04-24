@@ -19,7 +19,6 @@ function EnemyManager:removeEnemy(enemy)
 	for i,v in ipairs(self.enemys) do
 		if v == enemy then
 			local name = enemy:getNickname() 
-			print("remove: " ..name)
 			table.remove(self.enemys, i)
 		end
 	end
