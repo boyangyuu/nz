@@ -6,4 +6,8 @@ function BossFight:ctor(properties)
 	BossFight.super.ctor(self, properties)
 end
 
+function BossFight:startFightResult()
+    ui:showPopup("FightResultPopup",{},{anim = false})
+end
+
 return BossFight
