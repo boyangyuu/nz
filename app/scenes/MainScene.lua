@@ -7,6 +7,8 @@ local DebugLayer = import("..debug.DebugLayer")
 
 local LoadingLayer = import("..UI.LoadingLayer")
 
+local PauseLayer = import("..pause.PauseLayer")
+
 
 local MainScene = class("MainScene", function()
     return display.newScene("MainScene")
@@ -33,10 +35,15 @@ function MainScene:ctor()
     loadLayer:setPositionY(display.offset)
     self:addChild(loadLayer, 400)
 
+    -- PauseLayer
+    local pauseLayer = PauseLayer.new()
+    pauseLayer:setPositionY(display.offset)
+    self:addChild(pauseLayer, 500)
+
     --debug
     local debugLayer = DebugLayer.new()
     debugLayer:setPositionY(display.offset)
-    self:addChild(debugLayer, 500)
+    self:addChild(debugLayer, 600)
 
     --black
     local LayerColor = cc.c4b(0, 0, 0, 255)

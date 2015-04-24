@@ -35,10 +35,9 @@ function BossModeLayer:initUI()
 	--gun
 	self.panelGun = cc.uiloader:seekNodeByName(self.panelMain, "panelGun")
 
-	local parts = {"Danjia","Zhuti","Guan","Tuo","Miaozhun"}
 	self.partsImg = {}
-	for k,v in pairs(parts) do
-		self.partsImg[v] = cc.uiloader:seekNodeByName(panelWeapon, "panel"..v)
+	for i=1,5 do
+		self.partsImg[i] = cc.uiloader:seekNodeByName(panelWeapon, "panel0"..i)
 	end
 
 	--label
@@ -96,6 +95,14 @@ function BossModeLayer:initUI()
 end
 
 function BossModeLayer:refreshUI(event)
+		self.btnPre:setVisible(true)
+	self.btnNext:setVisible(true)
+	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
+		self.btnPre:setVisible(false)
+	elseif self.bossModeModel:checkNext(self.choseChapter+1) == false then
+		self.btnNext:setVisible(false)
+	end
+
 	local actionDown = cc.MoveBy:create(0.2, cc.p(0,-200))
 	local actionUp = cc.MoveBy:create(0.2, cc.p(0,200))
  	local actionNext = cc.MoveBy:create(0.2, cc.p(-1136,0))
@@ -126,13 +133,6 @@ function BossModeLayer:refreshUI(event)
 end
 
 function BossModeLayer:refreshContent()
-	self.btnPre:setVisible(true)
-	self.btnNext:setVisible(true)
-	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
-		self.btnPre:setVisible(false)
-	elseif self.bossModeModel:checkNext(self.choseChapter+1) == false then
-		self.btnNext:setVisible(false)
-	end
 
 	self.choseInfo = self.bossModeModel:getInfo(self.choseChapter)
 
@@ -162,21 +162,31 @@ function BossModeLayer:refreshContent()
     self.name:setString(self.choseInfo["name"])
     self.desc:setString(self.choseInfo["desc"])
 
-    --lingjian
-    for k,v in pairs(self.partsImg) do
-    	local lingjianId = self.weaponListModel:getPartIdByName(k)
-    	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..lingjianId..".png")
-    	dump(k)
-    	-- lingjianImg:setColor(cc.c3b(100, 100, 100))
-    	lingjianImg:setScale(1.2)
-    	addChildCenter(lingjianImg,v)
-    end
 
     --btn
+    self.btnGet:setButtonEnabled(true)
     local isGetWeapon = self.weaponListModel:isWeaponExist(self.choseInfo["weaponId"])
     if isGetWeapon then
     	self.btnGet:setButtonEnabled(false)
     end
+
+    --lingjian
+    local alreadyGet = self.bossModeModel:getAlreadyWave(self.choseChapter)
+    for k,v in pairs(self.partsImg) do
+    	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..k..".png")
+    	dump(k)
+    	lingjianImg:setColor(cc.c3b(100, 100, 100))
+    	if k <= alreadyGet then
+			lingjianImg:setColor(cc.c3b(255, 255, 255))
+    	end
+    	if isGetWeapon then
+    		lingjianImg:setColor(cc.c3b(255, 255, 255))
+    	end
+
+    	lingjianImg:setScale(1.2)
+    	addChildCenter(lingjianImg,v)
+    end
+
 end
 
 function BossModeLayer:onClickBtnClose()
@@ -205,4 +215,5 @@ end
 function BossModeLayer:onClickBtnGet()
 	
 end
+
 return BossModeLayer
