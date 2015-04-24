@@ -50,7 +50,8 @@ function FightProp:costLei(callfuncSuccess)
 		--todo 
 
 	    --um
-	    local fight = md:getInstance("Fight")
+	    local fightFactory = md:getInstance("FightFactory")
+   		local fight = fightFactory:getFight()
 	    local levelInfo = fight:getLevelInfo()
 	    assert(levelInfo, "levelInfo is nil")
 	    local umData = {}

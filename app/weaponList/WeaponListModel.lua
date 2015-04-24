@@ -246,19 +246,78 @@ function WeaponListModel:getAllWeapon()
 	return weapontable
 end
 
-function WeaponListModel:getWeaponPartById(PartId)
-	assert(PartId,"PartId is nil")
-	if PartId == 1 then
+function WeaponListModel:getPartIdByName(PartName)
+	assert(PartName,"PartName is nil")
+	if PartName == "Zhuti" then
+		return 1
+	elseif PartName == "Guan" then
+		return 2
+	elseif PartName == "Danjia" then
+		return 3
+	elseif PartName == "Tuo" then
+		return 4
+	elseif PartName == "Miaozhun" then
+		return 5
+	end
+end
+
+function WeaponListModel:getPartNameById(partId)
+	assert(partId,"partId is nil")
+	if partId == 1 then
 		return "Zhuti"
-	elseif PartId == 2 then
+	elseif partId == 2 then
 		return "Guan"
-	elseif PartId == 3 then
+	elseif partId == 3 then
 		return "Danjia"
-	elseif PartId == 4 then
+	elseif partId == 4 then
 		return "Tuo"
-	elseif PartId == 5 then
+	elseif partId == 5 then
 		return "Miaozhun"
 	end
+end
+
+function WeaponListModel:setWeaponPart(weaponId,waveNum)
+	local data = getUserData()
+	local parts = data.weapons.parts
+	
+	if self:isWeaponExist(weaponId) then return end
+	if self:isPartsExist(weaponId) then
+		for k,v in pairs(parts) do
+			if v.weaponid == weaponId and v.part < waveNum then
+				v.part = waveNum
+				print(":!!!!")		
+				self:setPartsComposition(weaponId)
+
+			end
+		end
+	else
+		local insertPart = {weaponid = weaponId,part = waveNum}
+		table.insert(parts,insertPart)
+		print(":~~~~")
+	end
+	
+	dump(data.weapons)
+	setUserData(data)
+end
+
+function WeaponListModel:setPartsComposition(weaponId)
+	local data = getUserData()
+	for k,v in pairs(data.weapons.parts) do
+		if v.weaponid == weaponId and v.part >= 5 then
+			table.remove(data.weapons.parts,k)
+			self:buyWeapon(weaponId)
+		end
+	end
+end
+
+function WeaponListModel:isPartsExist(weaponId)
+	local data = getUserData()
+	for k,v in pairs(data.weapons.parts) do
+		if v.weaponid == weaponId then
+			return true
+		end
+	end
+	return false
 end
 
 return WeaponListModel

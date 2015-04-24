@@ -16,7 +16,8 @@ end
 
 --返回当前战斗下 所有waves
 function FightConfigs:getWaveConfig()
-	self.fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight  = fightFactory:getFight()
 	local group = self.fight:getGroupId()
 	local level = self.fight:getLevelId()
     if math.floor(level) < level then
@@ -26,8 +27,6 @@ function FightConfigs:getWaveConfig()
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
 	local waveFight = require(p .. str_src).new()
-	-- waveFight = require(p..".waveExample").new()
-	-- waveFight = require(p..".bossWave.bossWave1_1").new()
 	return waveFight
 end
 
@@ -41,8 +40,6 @@ function FightConfigs:getWaveImages(gid, lid)
 	local name_lua = "wave"..gid.."_"..lid
 	local str_src = "."..name_lua
 	local waveConfig = require(p..str_src).new()
-	-- waveConfig = require(p..".bossWave.bossWave1_1").new()
-	print("p..str_src", p..str_src)	
 	for i,config in ipairs(waveConfig.enemys) do
 		images[#images + 1] = config["image"]
 	end

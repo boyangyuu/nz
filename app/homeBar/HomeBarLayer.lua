@@ -48,10 +48,17 @@ end
 function HomeBarLayer:popUpNextLevel(properties)
     if properties.isPopupNext then
         local levelMapModel = md:getInstance("LevelMapModel")
-        local fightModel = md:getInstance("Fight")
+        local fightFactory =     md:getInstance("FightFactory")
+        local fightModel = fightFactory:getFight()        
         local curGroup, curLevel = fightModel:getCurGroupAndLevel()
         local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
         ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
+    end
+end
+
+function HomeBarLayer:popUpBossMode(properties)
+    if properties.isPopupBossMode then
+        ui:showPopup("BossModeLayer")
     end
 end
 
@@ -59,7 +66,8 @@ function HomeBarLayer:mapPopUp(event)
     function delayPopUp()
         self:popUpNextLevel(self.properties)
         self:popUpWeaponGift(self.properties)
-        self:initDailyLogin()        
+        self:popUpBossMode(self.properties)
+        self:initDailyLogin()
     end
     self:performWithDelay(delayPopUp, 1)
 end
@@ -209,7 +217,8 @@ function HomeBarLayer:homeBarAction()
 end
 
 function HomeBarLayer:onEnter()
-    local fight = md:getInstance("Fight")
+    local fightFactory =   md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local levelModel = md:getInstance("LevelMapModel")
     local gid, lid  = levelModel:getConfig()
     if lid == 2 and gid == 1 then 

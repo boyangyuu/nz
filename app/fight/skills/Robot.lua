@@ -33,7 +33,8 @@ end
 
 function Robot:getDemage()
 	assert(define.kRobotDemage, "demage is nil")
-	local fight = md:getInstance("Fight")
+	local fightFactory =   md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	local gid = fight:getGroupId()
 	local scale = gid > 2 and 2.0 or 1.0
 	return define.kRobotDemage * scale
@@ -74,13 +75,13 @@ end
 function Robot:startRobot(time)
 	print("Robot:startRobot()")
     local levelModel = md:getInstance("LevelDetailModel")
-    local fight = md:getInstance("Fight")
+    local fightFactory =     md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local gid,lid = fight:getCurGroupAndLevel()
     local isju = levelModel:isJujiFight(gid,lid) 
     if isju then return end	
     
     --um
-    local fight = md:getInstance("Fight")
     local levelInfo = fight:getLevelInfo() 
     assert(levelInfo, "levelInfo is nil") 
     local umData = {}
@@ -91,7 +92,6 @@ function Robot:startRobot(time)
 	self.isRoboting = true
 	
 	--visible
-	local fight = md:getInstance("Fight")
 	fight:dispatchEvent({name = fight.CONTROL_HIDE_EVENT})
 	fight:dispatchEvent({name = fight.INFO_HIDE_EVENT})
 
@@ -121,7 +121,8 @@ function Robot:endRobot()
 	self:dispatchEvent({name = Robot.ROBOT_ENDTIME_EVENT})
 
 	--visible
-	local fight = md:getInstance("Fight")
+	local fightFactory =   md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	fight:dispatchEvent({name = fight.CONTROL_SHOW_EVENT})
 	fight:dispatchEvent({name = fight.INFO_SHOW_EVENT})
 	--cooldown

@@ -12,8 +12,9 @@ end)
 
 function FightModeBaseView:ctor()
 	--instance
-	self.fightMode 	 = md:getInstance("FightMode")
-	self.fight       = md:getInstance("Fight")
+	self.fightMode 	   = md:getInstance("FightMode")
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight 		   = fightFactory:getFight()
 
 	--data
 	self.modeConfig = self.fightMode:getModeConfig()

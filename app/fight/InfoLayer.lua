@@ -1,6 +1,5 @@
 
 local Hero 				= import(".Hero")
-local Fight 		    = import(".Fight")
 local ModeViewFactory    = import(".fightMode.ModeViewFactory")
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
@@ -11,7 +10,8 @@ function InfoLayer:ctor()
 	self.hero 			= md:getInstance("Hero")
 	self.weaponModel 	= md:getInstance("WeaponListModel")
 	self.guide 			= md:getInstance("Guide")
-	self.fight  		= md:getInstance("Fight")
+    local fightFactory  = md:getInstance("FightFactory")
+    self.fight 			= fightFactory:getFight()
 	self.inlay 			= md:getInstance("FightInlay")
 
 	cc.EventProxy.new(self.hero, self)
@@ -99,7 +99,8 @@ function InfoLayer:initBtns()
         end)
 
 	--guide
-	local fight = md:getInstance("Fight")
+	local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	local gid, lid = fight:getCurGroupAndLevel()
 	if gid == 0 and lid == 0 then 
 		btnStop:setVisible(false)
