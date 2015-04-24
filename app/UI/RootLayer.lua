@@ -35,7 +35,7 @@ function RootLayer:switchLayer(event)
     local layerCls   = event.layerCls
     local properties = event.properties
 
-    if loadingType == "fight" or loadingType == "home" 
+    if loadingType == "fight" or loadingType == "home"
          or loadingType == "home_first" then 
         self.waitLayerCls        = layerCls
         self.waitLayerProperties = properties

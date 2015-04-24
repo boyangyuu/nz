@@ -7,7 +7,7 @@ function StartLayer:ctor()
 	self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
-    self:playEnterSound()
+    
 end
 
 function StartLayer:loadCCS()
@@ -184,13 +184,14 @@ function StartLayer:switchSound()
 end
 
 function StartLayer:onEnter()
-    --music 
-    self:playBgMusic() 
-    
     --set sound
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
+
+    --music 
+    self:playEnterSound()
+    self:playBgMusic() 
 
     --init daily login
     self:initDailyLogin() 
