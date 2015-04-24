@@ -130,7 +130,15 @@ function MyApp:createGameStateFile()
                                         },
                         },
                         awardedIds = {
-                        }
+                        },
+
+                        parts = {
+                            --{weaponid = 9,
+                            --part = 3, 
+                            --}，
+                        },
+
+                        weaponExpNum = 0,
             }, 
             inlay = {
                         bags = {}, --{inlayid = 1,ownednum = 1}
@@ -153,7 +161,7 @@ function MyApp:createGameStateFile()
             weaponsuipian = {},
 
             money = 2000000,
-            diamond = 10000,
+            diamond = 0,
             
             --开启的关卡
             currentlevel =  {
