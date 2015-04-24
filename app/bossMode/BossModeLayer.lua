@@ -171,7 +171,7 @@ function BossModeLayer:refreshContent()
     end
 
     --lingjian
-    local alreadyGet = self.weaponListModel:getAlreadyGetParts(weaponId)
+    local alreadyGet = self.bossModeModel:getAlreadyWave(self.choseChapter)
     for k,v in pairs(self.partsImg) do
     	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..k..".png")
     	dump(k)
