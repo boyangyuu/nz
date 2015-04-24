@@ -14,7 +14,7 @@ end
 
 function FightModePutongView:refreshUI()
 	
-end
+end   
 
 function FightModePutongView:onFightStart(event)
 	

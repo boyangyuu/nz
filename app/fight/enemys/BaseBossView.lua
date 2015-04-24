@@ -107,13 +107,13 @@ function BaseBossView:refreshBlood(event)
     	end	
 	end
 
-    if isIncrease then 
-	    bloodDown:setScaleX(nodeScale)
-	    transition.scaleTo(bloodUp, {scaleX = nodeScale, time = 0.1})
-	else
+ --    if isIncrease then 
+	--     bloodDown:setScaleX(nodeScale)
+	--     transition.scaleTo(bloodUp, {scaleX = nodeScale, time = 0.1})
+	-- else
 	    bloodUp:setScaleX(nodeScale)
 	    transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})			
-    end	    	
+    -- end	    	
 end
 
 function BaseBossView:playStand()
@@ -221,6 +221,7 @@ function BaseBossView:playMoveRightDaoFire()
 end
 
 function BaseBossView:platMoveDaoFireAction(isLeft)
+	print("platMoveDaoFireAction(isLeft)")
 	self:setPauseOtherAnim(true)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
@@ -229,31 +230,36 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 	local bound = self.armature:getBoundingBox() 
 	local pos = self:getPosInMapBg()
 	local disOut = isLeft and  -bound.width or 1560
-	local time = math.abs(posOri.x - disOut) / speed
+	local time1 = math.abs(posOri.x - disOut) / speed
+	print("向左/右出发", time1)
 	local desPos = cc.p(disOut, posOri.y)
-	local actionOut = cc.MoveTo:create(time, desPos)
+	local actionOut = cc.MoveTo:create(time1, desPos)
 
 	--到右屏幕 (isLeft)
 	local desPosRight = cc.p(1560 + bound.width, posOri.y)
-	local time = math.abs(1560 + bound.width) / speed
-	local actionScreen1 = cc.MoveTo:create(time, desPosRight)
+	local time2 = math.abs(1560 + bound.width) / speed
+	print("1560 + bound.width", 1560 + bound.width)
+	print("到右屏幕", time2)
+	local actionScreen1 = cc.MoveTo:create(time2, desPosRight)
 
 	--到左屏幕 (not isLeft)
 	local desPosLeft = cc.p(- bound.width - 200, posOri.y)
-	local time = math.abs(1560 + bound.width) / speed	
-	local actionScreen2 = cc.MoveTo:create(time, desPosLeft)
+	local time3 = math.abs(1560 + bound.width) / speed	
+	print("到左屏幕", time3)
+	local actionScreen2 = cc.MoveTo:create(time3, desPosLeft)
 
 	--返回
 	local fromPos = isLeft and desPosRight or desPosLeft
-	local time = math.abs(posOri.x - fromPos.x) / speed
-	local actionBack = cc.MoveTo:create(time, posOri)
+	
+	local time4 = math.abs(posOri.x - fromPos.x) / speed
+	local actionBack = cc.MoveTo:create(time4, posOri)
 	local seq = nil
+	print("返回", time)
 
 	--出发之前
 	local callfuncBeforeOut = function ()
 		print("callfuncBeforeOut")
 		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
-		
 		self:setUnhurted(true)
 	end
 	local beforeOutCall = cc.CallFunc:create(callfuncBeforeOut)
@@ -401,7 +407,9 @@ end
 
 function BaseBossView:zhaohuan(index)
 	local name     = "enemys"..index
-	if self.zhaohuans[name] then return end
+	if self.zhaohuans[name] then 
+		return 
+	end
 
 	self.zhaohuans[name] = true
 	local waveData = self.config[name]

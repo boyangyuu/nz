@@ -132,13 +132,6 @@ function MyApp:createGameStateFile()
                         awardedIds = {
                         },
 
-                        parts = {
-                            --{weaponid = 9,
-                            --part = 3, 
-                            --}，
-                        },
-
-                        weaponExpNum = 0,
             }, 
             inlay = {
                         bags = {}, --{inlayid = 1,ownednum = 1}
@@ -168,6 +161,13 @@ function MyApp:createGameStateFile()
                         group = 3,
                         level = 6,
             },
+
+            bossmodelevel = {
+                --{chapterId = 1,
+                --waveNum = 3, 
+                --}，
+            },
+
             user = {
                 level = 1,
                 fightedGroupId = 0, --打过的最远的关卡groupId
