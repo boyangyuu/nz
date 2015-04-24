@@ -44,8 +44,8 @@ function Fight:beginFight()
 end
 
 function Fight:refreshData(properties)
-    self.groupId = properties.groupId
-    self.levelId = properties.levelId   
+    self.groupId   = properties.groupId
+    self.levelId   = properties.levelId   
 
     --init inatance
     self:cleanModels()
@@ -57,7 +57,7 @@ function Fight:refreshData(properties)
     self.inlay      = self.hero:getFightInlay()
 
     local levelModel = md:getInstance("LevelDetailModel")
-    self.isJujiFight = levelModel:isJujiFight(self.groupId,self.levelId)
+    self.isJujiFight = levelModel:isJujiFight(self.groupId, self.levelId)
     self.goldValue = 0.0
     self.result = nil
     self.resultData = {}
@@ -73,7 +73,6 @@ function Fight:refreshUm()
 
     --任务统计
     local levelInfo = self:getLevelInfo()
-    print(" um:startLevel(levelInfo)", levelInfo)
     um:startLevel(levelInfo)
 end
 
@@ -100,6 +99,10 @@ function Fight:refreshUmFightTimesEvent()
     local levelInfo = self:getLevelInfo()
     umData[levelInfo] = str
     um:event("关卡次数情况", umData)        
+end
+
+function Fight:refreshUmBossFightTimesEvent()
+    
 end
 
 function Fight:willStartFight()
@@ -143,10 +146,7 @@ function Fight:endFightWin()
 
     --level
     local levelMapModel = md:getInstance("LevelMapModel")
-    local userModel = md:getInstance("UserModel")
     levelMapModel:levelPass(self.groupId, self.levelId)
-    userModel:getUserLevel(self.groupId, self.levelId)
-        
 end
 
 function Fight:endFightFail()
@@ -331,7 +331,6 @@ end
 
 function Fight:clearFightData()
     self.inlayModel:removeAllInlay()
-         
 end
 
 function Fight:cleanModels()

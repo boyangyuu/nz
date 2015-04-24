@@ -63,7 +63,8 @@ function GunHelpLayer:onShow(event)
     self.node:moveTo(1.0, x, y)
 
     --pause
-    local fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:pauseFight(true)    
 end
 
@@ -73,7 +74,8 @@ function GunHelpLayer:onClickGet()
     self.fightGun:changeHelpGun(self.gunId)
 
     --pause
-    local fight = md:getInstance("Fight")
+    local fightFactory =    md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:pauseFight(false)
 
     if self.gunId == 8 then

@@ -73,7 +73,8 @@ function Hero:initGuns()
 
     --ju
     local levelModel = md:getInstance("LevelDetailModel")
-    local fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local gid,lid = fight:getCurGroupAndLevel()
     local isJuLevel = levelModel:isJujiFight(gid,lid)
     if isJuLevel then 
@@ -320,7 +321,8 @@ function Hero:helpFullHp()
     if self.isHelped then return end 
     self.isHelped = true
     self.isPause = true
-    local fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:stopFire()
 
     --pop
@@ -343,7 +345,8 @@ function Hero:onBuyFullHp()
     self.isPause = false
 
     print("立即回复生命 function Hero:onBuyFullHp()")
-    local fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:pauseFight(false)
 
     self:setFullHp()
@@ -353,7 +356,6 @@ function Hero:onBuyFullHp()
     fightProp:refreshData()
 
     --um
-    local fight = md:getInstance("Fight")
     local levelInfo = fight:getLevelInfo()    
     local umData = {}
     umData[levelInfo] = "满血"
@@ -365,7 +367,8 @@ function Hero:onDenyFullHp()
     self.isPause = false
 
     print("立即回复生命 function Hero:onDenyFullHp()")
-    local fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:pauseFight(false)
 
     local defence   = md:getInstance("Defence")

@@ -36,13 +36,12 @@ function EnemyManager:doBuffAll_increaseHp(buffData)
 
 	local enemys = self:getEnemysByBuff(name)
 	for i,enemy in ipairs(enemys) do
-		local enemyModel =  enemy:getEnemyModel()
+		local enemyModel = enemy:getEnemyModel()
 		local maxhp      = enemyModel:getMaxHp()
 		local value      = maxhp * value
 		if not enemyModel:isDead() then 
 			enemyModel:increaseHp(value)
 			enemy:playBuff(name)
-			local name = enemy:getNickname() 
 		end
 	end
 end

@@ -34,7 +34,8 @@ function FightPausePopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			--获得当前关卡id
-			local fight  = md:getInstance("Fight")
+		    local fightFactory = md:getInstance("FightFactory")
+		    local fight = fightFactory:getFight()
 	        local groupid,levelid = fight:getCurGroupAndLevel()
 	        local levelInfo = groupid.."-"..levelid
 	        print("levelInfo ",levelInfo)
@@ -109,7 +110,8 @@ function FightPausePopup:closePopup()
 end
 
 function FightPausePopup:onEnter()
-	local fight = md:getInstance("Fight")
+	local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	fight:pauseFight(true)
 end
 
