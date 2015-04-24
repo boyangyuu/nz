@@ -122,8 +122,6 @@ function LevelMapModel:levelPass(groupId,levelId)
 	elseif isOpenNext then
 		if self:isExistNextLevel(groupId, levelId) then
 			local nextgroup,nextlevel = self:getNextGroupAndLevel(groupId, levelId)
-			-- print("nextgroup",nextgroup)
-			-- print("nextlevel",nextlevel)	
 
 			--save user level
 			local levelDetailModel = md:getInstance("LevelDetailModel")

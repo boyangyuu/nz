@@ -48,7 +48,8 @@ end
 function HomeBarLayer:popUpNextLevel(properties)
     if properties.isPopupNext then
         local levelMapModel = md:getInstance("LevelMapModel")
-        local fightModel = md:getInstance("Fight")
+        local fightFactory =     md:getInstance("FightFactory")
+        local fightModel = fightFactory:getFight()        
         local curGroup, curLevel = fightModel:getCurGroupAndLevel()
         local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
         ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
@@ -216,7 +217,8 @@ function HomeBarLayer:homeBarAction()
 end
 
 function HomeBarLayer:onEnter()
-    local fight = md:getInstance("Fight")
+    local fightFactory =   md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local levelModel = md:getInstance("LevelMapModel")
     local gid, lid  = levelModel:getConfig()
     if lid == 2 and gid == 1 then 

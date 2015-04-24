@@ -18,7 +18,7 @@ modelClasses["DailyLoginModel"]     = import("..dailyLogin.DailyLoginModel")
 modelClasses["BossModeModel"]       = import("..bossMode.BossModeModel")
 
 --fight
-modelClasses["Fight"]               = import("..fight.Fight")
+modelClasses["FightFactory"]        = import("..fight.fightTypes.FightFactory")
 modelClasses["FightInlay"]          = import("..fight.FightInlay")
 modelClasses["FightGun"]            = import("..fight.Gun.FightGun")
 modelClasses["FightProp"]           = import("..fight.FightProp")

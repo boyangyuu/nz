@@ -50,7 +50,8 @@ function Defence:setIsDefending(isDefending_)
 end
 
 function Defence:refreshHp()
-	local fight = md:getInstance("Fight")
+	local fightFactory =  md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	local gid, lid = fight:getCurGroupAndLevel()
 	local isGuide = gid == 0 and lid == 0 
 	local hp = isGuide and 1000 or define.kDefenceHp
@@ -113,7 +114,8 @@ function Defence:startDefence()
 	self:dispatchEvent({name = Defence.DEFENCE_SWITCH_EVENT, isDefend = true})
 
     --um
-    local fight = md:getInstance("Fight")
+    local fightFactory =   md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local levelInfo = fight:getLevelInfo()
     assert(levelInfo, "levelInfo is nil")
     local umData = {}

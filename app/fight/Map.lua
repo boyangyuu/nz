@@ -25,12 +25,13 @@ function Map:ctor()
     Map.super.ctor(self)
     self.isJuAble = true
     self.isOpenJu_ = false
+    local fightFactory  = md:getInstance("FightFactory")
+    self.fight 		 = fightFactory:getFight()
     self:setCurWaveConfig()
 end
 
 function Map:setCurWaveConfig()
 	local fightConfigs  = md:getInstance("FightConfigs")
-	local fight = md:getInstance("Fight")
 	local waveConfig = fightConfigs:getWaveConfig()
 	self.curWaveCfg = waveConfig
 end
@@ -45,8 +46,7 @@ function Map:setIsOpenJu(isOpenJu_)
 		self:dispatchEvent({name = Map.GUN_OPEN_JU_EVENT})	
 	else
 		self:dispatchEvent({name = Map.GUN_CLOSE_JU_EVENT})
-		local fight = md:getInstance("Fight")
-		fight:dispatchEvent({name = fight.FIGHT_RESUMEPOS_EVENT})
+		self.fight:dispatchEvent({name = self.fight.FIGHT_RESUMEPOS_EVENT})
 	end
 end
 
@@ -63,26 +63,24 @@ function Map:getIsJuAble()
 end
 
 function Map:getIsJuMap()
-	local fight 	 = md:getInstance("Fight")
 	local levelModel = md:getInstance("LevelDetailModel")
-    local gid,lid 	 = fight:getCurGroupAndLevel()
+    local gid,lid 	 = self.fight:getCurGroupAndLevel()
     local isju 	     = levelModel:isJujiFight(gid,lid) 
     return isju
 end
 
 function Map:changeJuStatus()
 	self.isJu = not self.isJu
-	local fight = md:getInstance("Fight")
 	local data = {gunView = not self.isJu, btnLei = not self.isJu, 
 			label_leiNum = not self.isJu }
-	fight:dispatchEvent({name = fight.CONTROL_SET_EVENT,comps = data})
+	self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = data})
 end
 
 function Map:playEffect(name)
 	if name == "shake" then
-		print("function Map:playEffect(name)")
 		self:dispatchEvent({name = Map.EFFECT_SHAKE_EVENT})
 	else
+
 	end
 end
 

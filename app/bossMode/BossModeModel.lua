@@ -29,7 +29,7 @@ function BossModeModel:checkNext(choseChapter)
 	else
 		return false
 	end
-end
+end 
 
 function BossModeModel:refreshInfo()
 	self:dispatchEvent({name = BossModeModel.REFRESH_BOSSLAYER_EVENT})

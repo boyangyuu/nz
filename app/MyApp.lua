@@ -137,8 +137,6 @@ function MyApp:createGameStateFile()
                             --part = 3, 
                             --}，
                         },
-
-                        weaponExpNum = 0,
             }, 
             inlay = {
                         bags = {}, --{inlayid = 1,ownednum = 1}

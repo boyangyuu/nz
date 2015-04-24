@@ -209,7 +209,8 @@ function GunView:canShot()
 	if self.gun:getCurBulletNum() == 1 then 
 		self:stopFire()
 		self:playReload()
-		local fight = md:getInstance("Fight")
+		local fightFactory = md:getInstance("FightFactory")
+   	 	local fight = fightFactory:getFight()
 		fight:dispatchEvent({name = fight.GUN_RELOAD_EVENT})
 		return true 
 	end

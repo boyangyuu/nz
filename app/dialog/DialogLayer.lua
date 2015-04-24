@@ -63,7 +63,8 @@ function DialogLayer:finishDialog()
 end
 
 function DialogLayer:refreshUI()
-	local fight  = md:getInstance("Fight") 	
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()	
 	local groupId = fight:getGroupId()
 	local levelId = fight:getLevelId()
 	local appear  = self.dialog:getAppearType() 
