@@ -320,4 +320,14 @@ function WeaponListModel:isPartsExist(weaponId)
 	return false
 end
 
+function WeaponListModel:getAlreadyGetParts(weaponId)
+	local data = getUserData()
+	for k,v in pairs(data.weapons.parts) do
+		if v.weaponid == weaponId then
+			return v.part
+		end
+	end
+	return 0
+end
+
 return WeaponListModel
