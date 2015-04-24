@@ -15,7 +15,8 @@ function Dialog:check(appear, callfunc)
 	assert(appear, "appearType is nil")
 	self.callfunc   = callfunc
 	self.appearType = appear
-	local fight  = md:getInstance("Fight") 	
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	local groupId = fight:getGroupId()
 	local levelId = fight:getLevelId()
 	local config = DialogConfigs.getConfig(groupId,levelId,appear)
@@ -32,7 +33,8 @@ function Dialog:getAppearType()
 end
 
 function Dialog:getDialogNum()
-	local fight  = md:getInstance("Fight") 	
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()	
 	local groupId = fight:getGroupId()
 	local levelId = fight:getLevelId()
 	local appear  = self:getAppearType()

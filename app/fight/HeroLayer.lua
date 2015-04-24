@@ -9,7 +9,6 @@
 local scheduler = require("framework.scheduler")
 local Actor 	= import(".Actor")
 local Hero 		= import(".Hero")
-local Fight 	= import(".Fight")
 
 --import view
 local DefenceView = import(".skills.DefenceView")

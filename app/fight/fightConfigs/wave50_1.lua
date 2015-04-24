@@ -1,4 +1,4 @@
-local BaseWave = import("..BaseWave")
+local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {

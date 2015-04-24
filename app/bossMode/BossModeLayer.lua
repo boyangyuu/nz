@@ -206,15 +206,14 @@ function BossModeLayer:onClickBtnPre()
 end
 
 function BossModeLayer:onClickBtnStart()
+	ui:changeLayer("FightPlayer", { groupId = 50,
+		levelId = 1, fightType = "boss"})	
 
+	ui:closePopup("BossModeLayer")
 end
 
 function BossModeLayer:onClickBtnGet()
-
-	--todo
-	self.weaponListModel:setWeaponPart(9,5)
+	
 end
-
-
 
 return BossModeLayer

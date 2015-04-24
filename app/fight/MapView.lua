@@ -8,7 +8,6 @@ desc：
 ]]
 
 local Hero 			= import(".Hero")
-local Fight         = import(".Fight")
 local Actor 		= import(".Actor")
 local EnemyFactroy	= import(".EnemyFactroy")
 local MapAnimView  	= import(".MapAnimView")
@@ -35,7 +34,8 @@ local kNotFleshEnemyTypes = {
 function MapView:ctor()
 	--instance
 	self.hero 			= md:getInstance("Hero")
-	self.fight			= md:getInstance("Fight")
+    local fightFactory  = md:getInstance("FightFactory")
+    self.fight 			= fightFactory:getFight()
 	self.mapModel 		= md:getInstance("Map")
 	self.enemys 		= {}
 	self.missileNum     = 0

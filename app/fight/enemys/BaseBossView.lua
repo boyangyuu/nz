@@ -78,9 +78,12 @@ function BaseBossView:refreshBlood(event)
 	if persent < define.kGuideActiveJijia then self:checkGuide1() end
 
 	--init
+	local isIncrease = event.name == Actor.HP_INCREASE_EVENT
 	for i=1, kBloodMaxN do
 		local node = cc.uiloader:seekNodeByName(self.blood, "blood" .. i)
 		node:setVisible(false)
+    	local up   = cc.uiloader:seekNodeByName(node, "bloodUp")
+    	local down = cc.uiloader:seekNodeByName(node, "bloodDown")	
 	end
 
 	--data
@@ -96,10 +99,15 @@ function BaseBossView:refreshBlood(event)
 		if i == showNum then 
 	    	bloodUp    = cc.uiloader:seekNodeByName(node, "bloodUp")
 	    	bloodDown  = cc.uiloader:seekNodeByName(node, "bloodDown")			
+    	else
+    		up   = cc.uiloader:seekNodeByName(node, "bloodUp")
+    		down = cc.uiloader:seekNodeByName(node, "bloodDown")	
+    		up:setScaleX(1.0)
+    		down:setScaleX(1.0)
     	end	
 	end
 
-    if event.name == Actor.HP_INCREASE_EVENT  then 
+    if isIncrease then 
 	    bloodDown:setScaleX(nodeScale)
 	    transition.scaleTo(bloodUp, {scaleX = nodeScale, time = 0.1})
 	else
@@ -213,6 +221,7 @@ function BaseBossView:playMoveRightDaoFire()
 end
 
 function BaseBossView:platMoveDaoFireAction(isLeft)
+	self:setPauseOtherAnim(true)
 	local posOri = cc.p(self:getPositionX(), self:getPositionY())
 	local speed = 1000.0
 
@@ -242,8 +251,9 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 
 	--出发之前
 	local callfuncBeforeOut = function ()
+		print("callfuncBeforeOut")
 		self.armature:getAnimation():play("moveleft" , -1, 1) --todo改为move
-		self:setPauseOtherAnim(true)
+		
 		self:setUnhurted(true)
 	end
 	local beforeOutCall = cc.CallFunc:create(callfuncBeforeOut)
@@ -264,6 +274,7 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 
 	--回去之后
 	local callfuncAfterBack = function ()
+		print("callfuncAfterBack")
 		self:setPauseOtherAnim(false)
 		self:setUnhurted(false)
 	end	
@@ -547,25 +558,6 @@ function BaseBossView:onHitted(targetData)
 	self:checkSkill(destDemage)
 	
 	self:playHittedEffect()
-	-- --red
-	-- if self.isRed then return end
-	-- local function callfunc()
-	-- 	if self.isRed then 
-	-- 		-- print("回复")
-	-- 		self.armature:setColor(cc.c3b(255,255,255))
-			
-	-- 	end
-	-- end
-
-	-- local function callfuncRestore()
-	-- 	self.isRed = false
-	-- end
-
-	-- -- print("变红")
-	-- self.isRed = true
-	-- self.armature:setColor(cc.c3b(255,50,5))
-	-- self:performWithDelay(callfunc, 20/60)
-	-- self:performWithDelay(callfuncRestore, 60/60)
 end
 
 function BaseBossView:initBody()
@@ -609,7 +601,6 @@ function BaseBossView:getRange(rectName)
 		local weakData = self.weakNode[rectName]
 		assert(weakData, "weakData is nil" .. rectName) 
 		isValid = weakData["valid"]
-		-- print("isValid", isValid)
 	end
 	return range, isValid
 end
@@ -624,7 +615,8 @@ end
 
 function BaseBossView:checkGuide1()
 	local guide = md:getInstance("Guide")
-	local fight = md:getInstance("Fight")
+	local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	local gid = fight:getGroupId()
 	local lid = fight:getLevelId()	
 	local isGuideLevel = gid == 0 and lid == 0
@@ -633,7 +625,8 @@ function BaseBossView:checkGuide1()
 		local isWillGuide = guide:check("fight01_jijia")
 		if isWillGuide then
 			self.isGuidedJijia = true
-			local fight = md:getInstance("Fight")
+			local fightFactory = md:getInstance("FightFactory")
+		    local fight = fightFactory:getFight()
 			fight:stopFire()	
 
 			--show jijia

@@ -17,7 +17,8 @@ function FightResultModel:getRewardFall(grade)
 	local lockTable = {}
 	local itemsTable = {}
 	local config = getConfig("config/inlayfall.json")
-	local fightModel = md:getInstance("Fight")
+    local fightFactory =    md:getInstance("FightFactory")
+    local fightModel  = fightFactory:getFight()
 	local levelDetailModel = md:getInstance("LevelDetailModel")
 	local weaponListModel = md:getInstance("WeaponListModel")
 	local curGroup, curLevel = fightModel:getCurGroupAndLevel()

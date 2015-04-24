@@ -16,7 +16,8 @@ function FightResultFailPopup:onEnter()
     self:initGuide()
 
     local guide = md:getInstance("Guide")
-    local fight = md:getInstance("Fight")
+    local fightFactory =    md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local groupId,levelId = fight:getCurGroupAndLevel()
     local isWillGuide =  groupId == 1 and levelId == 4
     if isWillGuide then guide:check("fightRelive") end
@@ -85,7 +86,8 @@ end
 
 function FightResultFailPopup:onClickBackHome()
     local buyModel = md:getInstance("BuyModel")
-    local fight  = md:getInstance("Fight")
+    local fightFactory =     md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:doGiveUp()
 
     local groupId,levelId = fight:getCurGroupAndLevel()
@@ -103,14 +105,16 @@ function FightResultFailPopup:onClickBackHome()
 end
 
 function FightResultFailPopup:payReliveDone()
-    local fight = md:getInstance("Fight")
+    local fightFactory =    md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     fight:doRelive()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
 end
 
 function FightResultFailPopup:initGuide()
-    local fight = md:getInstance("Fight")
+    local fightFactory =    md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local guide = md:getInstance("Guide")
     local groupId,levelId = fight:getCurGroupAndLevel()
     local isGuided        = guide:isDone("fightRelive")

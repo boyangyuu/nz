@@ -1,7 +1,7 @@
 
 --[[--
 
-â€œç»‘åŒªâ€çš„è§†å›¾
+¡°°ó·Ë¡±µÄÊÓÍ¼
 1. 
 2. 
 ]]
@@ -42,7 +42,7 @@ function TFQiuEnemyView:playEnter(direct)
     end
     self:setPositionX(srcPosX)
 
-    --è—èº«å¤„
+    --²ØÉí´¦
     self:playMoveToNext()
 end
 
@@ -52,7 +52,7 @@ function TFQiuEnemyView:playMoveToNext()
     local data    = self.posDatas[self.posIndex]
     local direct  = self.posDatas["direct"]
     if data == nil then 
-        print("ç¦»å¼€")
+        print("Àë¿ª")
         self:exit()
         return
     end 
@@ -120,7 +120,7 @@ function TFQiuEnemyView:onTao()
     local fightMode = md:getInstance("FightMode")
     fightMode:dispatchEvent({name = fightMode.FightMODE_TAOFAN_TAO_EVENT})
     
-    --è¦æ»å å¦åˆ™å¯èƒ½ä¼šå…ˆèµ¢
+    --ÒªÖÍºó ·ñÔò¿ÉÄÜ»áÏÈÓ®
     self:setWillRemoved()
 end
 
@@ -160,7 +160,7 @@ function TFQiuEnemyView:playSan()
     end
 
     local seq = cc.Sequence:create(action, 
-        cc.CallFunc:create(handler(self, self.playMoveToNext)))    
+        cc.CallFunc:create(callfunc))    
     self:runAction(seq)
 
     --play

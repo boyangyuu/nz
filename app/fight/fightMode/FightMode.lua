@@ -15,6 +15,8 @@ FightMode.kModeTypes = {
 
 function FightMode:ctor(properties)
 	FightMode.super.ctor(self, properties)
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight = fightFactory:getFight()	
 end
 
 function FightMode:getModeConfig()
@@ -26,6 +28,9 @@ function FightMode:getModeConfig()
 end
 
 function FightMode:willFail(failData)
+	--result
+	if self.fight:getResult() then return end
+
 	local type = failData.type
 	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
 
@@ -40,15 +45,20 @@ function FightMode:willFail(failData)
 	end
 
     --fight
-    local fight = md:getInstance("Fight")
-    fight:willFail(2.0)
+
+    self.fight:willFail(2.0)
 end
 
 function FightMode:willWin(winData)
+	--result
+	if self.fight:getResult() then return end
+
 	local type = winData.type
 	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
-    local fight = md:getInstance("Fight")
-    scheduler.performWithDelayGlobal(handler(fight, fight.willWin), 2.0)    	
+	
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight = fightFactory:getFight()
+    scheduler.performWithDelayGlobal(handler(self.fight, self.fight.willWin), 2.0)    	
 end
 
 return FightMode

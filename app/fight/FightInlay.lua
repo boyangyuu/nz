@@ -31,7 +31,8 @@ function FightInlay:refreshUm()
         local name   = record["describe2"]
 
         --um
-        local fight = md:getInstance("Fight")
+        local fightFactory = md:getInstance("FightFactory")
+        local fight = fightFactory:getFight()
         assert(levelInfo, "levelInfo is nil")
         local levelInfo = fight:getLevelInfo()  
         local umData = {}
@@ -62,7 +63,8 @@ function FightInlay:activeGoldOnCost()
     self:setIsNativeGold(true)  
 
     --um
-    local fight = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
     local levelInfo = fight:getLevelInfo()
     assert(levelInfo, "levelInfo is nil") 
     local umData = {}

@@ -10,7 +10,8 @@ end)
 function Attackable:ctor(property)
 	--instance
     self.hero   = md:getInstance("Hero")	
-    self.fight  = md:getInstance("Fight")
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight  = fightFactory:getFight()
     self.enemyM = md:getInstance("EnemyManager") 
 	self.enemy  = self:getModel(property)
 	self.property = property
@@ -496,7 +497,8 @@ function Attackable:playKill(event)
 end
 
 function Attackable:onEnter()
-	local fight = md:getInstance("Fight")
+	local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
 	local isPause = fight:isPauseFight()
 	if isPause then 
 		self:setPause({isPause = true}) 

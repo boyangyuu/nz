@@ -21,8 +21,6 @@ function LevelDetailModel:initConfigTable()
 end
 
 function LevelDetailModel:getConfig(groupId,levelId)
-	-- print("groupId", groupId)
-	-- print("levelId", levelId)
 	assert(groupId and levelId, "param is nil")
 	local config = nil
 	local records = getRecordFromTable(self.config, "groupId", groupId)
@@ -46,8 +44,16 @@ function LevelDetailModel:getCurLevelType(groupId,levelId)
 end
 
 function LevelDetailModel:isJujiFight(groupId,levelId)
-	assert(groupId and levelId, "groupId or levelId is nil")
-    return self:getCurLevelType(groupId,levelId) == "juji"
+	local fightFactory = md:getInstance("FightFactory")
+	local fightType    = fightFactory:getFightType()
+	if fightType == "level" then 
+		assert(groupId and levelId, "groupId or levelId is nil")
+		return self:getCurLevelType(groupId,levelId) == "juji" 
+	elseif fightType == "boss" then 
+		return false
+	elseif fightType == "juji" then 
+		return true
+	end
 end
 
 function LevelDetailModel:getNeedSuipianNum(weaponId)
