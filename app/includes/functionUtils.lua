@@ -175,11 +175,30 @@ end
 
 
 function isDefendMM()
+    local expectYear = 2016
+    local expectMonth = 4
+    local expectDay = 25
+
     local time = os.time()
-    print("time", time)
     local year  = tonumber(os.date("%Y", time))
     local month = tonumber(os.date("%m", time))
     local day   = tonumber(os.date("%d", time))
-    local isDefend =  year <= 2015 and month <= 4 and day <= 16 
-    return isDefend
+
+    if year < expectYear then
+        return true
+    elseif year > expectYear then
+        return false
+    else
+        if month < expectMonth then
+            return true
+        elseif month > expectMonth then
+            return false
+        else 
+            if day <= expectDay then
+                return true
+            else
+                return false
+            end
+        end
+    end
 end
