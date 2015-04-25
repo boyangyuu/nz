@@ -209,7 +209,11 @@ function StartLayer:onClickBegan()
 
         local userModel = md:getInstance("UserModel")
         local isDone = userModel:getUserLevel() >= 4
-        ui:changeLayer("HomeBarLayer",{groupId = groupId,popWeaponGift = isDone, 
+        local fightData = {
+            fightType = "levelFight",
+            groupId = groupId,
+        }
+        ui:changeLayer("HomeBarLayer",{fightData = fightData, popWeaponGift = isDone, 
             loadingType = "home_first"})
     else
         --clear data

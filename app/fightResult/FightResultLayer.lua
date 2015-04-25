@@ -5,7 +5,9 @@ end)
 
 function FightResultLayer:ctor(properties)
     local fightFactory    =  md:getInstance("FightFactory")
-    self.fightModel 	  = fightFactory:getFight()
+    local fightModel 	  = fightFactory:getFight()
+    self.fightData        = fightModel:getResultData()
+    assert(self.fightData["fightType"] == "lvelFight")
 	self.weaponListModel  = md:getInstance("WeaponListModel")
 	self.guide      	  = md:getInstance("Guide")
 	self.levelDetailModel = md:getInstance("LevelDetailModel")
@@ -29,12 +31,11 @@ function FightResultLayer:ctor(properties)
 
     self.itemsTable = {}
  
-    local fightResult = self.fightModel:getResultData()
-    dump(fightResult)
-    local UserModel = md:getInstance("UserModel")
-    UserModel:addMoney(fightResult["goldNum"])
-    um:bonusVirtualCurrency(fightResult["goldNum"],4)
-    self.grade = self.fightResultModel:getGrade(fightResult["hpPercent"])
+    local userModel = md:getInstance("UserModel")
+    userModel:addMoney(self.fightData["goldNum"])
+    um:bonusVirtualCurrency(self.fightData["goldNum"],4)
+    local hpPercent = self.fightData["hpPercent"]
+    self.grade = self.fightResultModel:getGrade(hpPercent)
 
 	self:setDailyPopup()
 	self:onSentAward()
@@ -162,7 +163,7 @@ function FightResultLayer:initUI()
 		self.btnback:setButtonEnabled(true)
 
 
-	    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+	    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
 		local levelInfo = curGroup.."_"..curLevel
 		local umData = {}
 	    umData[levelInfo] = "快速镶嵌展示"
@@ -211,7 +212,7 @@ function FightResultLayer:initUI()
 end
 
 function FightResultLayer:onClickBtnNext()
-    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
 
     --todo
     if curLevel == 6 and curGroup < 4 then
@@ -225,12 +226,12 @@ function FightResultLayer:onClickBtnNext()
 	local isPopupNext = isGuidedWeapon and true or false
 
 	if isCurLevel then
-		ui:changeLayer("HomeBarLayer",{groupId = curGroup,isPopupNext = isPopupNext})
+		ui:changeLayer("HomeBarLayer",{fightData = self.fightData, isPopupNext = isPopupNext})
 	elseif curGroup == 0 then
-		ui:changeLayer("HomeBarLayer",{groupId = 1})
+		ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
 	else
 		print("1-4.1 OR 通关")
-    	ui:changeLayer("HomeBarLayer",{groupId = curGroup})
+    	ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
     end
 end
 
@@ -339,7 +340,7 @@ end
 
 function FightResultLayer:quickInlay()
 	self.inlayModel:equipAllInlays()
-    local curGroup, curLevel = self.fightModel:getCurGroupAndLevel()
+    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
 	local levelInfo = curGroup.."_"..curLevel
 	local umData = {}
     umData[levelInfo] = "快速镶嵌点击"
@@ -399,12 +400,13 @@ end
 function FightResultLayer:initGuide()
     local isDone = self.guide:isDone("afterfight01")
     if isDone then return end
+    local fightData = {groupId = 1, fightType = "levelFight"}
     self.guide:addClickListener({
         id = "afterfight01_jixu",
         groupId = "afterfight01",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			ui:changeLayer("HomeBarLayer",{groupId = 1,isPopupNext = isPopupNext})   
+			ui:changeLayer("HomeBarLayer",{fightData = fightData, isPopupNext = isPopupNext})   
         end
      })    	
 end
