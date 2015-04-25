@@ -163,9 +163,8 @@ function MyApp:createGameStateFile()
             },
 
             bossmodelevel = {
-                --{chapterId = 1,
-                --waveNum = 3, 
-                --}，
+                chapterId = 1,
+                waveNum = 0, 
             },
 
             user = {

@@ -29,4 +29,8 @@ function BossModeConfigs.getConfig(chapterId)
 	return chapterConfig
 end
 
+function BossModeConfigs.getConfigs()
+	return BossConfigs
+end
+
 return BossModeConfigs

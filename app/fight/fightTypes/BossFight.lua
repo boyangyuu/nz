@@ -12,7 +12,7 @@ function BossFight:startFightResult()
 end
 
 function BossFight:getResultData()
-	local resultData = BossFight.super.getResultData(self)
+	local resultData = {}
 	resultData["fightType"] = self:getFightType()
 	resultData["chapterId"] = 1 
 	resultData["groupId"]   = self:getGroupId()
