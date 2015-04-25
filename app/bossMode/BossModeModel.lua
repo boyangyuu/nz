@@ -6,7 +6,6 @@ BossModeModel.REFRESH_BOSSLAYER_EVENT = "REFRESH_BOSSLAYER_EVENT"
 
 function BossModeModel:ctor(properties)
 	BossModeModel.super.ctor(self, properties)
-
 	self.weaponListModel = md:getInstance("WeaponListModel")
 end
 

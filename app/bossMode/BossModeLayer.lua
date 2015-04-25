@@ -213,7 +213,9 @@ function BossModeLayer:onClickBtnStart()
 end
 
 function BossModeLayer:onClickBtnGet()
-	
+	ui:showPopup("commonPopup",
+			 {type = "style1",content = "您的武器零件还没凑齐喔"},
+			 {opacity = 100})
 end
 
 return BossModeLayer
