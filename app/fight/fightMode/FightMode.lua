@@ -11,6 +11,7 @@ FightMode.kModeTypes = {
 	renZhi  = "renZhi",
 	taoFan  = "taoFan",
 	puTong  = "puTong",
+	bossContest = "bossContest",
 }
 
 function FightMode:ctor(properties)

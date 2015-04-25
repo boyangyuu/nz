@@ -101,7 +101,6 @@ function DoctorEnemyView:playRun()
 end
 
 function DoctorEnemyView:playRunAction(direct)
-	print("function DoctorEnemyView:playRunLeft():")
 	local speed = define.kHushiSpeed
 	local time = define.kHushiWalkTime
 	local width = speed * time * self:getScale() * direct

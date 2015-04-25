@@ -7,7 +7,15 @@ function BossFight:ctor(properties)
 end
 
 function BossFight:startFightResult()
-    ui:showPopup("FightResultPopup",{},{anim = false})
+	local resultData = self:getResultData()
+    ui:changeLayer("HomeBarLayer",{fighResultData = resultData})
+end
+
+function BossFight:getResultData()
+	local resultData = BossFight.super.getResultData(self)
+	resultData["fightType"] = "bossFight"
+	resultData["chapterId"] = 1 
+	return resultData   
 end
 
 return BossFight

@@ -4,7 +4,7 @@ local BossModeLayer = class("BossModeLayer", function()
     return display.newLayer()
 end)
 
-function BossModeLayer:ctor()
+function BossModeLayer:ctor(properties)
 	self:loadCCS()
 	self:initUI()
 
@@ -14,7 +14,11 @@ function BossModeLayer:ctor()
 	cc.EventProxy.new(self.bossModeModel , self)
      :addEventListener(self.bossModeModel.REFRESH_BOSSLAYER_EVENT, handler(self, self.refreshUI))
 
+
 	self.choseChapter = 1
+	if properties.chapterId then
+		self.choseChapter = properties.chapterId
+	end
 	self.toward = nil
 	self:refreshUI()
 end
@@ -95,7 +99,7 @@ function BossModeLayer:initUI()
 end
 
 function BossModeLayer:refreshUI(event)
-		self.btnPre:setVisible(true)
+	self.btnPre:setVisible(true)
 	self.btnNext:setVisible(true)
 	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
 		self.btnPre:setVisible(false)
@@ -171,7 +175,7 @@ function BossModeLayer:refreshContent()
     end
 
     --lingjian
-    local alreadyGet = self.weaponListModel:getAlreadyGetParts(weaponId)
+    local alreadyGet = self.bossModeModel:getAlreadyWave(self.choseChapter)
     for k,v in pairs(self.partsImg) do
     	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..k..".png")
     	dump(k)
@@ -213,7 +217,9 @@ function BossModeLayer:onClickBtnStart()
 end
 
 function BossModeLayer:onClickBtnGet()
-	
+	ui:showPopup("commonPopup",
+			 {type = "style1",content = "您的武器零件还没凑齐喔"},
+			 {opacity = 100})
 end
 
 return BossModeLayer

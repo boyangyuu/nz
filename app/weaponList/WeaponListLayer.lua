@@ -245,7 +245,7 @@ end
 function WeaponListLayer:onCancelWeaponGift()
     if self.userModel:getDiamond() >= self.weaponRecord["cost"] then
         ui:showPopup("commonPopup",
-            {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."钻石升级购买该武器？",
+            {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."宝石购买该武器？",
              callfuncCofirm =  handler(self, self.onBuyWeaponSucc),
              callfuncClose  =  handler(self, self.closePopup)},
              { opacity = 155})

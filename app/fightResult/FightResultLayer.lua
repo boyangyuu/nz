@@ -30,7 +30,6 @@ function FightResultLayer:ctor(properties)
     self.itemsTable = {}
  
     local fightResult = self.fightModel:getResultData()
-    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!!!")
     dump(fightResult)
     local UserModel = md:getInstance("UserModel")
     UserModel:addMoney(fightResult["goldNum"])
@@ -197,7 +196,7 @@ function FightResultLayer:initUI()
             return true
         elseif event.name=='ended' then
 	        ui:showPopup("commonPopup",
-				 {type = "style1", content = "是否花费10颗钻石翻开剩余卡牌",
+				 {type = "style1", content = "是否花费10颗宝石翻开剩余卡牌",
 				 callfuncCofirm =  handler(self, self.onCofirmLeftCard)},
 				 {opacity = 155})
         end

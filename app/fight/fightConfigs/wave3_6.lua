@@ -350,6 +350,10 @@ local enemys = {
 	--烟雾导弹           type = "dao_wu",
 	{id=22,image="daodan03",demage=10,hp=5000, weak1=1},--打击者金武平均伤害5558
 
+	--boss召唤医疗兵      --type = "yiliao",
+	{id=26,image="yiliaob",demage=12,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
+
 }
 
 	--boss的关卡配置
@@ -384,11 +388,15 @@ local bosses = {
 			--zhaohuan = {0.95,0.65,0.35},                                        --召唤 
 
 			moveLeftFire = {
-				0.90, 0.60, 0.30, 
+				0.98,0.97,0.96,0.95,0.94,0.93,0.92,0.91,0.90, 0.60, 0.30, 
 			},
 			-- moveRightFire = {
 			-- 	0.75, 0.35,
 			-- },
+
+			zhaohuan = { 0.99,                       --召唤医疗
+			},
+
 
 			daoDan1 = {                                            --两发导弹
 				0.99, 0.75, 0.45, 
@@ -425,18 +433,49 @@ local bosses = {
 			},							
 		},
 		
+		enemys1 = {                                                   --第1波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {800,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {350,},
+				property = { 
+					placeName = "place4" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+
+
+
 		daoDan1 = {
 		    id = 20,                                 --boss导弹
 			type = "missile", 
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-225, -165), cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300), cc.p(-75, -265),cc.p(0, -200), 
-						cc.p(75, -165), cc.p(150, -100), cc.p(225, -165),cc.p(300, -200), cc.p(225, -265),         
+						cc.p(-225, -165), cc.p(-300, -200), cc.p(-225, -265),          
 			}, 
 			offsetPoses = { 
-						cc.p(-225, -165), cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300), cc.p(-75, -265),cc.p(0, -200), 
-						cc.p(75, -165), cc.p(150, -100), cc.p(225, -165),cc.p(300, -200), cc.p(225, -265),  
+						cc.p(-225, -165), cc.p(-300, -200), cc.p(-225, -265),   
 			},
 		},
 		daoDan2 = {
@@ -445,14 +484,10 @@ local bosses = {
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300), cc.p(-75, -265),cc.p(0, -200), 
-						cc.p(75, -165), cc.p(150, -100), cc.p(225, -165),cc.p(300, -200),
-						 --cc.p(-0, -250), cc.p(-0, -250), cc.p(-0, -250),           
+						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300),           
 			}, 
 			offsetPoses = { 
-						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300), cc.p(-75, -265),cc.p(0, -200), 
-						cc.p(75, -165), cc.p(150, -100), cc.p(225, -165),cc.p(300, -200),
-						 --cc.p(-0, -250), cc.p(-0, -250), cc.p(-0, -250),  
+						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300),  
 			},
 		},
 		daoDan3 = {
@@ -461,14 +496,10 @@ local bosses = {
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300), cc.p(-75, -265),cc.p(0, -200), 
-						cc.p(75, -165), cc.p(150, -100), cc.p(225, -165),cc.p(300, -200),
-						 --cc.p(-0, -250), cc.p(-0, -250), cc.p(-0, -250),           
+						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300),           
 			}, 
 			offsetPoses = { 
-						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300), cc.p(-75, -265),cc.p(0, -200), 
-						cc.p(75, -165), cc.p(150, -100), cc.p(225, -165),cc.p(300, -200),
-						 --cc.p(-0, -250), cc.p(-0, -250), cc.p(-0, -250),  
+						cc.p(-300, -200), cc.p(-225, -265), cc.p(-150,-300),  
 			},
 		},
 
