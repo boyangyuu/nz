@@ -11,10 +11,10 @@ function BossFight:startFightResult()
     ui:changeLayer("HomeBarLayer",{fighResultData = resultData})
 end
 
-function Fight:getResultData()
+function BossFight:getResultData()
 	local resultData = BossFight.super.getResultData(self)
 	resultData["fightType"] = "bossFight"
-	resultData["bossFightId"] = 1 
+	resultData["chapterId"] = 1 
 	return resultData   
 end
 

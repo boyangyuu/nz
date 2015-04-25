@@ -4,7 +4,7 @@ local BossModeLayer = class("BossModeLayer", function()
     return display.newLayer()
 end)
 
-function BossModeLayer:ctor()
+function BossModeLayer:ctor(properties)
 	self:loadCCS()
 	self:initUI()
 
@@ -14,7 +14,11 @@ function BossModeLayer:ctor()
 	cc.EventProxy.new(self.bossModeModel , self)
      :addEventListener(self.bossModeModel.REFRESH_BOSSLAYER_EVENT, handler(self, self.refreshUI))
 
+
 	self.choseChapter = 1
+	if properties.chapterId then
+		self.choseChapter = properties.chapterId
+	end
 	self.toward = nil
 	self:refreshUI()
 end
@@ -95,7 +99,7 @@ function BossModeLayer:initUI()
 end
 
 function BossModeLayer:refreshUI(event)
-		self.btnPre:setVisible(true)
+	self.btnPre:setVisible(true)
 	self.btnNext:setVisible(true)
 	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
 		self.btnPre:setVisible(false)

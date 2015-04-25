@@ -18,8 +18,6 @@ function LevelMapLayer:ctor(properties)
     self:initChooseLayer()
     self:refreshLevelLayer(self.curGroupId)
 
-    cc.EventProxy.new(self.FightResultModel, self)
-        :addEventListener("POPUP_LEVELDETAIL", handler(self, self.popupLevelDetail))
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.initBgLayer))
     cc.EventProxy.new(self.LevelMapModel, self)
@@ -282,12 +280,6 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             end
         end)
     end
-end
-
-function LevelMapLayer:popupLevelDetail(event)
-    groupId = event.gid
-    levelId = event.lid
-    ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
 end
 
 function LevelMapLayer:bgAction()    
