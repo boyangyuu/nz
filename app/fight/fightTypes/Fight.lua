@@ -178,7 +178,6 @@ end
 
 function Fight:doWin()
     assert(self.result)
-    self:setFightResult()
     self:endFightWin()  
 end
 
@@ -199,6 +198,7 @@ function Fight:doGiveUp()
 
     local failCause = self:getFailCause()
     um:failLevel(levelInfo, failCause)
+
 end
 
 function Fight:doRelive()
@@ -349,15 +349,17 @@ function Fight:getGoldValue()
     return self.goldValue
 end
 
-function Fight:setFightResult()
+function Fight:getResultData()
+    local resultData = {}
     local hpPercent = self.hero:getHp() / self.hero:getMaxHp()
     -- is gold weapon
     local inlay = md:getInstance("FightInlay")
     local isGold = inlay:getIsNativeGold()
     local hpPercent = isGold and 1.00 or hpPercent
 
-    self.resultData["goldNum"]   = self.goldValue
-    self.resultData["hpPercent"] = hpPercent
+    resultData["goldNum"]   = self.goldValue
+    resultData["hpPercent"] = hpPercent    
+    return resultData
 end
 
 function Fight:getResult()
@@ -368,8 +370,5 @@ function Fight:setResult(result)
     self.result = result
 end
 
-function Fight:getResultData()
-    return self.resultData
-end
 
 return Fight

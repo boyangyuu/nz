@@ -326,7 +326,7 @@ local bosses = {
 	{
 		award = 25000,         ----boss产出金币数量
 		image = "boss02_1",    --蓝boss基础上改的肌肉boss
-		hp = 250000,
+		hp = 150000,
 		demage = 3, 			--这个是没用的 需要告诉俊松
 		fireRate = 120,               --普攻频率
 		fireCd = 3,                     --普攻cd
