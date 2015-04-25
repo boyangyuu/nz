@@ -8,14 +8,17 @@ end
 
 function BossFight:startFightResult()
 	local resultData = self:getResultData()
+	dump(resultData)
     ui:changeLayer("HomeBarLayer",{fightData = resultData})
 end
 
 function BossFight:getResultData()
+	local levelMapModel = md:getInstance("LevelMapModel")
+    local groupId, levelId = levelMapModel:getConfig()
 	local resultData = {}
 	resultData["fightType"] = self:getFightType()
 	resultData["chapterId"] = 1 
-	resultData["groupId"]   = self:getGroupId()
+	resultData["groupId"]   = groupId
 	resultData["levelId"]   = self:getLevelId()
 	return resultData   
 end
