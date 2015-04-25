@@ -107,13 +107,13 @@ function BaseBossView:refreshBlood(event)
     	end	
 	end
 
- --    if isIncrease then 
-	--     bloodDown:setScaleX(nodeScale)
-	--     transition.scaleTo(bloodUp, {scaleX = nodeScale, time = 0.1})
-	-- else
+    if isIncrease then 
+	    bloodDown:setScaleX(nodeScale)
+	    transition.scaleTo(bloodUp, {scaleX = nodeScale, time = 0.1})
+	else
 	    bloodUp:setScaleX(nodeScale)
 	    transition.scaleTo(bloodDown, {scaleX = nodeScale, time = 0.1})			
-    -- end	    	
+    end	    	
 end
 
 function BaseBossView:playStand()
@@ -228,6 +228,8 @@ function BaseBossView:platMoveDaoFireAction(isLeft)
 
 	--向左/右出发
 	local bound = self.armature:getBoundingBox() 
+	if bound.width > 1500 then bound.width = 1500 end
+
 	local pos = self:getPosInMapBg()
 	local disOut = isLeft and  -bound.width or 1560
 	local time1 = math.abs(posOri.x - disOut) / speed

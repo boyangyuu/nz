@@ -17,6 +17,7 @@ function BossFight:getResultData()
 	resultData["chapterId"] = 1 
 	resultData["groupId"]   = self:getGroupId()
 	resultData["levelId"]   = self:getLevelId()
+	resultData["result"]    = self:getResult()
 	return resultData   
 end
 

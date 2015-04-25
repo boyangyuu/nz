@@ -64,7 +64,6 @@ function HomeBarLayer:mapPopUp(event)
         elseif self.properties.fightType == "bossFight" then
             ui:showPopup("BossModeLayer", {chapterId = self.properties.chapterId})
         end  
-
         self:initDailyLogin()
     end
     
