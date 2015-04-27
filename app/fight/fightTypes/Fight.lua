@@ -358,11 +358,11 @@ function Fight:setResult(result)
 end
 
 function Fight:getResultData()
-    assert(false, "must implement")
+    -- assert(false, "must implement")
 end
 
 function Fight:getFightType()
-    assert(false, "must implement")
+    -- assert(false, "must implement")
 end
 
 

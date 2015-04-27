@@ -98,6 +98,12 @@ function FightResultFailPopup:onClickBackHome()
         ui:changeLayer("HomeBarLayer",{fightData = result})
         return
     end
+    if fightType == "bossFight" then
+        local levelMapModel = md:getInstance("LevelMapModel")
+        local groupId, levelId = levelMapModel:getConfig()
+        result["groupId"] = groupId
+        ui:changeLayer("HomeBarLayer",{fightData = result})
+    end
     if isBoughtWeapon then
         ui:changeLayer("HomeBarLayer",{fightData = result})
     else
