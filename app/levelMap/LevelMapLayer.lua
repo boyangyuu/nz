@@ -201,7 +201,9 @@ function LevelMapLayer:initChooseLayer()
         event.target:runAction(cc.ScaleTo:create(0.1, 1))
     end)
     :onButtonClicked(function( event )
-        ui:showPopup("BossModeLayer")
+        local bossModeModel = md:getInstance("BossModeModel")
+        local chapterId = bossModeModel:getAlreadyChapter()
+        ui:showPopup("BossModeLayer",{chapterId = chapterId})
     end)
 end
 

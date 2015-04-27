@@ -166,7 +166,6 @@ function BossModeLayer:refreshContent()
     self.name:setString(self.choseInfo["name"])
     self.desc:setString(self.choseInfo["desc"])
 
-
     --btn
     self.btnGet:setButtonEnabled(true)
     local isGetWeapon = self.weaponListModel:isWeaponExist(self.choseInfo["weaponId"])
@@ -178,7 +177,6 @@ function BossModeLayer:refreshContent()
     local alreadyGet = self.bossModeModel:getAlreadyWave(self.choseChapter)
     for k,v in pairs(self.partsImg) do
     	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..k..".png")
-    	dump(k)
     	lingjianImg:setColor(cc.c3b(100, 100, 100))
     	if k <= alreadyGet then
 			lingjianImg:setColor(cc.c3b(255, 255, 255))
@@ -210,6 +208,13 @@ function BossModeLayer:onClickBtnPre()
 end
 
 function BossModeLayer:onClickBtnStart()
+	local data = getUserData()
+	if self.choseChapter > data.bossmodelevel.chapterId then
+		ui:showPopup("commonPopup",
+			 {type = "style1",content = "未开启，请通关前面章节！"},
+			 {opacity = 100})
+		return
+	end
 	ui:changeLayer("FightPlayer", { groupId = 50,
 		levelId = 1, fightType = "boss"})	
 

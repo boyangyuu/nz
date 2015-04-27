@@ -36,15 +36,16 @@ function FightPausePopup:initButtons()
 			--获得当前关卡id
 		    local fightFactory = md:getInstance("FightFactory")
 		    local fight = fightFactory:getFight()
-	        local groupid,levelid = fight:getCurGroupAndLevel()
-	        local levelInfo = groupid.."-"..levelid
-	        print("levelInfo ",levelInfo)
-
+	        local groupId,levelId = fight:getCurGroupAndLevel()
+	        local fightType = fight:getFightType()
+	        local fightData = {groupId = groupId, fightType = fightType}
+	        local levelInfo = groupId.."-"..levelId
+	        
 	        --um
 	        local umData = {}
 	    	umData[levelInfo] = "中途退出"
 	    	um:event("关卡完成情况", umData)
-			ui:changeLayer("HomeBarLayer",{groupId = groupid})
+			ui:changeLayer("HomeBarLayer",{fightData = fightData})
 			print("中途退出")
 
 			--pauseModel

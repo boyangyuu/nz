@@ -20,7 +20,6 @@ function Attackable:ctor(property)
 	self.isRed = false
 	self.isPauseOtherAnim = false
 	self.isWillDie = false
-	self.isWillRemove = false
 	self.isFlying = false
 
 	self:initArmature()
@@ -234,16 +233,10 @@ function Attackable:setDeadDone()
 	self.enemyM:removeEnemy(self)
 end
 
-function Attackable:getWillRemoved()
-	return self.isWillRemove
-end
-
 function Attackable:setWillRemoved(time)
 	self:setPauseOtherAnim(true)
 	local function callFunc()
-		self.isWillRemove = true
-		--remove enemy
-		self.enemyM:removeEnemy(self)		
+		self.enemyM:removeEnemy(self)			
 	end 
 	if time then 
 		self:performWithDelay(callFunc, time)
@@ -513,8 +506,6 @@ function Attackable:onEnter()
 
 	--add enemy
 	self.enemyM:addEnemy(self)
-
-	-- self:playBuff()
 end
 
 function Attackable:onCleanup()

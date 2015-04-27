@@ -349,25 +349,20 @@ function Fight:getGoldValue()
     return self.goldValue
 end
 
-function Fight:getResultData()
-    local resultData = {}
-    local hpPercent = self.hero:getHp() / self.hero:getMaxHp()
-    -- is gold weapon
-    local inlay = md:getInstance("FightInlay")
-    local isGold = inlay:getIsNativeGold()
-    local hpPercent = isGold and 1.00 or hpPercent
-
-    resultData["goldNum"]   = self.goldValue
-    resultData["hpPercent"] = hpPercent    
-    return resultData
-end
-
 function Fight:getResult()
     return self.result
 end
 
 function Fight:setResult(result)
     self.result = result
+end
+
+function Fight:getResultData()
+    -- assert(false, "must implement")
+end
+
+function Fight:getFightType()
+    -- assert(false, "must implement")
 end
 
 

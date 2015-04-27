@@ -17,11 +17,17 @@ end
 
 function EnemyManager:removeEnemy(enemy)
 	for i,v in ipairs(self.enemys) do
-		if v == enemy then
+		if v == enemy then 
 			local name = enemy:getNickname() 
 			table.remove(self.enemys, i)
+			enemy:removeFromParent()
+			enemy = nil
 		end
 	end
+end
+
+function EnemyManager:getAllEnemys()
+	return self.enemys
 end
 
 function EnemyManager:getEnemysByBuff(name)

@@ -36,13 +36,14 @@ function MapView:ctor()
 	self.hero 			= md:getInstance("Hero")
     local fightFactory  = md:getInstance("FightFactory")
     self.fight 			= fightFactory:getFight()
-	self.mapModel 			= md:getInstance("Map")
-	self.enemys 		= {}
+	self.mapModel 		= md:getInstance("Map")
 	self.missileNum     = 0
 	self.cacheEnemys    = {}
 	self.isPause 		= false
 	self.isZooming 		= false
 	self.fightDescModel = md:getInstance("FightDescModel")
+	self.enemyM         = md:getInstance("EnemyManager")
+
 	--ccs
 	self:loadCCS()
 
@@ -284,7 +285,8 @@ end
 
 function MapView:getLeftEnemyNum()
 	local num = 0
-	for i,enemyView in ipairs(self.enemys) do
+	local enemys = self.enemyM:getAllEnemys()
+	for i,enemyView in ipairs(enemys) do
 		local type = enemyView:getEnemyType()
 		if type ~= "missile" and type ~= "renzhi" 
 			and type ~= "jinbi" and type ~= "dao_wang"
@@ -313,7 +315,6 @@ function MapView:addEnemy(property)
 	
 	--create
 	local enemyView = EnemyFactroy.createEnemy(property)
-	self.enemys[#self.enemys + 1] = enemyView
 
 	--pos
 	local offsetX = property["offsetX"]
@@ -368,7 +369,8 @@ end
 
 function MapView:getSortedObjects()
 	local objects = {}
-	for i,v in ipairs(self.enemys) do
+	local enemys = self.enemyM:getAllEnemys()	
+	for i,v in ipairs(enemys) do
 		local object = {
 			posy  		= v:getPositionY(),
 			appearorder = v:getProperty()["order"] or 0,
@@ -469,7 +471,8 @@ end
 --fight
 function MapView:tick(dt)
 	-- 检查enemy的状态
-	for i,enemy in ipairs(self.enemys) do
+	local enemys = self.enemyM:getAllEnemys()
+	for i,enemy in ipairs(enemys) do
 		if enemy and enemy:getDeadDone() then
 			--pop gold
 			local boundingbox = enemy:getCascadeBoundingBox()
@@ -478,15 +481,6 @@ function MapView:tick(dt)
 			local enemyModel = enemy:getEnemyModel()
 			local award = enemyModel:getAward()
 			self:doKillAward(pos, award)
-			--remove
-			enemy:removeFromParent()
-			table.remove(self.enemys, i)
-			enemy = nil
-		elseif enemy and enemy:getWillRemoved() then
-			--remove
-			enemy:removeFromParent()			
-			table.remove(self.enemys, i)
-			enemy = nil
 		end
 	end
 
@@ -514,7 +508,8 @@ end
 ]]
 function MapView:getTargetDatas(focusNode)
 	local targetDatas = {}
-	for i,enemy in ipairs(self.enemys) do
+	local enemys = self.enemyM:getAllEnemys()
+	for i,enemy in ipairs(enemys) do
 		local isCovered = self:isCovered(enemy, focusNode)
 		if not isCovered then 
 			local isHited, targetData = enemy:getTargetData(focusNode)
@@ -561,7 +556,8 @@ end
 function MapView:getEnemysInRect(rect)
 	-- dump(rect, "rect") 
 	local enemys = {}
-	for i,enemy in ipairs(self.enemys) do
+	local allEnemys = self.enemyM:getAllEnemys()
+	for i,enemy in ipairs(allEnemys) do
 		if enemy then
 			local armature = enemy:getEnemyArmature()
 			local box = armature:getBoundingBox()
@@ -605,7 +601,6 @@ function MapView:callfuncAddMissile(event)
 	local pWorld = property.srcPos
 	local pos = self.map:convertToNodeSpace(pWorld)
 	enemyView:setPosition(pos)
-	self.enemys[#self.enemys + 1] = enemyView
 
 	--zorder
 	self.missileNum = self.missileNum + 1
