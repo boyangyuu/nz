@@ -205,7 +205,7 @@ function LevelMapLayer:initChooseLayer()
         local bossModeModel = md:getInstance("BossModeModel")
         local chapterId = bossModeModel:getAlreadyChapter()
         ui:showPopup("BossModeLayer",{chapterId = chapterId})
-        -- ui:showPopup("BossResultLayer",{waveIndex = 2},{anim = false})
+        -- ui:showPopup("BossResultLayer",{},{anim = false})
     end)
 end
 

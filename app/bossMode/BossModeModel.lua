@@ -81,6 +81,11 @@ function BossModeModel:getChapterNum()
 	return num
 end
 
+function BossModeModel:getChapterModel(chapterId,waveIndex)
+	local info = self:getInfo(chapterId)
+	return info["reward"..waveIndex]
+end
+
 function BossModeModel:refreshInfo()
 	self:dispatchEvent({name = BossModeModel.REFRESH_BOSSLAYER_EVENT})
 end

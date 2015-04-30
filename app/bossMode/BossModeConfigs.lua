@@ -7,6 +7,11 @@ BossConfigs["chapter1"] = {
 	desc = "决战吧！@小骚辉",
 	weaponId = 9,
 	weaponSkill = "多重攻击",
+	reward1 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward2 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward3 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward4 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward5 = {part = 1,healthBag = 2,lei = 3,money = 65199},
 }
 
 BossConfigs["chapter2"] = {
@@ -14,6 +19,11 @@ BossConfigs["chapter2"] = {
 	desc = "决战吧！@大骚辉",
 	weaponId = 10,
 	weaponSkill = "多重攻击",
+	reward1 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward2 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward3 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward4 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward5 = {part = 1,healthBag = 2,lei = 3,money = 65199},
 }
 
 BossConfigs["chapter3"] = {
@@ -21,6 +31,11 @@ BossConfigs["chapter3"] = {
 	desc = "决战吧！@老骚辉",
 	weaponId = 11,
 	weaponSkill = "多重攻击",
+	reward1 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward2 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward3 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward4 = {part = 1,healthBag = 2,lei = 3,money = 65199},
+	reward5 = {part = 1,healthBag = 2,lei = 3,money = 65199},
 }
  
 function BossModeConfigs.getConfig(chapterId)
