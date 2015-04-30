@@ -106,7 +106,7 @@ end
 function DailyLoginModel:isToday()
 	local DailyInfo = self:getDailyInfo()
 	dump(DailyInfo)
-	if DailyInfo["logintime"] == self.date then
+	if os.date("%x",DailyInfo["logintime"]) == os.date("%x",self.date) then
 		return true
 	else
 		return false
@@ -124,7 +124,7 @@ end
 
 function DailyLoginModel:setLoginState()
 	local DailyInfo = self:getDailyInfo()
-	if DailyInfo["logintime"] == self.date then
+	if os.date("%x",DailyInfo["logintime"]) == os.date("%x",self.date) then
 		if DailyInfo["isGet"] then
 
 		else
