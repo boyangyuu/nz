@@ -76,7 +76,8 @@ function HomeBarLayer:initDailyLogin()
     local guide = md:getInstance("Guide")
     local userModel = md:getInstance("UserModel")
     local isDone = userModel:getUserLevel() >= 4
-    if dailyLoginModel:checkPop() and isDone then
+    -- if dailyLoginModel:checkPop() and isDone then
+    if dailyLoginModel:checkPop()  then
         ui:showPopup("DailyLoginLayer", {})
         dailyLoginModel:donotPop()
     end

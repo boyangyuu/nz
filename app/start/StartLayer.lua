@@ -7,7 +7,8 @@ function StartLayer:ctor()
 	self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
-    
+
+    self.dailyLoginModel = md:getInstance("DailyLoginModel")
 end
 
 function StartLayer:loadCCS()
@@ -193,8 +194,6 @@ function StartLayer:onEnter()
     self:playEnterSound()
     self:playBgMusic() 
 
-    --init daily login
-    self:initDailyLogin() 
 end
 
 function StartLayer:onClickBegan()
@@ -215,6 +214,9 @@ function StartLayer:onClickBegan()
         }
         ui:changeLayer("HomeBarLayer",{fightData = fightData, popWeaponGift = isDone, 
             loadingType = "home_first"})
+        --init daily login
+        self:initDailyLogin() 
+
     else
         --clear data
         guide:clearData()
@@ -230,14 +232,17 @@ function StartLayer:isGuideDone()
 end
 
 function StartLayer:initDailyLogin()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-
-    local isToday = dailyLoginModel:isToday()
-    local isGet = dailyLoginModel:isGet()
+    local isToday = self.dailyLoginModel:isToday()
     if isToday  == false  then
-        dailyLoginModel:setGet(false)
+        self.dailyLoginModel:setGet(false)
+        self.dailyLoginModel:setTime()
     end
-    dailyLoginModel:setTime()
+
+    local isGet = self.dailyLoginModel:isGet()
+    local netState = network.getInternetConnectionStatus()
+    if isGet == false and netState ~=0 then
+        self.dailyLoginModel:setPopup()
+    end
 end
 
 return StartLayer
