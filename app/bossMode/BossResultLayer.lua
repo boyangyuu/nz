@@ -2,9 +2,9 @@ local BossResultLayer = class("BossResultLayer",function()
 	return display.newLayer()
 end)
 
-function BossResultLayer:ctor()
-	self.chapterIndex = 1
-	self.waveIndex = 2
+function BossResultLayer:ctor(properties)
+	self.chapterIndex = properties.chapterIndex
+	self.waveIndex = properties.waveIndex
 	self:loadCCS()
 	self:initUI()
 end
