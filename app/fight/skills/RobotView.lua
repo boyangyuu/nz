@@ -68,7 +68,7 @@ function RobotView:playStand()
 end
 
 function RobotView:playFire(event)
-	local soundSrc  = "res/Music/fight/m134fire.wav"
+	local soundSrc  = "res/Music/weapon/m134fire.wav"
 	self.audioId2 =  audio.playSound(soundSrc,false)	
 
 	if self.isFiring then return end
