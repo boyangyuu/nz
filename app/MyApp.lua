@@ -163,7 +163,7 @@ function MyApp:createGameStateFile()
             },
 
             bossmodelevel = {
-                chapterIndex = 1,
+                chapterIndex = 1, 
                 waveIndex = 0, 
             },
 

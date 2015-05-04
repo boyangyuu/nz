@@ -356,6 +356,10 @@ function Fight:setResult(result)
     self.result = result
 end
 
+function Fight:waveUpdate(nextWaveIndex, waveType)
+    assert(false, "must implement")
+end
+
 function Fight:getResultData()
     assert(false, "must implement")
 end
@@ -367,5 +371,6 @@ end
 function Fight:isJujiFight()
     assert(false, "must implement")
 end
+
 
 return Fight

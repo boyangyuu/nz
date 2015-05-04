@@ -32,4 +32,16 @@ function JujiFight:isJujiFight()
     return true
 end
 
+function JujiFight:waveUpdate(nextWaveIndex, waveType)
+    local fightDescModel = md:getInstance("FightDescModel")
+    -- if waveType == "boss" then 
+    --     fightDescModel:bossShow()
+    -- elseif waveType == "award" then  
+    --     fightDescModel:goldShow()
+    -- else 
+    --     fightDescModel:waveStart(nextWaveIndex)
+    -- end    
+end
+
+
 return JujiFight

@@ -42,7 +42,7 @@ function BossModeModel:setBossModeWave(chapterIndex,waveIndex)
 		data.bossmodelevel.waveIndex = waveIndex
 		self:setPartsComposition(chapterIndex)
 	end
-	dump(data.bossmodelevel)
+	-- dump(data.bossmodelevel)
 	setUserData(data)
 end
 
@@ -83,7 +83,9 @@ end
 
 function BossModeModel:getChapterModel(chapterId,waveIndex)
 	local info = self:getInfo(chapterId)
-	return info["reward"..waveIndex]
+	local data = info["reward"..waveIndex]
+	assert(data, "invalid param: chapterId:" .. chapterId .. "waveIndex: " ..waveIndex)
+	return data
 end
 
 function BossModeModel:refreshInfo()
