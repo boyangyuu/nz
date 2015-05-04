@@ -5,6 +5,7 @@ end)
 function BossResultLayer:ctor(properties)
 	self.chapterIndex = properties.chapterIndex
 	self.waveIndex = properties.waveIndex
+	self.properties = properties
 	self:loadCCS()
 	self:initUI()
 end
@@ -72,8 +73,12 @@ function BossResultLayer:initUI()
 end
 
 function BossResultLayer:onClickBtnGet()
-	print("aaa")
 	ui:closePopup("BossResultLayer")
+
+	--closefunc
+	if self.properties["closeFunc"] then 
+		self.properties["closeFunc"]()
+	end
 end
 
 return BossResultLayer

@@ -52,9 +52,6 @@ function FightModeBossContestView:onUpdateWave(event)
 	local actionScale2 = cc.ScaleTo:create(0.1, 1.0)
 	local seq = cc.Sequence:create(actionScale1, actionScale2) 
 	self.labelWave:runAction(seq)
-
-	--fight save
-	-- 等洞洞
 end
 
 function FightModeBossContestView:onFightPause(event)

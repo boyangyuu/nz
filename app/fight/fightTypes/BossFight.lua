@@ -10,9 +10,28 @@ function BossFight:ctor(properties)
 end
 
 function BossFight:startFightResult()
-	local resultData = self:getResultData()
-	-- dump(resultData)
-    ui:changeLayer("HomeBarLayer",{fightData = resultData})
+	--closeFunc
+	local function closeFunc()
+		local resultData = self:getResultData()
+	    ui:changeLayer("HomeBarLayer",{fightData = resultData})
+	end
+
+	--desc
+	local map = md:getInstance("Map")
+	local waveIndex = map:getWaveIndex()
+	local curWaveIndex = waveIndex - 1
+    local fightDescModel = md:getInstance("FightDescModel")
+    local data = {
+	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
+    	chapterIndex = self.chapterIndex,
+    	waveIndex    = curWaveIndex,
+    	closeFunc    = closeFunc,
+	}
+    fightDescModel:dispatchEvent(data)
+
+    --data
+	local bossModeModel = md:getInstance("BossModeModel")
+	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex)    
 end
 
 function BossFight:getResultData()
@@ -36,15 +55,29 @@ function BossFight:getFightType()
 end
 
 function BossFight:waveUpdate(nextWaveIndex, waveType)
+	if nextWaveIndex == 1 then return end
 	--award
+
 	local curWaveIndex = nextWaveIndex - 1
 	local bossModeModel = md:getInstance("BossModeModel")
 	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex)
 
 	--desc
+	local function closeFunc()
+		print("closeFunc!")
+	end
+
+	local map = md:getInstance("Map")
+	local waveIndex = map:getWaveIndex()
     local fightDescModel = md:getInstance("FightDescModel")
-    if nextWaveIndex == 1 then return end
-    fightDescModel:bossGift(self.chapterIndex, curWaveIndex)
+    local data = {
+	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
+    	chapterIndex = self.chapterIndex,
+    	waveIndex    = curWaveIndex,
+    	closeFunc    = closeFunc,
+	}
+
+    fightDescModel:dispatchEvent(data)
 end
 
 

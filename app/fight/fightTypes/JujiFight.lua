@@ -13,6 +13,8 @@ function JujiFight:startFightResult()
 	ui:changeLayer("FightPlayer", {fightData = resultData})	    
 end
 
+
+
 function JujiFight:getResultData()
 	-- local levelMapModel = md:getInstance("LevelMapModel")
     -- local groupId, levelId = levelMapModel:getConfig()
