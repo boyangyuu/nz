@@ -28,11 +28,6 @@ function FightDescModel:waveStart(waveNum) -- startWave
 	self:dispatchEvent({name = FightDescModel.WAVESTART_ANIM_EVENT,waveNum = waveNum})
 end
 
-function FightDescModel:bossGift(chapterIndex,waveIndex) -- startWave
-	self:dispatchEvent({name = FightDescModel.BOSSGIFT_ANIM_EVENT,
-		chapterIndex = chapterIndex,waveIndex = waveIndex})
-end
-
 --敌人简介
 function FightDescModel:showEnemyIntro(enemyId) -- showEnemyIntro
 	print("enemyId", enemyId)

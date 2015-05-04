@@ -31,7 +31,6 @@ function LevelFight:isJujiFight()
     local levelModel = md:getInstance("LevelDetailModel")
     local gid,lid    = self:getCurGroupAndLevel()
     local isju       = levelModel:isJujiFight(gid,lid) 
-    print("isju", isju)
     return isju 
 end
 

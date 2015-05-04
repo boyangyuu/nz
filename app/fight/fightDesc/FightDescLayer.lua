@@ -71,9 +71,10 @@ function FightDescLayer:onBossStart(event)
 end
 
 function FightDescLayer:onBossGift(event)
-    local chapterIndex = event.chapterIndex
-    local waveIndex = event.waveIndex
-    ui:showPopup("BossResultLayer",{chapterIndex = chapterIndex,waveIndex = waveIndex},
+    ui:showPopup("BossResultLayer",{
+        chapterIndex = event.chapterIndex,
+        waveIndex = event.waveIndex, 
+        closeFunc = event.closeFunc},
         {anim = false})
 end
 

@@ -20,6 +20,60 @@ local waves = {
 			},
 		},
 	},
+	{
+		waveType = "boss",                                      --强敌出现
+		enemys = {                                                                -- 1-6 boss
+			{
+				descId = "boss01_1", --简介
+				time = 3,	
+				num = 1,
+				pos = {500},
+				delay = {4},
+				property = { 
+					type = "boss",
+					placeName = "place1",
+					missileId = 20,            --BOSS导弹ID
+					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
+				},
+			},
+		},
+	},
+	{
+		waveType = "boss",                                      --强敌出现
+		enemys = {                                                                -- 1-6 boss
+			{
+				descId = "boss01_1", --简介
+				time = 3,	
+				num = 1,
+				pos = {500},
+				delay = {4},
+				property = { 
+					type = "boss",
+					placeName = "place1",
+					missileId = 20,            --BOSS导弹ID
+					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
+				},
+			},
+		},
+	},
+	{
+		waveType = "boss",                                      --强敌出现
+		enemys = {                                                                -- 1-6 boss
+			{
+				descId = "boss01_1", --简介
+				time = 3,	
+				num = 1,
+				pos = {500},
+				delay = {4},
+				property = { 
+					type = "boss",
+					placeName = "place1",
+					missileId = 20,            --BOSS导弹ID
+					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
+				},
+			},
+		},
+	},			
 	{	
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                                 -- 多足蜘蛛boss
@@ -382,10 +436,10 @@ function waveClass:ctor()
 	}
 
 	self.randomWaveOrders = {
-		{1, 2},
-		{2, 1},
-		{2, 1},
-		{2, 1},
+		{1, 2, 3, 4, 5},
+		{2, 1, 3, 4, 5},
+		{2, 1, 3, 4, 5},
+		{2, 1, 3, 4, 5},
 	}
 	self:randomWaves()
 end
