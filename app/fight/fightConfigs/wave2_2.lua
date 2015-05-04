@@ -406,7 +406,7 @@ local enemys = {
 
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=5,hp=880,
-	weak1=2, weak4=4},
+	weak1=4, weak4=4},
 
 
 	--飞机         type = "feiji" ,
