@@ -2,272 +2,272 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-	-- {
-	-- 	enemys = { 
-	-- 		{
-	-- 			descId = "yyc", --简介
-	-- 			time = 3,
-	-- 			num = 1,
-	-- 			pos = {555},
-	-- 			delay = {4},                            -- 吉普车
-	-- 			property = {
-	-- 				type = "jipu" ,
-	-- 				id = 12,
-	-- 				placeName = "place1",
-	-- 				missileId = 13,
-	-- 				missileType = "dao_wu",
-	-- 				missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-	-- 				startState = "enterleft",
-	-- 				lastTime = 60.0,		--持续时间			
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 10,
-	-- 			num = 3,
-	-- 			delay = {0,1.1,0.5},
-	-- 			pos = {400,680,960},
-	-- 			property = { 
-	-- 				placeName = "place3" ,
-	-- 				type = "jin",                  --盾
-	-- 				id = 8,
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 12,	
-	-- 			num = 5,
-	-- 			pos = {420,510,700,900,1050},
-	-- 			delay = {0.5,2,0,0.5,1.5},
-	-- 			property = {
-	-- 				placeName = "place4" ,         --普
-	-- 				startState = "rollright",
-	-- 				id = 1,
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 13,
-	-- 			num = 3,
-	-- 			delay = {0.1,0.5,1.2},
-	-- 			pos = {450,660,800},
-	-- 			property = { 
-	-- 				placeName = "place3" ,
-	-- 				startState = "rollleft",
-	-- 				id = 2,
-	-- 				type = "dao",
-	-- 				missileId = 3,
-	-- 				missileType = "lei",
-	-- 			},
-	-- 		},			
-	-- 		{
-	-- 			time = 14,
-	-- 			num = 3,
-	-- 			delay = {0.1,0.6,1},
-	-- 			pos = {250,460,600},
-	-- 			property = { 
-	-- 				placeName = "place2" ,
-	-- 				id = 5,
-	-- 				type = "dao",
-	-- 				missileId = 6,
-	-- 				missileType = "daodan",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 16,	
-	-- 			num = 5,
-	-- 			pos = {25,120,310,470,600},
-	-- 			delay = {0.1,0.6,1.5,1.8,0.8},
-	-- 			property = {
-	-- 				placeName = "place4" ,        
-	-- 				startState = "rollright",
-	-- 				id = 1,
-	-- 				startState = "san",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 18,
-	-- 			num = 3,
-	-- 			delay = {0,1.0,1.5},
-	-- 			pos = {250,410,510},
-	-- 			property = { 
-	-- 				placeName = "place2" ,
-	-- 				type = "dao",                              --导
-	-- 				id = 5,
-	-- 				missileId = 6,
-	-- 				missileType = "daodan",
-	-- 			},                                                          
-	-- 		},	
-	-- 		{
-	-- 			time = 20,
-	-- 			num = 3,
-	-- 			delay = {0,0.5,1},
-	-- 			pos = {300,370,440},
-	-- 			property = { 
-	-- 				placeName = "place3" ,
-	-- 				id = 1,
-	-- 				startState = "rollright",	
-	-- 			},                                                          
-	-- 		},	
-	-- 		{
-	-- 			time = 22,
-	-- 			num = 3,
-	-- 			delay = {0,0.7,1.4},
-	-- 			pos = {700,900,1100},
-	-- 			property = { 
-	-- 				placeName = "place3" ,
-	-- 				id = 1,
-	-- 				startState = "rollleft",	
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 24,
-	-- 			num = 2,
-	-- 			delay = {0,0.6},
-	-- 			pos = {380,560},
-	-- 			property = { 
-	-- 				placeName = "place4" ,
-	-- 				id = 2,
-	-- 				startState = "rollright",
-	-- 				type = "dao",
-	-- 				missileId = 3,
-	-- 				missileType = "lei",
-	-- 			},
-	-- 		},
-	-- 	},
-	-- },
+	{
+		enemys = { 
+			{
+				descId = "yyc", --简介
+				time = 3,
+				num = 1,
+				pos = {555},
+				delay = {4},                            -- 吉普车
+				property = {
+					type = "jipu" ,
+					id = 12,
+					placeName = "place1",
+					missileId = 13,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 60.0,		--持续时间			
+				},
+			},
+			{
+				time = 10,
+				num = 3,
+				delay = {0,1.1,0.5},
+				pos = {400,680,960},
+				property = { 
+					placeName = "place3" ,
+					type = "jin",                  --盾
+					id = 8,
+				},
+			},	
+			{
+				time = 12,	
+				num = 5,
+				pos = {420,510,700,900,1050},
+				delay = {0.5,2,0,0.5,1.5},
+				property = {
+					placeName = "place4" ,         --普
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 13,
+				num = 3,
+				delay = {0.1,0.5,1.2},
+				pos = {450,660,800},
+				property = { 
+					placeName = "place3" ,
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},			
+			{
+				time = 14,
+				num = 3,
+				delay = {0.1,0.6,1},
+				pos = {250,460,600},
+				property = { 
+					placeName = "place2" ,
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},
+			{
+				time = 16,	
+				num = 5,
+				pos = {25,120,310,470,600},
+				delay = {0.1,0.6,1.5,1.8,0.8},
+				property = {
+					placeName = "place4" ,        
+					startState = "rollright",
+					id = 1,
+					startState = "san",
+				},
+			},
+			{
+				time = 18,
+				num = 3,
+				delay = {0,1.0,1.5},
+				pos = {250,410,510},
+				property = { 
+					placeName = "place2" ,
+					type = "dao",                              --导
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},                                                          
+			},	
+			{
+				time = 20,
+				num = 3,
+				delay = {0,0.5,1},
+				pos = {300,370,440},
+				property = { 
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollright",	
+				},                                                          
+			},	
+			{
+				time = 22,
+				num = 3,
+				delay = {0,0.7,1.4},
+				pos = {700,900,1100},
+				property = { 
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollleft",	
+				},
+			},
+			{
+				time = 24,
+				num = 2,
+				delay = {0,0.6},
+				pos = {380,560},
+				property = { 
+					placeName = "place4" ,
+					id = 2,
+					startState = "rollright",
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+		},
+	},
 
-	-- {
-	-- 	enemys = {
-	-- 		{
-	-- 			time = 2,
-	-- 			num = 3,
-	-- 			delay = {0.5,0,1.2},
-	-- 			pos = {300,680,960},
-	-- 			property = { 
-	-- 				placeName = "place3" ,
-	-- 				type = "jin",                  --盾
-	-- 				id = 8,
-	-- 			},
-	-- 		},	
+	{
+		enemys = {
+			{
+				time = 2,
+				num = 3,
+				delay = {0.5,0,1.2},
+				pos = {300,680,960},
+				property = { 
+					placeName = "place3" ,
+					type = "jin",                  --盾
+					id = 8,
+				},
+			},	
 		    
-	-- 		{
-	-- 			time = 6,	
-	-- 			num = 5,
-	-- 			pos = {420,560,700,880,990},
-	-- 			delay = {1.4,0.6,0,1,2.1},
-	-- 			property = {
-	-- 				placeName = "place3" ,         --近
-	-- 				id = 7,
-	-- 				type = "jin",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 10,
-	-- 			num = 3,
-	-- 			delay = {0.5,0,1.3},
-	-- 			pos = {450,660,800},
-	-- 			property = { 
-	-- 				placeName = "place3" ,
-	-- 				type = "bao",                  --爆
-	-- 				id = 9,
-	-- 				startState = "san",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 12,
-	-- 			num = 5,
-	-- 			delay = {0.7,1.4,1.8, 0.1,0.8},
-	-- 			pos = {350,450,550,650,750},					
-	-- 			property = {
-	-- 				placeName = "place3" ,
-	-- 				id = 1,
-	-- 				startState = "rollright",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 14,
-	-- 			num = 1,
-	-- 			pos = {400},
-	-- 			delay = {0},                            -- 吉普车
-	-- 			property = {
-	-- 				type = "jipu" ,
-	-- 				id = 12,
-	-- 				placeName = "place1",
-	-- 				missileId = 13,
-	-- 				missileType = "dao_wu",
-	-- 				missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-	-- 				startState = "enterleft",
-	-- 				lastTime = 60.0,		--持续时间			
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 16,
-	-- 			num = 5,
-	-- 			delay = {0,0.7,1.4,1.8,0.5},
-	-- 			pos = {1000,900,800,700,600},					
-	-- 			property = {
-	-- 				placeName = "place4" ,
-	-- 				id = 1,
-	-- 				startState = "san",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 18,
-	-- 			num = 3,
-	-- 			delay = {0.2,1.0,1.8},
-	-- 			pos = {200,380,560},
-	-- 			property = { 
-	-- 				placeName = "place2" , 
-	-- 				type = "jin",                              --盾
-	-- 				id = 8,
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 22,	
-	-- 			num = 5,
-	-- 			pos = {25,120,310,470,600},
-	-- 			delay = {0.2,0.9,1.8,2.5,3.3},                  --近
-	-- 			property = {
-	-- 				placeName = "place2" ,
-	-- 				id = 7,
-	-- 				type = "jin",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 26,
-	-- 			num = 3,
-	-- 			delay = {0.1,0.9,1.7},
-	-- 			pos = {250,460,600},
-	-- 			property = { 
-	-- 				placeName = "place2" ,
-	-- 				type = "bao",                                --爆
-	-- 				id = 9,
-	-- 				startState = "san",
-	-- 			},
-	-- 		},
-	-- 		{
-	-- 			time = 28,
-	-- 			num = 5,
-	-- 			delay = {0.7,1.4,1.8, 0.1,0.8},
-	-- 			pos = {350,450,550,650,750},
-	-- 			property = {
-	-- 				placeName = "place3" ,
-	-- 				id = 1,
-	-- 				startState = "rollright",
-	-- 			},
-	-- 		},	
-	-- 		{
-	-- 			time = 30,
-	-- 			num = 5,
-	-- 			delay = {0,0.7,1.4,1.8,0.5},
-	-- 			pos = {1000,900,800,700,600},					
-	-- 			property = {
-	-- 				placeName = "place4" ,
-	-- 				id = 1,
-	-- 				startState = "rollleft",
-	-- 				startState = "san",
-	-- 			},
-	-- 		},	
-	-- 	},
-	-- },
+			{
+				time = 6,	
+				num = 5,
+				pos = {420,560,700,880,990},
+				delay = {1.4,0.6,0,1,2.1},
+				property = {
+					placeName = "place3" ,         --近
+					id = 7,
+					type = "jin",
+				},
+			},
+			{
+				time = 10,
+				num = 3,
+				delay = {0.5,0,1.3},
+				pos = {450,660,800},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",                  --爆
+					id = 9,
+					startState = "san",
+				},
+			},
+			{
+				time = 12,
+				num = 5,
+				delay = {0.7,1.4,1.8, 0.1,0.8},
+				pos = {350,450,550,650,750},					
+				property = {
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollright",
+				},
+			},
+			{
+				time = 14,
+				num = 1,
+				pos = {400},
+				delay = {0},                            -- 吉普车
+				property = {
+					type = "jipu" ,
+					id = 12,
+					placeName = "place1",
+					missileId = 13,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 60.0,		--持续时间			
+				},
+			},	
+			{
+				time = 16,
+				num = 5,
+				delay = {0,0.7,1.4,1.8,0.5},
+				pos = {1000,900,800,700,600},					
+				property = {
+					placeName = "place4" ,
+					id = 1,
+					startState = "san",
+				},
+			},
+			{
+				time = 18,
+				num = 3,
+				delay = {0.2,1.0,1.8},
+				pos = {200,380,560},
+				property = { 
+					placeName = "place2" , 
+					type = "jin",                              --盾
+					id = 8,
+				},
+			},
+			{
+				time = 22,	
+				num = 5,
+				pos = {25,120,310,470,600},
+				delay = {0.2,0.9,1.8,2.5,3.3},                  --近
+				property = {
+					placeName = "place2" ,
+					id = 7,
+					type = "jin",
+				},
+			},
+			{
+				time = 26,
+				num = 3,
+				delay = {0.1,0.9,1.7},
+				pos = {250,460,600},
+				property = { 
+					placeName = "place2" ,
+					type = "bao",                                --爆
+					id = 9,
+					startState = "san",
+				},
+			},
+			{
+				time = 28,
+				num = 5,
+				delay = {0.7,1.4,1.8, 0.1,0.8},
+				pos = {350,450,550,650,750},
+				property = {
+					placeName = "place3" ,
+					id = 1,
+					startState = "rollright",
+				},
+			},	
+			{
+				time = 30,
+				num = 5,
+				delay = {0,0.7,1.4,1.8,0.5},
+				pos = {1000,900,800,700,600},					
+				property = {
+					placeName = "place4" ,
+					id = 1,
+					startState = "rollleft",
+					startState = "san",
+				},
+			},	
+		},
+	},
 	{
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                              --冲锋铁球召唤医疗 CF boss
