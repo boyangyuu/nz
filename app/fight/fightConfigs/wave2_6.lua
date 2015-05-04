@@ -89,7 +89,7 @@ local waves = {
 	-- 			pos = {250,410,510},
 	-- 			property = { 
 	-- 				placeName = "place2" ,
-	-- 				type = "dao",      --导
+	-- 				type = "dao",                              --导
 	-- 				id = 5,
 	-- 				missileId = 6,
 	-- 				missileType = "daodan",
@@ -215,8 +215,8 @@ local waves = {
 	-- 			delay = {0.2,1.0,1.8},
 	-- 			pos = {200,380,560},
 	-- 			property = { 
-	-- 				placeName = "place2" ,
-	-- 				type = "jin",                      --盾
+	-- 				placeName = "place2" , 
+	-- 				type = "jin",                              --盾
 	-- 				id = 8,
 	-- 			},
 	-- 		},
@@ -224,7 +224,7 @@ local waves = {
 	-- 			time = 22,	
 	-- 			num = 5,
 	-- 			pos = {25,120,310,470,600},
-	-- 			delay = {0.2,0.9,1.8,2.5,3.3},              --近
+	-- 			delay = {0.2,0.9,1.8,2.5,3.3},                  --近
 	-- 			property = {
 	-- 				placeName = "place2" ,
 	-- 				id = 7,
@@ -270,19 +270,18 @@ local waves = {
 	-- },
 	{
 		waveType = "boss",                                      --强敌出现
-		enemys = {                                                 --boss
+		enemys = {                                              --冲锋铁球召唤医疗 CF boss
 			{
-				descId = "dzboss", --简介
+				descId = "boss02_1",
 				time = 3,	
 				num = 1,
-				pos = {500},
+				pos = {450},
 				delay = {4},
 				property = { 
-					type = "duozuBoss",
+					type = "chongBoss",
 					placeName = "place1",
-					wangId    = 19,        --网
-					missileId = 23,        --boss导弹
-					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
+					missileId = 19,                 --导弹id        
+					qiuId = 18,                   --铁球id
 					id = 1,
 				},
 			},		
@@ -293,7 +292,7 @@ local waves = {
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=20,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=2},
+	weak1=2, weak4=3},
 
 	--手雷兵      --type = "dao",
 	{id=2,image="shouleib",demage=0,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
@@ -323,169 +322,244 @@ local enemys = {
 	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
 	weak1=2, weak4=3 },	
 
-	--越野车       type = "jipu" ,
+	--越野车       type = "jipu",
 	{id=12,image="yyc",demage=0,hp=60000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
 	--吉普车烟雾导弹          type = "dao_wu",
 	{id=13,image="daodan03",demage=10,hp=3500, weak1=1}, 
 
-	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=10000},       
+	--BOSS铁球
+	{id=18,image="tieqiu",demage= 50,hp=9000, weak1=1},
 
-	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=10,hp=3000, speed=120,weak1=1}, 
+	--BOSS导弹            type = "missile",
+	{id=19,image="daodan",demage=15,hp=1000, weak1=1},
+ 
+	--烟雾导弹            type = "dao_wu",
+	{id=21,image="daodan03",demage=10,hp=5000, weak1=1},   --打击者金武平均伤害5558
 
-	--boss烟雾导弹          type = "dao_wu",
-	{id=21,image="daodan03",demage=10,hp=4000, weak1=1},   
+	--医疗兵              type = "yiliao",
+	{id=25,image="yiliaob",demage=12,hp=5000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
 
-	--BOSS导弹          type = "missile",
-	{id=23,image="daodan",demage=10,hp=1000, weak1=1},
+	--高级召唤医疗兵      type = "yiliao",
+	{id=26,image="yiliaob",demage=12,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
 
 }
 
-
-
-
---fire1 dao1 dao2 发闪光弹
---fire2 dao3 dao4 dao5 --多发导弹
---fire3 dao6  --发蜘蛛网
 
 
 	--boss的关卡配置
 local bosses = {
 	--第一个出场的boss
 	{
-		image = "dzboss", --图片名字
-		hp = 250000,
-		award = 30000,
-		fireRate = 180,                  --普攻频率
-		fireCd = 4,                     --普攻cd
-		demage = 0,
+		award = 25000,         ----boss产出金币数量
+		image = "boss02_1",    --蓝boss基础上改的肌肉boss
+		hp = 150000,
+		demage = 3, 			--这个是没用的 需要告诉俊松
+		fireRate = 120,               --普攻频率
+		fireCd = 3,                     --普攻cd
+
 		walkRate = 60,                    --移动频率
-		walkCd = 2,                         --移动cd				
+		walkCd = 2,                         --移动cd
+
+		chongfengDemage = 25,                --冲锋造成伤害
+
 		weak1 = 1.2,						--头 弱点伤害倍数
-		weak2 = 1.2,					--左腿 弱点伤害倍数
-		weak3 = 1.2,					--右腿 弱点伤害倍数	
-		wudiTime = 5.0,					--无敌时间
-		skilltrigger = {   			 --技能触发(可以同时)
+		weak2 = 1.2,					--手 弱点伤害倍数               
 
-			
-			daoDan1 =  { 0.98, 0.85, 0.70, 0.55, 0.40, 0.25,                --烟雾弹
-			},
-			zhaohuan = { 0.94, 0.80, 0.65, 0.50, 0.35,                      --召唤小兵
-			}, 
-			wudi =     { 0.90, 0.75, 0.60, 0.45, 0.30, 0.10,                --无敌
-			},  
+		
+		skilltrigger = {   			          --技能触发(可以同时)
 
-			-- wang = { 0.99,0.91,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15 ,0.05                    --网
+			-- daoDan1 = {                                            --烟雾导弹
+			-- 	0.95, 0.70, 0.50, 0.30, 0.15,
 			-- },
-
-
-			weak3 = { 0.70, 0.40, 0.10,                                --右腿 技能触发(可以同时)          
-			},	
-			weak2 = { 0.80, 0.60, 0.20,                                --左腿 技能触发(可以同时)	                      
+			moveLeftFire = {
+				0.90, 0.55,
 			},
-			weak1 = { 0.90, 0.50, 0.30,                                --头 技能触发(可以同时)	                        
+			moveRightFire = {
+				0.75, 0.35,
+			},
+			chongfeng = {
+			    0.85, 0.65, 0.45, 0.25, 0.10,
+			},
+			tieqiu = {
+				0.80, 0.60, 0.40, 0.20, 0.05,
+			},
+			zhaohuan = { 0.95, 0.70, 0.50, 0.30,                      --召唤小兵
+			},	
+			
+
+
+
+			weak2 = {                               --手 技能触发(可以同时)
+				0.80, 0.40,                        
+			},
+			weak1 = {                               --头 技能触发(可以同时)
+				0.60, 0.20,                      
 			},
 			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
-			},		
-			demage300 = {  
+			},	
+			demage300 = {
 				0.60,
-			},
-			demage400 = {  
-				0.40,
-			},			
+			},	
+			demage400 = {
+				0.30,
+			},						
 		},
 
-		daoDan1 = {
-		    id = 21,                                  --烟雾
-			type = "dao_wu",  
-			timeOffset = 0.1,                        --导弹间隔时间
-			srcPoses =    {                --起始点
-            cc.p(-150, -100), cc.p(0, -100), cc.p(150, -100), 
-           },                   
-			offsetPoses = {               --偏移点
-            cc.p(-200, -200), cc.p(0, -200), cc.p(200, -200), 
-           },               
+		-- daoDan1 = {
+		--     id = 21,                                  --烟雾
+		-- 	type = "dao_wu",  
+		-- 	timeOffset = 0.06,                        --导弹间隔时间                 
+		-- 	offsetPoses = {                  --目标点
+  --           cc.p(-300, -300), cc.p(-300, 300), cc.p(300, 300), cc.p(300, -300), 
+  --          },
+		-- },
+
+		enemys1 = {                                                   --第1波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {800,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {350,},
+				property = { 
+					placeName = "place4" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+		enemys2 = {                                                   --第2波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {260,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {860,},
+				property = { 
+					placeName = "place3" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+		enemys3 = {                                                   --第3波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {470,},
+				property = { 
+					placeName = "place6" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {900,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+		},
+		enemys4 = {                                                   --第4波召唤医疗兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {370,},
+				property = { 
+					placeName = "place3" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {950,},
+				property = { 
+					placeName = "place4" ,
+					type = "yiliao",     --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 6.0,                  --回血cd
+					skillValue = 0.05,               --回血百分比
+					id = 26,
+				},
+			},
 		},
 
-		enemys1 = {                                                   --第一波召唤蜘蛛兵
-			{
-				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,	
-				},
-			},
-		},	
-
-		enemys2 = {                                                   --第二波召唤蜘蛛兵
-			{
-				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-					demageScale = 1.5                    --伤害翻1.5倍	
-				},
-			},
-	    },	
-
-		enemys3 = {                                                   --第三波召唤蜘蛛兵
-			{
-				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-					demageScale = 2                    --伤害翻2倍	
-				},
-			},
-		},	
-
-		enemys4 = {                                                   --第四波召唤的蜘蛛兵
-			{
-				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-					demageScale = 2	                     --伤害翻2倍
-				},
-			},
-		},	
-
-		enemys5 = {                                                   --第四波召唤的蜘蛛兵
-			{
-				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 20,
-					demageScale = 3	                     --伤害翻3倍
-				},
-			},
-		},	
 
 
+
+		getMoveLeftAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))
+			local move3 = cc.MoveBy:create(13/60, cc.p(-45, 0))	
+			local move4 = cc.MoveBy:create(7/60, cc.p(-12, 0))
+			local move5 = cc.MoveBy:create(15/60, cc.p(-4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
+
+		getMoveRightAction = function ()
+			local move1 = cc.MoveBy:create(10/60, cc.p(10, 0))
+			local move2 = cc.MoveBy:create(15/60, cc.p(30, 0))
+			local move3 = cc.MoveBy:create(10/60, cc.p(10, 0))	
+			local move4 = cc.MoveBy:create(15/60, cc.p(12, 0))
+			local move5 = cc.MoveBy:create(10/60, cc.p(4, 0))
+			return cc.Sequence:create(move1, move2, move3, move4, move5)
+		end,
 	},
 }
 
