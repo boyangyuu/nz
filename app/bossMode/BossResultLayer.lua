@@ -28,7 +28,7 @@ function BossResultLayer:initUI()
 
 	local bossModeModel = md:getInstance("BossModeModel")
 	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
-		dump(info)
+	assert(info, "getChapterModel is nil")
 	partNum:setString("X"..info["part"])
 	healthBagNum:setString("X"..info["healthBag"])
 	leiNum:setString("X"..info["lei"])

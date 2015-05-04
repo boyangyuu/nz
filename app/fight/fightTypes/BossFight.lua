@@ -4,6 +4,9 @@ local BossFight = class("BossFight", Fight)
 function BossFight:ctor(properties)
 	dump(properties, "properties")
 	BossFight.super.ctor(self, properties)
+
+	--instance
+	self.chapterIndex = properties.chapterIndex
 end
 
 function BossFight:startFightResult()
@@ -31,5 +34,18 @@ end
 function BossFight:getFightType()
 	return "bossFight"
 end
+
+function BossFight:waveUpdate(nextWaveIndex, waveType)
+	--award
+	local curWaveIndex = nextWaveIndex - 1
+	local bossModeModel = md:getInstance("BossModeModel")
+	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex)
+
+	--desc
+    local fightDescModel = md:getInstance("FightDescModel")
+    if nextWaveIndex == 1 then return end
+    fightDescModel:bossGift(self.chapterIndex, curWaveIndex)
+end
+
 
 return BossFight

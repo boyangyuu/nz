@@ -21,11 +21,11 @@ function FightFactory:refreshData(property)
 	fightType = property.fightType or "levelFight"
 	self.fightType = fightType
 	if self.fightType == "levelFight" then 
-		self.fightInstance = LevelFight.new()
+		self.fightInstance = LevelFight.new(property)
 	elseif self.fightType == "bossFight" then 
-		self.fightInstance = BossFight.new()
+		self.fightInstance = BossFight.new(property)
 	elseif self.fightType == "jujiFight" then 
-		self.fightInstance = JujiFight.new()		
+		self.fightInstance = JujiFight.new(property)		
 	else
 		assert(false)
 	end	
