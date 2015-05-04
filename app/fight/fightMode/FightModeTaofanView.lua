@@ -13,7 +13,6 @@ function FightModeTaofanView:ctor()
 
 	--instance
 	self.curTaoNum = 0
-	self.label   = nil
 	self.isPause = false
 
  	cc.EventProxy.new(self.fightMode, self)
@@ -21,16 +20,21 @@ function FightModeTaofanView:ctor()
 	 		 handler(self, self.OnTaofanTao))	 	
 end
 
-function FightModeTaofanView:refreshUI()
-	local label = cc.uiloader:seekNodeByName(self.ui, "label") 
+function FightModeTaofanView:initUI()
+	FightModeTaofanView.super.initUI(self)
+	self.label = cc.uiloader:seekNodeByName(self.ui, "label")
+	self.label:setColor(cc.c3b(255, 0, 6))
+end
+
+function FightModeTaofanView:refreshUI() 
 	local str   = self:getLabelStr()
-	label:setString(str)
+	self.label:setString(str)
 
 	--action
 	local actionScale1 = cc.ScaleTo:create(0.2, 3.0)
 	local actionScale2 = cc.ScaleTo:create(0.1, 1.0)
 	local seq = cc.Sequence:create(actionScale1, actionScale2) 
-	label:runAction(seq)
+	self.label:runAction(seq)
 end
 
 function FightModeTaofanView:getLabelStr()
@@ -40,9 +44,8 @@ function FightModeTaofanView:getLabelStr()
 end
 
 function FightModeTaofanView:onFightStart(event)
-	local label = cc.uiloader:seekNodeByName(self.ui, "label") 
 	local str   = self:getLabelStr()
-	label:setString(str)
+	self.label:setString(str)
 end
 
 function FightModeTaofanView:OnTaofanTao(event)

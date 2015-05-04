@@ -21,7 +21,7 @@ function Attackable:ctor(property)
 	self.isPauseOtherAnim = false
 	self.isWillDie = false
 	self.isFlying = false
-
+	self.buffNode = nil
 	self:initArmature()
 	self:initBuff()
   
@@ -53,9 +53,10 @@ function Attackable:initBuff()
     local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
     local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
 
-	self.buffArmature = ccs.Armature:create("jiaxue")
-	self.buffArmature:setPosition(destpos)
-	self.armature:addChild(self.buffArmature, 30) 			
+
+	self.buffNode = display.newNode()
+	self.buffNode:setPosition(destpos)
+	self.armature:addChild(self.buffNode, 1000) 			
 end
 
 function Attackable:setPause(event)
@@ -227,21 +228,22 @@ end
 function Attackable:setDeadDone()
 	self:setPauseOtherAnim(true)
 	self.isDead = true
-	self:setVisible(false)
 
 	--remove enemy
-	self.enemyM:removeEnemy(self)
+	self:setVisible(false)
+	self:setWillRemoved(0.01)
 end
 
 function Attackable:setWillRemoved(time)
 	self:setPauseOtherAnim(true)
 	local function callFunc()
+		self:setVisible(false)
 		self.enemyM:removeEnemy(self)			
 	end 
 	if time then 
 		self:performWithDelay(callFunc, time)
 	else
-		callFunc()
+		self:performWithDelay(callFunc, 0.01)
 	end
 end
 
@@ -382,6 +384,7 @@ end
 function Attackable:checkAnim()
 	if self.enemy:isDead() then return end
 	if self:getPauseOtherAnim() then return end
+	if self:getDeadDone() then return end
 	local currentName = self.armature:getAnimation():getCurrentMovementID()
 	if currentName == "" or currentName == nil then 
 		self:playStand()
@@ -440,16 +443,21 @@ function Attackable:getEnemyModel()
 	return self.enemy
 end
 
-function Attackable:playBuff(buffName)
-	if self.buffArmature then
-		self.buffArmature:getAnimation():setMovementEventCallFunc(
-    	function (armatureBack,movementType,movementId) 
+function Attackable:playBuff(buffName)	
+	if self.buffNode == nil then return end
+
+	local buffArmature = ccs.Armature:create(buffName)
+	self.buffNode:addChild(buffArmature)
+	buffArmature:getAnimation():setMovementEventCallFunc(
+		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
-				self.buffArmature:getAnimation():stop()		
+				armatureBack:getAnimation():stop()		
+	    		armatureBack:removeSelf()
+	    		print(" Attackable:playBuff")
+	    		armatureBack = nil
 	    	end 
-    	end)	
-		self.buffArmature:getAnimation():play("jiaxue", -1, 1)
-	end
+		end)	
+	buffArmature:getAnimation():playWithIndex(0)
 end
 
 function Attackable:setIsFlying(isFlying)
@@ -506,6 +514,8 @@ function Attackable:onEnter()
 
 	--add enemy
 	self.enemyM:addEnemy(self)
+
+	--scale
 end
 
 function Attackable:onCleanup()

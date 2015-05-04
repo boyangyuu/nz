@@ -87,7 +87,7 @@ function InlayListCell:initCellUI(record)
 end
 
 function InlayListCell:onClickBtnBuy(record)
-    local dianji = "res/Music/ui/dianji.wav"
+    local dianji = "res/Music/ui/button.wav"
     audio.playSound(dianji,false)
 
     function refresh()
@@ -110,7 +110,7 @@ function InlayListCell:onClickBtnBuy(record)
 end
 
 function InlayListCell:onClickBtnEquip(record)
-    local dianji = "res/Music/ui/dianji.wav"
+    local dianji = "res/Music/ui/button.wav"
     audio.playSound(dianji,false)
     local xqcg = "res/Music/ui/xqcg.wav"
     audio.playSound(xqcg,false)

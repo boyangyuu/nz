@@ -10,11 +10,19 @@ local FightModeBossContestView = class("FightModeBossContestView", FightModeBase
 
 function FightModeBossContestView:ctor()
 	FightModeBossContestView.super.ctor(self)
-	self.labelWave   = nil
 
 	local map = md:getInstance("Map")
  	cc.EventProxy.new(map, self)
 	 	:addEventListener(map.WAVE_UPDATE_EVENT  , handler(self, self.onUpdateWave))	 	
+end
+
+function FightModeBossContestView:initUI()
+	FightModeBossContestView.super.initUI(self)
+	self.lastWave  = cc.uiloader:seekNodeByName(self.ui, "lastWave")
+	self.image	   = cc.uiloader:seekNodeByName(self.ui, "image")
+	self.lastWave:setVisible(false)
+	self.labelWave = cc.uiloader:seekNodeByName(self.ui, "labelWave")
+	self.labelWave:setColor(cc.c3b(255, 0, 6))
 end
 
 function FightModeBossContestView:refreshUI()
@@ -22,13 +30,22 @@ function FightModeBossContestView:refreshUI()
 end
 
 function FightModeBossContestView:onFightStart(event)
-	self.labelWave = cc.uiloader:seekNodeByName(self.ui, "labelWave") 
 	self.labelWave:setString(1)	
 end
 
 function FightModeBossContestView:onUpdateWave(event)
 	local waveIndex = event.waveIndex
 	self.labelWave:setString(waveIndex)	
+
+	--check is last wave or not
+	local map     = md:getInstance("Map")
+	local waveNum = map:getWaveNum()
+	if waveIndex == waveNum then 
+		self.lastWave:setVisible(true)
+		self.labelWave:setVisible(false)
+		self.image:setVisible(false)
+		return
+	end
 
 	--action
 	local actionScale1 = cc.ScaleTo:create(0.2, 3.0)

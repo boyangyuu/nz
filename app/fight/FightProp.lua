@@ -105,4 +105,23 @@ function FightProp:startGoldWeaponByPay()
 	self:refreshData()
 end
 
+function FightProp:sendAward(awardData)
+	local awardType = awardData.awardType
+	local value 	= awardData.awardValue
+	if awardType == "goldWeapon" then 
+		local fightInlay = md:getInstance("FightInlay")
+		fightInlay:activeGold()		
+	elseif awardType == "healthBag" then 
+		
+	elseif awardType == "shouLei" then
+		self.propModel:addProp("lei", value)
+	elseif awardType == "coin" then	
+		local hero = md:getInstance("Hero")
+	    hero:dispatchEvent({name = hero.AWARD_GOLD_INCREASE_EVENT, 
+                    value = value})
+	end	
+
+	self:refreshData()
+end
+
 return FightProp

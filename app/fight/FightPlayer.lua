@@ -8,6 +8,7 @@ local MapView        = import(".MapView")
 local HeroLayer      = import(".HeroLayer")
 local InfoLayer      = import(".InfoLayer")
 local GunHelpLayer   = import(".Gun.GunHelpLayer") 
+local GunSkillLayer  = import(".Gun.GunSkillLayer")
 
 local KFightConfig = {
     scaleMoveBg = 1.0, 
@@ -24,9 +25,9 @@ end)
 function FightPlayer:ctor(properties)
     --instance
     local fightFactory = md:getInstance("FightFactory")
-    fightFactory:refreshData(properties)
+    fightFactory:refreshData(properties.fightData)
     self.fight      = fightFactory:getFight()
-    self.fight:refreshData(properties)
+    self.fight:refreshData(properties.fightData)
     dump(properties, "properties")
     self.fight:beginFight()
     self.hero       = md:getInstance("Hero")
@@ -50,6 +51,7 @@ function FightPlayer:ctor(properties)
     self.heroLayer      = HeroLayer.new()
     self.infoLayer      = InfoLayer.new() 
     self.gunHelpLayer   = GunHelpLayer.new()
+    self.gunSkillLayer  = GunSkillLayer.new()
     self.isControlVisible = true
     
     --ui
@@ -129,7 +131,7 @@ function FightPlayer:showControl(event)
 
     local levelModel = md:getInstance("LevelDetailModel")
     local gid, lid= self.fight:getCurGroupAndLevel()
-    local isju = levelModel:isJujiFight(gid, lid)
+    local isju = self.fight:isJujiFight()
     if isju then 
         self.btnChange:setVisible(false) 
     end
@@ -186,6 +188,7 @@ function FightPlayer:initUI()
 
     --load layerGunInfo
     local layerGunInfo = cc.uiloader:seekNodeByName(self, "layerGunInfo")
+    layerGunInfo:addChild(self.gunSkillLayer)
     layerGunInfo:addChild(self.infoLayer)
     layerGunInfo:addChild(self.gunHelpLayer)
 
@@ -527,6 +530,7 @@ function FightPlayer:checkBtnFire(id,point,eventName)
         end
         if self.touchFireId == id and not isend then
             self.hero.fsm__:doEvent("ready")
+            self:onBtnFire()
             self.btnFireSch = self:schedule(handler(self, self.onBtnFire), 0.01)
         end
     end
@@ -541,9 +545,7 @@ end
 
 function FightPlayer:checkJuFire()
     --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
-    local levelModel = md:getInstance("LevelDetailModel")
-    local gid, lid= self.fight:getCurGroupAndLevel()
-    local isJuLevel = levelModel:isJujiFight(gid, lid)
+    local isJuLevel = self.fight:isJujiFight()
     local map           = md:getInstance("Map")
     local isOpenJu      = map:getIsOpenJu()
 
@@ -940,10 +942,7 @@ end
 function FightPlayer:onEnter()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
-
-    local gid, lid= self.fight:getCurGroupAndLevel()
-    local levelModel = md:getInstance("LevelDetailModel")
-    local isju = levelModel:isJujiFight(gid, lid)
+    local isju = self.fight:isJujiFight()
     if isju then 
         self.btnRobot:setVisible(false)
         self.label_jijiaNum:setVisible(false)       

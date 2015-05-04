@@ -165,7 +165,7 @@ function MapView:updateEnemys()
 	if wave == nil then 
 		print("赢了")
 		if result == nil then 
-			self.fight:willWin(0.0)
+			self.fight:willWin(2.0)
 			self:stopAllActions()			
 		end
 		return
@@ -179,6 +179,8 @@ function MapView:updateEnemys()
 	else 
 		self.fightDescModel:waveStart(waveIndex)
 	end
+
+	-- todo
 
 	--gunData
 	if wave.gunData then  

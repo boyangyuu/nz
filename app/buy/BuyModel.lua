@@ -167,9 +167,9 @@ function BuyModel:buy_novicesBag( buydata )
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
 	--机甲*3
-	propModel:buyProp("jijia",3)
+	propModel:addProp("jijia",3)
 	--手雷*10
-	propModel:buyProp("lei",10)
+	propModel:addProp("lei",10)
 	self:setBought("novicesBag")
 end
 
@@ -182,9 +182,9 @@ function BuyModel:buy_goldGiftBag( buydata )
 	inlayModel:buyGoldsInlay(15)
 
 	--机甲*15
-	propModel:buyProp("jijia",15)
+	propModel:addProp("jijia",15)
 	--手雷*30
-	propModel:buyProp("lei",30)
+	propModel:addProp("lei",30)
 
 	if not buydata.isNotPopup then 
 		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
@@ -196,14 +196,14 @@ function BuyModel:buy_handGrenade( buydata )
 	local storeModel = md:getInstance("StoreModel")
 	
 	--手雷*20
-	propModel:buyProp("lei",20)
+	propModel:addProp("lei",20)
 end
 
 function BuyModel:buy_armedMecha( buydata )
 	local propModel = md:getInstance("propModel")
 	local storeModel = md:getInstance("StoreModel")
 	--jijia*2
-	propModel:buyProp("jijia",2)
+	propModel:addProp("jijia",2)
 end
 
 function BuyModel:buy_unlockWeapon( buydata )

@@ -46,10 +46,14 @@ modelClasses["PauseModel"]          = import("..pause.PauseModel")
 -- IAPsdk
 modelClasses["IAPsdk"]              = import("..SDK.IAPsdk")
 
+-- rank
+modelClasses["RankModel"]              = import("..rank.RankModel")
+
 --need create
 needCreateClasses["Hero"] = true
 needCreateClasses["FightInlay"] = true
 needCreateClasses["Map"] = true
+needCreateClasses["EnemyManager"] = true
 
 function ModelManager:ctor()
     ModelManager.super.ctor(self) 

@@ -170,7 +170,7 @@ end
 
 function StoreCell:addBtnEvent()
     self.btnbuy:onButtonClicked(function()
-        local dianji = "res/Music/ui/dianji.wav"
+        local dianji = "res/Music/ui/button.wav"
         audio.playSound(dianji,false)
 
         if self.type == "prop" then
@@ -179,7 +179,7 @@ function StoreCell:addBtnEvent()
                 if self.record["nameid"] == "goldweapon" then
                     self.inlayModel:buyGoldsInlay(self.record["buynum"])
                 else
-                    self.propModel:buyProp(self.record["nameid"],self.record["buynum"])
+                    self.propModel:addProp(self.record["nameid"],self.record["buynum"])
                 end
                 um:buy(self.record["name"], 1, self.record["price"])   
                 if self.record["nameid"] == "goldweapon" then

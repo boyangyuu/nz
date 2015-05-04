@@ -206,9 +206,8 @@ function LevelMapLayer:initChooseLayer()
     end)
     :onButtonClicked(function( event )
         local bossModeModel = md:getInstance("BossModeModel")
-        local chapterId = bossModeModel:getAlreadyChapter()
-        ui:showPopup("BossModeLayer",{chapterId = chapterId})
-        -- ui:showPopup("BossResultLayer",{},{anim = false})
+        local chapterIndex = bossModeModel:getAlreadyChapter()
+        ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex})
     end)
 end
 

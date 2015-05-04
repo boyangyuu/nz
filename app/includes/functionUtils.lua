@@ -3,7 +3,7 @@
 ---- View ----
 -- add button event listener
 function playSoundBtn()
-    local dianji = "res/Music/ui/dianji.wav"
+    local dianji = "res/Music/ui/button.wav"
     audio.playSound(dianji,false)
 end
 
@@ -14,7 +14,7 @@ function addBtnEventListener(node, callfunc)
         if event.name=='began' then
             -- cc.ColorUtil:isHighLighted(node, true)
             node:runAction(cc.ScaleTo:create(0.05, 1.1))
-            local dianji = "res/Music/ui/dianji.wav"
+            local dianji = "res/Music/ui/button.wav"
             audio.playSound(dianji,false)
         elseif event.name=='ended' then
             -- cc.ColorUtil:isHighLighted(node, false)        
@@ -129,6 +129,11 @@ function getRecordByKey(configFileDir, propertyName, key)
     return recordArr
 end
 
+--[[
+    example: local records = getRecordFromTable(xx, )
+    
+]]
+
 function getRecordFromTable(table, propertyName, key)
     assert(propertyName ~= "" and type(propertyName) == "string", "invalid param")
     assert(key ~= "", "key is invalid param")
@@ -142,6 +147,7 @@ function getRecordFromTable(table, propertyName, key)
     end
     return recordArr
 end
+
 
 function getUserData()
     return GameData
@@ -175,26 +181,26 @@ end
 
 
 function isDefendMM()
-    local expectYear = 2016
-    local expectMonth = 4
-    local expectDay = 25
+    local endYear = 2016
+    local endMonth = 4
+    local endDay = 25
 
     local time = os.time()
     local year  = tonumber(os.date("%Y", time))
     local month = tonumber(os.date("%m", time))
     local day   = tonumber(os.date("%d", time))
 
-    if year < expectYear then
+    if year < endYear then
         return true
-    elseif year > expectYear then
+    elseif year > endYear then
         return false
     else
-        if month < expectMonth then
+        if month < endMonth then
             return true
-        elseif month > expectMonth then
+        elseif month > endMonth then
             return false
         else 
-            if day <= expectDay then
+            if day <= endDay then
                 return true
             else
                 return false

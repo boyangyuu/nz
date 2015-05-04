@@ -15,7 +15,7 @@ function PropModel:getPropNum(nameid)
 	return propnum
 end
 
-function PropModel:buyProp(nameid,buyNum)
+function PropModel:addProp(nameid,buyNum)
 	local data = getUserData()
 	local prop = data.prop[nameid]
 	assert(prop, "prop is nil invalid nameid:"..nameid)	

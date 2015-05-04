@@ -34,10 +34,15 @@ function EnemyManager:getEnemysByBuff(name)
 	return self.enemys
 end
 
+function EnemyManager:doBuff(buffFuncStr, buffData)
+	print("buffFuncStr", buffFuncStr)
+	self[buffFuncStr](self, buffData)
+end
+
 function EnemyManager:doBuffAll_increaseHp(buffData)
 	local value   = buffData.value
-	local time  = buffData.time
-	local name  = buffData.name
+	local times  = buffData.times
+	local name  = buffData.buffAnimName
 
 	local enemys = self:getEnemysByBuff(name)
 	for i,enemy in ipairs(enemys) do
@@ -51,10 +56,35 @@ function EnemyManager:doBuffAll_increaseHp(buffData)
 	end
 end
 
-function EnemyManager:doBuffAll_decreaseHp()
-	
+function EnemyManager:doBuffAll_decreaseHp(buffData)
+	local value   = buffData.value
+	local times  = buffData.times
+	local name  = buffData.buffAnimName
+
+	local enemys = self:getEnemysByBuff(name)
+	for i,enemy in ipairs(enemys) do
+		local enemyModel = enemy:getEnemyModel()
+		if not enemyModel:isDead() then 
+			enemyModel:decreaseHp(value)
+			enemy:playBuff(name)
+		end
+	end		
 end
 
+function EnemyManager:doBuffAll_pause(buffData)
+	local value   = buffData.value
+	local name  = buffData.buffAnimName
+
+	print("function EnemyManager:doBuffAll_pause(buffData)")
+	local enemys = self:getEnemysByBuff(name)
+	for i,enemy in ipairs(enemys) do
+		local enemyModel = enemy:getEnemyModel()
+		if not enemyModel:isDead() then 
+			print("		if not enemyModel:isDead() then ")
+			enemy:setPause({isPause = true}) 
+		end
+	end		
+end
 
 return EnemyManager
 

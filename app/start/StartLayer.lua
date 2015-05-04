@@ -85,6 +85,9 @@ function StartLayer:initUI()
     self.btnHelp:setTouchEnabled(true)
     addBtnEventListener(self.btnHelp, function( event )
         if event.name == "began" then
+            local rank = md:getInstance("RankModel")
+            local data = rank:getRankData("jujiLevel")
+            dump(data, "data")
             return true
         elseif event.name == "ended" then 
            ui:showPopup("AboutPopup",{popupName = "bangzhu"},{anim = false})

@@ -38,9 +38,9 @@ BossConfigs["chapter3"] = {
 	reward5 = {part = 1,healthBag = 2,lei = 3,money = 65199},
 }
  
-function BossModeConfigs.getConfig(chapterId)
-	assert(chapterId,"chapterId is nil")
-	local chapterConfig = BossConfigs["chapter"..chapterId]
+function BossModeConfigs.getConfig(chapterIndex)
+	assert(chapterIndex,"chapterIndex is nil")
+	local chapterConfig = BossConfigs["chapter"..chapterIndex]
 	return chapterConfig
 end
 

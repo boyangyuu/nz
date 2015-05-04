@@ -26,4 +26,11 @@ function LevelFight:getResultData()
     return resultData
 end
 
+function LevelFight:isJujiFight()
+    local levelModel = md:getInstance("LevelDetailModel")
+    local gid,lid    = self:getCurGroupAndLevel()
+    local isju       = levelModel:isJujiFight(gid,lid) 
+    return isju 
+end
+
 return LevelFight
