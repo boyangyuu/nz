@@ -18,7 +18,7 @@ function FightFactory:ctor()
 end
 
 function FightFactory:refreshData(property)
-	fightType = property.fightType or "levelFight"
+	local fightType = property.fightType or "levelFight"
 	self.fightType = fightType
 	if self.fightType == "levelFight" then 
 		self.fightInstance = LevelFight.new(property)
