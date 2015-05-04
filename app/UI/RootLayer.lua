@@ -15,9 +15,25 @@ function RootLayer:ctor()
     --add res 
     self:initLoginLayer()
 
+    -- add keyPad listener
+    self:setKeypadEnabled(true)
+    self:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
+        if event.name == "clicked" then
+            device.showAlert("","您就这样离开吗？", {"离开", "继续"}, handler{self, self.onClickListener})
+        end
+    end)
+
     --event
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LAYER_CHANGE_EVENT, handler(self, self.switchLayer))
+end
+
+function RootLayer:onClickListener(event)
+    if event.buttonIndex == 1 then
+        os.exit(1);
+    else
+
+    end
 end
 
 function RootLayer:initLoginLayer()

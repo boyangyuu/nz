@@ -37,7 +37,6 @@ function FightResultLayer:ctor()
     local hpPercent = self.fightData["hpPercent"]
     self.grade = self.fightResultModel:getGrade(hpPercent)
 
-	self:setDailyPopup()
 	self:onSentAward()
 	self:loadCCS()
 	self:initUI()
@@ -381,15 +380,6 @@ function FightResultLayer:onTurnLeftCard()
 	if self.getallArmature then
 		self.getallArmature:removeFromParent()
 		self.getallArmature = nil
-	end
-end
-
-function FightResultLayer:setDailyPopup()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-	local isGet = dailyLoginModel:isGet()
-	if isGet == false then
-		dailyLoginModel:setPopup()
 	end
 end
 

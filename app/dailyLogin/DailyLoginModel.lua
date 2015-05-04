@@ -3,11 +3,13 @@ local DailyLoginModel = class("DailyLoginModel", cc.mvc.ModelBase)
 
 function DailyLoginModel:ctor(properties)
 	DailyLoginModel.super.ctor(self,properties)
+	self:getDate()
 end
 
 local popup = false
 function DailyLoginModel:setPopup()
 	popup = true
+	dump(popup)
 end
 function DailyLoginModel:donotPop()
 	popup = false
@@ -17,8 +19,18 @@ function DailyLoginModel:checkPop()
 end
 
 function DailyLoginModel:setTime()
+	print("~~~~!~!~!~!~!")
+	dump(network.getInternetConnectionStatus())
+	if network.getInternetConnectionStatus() == 0 then return end
 	local data = getUserData()
-	data.dailylogin.logintime = os.date("%x")
+	data.dailylogin.logintime = self.date
+	if data.registertime == nil then
+		if network.getInternetConnectionStatus() == 0 then
+			data.registertime = os.time()
+		else
+			data.registertime = self.date
+		end
+	end
 	setUserData(data)
 end
 
@@ -93,7 +105,8 @@ end
 
 function DailyLoginModel:isToday()
 	local DailyInfo = self:getDailyInfo()
-	if DailyInfo["logintime"] == os.date("%x") then
+	dump(DailyInfo)
+	if os.date("%x",DailyInfo["logintime"]) == os.date("%x",self.date) then
 		return true
 	else
 		return false
@@ -111,7 +124,7 @@ end
 
 function DailyLoginModel:setLoginState()
 	local DailyInfo = self:getDailyInfo()
-	if DailyInfo["logintime"] == os.date("%x") then
+	if os.date("%x",DailyInfo["logintime"]) == os.date("%x",self.date) then
 		if DailyInfo["isGet"] then
 
 		else
@@ -124,6 +137,40 @@ function DailyLoginModel:setLoginState()
 		else
 			
 		end
+	end
+end
+
+function DailyLoginModel:getDate()
+	local data = getUserData()
+	self.date = data.dailylogin.logintime
+	dump(data.dailylogin)
+    local url = "http://123.57.213.26/timestamp.php"
+    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "GET")
+    request:start()
+end
+
+function DailyLoginModel:onRequestFinished(event)
+    local ok = (event.name == "completed")
+    local request = event.request
+ 
+    if not ok then
+        -- 请求失败，显示错误代码和错误消息
+        print(request:getErrorCode(), request:getErrorMessage())
+        return
+    end
+ 
+    local code = request:getResponseStatusCode()
+    if code ~= 200 then
+        -- 请求结束，但没有返回 200 响应代码
+        print(code)
+        return
+    end
+ 
+    -- 请求成功，显示服务端返回的内容
+    local response = request:getResponseString()
+    dump(response)
+    if response then
+	    self.date = response
 	end
 end
 

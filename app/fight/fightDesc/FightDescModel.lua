@@ -6,6 +6,7 @@ FightDescModel.WAVESTART_ANIM_EVENT = "WAVESTART_ANIM_EVENT"
 FightDescModel.ENEMYINTRO_ANIM_EVENT = "ENEMYINTRO_ANIM_EVENT"
 FightDescModel.GUNINTRO_ANIM_EVENT = "GUNINTRO_ANIM_EVENT"
 FightDescModel.GOLDWAVE_ANIM_EVENT = "GOLDWAVE_ANIM_EVENT"
+FightDescModel.BOSSGIFT_ANIM_EVENT = "BOSSGIFT_ANIM_EVENT"
 
 function FightDescModel:ctor(properties)
 	FightDescModel.super.ctor(self, properties)
@@ -25,6 +26,11 @@ end
 
 function FightDescModel:waveStart(waveNum) -- startWave
 	self:dispatchEvent({name = FightDescModel.WAVESTART_ANIM_EVENT,waveNum = waveNum})
+end
+
+function FightDescModel:bossGift(chapterIndex,waveIndex) -- startWave
+	self:dispatchEvent({name = FightDescModel.BOSSGIFT_ANIM_EVENT,
+		chapterIndex = chapterIndex,waveIndex = waveIndex})
 end
 
 --敌人简介

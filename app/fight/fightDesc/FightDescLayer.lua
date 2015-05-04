@@ -12,6 +12,7 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.onWaveStart))
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
         :addEventListener(self.model.GOLDWAVE_ANIM_EVENT, handler(self, self.onGoldWaveStart))
+        :addEventListener(self.model.BOSSGIFT_ANIM_EVENT, handler(self, self.onBossGift))
 
 	self:loadCCS()
     self:setTouchSwallowEnabled(false)
@@ -67,6 +68,13 @@ function FightDescLayer:onBossStart(event)
     --sound
     local soundSrc  = "res/Music/fight/qdcx.wav"
     self.audioId =  audio.playSound(soundSrc,false)    
+end
+
+function FightDescLayer:onBossGift(event)
+    local chapterIndex = event.chapterIndex
+    local waveIndex = event.waveIndex
+    ui:showPopup("BossResultLayer",{chapterIndex = chapterIndex,waveIndex = waveIndex},
+        {anim = false})
 end
 
 function FightDescLayer:onWaveStart(event)
