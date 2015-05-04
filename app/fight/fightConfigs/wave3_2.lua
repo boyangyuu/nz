@@ -13,8 +13,8 @@ local waves = {
 					type = "jipu" ,
 					id = 12,
 					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
+					missileId = 13,
+					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 50.0,		--持续时间			
@@ -179,8 +179,8 @@ local waves = {
 					type = "jipu" ,
 					id = 12,
 					placeName = "place12",
-					missileId = 6,
-					missileType = "daodan",
+					missileId = 13,
+					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 40.0,		--持续时间
@@ -413,6 +413,9 @@ local enemys = {
 	{id=12,image="yyc",demage=0,hp=80000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=2,    award = 60},
 
+	--吉普车烟雾导弹          type = "dao_wu",
+	{id=13,image="daodan03",demage=10,hp=3500, weak1=1}, 
+	
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="xiaorz",demage=35,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
