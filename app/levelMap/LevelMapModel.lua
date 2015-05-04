@@ -4,6 +4,7 @@ local LevelMapModel = class("LevelMapModel", cc.mvc.ModelBase)
 
 function LevelMapModel:ctor(properties, events, callbacks)
 	LevelMapModel.super.ctor(self, properties)
+
 end
 
 function LevelMapModel:getConfig()

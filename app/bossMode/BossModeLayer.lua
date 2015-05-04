@@ -14,10 +14,9 @@ function BossModeLayer:ctor(properties)
 	cc.EventProxy.new(self.bossModeModel , self)
      :addEventListener(self.bossModeModel.REFRESH_BOSSLAYER_EVENT, handler(self, self.refreshUI))
 
-
 	self.choseChapter = 1
-	if properties.chapterId then
-		self.choseChapter = properties.chapterId
+	if properties.chapterIndex then
+		self.choseChapter = properties.chapterIndex
 	end
 	self.toward = nil
 	self:refreshUI()
@@ -209,15 +208,16 @@ end
 
 function BossModeLayer:onClickBtnStart()
 	local data = getUserData()
-	if self.choseChapter > data.bossmodelevel.chapterId then
+	if self.choseChapter > data.bossmodelevel.chapterIndex then
 		ui:showPopup("commonPopup",
 			 {type = "style1",content = "未开启，请通关前面章节！"},
 			 {opacity = 100})
 		return
 	end
-	ui:changeLayer("FightPlayer", { groupId = 50,
-		levelId = 1, fightType = "boss"})	
-
+	local fightData = { groupId = 50,
+		levelId = 1, fightType = "bossFight"}
+	-- local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}
+	ui:changeLayer("FightPlayer", {fightData = fightData})
 	ui:closePopup("BossModeLayer")
 end
 

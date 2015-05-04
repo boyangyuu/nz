@@ -18,15 +18,14 @@ function FightFactory:ctor()
 end
 
 function FightFactory:refreshData(property)
-
-	fightType = property.fightType or "level"
-	assert(fightType == "boss" or fightType == "pk" or fightType == "level")
+	fightType = property.fightType or "levelFight"
 	self.fightType = fightType
-
-	if self.fightType == "level" then 
+	if self.fightType == "levelFight" then 
 		self.fightInstance = LevelFight.new()
-	elseif self.fightType == "boss" then 
+	elseif self.fightType == "bossFight" then 
 		self.fightInstance = BossFight.new()
+	elseif self.fightType == "jujiFight" then 
+		self.fightInstance = JujiFight.new()		
 	else
 		assert(false)
 	end	

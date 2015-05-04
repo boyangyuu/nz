@@ -15,6 +15,8 @@ function HeroAnimView:ctor()
     self.fight 		 = fightFactory:getFight()
 	local fightInlay = md:getInstance("FightInlay")
 	local fightMode  = md:getInstance("FightMode")
+	self.isPlayCombo = false
+
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
 		:addEventListener(self.hero.EFFECT_HURT_YAN_EVENT	, handler(self, self.playHurtedBomb_yan))	
@@ -208,6 +210,21 @@ function HeroAnimView:playKeepKill(event)
 	local seq = cc.Sequence:create(actionScale1, actionScale2) 
 	transition.execute(self.labelKeepKill, seq, {easing = "Out",})
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
+
+	--sound
+	local soundIndex = nil
+	if count <= 7 then 
+		soundIndex = count
+	elseif count % 10 == 0 then
+		soundIndex = 8 
+	else
+
+	end
+
+	if soundIndex ~= nil then
+	    local soundSrc   = "res/Music/fight/combo_" .. soundIndex .. ".wav"
+	    audio.playSound(soundSrc,false) 	
+	end
 end
 
 function HeroAnimView:playFightTips(event)
@@ -245,7 +262,7 @@ function HeroAnimView:playAnimGuide(event)
 end
 
 function HeroAnimView:onExit()
-
+	
 end
 
 return HeroAnimView

@@ -209,8 +209,11 @@ function LevelDetailLayer:initBtns()
 end
 
 function LevelDetailLayer:startGame()
-	ui:changeLayer("FightPlayer", {groupId = self.groupId, 
-		levelId = self.levelId})
+	local fightData = {
+		groupId = self.groupId, 
+		levelId = self.levelId,
+	}
+	ui:changeLayer("FightPlayer", {fightData = fightData})
 	self:onClickBtnOff()
 end
 

@@ -182,8 +182,8 @@ function BaseEnemyView:onHitted(targetData)
 	--爆头
 	if self.enemy:getHp() == 0 then 
 		if demageType == "head" then 
-			local soundSrc  = "res/Music/fight/btts.wav"
-			audio.playSound(soundSrc,false)				
+			-- local soundSrc  = "res/Music/fight/btts.wav"
+			-- audio.playSound(soundSrc,false)				
 			self.hero:dispatchEvent({
 				name = self.hero.ENEMY_KILL_HEAD_EVENT})
 		end

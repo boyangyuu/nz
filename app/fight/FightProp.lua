@@ -80,17 +80,16 @@ function FightProp:costGoldWeapon()
 	if isNativeGold then return end
 
 	local num = self:getGoldNum()
-	if num >= 1 then 
-		-- self.goldNum = self.goldNum - 1		
+	if num >= 1 then 	
 		local inlayModel = md:getInstance("InlayModel")
 		inlayModel:equipAllInlays()
 		fightInlay:checkNativeGold()
 	else
 		local function deneyBuyFunc()
-			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeapon),
+			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
 						isNotPopKefu = true}, "战斗界面_点击黄武")
 		end 		
-		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeapon),
+		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击黄武")	
 	end
 	self:refreshData()
@@ -101,9 +100,27 @@ function FightProp:getGoldNum()
 	return inlayModel:getGoldWeaponNum()
 end
 
-function FightProp:startGoldWeapon()
-	local inlay = md:getInstance("FightInlay")
-	inlay:activeGoldOnCost()
+function FightProp:startGoldWeaponByPay()
+	self:costGoldWeapon()
+	self:refreshData()
+end
+
+function FightProp:sendAward(awardData)
+	local awardType = awardData.awardType
+	local value 	= awardData.awardValue
+	if awardType == "goldWeapon" then 
+		local fightInlay = md:getInstance("FightInlay")
+		fightInlay:activeGold()		
+	elseif awardType == "healthBag" then 
+		
+	elseif awardType == "shouLei" then
+		self.propModel:addProp("lei", value)
+	elseif awardType == "coin" then	
+		local hero = md:getInstance("Hero")
+	    hero:dispatchEvent({name = hero.AWARD_GOLD_INCREASE_EVENT, 
+                    value = value})
+	end	
+
 	self:refreshData()
 end
 

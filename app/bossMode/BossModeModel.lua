@@ -9,8 +9,8 @@ function BossModeModel:ctor(properties)
 	self.weaponListModel = md:getInstance("WeaponListModel")
 end
 
-function BossModeModel:getInfo(chapterId)
-	local bossConfig = BossModeConfigs.getConfig(chapterId)
+function BossModeModel:getInfo(chapterIndex)
+	local bossConfig = BossModeConfigs.getConfig(chapterIndex)
 	return bossConfig
 end
 
@@ -32,44 +32,44 @@ function BossModeModel:checkNext(choseChapter)
 	end
 end 
 
-function BossModeModel:setBossModeWave(chapterId,waveNum)
-	local info = self:getInfo(chapterId)
+function BossModeModel:setBossModeWave(chapterIndex,waveIndex)
+	local info = self:getInfo(chapterIndex)
 	local weaponId = info["weaponId"]
 
 	local data = getUserData()
 	if self.weaponListModel:isWeaponExist(weaponId) then return end
-	if data.bossmodelevel.chapterId == chapterId and data.bossmodelevel.waveNum < waveNum then
-		data.bossmodelevel.waveNum = waveNum
-		self:setPartsComposition(chapterId)
+	if data.bossmodelevel.chapterIndex == chapterIndex and data.bossmodelevel.waveIndex < waveIndex then
+		data.bossmodelevel.waveIndex = waveIndex
+		self:setPartsComposition(chapterIndex)
 	end
 	dump(data.bossmodelevel)
 	setUserData(data)
 end
 
-function BossModeModel:setPartsComposition(chapterId)
+function BossModeModel:setPartsComposition(chapterIndex)
 	local data = getUserData()
-	if data.bossmodelevel.chapterId == chapterId and data.bossmodelevel.waveNum >= 5 then
-		local info = self:getInfo(chapterId)
+	if data.bossmodelevel.chapterIndex == chapterIndex and data.bossmodelevel.waveIndex >= 5 then
+		local info = self:getInfo(chapterIndex)
 		local weaponId = info["weaponId"]
 		self.weaponListModel:buyWeapon(weaponId)
-		if chapterId < self:getChapterNum() then
-			data.bossmodelevel.chapterId = chapterId + 1
-			data.bossmodelevel.waveNum = 0
+		if chapterIndex < self:getChapterNum() then
+			data.bossmodelevel.chapterIndex = chapterIndex + 1
+			data.bossmodelevel.waveIndex = 0
 		end
 	end
 end
 
-function BossModeModel:getAlreadyWave(chapterId)
+function BossModeModel:getAlreadyWave(chapterIndex)
 	local data = getUserData()
-	if data.bossmodelevel.chapterId == chapterId then
-		return data.bossmodelevel.waveNum
+	if data.bossmodelevel.chapterIndex == chapterIndex then
+		return data.bossmodelevel.waveIndex
 	end
 	return 0
 end
 
 function BossModeModel:getAlreadyChapter()
 	local data = getUserData()
-	return data.bossmodelevel.chapterId
+	return data.bossmodelevel.chapterIndex
 end
 
 function BossModeModel:getChapterNum()
@@ -79,6 +79,11 @@ function BossModeModel:getChapterNum()
 		num = num + 1
 	end
 	return num
+end
+
+function BossModeModel:getChapterModel(chapterId,waveIndex)
+	local info = self:getInfo(chapterId)
+	return info["reward"..waveIndex]
 end
 
 function BossModeModel:refreshInfo()

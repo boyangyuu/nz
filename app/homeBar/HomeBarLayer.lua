@@ -62,10 +62,9 @@ function HomeBarLayer:mapPopUp(event)
             self:popUpNextLevel()
             self:popUpWeaponGift()   
         elseif self.properties.fightData.fightType == "bossFight" then
-            local chapterId = self.properties.fightData.chapterId
-            ui:showPopup("BossModeLayer", {chapterId = chapterId})
+            local chapterIndex = self.properties.fightData.chapterIndex
+            ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex})
         end  
-
         self:initDailyLogin()
     end
     
@@ -77,7 +76,8 @@ function HomeBarLayer:initDailyLogin()
     local guide = md:getInstance("Guide")
     local userModel = md:getInstance("UserModel")
     local isDone = userModel:getUserLevel() >= 4
-    if dailyLoginModel:checkPop() and isDone then
+    -- if dailyLoginModel:checkPop() and isDone then
+    if dailyLoginModel:checkPop()  then
         ui:showPopup("DailyLoginLayer", {})
         dailyLoginModel:donotPop()
     end
@@ -231,7 +231,7 @@ end
 
 function HomeBarLayer:onBtnStoreClicked()
     self.notiStore:setVisible(false)
-    local dianji = "res/Music/ui/dianji.wav"
+    local dianji = "res/Music/ui/button.wav"
     audio.playSound(dianji,false)
     self.btnSetting:setVisible(false)
     self.btnBack:setVisible(true)

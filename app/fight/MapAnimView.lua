@@ -12,12 +12,19 @@ local MapAnimView = class("MapAnimView", function()
 end)
 
 function MapAnimView:ctor()
-	self.map = md:getInstance("Map")
+	self.map 	   = md:getInstance("Map")
+	local fightGun = md:getInstance("FightGun") 
+
+	--events
 	cc.EventProxy.new(self.map, self)
 		:addEventListener(self.map.EFFECT_LEI_BOMB_EVENT, handler(self, self.playEffectLeiBomb))	
-		:addEventListener(self.map.AWARD_GOLD_EVENT, 	  handler(self, self.playAwardGold))	
+		:addEventListener(self.map.AWARD_PROP_EVENT, 	  handler(self, self.playAwardProp))	
 		:addEventListener(self.map.EFFECT_DANDAO_EVENT,   handler(self, self.playEffectDandao))	
 		:addEventListener(self.map.EFFECT_FOCUS_EVENT, 	  handler(self, self.playEffectFocus))	
+
+	cc.EventProxy.new(fightGun, self)
+		:addEventListener(fightGun.GUN_SKILL_EVENT, handler(self, self.playEffectGunSkill))	
+
 end
 
 function MapAnimView:getScaleByPos(pos)
@@ -115,12 +122,14 @@ function MapAnimView:playEffectLeiBomb(event)
     audio.playSound(soundSrc,false) 	
 end
 
-function MapAnimView:playAwardGold(event)
-	local pWorld = event.pWorld
-	local pos 	 = self:convertToNodeSpace(pWorld)
-	local armature = ccs.Armature:create("dlhjak")
-	armature:setPosition(pos)
+function MapAnimView:playAwardProp(event)
+	local pWorld    = event.pWorld
+	local animName 	= event.awardType
 
+	--armature
+	local pos 	 = self:convertToNodeSpace(pWorld)
+	local armature = ccs.Armature:create("diaoluojiangli")
+	armature:setPosition(pos)
 	local scale = self:getScaleByPos(pos)
 	armature:setScale(scale)	
 	self:addChild(armature)
@@ -130,11 +139,7 @@ function MapAnimView:playAwardGold(event)
 				armature:removeFromParent()			
 	    	end 
     	end)	
-	armature:getAnimation():playWithIndex(0 , -1, 1)	
-
-	--gold
-	local fightInlay = md:getInstance("FightInlay")
-	fightInlay:activeGold()		
+	armature:getAnimation():play(animName , -1, 1)
 end
 
 function MapAnimView:playEffectDandao(event)
@@ -175,6 +180,21 @@ function MapAnimView:playEffectFocus(event)
 			end),
 		})
 	armature:runAction(seq)
+end
+
+function MapAnimView:playEffectGunSkill(event)
+	local animName = event.animName
+	local armature = ccs.Armature:create(animName)
+	armature:getAnimation():play("skill1" , -1, 1)
+	armature:setPosition(display.pCenter)
+	self:addChild(armature)
+	armature:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.loopComplete then
+				armature:removeFromParent()		
+				print("MapAnimView:playEffectGunSkill(event)")	
+	    	end 
+    	end)	
 end
 
 return MapAnimView

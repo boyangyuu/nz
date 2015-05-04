@@ -15,9 +15,25 @@ function RootLayer:ctor()
     --add res 
     self:initLoginLayer()
 
+    -- add keyPad listener
+    self:setKeypadEnabled(true)
+    self:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
+        if event.name == "clicked" then
+            device.showAlert("","您就这样离开吗？", {"离开", "继续"}, handler{self, self.onClickListener})
+        end
+    end)
+
     --event
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LAYER_CHANGE_EVENT, handler(self, self.switchLayer))
+end
+
+function RootLayer:onClickListener(event)
+    if event.buttonIndex == 1 then
+        os.exit(1);
+    else
+
+    end
 end
 
 function RootLayer:initLoginLayer()
@@ -144,7 +160,8 @@ function RootLayer:addResHome()
 end
 
 function RootLayer:addResFight() 
-    local gid, lid = self.waitLayerProperties["groupId"], self.waitLayerProperties["levelId"]
+    local fightData = self.waitLayerProperties["fightData"]
+    local gid, lid = fightData["groupId"], fightData["levelId"]
 
     self:addFrameRes("res/Fight/public/public0.plist", "res/Fight/public/public0.png")  
 
@@ -172,7 +189,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","dlhjak", "difang_dandao"}
+    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","diaoluojiangli", "difang_dandao"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
@@ -180,6 +197,24 @@ function RootLayer:addResFight()
         local png   = "res/Fight/mapAnim/"..v.."/"..v.."0.png"
         self:addFrameRes(plist, png)       
     end
+
+    local buffImgs = {"hqljn_mz", "jiaxue"}
+    for i,v in ipairs(buffImgs) do
+        local src = "res/Fight/buffAnim/"..v.."/"..v..".ExportJson"
+        self:addArmatureRes(src)
+        local plist = "res/Fight/buffAnim/"..v.."/"..v.."0.plist"
+        local png   = "res/Fight/buffAnim/"..v.."/"..v.."0.png"
+        self:addFrameRes(plist, png)         
+    end    
+
+    local skillImgs = {"skill_hql"}
+    for i,v in ipairs(skillImgs) do
+        local src = "res/Fight/skillAnim/"..v.."/"..v..".ExportJson"
+        self:addArmatureRes(src)
+        local plist = "res/Fight/skillAnim/"..v.."/"..v.."0.plist"
+        local png   = "res/Fight/skillAnim/"..v.."/"..v.."0.png"
+        self:addFrameRes(plist, png)         
+    end    
 
     local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "baozha4",

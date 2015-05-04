@@ -163,14 +163,19 @@ function MyApp:createGameStateFile()
             },
 
             bossmodelevel = {
-                chapterId = 1,
-                waveNum = 0, 
+                chapterIndex = 1,
+                waveIndex = 0, 
             },
 
             user = {
                 level = 1,
                 fightedGroupId = 0, --打过的最远的关卡groupId
                 fightedlevelId = 0, --打过的最远的关卡levelId
+
+                
+                jujiRankLevel = 10,
+                userName  = "玩家自己",
+                vipLevel  = 0,
             },
             guide = {
                         --记得和 filldata对应!
