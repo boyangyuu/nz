@@ -43,9 +43,9 @@ function Fight:beginFight()
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
 end
 
-function Fight:refreshData(properties)
-    self.groupId   = properties.groupId
-    self.levelId   = properties.levelId   
+function Fight:refreshData(fightData)
+    self.groupId   = fightData.groupId
+    self.levelId   = fightData.levelId   
 
     --init inatance
     self:cleanModels()
@@ -54,10 +54,8 @@ function Fight:refreshData(properties)
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.map        = md:createInstance("Map")
     self.robot      = md:createInstance("Robot")
+    self.enemyM     = md:createInstance("EnemyManager")
     self.inlay      = self.hero:getFightInlay()
-
-    local levelModel = md:getInstance("LevelDetailModel")
-    self.isJujiFight = levelModel:isJujiFight(self.groupId, self.levelId)
     self.goldValue = 0.0
     self.result = nil
     self.resultData = {}
@@ -314,7 +312,7 @@ function Fight:getLevelInfo()
 end
 
 function Fight:checkJuContorlType()
-    if self.isJujiFight == false then return end
+    if self:isJujiFight() == false then return end
     local comps = {btnJu = true, btnChange =  false,}
     self:setCompsVisible(comps)
 end
@@ -339,6 +337,7 @@ function Fight:cleanModels()
     md:deleteInstance("Defence")
     md:deleteInstance("Robot")
     md:deleteInstance("FightConfigs")
+    md:deleteInstance("EnemyManager")
 end
 
 function Fight:setGoldValue(goldValue_)
@@ -358,12 +357,15 @@ function Fight:setResult(result)
 end
 
 function Fight:getResultData()
-    -- assert(false, "must implement")
+    assert(false, "must implement")
 end
 
 function Fight:getFightType()
-    -- assert(false, "must implement")
+    assert(false, "must implement")
 end
 
+function Fight:isJujiFight()
+    assert(false, "must implement")
+end
 
 return Fight

@@ -176,8 +176,7 @@ function TFQiuEnemyView:canHitted()
 end
 
 function TFQiuEnemyView:getSpeed()
-    local map      = md:getInstance("Map")
-    local isJu     = map:getIsJuMap()
+    local isJu     = self.fight:getIsJuFight()
     local speed = isJu and define.kQiufanJuSpeed or define.kQiufanSpeed
     return speed
 end

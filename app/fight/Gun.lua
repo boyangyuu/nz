@@ -7,8 +7,9 @@
 --events
 
 --includes
-
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Gun = class("Gun", cc.mvc.ModelBase)
+local GunConfigs = import(".Gun.GunConfigs")
 
 function Gun:ctor(properties)
     Gun.super.ctor(self, properties)
@@ -19,6 +20,10 @@ function Gun:ctor(properties)
     self.weaponModel = md:getInstance("WeaponListModel")
     self.bagIndex    = properties.bagIndex
     self.configId    = properties.configId
+    self.config      = nil 
+    self.skillConfig = nil
+    self.isSkillCdings    = {} 
+
 	self:initConfig()
 	self.curBulletNum = self:getBulletNum()
 end
@@ -35,11 +40,44 @@ function Gun:initConfig()
 
 	self.config = self.weaponModel:getFightWeaponValue(self.configId, isHelpGun)
 	-- dump(self.config, "self.config gun")
+
+	--skill
+	local name = self:getGunName()
+	self.skillConfig = GunConfigs.getConfig(name)
+
+	--cd
+	if self.skillConfig ~= nil then
+		for k,config in pairs(self.skillConfig) do
+			self.isSkillCdings[k] = true
+		end
+	end
+end
+
+function Gun:isSkillCding(skillName)
+	local isCding = self.isSkillCdings[skillName]
+	assert(isCding ~= nil, "cd is nil" .. skillName)	
+	return isCding
+end
+
+function Gun:startSkillCd(skillName)
+	self.isSkillCdings[skillName] = false
+	local cdTimes = self.skillConfig[skillName]["cd"]
+	assert(cdTimes ~= nil, "cdTimes is nil" .. skillName)	
+	local function resumeCd()
+		self.isSkillCdings[skillName] = true	
+	end
+	scheduler.performWithDelayGlobal(
+        resumeCd, cdTimes)
 end
 
 function Gun:getConfig()
-	assert(self.config, "self.config is nil"..self.bagIndex)
+	assert(self.config, "self.config is nil" .. self.bagIndex)
 	return self.config
+end
+
+function Gun:getSkillConfig()
+	dump(self.skillConfig, "self.skillConfig")
+	return self.skillConfig
 end
 
 function Gun:getCooldown()
@@ -145,5 +183,12 @@ function Gun:getDemage()
 	return baseValue
 end
 
+function Gun:getConfigId()
+	return self.configId
+end
+
+function Gun:getGunName()
+	return self.config.growTable
+end
 
 return Gun

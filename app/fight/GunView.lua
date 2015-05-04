@@ -161,10 +161,8 @@ function GunView:playChange(event)
 	local function callFuncBeginChange()
 		self.isChanging = true
 	end
-
 	local function callFuncChange()
 		self:refreshGun()
-
 	end 
 	local function callFuncFinishChange()
 		self.isChanging = false

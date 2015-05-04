@@ -11,12 +11,17 @@ local FightModeRenzhiView = class("FightModeRenzhiView", FightModeBaseView)
 function FightModeRenzhiView:ctor()
 	FightModeRenzhiView.super.ctor(self)
 	self.curSaveNum = 0
-	self.labelSave  = nil
 
  	cc.EventProxy.new(self.fightMode, self)
 	 	:addEventListener(self.fightMode.FightMODE_RENZHI_SAVE_EVENT  ,
 	 		 handler(self, self.OnRenzhiSave))	 	
 
+end
+
+function FightModeRenzhiView:initUI()
+	FightModeRenzhiView.super.initUI(self)
+	self.label = cc.uiloader:seekNodeByName(self.ui, "label")
+	self.label:setColor(cc.c3b(0, 255, 235))
 end
 
 function FightModeRenzhiView:refreshUI()

@@ -84,4 +84,18 @@ function UserModel:getUserLevel()
 	return curLevel 
 end
 
+function UserModel:getUserName()
+	local data = getUserData()
+	local name = data.user.userName
+	return name
+end
+
+function UserModel:getLoginTime()
+	
+end
+
+function UserModel:getRegistTime()
+	
+end
+
 return UserModel

@@ -84,9 +84,9 @@ end
 function DoctorEnemyView:playSkillAddHp()
 	local value = self.property["skillValue"]
 	local buffData = {
-		name  = "jiaxue",
+		buffAnimName  = "jiaxue",
 		value = value,
-		time  = nil,
+		times  = nil,
 	}
 	self.enemyM:doBuffAll_increaseHp(buffData)
 end

@@ -27,6 +27,7 @@ function AwardSanEnemyView:ctor(property)
 end
 
 function AwardSanEnemyView:onEnter()
+    AwardSanEnemyView.super.onEnter(self)
     self:playFall()    
 end
 
@@ -82,13 +83,23 @@ function AwardSanEnemyView:sendAward()
     local pWorld = self:convertToWorldSpace(cc.p(0,0))
 
     --award
-    local awardType = self.property.award 
-    if awardType == "goldWeapon" then 
-        local map = md:getInstance("Map")
-        map:dispatchEvent({name = map.AWARD_GOLD_EVENT, pWorld = pWorld})   
-    end
+    local awardType = self.property.award
+    local awardValue = self.property.awardValue
 
+    --anim
+    local map = md:getInstance("Map")
+    map:dispatchEvent({name = map.AWARD_PROP_EVENT, 
+            awardType = awardType, pWorld = pWorld})   
+
+    --prop
+    local awardData = {
+        awardType = awardType,
+        awardValue = awardValue,
+    }
+    local fightProp = md:getInstance("FightProp")
+    fightProp:sendAward(awardData)
 end
+
 function AwardSanEnemyView:onHitted(targetData)
     local demage     = targetData.demage 
     local scale      = targetData.demageScale or 1.0
@@ -99,8 +110,8 @@ function AwardSanEnemyView:onHitted(targetData)
     --爆头
     if self.enemy:getHp() == 0 then 
         if demageType == "head" then 
-            local soundSrc  = "res/Music/fight/btts.wav"
-            self.audioId =  audio.playSound(soundSrc,false)             
+            -- local soundSrc  = "res/Music/fight/btts.wav"
+            -- self.audioId =  audio.playSound(soundSrc, false)             
             self.hero:dispatchEvent({
                 name = self.hero.ENEMY_KILL_HEAD_EVENT})
         end
@@ -110,10 +121,9 @@ end
 function AwardSanEnemyView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or movementType ==  ccs.MovementEventType.complete then
-
         if movementID == "die" or movementID == "die1" then 
-            self:setDeadDone()
             self:sendAward()
+            self:setDeadDone()
         end 
         if  self:getPauseOtherAnim() then
             return 

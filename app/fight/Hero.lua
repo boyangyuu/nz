@@ -75,8 +75,7 @@ function Hero:initGuns()
     local levelModel = md:getInstance("LevelDetailModel")
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
-    local gid,lid = fight:getCurGroupAndLevel()
-    local isJuLevel = levelModel:isJujiFight(gid,lid)
+    local isJuLevel = fight:isJujiFight()
     if isJuLevel then 
         self.bags["bag1"] = Gun.new({bagIndex = "bag3"}) 
         self.bags["bag2"] = Gun.new({bagIndex = "bag3"})
@@ -170,11 +169,11 @@ function Hero:killEnemy()
 end
 
 function Hero:checkKeepKill()
+    self.killKeepCnt = self.killKeepCnt + 1
     if self.killKeepCnt >= define.kHeroKillKeepCnt then
         self:dispatchEvent{name = Hero.EFFECT_KEEPKILL_EVENT, 
             count = self.killKeepCnt}
     end
-    self.killKeepCnt = self.killKeepCnt + 1
     if self.keepKillHandler then 
         scheduler.unscheduleGlobal(self.keepKillHandler)
         self.keepKillHandler = nil

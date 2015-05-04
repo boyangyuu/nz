@@ -71,7 +71,6 @@ function JinbiEnemyView:animationEvent(armatureBack,movementType,movementID)
         if movementID ~= "die" then
 
         elseif movementID == "die" then
-            print("elseif movementID == die then") 
             self:setDeadDone()
         end 
     end

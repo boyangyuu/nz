@@ -11,7 +11,12 @@ local FightModeXianshiView = class("FightModeXianshiView", FightModeBaseView)
 function FightModeXianshiView:ctor()
 	FightModeXianshiView.super.ctor(self)
 	self.curLeftTime = self.modeConfig.limitTime
-	self.labelTime   = nil
+end
+
+function FightModeXianshiView:initUI()
+	FightModeXianshiView.super.initUI(self)
+	self.labelTime = cc.uiloader:seekNodeByName(self.ui, "labelTime")
+	self.labelTime:setColor(cc.c3b(255, 0, 4))
 end
 
 function FightModeXianshiView:refreshUI()
@@ -19,7 +24,6 @@ function FightModeXianshiView:refreshUI()
 end
 
 function FightModeXianshiView:onFightStart(event)
-	self.labelTime = cc.uiloader:seekNodeByName(self.ui, "labelTime") 
 	local timeStr   =  self:getTimeStr(self.curLeftTime)
 	self.labelTime:setString(timeStr)	
 

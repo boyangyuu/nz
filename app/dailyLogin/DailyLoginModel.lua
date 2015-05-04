@@ -70,11 +70,11 @@ function  DailyLoginModel:setGift(dailyID)
 	    um:bonusVirtualCurrency(giftInfo["number"],3)
 		return true
 	elseif giftInfo["type"] == "lei" then
-		propModel:buyProp("lei",giftInfo["number"])
+		propModel:addProp("lei",giftInfo["number"])
 		um:bonusProps("手雷", giftInfo["number"], 0, 3)
 		return true
 	elseif giftInfo["type"] == "jijia" then
-		propModel:buyProp("jijia",giftInfo["number"])
+		propModel:addProp("jijia",giftInfo["number"])
 		um:bonusProps("无敌机甲", giftInfo["number"], 0, 3)
 		return true
 	elseif giftInfo["type"] == "goldweapon" then

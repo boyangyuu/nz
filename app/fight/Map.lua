@@ -19,7 +19,7 @@ Map.MAP_ZOOM_RESUME_EVENT = "MAP_ZOOM_RESUME_EVENT"
 Map.GUN_OPEN_JU_EVENT	  = "GUN_OPEN_JU_EVENT"
 Map.GUN_CLOSE_JU_EVENT    = "GUN_CLOSE_JU_EVENT"
 
-Map.AWARD_GOLD_EVENT 	  = "AWARD_GOLD_EVENT" 	  
+Map.AWARD_PROP_EVENT 	  = "AWARD_PROP_EVENT" 	  
 
 Map.WAVE_UPDATE_EVENT 	  = "WAVE_UPDATE_EVENT" 
 
@@ -50,6 +50,11 @@ function Map:setWaveIndex(index)
 		waveIndex = self.waveIndex})
 end
 
+function Map:getWaveNum()
+	local num = #(self.curWaveCfg.waves)
+	return num
+end
+
 function Map:getWaveIndex()
 	return self.waveIndex
 end
@@ -74,13 +79,6 @@ end
 
 function Map:getIsJuAble()
 	return self.isJuAble
-end
-
-function Map:getIsJuMap()
-	local levelModel = md:getInstance("LevelDetailModel")
-    local gid,lid 	 = self.fight:getCurGroupAndLevel()
-    local isju 	     = levelModel:isJujiFight(gid,lid) 
-    return isju
 end
 
 function Map:changeJuStatus()

@@ -77,8 +77,7 @@ function Robot:startRobot(time)
     local levelModel = md:getInstance("LevelDetailModel")
     local fightFactory =     md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
-    local gid,lid = fight:getCurGroupAndLevel()
-    local isju = levelModel:isJujiFight(gid,lid) 
+    local isju = fight:isJujiFight() 
     if isju then return end	
     
     --um

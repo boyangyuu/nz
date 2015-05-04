@@ -4,10 +4,9 @@ WeaponListModel.WEAPON_UPDATE_EVENT 	= "WEAPON_UPDATE_EVENT"
 WeaponListModel.WEAPON_STAR_ONE_EVENT   = "WEAPON_STAR_ONE_EVENT"
 WeaponListModel.WEAPON_STAR_FULL_EVENT  = "WEAPON_STAR_FULL_EVENT"
 
-function WeaponListModel:ctor(properties, events, callbacks)
+function WeaponListModel:ctor(properties)
 	WeaponListModel.super.ctor(self, properties)
-	self:addComponent("components.behavior.EventProtocol"):exportMethods()
-	-- self:initConfigTable()
+	self:initConfigTable()
 end
 
 function WeaponListModel:initConfigTable()
@@ -17,6 +16,9 @@ end
 
 function WeaponListModel:getWeaponRecord(index)
 	local WeaponRecord = getRecordByID("config/weapon_weapon.json",index)
+	-- local WeaponRecord = getRecordFromTable(self.config,
+	-- 	"id", index)
+	dump(WeaponRecord)
 	return WeaponRecord
 end
 
