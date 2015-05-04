@@ -81,8 +81,9 @@ function LevelMapLayer:initChooseLayer()
     self.panelLeft = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     self.panelgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
-    local telNum = cc.uiloader:seekNodeByName(self.panelDown, "telNum")
-    telNum:enableOutline(cc.c4b(255, 255, 255,255), 1)
+    self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
+    self.telNum:setColor(cc.c3b(255, 0, 0))
+    self.telNum:enableOutline(cc.c4b(255, 255, 255,255), 2)
     local armature = ccs.Armature:create("thj_bx")
     armature:setPosition(56,43)
     btnGold:addChild(armature) 
@@ -142,6 +143,7 @@ function LevelMapLayer:initChooseLayer()
             self:bgAction()
             self:panelAction()
             self.UserModel:panelAction()
+            self.telNum:setVisible(false)
         end
     end)
 
@@ -159,6 +161,7 @@ function LevelMapLayer:initChooseLayer()
             self:bgAction()
             self:panelAction()
             self.UserModel:panelAction()
+            self.telNum:setVisible(false)
         end
     end)
 
@@ -308,6 +311,7 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self.ldArmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.curGroupId)
             self:refreshLevelLayer(self.curGroupId)
+            self.telNum:setVisible(true)
         end
     end
 end
