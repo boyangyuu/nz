@@ -198,7 +198,7 @@ local waves = {
 local enemys = {
 
 	--狙击兵      --type = "juji",
-	{id=4,image="jujib",demage=30,hp=5000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
+	{id=4,image="jujib",demage=30,hp=20000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
 	weak1=3},
 
 	--盾兵         --type = "jin",
@@ -229,7 +229,7 @@ local enemys = {
 	weak1=1},
 
 	--烟雾导弹           type = "dao_wu",
-	{id=22,image="daodan03",demage=10,hp=5000, weak1=1},--打击者金武平均伤害5558
+	{id=22,image="daodan03",demage=10,hp=5000, weak1=1},           --打击者金武平均伤害5558
 
 	--大黑导弹          --missileType = "daodan",
 	{id=23,image="daodan02",demage=50,hp=5000, weak1=1},
@@ -238,10 +238,10 @@ local enemys = {
 	{id=24,image="tieqiu",demage= 50,hp=9000, weak1=1},
 
 	--boss扔的汽车
-	{id=25,image="qiche",demage=50,hp=8000,weak1=1},
+	{id=25,image="qiche",demage=50,hp=9000,weak1=1},
 
 	--高级召唤医疗兵      type = "yiliao",
-	{id=26,image="yiliaob",demage=15,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=26,image="yiliaob",demage=15,hp=20000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--蜘蛛网
@@ -251,12 +251,11 @@ local enemys = {
 	{id=28,image="xiaozz",demage=15,hp=5000, speed=120,
 	weak1=1},
 
-	--女人质           type = "renzhi",                                    speakRate =120,speakCd = 2.0,人质喊话cd
-	{id=29,image="hs",demage=0,hp=10000,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
-	weak1=1},
+	--绑匪                                     140--左右移动距离       280--滚动距离
+	{id=29,image="tufeib",demage=15,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
 
-	--黄衣人质商人      type = "shangren",
-	{id=30,image="shangr_1",hp=10000, weak1=1},	--黄衣人质商人
+	--被绑架人        --type = "bangren",
+	{id=30,image="hs", hp=10000, weak1=1},
 
 	
 
@@ -488,10 +487,10 @@ local bosses = {
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-400, 0), cc.p(-200, -300), cc.p(0, 0), cc.p(200,-300), cc.p(400, 0),
+						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
 			}, 
 			offsetPoses = { 
-						cc.p(-400, 0), cc.p(-200, -300), cc.p(0, 0), cc.p(200,-300), cc.p(400, 0),
+						cc.p(-300, 0), cc.p(-150, -300), cc.p(0, 0), cc.p(150,-300), cc.p(300, 0),
 			},
 		},
 		daoDan2 = {
@@ -500,10 +499,10 @@ local bosses = {
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-400, 0), cc.p(-200, -300), cc.p(0, 0), cc.p(200,-300), cc.p(400, 0),
+						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
 			}, 
 			offsetPoses = { 
-						cc.p(-400, 0), cc.p(-200, -300), cc.p(0, 0), cc.p(200,-300), cc.p(400, 0),
+						cc.p(-300, 0), cc.p(-150, -300), cc.p(0, 0), cc.p(150,-300), cc.p(300, 0),
 			},
 		},
 		daoDan3 = {
@@ -512,10 +511,10 @@ local bosses = {
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-400, 0), cc.p(-200, -300), cc.p(0, 0), cc.p(200,-300), cc.p(400, 0),
+						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
 			}, 
 			offsetPoses = { 
-						cc.p(-400, 0), cc.p(-200, -300), cc.p(0, 0), cc.p(200,-300), cc.p(400, 0),
+						cc.p(-300, 0), cc.p(-150, -300), cc.p(0, 0), cc.p(150,-300), cc.p(300, 0),
 			},
 		},
 
@@ -526,7 +525,7 @@ local bosses = {
 				pos = {400,1000,},
 				delay = {0.5,0,},
 				property = {
-					placeName = "place3" ,
+					placeName = "place5" ,
 					id = 4,
 					type = "juji",
 				},
@@ -539,7 +538,7 @@ local bosses = {
 				pos = {300,500,900,1100},
 				delay = {1,0,0.7,1.4},
 				property = {
-					placeName = "place3" ,
+					placeName = "place4" ,
 					id = 4,
 					type = "juji",
 				},
@@ -549,7 +548,7 @@ local bosses = {
 			{
 				time = 0,	
 				num = 5,
-				pos = {420,620,830,920,1100},
+				pos = {300,500,700,900,1100},
 				delay = {1.4,0,0.7,1.4,0.3},
 				property = {
 					placeName = "place3" ,
@@ -643,7 +642,6 @@ local bosses = {
 		},
 
 		daoDan1 = {
-		
 		    id = 20,                                 --boss导弹
 			type = "missile",                  
 			offsetPoses = {
@@ -666,42 +664,79 @@ local bosses = {
 		},
 
 
-		enemys1 = {                                                   --第一波召唤的自爆兵
+		enemys1 = {                                                     --第一波召唤的人质
 			{
-				time = 0,	
-				num = 3,
-				pos = {360,660,960},
-				delay = {0.7,0,1.4},
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
 				property = {
-					placeName = "place3" ,
-					id = 9,
-					type = "bao",
+					renzhiName = "人质1",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place6",
+					id = 29,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质1",     --  一组统一标示
+					type = "bangren",
+					placeName = "place6",
+					id = 30,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {900},
+				property = {
+					renzhiName = "人质2",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place5",
+					id = 29,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {900},
+				property = {
+					renzhiName = "人质2",     --  一组统一标示
+					type = "bangren",
+					placeName = "place5",
+					id = 30,
 				},
 			},
 		},
-		enemys2 = {                                                      --第二波召唤的兵
+		enemys2 = {                                                      --第二波召唤的人质
 			{
 				time = 0,	
 				num = 4,
 				pos = {360,560,860,1050},
 				delay = {1,0,0.7,1.4},
 				property = {
-					placeName = "place3" ,
-					id = 9,
-					type = "bao",
+					placeName = "place5" ,
+					id = 29,
+					type = "renzhi",
 				},
 			},
 		},
-		enemys3 = {                                                      --第三波召唤的兵
+		enemys3 = {                                                      --第三波召唤的人质
 			{
 				time = 0,	
 				num = 5,
 				pos = {420,620,830,920,1100},
 				delay = {1.4,0,0.7,1.4,0.3},
 				property = {
-					placeName = "place3" ,
-					id = 9,
-					type = "bao",
+					placeName = "place4" ,
+					id = 29,
+					type = "renzhi",
 				},
 			},	
 		},	
@@ -1554,7 +1589,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 0.06,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-300, 300), cc.p(300, 300), cc.p(0, -300),
+            	cc.p(-300, 0), cc.p(0, 0), cc.p(300, 0),
         	},
         },
 
@@ -1563,7 +1598,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 0.06,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-300, 300), cc.p(300, 300), cc.p(0, -300),
+            	cc.p(-300, 0), cc.p(0, 0), cc.p(300, 0),
         	},
         },
 
@@ -1572,7 +1607,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 0.06,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-300, 300), cc.p(300, 300), cc.p(0, -300),
+            	cc.p(-300, 0), cc.p(0, 0), cc.p(300, 0),
         	},
         },
 
@@ -1643,8 +1678,8 @@ local bosses = {
 			zhaohuan = { 0.90, 0.70, 0.40,                    --召唤小兵
 			},   
 
-			wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
-			},
+			-- wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
+			-- },
 
 			daoDan1 = {                                            --两发导弹
 				0.95, 0.75, 0.45, 
