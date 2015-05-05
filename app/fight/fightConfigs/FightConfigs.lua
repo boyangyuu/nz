@@ -12,10 +12,12 @@ local p = "app.fight.fightConfigs"
 
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)
+	self.waveFight = nil
 end
 
 --返回当前战斗下 所有waves
 function FightConfigs:getWaveConfig()
+	if self.waveFight then return self.waveFight end
     local fightFactory = md:getInstance("FightFactory")
     self.fight  = fightFactory:getFight()
 	local group = self.fight:getGroupId()
@@ -26,8 +28,8 @@ function FightConfigs:getWaveConfig()
     end
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
-	local waveFight = require(p .. str_src).new()
-	return waveFight
+	self.waveFight = require(p .. str_src).new()
+	return self.waveFight
 end
 
 function FightConfigs:getWaveImages(gid, lid)

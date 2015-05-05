@@ -55,6 +55,8 @@ function Fight:refreshData(fightData)
     md:deleteInstance("FightMode")
     md:deleteInstance("Map") 
     md:deleteInstance("EnemyManager")
+    md:deleteInstance("FightConfigs")
+
     md:createInstance("FightMode")
     md:createInstance("Map") 
     md:createInstance("EnemyManager")
