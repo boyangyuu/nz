@@ -58,7 +58,6 @@ modelClasses["RankModel"]              = import("..rank.RankModel")
 needCreateClasses["FightMode"] = true
 needCreateClasses["Map"] = true
 needCreateClasses["EnemyManager"] = true
-
 needCreateClasses["Hero"] = true
 needCreateClasses["FightInlay"] = true
 
