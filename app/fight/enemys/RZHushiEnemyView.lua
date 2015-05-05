@@ -180,7 +180,7 @@ function RZHushiEnemyView:playRunAction(direct, isRoll)
 end
 
 function RZHushiEnemyView:getIsWudi()
-	return self.isEntering or self.isExiting
+	return self.isEntering --or self.isExiting
 end
 
 function RZHushiEnemyView:onHitted(targetData)
