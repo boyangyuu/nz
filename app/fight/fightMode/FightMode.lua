@@ -59,7 +59,7 @@ function FightMode:willWin(winData)
 	
     local fightFactory = md:getInstance("FightFactory")
     self.fight = fightFactory:getFight()
-    scheduler.performWithDelayGlobal(handler(self.fight, self.fight.willWin), 2.0)    	
+    scheduler.performWithDelayGlobal(handler(self.fight, self.fight.willWin), 0.0)    	
 end
 
 return FightMode
