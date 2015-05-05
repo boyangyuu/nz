@@ -17,15 +17,19 @@ function FightFactory:ctor()
 	self.fightInstance = nil
 end
 
-function FightFactory:refreshData(property)
-	local fightType = property.fightType or "levelFight"
+function FightFactory:refreshData(fightData)
+    local isContinue = fightData["isContinue"]
+    if isContinue then return end
+
+	self.fightInstance = nil
+	local fightType = fightData.fightType or "levelFight"
 	self.fightType = fightType
 	if self.fightType == "levelFight" then 
-		self.fightInstance = LevelFight.new(property)
+		self.fightInstance = LevelFight.new(fightData)
 	elseif self.fightType == "bossFight" then 
-		self.fightInstance = BossFight.new(property)
+		self.fightInstance = BossFight.new(fightData)
 	elseif self.fightType == "jujiFight" then 
-		self.fightInstance = JujiFight.new(property)		
+		self.fightInstance = JujiFight.new(fightData)		
 	else
 		assert(false)
 	end	

@@ -159,11 +159,8 @@ function MapView:updateEnemys()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	local waveIndex = self.mapModel:getWaveIndex()
 	local wave = waveConfig:getWaves(waveIndex)
-	-- dump(wave, "wave")
-
-	local result = self.fight:getResult()
 	if wave == nil then 
-		print("赢了")
+		local result = self.fight:getResult()
 		if result == nil then 
 			self.fight:willWin(2.0)
 			self:stopAllActions()			
