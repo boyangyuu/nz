@@ -280,7 +280,7 @@ local waves = {
 				property = { 
 					type = "chongBoss",
 					placeName = "place1",
-					missileId = 19,                 --导弹id        
+					missileId = 19,                 --导弹id
 					qiuId = 18,                   --铁球id
 					id = 1,
 				},
