@@ -345,8 +345,7 @@ function Fight:clearFightData()
 end
 
 function Fight:cleanModels()
-
-      
+    
 end
 
 function Fight:setGoldValue(goldValue_)

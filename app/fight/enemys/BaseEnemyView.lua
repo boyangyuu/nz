@@ -47,6 +47,7 @@ function BaseEnemyView:initBlood()
     
     --pos
     local boneBlood = self.armature:getBone("blood")
+    local node = boneBlood:getDisplayRenderNode() 
     local posBone = boneBlood:convertToWorldSpace(cc.p(0, 0))
     local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
     local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
@@ -170,8 +171,6 @@ function BaseEnemyView:playKill(event)
 end
 
 function BaseEnemyView:onHitted(targetData)
-	-- print("BaseEnemyView:onHitted(targetData)")
-	-- dump(targetData, "targetData")
 	local demage 	 = targetData.demage
 	local scale  	 = targetData.demageScale or 1.0
 	local demageType = targetData.demageType
@@ -192,10 +191,6 @@ end
 
 function BaseEnemyView:playStartState(state)
 	self:playStand()
-end
-
-function BaseEnemyView:canHitted()
-	return true
 end
 
 --required

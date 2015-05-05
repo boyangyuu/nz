@@ -448,6 +448,8 @@ function Attackable:playBuff(buffName)
 
 	local buffArmature = ccs.Armature:create(buffName)
 	self.buffNode:addChild(buffArmature)
+	local boneBuff = self.armature:getBone("buff")
+	-- buffArmature:setParentBone(boneBuff)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
