@@ -30,8 +30,6 @@ end
 
 function FightMode:willFail(failData)
 	--result
-	if self.fight:getResult() then return end
-
 	local type = failData.type
 	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
 
@@ -52,14 +50,12 @@ end
 
 function FightMode:willWin(winData)
 	--result
-	if self.fight:getResult() then return end
-
 	local type = winData.type
 	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
 	
     local fightFactory = md:getInstance("FightFactory")
     self.fight = fightFactory:getFight()
-    scheduler.performWithDelayGlobal(handler(self.fight, self.fight.willWin), 0.0)    	
+    scheduler.performWithDelayGlobal(handler(self.fight, self.fight.willWin), 1.0)    	
 end
 
 return FightMode

@@ -15,7 +15,12 @@ modelClasses["InlayModel"]          = import("..inlay.InlayModel")
 modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
 modelClasses["commonPopModel"]      = import("..commonPopup.commonPopModel")
 modelClasses["DailyLoginModel"]     = import("..dailyLogin.DailyLoginModel")
+
+--bossFight
 modelClasses["BossModeModel"]       = import("..bossMode.BossModeModel")
+
+--jujiFight
+modelClasses["JujiModeModel"]       = import("..jujiMode.JujiModeModel")
 
 --fight
 modelClasses["FightFactory"]        = import("..fight.fightTypes.FightFactory")
@@ -50,10 +55,12 @@ modelClasses["IAPsdk"]              = import("..SDK.IAPsdk")
 modelClasses["RankModel"]              = import("..rank.RankModel")
 
 --need create
-needCreateClasses["Hero"] = true
-needCreateClasses["FightInlay"] = true
+needCreateClasses["FightMode"] = true
 needCreateClasses["Map"] = true
 needCreateClasses["EnemyManager"] = true
+
+needCreateClasses["Hero"] = true
+needCreateClasses["FightInlay"] = true
 
 function ModelManager:ctor()
     ModelManager.super.ctor(self) 

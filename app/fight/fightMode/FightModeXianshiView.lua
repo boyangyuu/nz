@@ -53,7 +53,6 @@ function FightModeXianshiView:decreaseTime()
 	if self.curLeftTime == 0 then 
 		transition.removeAction(self.timeSchAction)
 		self:onTimeEnd()
-		return
 	end
 	local timeStr = self:getTimeStr(self.curLeftTime)
 	self.labelTime:setString(timeStr)

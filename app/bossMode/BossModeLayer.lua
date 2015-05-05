@@ -208,7 +208,7 @@ end
 
 function BossModeLayer:onClickBtnStart()
 	local data = getUserData()
-	if self.choseChapter > data.bossmodelevel.chapterIndex then
+	if self.choseChapter > data.bossMode.chapterIndex then
 		ui:showPopup("commonPopup",
 			 {type = "style1",content = "未开启，请通关前面章节！"},
 			 {opacity = 100})
