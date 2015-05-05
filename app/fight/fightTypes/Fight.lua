@@ -33,6 +33,7 @@ Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
+    self:refreshData(properties)
 end
 
 function Fight:beginFight()
@@ -41,6 +42,8 @@ function Fight:beginFight()
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
+    
+    
 end
 
 function Fight:refreshData(fightData)
