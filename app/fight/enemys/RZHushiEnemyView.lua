@@ -188,6 +188,7 @@ function RZHushiEnemyView:onHitted(targetData)
 		return
 	end
 	RZHushiEnemyView.super.onHitted(self, targetData)
+	
     --sound
     local soundSrc  = "res/Music/fight/rz_bj.wav"
 	audio.playSound(soundSrc,false)  	

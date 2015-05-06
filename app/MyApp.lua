@@ -162,10 +162,14 @@ function MyApp:createGameStateFile()
                         level = 6,
             },
 
-            bossmodelevel = {
+            bossMode = {
                 chapterIndex = 1, 
                 waveIndex = 0, 
             },
+
+            jujiMode = {
+                waveIndex = 0, 
+            },            
 
             user = {
                 level = 1,

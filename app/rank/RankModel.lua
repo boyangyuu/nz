@@ -54,7 +54,7 @@ function RankModel:getUserRankData(type)
 	local jujiLevel = userData.user.jujiRankLevel 
 
 	local data = {}
-	if type == "jujiLevel" then 
+	if type == "jujiMode" then 
 		data = {
 			name = self.user:getUserName(),
 			level = jujiLevel,

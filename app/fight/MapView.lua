@@ -159,11 +159,8 @@ function MapView:updateEnemys()
 	local waveConfig = self.mapModel:getCurWaveConfig()
 	local waveIndex = self.mapModel:getWaveIndex()
 	local wave = waveConfig:getWaves(waveIndex)
-	-- dump(wave, "wave")
-
-	local result = self.fight:getResult()
 	if wave == nil then 
-		print("赢了")
+		local result = self.fight:getResult()
 		if result == nil then 
 			self.fight:willWin(2.0)
 			self:stopAllActions()			
@@ -184,7 +181,7 @@ function MapView:updateEnemys()
 	self:addWave(wave.enemys)
 end
 
-function MapView:addWave(waveData)
+function MapView:addWave(waveData, isZhaohuan)
 	local lastTime = 0
 	local order = kDefine["orderMax"]
 	for groupId, group in ipairs(waveData) do
@@ -217,6 +214,8 @@ function MapView:addWave(waveData)
 			self:performWithDelay(addEnemyFunc, delay)
 		end
 	end	
+
+	if isZhaohuan then return end
 	self:performWithDelay(handler(self, self.checkWave), lastTime + 1)	
 end
 
@@ -228,6 +227,7 @@ function MapView:showEnemyIntro(descId, time)
 end
 
 function MapView:checkWave()
+	print("function MapView:checkWave()")
 	local function checkEnemysEmpty()
 		local leftnum   =  self:getLeftEnemyNum()
 		local cachenum  = #self.cacheEnemys
@@ -239,6 +239,7 @@ function MapView:checkWave()
 			self:checkGuide()
 			self:updateEnemys()
 			transition.removeAction(self.checkEnemysEmptyHandler)
+			self.checkEnemysEmptyHandler = nil
 		end
 	end
 	self.checkEnemysEmptyHandler = self:schedule(checkEnemysEmpty, 1.0)
@@ -573,7 +574,7 @@ end
 
 --events
 function MapView:callfuncAddWave(event)
-	self:addWave(event.waveData)
+	self:addWave(event.waveData, true)
 end
 
 function MapView:callfuncAddEnemys(event)

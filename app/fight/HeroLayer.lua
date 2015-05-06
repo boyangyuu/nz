@@ -140,6 +140,7 @@ end
 
 
 function HeroLayer:onCleanup()
+	print("function HeroLayer:onCleanup()")
 	if self.hpUpdateHandler then
 		scheduler.unscheduleGlobal(self.hpUpdateHandler)
 		self.hpUpdateHandler = nil

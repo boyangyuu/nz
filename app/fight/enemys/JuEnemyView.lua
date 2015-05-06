@@ -117,10 +117,6 @@ function JuEnemyView:playHitted(event)
 	self:playHittedEffect()
 end
 
-function JuEnemyView:canHitted()
-	return true
-end
-
 function JuEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
 		armatureBack:stopAllActions()

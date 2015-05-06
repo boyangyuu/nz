@@ -541,8 +541,6 @@ local bosses = {
 		},
 
 
-
-
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
 			local move2 = cc.MoveBy:create(15/60, cc.p(-18, 0))

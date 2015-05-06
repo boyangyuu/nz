@@ -87,10 +87,6 @@ function RZBangrenEnemyView:playRun()
         cc.CallFunc:create(callfunc)))
 end
 
-function RZBangrenEnemyView:canHitted()
-    return true
-end
-
 function RZBangrenEnemyView:rectIntersectsRect(focusBound, enemyBound)
     focusBound.width = 1
     focusBound.height = 1

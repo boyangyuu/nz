@@ -33,6 +33,7 @@ Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
+    self:refreshData(properties)
 end
 
 function Fight:beginFight()
@@ -41,25 +42,31 @@ function Fight:beginFight()
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
+    
+    
 end
 
 function Fight:refreshData(fightData)
     self.groupId   = fightData.groupId
-    self.levelId   = fightData.levelId   
-
-    --init inatance
-    self:cleanModels()
-
+    self.levelId   = fightData.levelId
     self.inlayModel = md:getInstance("InlayModel")
-    self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
-    self.map        = md:createInstance("Map")
-    self.robot      = md:createInstance("Robot")
-    self.enemyM     = md:createInstance("EnemyManager")
-    self.inlay      = self.hero:getFightInlay()
-    self.goldValue = 0.0
+
+    --clear   
     self.result = nil
     self.resultData = {}
     self.isPause = false
+    md:createInstance("FightMode")
+    md:createInstance("Map") 
+    md:createInstance("EnemyManager")
+    
+    --init instance
+    local isContinue = fightData["isContinue"]
+    if isContinue then return end
+    -- self:cleanModels()
+
+    self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
+    self.inlay      = self.hero:getFightInlay()
+    self.goldValue  = 0.0
 end
 
 function Fight:refreshUm()
@@ -332,12 +339,7 @@ function Fight:clearFightData()
 end
 
 function Fight:cleanModels()
-    md:deleteInstance("Hero")
-    md:deleteInstance("FightInlay")  
-    md:deleteInstance("Defence")
-    md:deleteInstance("Robot")
-    md:deleteInstance("FightConfigs")
-    md:deleteInstance("EnemyManager")
+    
 end
 
 function Fight:setGoldValue(goldValue_)
@@ -349,10 +351,12 @@ function Fight:getGoldValue()
 end
 
 function Fight:getResult()
+    print("getResult", self.result)
     return self.result
 end
 
 function Fight:setResult(result)
+    print("setResult", self.result)
     self.result = result
 end
 
