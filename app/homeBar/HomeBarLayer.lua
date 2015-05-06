@@ -57,18 +57,17 @@ function HomeBarLayer:popUpNextLevel()
 end
 
 function HomeBarLayer:mapPopUp(event)
-    function delayPopUp()
-        if self.properties.fightData.fightType == "levelFight" then 
+    if self.properties.fightData.fightType == "levelFight" then 
+        function delayPopUpLF()
             self:popUpNextLevel()
             self:popUpWeaponGift()   
-        elseif self.properties.fightData.fightType == "bossFight" then
-            local chapterIndex = self.properties.fightData.chapterIndex
-            ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex})
-        end  
-        self:initDailyLogin()
-    end
-    
-    self:performWithDelay(delayPopUp, 1)
+        end
+        self:performWithDelay(delayPopUpLF, 1)
+    elseif self.properties.fightData.fightType == "bossFight" then
+        local chapterIndex = self.properties.fightData.chapterIndex
+        ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{anim = false})
+    end  
+    self:initDailyLogin()    
 end
 
 function HomeBarLayer:initDailyLogin()
