@@ -18,7 +18,7 @@ local waves = {
 			},
 		},
 	},
---[[	{
+	{
 		enemys = { 
 			{
 				time = 3,
@@ -88,7 +88,7 @@ local waves = {
 				descId = "zpbing",               --简介重炮兵
 				time = 2,
 				num = 1,
-				delay = {4},
+				delay = {0},
 				pos = {450},
 				property = {
 					placeName = "place11",  
@@ -229,7 +229,7 @@ local waves = {
 				},
 			},
 		},
-	}, ]]
+	}, 
 
 }
 --enemy的关卡配置

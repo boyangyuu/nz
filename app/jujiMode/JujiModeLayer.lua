@@ -5,8 +5,13 @@ local JujiModeLayer = class("JujiModeLayer", function()
 end)
 
 function JujiModeLayer:ctor()
+	self.jujiModel = md:getInstance("JujiModeModel")
+	self.rankModel = md:getInstance("RankModel")
+	self.rankTable = self.jujiModel:getRankData()
+
 	self:loadCCS()
 	self:initUI()
+	self:refreshListView()
 end
 
 function JujiModeLayer:loadCCS()
@@ -23,6 +28,13 @@ function JujiModeLayer:initUI()
 	local playerRank = cc.uiloader:seekNodeByName(self, "rank")
 	local playerName = cc.uiloader:seekNodeByName(self, "playerName")
 	local playerPoint = cc.uiloader:seekNodeByName(self, "point")
+
+	local myselfRecord = self.rankModel:getUserRankData("jujiLevel")
+	local myselfRank = self.rankModel:getUserRank()
+	playerRank:setString(myselfRank)
+	playerName:setString(myselfRecord["name"])
+	playerPoint:setString(myselfRecord["jujiLevel"] )
+
 	btnBack:setTouchEnabled(true)
 	addBtnEventListener(btnBack, function(event)
 			if event.name == 'began' then
@@ -53,13 +65,10 @@ function JujiModeLayer:onClickBtnReward()
 end
 
 function JujiModeLayer:refreshListView(index)
-	--need Player Table, Waiting for YYB
-	local table = {}
-
     removeAllItems(self.listViewPlayer)
-    for i=1,#table do
+    for i=1,#self.rankTable do
         local item = self.listViewPlayer:newItem()
-        local content = JujiPlayerCell.new(table[i])
+        local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})
         item:addContent(content)
         item:setItemSize(524, 88)
         self.listViewPlayer:addItem(item)
