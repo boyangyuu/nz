@@ -18,9 +18,8 @@ end
 
 function RankModel:getRankData(sortType)
 	--type 
-	sortType = sortType == "jujiLevel" and "level" or "vipLevel"
+	self.rankData = clone(self.rankConfig)
 
-	self.rankData = self.rankConfig
 
     local loginTime = 1430067661
     local now = os.time()	
@@ -31,13 +30,13 @@ function RankModel:getRankData(sortType)
 
     --grow
     for i,record in ipairs(self.rankData) do
-    	local speed = record["growSpeed"]
-    	record["level"] = math.floor(record["level"] + 
+    	local speed = record["jujiSpeed"]
+    	record[sortType] = math.floor(record[sortType] + 
     			offsetDays * speed)
     end
 
 	--add self
-	self.rankData[#self.rankData + 1] = self:getUserRankData("jujiLevel")
+	self.rankData[#self.rankData + 1] = self:getUserRankData(sortType)
 
     --sort
 	local function sortFunction(record1, record2)
@@ -49,15 +48,24 @@ function RankModel:getRankData(sortType)
 	return self.rankData
 end
 
+function RankModel:getUserRank()
+	for i,v in ipairs(self.rankData) do
+		if v.name == self.user:getUserName() and v.isUser == true then
+			return i
+		end
+	end
+end
+
 function RankModel:getUserRankData(type)
 	local userData = getUserData()
 	local jujiLevel = userData.user.jujiRankLevel 
 
 	local data = {}
-	if type == "jujiMode" then 
+	if type == "jujiLevel" then 
 		data = {
 			name = self.user:getUserName(),
-			level = jujiLevel,
+			jujiLevel = jujiLevel,
+			isUser = true,
 		}
 	elseif type == "boss" then	
 
