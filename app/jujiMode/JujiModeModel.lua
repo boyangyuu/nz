@@ -1,4 +1,3 @@
-
 local JujiModeModel = class("JujiModeModel", cc.mvc.ModelBase)
 
 function JujiModeModel:ctor(properties)
@@ -11,7 +10,7 @@ end
 
 function JujiModeModel:getRankData()
     local rank = md:getInstance("RankModel")
-    local data = rank:getRankData("jujiMode")
+    local data = rank:getRankData("jujiLevel")
     -- dump(data, "data")
     return data	
 end

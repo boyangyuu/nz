@@ -96,4 +96,8 @@ function UserModel:getRegisterTime()
 	return registerTime 
 end
 
+function UserModel:getUserName()
+	return "DonnieSuen"
+end
+
 return UserModel
