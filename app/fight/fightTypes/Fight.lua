@@ -33,7 +33,6 @@ Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
-    self:refreshData(properties)
 end
 
 function Fight:beginFight()
@@ -42,8 +41,6 @@ function Fight:beginFight()
 
     --dialog
     scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
-    
-    
 end
 
 function Fight:refreshData(fightData)
@@ -55,6 +52,10 @@ function Fight:refreshData(fightData)
     self.result = nil
     self.resultData = {}
     self.isPause = false
+    md:deleteInstance("FightMode")
+    md:deleteInstance("Map") 
+    md:deleteInstance("EnemyManager")    
+    md:deleteInstance("FightConfigs")   
     md:createInstance("FightMode")
     md:createInstance("Map") 
     md:createInstance("EnemyManager")
@@ -62,7 +63,9 @@ function Fight:refreshData(fightData)
     --init instance
     local isContinue = fightData["isContinue"]
     if isContinue then return end
-    -- self:cleanModels()
+
+    print("elf.hero:getFightInlay()")
+ 
 
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.inlay      = self.hero:getFightInlay()
@@ -339,7 +342,7 @@ function Fight:clearFightData()
 end
 
 function Fight:cleanModels()
-    
+ 
 end
 
 function Fight:setGoldValue(goldValue_)

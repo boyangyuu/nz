@@ -25,9 +25,12 @@ end)
 function FightPlayer:ctor(properties)
     --instance
     local fightFactory = md:getInstance("FightFactory")
+    fightFactory:refreshData(properties.fightData)
     self.fight      = fightFactory:getFight()
-    dump(properties, "properties")
+    -- dump(properties, "properties")
+    self.fight:refreshData(properties.fightData)
     self.fight:beginFight()
+   
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
