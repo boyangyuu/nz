@@ -219,7 +219,7 @@ function RootLayer:addResFight()
     local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "baozha4",
         "effect_gun_kaiqiang", "wdhd", 
-        "direnlx", "renwuks", "qiangdicx", "jinbijl", "jiaxue"}
+        "renwuks", "qiangdicx", "jinbijl", "jiaxue"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
