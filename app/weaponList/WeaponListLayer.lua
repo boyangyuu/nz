@@ -217,25 +217,26 @@ function WeaponListLayer:onClickBtnEquip(weaponid)
 end
 
 function WeaponListLayer:onClickBtnOncefull()
-    local guide = md:getInstance("Guide")
-    local isBoughtWeapon = self.buyModel:checkBought("weaponGiftBag")
-    if not isBoughtWeapon then
-        self.buyModel:showBuy("weaponGiftBag",{
-            payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-            deneyBuyFunc = handler(self, self.onCancelOncefull),isNotPopKefu = true},"武器库界面_点击一键满级")
-    elseif isBoughtWeapon then
+    local function funcCofirm()
         self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
     end
+    ui:showPopup("commonPopup",
+             {type = "style7", content = proInfo.getConfig("onceFull"), callfuncCofirm = funcCofirm},
+             {opacity = 0})
 end
 
 function WeaponListLayer:onClickBtnBuy()
-    local guide = md:getInstance("Guide")
-    if self.buyModel:checkBought("weaponGiftBag") == false then
-        self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-          deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
-                                       "武器库界面_点击解锁武器"..self.weaponRecord["name"])
-    end
+    -- 暂时不用
+    -- local guide = md:getInstance("Guide")
+    -- if self.buyModel:checkBought("weaponGiftBag") == false then
+    --     self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+    --       deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
+    --                                    "武器库界面_点击解锁武器"..self.weaponRecord["name"])
+    -- end
+
+    self:onCancelWeaponGift()
+
 end
 
 function WeaponListLayer:onClickBtnUpgrade(event)
@@ -252,11 +253,21 @@ function WeaponListLayer:onCancelWeaponGift()
     else
         local rmbCost = self.weaponRecord["rmbCost"]
         if  rmbCost == 6 then
-            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
+            local function funcCofirm()
+                self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
                 payDoneFunc = handler(self, self.onBuyWeaponSucc)},
                  "武器库界面_点击解锁武器"..self.weaponRecord["name"])
+            end
+            ui:showPopup("commonPopup",
+                {type = "style7", content = proInfo.getConfig("unlockWeapon"), callfuncCofirm = funcCofirm},
+                {opacity = 0})
         elseif rmbCost == 10 then
-            self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
+            local function funcCofirm()
+                self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
+            end
+            ui:showPopup("commonPopup",
+                {type = "style7", content = proInfo.getConfig("highgradeWeapon"), callfuncCofirm = funcCofirm},
+                {opacity = 0})
         end
     end
 end

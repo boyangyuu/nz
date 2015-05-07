@@ -31,7 +31,7 @@ function IAPsdk:initConfigs()
 	if self.telecomOperator == "mobile" then
 		--移动商用计费代码 3月28日检查 无错误
 		--礼包
-		config["novicesBag"]       = "30000883682311"		--新手礼包
+		config["novicesBag"]       = "30000883682301"		--新手礼包
 		config["weaponGiftBag"]    = "30000883682317"		--武器礼包
 		config["goldGiftBag"]      = "30000883682318"		--土豪金礼包
 
@@ -51,7 +51,7 @@ function IAPsdk:initConfigs()
 	elseif self.telecomOperator == "unicom" then
 		--联通商用计费代码 3月28日检查 无错误
 		--礼包
-		config["novicesBag"]       = "017"		--新手礼包1
+		config["novicesBag"]       = "001"		--新手礼包1
 		config["weaponGiftBag"]    = "018"		--武器到礼包1
 		config["goldGiftBag"]      = "019"		--土豪金礼包1
 
@@ -70,7 +70,7 @@ function IAPsdk:initConfigs()
 	elseif self.telecomOperator == "telecom" then
 		-- 电信外放计费代码 3月28日检查 无错误
 		--礼包
-		config["novicesBag"]       = "5156711"		--新手礼包
+		config["novicesBag"]       = "5156701"		--新手礼包
 		config["weaponGiftBag"]    = "5156712"		--武器到礼包
 		config["goldGiftBag"]      = "5156713"		--土豪金礼包
 
@@ -99,6 +99,9 @@ function IAPsdk:pay(name)
 	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	if isFree or self.telecomOperator == nil then
 		self:callbackSuccess()
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "道具购买成功！", delay = 1},
+			 {opacity = 0})
 		print("请在手机上支付 傻逼！")
 	else
 		if device.platform == 'android' then
