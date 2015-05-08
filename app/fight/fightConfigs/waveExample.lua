@@ -153,7 +153,7 @@ local waveClass = class("waveExample", BaseWave)
 				property = { 
 					type = "awardSan",
 					id = 11,
-					award = "goldWeapon",
+					award = "goldWeapon",         --黄金武器
 					placeName = "place1",
 				},
 			},
@@ -165,7 +165,7 @@ local waveClass = class("waveExample", BaseWave)
 				property = { 
 					type = "awardSan",
 					id = 11,
-					award = "shouLei",
+					award = "shouLei",            --手雷
 					value = 1,
 					placeName = "place1",
 				},
@@ -178,7 +178,7 @@ local waveClass = class("waveExample", BaseWave)
 				property = { 
 					type = "awardSan",
 					id = 11,
-					award = "coin",
+					award = "coin",                 --金币
 					value = 1000,
 					placeName = "place1",
 				},
@@ -191,13 +191,13 @@ local waveClass = class("waveExample", BaseWave)
 				property = { 
 					type = "awardSan",
 					id = 11,
-					award = "healthBag",
+					award = "healthBag",             --医疗包
 					value = 1,
 					placeName = "place1",
 				},
 			},		
 	-- 金武箱子奖励  type = "awardSan",
-	{id=11,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励  
+	{id=11,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 
 
 
 --enemy的关卡配置                                                    白银难度对应怪物属性
