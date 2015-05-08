@@ -7,11 +7,11 @@
 
 local BaseEnemy = import(".BaseEnemy")
 local Enemy = class("Enemy", BaseEnemy)
-local FightConfigs = import("..fightConfigs.FightConfigs")
 
 function Enemy:ctor(enemy_property)
     --super
-    local waveConfig = FightConfigs:getWaveConfig()
+    self.fightConfigs  = md:getInstance("FightConfigs")
+    local waveConfig = self.fightConfigs:getWaveConfig() 
     self.config = waveConfig:getEnemys(enemy_property.id)  
     local hpScale     = enemy_property["hpScale"] or 1.0
     local actor_property = {

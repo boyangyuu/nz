@@ -12,12 +12,12 @@ local p = "app.fight.fightConfigs"
 
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)
-	self.waveFight = nil
+	print("function FightConfigs:ctor(properties)")
+	self:initWaveConfig()
 end
 
 --返回当前战斗下 所有waves
-function FightConfigs:getWaveConfig()
-	if self.waveFight then return self.waveFight end
+function FightConfigs:initWaveConfig()
     local fightFactory = md:getInstance("FightFactory")
     self.fight  = fightFactory:getFight()
 	local group = self.fight:getGroupId()
@@ -28,11 +28,18 @@ function FightConfigs:getWaveConfig()
     end
 	local name_lua = "wave"..group.."_"..level
 	local str_src = "."..name_lua
-	self.waveFight = require(p .. str_src).new()
-	return self.waveFight
+	self.waveConfig = require(p .. str_src).new()
+	assert(self.waveConfig, "self.waveConfig is nil")
 end
 
-function FightConfigs:getWaveImages(gid, lid)
+--返回当前战斗下 所有waves
+function FightConfigs:getWaveConfig()
+	assert(self.waveConfig ~= nil, "self.waveConfig is nil")
+	return self.waveConfig
+end
+
+function FightConfigs.getWaveImages(gid, lid)
+	print("FightConfigs:getWaveImages", lid)
     if math.floor(lid) < lid then
         lid = tostring(lid)
         lid = string.gsub(lid, "%.", "_")

@@ -1,6 +1,6 @@
 local StartLayer = import("..start.StartLayer")
 local FightPlayer = import("..fight.FightPlayer")
-
+local FightConfigs  = import("..fight.fightConfigs.FightConfigs")
 local LayerColor_BLACK = cc.c4b(0, 122, 44, 0)
 
 local RootLayer = class("RootLayer", function()
@@ -169,8 +169,8 @@ function RootLayer:addResFight()
     local manager = ccs.ArmatureDataManager:getInstance()
 
     --enemys
-    local fightConfigs  = md:getInstance("FightConfigs")
-    local enemyImages = fightConfigs:getWaveImages(gid, lid)
+
+    local enemyImages = FightConfigs.getWaveImages(gid, lid)
     for i,v in ipairs(enemyImages) do
         local src = "res/Fight/enemys/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)

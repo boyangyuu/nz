@@ -99,9 +99,6 @@ function IAPsdk:pay(name)
 	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	if isFree or self.telecomOperator == nil then
 		self:callbackSuccess()
-		ui:showPopup("commonPopup",
-			 {type = "style2", content = "道具购买成功！", delay = 1},
-			 {opacity = 0})
 		print("请在手机上支付 傻逼！")
 	else
 		if device.platform == 'android' then
