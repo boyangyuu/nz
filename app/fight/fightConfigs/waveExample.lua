@@ -144,6 +144,61 @@ local waveClass = class("waveExample", BaseWave)
 	{id=4,image="yiliaob",demage=20,hp=1110,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=3},
 
+---------- 奖励兵配置 -----------------------------
+			{
+				time = 6,	                                               --金武奖励箱子
+				num = 1,
+				pos = {200},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 11,
+					award = "goldWeapon",
+					placeName = "place1",
+				},
+			},
+			{
+				time = 6,	                                               --金武奖励箱子
+				num = 1,
+				pos = {200},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 11,
+					award = "shouLei",
+					value = 1,
+					placeName = "place1",
+				},
+			},
+			{
+				time = 6,	                                               --金武奖励箱子
+				num = 1,
+				pos = {200},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 11,
+					award = "coin",
+					value = 1000,
+					placeName = "place1",
+				},
+			},						
+			{
+				time = 6,	                                               --金武奖励箱子
+				num = 1,
+				pos = {200},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 11,
+					award = "healthBag",
+					value = 1,
+					placeName = "place1",
+				},
+			},		
+	-- 金武箱子奖励  type = "awardSan",
+	{id=11,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励  
+
 
 --enemy的关卡配置                                                    白银难度对应怪物属性
 local enemys = {
