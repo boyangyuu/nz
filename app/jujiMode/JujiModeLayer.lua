@@ -11,7 +11,11 @@ function JujiModeLayer:ctor()
 
 	self:loadCCS()
 	self:initUI()
-	self:refreshListView()
+	self:setNodeEventEnabled(true)
+end
+
+function JujiModeLayer:onEnter()
+	self:performWithDelay(handler(self,self.refreshListView),0.3)
 end
 
 function JujiModeLayer:loadCCS()
@@ -53,7 +57,14 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:onClickBtnStart()
+	local isInternetConnectionAvailable = network.isInternetConnectionAvailable()
+	if isInternetConnectionAvailable then
 
+	else
+		ui:showPopup("commonPopup",
+			 {type = "style1",content = "当前网络连接失败，连接网络后数据将会统计"},
+			 {opacity = 0})
+	end
 end
 
 function JujiModeLayer:onClickBtnClose()
@@ -64,8 +75,7 @@ function JujiModeLayer:onClickBtnReward()
 	
 end
 
-function JujiModeLayer:refreshListView(index)
-    removeAllItems(self.listViewPlayer)
+function JujiModeLayer:refreshListView()
     for i=1,#self.rankTable do
         local item = self.listViewPlayer:newItem()
         local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})

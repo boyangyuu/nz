@@ -26,13 +26,21 @@ function FightProp:costRobot(callfuncSuccess)
 		self.propModel:costProp("jijia",1) 
 		callfuncSuccess()
 	else
+		-- 保留，暂时不用
 		--buy
-		local function deneyBuyFunc()
+		-- local function deneyBuyFunc()
+		-- 	self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
+		-- 		isNotPopKefu = true}, "战斗界面_点击机甲")
+		-- end 
+		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
+		-- 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击机甲")
+		
+		local function funcCofirm()
 			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
-				isNotPopKefu = true}, "战斗界面_点击机甲")
-		end 
-		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击机甲")
+				isNotPopKefu = true}, "战斗界面_点击机甲")		end
+		ui:showPopup("commonPopup",
+			 {type = "style7", content = proInfo.getConfig("armedMecha"), callfuncCofirm = funcCofirm},
+			 {opacity = 0})
 	end
 	self:refreshData()
 end
@@ -58,13 +66,22 @@ function FightProp:costLei(callfuncSuccess)
 	    umData[levelInfo] = "手雷"
 	    um:event("关卡道具使用", umData) 		
 	else
-		local function deneyBuyFunc()
+		-- 保留，暂时不用
+		-- local function deneyBuyFunc()
+		-- 	self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
+		-- 				isNotPopKefu = true}, "战斗界面_点击手雷")
+		-- end 		
+		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
+		-- 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}
+		-- 				, "战斗界面_点击手雷")
+		
+		local function funcCofirm()
 			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
-						isNotPopKefu = true}, "战斗界面_点击手雷")
-		end 		
-		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
-						deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}
-						, "战斗界面_点击手雷")
+				isNotPopKefu = true}, "战斗界面_点击手雷")
+		end
+		ui:showPopup("commonPopup",
+			 {type = "style7", content = proInfo.getConfig("handGrenade"), callfuncCofirm = funcCofirm},
+			 {opacity = 0})
 	end
 	self:refreshData()
 end
@@ -85,12 +102,22 @@ function FightProp:costGoldWeapon()
 		inlayModel:equipAllInlays()
 		fightInlay:checkNativeGold()
 	else
-		local function deneyBuyFunc()
+		-- 保留，暂时不用
+		-- local function deneyBuyFunc()
+		-- 	self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
+		-- 				isNotPopKefu = true}, "战斗界面_点击黄武")
+		-- end 		
+		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
+		-- 		deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击黄武")	
+	
+		local function funcCofirm()
 			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
-						isNotPopKefu = true}, "战斗界面_点击黄武")
-		end 		
-		self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
-				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击黄武")	
+				isNotPopKefu = true}, "战斗界面_点击黄武")
+		end
+		ui:showPopup("commonPopup",
+			 {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = funcCofirm},
+			 {opacity = 0})
+
 	end
 	self:refreshData()
 end

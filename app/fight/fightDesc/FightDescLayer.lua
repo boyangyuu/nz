@@ -80,18 +80,19 @@ end
 
 function FightDescLayer:onWaveStart(event)
     self:setVisible(true)
-    armature = ccs.Armature:create("direnlx")
-    armature:getAnimation():setMovementEventCallFunc(
-        function ( armatureBack,movementType,movementId ) 
-            if movementType == ccs.MovementEventType.loopComplete then
-                armature:removeFromParent()
-                armature = nil
-                self:setVisible(false)
-            end
-        end)
-    addChildCenter(armature, self.animPanl)
-    local animName = "direnlx"..event.waveNum
-    armature:getAnimation():play(animName , -1, 1)
+    local label = display.newBMFontLabel({
+        text = "A"..event.waveNum.."BCDEF",
+        font = "res/fnt/NO7.fnt",
+        })
+    addChildCenter(label, self.animPanl)
+
+    action1 = cc.ScaleTo:create(0.5, 2)
+    action2 = cc.ScaleTo:create(5/12, 1)
+
+    label:runAction(transition.sequence({action1, cc.DelayTime:create(1/6),action2,
+        cc.CallFunc:create(function()
+                    self:setVisible(false)
+                    end)}))
 end
 
 function FightDescLayer:onGoldWaveStart(event)

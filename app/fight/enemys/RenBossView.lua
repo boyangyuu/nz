@@ -201,10 +201,27 @@ function RenBossView:playFire()
     end
 end
 
-function RenBossView:playZhanHuan(index)
+function RenBossView:zhaohuan(index)
+    local name     = "enemys"..index
+    if self.zhaohuans[name] then 
+        return 
+    end
+
     self.armature:getAnimation():play("zhaohuan", -1, 1)
-    self:zhaohuan(index)
     self.isShaning = true
+    self.zhaohuans[name] = true
+    local waveData = self.config[name]
+    assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. index)
+    self.enemysCallNum = 0
+    for i,group in ipairs(waveData) do
+        local bossId = self.property["id"]
+        group.property["deadEventData"] = {name = self.hero.ENEMY_KILL_CALL_EVENT, 
+                                            bossId = bossId}
+        self.enemysCallNum = self.enemysCallNum + group.num
+    end
+
+    self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
+        waveData = waveData})
 end
 
 function RenBossView:onKillLastCall()

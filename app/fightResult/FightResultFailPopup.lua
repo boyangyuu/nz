@@ -72,16 +72,29 @@ function FightResultFailPopup:initUI()
 end
 
 function FightResultFailPopup:onCancelGoldGift()
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
-     "战斗失败页面_原地复活取消土豪")
+    -- 保留，暂时不用
+    -- local buyModel = md:getInstance("BuyModel")
+    -- buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
+    --  "战斗失败页面_原地复活取消土豪")
+
+    local function funcCofirm()
+        local buyModel = md:getInstance("BuyModel")
+        buyModel:showBuy("resurrection",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
+             "战斗失败页面_原地复活取消土豪")
+    end
+    ui:showPopup("commonPopup",
+         {type = "style7", content = proInfo.getConfig("resurrection"), callfuncCofirm = funcCofirm},
+         {opacity = 0})
 end
 
 function FightResultFailPopup:onClickRelive()
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
-        deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true,isNotPopKefu = true},
-     "失败页面_点击复活按钮")
+    -- 保留，暂时不用
+    -- local buyModel = md:getInstance("BuyModel")
+    -- buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
+    --     deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true,isNotPopKefu = true},
+    --  "失败页面_点击复活按钮")
+    
+    self:onCancelGoldGift()
 end
 
 function FightResultFailPopup:onClickBackHome()

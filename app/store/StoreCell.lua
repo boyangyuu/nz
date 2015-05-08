@@ -190,14 +190,30 @@ function StoreCell:addBtnEvent()
                 end
             else
                 if self.record["nameid"] == "goldweapon" then
-                    self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
-                        deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_黄武钻石不够")
+                    -- 暂时不用
+                    -- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
+                    --     deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_黄武钻石不够")
+
+                    ui:showPopup("commonPopup",
+                        {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = handler(self, self.deneyGoldGift)},
+                        {opacity = 0})
                 elseif self.record["nameid"] == "jijia" then
-                    self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
-                        deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_机甲钻石不够")
+                    -- 暂时不用
+                    -- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
+                    --     deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_机甲钻石不够")
+
+
+                    ui:showPopup("commonPopup",
+                        {type = "style7", content = proInfo.getConfig("armedMecha"), callfuncCofirm = handler(self, self.deneyGoldGift)},
+                        {opacity = 0})
                 elseif self.record["nameid"] == "lei" then
-                    self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
-                        deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_手雷钻石不够")
+                    -- 暂时不用
+                    -- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
+                    --     deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_手雷钻石不够")
+                   
+                    ui:showPopup("commonPopup",
+                        {type = "style7", content = proInfo.getConfig("handGrenade"), callfuncCofirm = handler(self, self.deneyGoldGift)},
+                        {opacity = 0})
                 end
             end
         elseif self.type == "bank" then
