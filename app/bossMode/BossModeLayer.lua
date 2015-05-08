@@ -34,6 +34,7 @@ function BossModeLayer:initUI()
 
 	local panelWeapon = cc.uiloader:seekNodeByName(self.panelDown, "panelWeapon")
 	self.panelChapter = cc.uiloader:seekNodeByName(self.panelMain, "panelChapter")
+	self.weaponName   = cc.uiloader:seekNodeByName(self.panelMain, "weaponName")
 
 	--gun
 	self.panelGun = cc.uiloader:seekNodeByName(self.panelMain, "panelGun")
@@ -151,6 +152,11 @@ function BossModeLayer:refreshContent()
 	weaponImg:setScale(1.1)
 	addChildCenter(weaponImg, self.panelGun)
 
+
+	self.weaponName:removeAllChildren()
+	local weaponName = display.newSprite("#name_"..imgName..".png")
+	addChildCenter(weaponName, self.weaponName)
+
 	--
 	self.panelChapter:removeAllChildren()
     local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
@@ -214,8 +220,8 @@ function BossModeLayer:onClickBtnStart()
 			 {opacity = 100})
 		return
 	end
-	-- local fightData = {groupId = 50, levelId = 1, fightType = "bossFight", chapterIndex = self.choseChapter}
-	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}
+	local fightData = {groupId = 50, levelId = 1, fightType = "bossFight", chapterIndex = self.choseChapter}
+	-- local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
 	ui:closePopup("BossModeLayer")
 end

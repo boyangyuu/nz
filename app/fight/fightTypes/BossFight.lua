@@ -65,6 +65,7 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 	--desc
 	local function closeFunc()
 		print("closeFunc!")
+		self:pauseFight(false)
 	end
 
 	local map = md:getInstance("Map")
@@ -78,6 +79,7 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 	}
 
     fightDescModel:dispatchEvent(data)
+    self:pauseFight(true)
 end
 
 

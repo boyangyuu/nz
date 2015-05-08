@@ -20,7 +20,6 @@ function BaseBossView:ctor(property)
 
 	--config
 	self.attackType = "weak"
-	self.zhaohuanIndex  = 1
 	local index = property.id
 	local waveConfig = FightConfigs:getWaveConfig()
 	self.bloodNum = 4
@@ -412,8 +411,10 @@ function BaseBossView:zhaohuan(index)
 	if self.zhaohuans[name] then 
 		return 
 	end
-
+	dump(self.zhaohuans, "self.zhaohuans")
+	print("name", name)
 	self.zhaohuans[name] = true
+	dump(self.zhaohuans, "self.zhaohuans")
 	local waveData = self.config[name]
 	assert(waveData, "config is invalid, no wave, zhaohuanIndex:" .. index)
 	self.enemysCallNum = 0
