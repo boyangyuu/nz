@@ -51,12 +51,9 @@ function Fight:refreshData(fightData)
     --clear   
     self.result = nil
     self.resultData = {}
-    self.isPause = false
-    md:deleteInstance("FightMode")
-    md:deleteInstance("Map") 
-    md:deleteInstance("EnemyManager")    
-    md:deleteInstance("FightConfigs")   
+    self.isPause = false     
     md:createInstance("FightMode")
+    md:createInstance("FightConfigs")  
     md:createInstance("Map") 
     md:createInstance("EnemyManager")
     
@@ -64,8 +61,10 @@ function Fight:refreshData(fightData)
     local isContinue = fightData["isContinue"]
     if isContinue then return end
 
-    print("elf.hero:getFightInlay()")
- 
+    md:createInstance("Hero")
+    md:createInstance("FightInlay") 
+    md:createInstance("Defence")    
+    md:createInstance("Robot")     
 
     self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
     self.inlay      = self.hero:getFightInlay()
