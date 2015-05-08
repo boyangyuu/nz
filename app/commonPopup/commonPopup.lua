@@ -211,6 +211,29 @@ function commonPopup:initUI(properties)
 		        self:onClickClose()
 	        end
 	    end)
+	elseif typeName == "style7" then
+		local content = cc.uiloader:seekNodeByName(self, "content")
+		content:setString(properties.content)
+		
+	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
+	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
+    	btntrue:setTouchEnabled(true)
+    	btnfalse:setTouchEnabled(true)
+    	addBtnEventListener(btntrue, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then		
+		        self:onClickCofirm()
+	        end
+	    end)
+    	addBtnEventListener(btnfalse, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then		
+
+		     self:onClickClose()
+	        end
+	    end)
 	end
 end
 
