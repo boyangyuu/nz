@@ -35,7 +35,7 @@ function BossResultLayer:initUI()
 	
 	local data = getUserData()
 	if self.chapterIndex < data.bossMode.chapterIndex then
-		table.remove(info, "part")
+		info["part"] = nil
 		table.remove(indexTable,1)
 	elseif self.chapterIndex == data.bossMode.chapterIndex then
 		if self.waveIndex < data.bossMode.waveIndex then
