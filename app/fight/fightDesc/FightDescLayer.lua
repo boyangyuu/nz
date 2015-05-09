@@ -91,6 +91,7 @@ function FightDescLayer:onWaveStart(event)
 
     label:runAction(transition.sequence({action1, cc.DelayTime:create(1/6),action2,
         cc.CallFunc:create(function()
+                    label:removeFromParent()
                     self:setVisible(false)
                     end)}))
 end

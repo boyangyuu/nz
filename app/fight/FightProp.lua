@@ -11,9 +11,10 @@ FightProp.PROP_UPDATE_EVENT           = "PROP_UPDATE_EVENT"
 
 function FightProp:ctor(properties)
     --instance
-    FightProp.super.ctor(self, properties)
-    self.propModel = md:getInstance("propModel") 
+    FightProp.wsuper.ctor(self, properties)
+    self.propModel = md:getInstance("PropModel") 
     self.buyModel  = md:getInstance("BuyModel")
+    self.hero      = md:getInstance("Hero")
 end
 
 function FightProp:refreshData()
@@ -26,21 +27,14 @@ function FightProp:costRobot(callfuncSuccess)
 		self.propModel:costProp("jijia",1) 
 		callfuncSuccess()
 	else
-		-- 保留，暂时不用
 		--buy
 		-- local function deneyBuyFunc()
-		-- 	self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
-		-- 		isNotPopKefu = true}, "战斗界面_点击机甲")
+			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
+				isNotPopKefu = true}, "战斗界面_点击机甲")
 		-- end 
 		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 		-- 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击机甲")
-		
-		local function funcCofirm()
-			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
-				isNotPopKefu = true}, "战斗界面_点击机甲")		end
-		ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("armedMecha"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
+				
 	end
 	self:refreshData()
 end
@@ -66,22 +60,13 @@ function FightProp:costLei(callfuncSuccess)
 	    umData[levelInfo] = "手雷"
 	    um:event("关卡道具使用", umData) 		
 	else
-		-- 保留，暂时不用
 		-- local function deneyBuyFunc()
-		-- 	self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
-		-- 				isNotPopKefu = true}, "战斗界面_点击手雷")
+			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
+						isNotPopKefu = true}, "战斗界面_点击手雷")
 		-- end 		
 		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 		-- 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}
 		-- 				, "战斗界面_点击手雷")
-		
-		local function funcCofirm()
-			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
-				isNotPopKefu = true}, "战斗界面_点击手雷")
-		end
-		ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("handGrenade"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
 	end
 	self:refreshData()
 end
@@ -102,21 +87,12 @@ function FightProp:costGoldWeapon()
 		inlayModel:equipAllInlays()
 		fightInlay:checkNativeGold()
 	else
-		-- 保留，暂时不用
 		-- local function deneyBuyFunc()
-		-- 	self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
-		-- 				isNotPopKefu = true}, "战斗界面_点击黄武")
+			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
+						isNotPopKefu = true}, "战斗界面_点击黄武")
 		-- end 		
 		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
 		-- 		deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击黄武")	
-	
-		local function funcCofirm()
-			self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
-				isNotPopKefu = true}, "战斗界面_点击黄武")
-		end
-		ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
 
 	end
 	self:refreshData()
@@ -125,6 +101,21 @@ end
 function FightProp:getGoldNum()
 	local inlayModel = md:getInstance("InlayModel")
 	return inlayModel:getGoldWeaponNum()
+end
+
+function FightProp:getHpBagNum()
+	return self.propModel:getPropNum("hpBag")
+end
+
+function FightProp:addHpBag(num)
+	self.propModel:addProp("hpBag", num)
+	self:refreshData()
+end
+
+function FightProp:costHpBag(num)
+	self.propModel:costProp("hpBag", num)
+	self.hero:costHpBag()
+	self:refreshData()
 end
 
 function FightProp:startGoldWeaponByPay()

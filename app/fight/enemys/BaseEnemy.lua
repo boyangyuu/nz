@@ -49,6 +49,7 @@ function BaseEnemy:beginFireCd()
     end
     if self.resumeFireSch then 
         scheduler.unscheduleGlobal(self.resumeFireSch)
+        self.resumeFireSch = nil
     end
     self.resumeFireSch = scheduler.performWithDelayGlobal(
         resumeCd, fireCd)
@@ -68,6 +69,7 @@ function BaseEnemy:beginWalkCd()
     end
     if self.resumeWalkSch then 
         scheduler.unscheduleGlobal(self.resumeWalkSch)
+        self.resumeWalkSch = nil
     end    
     self.resumeWalkSch = scheduler.performWithDelayGlobal(
         resumeCd, walkCd)
@@ -87,6 +89,7 @@ function BaseEnemy:beginRollCd()
     end
     if self.resumeRollSch then 
         scheduler.unscheduleGlobal(self.resumeRollSch)
+        self.resumeRollSch = nil
     end    
     self.resumeRollSch = scheduler.performWithDelayGlobal(
         resumeCd, rollCd)
@@ -108,6 +111,7 @@ function BaseEnemy:beginSpeakCd()
     end
     if self.resumeSpeakSch then 
         scheduler.unscheduleGlobal(self.resumeSpeakSch)
+        self.resumeSpeakSch = nil
     end    
     self.resumeSpeakSch = scheduler.performWithDelayGlobal(resumeCd, speakCd)
 end
@@ -127,6 +131,7 @@ function BaseEnemy:beginShanCd()
     end
     if self.resumeShanSch then 
         scheduler.unscheduleGlobal(self.resumeShanSch)
+        self.resumeShanSch = nil
     end    
     self.resumeShanSch = scheduler.performWithDelayGlobal(resumeCd, shanCd)
 end

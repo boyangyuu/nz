@@ -48,10 +48,22 @@ function JujiModeLayer:initUI()
 			end
 		end)
 
-    btnReward:onButtonClicked(function()
+    btnReward:onButtonPressed(function( event )
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function( event )
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    :onButtonClicked(function()
         self:onClickBtnReward()
     end)
-    btnStart:onButtonClicked(function()
+    btnStart:onButtonPressed(function( event )
+        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+    end)
+    :onButtonRelease(function( event )
+        event.target:runAction(cc.ScaleTo:create(0.1, 1))
+    end)
+    :onButtonClicked(function()
         self:onClickBtnStart()
     end)
 end
@@ -59,7 +71,7 @@ end
 function JujiModeLayer:onClickBtnStart()
 	local isInternetConnectionAvailable = network.isInternetConnectionAvailable()
 	if isInternetConnectionAvailable then
-
+		print("JujiModeLayer:onClickBtnStart()")
 	else
 		ui:showPopup("commonPopup",
 			 {type = "style1",content = "当前网络连接失败，连接网络后数据将会统计"},
@@ -67,12 +79,13 @@ function JujiModeLayer:onClickBtnStart()
 	end
 end
 
+-- 我死之后哪怕洪水滔天
 function JujiModeLayer:onClickBtnClose()
 	ui:closePopup("JujiModeLayer")
 end
 
 function JujiModeLayer:onClickBtnReward()
-	
+	print("JujiModeLayer:onClickBtnReward()")
 end
 
 function JujiModeLayer:refreshListView()

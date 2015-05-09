@@ -57,7 +57,7 @@ function InfoLayer:loadCCS()
 	self.goldAnim:setVisible(false)
 	self.goldProgress:setVisible(false)
 
-	local displayHp = math.floor(self.hero:getHp() )
+	local displayHp = math.floor(self.hero:getHp())
 	self.bloodLabel:setString(displayHp)
 end
 
@@ -121,7 +121,7 @@ end
 function InfoLayer:onRefreshBullet(event)
 	local num = event.num
 	assert(num, "num is nil") 
-	self.labelBulletNum:setString(num)
+	self.labelBulletNum:setString(num .. "/无限子弹")
 end
 
 function InfoLayer:onHeroHpChange(event)

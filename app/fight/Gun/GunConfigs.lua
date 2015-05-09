@@ -1,24 +1,29 @@
 local GunConfigs = class("GunConfigs", cc.mvc.ModelBase)
-
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local configs = {}
 
 configs["m4a1"] = {
 	skill1 = {
 		animName = "skill_hql",
-		value    = 50,
-		buffAnimName = "hqljn_mz",
-	    buffFunc = "doBuffAll_decreaseHp",
+	    buffFunc = function ()
+		    local hero = md:getInstance("Hero")
+			local demage = hero:getDemage() * 10
+			local buffData = {
+				buffAnimName  = "hqljn_mz",
+				value = demage,
+			}
+			local enemyM = md:getInstance("EnemyManager")
+			local function buffFunc()
+				enemyM:doBuff("doBuffAll_decreaseHp", buffData)
+			end	
+			local delay = 0.0
+			for i=1, 3 do
+				delay = delay + 0.3
+				scheduler.performWithDelayGlobal(buffFunc, delay)
+			end
+	    end,
 		cd       = 5.0,
-		times    = 3,
-		timeOffset = 0.3,
 	},
-	skill2 = {
-		animName = "skill_hql",
-		value    = 50,
-		buffAnimName = "hqljn_mz",
-	    buffFunc = "doBuffAll_pause",
-		cd       = 5.0,		
-	},	
 }
 
 configs["huoqilin"] = {
@@ -32,18 +37,13 @@ configs["balete"] = {
 configs["leimingdun"] = {
 	skill1 = {
 		animName = "skill_hql",
-		value    = 50,
-		buffAnimName = "hqljn_mz",
-	    buffFunc = "doBuffAll_decreaseHp",
-		cd       = 5.0,
-		times    = 3,
-		timeOffset = 0.3,
-	},
-	skill2 = {
-		animName = "skill_hql",
-		value    = 50,
-		buffAnimName = "hqljn_mz",
-	    buffFunc = "doBuffAll_pause",
+	    buffFunc = function ()
+			local buffData = {
+				buffAnimName  = "hqljn_mz",
+			}
+			local enemyM = md:getInstance("EnemyManager")
+			enemyM:doBuff("doBuffAll_pause", buffData)
+	    end,
 		cd       = 5.0,		
 	},	
 }

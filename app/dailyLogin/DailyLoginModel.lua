@@ -75,7 +75,7 @@ end
 function  DailyLoginModel:setGift(dailyID)
 	local giftInfo = DailyLoginConfig.getConfig(dailyID)
 	local UserModel = md:getInstance("UserModel")
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	local InlayModel = md:getInstance("InlayModel")
 	if giftInfo["type"] == "gold" then
 		UserModel:addMoney(giftInfo["number"])

@@ -6,7 +6,6 @@ local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 local DataModel = require("app.DataModel")
-proInfo = require("app.commonPopup.ProductInfoConfig")
 GameState = require("framework.cc.utils.GameState")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
@@ -150,6 +149,7 @@ function MyApp:createGameStateFile()
                         lei = {num = 10},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
+                        hpBag = {num = 2},
             },
        
             weaponsuipian = {},

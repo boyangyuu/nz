@@ -371,14 +371,14 @@ function BaseBossView:playChongfeng()
     --ahead begin
     local speed = 400
     local desY = -180
-    local scale = 2.0
+    local scaleSrc = self:getScaleX()
     local pWorld = self:convertToWorldSpace(cc.p(0,0))
     local posOri = cc.p(self:getPositionX(), self:getPositionY())
     local distanceY = desY - pWorld.y
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
-    local actionScale = cc.ScaleBy:create(time, scale)
+    local actionScale = cc.ScaleTo:create(time, scaleSrc * 2)
 
     --callfunc
     local aheadEndFunc = function ()
@@ -387,7 +387,7 @@ function BaseBossView:playChongfeng()
         	* self.enemy:getDemageScale()
         self.enemy:hit(self.hero, destDemage)
         self:setPosition(posOri)
-        self:scaleBy(0.01, 1/scale)
+        self:scaleTo(0.01, scaleSrc)
         local map = md:getInstance("Map")
         map:playEffect("shake")
         --restore

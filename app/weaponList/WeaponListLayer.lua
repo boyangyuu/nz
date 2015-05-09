@@ -43,7 +43,7 @@ function WeaponListLayer:onShow()
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
     --guide
-    self:initGuide()        
+    self:initGuide()
 end
 
 function WeaponListLayer:loadCCS()
@@ -217,13 +217,8 @@ function WeaponListLayer:onClickBtnEquip(weaponid)
 end
 
 function WeaponListLayer:onClickBtnOncefull()
-    local function funcCofirm()
-        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
+    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
-    end
-    ui:showPopup("commonPopup",
-             {type = "style7", content = proInfo.getConfig("onceFull"), callfuncCofirm = funcCofirm},
-             {opacity = 0})
 end
 
 function WeaponListLayer:onClickBtnBuy()
@@ -253,21 +248,12 @@ function WeaponListLayer:onCancelWeaponGift()
     else
         local rmbCost = self.weaponRecord["rmbCost"]
         if  rmbCost == 6 then
-            local function funcCofirm()
-                self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
+            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
                 payDoneFunc = handler(self, self.onBuyWeaponSucc)},
                  "武器库界面_点击解锁武器"..self.weaponRecord["name"])
-            end
-            ui:showPopup("commonPopup",
-                {type = "style7", content = proInfo.getConfig("unlockWeapon"), callfuncCofirm = funcCofirm},
-                {opacity = 0})
         elseif rmbCost == 10 then
-            local function funcCofirm()
-                self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
-            end
-            ui:showPopup("commonPopup",
-                {type = "style7", content = proInfo.getConfig("highgradeWeapon"), callfuncCofirm = funcCofirm},
-                {opacity = 0})
+            self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
+
         end
     end
 end

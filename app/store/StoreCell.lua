@@ -4,7 +4,7 @@ end)
 
 function StoreCell:ctor(parameter)
     self.inlayModel = md:getInstance("InlayModel")
-    self.propModel = md:getInstance("propModel")
+    self.propModel = md:getInstance("PropModel")
     self.userModel = md:getInstance("UserModel")
     self.storeModel = md:getInstance("StoreModel")
     self.buyModel = md:getInstance("BuyModel")
@@ -189,32 +189,17 @@ function StoreCell:addBtnEvent()
                     self.ownnumber:setString(self.propModel:getPropNum(self.record["nameid"]))
                 end
             else
-                if self.record["nameid"] == "goldweapon" then
-                    -- 暂时不用
-                    -- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
-                    --     deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_黄武钻石不够")
-
-                    ui:showPopup("commonPopup",
-                        {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = handler(self, self.deneyGoldGift)},
-                        {opacity = 0})
-                elseif self.record["nameid"] == "jijia" then
-                    -- 暂时不用
-                    -- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
-                    --     deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_机甲钻石不够")
-
-
-                    ui:showPopup("commonPopup",
-                        {type = "style7", content = proInfo.getConfig("armedMecha"), callfuncCofirm = handler(self, self.deneyGoldGift)},
-                        {opacity = 0})
-                elseif self.record["nameid"] == "lei" then
-                    -- 暂时不用
-                    -- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
-                    --     deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_手雷钻石不够")
-                   
-                    ui:showPopup("commonPopup",
-                        {type = "style7", content = proInfo.getConfig("handGrenade"), callfuncCofirm = handler(self, self.deneyGoldGift)},
-                        {opacity = 0})
-                end
+                -- if self.record["nameid"] == "goldweapon" then
+                --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
+                --         deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_黄武钻石不够")
+                -- elseif self.record["nameid"] == "jijia" then
+                --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
+                --         deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_机甲钻石不够")
+                -- elseif self.record["nameid"] == "lei" then
+                --     self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyPropGoldGift),
+                --         deneyBuyFunc = handler(self, self.deneyGoldGift)}, "商城页面_手雷钻石不够")                   
+                -- end
+                self:deneyGoldGift()
             end
         elseif self.type == "bank" then
             self.buyModel:showBuy("stone"..self.record["number"],{payDoneFunc = handler(self,self.playSound)}, "商城界面_点击钻石"..self.record["number"])

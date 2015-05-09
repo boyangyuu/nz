@@ -12,7 +12,6 @@ local p = "app.fight.fightConfigs"
 
 function FightConfigs:ctor(properties)
 	FightConfigs.super.ctor(self, properties)
-	print("function FightConfigs:ctor(properties)")
 	self:initWaveConfig()
 end
 
@@ -39,7 +38,6 @@ function FightConfigs:getWaveConfig()
 end
 
 function FightConfigs.getWaveImages(gid, lid)
-	print("FightConfigs:getWaveImages", lid)
     if math.floor(lid) < lid then
         lid = tostring(lid)
         lid = string.gsub(lid, "%.", "_")

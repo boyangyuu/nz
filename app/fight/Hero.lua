@@ -17,6 +17,7 @@ local Hero          = class("Hero", Actor)
 Hero.EFFECT_HURT_BOMB_EVENT      = "EFFECT_HURT_BOMB_EVENT"    --效果_导弹炸屏幕
 Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    --效果_玻璃
 Hero.EFFECT_HURT_YAN_EVENT       = "EFFECT_HURT_YAN_EVENT"     --效果_烟雾
+Hero.EFFECT_ADDHP_EVENT          = "EFFECT_ADDHP_EVENT"        --效果_加血
 Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
 Hero.EFFECT_GUIDE_EVENT          = "EFFECT_GUIDE_EVENT"        --效果_引导
 
@@ -250,6 +251,11 @@ function Hero:getMaxHp()
         valueMaxHp = kMaxHp
     end
     return valueMaxHp
+end
+
+function Hero:costHpBag()
+    self:increaseHp(50)
+    self:dispatchEvent({name = Hero.EFFECT_ADDHP_EVENT})    
 end
 
 function Hero:decreaseHp(hp)

@@ -11,6 +11,7 @@ end
 function PropModel:getPropNum(nameid)
 	local data = getUserData()
 	local prop = data.prop[nameid]
+	assert(prop, "prop is nil nameid " .. nameid)
 	local propnum = prop.num
 	return propnum
 end
@@ -36,6 +37,8 @@ function PropModel:costProp(nameid,costNum)
 		um:use("手雷", costNum, 0)
 	elseif nameid == "jijia" then
 		um:use("无敌机甲", costNum, 0)
+	elseif nameid == "hpBag" then 
+		um:use("医疗包", costNum, 0)
 	end
 end
 
