@@ -1,4 +1,4 @@
-import("..includes.functionUtils")
+
 
 local LevelMapModel = class("LevelMapModel", cc.mvc.ModelBase)
 

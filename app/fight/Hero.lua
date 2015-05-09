@@ -76,7 +76,6 @@ function Hero:initGuns()
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     local isJuLevel = fight:isJujiFight()
-    print("Hero:initGuns( isJuLevel", isJuLevel)
     if isJuLevel then 
         self.bags["bag1"] = Gun.new({bagIndex = "bag3"}) 
         self.bags["bag2"] = Gun.new({bagIndex = "bag3"})
@@ -146,7 +145,6 @@ end
 
 function Hero:setGun(bagIndex)
     self.gun = self.bags[bagIndex]
-    print("function Hero:setGun(bagIndex)")
 
     --prefer
     self:setPreferBagIndex(bagIndex)
@@ -364,7 +362,6 @@ function Hero:onDenyFullHp()
     --clear pause
     self.isPause = false
 
-    print("立即回复生命 function Hero:onDenyFullHp()")
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     fight:pauseFight(false)

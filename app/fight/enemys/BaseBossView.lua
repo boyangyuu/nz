@@ -10,7 +10,6 @@
 local Attackable = import(".Attackable")
 local Actor = import("..Actor")
 local Boss = import(".Boss")
-local FightConfigs = import("..fightConfigs.FightConfigs")
 local BaseBossView = class("BaseBossView", Attackable)
 
 local kBloodMaxN = 6
@@ -21,7 +20,8 @@ function BaseBossView:ctor(property)
 	--config
 	self.attackType = "weak"
 	local index = property.id
-	local waveConfig = FightConfigs:getWaveConfig()
+	local fightConfigs  = md:getInstance("FightConfigs")
+	local waveConfig = fightConfigs:getWaveConfig()	
 	self.bloodNum = 4
     
     --blood

@@ -8,10 +8,9 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local Actor = import("..Actor")
 local BaseEnemy = class("BaseEnemy", Actor)
-local FightConfigs = import("..fightConfigs.FightConfigs")
 
 function BaseEnemy:ctor(actor_property, enemy_property)
-    --super
+    --super  
     BaseEnemy.super.ctor(self, actor_property) 
     local demageScale = enemy_property["demageScale"] or 1.0
     self:setDemageScale(demageScale)

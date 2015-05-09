@@ -75,7 +75,6 @@ function MapView:loadCCS()
 	--map
 
 	local waveConfig = self.mapModel:getCurWaveConfig()
-	-- dump(waveConfig, "waveConfig")
 	local mapName = waveConfig:getMapId()
 	local mapSrcName = mapName..".json"   -- todo 外界
     cc.FileUtils:getInstance():addSearchPath("res/Fight/Maps")

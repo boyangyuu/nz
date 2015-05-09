@@ -64,11 +64,4 @@ function JujiFight:passLevel()
 	print("curWaveIndex:", curWaveIndex)
 end
 
-function JujiFight:cleanModels()
-    md:deleteInstance("Hero")
-    md:deleteInstance("FightInlay") 
-    md:deleteInstance("Defence")    
-    md:deleteInstance("Robot") 
-end
-    
 return JujiFight
