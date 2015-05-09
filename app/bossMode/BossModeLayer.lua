@@ -247,9 +247,14 @@ function BossModeLayer:onClickBtnStart()
 end
 
 function BossModeLayer:onClickBtnGet()
-	ui:showPopup("commonPopup",
+	self.bossModeModel:setWeapon(self.choseChapter)
+	-- self.bossModeModel:refreshInfo()
+	self:refreshContent()
+	if self.btnGet:isButtonEnabled() then
+		ui:showPopup("commonPopup",
 			 {type = "style1",content = "您的武器零件还没凑齐喔"},
 			 {opacity = 100})
+	end
 end
 
 return BossModeLayer

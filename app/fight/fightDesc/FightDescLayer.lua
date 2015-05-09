@@ -13,6 +13,7 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
         :addEventListener(self.model.GOLDWAVE_ANIM_EVENT, handler(self, self.onGoldWaveStart))
         :addEventListener(self.model.BOSSGIFT_ANIM_EVENT, handler(self, self.onBossGift))
+        :addEventListener(self.model.JUJIGIFT_ANIM_EVENT, handler(self, self.onJujiGift))
 
 	self:loadCCS()
     self:setTouchSwallowEnabled(false)
@@ -73,6 +74,14 @@ end
 function FightDescLayer:onBossGift(event)
     ui:showPopup("BossResultLayer",{
         chapterIndex = event.chapterIndex,
+        waveIndex = event.waveIndex, 
+        closeFunc = event.closeFunc},
+        {anim = false})
+end
+
+function FightDescLayer:onJujiGift(event)
+    ui:showPopup("JujiResultLayer",{
+        -- chapterIndex = event.chapterIndex,
         waveIndex = event.waveIndex, 
         closeFunc = event.closeFunc},
         {anim = false})
