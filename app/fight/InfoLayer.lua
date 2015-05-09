@@ -57,7 +57,7 @@ function InfoLayer:loadCCS()
 	self.goldAnim:setVisible(false)
 	self.goldProgress:setVisible(false)
 
-	local displayHp = math.floor(self.hero:getHp() )
+	local displayHp = math.floor(self.hero:getHp())
 	self.bloodLabel:setString(displayHp)
 end
 

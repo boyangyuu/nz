@@ -51,18 +51,18 @@ function MapAnimView:playEffectShooted(event)
 
 	--animName
 	if isGold or isRobot or isRpg then 
-		animName = "hjqmz"
+		animName = "zd_hjqmz"
 	elseif isHitted then
-		animName = "zdmz_pt" 
+		animName = "zd_ptmz" 
 	else
-		animName = "zdmz_di"
+		animName = "zd_dimian"
 	end
-	-- print("animName"..animName)
+
 	--pos
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	assert(animName, "animName is nil type"..animName)
 
-	if self.isShootAniming and animName == "zdmz_pt" then return end
+	if self.isShootAniming and animName == "diren" then return end
 	self.isShootAniming = true
 
 	--one or many
@@ -79,9 +79,7 @@ function MapAnimView:playEffectShooted(event)
 end
 
 function MapAnimView:addShootedArmature(animName, pos)
-	-- print("function MapAnimView:addShootedArmature(animName, pos)")
 	local armature = ccs.Armature:create(animName)
-	assert(armature, "armature os mil animName:"..animName)
 	self:addChild(armature)
 	armature:setPosition(pos)
 	
@@ -96,7 +94,7 @@ function MapAnimView:addShootedArmature(animName, pos)
     	    		self.isShootAniming = false
     	    	end
 	    	end)
-	armature:getAnimation():playWithIndex(0 , -1, 1)
+	armature:getAnimation():playWithIndex(0)
 end
 
 function MapAnimView:playEffectLeiBomb(event)
@@ -183,8 +181,18 @@ function MapAnimView:playEffectFocus(event)
 end
 
 function MapAnimView:playEffectGunSkill(event)
+	--add res
 	local animName = event.animName
+	local manager = ccs.ArmatureDataManager:getInstance()
+    local src = "res/Fight/skillAnim/"..animName.."/"..animName..".ExportJson"
+    local plist = "res/Fight/skillAnim/"..animName.."/"..animName.."0.plist"
+    local png   = "res/Fight/skillAnim/"..animName.."/"..animName.."0.png"	
+    manager:addArmatureFileInfo(src)
+    display.addSpriteFrames(plist, png) 
+
+    --armature
 	local armature = ccs.Armature:create(animName)
+	assert(armature, "armature is nil " .. animName)
 	armature:getAnimation():play("skill1" , -1, 1)
 	armature:setPosition(display.pCenter)
 	self:addChild(armature)

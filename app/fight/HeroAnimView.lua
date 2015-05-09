@@ -23,6 +23,7 @@ function HeroAnimView:ctor()
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
 		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
 		:addEventListener(self.hero.EFFECT_GUIDE_EVENT		, handler(self, self.playAnimGuide))
+		:addEventListener(self.hero.EFFECT_ADDHP_EVENT		, handler(self, self.playAnimAddHp))
 		
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
@@ -259,6 +260,25 @@ function HeroAnimView:playAnimGuide(event)
         armature = nil
     end
     self:performWithDelay(removeFunc, 10.0)	
+end
+
+function HeroAnimView:playAnimAddHp(event)
+	--add res
+	local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo("res/Fight/heroAnim/avatar_jiaxue/avatar_jiaxue.ExportJson")
+    display.addSpriteFrames("res/Fight/heroAnim/avatar_jiaxue/avatar_jiaxue0.plist", 
+        "res/Fight/heroAnim/avatar_jiaxue/avatar_jiaxue0.png") 
+
+	local armature 	= ccs.Armature:create("avatar_jiaxue")
+	armature:getAnimation():playWithIndex(0)
+	armature:getAnimation():setMovementEventCallFunc(
+    	function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.complete then
+				armatureBack:removeFromParent()
+				armatureBack = nil
+	    	end 
+    	end)		
+	self:addChild(armature)
 end
 
 function HeroAnimView:onExit()

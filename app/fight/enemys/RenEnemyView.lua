@@ -148,7 +148,7 @@ function RenEnemyView:playChongfeng()
     --前进
     local speed = 400
     local desY = -0
-    local scale = 2.0
+    local scaleSrc = self:getScaleX()
 
     local pWorld = self.armature:convertToWorldSpace(cc.p(0,0))
     -- dump(pWorld, "pWorld")
@@ -158,7 +158,7 @@ function RenEnemyView:playChongfeng()
     local time = math.abs(distanceY) /speed
     local desPos = cc.p(0, distanceY)
     local actionAhead = cc.MoveBy:create(time, desPos)
-    local actionScale = cc.ScaleBy:create(time, scale)
+    local actionScale = cc.ScaleTo:create(time, scaleSrc * 2)
 
     --
     local aheadEndFunc = function ()
@@ -168,7 +168,7 @@ function RenEnemyView:playChongfeng()
             * self.enemy:getDemageScale()
         self.enemy:hit(self.hero, destDemage)
         self:setPosition(posOri)
-        self:scaleBy(0.01, 1/scale)
+        self:scaleTo(0.01, scaleSrc)
         local map = md:getInstance("Map")
         map:playEffect("shake")
         self:restoreStand()

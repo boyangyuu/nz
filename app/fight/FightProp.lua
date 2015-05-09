@@ -11,9 +11,10 @@ FightProp.PROP_UPDATE_EVENT           = "PROP_UPDATE_EVENT"
 
 function FightProp:ctor(properties)
     --instance
-    FightProp.super.ctor(self, properties)
-    self.propModel = md:getInstance("propModel") 
+    FightProp.wsuper.ctor(self, properties)
+    self.propModel = md:getInstance("PropModel") 
     self.buyModel  = md:getInstance("BuyModel")
+    self.hero      = md:getInstance("Hero")
 end
 
 function FightProp:refreshData()
@@ -100,6 +101,21 @@ end
 function FightProp:getGoldNum()
 	local inlayModel = md:getInstance("InlayModel")
 	return inlayModel:getGoldWeaponNum()
+end
+
+function FightProp:getHpBagNum()
+	return self.propModel:getPropNum("hpBag")
+end
+
+function FightProp:addHpBag(num)
+	self.propModel:addProp("hpBag", num)
+	self:refreshData()
+end
+
+function FightProp:costHpBag(num)
+	self.propModel:costProp("hpBag", num)
+	self.hero:costHpBag()
+	self:refreshData()
 end
 
 function FightProp:startGoldWeaponByPay()

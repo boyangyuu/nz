@@ -24,13 +24,17 @@ function GunSkillLayer:refreshUI(event)
 		self.ui:removeSelf()
 		self.ui = nil 
 	end
+	self.timers = {}
+	self.config = {}
+	self.skillCdPercent = {}
+	self:stopAllActions()
 
 	--config
 	local gun   = self.hero:getGun() 
 	local name  = gun:getGunName()
 	name = "huoqilin"
-	local config = gun:getSkillConfig()
-	if config == nil then return end
+	self.config = gun:getSkillConfig()
+	if self.config == nil then return end
 
 	--ui
 	self.ui = cc.uiloader:load("res/Fight/fightLayer/gunSkill/" 
@@ -38,28 +42,36 @@ function GunSkillLayer:refreshUI(event)
 	assert(self.ui, "no GunSkillLayer ui: " .. name)
 	self:addChild(self.ui)	
 
-	--btns
-	for skillId,skillConfig in pairs(config) do
+	--btns timers
+	for skillId,skillConfig in pairs(self.config) do
 		local btn = cc.uiloader:seekNodeByName(self.ui, "btn_" .. skillId)
 		assert(btn, "btn")
         btn:onButtonClicked(function()
 	         self:onClickBtnSkill(skillId)
 	    end)
+
+        --timer
+        self.skillCdPercent[skillId] = 0
+	    local bar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+		btn:addChild(bar)
+	    bar:setAnchorPoint(0.0,0.0)
+	    bar:setReverseDirection(true)
+	    bar:setPercentage(100)
+	    bar:setVisible(false)
+		self.timers[skillId] = bar
 	end
 end
 
 function GunSkillLayer:onClickBtnSkill(skillId)	
 	--check cooldown
-	local gun   	 = self.hero:getGun() 
-	local isCooldown = gun:isSkillCding(skillId)
-	if not isCooldown then 
+	local percent = self:getSkillCdPercent(skillId)
+	if percent ~= 0 then
 		return 
 	end
-	gun:startSkillCd(skillId)
+	self:startSkillCd(skillId)
 
 	--config
-	local config = gun:getSkillConfig()
-	local skillConfig = config[skillId]
+	local skillConfig = self.config[skillId]
 	assert(skillConfig, "nil:" .. skillId)
 	-- dump(skillConfig, "skillConfig")
 
@@ -67,31 +79,32 @@ function GunSkillLayer:onClickBtnSkill(skillId)
 	self.fightGun:playSkill(skillConfig["animName"])
 
 	--play buff
-	local demage = self.hero:getDemage() * skillConfig["value"]
-	local buffData = {
-		buffAnimName  = skillConfig["buffAnimName"],
-		value = demage,
-		times  = nil,
-	}
-	local enemyM = md:getInstance("EnemyManager")
-	
-	local function buffFunc()
-		local funcName = skillConfig["buffFunc"] 
-		enemyM:doBuff(funcName, buffData)
-		-- enemyM:doBuffAll_pause(buffData)
-	end	
+	skillConfig.buffFunc()
+end
 
-	local delay = 0.0
-	local timeOffset = skillConfig["timeOffset"]
-	if timeOffset then
-		for i=1,skillConfig["times"] do
-			delay = delay + timeOffset
-			self:performWithDelay(buffFunc, delay)
+function GunSkillLayer:getSkillCdPercent(skillId)
+	local percent = self.skillCdPercent[skillId]
+	assert(percent ~= nil, "percent cd is nil" .. skillId)	
+	return percent
+end
+
+function GunSkillLayer:startSkillCd(skillId)
+	self.skillCdPercent[skillId] = 100
+	self.timers[skillId]:setVisible(true)
+	local cdTimes = self.config[skillId]["cd"]
+	assert(cdTimes ~= nil, "cdTimes is nil" .. skillId)
+	local sch = nil	
+	local function resumeCd()
+		if self.skillCdPercent[skillId] == 0 then 
+			transition.removeAction(sch)
+			return
 		end
-	else
-		self:performWithDelay(buffFunc, 0.1)
+		local nextPer = self.skillCdPercent[skillId] - 1	
+		self.skillCdPercent[skillId] = nextPer
+		self.timers[skillId]:setPercentage(nextPer)
 	end
-
+	local offsetTime = cdTimes / 100
+	sch = self:schedule(resumeCd, offsetTime)
 end
 
 return GunSkillLayer

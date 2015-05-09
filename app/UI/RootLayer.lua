@@ -189,7 +189,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)        
     end
 
-    local mapImgs = {"zdmz_pt", "zdmz_di", "hjqmz","diaoluojiangli", "difang_dandao"}
+    local mapImgs = {"diaoluojiangli", "difang_dandao"}
     for i,v in ipairs(mapImgs) do
         local src = "res/Fight/mapAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
@@ -207,14 +207,14 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)         
     end    
 
-    local skillImgs = {"skill_hql"}
-    for i,v in ipairs(skillImgs) do
-        local src = "res/Fight/skillAnim/"..v.."/"..v..".ExportJson"
+    local bulletImgs = {"zd_dimian", "zd_hjqmz", "zd_ptmz"}
+    for i,v in ipairs(bulletImgs) do
+        local src = "res/Fight/bulletAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
-        local plist = "res/Fight/skillAnim/"..v.."/"..v.."0.plist"
-        local png   = "res/Fight/skillAnim/"..v.."/"..v.."0.png"
+        local plist = "res/Fight/bulletAnim/"..v.."/"..v.."0.plist"
+        local png   = "res/Fight/bulletAnim/"..v.."/"..v.."0.png"
         self:addFrameRes(plist, png)         
-    end    
+    end  
 
     local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "baozha4",
