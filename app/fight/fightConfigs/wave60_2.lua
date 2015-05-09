@@ -389,7 +389,22 @@ local waves = {
 					},
 				},
 			},
-			
+			{
+				time = 10,	                                               --奖励箱子
+				num = 1,
+				pos = {550},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 20,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place11",
+				},
+			},
 		},
 	},
 
@@ -397,7 +412,7 @@ local waves = {
 
 
 
---enemy的关卡配置                                  青铜难度 狙击枪630伤害 1枪  880         dps大于等于5
+--enemy的关卡配置                                  无镶嵌 狙击枪3星350伤害   1枪  350         dps大于等于1
 local enemys = {
 
 	--汽油桶         --type = "bao_tong",
@@ -405,17 +420,20 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=5,hp=880,
+	{id=4,image="qiufan",demage=1,hp=350,
 	weak1=4, weak4=4},
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=2600, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=1400, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	--导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=5,hp=1,
+	{id=6,image="daodan",demage=3,hp=1,
 	weak1=1},
+
+	--箱子奖励  type = "awardSan",
+	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 
 
 
 }

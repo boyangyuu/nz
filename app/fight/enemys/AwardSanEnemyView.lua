@@ -84,7 +84,7 @@ function AwardSanEnemyView:sendAward()
 
     --award
     local awardType = self.property.award
-    local awardValue = self.property.awardValue
+    local awardValue = self.property.value
 
     --anim
     local map = md:getInstance("Map")

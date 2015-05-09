@@ -228,11 +228,27 @@ local waves = {
 					startState = "rollright",
 				},
 			},
+			{
+				time = 15,	                                               --奖励箱子
+				num = 1,
+				pos = {460},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 20,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place3",
+				},
+			},
 		},
 	}, 
 
 }
---enemy的关卡配置
+--enemy的关卡配置                                      无镶嵌 狙击枪0星 230伤害 1枪  230         dps大于等于1
 local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4, weak1=3},
@@ -260,6 +276,9 @@ local enemys = {
 
 	--被绑架人        --type = "bangren",
 	{id=8,image="hs", hp=500, weak1=1},	
+
+	--箱子奖励  type = "awardSan",
+	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 
 		
 }
 local mapId = "map_1_4"
