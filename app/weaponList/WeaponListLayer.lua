@@ -43,7 +43,7 @@ function WeaponListLayer:onShow()
         :addEventListener(self.weaponListModel.WEAPON_STAR_FULL_EVENT, handler(self, self.playFullStar))
 
     --guide
-    self:initGuide()        
+    self:initGuide()
 end
 
 function WeaponListLayer:loadCCS()
