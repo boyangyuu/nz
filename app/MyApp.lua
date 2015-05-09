@@ -150,6 +150,7 @@ function MyApp:createGameStateFile()
                         lei = {num = 10},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
+                        hpBag = {num = 2},
             },
        
             weaponsuipian = {},

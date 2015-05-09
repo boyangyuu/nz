@@ -4,7 +4,7 @@ end)
 
 function StoreCell:ctor(parameter)
     self.inlayModel = md:getInstance("InlayModel")
-    self.propModel = md:getInstance("propModel")
+    self.propModel = md:getInstance("PropModel")
     self.userModel = md:getInstance("UserModel")
     self.storeModel = md:getInstance("StoreModel")
     self.buyModel = md:getInstance("BuyModel")

@@ -121,7 +121,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	local weaponListModel = md:getInstance("WeaponListModel")
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	local weaponIds = {3,4,5,7,8}
 	local weaponIndex = 1
 	for k,v in pairs(weaponIds) do
@@ -163,7 +163,7 @@ function BuyModel:buy_novicesBag( buydata )
 	print("BuyModel:buy_novicesBag(buydata)")
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	--黄武*4
 	inlayModel:buyGoldsInlay(4)
 	--机甲*3
@@ -177,7 +177,7 @@ function BuyModel:buy_goldGiftBag( buydata )
 	print("BuyModel:buy_goldGiftBag(buydata)")
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	--黄武*15
 	inlayModel:buyGoldsInlay(15)
 
@@ -192,7 +192,7 @@ function BuyModel:buy_goldGiftBag( buydata )
 end
 
 function BuyModel:buy_handGrenade( buydata )
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	local storeModel = md:getInstance("StoreModel")
 	
 	--手雷*20
@@ -200,7 +200,7 @@ function BuyModel:buy_handGrenade( buydata )
 end
 
 function BuyModel:buy_armedMecha( buydata )
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	local storeModel = md:getInstance("StoreModel")
 	--jijia*2
 	propModel:addProp("jijia",2)
@@ -227,7 +227,7 @@ function BuyModel:buy_goldWeapon( buydata )
 	--黄武*2
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
-	local propModel = md:getInstance("propModel")
+	local propModel = md:getInstance("PropModel")
 	inlayModel:buyGoldsInlay(2)
 end
 

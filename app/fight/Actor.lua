@@ -173,7 +173,7 @@ function Actor:setFullHp()
 end
 
 function Actor:increaseHp(hp)
-    assert(not self:isDead(),"actor s is dead, can't change Hp")
+    assert(not self:isDead(),"actors is dead, can't change Hp")
     assert(hp > 0, "Actor:increaseHp() - invalid hp")
 
     local newhp = self.hp_ + hp

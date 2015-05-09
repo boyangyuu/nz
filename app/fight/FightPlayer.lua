@@ -1,14 +1,15 @@
 --import
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
-local DialogLayer    = import("..dialog.DialogLayer")
-local FightDescLayer = import(".fightDesc.FightDescLayer")
-local GunView        = import(".GunView")
-local FocusView      = import(".FocusView")
-local MapView        = import(".MapView")
-local HeroLayer      = import(".HeroLayer")
-local InfoLayer      = import(".InfoLayer")
-local GunHelpLayer   = import(".Gun.GunHelpLayer") 
-local GunSkillLayer  = import(".Gun.GunSkillLayer")
+local DialogLayer       = import("..dialog.DialogLayer")
+local FightDescLayer    = import(".fightDesc.FightDescLayer")
+local GunView           = import(".GunView")
+local FocusView         = import(".FocusView")
+local MapView           = import(".MapView")
+local HeroLayer         = import(".HeroLayer")
+local InfoLayer         = import(".InfoLayer")
+local FightControlLayer = import(".FightControlLayer")
+local GunHelpLayer      = import(".Gun.GunHelpLayer") 
+local GunSkillLayer     = import(".Gun.GunSkillLayer")
 
 local KFightConfig = {
     scaleMoveBg = 1.0, 
@@ -53,6 +54,7 @@ function FightPlayer:ctor(properties)
     self.infoLayer      = InfoLayer.new() 
     self.gunHelpLayer   = GunHelpLayer.new()
     self.gunSkillLayer  = GunSkillLayer.new()
+    self.fightControlLayer = FightControlLayer.new()
     self.isControlVisible = true
     
     --ui
@@ -192,7 +194,8 @@ function FightPlayer:initUI()
     layerGunInfo:addChild(self.gunSkillLayer)
     layerGunInfo:addChild(self.infoLayer)
     layerGunInfo:addChild(self.gunHelpLayer)
-
+    layerGunInfo:addChild(self.fightControlLayer)
+    
     --load focus
     self.focusNode = cc.uiloader:seekNodeByName(self, "fucusNode")
     addChildCenter(self.focusView, self.focusNode)

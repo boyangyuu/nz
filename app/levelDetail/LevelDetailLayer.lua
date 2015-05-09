@@ -8,7 +8,7 @@ function LevelDetailLayer:ctor(properties)
 	self.levelDetailModel = md:getInstance("LevelDetailModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
 	self.inlayModel 	 = md:getInstance("InlayModel")
-	self.propModel       = md:getInstance("propModel")
+	self.propModel       = md:getInstance("PropModel")
 	self.guide           = md:getInstance("Guide")
 	self.buyModel 		 = md:getInstance("BuyModel")
 	self.groupId 		 = properties.groupId
