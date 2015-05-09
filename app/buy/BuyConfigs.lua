@@ -4,6 +4,8 @@ local dir = "res/GiftBag/GiftBag/GiftBag_"
 
 local isGiftDefend = isDefendMM()
 
+local isNovicesGift, novicesPrice = isMobileSimCard()
+
 local configs = {
 	goldGiftBag    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag.json",
@@ -13,8 +15,8 @@ local configs = {
 	},
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
-			isGift = isGiftDefend,
-			price = 6,
+			isGift = isNovicesGift,
+			price = novicesPrice,
 			name = "新手礼包",
 	}, 
 	weaponGiftBag  = {           --武器大礼包
@@ -75,7 +77,6 @@ local configs = {
 			name = "钻石450个",
 	},
 }
-
 
 function BuyConfigs.getConfig(name)
 	dump(name, "name")
