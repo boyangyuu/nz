@@ -17,23 +17,36 @@ function BossResultLayer:loadCCS()
 end
 
 function BossResultLayer:initUI()
-	local layerBtn     = cc.uiloader:seekNodeByName(self, "layerBtn")
-	local partNum      = cc.uiloader:seekNodeByName(self, "partNum")
-	local healthBagNum = cc.uiloader:seekNodeByName(self, "healthBagNum")
-	local leiNum 	   = cc.uiloader:seekNodeByName(self, "leiNum")
-	local moneyNum     = cc.uiloader:seekNodeByName(self, "moneyNum")
-	partNum:setVisible(false)
-	healthBagNum:setVisible(false)
-	leiNum:setVisible(false)
-	moneyNum:setVisible(false)
+	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
+	local indexTable = {"part","healthBag","lei","money"}
+	local numTable = {}
+	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
+	numTable["num2"] = cc.uiloader:seekNodeByName(self, "num2")
+	numTable["num3"] = cc.uiloader:seekNodeByName(self, "num3")
+	numTable["num4"] = cc.uiloader:seekNodeByName(self, "num4")
+	local waveNum    = cc.uiloader:seekNodeByName(self, "waveNum")
+	for k,v in pairs(numTable) do
+		v:setVisible(false)
+	end
 
 	local bossModeModel = md:getInstance("BossModeModel")
 	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
 	assert(info, "getChapterModel is nil")
-	partNum:setString("X"..info["part"])
-	healthBagNum:setString("X"..info["healthBag"])
-	leiNum:setString("X"..info["lei"])
-	moneyNum:setString("X"..info["money"])
+	
+	local data = getUserData()
+	dump(self.chapterIndex)
+	dump(data.bossMode.chapterIndex)
+	dump(self.waveIndex)
+	dump(data.bossMode.waveIndex)
+	if self.chapterIndex < data.bossMode.chapterIndex then
+		table.remove(info, "part")
+		table.remove(indexTable,1)
+	elseif self.chapterIndex == data.bossMode.chapterIndex then
+		if self.waveIndex < data.bossMode.waveIndex then
+			info["part"] = nil
+			table.remove(indexTable,1)
+		end
+	end
 
 	local manager = ccs.ArmatureDataManager:getInstance()
     local src = "res/BossMode/wxboss_jiesuan/wxboss_jiesuan.ExportJson"
@@ -47,19 +60,28 @@ function BossResultLayer:initUI()
     self:addChild(armature)
     armature:getAnimation():play("kaishi" , -1, 0)
 
-    local numImg = "bossjs_0"..self.waveIndex..".png"
-    local skin = ccs.Skin:createWithSpriteFrameName(numImg)
-    armature:getBone("bossjs_01"):addDisplay(skin, 1)
-    armature:getBone("bossjs_01"):changeDisplayWithIndex(1, true)
+
+	for i=1,table.nums(info) do
+		local indexName = indexTable[i]
+		numTable["num"..i]:setString("X"..info[indexName])
+
+	    local icon = "icon_"..indexName..".png"
+	    local skinIcon = ccs.Skin:createWithSpriteFrameName(icon)
+	    armature:getBone("icon_"..i):addDisplay(skinIcon, 1)
+	    armature:getBone("icon_"..i):changeDisplayWithIndex(1, true)
+	end
+
+    waveNum:setString("d"..self.waveIndex.."b")
+    local action = cc.MoveBy:create(0.3, cc.p(0,-100))
+    waveNum:runAction(action)
 
     armature:getAnimation():setMovementEventCallFunc(
         function (armatureBack,movementType,movementId)
             if movementType == ccs.MovementEventType.complete then
                 armature:getAnimation():play("chixu" , -1, 1)
-				partNum:setVisible(true)
-				healthBagNum:setVisible(true)
-				leiNum:setVisible(true)
-				moneyNum:setVisible(true)
+				for k,v in pairs(numTable) do
+					v:setVisible(true)
+				end
                 layerBtn:setTouchEnabled(true)
                 addBtnEventListener(layerBtn, function(event)
 					if event.name == 'began' then
