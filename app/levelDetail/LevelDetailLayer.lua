@@ -261,20 +261,13 @@ function LevelDetailLayer:onClickGoldWeapon()
 	end
 	-- 保留，暂时不用
 	-- function deneyPopGoldGift()
-	--     self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	--     	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
+	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
 	-- end
  --    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
  --    	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
 	--      "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
 	
-	local function funcCofirm()
-		self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
-	end
-	ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
 
     local umData = {}
 	umData[self.levelInfo] = "点击黄金武器"
@@ -300,17 +293,11 @@ end
 function LevelDetailLayer:onClickBtnJijia()
 	-- 保留，暂时不用
 	-- function deneyGoldGiftJijia()
-	--     self.buyModel:showBuy("armedMecha",{}, "关卡详情_点击机甲按钮")
+	    self.buyModel:showBuy("armedMecha",{}, "关卡详情_点击机甲按钮")
 	-- end
  --    self.buyModel:showBuy("goldGiftBag",{deneyBuyFunc = deneyGoldGiftJijia},
  --     	"关卡详情_点击机甲按钮")
 
-	local function funcCofirm()
-		self.buyModel:showBuy("armedMecha",{}, "关卡详情_点击机甲按钮")
-	end
-	ui:showPopup("commonPopup",
-		 {type = "style7", content = proInfo.getConfig("armedMecha"), callfuncCofirm = funcCofirm},
-		 {opacity = 0})
 end
 
 function LevelDetailLayer:equipGold()
@@ -344,25 +331,10 @@ function LevelDetailLayer:onCancelWeaponGift()
 	local rmbCost = weaponRecord["rmbCost"]
 	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
     if  rmbCost == 6 then
-    	-- 保留，暂时不用
-        -- self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.onBuyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..weaponName)
-    	
-    	local function funcCofirm()
-	        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.onBuyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..weaponName)
-		end
-		ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("unlockWeapon"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
+        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.onBuyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..weaponName)
     elseif rmbCost == 10 then
-    	-- 保留，暂时不用
-     --    self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..weaponName)
+        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..weaponName)
    		
-   		local function funcCofirm()
-	        self.buyModel:showBuy("highgradeWeapon",{payDoneFunc = handler(self, self.onBuyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..weaponName)
-		end
-		ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("highgradeWeapon"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
     end
 end
 

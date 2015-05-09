@@ -172,7 +172,7 @@ function TFQiuEnemyView:playHitted()
 end
 
 function TFQiuEnemyView:getSpeed()
-    local isJu     = self.fight:getIsJuFight()
+    local isJu     = self.fight:isJujiFight()
     local speed = isJu and define.kQiufanJuSpeed or define.kQiufanSpeed
     return speed
 end

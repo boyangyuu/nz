@@ -5,7 +5,7 @@
 ]]
 local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
-
+local proInfo = require("app.commonPopup.ProductInfoConfig")
 -- 定义事件
 function BuyModel:ctor(properties)
     BuyModel.super.ctor(self, properties)
@@ -43,7 +43,9 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
     else
-    	self:iapPay()
+    	ui:showPopup("commonPopup",
+			 {type = "style7", content = proInfo.getConfig(configId), callfuncCofirm = handler(self, self.iapPay)},
+			 {opacity = 0})
     end
 end
 

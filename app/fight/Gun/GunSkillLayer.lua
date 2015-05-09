@@ -19,7 +19,6 @@ function GunSkillLayer:ctor()
 end
 
 function GunSkillLayer:refreshUI(event)
-	print("function GunSkillLayer:refreshUI(event)")
 	--clear
 	if self.ui then 
 		self.ui:removeSelf()
@@ -29,7 +28,6 @@ function GunSkillLayer:refreshUI(event)
 	--config
 	local gun   = self.hero:getGun() 
 	local name  = gun:getGunName()
-	print("name", name)
 	name = "huoqilin"
 	local config = gun:getSkillConfig()
 	if config == nil then return end
@@ -50,14 +48,11 @@ function GunSkillLayer:refreshUI(event)
 	end
 end
 
-function GunSkillLayer:onClickBtnSkill(skillId)
-	print("onClickBtnSkill(skillId)", skillId)
-	
+function GunSkillLayer:onClickBtnSkill(skillId)	
 	--check cooldown
 	local gun   	 = self.hero:getGun() 
 	local isCooldown = gun:isSkillCding(skillId)
 	if not isCooldown then 
-		print(" not isCooldown")
 		return 
 	end
 	gun:startSkillCd(skillId)

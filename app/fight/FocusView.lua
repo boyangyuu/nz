@@ -5,10 +5,6 @@
 
 ]]
 
---import
-local FightConfigs = import(".fightConfigs.FightConfigs")
-local Gun = import(".Gun")
-
 local FocusView = class("FocusView", function()
 	local node = display.newNode()
 	node:setAnchorPoint(0.5,0.5)
@@ -45,7 +41,6 @@ end
 function FocusView:refreshFocus(event)
 	--clear
 	event = event or {}
-	print("function FocusView:refreshFocus(event)")
 	if self.armature then
 		self.armature:removeFromParent()
 	end
@@ -201,7 +196,6 @@ function FocusView:addJu(event)
 end
 
 function FocusView:removeJu(event)
-	print("FocusView:removeJu()")
 	-- local ox, oy = self.oriJuPos.x, self.oriJuPos.y
 	-- local cx, cy = self:getParent():getPosition()
 	-- local destPos = cc.p(ox + (cx - ox)/4 , oy + (cy - oy)/4 )
