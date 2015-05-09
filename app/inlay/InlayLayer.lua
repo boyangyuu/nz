@@ -140,19 +140,13 @@ function InlayLayer:onClickGoldWeaponBtn()
             self.inlayModel:equipAllInlays()
             self:playSoundxqcg()
         end
-        -- 保留，暂时不用
+        
         -- function deneyGoldGift()
-        --     self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
+            self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
         -- end
         -- self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
         --      "镶嵌页面_点击一键黄武")
 
-        local function funcCofirm()
-            self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
-        end
-        ui:showPopup("commonPopup",
-             {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = funcCofirm},
-             {opacity = 0})
     end
 end
 
