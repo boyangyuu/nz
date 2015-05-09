@@ -34,10 +34,6 @@ function BossResultLayer:initUI()
 	assert(info, "getChapterModel is nil")
 	
 	local data = getUserData()
-	dump(self.chapterIndex)
-	dump(data.bossMode.chapterIndex)
-	dump(self.waveIndex)
-	dump(data.bossMode.waveIndex)
 	if self.chapterIndex < data.bossMode.chapterIndex then
 		table.remove(info, "part")
 		table.remove(indexTable,1)
