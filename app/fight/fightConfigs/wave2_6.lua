@@ -273,7 +273,7 @@ local waves = {
 		enemys = {                                              --冲锋铁球召唤医疗 CF boss
 			{
 				descId = "boss02_1",
-				time = 3,	
+				time = 2,	
 				num = 1,
 				pos = {450},
 				delay = {4},
@@ -288,46 +288,46 @@ local waves = {
 		},
 	},
 }
---enemy的关卡配置                                                    黄金镶嵌  dps大于等于5  怪物数据
+--enemy的关卡配置                                                  白银镶嵌 m4a1伤害110  dps大于等于3  远程3近战3  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=20,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=10,hp=650,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2, weak4=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=650,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=300,
+	{id=3,image="shoulei",demage=12,hp=100,
 	weak1=1},
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=7000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=700,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=500,
+	{id=6,image="daodan",demage=12,hp=200,
 	weak1=1},
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=20,hp=18000,fireRate=180,fireCd=4,speed=60,
+	{id=7,image="jinzhanb",demage=12,hp=1300,fireRate=180,fireCd=4,speed=60,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=45000,fireRate=180,fireCd=5,speed=40,
+	{id=8,image="dunbing",demage=10,hp=6500,fireRate=180,fireCd=5,speed=40,
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=15,hp=700,fireRate=30,speed=120,
 	weak1=2, weak4=3 },	
 
 	--越野车       type = "jipu",
-	{id=12,image="yyc",demage=0,hp=60000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=20000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--吉普车烟雾导弹          type = "dao_wu",
-	{id=13,image="daodan03",demage=10,hp=3500, weak1=1}, 
+	{id=13,image="daodan03",demage=12,hp=1500, weak1=1}, 
 
 	--BOSS铁球
 	{id=18,image="tieqiu",demage= 50,hp=9000, weak1=1},

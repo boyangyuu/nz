@@ -260,7 +260,7 @@ local waves = {
 		enemys = {                                                 -- 多足蜘蛛boss
 			{
 				descId = "dzboss_1", --简介
-				time = 3,	
+				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
@@ -270,7 +270,7 @@ local waves = {
 					wangId    = 19,
 					missileId = 20, 
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50) , cc.p(150, 150)},
-					id = 2,
+					id = 1,
 				},
 			},
 		},
@@ -345,8 +345,8 @@ local bosses = {
 	{
 		image = "dzboss_1", --图片名字
 		award = 50000,                   --boss产出金币数量
-		hp = 250000,
-		fireRate = 60,                  --普攻频率
+		hp = 200000,
+		fireRate = 180,                  --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 180,                    --移动频率
@@ -356,25 +356,24 @@ local bosses = {
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
 		wudiTime = 5.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
-			wudi = { 0.91, 0.71, 0.51 , 0.31, 0.10
+
+			-- wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
+			-- },
+
+			wudi = { 0.90, 0.70, 0.50 , 0.30, 0.10
 			}, 
 
-			zhaohuan = { 0.90, 0.70, 0.40,                    --召唤小兵
+			zhaohuan = { 0.91, 0.71, 0.41,                         --召唤小兵
 			},   
 
-			wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
-			},
-
 			daoDan1 = {                                            --两发导弹
-				0.95, 0.75, 0.45, 
+				0.95, 0.65, 0.35, 
 			},
-
 			daoDan2 = {                                            --两发导弹
-				0.80, 0.55, 0.34,
+				0.80, 0.55, 0.25,
 			},
-
 			daoDan3 = {                                            --两发导弹
-				0.64, 0.22, 0.15,
+				0.75, 0.45, 0.15,
 			},
 
 
@@ -402,7 +401,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 0.06,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-300, 300), cc.p(300, 300), cc.p(0, -300),
+            	cc.p(-150, 150), cc.p(150, 150), cc.p(0, -150),
         	},
         },
 
@@ -411,7 +410,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 0.06,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-300, 300), cc.p(300, 300), cc.p(0, -300),
+            	cc.p(-150, 150), cc.p(150, 150), cc.p(0, -150),
         	},
         },
 
@@ -420,7 +419,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 0.06,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-300, 300), cc.p(300, 300), cc.p(0, -300),
+            	cc.p(-150, 150), cc.p(150, 150), cc.p(0, -150),
         	},
         },
 

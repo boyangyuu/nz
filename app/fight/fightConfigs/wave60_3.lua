@@ -282,7 +282,11 @@ local waves = {
 				property = { 
 					type = "awardSan",
 					id = 20,
-					award = "goldWeapon",
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 1,
 					placeName = "place9",
 				},
 			},
@@ -341,36 +345,36 @@ local waves = {
 
 
 
---enemy的关卡配置                                   黄金镶嵌 狙击枪630*1.6=1000伤害          dps大于等于7
+--enemy的关卡配置                                   无镶嵌 狙击枪6星470伤害   1枪  470         dps大于等于2
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=21,hp=1000,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=2,hp=470,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=1000,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=470,walkRate=120,walkCd=2,rollRate=180,rollCd=4,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=1,
+	{id=3,image="shoulei",demage=2,hp=1,
 	weak1=1},
 
 	--狙击兵      --type = "juji",
-	{id=4,image="jujib",demage=30,hp=1000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
+	{id=4,image="jujib",demage=6,hp=1400, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=35,hp=1,
+	{id=6,image="daodan",demage=2,hp=1,
 	weak1=1},
 
 	--绑匪                                     140--左右移动距离       280--滚动距离
-	{id=7,image="tufeib",demage=21,hp=1000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+	{id=7,image="tufeib",demage=2,hp=470,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
 
 	--被绑架人        --type = "bangren",
-	{id=8,image="hs", hp=1000, weak1=1},	
+	{id=8,image="hs", hp=310, weak1=1},	
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=4000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=2000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	-- 金武箱子奖励  type = "awardSan",
