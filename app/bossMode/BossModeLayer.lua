@@ -160,6 +160,24 @@ function BossModeLayer:refreshContent()
 	--
 	self.panelChapter:removeAllChildren()
     local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
+    
+    local btnChapter = {}
+    for i=1,5 do
+		btnChapter[i] = cc.uiloader:seekNodeByName(bossBtnNode, "part"..i)
+		btnChapter[i]:setTouchEnabled(true)
+		addBtnEventListener(btnChapter[i], function(event)
+			if event.name == 'began' then
+				return true
+			elseif event.name == 'ended' then
+				self.bossModeModel = md:getInstance("BossModeModel")
+				local info = self.bossModeModel:getChapterModel(self.choseChapter,i)
+				local msg = "此波奖励武器零件，手雷"..info["lei"].."个，药包"..info["healthBag"].."个，"..info["money"].."金币"
+				ui:showPopup("commonPopup",
+				 {type = "style1",content = msg},
+				 {opacity = 0})
+			end
+		end)
+    end
     self.panelChapter:addChild(bossBtnNode)
 
     --label
