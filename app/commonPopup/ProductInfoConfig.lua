@@ -1,7 +1,7 @@
 local ProductInfoConfig = class("ProductInfoConfig", cc.mvc.ModelBase)
 
 local configs = {
-	novicesBag     = "购买新手大礼包1个，价值1元，点击确定购买！",
+	novicesBag     = "购买新手大礼包1个，价值6元，点击确定购买！",
 	goldGiftBag    = "购买土豪金大礼包1个，价值30元，点击确定购买！",
 	weaponGiftBag  = "购买武器大礼包1个，价值20元，点击确定购买！",
 	armedMecha     = "购买无敌机甲2次，价值4元，点击确定购买！",
