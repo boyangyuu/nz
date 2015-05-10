@@ -17,7 +17,8 @@ isTest  = false     --战斗的各种框
 isDebug = true      --debug页面
 isAnalytics = nil --统计功能开关
 isAsync = false
-__versionId = nil
+__versionId = nil   --游戏当前版本
+appName = nil       --游戏当前名称
 
 ui        = UI.new()
 md        = MD.new()
@@ -27,11 +28,10 @@ dataModel = DataModel.new()
 
 function MyApp:ctor()
     MyApp.super.ctor(self)
-    self:initVersionId()
-    self:initIsAnalytics()
     self.objects_ = {}
     self:initGameState()    
-
+    self:initVariables()
+    
     -- um 设置玩家账户及等级
     um:setUserAccount()
 end
@@ -68,34 +68,19 @@ function MyApp:initGameState()
         self:createGameStateFile()
         GameData=GameState.load()
     end
-
-    -- um 设置玩家账户及等级
-    um:setUserAccount()
 end
 
-function MyApp:initVersionId()
+function MyApp:initVariables()
     if device.platform ~= "android" then return end
-    local className = "com/hgtt/com/Ccn"
-    local sig = "()Ljava/lang/String;"
-    local result,versionId = luaj.callStaticMethod(className,"getVersionName",{},sig)
-    if versionId then 
-        __versionId = versionId 
-    else
-        __versionId = "unknown"
-    end
-end
-
-function MyApp:initIsAnalytics()
-    if device.platform ~= "android" then return end
-    local className = "com/hgtt/com/Ccn"
-    local sig = "(Ljava/lang/String;)Z"
-    local result, analytics = luaj.callStaticMethod(className,"getAppMetaData",{"ISANALYTICS"},sig)
-    print("analytics :" ,analytics)
-    if analytics == "true"then
-        isAnalytics = analytics
-    else
-        isAnalytics = analytics
-    end
+    local className = "com/hgtt/com/IAPControl"
+    local params = {}
+    local boolSig = "()Z"
+    local stringSig = "()Ljava/lang/String;"
+    local result = nil
+    result, isAnalytics = luaj.callStaticMethod(className, "getIsAnalytics", params,boolSig)
+    result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
+    result, appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    print("MyApp-isAnalytics:",isAnalytics)
 end
 
 function MyApp:createGameStateFile()
@@ -120,7 +105,7 @@ function MyApp:createGameStateFile()
                         },
                         weaponed = {
                                 bag1 =  {
-                                        weaponid   = 1,
+                                        weaponid   = 9,
                                         },
                                 bag2 =  {
                                         weaponid   = 2,
@@ -243,9 +228,9 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-    local pauseModel = md:getInstance("PauseModel")
-    pauseModel:showPopup("HomePausePopup",{},
-        {anim = true,isNotScrenCapture = true})
+    -- local pauseModel = md:getInstance("PauseModel")
+    -- pauseModel:showPopup("HomePausePopup",{},
+    --     {anim = true,isNotScrenCapture = true})
 end
 
 function MyApp:onEnterForeground()

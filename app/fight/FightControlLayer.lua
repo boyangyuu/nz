@@ -40,9 +40,9 @@ function FightControlLayer:initUI()
     end)	
 
     --timer hp
-    self.timerHp = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+    self.timerHp = display.newProgressTimer("#btn_cd1.png", display.PROGRESS_TIMER_RADIAL)
 	buttonHp:addChild(self.timerHp)
-    self.timerHp:setAnchorPoint(0.0,0.0)
+    self.timerHp:setAnchorPoint(0.5,0.5)
     self.timerHp:setReverseDirection(true)
     self.timerHp:setPercentage(100)
     self.timerHp:setVisible(false)   

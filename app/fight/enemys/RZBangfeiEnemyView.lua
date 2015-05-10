@@ -105,8 +105,7 @@ end
 
 function RZBangfeiEnemyView:playFire()
     if self.walkPos == 0 then return end
-    self.armature:getAnimation():play("fire" , -1, 1) 
-    self.enemy:hit(self.hero)
+    RZBangfeiEnemyView.super.playFire(self) 
 end
 
 function RZBangfeiEnemyView:canHitted()

@@ -1,8 +1,8 @@
-local BossResultLayer = class("BossResultLayer",function()
+local JujiResultLayer = class("JujiResultLayer",function()
 	return display.newLayer()
 end)
 
-function BossResultLayer:ctor(properties)
+function JujiResultLayer:ctor(properties)
 	self.chapterIndex = properties.chapterIndex
 	self.waveIndex = properties.waveIndex
 	self.properties = properties
@@ -10,13 +10,13 @@ function BossResultLayer:ctor(properties)
 	self:initUI()
 end
 
-function BossResultLayer:loadCCS()
+function JujiResultLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/BossMode/ResultLayer")
     local controlNode = cc.uiloader:load("bossResultLayer_1.ExportJson")
     self:addChild(controlNode,100)
 end
 
-function BossResultLayer:initUI()
+function JujiResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
 	local indexTable = {"part","healthBag","lei","money"}
 	local numTable = {}
@@ -90,8 +90,8 @@ function BossResultLayer:initUI()
         end)
 end
 
-function BossResultLayer:onClickBtnGet()
-	ui:closePopup("BossResultLayer")
+function JujiResultLayer:onClickBtnGet()
+	ui:closePopup("JujiResultLayer")
 
 	--closefunc
 	if self.properties["closeFunc"] then 
@@ -99,4 +99,4 @@ function BossResultLayer:onClickBtnGet()
 	end
 end
 
-return BossResultLayer
+return JujiResultLayer

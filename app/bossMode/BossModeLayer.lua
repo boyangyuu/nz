@@ -103,7 +103,8 @@ function BossModeLayer:refreshUI(event)
 	self.btnNext:setVisible(true)
 	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
 		self.btnPre:setVisible(false)
-	elseif self.bossModeModel:checkNext(self.choseChapter+1) == false then
+	end
+	if self.bossModeModel:checkNext(self.choseChapter+1) == false then
 		self.btnNext:setVisible(false)
 	end
 
@@ -160,6 +161,24 @@ function BossModeLayer:refreshContent()
 	--
 	self.panelChapter:removeAllChildren()
     local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
+    
+    local btnChapter = {}
+    for i=1,5 do
+		btnChapter[i] = cc.uiloader:seekNodeByName(bossBtnNode, "part"..i)
+		btnChapter[i]:setTouchEnabled(true)
+		addBtnEventListener(btnChapter[i], function(event)
+			if event.name == 'began' then
+				return true
+			elseif event.name == 'ended' then
+				self.bossModeModel = md:getInstance("BossModeModel")
+				local info = self.bossModeModel:getChapterModel(self.choseChapter,i)
+				local msg = "此波奖励武器零件，手雷"..info["lei"].."个，药包"..info["healthBag"].."个，"..info["money"].."金币"
+				ui:showPopup("commonPopup",
+				 {type = "style1",content = msg},
+				 {opacity = 0})
+			end
+		end)
+    end
     self.panelChapter:addChild(bossBtnNode)
 
     --label
@@ -229,9 +248,14 @@ function BossModeLayer:onClickBtnStart()
 end
 
 function BossModeLayer:onClickBtnGet()
-	ui:showPopup("commonPopup",
+	self.bossModeModel:setWeapon(self.choseChapter)
+	-- self.bossModeModel:refreshInfo()
+	self:refreshContent()
+	if self.btnGet:isButtonEnabled() then
+		ui:showPopup("commonPopup",
 			 {type = "style1",content = "您的武器零件还没凑齐喔"},
 			 {opacity = 100})
+	end
 end
 
 return BossModeLayer

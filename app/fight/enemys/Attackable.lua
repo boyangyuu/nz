@@ -448,18 +448,39 @@ function Attackable:playBuff(buffName)
 
 	local buffArmature = ccs.Armature:create(buffName)
 	self.buffNode:addChild(buffArmature)
-	local boneBuff = self.armature:getBone("buff")
-	-- buffArmature:setParentBone(boneBuff)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
 				armatureBack:getAnimation():stop()		
 	    		armatureBack:removeSelf()
-	    		print(" Attackable:playBuff")
 	    		armatureBack = nil
 	    	end 
 		end)	
 	buffArmature:getAnimation():playWithIndex(0)
+end
+
+function Attackable:playBuffWithTime(buffName, time, endFunc)
+	if self.buffNode == nil then return end
+
+	local buffArmature = ccs.Armature:create(buffName)
+	self.buffNode:addChild(buffArmature)
+	buffArmature:getAnimation():setMovementEventCallFunc(
+		function (armatureBack,movementType,movementId) 
+	    	if movementType == ccs.MovementEventType.loopComplete and
+	    		movementId == "start" then
+				armatureBack:getAnimation():play("chixu", -1, 1)		
+	    	end 
+		end)	
+	buffArmature:getAnimation():play("start", -1, 1)	
+
+
+	local function removeFunc()
+		print("removeFunc")
+		buffArmature:removeSelf()
+		buffArmature = nil
+		endFunc(self)
+	end
+	self.buffNode:performWithDelay(removeFunc, time)
 end
 
 function Attackable:setIsFlying(isFlying)
@@ -478,6 +499,10 @@ end
 --接口
 function Attackable:tick(t)
 	assert("required method, must implement me")	
+end
+
+function Attackable:isBeBuff()
+	return true
 end
 
 function Attackable:onHitted(targetData)

@@ -53,7 +53,8 @@ function MapAnimView:playEffectShooted(event)
 	if isGold or isRobot or isRpg then 
 		animName = "zd_hjqmz"
 	elseif isHitted then
-		animName = "zd_ptmz" 
+		animName = gunCfg["mzName"]
+		print("animName", animName)
 	else
 		animName = "zd_dimian"
 	end
@@ -67,7 +68,7 @@ function MapAnimView:playEffectShooted(event)
 
 	--one or many
 	if isPz then 
-		for i=1,6 do
+		for i=1,3 do
 			local rx = math.random(-70, 70)
 			local ry = math.random(-40, 40)
 			local destPos = cc.p(pos.x + rx, pos.y + ry)
@@ -88,13 +89,14 @@ function MapAnimView:addShootedArmature(animName, pos)
 	armature:setScale(scale)
 	armature:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
-    	    	if movementType == ccs.MovementEventType.loopComplete then
-    	    		armature:removeFromParent()
-    	    		armature = nil
+    	    	if movementType == ccs.MovementEventType.complete then
+    	    		print("armature:removeFromParent()")
+    	    		armatureBack:removeFromParent()
+    	    		armatureBack = nil
     	    		self.isShootAniming = false
     	    	end
 	    	end)
-	armature:getAnimation():playWithIndex(0)
+	armature:getAnimation():playWithIndex(0 , -1, 0)
 end
 
 function MapAnimView:playEffectLeiBomb(event)
@@ -199,7 +201,7 @@ function MapAnimView:playEffectGunSkill(event)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
-				armature:removeFromParent()		
+				armatureBack:removeFromParent()		
 				print("MapAnimView:playEffectGunSkill(event)")	
 	    	end 
     	end)	

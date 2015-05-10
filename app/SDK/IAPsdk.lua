@@ -48,7 +48,7 @@ function IAPsdk:initConfigs()
 		config["stone450"]         = "30000883682315"		--堆成山的宝石
 		config["unlockWeapon"] 	   = "30000883682323"       --武器购买
 
-	elseif self.iapName == 'andGame' then
+	elseif self.iapName == 'andgame' then
 		--移动基地商用计费代码 
 		--礼包
 		config["novicesBag"]       = "001"		--新手礼包1

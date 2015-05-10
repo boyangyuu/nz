@@ -3,6 +3,10 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local configs = {}
 
 configs["m4a1"] = {
+
+}
+
+configs["huoqilin"] = {
 	skill1 = {
 		animName = "skill_hql",
 	    buffFunc = function ()
@@ -26,20 +30,29 @@ configs["m4a1"] = {
 	},
 }
 
-configs["huoqilin"] = {
-
-}
-
 configs["balete"] = {
-
+	skill1 = {
+		animName = "skill_blt",
+	    buffFunc = function ()
+			local buffData = {
+				buffAnimName  = "bltjn_mz",
+				time = 8.0,
+			}
+			local enemyM = md:getInstance("EnemyManager")
+			enemyM:doBuff("doBuffAll_pause", buffData)
+	    end,
+		cd       = 5.0,		
+	},	
 }
+
 
 configs["leimingdun"] = {
 	skill1 = {
-		animName = "skill_hql",
+		animName = "skill_blt",
 	    buffFunc = function ()
 			local buffData = {
-				buffAnimName  = "hqljn_mz",
+				buffAnimName  = "bltjn_mz",
+				time = 8.0,
 			}
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)

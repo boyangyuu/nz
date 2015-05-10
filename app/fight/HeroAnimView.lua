@@ -30,7 +30,7 @@ function HeroAnimView:ctor()
 		:addEventListener(self.hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
 		
 		:addEventListener(self.hero.HP_DECREASE_EVENT		, handler(self, self.playHitted))
-		:addEventListener(self.hero.HP_STATE_EVENT			, handler(self, self.playLessHp))
+		:addEventListener(self.hero.HP_STATE_EVENT			, handler(self, self.onUpdateHp))
 		:addEventListener(self.hero.GUN_RELOAD_EVENT		, handler(self, self.playGunReload))
 
 	cc.EventProxy.new(fightInlay, self)
@@ -49,10 +49,6 @@ function HeroAnimView:loadCCS()
     self.armatureHead = ccs.Armature:create("baotou")
     self:addChild(self.armatureHead)
 
-
-    --血量警告    
-	self.armatureScreenRed = ccs.Armature:create("avatarhit")
-    self:addChild(self.armatureScreenRed)   
 
     --血花 
     self.armatureBlood1 = ccs.Armature:create("blood1")
@@ -150,21 +146,18 @@ end
 
 function HeroAnimView:playHitted(event)
 	self:playHpDecreaseEffect()
-	self:playHpAlertEffect()
 end
 
-function HeroAnimView:playLessHp(event)
+function HeroAnimView:onUpdateHp(event)
 	local isLessHp = event.isLessHp
-	if isLessHp then
+	if isLessHp and self.armatureScreenRed == nil then
+		self.armatureScreenRed = ccs.Armature:create("avatarhit")
+	    self:addChild(self.armatureScreenRed)  
 		self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 1)
-	else
-		self.armatureScreenRed:getAnimation():stop()
+	elseif self.armatureScreenRed then
+		self.armatureScreenRed:removeSelf()
+		self.armatureScreenRed = nil
 	end
-end
-
-function HeroAnimView:playHpAlertEffect()
-	if self.hero:getIsLessHp() then return end
-	self.armatureScreenRed:getAnimation():play("avatarhit" , -1, 0)
 end
 
 function HeroAnimView:playHpDecreaseEffect()
