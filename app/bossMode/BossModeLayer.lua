@@ -103,7 +103,8 @@ function BossModeLayer:refreshUI(event)
 	self.btnNext:setVisible(true)
 	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
 		self.btnPre:setVisible(false)
-	elseif self.bossModeModel:checkNext(self.choseChapter+1) == false then
+	end
+	if self.bossModeModel:checkNext(self.choseChapter+1) == false then
 		self.btnNext:setVisible(false)
 	end
 

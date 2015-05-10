@@ -72,7 +72,6 @@ function JujiModeLayer:onClickBtnStart()
 	local isAvailable = network.isInternetConnectionAvailable()
 	if isAvailable then
 		print("JujiModeLayer:onClickBtnStart()")
-
 	else
 		ui:showPopup("commonPopup",
 			 {type = "style1",content = "当前网络连接失败，连接网络后数据将会统计"},
@@ -80,7 +79,6 @@ function JujiModeLayer:onClickBtnStart()
 	end
 end
 
--- 我死之后哪怕洪水滔天
 function JujiModeLayer:onClickBtnClose()
 	ui:closePopup("JujiModeLayer")
 end
