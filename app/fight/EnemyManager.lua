@@ -74,14 +74,19 @@ end
 function EnemyManager:doBuffAll_pause(buffData)
 	local value   = buffData.value
 	local name  = buffData.buffAnimName
+	local time  = buffData.time
 
 	print("function EnemyManager:doBuffAll_pause(buffData)")
 	local enemys = self:getEnemysByBuff(name)
 	for i,enemy in ipairs(enemys) do
 		local enemyModel = enemy:getEnemyModel()
 		if not enemyModel:isDead() then 
-			print("		if not enemyModel:isDead() then ")
 			enemy:setPause({isPause = true}) 
+			local function endFunc(enemy)
+				print("endFunc")
+				enemy:setPause({isPause = false}) 
+			end
+			enemy:playBuffWithTime(name, time, endFunc)
 		end
 	end		
 end

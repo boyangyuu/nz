@@ -52,9 +52,9 @@ function GunSkillLayer:refreshUI(event)
 
         --timer
         self.skillCdPercent[skillId] = 0
-	    local bar = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+	    local bar = display.newProgressTimer("#btn_cd1.png", display.PROGRESS_TIMER_RADIAL)
 		btn:addChild(bar)
-	    bar:setAnchorPoint(0.0,0.0)
+	    bar:setAnchorPoint(0.5, 0.5)
 	    bar:setReverseDirection(true)
 	    bar:setPercentage(100)
 	    bar:setVisible(false)
@@ -76,7 +76,7 @@ function GunSkillLayer:onClickBtnSkill(skillId)
 	-- dump(skillConfig, "skillConfig")
 
 	--play skill
-	self.fightGun:playSkill(skillConfig["animName"])
+	-- self.fightGun:playSkill(skillConfig["animName"])
 
 	--play buff
 	skillConfig.buffFunc()
