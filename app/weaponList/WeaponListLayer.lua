@@ -69,7 +69,13 @@ function WeaponListLayer:loadCCS()
     manager:addArmatureFileInfo(wqsjsrc)
     local plist = "res/WeaponList/wqsj/wqsj0.plist"
     local png   = "res/WeaponList/wqsj/wqsj0.png"
-    display.addSpriteFrames(plist, png)          
+    display.addSpriteFrames(plist, png)  
+
+    local hqlsrc = "res/WeaponList/iconhql_tx/iconhql_tx.ExportJson"
+    manager:addArmatureFileInfo(hqlsrc)
+    local plist = "res/WeaponList/iconhql_tx/iconhql_tx0.plist"
+    local png   = "res/WeaponList/iconhql_tx/iconhql_tx0.png"
+    display.addSpriteFrames(plist, png)        
 end
 
 function WeaponListLayer:initUI()
@@ -332,11 +338,27 @@ function WeaponListLayer:refreshComment()
     self.labelDescribe:setString(self.weaponRecord["describe"])
     local weaponImg = display.newSprite("#icon_"..self.weaponRecord["imgName"]..".png")
     weaponImg:setScale(1.43)
-    addChildCenter(weaponImg, self.layerGun)
+    weaponImg:setAnchorPoint(0.5,0.5)
+    self.layerGun:addChild(weaponImg)
+    -- addChildCenter(weaponImg, self.layerGun)
     local imageName = self.weaponRecord["imgName"]
     local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
     if weaponSpc then
+        weaponSpc:setAnchorPoint(0.5,0.5)
         self.layerGun:addChild(weaponSpc)
+    end
+
+    if self.weaponId == 9 then
+        local armaturehql = ccs.Armature:create("iconhql_tx")
+        armaturehql:setAnchorPoint(0.5,0.5)
+        self.layerGun:addChild(armaturehql)
+        armaturehql:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movement) 
+            if movementType == ccs.MovementEventType.complete then
+                armaturehql:getAnimation():play("chixu", -1, 0)
+            end 
+        end)
+        armaturehql:getAnimation():play("start" , -1, 0)
     end
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
