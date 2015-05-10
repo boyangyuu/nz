@@ -11,7 +11,7 @@ FightProp.PROP_UPDATE_EVENT           = "PROP_UPDATE_EVENT"
 
 function FightProp:ctor(properties)
     --instance
-    FightProp.wsuper.ctor(self, properties)
+    FightProp.super.ctor(self, properties)
     self.propModel = md:getInstance("PropModel") 
     self.buyModel  = md:getInstance("BuyModel")
     self.hero      = md:getInstance("Hero")
@@ -130,7 +130,7 @@ function FightProp:sendAward(awardData)
 		local fightInlay = md:getInstance("FightInlay")
 		fightInlay:activeGold()		
 	elseif awardType == "healthBag" then 
-		
+		self.propModel:addProp("hpBag", value)
 	elseif awardType == "shouLei" then
 		self.propModel:addProp("lei", value)
 	elseif awardType == "coin" then	

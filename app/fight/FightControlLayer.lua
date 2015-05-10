@@ -75,7 +75,7 @@ end
 function FightControlLayer:startHpCd()
 	self.hpCdPercent = 100
 	self.timerHp:setVisible(true)
-	local cdTimes = 2.0
+	local cdTimes = define.kHeroHpBagCd
 	local sch = nil
 	local function resumeCd()
 		if self.hpCdPercent == 0 then 

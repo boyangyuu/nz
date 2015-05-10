@@ -37,7 +37,7 @@ end
 function DDWuEnemyView:playFire()
     --scale
     self.armature:setScale(self.srcScale)
-    local time = define.kMissileDaoTime    
+    local time = self.property["flyTime"] or define.kMissileDaoTime    
     local destScale = self.property["destScale"] or 1.0
     local scaleAction = cc.ScaleTo:create(time, destScale)
 

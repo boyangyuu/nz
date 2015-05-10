@@ -32,7 +32,7 @@ local waves = {
 			{
 				time = 10,
 				num = 1,
-				delay = {0.5},
+				delay = {0},
 				pos = {360},
 				property = {
 					placeName = "place5",  
@@ -93,7 +93,7 @@ local waves = {
 				
 				time = 17,
 				num = 1,
-				delay = {0.3,},
+				delay = {0},
 				pos = {280},
 				property = {
 					placeName = "place16",
@@ -105,7 +105,7 @@ local waves = {
 			{
 				time = 21,
 				num = 1,
-				delay = {0.6,},
+				delay = {0},
 				pos = {300,},
 				property = {
 					placeName = "place9",  
@@ -221,7 +221,7 @@ local waves = {
 			{
 				time = 21,
 				num = 1,
-				delay = {0.4},
+				delay = {0},
 				pos = {195},
 				property = {
 					placeName = "place14",
@@ -235,7 +235,7 @@ local waves = {
 			{
 				time = 24,
 				num = 1,
-				delay = {0.4},
+				delay = {0},
 				pos = {80},
 				property = {
 					placeName = "place12",

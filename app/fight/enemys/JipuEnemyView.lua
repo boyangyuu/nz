@@ -226,6 +226,8 @@ function JipuEnemyView:playFire()
 		local name = "dao"..index
 	    local boneDao = self.armature:getBone(name)
 	    if offsetIndex > 2 then break end
+	    local offset = offsetPoses[offsetIndex]
+	    if offset == nil then break end
 	    local boneImage = boneDao:getDisplayRenderNode()
 	    
 	    local pWorldBone = boneImage:convertToWorldSpace(cc.p(0, 0))
@@ -237,7 +239,8 @@ function JipuEnemyView:playFire()
 	        type = self.property["missileType"],
 	        id = self.property["missileId"],
 	        demageScale = self.enemy:getDemageScale(),
-	        offset = offsetPoses[offsetIndex]
+	        flyTime =  self.property["flyTime"],
+	        offset = offset
 	    }
 	    local function callfuncDaoDan()
 	    	local hero = md:getInstance("Hero")

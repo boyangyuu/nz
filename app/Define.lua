@@ -7,6 +7,8 @@ Define.kHeroBaseHp 				= 100.0  --角色血量
 Define.kHeroCritScale 			= 3.0  --暴击倍数
 Define.kHeroHpLess 				= 0.1  --血量剩下0.1的时候 飘红
 Define.kHeroHelper				= 0  --默认回血0/s
+Define.kHeroHpBag				= 200  --回血包
+Define.kHeroHpBagCd				= 2    --回血包cd
 
 Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
 Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
