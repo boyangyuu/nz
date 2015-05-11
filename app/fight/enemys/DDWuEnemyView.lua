@@ -96,4 +96,9 @@ function DDWuEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
+
+function DDWuEnemyView:isBeBuff()
+    return false
+end
+
 return DDWuEnemyView

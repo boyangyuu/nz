@@ -118,8 +118,8 @@ function FocusView:playJuFire()
 	local time1 = 0.15
 	local time2 = 0.4
 	local scale = 1.3
-	local moveAction1 = cc.ScaleBy:create(time1, scale)
-	local moveAction2 = cc.ScaleBy:create(time2, 1/scale)	
+	local moveAction1 = cc.ScaleTo:create(time1, scale)
+	local moveAction2 = cc.ScaleTo:create(time2, 1)	
 
 	self.juNode:runAction(cc.Sequence:create(moveAction1, moveAction2, 
 		cc.DelayTime:create(0.4)))
