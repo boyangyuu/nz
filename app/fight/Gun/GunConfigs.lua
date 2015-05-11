@@ -33,7 +33,7 @@ configs["huoqilin"] = {
 	},
 }
 
-configs["balete"] = {
+configs["baleite"] = {
 	skill1 = {
 		animName = "skill_blt",
 	    buffFunc = function ()
@@ -52,23 +52,6 @@ configs["balete"] = {
 }
 
 
-configs["leimingdun"] = {
-	skill1 = {
-		animName = "skill_blt",
-	    buffFunc = function ()
-	    	local gunId = 10
-		    local weaponModel = md:getInstance("WeaponListModel")
-		    local level 	  = weaponModel:getIntenlevel(gunId) 				
-			local buffData = {
-				buffAnimName  = "bltjn_mz",
-				time = 8.0 + level * 0.2,
-			}
-			local enemyM = md:getInstance("EnemyManager")
-			enemyM:doBuff("doBuffAll_pause", buffData)
-	    end,
-		cd       = 5.0,		
-	},	
-}
 
 function GunConfigs.getConfig(gunName)
 	return configs[gunName]
