@@ -5,11 +5,14 @@ local configs = {}
 
 
 configs["huoqilin"] = {
+
 	skill1 = {
 		animName = "skill_hql",
 	    buffFunc = function ()
-		    local hero = md:getInstance("Hero")
-			local demage = 5000   --技能伤害基础值
+	    	local gunId = 9
+		    local weaponModel = md:getInstance("WeaponListModel")
+		    local level 	  = weaponModel:getIntenlevel(9) 
+			local demage = 5000 + 300 * level
 			local buffData = {
 				buffAnimName  = "hqljn_mz",
 				value = demage,
@@ -28,13 +31,16 @@ configs["huoqilin"] = {
 	},
 }
 
-configs["balete"] = {
+configs["baleite"] = {
 	skill1 = {
 		animName = "skill_blt",
 	    buffFunc = function ()
+	    	local gunId = 6
+		    local weaponModel = md:getInstance("WeaponListModel")
+		    local level 	  = weaponModel:getIntenlevel(gunId) 				
 			local buffData = {
 				buffAnimName  = "bltjn_mz",
-				time = 5.0, --buff 冰冻时间
+				time = 5.0 + level * 0.2,
 			}
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)

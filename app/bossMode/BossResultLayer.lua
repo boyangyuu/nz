@@ -16,9 +16,30 @@ function BossResultLayer:loadCCS()
     self:addChild(controlNode,100)
 end
 
+function BossResultLayer:getAwards()
+	local indexTable = {"part","healthBag","lei","money"}
+
+	local bossModeModel = md:getInstance("BossModeModel")
+	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
+	assert(info, "getChapterModel is nil")
+
+	local data = getUserData()
+	if self.chapterIndex < data.bossMode.chapterIndex then
+		info["part"] = nil
+		table.remove(indexTable,1)
+	elseif self.chapterIndex == data.bossMode.chapterIndex then
+		if self.waveIndex <= data.bossMode.waveIndex then
+			info["part"] = nil
+			table.remove(indexTable,1)
+		end
+	end	
+	return table {{part = 1}, {healthBag = 2}, }
+end
+
 function BossResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
-	local indexTable = {"part","healthBag","lei","money"}
+	-- local indexTable = {"part","healthBag","lei","money"}
+	local indexTable = self:getAwards()
 	local numTable = {}
 	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
 	numTable["num2"] = cc.uiloader:seekNodeByName(self, "num2")
@@ -29,20 +50,20 @@ function BossResultLayer:initUI()
 		v:setVisible(false)
 	end
 
-	local bossModeModel = md:getInstance("BossModeModel")
-	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
-	assert(info, "getChapterModel is nil")
+	-- local bossModeModel = md:getInstance("BossModeModel")
+	-- local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
+	-- assert(info, "getChapterModel is nil")
 	
-	local data = getUserData()
-	if self.chapterIndex < data.bossMode.chapterIndex then
-		info["part"] = nil
-		table.remove(indexTable,1)
-	elseif self.chapterIndex == data.bossMode.chapterIndex then
-		if self.waveIndex < data.bossMode.waveIndex then
-			info["part"] = nil
-			table.remove(indexTable,1)
-		end
-	end
+	-- local data = getUserData()
+	-- if self.chapterIndex < data.bossMode.chapterIndex then
+	-- 	info["part"] = nil
+	-- 	table.remove(indexTable,1)
+	-- elseif self.chapterIndex == data.bossMode.chapterIndex then
+	-- 	if self.waveIndex <= data.bossMode.waveIndex then
+	-- 		info["part"] = nil
+	-- 		table.remove(indexTable,1)
+	-- 	end
+	-- end
 
 	local manager = ccs.ArmatureDataManager:getInstance()
     local src = "res/BossMode/wxboss_jiesuan/wxboss_jiesuan.ExportJson"

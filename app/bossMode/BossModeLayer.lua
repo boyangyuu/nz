@@ -239,10 +239,8 @@ function BossModeLayer:onClickBtnStart()
 			 {opacity = 100})
 		return
 	end
-
-	-- local fightData = {groupId = 50, levelId = 1, fightType = "bossFight", chapterIndex = self.choseChapter}  --BOss竞技场
-	local fightData = { groupId = 60,levelId = 15, fightType = "jujiFight"}  --无限狙击
-
+	local fightData = {groupId = 50, levelId = 1, 
+		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
 	ui:closePopup("BossModeLayer")
 end

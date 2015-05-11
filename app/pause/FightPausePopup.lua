@@ -45,7 +45,19 @@ function FightPausePopup:initButtons()
 	        local umData = {}
 	    	umData[levelInfo] = "中途退出"
 	    	um:event("关卡完成情况", umData)
-			ui:changeLayer("HomeBarLayer",{fightData = fightData})
+		    if fightType == "bossFight" then
+		        local levelMapModel = md:getInstance("LevelMapModel")
+		        local groupId, levelId = levelMapModel:getConfig()
+		        fightData["groupId"] = groupId
+		        ui:changeLayer("HomeBarLayer",{fightData = fightData})
+	        elseif fightType == "jujiFight" then
+	        	local levelMapModel = md:getInstance("LevelMapModel")
+		        local groupId, levelId = levelMapModel:getConfig()
+		        fightData["groupId"] = groupId
+		        ui:changeLayer("HomeBarLayer",{fightData = fightData})
+	        else
+				ui:changeLayer("HomeBarLayer",{fightData = fightData})
+		    end
 			print("中途退出")
 
 			--pauseModel

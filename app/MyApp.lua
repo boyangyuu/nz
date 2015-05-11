@@ -134,7 +134,7 @@ function MyApp:createGameStateFile()
                         lei = {num = 10},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
-                        hpBag = {num = 2},
+                        hpBag = {num = 12},
             },
        
             weaponsuipian = {},
@@ -162,8 +162,6 @@ function MyApp:createGameStateFile()
                 fightedGroupId = 0, --打过的最远的关卡groupId
                 fightedlevelId = 0, --打过的最远的关卡levelId
 
-                
-                jujiRankLevel = 10,
                 userName  = "玩家自己",
                 vipLevel  = 0,
             },
@@ -210,7 +208,8 @@ function MyApp:createGameStateFile()
                         novicesBag = false,
             },
             dailylogin = {
-                        logintime = "00000",
+                        loginTime = nil,  --时间戳
+                        registTime = nil, --时间戳
                         isGet = false,
                         dailyid = 0,
             },

@@ -23,12 +23,12 @@ function DailyLoginModel:setTime()
 	dump(network.getInternetConnectionStatus())
 	if network.getInternetConnectionStatus() == 0 then return end
 	local data = getUserData()
-	data.dailylogin.logintime = self.date
-	if data.registertime == nil then
+	data.dailylogin.loginTime = self.date
+	if data.registTime == nil then
 		if network.getInternetConnectionStatus() == 0 then
-			data.registertime = os.time()
+			data.registTime = os.time()
 		else
-			data.registertime = self.date
+			data.registTime = self.date
 		end
 	end
 	setUserData(data)
@@ -106,7 +106,7 @@ end
 function DailyLoginModel:isToday()
 	local DailyInfo = self:getDailyInfo()
 	dump(DailyInfo)
-	if os.date("%x",DailyInfo["logintime"]) == os.date("%x",self.date) then
+	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",self.date) then
 		return true
 	else
 		return false
@@ -124,7 +124,7 @@ end
 
 function DailyLoginModel:setLoginState()
 	local DailyInfo = self:getDailyInfo()
-	if os.date("%x",DailyInfo["logintime"]) == os.date("%x",self.date) then
+	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",self.date) then
 		if DailyInfo["isGet"] then
 
 		else
@@ -142,7 +142,7 @@ end
 
 function DailyLoginModel:getDate()
 	local data = getUserData()
-	self.date = data.dailylogin.logintime
+	self.date = data.dailylogin.loginTime
 	dump(data.dailylogin)
     local url = "http://123.57.213.26/timestamp.php"
     local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "GET")
