@@ -504,7 +504,6 @@ function BaseBossView:tick(t)
 
 	--fire
 	local fireRate, isAble = self.enemy:getFireRate()
-	assert(fireRate > 1, "invalid fireRate")
 	if isAble then 
 		randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 

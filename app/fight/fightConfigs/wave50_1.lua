@@ -69,6 +69,7 @@ local waves = {
 					placeName = "place1",
 					missileId = 20,                 --导弹id        
 					qiuId = 25,                   --铁球id
+					-- qiuTime = 10,                 --铁球飞行到脸前的时间
 					id = 4,                --boss里面id为1  ,以后有可能有很多boss 
 				},
 			},		
@@ -88,6 +89,7 @@ local waves = {
 					placeName = "place1",
 					missileId = 20,                 --导弹id
 					qiuId = 24,                   --铁球id
+					-- qiuTime = 10,                 --铁球飞行到脸前的时间
 					id = 5,
 				},
 			},		
@@ -107,6 +109,7 @@ local waves = {
 					placeName = "place1",
 					missileId = 20,                 --导弹id
 					qiuId = 24,                   --铁球id
+					-- qiuTime = 10,                 --铁球飞行到脸前的时间
 					id = 6,
 				},
 			},		
@@ -344,7 +347,7 @@ local bosses = {
 		award = 10000,                   --boss产出金币数量
 		hp = 100000,
 		demage = 5,                        --普通攻击伤害
-		fireRate = 30,
+		fireRate = 30,                  --0就不普通攻击了
 		fireCd = 2,  		
 		walkRate = 120,
 		walkCd = 1,         --移动cd	
@@ -492,7 +495,7 @@ local bosses = {
 		hp = 100000,
 		--hp = 60000,
 		demage = 4,
-		fireRate = 60,
+		fireRate = 60,                  --0就不普通攻击了
 		fireCd = 3,  		
 		walkRate = 120,
 		walkCd = 2,         --移动cd	

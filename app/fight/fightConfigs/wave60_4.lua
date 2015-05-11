@@ -19,7 +19,7 @@ local waves = {
 			{
 				time = 5,
 				num = 1,
-				delay = {0.5},
+				delay = {0},
 				pos = {360},
 				property = {
 					placeName = "place5",  
@@ -113,7 +113,7 @@ local waves = {
 				
 				time = 18,
 				num = 1,
-				delay = {1.6},
+				delay = {0},
 				pos = {280},
 				property = {
 					placeName = "place16",
@@ -144,7 +144,7 @@ local waves = {
 			{
 				time = 3,
 				num = 1,
-				delay = {4},
+				delay = {0},
 				pos = {500},
 				property = {
 					placeName = "place11",  

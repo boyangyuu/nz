@@ -36,7 +36,9 @@ function BaseEnemy:getDemageScale()
 end
 
 function BaseEnemy:getFireRate()
-    if self.config["fireRate"] == nil then return 0, false end
+    if self.config["fireRate"] == nil or self.config["fireRate"] <=0 then 
+        return 0, false 
+    end
 	return self.config["fireRate"], not self.isFireCd
 end
 

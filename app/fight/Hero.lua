@@ -254,7 +254,7 @@ function Hero:getMaxHp()
 end
 
 function Hero:costHpBag()
-    self:increaseHp(50)
+    self:increaseHp(define.kHeroHpBag)
     self:dispatchEvent({name = Hero.EFFECT_ADDHP_EVENT})    
 end
 

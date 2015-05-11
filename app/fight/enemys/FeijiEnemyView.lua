@@ -237,20 +237,22 @@ function FeijiEnemyView:playFire()
 		local name = "dao"..index
 	    local boneDao = self.armature:getBone(name)
 	    if boneDao == nil then break end
-	    -- print("playFire index"..index)
 	    local boneImage = boneDao:getDisplayRenderNode()
-	    
 	    local pWorldBone = boneImage:convertToWorldSpace(cc.p(0, 0))
+
+	    local offset = offsetPoses[offsetIndex]
+	    if offset == nil then break end
 
 	    local property = {
 	        srcPos = pWorldBone,
 	        srcScale = self:getScale() * 0.3,
 	        destPos = pWorldBone,
+	        flyTime =  self.property["flyTime"],
 	        type = "missile",
 	        id = self.property["missileId"],
 	        demageScale = self.enemy:getDemageScale(),
 	        missileType = self.property["missileType"],
-	        offset = offsetPoses[offsetIndex]
+	        offset = offset
 	    }
 	    local function callfuncDaoDan()
 	    	-- print("local function callfuncDaoDan()")

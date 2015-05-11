@@ -15,7 +15,7 @@ function JujiModeLayer:ctor()
 end
 
 function JujiModeLayer:onEnter()
-	self:performWithDelay(handler(self,self.refreshListView),0.3)
+	self:performWithDelay(handler(self,self.refreshListView),0.5)
 end
 
 function JujiModeLayer:loadCCS()
@@ -89,9 +89,9 @@ function JujiModeLayer:onClickBtnReward()
 end
 
 function JujiModeLayer:refreshListView()
-    for i=1,#self.rankTable do
-        local item = self.listViewPlayer:newItem()
+    for i=1, 20 do
         local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})
+        local item = self.listViewPlayer:newItem()
         item:addContent(content)
         item:setItemSize(524, 88)
         self.listViewPlayer:addItem(item)
