@@ -41,7 +41,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -60,11 +60,11 @@ local waves = {
 						direct = "left", --向左逃跑
 						{
 							pos = 500,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 						{
 							pos = -300,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 						{
 							pos = -250,  --第一次藏身处 移动 600
@@ -88,11 +88,11 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 275,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},	
 						{
 							pos = 400,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s
+							time = 0,   --隐藏时间 3s
 						},										
 					},									
 				},
@@ -109,7 +109,7 @@ local waves = {
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					flyTime = 5.0,                           --导弹飞到脸前的时间
+					flyTime = 4.0,                           --导弹飞到脸前的时间
 					startState = "enterright",          --从右面进来
 					lastTime = 60.0,		--持续时间			
 				},
@@ -128,11 +128,11 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 200,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 						{
 							pos = 350,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 					},
 				},
@@ -151,7 +151,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -197,11 +197,11 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 160,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},	
 						{
 							pos = 500,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s
+							time = 0,   --隐藏时间 3s
 						},										
 					},									
 				},
@@ -220,11 +220,11 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 300,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 						{
 							pos = 300,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 					},
 				},
@@ -243,15 +243,15 @@ local waves = {
 						direct = "left", --向左逃跑
 						{
 							pos = 650,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s	
+							time = 0,   --隐藏时间 3s	
 						},
 						{
 							pos = -300,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s
+							time = 0,   --隐藏时间 3s
 						},
 						{
 							pos = -350,  --第一次藏身处 移动 600
-							time = 1,   --隐藏时间 3s
+							time = 0,   --隐藏时间 3s
 						},
 					},
 					exit = "middle" ,  --消失
@@ -285,7 +285,7 @@ local waves = {
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					flyTime = 5.0,                           --导弹飞到脸前的时间
+					flyTime = 4.0,                           --导弹飞到脸前的时间
 					startState = "enterright",          --从右面进来
 					lastTime = 60.0,		--持续时间			
 				},
@@ -304,7 +304,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -366,7 +366,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -385,7 +385,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -404,7 +404,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -421,7 +421,7 @@ local waves = {
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					flyTime = 5.0,                           --导弹飞到脸前的时间
+					flyTime = 4.0,                           --导弹飞到脸前的时间
 					startState = "enterright",          --从右面进来
 					lastTime = 60.0,		--持续时间			
 				},
@@ -440,7 +440,7 @@ local waves = {
 						direct = "right", --向右逃跑
 						{
 							pos = 0,  --第一次藏身处 移动 -200 
-							time = 1,	 --隐藏时间 3s													
+							time = 0,	 --隐藏时间 3s													
 						},					
 					},
 				},
@@ -468,7 +468,7 @@ local waves = {
 
 
 
---enemy的关卡配置                                 黄金镶嵌    满级狙击枪10星630伤害   1枪  1500         dps大于等于6
+--enemy的关卡配置                                 黄金镶嵌    1星巴雷特900伤害   1枪  2070         dps大于等于5
 local enemys = {
 
 	--汽油桶         --type = "bao_tong",
@@ -481,11 +481,11 @@ local enemys = {
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=9000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=16560, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=9000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=16560,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--导弹          --missileType = "daodan",
@@ -524,7 +524,7 @@ function waveClass:ctor()
 		-- limitTime = 60,                   --限时模式时长
 
 		type 	  = "taoFan",
-		limitNums = 5,                      --逃跑逃犯数量
+		limitNums = 3,                      --逃跑逃犯数量
 	}
 end
 return waveClass

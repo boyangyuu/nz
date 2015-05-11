@@ -2,16 +2,14 @@ local GunConfigs = class("GunConfigs", cc.mvc.ModelBase)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local configs = {}
 
-configs["m4a1"] = {
 
-}
 
 configs["huoqilin"] = {
 	skill1 = {
 		animName = "skill_hql",
 	    buffFunc = function ()
 		    local hero = md:getInstance("Hero")
-			local demage = hero:getDemage() * 10
+			local demage = 5000   --技能伤害基础值
 			local buffData = {
 				buffAnimName  = "hqljn_mz",
 				value = demage,
@@ -26,7 +24,7 @@ configs["huoqilin"] = {
 				scheduler.performWithDelayGlobal(buffFunc, delay)
 			end
 	    end,
-		cd       = 5.0,
+		cd       = 30.0,
 	},
 }
 
@@ -36,30 +34,15 @@ configs["balete"] = {
 	    buffFunc = function ()
 			local buffData = {
 				buffAnimName  = "bltjn_mz",
-				time = 8.0,
+				time = 5.0, --buff 冰冻时间
 			}
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)
 	    end,
-		cd       = 5.0,		
+		cd       = 30.0,		
 	},	
 }
 
-
-configs["leimingdun"] = {
-	skill1 = {
-		animName = "skill_blt",
-	    buffFunc = function ()
-			local buffData = {
-				buffAnimName  = "bltjn_mz",
-				time = 8.0,
-			}
-			local enemyM = md:getInstance("EnemyManager")
-			enemyM:doBuff("doBuffAll_pause", buffData)
-	    end,
-		cd       = 5.0,		
-	},	
-}
 
 function GunConfigs.getConfig(gunName)
 	return configs[gunName]

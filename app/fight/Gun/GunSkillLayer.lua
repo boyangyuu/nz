@@ -32,7 +32,6 @@ function GunSkillLayer:refreshUI(event)
 	--config
 	local gun   = self.hero:getGun() 
 	local name  = gun:getGunName()
-	name = "huoqilin"
 	self.config = gun:getSkillConfig()
 	if self.config == nil then return end
 
@@ -76,7 +75,7 @@ function GunSkillLayer:onClickBtnSkill(skillId)
 	-- dump(skillConfig, "skillConfig")
 
 	--play skill
-	-- self.fightGun:playSkill(skillConfig["animName"])
+	self.fightGun:playSkill(skillConfig["animName"])
 
 	--play buff
 	skillConfig.buffFunc()
