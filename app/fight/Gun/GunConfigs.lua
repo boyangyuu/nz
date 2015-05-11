@@ -45,7 +45,7 @@ configs["baleite"] = {
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)
 	    end,
-		cd       = 30.0,		
+		cd       = 10.0,		
 	},	
 }
 

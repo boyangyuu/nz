@@ -1,6 +1,7 @@
 local FightDescModel = class("FightDescModel", cc.mvc.ModelBase)
 
 FightDescModel.START_ANIM_EVENT = "START_ANIM_EVENT"
+FightDescModel.SUCCESS_ANIM_EVENT = "SUCCESS_ANIM_EVENT"
 FightDescModel.BOSSSHOW_ANIM_EVENT = "BOSSSHOW_ANIM_EVENT"
 FightDescModel.WAVESTART_ANIM_EVENT = "WAVESTART_ANIM_EVENT"
 FightDescModel.ENEMYINTRO_ANIM_EVENT = "ENEMYINTRO_ANIM_EVENT"
@@ -15,6 +16,7 @@ end
 function FightDescModel:start(fightType)
 	self:dispatchEvent({name = FightDescModel.START_ANIM_EVENT,fightType = fightType})
 end
+
 
 function FightDescModel:bossShow()
 	self:dispatchEvent({name = FightDescModel.BOSSSHOW_ANIM_EVENT})

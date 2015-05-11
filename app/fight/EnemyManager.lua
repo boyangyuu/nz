@@ -31,7 +31,14 @@ function EnemyManager:getAllEnemys()
 end
 
 function EnemyManager:getEnemysByBuff(name)
-	return self.enemys
+	local enemyBeBuffs = {} 
+	for i,v in ipairs(self.enemys) do
+		if v:isBeBuff(name) then 
+			table.insert(enemyBeBuffs, v)
+		end
+	end
+	dump(enemyBeBuffs, "enemyBeBuffs")
+	return enemyBeBuffs
 end
 
 function EnemyManager:doBuff(buffFuncStr, buffData)
@@ -86,7 +93,7 @@ function EnemyManager:doBuffAll_pause(buffData)
 				print("endFunc")
 				enemy:setPause({isPause = false}) 
 			end
-			enemy:playBuffWithTime(name, time, endFunc)
+			enemy:playBuffWithTime(name, time, endFunc, "down")
 		end
 	end		
 end
