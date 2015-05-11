@@ -71,14 +71,14 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 	local map = md:getInstance("Map")
 	local waveIndex = map:getWaveIndex()
     local fightDescModel = md:getInstance("FightDescModel")
-    local data = {
+    local eventData = {
 	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
     	closeFunc    = closeFunc,
 	}
 
-    fightDescModel:dispatchEvent(data)
+    fightDescModel:dispatchEvent(eventData)
     self:pauseFight(true)
 end
 

@@ -97,7 +97,8 @@ function UserModel:getRegisterTime()
 end
 
 function UserModel:getUserName()
-	return "DonnieSuen"
+	local data = getUserData()
+	return data.user.userName
 end
 
 return UserModel

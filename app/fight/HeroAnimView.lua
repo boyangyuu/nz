@@ -97,7 +97,7 @@ function HeroAnimView:playHurtedBomb_boli(event)
 				armatureBack:removeFromParent()
 	    	end 
     	end)	
-	armatureBoli:getAnimation():playWithIndex(0)
+	armatureBoli:getAnimation():playWithIndex(0 , -1, 0)
 
 	--sound
     local soundSrc  = "res/Music/fight/glass.wav"
@@ -183,7 +183,7 @@ function HeroAnimView:playActiveGold(event)
 				armatureBack:removeFromParent()
 	    	end 
     	end)	
-	armatureGold:getAnimation():playWithIndex(0)
+	armatureGold:getAnimation():playWithIndex(0 , -1, 0)
 
     --sound
     local soundSrc  = "res/Music/fight/hjwq.wav"
@@ -263,7 +263,7 @@ function HeroAnimView:playAnimAddHp(event)
         "res/Fight/heroAnim/avatar_jiaxue/avatar_jiaxue0.png") 
 
 	local armature 	= ccs.Armature:create("avatar_jiaxue")
-	armature:getAnimation():playWithIndex(0)
+	armature:getAnimation():playWithIndex(0 , -1, 0)
 	armature:getAnimation():setMovementEventCallFunc(
     	function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.complete then
