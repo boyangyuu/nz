@@ -239,7 +239,6 @@ function BossModeLayer:onClickBtnStart()
 			 {opacity = 100})
 		return
 	end
-
 	local fightData = {groupId = 50, levelId = 1, 
 		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})

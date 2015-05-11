@@ -38,7 +38,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	                                               --奖励箱子
+				time = 3,	                                               --奖励箱子
 				num = 1,
 				pos = {450},
 				delay = {0},
@@ -54,7 +54,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	                                               --奖励箱子
+				time = 4,	                                               --奖励箱子
 				num = 1,
 				pos = {40},
 				delay = {0},
@@ -70,7 +70,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	                                               --奖励箱子
+				time = 5,	                                               --奖励箱子
 				num = 1,
 				pos = {200},
 				delay = {0},
@@ -86,7 +86,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	                                               --奖励箱子
+				time = 6,	                                               --奖励箱子
 				num = 1,
 				pos = {520},
 				delay = {0},
@@ -102,7 +102,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,	                                               --奖励箱子
+				time = 7,	                                               --奖励箱子
 				num = 1,
 				pos = {80},
 				delay = {0},
@@ -118,7 +118,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	                                               --奖励箱子
+				time = 8,	                                               --奖励箱子
 				num = 1,
 				pos = {40},
 				delay = {0},
@@ -134,7 +134,7 @@ local waves = {
 				},
 			},
 			{
-				time = 16,	                                               --奖励箱子
+				time = 9,	                                               --奖励箱子
 				num = 1,
 				pos = {650},
 				delay = {0},
@@ -150,7 +150,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,	                                               --奖励箱子
+				time = 10,	                                               --奖励箱子
 				num = 1,
 				pos = {300},
 				delay = {0},
@@ -166,7 +166,7 @@ local waves = {
 				},
 			},
 			{
-				time = 20,	                                               --奖励箱子
+				time = 11,	                                               --奖励箱子
 				num = 1,
 				pos = {300},
 				delay = {0},

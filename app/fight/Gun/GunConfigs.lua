@@ -2,9 +2,7 @@ local GunConfigs = class("GunConfigs", cc.mvc.ModelBase)
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local configs = {}
 
-configs["m4a1"] = {
 
-}
 
 configs["huoqilin"] = {
 
@@ -14,7 +12,7 @@ configs["huoqilin"] = {
 	    	local gunId = 9
 		    local weaponModel = md:getInstance("WeaponListModel")
 		    local level 	  = weaponModel:getIntenlevel(9) 
-			local demage = 3000 + 300 * level
+			local demage = 5000 + 300 * level
 			local buffData = {
 				buffAnimName  = "hqljn_mz",
 				value = demage,
@@ -29,11 +27,11 @@ configs["huoqilin"] = {
 				scheduler.performWithDelayGlobal(buffFunc, delay)
 			end
 	    end,
-		cd       = 5.0,
+		cd       = 30.0,
 	},
 }
 
-configs["balete"] = {
+configs["baleite"] = {
 	skill1 = {
 		animName = "skill_blt",
 	    buffFunc = function ()
@@ -42,33 +40,15 @@ configs["balete"] = {
 		    local level 	  = weaponModel:getIntenlevel(gunId) 				
 			local buffData = {
 				buffAnimName  = "bltjn_mz",
-				time = 8.0 + level * 0.2,
+				time = 5.0 + level * 0.2,
 			}
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)
 	    end,
-		cd       = 5.0,		
+		cd       = 30.0,		
 	},	
 }
 
-
-configs["leimingdun"] = {
-	skill1 = {
-		animName = "skill_blt",
-	    buffFunc = function ()
-	    	local gunId = 10
-		    local weaponModel = md:getInstance("WeaponListModel")
-		    local level 	  = weaponModel:getIntenlevel(gunId) 				
-			local buffData = {
-				buffAnimName  = "bltjn_mz",
-				time = 8.0 + level * 0.2,
-			}
-			local enemyM = md:getInstance("EnemyManager")
-			enemyM:doBuff("doBuffAll_pause", buffData)
-	    end,
-		cd       = 5.0,		
-	},	
-}
 
 function GunConfigs.getConfig(gunName)
 	return configs[gunName]
