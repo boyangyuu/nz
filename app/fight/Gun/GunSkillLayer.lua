@@ -76,7 +76,7 @@ function GunSkillLayer:onClickBtnSkill(skillId)
 	-- dump(skillConfig, "skillConfig")
 
 	--play skill
-	-- self.fightGun:playSkill(skillConfig["animName"])
+	self.fightGun:playSkill(skillConfig["animName"])
 
 	--play buff
 	skillConfig.buffFunc()

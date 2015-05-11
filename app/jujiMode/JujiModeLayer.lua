@@ -15,6 +15,7 @@ function JujiModeLayer:ctor()
 end
 
 function JujiModeLayer:onEnter()
+	
 	self:performWithDelay(handler(self,self.refreshListView),0.5)
 end
 
@@ -69,14 +70,20 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:onClickBtnStart()
+	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
+	ui:changeLayer("FightPlayer", {fightData = fightData})	
+	ui:closePopup("JujiModeLayer")
+end
+
+function JujiModeLayer:checkNetWork()
 	local isAvailable = network.isInternetConnectionAvailable()
 	if isAvailable then
-		print("JujiModeLayer:onClickBtnStart()")
+		print("network isAvailable")
 	else
 		ui:showPopup("commonPopup",
-			 {type = "style1",content = "当前网络连接失败，连接网络后数据将会统计"},
+			 {type = "style1",content = "当前网络连接失败，连接网络后排名数据将会统计"},
 			 {opacity = 0})
-	end
+	end	
 end
 
 function JujiModeLayer:onClickBtnClose()
@@ -88,6 +95,8 @@ function JujiModeLayer:onClickBtnReward()
 end
 
 function JujiModeLayer:refreshListView()
+	self:checkNetWork()
+
     for i=1, 20 do
         local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})
         local item = self.listViewPlayer:newItem()

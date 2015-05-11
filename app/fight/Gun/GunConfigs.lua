@@ -7,11 +7,14 @@ configs["m4a1"] = {
 }
 
 configs["huoqilin"] = {
+
 	skill1 = {
 		animName = "skill_hql",
 	    buffFunc = function ()
-		    local hero = md:getInstance("Hero")
-			local demage = hero:getDemage() * 10
+	    	local gunId = 9
+		    local weaponModel = md:getInstance("WeaponListModel")
+		    local level 	  = weaponModel:getIntenlevel(9) 
+			local demage = 1000 + 300 * level
 			local buffData = {
 				buffAnimName  = "hqljn_mz",
 				value = demage,
@@ -34,9 +37,12 @@ configs["balete"] = {
 	skill1 = {
 		animName = "skill_blt",
 	    buffFunc = function ()
+	    	local gunId = 6
+		    local weaponModel = md:getInstance("WeaponListModel")
+		    local level 	  = weaponModel:getIntenlevel(gunId) 				
 			local buffData = {
 				buffAnimName  = "bltjn_mz",
-				time = 8.0,
+				time = 8.0 + level * 0.2,
 			}
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)
@@ -50,9 +56,12 @@ configs["leimingdun"] = {
 	skill1 = {
 		animName = "skill_blt",
 	    buffFunc = function ()
+	    	local gunId = 10
+		    local weaponModel = md:getInstance("WeaponListModel")
+		    local level 	  = weaponModel:getIntenlevel(gunId) 				
 			local buffData = {
 				buffAnimName  = "bltjn_mz",
-				time = 8.0,
+				time = 8.0 + level * 0.2,
 			}
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)
