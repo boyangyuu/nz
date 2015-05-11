@@ -22,9 +22,9 @@ function DataModel:setNewData()
     data.versionId = __versionId
 
     --用户等级
-    data.user = {level = 1, 
-    fightedGroupId = 0, 
-    fightedlevelId = 0}
+    -- data.user = {level = 1, 
+    -- fightedGroupId = 0, 
+    -- fightedlevelId = 0}
 
     data.weapons.awardedIds = {}
 
