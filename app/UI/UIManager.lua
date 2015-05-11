@@ -31,8 +31,9 @@ layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopu
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
 layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
-layerClasses["BossResultLayer"]        = import("..bossMode.BossResultLayer")
+layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiModeLayer"]        = import("..jujiMode.JujiModeLayer")
+layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
 
 -- 关于Popup
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")

@@ -103,7 +103,8 @@ function BossModeLayer:refreshUI(event)
 	self.btnNext:setVisible(true)
 	if self.bossModeModel:checkPre(self.choseChapter-1) == false then
 		self.btnPre:setVisible(false)
-	elseif self.bossModeModel:checkNext(self.choseChapter+1) == false then
+	end
+	if self.bossModeModel:checkNext(self.choseChapter+1) == false then
 		self.btnNext:setVisible(false)
 	end
 
@@ -239,17 +240,21 @@ function BossModeLayer:onClickBtnStart()
 		return
 	end
 
-	-- local fightData = {groupId = 50, levelId = 1, fightType = "bossFight", chapterIndex = self.choseChapter}  --BOss竞技场
-	local fightData = { groupId = 60,levelId = 7, fightType = "jujiFight"}  --无限狙击
-
+	local fightData = {groupId = 50, levelId = 1, 
+		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
 	ui:closePopup("BossModeLayer")
 end
 
 function BossModeLayer:onClickBtnGet()
-	ui:showPopup("commonPopup",
+	self.bossModeModel:setWeapon(self.choseChapter)
+	-- self.bossModeModel:refreshInfo()
+	self:refreshContent()
+	if self.btnGet:isButtonEnabled() then
+		ui:showPopup("commonPopup",
 			 {type = "style1",content = "您的武器零件还没凑齐喔"},
 			 {opacity = 100})
+	end
 end
 
 return BossModeLayer

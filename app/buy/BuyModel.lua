@@ -212,7 +212,7 @@ function BuyModel:buy_unlockWeapon( buydata )
 	print("BuyModel:buy_unlockWeapon( buydata )")
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(buydata.weaponid)
-	 ui:showPopup("WeaponNotifyLayer",
+	ui:showPopup("WeaponNotifyLayer",
      {type = "gun",weaponId = buydata.weaponid})
 
 end

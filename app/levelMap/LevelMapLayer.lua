@@ -326,12 +326,12 @@ end
 function LevelMapLayer:panelAction()
     local changeTime = 0.2
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
-    self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelLeft:getContentSize().width-25, 0)))
+    self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelLeft:getContentSize().width-80, 0)))
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
     self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
         cc.CallFunc:create(function()
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
-                self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelLeft:getContentSize().width+25, 0)))
+                self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelLeft:getContentSize().width+80, 0)))
                 self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelDown:getContentSize().height+5)))
             end)}))
 end

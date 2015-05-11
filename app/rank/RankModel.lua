@@ -21,9 +21,9 @@ function RankModel:getRankData(sortType)
 	self.rankData = clone(self.rankConfig)
 
 
-    local loginTime = 1430067661
+    local registTime = 1430067661 --todo
     local now = os.time()	
-    local offsetTime = now - loginTime
+    local offsetTime = now - registTime
     local offsetDays = math.floor(offsetTime / (24 * 60 * 60))
     if offsetDays > 7 then offsetDays = 7 end  	
     print("offsetDays", offsetDays)
@@ -57,8 +57,8 @@ function RankModel:getUserRank()
 end
 
 function RankModel:getUserRankData(type)
-	local userData = getUserData()
-	local jujiLevel = userData.user.jujiRankLevel 
+	local jujiModeModel = md:getInstance("JujiModeModel")
+	local jujiLevel = jujiModeModel:getCurWaveIndex()
 
 	local data = {}
 	if type == "jujiLevel" then 

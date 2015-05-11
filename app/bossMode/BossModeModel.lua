@@ -42,18 +42,17 @@ function BossModeModel:setBossModeWave(chapterIndex,waveIndex)
 		data.bossMode.waveIndex = waveIndex
 		self:setPartsComposition(chapterIndex)
 	end
-	--award
-	
 
+	--award
 	setUserData(data)
 end
 
 function BossModeModel:setPartsComposition(chapterIndex)
 	local data = getUserData()
 	if data.bossMode.chapterIndex == chapterIndex and data.bossMode.waveIndex >= 5 then
-		local info = self:getInfo(chapterIndex)
-		local weaponId = info["weaponId"]
-		self.weaponListModel:buyWeapon(weaponId)
+		-- local info = self:getInfo(chapterIndex)
+		-- local weaponId = info["weaponId"]
+		-- self.weaponListModel:buyWeapon(weaponId)
 		if chapterIndex < self:getChapterNum() then
 			data.bossMode.chapterIndex = chapterIndex + 1
 			data.bossMode.waveIndex = 0
@@ -61,12 +60,27 @@ function BossModeModel:setPartsComposition(chapterIndex)
 	end
 end
 
+function BossModeModel:setWeapon(chapterIndex)
+	local data = getUserData()
+	if data.bossMode.chapterIndex > chapterIndex then
+		local info = self:getInfo(chapterIndex)
+		local weaponId = info["weaponId"]
+		self.weaponListModel:buyWeapon(weaponId)
+		ui:showPopup("WeaponNotifyLayer",
+	     {type = "gun",weaponId = weaponId})
+
+	end
+end
+
 function BossModeModel:getAlreadyWave(chapterIndex)
 	local data = getUserData()
 	if data.bossMode.chapterIndex == chapterIndex then
 		return data.bossMode.waveIndex
+	elseif data.bossMode.chapterIndex > chapterIndex then
+		return 5
+	else
+		return 0
 	end
-	return 0
 end
 
 function BossModeModel:getAlreadyChapter()

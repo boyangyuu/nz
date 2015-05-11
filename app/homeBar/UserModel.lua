@@ -86,13 +86,13 @@ end
 
 function UserModel:getLoginTime()
 	local data = getUserData()
-	local loginTime = data.dailylogin.logintime
+	local loginTime = data.dailylogin.loginTime
 	return loginTime
 end
 
 function UserModel:getRegisterTime()
 	local data = getUserData()
-	local registerTime = data.registertime
+	local registerTime = data.registTime
 	return registerTime 
 end
 

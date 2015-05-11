@@ -40,9 +40,9 @@ function FightControlLayer:initUI()
     end)	
 
     --timer hp
-    self.timerHp = display.newProgressTimer("#btn_dun03.png", display.PROGRESS_TIMER_RADIAL)
+    self.timerHp = display.newProgressTimer("#btn_cd1.png", display.PROGRESS_TIMER_RADIAL)
 	buttonHp:addChild(self.timerHp)
-    self.timerHp:setAnchorPoint(0.0,0.0)
+    self.timerHp:setAnchorPoint(0.5,0.5)
     self.timerHp:setReverseDirection(true)
     self.timerHp:setPercentage(100)
     self.timerHp:setVisible(false)   
@@ -75,7 +75,7 @@ end
 function FightControlLayer:startHpCd()
 	self.hpCdPercent = 100
 	self.timerHp:setVisible(true)
-	local cdTimes = 2.0
+	local cdTimes = define.kHeroHpBagCd
 	local sch = nil
 	local function resumeCd()
 		if self.hpCdPercent == 0 then 

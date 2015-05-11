@@ -49,6 +49,7 @@ function ChongBossView:playTieQiu()
 			srcScale = self:getScale() * 0.3, 
 			demageScale = self.enemy:getDemageScale(),
 			id = self.property["qiuId"], 
+			flyTime = self.property["qiuTime"],
 		}
 		local function callfuncAddDao()
 			local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))
