@@ -87,6 +87,7 @@ function JujiModeLayer:checkNetWork()
 end
 
 function JujiModeLayer:onClickBtnClose()
+	self.listViewPlayer:setVisible(false)
 	ui:closePopup("JujiModeLayer")
 end
 
