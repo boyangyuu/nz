@@ -11,21 +11,21 @@ award = {
 	{diamond = 30},
 }
 
-levelAward = {
-	{healthBag = 2,lei = 3,money = 65199}, --第一关
-	{healthBag = 2,lei = 3,money = 65199}, --第二关
-	{healthBag = 2,lei = 3,money = 65199}, --
-	{healthBag = 2,lei = 3,money = 65199},
+groupAward = {
+	{{healthBag = 2},{lei = 3},{money = 65199}}, --第一关
+	{{healthBag = 2},{lei = 3},{money = 65199}}, 
+	{{healthBag = 2},{lei = 3},{money = 65199}}, 
+	{{healthBag = 2},{lei = 3},{money = 65199}}, 
 }
 
-function JujiModeConfigs.getConfig(chapterIndex)
-	assert(chapterIndex,"chapterIndex is nil")
-	local chapterConfig = JujiConfigs["chapter"..chapterIndex]
-	return chapterConfig
+function JujiModeConfigs.getConfig(groupIndex)
+	assert(groupIndex,"groupIndex is nil")
+	local rewardConfig = groupAward["chapter"..groupIndex]
+	return rewardConfig
 end
 
-function JujiModeConfigs.getConfigs()
-	return JujiConfigs
+function JujiModeConfigs.getAward()
+	return award
 end
 
 return JujiModeConfigs

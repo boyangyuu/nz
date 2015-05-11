@@ -17,25 +17,18 @@ function BossResultLayer:loadCCS()
 end
 
 function BossResultLayer:getAwards()
-	-- local indexTable = {"part","healthBag","lei","money"}
-
 	local bossModeModel = md:getInstance("BossModeModel")
 	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
 	assert(info, "getChapterModel is nil")
 
 	local data = getUserData()
 	if self.chapterIndex < data.bossMode.chapterIndex then
-		-- info["part"] = nil
 		table.remove(info,1)
-		-- table.remove(indexTable,1)
 	elseif self.chapterIndex == data.bossMode.chapterIndex then
 		if self.waveIndex <= data.bossMode.waveIndex then
-			-- info["part"] = nil
-			-- table.remove(indexTable,1)
 			table.remove(info,1)
 		end
 	end	
-	dump(info)
 	return info
 end
 
@@ -63,7 +56,6 @@ function BossResultLayer:initUI()
     armature:setPosition(display.cx,display.cy)
     self:addChild(armature)
     armature:getAnimation():play("kaishi" , -1, 0)
-
 
 	for i=1,#awardsTable do
 		local award = awardsTable[i]
