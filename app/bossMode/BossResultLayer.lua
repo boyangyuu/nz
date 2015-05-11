@@ -17,7 +17,7 @@ function BossResultLayer:loadCCS()
 end
 
 function BossResultLayer:getAwards()
-	local indexTable = {"part","healthBag","lei","money"}
+	-- local indexTable = {"part","healthBag","lei","money"}
 
 	local bossModeModel = md:getInstance("BossModeModel")
 	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
@@ -25,21 +25,23 @@ function BossResultLayer:getAwards()
 
 	local data = getUserData()
 	if self.chapterIndex < data.bossMode.chapterIndex then
-		info["part"] = nil
-		table.remove(indexTable,1)
+		-- info["part"] = nil
+		table.remove(info,1)
+		-- table.remove(indexTable,1)
 	elseif self.chapterIndex == data.bossMode.chapterIndex then
 		if self.waveIndex <= data.bossMode.waveIndex then
-			info["part"] = nil
-			table.remove(indexTable,1)
+			-- info["part"] = nil
+			-- table.remove(indexTable,1)
+			table.remove(info,1)
 		end
 	end	
-	return table {{part = 1}, {healthBag = 2}, }
+	dump(info)
+	return info
 end
 
 function BossResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
-	-- local indexTable = {"part","healthBag","lei","money"}
-	local indexTable = self:getAwards()
+	local awardsTable = self:getAwards()
 	local numTable = {}
 	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
 	numTable["num2"] = cc.uiloader:seekNodeByName(self, "num2")
@@ -49,21 +51,6 @@ function BossResultLayer:initUI()
 	for k,v in pairs(numTable) do
 		v:setVisible(false)
 	end
-
-	-- local bossModeModel = md:getInstance("BossModeModel")
-	-- local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
-	-- assert(info, "getChapterModel is nil")
-	
-	-- local data = getUserData()
-	-- if self.chapterIndex < data.bossMode.chapterIndex then
-	-- 	info["part"] = nil
-	-- 	table.remove(indexTable,1)
-	-- elseif self.chapterIndex == data.bossMode.chapterIndex then
-	-- 	if self.waveIndex <= data.bossMode.waveIndex then
-	-- 		info["part"] = nil
-	-- 		table.remove(indexTable,1)
-	-- 	end
-	-- end
 
 	local manager = ccs.ArmatureDataManager:getInstance()
     local src = "res/BossMode/wxboss_jiesuan/wxboss_jiesuan.ExportJson"
@@ -78,14 +65,16 @@ function BossResultLayer:initUI()
     armature:getAnimation():play("kaishi" , -1, 0)
 
 
-	for i=1,table.nums(info) do
-		local indexName = indexTable[i]
-		numTable["num"..i]:setString("X"..info[indexName])
-
-	    local icon = "icon_"..indexName..".png"
-	    local skinIcon = ccs.Skin:createWithSpriteFrameName(icon)
-	    armature:getBone("icon_"..i):addDisplay(skinIcon, 1)
-	    armature:getBone("icon_"..i):changeDisplayWithIndex(1, true)
+	for i=1,#awardsTable do
+		local award = awardsTable[i]
+		dump(award)
+		for k,v in pairs(award) do
+			numTable["num"..i]:setString("X"..v)
+		    local icon = "icon_"..k..".png"
+		    local skinIcon = ccs.Skin:createWithSpriteFrameName(icon)
+		    armature:getBone("icon_"..i):addDisplay(skinIcon, 1)
+		    armature:getBone("icon_"..i):changeDisplayWithIndex(1, true)
+		end
 	end
 
     waveNum:setString("d"..self.waveIndex.."b")

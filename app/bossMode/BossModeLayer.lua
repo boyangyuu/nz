@@ -171,8 +171,15 @@ function BossModeLayer:refreshContent()
 				return true
 			elseif event.name == 'ended' then
 				self.bossModeModel = md:getInstance("BossModeModel")
-				local info = self.bossModeModel:getChapterModel(self.choseChapter,i)
-				local msg = "此波奖励武器零件，手雷"..info["lei"].."个，药包"..info["healthBag"].."个，"..info["money"].."金币"
+				local awardsTable = self.bossModeModel:getChapterModel(self.choseChapter,i)
+				local reward = {}
+				for i=1,#awardsTable do
+					local award = awardsTable[i]
+					for k,v in pairs(award) do
+						reward[k] = v
+					end
+				end
+				local msg = "此波奖励武器零件，手雷"..reward["lei"].."个，药包"..reward["healthBag"].."个，"..reward["money"].."金币"
 				ui:showPopup("commonPopup",
 				 {type = "style1",content = msg},
 				 {opacity = 0})
