@@ -8,7 +8,7 @@ local MapView           = import(".MapView")
 local HeroLayer         = import(".HeroLayer")
 local InfoLayer         = import(".InfoLayer")
 local FightControlLayer = import(".FightControlLayer")
-local GunHelpLayer      = import(".Gun.GunHelpLayer") 
+-- local GunHelpLayer      = import(".Gun.GunHelpLayer") 
 local GunSkillLayer     = import(".Gun.GunSkillLayer")
 
 local KFightConfig = {
@@ -52,7 +52,7 @@ function FightPlayer:ctor(properties)
     self.gunView        = GunView.new()
     self.heroLayer      = HeroLayer.new()
     self.infoLayer      = InfoLayer.new() 
-    self.gunHelpLayer   = GunHelpLayer.new()
+    -- self.gunHelpLayer   = GunHelpLayer.new()
     self.gunSkillLayer  = GunSkillLayer.new()
     self.fightControlLayer = FightControlLayer.new()
     self.isControlVisible = true
@@ -193,7 +193,7 @@ function FightPlayer:initUI()
     local layerGunInfo = cc.uiloader:seekNodeByName(self, "layerGunInfo")
     layerGunInfo:addChild(self.gunSkillLayer)
     layerGunInfo:addChild(self.infoLayer)
-    layerGunInfo:addChild(self.gunHelpLayer)
+    -- layerGunInfo:addChild(self.gunHelpLayer)
     layerGunInfo:addChild(self.fightControlLayer)
     
     --load focus

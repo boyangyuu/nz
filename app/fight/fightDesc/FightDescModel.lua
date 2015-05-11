@@ -17,7 +17,6 @@ function FightDescModel:start(fightType)
 	self:dispatchEvent({name = FightDescModel.START_ANIM_EVENT,fightType = fightType})
 end
 
-
 function FightDescModel:bossShow()
 	self:dispatchEvent({name = FightDescModel.BOSSSHOW_ANIM_EVENT})
 end

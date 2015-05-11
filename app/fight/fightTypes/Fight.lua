@@ -161,12 +161,12 @@ function Fight:endFightFail()
     self:pauseFight(true)
     self.inlayModel:removeAllInlay()
     local fightProp = md:getInstance("FightProp")
-    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
+    ui:showPopup("FightResultFailPopup",{},{animName = "normal"}) 
     self:clearFightData()
 end
 
 function Fight:startFightResult()
-    ui:showPopup("FightResultPopup",{},{anim = false})
+    ui:showPopup("FightResultPopup",{},{animName = "normal"})
 end
 
 function Fight:willWin(time)

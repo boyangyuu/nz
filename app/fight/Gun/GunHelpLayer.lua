@@ -2,15 +2,16 @@ local GunHelpLayer = class("GunHelpLayer", function()
 	return display.newLayer()
 end)
 
-function GunHelpLayer:ctor()
+function GunHelpLayer:ctor(properties)
     self.fightGun = md:getInstance("FightGun")
+    self.gunId = properties.gunId
 
     cc.EventProxy.new(self.fightGun, self)
         :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
-        
-	self:loadCCS()
+    
     self:setTouchSwallowEnabled(false)
-    self.node:setVisible(false)
+    self:loadCCS()
+    self:onShow()
 end
 
 function GunHelpLayer:loadCCS()
@@ -19,11 +20,11 @@ function GunHelpLayer:loadCCS()
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
         "res/Fight/uiAnim/yd_saosan/yd_saosan0.png")     
 
-	self.node = cc.uiloader:load("res/fight/helpWeapon/helpWeapon.ExportJson")
+	self.node = cc.uiloader:load("res/fight/fightLayer/fightTips/helpWeapon.ExportJson")
     self:addChild(self.node)
-    self.nameNode   = cc.uiloader:seekNodeByName(self, "nameNode")
-    self.btnGet     = cc.uiloader:seekNodeByName(self, "btnGet")
-    self.gunDisplay = cc.uiloader:seekNodeByName(self, "gunDisplay")
+    self.nameNode   = cc.uiloader:seekNodeByName(self.node, "nameNode")
+    self.btnGet     = cc.uiloader:seekNodeByName(self.node, "btnGet")
+    self.gunDisplay = cc.uiloader:seekNodeByName(self.node, "gunDisplay")
     self.btnGet:onButtonPressed(function( event )
         event.target:setScale(1.2)
     end)
@@ -36,7 +37,6 @@ function GunHelpLayer:loadCCS()
 end
 
 function GunHelpLayer:onShow(event)
-    self.node:setVisible(true)
     --refresh ui
     self.gunDisplay:removeAllChildren()
 
@@ -46,7 +46,6 @@ function GunHelpLayer:onShow(event)
     self.btnGet:addChild(armature, 10)
 
     --gun icon
-    self.gunId = event.gunId
     local record = getRecordByKey("config/weapon_weapon.json", "id", self.gunId)[1]
     assert(record, "record is nil id is "..self.gunId)
     local icon = display.newSprite("#icon_"..record["imgName"]..".png")    
@@ -69,8 +68,6 @@ function GunHelpLayer:onShow(event)
 end
 
 function GunHelpLayer:onClickGet()
-    print("function GunHelpLayer:onClickGet()")
-    self.node:setVisible(false)
     self.fightGun:changeHelpGun(self.gunId)
 
     --pause
@@ -83,6 +80,8 @@ function GunHelpLayer:onClickGet()
         local hero = md:getInstance("Hero")
         hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
     end
+
+    ui:closePopup("GunHelpLayer")
 end
 
 

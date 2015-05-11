@@ -76,7 +76,7 @@ function FightDescLayer:onBossGift(event)
         chapterIndex = event.chapterIndex,
         waveIndex = event.waveIndex, 
         closeFunc = event.closeFunc},
-        {anim = false})
+        {animName = "normal"})
 end
 
 function FightDescLayer:onJujiGift(event)
@@ -84,7 +84,7 @@ function FightDescLayer:onJujiGift(event)
         -- chapterIndex = event.chapterIndex,
         waveIndex = event.waveIndex, 
         closeFunc = event.closeFunc},
-        {anim = false})
+        {animName = "normal"})
 end
 
 function FightDescLayer:onWaveStart(event)

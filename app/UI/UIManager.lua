@@ -34,8 +34,7 @@ layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
 layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiModeLayer"]        = import("..jujiMode.JujiModeLayer")
 layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
-
--- 关于Popup
+layerClasses["GunHelpLayer"]         = import("..fight.Gun.GunHelpLayer")
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 
 -- giftBag
