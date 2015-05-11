@@ -8,6 +8,7 @@ function FightDescLayer:ctor()
 
     cc.EventProxy.new(self.model, self)
         :addEventListener(self.model.START_ANIM_EVENT, handler(self, self.onFightStart))
+        :addEventListener(self.model.SUCCESS_ANIM_EVENT, handler(self, self.onFightSuccess))
         :addEventListener(self.model.BOSSSHOW_ANIM_EVENT, handler(self, self.onBossStart))
         :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.onWaveStart))
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
@@ -49,6 +50,22 @@ function FightDescLayer:onFightStart(event)
     end
     local letsgo   = "res/Music/ui/letsgo.wav"
     audio.playSound(letsgo,false)
+end
+
+function FightDescLayer:onFightSuccess(event)
+    self:setVisible(true)
+    local armature = ccs.Armature:create("renwuwc")
+    armature:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movementId ) 
+            if movementType == ccs.MovementEventType.loopComplete then
+                armature:removeFromParent()
+                armature = nil
+                self:setVisible(false)
+                ui:changeLayer("FightResultLayer")
+            end
+        end)
+    addChildCenter(armature, self.animPanl)
+    armature:getAnimation():play("renwuwc" , -1, 1)
 end
 
 function FightDescLayer:onBossStart(event)
