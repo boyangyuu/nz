@@ -208,7 +208,7 @@ function MyApp:createGameStateFile()
                         novicesBag = false,
             },
             dailylogin = {
-                        logintime = nil,  --时间戳
+                        loginTime = nil,  --时间戳
                         registTime = nil, --时间戳
                         isGet = false,
                         dailyid = 0,
