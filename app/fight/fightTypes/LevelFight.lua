@@ -35,13 +35,16 @@ function LevelFight:isJujiFight()
 end
 
 function LevelFight:waveUpdate(nextWaveIndex, waveType)
+    print("function LevelFight:waveUpdate(nextWaveIndex, waveType)", waveType)
     local fightDescModel = md:getInstance("FightDescModel")
     if waveType == "boss" then 
         fightDescModel:bossShow()
     elseif waveType == "award" then  
         fightDescModel:goldShow()
-    else 
+    elseif waveType == "normalWave" then 
         fightDescModel:waveStart(nextWaveIndex)
+    else
+        assert(waveType, "waveType is nil")
     end    
 end
 
