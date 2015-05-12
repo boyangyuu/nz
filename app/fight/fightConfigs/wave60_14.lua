@@ -210,7 +210,7 @@ local enemys = {
 	weak1=2},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=9000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	-- 金武箱子奖励  type = "awardSan",
@@ -230,16 +230,16 @@ local bosses = {
 	{
 		image = "boss01_2", --图片名字
 		award = 10000,                   --boss产出金币数量
-		hp = 100000,
+		hp = 70000,
 		demage = 5,
 		fireRate = 120,                  --0就不普通攻击了
 		fireCd = 3,  		
 		walkRate = 60,
 		walkCd = 1,         --移动cd	
 		wudiTime = 5 , 	
-		weak1 = 2,					--手  弱点伤害倍数
-		weak2 = 2,					--腹  弱点伤害倍数
-		weak3 = 2,					--头  弱点伤害倍数
+		weak1 = 1.1,					--手  弱点伤害倍数
+		weak2 = 1.1,					--腹  弱点伤害倍数
+		weak3 = 1.1,					--头  弱点伤害倍数
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 8, 			--一次扫射10下
 		skilltrigger = {   			   --技能触发(可以同时)

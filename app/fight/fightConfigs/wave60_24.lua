@@ -6,162 +6,6 @@ local waves = {
 	{
 		enemys = { 
 			{
-				time = 0, 
-				num = 1,
-				delay = {0},
-				pos = {450},
-				property = { 
-					placeName = "place9",
-					type = "bao_tong",
-					id = 1,
-				},
-			},
-			{
-				time = 0, 
-				num = 1,
-				delay = {0},
-				pos = {500},
-				property = { 
-					placeName = "place3",
-					type = "bao_tong",
-					id = 1,
-				},
-			},--------------------------------- 汽油桶配置 ----------------------
-			{ 
-				time = 0,
-				num = 3,
-				delay = {0,0.7,1.4},
-				pos = {300,500,700,},
-				property = { 
-					type = "taofan_qiu",
-					placeName = "place9",
-					id = 4,
-					startState = "san",  --从伞进入                          伞落下的逃犯
-					data = {
-						direct = "right", --向右逃跑
-						{
-							pos = 0,  --第一次藏身处 移动 -200 
-							time = 0,	 --隐藏时间 3s													
-						},					
-					},
-				},
-			},
-			{
-				time = 4,
-				num = 1,
-				delay = {0},
-				pos = {0},
-				property = {
-					type = "taofan_qiu", 
-					placeName = "place11",
-					id = 4,
-					startState = "enterright", --从屏幕右侧进入
-					data = {
-						direct = "left", --向左逃跑
-						{
-							pos = 500,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s	
-						},
-						{
-							pos = -300,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s	
-						},
-						{
-							pos = -250,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s
-						},
-					},
-					exit = "middle" ,  --消失
-				},
-			},
-			{
-				time = 8,
-				num = 1,
-				delay = {0},
-				pos = {0},
-				property = {
-					type = "taofan_qiu", 
-					placeName = "place5",
-					id = 4,
-					startState = "enterleft", --从屏幕左侧进入
-					data = {
-						direct = "right", --向右逃跑
-						{
-							pos = 275,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s	
-						},	
-						{
-							pos = 400,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s
-						},										
-					},									
-				},
-			},
-			{
-				time = 12,
-				num = 1,
-				pos = {500},
-				delay = {4},                            -- 吉普车
-				property = {
-					placeName = "place21",
-					type = "jipu" ,
-					id = 12,
-					missileId = 22,
-					missileType = "dao_wu",
-					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					flyTime = 4.0,                           --导弹飞到脸前的时间
-					startState = "enterright",          --从右面进来
-					lastTime = 60.0,		--持续时间			
-				},
-			},
-			{
-				time = 14,
-				num = 1,
-				delay = {0},
-				pos = {0},
-				property = {
-					type = "taofan_qiu", 
-					placeName = "place3",
-					id = 4,
-					startState = "enterleft", --从屏幕左侧进入
-					data = {
-						direct = "right", --向右逃跑
-						{
-							pos = 200,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s	
-						},
-						{
-							pos = 350,  --第一次藏身处 移动 600
-							time = 0,   --隐藏时间 3s	
-						},
-					},
-				},
-			},
-			{ 
-				time = 14,
-				num = 1,
-				delay = {0,},
-				pos = {15,},
-				property = { 
-					type = "taofan_qiu",
-					placeName = "place2",
-					id = 4,
-					startState = "san",  --从伞进入                          伞落下的逃犯
-					data = {
-						direct = "right", --向右逃跑
-						{
-							pos = 0,  --第一次藏身处 移动 -200 
-							time = 0,	 --隐藏时间 3s													
-						},					
-					},
-				},
-			},
-
-		},
-	},
-	{
-		enemys = { 
-			{
 				time = 0,
 				num = 1,
 				delay = {0},
@@ -207,7 +51,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,
+				time = 2,
 				num = 1,
 				delay = {0},
 				pos = {0},
@@ -230,7 +74,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 4,
 				num = 1,
 				delay = {0},
 				pos = {0},
@@ -258,7 +102,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	                                               --奖励箱子
+				time = 6,	                                               --奖励箱子
 				num = 1,
 				pos = {550},
 				delay = {0},
@@ -274,7 +118,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 8,
 				num = 1,
 				pos = {500},
 				delay = {4},                            -- 吉普车
@@ -291,13 +135,169 @@ local waves = {
 				},
 			},
 			{ 
-				time = 14,
+				time = 10,
 				num = 3,
 				delay = {0,0.7,1.4},
 				pos = {200,400,600},
 				property = { 
 					type = "taofan_qiu",
 					placeName = "place11",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 0,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+
+		},
+	},
+	{
+		enemys = { 
+			{
+				time = 0, 
+				num = 1,
+				delay = {0},
+				pos = {450},
+				property = { 
+					placeName = "place9",
+					type = "bao_tong",
+					id = 1,
+				},
+			},
+			{
+				time = 0, 
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = { 
+					placeName = "place3",
+					type = "bao_tong",
+					id = 1,
+				},
+			},--------------------------------- 汽油桶配置 ----------------------
+			{ 
+				time = 0,
+				num = 3,
+				delay = {0,0.7,1.4},
+				pos = {300,500,700,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place9",
+					id = 4,
+					startState = "san",  --从伞进入                          伞落下的逃犯
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 0,  --第一次藏身处 移动 -200 
+							time = 0,	 --隐藏时间 3s													
+						},					
+					},
+				},
+			},
+			{
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place11",
+					id = 4,
+					startState = "enterright", --从屏幕右侧进入
+					data = {
+						direct = "left", --向左逃跑
+						{
+							pos = 500,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s	
+						},
+						{
+							pos = -300,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s	
+						},
+						{
+							pos = -250,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s
+						},
+					},
+					exit = "middle" ,  --消失
+				},
+			},
+			{
+				time = 5,
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place5",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 275,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s	
+						},	
+						{
+							pos = 400,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s
+						},										
+					},									
+				},
+			},
+			{
+				time = 7,
+				num = 1,
+				pos = {500},
+				delay = {4},                            -- 吉普车
+				property = {
+					placeName = "place21",
+					type = "jipu" ,
+					id = 12,
+					missileId = 22,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					flyTime = 4.0,                           --导弹飞到脸前的时间
+					startState = "enterright",          --从右面进来
+					lastTime = 60.0,		--持续时间			
+				},
+			},
+			{
+				time = 9,
+				num = 1,
+				delay = {0},
+				pos = {0},
+				property = {
+					type = "taofan_qiu", 
+					placeName = "place3",
+					id = 4,
+					startState = "enterleft", --从屏幕左侧进入
+					data = {
+						direct = "right", --向右逃跑
+						{
+							pos = 200,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s	
+						},
+						{
+							pos = 350,  --第一次藏身处 移动 600
+							time = 0,   --隐藏时间 3s	
+						},
+					},
+				},
+			},
+			{ 
+				time = 11,
+				num = 1,
+				delay = {0,},
+				pos = {15,},
+				property = { 
+					type = "taofan_qiu",
+					placeName = "place2",
 					id = 4,
 					startState = "san",  --从伞进入                          伞落下的逃犯
 					data = {
@@ -372,7 +372,7 @@ local waves = {
 				},
 			},
 			{ 
-				time = 8,
+				time = 6,
 				num = 2,
 				delay = {0,0.7,},
 				pos = {200,500,},
@@ -391,7 +391,7 @@ local waves = {
 				},
 			},
 			{ 
-				time = 10,
+				time = 8,
 				num = 2,
 				delay = {0,0.7,},
 				pos = {260,500,},
@@ -410,7 +410,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,
+				time = 10,
 				num = 1,
 				pos = {500},
 				delay = {4},                            -- 吉普车
@@ -427,7 +427,7 @@ local waves = {
 				},
 			},
 			{ 
-				time = 14,
+				time = 12,
 				num = 3,
 				delay = {0,0.7,1.4},
 				pos = {10,280,640,},
@@ -446,7 +446,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	                                               --奖励箱子
+				time = 8,	                                               --奖励箱子
 				num = 1,
 				pos = {550},
 				delay = {0},
@@ -468,35 +468,35 @@ local waves = {
 
 
 
---enemy的关卡配置                                 黄金镶嵌    1星巴雷特950伤害   1枪  2185         dps大于等于5
+--enemy的关卡配置                                 黄金镶嵌    9星巴雷特1350伤害   1枪  3100         dps大于等于7
 local enemys = {
 
 	--汽油桶         --type = "bao_tong",
-	{id=1,image="qyt_01",demage=5000,hp=1,
+	{id=1,image="qyt_01",demage=6200,hp=1,
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=24,hp=4370,
+	{id=4,image="qiufan",demage=28,hp=6200,
 	weak1=3, weak4=4},
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=17480, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=24840, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=17480,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=24840,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=24,hp=1,
+	{id=6,image="daodan",demage=28,hp=1,
 	weak1=1},
 
 	--箱子奖励  type = "awardSan",
 	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 
 	--烟雾导弹           type = "dao_wu",
-	{id=22,image="daodan03",demage=24,hp=1, weak1=1},
+	{id=22,image="daodan03",demage=28,hp=1, weak1=1},
 
 
 }

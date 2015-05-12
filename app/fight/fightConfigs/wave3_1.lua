@@ -162,7 +162,7 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                     黄金镶嵌M4A1满级1枪伤害621  dps大于等于6  怪物数据
+--enemy的关卡配置                                                     M4A1 5级白银镶嵌   1枪伤害621  dps大于等于4  怪物数据
 local enemys = {
 
 	--盾兵         --type = "jin",

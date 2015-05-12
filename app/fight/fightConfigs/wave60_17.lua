@@ -2,7 +2,211 @@ local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
-
+	{
+		enemys = {
+			{
+				time = 2,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					placeName = "place11",  
+					startState = "",
+					type = "juji",
+					id = 4,
+				},
+			}, 
+			{
+				time = 4,
+				num = 1,
+				delay = {0},
+				pos = {50},
+				property = {
+					placeName = "place10",  
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0,},
+				pos = {600,},
+				property = { 
+					placeName = "place9" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterright",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,              --回血百分比
+					id = 10,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				pos = {450},
+				delay = {0},                            -- 吉普车
+				property = {
+					placeName = "place21",
+					type = "jipu" ,
+					id = 12,
+					missileId = 22,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					flyTime = 4.0,                           --导弹飞到脸前的时间
+					startState = "enterright",          --从右面进来
+					lastTime = 60.0,		--持续时间			
+				},
+			},
+			{
+				time = 10,
+				num = 1,
+				delay = {0},
+				pos = {370},
+				property = {
+					renzhiName = "人质2",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place9",
+					id = 7,
+				},
+			},
+			{
+				time = 10,
+				num = 1,
+				delay = {0},
+				pos = {370},
+				property = {
+					renzhiName = "人质2",     --  一组统一标示
+					type = "bangren",
+					placeName = "place9",
+					id = 8,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {600},
+				property = {
+					placeName = "place5",  
+					id = 1,
+					startState = "rollright",
+				},
+			},
+			{
+				time = 14,
+				num = 1,
+				delay = {0},
+				pos = {95},
+				property = {
+					placeName = "place3",  
+					id = 1,
+					startState = "rollright",
+				},
+			},
+			{
+				time = 16,
+				num = 1,
+				delay = {0},
+				pos = {195},
+				property = {
+					placeName = "place14",  
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},
+			}, 
+			{
+				time = 18,
+				num = 1,
+				delay = {0},
+				pos = {80},
+				property = {
+					placeName = "place12",  
+					type = "juji",
+					startState = "",
+					id = 4,
+				},
+			}, 
+			{
+				time = 20,	      --忍者
+				num = 1,
+				pos = {400,},
+				delay = {0},
+				property = {
+					placeName = "place11" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 22,
+				num = 1,
+				delay = {0},
+				pos = {70},
+				property = {
+					placeName = "place16",  
+					type = "juji",
+					startState = "",
+					id = 4,
+				},
+			}, 
+			{
+				time = 24,	      --忍者
+				num = 1,
+				pos = {300,},
+				delay = {0},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 26,
+				num = 2,
+				delay = {0,0.5},
+				pos = {300,600},
+				property = {
+					placeName = "place11",  
+					id = 1,
+					startState = "rollright",
+				},
+			},
+			{
+				time = 28,
+				num = 1,
+				delay = {0},
+				pos = {550},
+				property = {
+					placeName = "place2",  
+					type = "dao",
+					id = 5,
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},
+			{
+				time = 30,
+				num = 1,
+				delay = {0},
+				pos = {180},
+				property = {
+					placeName = "place5",  
+					startState = "rollleft",
+					id = 2,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
+				},
+			},
+		},
+	},
 	{
 		enemys = { 
 			{
@@ -242,212 +446,6 @@ local waves = {
 				},
 			},	
 		},
-	},
-
-	{
-		enemys = {
-			{
-				time = 2,
-				num = 1,
-				delay = {0},
-				pos = {500},
-				property = {
-					placeName = "place11",  
-					startState = "",
-					type = "juji",
-					id = 4,
-				},
-			}, 
-			{
-				time = 4,
-				num = 1,
-				delay = {0},
-				pos = {50},
-				property = {
-					placeName = "place10",  
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-			{
-				time = 6,
-				num = 1,
-				delay = {0,},
-				pos = {600,},
-				property = { 
-					placeName = "place9" ,
-					type = "yiliao",                                --医疗兵
-					startState = "enterright",       --从左面跑出来
-					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,              --回血百分比
-					id = 10,
-				},
-			},
-			{
-				time = 8,
-				num = 1,
-				pos = {450},
-				delay = {0},                            -- 吉普车
-				property = {
-					placeName = "place21",
-					type = "jipu" ,
-					id = 12,
-					missileId = 22,
-					missileType = "dao_wu",
-					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					flyTime = 4.0,                           --导弹飞到脸前的时间
-					startState = "enterright",          --从右面进来
-					lastTime = 60.0,		--持续时间			
-				},
-			},
-			{
-				time = 10,
-				num = 1,
-				delay = {0},
-				pos = {370},
-				property = {
-					renzhiName = "人质2",      --  一组统一标示
-					type = "bangfei",
-					placeName = "place9",
-					id = 7,
-				},
-			},
-			{
-				time = 10,
-				num = 1,
-				delay = {0},
-				pos = {370},
-				property = {
-					renzhiName = "人质2",     --  一组统一标示
-					type = "bangren",
-					placeName = "place9",
-					id = 8,
-				},
-			},
-			{
-				time = 12,
-				num = 1,
-				delay = {0},
-				pos = {600},
-				property = {
-					placeName = "place5",  
-					id = 1,
-					startState = "rollright",
-				},
-			},
-			{
-				time = 14,
-				num = 1,
-				delay = {0},
-				pos = {95},
-				property = {
-					placeName = "place3",  
-					id = 1,
-					startState = "rollright",
-				},
-			},
-			{
-				time = 16,
-				num = 1,
-				delay = {0},
-				pos = {195},
-				property = {
-					placeName = "place14",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},
-			}, 
-			{
-				time = 18,
-				num = 1,
-				delay = {0},
-				pos = {80},
-				property = {
-					placeName = "place12",  
-					type = "juji",
-					startState = "",
-					id = 4,
-				},
-			}, 
-			{
-				time = 20,	      --忍者
-				num = 1,
-				pos = {400,},
-				delay = {0},
-				property = {
-					placeName = "place11" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 22,
-				num = 1,
-				delay = {0},
-				pos = {70},
-				property = {
-					placeName = "place16",  
-					type = "juji",
-					startState = "",
-					id = 4,
-				},
-			}, 
-			{
-				time = 24,	      --忍者
-				num = 1,
-				pos = {300,},
-				delay = {0},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 26,
-				num = 2,
-				delay = {0,0.5},
-				pos = {300,600},
-				property = {
-					placeName = "place11",  
-					id = 1,
-					startState = "rollright",
-				},
-			},
-			{
-				time = 28,
-				num = 1,
-				delay = {0},
-				pos = {550},
-				property = {
-					placeName = "place2",  
-					type = "dao",
-					id = 5,
-					missileId = 6,
-					missileType = "daodan",
-				},
-			},
-			{
-				time = 30,
-				num = 1,
-				delay = {0},
-				pos = {180},
-				property = {
-					placeName = "place5",  
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
-			},
-		},
 	},			
 	{
 		enemys = {
@@ -667,14 +665,14 @@ local waves = {
 
 
 
---enemy的关卡配置                               黄金镶嵌    0星巴雷特900伤害   1枪  2070         dps大于等于5
+--enemy的关卡配置                               黄金镶嵌    2星巴雷特1000伤害   1枪  2300         dps大于等于5
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=20,hp=4140,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=20,hp=4600,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2, weak4=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=4140,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=4600,walkRate=120,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
@@ -682,11 +680,11 @@ local enemys = {
 	weak1=1},	
 
 	--狙击兵      --type = "juji",
-	{id=4,image="jujib",demage=30,hp=8280, rollRate=180,rollCd=3,fireRate=180, fireCd = 6,
+	{id=4,image="jujib",demage=30,hp=9200, rollRate=180,rollCd=3,fireRate=180, fireCd = 6,
 	weak1=2},                                                           
 
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=8280,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=9200,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
@@ -694,25 +692,25 @@ local enemys = {
 	weak1=1},	
 	
 	--绑匪                                     140--左右移动距离       280--滚动距离
-	{id=7,image="tufeib",demage=20,hp=4140,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+	{id=7,image="tufeib",demage=20,hp=4600,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
 
 	--被绑架人        --type = "bangren",
 	{id=8,image="hs", hp=1400, weak1=1},	
 
 	--医疗兵      type = "yiliao",
-	{id=10,image="yiliaob",demage=20,hp=8280,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=10,image="yiliaob",demage=20,hp=9200,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=16560, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=18400, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=16560,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=18400,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=20,hp=8280,walkRate=120,walkCd = 2.0,rollRate=120, rollCd = 1.5,fireRate=180, fireCd=4.0, 
+	{id=17,image="xiaorz",demage=20,hp=9200,walkRate=120,walkCd = 2.0,rollRate=120, rollCd = 1.5,fireRate=180, fireCd=4.0, 
 	shanRate = 120, shanCd = 4, chongRate = 180, chongCd = 4, weak1=2},
 
 	--飞镖

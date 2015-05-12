@@ -145,7 +145,7 @@ local waves = {
 					award = "coin",                        --金币
 					--award = "shouLei",        --手雷
 					--award = "healthBag",                 --医疗包
-					value = 500,
+					value = 550,
 					placeName = "place5",
 				},
 			},
@@ -161,7 +161,7 @@ local waves = {
 					award = "coin",                        --金币
 					--award = "shouLei",        --手雷
 					--award = "healthBag",                 --医疗包
-					value = 500,
+					value = 450,
 					placeName = "place3",
 				},
 			},
@@ -177,7 +177,7 @@ local waves = {
 					award = "coin",                        --金币
 					--award = "shouLei",        --手雷
 					--award = "healthBag",                 --医疗包
-					value = 500,
+					value = 600,
 					placeName = "place9",
 				},
 			},
@@ -230,9 +230,9 @@ local bosses = {
 		wudiTime = 5 , 	
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 10, 			--一次扫射10下
-		weak1 = 2,					--手  弱点伤害倍数
-		weak2 = 2,					--腹  弱点伤害倍数
-		weak3 = 2,					--头  弱点伤害倍数
+		weak1 = 1.1,					--手  弱点伤害倍数
+		weak2 = 1.1,					--腹  弱点伤害倍数
+		weak3 = 1.1,					--头  弱点伤害倍数
 		skilltrigger = {   			   --技能触发(可以同时)
 
 			-- moveLeftFire = {

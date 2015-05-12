@@ -5,7 +5,6 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
--------------- 汽油桶配置 ----------------------
 			{
 				time = 0,
 				num = 1,
@@ -27,8 +26,7 @@ local waves = {
 					type = "bao_tong",
 					id = 1,
 				},
-			},
-----------------------------------------------
+			},------------------------------------------------------------ 汽油桶配置 ----------------------
 			{
 				time = 0,
 				num = 1,
@@ -128,7 +126,6 @@ local waves = {
 
 	{
 		enemys = { 
--------------------- 汽油桶配置 -----------------------------
 			{
 				time = 0,
 				num = 1,
@@ -150,8 +147,7 @@ local waves = {
 					type = "bao_tong",
 					id = 1,
 				},
-			},	
-----------------------------------------------
+			},------------------------------------------------------------ 汽油桶配置 ----------------------
 			{ 
 				time = 0,
 				num = 2,
@@ -272,7 +268,6 @@ local waves = {
 		
 	{
 		enemys = {
--------------------- 汽油桶配置 -----------------------------
 			{
 				time = 0,
 				num = 2,
@@ -294,8 +289,7 @@ local waves = {
 					type = "bao_tong",
 					id = 1,
 				},
-			},	
-----------------------------------------------
+			},------------------------------------------------------------ 汽油桶配置 ----------------------
 		    {
 				time = 0,
 				num = 1,
@@ -397,7 +391,7 @@ local waves = {
 
 
 
---enemy的关卡配置                                  青铜难度 狙击枪630伤害 1枪  880         dps大于等于5
+--enemy的关卡配置                                   雷明顿4星基础伤害390伤害 青铜难度1枪  550         dps大于等于5
 local enemys = {
 
 	--汽油桶         --type = "bao_tong",
@@ -405,12 +399,12 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=5,hp=880,
+	{id=4,image="qiufan",demage=5,hp=550,
 	weak1=4, weak4=4},
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=2600, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=2500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	--导弹          --missileType = "daodan",
