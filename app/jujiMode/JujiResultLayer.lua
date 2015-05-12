@@ -25,7 +25,7 @@ end
 
 function JujiResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
-	local awardsTable = self:getAwards()
+	self.awardsTable = self:getAwards()
 	local numTable = {}
 	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
 	numTable["num2"] = cc.uiloader:seekNodeByName(self, "num2")
@@ -48,8 +48,8 @@ function JujiResultLayer:initUI()
     self:addChild(armature)
     armature:getAnimation():play("kaishi" , -1, 0)
 
-	for i=1,#awardsTable do
-		local award = awardsTable[i]
+	for i=1,#self.awardsTable do
+		local award = self.awardsTable[i]
 		dump(award)
 		for k,v in pairs(award) do
 			numTable["num"..i]:setString("X"..v)
@@ -84,6 +84,21 @@ function JujiResultLayer:initUI()
 end
 
 function JujiResultLayer:onClickBtnGet()
+	local userModel = md:getInstance("UserModel")
+	local propModel = md:getInstance("PropModel")
+	for i=1,#self.awardsTable do
+		local award = self.awardsTable[i]
+		for k,v in pairs(award) do
+			if k == "healthBag" then
+				propModel:addProp("hpBag",v)
+			elseif k == "lei" then
+				propModel:addProp("lei",v)
+			elseif k == "money" then
+				userModel:addMoney(v)
+			end
+		end
+	end
+
 	ui:closePopup("JujiResultLayer")
 
 	--closefunc
