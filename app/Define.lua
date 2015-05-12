@@ -2,17 +2,7 @@
 
 local Define = class("Define", cc.mvc.ModelBase)
 
---hero
-Define.kHeroBaseHp 				= 100.0  --角色血量
-Define.kHeroCritScale 			= 3.0  --暴击倍数
-Define.kHeroHpLess 				= 0.15  --血量剩下0.1的时候 飘红
-Define.kHeroHelper				= 0  --默认回血0/s
-Define.kHeroHpBag				= 200  --回血包
-Define.kHeroHpBagCd				= 10    --回血包cd
-
-Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
-Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
-
+---------------------- 怪物 --------------------------
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 10.0       --左右移动速度
 Define.kEnemyWalkWidth 			= 300 * 1	--左右移动距离原来140改为200
@@ -101,8 +91,16 @@ Define.kMissileWangTime			= 1    --飞过来的时间
 Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
 
----------------其他-----------------------------------------------------------
-------------------------------------------------------------------------------
+--------------------------角色---------------------------------
+--hero
+Define.kHeroBaseHp 				= 100.0  --角色血量
+Define.kHeroCritScale 			= 3.0  --暴击倍数
+Define.kHeroHpLess 				= 0.15  --血量剩下0.1的时候 飘红
+Define.kHeroHelper				= 0  --默认回血0/s
+Define.kHeroHpBag				= 200  --回血包
+Define.kHeroHpBagCd				= 10    --回血包cd
+Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
+Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
 
 --黄金武器
 Define.kGoldTime 				= 8     --黄金武器激活时间
@@ -146,6 +144,12 @@ Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之30血时 触发机甲
 
 --enenmy动画缩放比例
 Define.kEnemyAnimScale      	= 1 / 0.7
+
+
+--------------------------战斗---------------------------------
+Define.kJujiReliveCosts         = {20, 50, 100, 200, 300, 600}  --无限狙击模式复活
+Define.kBossReliveCosts         = {20, 50, 100, 200, 300, 600}  --boss竞技模式复活
+Define.kLevelReliveCosts        = {10, 20, 40, 80} 				--普通关卡模式复活
 
 function Define:ctor()
     Define.super.ctor(self) 

@@ -61,6 +61,7 @@ end
 
 
 function JujiFight:passLevel()
+
 	self.passLevelNum = self.passLevelNum + 1
 
 	--save data
@@ -74,6 +75,31 @@ function JujiFight:passLevel()
 	print("self.passLevelNum:", self.passLevelNum )
 	local curWaveIndex =  jujiModeModel:getCurWaveIndex()
 	print("curWaveIndex:", curWaveIndex)
+end
+
+function JujiFight:endFightFail()
+    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
+    self:pauseFight(true)
+	ui:showPopup("FightRelivePopup",
+		{onReliveFunc = handler(self, self.onReliveConfirm),
+		 onGiveUpFunc = handler(self, self.onReliveDeny)},
+		{animName = "normal"})
+    self:clearFightData()
+end
+
+function JujiFight:getReliveCost()
+    local times = self:getRelivedTimes()
+    local costs = define.kJujiReliveCosts
+    local maxCost = costs[#costs]
+    return costs[times + 1] or maxCost
+end
+
+function JujiFight:onReliveConfirm()
+	self:doRelive()
+end
+
+function JujiFight:onReliveDeny()
+	self:doGiveUp()
 end
 
 return JujiFight

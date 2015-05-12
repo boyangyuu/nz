@@ -39,7 +39,7 @@ function BossFight:getResultData()
     local groupId, levelId = levelMapModel:getConfig()
 	local resultData = {}
 	resultData["fightType"] = self:getFightType()
-	resultData["chapterIndex"] = 1 
+	resultData["chapterIndex"] = 1
 	resultData["groupId"]   = groupId
 	resultData["levelId"]   = self:getLevelId()
 	resultData["result"]    = self:getResult() 

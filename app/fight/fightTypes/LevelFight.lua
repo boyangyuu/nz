@@ -35,7 +35,6 @@ function LevelFight:isJujiFight()
 end
 
 function LevelFight:waveUpdate(nextWaveIndex, waveType)
-    print("function LevelFight:waveUpdate(nextWaveIndex, waveType)", waveType)
     local fightDescModel = md:getInstance("FightDescModel")
     if waveType == "boss" then 
         fightDescModel:bossShow()
