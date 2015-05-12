@@ -17,6 +17,22 @@ function JujiFight:startFightResult()
 
 	--save
 	self:passLevel() 
+
+	--closeFunc
+	local function closeFunc()
+		local resultData = self:getResultData()
+	    ui:changeLayer("HomeBarLayer",{fightData = resultData})
+	end
+	
+	--desc
+    local fightDescModel = md:getInstance("FightDescModel")
+    local data = {
+	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
+    	chapterIndex = self.chapterIndex,
+    	waveIndex    = curWaveIndex,
+    	closeFunc    = closeFunc,
+	}
+    fightDescModel:dispatchEvent(data)	
 end
 
 function JujiFight:getResultData()

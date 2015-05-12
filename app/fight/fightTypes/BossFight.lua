@@ -16,7 +16,6 @@ function BossFight:startFightResult()
 	    ui:changeLayer("HomeBarLayer",{fightData = resultData})
 	end
 
-
     --data
    	local map = md:getInstance("Map")
 	local waveIndex = map:getWaveIndex()
