@@ -47,6 +47,7 @@ function FightInlay:checkNativeGold()
     local isNativeGold = self:getIsNativeGold()
     self:setIsActiveGold(isNativeGold)
     if isNativeGold then 
+        print("function FightInlay:checkNativeGold()")
         self:activeGoldOnCost()
     end
 end

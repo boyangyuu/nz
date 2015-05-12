@@ -25,12 +25,13 @@ end)
 
 function FightPlayer:ctor(properties)
     --instance
+    -- dump(properties, "properties")    
     local fightFactory = md:getInstance("FightFactory")
     fightFactory:refreshData(properties.fightData)
     self.fight      = fightFactory:getFight()
-    -- dump(properties, "properties")
+
     self.fight:refreshData(properties.fightData)
-    self.fight:beginFight()
+    
    
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
@@ -944,6 +945,10 @@ function FightPlayer:initGuide4()
 end
 
 function FightPlayer:onEnter()
+    --start fight
+    self.fight:beginFight()    
+
+    --music
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
     local isju = self.fight:isJujiFight()

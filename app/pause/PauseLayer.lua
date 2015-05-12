@@ -18,10 +18,8 @@ function PauseLayer:ctor()
 end 
 
 function PauseLayer:showPopup(event)
-	print("function PauseLayer:showPopup(event)")
 	self:setVisible(true)
 	display.pause()
-	print("event.isPauseSecond:",event.isPauseSecond)
 
 	local cls = event.layerCls
 	self.str = cls.__cname
