@@ -171,7 +171,8 @@ function Fight:endFightFail()
 end
 
 function Fight:startFightResult()
-    ui:showPopup("FightResultPopup",{},{animName = "normal"})
+    local fightDescModel = md:getInstance("FightDescModel")
+    fightDescModel:dispatchEvent({name = fightDescModel.SUCCESS_ANIM_EVENT})
 end
 
 function Fight:willWin(time)

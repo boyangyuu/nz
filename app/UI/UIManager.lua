@@ -26,7 +26,6 @@ layerClasses["storyLayer"]           = import("..start.StoryLayer")
 layerClasses["DailyLoginLayer"]      = import("..dailyLogin.DailyLoginLayer")
 
 --popup
-layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
