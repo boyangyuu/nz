@@ -207,7 +207,6 @@ function BossModeLayer:refreshContent()
     	lingjianImg:setScale(1.2)
     	addChildCenter(lingjianImg,v)
     end
-
 end
 
 function BossModeLayer:onClickBtnAward(i)

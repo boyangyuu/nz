@@ -310,12 +310,14 @@ end
 
 --如果有盾 则 return true
 function Hero:helpFullHp()
-    --暂停
+    --is helped
     if self.isHelped then return end 
     self.isHelped = true
+
+    --pause
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
-    fight:stopFire()
+    fight:pauseFight(true)
 
     --pop
     ui:showPopup("commonPopup",
