@@ -340,10 +340,6 @@ function Hero:onBuyFullHp()
 
     self:setFullHp()
 
-    --refresh 买礼包时候需要刷新
-    local fightProp = md:getInstance("FightProp")
-    fightProp:refreshData()
-
     --um
     local levelInfo = fight:getLevelInfo()    
     local umData = {}
