@@ -2,7 +2,7 @@ local JujiModeConfigs = import(".JujiModeConfigs")
 local JujiModeModel = class("JujiModeModel", cc.mvc.ModelBase)
 
 function JujiModeModel:ctor(properties)
-	
+	JujiModeModel.super.ctor(self, properties)
 end
 
 function JujiModeModel:initRankData()
