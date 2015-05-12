@@ -2,7 +2,7 @@ import("..includes.functionUtils")
 
 local PropModel = class("PropModel", cc.mvc.ModelBase)
 
-PropModel.REFRESH_PROP_EVENT = "REFRESH_PROP_EVENT"
+PropModel.PROP_UPDATE_EVENT = "PROP_UPDATE_EVENT"
 
 function PropModel:ctor(properties, events, callbacks)
 	PropModel.super.ctor(self, properties)
@@ -40,10 +40,12 @@ function PropModel:costProp(nameid,costNum)
 	elseif nameid == "hpBag" then 
 		um:use("医疗包", costNum, 0)
 	end
+	self:refreshInfo()
 end
 
 function PropModel:refreshInfo()
-	self:dispatchEvent({name = PropModel.REFRESH_PROP_EVENT})
+	print("function PropModel:refreshInfo()")
+	self:dispatchEvent({name = PropModel.PROP_UPDATE_EVENT})
 end
 
 return PropModel

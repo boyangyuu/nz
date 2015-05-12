@@ -16,10 +16,6 @@ function FightProp:ctor(properties)
     self.buyModel  = md:getInstance("BuyModel")
 end
 
-function FightProp:refreshData()
-	self:dispatchEvent({name = self.PROP_UPDATE_EVENT})
-end
-
 function FightProp:costRobot(callfuncSuccess)
 	local num = self.propModel:getPropNum("jijia")
 	if num >= 1 then 
@@ -28,14 +24,12 @@ function FightProp:costRobot(callfuncSuccess)
 	else
 		--buy
 		-- local function deneyBuyFunc()
-			self.buyModel:showBuy("armedMecha", {payDoneFunc = handler(self, self.refreshData),
-				isNotPopKefu = true}, "战斗界面_点击机甲")
+			self.buyModel:showBuy("armedMecha", {isNotPopKefu = true}, "战斗界面_点击机甲")
 		-- end 
 		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 		-- 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击机甲")
 				
 	end
-	self:refreshData()
 end
 
 function FightProp:getRobotNum()
@@ -60,14 +54,12 @@ function FightProp:costLei(callfuncSuccess)
 	    um:event("关卡道具使用", umData) 		
 	else
 		-- local function deneyBuyFunc()
-			self.buyModel:showBuy("handGrenade", {payDoneFunc = handler(self, self.refreshData),
-						isNotPopKefu = true}, "战斗界面_点击手雷")
+			self.buyModel:showBuy("handGrenade", {isNotPopKefu = true}, "战斗界面_点击手雷")
 		-- end 		
 		-- self.buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.refreshData),
 		-- 				deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}
 		-- 				, "战斗界面_点击手雷")
 	end
-	self:refreshData()
 end
 
 function FightProp:getLeiNum()
@@ -94,7 +86,6 @@ function FightProp:costGoldWeapon()
 		-- 		deneyBuyFunc = deneyBuyFunc, isNotPopup = true,isNotPopKefu = true}, "战斗界面_点击黄武")	
 
 	end
-	self:refreshData()
 end
 
 function FightProp:getGoldNum()
@@ -108,19 +99,16 @@ end
 
 function FightProp:addHpBag(num)
 	self.propModel:addProp("hpBag", num)
-	self:refreshData()
 end
 
 function FightProp:costHpBag(num)
 	self.propModel:costProp("hpBag", num)
 	local hero = md:getInstance("Hero")
 	hero:costHpBag()
-	self:refreshData()
 end
 
 function FightProp:startGoldWeaponByPay()
 	self:costGoldWeapon()
-	self:refreshData()
 end
 
 function FightProp:sendAward(awardData)
@@ -138,8 +126,6 @@ function FightProp:sendAward(awardData)
 	    hero:dispatchEvent({name = hero.AWARD_GOLD_INCREASE_EVENT, 
                     value = value})
 	end	
-
-	self:refreshData()
 end
 
 return FightProp

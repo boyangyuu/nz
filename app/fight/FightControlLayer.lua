@@ -9,6 +9,7 @@ function FightControlLayer:ctor()
     local fightFactory  = md:getInstance("FightFactory")
     self.fight 			= fightFactory:getFight()
     self.fightProp 		= md:getInstance("FightProp")
+    local propModel     = md:getInstance("PropModel")
 	--instance
 	self.timerHp = nil
 	self.hpCdPercent = 0
@@ -18,8 +19,8 @@ function FightControlLayer:ctor()
 	self:refreshData()
 	
 	--events
-	cc.EventProxy.new(self.fightProp, self)
-			:addEventListener(self.fightProp.PROP_UPDATE_EVENT,
+	cc.EventProxy.new(propModel, self)
+			:addEventListener(propModel.PROP_UPDATE_EVENT,
 			 handler(self, self.refreshData))
 		
 	self:setTouchEnabled(true)

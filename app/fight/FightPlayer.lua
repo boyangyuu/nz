@@ -39,6 +39,7 @@ function FightPlayer:ctor(properties)
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
     self.fightProp  = md:getInstance("FightProp")
+    local propModel = md:getInstance("PropModel")
 
     --datas
     self.curGold    = 0
@@ -76,8 +77,8 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
        
-    cc.EventProxy.new(self.fightProp, self)
-        :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
+    cc.EventProxy.new(propModel, self)
+        :addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
 
     cc.EventProxy.new(self.defence, self)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
