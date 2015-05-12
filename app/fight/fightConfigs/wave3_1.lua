@@ -166,14 +166,14 @@ local waves = {
 local enemys = {
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=50000,fireRate=180,fireCd=5,speed=35, weak1=2},
+	{id=8,image="dunbing",demage=20,hp=10000,fireRate=180,fireCd=5,speed=35, weak1=2},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=20,hp=5000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=5000},
+	{id=18,image="feibiao",demage=10,hp=1000},
                            
 }
 
