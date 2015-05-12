@@ -3,7 +3,8 @@ local JujiResultLayer = class("JujiResultLayer",function()
 end)
 
 function JujiResultLayer:ctor(properties)
-	self.groupIndex = properties.groupIndex
+	self.levelIndex = properties.levelIndex
+	self.waveIndex  = properties.waveIndex
 	self.properties = properties
 	self:loadCCS()
 	self:initUI()
@@ -17,18 +18,8 @@ end
 
 function JujiResultLayer:getAwards()
 	local jujiModeModel = md:getInstance("JujiModeModel")
-	local info = jujiModeModel:getAwardTable(self.groupIndex)
+	local info = jujiModeModel:getAwardTable(self.levelIndex)
 	assert(info, "getAwardTable is nil")
-
-	-- local data = getUserData()
-	-- if self.chapterIndex < data.bossMode.chapterIndex then
-	-- 	table.remove(info,1)
-	-- elseif self.chapterIndex == data.bossMode.chapterIndex then
-	-- 	if self.waveIndex <= data.bossMode.waveIndex then
-	-- 		table.remove(info,1)
-	-- 	end
-	-- end	
-	
 	return info
 end
 
@@ -69,7 +60,7 @@ function JujiResultLayer:initUI()
 		end
 	end
 
-    waveNum:setString("d"..self.groupIndex.."b")
+    waveNum:setString("d"..self.waveIndex.."b")
     local action = cc.MoveBy:create(0.3, cc.p(0,-100))
     waveNum:runAction(action)
 

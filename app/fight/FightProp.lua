@@ -14,7 +14,6 @@ function FightProp:ctor(properties)
     FightProp.super.ctor(self, properties)
     self.propModel = md:getInstance("PropModel") 
     self.buyModel  = md:getInstance("BuyModel")
-    self.hero      = md:getInstance("Hero")
 end
 
 function FightProp:refreshData()
@@ -114,7 +113,8 @@ end
 
 function FightProp:costHpBag(num)
 	self.propModel:costProp("hpBag", num)
-	self.hero:costHpBag()
+	local hero = md:getInstance("Hero")
+	hero:costHpBag()
 	self:refreshData()
 end
 

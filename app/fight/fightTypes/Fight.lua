@@ -58,6 +58,7 @@ function Fight:refreshData(fightData)
     md:createInstance("FightConfigs")  
     md:createInstance("Map") 
     md:createInstance("EnemyManager")
+    md:createInstance("FightProp")
     
     --init instance
     local isContinue = fightData["isContinue"]

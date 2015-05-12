@@ -226,7 +226,6 @@ function MapView:showEnemyIntro(descId, time)
 end
 
 function MapView:checkWave()
-	print("function MapView:checkWave()")
 	local function checkEnemysEmpty()
 		local leftnum   =  self:getLeftEnemyNum()
 		local cachenum  = #self.cacheEnemys

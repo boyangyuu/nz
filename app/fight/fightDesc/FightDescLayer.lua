@@ -98,7 +98,8 @@ end
 
 function FightDescLayer:onJujiGift(event)
     ui:showPopup("JujiResultLayer",{
-        groupIndex = event.groupIndex, 
+        levelIndex = event.levelIndex, --领奖用
+        waveIndex  = event.waveIndex,  --显示用 
         closeFunc = event.closeFunc},
         {animName = "normal"})
 end
