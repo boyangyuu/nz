@@ -8,7 +8,7 @@ local waves = {
 				descId = "xiaorz", --简介
 				time = 2,	
 				num = 1,
-				pos = {600},
+				pos = {300},
 				delay = {4},
 				property = {
 					placeName = "place2" ,
@@ -20,8 +20,8 @@ local waves = {
 			{
 				time = 6,	
 				num = 1,
-				pos = {900},
-				delay = {0.1},
+				pos = {800},
+				delay = {0},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -72,7 +72,7 @@ local waves = {
 			{
 				time = 5,	
 				num = 1,
-				pos = {900},
+				pos = {400},
 				delay = {0.1},
 				property = {
 					placeName = "place3" ,
@@ -109,7 +109,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 5,	
+				time = 6,	
 				num = 1,
 				pos = {250},
 				delay = {0.1},
@@ -121,7 +121,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	
+				time = 8,	
 				num = 1,
 				pos = {600},
 				delay = {0.1},
@@ -133,7 +133,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,	
+				time = 10,	
 				num = 1,
 				pos = {400},
 				delay = {0.1},
@@ -145,7 +145,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 8,	
+				time = 12,	
 				num = 1,
 				pos = {690},
 				delay = {0.1},
@@ -157,7 +157,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 9,	
+				time = 14,	
 				num = 1,
 				pos = {230},
 				delay = {0.1},
@@ -168,18 +168,18 @@ local waves = {
 					missileId = 18,
 				},
 			},	
-			{
-				time = 10,	
-				num = 1,
-				pos = {420},
-				delay = {0.1},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
+			-- {
+			-- 	time = 16,	
+			-- 	num = 1,
+			-- 	pos = {420},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place2" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
 		},
 	},
 		
