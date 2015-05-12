@@ -6,9 +6,9 @@ local waves = {
 		enemys = {
 			{
 				descId = "xiaorz", --简介
-				time = 3,	
+				time = 2,	
 				num = 1,
-				pos = {600},
+				pos = {300},
 				delay = {4},
 				property = {
 					placeName = "place2" ,
@@ -16,7 +16,19 @@ local waves = {
 					type = "renzhe",
 					missileId = 18,
 				},
-			},	
+			},
+			{
+				time = 6,	
+				num = 1,
+				pos = {800},
+				delay = {0},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
 		},
 	},
 	{
@@ -34,7 +46,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 2.5,	
+				time = 3,	
 				num = 1,
 				pos = {250},
 				delay = {0.1},
@@ -46,7 +58,7 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 4,	
 				num = 1,
 				pos = {600},
 				delay = {0.1},
@@ -56,7 +68,19 @@ local waves = {
 					type = "renzhe",
 					missileId = 18,
 				},
-			},		
+			},
+			{
+				time = 5,	
+				num = 1,
+				pos = {400},
+				delay = {0.1},
+				property = {
+					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
 		},
 	},
 	{
@@ -85,7 +109,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 4.5,	
+				time = 6,	
 				num = 1,
 				pos = {250},
 				delay = {0.1},
@@ -97,7 +121,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5,	
+				time = 8,	
 				num = 1,
 				pos = {600},
 				delay = {0.1},
@@ -109,7 +133,7 @@ local waves = {
 				},
 			},
 			{
-				time = 5.5,	
+				time = 10,	
 				num = 1,
 				pos = {400},
 				delay = {0.1},
@@ -121,7 +145,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 6,	
+				time = 12,	
 				num = 1,
 				pos = {690},
 				delay = {0.1},
@@ -133,7 +157,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 6.5,	
+				time = 14,	
 				num = 1,
 				pos = {230},
 				delay = {0.1},
@@ -144,36 +168,36 @@ local waves = {
 					missileId = 18,
 				},
 			},	
-			{
-				time = 7,	
-				num = 1,
-				pos = {420},
-				delay = {0.1},
-				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
+			-- {
+			-- 	time = 16,	
+			-- 	num = 1,
+			-- 	pos = {420},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place2" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },	
 		},
 	},
 		
 }
 
 
---enemy的关卡配置                                                     黄金镶嵌M4A1满级1枪伤害621  dps大于等于6  怪物数据
+--enemy的关卡配置                                                     M4A1 5级白银镶嵌   1枪伤害621  dps大于等于4  怪物数据
 local enemys = {
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=50000,fireRate=180,fireCd=5,speed=35, weak1=2},
+	{id=8,image="dunbing",demage=20,hp=10000,fireRate=180,fireCd=5,speed=35, weak1=2},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=20,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=120, fireCd=3.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=5000},
+	{id=18,image="feibiao",demage=10,hp=600},
                            
 }
 

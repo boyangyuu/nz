@@ -16,9 +16,25 @@ function BossResultLayer:loadCCS()
     self:addChild(controlNode,100)
 end
 
+function BossResultLayer:getAwards()
+	local bossModeModel = md:getInstance("BossModeModel")
+	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
+	assert(info, "getChapterModel is nil")
+
+	local data = getUserData()
+	if self.chapterIndex < data.bossMode.chapterIndex then
+		table.remove(info,1)
+	elseif self.chapterIndex == data.bossMode.chapterIndex then
+		if self.waveIndex <= data.bossMode.waveIndex then
+			table.remove(info,1)
+		end
+	end	
+	return info
+end
+
 function BossResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
-	local indexTable = {"part","healthBag","lei","money"}
+	self.awardsTable = self:getAwards()
 	local numTable = {}
 	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
 	numTable["num2"] = cc.uiloader:seekNodeByName(self, "num2")
@@ -27,21 +43,6 @@ function BossResultLayer:initUI()
 	local waveNum    = cc.uiloader:seekNodeByName(self, "waveNum")
 	for k,v in pairs(numTable) do
 		v:setVisible(false)
-	end
-
-	local bossModeModel = md:getInstance("BossModeModel")
-	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
-	assert(info, "getChapterModel is nil")
-	
-	local data = getUserData()
-	if self.chapterIndex < data.bossMode.chapterIndex then
-		info["part"] = nil
-		table.remove(indexTable,1)
-	elseif self.chapterIndex == data.bossMode.chapterIndex then
-		if self.waveIndex < data.bossMode.waveIndex then
-			info["part"] = nil
-			table.remove(indexTable,1)
-		end
 	end
 
 	local manager = ccs.ArmatureDataManager:getInstance()
@@ -56,15 +57,16 @@ function BossResultLayer:initUI()
     self:addChild(armature)
     armature:getAnimation():play("kaishi" , -1, 0)
 
-
-	for i=1,table.nums(info) do
-		local indexName = indexTable[i]
-		numTable["num"..i]:setString("X"..info[indexName])
-
-	    local icon = "icon_"..indexName..".png"
-	    local skinIcon = ccs.Skin:createWithSpriteFrameName(icon)
-	    armature:getBone("icon_"..i):addDisplay(skinIcon, 1)
-	    armature:getBone("icon_"..i):changeDisplayWithIndex(1, true)
+	for i=1,#self.awardsTable do
+		local award = self.awardsTable[i]
+		dump(award)
+		for k,v in pairs(award) do
+			numTable["num"..i]:setString("X"..v)
+		    local icon = "icon_"..k..".png"
+		    local skinIcon = ccs.Skin:createWithSpriteFrameName(icon)
+		    armature:getBone("icon_"..i):addDisplay(skinIcon, 1)
+		    armature:getBone("icon_"..i):changeDisplayWithIndex(1, true)
+		end
 	end
 
     waveNum:setString("d"..self.waveIndex.."b")
@@ -91,6 +93,21 @@ function BossResultLayer:initUI()
 end
 
 function BossResultLayer:onClickBtnGet()
+	local userModel = md:getInstance("UserModel")
+	local propModel = md:getInstance("PropModel")
+	for i=1,#self.awardsTable do
+		local award = self.awardsTable[i]
+		for k,v in pairs(award) do
+			if k == "healthBag" then
+				propModel:addProp("hpBag",v)
+			elseif k == "lei" then
+				propModel:addProp("lei",v)
+			elseif k == "money" then
+				userModel:addMoney(v)
+			end
+		end
+	end
+
 	ui:closePopup("BossResultLayer")
 
 	--closefunc

@@ -176,4 +176,9 @@ function AwardEnemyView:animationEvent(armatureBack,movementType,movementID)
 	end
 end
 
+
+function AwardEnemyView:isBeBuff()
+	return false
+end
+
 return AwardEnemyView

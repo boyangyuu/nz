@@ -16,10 +16,14 @@ function BossFight:startFightResult()
 	    ui:changeLayer("HomeBarLayer",{fightData = resultData})
 	end
 
-	--desc
-	local map = md:getInstance("Map")
+    --data
+   	local map = md:getInstance("Map")
 	local waveIndex = map:getWaveIndex()
-	local curWaveIndex = waveIndex - 1
+	local curWaveIndex = waveIndex - 1 
+	local bossModeModel = md:getInstance("BossModeModel")
+	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex) 
+	
+	--desc
     local fightDescModel = md:getInstance("FightDescModel")
     local data = {
 	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
@@ -28,10 +32,6 @@ function BossFight:startFightResult()
     	closeFunc    = closeFunc,
 	}
     fightDescModel:dispatchEvent(data)
-
-    --data
-	local bossModeModel = md:getInstance("BossModeModel")
-	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex)    
 end
 
 function BossFight:getResultData()
@@ -71,14 +71,14 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 	local map = md:getInstance("Map")
 	local waveIndex = map:getWaveIndex()
     local fightDescModel = md:getInstance("FightDescModel")
-    local data = {
+    local eventData = {
 	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
     	closeFunc    = closeFunc,
 	}
 
-    fightDescModel:dispatchEvent(data)
+    fightDescModel:dispatchEvent(eventData)
     self:pauseFight(true)
 end
 

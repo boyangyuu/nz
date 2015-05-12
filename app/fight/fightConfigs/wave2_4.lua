@@ -621,10 +621,10 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    白银镶嵌 MP5伤害90  dps大于等于3,远程3近战3 怪物数据 
+--enemy的关卡配置                                                    白银镶嵌 MP5伤害90  dps大于等于3,远程2近战2 怪物数据 
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=12,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=562,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
@@ -632,7 +632,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=1,
+	{id=3,image="shoulei",demage=8,hp=1,
 	weak1=1},
 
 	--导弹兵      --type = "dao",
@@ -640,19 +640,19 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=12,hp=150,
+	{id=6,image="daodan",demage=8,hp=150,
 	weak1=1},	
 
 	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵  近战兵到身前的比例
-	{id=7,image="jinzhanb",demage=9,hp=1123,fireRate=180,fireCd=3,speed=40,
+	{id=7,image="jinzhanb",demage=6,hp=1123,fireRate=180,fireCd=4,speed=40,
 	weak1=2},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=9,hp=5616,fireRate=180,fireCd=3,speed=40, scale = 1.8,--盾兵到身前的比例
+	{id=8,image="dunbing",demage=6,hp=5616,fireRate=180,fireCd=4,speed=40, scale = 1.8,--盾兵到身前的比例
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=750,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=12,hp=750,fireRate=30,speed=120,
 	weak1=2},	
 
 	--飞机         type = "feiji" ,
@@ -660,7 +660,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--医疗兵      --type = "yiliao",
-	{id=25,image="yiliaob",demage=12,hp=1123,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=25,image="yiliaob",demage=8,hp=1123,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
 }

@@ -41,7 +41,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	--pay
 	local isGift = buyConfig.isGift 
 	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "Shake"})
+        ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "shake"})
     else
     	ui:showPopup("commonPopup",
 			 {type = "style7", content = proInfo.getConfig(configId), callfuncCofirm = handler(self, self.iapPay)},

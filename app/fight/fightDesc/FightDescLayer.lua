@@ -8,12 +8,13 @@ function FightDescLayer:ctor()
 
     cc.EventProxy.new(self.model, self)
         :addEventListener(self.model.START_ANIM_EVENT, handler(self, self.onFightStart))
+        :addEventListener(self.model.SUCCESS_ANIM_EVENT, handler(self, self.onFightSuccess))
         :addEventListener(self.model.BOSSSHOW_ANIM_EVENT, handler(self, self.onBossStart))
         :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.onWaveStart))
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
         :addEventListener(self.model.GOLDWAVE_ANIM_EVENT, handler(self, self.onGoldWaveStart))
         :addEventListener(self.model.BOSSGIFT_ANIM_EVENT, handler(self, self.onBossGift))
-        -- :addEventListener(self.model.JUJIGIFT_ANIM_EVENT, handler(self, self.onJujiGift))
+        :addEventListener(self.model.JUJIGIFT_ANIM_EVENT, handler(self, self.onJujiGift))
 
 	self:loadCCS()
     self:setTouchSwallowEnabled(false)
@@ -51,6 +52,22 @@ function FightDescLayer:onFightStart(event)
     audio.playSound(letsgo,false)
 end
 
+function FightDescLayer:onFightSuccess(event)
+    self:setVisible(true)
+    local armature = ccs.Armature:create("renwuwc")
+    armature:getAnimation():setMovementEventCallFunc(
+        function ( armatureBack,movementType,movementId ) 
+            if movementType == ccs.MovementEventType.loopComplete then
+                armature:removeFromParent()
+                armature = nil
+                self:setVisible(false)
+                ui:changeLayer("FightResultLayer")
+            end
+        end)
+    addChildCenter(armature, self.animPanl)
+    armature:getAnimation():play("renwuwc" , -1, 1)
+end
+
 function FightDescLayer:onBossStart(event)
     self:setTouchSwallowEnabled(true)
     self:setVisible(true)
@@ -76,15 +93,15 @@ function FightDescLayer:onBossGift(event)
         chapterIndex = event.chapterIndex,
         waveIndex = event.waveIndex, 
         closeFunc = event.closeFunc},
-        {anim = false})
+        {animName = "normal"})
 end
 
 function FightDescLayer:onJujiGift(event)
     ui:showPopup("JujiResultLayer",{
-        -- chapterIndex = event.chapterIndex,
-        waveIndex = event.waveIndex, 
+        levelIndex = event.levelIndex, --领奖用
+        waveIndex  = event.waveIndex,  --显示用 
         closeFunc = event.closeFunc},
-        {anim = false})
+        {animName = "normal"})
 end
 
 function FightDescLayer:onWaveStart(event)

@@ -226,7 +226,6 @@ function MapView:showEnemyIntro(descId, time)
 end
 
 function MapView:checkWave()
-	print("function MapView:checkWave()")
 	local function checkEnemysEmpty()
 		local leftnum   =  self:getLeftEnemyNum()
 		local cachenum  = #self.cacheEnemys
@@ -760,8 +759,9 @@ end
 function MapView:playEffectJuShaked(event)
 	local x = 100
 	local y = 300
-	local tMove = cc.MoveBy:create(event.time1, cc.p(-x, -y))
-	local tMove1 = cc.MoveBy:create(event.time2, cc.p(x, y))
+	local posx, posy = self:getPositionX(), self:getPositionY()
+	local tMove = cc.MoveTo:create(event.time1, cc.p(posx-x, posy-y))
+	local tMove1 = cc.MoveTo:create(event.time2, cc.p(posx, posy))
 	self:runAction(cc.Sequence:create(tMove, tMove1))
 end
 

@@ -38,7 +38,7 @@ local waves = {
 				},
 			},
 			{
-				time = 4,	                                               --奖励箱子
+				time = 3,	                                               --奖励箱子
 				num = 1,
 				pos = {450},
 				delay = {0},
@@ -54,7 +54,7 @@ local waves = {
 				},
 			},
 			{
-				time = 6,	                                               --奖励箱子
+				time = 4,	                                               --奖励箱子
 				num = 1,
 				pos = {40},
 				delay = {0},
@@ -70,7 +70,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	                                               --奖励箱子
+				time = 5,	                                               --奖励箱子
 				num = 1,
 				pos = {200},
 				delay = {0},
@@ -86,7 +86,7 @@ local waves = {
 				},
 			},
 			{
-				time = 10,	                                               --奖励箱子
+				time = 6,	                                               --奖励箱子
 				num = 1,
 				pos = {520},
 				delay = {0},
@@ -102,7 +102,7 @@ local waves = {
 				},
 			},
 			{
-				time = 12,	                                               --奖励箱子
+				time = 7,	                                               --奖励箱子
 				num = 1,
 				pos = {80},
 				delay = {0},
@@ -118,7 +118,7 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	                                               --奖励箱子
+				time = 8,	                                               --奖励箱子
 				num = 1,
 				pos = {40},
 				delay = {0},
@@ -134,7 +134,7 @@ local waves = {
 				},
 			},
 			{
-				time = 16,	                                               --奖励箱子
+				time = 9,	                                               --奖励箱子
 				num = 1,
 				pos = {650},
 				delay = {0},
@@ -150,7 +150,7 @@ local waves = {
 				},
 			},
 			{
-				time = 18,	                                               --奖励箱子
+				time = 10,	                                               --奖励箱子
 				num = 1,
 				pos = {300},
 				delay = {0},
@@ -166,7 +166,7 @@ local waves = {
 				},
 			},
 			{
-				time = 20,	                                               --奖励箱子
+				time = 11,	                                               --奖励箱子
 				num = 1,
 				pos = {300},
 				delay = {0},
@@ -189,12 +189,12 @@ local waves = {
 
 
 
---enemy的关卡配置                               黄金镶嵌    满级狙击枪10星630伤害   1枪  1500         dps大于等于5
+--enemy的关卡配置                               黄金镶嵌    满级狙击枪10星630伤害   1枪  1500         dps大于等于7
 local enemys = {
 	
 
 	--狙击兵      --type = "juji",
-	{id=4,image="jujib",demage=30,hp=6000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
+	{id=4,image="jujib",demage=42,hp=6000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
 	weak1=2},                                                           
 
 	--导弹兵      --type = "dao",
@@ -202,21 +202,27 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=1,
+	{id=6,image="daodan",demage=35,hp=1,
 	weak1=1},	
 
 	--医疗兵      type = "yiliao",
-	{id=10,image="yiliaob",demage=20,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
-	weak1=2}, 
+	{id=10,image="yiliaob",demage=35,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
+
+	--越野车       type = "jipu" ,
+	{id=12,image="yyc",demage=0,hp=6000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	weak1=2,    award = 60},
 
 	-- 金武箱子奖励  type = "awardSan",
 	{id=20,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 
 
 	--烟雾导弹           type = "dao_wu",
-	{id=22,image="daodan03",demage=20,hp=1, weak1=1},
+	{id=22,image="daodan03",demage=30,hp=1, weak1=1},
 
-	--BOSS铁球
-	{id=24,image="tieqiu",demage= 100,hp=9000, weak1=1},
+	--大黑导弹           type = "missile",
+	{id=23,image="daodan02",demage=200,hp=1, weak1=1},
+
+
 
 }
 
@@ -225,16 +231,17 @@ local bosses = {
 		image = "boss01_2", --图片名字
 		award = 10000,                   --boss产出金币数量
 		hp = 70000,
-		demage = 4,
-		fireRate = 0,                 --0就不普通攻击了
-		fireCd = 5,  		
+		demage = 5,
+		fireRate = 120,                  --0就不普通攻击了
+		fireCd = 3,  		
 		walkRate = 60,
 		walkCd = 1,         --移动cd	
 		wudiTime = 5 , 	
-		weak1 = 2,					--手  弱点伤害倍数
-		weak2 = 2,					--腹  弱点伤害倍数
-		weak3 = 2,					--头  弱点伤害倍数
-
+		weak1 = 1.1,					--手  弱点伤害倍数
+		weak2 = 1.1,					--腹  弱点伤害倍数
+		weak3 = 1.1,					--头  弱点伤害倍数
+		saoFireOffset = 0.1, 		--扫射时间间隔
+		saoFireTimes = 8, 			--一次扫射10下
 		skilltrigger = {   			   --技能触发(可以同时)
 
 			-- moveLeftFire = {
@@ -253,7 +260,7 @@ local bosses = {
 			saoShe = { 0.85, 0.65, 0.45, 0.25 , 0.05,   --调用普通攻击的伤害  扫射
 			}, 
 
-			daoDan1 = { 0.99, 0.80, 0.60, 0.40, 0.20,     --两发导弹
+			daoDan1 = { 0.99, 0.80, 0.60, 0.40, 0.20,     --大黑导弹
 			},
 
 
@@ -282,8 +289,8 @@ local bosses = {
 		},
 		
 		daoDan1 = {
-		    id = 22,                                 --boss导弹
-			type = "dao_wu",  
+		    id = 23,                                 --boss大黑导弹
+			type = "missile", 
 			timeOffset = 0.06,                        --导弹间隔时间
             flyTime = 5.0,                           --导弹飞到脸前的时间 
             srcPoses = {
@@ -335,21 +342,25 @@ local bosses = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,              --回血百分比
+					skillValue = 0.1,              --回血百分比
 					id = 10,
 				},
 			},
 			{
 				time = 0,
 				num = 1,
-				delay = {0.5,},
-				pos = {660,},
+				pos = {500},
+				delay = {0},                            -- 吉普车
 				property = {
-					placeName = "place11",
-					id = 5,
-					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					placeName = "place21",
+					type = "jipu" ,
+					id = 12,
+					missileId = 22,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					flyTime = 4.0,                           --导弹飞到脸前的时间
+					startState = "enterright",          --从右面进来
+					lastTime = 60.0,		--持续时间			
 				},
 			},
 		},
@@ -394,21 +405,25 @@ local bosses = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,              --回血百分比
+					skillValue = 0.1,              --回血百分比
 					id = 10,
 				},
 			},
 			{
 				time = 0,
 				num = 1,
-				delay = {0.5,},
-				pos = {660,},
+				pos = {500},
+				delay = {0},                            -- 吉普车
 				property = {
-					placeName = "place11",
-					id = 5,
-					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					placeName = "place21",
+					type = "jipu" ,
+					id = 12,
+					missileId = 22,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					flyTime = 4.0,                           --导弹飞到脸前的时间
+					startState = "enterright",          --从右面进来
+					lastTime = 60.0,		--持续时间			
 				},
 			},
 		},
@@ -453,21 +468,25 @@ local bosses = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,              --回血百分比
+					skillValue = 1,              --回血百分比
 					id = 10,
 				},
 			},
 			{
 				time = 0,
 				num = 1,
-				delay = {0.5,},
-				pos = {660,},
+				pos = {500},
+				delay = {0},                            -- 吉普车
 				property = {
-					placeName = "place11",
-					id = 5,
-					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					placeName = "place21",
+					type = "jipu" ,
+					id = 12,
+					missileId = 22,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(0,0),},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					flyTime = 4.0,                           --导弹飞到脸前的时间
+					startState = "enterright",          --从右面进来
+					lastTime = 60.0,		--持续时间			
 				},
 			},
 		},

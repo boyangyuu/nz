@@ -54,7 +54,6 @@ Hero.HP_STATE_EVENT             = "HP_STATE_EVENT"
 
 function Hero:ctor(properties)
     --instance
-    self.fightInlay = md:createInstance("FightInlay")
     Hero.super.ctor(self, properties)
     
     --init
@@ -205,7 +204,8 @@ end
 
 --镶嵌相关
 function Hero:getFightInlay()
-    return self.fightInlay
+    local fightInlay = md:getInstance("FightInlay")    
+    return fightInlay
 end
 
 function Hero:getDemage()
@@ -218,7 +218,8 @@ function Hero:getDemage()
     end
     
     --inlay
-    local scale, isInlayed = self.fightInlay:getInlayedValue("bullet")
+    local fightInlay = self:getFightInlay()
+    local scale, isInlayed = fightInlay:getInlayedValue("bullet")
     if isInlayed then
         value = baseDemage + baseDemage * scale
     else
@@ -244,7 +245,8 @@ function Hero:getMaxHp()
     local kMaxHp = define.kHeroBaseHp 
     local baseMaxHp = Hero.super.getMaxHp(self)
     local valueMaxHp = 0.0
-    local value, isInlayed = self.fightInlay:getInlayedValue("blood")
+    local fightInlay = self:getFightInlay()
+    local value, isInlayed = fightInlay:getInlayedValue("blood")
     if isInlayed then 
         valueMaxHp = kMaxHp + kMaxHp * value
     else
@@ -260,9 +262,6 @@ end
 
 function Hero:decreaseHp(hp)
     if self:isDead() then return end
-    if self:getIsPause() then 
-        return 
-    end
 
     local defence = md:getInstance("Defence")
     local robot   = md:getInstance("Robot")
@@ -293,14 +292,6 @@ function Hero:getIsLessHp()
     return self.isLessHp
 end
 
-function Hero:getIsPause()
-    return self.isPause or false
-end
-
-function Hero:setIsPause(isPause)
-    self.isPause = isPause
-end
-
 function Hero:isHelpHp(demage)
     if self:isDead() then return false end
     local defence   = md:getInstance("Defence")
@@ -319,13 +310,14 @@ end
 
 --如果有盾 则 return true
 function Hero:helpFullHp()
-    --暂停
+    --is helped
     if self.isHelped then return end 
     self.isHelped = true
-    self.isPause = true
+
+    --pause
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
-    fight:stopFire()
+    fight:pauseFight(true)
 
     --pop
     ui:showPopup("commonPopup",
@@ -343,19 +335,12 @@ function Hero:showTuhao()
 end
 
 function Hero:onBuyFullHp()
-    --clear pause
-    self.isPause = false
-
     print("立即回复生命 function Hero:onBuyFullHp()")
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     fight:pauseFight(false)
 
     self:setFullHp()
-
-    --refresh 买礼包时候需要刷新
-    local fightProp = md:getInstance("FightProp")
-    fightProp:refreshData()
 
     --um
     local levelInfo = fight:getLevelInfo()    
@@ -365,9 +350,6 @@ function Hero:onBuyFullHp()
 end
 
 function Hero:onDenyFullHp()
-    --clear pause
-    self.isPause = false
-
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     fight:pauseFight(false)

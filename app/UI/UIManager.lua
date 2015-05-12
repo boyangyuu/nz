@@ -26,7 +26,6 @@ layerClasses["storyLayer"]           = import("..start.StoryLayer")
 layerClasses["DailyLoginLayer"]      = import("..dailyLogin.DailyLoginLayer")
 
 --popup
-layerClasses["FightResultPopup"] 	 = import("..fightResult.FightResultPopup")
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
@@ -34,8 +33,7 @@ layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
 layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiModeLayer"]        = import("..jujiMode.JujiModeLayer")
 layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
-
--- 关于Popup
+layerClasses["GunHelpLayer"]         = import("..fight.Gun.GunHelpLayer")
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 
 -- giftBag

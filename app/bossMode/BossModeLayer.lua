@@ -170,12 +170,7 @@ function BossModeLayer:refreshContent()
 			if event.name == 'began' then
 				return true
 			elseif event.name == 'ended' then
-				self.bossModeModel = md:getInstance("BossModeModel")
-				local info = self.bossModeModel:getChapterModel(self.choseChapter,i)
-				local msg = "此波奖励武器零件，手雷"..info["lei"].."个，药包"..info["healthBag"].."个，"..info["money"].."金币"
-				ui:showPopup("commonPopup",
-				 {type = "style1",content = msg},
-				 {opacity = 0})
+				self:onClickBtnAward(i)
 			end
 		end)
     end
@@ -212,7 +207,24 @@ function BossModeLayer:refreshContent()
     	lingjianImg:setScale(1.2)
     	addChildCenter(lingjianImg,v)
     end
+end
 
+function BossModeLayer:onClickBtnAward(i)
+	self.bossModeModel = md:getInstance("BossModeModel")
+	local awardsTable = self.bossModeModel:getChapterModel(self.choseChapter,i)
+	local reward = {}
+	for i=1,#awardsTable do
+		local award = awardsTable[i]
+		for k,v in pairs(award) do
+			reward[k] = v
+		end
+	end
+	local bujianName = {"枪柄部件", "枪口部件", "枪匣部件", "枪托部件", "枪身部件"}
+	local msg = "奖励：".. bujianName[i] .. "x1，手雷x"..reward["lei"] .."，药包x"..reward["healthBag"].."，金币x"..reward["money"]
+	
+	ui:showPopup("commonPopup",
+	 {type = "style1",content = msg},
+	 {opacity = 0})
 end
 
 function BossModeLayer:onClickBtnClose()
@@ -239,7 +251,6 @@ function BossModeLayer:onClickBtnStart()
 			 {opacity = 100})
 		return
 	end
-
 	local fightData = {groupId = 50, levelId = 1, 
 		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})

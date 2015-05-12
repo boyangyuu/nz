@@ -105,7 +105,7 @@ function MyApp:createGameStateFile()
                         },
                         weaponed = {
                                 bag1 =  {
-                                        weaponid   = 9,
+                                        weaponid   = 1,
                                         },
                                 bag2 =  {
                                         weaponid   = 2,
@@ -134,7 +134,7 @@ function MyApp:createGameStateFile()
                         lei = {num = 10},
                         jijia = {num = 0},
                         goldweapon = {num = 0},
-                        hpBag = {num = 2},
+                        hpBag = {num = 12},
             },
        
             weaponsuipian = {},

@@ -33,6 +33,7 @@ Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
+    self.fightData = nil
 end
 
 function Fight:beginFight()
@@ -40,7 +41,7 @@ function Fight:beginFight()
     self:refreshUm()
 
     --dialog
-    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 0.4)    
+    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 2.0)    
 end
 
 function Fight:refreshData(fightData)
@@ -51,22 +52,24 @@ function Fight:refreshData(fightData)
     --clear   
     self.result = nil
     self.resultData = {}
-    self.isPause = false     
+    self.isPause = false  
+    self.fightData = fightData   
     md:createInstance("FightMode")
     md:createInstance("FightConfigs")  
     md:createInstance("Map") 
     md:createInstance("EnemyManager")
+    md:createInstance("FightProp")
     
     --init instance
     local isContinue = fightData["isContinue"]
     if isContinue then return end
-
-    md:createInstance("Hero")
+    
     md:createInstance("FightInlay") 
+    md:createInstance("Hero")
     md:createInstance("Defence")    
     md:createInstance("Robot")     
 
-    self.hero       = md:createInstance("Hero")  --todo改为refreash Instance
+    self.hero       = md:getInstance("Hero") 
     self.inlay      = self.hero:getFightInlay()
     self.goldValue  = 0.0
 end
@@ -118,7 +121,10 @@ end
 
 function Fight:startFight()
     self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-    self.inlay:checkNativeGold()
+    if not self.fightData["isContinue"] then 
+        print("function Fight:startFight()")
+        self.inlay:checkNativeGold()    
+    end
 
     --check ju
     self:checkJuContorlType()
@@ -161,12 +167,13 @@ function Fight:endFightFail()
     self:pauseFight(true)
     self.inlayModel:removeAllInlay()
     local fightProp = md:getInstance("FightProp")
-    ui:showPopup("FightResultFailPopup",{},{anim = false}) 
+    ui:showPopup("FightResultFailPopup",{},{animName = "normal"}) 
     self:clearFightData()
 end
 
 function Fight:startFightResult()
-    ui:showPopup("FightResultPopup",{},{anim = false})
+    local fightDescModel = md:getInstance("FightDescModel")
+    fightDescModel:dispatchEvent({name = fightDescModel.SUCCESS_ANIM_EVENT})
 end
 
 function Fight:willWin(time)
@@ -239,16 +246,17 @@ function Fight:equipReliveAward()
     --jijia
     local robot = md:getInstance("Robot")
     robot:startRobot(define.kRobotTimeRelieve)
-
-    --refresh
-    local fightProp = md:getInstance("FightProp")
-    fightProp:refreshData()
 end
 
 function Fight:pauseFight(isPause)
     self.isPause = isPause
     self:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, 
         isPause = self.isPause})
+
+    --fire
+    if isPause then 
+        self:stopFire() 
+    end
 end
 
 function Fight:isPauseFight()

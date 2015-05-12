@@ -87,7 +87,7 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-           ui:showPopup("AboutPopup",{popupName = "bangzhu"},{anim = false})
+           ui:showPopup("AboutPopup",{popupName = "bangzhu"},{animName = "normal"})
         end
     end)
 

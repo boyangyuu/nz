@@ -168,7 +168,6 @@ end
 
 function Actor:setFullHp()
     self.hp_ = self:getMaxHp()
-    -- print("function Actor:setFullHp()self.hp_ ", self.hp_ )
     self:dispatchEvent({name = Actor.HP_INCREASE_EVENT})
 end
 

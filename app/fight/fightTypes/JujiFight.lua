@@ -11,12 +11,24 @@ function JujiFight:ctor(properties)
 end
 
 function JujiFight:startFightResult()
-	print("function JujiFight:startFightResult()")
-	local resultData = self:getResultData()
-	ui:changeLayer("FightPlayer", {fightData = resultData})	   
-
 	--save
 	self:passLevel() 
+
+	--closeFunc
+	local function closeFunc()
+		local resultData = self:getResultData()
+	    ui:changeLayer("FightPlayer",{fightData = resultData})
+	end
+	
+	--desc
+    local fightDescModel = md:getInstance("FightDescModel")
+    local data = {
+	    name         = fightDescModel.JUJIGIFT_ANIM_EVENT,
+    	levelIndex   = self:getLevelId() + 1,
+    	waveIndex    = self.passLevelNum,
+    	closeFunc    = closeFunc,
+	}
+    fightDescModel:dispatchEvent(data)	
 end
 
 function JujiFight:getResultData()

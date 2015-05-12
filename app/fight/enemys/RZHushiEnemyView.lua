@@ -235,5 +235,8 @@ function RZHushiEnemyView:animationEvent(armatureBack,movementType,movementID)
 end
 
 
+function RZHushiEnemyView:isBeBuff()
+    return false
+end
 
 return RZHushiEnemyView

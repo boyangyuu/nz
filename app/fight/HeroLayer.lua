@@ -5,11 +5,6 @@
 
 ]]
 
---import model
-local scheduler = require("framework.scheduler")
-local Actor 	= import(".Actor")
-local Hero 		= import(".Hero")
-
 --import view
 local DefenceView = import(".skills.DefenceView")
 local RobotView = import(".skills.RobotView")
@@ -21,15 +16,19 @@ end)
 
 function HeroLayer:ctor(properties)
 	--instance
-	self.hero 	= md:getInstance("Hero")
-	self.guide 	= md:getInstance("Guide")
-	self.inlay 	= md:getInstance("FightInlay")
+	self.hero 	 = md:getInstance("Hero")
+	self.guide 	 = md:getInstance("Guide")
+	self.inlay 	 = md:getInstance("FightInlay")
 	self.defence = md:getInstance("Defence")
-	self.keepKillPercent = 100
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight   = fightFactory:getFight()	
 
 	--events
 	cc.EventProxy.new(self.hero, self)
-		:addEventListener(Hero.ENEMY_KILL_ENEMY_EVENT		, handler(self, self.killEnmeyGold))		
+		:addEventListener(self.hero.ENEMY_KILL_ENEMY_EVENT	, handler(self, self.killEnmeyGold))		
+	cc.EventProxy.new(self.fight, self)
+		:addEventListener(self.fight.PAUSE_SWITCH_EVENT		, handler(self, self.onFightPause))		
+
 	self:loadCCS()
 	self:initUI()
 	self:initData()
@@ -103,17 +102,8 @@ function HeroLayer:killEnmeyGold(event)
 	end
 end
 
-function HeroLayer:updateHp(event)
-	if self.hpUpdateHandler then 
-		scheduler.unscheduleGlobal(self.hpUpdateHandler)
-		self.hpUpdateHandler = nil
-	end
-
+function HeroLayer:updateHp()
 	local function updateHpFunc()
-		--ispause
-		local isPause = self.hero:getIsPause()
-		if isPause then return end
-
 		local value = 0.0
 		local scale, isInlayed = self.inlay:getInlayedValue("helper") 
 		local maxHp = self.hero:getMaxHp()
@@ -124,7 +114,6 @@ function HeroLayer:updateHp(event)
 			value = define.kHeroHelper
 		end
 		if self.hero:isDead() then 
-			
 			return
 		end
 
@@ -135,16 +124,21 @@ function HeroLayer:updateHp(event)
 		self.hero:increaseHp(value)
 
 	end
-	self.hpUpdateHandler = scheduler.scheduleGlobal(updateHpFunc, 1.0)
+	self.hpUpdateHandler = self:schedule(updateHpFunc, 1.0)
 end
 
+function HeroLayer:onFightPause(event)
+	if event.isPause then 
+		print("function HeroLayer:onFightPause(event)")
+		transition.pauseTarget(self)
+	else
+		print("function HeroLayer:onFightResume(event)")
+		transition.resumeTarget(self)	
+	end	
+end
 
 function HeroLayer:onCleanup()
-	print("function HeroLayer:onCleanup()")
-	if self.hpUpdateHandler then
-		scheduler.unscheduleGlobal(self.hpUpdateHandler)
-		self.hpUpdateHandler = nil
-	end
+	
 end
 
 function HeroLayer:onEnter()

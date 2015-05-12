@@ -70,7 +70,7 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:onClickBtnStart()
-	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
+	local fightData = { groupId = 60,levelId = 31, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
 	ui:closePopup("JujiModeLayer")
 end
@@ -96,8 +96,10 @@ function JujiModeLayer:onClickBtnReward()
 end
 
 function JujiModeLayer:refreshListView()
+	--net
 	self:checkNetWork()
 
+	--list
     for i=1, 20 do
         local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})
         local item = self.listViewPlayer:newItem()
