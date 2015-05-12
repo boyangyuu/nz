@@ -3,7 +3,7 @@ local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
 local className = "com/hgtt/com/IAPControl"
 
-local sig = "(Ljava/lang/String;II)V"
+local sig = "(Ljava/lang/String;Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
 	self.iapName = IAPsdk:setIapName()
@@ -115,7 +115,7 @@ end
 
 function IAPsdk:pay(name)
 	-- print(name)
-	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
+	local args = {self.config[name],name, handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	if isFree or self.iapName == nil then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")

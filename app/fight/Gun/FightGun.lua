@@ -22,7 +22,7 @@ function FightGun:showGunIntro(gunData) -- showEnemyIntro
 
 	local function callfuncStart()
 		local fightFactory = md:getInstance("FightFactory")
-    local fight = fightFactory:getFight()
+	    local fight = fightFactory:getFight()
 		fight:pauseFight(true)
 	    local dialog = md:getInstance("DialogModel")
 	    dialog:check("award",  callfuncDialogEnd)   

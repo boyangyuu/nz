@@ -40,8 +40,10 @@ function LevelFight:waveUpdate(nextWaveIndex, waveType)
         fightDescModel:bossShow()
     elseif waveType == "award" then  
         fightDescModel:goldShow()
-    else 
+    elseif waveType == "normalWave" then 
         fightDescModel:waveStart(nextWaveIndex)
+    else
+        assert(waveType, "waveType is nil")
     end    
 end
 

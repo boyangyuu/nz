@@ -70,7 +70,7 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:onClickBtnStart()
-	local fightData = { groupId = 60,levelId = 31, fightType = "jujiFight"}  --无限狙击
+	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
 	ui:closePopup("JujiModeLayer")
 end

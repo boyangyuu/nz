@@ -1,4 +1,3 @@
-local Color_BLACK = cc.c3b(0, 0, 0)
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)

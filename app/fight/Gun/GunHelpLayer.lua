@@ -8,8 +8,6 @@ function GunHelpLayer:ctor(properties)
 
     cc.EventProxy.new(self.fightGun, self)
         :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
-    
-    self:setTouchSwallowEnabled(false)
     self:loadCCS()
     self:onShow()
 end

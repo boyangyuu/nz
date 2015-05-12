@@ -72,6 +72,7 @@ function Fight:refreshData(fightData)
     self.hero       = md:getInstance("Hero") 
     self.inlay      = self.hero:getFightInlay()
     self.goldValue  = 0.0
+    self.relivedTimes = 0
 end
 
 function Fight:refreshUm()
@@ -165,8 +166,6 @@ end
 function Fight:endFightFail()
     self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
     self:pauseFight(true)
-    self.inlayModel:removeAllInlay()
-    local fightProp = md:getInstance("FightProp")
     ui:showPopup("FightResultFailPopup",{},{animName = "normal"}) 
     self:clearFightData()
 end
@@ -236,6 +235,19 @@ function Fight:doRelive()
     --relive
     self:dispatchEvent({name = Fight.FIGHT_RELIVE_EVENT})
     self:pauseFight(false)
+
+    self.relivedTimes = self.relivedTimes + 1
+end
+
+function Fight:getRelivedTimes()
+    return self.relivedTimes
+end
+
+function Fight:getReliveCost()
+    local times = self:getRelivedTimes()
+    local costs = define.kLevelReliveCosts
+    local maxCost = costs[#costs]
+    return costs[times + 1] or maxCost
 end
 
 function Fight:equipReliveAward()
@@ -252,6 +264,11 @@ function Fight:pauseFight(isPause)
     self.isPause = isPause
     self:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, 
         isPause = self.isPause})
+
+    --fire
+    if isPause then 
+        self:stopFire() 
+    end
 end
 
 function Fight:isPauseFight()
@@ -291,12 +308,6 @@ function Fight:onDialogAfterEnd()
     else
         self:startFightResult()
     end
-end
-
-function Fight:checkDialogAward(callfunc)
-    local dialog = md:getInstance("DialogModel")
-    self:pauseFight(true)
-    dialog:check("award",  callfunc)    
 end
 
 ---- 关卡相关 ----
