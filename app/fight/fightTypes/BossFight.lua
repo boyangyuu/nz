@@ -21,7 +21,7 @@ function BossFight:startFightResult()
 	local waveIndex = map:getWaveIndex()
 	local curWaveIndex = waveIndex - 1 
 	local bossModeModel = md:getInstance("BossModeModel")
-	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex) 
+	local isNewProgress = bossModeModel:passWave(self.chapterIndex, curWaveIndex) 
 	
 	--desc
     local fightDescModel = md:getInstance("FightDescModel")
@@ -29,6 +29,7 @@ function BossFight:startFightResult()
 	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
+    	isAwardBujian= isNewProgress,
     	closeFunc    = closeFunc,
 	}
     fightDescModel:dispatchEvent(data)
@@ -60,7 +61,7 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 
 	local curWaveIndex = nextWaveIndex - 1
 	local bossModeModel = md:getInstance("BossModeModel")
-	bossModeModel:setBossModeWave(self.chapterIndex, curWaveIndex)
+	local isNewProgress = bossModeModel:passWave(self.chapterIndex, curWaveIndex) 
 
 	--desc
 	local function closeFunc()
@@ -76,8 +77,9 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
     	closeFunc    = closeFunc,
+    	isAwardBujian= isNewProgress,
 	}
-
+	dump(eventData, "eventData")
     fightDescModel:dispatchEvent(eventData)
     self:pauseFight(true)
 end
