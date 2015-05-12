@@ -252,6 +252,11 @@ function Fight:pauseFight(isPause)
     self.isPause = isPause
     self:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, 
         isPause = self.isPause})
+
+    --fire
+    if isPause then 
+        self:stopFire() 
+    end
 end
 
 function Fight:isPauseFight()
