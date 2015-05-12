@@ -11,11 +11,9 @@ end)
 ]]
 function WeaponNotifyLayer:ctor(properties)
 	self.weaponListModel = md:getInstance("WeaponListModel")
-
 	self.properties = properties
 	self:loadCCS()
 	self:initUI(properties)
-
 	self:setLocalZOrder(100)
 end
 

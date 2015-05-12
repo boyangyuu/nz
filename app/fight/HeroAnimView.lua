@@ -174,6 +174,7 @@ function HeroAnimView:playHpDecreaseEffect()
 end
 
 function HeroAnimView:playActiveGold(event)
+	print("function HeroAnimView:playActiveGold(event)")
     --黄武
     local armatureGold 	= ccs.Armature:create("hjwq")
     self:addChild(armatureGold) 

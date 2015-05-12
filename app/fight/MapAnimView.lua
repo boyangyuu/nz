@@ -54,7 +54,6 @@ function MapAnimView:playEffectShooted(event)
 		animName = "zd_hjqmz"
 	elseif isHitted then
 		animName = gunCfg["mzName"]
-		print("animName", animName)
 	else
 		animName = "zd_dimian"
 	end
@@ -90,7 +89,6 @@ function MapAnimView:addShootedArmature(animName, pos)
 	armature:getAnimation():setMovementEventCallFunc(
         	function ( armatureBack,movementType,movementId ) 
     	    	if movementType == ccs.MovementEventType.complete then
-    	    		print("armature:removeFromParent()")
     	    		armatureBack:removeFromParent()
     	    		armatureBack = nil
     	    		self.isShootAniming = false
@@ -202,7 +200,6 @@ function MapAnimView:playEffectGunSkill(event)
     	function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete then
 				armatureBack:removeFromParent()		
-				print("MapAnimView:playEffectGunSkill(event)")	
 	    	end 
     	end)	
 end

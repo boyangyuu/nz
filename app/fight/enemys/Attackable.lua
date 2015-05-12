@@ -47,16 +47,25 @@ function Attackable:initArmature()
 end
 
 function Attackable:initBuff()
-    local boneBuff = self.armature:getBone("buff")
-    if boneBuff == nil then return end
-    local posBone = boneBuff:convertToWorldSpace(cc.p(0, 0))
+	--buff1
+    local boneBuff1 = self.armature:getBone("buff01")
+    if boneBuff1 == nil then return end
+    local posBone = boneBuff1:convertToWorldSpace(cc.p(0, 0))
     local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
     local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+	self.buffNode1 = display.newNode()
+	self.buffNode1:setPosition(destpos)
+	self.armature:addChild(self.buffNode1, 1000) 
 
-
-	self.buffNode = display.newNode()
-	self.buffNode:setPosition(destpos)
-	self.armature:addChild(self.buffNode, 1000) 			
+	--buff2
+    local boneBuff2 = self.armature:getBone("buff02")
+    if boneBuff2 == nil then return end
+    posBone = boneBuff2:convertToWorldSpace(cc.p(0, 0))
+    posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+	self.buffNode2 = display.newNode()
+	self.buffNode2:setPosition(destpos)
+	self.armature:addChild(self.buffNode2, 1000) 			
 end
 
 function Attackable:setPause(event)
@@ -443,27 +452,32 @@ function Attackable:getEnemyModel()
 	return self.enemy
 end
 
-function Attackable:playBuff(buffName)	
-	if self.buffNode == nil then return end
+function Attackable:playBuff(buffName, buffPos)
+	assert (self:isBeBuff(), "no buff")	
+	if buffPos == nil then buffPos = "up" end	
+	if self.buffNode1 == nil then return end
 
-	local buffArmature = ccs.Armature:create(buffName)
-	self.buffNode:addChild(buffArmature)
+	local buffNode = buffPos == "up" and self.buffNode1 or self.buffNode2	local buffArmature = ccs.Armature:create(buffName)
+	buffNode:addChild(buffArmature)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
+	    	if movementType == ccs.MovementEventType.complete then
 				armatureBack:getAnimation():stop()		
 	    		armatureBack:removeSelf()
 	    		armatureBack = nil
 	    	end 
 		end)	
-	buffArmature:getAnimation():playWithIndex(0)
+	buffArmature:getAnimation():playWithIndex(0, -1, 0)
 end
 
-function Attackable:playBuffWithTime(buffName, time, endFunc)
-	if self.buffNode == nil then return end
+function Attackable:playBuffWithTime(buffName, time, endFunc, buffPos)
+	assert (self:isBeBuff(), "no buff")	
+	if buffPos == nil then buffPos = "up" end	
+	if self.buffNode1 == nil then return end
 
+	local buffNode = buffPos == "up" and self.buffNode1 or self.buffNode2
 	local buffArmature = ccs.Armature:create(buffName)
-	self.buffNode:addChild(buffArmature)
+	buffNode:addChild(buffArmature)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.loopComplete and
@@ -480,7 +494,7 @@ function Attackable:playBuffWithTime(buffName, time, endFunc)
 		buffArmature = nil
 		endFunc(self)
 	end
-	self.buffNode:performWithDelay(removeFunc, time)
+	buffNode:performWithDelay(removeFunc, time)
 end
 
 function Attackable:setIsFlying(isFlying)
@@ -501,7 +515,7 @@ function Attackable:tick(t)
 	assert("required method, must implement me")	
 end
 
-function Attackable:isBeBuff()
+function Attackable:isBeBuff(buffName)
 	return true
 end
 

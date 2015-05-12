@@ -1,12 +1,14 @@
 local FightDescModel = class("FightDescModel", cc.mvc.ModelBase)
 
 FightDescModel.START_ANIM_EVENT = "START_ANIM_EVENT"
+FightDescModel.SUCCESS_ANIM_EVENT = "SUCCESS_ANIM_EVENT"
 FightDescModel.BOSSSHOW_ANIM_EVENT = "BOSSSHOW_ANIM_EVENT"
 FightDescModel.WAVESTART_ANIM_EVENT = "WAVESTART_ANIM_EVENT"
 FightDescModel.ENEMYINTRO_ANIM_EVENT = "ENEMYINTRO_ANIM_EVENT"
 FightDescModel.GUNINTRO_ANIM_EVENT = "GUNINTRO_ANIM_EVENT"
 FightDescModel.GOLDWAVE_ANIM_EVENT = "GOLDWAVE_ANIM_EVENT"
 FightDescModel.BOSSGIFT_ANIM_EVENT = "BOSSGIFT_ANIM_EVENT"
+FightDescModel.JUJIGIFT_ANIM_EVENT = "JUJIGIFT_ANIM_EVENT"
 
 function FightDescModel:ctor(properties)
 	FightDescModel.super.ctor(self, properties)

@@ -65,7 +65,7 @@ function HomeBarLayer:mapPopUp(event)
         self:performWithDelay(delayPopUpLF, 1)
     elseif self.properties.fightData.fightType == "bossFight" then
         local chapterIndex = self.properties.fightData.chapterIndex
-        ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{anim = false})
+        ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
     end  
     self:initDailyLogin()    
 end

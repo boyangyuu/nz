@@ -411,10 +411,11 @@ function WeaponListLayer:refreshComment()
     local suipiannum = self.levelDetailModel:getSuiPianNum(self.weaponId)
     local needSuipianNum = self.levelDetailModel:getNeedSuipianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
-    if self.weaponRecord["partNum"] ~= nil and not isGot then
+    dump(self.weaponRecord["partNum"])
+    if self.weaponRecord["partNum"] ~= "null" and not isGot then
         self.suipiannum:setVisible(true)
         self.suipiannum:setString("DSLJ"..suipiannum.."/"..needSuipianNum)
-    elseif isGot then
+    else
         self.suipiannum:setVisible(false)
     end
 

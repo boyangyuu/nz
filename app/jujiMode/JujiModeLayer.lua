@@ -96,8 +96,10 @@ function JujiModeLayer:onClickBtnReward()
 end
 
 function JujiModeLayer:refreshListView()
+	--net
 	self:checkNetWork()
 
+	--list
     for i=1, 20 do
         local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})
         local item = self.listViewPlayer:newItem()

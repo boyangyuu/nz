@@ -186,4 +186,8 @@ function DDNormalEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
+function DDNormalEnemyView:isBeBuff()
+    return false
+end
+
 return DDNormalEnemyView

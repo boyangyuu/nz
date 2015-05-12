@@ -8,7 +8,7 @@ local MapView           = import(".MapView")
 local HeroLayer         = import(".HeroLayer")
 local InfoLayer         = import(".InfoLayer")
 local FightControlLayer = import(".FightControlLayer")
-local GunHelpLayer      = import(".Gun.GunHelpLayer") 
+-- local GunHelpLayer      = import(".Gun.GunHelpLayer") 
 local GunSkillLayer     = import(".Gun.GunSkillLayer")
 
 local KFightConfig = {
@@ -25,12 +25,13 @@ end)
 
 function FightPlayer:ctor(properties)
     --instance
+    -- dump(properties, "properties")    
     local fightFactory = md:getInstance("FightFactory")
     fightFactory:refreshData(properties.fightData)
     self.fight      = fightFactory:getFight()
-    -- dump(properties, "properties")
+
     self.fight:refreshData(properties.fightData)
-    self.fight:beginFight()
+    
    
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
@@ -38,6 +39,7 @@ function FightPlayer:ctor(properties)
     self.defence    = md:getInstance("Defence")
     self.inlay      = md:getInstance("FightInlay")
     self.fightProp  = md:getInstance("FightProp")
+    local propModel = md:getInstance("PropModel")
 
     --datas
     self.curGold    = 0
@@ -52,7 +54,7 @@ function FightPlayer:ctor(properties)
     self.gunView        = GunView.new()
     self.heroLayer      = HeroLayer.new()
     self.infoLayer      = InfoLayer.new() 
-    self.gunHelpLayer   = GunHelpLayer.new()
+    -- self.gunHelpLayer   = GunHelpLayer.new()
     self.gunSkillLayer  = GunSkillLayer.new()
     self.fightControlLayer = FightControlLayer.new()
     self.isControlVisible = true
@@ -75,8 +77,8 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.fight.FIGHT_RESUMEPOS_EVENT, handler(self, self.onResumePos))
         :addEventListener(self.fight.FIGHT_FIRE_PAUSE_EVENT, handler(self, self.stopFire))
        
-    cc.EventProxy.new(self.fightProp, self)
-        :addEventListener(self.fightProp.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
+    cc.EventProxy.new(propModel, self)
+        :addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
 
     cc.EventProxy.new(self.defence, self)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
@@ -193,7 +195,7 @@ function FightPlayer:initUI()
     local layerGunInfo = cc.uiloader:seekNodeByName(self, "layerGunInfo")
     layerGunInfo:addChild(self.gunSkillLayer)
     layerGunInfo:addChild(self.infoLayer)
-    layerGunInfo:addChild(self.gunHelpLayer)
+    -- layerGunInfo:addChild(self.gunHelpLayer)
     layerGunInfo:addChild(self.fightControlLayer)
     
     --load focus
@@ -944,6 +946,10 @@ function FightPlayer:initGuide4()
 end
 
 function FightPlayer:onEnter()
+    --start fight
+    self.fight:beginFight()    
+
+    --music
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
     local isju = self.fight:isJujiFight()

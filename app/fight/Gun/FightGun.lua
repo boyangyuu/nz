@@ -15,8 +15,9 @@ end
 function FightGun:showGunIntro(gunData) -- showEnemyIntro
 	assert(gunData, "gunData is nil")
 	local function callfuncDialogEnd()
-		self:dispatchEvent({name = FightGun.HELP_START_EVENT,
-			gunId = gunData.id})
+		ui:showPopup("GunHelpLayer",
+						 {gunId = gunData.id},
+						 {animName = "normal",  opacity = 0})
 	end
 
 	local function callfuncStart()
