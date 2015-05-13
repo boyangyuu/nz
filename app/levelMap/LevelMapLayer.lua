@@ -9,10 +9,10 @@ local smallTime, bigTime = 0.5, 0.5  --Amplify times and time of background
 
 function LevelMapLayer:ctor(properties)
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
-    self.levelMapModel = md:getInstance("LevelMapModel")
-    self.FightResultModel = md:getInstance("FightResultModel")
-    self.UserModel = md:getInstance("UserModel")
-    self.LevelDetailModel = md:getInstance("LevelDetailModel")
+    self.levelMapModel      = md:getInstance("LevelMapModel")
+    self.FightResultModel   = md:getInstance("FightResultModel")
+    self.UserModel          = md:getInstance("UserModel")
+    self.LevelDetailModel   = md:getInstance("LevelDetailModel")
     
     self.properties = properties
     self:initData()
@@ -59,6 +59,7 @@ function LevelMapLayer:popUpWeaponGift()
 
     --战斗失败返回世界地图
     if self.fightData["result"] == "fail" then isPopWeaponGift = true end
+    
     --开始菜单进世界地图，玩家等级 >= 4
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
@@ -71,7 +72,8 @@ function LevelMapLayer:refreshData()
 end
 
 function LevelMapLayer:popUpNextLevel()
-    if self.fightData["result"] == "fail" or self.fightData["result"] == nil then return end
+    local result = self.fightData["result"]
+    if result == "fail" or result == nil then return end
     local isPopupNext = false
     local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
 
@@ -85,7 +87,9 @@ function LevelMapLayer:popUpNextLevel()
     local guide = md:getInstance("Guide")
     local isGuidedWeapon = guide:isDone("weapon")
     local popupNext = isGuidedWeapon and true or false
-    if self.fightData["result"] == "win" and isCurLevel then isPopupNext = popupNext end
+    if result == "win" and isCurLevel then 
+        isPopupNext = popupNext 
+    end
     if isPopupNext then    
         local curGroup, curLevel = self.fightData["groupId"], 
             self.fightData["levelId"]
@@ -113,7 +117,6 @@ function LevelMapLayer:initDailyLogin()
     local guide = md:getInstance("Guide")
     local userModel = md:getInstance("UserModel")
     local isDone = userModel:getUserLevel() >= 4
-    -- if dailyLoginModel:checkPop() and isDone then
     if dailyLoginModel:checkPop()  then
         ui:showPopup("DailyLoginLayer", {})
         dailyLoginModel:donotPop()

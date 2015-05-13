@@ -163,12 +163,8 @@ function Fight:endFightWin()
     levelMapModel:levelPass(self.groupId, self.levelId)
 end
 
-function Fight:endFightFail()
-    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
-    self:pauseFight(true)
-    ui:showPopup("FightResultFailPopup",{},{animName = "normal"}) 
-    self:clearFightData()
-end
+
+
 
 function Fight:startFightResult()
     local fightDescModel = md:getInstance("FightDescModel")
@@ -238,12 +234,6 @@ function Fight:getRelivedTimes()
     return self.relivedTimes
 end
 
-function Fight:getReliveCost()
-    local times = self:getRelivedTimes()
-    local costs = define.kLevelReliveCosts
-    local maxCost = costs[#costs]
-    return costs[times + 1] or maxCost
-end
 
 function Fight:equipReliveAward()
     --gold
@@ -387,5 +377,20 @@ function Fight:isJujiFight()
     assert(false, "must implement")
 end
 
+function Fight:endFightFail()
+    assert(false, "must implement") 
+end
+
+function Fight:onReliveConfirm()
+   assert(false, "must implement") 
+end
+
+function Fight:onReliveDeny()
+    assert(false, "must implement")
+end
+
+function Fight:getReliveCost()
+    assert(false, "must implement")
+end
 
 return Fight
