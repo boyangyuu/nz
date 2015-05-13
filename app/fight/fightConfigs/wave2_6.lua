@@ -326,7 +326,7 @@ local enemys = {
 	{id=12,image="yyc",demage=0,hp=20000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
 	weak1=2,    award = 60},
 
-	--吉普车烟雾导弹          type = "dao_wu",
+	--吉普车烟雾导弹          missileType = "dao_wu",
 	{id=13,image="daodan03",demage=10,hp=1500, weak1=1}, 
 
 	--BOSS铁球

@@ -396,7 +396,7 @@ local waves = {
 					type = "taofan_qiu", 
 					placeName = "place4",
 					id = 4,
-					startState = "enterleft", --从屏幕左侧进入
+					startState = "enterleft", --从屏幕左侧进入  逃犯
 					data = {
 						direct = "right", --向右逃跑
 												
@@ -553,15 +553,6 @@ local enemys = {
 
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=5,hp=2500, weak1=2, weak4= 4,},
-
-                                                          
-	-- --导弹兵      --type = "dao",
-	-- {id=5,image="zpbing",demage=0,hp=8888,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
-	-- weak1=2},
-
- --    --导弹          --missileType = "daodan",
-	-- {id=6,image="daodan",demage=10,hp=150,
-	-- weak1=1},	
 
 
 
