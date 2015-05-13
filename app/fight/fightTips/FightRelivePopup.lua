@@ -1,7 +1,7 @@
 
 --[[--
 
-“地图效果”的视图
+“复活提示”的视图
 
 ]]
 
@@ -42,13 +42,13 @@ end
 function FightRelivePopup:onClickRelive()
 	print("function FightRelivePopup:onClickRelive()")
 	self.property["onReliveFunc"]()
-	self:close()
+	self:closePopup()
 end
 
 function FightRelivePopup:onClickGiveUp()
 	print("function FightRelivePopup:onClickGiveUp()")	
 	self.property["onGiveUpFunc"]()
-	self:close()
+	self:closePopup()
 end
 
 function FightRelivePopup:onShow()
@@ -66,7 +66,7 @@ function FightRelivePopup:onShow()
 	local function timeFunc()
 		remainTimes = remainTimes - 1
 		if remainTimes == 0 then 
-			self:onClickGiveUp()
+			-- self:onClickGiveUp()
 			return
 		end
 		labelTime:setString(remainTimes)
@@ -81,8 +81,8 @@ function FightRelivePopup:getReliveCost()
 	return fight:getReliveCost()
 end
 
-function FightRelivePopup:close()
-	ui:closePopup("FightRelivePopup")
+function FightRelivePopup:closePopup()
+	ui:closePopup("FightRelivePopup", {animName = "normal"})
 end
 
 return FightRelivePopup

@@ -15,7 +15,7 @@ end
 function FightGun:showGunIntro(gunData) -- showEnemyIntro
 	assert(gunData, "gunData is nil")
 	local function callfuncDialogEnd()
-		ui:showPopup("GunHelpLayer",
+		ui:showPopup("GunHelpPopup",
 						 {gunId = gunData.id},
 						 {animName = "normal",  opacity = 0})
 	end
@@ -35,6 +35,27 @@ function FightGun:changeHelpGun(id)
 	local hero = md:getInstance("Hero")
 	hero:changeTempGun(id)
 end
+
+function FightGun:buyGun(id)
+	local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()	
+	local isJuji = fight:isJujiFight()
+	local hero = md:getInstance("Hero")
+	local preferBag = hero:getPreferBagIndex()
+	local bagIndex = isJuji and 3 or preferBag
+
+	--buy
+	 local weaponListModel = md:getInstance("WeaponListModel")
+	 weaponListModel:buyWeapon(id)
+	
+	--equip in bag
+    weaponListModel:equipBag(id, bagIndex)	
+
+    --refresh hero
+    hero:initGuns()
+    hero:refreshGun()
+end
+
 
 function FightGun:playSkill(animName)
 	self:dispatchEvent({name = FightGun.GUN_SKILL_EVENT, animName = animName})

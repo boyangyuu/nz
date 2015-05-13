@@ -10,6 +10,7 @@ local Robot = class("Robot", cc.mvc.ModelBase)
 
 --events
 Robot.ROBOT_START_EVENT		 = "ROBOT_START_EVENT"
+Robot.GOLDROBOT_START_EVENT	 = "GOLDROBOT_START_EVENT"
 Robot.ROBOT_ENDTIME_EVENT	 = "ROBOT_ENDTIME_EVENT"
 Robot.ROBOT_BEHURTED_EVENT 	 = "ROBOT_BEHURTED_EVENT"
 Robot.ROBOT_FIRE_EVENT 		 = "ROBOT_FIRE_EVENT"
@@ -70,6 +71,37 @@ end
 
 function Robot:onHitted()
 	print("Robot is on hitted")
+end
+
+function Robot:startGoldRobot(time)
+	print("Robot:startGoldRobot()")
+    
+    --um
+    local fightFactory =     md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
+    local levelInfo = fight:getLevelInfo() 
+    assert(levelInfo, "levelInfo is nil") 
+    local umData = {}
+    umData[levelInfo] = "黄金机甲"
+    um:event("关卡道具使用", umData) 	
+
+	--data
+	self.isRoboting = true
+	
+	--visible
+	fight:dispatchEvent({name = fight.CONTROL_HIDE_EVENT})
+	fight:dispatchEvent({name = fight.INFO_HIDE_EVENT})
+
+	--show robot
+	self:dispatchEvent({name = Robot.GOLDROBOT_START_EVENT})
+
+	--cancell dun
+	local defence = md:getInstance("Defence")
+	defence:endDefence()
+
+	--sch endRobot
+	local time = time or 100000
+	scheduler.performWithDelayGlobal(handler(self, self.endRobot), time) 
 end
 
 function Robot:startRobot(time)

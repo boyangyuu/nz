@@ -118,6 +118,7 @@ function FightResultFailPopup:payReliveDone()
     fight:doRelive()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
+    ui:closePopup("FightResultFailPopup")
 end
 
 function FightResultFailPopup:initGuide()

@@ -39,7 +39,6 @@ function MapView:ctor()
 	self.mapModel 		= md:getInstance("Map")
 	self.missileNum     = 0
 	self.cacheEnemys    = {}
-	self.isPause 		= false
 	self.isZooming 		= false
 	self.fightDescModel = md:getInstance("FightDescModel")
 	self.enemyM         = md:getInstance("EnemyManager")
@@ -60,7 +59,8 @@ function MapView:ctor()
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT,	  handler(self, self.onThrowGrenade))	
 
     cc.EventProxy.new(self.fight, self)   
-        :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
+        :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.onStartFight))
+        :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.onFightPause))
 
 	cc.EventProxy.new(self.mapModel, self)
 		:addEventListener(self.mapModel.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
@@ -146,11 +146,20 @@ function MapView:loadPlaces()
     end       	
 end
 
-function MapView:startFight(event)
+function MapView:onStartFight(event)
 	local fightModel = md:getInstance("FightMode")
 	local modeConfig = fightModel:getModeConfig()
 	self.fightDescModel:start(modeConfig.type)
 	self:performWithDelay(handler(self, self.updateEnemys), 3.0)
+end
+
+function MapView:onFightPause(event)
+	local isPause = event.isPause
+	if isPause then 
+		transition.pauseTarget(self)
+	else
+		transition.resumeTarget(self)
+	end
 end
 
 function MapView:updateEnemys()
@@ -175,6 +184,13 @@ function MapView:updateEnemys()
 	if wave.gunData then  
 		local fightGun = md:getInstance("FightGun")
 		fightGun:showGunIntro(wave.gunData)
+	end
+
+	--adviseData
+	if wave.adviseData then  
+		ui:showPopup("FightAdvisePopup", 
+			wave.adviseData, 
+			{animName = "scale"})
 	end
 
 	--addEnemys

@@ -10,7 +10,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
-Fight.PAUSE_SWITCH_EVENT   = "PAUSE_SWITCH_EVENT"
+-- Fight.PAUSE_SWITCH_EVENT   = "PAUSE_SWITCH_EVENT"
 
 Fight.FIGHT_START_EVENT      = "FIGHT_START_EVENT"
 Fight.FIGHT_WIN_EVENT        = "FIGHT_WIN_EVENT"
@@ -220,19 +220,14 @@ function Fight:doRelive()
     local umData = {}
     umData[levelInfo] = "复活"
     um:event("关卡道具使用", umData)
-
-    --relive
-    ui:closePopup("FightResultFailPopup")
-    self.hero:doRelive()
-    
+  
     --clear
     self:clearFightData()
-
     self.result = nil
-    
-    self:equipReliveAward()
 
     --relive
+    self.hero:doRelive()
+    self:equipReliveAward()
     self:dispatchEvent({name = Fight.FIGHT_RELIVE_EVENT})
     self:pauseFight(false)
 
