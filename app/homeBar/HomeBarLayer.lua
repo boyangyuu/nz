@@ -19,8 +19,6 @@ function HomeBarLayer:ctor(properties)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
-    cc.EventProxy.new(ui, self)
-        :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.mapPopUp))
     self.properties = properties
     self.fightData  = properties["fightData"]
 
@@ -32,53 +30,6 @@ function HomeBarLayer:ctor(properties)
 
     self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
-end
-
-function HomeBarLayer:popUpWeaponGift()
-    local buyModel = md:getInstance("BuyModel")
-    local isNotBought = buyModel:checkBought("weaponGiftBag") == false
-    if self.properties.popWeaponGift and isNotBought then
-        buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
-    end
-end
-
-function HomeBarLayer:refreshData()
-    self.levelMapModel:hideGiftBagIcon()
-end
-
-function HomeBarLayer:popUpNextLevel()
-    if self.properties.isPopupNext then    
-        local curGroup, curLevel = self.fightData["groupId"], 
-            self.fightData["levelId"]
-        local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
-        ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
-    end
-end
-
-function HomeBarLayer:mapPopUp(event)
-    if self.properties.fightData.fightType == "levelFight" then 
-        function delayPopUpLF()
-            self:popUpNextLevel()
-            self:popUpWeaponGift()   
-        end
-        self:performWithDelay(delayPopUpLF, 1)
-    elseif self.properties.fightData.fightType == "bossFight" then
-        local chapterIndex = self.properties.fightData.chapterIndex
-        ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
-    end  
-    self:initDailyLogin()    
-end
-
-function HomeBarLayer:initDailyLogin()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-    local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 4
-    -- if dailyLoginModel:checkPop() and isDone then
-    if dailyLoginModel:checkPop()  then
-        ui:showPopup("DailyLoginLayer", {})
-        dailyLoginModel:donotPop()
-    end
 end
 
 function HomeBarLayer:loadCCS()
@@ -140,14 +91,7 @@ function HomeBarLayer:initHomeLayer()
     self.commonlayers["WeaponListLayer"] = WeaponListLayer.new()
     self.commonlayers["inlayLayer"] = InlayLayer.new()
     self.commonlayers["StoreLayer"] = StoreLayer.new()
-    local groupId, levelId = self.levelMapModel:getConfig()
-    if self.fightData["fightType"] == "bossFight" then
-        self.fightData["groupId"] = groupId
-    elseif self.fightData["fightType"] == "jujiFight" then
-        self.fightData["groupId"] = groupId
-    end
-
-    self.commonlayers["levelMapLayer"] = LevelMapLayer.new({groupId = self.fightData["groupId"]})
+    self.commonlayers["levelMapLayer"] = LevelMapLayer.new({fightData = self.fightData})
     for k,v in pairs(self.commonlayers) do
         v:setVisible(false)
         self.commonRootNode:addChild(v)

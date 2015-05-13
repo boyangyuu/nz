@@ -1,5 +1,3 @@
-
-
 local FightPausePopup = class("FightPausePopup", function( )
 	return display.newLayer()
 end)
@@ -45,13 +43,8 @@ function FightPausePopup:initButtons()
 	        local umData = {}
 	    	umData[levelInfo] = "中途退出"
 	    	um:event("关卡完成情况", umData)
-		    if fightType == "bossFight" then
-		        ui:changeLayer("HomeBarLayer",{fightData = fightData})
-	        elseif fightType == "jujiFight" then
-		        ui:changeLayer("HomeBarLayer",{fightData = fightData})
-	        else
-				ui:changeLayer("HomeBarLayer",{fightData = fightData})
-		    end
+	        ui:changeLayer("HomeBarLayer",{fightData = fightData})
+
 			print("中途退出")
 
 			--pauseModel

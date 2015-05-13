@@ -259,19 +259,26 @@ function LevelDetailLayer:onClickGoldWeapon()
 		self:equipGold()
 		self:startGame()
 	end
-	-- 保留，暂时不用
-	-- function deneyPopGoldGift()
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
-	-- end
- --    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
- --    	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
-	--      "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
-	
 
-    local umData = {}
-	umData[self.levelInfo] = "点击黄金武器"
-	um:event("关卡提示未镶嵌", umData)
+	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
+	if goldweaponNum > 0 then
+        self.inlayModel:equipAllInlays()
+        self:startGame()	
+	else
+		-- 保留，暂时不用
+		-- function deneyPopGoldGift()
+		    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
+		    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
+		-- end
+	 --    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
+	 --    	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
+		--      "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
+
+	    local umData = {}
+		umData[self.levelInfo] = "点击黄金武器"
+		um:event("关卡提示未镶嵌", umData)
+    end
+
 end
 
 function LevelDetailLayer:onClickBtnBibei()
