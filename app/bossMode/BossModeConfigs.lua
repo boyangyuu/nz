@@ -44,4 +44,8 @@ function BossModeConfigs.getConfig(chapterIndex)
 	return chapterConfig
 end
 
+function BossModeConfigs.getConfigs()
+	return BossConfigs
+end
+
 return BossModeConfigs

@@ -9,33 +9,119 @@ local smallTime, bigTime = 0.5, 0.5  --Amplify times and time of background
 
 function LevelMapLayer:ctor(properties)
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
-    self.LevelMapModel = md:getInstance("LevelMapModel")
-    self.FightResultModel = md:getInstance("FightResultModel")
-    self.UserModel = md:getInstance("UserModel")
-    self.LevelDetailModel = md:getInstance("LevelDetailModel")
+    self.levelMapModel      = md:getInstance("LevelMapModel")
+    self.FightResultModel   = md:getInstance("FightResultModel")
+    self.UserModel          = md:getInstance("UserModel")
+    self.LevelDetailModel   = md:getInstance("LevelDetailModel")
     
-    self:initData(properties)
+    self.properties = properties
+    self:initData()
     self:initChooseLayer()
     self:refreshLevelLayer(self.curGroupId)
 
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.initBgLayer))
-    cc.EventProxy.new(self.LevelMapModel, self)
+        :addEventListener(ui.LOAD_HIDE_EVENT, handler(self, self.mapPopUp))
+    cc.EventProxy.new(self.levelMapModel, self)
         :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.hideWeaponGiftBag))
 
     self:initGuide() 
 end
 
-function LevelMapLayer:initData(properties)
-    assert(properties.groupId, "properties.groupId is nil")
-    self.curGroupId = properties.groupId
+function LevelMapLayer:initData()
+    assert(self.properties.fightData, "self.properties.fightData is nil")
+    self.fightData = self.properties.fightData
+    assert(self.fightData.groupId, "self.fightData.groupId is nil")
+    assert(self.fightData.fightType, "self.fightData.fightType is nil")
+    local groupId, levelId = self.levelMapModel:getConfig()
+    if self.fightData.fightType == "bossFight" then
+        self.curGroupId = groupId
+    elseif self.fightData.fightType == "jujiFight" then
+        self.curGroupId = groupId
+    elseif groupId == 0 and levelId == 0 and fightType == "levelFight" then
+        self.curGroupId = groupId
+    else
+        self.curGroupId = self.fightData.groupId
+    end
     --userData
     self.preGroupId = 0
 
     --config
-    self.groupNum = self.LevelMapModel:getGroupNum()
+    self.groupNum = self.levelMapModel:getGroupNum()
 end
 
+function LevelMapLayer:popUpWeaponGift()
+    local buyModel = md:getInstance("BuyModel")
+    local isNotBought = buyModel:checkBought("weaponGiftBag") == false
+    local isPopWeaponGift = false
+    local userModel = md:getInstance("UserModel")
+    local isDone = userModel:getUserLevel() >= 4
+
+    --战斗失败返回世界地图
+    if self.fightData["result"] == "fail" then isPopWeaponGift = true end
+    
+    --开始菜单进世界地图，玩家等级 >= 4
+    if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
+    if isPopWeaponGift and isNotBought then
+        buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
+    end
+end
+
+function LevelMapLayer:refreshData()
+    self.levelMapModel:hideGiftBagIcon()
+end
+
+function LevelMapLayer:popUpNextLevel()
+    local result = self.fightData["result"]
+    if result == "fail" or result == nil then return end
+    local isPopupNext = false
+    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
+
+    --todo
+    if curLevel == 6 and curGroup < 10 then
+     curGroup = curGroup + 1
+    end
+    local isCurLevel = self.levelMapModel:isCurGroupAndLevel(curGroup, curLevel)
+
+    --check guide
+    local guide = md:getInstance("Guide")
+    local isGuidedWeapon = guide:isDone("weapon")
+    local popupNext = isGuidedWeapon and true or false
+    if result == "win" and isCurLevel then 
+        isPopupNext = popupNext 
+    end
+    if isPopupNext then    
+        local curGroup, curLevel = self.fightData["groupId"], 
+            self.fightData["levelId"]
+        local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+        ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
+    end
+end
+
+function LevelMapLayer:mapPopUp(event)
+    if self.properties.fightData.fightType == "levelFight" then 
+        function delayPopUpLF()
+            self:popUpNextLevel()
+            self:popUpWeaponGift()   
+        end
+        self:performWithDelay(delayPopUpLF, 1)
+    elseif self.properties.fightData.fightType == "bossFight" then
+        local chapterIndex = self.properties.fightData.chapterIndex
+        ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
+    end  
+    self:initDailyLogin()
+end
+
+function LevelMapLayer:initDailyLogin()
+    local dailyLoginModel = md:getInstance("DailyLoginModel")
+    local guide = md:getInstance("Guide")
+    local userModel = md:getInstance("UserModel")
+    local isDone = userModel:getUserLevel() >= 4
+    if dailyLoginModel:checkPop()  then
+        ui:showPopup("DailyLoginLayer", {})
+        dailyLoginModel:donotPop()
+    end
+end
 
 function LevelMapLayer:initBgLayer(event)
     -- bg starting animation
@@ -220,7 +306,7 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:refreshData()
-    self.LevelMapModel:hideGiftBagIcon()
+    self.levelMapModel:hideGiftBagIcon()
 end
 
 function LevelMapLayer:hideWeaponGiftBag(event)
@@ -239,8 +325,8 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local panelGray = {}
     -- local dian = {}
     local imgIcon = {}
-    local group,level = self.LevelMapModel:getConfig()
-    local groupInfo = self.LevelMapModel:getGroupInfo(self.curGroupId)
+    local group,level = self.levelMapModel:getConfig()
+    local groupInfo = self.levelMapModel:getGroupInfo(self.curGroupId)
 
     for k,v in pairs(groupInfo) do
         panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)

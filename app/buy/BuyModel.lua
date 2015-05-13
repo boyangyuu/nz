@@ -43,8 +43,10 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	if isGift then
         ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "shake"})
     else
+    	local tipsStr = buyData.tips or proInfo.getConfig(configId)
     	ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig(configId), callfuncCofirm = handler(self, self.iapPay)},
+			 {type = "style7", content = tipsStr, 
+			 callfuncCofirm = handler(self, self.iapPay)},
 			 {opacity = 0})
     end
 end
@@ -206,22 +208,6 @@ function BuyModel:buy_armedMecha( buydata )
 	local storeModel = md:getInstance("StoreModel")
 	--jijia*2
 	propModel:addProp("jijia",2)
-end
-
-function BuyModel:buy_unlockWeapon( buydata )
-	print("BuyModel:buy_unlockWeapon( buydata )")
-	local weaponListModel = md:getInstance("WeaponListModel")
-	weaponListModel:buyWeapon(buydata.weaponid)
-	ui:showPopup("WeaponNotifyLayer",
-     {type = "gun",weaponId = buydata.weaponid})
-
-end
-
-function BuyModel:buy_highgradeWeapon(buydata)
-	local weaponListModel = md:getInstance("WeaponListModel")
-	weaponListModel:buyWeapon(buydata.weaponid)
-	 ui:showPopup("WeaponNotifyLayer",
-     {type = "gun",weaponId = buydata.weaponid})
 end
 
 function BuyModel:buy_goldWeapon( buydata )

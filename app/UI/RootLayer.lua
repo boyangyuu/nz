@@ -26,6 +26,7 @@ function RootLayer:ctor()
     --event
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LAYER_CHANGE_EVENT, handler(self, self.switchLayer))
+        :addEventListener(ui.LAYER_PAUSE_EVENT, handler(self, self.onPauseSwitch))
 end
 
 function RootLayer:onClickListener(event)
@@ -34,6 +35,23 @@ function RootLayer:onClickListener(event)
     else
 
     end
+end
+
+function RootLayer:onPauseSwitch(event)
+    local isPause = event.isPause
+    -- if isPause then 
+    --     self:pause()
+    --     transition.pauseTarget(self)
+    -- else
+    --     self:resume()
+    --     transition.resumeTarget(self)
+    -- end  
+
+    -- if isPause then 
+    --     self:onExit()
+    -- else
+    --     self:onEnter()
+    -- end     
 end
 
 function RootLayer:initLoginLayer()

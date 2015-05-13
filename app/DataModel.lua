@@ -21,7 +21,7 @@ function DataModel:setNewData()
     --版本
     data.versionId = __versionId
 
-    --用户等级
+    -- 用户等级
     -- data.user = {level = 1, 
     -- fightedGroupId = 0, 
     -- fightedlevelId = 0}

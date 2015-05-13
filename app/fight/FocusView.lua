@@ -25,6 +25,7 @@ function FocusView:ctor(properties)
 	local robot = md:getInstance("Robot")
 	cc.EventProxy.new(robot, self)
 		:addEventListener(robot.ROBOT_START_EVENT	, handler(self, self.onShowRobot))
+		:addEventListener(robot.GOLDROBOT_START_EVENT, handler(self, self.onShowRobot))
 		:addEventListener(robot.ROBOT_ENDTIME_EVENT	, handler(self, self.onHideRobot))
 
 	local inlay = md:getInstance("FightInlay")

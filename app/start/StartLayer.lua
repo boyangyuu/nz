@@ -206,14 +206,11 @@ function StartLayer:onClickBegan()
         local groupId, levelId = levelMapModel:getConfig()
         -- print("groupId", groupId)
 
-        local userModel = md:getInstance("UserModel")
-        local isDone = userModel:getUserLevel() >= 4
         local fightData = {
             fightType = "levelFight",
             groupId = groupId,
         }
-        ui:changeLayer("HomeBarLayer",{fightData = fightData, popWeaponGift = isDone, 
-            loadingType = "home_first"})
+        ui:changeLayer("HomeBarLayer",{fightData = fightData,loadingType = "home_first"})
         --init daily login
         self:initDailyLogin() 
 

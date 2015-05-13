@@ -3,7 +3,7 @@ local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 
 local className = "com/hgtt/com/IAPControl"
 
-local sig = "(Ljava/lang/String;II)V"
+local sig = "(Ljava/lang/String;Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
 	self.iapName = IAPsdk:setIapName()
@@ -28,8 +28,7 @@ function IAPsdk:initConfigs()
 	self.config = {}
 	local config = self.config
 	-- assert(iapName, "iapName:")
-	if self.iapName == "mm" then
-		--移动商用计费代码 3月28日检查 无错误
+	if self.iapName == "mm" then --mm
 		--礼包
 		config["novicesBag"]       = "30000883682301"		--新手礼包
 		config["weaponGiftBag"]    = "30000883682317"		--武器礼包
@@ -40,17 +39,13 @@ function IAPsdk:initConfigs()
 		config["handGrenade"]      = "30000883682307"		--手雷
 		config["armedMecha"]       = "30000883682319"		--机甲
 		config["onceFull"]         = "30000883682320"		--一键满级
-		config["resurrection"]     = "30000883682321"	    --复活送黄武
-		config["highgradeWeapon"]  = "30000883682322"		--高级武器一把
+		config["resurrection"]     = "30000883682321"	    --复活送黄武 --todo
 		config["stone45"]          = "30000883682312"		--一堆宝石
 		config["stone120"]         = "30000883682313"		--一麻袋宝石
 		config["stone260"]         = "30000883682314"		--一箱子宝石
 		config["stone450"]         = "30000883682315"		--堆成山的宝石
-		config["unlockWeapon"] 	   = "30000883682323"       --武器购买
-
-	elseif self.iapName == 'andgame' then
-		--移动基地商用计费代码 
-		--礼包
+	
+	elseif self.iapName == 'andgame' then --基地
 		config["novicesBag"]       = "001"		--新手礼包1
 		config["weaponGiftBag"]    = "002"		--武器到礼包1
 		config["goldGiftBag"]      = "003"		--土豪金礼包1
@@ -64,11 +59,8 @@ function IAPsdk:initConfigs()
 		config["stone120"]         = "009"		--一麻袋宝石
 		config["stone260"]         = "010"		--一箱子宝石
 		config["stone450"]         = "011"		--堆成山的宝石
-		config["unlockWeapon"]     = "012"       --武器购买1
-		config["highgradeWeapon"]  = "013"		--高级武器一把1
 
-	elseif self.iapName == "unicom" then
-		--联通商用计费代码 3月28日检查 无错误
+	elseif self.iapName == "unicom" then --联通
 		--礼包
 		config["novicesBag"]       = "001"		--新手礼包1
 		config["weaponGiftBag"]    = "018"		--武器到礼包1
@@ -83,11 +75,8 @@ function IAPsdk:initConfigs()
 		config["stone120"]         = "013"		--一麻袋宝石
 		config["stone260"]         = "014"		--一箱子宝石
 		config["stone450"]         = "015"		--堆成山的宝石
-		config["unlockWeapon"]     = "024"       --武器购买1
-		config["highgradeWeapon"]  = "023"		--高级武器一把1
 
-	elseif self.iapName == "telecom" then
-		-- 电信外放计费代码 3月28日检查 无错误
+	elseif self.iapName == "telecom" then -- 电信
 		--礼包
 		config["novicesBag"]       = "5156701"		--新手礼包
 		config["weaponGiftBag"]    = "5156712"		--武器到礼包
@@ -102,8 +91,6 @@ function IAPsdk:initConfigs()
 		config["stone120"]         = "5128237"		--一麻袋宝石
 		config["stone260"]         = "5128238"		--一箱子宝石
 		config["stone450"]         = "5128239"		--堆成山的宝石
-		config["highgradeWeapon"]  = "5156717"		--高级武器一把
-		config["unlockWeapon"] 	   = "5156718"       --武器购买1
 	end
 end
 
@@ -115,7 +102,7 @@ end
 
 function IAPsdk:pay(name)
 	-- print(name)
-	local args = {self.config[name], handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
+	local args = {self.config[name],name, handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
 	if isFree or self.iapName == nil then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")
@@ -137,13 +124,13 @@ function IAPsdk:callbackFaild(result)
 
 end
 
-function IAPsdk:isMobileSimCard()
-    if self.iapName ~= 'unicom' and self.iapName ~= 'telecom' and self.iapName ~= 'unknown' then
-        return false, 6
-    else
-        return true, 1
-    end
-end
+-- function IAPsdk:isMobileSimCard()
+--     if self.iapName ~= 'unicom' and self.iapName ~= 'telecom' and self.iapName ~= 'unknown' then
+--         return false, 6
+--     else
+--         return true, 1
+--     end
+-- end
 
 return IAPsdk
 

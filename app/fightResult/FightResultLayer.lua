@@ -1,4 +1,3 @@
-local Color_BLACK = cc.c3b(0, 0, 0)
 local FightResultLayer = class("FightResultLayer", function()
 	return display.newLayer()
 end)
@@ -211,27 +210,7 @@ function FightResultLayer:initUI()
 end
 
 function FightResultLayer:onClickBtnNext()
-    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
-
-    --todo
-    if curLevel == 6 and curGroup < 4 then
-    	curGroup = curGroup + 1
-    end
-	local isCurLevel = self.levelMapModel:isCureGroupAndLevel(curGroup, curLevel)
-
-	--check guide
-	local guide = md:getInstance("Guide")
-	local isGuidedWeapon = guide:isDone("weapon")
-	local isPopupNext = isGuidedWeapon and true or false
-
-	if isCurLevel then
-		ui:changeLayer("HomeBarLayer",{fightData = self.fightData, isPopupNext = isPopupNext})
-	elseif curGroup == 0 then
-		ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
-	else
-		print("1-4.1 OR 通关")
-    	ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
-    end
+	 ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
 end
 
 function FightResultLayer:initUIContent()
@@ -396,7 +375,7 @@ function FightResultLayer:initGuide()
         groupId = "afterfight01",
         rect = self.btnback:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			ui:changeLayer("HomeBarLayer",{fightData = fightData, isPopupNext = isPopupNext})   
+			ui:changeLayer("HomeBarLayer",{fightData = fightData})
         end
      })    	
 end

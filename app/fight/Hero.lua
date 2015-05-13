@@ -58,12 +58,13 @@ function Hero:ctor(properties)
     
     --init
     self.bags = {}
-    self:initGuns()
+    self.isGun1 = false
     self.isReloading = false
     self.killCnt = 0
     self.killKeepCnt = 0
     self.killGoldIndex = 1
     self.isLessHp = false
+    self:initGuns()
 end
 
 --枪械相关
@@ -109,11 +110,15 @@ function Hero:changeGun()
     end
     print("change gun bagIndex", bagIndex)
     self:setGun(bagIndex)
-    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
-
+    -- self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
+    self:refreshGun()
     --refresh bulletNum
     local bulletNum = self.gun:getCurBulletNum()
     self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})
+end
+
+function Hero:refreshGun()
+    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT})
 end
 
 function Hero:changeTempGun(configid)
@@ -124,7 +129,8 @@ function Hero:changeTempGun(configid)
 
     --refresh
     self:setGun(bagIndex)
-    self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
+    -- self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
+    self:refreshGun()
     local bulletNum = self.gun:getCurBulletNum()
     self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})    
 
@@ -148,6 +154,11 @@ function Hero:setGun(bagIndex)
 
     --prefer
     self:setPreferBagIndex(bagIndex)
+end
+
+function Hero:getPreferBagIndex()
+    local isPreferBag1 = self:isPreferBag1()
+    return isPreferBag1 and 1 or 2
 end
 
 function Hero:getCooldown()

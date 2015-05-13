@@ -23,19 +23,16 @@ end
 function FightDescLayer:loadCCS()
 	local controlNode = cc.uiloader:load("res/CommonPopup/animLayer/animLayer_1.ExportJson")
     self:addChild(controlNode)
-    self:setVisible(false)
     self.animPanl = cc.uiloader:seekNodeByName(self, "animPanl")
 end
 
 function FightDescLayer:onFightStart(event)
-    self:setVisible(true)
     local armature = ccs.Armature:create("renwuks")
     armature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movementId ) 
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
-                self:setVisible(false)
             end
         end)
     addChildCenter(armature, self.animPanl)
@@ -53,14 +50,12 @@ function FightDescLayer:onFightStart(event)
 end
 
 function FightDescLayer:onFightSuccess(event)
-    self:setVisible(true)
     local armature = ccs.Armature:create("renwuwc")
     armature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movementId ) 
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
-                self:setVisible(false)
                 ui:changeLayer("FightResultLayer")
             end
         end)
@@ -70,14 +65,12 @@ end
 
 function FightDescLayer:onBossStart(event)
     self:setTouchSwallowEnabled(true)
-    self:setVisible(true)
     local armature = ccs.Armature:create("qiangdicx")
     armature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movementId ) 
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
-                self:setVisible(false)
             end
         end)
     addChildCenter(armature, self.animPanl)
@@ -89,23 +82,14 @@ function FightDescLayer:onBossStart(event)
 end
 
 function FightDescLayer:onBossGift(event)
-    ui:showPopup("BossResultLayer",{
-        chapterIndex = event.chapterIndex,
-        waveIndex = event.waveIndex, 
-        closeFunc = event.closeFunc},
-        {animName = "normal"})
+    ui:showPopup("BossResultLayer",event,{animName = "normal"})
 end
 
 function FightDescLayer:onJujiGift(event)
-    ui:showPopup("JujiResultLayer",{
-        levelIndex = event.levelIndex, --领奖用
-        waveIndex  = event.waveIndex,  --显示用 
-        closeFunc = event.closeFunc},
-        {animName = "normal"})
+    ui:showPopup("JujiResultLayer",event,{animName = "normal"})
 end
 
 function FightDescLayer:onWaveStart(event)
-    self:setVisible(true)
     local label = display.newBMFontLabel({
         text = "A"..event.waveNum.."BCDEF",
         font = "res/fnt/NO7.fnt",
@@ -118,19 +102,16 @@ function FightDescLayer:onWaveStart(event)
     label:runAction(transition.sequence({action1, cc.DelayTime:create(1/6),action2,
         cc.CallFunc:create(function()
                     label:removeFromParent()
-                    self:setVisible(false)
                     end)}))
 end
 
 function FightDescLayer:onGoldWaveStart(event)
-    self:setVisible(true)
     local armature = ccs.Armature:create("jinbijl")
     armature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movementId ) 
             if movementType == ccs.MovementEventType.loopComplete then
                 armature:removeFromParent()
                 armature = nil
-                self:setVisible(false)
             end
         end)
     addChildCenter(armature, self.animPanl)
@@ -138,22 +119,19 @@ function FightDescLayer:onGoldWaveStart(event)
 end
 
 function FightDescLayer:onShowEnemyIntro(event)
-
-    self:setVisible(true)
     local controlNode = cc.uiloader:load("res/CommonPopup/animLayer/animLayer_2.ExportJson")
     self:addChild(controlNode)
     local enemyID = event.enemyId
     self:initEnemyIntro(enemyID)
     self:runAction(transition.sequence({cc.DelayTime:create(3), cc.CallFunc:create(function()
         controlNode:removeFromParent()
-        self:setVisible(false)
     end)}))
 
 end
 
 function FightDescLayer:initEnemyIntro(enemyID)
     local descConfig = FightDescConfig.getConfig(enemyID)
-    dump(descConfig)
+    -- dump(descConfig)
     local title = cc.uiloader:seekNodeByName(self, "title")
     local name = cc.uiloader:seekNodeByName(self, "name")
     local namea = cc.uiloader:seekNodeByName(self, "namea")
