@@ -185,7 +185,7 @@ end
 function Fight:willFail(time)
     if self:getResult() ~= nil then return end
     local delay = time or 2.0
-    self:setResult("fail")    
+    self:setResult("willFail")    
     scheduler.performWithDelayGlobal(handler(self, self.doFail), delay)
 end
 
@@ -201,7 +201,7 @@ function Fight:doFail()
 end
 
 function Fight:doGiveUp()
-    self.result = "giveUp"
+    self.result = "fail"
 
      --um 关卡完成情况事件
     local levelInfo = self:getLevelInfo() 

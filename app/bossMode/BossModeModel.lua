@@ -32,31 +32,23 @@ function BossModeModel:checkNext(choseChapter)
 	end
 end 
 
-function BossModeModel:setBossModeWave(chapterIndex,waveIndex)
-	local info = self:getInfo(chapterIndex)
-	local weaponId = info["weaponId"]
-
+function BossModeModel:passWave(chapterIndex,waveIndex)
 	local data = getUserData()
-	if self.weaponListModel:isWeaponExist(weaponId) then return end
-	if data.bossMode.chapterIndex == chapterIndex and data.bossMode.waveIndex < waveIndex then
+	if data.bossMode.chapterIndex == chapterIndex 
+		and data.bossMode.waveIndex < waveIndex then
 		data.bossMode.waveIndex = waveIndex
-		self:setPartsComposition(chapterIndex)
-	end
 
-	--award
-	setUserData(data)
-end
-
-function BossModeModel:setPartsComposition(chapterIndex)
-	local data = getUserData()
-	if data.bossMode.chapterIndex == chapterIndex and data.bossMode.waveIndex >= 5 then
-		-- local info = self:getInfo(chapterIndex)
-		-- local weaponId = info["weaponId"]
-		-- self.weaponListModel:buyWeapon(weaponId)
-		if chapterIndex < self:getChapterNum() then
-			data.bossMode.chapterIndex = chapterIndex + 1
-			data.bossMode.waveIndex = 0
+		--next chapter
+		if data.bossMode.waveIndex >= 5 then
+			if chapterIndex < self:getChapterNum() then
+				data.bossMode.chapterIndex = chapterIndex + 1
+				data.bossMode.waveIndex = 0
+			end
 		end
+		setUserData(data)
+		return true --有突破
+	else
+		return false --没突破
 	end
 end
 

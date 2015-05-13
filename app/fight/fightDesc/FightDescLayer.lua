@@ -82,19 +82,11 @@ function FightDescLayer:onBossStart(event)
 end
 
 function FightDescLayer:onBossGift(event)
-    ui:showPopup("BossResultLayer",{
-        chapterIndex = event.chapterIndex,
-        waveIndex = event.waveIndex, 
-        closeFunc = event.closeFunc},
-        {animName = "normal"})
+    ui:showPopup("BossResultLayer",event,{animName = "normal"})
 end
 
 function FightDescLayer:onJujiGift(event)
-    ui:showPopup("JujiResultLayer",{
-        levelIndex = event.levelIndex, --领奖用
-        waveIndex  = event.waveIndex,  --显示用 
-        closeFunc = event.closeFunc},
-        {animName = "normal"})
+    ui:showPopup("JujiResultLayer",event,{animName = "normal"})
 end
 
 function FightDescLayer:onWaveStart(event)

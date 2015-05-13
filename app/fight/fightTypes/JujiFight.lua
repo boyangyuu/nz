@@ -37,6 +37,7 @@ function JujiFight:getResultData()
 	resultData["groupId"]   = self:getGroupId()
 	resultData["levelId"]   = self:getLevelId() + 1 
 	resultData["isContinue"]= true 
+	resultData["result"]    = self:getResult()
 	return resultData   
 end
 

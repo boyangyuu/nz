@@ -20,15 +20,9 @@ function BossResultLayer:getAwards()
 	local bossModeModel = md:getInstance("BossModeModel")
 	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
 	assert(info, "getChapterModel is nil")
-
-	local data = getUserData()
-	if self.chapterIndex < data.bossMode.chapterIndex then
+	if not self.properties.isAwardBujian then
 		table.remove(info,1)
-	elseif self.chapterIndex == data.bossMode.chapterIndex then
-		if self.waveIndex <= data.bossMode.waveIndex then
-			table.remove(info,1)
-		end
-	end	
+	end
 	return info
 end
 

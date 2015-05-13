@@ -23,7 +23,8 @@ function LevelFight:getResultData()
     resultData["hpPercent"] = hpPercent  
     resultData["levelId"]   = self:getLevelId()  
     resultData["groupId"]   = self:getGroupId()  
-    resultData["fightType"]   = self:getFightType() 
+    resultData["fightType"] = self:getFightType() 
+    resultData["result"]    = self:getResult()
     return resultData
 end
 
