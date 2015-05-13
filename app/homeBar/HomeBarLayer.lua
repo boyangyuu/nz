@@ -13,6 +13,7 @@ end)
 function HomeBarLayer:ctor(properties)
     self.usermodel   = md:getInstance("UserModel")
     self.guide       = md:getInstance("Guide")
+    self.levelMapModel = md:getInstance("LevelMapModel")
 
     cc.EventProxy.new(self.usermodel , self)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
@@ -42,16 +43,14 @@ function HomeBarLayer:popUpWeaponGift()
 end
 
 function HomeBarLayer:refreshData()
-    local levelMapModel = md:getInstance("LevelMapModel")
-    levelMapModel:hideGiftBagIcon()
+    self.levelMapModel:hideGiftBagIcon()
 end
 
 function HomeBarLayer:popUpNextLevel()
-    if self.properties.isPopupNext then
-        local levelMapModel = md:getInstance("LevelMapModel")     
+    if self.properties.isPopupNext then    
         local curGroup, curLevel = self.fightData["groupId"], 
             self.fightData["levelId"]
-        local nextG,nextL = levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
+        local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
         ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
     end
 end
@@ -141,6 +140,13 @@ function HomeBarLayer:initHomeLayer()
     self.commonlayers["WeaponListLayer"] = WeaponListLayer.new()
     self.commonlayers["inlayLayer"] = InlayLayer.new()
     self.commonlayers["StoreLayer"] = StoreLayer.new()
+    local groupId, levelId = self.levelMapModel:getConfig()
+    if self.fightData["fightType"] == "bossFight" then
+        self.fightData["groupId"] = groupId
+    elseif self.fightData["fightType"] == "jujiFight" then
+        self.fightData["groupId"] = groupId
+    end
+
     self.commonlayers["levelMapLayer"] = LevelMapLayer.new({groupId = self.fightData["groupId"]})
     for k,v in pairs(self.commonlayers) do
         v:setVisible(false)
@@ -213,8 +219,7 @@ end
 function HomeBarLayer:onEnter()
     local fightFactory =   md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
-    local levelModel = md:getInstance("LevelMapModel")
-    local gid, lid  = levelModel:getConfig()
+    local gid, lid  = self.levelMapModel:getConfig()
     if lid == 2 and gid == 1 then 
         self.guide:check("xiangqian")
     end
