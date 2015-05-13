@@ -10,7 +10,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
--- Fight.PAUSE_SWITCH_EVENT   = "PAUSE_SWITCH_EVENT"
+Fight.PAUSE_SWITCH_EVENT   = "PAUSE_SWITCH_EVENT"
 
 Fight.FIGHT_START_EVENT      = "FIGHT_START_EVENT"
 Fight.FIGHT_WIN_EVENT        = "FIGHT_WIN_EVENT"

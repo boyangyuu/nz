@@ -39,13 +39,19 @@ end
 
 function RootLayer:onPauseSwitch(event)
     local isPause = event.isPause
-    if isPause then 
-        self:pause()
-        transition.pauseTarget(self)
-    else
-        self:resume()
-        transition.resumeTarget(self)
-    end    
+    -- if isPause then 
+    --     self:pause()
+    --     transition.pauseTarget(self)
+    -- else
+    --     self:resume()
+    --     transition.resumeTarget(self)
+    -- end  
+
+    -- if isPause then 
+    --     self:onExit()
+    -- else
+    --     self:onEnter()
+    -- end     
 end
 
 function RootLayer:initLoginLayer()

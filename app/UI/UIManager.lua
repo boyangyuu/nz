@@ -102,7 +102,8 @@ end
 
 function UI:setPause(isPause)
 	print("function UI:setPause(isPause)")
-	-- self:dispatchEvent({name = UI.LAYER_PAUSE_EVENT, isPause = isPause})
+	self:dispatchEvent({name = UI.LAYER_PAUSE_EVENT, isPause = isPause})
+
 end
 
 function UI:getLayerCls(layerId)
