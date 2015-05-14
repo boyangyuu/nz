@@ -147,9 +147,9 @@ Define.kEnemyAnimScale      	= 1 / 0.7
 
 
 --------------------------战斗---------------------------------
-Define.kJujiReliveCosts         = {20, 50, 100, 200, 300, 600}  --无限狙击模式复活
-Define.kBossReliveCosts         = {20, 50, 100, 200, 300, 600}  --boss竞技模式复活
-Define.kLevelReliveCosts        = {10, 20, 40, 80} 				--普通关卡模式复活
+Define.kJujiReliveCosts         = {20, 40, 40, 60, 80, 100,}  --无限狙击模式复活
+Define.kBossReliveCosts         = {20, 40, 40, 60, 80, 100,}  --boss竞技模式复活
+Define.kLevelReliveCosts        = {20, 40, 60, 80,} 				--普通关卡模式复活
 
 function Define:ctor()
     Define.super.ctor(self) 

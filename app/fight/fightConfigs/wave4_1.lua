@@ -233,11 +233,11 @@ local enemys = {
 	weak1=2},                                                        --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=100000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=11,image="feiji",demage=0,hp=100000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=5.0,
+	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 2, fireCd=7.0,
 	weak1=2,    award = 60},
                                                          
 	--吉普车烟雾导弹          missileType = "dao_wu",

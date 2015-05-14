@@ -63,7 +63,7 @@ local waves = {
 				time = 8,
 				num = 1,
 				delay = {0},
-				pos = {1000},
+				pos = {460},
 				property = {
 					renzhiName = "人质1",      --  一组统一标示
 					type = "bangfei",
@@ -75,7 +75,7 @@ local waves = {
 				time = 8,
 				num = 1,
 				delay = {0},
-				pos = {1000},
+				pos = {460},
 				property = {
 					renzhiName = "人质1",     --  一组统一标示
 					type = "bangren",
@@ -171,11 +171,11 @@ local waves = {
 				time = 8,
 				num = 1,
 				delay = {0},
-				pos = {580},
+				pos = {350},
 				property = {
 					renzhiName = "人质2",      --  一组统一标示
 					type = "bangfei",
-					placeName = "place1",
+					placeName = "place3",
 					id = 7,
 				},
 			},
@@ -183,11 +183,11 @@ local waves = {
 				time = 8,
 				num = 1,
 				delay = {0},
-				pos = {580},
+				pos = {350},
 				property = {
 					renzhiName = "人质2",     --  一组统一标示
 					type = "bangren",
-					placeName = "place1",
+					placeName = "place3",
 					id = 8,
 				},
 			},
@@ -297,7 +297,7 @@ local waves = {
 				time = 20,
 				num = 1,
 				delay = {0},
-				pos = {250},
+				pos = {950},
 				property = {
 					renzhiName = "人质3",      --  一组统一标示
 					type = "bangfei",
@@ -309,7 +309,7 @@ local waves = {
 				time = 20,
 				num = 1,
 				delay = {0},
-				pos = {250},
+				pos = {950},
 				property = {
 					renzhiName = "人质3",     --  一组统一标示
 					type = "bangren",
@@ -345,7 +345,7 @@ local enemys = {
 	{id=8,image="hs", hp=5000, weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=9,image="dunbing",demage=25,hp=70000,fireRate=180,fireCd=5,speed=35, scale = 2.0,--scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=9,image="dunbing",demage=25,hp=70000,fireRate=180,fireCd=5,speed=35, scale = 1.9,--scale = 3.0,  近战走到屏幕最近放缩比例
 	weak1=2},
 
 	--医疗兵      type = "yiliao",
@@ -357,7 +357,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=5.0,
+	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 2, fireCd=7.0,
 	weak1=2,    award = 60},
                                                          
 	--吉普车烟雾导弹          missileType = "dao_wu",

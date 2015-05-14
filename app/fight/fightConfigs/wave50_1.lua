@@ -196,6 +196,11 @@ local waves = {
 ---------------------------------------------------------------------------------------------------------第10个毒刺boss id = 10
 
 	{	
+			--推荐黄金机甲
+		adviseData = {
+			type = "goldJijia", --黄金机甲
+			cost  = 450,  --钻石花费 
+		},
 		enemys = {                                                                -- 魔化鬼眼boss
 			{
 				descId = "renzb", --简介
@@ -290,7 +295,7 @@ local enemys = {
 	weak1=2},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=2, fireCd=7.0,
 	weak1=2,    award = 60},
 
 	--鬼眼分身           冲锋伤害  type = "renzhe",
