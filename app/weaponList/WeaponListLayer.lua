@@ -328,8 +328,7 @@ function WeaponListLayer:refreshComment()
     local weaponImg = display.newSprite("#icon_"..self.weaponRecord["imgName"]..".png")
     weaponImg:setScale(1.43)
     weaponImg:setAnchorPoint(0.5,0.5)
-    self.layerGun:addChild(weaponImg)
-    -- addChildCenter(weaponImg, self.layerGun)
+    -- self.layerGun:addChild(weaponImg)
     local imageName = self.weaponRecord["imgName"]
     local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
     if weaponSpc then
@@ -339,11 +338,12 @@ function WeaponListLayer:refreshComment()
 
     if self.weaponRecord["shopAnimName"] ~= "null" then
         local animName = self.weaponRecord["shopAnimName"]
-        dump(animName)
         local gunArmature = ccs.Armature:create(animName)
         gunArmature:setAnchorPoint(0.5,0.5)
-        -- gunArmature:setPosition
+        --todo
         self.layerGun:addChild(gunArmature)
+        gunArmature:getBone("gun"):addDisplay(weaponImg, 0)
+        gunArmature:getBone("gun"):changeDisplayWithIndex(0, true)
         gunArmature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movement) 
             if movementType == ccs.MovementEventType.complete then
