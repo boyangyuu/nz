@@ -485,7 +485,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=9000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=9000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=2, fireCd=7.0,
 	weak1=2,    award = 60},
 
 	--导弹          --missileType = "daodan",

@@ -195,6 +195,9 @@ function WeaponListModel:getWeaponInBag()
 end
 
 function WeaponListModel:equipBag(weaponid, index)
+	local isWeaponExist = self:isWeaponExist(weaponid)
+	assert(isWeaponExist, "no this gun in bag:" .. weaponid)
+	
 	local data = getUserData()
 	if self:getWeaponStatus(weaponid) == 0 then
 		for k,v in pairs(data.weapons.bags) do

@@ -33,7 +33,7 @@ function AboutPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			if self.popupName == "bangzhu" then
-				ui:closePopup("AboutPopup", {isCancelAnim = true})
+				ui:closePopup("AboutPopup", {animName = "normal"})
 			else
 				ui:closePopup("AboutPopup")
 			end

@@ -48,4 +48,32 @@ function LevelFight:waveUpdate(nextWaveIndex, waveType)
     end    
 end
 
+function LevelFight:endFightFail()
+    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
+    self:pauseFight(true)
+    ui:showPopup("FightResultFailPopup",
+        {onReliveFunc = handler(self, self.onReliveConfirm),
+         onGiveUpFunc = handler(self, self.onReliveDeny)},
+        {animName = "normal"}) 
+    self:clearFightData()
+end
+
+function LevelFight:getReliveCost()
+    local times = self:getRelivedTimes()
+    local costs = define.kLevelReliveCosts
+    local maxCost = costs[#costs]
+    return costs[times + 1] or maxCost
+end
+
+function LevelFight:onReliveConfirm()
+    self:doRelive()
+end
+
+function LevelFight:onReliveDeny()
+    self:doGiveUp()
+    local fightData = self:getResultData()
+    ui:changeLayer("HomeBarLayer",{fightData = fightData})  
+end
+
+
 return LevelFight

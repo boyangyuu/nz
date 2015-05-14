@@ -25,6 +25,7 @@ function FocusView:ctor(properties)
 	local robot = md:getInstance("Robot")
 	cc.EventProxy.new(robot, self)
 		:addEventListener(robot.ROBOT_START_EVENT	, handler(self, self.onShowRobot))
+		:addEventListener(robot.GOLDROBOT_START_EVENT, handler(self, self.onShowRobot))
 		:addEventListener(robot.ROBOT_ENDTIME_EVENT	, handler(self, self.onHideRobot))
 
 	local inlay = md:getInstance("FightInlay")
@@ -166,12 +167,11 @@ function FocusView:addJu(event)
 	print("FocusView:addJu()")
 
 	local x, y = self:getParent():getPosition()
-	print("x"..x.."y"..y)
-	self.oriJuPos = cc.p(x, y)
-	dump("self.oriJuPos", self.oriJuPos)
-
+	
 	--zoom
+	--todo
 	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
+	local destWorldPos = event.pos
 	local scale = define.kJuRange
 	local time = 0.1
 	local map = md:getInstance("Map")

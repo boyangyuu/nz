@@ -101,6 +101,8 @@ end
 
 function JujiFight:onReliveDeny()
 	self:doGiveUp()
+    local fightData = self:getResultData()
+    ui:changeLayer("HomeBarLayer",{fightData = fightData})	
 end
 
 return JujiFight

@@ -81,6 +81,7 @@ Define.kAwardEnemySanSpeed		= 50.0      --伞速
 Define.kMissileDaoTime				= 2.5    --导弹飞行时间
 Define.kMissileTieqiuTime           = 2.0    --铁球和汽车飞行时间
 Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
+Define.kYanEffectTime				= 5      --烟雾时间 
 
 --飞镖
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
@@ -147,9 +148,9 @@ Define.kEnemyAnimScale      	= 1 / 0.7
 
 
 --------------------------战斗---------------------------------
-Define.kJujiReliveCosts         = {20, 50, 100, 200, 300, 600}  --无限狙击模式复活
-Define.kBossReliveCosts         = {20, 50, 100, 200, 300, 600}  --boss竞技模式复活
-Define.kLevelReliveCosts        = {10, 20, 40, 80} 				--普通关卡模式复活
+Define.kJujiReliveCosts         = {20, 40, 40, 60, 80, 100,}  --无限狙击模式复活
+Define.kBossReliveCosts         = {20, 40, 40, 60, 80, 100,}  --boss竞技模式复活
+Define.kLevelReliveCosts        = {20, 40, 60, 80,} 				--普通关卡模式复活
 
 function Define:ctor()
     Define.super.ctor(self) 

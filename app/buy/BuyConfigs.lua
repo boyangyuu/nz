@@ -4,7 +4,7 @@ local dir = "res/GiftBag/GiftBag/GiftBag_"
 
 local isGiftDefend = isDefendMM()
 
-local isNovicesGift, novicesPrice = isMobileSimCard()
+-- local isNovicesGift, novicesPrice = isMobileSimCard() 
 
 local configs = {
 	goldGiftBag    = {				--土豪金
@@ -15,8 +15,8 @@ local configs = {
 	},
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
-			isGift = isNovicesGift,
-			price = novicesPrice,
+			isGift = true,
+			price = 1,
 			name = "新手礼包",
 	}, 
 	weaponGiftBag  = {           --武器大礼包
@@ -34,16 +34,6 @@ local configs = {
 			isGift = false,
 			price = 4,
 			name = "手雷20个",
-	},
-	unlockWeapon   = {            --解锁武器
-			isGift = false,
-			price = 6,
-			name = "解锁武器",
-	},
-	highgradeWeapon   = {      --解锁高级武器
-			isGift = false,
-			price = 10,
-			name = "解锁高级武器",
 	},
 	goldWeapon     = {				--金武
 			isGift = false,

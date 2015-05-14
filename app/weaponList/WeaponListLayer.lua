@@ -221,24 +221,24 @@ function WeaponListLayer:onClickBtnOncefull()
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
 end
 
-function WeaponListLayer:onClickBtnBuy()
-    -- 暂时不用
-    -- local guide = md:getInstance("Guide")
-    -- if self.buyModel:checkBought("weaponGiftBag") == false then
-    --     self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-    --       deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
-    --                                    "武器库界面_点击解锁武器"..self.weaponRecord["name"])
-    -- end
+-- function WeaponListLayer:onClickBtnBuy()
+--     -- 暂时不用
+--     -- local guide = md:getInstance("Guide")
+--     -- if self.buyModel:checkBought("weaponGiftBag") == false then
+--     --     self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+--     --       deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
+--     --                                    "武器库界面_点击解锁武器"..self.weaponRecord["name"])
+--     -- end
 
-    self:onCancelWeaponGift()
+--     self:onCancelWeaponGift()
 
-end
+-- end
 
 function WeaponListLayer:onClickBtnUpgrade(event)
     self.weaponListModel:intensify(self.weaponId)
 end
 
-function WeaponListLayer:onCancelWeaponGift()
+function WeaponListLayer:onClickBtnBuy(event)
     if self.userModel:getDiamond() >= self.weaponRecord["cost"] then
         ui:showPopup("commonPopup",
             {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."宝石购买该武器？",
@@ -247,14 +247,8 @@ function WeaponListLayer:onCancelWeaponGift()
              { opacity = 155})
     else
         local rmbCost = self.weaponRecord["rmbCost"]
-        if  rmbCost == 6 then
-            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
-                payDoneFunc = handler(self, self.onBuyWeaponSucc)},
-                 "武器库界面_点击解锁武器"..self.weaponRecord["name"])
-        elseif rmbCost == 10 then
-            self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
-
-        end
+        local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
+        self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)
     end
 end
 
@@ -267,7 +261,8 @@ function WeaponListLayer:onBuyWeaponGiftSucc()
 end
 
 function WeaponListLayer:onBuyWeaponSucc()
-    if self.userModel:costDiamond(self.weaponRecord["cost"]) then
+    local isAfforded = self.userModel:costDiamond(self.weaponRecord["cost"]) 
+    if isAfforded then
         self.weaponListModel:buyWeapon(self.weaponId)
         if self.weapontype == "ju" then
             self.weaponListModel:equipBag(self.weaponId,3)

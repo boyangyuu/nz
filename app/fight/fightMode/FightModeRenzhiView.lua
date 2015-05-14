@@ -67,8 +67,8 @@ function FightModeRenzhiView:onFightEnd(event)
 	
 end
 
-function FightModeRenzhiView:onFightPause(event)
+-- function FightModeRenzhiView:onFightPause(event)
 
-end
+-- end
 
 return FightModeRenzhiView

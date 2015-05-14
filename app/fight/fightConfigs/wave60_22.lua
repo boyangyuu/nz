@@ -728,7 +728,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=23000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=23000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=6, fireCd=7.0,
 	weak1=2,    award = 60},
 
 	--忍者兵            冲锋伤害  type = "renzhe",

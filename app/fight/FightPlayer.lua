@@ -8,7 +8,6 @@ local MapView           = import(".MapView")
 local HeroLayer         = import(".HeroLayer")
 local InfoLayer         = import(".InfoLayer")
 local FightControlLayer = import(".FightControlLayer")
--- local GunHelpLayer      = import(".Gun.GunHelpLayer") 
 local GunSkillLayer     = import(".Gun.GunSkillLayer")
 
 local KFightConfig = {
@@ -54,7 +53,6 @@ function FightPlayer:ctor(properties)
     self.gunView        = GunView.new()
     self.heroLayer      = HeroLayer.new()
     self.infoLayer      = InfoLayer.new() 
-    -- self.gunHelpLayer   = GunHelpLayer.new()
     self.gunSkillLayer  = GunSkillLayer.new()
     self.fightControlLayer = FightControlLayer.new()
     self.isControlVisible = true
@@ -195,7 +193,6 @@ function FightPlayer:initUI()
     local layerGunInfo = cc.uiloader:seekNodeByName(self, "layerGunInfo")
     layerGunInfo:addChild(self.gunSkillLayer)
     layerGunInfo:addChild(self.infoLayer)
-    -- layerGunInfo:addChild(self.gunHelpLayer)
     layerGunInfo:addChild(self.fightControlLayer)
     
     --load focus
@@ -378,8 +375,13 @@ function FightPlayer:onMutiTouchBegin(event)
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
-      
+        
+        -- --test yby
+        -- local map = md:getInstance("Map")
+        -- map:setIsOpenJu(true, point)      
     end
+
+
     return false
 end
 
@@ -672,6 +674,7 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     --变红 todoyby
     local x, y = focusNode:getPosition()
     self:moveGun(x - xOri,y - yOri)
+
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
@@ -693,7 +696,8 @@ end
 function FightPlayer:moveGun(offsetX, offsetY)
     local layerGun = self.layerGun
     local xOri, yOri = layerGun:getPosition()
-    layerGun:setPositionX(offsetX + xOri)
+    -- layerGun:setPositionX(offsetX + xOri)
+    layerGun:setPosition(offsetX + xOri, offsetY + yOri)
 end
 
 function FightPlayer:justBgPos(node)

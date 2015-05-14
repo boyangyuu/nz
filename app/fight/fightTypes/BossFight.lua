@@ -84,5 +84,31 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
     self:pauseFight(true)
 end
 
+function BossFight:endFightFail()
+    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
+    self:pauseFight(true)
+	ui:showPopup("FightRelivePopup",
+		{onReliveFunc = handler(self, self.onReliveConfirm),
+		 onGiveUpFunc = handler(self, self.onReliveDeny)},
+		{animName = "normal"})
+    self:clearFightData()
+end
+
+function BossFight:getReliveCost()
+    local times = self:getRelivedTimes()
+    local costs = define.kBossReliveCosts
+    local maxCost = costs[#costs]
+    return costs[times + 1] or maxCost
+end
+
+function BossFight:onReliveConfirm()
+	self:doRelive()
+end
+
+function BossFight:onReliveDeny()
+	self:doGiveUp()
+    local fightData = self:getResultData()
+    ui:changeLayer("HomeBarLayer",{fightData = fightData})	
+end
 
 return BossFight

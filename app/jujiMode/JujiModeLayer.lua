@@ -21,7 +21,7 @@ end
 
 function JujiModeLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/JujiMode")
-    local controlNode = cc.uiloader:load("main.ExportJson")
+    local controlNode = cc.uiloader:load("main.json")
     self:addChild(controlNode)
 end
 
@@ -70,7 +70,7 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:onClickBtnStart()
-	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
+	local fightData = { groupId = 60,levelId = 28, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
 	ui:closePopup("JujiModeLayer")
 end
