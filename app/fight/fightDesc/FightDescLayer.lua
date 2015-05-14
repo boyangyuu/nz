@@ -64,7 +64,7 @@ function FightDescLayer:onFightSuccess(event)
 end
 
 function FightDescLayer:onBossStart(event)
-    self:setTouchSwallowEnabled(true)
+    -- self:setTouchSwallowEnabled(true)
     local armature = ccs.Armature:create("qiangdicx")
     armature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movementId ) 

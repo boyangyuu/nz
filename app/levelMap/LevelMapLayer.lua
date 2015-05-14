@@ -55,11 +55,11 @@ function LevelMapLayer:popUpWeaponGift()
     local isNotBought = buyModel:checkBought("weaponGiftBag") == false
     local isPopWeaponGift = false
     local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 4
+    local isDone = userModel:getUserLevel() >= 6
 
     --战斗失败返回世界地图
     if self.fightData["result"] == "fail" then isPopWeaponGift = true end
-    --开始菜单进世界地图，玩家等级 >= 4
+    --开始菜单进世界地图，玩家等级 >= 6
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
         buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
@@ -177,6 +177,11 @@ function LevelMapLayer:initChooseLayer()
     armature:setScale(2)
     addChildCenter(armature, self.panelgift)
     armature:getAnimation():play("guangtx" , -1, 1)
+
+    local tousuArm = ccs.Armature:create("tousu_tx")
+    addChildCenter(tousuArm, btnkefu)
+    tousuArm:getAnimation():play("Animation1" , -1, 1)
+
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
         self.panelgift:setVisible(false)

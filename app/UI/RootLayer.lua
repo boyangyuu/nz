@@ -107,6 +107,12 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.png"
     self:addFrameRes(plist, png)
 
+    local toususrc = "res/LevelMap/tousu_tx/tousu_tx.ExportJson"
+    self:addArmatureRes(toususrc)
+    local plist = "res/LevelMap/tousu_tx/tousu_tx0.plist"
+    local png   = "res/LevelMap/tousu_tx/tousu_tx0.png"
+    self:addFrameRes(plist, png)
+
     local guangsrc = "res/Store/guang/guang.ExportJson"
     self:addArmatureRes(guangsrc)
     local plist = "res/Store/guang/guang0.plist"
@@ -148,6 +154,18 @@ function RootLayer:addResHome()
     local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
     local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
     self:addFrameRes(plist, png)
+
+    local hqlsrc = "res/WeaponList/iconhql_tx/iconhql_tx.ExportJson"
+    self:addArmatureRes(hqlsrc)
+    local plist = "res/WeaponList/iconhql_tx/iconhql_tx0.plist"
+    local png   = "res/WeaponList/iconhql_tx/iconhql_tx0.png"
+    self:addFrameRes(plist, png)    
+
+    local bltsrc = "res/WeaponList/iconblt_tx/iconblt_tx.ExportJson"
+    self:addArmatureRes(bltsrc)
+    local plist = "res/WeaponList/iconblt_tx/iconblt_tx0.plist"
+    local png   = "res/WeaponList/iconblt_tx/iconblt_tx0.png"
+    self:addFrameRes(plist, png)     
 
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.ExportJson"
     self:addArmatureRes(thjbxsrc)

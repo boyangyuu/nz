@@ -18,7 +18,7 @@ function WeaponListModel:getWeaponRecord(index)
 	local WeaponRecord = getRecordByID("config/weapon_weapon.json",index)
 	-- local WeaponRecord = getRecordFromTable(self.config,
 	-- 	"id", index)
-	dump(WeaponRecord)
+	-- dump(WeaponRecord)
 	return WeaponRecord
 end
 
