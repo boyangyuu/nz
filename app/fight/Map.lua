@@ -83,10 +83,10 @@ function Map:getIsJuAble()
 end
 
 function Map:changeJuStatus()
-	self.isJu = not self.isJu
-	local data = {gunView = not self.isJu, btnLei = not self.isJu, 
-			label_leiNum = not self.isJu }
-	self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = data})
+	-- self.isJu = not self.isJu
+	-- local data = {gunView = not self.isJu, btnLei = not self.isJu, 
+	-- 		label_leiNum = not self.isJu }
+	-- self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = data})
 end
 
 function Map:playEffect(name)

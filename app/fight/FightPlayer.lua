@@ -82,6 +82,11 @@ function FightPlayer:ctor(properties)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
 
+    local map = md:getInstance("Map")       
+    cc.EventProxy.new(map, self)
+         :addEventListener(map.GUN_OPEN_JU_EVENT, handler(self, self.onJuOpen))
+         :addEventListener(map.GUN_CLOSE_JU_EVENT, handler(self, self.onJuClose))
+
     self:setNodeEventEnabled(true)   
 end
 
@@ -375,12 +380,8 @@ function FightPlayer:onMutiTouchBegin(event)
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
-        
-   
     end
 
-    --test yby
-    -- dump(event, "event")
     self:checkJuOpen(event.points["0"])
     return false
 end
@@ -390,7 +391,37 @@ function FightPlayer:checkJuOpen(point)
     local isOpen = map:getIsOpenJu()
     if isOpen then return end 
     local pos = cc.p(point.x, point.y)
-    map:setIsOpenJu(true, pos)       
+    map:setIsOpenJu(true, pos)      
+end
+
+function FightPlayer:onJuClose(event)
+    -- self.btnRobot:setVisible(true)
+    -- self.label_jijiaNum:setVisible(true)
+    self.btnLei:setVisible(true)
+    self.label_leiNum:setVisible(true)
+    self.gunView:setVisible(true)
+    self.focusNode:setVisible(false)
+    self.btnJu:setVisible(false)
+end
+
+function FightPlayer:onJuOpen(event)
+    -- self.btnRobot:setVisible(false)
+    -- self.label_jijiaNum:setVisible(false)
+    self.btnLei:setVisible(false)
+    self.label_leiNum:setVisible(false)
+    self.gunView:setVisible(false)
+    self.focusNode:setVisible(true)
+    self.btnJu:setVisible(true)
+end
+
+function FightPlayer:checkJujiControl()
+    local isju = self.fight:isJujiFight()
+    if isju then 
+        self.btnJu:setVisible(false)
+        self.btnChange:setVisible(false)
+        self.btnRobot:setVisible(false)
+        self.label_jijiaNum:setVisible(false)        
+    end 
 end
 
 function FightPlayer:onMutiTouchEnd(event)
@@ -671,6 +702,9 @@ function FightPlayer:onResumePos(event)
 end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
+    --check ju
+    if self.fight:isJujiFight() then return end
+
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
@@ -964,12 +998,11 @@ function FightPlayer:onEnter()
     --music
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
-    local isju = self.fight:isJujiFight()
-    if isju then 
-        self.btnRobot:setVisible(false)
-        self.label_jijiaNum:setVisible(false)       
-    end 
+    
+    --show
+    self:checkJujiControl()
 end
+
 
 function FightPlayer:onCleanup()
      audio:stopAllSounds()
