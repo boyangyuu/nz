@@ -113,6 +113,7 @@ function HeroAnimView:playHurtedBomb_yan(event)
     self:addChild(armatureYan)
     local function removeFunc()
     	armatureYan:removeSelf()
+    	self.isPlayingYan = false
     end	
 	armatureYan:getAnimation():play("yanwu" , -1, 1)
 	self:performWithDelay(removeFunc, lastTime)

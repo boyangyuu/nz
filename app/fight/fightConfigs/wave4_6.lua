@@ -4,17 +4,17 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = { 
-			{
-				time = 2,
-				num = 3,
-				delay = {0,1,0.5},
-				pos = {300,600,900},
-				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾
-					id = 8,
-				},
-			},	
+			-- {
+			-- 	time = 2,
+			-- 	num = 3,
+			-- 	delay = {0,1,0.5},
+			-- 	pos = {300,600,900},
+			-- 	property = { 
+			-- 		placeName = "place3" ,
+			-- 		type = "jin",                  --盾
+			-- 		id = 8,
+			-- 	},
+			-- },	
 			{
 				time = 5,	
 				num = 1,
@@ -27,42 +27,42 @@ local waves = {
 					missileId = 18,
 				},
 			},	
-			{
-				time = 7,	
-				num = 1,
-				pos = {450},
-				delay = {0.1},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 9,	
-				num = 1,
-				pos = {800},
-				delay = {0.1},
-				property = {
-					placeName = "place4" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
-			{
-				time = 11,	
-				num = 2,
-				pos = {400,1050},
-				delay = {0.1,0.6},
-				property = {
-					placeName = "place3" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},
+			-- {
+			-- 	time = 7,	
+			-- 	num = 1,
+			-- 	pos = {450},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place3" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },
+			-- {
+			-- 	time = 9,	
+			-- 	num = 1,
+			-- 	pos = {800},
+			-- 	delay = {0.1},
+			-- 	property = {
+			-- 		placeName = "place4" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },
+			-- {
+			-- 	time = 11,	
+			-- 	num = 2,
+			-- 	pos = {400,1050},
+			-- 	delay = {0.1,0.6},
+			-- 	property = {
+			-- 		placeName = "place3" ,
+			-- 		id = 17,
+			-- 		type = "renzhe",
+			-- 		missileId = 18,
+			-- 	},
+			-- },
 
 		},
 	},
@@ -72,10 +72,10 @@ local waves = {
 	    waveType = "boss",                                      --强敌出现
 		enemys = {                                             --红色扫射
 			{
-				time = 3,	
+				time = 2,	
 				num = 1,
 				pos = {500},
-				delay = {0.1},
+				delay = {4},
 				property = { 
 					type = "boss",
 					placeName = "place1",
