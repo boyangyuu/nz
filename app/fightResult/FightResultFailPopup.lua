@@ -37,8 +37,6 @@ function FightResultFailPopup:initUI()
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     self.btnRevive = cc.uiloader:seekNodeByName(self, "btnrevive")
 
-    
-
     --add res
     local manager = ccs.ArmatureDataManager:getInstance()
     local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.ExportJson"

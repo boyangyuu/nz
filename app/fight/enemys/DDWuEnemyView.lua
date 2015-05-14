@@ -58,8 +58,9 @@ function DDWuEnemyView:playAheadEnd()
     self.enemy:hit(self.hero) 
 
     --dispatch 
+    local time = define.kYanEffectTime
     local hero = md:getInstance("Hero")
-    self.hero:dispatchEvent({name = hero.EFFECT_HURT_YAN_EVENT})
+    self.hero:dispatchEvent({name = hero.EFFECT_HURT_YAN_EVENT, time = time})
 end
 
 --Attackable接口

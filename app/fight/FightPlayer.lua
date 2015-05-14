@@ -375,8 +375,13 @@ function FightPlayer:onMutiTouchBegin(event)
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
-      
+        
+        -- --test yby
+        -- local map = md:getInstance("Map")
+        -- map:setIsOpenJu(true, point)      
     end
+
+
     return false
 end
 
@@ -669,6 +674,7 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     --变红 todoyby
     local x, y = focusNode:getPosition()
     self:moveGun(x - xOri,y - yOri)
+
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
@@ -690,7 +696,8 @@ end
 function FightPlayer:moveGun(offsetX, offsetY)
     local layerGun = self.layerGun
     local xOri, yOri = layerGun:getPosition()
-    layerGun:setPositionX(offsetX + xOri)
+    -- layerGun:setPositionX(offsetX + xOri)
+    layerGun:setPosition(offsetX + xOri, offsetY + yOri)
 end
 
 function FightPlayer:justBgPos(node)
