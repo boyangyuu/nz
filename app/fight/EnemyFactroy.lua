@@ -118,8 +118,10 @@ function EnemyFactory.createEnemy(property)
 		enemyView = RenEnemyView.new(property)							
 	elseif type == "award" then
 		enemyView = AwardEnemyView.new(property)							
-	else			
+	elseif type == "common" then 			
 		enemyView = CommonEnemyView.new(property)
+	else
+		assert(false, "invalid type:"..type)
 	end
 	return enemyView
 end
