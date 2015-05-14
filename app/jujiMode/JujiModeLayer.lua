@@ -21,7 +21,7 @@ end
 
 function JujiModeLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/JujiMode")
-    local controlNode = cc.uiloader:load("main.ExportJson")
+    local controlNode = cc.uiloader:load("main.json")
     self:addChild(controlNode)
 end
 

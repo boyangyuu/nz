@@ -81,6 +81,7 @@ Define.kAwardEnemySanSpeed		= 50.0      --伞速
 Define.kMissileDaoTime				= 2.5    --导弹飞行时间
 Define.kMissileTieqiuTime           = 2.0    --铁球和汽车飞行时间
 Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
+Define.kYanEffectTime				= 5      --烟雾时间 
 
 --飞镖
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间

@@ -106,17 +106,16 @@ end
 
 function HeroAnimView:playHurtedBomb_yan(event)
     --烟雾
+    if self.isPlayingYan then return end
+    local lastTime = event.time
+    self.isPlayingYan = true
     local armatureYan = ccs.Armature:create("yw")
-    self:addChild(armatureYan)	
-	armatureYan:getAnimation():setMovementEventCallFunc(
-    	function (armatureBack,movementType,movementId) 
-	    	if movementType == ccs.MovementEventType.loopComplete then
-				if movementId == "yanwu" then 
-					armatureYan:removeFromParent()
-				end
-	    	end 
-    	end)	
+    self:addChild(armatureYan)
+    local function removeFunc()
+    	armatureYan:removeSelf()
+    end	
 	armatureYan:getAnimation():play("yanwu" , -1, 1)
+	self:performWithDelay(removeFunc, lastTime)
 end
 
 function HeroAnimView:playKillHead(event)
