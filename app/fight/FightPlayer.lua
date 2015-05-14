@@ -376,13 +376,21 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
         
-        -- --test yby
-        -- local map = md:getInstance("Map")
-        -- map:setIsOpenJu(true, point)      
+   
     end
 
-
+    --test yby
+    -- dump(event, "event")
+    self:checkJuOpen(event.points["0"])
     return false
+end
+
+function FightPlayer:checkJuOpen(point)
+    local map    = md:getInstance("Map")
+    local isOpen = map:getIsOpenJu()
+    if isOpen then return end 
+    local pos = cc.p(point.x, point.y)
+    map:setIsOpenJu(true, pos)       
 end
 
 function FightPlayer:onMutiTouchEnd(event)

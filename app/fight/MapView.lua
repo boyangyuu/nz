@@ -447,6 +447,7 @@ function MapView:openZoom(event)
 
 	--event data
 	local destWorldPos = event.destWorldPos
+	-- dump(destWorldPos, "destWorldPos")
 	local scale = event.scale
 	local time = event.time
 	self.hero:setMapZoom(scale)
@@ -457,9 +458,13 @@ function MapView:openZoom(event)
 		-- 回复触摸Ftodoyby
 		self.isZooming = false
 	end
-	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))
-	local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
-	local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	local pWorldMap = self:convertToWorldSpace(cc.p(0, 0))
+	-- dump(pWorldMap, "pWorldMap")
+	-- local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
+	-- local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	
+	local offsetX = (-destWorldPos.x  + pWorldMap.x) * (scale)
+	local offsetY = (-destWorldPos.y + pWorldMap.y) * (scale)
 	local action = cc.MoveBy:create(time, cc.p(offsetX, offsetY))
 	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
 	self:runAction(cc.ScaleBy:create(time, scale))	
