@@ -241,7 +241,7 @@ local waves = {
 				pos = {200,300,350,},
 				property = { 
 					placeName = "place2",
-					startState = "rollright",                                          --第二波20个怪
+					startState = "rollright",                                   
 					id = 1,
 				},
 			},
@@ -442,7 +442,7 @@ local waves = {
 				delay = {0,0.5,1},
 				property = { 
 					placeName = "place2",
-					startState = "rollright",                                          --第一波20个怪
+					startState = "rollright",                                  
 					id = 1,
 				},
 			},	

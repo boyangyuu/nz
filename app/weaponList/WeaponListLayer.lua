@@ -325,11 +325,9 @@ function WeaponListLayer:refreshComment()
     self.labelName:setString(self.weaponRecord["name"])
     self.buycost:setString(self.weaponRecord["cost"])
     self.labelDescribe:setString(self.weaponRecord["describe"])
-    local weaponImg = display.newSprite("#icon_"..self.weaponRecord["imgName"]..".png")
-    weaponImg:setScale(1.43)
-    weaponImg:setAnchorPoint(0.5,0.5)
-    -- self.layerGun:addChild(weaponImg)
     local imageName = self.weaponRecord["imgName"]
+    local weaponImg = display.newSprite("#icon_"..imageName..".png")
+    weaponImg:setScale(1.43)
     local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
     if weaponSpc then
         weaponSpc:setAnchorPoint(0.5,0.5)
@@ -351,6 +349,9 @@ function WeaponListLayer:refreshComment()
             end 
         end)
         gunArmature:getAnimation():play("start" , -1, 0)
+    else
+        weaponImg:setAnchorPoint(0.5,0.5)
+        self.layerGun:addChild(weaponImg)
     end
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)

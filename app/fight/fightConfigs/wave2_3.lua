@@ -15,7 +15,7 @@ local waves = {
 					type = "yiliao",
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},	
@@ -151,7 +151,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -202,7 +202,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -267,7 +267,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -318,7 +318,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},			
@@ -332,7 +332,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
