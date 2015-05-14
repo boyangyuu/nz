@@ -222,7 +222,7 @@ function MapView:addWave(waveData, isZhaohuan)
 				--出场顺序
 				enemyProperty["order"] = order 
 				local pos = group["pos"][i] 
-				assert("pos", pos)
+				assert(pos, "没有配置pos！！")
 				enemyProperty["offsetX"] = pos 
 				self:cacheEnemy(enemyProperty)
 			end

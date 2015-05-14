@@ -191,7 +191,7 @@ function FocusView:addJu(event)
 	--hide
 	self.armature:setVisible(false)
 
-	self.map:changeJuStatus()	
+	-- self.map:changeJuStatus()	
 end
 
 function FocusView:removeJu(event)
@@ -219,7 +219,7 @@ function FocusView:removeJuEnd()
 	--hide
 	self.armature:setVisible(true)
 
-	self.map:changeJuStatus()
+	-- self.map:changeJuStatus()
 end
 
 

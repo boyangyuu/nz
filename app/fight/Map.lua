@@ -82,12 +82,12 @@ function Map:getIsJuAble()
 	return self.isJuAble
 end
 
-function Map:changeJuStatus()
+-- function Map:changeJuStatus()
 	-- self.isJu = not self.isJu
 	-- local data = {gunView = not self.isJu, btnLei = not self.isJu, 
 	-- 		label_leiNum = not self.isJu }
 	-- self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = data})
-end
+-- end
 
 function Map:playEffect(name)
 	if name == "shake" then
