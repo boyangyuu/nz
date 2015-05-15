@@ -1,3 +1,5 @@
+local JujiModeConfigs = import(".JujiModeConfigs")
+
 local JujiResultLayer = class("JujiResultLayer",function()
 	return display.newLayer()
 end)
@@ -17,9 +19,8 @@ function JujiResultLayer:loadCCS()
 end
 
 function JujiResultLayer:getAwards()
-	local jujiModeModel = md:getInstance("JujiModeModel")
-	local info = jujiModeModel:getAwardTable(self.levelIndex)
-	assert(info, "getAwardTable is nil")
+	local info = JujiModeConfigs.getFightAward(self.levelIndex)
+	assert(info, "FightAward is nil" .. self.levelIndex)
 	return info
 end
 

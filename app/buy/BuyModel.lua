@@ -231,15 +231,15 @@ end
 
 function BuyModel:buy_stone120( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(120)
+	userModel:addDiamond(120)
 end
 function BuyModel:buy_stone260( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(260)
+	userModel:addDiamond(260)
 end
 function BuyModel:buy_stone450( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(450)
+	userModel:addDiamond(450)
 end
 
 function BuyModel:checkBought(giftId)

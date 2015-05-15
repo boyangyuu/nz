@@ -93,6 +93,7 @@ end
 
 function JujiModeLayer:onClickBtnReward()
 	print("JujiModeLayer:onClickBtnReward()")
+	ui:showPopup("JujiAwardPopup")
 end
 
 function JujiModeLayer:refreshListView()

@@ -57,9 +57,4 @@ function StoreModel:refreshInfo(typename)
 	self:dispatchEvent({name = "REFRESH_STORE_EVENT",typename = typename})
 end
 
-
-function StoreModel:buyDiamond()
-	-- body
-end
-
 return StoreModel

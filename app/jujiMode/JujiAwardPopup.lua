@@ -5,13 +5,14 @@
 
 ]]
 
-local FightRelivePopup = class("FightRelivePopup", function()
+local JujiAwardPopup = class("JujiAwardPopup", function()
     return display.newLayer()
 end)
 
-function FightRelivePopup:ctor(property)
+function JujiAwardPopup:ctor(property)
 
 	--instance
+	self.jujiMode = md:getInstance("JujiModeModel")
 	self.property = property
     -- cc.EventProxy.new(self.fightGun, self)
     --     :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
@@ -19,70 +20,88 @@ function FightRelivePopup:ctor(property)
     self:setNodeEventEnabled(true) 
 end
 
-function FightRelivePopup:onEnter()
-	self:onShow()
+function JujiAwardPopup:onEnter()
+
 end
 
-function FightRelivePopup:loadCCS()
-    local manager = ccs.ArmatureDataManager:getInstance() 
-	self.node = cc.uiloader:load("res/JujiMode/main.json")
+function JujiAwardPopup:loadCCS()
+	self.node = cc.uiloader:load("res/JujiMode/paihang.json")
     self:addChild(self.node)    
 
-    --btns
-    local btn_relive = cc.uiloader:seekNodeByName(self.node, "btn_relive")
-    btn_relive:onButtonClicked(function()
-         self:onClickRelive()
+    self:refreshList()
+
+    --btn close
+    local btnClose = cc.uiloader:seekNodeByName(self.node, "btnClose")
+    btnClose:onButtonClicked(function()
+         self:onClickClose()
     end)
-    local btn_giveUp = cc.uiloader:seekNodeByName(self.node, "btn_giveUp")
-    btn_giveUp:onButtonClicked(function()
-         self:onClickGiveUp()
-    end)
+
+    local bg =   cc.uiloader:seekNodeByName(self.node, "bg")  
+    bg:setOpacity(190)
 end
 
-function FightRelivePopup:onClickRelive()
-	print("function FightRelivePopup:onClickRelive()")
-	self.property["onReliveFunc"]()
-	self:closePopup()
+function JujiAwardPopup:refreshList()
+    --item
+    local itemIndex = 1
+    while true do
+    	print("itemIndex") 
+    	local item = cc.uiloader:seekNodeByName(self.node, "item"..itemIndex)
+    	if item == nil then break end
+
+    	--status
+    	local isAvaliable = self.jujiMode:isScoreAwardAvailable(itemIndex)
+    	local isGetted    = self.jujiMode:isScoreAwardGetted(itemIndex)
+
+		--bg
+		local bg   = cc.uiloader:seekNodeByName(item, "bg")
+		local bg1  = cc.uiloader:seekNodeByName(item, "bg1")
+
+    	--btn
+    	local btn  = cc.uiloader:seekNodeByName(item, "btnGet")
+	    local index = itemIndex
+	    btn:onButtonClicked(function()
+	         self:onClickGet(index)
+	    end)
+
+	    if isGetted then 
+	    	bg1:setVisible(false)
+	    	btn:setButtonImage(btn.NORMAL, "btn_lingqu3.png")
+	    elseif isAvaliable then 
+	    	btn:setButtonImage(btn.NORMAL, "btn_lingqu1.png")
+	    else
+	    	bg1:setVisible(false)
+	    	btn:setButtonImage(btn.NORMAL, "btn_lingqu2.png")
+	    end
+
+    	itemIndex = itemIndex + 1
+    end	
 end
 
-function FightRelivePopup:onClickGiveUp()
-	print("function FightRelivePopup:onClickGiveUp()")	
-	self.property["onGiveUpFunc"]()
-	self:closePopup()
+function JujiAwardPopup:onClickGet(itemIndex)
+	print("function JujiAwardPopup:onClickGet(index)", itemIndex)
+	local isAvaliable = self.jujiMode:isScoreAwardAvailable(itemIndex)
+	local isGetted    = self.jujiMode:isScoreAwardGetted(itemIndex)
+    local str = ""
+    if isGetted then 
+        str = "该奖励已领取！"
+    elseif isAvaliable then 
+    	self.jujiMode:getAward(itemIndex)
+    	self:refreshList()
+        str = "成功获取奖励！"
+    else
+        str = "积分不足，无法领取！"
+    end	
+
+    ui:showPopup("commonPopup",{type = "style2",content = str, delay = 0.5},
+         {opacity = 100})    
 end
 
-function FightRelivePopup:onShow()
-	local remainTimes = 5
-	local labelTime = cc.uiloader:seekNodeByName(self.node, "labelTime")
-	local labelCost = cc.uiloader:seekNodeByName(self.node, "labelNumCost")
-	
-	--cost
-	local cost = self:getReliveCost()
-	print("cost", cost)	
-	labelCost:setString(cost)
-
-	--time
-	labelTime:setString(remainTimes)
-	local function timeFunc()
-		remainTimes = remainTimes - 1
-		if remainTimes == 0 then 
-			-- self:onClickGiveUp()
-			return
-		end
-		labelTime:setString(remainTimes)
-		print("remainTimes", remainTimes)
-	end
-	self:schedule(timeFunc, 1.0)
+function JujiAwardPopup:onClickClose()
+    self:closePopup()
 end
 
-function FightRelivePopup:getReliveCost()
-	local fightFactory = md:getInstance("FightFactory")
-	local fight        = fightFactory:getFight()
-	return fight:getReliveCost()
+function JujiAwardPopup:closePopup()
+	ui:closePopup("JujiAwardPopup", {animName = "scale"})
 end
 
-function FightRelivePopup:closePopup()
-	ui:closePopup("FightRelivePopup", {animName = "normal"})
-end
-
-return FightRelivePopup
+return JujiAwardPopup
