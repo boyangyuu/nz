@@ -7,7 +7,7 @@ end)
 function JujiModeLayer:ctor()
 	self.jujiModel = md:getInstance("JujiModeModel")
 	self.rankModel = md:getInstance("RankModel")
-	self.rankTable = self.jujiModel:getRankData()
+	self.rankTable = self.jujiModel:getRankData() 
 
 	self:loadCCS()
 	self:initUI()

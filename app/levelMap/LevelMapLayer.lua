@@ -108,18 +108,6 @@ function LevelMapLayer:mapPopUp(event)
         local chapterIndex = self.properties.fightData.chapterIndex
         ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
     end  
-    self:initDailyLogin()
-end
-
-function LevelMapLayer:initDailyLogin()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-    local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 4
-    if dailyLoginModel:checkPop()  then
-        ui:showPopup("DailyLoginLayer", {})
-        dailyLoginModel:donotPop()
-    end
 end
 
 function LevelMapLayer:initBgLayer(event)
