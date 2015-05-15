@@ -105,7 +105,7 @@ end
 
 function StartLayer:checkActivateCode()
     ui:showPopup("commonPopup",
-             {type = "style2", content = "激活码错误！", delay = 0.8},
+             {type = "style2", content = "激活码错误！"},
              {opacity = 0})
 end
 

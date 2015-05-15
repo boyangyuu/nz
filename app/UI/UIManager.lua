@@ -29,12 +29,8 @@ layerClasses["storyLayer"]           = import("..start.StoryLayer")
 
 layerClasses["DailyLoginLayer"]      = import("..dailyLogin.DailyLoginLayer")
 
---popup
+--fight
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
-layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
-layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
-layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
-layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiModeLayer"]        = import("..jujiMode.JujiModeLayer")
 layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
 layerClasses["GunHelpPopup"]         = import("..fight.Gun.GunHelpPopup")
@@ -42,9 +38,17 @@ layerClasses["FightAdvisePopup"]     = import("..fight.fightTips.FightAdvisePopu
 layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopup")
 
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
+layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
+layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
 
 -- giftBag
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
+
+--jujiFight
+layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
+layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
+layerClasses["JujiAwardPopup"]       = import("..jujiMode.JujiAwardPopup")
+
 
 
 function UI:ctor(properties)

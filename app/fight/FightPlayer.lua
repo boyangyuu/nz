@@ -929,10 +929,11 @@ function FightPlayer:initGuide3()
     self.guide:addClickListener({
         id = "fightJu_open",
         groupId = "fightJu",
-        rect = self.btnFire:getBoundingBox(),
+        rect = cc.rect(display.width1/2 - 60, display.height1/2 - 60,
+                        120, 120),
         endfunc = function (touchEvent)
             local map = md:getInstance("Map")
-            map:setIsOpenJu(true)            
+            map:setIsOpenJu(true, cc.p(display.width1/2, display.height1/2))            
         end
      })    
 
