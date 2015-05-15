@@ -65,7 +65,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -154,7 +154,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -269,7 +269,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -358,7 +358,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -473,7 +473,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -562,7 +562,7 @@ local waves = {
 					type = "yiliao",                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 6.0,                  --回血cd
-					skillValue = 0.1,               --回血百分比
+					skillValue = 0.3,               --回血百分比
 					id = 25,
 				},
 			},
@@ -656,7 +656,7 @@ local enemys = {
 	weak1=2},	
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=12800, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=120, fireCd=3.0,
+	{id=11,image="feiji",demage=0,hp=12800, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--医疗兵      --type = "yiliao",

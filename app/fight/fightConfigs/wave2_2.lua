@@ -404,7 +404,7 @@ local enemys = {
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=2500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=2500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	--导弹          --missileType = "daodan",

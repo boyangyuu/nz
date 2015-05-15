@@ -59,10 +59,11 @@ function Map:getWaveIndex()
 	return self.waveIndex
 end
 
-function Map:setIsOpenJu(isOpenJu_)
+function Map:setIsOpenJu(isOpenJu_, pos)
+	-- print("function Map:setIsOpenJu(isOpenJu_, pos)", isOpenJu_)
 	self.isOpenJu = isOpenJu_
 	if self.isOpenJu then 
-		self:dispatchEvent({name = Map.GUN_OPEN_JU_EVENT})	
+		self:dispatchEvent({name = Map.GUN_OPEN_JU_EVENT, pos = pos})	
 	else
 		self:dispatchEvent({name = Map.GUN_CLOSE_JU_EVENT})
 		self.fight:dispatchEvent({name = self.fight.FIGHT_RESUMEPOS_EVENT})
@@ -81,12 +82,12 @@ function Map:getIsJuAble()
 	return self.isJuAble
 end
 
-function Map:changeJuStatus()
-	self.isJu = not self.isJu
-	local data = {gunView = not self.isJu, btnLei = not self.isJu, 
-			label_leiNum = not self.isJu }
-	self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = data})
-end
+-- function Map:changeJuStatus()
+	-- self.isJu = not self.isJu
+	-- local data = {gunView = not self.isJu, btnLei = not self.isJu, 
+	-- 		label_leiNum = not self.isJu }
+	-- self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,comps = data})
+-- end
 
 function Map:playEffect(name)
 	if name == "shake" then

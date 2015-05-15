@@ -9,7 +9,7 @@ end
 
 function JujiPlayerCell:initCellUI()
 	cc.FileUtils:getInstance():addSearchPath("res/JujiMode")
-    local controlNode = cc.uiloader:load("cellPlayer.ExportJson")
+    local controlNode = cc.uiloader:load("cellPlayer.json")
     controlNode:setPosition(0, 0)
     self:addChild(controlNode)
 

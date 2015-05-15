@@ -88,7 +88,8 @@ function DuozuBossView:playFire()
     --普通导弹
     self.armature:getAnimation():play("fire2" , -1, 1) 
 
-    for i=1,3 do
+    local missileOffsets = self.property["missileOffsets"]
+    for i=1,#missileOffsets do
         local index = i + 2
         local boneName = "dao"..index
         local bone = self.armature:getBone(boneName):getDisplayRenderNode()     
@@ -98,7 +99,7 @@ function DuozuBossView:playFire()
             srcScale = self:getScale() * 0.3, 
             id = self.property["missileId"], 
             demageScale = self.enemy:getDemageScale(),
-            offset = self.property["missileOffsets"][i],
+            offset = missileOffsets[i],
         }
         local function callfuncAddDao()
             local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))

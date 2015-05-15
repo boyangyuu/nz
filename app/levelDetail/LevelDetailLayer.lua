@@ -259,19 +259,26 @@ function LevelDetailLayer:onClickGoldWeapon()
 		self:equipGold()
 		self:startGame()
 	end
-	-- 保留，暂时不用
-	-- function deneyPopGoldGift()
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
-	-- end
- --    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
- --    	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
-	--      "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
-	
 
-    local umData = {}
-	umData[self.levelInfo] = "点击黄金武器"
-	um:event("关卡提示未镶嵌", umData)
+	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
+	if goldweaponNum > 0 then
+        self.inlayModel:equipAllInlays()
+        self:startGame()	
+	else
+		-- 保留，暂时不用
+		-- function deneyPopGoldGift()
+		    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
+		    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
+		-- end
+	 --    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
+	 --    	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
+		--      "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
+
+	    local umData = {}
+		umData[self.levelInfo] = "点击黄金武器"
+		um:event("关卡提示未镶嵌", umData)
+    end
+
 end
 
 function LevelDetailLayer:onClickBtnBibei()
@@ -330,12 +337,8 @@ function LevelDetailLayer:onCancelWeaponGift()
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local rmbCost = weaponRecord["rmbCost"]
 	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
-    if  rmbCost == 6 then
-        self.buyModel:showBuy("unlockWeapon",{payDoneFunc = handler(self, self.onBuyWeaponSucc),weaponid = self.recomWeaponId}, "关卡详情_点击解锁"..weaponName)
-    elseif rmbCost == 10 then
-        self.buyModel:showBuy("highgradeWeapon",{weaponid = self.recomWeaponId}, "关卡详情_点击解锁高级武器"..weaponName)
-   		
-    end
+    local strPos  =  "关卡详情_点击解锁高级武器" .. weaponName
+    self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)    
 end
 
 function LevelDetailLayer:onBuyWeaponGiftSucc()

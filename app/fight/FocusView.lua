@@ -25,6 +25,7 @@ function FocusView:ctor(properties)
 	local robot = md:getInstance("Robot")
 	cc.EventProxy.new(robot, self)
 		:addEventListener(robot.ROBOT_START_EVENT	, handler(self, self.onShowRobot))
+		:addEventListener(robot.GOLDROBOT_START_EVENT, handler(self, self.onShowRobot))
 		:addEventListener(robot.ROBOT_ENDTIME_EVENT	, handler(self, self.onHideRobot))
 
 	local inlay = md:getInstance("FightInlay")
@@ -127,7 +128,6 @@ function FocusView:playJuFire()
 	--map 下移
 	local map = md:getInstance("Map")
 	map:dispatchEvent({name = map.EFFECT_JUSHAKE_EVENT, time1 = time1, time2 = time2}) 
-	
 end
 
 function FocusView:animationEvent(armatureBack,movementType,movementID)
@@ -163,15 +163,14 @@ function FocusView:getFocusRange()
 end
 
 function FocusView:addJu(event)
-	print("FocusView:addJu()")
+	-- print("FocusView:addJu()")
 
 	local x, y = self:getParent():getPosition()
-	print("x"..x.."y"..y)
-	self.oriJuPos = cc.p(x, y)
-	dump("self.oriJuPos", self.oriJuPos)
-
+	
 	--zoom
-	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
+	--todo
+	-- local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
+	local destWorldPos = event.pos
 	local scale = define.kJuRange
 	local time = 0.1
 	local map = md:getInstance("Map")
@@ -192,7 +191,7 @@ function FocusView:addJu(event)
 	--hide
 	self.armature:setVisible(false)
 
-	self.map:changeJuStatus()	
+	-- self.map:changeJuStatus()	
 end
 
 function FocusView:removeJu(event)
@@ -220,7 +219,7 @@ function FocusView:removeJuEnd()
 	--hide
 	self.armature:setVisible(true)
 
-	self.map:changeJuStatus()
+	-- self.map:changeJuStatus()
 end
 
 

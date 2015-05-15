@@ -1,20 +1,18 @@
-local GunHelpLayer = class("GunHelpLayer", function()
+local GunHelpPopup = class("GunHelpPopup", function()
 	return display.newLayer()
 end)
 
-function GunHelpLayer:ctor(properties)
+function GunHelpPopup:ctor(properties)
     self.fightGun = md:getInstance("FightGun")
     self.gunId = properties.gunId
 
     cc.EventProxy.new(self.fightGun, self)
         :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
-    
-    self:setTouchSwallowEnabled(false)
     self:loadCCS()
     self:onShow()
 end
 
-function GunHelpLayer:loadCCS()
+function GunHelpPopup:loadCCS()
     local manager = ccs.ArmatureDataManager:getInstance() 
     manager:addArmatureFileInfo("res/Fight/uiAnim/yd_saosan/yd_saosan.ExportJson")
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
@@ -36,7 +34,7 @@ function GunHelpLayer:loadCCS()
     end)
 end
 
-function GunHelpLayer:onShow(event)
+function GunHelpPopup:onShow(event)
     --refresh ui
     self.gunDisplay:removeAllChildren()
 
@@ -67,7 +65,7 @@ function GunHelpLayer:onShow(event)
     fight:pauseFight(true)    
 end
 
-function GunHelpLayer:onClickGet()
+function GunHelpPopup:onClickGet()
     self.fightGun:changeHelpGun(self.gunId)
 
     --pause
@@ -76,13 +74,12 @@ function GunHelpLayer:onClickGet()
     fight:pauseFight(false)
 
     if self.gunId == 8 then
-        print("function GunHelpLayer:onClickGe111")
         local hero = md:getInstance("Hero")
         hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
     end
 
-    ui:closePopup("GunHelpLayer")
+    ui:closePopup("GunHelpPopup", {animName = "normal"})
 end
 
 
-return GunHelpLayer
+return GunHelpPopup

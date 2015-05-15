@@ -144,7 +144,7 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 3,
+                        group = 1,
                         level = 6,
             },
 
@@ -154,7 +154,9 @@ function MyApp:createGameStateFile()
             },
 
             jujiMode = {
-                waveIndex = 0, 
+                waveIndex = 40, 
+                scoreAwarded = {
+                },
             },            
 
             user = {
@@ -192,7 +194,7 @@ function MyApp:createGameStateFile()
                         afterfight03    = true,   -- 回到主界面
                         
                         --第1-5关之内
-                        fightJu         = true,  
+                        fightJu         = false,  
 
                         --第1-4失败之后
                         fightRelive     = true,                      

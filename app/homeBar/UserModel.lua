@@ -47,7 +47,8 @@ function UserModel:costDiamond(diamond)
 	end
 end
 
- function UserModel:buyDiamond(diamond)
+ function UserModel:addDiamond(diamond)
+ 	if diamond <= 0 then return end
 	local data = getUserData()
 	data.diamond = data.diamond + diamond
 	setUserData(data)
@@ -55,6 +56,7 @@ end
 end
 
  function UserModel:addMoney(money)
+ 	if money <= 0 then return end
 	local data = getUserData()
 	data.money = data.money + money
 	setUserData(data)

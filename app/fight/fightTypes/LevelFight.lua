@@ -23,7 +23,8 @@ function LevelFight:getResultData()
     resultData["hpPercent"] = hpPercent  
     resultData["levelId"]   = self:getLevelId()  
     resultData["groupId"]   = self:getGroupId()  
-    resultData["fightType"]   = self:getFightType() 
+    resultData["fightType"] = self:getFightType() 
+    resultData["result"]    = self:getResult()
     return resultData
 end
 
@@ -40,9 +41,39 @@ function LevelFight:waveUpdate(nextWaveIndex, waveType)
         fightDescModel:bossShow()
     elseif waveType == "award" then  
         fightDescModel:goldShow()
-    else 
+    elseif waveType == "normalWave" then 
         fightDescModel:waveStart(nextWaveIndex)
+    else
+        assert(waveType, "waveType is nil")
     end    
 end
+
+function LevelFight:endFightFail()
+    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
+    self:pauseFight(true)
+    ui:showPopup("FightResultFailPopup",
+        {onReliveFunc = handler(self, self.onReliveConfirm),
+         onGiveUpFunc = handler(self, self.onReliveDeny)},
+        {animName = "normal"}) 
+    self:clearFightData()
+end
+
+function LevelFight:getReliveCost()
+    local times = self:getRelivedTimes()
+    local costs = define.kLevelReliveCosts
+    local maxCost = costs[#costs]
+    return costs[times + 1] or maxCost
+end
+
+function LevelFight:onReliveConfirm()
+    self:doRelive()
+end
+
+function LevelFight:onReliveDeny()
+    self:doGiveUp()
+    local fightData = self:getResultData()
+    ui:changeLayer("HomeBarLayer",{fightData = fightData})  
+end
+
 
 return LevelFight

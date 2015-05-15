@@ -2,17 +2,7 @@
 
 local Define = class("Define", cc.mvc.ModelBase)
 
---hero
-Define.kHeroBaseHp 				= 100.0  --角色血量
-Define.kHeroCritScale 			= 3.0  --暴击倍数
-Define.kHeroHpLess 				= 0.15  --血量剩下0.1的时候 飘红
-Define.kHeroHelper				= 0  --默认回血0/s
-Define.kHeroHpBag				= 200  --回血包
-Define.kHeroHpBagCd				= 10    --回血包cd
-
-Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
-Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
-
+---------------------- 怪物 --------------------------
 --手雷兵 远程兵 
 Define.kEnemyWalkSpeed 			= 10.0       --左右移动速度
 Define.kEnemyWalkWidth 			= 300 * 1	--左右移动距离原来140改为200
@@ -91,6 +81,7 @@ Define.kAwardEnemySanSpeed		= 50.0      --伞速
 Define.kMissileDaoTime				= 2.5    --导弹飞行时间
 Define.kMissileTieqiuTime           = 2.0    --铁球和汽车飞行时间
 Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
+Define.kYanEffectTime				= 5      --烟雾白屏时间 
 
 --飞镖
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
@@ -101,8 +92,16 @@ Define.kMissileWangTime			= 1    --飞过来的时间
 Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
 
----------------其他-----------------------------------------------------------
-------------------------------------------------------------------------------
+--------------------------角色---------------------------------
+--hero
+Define.kHeroBaseHp 				= 100.0  --角色血量
+Define.kHeroCritScale 			= 3.0  --暴击倍数
+Define.kHeroHpLess 				= 0.15  --血量剩下0.1的时候 飘红
+Define.kHeroHelper				= 0  --默认回血0/s
+Define.kHeroHpBag				= 200  --回血包
+Define.kHeroHpBagCd				= 10    --回血包cd
+Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
+Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
 
 --黄金武器
 Define.kGoldTime 				= 8     --黄金武器激活时间
@@ -146,6 +145,12 @@ Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之30血时 触发机甲
 
 --enenmy动画缩放比例
 Define.kEnemyAnimScale      	= 1 / 0.7
+
+
+--------------------------战斗---------------------------------
+Define.kJujiReliveCosts         = {20, 40, 40, 60, 80, 100,}  --无限狙击模式复活
+Define.kBossReliveCosts         = {20, 40, 40, 60, 80, 100,}  --boss竞技模式复活
+Define.kLevelReliveCosts        = {20, 40, 60, 80,} 				--普通关卡模式复活
 
 function Define:ctor()
     Define.super.ctor(self) 

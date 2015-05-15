@@ -39,7 +39,6 @@ function MapView:ctor()
 	self.mapModel 		= md:getInstance("Map")
 	self.missileNum     = 0
 	self.cacheEnemys    = {}
-	self.isPause 		= false
 	self.isZooming 		= false
 	self.fightDescModel = md:getInstance("FightDescModel")
 	self.enemyM         = md:getInstance("EnemyManager")
@@ -60,7 +59,8 @@ function MapView:ctor()
 		:addEventListener(Hero.SKILL_GRENADE_START_EVENT,	  handler(self, self.onThrowGrenade))	
 
     cc.EventProxy.new(self.fight, self)   
-        :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.startFight))
+        :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.onStartFight))
+        :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.onFightPause))
 
 	cc.EventProxy.new(self.mapModel, self)
 		:addEventListener(self.mapModel.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
@@ -146,11 +146,20 @@ function MapView:loadPlaces()
     end       	
 end
 
-function MapView:startFight(event)
+function MapView:onStartFight(event)
 	local fightModel = md:getInstance("FightMode")
 	local modeConfig = fightModel:getModeConfig()
 	self.fightDescModel:start(modeConfig.type)
 	self:performWithDelay(handler(self, self.updateEnemys), 3.0)
+end
+
+function MapView:onFightPause(event)
+	local isPause = event.isPause
+	if isPause then 
+		transition.pauseTarget(self)
+	else
+		transition.resumeTarget(self)
+	end
 end
 
 function MapView:updateEnemys()
@@ -168,12 +177,20 @@ function MapView:updateEnemys()
 	end
 
 	--wave提示
+	local waveType = wave["waveType"] or "normalWave"
 	self.fight:waveUpdate(waveIndex, waveType)
 
 	--gunData
 	if wave.gunData then  
 		local fightGun = md:getInstance("FightGun")
 		fightGun:showGunIntro(wave.gunData)
+	end
+
+	--adviseData
+	if wave.adviseData then  
+		ui:showPopup("FightAdvisePopup", 
+			wave.adviseData, 
+			{animName = "scale"})
 	end
 
 	--addEnemys
@@ -205,7 +222,7 @@ function MapView:addWave(waveData, isZhaohuan)
 				--出场顺序
 				enemyProperty["order"] = order 
 				local pos = group["pos"][i] 
-				assert("pos", pos)
+				assert(pos, "没有配置pos！！")
 				enemyProperty["offsetX"] = pos 
 				self:cacheEnemy(enemyProperty)
 			end
@@ -430,6 +447,7 @@ function MapView:openZoom(event)
 
 	--event data
 	local destWorldPos = event.destWorldPos
+	-- dump(destWorldPos, "destWorldPos")
 	local scale = event.scale
 	local time = event.time
 	self.hero:setMapZoom(scale)
@@ -440,9 +458,13 @@ function MapView:openZoom(event)
 		-- 回复触摸Ftodoyby
 		self.isZooming = false
 	end
-	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))
-	local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
-	local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	local pWorldMap = self:convertToWorldSpace(cc.p(0, 0))
+	-- dump(pWorldMap, "pWorldMap")
+	-- local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
+	-- local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	
+	local offsetX = (-destWorldPos.x  + pWorldMap.x) * (scale)
+	local offsetY = (-destWorldPos.y + pWorldMap.y) * (scale)
 	local action = cc.MoveBy:create(time, cc.p(offsetX, offsetY))
 	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
 	self:runAction(cc.ScaleBy:create(time, scale))	

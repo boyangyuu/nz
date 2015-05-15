@@ -13,7 +13,7 @@ local GunConfigs = import(".Gun.GunConfigs")
 
 function Gun:ctor(properties)
     Gun.super.ctor(self, properties)
-    -- dump(properties, "properties")
+    dump(properties, "properties")
 
     --instance
     self.inlay 		 = md:getInstance("FightInlay")
@@ -38,7 +38,7 @@ function Gun:initConfig()
   	end
 
 	self.config = self.weaponModel:getFightWeaponValue(self.configId, isHelpGun)
-	-- dump(self.config, "self.config gun")
+	dump(self.config, "self.config gun")
 
 	--skill
 	local name = self:getGunName()

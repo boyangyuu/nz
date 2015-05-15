@@ -2,11 +2,15 @@ local UI = class("UIManager",cc.mvc.ModelBase)
 
 -- 定义事件
 UI.LAYER_CHANGE_EVENT 	= "LAYER_CHANGE_EVENT"
+UI.LAYER_PAUSE_EVENT 	= "LAYER_PAUSE_EVENT"
+
 UI.POPUP_SHOW_EVENT   	= "POPUP_SHOW_EVENT"
 UI.POPUP_CLOSE_EVENT   	= "POPUP_CLOSE_EVENT"
 UI.POPUP_CLOSEALL_EVENT = "POPUP_CLOSEALL_EVENT"
+
 UI.LOAD_SHOW_EVENT 		= "LOAD_SHOW_EVENT"
 UI.LOAD_HIDE_EVENT 		= "LOAD_HIDE_EVENT"
+
 UI.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
 UI.PAUSESCENE_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
 
@@ -25,19 +29,26 @@ layerClasses["storyLayer"]           = import("..start.StoryLayer")
 
 layerClasses["DailyLoginLayer"]      = import("..dailyLogin.DailyLoginLayer")
 
---popup
+--fight
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
-layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
-layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
-layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
-layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiModeLayer"]        = import("..jujiMode.JujiModeLayer")
 layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
-layerClasses["GunHelpLayer"]         = import("..fight.Gun.GunHelpLayer")
+layerClasses["GunHelpPopup"]         = import("..fight.Gun.GunHelpPopup")
+layerClasses["FightAdvisePopup"]     = import("..fight.fightTips.FightAdvisePopup")
+layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopup")
+
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
+layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
+layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
 
 -- giftBag
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
+
+--jujiFight
+layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
+layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
+layerClasses["JujiAwardPopup"]       = import("..jujiMode.JujiAwardPopup")
+
 
 
 function UI:ctor(properties)
@@ -73,22 +84,30 @@ function UI:showPopup(layerId, properties, extra)
 		anim = extra.anim
 		animName = extra.animName
 	end
-
 	local layerCls = self:getLayerCls(layerId)
-
 	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
 		opacity = opacity, anim = anim, animName = animName,
 		properties = properties})
 
+	--pause rootLayer
+	self:setPause(true)
 end
 
 function UI:closePopup(layerId,eventData)
-	dump(eventData, "eventData")
 	self:dispatchEvent({name = UI.POPUP_CLOSE_EVENT, layerId = layerId, eventData = eventData})
 end
 
 function UI:closeAllPopups()
 	self:dispatchEvent({name = UI.POPUP_CLOSEALL_EVENT})
+
+	--resume rootLayer
+	self:setPause(false)
+end
+
+function UI:setPause(isPause)
+	print("function UI:setPause(isPause)")
+	self:dispatchEvent({name = UI.LAYER_PAUSE_EVENT, isPause = isPause})
+
 end
 
 function UI:getLayerCls(layerId)

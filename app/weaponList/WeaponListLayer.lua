@@ -70,12 +70,6 @@ function WeaponListLayer:loadCCS()
     local plist = "res/WeaponList/wqsj/wqsj0.plist"
     local png   = "res/WeaponList/wqsj/wqsj0.png"
     display.addSpriteFrames(plist, png)  
-
-    local hqlsrc = "res/WeaponList/iconhql_tx/iconhql_tx.ExportJson"
-    manager:addArmatureFileInfo(hqlsrc)
-    local plist = "res/WeaponList/iconhql_tx/iconhql_tx0.plist"
-    local png   = "res/WeaponList/iconhql_tx/iconhql_tx0.png"
-    display.addSpriteFrames(plist, png)        
 end
 
 function WeaponListLayer:initUI()
@@ -227,24 +221,24 @@ function WeaponListLayer:onClickBtnOncefull()
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
 end
 
-function WeaponListLayer:onClickBtnBuy()
-    -- 暂时不用
-    -- local guide = md:getInstance("Guide")
-    -- if self.buyModel:checkBought("weaponGiftBag") == false then
-    --     self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-    --       deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
-    --                                    "武器库界面_点击解锁武器"..self.weaponRecord["name"])
-    -- end
+-- function WeaponListLayer:onClickBtnBuy()
+--     -- 暂时不用
+--     -- local guide = md:getInstance("Guide")
+--     -- if self.buyModel:checkBought("weaponGiftBag") == false then
+--     --     self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
+--     --       deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
+--     --                                    "武器库界面_点击解锁武器"..self.weaponRecord["name"])
+--     -- end
 
-    self:onCancelWeaponGift()
+--     self:onCancelWeaponGift()
 
-end
+-- end
 
 function WeaponListLayer:onClickBtnUpgrade(event)
     self.weaponListModel:intensify(self.weaponId)
 end
 
-function WeaponListLayer:onCancelWeaponGift()
+function WeaponListLayer:onClickBtnBuy(event)
     if self.userModel:getDiamond() >= self.weaponRecord["cost"] then
         ui:showPopup("commonPopup",
             {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."宝石购买该武器？",
@@ -253,14 +247,8 @@ function WeaponListLayer:onCancelWeaponGift()
              { opacity = 155})
     else
         local rmbCost = self.weaponRecord["rmbCost"]
-        if  rmbCost == 6 then
-            self.buyModel:showBuy("unlockWeapon",{weaponid = self.weaponId,
-                payDoneFunc = handler(self, self.onBuyWeaponSucc)},
-                 "武器库界面_点击解锁武器"..self.weaponRecord["name"])
-        elseif rmbCost == 10 then
-            self.buyModel:showBuy("highgradeWeapon",{weaponid = self.weaponId}, "武器库界面_点击解锁高级武器"..self.weaponRecord["name"])
-
-        end
+        local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
+        self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)
     end
 end
 
@@ -273,7 +261,8 @@ function WeaponListLayer:onBuyWeaponGiftSucc()
 end
 
 function WeaponListLayer:onBuyWeaponSucc()
-    if self.userModel:costDiamond(self.weaponRecord["cost"]) then
+    local isAfforded = self.userModel:costDiamond(self.weaponRecord["cost"]) 
+    if isAfforded then
         self.weaponListModel:buyWeapon(self.weaponId)
         if self.weapontype == "ju" then
             self.weaponListModel:equipBag(self.weaponId,3)
@@ -336,29 +325,33 @@ function WeaponListLayer:refreshComment()
     self.labelName:setString(self.weaponRecord["name"])
     self.buycost:setString(self.weaponRecord["cost"])
     self.labelDescribe:setString(self.weaponRecord["describe"])
-    local weaponImg = display.newSprite("#icon_"..self.weaponRecord["imgName"]..".png")
-    weaponImg:setScale(1.43)
-    weaponImg:setAnchorPoint(0.5,0.5)
-    self.layerGun:addChild(weaponImg)
-    -- addChildCenter(weaponImg, self.layerGun)
     local imageName = self.weaponRecord["imgName"]
+    local weaponImg = display.newSprite("#icon_"..imageName..".png")
+    weaponImg:setScale(1.43)
     local weaponSpc = cc.uiloader:load("res/WeaponList/wutexing/wutexing_"..imageName..".ExportJson")
     if weaponSpc then
         weaponSpc:setAnchorPoint(0.5,0.5)
         self.layerGun:addChild(weaponSpc)
     end
 
-    if self.weaponId == 9 then
-        local armaturehql = ccs.Armature:create("iconhql_tx")
-        armaturehql:setAnchorPoint(0.5,0.5)
-        self.layerGun:addChild(armaturehql)
-        armaturehql:getAnimation():setMovementEventCallFunc(
+    if self.weaponRecord["shopAnimName"] ~= "null" then
+        local animName = self.weaponRecord["shopAnimName"]
+        local gunArmature = ccs.Armature:create(animName)
+        gunArmature:setAnchorPoint(0.5,0.5)
+        --todo
+        self.layerGun:addChild(gunArmature)
+        gunArmature:getBone("gun"):addDisplay(weaponImg, 0)
+        gunArmature:getBone("gun"):changeDisplayWithIndex(0, true)
+        gunArmature:getAnimation():setMovementEventCallFunc(
         function ( armatureBack,movementType,movement) 
             if movementType == ccs.MovementEventType.complete then
-                armaturehql:getAnimation():play("chixu", -1, 0)
+                gunArmature:getAnimation():play("chixu", -1, 0)
             end 
         end)
-        armaturehql:getAnimation():play("start" , -1, 0)
+        gunArmature:getAnimation():play("start" , -1, 0)
+    else
+        weaponImg:setAnchorPoint(0.5,0.5)
+        self.layerGun:addChild(weaponImg)
     end
 
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)

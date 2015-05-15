@@ -105,7 +105,7 @@ end
 
 function StartLayer:checkActivateCode()
     ui:showPopup("commonPopup",
-             {type = "style2", content = "激活码错误！", delay = 0.8},
+             {type = "style2", content = "激活码错误！"},
              {opacity = 0})
 end
 
@@ -193,7 +193,8 @@ function StartLayer:onEnter()
     --music 
     self:playEnterSound()
     self:playBgMusic() 
-
+    --init daily login
+    self:initDailyLogin()
 end
 
 function StartLayer:onClickBegan()
@@ -206,16 +207,11 @@ function StartLayer:onClickBegan()
         local groupId, levelId = levelMapModel:getConfig()
         -- print("groupId", groupId)
 
-        local userModel = md:getInstance("UserModel")
-        local isDone = userModel:getUserLevel() >= 4
         local fightData = {
             fightType = "levelFight",
             groupId = groupId,
         }
-        ui:changeLayer("HomeBarLayer",{fightData = fightData, popWeaponGift = isDone, 
-            loadingType = "home_first"})
-        --init daily login
-        self:initDailyLogin() 
+        ui:changeLayer("HomeBarLayer",{fightData = fightData,loadingType = "home_first"})
 
     else
         --clear data
@@ -240,8 +236,8 @@ function StartLayer:initDailyLogin()
 
     local isGet = self.dailyLoginModel:isGet()
     local netState = network.getInternetConnectionStatus()
-    if isGet == false and netState ~=0 then
-        self.dailyLoginModel:setPopup()
+    if isGet == false and netState ~= 0 then
+        ui:showPopup("DailyLoginLayer", {})
     end
 end
 

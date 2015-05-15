@@ -37,8 +37,6 @@ function FightResultFailPopup:initUI()
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     self.btnRevive = cc.uiloader:seekNodeByName(self, "btnrevive")
 
-    
-
     --add res
     local manager = ccs.ArmatureDataManager:getInstance()
     local ydfhsrc = "res/FightResult/anim/ydfh/ydfh.ExportJson"
@@ -91,30 +89,12 @@ function FightResultFailPopup:onClickRelive()
 end
 
 function FightResultFailPopup:onClickBackHome()
-    local buyModel = md:getInstance("BuyModel")
     local fightFactory =     md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     fight:doGiveUp()
     local result = fight:getResultData()
-    local groupId, levelId = result["groupId"], result["levelId"]
-    local fightType = result["fightType"]
     ui:closePopup("FightResultFailPopup")
-    local isBoughtWeapon = buyModel:checkBought("weaponGiftBag")
-    if groupId == 0 and levelId == 0 and fightType == "levelFight" then
-        ui:changeLayer("HomeBarLayer",{fightData = result})
-        return
-    end
-    if fightType == "bossFight" then
-        local levelMapModel = md:getInstance("LevelMapModel")
-        local groupId, levelId = levelMapModel:getConfig()
-        result["groupId"] = groupId
-        ui:changeLayer("HomeBarLayer",{fightData = result})
-    end
-    if isBoughtWeapon then
-        ui:changeLayer("HomeBarLayer",{fightData = result})
-    else
-        ui:changeLayer("HomeBarLayer",{popWeaponGift = true, fightData = result})
-    end
+    ui:changeLayer("HomeBarLayer",{fightData = result})
 end
 
 function FightResultFailPopup:payReliveDone()
@@ -123,6 +103,7 @@ function FightResultFailPopup:payReliveDone()
     fight:doRelive()
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
+    ui:closePopup("FightResultFailPopup")
 end
 
 function FightResultFailPopup:initGuide()

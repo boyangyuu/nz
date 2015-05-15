@@ -72,6 +72,7 @@ function Fight:refreshData(fightData)
     self.hero       = md:getInstance("Hero") 
     self.inlay      = self.hero:getFightInlay()
     self.goldValue  = 0.0
+    self.relivedTimes = 0
 end
 
 function Fight:refreshUm()
@@ -126,9 +127,6 @@ function Fight:startFight()
         self.inlay:checkNativeGold()    
     end
 
-    --check ju
-    self:checkJuContorlType()
-
     --check guide
     local guide = md:getInstance("Guide")
     if self.groupId == 0 and self.levelId == 0 then 
@@ -162,14 +160,8 @@ function Fight:endFightWin()
     levelMapModel:levelPass(self.groupId, self.levelId)
 end
 
-function Fight:endFightFail()
-    self:dispatchEvent({name = Fight.FIGHT_FAIL_EVENT})
-    self:pauseFight(true)
-    self.inlayModel:removeAllInlay()
-    local fightProp = md:getInstance("FightProp")
-    ui:showPopup("FightResultFailPopup",{},{animName = "normal"}) 
-    self:clearFightData()
-end
+
+
 
 function Fight:startFightResult()
     local fightDescModel = md:getInstance("FightDescModel")
@@ -186,7 +178,7 @@ end
 function Fight:willFail(time)
     if self:getResult() ~= nil then return end
     local delay = time or 2.0
-    self:setResult("fail")    
+    self:setResult("willFail")    
     scheduler.performWithDelayGlobal(handler(self, self.doFail), delay)
 end
 
@@ -202,7 +194,7 @@ function Fight:doFail()
 end
 
 function Fight:doGiveUp()
-    self.result = "giveUp"
+    self.result = "fail"
 
      --um 关卡完成情况事件
     local levelInfo = self:getLevelInfo() 
@@ -221,22 +213,24 @@ function Fight:doRelive()
     local umData = {}
     umData[levelInfo] = "复活"
     um:event("关卡道具使用", umData)
-
-    --relive
-    ui:closePopup("FightResultFailPopup")
-    self.hero:doRelive()
-    
+  
     --clear
     self:clearFightData()
-
     self.result = nil
-    
-    self:equipReliveAward()
 
     --relive
+    self.hero:doRelive()
+    self:equipReliveAward()
     self:dispatchEvent({name = Fight.FIGHT_RELIVE_EVENT})
     self:pauseFight(false)
+
+    self.relivedTimes = self.relivedTimes + 1
 end
+
+function Fight:getRelivedTimes()
+    return self.relivedTimes
+end
+
 
 function Fight:equipReliveAward()
     --gold
@@ -298,12 +292,6 @@ function Fight:onDialogAfterEnd()
     end
 end
 
-function Fight:checkDialogAward(callfunc)
-    local dialog = md:getInstance("DialogModel")
-    self:pauseFight(true)
-    dialog:check("award",  callfunc)    
-end
-
 ---- 关卡相关 ----
 function Fight:getFailCause()
     local goldCostTimes = self.inlay:getGoldCostTimes()
@@ -326,12 +314,6 @@ function Fight:getLevelInfo()
     local str = self.groupId.."-"..self.levelId 
     assert(str, "str is nil")
     return str
-end
-
-function Fight:checkJuContorlType()
-    if self:isJujiFight() == false then return end
-    local comps = {btnJu = true, btnChange =  false,}
-    self:setCompsVisible(comps)
 end
 
 function Fight:setCompsVisible(componentVisibles)
@@ -386,5 +368,20 @@ function Fight:isJujiFight()
     assert(false, "must implement")
 end
 
+function Fight:endFightFail()
+    assert(false, "must implement") 
+end
+
+function Fight:onReliveConfirm()
+   assert(false, "must implement") 
+end
+
+function Fight:onReliveDeny()
+    assert(false, "must implement")
+end
+
+function Fight:getReliveCost()
+    assert(false, "must implement")
+end
 
 return Fight
