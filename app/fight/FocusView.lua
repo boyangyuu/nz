@@ -128,7 +128,6 @@ function FocusView:playJuFire()
 	--map 下移
 	local map = md:getInstance("Map")
 	map:dispatchEvent({name = map.EFFECT_JUSHAKE_EVENT, time1 = time1, time2 = time2}) 
-	
 end
 
 function FocusView:animationEvent(armatureBack,movementType,movementID)
@@ -164,13 +163,13 @@ function FocusView:getFocusRange()
 end
 
 function FocusView:addJu(event)
-	print("FocusView:addJu()")
+	-- print("FocusView:addJu()")
 
 	local x, y = self:getParent():getPosition()
 	
 	--zoom
 	--todo
-	local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
+	-- local destWorldPos = self:convertToNodeSpace(cc.p(0, 0))
 	local destWorldPos = event.pos
 	local scale = define.kJuRange
 	local time = 0.1
@@ -192,7 +191,7 @@ function FocusView:addJu(event)
 	--hide
 	self.armature:setVisible(false)
 
-	self.map:changeJuStatus()	
+	-- self.map:changeJuStatus()	
 end
 
 function FocusView:removeJu(event)
@@ -220,7 +219,7 @@ function FocusView:removeJuEnd()
 	--hide
 	self.armature:setVisible(true)
 
-	self.map:changeJuStatus()
+	-- self.map:changeJuStatus()
 end
 
 

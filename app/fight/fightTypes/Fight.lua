@@ -127,9 +127,6 @@ function Fight:startFight()
         self.inlay:checkNativeGold()    
     end
 
-    --check ju
-    self:checkJuContorlType()
-
     --check guide
     local guide = md:getInstance("Guide")
     if self.groupId == 0 and self.levelId == 0 then 
@@ -317,12 +314,6 @@ function Fight:getLevelInfo()
     local str = self.groupId.."-"..self.levelId 
     assert(str, "str is nil")
     return str
-end
-
-function Fight:checkJuContorlType()
-    if self:isJujiFight() == false then return end
-    local comps = {btnJu = true, btnChange =  false,}
-    self:setCompsVisible(comps)
 end
 
 function Fight:setCompsVisible(componentVisibles)
