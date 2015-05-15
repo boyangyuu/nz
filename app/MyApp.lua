@@ -29,8 +29,8 @@ dataModel = DataModel.new()
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
-    self:initGameState()    
     self:initVariables()
+    self:initGameState()    
     
     -- um 设置玩家账户及等级
     um:setUserAccount()
