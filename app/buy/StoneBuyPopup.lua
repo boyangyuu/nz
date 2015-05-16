@@ -47,7 +47,10 @@ end
 function StoneBuyPopup:onClickConfirm(event)
     if self.properties["onClickConfirm"] then 
         self.properties["onClickConfirm"]() 
+    else
+        self.buyModel:iapPay()
     end
+    -- self:close()
 end
 
 function StoneBuyPopup:close()

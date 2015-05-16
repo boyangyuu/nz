@@ -131,8 +131,7 @@ function FightProp:costHpBag()
 
     local tips = "是否花费"..kValue.."宝石购买医疗包x6？"
     ui:showPopup("StoneBuyPopup",
-         {tips = tips, 
-         onClickConfirm = onClickConfirm},
+         {tips = tips},
          {opacity = 0})	
 
 end
