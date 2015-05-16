@@ -82,7 +82,7 @@ function HeroAnimView:loadCCS()
 end
 
 function HeroAnimView:playHurtedBomb_lei(event)
-	-- --sound
+	--sound
     local soundSrc  = "res/Music/fight/hd_bz.wav"
     audio.playSound(soundSrc,false)  	
 end
