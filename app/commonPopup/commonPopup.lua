@@ -49,6 +49,8 @@ end
 
 function commonPopup:initUI(properties)
 	local typeName = properties.type
+	-- local funcStr = "initUI_" .. typeName 
+	-- self[funcStr](properties)
 	if typeName == "style1" then
 		local content = cc.uiloader:seekNodeByName(self, "content")
 		content:setString(properties.content)
@@ -233,6 +235,10 @@ function commonPopup:initUI(properties)
 	    end)
 	end
 end
+
+-- function callPhone:initUI_style1(properties)
+	
+-- end
 
 function commonPopup:onClickCofirm()
 	ui:closePopup("commonPopup")

@@ -103,34 +103,55 @@ function FightProp:addHpBag(num)
 	self.propModel:addProp("hpBag", num)
 end
 
-function FightProp:costHpBag(callfuncSuccess)
+function FightProp:costHpBag()
 	local num = self.propModel:getPropNum("hpBag")
 	local isfree = self:isFreeCost()  
-
 	if num >= 1 or isfree then 
 		local hero = md:getInstance("Hero")
 		hero:costHpBag()
-        if callfuncSuccess then callfuncSuccess() end
         if not isfree then 
 	       	self.propModel:costProp("hpBag",1)  
         end
-	else
-		local user = md:getInstance("UserModel")
-		local numDia  = user:getDiamond()
-		print("numDia", numDia)
-		local kValue = 20
-		if numDia <= kValue then
+        return 
+    end
 
-	        ui:showPopup("commonPopup",
-	            {type = "style3", content = "是否花费"..kValue.."宝石购买医疗包？",
-	             callfuncCofirm =  handler(self, self.onBuyHpSucc),
-	             },{ opacity = 155})
-	    else
-			self.buyModel:showBuy("stone450", {
-				isNotPopKefu = true}
-				, "战斗界面_点击医疗包")
-		end
-	end
+    --buy
+	local kValue = 40
+    local function onClickConfirm()
+        if self:buyHpBagByStone() then 
+            ui:closePopup("StoneBuyPopup")
+        else 
+            local strPos  =  "战斗界面_点击血包"
+            self.buyModel:showBuy("stone450", 
+        	{showType = "iap",
+        	payDoneFunc = handler(self, self.buyHpBagByStone)}, 
+        	strPos)
+        end
+    end
+
+    local tips = "是否花费"..kValue.."宝石购买医疗包x6？"
+    ui:showPopup("StoneBuyPopup",
+         {tips = tips, 
+         onClickConfirm = onClickConfirm},
+         {opacity = 0})	
+
+end
+
+function FightProp:buyHpBagByStone()
+	print("function FightProp:buyHpBagByStone()")	
+	local kValue = 40
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(kValue) 
+    if isAfforded then
+		local hero = md:getInstance("Hero")
+		hero:costHpBag()
+       	self.propModel:addProp("hpBag",6)  
+       	print("addProp")
+        ui:closePopup("StoneBuyPopup")
+        return true
+    else
+        return false
+    end	
 end
 
 function FightProp:onBuyHpSucc()

@@ -17,11 +17,11 @@ local Hero          = class("Hero", Actor)
 Hero.EFFECT_HURT_BOMB_EVENT      = "EFFECT_HURT_BOMB_EVENT"    --效果_导弹炸屏幕
 Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    --效果_玻璃
 Hero.EFFECT_HURT_YAN_EVENT       = "EFFECT_HURT_YAN_EVENT"     --效果_烟雾
-Hero.EFFECT_ADDHP_EVENT          = "EFFECT_ADDHP_EVENT"        --效果_加血
 Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
 Hero.EFFECT_GUIDE_EVENT          = "EFFECT_GUIDE_EVENT"        --效果_引导
 
 --skill
+Hero.SKILL_ADDHP_EVENT            = "SKILL_ADDHP_EVENT"        --效果_加血
 Hero.SKILL_ROBOT_START_EVENT      = "SKILL_ROBOT_START_EVENT"    --机甲开启
 Hero.SKILL_DEFENCE_SWITCH_EVENT   = "SKILL_DEFENCE_SWITCH_EVENT" --护盾开启
 Hero.SKILL_DEFENCE_BEHURT_EVENT   = "SKILL_DEFENCE_BEHURT_EVENT" --护盾被攻击
@@ -268,7 +268,7 @@ end
 
 function Hero:costHpBag()
     self:increaseHp(define.kHeroHpBag)
-    self:dispatchEvent({name = Hero.EFFECT_ADDHP_EVENT})    
+    self:dispatchEvent({name = Hero.SKILL_ADDHP_EVENT})    
 end
 
 function Hero:decreaseHp(hp)

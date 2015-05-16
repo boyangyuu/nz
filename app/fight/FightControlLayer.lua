@@ -20,9 +20,11 @@ function FightControlLayer:ctor()
 	
 	--events
 	cc.EventProxy.new(propModel, self)
-			:addEventListener(propModel.PROP_UPDATE_EVENT,
-			 handler(self, self.refreshData))
-		
+			:addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshData))
+	
+	cc.EventProxy.new(self.hero, self)
+			:addEventListener(self.hero.SKILL_ADDHP_EVENT, handler(self, self.startHpCd))
+				
 	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
 	self:setTouchSwallowEnabled(false) 
@@ -61,17 +63,14 @@ end
 function FightControlLayer:onClickBtnHp(event)
 	--cd
 	if self.hpCdPercent ~= 0 then return end
-	local function callfuncSuccess()
-		self:startHpCd()
-	end
-	self.fightProp:costHpBag(callfuncSuccess)	
+	self.fightProp:costHpBag()	
 end
 
 function FightControlLayer:getHpCdPercent()
 	return self.hpCdPercent
 end
 
-function FightControlLayer:startHpCd()
+function FightControlLayer:startHpCd(event)
 	self.hpCdPercent = 100
 	self.timerHp:setVisible(true)
 	local cdTimes = define.kHeroHpBagCd
