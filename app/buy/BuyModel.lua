@@ -52,13 +52,14 @@ function BuyModel:showBuy(configId, buyData, strPos)
         ui:showPopup("GiftBagPopup",
         	{popupName = configId},
         	{animName = "shake"})
-    elseif showType == "tips" then
-    	local tips = buyData.tips or proInfo.getConfig(configId)
-    	ui:showPopup("StoneBuyPopup",
-			 {tips = tips},
-			 {opacity = 0})
     elseif showType == "iap" then 
-    	self:iapPay()
+    	self:iapPay()        
+    elseif showType =="prop" then
+    	ui:showPopup("StoneBuyPopup",
+			 {type = self.curId, 
+			 onClickConfirm = handler(self, self.iapPay)},
+			 {animName = "moveDown", opacity = 0})    	
+
     else
     	assert(false, "invalid showType", showType)
     end

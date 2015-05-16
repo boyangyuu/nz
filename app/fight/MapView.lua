@@ -465,9 +465,7 @@ function MapView:openZoom(event)
 		self.isZooming = false
 	end
 	local pWorldMap = self:convertToWorldSpace(cc.p(0, 0))
-	-- dump(pWorldMap, "pWorldMap")
-	-- local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
-	-- local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+
 	
 	local offsetX = (-destWorldPos.x  + pWorldMap.x) * (scale)
 	local offsetY = (-destWorldPos.y + pWorldMap.y) * (scale)

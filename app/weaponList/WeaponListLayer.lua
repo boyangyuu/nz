@@ -242,7 +242,7 @@ function WeaponListLayer:onClickBtnBuy(event)
     ui:showPopup("StoneBuyPopup",
          {tips = tips, 
          onClickConfirm = onClickConfirm},
-         {opacity = 0})
+         {opacity = 150})
 
 end
 

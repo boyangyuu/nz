@@ -338,21 +338,51 @@ function LevelDetailLayer:onClickBtnGold()
 end
 
 function LevelDetailLayer:onCancelWeaponGift()
+
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local cost = weaponRecord["cost"]
 	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
-    local strPos  =  "关卡详情_点击解锁高级武器" .. weaponName
-    self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)    
+    
+    local function onClickConfirm()
+        if self:buyWeaponByStone(cost) then 
+            ui:closePopup("StoneBuyPopup")
+        else 
+            local strPos  =  "关卡详情_点击解锁武器" .. weaponName
+            self.buyModel:showBuy("stone450", {}, strPos)
+        end
+    end
+
+    local tips = "是否花费"..cost.."宝石购买该武器？"
+    ui:showPopup("StoneBuyPopup",
+         {tips = tips, 
+         onClickConfirm = onClickConfirm},
+         {opacity = 150})
+    -- local strPos  =  "关卡详情_点击解锁高级武器" .. weaponName
+    -- self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)    
 end
 
-function LevelDetailLayer:onBuyWeaponGiftSucc()
-    local levelMapModel = md:getInstance("LevelMapModel")
-    levelMapModel:hideGiftBagIcon()
-	self.weaponListModel:equipBag(self.recomWeaponId,1)
+function LevelDetailLayer:buyWeaponByStone(cost)
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(cost) 
+    if isAfforded then
+        self.weaponListModel:buyWeapon(self.recomWeaponId)
+        ui:showPopup("WeaponNotifyLayer",
+         {type = "gun",weaponId = self.recomWeaponId})
+        return true
+    else
+        return false
+    end
 end
 
-function LevelDetailLayer:onBuyWeaponSucc()
-	self.weaponListModel:equipBag(self.recomWeaponId,1)
-end
+-- function LevelDetailLayer:onBuyWeaponGiftSucc()
+--     local levelMapModel = md:getInstance("LevelMapModel")
+--     levelMapModel:hideGiftBagIcon()
+-- 	self.weaponListModel:equipBag(self.recomWeaponId,1)
+-- end
+
+-- function LevelDetailLayer:onBuyWeaponSucc()
+-- 	self.weaponListModel:equipBag(self.recomWeaponId,1)
+-- end
 
 ---- initData ----
 function LevelDetailLayer:initData()

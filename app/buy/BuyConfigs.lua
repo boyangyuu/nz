@@ -28,28 +28,28 @@ local configs = {
 			name = "武器大礼包",
 	},
 	armedMecha     = {				--机甲
-			showType = "tips",
+			showType = "prop",
 			price = 4,
 			name = "机甲变身2次",
 	},
 	handGrenade    = {             --手雷
-			showType = "tips",
+			showType = "prop",
 			price = 4,
 			name = "手雷20个",
 	},
 	goldWeapon     = {				--金武
-			showType = "tips",
+			showType = "prop",
 			price = 4,
 			name = "金武2次",
 	},
 	onceFull       = {				--一键满级
 
-			showType = "tips",
+			showType = "prop",
 			price = 2,
 			name = "一键满级",
 	},
 	resurrection   = {        		--复活
-			showType = "tips",
+			showType = "prop",
 			price = 2,
 			name = "复活1次",
 	},
@@ -68,6 +68,18 @@ local configs = {
 			price = 30,
 			name = "钻石450个",
 	},
+	hpBag         = {
+			showType = "prop",
+			price = 30,
+			name = "钻石40个",
+			iapId = "stone450",
+	},	
+	weaponBuy      = {
+			showType = "prop",
+			price = 30,
+			name = "钻石450个",
+			iapId = "stone450",
+	},		
 }
 
 function BuyConfigs.getConfig(name)

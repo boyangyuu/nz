@@ -60,9 +60,9 @@ function Map:getWaveIndex()
 end
 
 function Map:setIsOpenJu(isOpenJu_, pos)
-	-- print("function Map:setIsOpenJu(isOpenJu_, pos)", isOpenJu_)
 	self.isOpenJu = isOpenJu_
 	if self.isOpenJu then 
+		assert(pos, "pos is nil")
 		self:dispatchEvent({name = Map.GUN_OPEN_JU_EVENT, pos = pos})	
 	else
 		self:dispatchEvent({name = Map.GUN_CLOSE_JU_EVENT})

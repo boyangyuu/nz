@@ -39,7 +39,7 @@ function FightPlayer:ctor(properties)
     self.inlay      = md:getInstance("FightInlay")
     self.fightProp  = md:getInstance("FightProp")
     local propModel = md:getInstance("PropModel")
-
+    local inlayModel = md:getInstance("InlayModel")
     --datas
     self.curGold    = 0
     self.tempChangeGoldHandler = nil
@@ -77,6 +77,10 @@ function FightPlayer:ctor(properties)
        
     cc.EventProxy.new(propModel, self)
         :addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
+
+    cc.EventProxy.new(inlayModel, self)
+        :addEventListener(inlayModel.REFRESH_INLAY_EVENT, handler(self, self.refreshPropData))
+
 
     cc.EventProxy.new(self.defence, self)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
@@ -381,8 +385,9 @@ function FightPlayer:onMutiTouchBegin(event)
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
     end
-
-    self:checkJuOpen(event.points["0"])
+    if event.points["0"] then 
+        self:checkJuOpen(event.points["0"])
+    end
     return false
 end
 
@@ -492,6 +497,7 @@ function FightPlayer:checkBtnLei(point)
         end        
         self.fightProp:costLei(callfunc)
     end
+    return isTouch
 end
 
 function FightPlayer:refreshPropData(event)
@@ -562,11 +568,11 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
     
-    --in touch
-    if isTouch then
-        local isOpenJu = self:checkJuFire()
-        if isOpenJu then return false end 
-    end
+    -- --in touch
+    -- if isTouch then
+    --     local isOpenJu = self:checkJuFire()
+    --     if isOpenJu then return false end 
+    -- end
 
     if isTouch  then
         if self.touchFireId == nil and 
@@ -588,19 +594,19 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     return isTouch
 end
 
-function FightPlayer:checkJuFire()
-    --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
-    local isJuLevel = self.fight:isJujiFight()
-    local map           = md:getInstance("Map")
-    local isOpenJu      = map:getIsOpenJu()
+-- function FightPlayer:checkJuFire()
+--     --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
+--     local isJuLevel = self.fight:isJujiFight()
+--     local map           = md:getInstance("Map")
+--     local isOpenJu      = map:getIsOpenJu()
 
-    local isJuAble      = map:getIsJuAble()    
-    if isJuLevel and not isOpenJu then 
-        map:setIsOpenJu(true)
-        return true
-    end 
-    return false
-end
+--     local isJuAble      = map:getIsJuAble()    
+--     if isJuLevel and not isOpenJu then 
+--         map:setIsOpenJu(true)
+--         return true
+--     end 
+--     return false
+-- end
 
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")
