@@ -103,4 +103,10 @@ function UserModel:getUserName()
 	return data.user.userName
 end
 
+function UserModel:setUserName(nameString)
+	local data = getUserData()
+	data.user.userName = nameString
+	setUserData(data)
+end
+
 return UserModel

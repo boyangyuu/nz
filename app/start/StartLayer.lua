@@ -214,8 +214,6 @@ function StartLayer:onClickBegan()
             groupId = groupId,
         }
         ui:changeLayer("HomeBarLayer",{fightData = fightData,loadingType = "home_first"})
-        --init daily login
-        self:initDailyLogin() 
 
     else
         --clear data
@@ -240,8 +238,8 @@ function StartLayer:initDailyLogin()
 
     local isGet = self.dailyLoginModel:isGet()
     local netState = network.getInternetConnectionStatus()
-    if isGet == false and netState ~=0 then
-        self.dailyLoginModel:setPopup()
+    if isGet == false and netState ~= 0 then
+        ui:showPopup("DailyLoginLayer", {})
     end
 end
 
