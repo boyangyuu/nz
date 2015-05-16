@@ -541,8 +541,12 @@ function WeaponListLayer:refreshBtns()
             self.labelPercent:setVisible(false)
             self.damagepluse:setVisible(false)
         else
+            if self.weaponRecord["onceFull"] == "notAllow" then
+                self.btnOncefull:setVisible(false)
+            else
+                self.btnOncefull:setVisible(true)
+            end
             self.btnFull:setVisible(false)
-            self.btnOncefull:setVisible(true)
             self.btnUpgrade:setVisible(true)
         end        
     else
