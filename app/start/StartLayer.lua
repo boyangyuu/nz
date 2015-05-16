@@ -101,6 +101,19 @@ function StartLayer:initUI()
              {opacity = 0})
         end
     end)
+
+    local btnTousu = cc.uiloader:seekNodeByName(self, "btnTousu")
+
+    local manager = ccs.ArmatureDataManager:getInstance()
+    local toususrc = "res/LevelMap/tousu_tx/tousu_tx.ExportJson"
+    manager:addArmatureFileInfo(toususrc)
+    local plist = "res/LevelMap/tousu_tx/tousu_tx0.plist"
+    local png   = "res/LevelMap/tousu_tx/tousu_tx0.png"
+    display.addSpriteFrames(plist, png)  
+
+    local tousuArm = ccs.Armature:create("tousu_tx")
+    addChildCenter(tousuArm, btnTousu)
+    tousuArm:getAnimation():play("Animation1" , -1, 1)
 end
 
 function StartLayer:checkActivateCode()
