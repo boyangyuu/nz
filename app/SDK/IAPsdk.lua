@@ -6,23 +6,10 @@ local className = "com/hgtt/com/IAPControl"
 local sig = "(Ljava/lang/String;Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
-	self.iapName = IAPsdk:setIapName()
+	self.iapName = getIapName()
 	self:initConfigs()
 	self.buyModel = md:getInstance("BuyModel")
 end
-
-function IAPsdk:setIapName()
-    local iapName = 'mobile'
-    if device.platform == 'android' then
-        local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapName", {}, "()Ljava/lang/String;")
-        return iapName
-    end
-	print("iapName:",iapName)
-    return iapName
-end
-
--- 电信运营商
-
 
 function IAPsdk:initConfigs()
 	self.config = {}
@@ -45,7 +32,7 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "30000883682314"		--一箱子宝石
 		config["stone450"]         = "30000883682315"		--堆成山的宝石
 	
-	elseif self.iapName == 'andgame' then --基地
+	elseif self.iapName == 'jd' then --基地
 		config["novicesBag"]       = "001"		--新手礼包1
 		config["weaponGiftBag"]    = "002"		--武器到礼包1
 		config["goldGiftBag"]      = "003"		--土豪金礼包1

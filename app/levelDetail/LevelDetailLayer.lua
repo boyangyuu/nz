@@ -39,6 +39,14 @@ function LevelDetailLayer:loadCCS()
 	local controlNode = cc.uiloader:load("guanqiakaishi.ExportJson")
     self:addChild(controlNode)
 
+    --armature
+	local manager = ccs.ArmatureDataManager:getInstance()
+    local src = "res/LevelDetail/bt_kaishi/bt_kaishi.ExportJson"
+    manager:addArmatureFileInfo(src) 
+    local plist = "res/LevelDetail/bt_kaishi/bt_kaishi0.plist"
+    local png   = "res/LevelDetail/bt_kaishi/bt_kaishi0.png"
+    display.addSpriteFrames(plist, png)          
+
     --seek panels
 	self.panelDetail  = cc.uiloader:seekNodeByName(self, "paneldetail")
 	self.panelJijia  = cc.uiloader:seekNodeByName(self, "paneljijia")
@@ -68,12 +76,10 @@ function LevelDetailLayer:loadCCS()
 		:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	cc.uiloader:seekNodeByName(self.btnJijia, "yijianc")
 		:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	self.startlabel    = cc.uiloader:seekNodeByName(self.btnStart, "startlabel")
 
 	self.labelTitle:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.labelId:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.target:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	self.startlabel:enableOutline(cc.c4b(255, 255, 255,255), 2)
 	
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self.panelmap, "mapimage")
@@ -112,7 +118,6 @@ function LevelDetailLayer:initUI()
 	end
 	if self.config["type"] == "boss" then
 		local enemyPlay = self.config["enemyPlay"]
-		dump(enemyPlay)
 		local manager = ccs.ArmatureDataManager:getInstance()
         local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".ExportJson"
         manager:addArmatureFileInfo(src) 
@@ -163,12 +168,16 @@ function LevelDetailLayer:initBtns()
     local goldarmature = ccs.Armature:create("bt_yjzb")
     local jijiaarmature = ccs.Armature:create("bt_yjzb")
     local bibeiarmature = ccs.Armature:create("bt_yjzb")
+    local kaishiarmature = ccs.Armature:create("bt_kaishi")
     addChildCenter(goldarmature, self.btnGold)
     addChildCenter(jijiaarmature, self.btnJijia)
     addChildCenter(bibeiarmature, self.btnBibei)
+    kaishiarmature:setPosition(116, 45)
+    self.btnStart:addChild(kaishiarmature)
     goldarmature:getAnimation():play("yjzb" , -1, 1)
     jijiaarmature:getAnimation():play("yjzb" , -1, 1)
     bibeiarmature:getAnimation():play("yjzb" , -1, 1)
+    kaishiarmature:getAnimation():play("Animation1" , -1, 1)
 
     --addEvents
 	addBtnEventListener(self.btnOff, function(event)

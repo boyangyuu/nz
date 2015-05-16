@@ -24,7 +24,7 @@ function BuyModel:clearData()
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
-	if configId == "goldGiftBag" then configId = "goldGiftBag_dx" end 
+	if configId == "goldGiftBag" and isDefendDX() then configId = "goldGiftBag_dx" end 
 	print("BuyModel:showBuy", strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()

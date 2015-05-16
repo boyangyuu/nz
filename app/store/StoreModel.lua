@@ -11,6 +11,14 @@ function StoreModel:initConfigTable()
 	self.xqconfig = getConfig("config/items_xq.json")
 	self.bankconfig = getConfig("config/items_bank.json")
 	self.fightconfig = getConfig("config/items_fight.json")
+	local isDX = isDefendDX()
+	if isDX then
+		for i,v in ipairs(self.bankconfig) do
+			if v["price"] == 30 then
+				table.remove(self.bankconfig,i)
+			end
+		end
+	end
 end
 
 function StoreModel:getConfigTable(type)
@@ -19,6 +27,8 @@ function StoreModel:getConfigTable(type)
 		newTable = self.fightconfig
 	elseif type == "bank" then
 		newTable = self.bankconfig
+			dump(self.bankconfig)
+
 	elseif type == "inlay" then
 		 local config = self.xqconfig
 		newTable = self:orderByGold(config)
