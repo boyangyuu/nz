@@ -24,11 +24,11 @@ function DailyLoginModel:setTime()
 	if network.getInternetConnectionStatus() == 0 then return end
 	local data = getUserData()
 	data.dailylogin.loginTime = self.date
-	if data.registTime == nil then
+	if data.dailylogin.registTime == nil then
 		if network.getInternetConnectionStatus() == 0 then
-			data.registTime = os.time()
+			data.dailylogin.registTime = os.time()
 		else
-			data.registTime = self.date
+			data.dailylogin.registTime = self.date
 		end
 	end
 	setUserData(data)

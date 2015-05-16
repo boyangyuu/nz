@@ -387,6 +387,8 @@ function FightPlayer:onMutiTouchBegin(event)
 end
 
 function FightPlayer:checkJuOpen(point)
+    local isju = self.fight:isJujiFight()
+    if not isju then return end
     local map    = md:getInstance("Map")
     local isOpen = map:getIsOpenJu()
     if isOpen then return end 
@@ -462,12 +464,8 @@ function FightPlayer:checkbtnRobot(point)
     if isTouch then
         addBtnEffect(self.btnRobot)
 
-        --cost
-        local function callfunc()
-            local robot = md:getInstance("Robot")
-            robot:startRobot()
-        end        
-        self.fightProp:costRobot(callfunc)
+        --cost      
+        self.fightProp:costRobot()
     end
     return isTouch
 end
@@ -873,7 +871,8 @@ function FightPlayer:initGuide1()
         groupId = "fight01_gold",
         rect = self.btnGold:getBoundingBox(),
         endfunc = function (touchEvent)
-            self.inlay:activeGoldOnCost()
+            local fightInlay = md:getInstance("FightInlay")
+            fightInlay:activeGoldOnCost()
         end
     })     
 end
@@ -986,8 +985,7 @@ function FightPlayer:initGuide4()
         rect = self.btnRobot:getBoundingBox(),
         endfunc = function (touchEvent)
             addBtnEffect(self.btnRobot)
-            local robot = md:getInstance("Robot")
-            robot:startRobot()  
+            self.fightProp:costRobot()
         end
     })   
 end

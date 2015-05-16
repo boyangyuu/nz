@@ -265,7 +265,6 @@ function HomeBarLayer:initGuideInlay()
         groupId = "xiangqian",
         rect = self.btnBack:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-            -- self.guide:finishGuide()
             self:onBtnBackClicked()
         end
      })        

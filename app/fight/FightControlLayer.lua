@@ -58,15 +58,13 @@ function FightControlLayer:refreshData(event)
 	self.labelHp:setString(numHp)
 end
 
-
 function FightControlLayer:onClickBtnHp(event)
 	--cd
 	if self.hpCdPercent ~= 0 then return end
-	local num = self.fightProp:getHpBagNum()
-	if num < 1 then return end
-
-	self.fightProp:costHpBag(1)
-	self:startHpCd()
+	local function callfuncSuccess()
+		self:startHpCd()
+	end
+	self.fightProp:costHpBag(callfuncSuccess)	
 end
 
 function FightControlLayer:getHpCdPercent()

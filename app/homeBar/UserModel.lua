@@ -94,7 +94,7 @@ end
 
 function UserModel:getRegisterTime()
 	local data = getUserData()
-	local registerTime = data.registTime
+	local registerTime = data.dailylogin.registTime
 	return registerTime 
 end
 

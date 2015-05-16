@@ -52,7 +52,6 @@ end
 function Guide:doGuideNext()
 	--check finish
 	if self:isDone(self.groupId) then 
-		-- self:finishGuide()
 		return
 	end
 	local configGroup =  GuideConfigs.getConfig(self.groupId)
@@ -139,7 +138,6 @@ function Guide:finishGuide()
 				groupId = self.groupId})
 
 	--clear
-	-- print("function Guide:finishGuide()")
 	self.stepIndex = 0
 	self.isGuiding = false	
 	self.groupId = nil	
@@ -171,6 +169,13 @@ function Guide:getCurGroupId()
 	return self.groupId
 end
 
+function Guide:checkGuideUM(id)
+	local isGuided = self:isDone(id)
+	if isGuided then return end
+	um:startLevel("新手:" .. id)
+	um:finishLevel("新手:" .. id)
+end
+
 function Guide:clearData()
 	local data = getUserData()
 	for k,v in pairs(data.guide) do
@@ -184,8 +189,7 @@ function Guide:fillData()
 
 	--cur data
 	local guideIds = 
-		{
-		"gamePre", "fight01_move", "fight01_fire", "fight01_lei", 
+		{ "fight01_move", "fight01_fire", "fight01_lei", 
 		"fight01_gold", "fight01_jijia", "afterfight01", 
 		"fight_change", "fight_dun", "xiangqian", --镶嵌
 		"weapon", "afterfight03", "fightJu", "fightRelive_relive"}

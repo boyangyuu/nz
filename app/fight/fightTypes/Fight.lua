@@ -352,6 +352,7 @@ function Fight:setResult(result)
     self.result = result
 end
 
+
 function Fight:waveUpdate(nextWaveIndex, waveType)
     assert(false, "must implement")
 end

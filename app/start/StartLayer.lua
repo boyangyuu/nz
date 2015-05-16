@@ -194,6 +194,9 @@ function StartLayer:onEnter()
     self:playEnterSound()
     self:playBgMusic() 
 
+    --um
+    local guide = md:getInstance("Guide")
+    guide:checkGuideUM("login")
 end
 
 function StartLayer:onClickBegan()

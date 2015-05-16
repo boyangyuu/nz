@@ -19,10 +19,8 @@ end
 function RankModel:getRankData(sortType)
 	--type 
 	self.rankData = clone(self.rankConfig)
-
-
-    local registTime = 1430067661 --todo
-    local now = os.time()	
+	local now = os.time()
+    local registTime = self.user:getRegisterTime() or now
     local offsetTime = now - registTime
     local offsetDays = math.floor(offsetTime / (24 * 60 * 60))
     if offsetDays > 7 then offsetDays = 7 end  	
