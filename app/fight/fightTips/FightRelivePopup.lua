@@ -39,10 +39,31 @@ function FightRelivePopup:loadCCS()
     end)
 end
 
+function FightRelivePopup:buyReliveByStone()
+	print("function FightProp:buyHpBagByStone()")	
+	local cost = self:getReliveCost()
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(cost) 
+    if isAfforded then
+		self.property["onReliveFunc"]()
+		self:closePopup()
+        return true
+    else
+        return false
+    end		
+end
+
 function FightRelivePopup:onClickRelive()
 	print("function FightRelivePopup:onClickRelive()")
-	self.property["onReliveFunc"]()
-	self:closePopup()
+    if self:buyHpBagByStone() then 
+
+    else 
+        local strPos  =  "战斗界面_点击钻石复活"
+        self.buyModel:showBuy("stone450",
+    	{showType = "iap",
+    	payDoneFunc = handler(self, self.buyReliveByStone)}, 
+    	strPos)
+    end	
 end
 
 function FightRelivePopup:onClickGiveUp()
