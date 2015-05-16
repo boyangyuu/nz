@@ -330,7 +330,6 @@ end
 
 function LevelDetailLayer:onCancelWeaponGift()
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
-	local rmbCost = weaponRecord["rmbCost"]
 	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
     local strPos  =  "关卡详情_点击解锁高级武器" .. weaponName
     self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)    

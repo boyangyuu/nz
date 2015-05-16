@@ -146,6 +146,13 @@ function LevelMapLayer:initBgLayer(event)
 end
 
 function LevelMapLayer:initAwardLayer()
+    self.btnWeapon     = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
+    self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
+    local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
+    local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
+    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")
+
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
         self.panelgift:setVisible(false)
@@ -155,7 +162,6 @@ function LevelMapLayer:initAwardLayer()
     end    
 
     --土豪金
-    local btnGold = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
     local armature = ccs.Armature:create("thj_bx")
     armature:setPosition(67,33)
     btnGold:addChild(armature) 
@@ -172,7 +178,6 @@ function LevelMapLayer:initAwardLayer()
     end)
 
     --武器礼包
-    self.btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     self.btnWeapon:setTouchEnabled(true)
     addBtnEventListener(self.btnWeapon, function(event)
         if event.name=='began' then
@@ -185,8 +190,6 @@ function LevelMapLayer:initAwardLayer()
     end)
 
     --新手礼包
-    self.panelgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
-    local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
 
     local armature = ccs.Armature:create("guang")
     armature:setScale(2)
@@ -206,8 +209,6 @@ function LevelMapLayer:initAwardLayer()
     libaoArmature:getAnimation():play("libao" , -1, 1)
 
     --限时礼包
-    local btnTime = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
-    local labelTime = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")
     btnTime:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
