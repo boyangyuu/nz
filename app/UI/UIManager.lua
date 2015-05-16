@@ -44,6 +44,10 @@ layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer"
 -- giftBag
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 
+--awardTime
+layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")
+
+
 --jujiFight
 layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
 layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")

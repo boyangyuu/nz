@@ -206,7 +206,12 @@ function StartLayer:onEnter()
     --music 
     self:playEnterSound()
     self:playBgMusic() 
-    --init daily login
+
+    --um
+    local guide = md:getInstance("Guide")
+    guide:checkGuideUM("login")
+
+    --login award
     self:initDailyLogin()
 end
 
@@ -247,11 +252,16 @@ function StartLayer:initDailyLogin()
         self.dailyLoginModel:setTime()
     end
 
-    local isGet = self.dailyLoginModel:isGet()
-    local netState = network.getInternetConnectionStatus()
-    if isGet == false and netState ~= 0 then
-        ui:showPopup("DailyLoginLayer", {})
+    local function callfunc(status)
+        print("网络请求", status)
+        if status == "success" then
+            local isToday = self.dailyLoginModel:isToday()
+            if isToday == false
+            ui:showPopup("DailyLoginLayer", {})
+        end
     end
+
+    self.dailyLoginModel:requestDateSever(callfunc)
 end
 
 return StartLayer

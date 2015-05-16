@@ -54,6 +54,10 @@ modelClasses["IAPsdk"]              = import("..SDK.IAPsdk")
 -- rank
 modelClasses["RankModel"]              = import("..rank.RankModel")
 
+--awardTIme
+modelClasses["AwardTimeModel"]              = import("..awardTime.AwardTimeModel")
+
+
 --need create
 needCreateClasses["FightMode"] = true
 needCreateClasses["Map"] = true
