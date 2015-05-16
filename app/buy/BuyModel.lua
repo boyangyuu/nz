@@ -5,6 +5,11 @@
 ]]
 local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
+
+--events
+-- BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
+-- BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
+
 local proInfo = require("app.commonPopup.ProductInfoConfig")
 -- 定义事件
 function BuyModel:ctor(properties)
@@ -39,15 +44,22 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	um:event("支付情况", umData)  
 
 	--pay
-	local isGift = buyConfig.isGift 
-	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "shake"})
-    else
-    	local tipsStr = buyData.tips or proInfo.getConfig(configId)
-    	ui:showPopup("commonPopup",
-			 {type = "style7", content = tipsStr, 
-			 callfuncCofirm = handler(self, self.iapPay)},
+	--todo ui、写在外面！
+	local showType = buyConfig.showType 
+
+	if showType == "gift" then
+        ui:showPopup("GiftBagPopup",
+        	{popupName = configId},
+        	{animName = "shake"})
+    elseif showType == "tips" then
+    	local tips = buyData.tips or proInfo.getConfig(configId)
+    	ui:showPopup("StoneBuyPopup",
+			 {tips = tips},
 			 {opacity = 0})
+    elseif showType == "iap" then 
+    	self:iapPay()
+    else
+    	assert(false, "invalid showType", showType)
     end
 end
 
@@ -105,6 +117,9 @@ function BuyModel:payDone(result)
 	local umData = {}
 	umData[self.strDesc] = "支付成功"
 	um:event("支付情况", umData)
+
+	--events
+	-- self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
 end
 
 function BuyModel:deneyPay()

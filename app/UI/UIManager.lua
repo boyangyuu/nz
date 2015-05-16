@@ -43,6 +43,9 @@ layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer"
 
 -- giftBag
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
+layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
+
+
 
 --awardTime
 layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")

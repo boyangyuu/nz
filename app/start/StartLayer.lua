@@ -243,7 +243,6 @@ function StartLayer:initDailyLogin()
         print("网络请求", status)
         if status == "success" then
             local isToday = self.dailyLoginModel:isToday()
-            if isToday == false
             ui:showPopup("DailyLoginLayer", {})
         end
     end
