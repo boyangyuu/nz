@@ -97,6 +97,7 @@ function WeaponListLayer:initUI()
     self.buycost          = cc.uiloader:seekNodeByName(layerBtn, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self.panelDamage, "damagepluse")
     self.suipiannum       = cc.uiloader:seekNodeByName(self.paneldetail, "suipiannum")
+    self.labelNote       = cc.uiloader:seekNodeByName(self.paneldetail, "labelNote")
 
     cc.uiloader:seekNodeByName(self.panelDamage, "shanghai")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -116,6 +117,7 @@ function WeaponListLayer:initUI()
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
     cc.uiloader:seekNodeByName(layerBtn, "yijianmanji")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.labelNote:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.buycost:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.upgradecost:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.damagepluse:enableOutline(cc.c4b(0, 255, 79,255), 2)
@@ -349,6 +351,12 @@ function WeaponListLayer:refreshComment()
         self.layerGun:addChild(weaponImg)
     end
 
+    if self.weaponRecord["cost"] == 0 then
+        self.labelNote:setVisible(true)
+    else
+        self.labelNote:setVisible(false)
+    end
+
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
     local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")
     local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,"maxLevel")
@@ -399,7 +407,6 @@ function WeaponListLayer:refreshComment()
     local suipiannum = self.levelDetailModel:getSuiPianNum(self.weaponId)
     local needSuipianNum = self.levelDetailModel:getNeedSuipianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
-    dump(self.weaponRecord["partNum"])
     if self.weaponRecord["partNum"] ~= "null" and not isGot then
         self.suipiannum:setVisible(true)
         self.suipiannum:setString("DSLJ"..suipiannum.."/"..needSuipianNum)
@@ -537,7 +544,7 @@ function WeaponListLayer:refreshBtns()
             self.btnFull:setVisible(false)
             self.btnOncefull:setVisible(true)
             self.btnUpgrade:setVisible(true)
-        end
+        end        
     else
         self.progBulletNext:setVisible(false)
         self.progAccuracyNext:setVisible(false)
@@ -547,8 +554,12 @@ function WeaponListLayer:refreshBtns()
         self.btnFull:setVisible(false)
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
-        self.btnBuy:setVisible(true)
         self.btnEquip:setVisible(false)
+        if self.weaponRecord["cost"] == 0 then
+            self.btnBuy:setVisible(false)
+        else
+            self.btnBuy:setVisible(true)
+        end
     end
     if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)

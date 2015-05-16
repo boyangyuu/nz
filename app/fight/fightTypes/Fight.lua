@@ -112,10 +112,6 @@ function Fight:refreshUmFightTimesEvent()
     um:event("关卡次数情况", umData)        
 end
 
-function Fight:refreshUmBossFightTimesEvent()
-    
-end
-
 function Fight:willStartFight()
     self:checkDialogForward()
 end

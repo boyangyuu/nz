@@ -3,8 +3,6 @@ local DailyLoginModel = class("DailyLoginModel", cc.mvc.ModelBase)
 
 function DailyLoginModel:ctor(properties)
 	DailyLoginModel.super.ctor(self,properties)
-	-- self:checkDailyLogin()
-	-- self:requestDateSever()
 end
 
 function DailyLoginModel:setGet(isget)

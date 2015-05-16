@@ -2,8 +2,6 @@ local BuyConfigs = class("BuyConfigs", cc.mvc.ModelBase)
 
 local dir = "res/GiftBag/GiftBag/GiftBag_"
 
--- local isNovicesGift, novicesPrice = isMobileSimCard() 
-
 local configs = {
 	goldGiftBag    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag.json",
@@ -11,6 +9,12 @@ local configs = {
 			price = 30,
 			name = "土豪金礼包",
 	},
+	goldGiftBag_dx    = {				--土豪金
+			ccsPath = dir.."GoldGiftBag_dx.json",
+			showType = "gift",
+			price = 20,
+			name = "土豪金礼包",
+	},	
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
 			showType = "gift",

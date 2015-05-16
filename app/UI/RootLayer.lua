@@ -125,12 +125,6 @@ function RootLayer:addResHome()
     local png   = "res/LevelMap/sjdt_tbtx/sjdt_tbtx0.png"
     self:addFrameRes(plist, png)
 
-    local toususrc = "res/LevelMap/tousu_tx/tousu_tx.ExportJson"
-    self:addArmatureRes(toususrc)
-    local plist = "res/LevelMap/tousu_tx/tousu_tx0.plist"
-    local png   = "res/LevelMap/tousu_tx/tousu_tx0.png"
-    self:addFrameRes(plist, png)
-
     local guangsrc = "res/Store/guang/guang.ExportJson"
     self:addArmatureRes(guangsrc)
     local plist = "res/Store/guang/guang0.plist"

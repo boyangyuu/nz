@@ -24,6 +24,7 @@ function BuyModel:clearData()
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
+	if configId == "goldGiftBag" then configId = "goldGiftBag_dx" end 
 	print("BuyModel:showBuy", strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
@@ -204,6 +205,24 @@ function BuyModel:buy_goldGiftBag( buydata )
 	propModel:addProp("jijia",15)
 	--手雷*30
 	propModel:addProp("lei",30)
+
+	if not buydata.isNotPopup then 
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+	end
+end
+
+function BuyModel:buy_goldGiftBag_dx( buydata )
+	print("BuyModel:buy_goldGiftBag(buydata)")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
+	local propModel = md:getInstance("PropModel")
+	--黄武*10
+	inlayModel:buyGoldsInlay(10)
+
+	--机甲*10
+	propModel:addProp("jijia",10)
+	--手雷*20
+	propModel:addProp("lei",20)
 
 	if not buydata.isNotPopup then 
 		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})

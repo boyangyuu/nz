@@ -267,7 +267,6 @@ function LevelMapLayer:initKefuLayer()
             ui:showPopup("commonPopup",{type = "style4",
                     opacity = 0})
         end)
-
 end
 
 function LevelMapLayer:initChooseLayer()
@@ -282,11 +281,6 @@ function LevelMapLayer:initChooseLayer()
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
     self.panelLeft = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
     
-
-    -- local tousuArm = ccs.Armature:create("tousu_tx")
-    -- addChildCenter(tousuArm, btnkefu)
-    -- tousuArm:getAnimation():play("Animation1" , -1, 1)
-
     self.levelNum:setString(self.curGroupId)
 
     local actionPre = transition.sequence({

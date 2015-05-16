@@ -219,7 +219,6 @@ function MyApp:createGameStateFile()
             registTime = nil, --时间戳
             isGet = false,
             dailyid = 0,
-            awardData = {lastAwardedDate = 2015-1-1, id = 1}
         },
         preference = {
             isOpenMusic = true
