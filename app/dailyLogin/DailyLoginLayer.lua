@@ -28,11 +28,12 @@ function DailyLoginLayer:loadCCS()
 end
 
 function DailyLoginLayer:initUI()
-    local receiveBtn = cc.uiloader:seekNodeByName(self, "btn_Receive")
+    self.receiveBtn = cc.uiloader:seekNodeByName(self, "btn_Receive")
+    local closeBtn = cc.uiloader:seekNodeByName(self, "btn_guanbi")
 
-    local armature = ccs.Armature:create("lb_ljlq")
-    armature:getAnimation():play("lb_ljlq", -1, 1)
-    addChildCenter(armature, receiveBtn)
+    self.armature = ccs.Armature:create("lb_ljlq")
+    self.armature:getAnimation():play("lb_ljlq", -1, 1)
+    addChildCenter(self.armature, self.receiveBtn)
 
     local getnum = {}
     local bg = {}
@@ -65,34 +66,48 @@ function DailyLoginLayer:initUI()
     	self.tx[i] = cc.uiloader:seekNodeByName(self, "tx"..i)
     end
 
-    local dailyInfo = self.dailyLoginModel:getDailyInfo()
-    for i=1,dailyInfo["dailyid"] do
+    self.dailyInfo = self.dailyLoginModel:getDailyInfo()
+    for i=1,self.dailyInfo["dailyid"] do
     	self.already[i]:setVisible(true)
     end
     
-    local armature = ccs.Armature:create("mrdl")
-    local parePanl = self.tx[dailyInfo["dailyid"]+1]
-    armature:setScale(2)
-    armature:setPosition(110,150)
-    parePanl:addChild(armature) 
-    armature:getAnimation():play("die" , -1, 1)
+    local mrdlArm = ccs.Armature:create("mrdl")
+    local parePanl = self.tx[self.dailyInfo["dailyid"]+1]
+    mrdlArm:setScale(2)
+    mrdlArm:setPosition(110,150)
+    parePanl:addChild(mrdlArm) 
+    mrdlArm:getAnimation():play("die" , -1, 1)
 
-    receiveBtn:setTouchEnabled(true)
-	addBtnEventListener(receiveBtn, function(event)
-		if event.name == 'began' then
-			return true
-		elseif event.name == 'ended' then
-			ui:closePopup("DailyLoginLayer")
-			local dailyID = self.dailyLoginModel:getNextDailyID()
-			dump(dailyID)
-			self.dailyLoginModel:setGift(dailyID)
-			-- for i=1,dailyInfo["dailyid"] do
-		 --    	self.already[i]:setVisible(true)
-		 --    end
-			self.dailyLoginModel:setNextDailyID()
-			self.dailyLoginModel:setGet(true)
-		end
-	end)
+    closeBtn:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:closePopup("DailyLoginLayer")
+        end)
+
+    self.receiveBtn:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            local dailyID = self.dailyLoginModel:getNextDailyID()
+            self.dailyLoginModel:setGift(dailyID)
+            self.dailyLoginModel:setNextDailyID()
+            self.dailyLoginModel:setGet(true)
+            self:refreshUI()
+        end)
+end
+
+function DailyLoginLayer:refreshUI()
+    for i=1,self.dailyInfo["dailyid"] do
+        self.already[i]:setVisible(true)
+    end
+    self.receiveBtn:removeSelf()
 end
 
 return DailyLoginLayer

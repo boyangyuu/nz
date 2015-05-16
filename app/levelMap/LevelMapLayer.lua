@@ -267,7 +267,6 @@ function LevelMapLayer:initKefuLayer()
             ui:showPopup("commonPopup",{type = "style4",
                     opacity = 0})
         end)
-
 end
 
 function LevelMapLayer:initChooseLayer()

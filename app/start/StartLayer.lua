@@ -114,6 +114,18 @@ function StartLayer:initUI()
     local tousuArm = ccs.Armature:create("tousu_tx")
     addChildCenter(tousuArm, btnTousu)
     tousuArm:getAnimation():play("Animation1" , -1, 1)
+
+    -- 添加客服按钮点击事件
+    btnTousu:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("commonPopup",{type = "style4",
+                    opacity = 0})
+        end)
 end
 
 function StartLayer:checkActivateCode()
@@ -247,17 +259,18 @@ end
 
 function StartLayer:initDailyLogin()
     local isToday = self.dailyLoginModel:isToday()
-    if isToday  == false  then
+    if isToday == false then
         self.dailyLoginModel:setGet(false)
-        self.dailyLoginModel:setTime()
+        self.dailyLoginModel:saveTimeData()
     end
 
     local function callfunc(status)
         print("网络请求", status)
         if status == "success" then
-            local isToday = self.dailyLoginModel:isToday()
-            if isToday == false
-            ui:showPopup("DailyLoginLayer", {})
+            local isGet = self.dailyLoginModel:isGet()
+            if isGet == false then
+                ui:showPopup("DailyLoginLayer", {})
+            end
         end
     end
 

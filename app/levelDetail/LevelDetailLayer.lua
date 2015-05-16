@@ -324,12 +324,7 @@ function LevelDetailLayer:onClickBtnGold()
     else
 	    -- self.buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self, self.equipGold),deneyBuyFunc = deneyGoldGift},
 	    --  "关卡详情_点击黄武按钮")
-		local function funcCofirm()
-		    self.buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self, self.equipGold)}, "关卡详情_黄武按钮取消土豪礼包")
-		end
-		ui:showPopup("commonPopup",
-			 {type = "style7", content = proInfo.getConfig("goldWeapon"), callfuncCofirm = funcCofirm},
-			 {opacity = 0})
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self, self.equipGold)}, "关卡详情_黄武按钮取消土豪礼包")
 	end
 end
 

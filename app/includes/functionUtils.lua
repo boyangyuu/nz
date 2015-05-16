@@ -209,6 +209,10 @@ function isDefendMM()
     end
 end
 
+function isDefendMM()
+    return true
+end
+
 -- function isMobileSimCard()
 --     if device.platform ~= 'android' then return true, 1 end
 --     local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapName", {}, "()Ljava/lang/String;")

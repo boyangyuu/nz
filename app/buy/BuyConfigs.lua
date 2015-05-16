@@ -2,17 +2,20 @@ local BuyConfigs = class("BuyConfigs", cc.mvc.ModelBase)
 
 local dir = "res/GiftBag/GiftBag/GiftBag_"
 
-local isGiftDefend = isDefendMM()
-
--- local isNovicesGift, novicesPrice = isMobileSimCard() 
 
 local configs = {
 	goldGiftBag    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag.json",
-			isGift = isGiftDefend,
+			isGift = true,
 			price = 30,
 			name = "土豪金礼包",
 	},
+	goldGiftBag_dx    = {				--土豪金
+			ccsPath = dir.."GoldGiftBag_dx.json",
+			isGift = true,
+			price = 20,
+			name = "土豪金礼包",
+	},	
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
 			isGift = true,
