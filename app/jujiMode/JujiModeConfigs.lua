@@ -13,10 +13,40 @@ scoreAward = {
 
 fightAward = {
 	{{healthBag = 2},{lei = 3},{money = 65199}}, --第一关奖励
+	{{healthBag = 2},{lei = 3},{money = 65199}},--2
+	{{healthBag = 2},{lei = 3},{money = 65199}},--3
+	{{healthBag = 2},{lei = 3},{money = 65199}},--4
+	{{healthBag = 2},{lei = 3},{money = 65199}},--5
 	{{healthBag = 2},{lei = 3},{money = 65199}},
 	{{healthBag = 2},{lei = 3},{money = 65199}},
 	{{healthBag = 2},{lei = 3},{money = 65199}},
 	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},--10
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},--15
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},--20
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},--25
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},--30
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},
+	{{healthBag = 2},{lei = 3},{money = 65199}},--35
 }
 
 function JujiModeConfigs.getFightAward(levelIndex)

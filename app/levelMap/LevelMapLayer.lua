@@ -163,7 +163,7 @@ function LevelMapLayer:initAwardLayer()
 
     --土豪金
     local armature = ccs.Armature:create("thj_bx")
-    armature:setPosition(67,33)
+    armature:setPosition(-73,-10)
     btnGold:addChild(armature) 
     armature:getAnimation():play("thj_bx" , -1, 1)
 
