@@ -32,10 +32,43 @@ function JujiModeModel:getCurWaveIndex()
 	return curIndex
 end
 
-function JujiModeModel:getAwardTable(groupIndex)
-	local info = JujiModeConfigs.getConfig(groupIndex)
-	assert(info, "invalid param: groupIndex:" .. groupIndex)
-	return info
+function JujiModeModel:getCurScore()
+	local score = self:getCurWaveIndex() * 100
+	return score
+end
+
+function JujiModeModel:isScoreAwardAvailable(awardIndex)
+	local curScore = self:getCurScore()
+	local scoreAwardCfg = JujiModeConfigs.getScoreAward(awardIndex)
+	assert(scoreAwardCfg, "awardIndex"..awardIndex)
+	local scoreLimit = scoreAwardCfg["score"]
+	return curScore >= scoreLimit
+end
+
+function JujiModeModel:isScoreAwardGetted(awardIndex)
+	local data = getUserData()
+	local isGetted = data.jujiMode.scoreAwarded[awardIndex] 	
+	return isGetted
+end
+
+function JujiModeModel:getAward(awardIndex)
+	local isAvaliable = self:isScoreAwardAvailable(awardIndex)
+	local isGetted    = self:isScoreAwardGetted(awardIndex) == true
+	assert(isGetted == false and isAvaliable, "invalid awardIndex："..awardIndex)
+
+    --award
+    print("发奖励")
+    local cfg = JujiModeConfigs.getScoreAward(awardIndex)
+    local moneyNum   = cfg["money"] or 0
+    local diamondNum = cfg["diamond"] or 0
+    local user       = md:getInstance("UserModel")
+    user:addDiamond(diamondNum)
+    user:addMoney(moneyNum)
+
+	--save
+	local data = getUserData()
+	data.jujiMode.scoreAwarded[awardIndex]= true
+    setUserData(data)
 end
 
 return JujiModeModel

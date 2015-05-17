@@ -10,18 +10,23 @@ function FightControlLayer:ctor()
     self.fight 			= fightFactory:getFight()
     self.fightProp 		= md:getInstance("FightProp")
     local propModel     = md:getInstance("PropModel")
+
 	--instance
 	self.timerHp = nil
 	self.hpCdPercent = 0
-
 	self:loadCCS()
 	self:initUI()
 	self:refreshData()
 	
 	--events
 	cc.EventProxy.new(propModel, self)
-			:addEventListener(propModel.PROP_UPDATE_EVENT,
-			 handler(self, self.refreshData))
+			:addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshData))
+	
+	cc.EventProxy.new(self.hero, self)
+			:addEventListener(self.hero.SKILL_ADDHP_EVENT, handler(self, self.startHpCd))
+				
+	cc.EventProxy.new(ui, self)
+			:addEventListener(ui.LAYER_PAUSE_EVENT, handler(self, self.onLayerPause))
 		
 	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
@@ -58,22 +63,17 @@ function FightControlLayer:refreshData(event)
 	self.labelHp:setString(numHp)
 end
 
-
 function FightControlLayer:onClickBtnHp(event)
 	--cd
 	if self.hpCdPercent ~= 0 then return end
-	local num = self.fightProp:getHpBagNum()
-	if num < 1 then return end
-
-	self.fightProp:costHpBag(1)
-	self:startHpCd()
+	self.fightProp:costHpBag()	
 end
 
 function FightControlLayer:getHpCdPercent()
 	return self.hpCdPercent
 end
 
-function FightControlLayer:startHpCd()
+function FightControlLayer:startHpCd(event)
 	self.hpCdPercent = 100
 	self.timerHp:setVisible(true)
 	local cdTimes = define.kHeroHpBagCd
@@ -88,6 +88,11 @@ function FightControlLayer:startHpCd()
 	end
 	local offsetTime = cdTimes / 100
 	sch = self:schedule(resumeCd, offsetTime)
+end
+
+function FightControlLayer:onLayerPause(event)
+	local isPause = event.isPause
+	self.fight:pauseFight(isPause)
 end
 
 return FightControlLayer

@@ -16,7 +16,7 @@ function LevelMapLayer:ctor(properties)
     
     self.properties = properties
     self:initData()
-    self:initChooseLayer()
+    self:initUI()
     self:refreshLevelLayer(self.curGroupId)
 
     cc.EventProxy.new(ui, self)
@@ -26,6 +26,13 @@ function LevelMapLayer:ctor(properties)
         :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.hideWeaponGiftBag))
 
     self:initGuide() 
+end
+
+function LevelMapLayer:initUI()
+    self:initChooseLayer()
+    self:initKefuLayer()
+    self:initFightActLayer()
+    self:initAwardLayer()
 end
 
 function LevelMapLayer:initData()
@@ -108,18 +115,6 @@ function LevelMapLayer:mapPopUp(event)
         local chapterIndex = self.properties.fightData.chapterIndex
         ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
     end  
-    self:initDailyLogin()
-end
-
-function LevelMapLayer:initDailyLogin()
-    local dailyLoginModel = md:getInstance("DailyLoginModel")
-    local guide = md:getInstance("Guide")
-    local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 4
-    if dailyLoginModel:checkPop()  then
-        ui:showPopup("DailyLoginLayer", {})
-        dailyLoginModel:donotPop()
-    end
 end
 
 function LevelMapLayer:initBgLayer(event)
@@ -150,39 +145,13 @@ function LevelMapLayer:initBgLayer(event)
 
 end
 
-function LevelMapLayer:initChooseLayer()
-    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.ExportJson")
-    self:addChild(self.chooseRootNode, Zorder_up)
-
-    self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
-    self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
-    self.btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
-    local btnGold = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
-    self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
-    self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
-    self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
-    self.panelLeft = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
-    self.panelgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
+function LevelMapLayer:initAwardLayer()
+    self.btnWeapon     = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
+    self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
-    self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
-    self.telNum:setColor(cc.c3b(255, 0, 0))
-    self.telNum:enableOutline(cc.c4b(255, 255, 255,255), 2)
-    local armature = ccs.Armature:create("thj_bx")
-    armature:setPosition(67,33)
-    btnGold:addChild(armature) 
-    armature:getAnimation():play("thj_bx" , -1, 1)
-
-    local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
-    local btnboss = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnboss")
-    local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
-    local armature = ccs.Armature:create("guang")
-    armature:setScale(2)
-    addChildCenter(armature, self.panelgift)
-    armature:getAnimation():play("guangtx" , -1, 1)
-
-    local tousuArm = ccs.Armature:create("tousu_tx")
-    addChildCenter(tousuArm, btnkefu)
-    tousuArm:getAnimation():play("Animation1" , -1, 1)
+    local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
+    local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
+    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")
 
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
@@ -192,6 +161,41 @@ function LevelMapLayer:initChooseLayer()
         self.btnWeapon:setVisible(false)
     end    
 
+    --土豪金
+    local armature = ccs.Armature:create("thj_bx")
+    armature:setPosition(67,33)
+    btnGold:addChild(armature) 
+    armature:getAnimation():play("thj_bx" , -1, 1)
+
+    btnGold:setTouchEnabled(true)
+    addBtnEventListener(btnGold, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
+        end
+    end)
+
+    --武器礼包
+    self.btnWeapon:setTouchEnabled(true)
+    addBtnEventListener(self.btnWeapon, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+            local buyModel = md:getInstance("BuyModel")
+            buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),
+                isNotPopKefu = true}, "主界面_点击武器大礼包")
+        end
+    end)
+
+    --新手礼包
+
+    local armature = ccs.Armature:create("guang")
+    armature:setScale(2)
+    addChildCenter(armature, self.panelgift)
+    armature:getAnimation():play("guangtx" , -1, 1)
+
     function hideGiftIcon()
         self.panelgift:setVisible(false)
     end
@@ -199,11 +203,85 @@ function LevelMapLayer:initChooseLayer()
     btnfirstgift:onButtonClicked(function()
         buyModel:showBuy("novicesBag",{payDoneFunc = hideGiftIcon}, "主界面_点击新手礼包")
         end)
-    
+
     local libaoArmature = ccs.Armature:create("libao")
     btnfirstgift:addChild(libaoArmature)
     libaoArmature:getAnimation():play("libao" , -1, 1)
 
+    --限时礼包
+    btnTime:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            --todo
+        end)
+end
+
+function LevelMapLayer:initFightActLayer()
+    --无限狙击
+    local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
+
+    btnjuji:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("JujiModeLayer")
+        end)
+
+    --boss
+    local btnboss = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnboss")
+    btnboss:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            local bossModeModel = md:getInstance("BossModeModel")
+            local chapterIndex = bossModeModel:getAlreadyChapter()
+            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex})
+        end)
+end
+
+function LevelMapLayer:initKefuLayer()
+    --客服
+    self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
+    self.telNum:setColor(cc.c3b(255, 0, 0))
+    self.telNum:enableOutline(cc.c4b(255, 255, 255,255), 2)
+
+    local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
+
+    -- 添加客服按钮点击事件
+    btnkefu:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("commonPopup",{type = "style4",
+                    opacity = 0})
+        end)
+end
+
+function LevelMapLayer:initChooseLayer()
+    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.ExportJson")
+    self:addChild(self.chooseRootNode, Zorder_up)
+
+    self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
+    self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
+    
+    self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
+    self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
+    self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
+    self.panelLeft = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
+    
     self.levelNum:setString(self.curGroupId)
 
     local actionPre = transition.sequence({
@@ -216,7 +294,6 @@ function LevelMapLayer:initChooseLayer()
     cc.MoveTo:create(0.5, cc.p(self.btnNext:getPositionX()-10, self.btnNext:getPositionY()))})
     self.btnNext:runAction(cc.RepeatForever:create(actionNext))
 
-    -- add listener (attention: this isnot button, so we add node event listener)
     addBtnEventListener(self.btnNext, function(event)
         if event.name=='began' then
             return true
@@ -251,61 +328,6 @@ function LevelMapLayer:initChooseLayer()
             self.UserModel:panelAction()
             self.telNum:setVisible(false)
         end
-    end)
-
-    self.btnWeapon:setTouchEnabled(true)
-    addBtnEventListener(self.btnWeapon, function(event)
-        if event.name=='began' then
-            return true
-        elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),
-                isNotPopKefu = true}, "主界面_点击武器大礼包")
-        end
-    end)
-
-    btnGold:setTouchEnabled(true)
-    addBtnEventListener(btnGold, function(event)
-        if event.name=='began' then
-            return true
-        elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
-        end
-    end)
-
-    -- 添加客服按钮点击事件
-    btnkefu:onButtonPressed(function( event )
-        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-    end)
-    :onButtonRelease(function( event )
-        event.target:runAction(cc.ScaleTo:create(0.1, 1))
-    end)
-    :onButtonClicked(function( event )
-        ui:showPopup("commonPopup",{type = "style4",
-                opacity = 0})
-    end)
-
-    btnboss:onButtonPressed(function( event )
-        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-    end)
-    :onButtonRelease(function( event )
-        event.target:runAction(cc.ScaleTo:create(0.1, 1))
-    end)
-    :onButtonClicked(function( event )
-        local bossModeModel = md:getInstance("BossModeModel")
-        local chapterIndex = bossModeModel:getAlreadyChapter()
-        ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex})
-    end)
-
-    btnjuji:onButtonPressed(function( event )
-        event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-    end)
-    :onButtonRelease(function( event )
-        event.target:runAction(cc.ScaleTo:create(0.1, 1))
-    end)
-    :onButtonClicked(function( event )
-        ui:showPopup("JujiModeLayer")
     end)
 end
 
@@ -378,7 +400,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else                            
                     ui:showPopup("commonPopup",
-                     {type = "style2", content = "本关还没开启",delay = 2},
+                     {type = "style2", content = "本关还没开启"},
                      { opacity = 0})
                 end
             end

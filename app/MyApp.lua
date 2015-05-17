@@ -29,8 +29,8 @@ dataModel = DataModel.new()
 function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
-    self:initGameState()    
     self:initVariables()
+    self:initGameState()    
     
     -- um 设置玩家账户及等级
     um:setUserAccount()
@@ -87,135 +87,142 @@ function MyApp:createGameStateFile()
     print("createGameStateFile")
     local data = GameData.data
     data = {
-            versionId = __versionId,
-            weapons = {
-                        bags = {
-                                    {
-                                    intenlevel = 0,
-                                    weaponid   = 1,
-                                    },
-                                    {
-                                    intenlevel = 0,
-                                    weaponid   = 2 ,           
-                                    },
-                                    {
-                                    intenlevel = 0,
-                                    weaponid   = 6, 
-                                    }
-                        },
-                        weaponed = {
-                                bag1 =  {
-                                        weaponid   = 1,
-                                        },
-                                bag2 =  {
-                                        weaponid   = 2,
-                                        },
-                                bag3 = {
-                                        weaponid   = 6,
-                                        },
-                        },
-                        awardedIds = {
-                        },
-
-            }, 
-            inlay = {
-                        bags = {}, --{inlayid = 1,ownednum = 1}
-                        inlayed  = {
-                                        --存id bullet = 1,
-                                    bullet = nil,
-                                    clip = nil,
-                                    speed = nil,
-                                    crit = nil,
-                                    blood = nil,    
-                                    helper = nil,   
-                        },
+        versionId = __versionId,
+        weapons = {
+            bags = {
+                {
+                    intenlevel = 0,
+                    weaponid   = 1,
+                },
+                {
+                    intenlevel = 0,
+                    weaponid   = 2 ,           
+                },
+                {
+                    intenlevel = 0,
+                    weaponid   = 6, 
+                }
             },
-            prop = {
-                        lei = {num = 10},
-                        jijia = {num = 0},
-                        goldweapon = {num = 0},
-                        hpBag = {num = 12},
+            weaponed = {
+                bag1 = {
+                    weaponid   = 1,
+                },
+                bag2 = {
+                    weaponid   = 2,
+                },
+                bag3 = {
+                    weaponid   = 6,
+                },
             },
-       
-            weaponsuipian = {},
+            awardedIds = {
+            },
 
-            money = 2000000,
-            diamond = 0,
+        }, 
+        inlay = {
+            bags = {
             
-            --开启的关卡
-            currentlevel =  {
-                        group = 9,
-                        level = 6,
+            }, --{inlayid = 1,ownednum = 1}
+            inlayed  = {
+                --存id bullet = 1,
+                bullet = nil,
+                clip = nil,
+                speed = nil,
+                crit = nil,
+                blood = nil,    
+                helper = nil,   
             },
+        },
+        prop = {
+            lei = {num = 10},
+            jijia = {num = 1},
+            hpBag = {num = 1},
+        },
 
-            bossMode = {
-                chapterIndex = 1, 
-                waveIndex = 0, 
+        weaponsuipian = {},
+
+        money = 2000000,
+        diamond = 0,
+        
+        --开启的关卡
+        currentlevel =  {
+            group = 1,
+            level = 6,
+        },
+
+        bossMode = {
+            chapterIndex = 1, 
+            waveIndex = 0, 
+        },
+
+        jujiMode = {
+            waveIndex = 40, 
+            scoreAwarded = {
             },
+        },            
 
-            jujiMode = {
-                waveIndex = 0, 
-            },            
 
-            user = {
-                level = 1,
-                fightedGroupId = 0, --打过的最远的关卡groupId
-                fightedlevelId = 0, --打过的最远的关卡levelId
+        user = {
+            level = 1,
+            fightedGroupId = 0, --打过的最远的关卡groupId
+            fightedlevelId = 0, --打过的最远的关卡levelId
 
-                userName  = "玩家自己",
-                vipLevel  = 0,
-            },
-            guide = {
-                        --记得和 filldata对应!
+            userName  = "玩家自己",
+            vipLevel  = 0,
+        },
+        guide = {
+            --记得和 filldata对应!
 
-                        --第0-0关之内
-                        gamePre         = true,
-                        fight01_move    = true,
-                        fight01_fire    = true,
-                        fight01_lei     = true,
-                        fight01_gold    = true,
-                        fight01_change  = true,
-                        fight01_jijia   = true, 
+            --登陆
+            login           = true,
+            --前戏
+            preStory        = true,
+            --第0-0关之内
+            fight01_move    = true,
+            fight01_fire    = true,
+            fight01_lei     = true,
+            fight01_gold    = true,
+            fight01_change  = true,
+            fight01_jijia   = true, 
 
-                        --第0-0关之后  
-                        afterfight01    = true,   -- 进入下一关
-                     
-                        --第1-1之内
-                        fight_change    = true,
-                        fight_dun       = true,
+            --第0-0关之后  
+            afterfight01    = true,   -- 进入下一关
+         
+            --第1-1之内
+            fight_change    = true,
+            fight_dun       = true,
 
-                        --第1-2关之前
-                        xiangqian       = true,   --镶嵌一套青铜
+            --第1-2关之前
+            xiangqian       = true,   --镶嵌一套青铜
 
-                        --第1-3关之前
-                        weapon          = true,   -- 升级武器
-                        afterfight03    = true,   -- 回到主界面
-                        
-                        --第1-5关之内
-                        fightJu         = true,  
+            --第1-3关之前
+            weapon          = true,   -- 升级武器
+            afterfight03    = true,   -- 回到主界面
+            
+            --第1-5关之内
+            fightJu         = true,  
 
-                        --第1-4失败之后
-                        fightRelive     = true,                      
-            },
-            fight = {
-               isPreferBag1 = true,
-            },
+            --第1-4失败之后
+            fightRelive     = true,                      
+        },
+        fight = {
+           isPreferBag1 = true,
+        },
 
-            -- 礼包购买状态
-            giftBag = { --buy
-                        --false 为未购买
-                        weaponGiftBag =  false,
-                        novicesBag = false,
-            },
-            dailylogin = {
-                        loginTime = nil,  --时间戳
-                        registTime = nil, --时间戳
-                        isGet = false,
-                        dailyid = 0,
-            },
-            preference = {
-                isOpenMusic = true
-            },
+        -- 礼包购买状态
+        giftBag = { --buy
+                    --false 为未购买
+            weaponGiftBag =  false,
+            novicesBag = false,
+        },
+        dailylogin = {
+            loginTime = nil,  --时间戳
+            registTime = nil, --时间戳
+            isGet = false,
+            dailyid = 0,
+        },
+        preference = {
+            isOpenMusic = true
+        },
             
     }
     GameState.save(data)
@@ -227,9 +234,7 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-    -- local pauseModel = md:getInstance("PauseModel")
-    -- pauseModel:showPopup("HomePausePopup",{},
-    --     {anim = true,isNotScrenCapture = true})
+
 end
 
 function MyApp:onEnterForeground()

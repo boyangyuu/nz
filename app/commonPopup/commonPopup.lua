@@ -49,6 +49,8 @@ end
 
 function commonPopup:initUI(properties)
 	local typeName = properties.type
+	-- local funcStr = "initUI_" .. typeName 
+	-- self[funcStr](properties)
 	if typeName == "style1" then
 		local content = cc.uiloader:seekNodeByName(self, "content")
 		content:setString(properties.content)
@@ -73,10 +75,7 @@ function commonPopup:initUI(properties)
 	    end)
 
 	elseif typeName == "style2" then
-		local delay = properties.delay
-		if delay == nil then
-			delay = 2
-		end
+		local delay = properties.delay or 1.0
 	    local labelTip = cc.uiloader:seekNodeByName(self, "Label_tip")
 	    local panl_style2 = cc.uiloader:seekNodeByName(self, "panl_style2")
 	    labelTip:setString(properties.content)
@@ -236,6 +235,10 @@ function commonPopup:initUI(properties)
 	    end)
 	end
 end
+
+-- function callPhone:initUI_style1(properties)
+	
+-- end
 
 function commonPopup:onClickCofirm()
 	ui:closePopup("commonPopup")

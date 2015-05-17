@@ -5,6 +5,11 @@
 ]]
 local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
+
+--events
+BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
+BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
+
 local proInfo = require("app.commonPopup.ProductInfoConfig")
 -- 定义事件
 function BuyModel:ctor(properties)
@@ -19,6 +24,7 @@ function BuyModel:clearData()
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
+	if configId == "goldGiftBag" and isDefendDX() then configId = "goldGiftBag_dx" end 
 	print("BuyModel:showBuy", strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
@@ -39,15 +45,22 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	um:event("支付情况", umData)  
 
 	--pay
-	local isGift = buyConfig.isGift 
-	if isGift then
-        ui:showPopup("GiftBagPopup",{popupName = configId},{animName = "shake"})
+	local showType = buyConfig.showType 
+
+	if showType == "gift" then
+        ui:showPopup("GiftBagPopup",
+        	{popupName = configId},
+        	{animName = "shake"})
+    elseif showType == "iap" then 
+    	self:iapPay()        
+    elseif showType =="prop_rmb" then --非钻石购买的道具
+    	ui:showPopup("RmbBuyPopup",
+			 {jsonName = buyConfig.jsonName, 
+			 price = buyConfig.price,
+			 onClickConfirm = handler(self, self.iapPay)},
+			 {animName = "moveDown", opacity = 0})    			  
     else
-    	local tipsStr = buyData.tips or proInfo.getConfig(configId)
-    	ui:showPopup("commonPopup",
-			 {type = "style7", content = tipsStr, 
-			 callfuncCofirm = handler(self, self.iapPay)},
-			 {opacity = 0})
+    	assert(false, "invalid showType", showType)
     end
 end
 
@@ -105,6 +118,9 @@ function BuyModel:payDone(result)
 	local umData = {}
 	umData[self.strDesc] = "支付成功"
 	um:event("支付情况", umData)
+
+	--events
+	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
 end
 
 function BuyModel:deneyPay()
@@ -195,6 +211,24 @@ function BuyModel:buy_goldGiftBag( buydata )
 	end
 end
 
+function BuyModel:buy_goldGiftBag_dx( buydata )
+	print("BuyModel:buy_goldGiftBag(buydata)")
+	local inlayModel = md:getInstance("InlayModel")
+	local storeModel = md:getInstance("StoreModel")
+	local propModel = md:getInstance("PropModel")
+	--黄武*10
+	inlayModel:buyGoldsInlay(10)
+
+	--机甲*10
+	propModel:addProp("jijia",10)
+	--手雷*20
+	propModel:addProp("lei",20)
+
+	if not buydata.isNotPopup then 
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+	end
+end
+
 function BuyModel:buy_handGrenade( buydata )
 	local propModel = md:getInstance("PropModel")
 	local storeModel = md:getInstance("StoreModel")
@@ -224,22 +258,22 @@ function BuyModel:buy_onceFull( buydata )
 	weaponListModel:onceFull(buydata.weaponid)
 end
 
-function BuyModel:buy_resurrection( buydata )
-	print("BuyModel:buy_resurrection( buydata )")
+function BuyModel:buy_relive( buydata )
+	print("BuyModel:buy_relive( buydata )")
 	--yby todo
 end
 
 function BuyModel:buy_stone120( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(120)
+	userModel:addDiamond(120)
 end
 function BuyModel:buy_stone260( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(260)
+	userModel:addDiamond(260)
 end
 function BuyModel:buy_stone450( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:buyDiamond(450)
+	userModel:addDiamond(450)
 end
 
 function BuyModel:checkBought(giftId)

@@ -112,10 +112,6 @@ function Fight:refreshUmFightTimesEvent()
     um:event("关卡次数情况", umData)        
 end
 
-function Fight:refreshUmBossFightTimesEvent()
-    
-end
-
 function Fight:willStartFight()
     self:checkDialogForward()
 end
@@ -126,9 +122,6 @@ function Fight:startFight()
         print("function Fight:startFight()")
         self.inlay:checkNativeGold()    
     end
-
-    --check ju
-    self:checkJuContorlType()
 
     --check guide
     local guide = md:getInstance("Guide")
@@ -319,12 +312,6 @@ function Fight:getLevelInfo()
     return str
 end
 
-function Fight:checkJuContorlType()
-    if self:isJujiFight() == false then return end
-    local comps = {btnJu = true, btnChange =  false,}
-    self:setCompsVisible(comps)
-end
-
 function Fight:setCompsVisible(componentVisibles)
     self:dispatchEvent({name = Fight.CONTROL_SET_EVENT, 
         comps = componentVisibles})
@@ -360,6 +347,7 @@ function Fight:setResult(result)
     print("setResult", self.result)
     self.result = result
 end
+
 
 function Fight:waveUpdate(nextWaveIndex, waveType)
     assert(false, "must implement")

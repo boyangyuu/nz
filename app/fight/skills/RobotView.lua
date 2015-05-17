@@ -13,10 +13,12 @@ end)
 function RobotView:ctor()
 	--instance
 	self.robot 	 = md:getInstance("Robot")
+	self.robotType = 1
 
 	--event
 	cc.EventProxy.new(self.robot, self)
 		:addEventListener(Robot.ROBOT_START_EVENT	, handler(self, self.showRobot))
+		:addEventListener(Robot.GOLDROBOT_START_EVENT, handler(self, self.showGoldRobot))
 		:addEventListener(Robot.ROBOT_ENDTIME_EVENT	, handler(self, self.hideRobot))		
 		:addEventListener(Robot.ROBOT_FIRE_EVENT	, handler(self, self.playFire))
 		:addEventListener(Robot.ROBOT_STOPFIRE_EVENT, handler(self, self.stopFire))
@@ -31,6 +33,7 @@ function RobotView:clearUI()
 		self.armature:removeSelf()
 	end
 	self.armature = ccs.Armature:create("jijia")
+	self.armature:setScale(1/0.7)
 	self:addChild(self.armature)
 	self.armature:getAnimation():setMovementEventCallFunc(
 		handler(self, self.animationEvent))
@@ -39,7 +42,7 @@ end
 
 function RobotView:hideRobot(event)
 	self:stopFire()
-	self.armature:getAnimation():play("jijia_shou", -1, 1) --reverse
+	self.armature:getAnimation():play("jijia_shou"..self.robotType, -1, 1) --reverse
 
 	--effect
 	local soundSrc  = "res/Music/fight/jijia_close.wav"
@@ -49,12 +52,25 @@ end
 function RobotView:showRobot(event)
 	self:clearUI()
 	self:setVisible(true)
-	self.armature:getAnimation():play("jijia", -1, 1)
+	self.robotType = 1
+	self.armature:getAnimation():play("jijia"..self.robotType, -1, 1)
 
 	--effect
 	local soundSrc  = "res/Music/fight/jijia_open.wav"
 	self.audioId2 =  audio.playSound(soundSrc,false)		
 end
+
+function RobotView:showGoldRobot(event)
+	self:clearUI()
+	self:setVisible(true)
+	self.robotType = 2
+	self.armature:getAnimation():play("jijia"..self.robotType, -1, 1)
+
+	--effect
+	local soundSrc  = "res/Music/fight/jijia_open.wav"
+	self.audioId2 =  audio.playSound(soundSrc,false)		
+end
+
 
 function RobotView:RobotBehurtEffect(event)
 	--Robot behurted action effect
@@ -64,7 +80,7 @@ function RobotView:RobotBehurtEffect(event)
 end
 
 function RobotView:playStand()
-	self.armature:getAnimation():play("jijia_chixu", -1, 1)	
+	self.armature:getAnimation():play("jijia_chixu"..self.robotType, -1, 1)	
 end
 
 function RobotView:playFire(event)
@@ -73,7 +89,7 @@ function RobotView:playFire(event)
 
 	if self.isFiring then return end
 	self.isFiring = true
-	self.armature:getAnimation():play("jijia_fire", -1, 1)
+	self.armature:getAnimation():play("jijia_fire"..self.robotType, -1, 1)
 end
 
 function RobotView:stopFire(event)
@@ -83,9 +99,9 @@ end
 
 function RobotView:animationEvent(armatureBack,movementType,movementID)
 	if movementType == ccs.MovementEventType.loopComplete then
-    	if movementID == "jijia_shou" then
+    	if movementID == "jijia_shou"..self.robotType then
 			self:clearUI()
-		elseif movementID ~= "jijia_fire" then
+		elseif movementID ~= "jijia_fire"..self.robotType then
 			self:playStand() 
 		end 
 	end

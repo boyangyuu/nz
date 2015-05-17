@@ -7,7 +7,7 @@ end)
 function JujiModeLayer:ctor()
 	self.jujiModel = md:getInstance("JujiModeModel")
 	self.rankModel = md:getInstance("RankModel")
-	self.rankTable = self.jujiModel:getRankData()
+	self.rankTable = self.jujiModel:getRankData() 
 
 	self:loadCCS()
 	self:initUI()
@@ -15,8 +15,20 @@ function JujiModeLayer:ctor()
 end
 
 function JujiModeLayer:onEnter()
-	
 	self:performWithDelay(handler(self,self.refreshListView),0.5)
+	self:performWithDelay(handler(self,self.setUserName),0.5)
+end
+
+function JujiModeLayer:setUserName()
+	local user = md:getInstance("UserModel")
+	if  user:getUserName() == "玩家自己" then
+		self.userName = device.showInputBox("请输入昵称","昵称只能修改一次喔！")
+		while self.userName == "" do
+			self.userName = device.showInputBox("请输入昵称","昵称不能为空！")
+		end
+		user:setUserName(self.userName)
+		self.playerName:setString(user:getUserName())
+	end
 end
 
 function JujiModeLayer:loadCCS()
@@ -31,13 +43,13 @@ function JujiModeLayer:initUI()
 	local btnReward = cc.uiloader:seekNodeByName(self, "raward")
 	local btnStart = cc.uiloader:seekNodeByName(self, "start")
 	local playerRank = cc.uiloader:seekNodeByName(self, "rank")
-	local playerName = cc.uiloader:seekNodeByName(self, "playerName")
+	self.playerName = cc.uiloader:seekNodeByName(self, "playerName")
 	local playerPoint = cc.uiloader:seekNodeByName(self, "point")
 
 	local myselfRecord = self.rankModel:getUserRankData("jujiLevel")
 	local myselfRank = self.rankModel:getUserRank()
 	playerRank:setString(myselfRank)
-	playerName:setString(myselfRecord["name"])
+	self.playerName:setString(myselfRecord["name"])
 	playerPoint:setString(myselfRecord["jujiLevel"] )
 
 	btnBack:setTouchEnabled(true)
@@ -70,7 +82,7 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:onClickBtnStart()
-	local fightData = { groupId = 60,levelId = 8, fightType = "jujiFight"}  --无限狙击
+	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
 	ui:closePopup("JujiModeLayer")
 end
@@ -93,6 +105,7 @@ end
 
 function JujiModeLayer:onClickBtnReward()
 	print("JujiModeLayer:onClickBtnReward()")
+	ui:showPopup("JujiAwardPopup")
 end
 
 function JujiModeLayer:refreshListView()

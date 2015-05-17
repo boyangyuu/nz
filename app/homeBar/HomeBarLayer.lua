@@ -97,18 +97,15 @@ function HomeBarLayer:initHomeLayer()
         self.commonRootNode:addChild(v)
     end
 
+    local buyModel = md:getInstance("BuyModel")
     self.btnBuyCoin:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            self.btnSetting:setVisible(false)
-            self.btnBack:setVisible(true)
-            self:refreshCommonLayer("StoreLayer")
-            self.btnInlay:setButtonEnabled(true)
-            self.btnStore:setButtonEnabled(false)
-            self.btnArsenal:setButtonEnabled(true)
             local storeModel  = md:getInstance("StoreModel")
+            self:onBtnStoreClicked()
             storeModel:refreshInfo("bank")
+            buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
         end
     end)
 
@@ -130,12 +127,15 @@ function HomeBarLayer:initHomeLayer()
     end)
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
+        buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
+            "打开武器库_自动弹出武器大礼包")
     end)
     self.btnInlay:onButtonClicked(function()
         self:onBtnInlayClicked()
     end)
     self.btnStore:onButtonClicked(function()
         self:onBtnStoreClicked()
+        buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
 end
 
@@ -265,7 +265,6 @@ function HomeBarLayer:initGuideInlay()
         groupId = "xiangqian",
         rect = self.btnBack:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-            -- self.guide:finishGuide()
             self:onBtnBackClicked()
         end
      })        

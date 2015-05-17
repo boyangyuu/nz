@@ -38,6 +38,7 @@ function BossModeLayer:initUI()
 
 	--gun
 	self.panelGun = cc.uiloader:seekNodeByName(self.panelMain, "panelGun")
+	self.skillIcon = cc.uiloader:seekNodeByName(self.panelMain, "skillIcon")
 
 	self.partsImg = {}
 	for i=1,5 do
@@ -145,14 +146,15 @@ function BossModeLayer:refreshContent()
 	self.panelGun:removeAllChildren()
 	local weaponId = self.choseInfo["weaponId"]
 	local imgName = self.weaponListModel:getWeaponImgByID(weaponId)
-
-
 	local weaponImg = display.newSprite("#icon_"..imgName..".png")
 	weaponImg:setFlippedX(true)
 	weaponImg:setRotation(-10)
 	weaponImg:setScale(1.1)
 	addChildCenter(weaponImg, self.panelGun)
 
+	self.skillIcon:removeAllChildren()
+	local skillIconImg = display.newSprite("#skill1_"..imgName..".png")
+	addChildCenter(skillIconImg, self.skillIcon)
 
 	self.weaponName:removeAllChildren()
 	local weaponName = display.newSprite("#name_"..imgName..".png")

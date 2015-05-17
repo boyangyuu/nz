@@ -40,6 +40,12 @@ function StoryLayer:loadCCS()
 	self:addChild(self.storyNode)
 end
 
+function StoryLayer:onEnter()
+	--um
+    local guide = md:getInstance("Guide")
+    guide:checkGuideUM("preStory")
+end
+
 function StoryLayer:initTalks()
 	local posSet = {-250, 1232 ,-250}
 	local fileName = "talk"
@@ -82,9 +88,6 @@ function StoryLayer:initTouchEvent()
 			if self.id <= 3 then
 				self:changeTalk()
 			else
-				local data = getUserData()
-				data.guide.gamePre = true
-				setUserData(data)
 				local fightData = {
 					groupId = 0, 
 					levelId = 0,

@@ -23,7 +23,7 @@ function HeroAnimView:ctor()
 		:addEventListener(self.hero.EFFECT_HURT_BOMB_EVENT	, handler(self, self.playHurtedBomb_lei))	
 		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
 		:addEventListener(self.hero.EFFECT_GUIDE_EVENT		, handler(self, self.playAnimGuide))
-		:addEventListener(self.hero.EFFECT_ADDHP_EVENT		, handler(self, self.playAnimAddHp))
+		:addEventListener(self.hero.SKILL_ADDHP_EVENT		, handler(self, self.playAnimAddHp))
 		
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
@@ -82,7 +82,7 @@ function HeroAnimView:loadCCS()
 end
 
 function HeroAnimView:playHurtedBomb_lei(event)
-	-- --sound
+	--sound
     local soundSrc  = "res/Music/fight/hd_bz.wav"
     audio.playSound(soundSrc,false)  	
 end

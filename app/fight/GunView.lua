@@ -20,7 +20,6 @@ function GunView:ctor()
 	self.gun   = nil
 	self.jqk   = nil
 	self.qkzd = nil
-	self.dk    = nil
 	self:refreshGun()
 
 	--event
@@ -51,10 +50,7 @@ function GunView:fire()
 		self.qkzd:getAnimation():play("qkzd" , -1, 0)
 	end
 
-	if self.dk then 
-		self.dk    :setVisible(true)
-		self.dk:getAnimation()	 :play("danke", -1, 0)
-	end
+	self:addDanke()
 
 	self.armature:getAnimation():play("fire" , -1, 0)	
 
@@ -74,7 +70,6 @@ function GunView:refreshGun()
 	self.gun   = nil
 	self.jqk   = nil
 	self.qkzd = nil
-	self.dk    = nil
 
 	--gun
 	self.gun  = self.hero:getGun()
@@ -126,8 +121,8 @@ function GunView:refreshGun()
 	    self.qkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
     end
 
-    --蛋壳
-    self:addDanke()
+    -- --蛋壳
+    -- self:addDanke()
 end
 
 function GunView:onHeroFire(event)
@@ -140,9 +135,6 @@ function GunView:stopFire()
 	end
 	if self.qkzd then 
 		self.qkzd:setVisible(false)
-	end
-	if self.dk then
-		self.dk  :setVisible(false)
 	end
 
 	self:playIdle()
@@ -196,8 +188,6 @@ function GunView:playReload()
 	end
 	self:performWithDelay(reloadDone, reloadTime)
 	
-	--hero层reload动画
-	-- print("GunView:playReload()")
 	self.hero:dispatchEvent({
 				name = self.hero.GUN_RELOAD_EVENT , speedScale = speedScale})
 end
@@ -222,20 +212,29 @@ function GunView:setCoolDown(time)
 end
 
 function GunView:addDanke()
-	self.dk = ccs.Armature:create("danke")
-	self.dk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
+	local dk = ccs.Armature:create("danke")
+	dk:getAnimation():play("danke", -1, 1)
+	local function animationEvent(armatureBack,movementType,movementId) 
+    	if movementType == ccs.MovementEventType.loopComplete then
+			dk:removeSelf()
+    	end
+	end	
+	dk:getAnimation():setMovementEventCallFunc(animationEvent)
 
 	--special check
 	local config = self.gun:getConfig()
 	local animName = config["animName"]	
 	local armature = self.armature
-    local boneDk = armature:getBone("dk")
-    local posBone = boneDk:convertToWorldSpace(cc.p(0, 0))
-    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
-    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
-    self.dk:setVisible(false)
-   	self.dk:setPosition(destpos.x, destpos.y)
-    armature:addChild(self.dk , 3)	
+
+	--danke
+    if self.destpos == nil then 
+	    local boneDk = armature:getBone("dk")
+	    local posBone = boneDk:convertToWorldSpace(cc.p(0, 0))
+	    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
+	    self.destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+	end
+   	dk:setPosition(self.destpos.x, self.destpos.y)
+    armature:addChild(dk)	
 end
 
 function GunView:setGoldGun(isGold)

@@ -97,6 +97,7 @@ function WeaponListLayer:initUI()
     self.buycost          = cc.uiloader:seekNodeByName(layerBtn, "buycost")
     self.damagepluse      = cc.uiloader:seekNodeByName(self.panelDamage, "damagepluse")
     self.suipiannum       = cc.uiloader:seekNodeByName(self.paneldetail, "suipiannum")
+    self.labelNote       = cc.uiloader:seekNodeByName(self.paneldetail, "labelNote")
 
     cc.uiloader:seekNodeByName(self.panelDamage, "shanghai")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -116,6 +117,7 @@ function WeaponListLayer:initUI()
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
     cc.uiloader:seekNodeByName(layerBtn, "yijianmanji")
                 :enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.labelNote:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.buycost:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.upgradecost:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.damagepluse:enableOutline(cc.c4b(0, 255, 79,255), 2)
@@ -221,35 +223,25 @@ function WeaponListLayer:onClickBtnOncefull()
              "武器库界面_点击一键满级"..self.weaponRecord["name"])
 end
 
--- function WeaponListLayer:onClickBtnBuy()
---     -- 暂时不用
---     -- local guide = md:getInstance("Guide")
---     -- if self.buyModel:checkBought("weaponGiftBag") == false then
---     --     self.buyModel:showBuy("weaponGiftBag",{payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
---     --       deneyBuyFunc = handler(self, self.onCancelWeaponGift),isNotPopKefu = true}, 
---     --                                    "武器库界面_点击解锁武器"..self.weaponRecord["name"])
---     -- end
-
---     self:onCancelWeaponGift()
-
--- end
-
 function WeaponListLayer:onClickBtnUpgrade(event)
     self.weaponListModel:intensify(self.weaponId)
 end
 
 function WeaponListLayer:onClickBtnBuy(event)
-    if self.userModel:getDiamond() >= self.weaponRecord["cost"] then
-        ui:showPopup("commonPopup",
-            {type = "style3", content = "是否花费"..self.weaponRecord["cost"].."宝石购买该武器？",
-             callfuncCofirm =  handler(self, self.onBuyWeaponSucc),
-             callfuncClose  =  handler(self, self.closePopup)},
-             { opacity = 155})
-    else
-        local rmbCost = self.weaponRecord["rmbCost"]
-        local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
-        self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)
+    local function onClickConfirm()
+        if self:buyWeaponByStone() then 
+            ui:closePopup("StoneBuyPopup")
+        else 
+            local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
+            self.buyModel:showBuy("stone450", {}, strPos)
+        end
     end
+    ui:showPopup("StoneBuyPopup",
+         {jsonName = "weaponBuy", 
+         price = self.weaponRecord["cost"],
+         onClickConfirm = onClickConfirm},
+         {opacity = 150})
+
 end
 
 function WeaponListLayer:onCancelOncefull()
@@ -260,7 +252,7 @@ function WeaponListLayer:onBuyWeaponGiftSucc()
     self.levelMapModel:hideGiftBagIcon()
 end
 
-function WeaponListLayer:onBuyWeaponSucc()
+function WeaponListLayer:buyWeaponByStone()
     local isAfforded = self.userModel:costDiamond(self.weaponRecord["cost"]) 
     if isAfforded then
         self.weaponListModel:buyWeapon(self.weaponId)
@@ -272,6 +264,9 @@ function WeaponListLayer:onBuyWeaponSucc()
 
         ui:showPopup("WeaponNotifyLayer",
          {type = "gun",weaponId = self.weaponId})
+        return true
+    else
+        return false
     end
 end
 
@@ -354,6 +349,12 @@ function WeaponListLayer:refreshComment()
         self.layerGun:addChild(weaponImg)
     end
 
+    if self.weaponRecord["cost"] == 0 then
+        self.labelNote:setVisible(true)
+    else
+        self.labelNote:setVisible(false)
+    end
+
     local weaponproperity = self.weaponListModel:getWeaponProperity(self.weaponId)
     local weaponproperitynext = self.weaponListModel:getWeaponProperity(self.weaponId,"nextLevel")
     local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,"maxLevel")
@@ -404,7 +405,6 @@ function WeaponListLayer:refreshComment()
     local suipiannum = self.levelDetailModel:getSuiPianNum(self.weaponId)
     local needSuipianNum = self.levelDetailModel:getNeedSuipianNum(self.weaponId)
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
-    dump(self.weaponRecord["partNum"])
     if self.weaponRecord["partNum"] ~= "null" and not isGot then
         self.suipiannum:setVisible(true)
         self.suipiannum:setString("DSLJ"..suipiannum.."/"..needSuipianNum)
@@ -539,10 +539,14 @@ function WeaponListLayer:refreshBtns()
             self.labelPercent:setVisible(false)
             self.damagepluse:setVisible(false)
         else
+            if self.weaponRecord["onceFull"] == "notAllow" then
+                self.btnOncefull:setVisible(false)
+            else
+                self.btnOncefull:setVisible(true)
+            end
             self.btnFull:setVisible(false)
-            self.btnOncefull:setVisible(true)
             self.btnUpgrade:setVisible(true)
-        end
+        end        
     else
         self.progBulletNext:setVisible(false)
         self.progAccuracyNext:setVisible(false)
@@ -552,8 +556,12 @@ function WeaponListLayer:refreshBtns()
         self.btnFull:setVisible(false)
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
-        self.btnBuy:setVisible(true)
         self.btnEquip:setVisible(false)
+        if self.weaponRecord["cost"] == 0 then
+            self.btnBuy:setVisible(false)
+        else
+            self.btnBuy:setVisible(true)
+        end
     end
     if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)

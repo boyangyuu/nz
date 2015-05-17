@@ -164,7 +164,15 @@ function MapView:onFightPause(event)
 end
 
 function MapView:onFightRelive(event)
-	self:checkWave() 
+	--check enemy
+	local leftnum   =  self:getLeftEnemyNum()
+	local cachenum  = #self.cacheEnemys
+	if leftnum == 0 and cachenum == 0 then 
+		local waveIndex = self.mapModel:getWaveIndex() 
+		print("第"..waveIndex.."波怪物消灭完毕")
+		self.mapModel:setWaveIndex(waveIndex + 1)
+		self:updateEnemys()
+	end
 end
 
 function MapView:updateEnemys()
@@ -227,7 +235,7 @@ function MapView:addWave(waveData, isZhaohuan)
 				--出场顺序
 				enemyProperty["order"] = order 
 				local pos = group["pos"][i] 
-				assert("pos", pos)
+				assert(pos, "没有配置pos！！")
 				enemyProperty["offsetX"] = pos 
 				self:cacheEnemy(enemyProperty)
 			end
@@ -452,6 +460,7 @@ function MapView:openZoom(event)
 
 	--event data
 	local destWorldPos = event.destWorldPos
+	-- dump(destWorldPos, "destWorldPos")
 	local scale = event.scale
 	local time = event.time
 	self.hero:setMapZoom(scale)
@@ -462,9 +471,11 @@ function MapView:openZoom(event)
 		-- 回复触摸Ftodoyby
 		self.isZooming = false
 	end
-	local pWorldMap = self:convertToNodeSpace(cc.p(0, 0))
-	local offsetX = (destWorldPos.x  - pWorldMap.x) * (scale - 1)
-	local offsetY = (destWorldPos.y - pWorldMap.y) * (scale - 1)	
+	local pWorldMap = self:convertToWorldSpace(cc.p(0, 0))
+
+	
+	local offsetX = (-destWorldPos.x  + pWorldMap.x) * (scale)
+	local offsetY = (-destWorldPos.y + pWorldMap.y) * (scale)
 	local action = cc.MoveBy:create(time, cc.p(offsetX, offsetY))
 	self:runAction(cc.Sequence:create(action, cc.CallFunc:create(zoomEnd)))
 	self:runAction(cc.ScaleBy:create(time, scale))	

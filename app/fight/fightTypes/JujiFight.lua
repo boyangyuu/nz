@@ -3,7 +3,6 @@ local Fight   = import(".Fight")
 
 local JujiFight = class("JujiFight", Fight)
 function JujiFight:ctor(properties)
-	-- dump(properties, "properties")
 	JujiFight.super.ctor(self, properties)
 
 	--instance
@@ -60,9 +59,7 @@ function JujiFight:waveUpdate(nextWaveIndex, waveType)
     fightDescModel:waveStart(self.passLevelNum + 1)
 end
 
-
 function JujiFight:passLevel()
-
 	self.passLevelNum = self.passLevelNum + 1
 
 	--save data

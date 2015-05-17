@@ -21,10 +21,11 @@ function LevelFight:getResultData()
 
     resultData["goldNum"]   = self.goldValue
     resultData["hpPercent"] = hpPercent  
-    resultData["levelId"]   = self:getLevelId()  
-    resultData["groupId"]   = self:getGroupId()  
-    resultData["fightType"] = self:getFightType() 
+    resultData["levelId"]   = self:getLevelId()
+    resultData["groupId"]   = self:getGroupId()
+    resultData["fightType"] = self:getFightType()
     resultData["result"]    = self:getResult()
+    resultData["isFirst"]   = true
     return resultData
 end
 

@@ -1,7 +1,4 @@
 
-
-
-
 local LayerColor_BLACK = cc.c4b(0, 0, 0, 0)
 local kOpacity = 200.0
 
@@ -36,7 +33,7 @@ function PopupRootLayer:showPopup(event)
 	--action
 	local animName = event.animName or "scale"
 	if event.animName == "normal" then
-		print("PopupRootLayer animName")
+
 	elseif animName == "scale" then
 		layer:scale(0.0)
 		layer:scaleTo(0.15, 1)

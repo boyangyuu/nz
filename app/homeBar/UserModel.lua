@@ -47,7 +47,8 @@ function UserModel:costDiamond(diamond)
 	end
 end
 
- function UserModel:buyDiamond(diamond)
+ function UserModel:addDiamond(diamond)
+ 	if diamond <= 0 then return end
 	local data = getUserData()
 	data.diamond = data.diamond + diamond
 	setUserData(data)
@@ -55,6 +56,7 @@ end
 end
 
  function UserModel:addMoney(money)
+ 	if money <= 0 then return end
 	local data = getUserData()
 	data.money = data.money + money
 	setUserData(data)
@@ -92,13 +94,19 @@ end
 
 function UserModel:getRegisterTime()
 	local data = getUserData()
-	local registerTime = data.registTime
+	local registerTime = data.dailylogin.registTime
 	return registerTime 
 end
 
 function UserModel:getUserName()
 	local data = getUserData()
 	return data.user.userName
+end
+
+function UserModel:setUserName(nameString)
+	local data = getUserData()
+	data.user.userName = nameString
+	setUserData(data)
 end
 
 return UserModel

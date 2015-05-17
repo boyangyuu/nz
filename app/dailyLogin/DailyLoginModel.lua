@@ -3,35 +3,6 @@ local DailyLoginModel = class("DailyLoginModel", cc.mvc.ModelBase)
 
 function DailyLoginModel:ctor(properties)
 	DailyLoginModel.super.ctor(self,properties)
-	self:getDate()
-end
-
-local popup = false
-function DailyLoginModel:setPopup()
-	popup = true
-	dump(popup)
-end
-function DailyLoginModel:donotPop()
-	popup = false
-end
-function DailyLoginModel:checkPop()
-	return popup
-end
-
-function DailyLoginModel:setTime()
-	print("~~~~!~!~!~!~!")
-	dump(network.getInternetConnectionStatus())
-	if network.getInternetConnectionStatus() == 0 then return end
-	local data = getUserData()
-	data.dailylogin.loginTime = self.date
-	if data.registTime == nil then
-		if network.getInternetConnectionStatus() == 0 then
-			data.registTime = os.time()
-		else
-			data.registTime = self.date
-		end
-	end
-	setUserData(data)
 end
 
 function DailyLoginModel:setGet(isget)
@@ -122,56 +93,48 @@ function DailyLoginModel:isGet()
 	end
 end
 
-function DailyLoginModel:setLoginState()
-	local DailyInfo = self:getDailyInfo()
-	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",self.date) then
-		if DailyInfo["isGet"] then
-
-		else
-
-		end
-	else
-		self:setTime()
-		if DailyInfo["isGet"] then
-			self:setGet(false)
-		else
-			
-		end
+function DailyLoginModel:requestDateSever(callfunc)
+	local function onRequestFinished(event)
+		self:refreshTime(event, callfunc)
 	end
-end
-
-function DailyLoginModel:getDate()
-	local data = getUserData()
-	self.date = data.dailylogin.loginTime
-	dump(data.dailylogin)
     local url = "http://123.57.213.26/timestamp.php"
-    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "GET")
+    local request = network.createHTTPRequest(onRequestFinished, url, "GET")
     request:start()
 end
 
-function DailyLoginModel:onRequestFinished(event)
-    local ok = (event.name == "completed")
+function DailyLoginModel:refreshTime(event, callfunc)
+	dump(event, "event refreshTime")
+    local name = event.name 
     local request = event.request
- 
-    if not ok then
-        -- 请求失败，显示错误代码和错误消息
-        print(request:getErrorCode(), request:getErrorMessage())
+ 	
+    if name ~= "completed" then
+        print("网络请求中", request:getErrorCode()..request:getErrorMessage())
         return
     end
- 
+ 	
     local code = request:getResponseStatusCode()
     if code ~= 200 then
-        -- 请求结束，但没有返回 200 响应代码
-        print(code)
-        return
+        print("网络请求失败", code)
+        callfunc("fail")
+    else
+	    print("网络请求成功", code) 
+	    local response = request:getResponseString()
+	    -- dump(response, "请求成功 response")
+	    if response then
+	    	local curTimeStamp = response
+	    	self:saveTimeData(curTimeStamp)
+	    	callfunc("success")
+		end
     end
- 
-    -- 请求成功，显示服务端返回的内容
-    local response = request:getResponseString()
-    dump(response)
-    if response then
-	    self.date = response
+end
+
+function DailyLoginModel:saveTimeData(curTimeStamp)
+	local data = getUserData()
+	data.dailylogin.loginTime = curTimeStamp
+	if data.dailylogin.registTime == nil then
+		data.dailylogin.registTime = curTimeStamp
 	end
+	setUserData(data)
 end
 
 return DailyLoginModel

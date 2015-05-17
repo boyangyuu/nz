@@ -19,12 +19,12 @@ configs["day3"] = {
 
 configs["day4"] = {
 	type = "gold",
-	number = 5000
+	number = 5000,
 }
 
 configs["day5"] = {
-	type = "suipian",
-	id = 4,
+	type = "goldweapon",
+	number = 1,
 }
 
 configs["day6"] = {

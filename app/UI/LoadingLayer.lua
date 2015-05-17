@@ -24,7 +24,7 @@ end
 
 function LoadingLayer:loadGiftCCS()
     math.randomseed(os.time())
-    local rans = math.random(2,3)
+    local rans = math.random(2,4)
     local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")    
     self:addChild(controlNode)
 end

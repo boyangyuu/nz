@@ -30,8 +30,7 @@ function FightResultLayer:ctor()
 
     self.itemsTable = {}
  
-    local userModel = md:getInstance("UserModel")
-    userModel:addMoney(self.fightData["goldNum"])
+    self.userModel:addMoney(self.fightData["goldNum"])
     um:bonusVirtualCurrency(self.fightData["goldNum"],4)
     local hpPercent = self.fightData["hpPercent"]
     self.grade = self.fightResultModel:getGrade(hpPercent)
@@ -137,6 +136,15 @@ function FightResultLayer:initUI()
     self.btnGetAll:addChild(self.getallArmature)
     self.inlayArmature:getAnimation():play("yjzb" , -1, 1)
     self.getallArmature:getAnimation():play("yjzb" , -1, 1)
+
+    labelMoney = cc.uiloader:seekNodeByName(self, "labelMoney")
+    labelDiamond = cc.uiloader:seekNodeByName(self, "labelDiamond")
+    labelMoney:setString("本关战斗获得"..self.fightData["goldNum"].."金币")
+    if self.fightData["isFirst"] then
+    	local record = self.levelDetailModel:getConfig(self.fightData["groupId"],self.fightData["groupId"])
+		labelDiamond:setString("首次战斗获得"..record["giftDiamond"].."宝石")
+		self.userModel:addDiamond(record["giftDiamond"])
+	end
 
 	function showButton()
 		self:startGuide()

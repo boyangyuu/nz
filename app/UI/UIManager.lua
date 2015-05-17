@@ -11,9 +11,6 @@ UI.POPUP_CLOSEALL_EVENT = "POPUP_CLOSEALL_EVENT"
 UI.LOAD_SHOW_EVENT 		= "LOAD_SHOW_EVENT"
 UI.LOAD_HIDE_EVENT 		= "LOAD_HIDE_EVENT"
 
-UI.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
-UI.PAUSESCENE_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
-
 --保存layer
 local layerClasses = {}
 -- layerClasses["LoadingLayer"] 		 = import("..load.LoadingLayer")
@@ -29,12 +26,8 @@ layerClasses["storyLayer"]           = import("..start.StoryLayer")
 
 layerClasses["DailyLoginLayer"]      = import("..dailyLogin.DailyLoginLayer")
 
---popup
+--fight
 layerClasses["FightResultFailPopup"] = import("..fightResult.FightResultFailPopup")
-layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
-layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
-layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
-layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiModeLayer"]        = import("..jujiMode.JujiModeLayer")
 layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
 layerClasses["GunHelpPopup"]         = import("..fight.Gun.GunHelpPopup")
@@ -42,9 +35,23 @@ layerClasses["FightAdvisePopup"]     = import("..fight.fightTips.FightAdvisePopu
 layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopup")
 
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
+layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
+layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
 
--- giftBag
+-- buy
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
+layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
+layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
+
+--awardTime
+layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")
+
+
+--jujiFight
+layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
+layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
+layerClasses["JujiAwardPopup"]       = import("..jujiMode.JujiAwardPopup")
+
 
 
 function UI:ctor(properties)

@@ -39,7 +39,7 @@ function FightPlayer:ctor(properties)
     self.inlay      = md:getInstance("FightInlay")
     self.fightProp  = md:getInstance("FightProp")
     local propModel = md:getInstance("PropModel")
-
+    local inlayModel = md:getInstance("InlayModel")
     --datas
     self.curGold    = 0
     self.tempChangeGoldHandler = nil
@@ -78,9 +78,18 @@ function FightPlayer:ctor(properties)
     cc.EventProxy.new(propModel, self)
         :addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
 
+    cc.EventProxy.new(inlayModel, self)
+        :addEventListener(inlayModel.REFRESH_INLAY_EVENT, handler(self, self.refreshPropData))
+
+
     cc.EventProxy.new(self.defence, self)
         :addEventListener(self.defence.DEFENCE_BEHURTED_EVENT, handler(self, self.onDefenceBeHurt))
         :addEventListener(self.defence.DEFENCE_BROKEN_EVENT, handler(self, self.startDefenceResume))
+
+    local map = md:getInstance("Map")       
+    cc.EventProxy.new(map, self)
+         :addEventListener(map.GUN_OPEN_JU_EVENT, handler(self, self.onJuOpen))
+         :addEventListener(map.GUN_CLOSE_JU_EVENT, handler(self, self.onJuClose))
 
     self:setNodeEventEnabled(true)   
 end
@@ -375,14 +384,51 @@ function FightPlayer:onMutiTouchBegin(event)
 
         isTouch = self:checkBtnGold(point)
         if isTouch then return true end
-        
-        -- --test yby
-        -- local map = md:getInstance("Map")
-        -- map:setIsOpenJu(true, point)      
     end
-
-
+    if event.points["0"] then 
+        self:checkJuOpen(event.points["0"])
+    end
     return false
+end
+
+function FightPlayer:checkJuOpen(point)
+    local isju = self.fight:isJujiFight()
+    if not isju then return end
+    local map    = md:getInstance("Map")
+    local isOpen = map:getIsOpenJu()
+    if isOpen then return end 
+    local pos = cc.p(point.x, point.y)
+    map:setIsOpenJu(true, pos)      
+end
+
+function FightPlayer:onJuClose(event)
+    -- self.btnRobot:setVisible(true)
+    -- self.label_jijiaNum:setVisible(true)
+    self.btnLei:setVisible(true)
+    self.label_leiNum:setVisible(true)
+    self.gunView:setVisible(true)
+    self.focusNode:setVisible(false)
+    self.btnJu:setVisible(false)
+end
+
+function FightPlayer:onJuOpen(event)
+    -- self.btnRobot:setVisible(false)
+    -- self.label_jijiaNum:setVisible(false)
+    self.btnLei:setVisible(false)
+    self.label_leiNum:setVisible(false)
+    self.gunView:setVisible(false)
+    self.focusNode:setVisible(true)
+    self.btnJu:setVisible(true)
+end
+
+function FightPlayer:checkJujiControl()
+    local isju = self.fight:isJujiFight()
+    if isju then 
+        self.btnJu:setVisible(false)
+        self.btnChange:setVisible(false)
+        self.btnRobot:setVisible(false)
+        self.label_jijiaNum:setVisible(false)        
+    end 
 end
 
 function FightPlayer:onMutiTouchEnd(event)
@@ -423,12 +469,8 @@ function FightPlayer:checkbtnRobot(point)
     if isTouch then
         addBtnEffect(self.btnRobot)
 
-        --cost
-        local function callfunc()
-            local robot = md:getInstance("Robot")
-            robot:startRobot()
-        end        
-        self.fightProp:costRobot(callfunc)
+        --cost      
+        self.fightProp:costRobot()
     end
     return isTouch
 end
@@ -455,6 +497,7 @@ function FightPlayer:checkBtnLei(point)
         end        
         self.fightProp:costLei(callfunc)
     end
+    return isTouch
 end
 
 function FightPlayer:refreshPropData(event)
@@ -526,9 +569,8 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
     
     --in touch
-    if isTouch then
-        local isOpenJu = self:checkJuFire()
-        if isOpenJu then return false end 
+    if not self:checkJuFire() then
+        return isTouch
     end
 
     if isTouch  then
@@ -555,14 +597,11 @@ function FightPlayer:checkJuFire()
     --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
     local isJuLevel = self.fight:isJujiFight()
     local map           = md:getInstance("Map")
-    local isOpenJu      = map:getIsOpenJu()
-
-    local isJuAble      = map:getIsJuAble()    
+    local isOpenJu      = map:getIsOpenJu() 
     if isJuLevel and not isOpenJu then 
-        map:setIsOpenJu(true)
-        return true
+        return false
     end 
-    return false
+    return true
 end
 
 function FightPlayer:onBtnFire()
@@ -663,6 +702,9 @@ function FightPlayer:onResumePos(event)
 end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
+    --check ju
+    if self.fight:isJujiFight() then return end
+
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
     local scale = KFightConfig.scaleMoveFocus
@@ -831,7 +873,8 @@ function FightPlayer:initGuide1()
         groupId = "fight01_gold",
         rect = self.btnGold:getBoundingBox(),
         endfunc = function (touchEvent)
-            self.inlay:activeGoldOnCost()
+            local fightInlay = md:getInstance("FightInlay")
+            fightInlay:activeGoldOnCost()
         end
     })     
 end
@@ -887,10 +930,11 @@ function FightPlayer:initGuide3()
     self.guide:addClickListener({
         id = "fightJu_open",
         groupId = "fightJu",
-        rect = self.btnFire:getBoundingBox(),
+        rect = cc.rect(display.width1/2 - 60, display.height1/2 - 60,
+                        120, 120),
         endfunc = function (touchEvent)
             local map = md:getInstance("Map")
-            map:setIsOpenJu(true)            
+            map:setIsOpenJu(true, cc.p(display.width1/2, display.height1/2))            
         end
      })    
 
@@ -943,8 +987,7 @@ function FightPlayer:initGuide4()
         rect = self.btnRobot:getBoundingBox(),
         endfunc = function (touchEvent)
             addBtnEffect(self.btnRobot)
-            local robot = md:getInstance("Robot")
-            robot:startRobot()  
+            self.fightProp:costRobot()
         end
     })   
 end
@@ -956,12 +999,11 @@ function FightPlayer:onEnter()
     --music
     local src = "res/Music/bg/bjyx.wav"
     audio.playMusic(src, true)
-    local isju = self.fight:isJujiFight()
-    if isju then 
-        self.btnRobot:setVisible(false)
-        self.label_jijiaNum:setVisible(false)       
-    end 
+    
+    --show
+    self:checkJujiControl()
 end
+
 
 function FightPlayer:onCleanup()
      audio:stopAllSounds()
