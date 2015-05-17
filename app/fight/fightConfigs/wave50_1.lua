@@ -3,15 +3,15 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {                                                                --盾牌boss
+		enemys = {                                                              
 			{
-				descId = "boss01",  --简介
+				descId = "boss01",  --简介                            
 				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "boss",
+					type = "boss",                                                 --盾牌boss
 					placeName = "place1",
 					missileId = 20,            --BOSS导弹ID
 					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
@@ -21,15 +21,15 @@ local waves = {
 	},
 -----------------------------------------------------------------------------------------------------------第1个盾牌boss  id = 1
 	{
-		enemys = {                                                                -- 红枪boss
+		enemys = {                                                                
 			{
-				descId = "boss01_1", --简介
+				descId = "boss01_1", --简介                           
 				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "boss",
+					type = "boss",                                                 --红枪boss
 					placeName = "place1",
 					missileId = 20,            --BOSS导弹ID
 					id = 2,            --boss里面id为1  ,以后有可能有很多boss         
@@ -39,15 +39,15 @@ local waves = {
 	},
 -----------------------------------------------------------------------------------------------------------第2个红枪boss  id = 2
 	{
-		enemys = {                                                                -- 紫炮boss
+		enemys = {                                                                 
 			{
-				descId = "boss01_2", --简介
+				descId = "boss01_2", --简介                            
 				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "boss",
+					type = "boss",                                                  -- 紫炮boss
 					placeName = "place1",
 					missileId = 20,            --BOSS导弹ID
 					id = 3,            --boss里面id为1  ,以后有可能有很多boss     
@@ -57,17 +57,18 @@ local waves = {
 	},
 -----------------------------------------------------------------------------------------------------------第3个紫炮boss  id = 3
 	{
-		enemys = {                                                                --冲锋蓝boss
+		enemys = {                                                            
 			{
-				descId = "boss02",--简介
+				descId = "boss02",--简介                          
 				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "chongBoss",
+					type = "chongBoss",                                            --冲锋蓝boss
 					placeName = "place1",
-					missileId = 20,                 --导弹id        
+					missileId = 20,                 --导弹id    
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) },    
 					qiuId = 25,                   --铁球id
 					-- qiuTime = 10,                 --铁球飞行到脸前的时间
 					id = 4,                --boss里面id为1  ,以后有可能有很多boss 
@@ -85,9 +86,10 @@ local waves = {
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "chongBoss",                          -- CF肌肉 boss
+					type = "chongBoss",                                         -- CF肌肉 boss
 					placeName = "place1",
 					missileId = 20,                 --导弹id
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) },
 					qiuId = 24,                   --铁球id
 					-- qiuTime = 10,                 --铁球飞行到脸前的时间
 					id = 5,
@@ -97,17 +99,18 @@ local waves = {
 	},
 ----------------------------------------------------------------------------------------------------------第5个CF肌肉 boss id = 5
 	{
-		enemys = {                                                                -- 冲锋黄boss
+		enemys = {                                                                
 			{
-				descId = "boss02_2",--简介
+				descId = "boss02_2",--简介                            
 				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "chongBoss",
+					type = "chongBoss",                                           --  冲锋黄boss
 					placeName = "place1",
 					missileId = 20,                 --导弹id
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) },
 					qiuId = 24,                   --铁球id
 					-- qiuTime = 10,                 --铁球飞行到脸前的时间
 					id = 6,
@@ -136,7 +139,7 @@ local waves = {
 	},
 -----------------------------------------------------------------------------------------------------------第7个女忍者boss id = 7
 	{
-		enemys = {                                                                --鬼眼
+		enemys = {                                                                 
 			{
 				descId = "renzb", --简介
 				time = 2,	
@@ -144,7 +147,7 @@ local waves = {
 				pos = {650},
 				delay = {4},
 				property = { 
-					type = "renzheBoss",
+					type = "renzheBoss",                                              --鬼眼
 					placeName = "place11",
 					missileId = 18, 
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50)},
@@ -155,7 +158,7 @@ local waves = {
 	},
 -----------------------------------------------------------------------------------------------------------第8个鬼眼boss id = 8
 	{	
-		enemys = {                                                                -- 多足蜘蛛boss
+		enemys = {                                                               
 			{
 				descId = "dzboss", --简介
 				time = 2,	
@@ -163,7 +166,7 @@ local waves = {
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "duozuBoss",
+					type = "duozuBoss",                                              -- 多足蜘蛛boss
 					placeName = "place1",
 					wangId    = 27,    --网ID
 					missileId = 20,    --BOSS导弹
@@ -175,15 +178,15 @@ local waves = {
 	},
 ----------------------------------------------------------------------------------------------------------第9个多足蜘蛛boss id = 9
 	{	
-		enemys = {                                                                -- 毒刺boss
+		enemys = {                                                                
 			{
-				descId = "dzboss_1", --简介
+				descId = "dzboss_1", --简介               
 				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "duozuBoss",
+					type = "duozuBoss",                                                  -- 毒刺boss
 					placeName = "place1",
 					wangId    = 27,     --网ID
 					missileId = 23,     --大黑导弹
@@ -201,7 +204,7 @@ local waves = {
 			type = "goldJijia", --黄金机甲
 			cost  = 450,  --钻石花费 
 		},
-		enemys = {                                                                -- 魔化鬼眼boss
+		enemys = {                                                             
 			{
 				descId = "renzb", --简介
 				time = 2,	
@@ -209,7 +212,7 @@ local waves = {
 				pos = {550},
 				delay = {4},
 				property = { 
-					type = "renzheBoss",
+					type = "renzheBoss",                                              -- 魔化鬼眼boss
 					placeName = "place1",
 					missileId = 18, 
 					missileOffsets = {cc.p(-150,50) , cc.p(150, -50)},
@@ -228,9 +231,10 @@ local waves = {
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "chongBoss",                          -- CF肌肉 boss
+					type = "chongBoss",                                                    -- CF肌肉 boss
 					placeName = "place1",
 					missileId = 20,                 --导弹id
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) },
 					qiuId = 24,                   --铁球id
 					id = 12,
 				},
@@ -247,7 +251,7 @@ local waves = {
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "boss",                                 -- 紫炮boss
+					type = "boss",                                                        -- 紫炮boss
 					placeName = "place1",
 					missileId = 20,            --BOSS导弹ID
 					id = 13,            --boss里面id为1  ,以后有可能有很多boss     
@@ -265,7 +269,7 @@ local waves = {
 				pos = {500},
 				delay = {4},
 				property = { 
-					type = "duozuBoss",                         -- 多足蜘蛛boss
+					type = "duozuBoss",                                                  -- 多足蜘蛛boss
 					placeName = "place1",
 					wangId    = 27,    --网ID
 					missileId = 20,    --BOSS导弹
@@ -295,7 +299,7 @@ local enemys = {
 	weak1=2},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=2, fireCd=7.0,
+	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=6, fireCd=8.0,
 	weak1=2,    award = 60},
 
 	--鬼眼分身           冲锋伤害  type = "renzhe",
@@ -348,7 +352,6 @@ local enemys = {
 local bosses = {
 	{
 		image = "boss01", --图片名字
-		-- hp = 60000,
 		award = 10000,                   --boss产出金币数量
 		hp = 100000,
 		demage = 5,                        --普通攻击伤害
@@ -498,7 +501,6 @@ local bosses = {
 		image = "boss01_1", --图片名字
 		award = 10000,                   --boss产出金币数量
 		hp = 100000,
-		--hp = 60000,
 		demage = 4,
 		fireRate = 60,                  --0就不普通攻击了
 		fireCd = 3,  		
@@ -661,8 +663,7 @@ local bosses = {
 	},
 --------------------------------------------------------------------------------------------------第2个出场的boss 红枪  id = 2
 	{
-		image = "boss01_2", --图片名字
-		-- hp = 100000,
+		image = "boss01_2", --图片名字                         紫炮
 		award = 10000,                   --boss产出金币数量
 		hp = 100000,
 		demage = 5,                        --普通攻击伤害
@@ -673,34 +674,26 @@ local bosses = {
 		wudiTime = 5 , 	    --无敌时间
 		
 		saoFireOffset = 0.1, 		--扫射时间间隔
-		saoFireTimes = 15, 			--一次扫射5下
+		saoFireTimes = 10, 			--一次扫射5下
 		weak1 = 1.2,					--手  弱点伤害倍数
 		weak2 = 1.2,					--腹  弱点伤害倍数
 		weak3 = 1.2,					--头  弱点伤害倍数
 		skilltrigger = {   			   --技能触发(可以同时)
+
+			saoShe = { 0.95, 0.65, 0.35,},                --调用普通攻击的伤害  扫射
                        
-			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
-			-- },                                        
+			wudi = {0.90, 0.70, 0.50, 0.30,},                    --无敌                                        
+ 
+			zhaohuan = {0.92, 0.72, 0.52, 0.32, },                         --召唤小怪 
 
-			saoShe = { 0.90, 0.63, 0.35 },                --调用普通攻击的伤害  扫射 
-
-			zhaohuan = {0.95, 0.70, 0.40 },                         --召唤小怪 
-
-			moveLeftFire = { 0.85 , 0.30 },
-			moveRightFire = { 0.60, },
+			moveLeftFire = { 0.80 , 0.40, },
+			moveRightFire = { 0.60, 0.20, },
 			
 
 			daoDan1 = {                                            --两发导弹
-				0.99, 0.45, 0.10
+				0.99, 0.85, 0.75, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15,
 			},
 
-			daoDan2 = {                                            --两发导弹
-				0.80, 0.50, 0.20
-			},
-
-			daoDan3 = {                                            --两发导弹
-				0.75, 0.25, 0.15
-			},
 
 			weak1 = {
 				0.60,
@@ -716,10 +709,10 @@ local bosses = {
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {  
+			demage200 = {  
 				0.65,
 			},	
-			demage400 = {  
+			demage300 = {  
 				0.30,
 			},							
 		},
@@ -728,23 +721,10 @@ local bosses = {
 		    id = 20,                                 --boss导弹
 			type = "missile",                  
 			offsetPoses = {
-                cc.p(-300, 0), cc.p(300, 0), 
+                cc.p(300, 0), cc.p(-300, 0),
            }               
 		},
-		daoDan2 = {
-			id = 20,                                 --boss导弹
-			type = "missile",
-			offsetPoses = {
-                cc.p(0, 0), cc.p(0, -500), 
-           }               
-		},
-		daoDan3 = {
-			id = 20,                                 --boss导弹
-			type = "missile",                        
-			offsetPoses = {
-                cc.p(-300, -300), cc.p(300, -300), 
-           }               
-		},
+
 
 
 		enemys1 = {                                                     --第一波召唤的人质
@@ -894,17 +874,15 @@ local bosses = {
 					id = 30,
 				},
 			},
-		},
-		enemys3 = {                                                     --第一波召唤的人质
 			{
 				time = 0,
 				num = 1,
 				delay = {0},
-				pos = {500},
+				pos = {350},
 				property = {
 					renzhiName = "人质7",      --  一组统一标示
 					type = "bangfei",
-					placeName = "place6",
+					placeName = "place4",
 					id = 29,
 				},
 			},
@@ -912,14 +890,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0},
-				pos = {500},
+				pos = {350},
 				property = {
 					renzhiName = "人质7",     --  一组统一标示
 					type = "bangren",
-					placeName = "place6",
+					placeName = "place4",
 					id = 30,
 				},
 			},
+		},
+		enemys3 = {                                                     --第一波召唤的人质
+
 			{
 				time = 0.5,
 				num = 1,
@@ -968,8 +949,154 @@ local bosses = {
 					id = 30,
 				},
 			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质10",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place6",
+					id = 29,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质10",     --  一组统一标示
+					type = "bangren",
+					placeName = "place6",
+					id = 30,
+				},
+			},
+			{
+				time = 0.5,
+				num = 1,
+				delay = {0},
+				pos = {1100},
+				property = {
+					renzhiName = "人质11",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place4",
+					id = 29,
+				},
+			},
+			{
+				time = 0.5,
+				num = 1,
+				delay = {0},
+				pos = {1100},
+				property = {
+					renzhiName = "人质11",     --  一组统一标示
+					type = "bangren",
+					placeName = "place4",
+					id = 30,
+				},
+			},
 		},
+		enemys4 = {                                                     --第一波召唤的人质
 
+			{
+				time = 0.5,
+				num = 1,
+				delay = {0},
+				pos = {900},
+				property = {
+					renzhiName = "人质12",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place5",
+					id = 29,
+				},
+			},
+			{
+				time = 0.5,
+				num = 1,
+				delay = {0},
+				pos = {900},
+				property = {
+					renzhiName = "人质12",     --  一组统一标示
+					type = "bangren",
+					placeName = "place5",
+					id = 30,
+				},
+			},
+			{
+				time = 1,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质13",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place7",
+					id = 29,
+				},
+			},
+			{
+				time = 1,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质13",     --  一组统一标示
+					type = "bangren",
+					placeName = "place7",
+					id = 30,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质14",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place6",
+					id = 29,
+				},
+			},
+			{
+				time = 0,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质14",     --  一组统一标示
+					type = "bangren",
+					placeName = "place6",
+					id = 30,
+				},
+			},
+			{
+				time = 0.5,
+				num = 1,
+				delay = {0},
+				pos = {1100},
+				property = {
+					renzhiName = "人质15",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place4",
+					id = 29,
+				},
+			},
+			{
+				time = 0.5,
+				num = 1,
+				delay = {0},
+				pos = {1100},
+				property = {
+					renzhiName = "人质15",     --  一组统一标示
+					type = "bangren",
+					placeName = "place4",
+					id = 30,
+				},
+			},
+		},
 
 		getMoveLeftAction = function ()
 			local move1 = cc.MoveBy:create(10/60, cc.p(0, 0))
@@ -1335,13 +1462,12 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------第6个出场的boss 冲锋黄 id = 6
 	{
 		image = "nvrenzb",                       --图片名字                            红衣女忍者
-		award = 40000,                   --boss产出金币数量
-		--hp = 200000,
-		hp = 150000,
+		award = 50000,                   --boss产出金币数量
+		hp = 250000,
 		fireRate = 120,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --
-		walkRate = 180,                    --移动频率
+		walkRate = 100,                    --移动频率
 		walkCd = 2,                         --移动cd
 		rollRate = 100,					--快速移动
 		rollCd = 2,						--快速移动cd
@@ -1448,9 +1574,9 @@ local bosses = {
 				time = 0,	
 				num = 1,
 				pos = {400},
-				delay = {0.2},
+				delay = {0},
 				property = {
-					placeName = "place3" ,
+					placeName = "place4" ,
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
@@ -1459,8 +1585,20 @@ local bosses = {
 			{
 				time = 0,	
 				num = 1,
-				pos = {800},
-				delay = {0.2},
+				pos = {900},
+				delay = {0.5},
+				property = {
+					placeName = "place4" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},
+			{
+				time = 0.5,	
+				num = 1,
+				pos = {680},
+				delay = {0.5},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -1472,24 +1610,24 @@ local bosses = {
 
 		enemys2 = {                                                   --第二波召唤的忍者兵
 			{
-				time = 1,	
+				time = 0,	
 				num = 1,
-				pos = {400},
-				delay = {0.2},
+				pos = {1000},
+				delay = {0},
 				property = {
-					placeName = "place1" ,
+					placeName = "place5" ,
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
 				},
 			},	
 			{
-				time = 1,	
+				time = 0.5,	
 				num = 1,
 				pos = {700},
 				delay = {0.4},
 				property = {
-					placeName = "place2" ,
+					placeName = "place4" ,
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
@@ -1498,7 +1636,7 @@ local bosses = {
 			{
 				time = 1,	
 				num = 1,
-				pos = {1000},
+				pos = {400},
 				delay = {0.6},
 				property = {
 					placeName = "place3" ,
@@ -1511,48 +1649,50 @@ local bosses = {
 
 		enemys3 = {                                                   --第三波召唤的忍者兵
 			{
-				time = 2,	
+				time = 0,	
 				num = 1,
-				pos = {900},
-				delay = {0.2},
+				pos = {700},
+				delay = {0},
 				property = {
-					placeName = "place2" ,
-					id = 17,
-					type = "renzhe",
-					missileId = 18,
-				},
-			},	
-			{
-				time = 2,	
-				num = 1,
-				pos = {400},
-				delay = {0.4},
-				property = {
-					placeName = "place1" ,
+					placeName = "place4" ,
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
 				},
 			},
 			{
-				time = 2,	
+				time = 0.5,	
 				num = 1,
-				pos = {600},
-				delay = {0.6},
+				pos = {1000},
+				delay = {0},
 				property = {
-					placeName = "place2" ,
+					placeName = "place5" ,
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
 				},
 			},	
+			
 			{
-				time = 2,	
+				time = 1,	
 				num = 1,
-				pos = {750},
-				delay = {0.8},
+				pos = {500},
+				delay = {0},
 				property = {
 					placeName = "place3" ,
+					id = 17,
+					type = "renzhe",
+					missileId = 18,
+				},
+			},	
+
+			{
+				time = 1.5,	
+				num = 1,
+				pos = {300},
+				delay = {0},
+				property = {
+					placeName = "place4" ,
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
@@ -2125,12 +2265,11 @@ local bosses = {
 	{
 		image = "dzboss_1", --图片名字                                                             --毒刺boss
 		award = 60000,                   --boss产出金币数量
-		--hp = 250000,
 		hp = 200000,
-		fireRate = 180,                  --普攻频率
-		fireCd = 4,                     --普攻cd
+		fireRate = 120,                  --普攻频率
+		fireCd = 5,                     --普攻cd
 		demage = 0,  				    --
-		walkRate = 180,                    --移动频率
+		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
 		weak1 = 1.1,						--头 弱点伤害倍数
 		weak2 = 1.1,					--左腿 弱点伤害倍数
@@ -2143,14 +2282,12 @@ local bosses = {
 			wudi = { 0.90, 0.70, 0.50, 0.30, 0.10,
 			}, 
 
-			zhaohuan = { 0.92, 0.72, 0.52, 0.32,                   --召唤小兵
+			zhaohuan = { 0.91, 0.71, 0.51, 0.31,                   --召唤小兵
 			},   
 
-
-			daoDan1 = {                                            --两发导弹
+			daoDan1 = {                                            --3发烟雾导弹
 				0.99, 0.80, 0.60, 0.40, 0.20, 0.05,
 			},
-
 
 
 
@@ -2160,28 +2297,28 @@ local bosses = {
 			},
 			weak1 = { 0.90,0.50,0.30,                             --头 技能触发(可以同时)	                        
 			},
-			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},
-			demage300 = {
+			demage200 = {
 				0.60,
 			},
-			demage400 = {
+			demage300 = {
 				0.40,
 			},			
 		},
 
-
 		daoDan1 = {
 		    id = 22,                                  --烟雾
 			type = "dao_wu",  
-			timeOffset = 0.06,                        --导弹间隔时间                 
+			timeOffset = 2.0,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(-150, 150), cc.p(150, 150), cc.p(0, -150),
+            	cc.p(150, 150), cc.p(170, -190), cc.p(-150, -50),
         	},
         },
 
-		enemys1 = {                                                   --第一波召唤蜘蛛兵
+
+		enemys1 = {                                                   --第1波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -2194,8 +2331,7 @@ local bosses = {
 				},
 			},
 		},	
-
-		enemys2 = {                                                   --第二波召唤蜘蛛兵
+		enemys2 = {                                                   --第2波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -2209,8 +2345,21 @@ local bosses = {
 				},
 			},
 	    },	
-
-		enemys3 = {                                                   --第三波召唤蜘蛛兵
+		enemys3 = {                                                   --第3波召唤蜘蛛兵
+			{
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",      --爆
+					id = 28,
+					demageScale = 3  ,                  --伤害翻2倍	
+				},
+			},
+		},
+		enemys4 = {                                                   --第4波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -2225,20 +2374,6 @@ local bosses = {
 			},
 		},
 
-		enemys4 = {                                                   --第三波召唤蜘蛛兵
-			{
-				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 28,
-					demageScale = 3  ,                  --伤害翻2倍	
-				},
-			},
-		},													
 	},
 ---------------------------------------------------------------------------------------------------第10个出场的boss 毒刺  id = 10
 	{
@@ -2342,6 +2477,7 @@ local bosses = {
 					type = "chongBoss",                                  -- CF肌肉 boss
 					placeName = "place1",
 					missileId = 20,                 --导弹id
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) },
 					qiuId = 24,                   --铁球id
 					id = 12,
 				},
@@ -3221,12 +3357,12 @@ end
 function waveClass:randomWaves()
 	local waves = {}
 	local order = {}
-	-- order[1] = math.random(9,9) 	
-	order[1] = math.random(1,3)
-	order[2] = math.random(4,6)
-	order[3] = math.random(7,8)
-	order[4] = math.random(9,10)
-	order[5] = math.random(11, 11)  
+	order[1] = math.random(11,11) 	
+	-- order[1] = math.random(1,3)
+	-- order[2] = math.random(4,6)
+	-- order[3] = math.random(7,8)
+	-- order[4] = math.random(9,10)
+	-- order[5] = math.random(11, 11)  
 	dump(order, "order")
 
 	for i,index in ipairs(order) do

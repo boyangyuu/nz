@@ -61,7 +61,8 @@ function MapView:ctor()
     cc.EventProxy.new(self.fight, self)   
         :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.onStartFight))
         :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.onFightPause))
-
+		:addEventListener(self.fight.FIGHT_RELIVE_EVENT, handler(self, self.onFightRelive))
+		
 	cc.EventProxy.new(self.mapModel, self)
 		:addEventListener(self.mapModel.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
         :addEventListener(self.mapModel.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
@@ -160,6 +161,10 @@ function MapView:onFightPause(event)
 	else
 		transition.resumeTarget(self)
 	end
+end
+
+function MapView:onFightRelive(event)
+	self:checkWave() 
 end
 
 function MapView:updateEnemys()

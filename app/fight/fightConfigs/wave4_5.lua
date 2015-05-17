@@ -550,7 +550,6 @@ local waves = {
 		},
 	},
 	{
-		waveType = "award",
 		enemys = {
 			{
 				time = 2,

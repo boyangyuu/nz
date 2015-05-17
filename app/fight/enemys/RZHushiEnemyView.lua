@@ -235,8 +235,12 @@ function RZHushiEnemyView:animationEvent(armatureBack,movementType,movementID)
 end
 
 
-function RZHushiEnemyView:isBeBuff()
-    return false
+function RZHushiEnemyView:isBeBuff(type)
+    if type == "demage" then
+        return false
+    else
+        return true
+    end
 end
 
 return RZHushiEnemyView

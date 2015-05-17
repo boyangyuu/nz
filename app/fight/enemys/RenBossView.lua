@@ -96,13 +96,19 @@ function RenBossView:playShan()
     self.armature:getAnimation():play("shanchu" , -1, 1) 
     self.isShaning = true
 
-    --callfunc
+    --callfunc todo
+    local function hide()
+        self:setVisible(false)
+    end
+
     local function shanru()
         self:setVisible(true)
         self:setPositionX(self:getPositionX() +  offset)
         self.armature:getAnimation():play("shanru" , -1, 1) 
         self.isShaning = false
     end
+
+    self:performWithDelay(hide, 0.8)    
     self:performWithDelay(shanru, define.kRenzheShanTime)
 end
 
@@ -222,6 +228,12 @@ function RenBossView:zhaohuan(index)
 
     self.hero:dispatchEvent({name = self.hero.ENEMY_WAVE_ADD_EVENT, 
         waveData = waveData})
+
+    --hide todo
+    local function hide()
+        self:setVisible(false)
+    end
+    self:performWithDelay(hide, 0.8)     
 end
 
 function RenBossView:onKillLastCall()
@@ -233,13 +245,14 @@ end
 function RenBossView:animationEvent(armatureBack,movementType,movementID)
     if movementType == ccs.MovementEventType.loopComplete 
         or  movementType == ccs.MovementEventType.complete   then
+        print("movementID", movementID)
         if  self:getPauseOtherAnim() and  movementID ~= "die"  then
             return 
         end
 
         armatureBack:stopAllActions()
         if movementID == "shanchu" or movementID == "zhaohuan" then 
-            self:setVisible(false)
+            -- self:setVisible(false) -- todo
             return
         end
 

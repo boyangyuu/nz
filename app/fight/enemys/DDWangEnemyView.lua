@@ -91,8 +91,12 @@ function DDWangEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
-function DDWangEnemyView:isBeBuff()
-    return false
+function DDWangEnemyView:isBeBuff(type)
+    if type == "pause" or type == "addHp"  then
+        return false
+    else
+        return true
+    end
 end
 
 

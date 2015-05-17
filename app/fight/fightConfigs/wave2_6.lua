@@ -281,6 +281,7 @@ local waves = {
 					type = "chongBoss",
 					placeName = "place1",
 					missileId = 19,                 --导弹id
+					missileOffsets = {cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) },
 					qiuId = 18,                   --铁球id
 					id = 1,
 				},

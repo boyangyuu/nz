@@ -260,6 +260,7 @@ function RenEnemyView:animationEvent(armatureBack,movementType,movementID)
             return 
         end        
         armatureBack:stopAllActions()
+        armatureBack:getAnimation():stop()
         if movementID == "shanchu" then 
             self:setVisible(false)
             return

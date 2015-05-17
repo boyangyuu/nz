@@ -144,7 +144,7 @@ function MyApp:createGameStateFile()
             
             --开启的关卡
             currentlevel =  {
-                        group = 4,
+                        group = 9,
                         level = 6,
             },
 

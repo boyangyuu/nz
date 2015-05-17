@@ -199,6 +199,18 @@ local waveClass = class("waveExample", BaseWave)
 	-- 金武箱子奖励  type = "awardSan",
 	{id=11,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励 
 
+-----------------------------------------------------------------------------推荐武器
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 450,    --钻石话费
+			gunId = 10,      --武器id10  寒冰巴雷特
+		}, 
+
+---------------------------------------------------------推荐黄金机甲
+		adviseData = {
+			type = "goldJijia", --黄金机甲
+			cost  = 450,  --钻石花费 
+		},
 
 --enemy的关卡配置                                                    白银难度对应怪物属性
 local enemys = {

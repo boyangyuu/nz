@@ -3,9 +3,9 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {                                                                -- CF肌肉 boss
+		enemys = {                                                             
 			{
-				descId = "boss01_2",--简介
+				descId = "boss01_2",--简介   -- 紫炮boss
 				time = 2,	
 				num = 1,
 				pos = {450},
@@ -228,7 +228,7 @@ local enemys = {
 
 local bosses = {
 	{
-		image = "boss01_2", --图片名字
+		image = "boss01_2", --图片名字   -- 紫炮boss
 		award = 10000,                   --boss产出金币数量
 		hp = 70000,
 		demage = 5,
@@ -511,7 +511,7 @@ local bosses = {
 		end,
 	},
 }
---------------------------------------------------------------------------------------------------boss 红枪  id = 1
+--------------------------------------------------------------------------------------------紫炮boss  id = 1
 
 
 

@@ -51,7 +51,7 @@ function EnemyManager:doBuffAll_increaseHp(buffData)
 	local times  = buffData.times
 	local name  = buffData.buffAnimName
 
-	local enemys = self:getEnemysByBuff(name)
+	local enemys = self:getEnemysByBuff("addHp")
 	for i,enemy in ipairs(enemys) do
 		local enemyModel = enemy:getEnemyModel()
 		local maxhp      = enemyModel:getMaxHp()
@@ -68,11 +68,13 @@ function EnemyManager:doBuffAll_decreaseHp(buffData)
 	local times  = buffData.times
 	local name  = buffData.buffAnimName
 
-	local enemys = self:getEnemysByBuff(name)
+	local enemys = self:getEnemysByBuff("demage")
 	for i,enemy in ipairs(enemys) do
 		local enemyModel = enemy:getEnemyModel()
 		if not enemyModel:isDead() then 
-			enemyModel:decreaseHp(value)
+			-- enemyModel:decreaseHp(value)
+			local data = {demage = value, demageScale = 1}
+			enemy:onHitted(data)
 			enemy:playBuff(name)
 		end
 	end		
@@ -84,7 +86,7 @@ function EnemyManager:doBuffAll_pause(buffData)
 	local time  = buffData.time
 
 	print("function EnemyManager:doBuffAll_pause(buffData)")
-	local enemys = self:getEnemysByBuff(name)
+	local enemys = self:getEnemysByBuff("pause")
 	for i,enemy in ipairs(enemys) do
 		local enemyModel = enemy:getEnemyModel()
 		if not enemyModel:isDead() then 

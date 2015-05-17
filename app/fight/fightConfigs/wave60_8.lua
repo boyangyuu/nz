@@ -4,6 +4,13 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 
 	{
+-------------------------------------------------------------推荐武器
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 450,    --钻石话费
+			gunId = 10,      --武器id10  寒冰巴雷特
+		},
+
 		enemys = { 
 			{
 				descId = "yyc", --简介
@@ -508,7 +515,7 @@ local enemys = {
 	weak1=2.0,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=6250,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=180, fireCd=4.0,
+	{id=12,image="yyc",demage=0,hp=6250,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=6, fireCd=8.0,
 	weak1=2,    award = 60},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
