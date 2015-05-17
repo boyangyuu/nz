@@ -3,10 +3,38 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {                                                              
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 120,    --钻石话费
+			gunId = 8,      --武器id8  加特林
+		},
+------------------------------------------------推荐武器
+		enemys = {                                                   --第一波召唤的自爆兵
 			{
-				descId = "boss01",  --简介                            
 				time = 2,	
+				num = 3,
+				pos = {50,350,650},
+				delay = {0.7,0,1.4},
+				property = {
+					placeName = "place2" ,
+					id = 9,
+					type = "bao",
+				},
+			},
+			{
+				time = 8,	
+				num = 4,
+				pos = {360,560,860,1050},
+				delay = {1,0,0.7,1.4},
+				property = {
+					placeName = "place3" ,
+					id = 9,
+					type = "bao",
+				},
+			},
+        	{
+				descId = "boss01",  --简介                            
+				time = 16,	
 				num = 1,
 				pos = {500},
 				delay = {4},
@@ -14,17 +42,125 @@ local waves = {
 					type = "boss",                                                 --盾牌boss
 					placeName = "place1",
 					missileId = 20,            --BOSS导弹ID
-					id = 1,            --boss里面id为1  ,以后有可能有很多boss         
+					id = 1,            --boss里面id为1  ,以后有可能有很多bossi         
+				},
+			},
+			{
+				time = 10,	                                               --奖励箱子
+				num = 1,
+				pos = {350},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 15,	                                               --奖励箱子
+				num = 1,
+				pos = {550},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place4",
+				},
+			},
+			{
+				time = 20,	                                               --奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place5",
+				},
+			},
+			{
+				time = 25,	                                               --奖励箱子
+				num = 1,
+				pos = {600},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 30,	                                               --奖励箱子
+				num = 1,
+				pos = {400},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 300,
+					placeName = "place4",
 				},
 			},
 		},
 	},
 -----------------------------------------------------------------------------------------------------------第1个盾牌boss  id = 1
 	{
-		enemys = {                                                                
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 120,    --钻石话费
+			gunId = 8,      --武器id8  加特林
+		},
+-----------------------------------------------推荐武器
+		enemys = { 
+			{
+				time = 2,	
+				num = 2,
+				pos = {400,1000,},
+				delay = {0.5,0,},
+				property = {
+					placeName = "place5" ,
+					id = 4,
+					type = "juji",
+				},
+			},
+			{
+				time = 8,	
+				num = 3,
+				pos = {300,700,1100},
+				delay = {0,0.7,1.4},
+				property = {
+					placeName = "place4" ,
+					id = 4,
+					type = "juji",
+				},
+			},                                                              
 			{
 				descId = "boss01_1", --简介                           
-				time = 2,	
+				time = 16,	
 				num = 1,
 				pos = {500},
 				delay = {4},
@@ -35,14 +171,172 @@ local waves = {
 					id = 2,            --boss里面id为1  ,以后有可能有很多boss         
 				},
 			},
+			{
+				time = 10,	                                               --奖励箱子
+				num = 1,
+				pos = {350},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 15,	                                               --奖励箱子
+				num = 1,
+				pos = {550},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place4",
+				},
+			},
+			{
+				time = 20,	                                               --奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place5",
+				},
+			},
+			{
+				time = 25,	                                               --奖励箱子
+				num = 1,
+				pos = {600},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 30,	                                               --奖励箱子
+				num = 1,
+				pos = {400},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 300,
+					placeName = "place4",
+				},
+			},
 		},
 	},
 -----------------------------------------------------------------------------------------------------------第2个红枪boss  id = 2
 	{
-		enemys = {                                                                 
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 120,    --钻石话费
+			gunId = 8,      --武器id8  加特林
+		},
+-----------------------------------------------推荐武器
+		enemys = { 
+			{
+				time = 2,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质16",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place6",
+					id = 29,
+				},
+			},
+			{
+				time = 2,
+				num = 1,
+				delay = {0},
+				pos = {500},
+				property = {
+					renzhiName = "人质16",     --  一组统一标示
+					type = "bangren",
+					placeName = "place6",
+					id = 30,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {900},
+				property = {
+					renzhiName = "人质17",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place5",
+					id = 29,
+				},
+			},
+			{
+				time = 8,
+				num = 1,
+				delay = {0},
+				pos = {900},
+				property = {
+					renzhiName = "人质17",     --  一组统一标示
+					type = "bangren",
+					placeName = "place5",
+					id = 30,
+				},
+			},
+			{
+				time = 10,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质18",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place7",
+					id = 29,
+				},
+			},
+			{
+				time = 10,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质18",     --  一组统一标示
+					type = "bangren",
+					placeName = "place7",
+					id = 30,
+				},
+			},                                                                
 			{
 				descId = "boss01_2", --简介                            
-				time = 2,	
+				time = 16,	
 				num = 1,
 				pos = {500},
 				delay = {4},
@@ -51,6 +345,86 @@ local waves = {
 					placeName = "place1",
 					missileId = 20,            --BOSS导弹ID
 					id = 3,            --boss里面id为1  ,以后有可能有很多boss     
+				},
+			},
+			{
+				time = 10,	                                               --奖励箱子
+				num = 1,
+				pos = {350},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 15,	                                               --奖励箱子
+				num = 1,
+				pos = {550},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place4",
+				},
+			},
+			{
+				time = 20,	                                               --奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place5",
+				},
+			},
+			{
+				time = 25,	                                               --奖励箱子
+				num = 1,
+				pos = {600},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 200,
+					placeName = "place3",
+				},
+			},
+			{
+				time = 30,	                                               --奖励箱子
+				num = 1,
+				pos = {400},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 300,
+					placeName = "place4",
 				},
 			},
 		},
@@ -295,7 +669,7 @@ local enemys = {
 	weak1=2, weak4=4},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=10000,fireRate=30,speed=130,scale = 1.7,
+	{id=9,image="zibaob",demage=25,hp=10000,fireRate=30,speed=100,scale = 1.7,
 	weak1=2},
 
 	--越野车       type = "jipu" ,
@@ -315,6 +689,9 @@ local enemys = {
 
 	--BOSS导弹          type = "missile",
 	{id=20,image="daodan",demage=25,hp=5000, weak1=1},
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 
 	--烟雾导弹           type = "dao_wu",
 	{id=22,image="daodan03",demage=25,hp=5000, weak1=1},           --打击者金武平均伤害5558
@@ -382,11 +759,9 @@ local bosses = {
 			daoDan1 = {                                            --两发导弹
 				0.99, 0.45, 0.10
 			},
-
 			daoDan2 = {                                            --两发导弹
 				0.80, 0.50, 0.20
 			},
-
 			daoDan3 = {                                            --两发导弹
 				0.75, 0.25, 0.15
 			},
@@ -405,11 +780,11 @@ local bosses = {
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {  
-				0.65,
+			demage200 = {  
+				0.70,
 			},	
-			demage400 = {  
-				0.30,
+			demage300 = {  
+				0.40,
 			},							
 		},
 
@@ -509,38 +884,30 @@ local bosses = {
 		wudiTime = 6 , 	
 		saoFireOffset = 0.1, 		--扫射时间间隔
 		saoFireTimes = 10, 			--一次扫射10下
-		weak1 = 1.1,					--手  弱点伤害倍数
-		weak2 = 1.1,					--腹  弱点伤害倍数
-		weak3 = 1.1,					--头  弱点伤害倍数
+		weak1 = 1.2,					--手  弱点伤害倍数
+		weak2 = 1.2,					--腹  弱点伤害倍数
+		weak3 = 1.2,					--头  弱点伤害倍数
 		skilltrigger = {   			   --技能触发(可以同时)
 
 
                                     
-			wudi = {0.91,0.71,0.51,0.31,0.11                         --无敌
+			wudi = {0.91, 0.51, 0.31,                        --无敌
 			},                                        
 
-			saoShe = { 0.85, 0.70, 0.50, 0.30 , 0.10   --调用普通攻击的伤害  扫射
+			saoShe = { 0.75, 0.50, 0.30 , 0.10,   --调用普通攻击的伤害  扫射
 			}, 
 
-			zhaohuan = {0.95, 0.65, 0.35},                           --召唤 
+			zhaohuan = {0.95, 0.65, 0.35,},                           --召唤 
 
 			moveLeftFire = {
-				0.90, 0.60, 0.30, 
+				0.85, 0.55, 0.25, 
 			},
 			-- moveRightFire = {
 			-- 	0.75, 0.35,
 			-- },
 
 			daoDan1 = {                                            --两发导弹
-				0.99, 0.75, 0.45, 
-			},
-
-			daoDan2 = {                                            --两发导弹
-				0.80, 0.55, 0.34,
-			},
-
-			daoDan3 = {                                            --两发导弹
-				0.64, 0.22, 0.15
+				0.99, 0.70, 0.40, 0.10,
 			},
 
 			weak1 = {
@@ -555,13 +922,13 @@ local bosses = {
 
 			
 
-			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {  
+			demage200 = {  
 				0.70,
 			},	
-			demage400 = {  
+			demage300 = {  
 				0.40,
 			},							
 		},
@@ -570,36 +937,12 @@ local bosses = {
 		    id = 20,                                 --boss导弹
 			type = "missile", 
 			timeOffset = 0.1,                        --导弹间隔时间 
-            flyTime = 5.0,                           --导弹飞到脸前的时间 
+            flyTime = 6.0,                           --导弹飞到脸前的时间 
             srcPoses = {
 						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
 			}, 
 			offsetPoses = { 
-						cc.p(-300, 0), cc.p(-150, -300), cc.p(0, 0), cc.p(150,-300), cc.p(300, 0),
-			},
-		},
-		daoDan2 = {
-		    id = 20,                                 --boss导弹
-			type = "missile", 
-			timeOffset = 0.1,                        --导弹间隔时间 
-            flyTime = 5.0,                           --导弹飞到脸前的时间 
-            srcPoses = {
-						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
-			}, 
-			offsetPoses = { 
-						cc.p(-300, 0), cc.p(-150, -300), cc.p(0, 0), cc.p(150,-300), cc.p(300, 0),
-			},
-		},
-		daoDan3 = {
-		    id = 20,                                 --boss导弹
-			type = "missile", 
-			timeOffset = 0.1,                        --导弹间隔时间 
-            flyTime = 5.0,                           --导弹飞到脸前的时间 
-            srcPoses = {
-						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
-			}, 
-			offsetPoses = { 
-						cc.p(-300, 0), cc.p(-150, -300), cc.p(0, 0), cc.p(150,-300), cc.p(300, 0),
+						cc.p(-200, 0), cc.p(-120, -200), cc.p(0, 0), cc.p(120,-200), cc.p(200, 0),
 			},
 		},
 
@@ -710,10 +1053,10 @@ local bosses = {
 				0.90,
 			},	
 			demage200 = {  
-				0.65,
+				0.70,
 			},	
 			demage300 = {  
-				0.30,
+				0.40,
 			},							
 		},
 
@@ -2378,7 +2721,7 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------第10个出场的boss 毒刺  id = 10
 	{
 		award = 100000,
-		image = "renzb",                       --图片名字                                  魔化鬼眼
+		image = "renzb_01",                       --图片名字                                  魔化鬼眼
 		--hp = 100000,
 		hp = 250000,
 		fireRate = 60,               --普攻频率
@@ -3357,7 +3700,7 @@ end
 function waveClass:randomWaves()
 	local waves = {}
 	local order = {}
-	order[1] = math.random(11,11) 	
+	order[1] = math.random(3,3) 	
 	-- order[1] = math.random(1,3)
 	-- order[2] = math.random(4,6)
 	-- order[3] = math.random(7,8)

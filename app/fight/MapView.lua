@@ -201,6 +201,8 @@ function MapView:updateEnemys()
 
 	--adviseData
 	if wave.adviseData then  
+		local fightAdvise = md:getInstance("FightAdviseModel")		
+		fightAdvise:showAdvise(wave.adviseData)
 		ui:showPopup("FightAdvisePopup", 
 			wave.adviseData, 
 			{animName = "scale"})
