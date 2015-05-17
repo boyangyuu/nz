@@ -95,12 +95,20 @@ function DailyLoginLayer:initUI()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            local dailyID = self.dailyLoginModel:getNextDailyID()
-            self.dailyLoginModel:setGift(dailyID)
-            self.dailyLoginModel:setNextDailyID()
-            self.dailyLoginModel:setGet(true)
-            self:refreshUI()
+            self:onClickBtnReceive()
         end)
+end
+
+function DailyLoginLayer:onClickBtnReceive()
+    local dailyID = self.dailyLoginModel:getNextDailyID()
+    self.dailyLoginModel:setGift(dailyID)
+    self.dailyLoginModel:setNextDailyID()
+    self.dailyLoginModel:setGet(true)
+    self:refreshUI()
+    function delayClose()
+        ui:closePopup("DailyLoginLayer")
+    end
+    self:performWithDelay(delayClose, 1)
 end
 
 function DailyLoginLayer:refreshUI()
