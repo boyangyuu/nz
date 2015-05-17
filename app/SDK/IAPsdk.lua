@@ -26,7 +26,6 @@ function IAPsdk:initConfigs()
 		config["handGrenade"]      = "30000883682307"		--手雷
 		config["armedMecha"]       = "30000883682319"		--机甲
 		config["onceFull"]         = "30000883682320"		--一键满级
-		config["resurrection"]     = "30000883682321"	    --复活送黄武 --todo
 		config["stone45"]          = "30000883682312"		--一堆宝石
 		config["stone120"]         = "30000883682313"		--一麻袋宝石
 		config["stone260"]         = "30000883682314"		--一箱子宝石
@@ -42,7 +41,6 @@ function IAPsdk:initConfigs()
 		config["handGrenade"]      = "005"		--手雷
 		config["armedMecha"]       = "006"		--机甲1
 		config["onceFull"]         = "007"		--一键满级1
-		config["resurrection"]     = "008"	    --复活送黄武1
 		config["stone120"]         = "009"		--一麻袋宝石
 		config["stone260"]         = "010"		--一箱子宝石
 		config["stone450"]         = "011"		--堆成山的宝石
@@ -58,7 +56,6 @@ function IAPsdk:initConfigs()
 		config["handGrenade"]      = "007"		--手雷
 		config["armedMecha"]       = "020"		--机甲1
 		config["onceFull"]         = "021"		--一键满级1
-		config["resurrection"]     = "022"	    --复活送黄武1
 		config["stone120"]         = "013"		--一麻袋宝石
 		config["stone260"]         = "014"		--一箱子宝石
 		config["stone450"]         = "015"		--堆成山的宝石
@@ -74,7 +71,6 @@ function IAPsdk:initConfigs()
 		config["handGrenade"]      = "5128231"		--手雷
 		config["armedMecha"]       = "5156714"		--机甲
 		config["onceFull"]         = "5156715"		--一键满级
-		config["resurrection"]     = "5156716"	    --复活送黄武
 		config["stone120"]         = "5128237"		--一麻袋宝石
 		config["stone260"]         = "5128238"		--一箱子宝石
 		config["stone450"]         = "5128239"		--堆成山的宝石

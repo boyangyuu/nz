@@ -232,15 +232,13 @@ function WeaponListLayer:onClickBtnBuy(event)
         if self:buyWeaponByStone() then 
             ui:closePopup("StoneBuyPopup")
         else 
-            
             local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
-            self.buyModel:showBuy("stone450", {showType = "iap"}, strPos)
+            self.buyModel:showBuy("stone450", {}, strPos)
         end
     end
-
-    local tips = "是否花费"..self.weaponRecord["cost"].."宝石购买该武器？"
     ui:showPopup("StoneBuyPopup",
-         {tips = tips, 
+         {jsonName = "weaponBuy", 
+         price = self.weaponRecord["cost"],
          onClickConfirm = onClickConfirm},
          {opacity = 150})
 

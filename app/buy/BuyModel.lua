@@ -7,8 +7,8 @@ local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 
 --events
--- BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
--- BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
+BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
+BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
 
 local proInfo = require("app.commonPopup.ProductInfoConfig")
 -- 定义事件
@@ -45,7 +45,6 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	um:event("支付情况", umData)  
 
 	--pay
-	--todo ui、写在外面！
 	local showType = buyConfig.showType 
 
 	if showType == "gift" then
@@ -54,12 +53,12 @@ function BuyModel:showBuy(configId, buyData, strPos)
         	{animName = "shake"})
     elseif showType == "iap" then 
     	self:iapPay()        
-    elseif showType =="prop" then
-    	ui:showPopup("StoneBuyPopup",
-			 {type = self.curId, 
+    elseif showType =="prop_rmb" then --非钻石购买的道具
+    	ui:showPopup("RmbBuyPopup",
+			 {jsonName = buyConfig.jsonName, 
+			 price = buyConfig.price,
 			 onClickConfirm = handler(self, self.iapPay)},
-			 {animName = "moveDown", opacity = 0})    	
-
+			 {animName = "moveDown", opacity = 0})    			  
     else
     	assert(false, "invalid showType", showType)
     end
@@ -121,7 +120,7 @@ function BuyModel:payDone(result)
 	um:event("支付情况", umData)
 
 	--events
-	-- self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
+	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
 end
 
 function BuyModel:deneyPay()
@@ -259,8 +258,8 @@ function BuyModel:buy_onceFull( buydata )
 	weaponListModel:onceFull(buydata.weaponid)
 end
 
-function BuyModel:buy_resurrection( buydata )
-	print("BuyModel:buy_resurrection( buydata )")
+function BuyModel:buy_relive( buydata )
+	print("BuyModel:buy_relive( buydata )")
 	--yby todo
 end
 

@@ -28,31 +28,30 @@ local configs = {
 			name = "武器大礼包",
 	},
 	armedMecha     = {				--机甲
-			showType = "prop",
+			showType = "prop_rmb",
+			jsonName = "jijia",
 			price = 4,
 			name = "机甲变身2次",
 	},
 	handGrenade    = {             --手雷
-			showType = "prop",
+			showType = "prop_rmb",
+			jsonName = "shouLei",
 			price = 4,
 			name = "手雷20个",
 	},
 	goldWeapon     = {				--金武
-			showType = "prop",
+			showType = "prop_rmb",
+			jsonName = "huanWu",
 			price = 4,
 			name = "金武2次",
 	},
 	onceFull       = {				--一键满级
-
-			showType = "prop",
+			showType = "prop_rmb",
+			jsonName = "manJi",
 			price = 2,
 			name = "一键满级",
 	},
-	resurrection   = {        		--复活
-			showType = "prop",
-			price = 2,
-			name = "复活1次",
-	},
+
 	stone120         = {
 			showType = "iap",
 			price = 10,
@@ -68,18 +67,26 @@ local configs = {
 			price = 30,
 			name = "钻石450个",
 	},
-	hpBag         = {
-			showType = "prop",
-			price = 30,
-			name = "钻石40个",
-			iapId = "stone450",
-	},	
-	weaponBuy      = {
-			showType = "prop",
-			price = 30,
-			name = "钻石450个",
-			iapId = "stone450",
-	},		
+	-- hpBag         = {
+	-- 		showType = "prop_stone",
+	-- 		price = 30,
+	-- 		jsonName = hpBag
+	-- 		name = "医疗包4个",
+	-- 		iapId = "stone450",
+	-- },	
+	-- weaponBuy      = {
+	-- 		showType = "prop_stone",
+	-- 		price = 30,
+	-- 		jsonName = weaponBuy
+	-- 		name = "武器解锁",
+	-- 		iapId = "stone450",
+	-- },	
+	-- relive   = {        		--复活
+	-- 		showType = "prop_stone",
+	-- 		jsonName = relive
+	-- 		price = 2,
+	-- 		name = "复活1次",
+	-- },		
 }
 
 function BuyConfigs.getConfig(name)

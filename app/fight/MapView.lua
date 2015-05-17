@@ -165,7 +165,15 @@ function MapView:onFightPause(event)
 end
 
 function MapView:onFightRelive(event)
-	self:checkWave() 
+	--check enemy
+	local leftnum   =  self:getLeftEnemyNum()
+	local cachenum  = #self.cacheEnemys
+	if leftnum == 0 and cachenum == 0 then 
+		local waveIndex = self.mapModel:getWaveIndex() 
+		print("第"..waveIndex.."波怪物消灭完毕")
+		self.mapModel:setWaveIndex(waveIndex + 1)
+		self:updateEnemys()
+	end
 end
 
 function MapView:updateEnemys()
