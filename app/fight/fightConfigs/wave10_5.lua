@@ -33,14 +33,25 @@ local waves = {
 				time = 4,
 				num = 1,
 				delay = {0},
-				pos = {20},					
+				pos = {20},
 				property = {
-					placeName = "place6",   
-					id = 2,
-					startState = "",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					renzhiName = "人质1",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place6",
+					id = 11,
+				},
+			},
+			{
+				time = 4,
+				num = 1,
+				delay = {0},
+				pos = {20},
+				property = {
+					renzhiName = "人质1",     --  一组统一标示
+					type = "bangren",
+					placeName = "place6",
+					id = 12,
+					exit = "middle",--解救后消失
 				},
 			},
 			{
@@ -52,6 +63,22 @@ local waves = {
 					placeName = "place1",   
 					id = 1,
 					startState = "rollright",
+				},
+			},
+			{
+				time = 11,	                                               --奖励箱子
+				num = 1,
+				pos = {400},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 500,
+					placeName = "place4",
 				},
 			},
 			{
@@ -83,14 +110,31 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {200,300,400},					
-				property = {
-					placeName = "place2",   
-					id = 1,
-					startState = "rollright",
+				time = 3,
+				num = 1,
+				delay = {0,},
+				pos = {350,},
+				property = { 
+					placeName = "place2" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.3,              --回血百分比
+					id = 10,
+				},
+			},
+			{
+				time = 3,
+				num = 1,
+				delay = {0,},
+				pos = {930,},
+				property = { 
+					placeName = "place4" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.3,              --回血百分比
+					id = 10,
 				},
 			},
 			{
@@ -111,10 +155,10 @@ local waves = {
 				time = 9,
 				num = 3,
 				delay = {0,0.5,1},
-				pos = {550,650,750},					
+				pos = {100,350,750},					
 				property = {
 					placeName = "place3", 
-					startState = "rollleft",
+					startState = "rollright",
 					id = 1,
 				},
 			},
@@ -122,9 +166,9 @@ local waves = {
 				time = 10,
 				num = 2,
 				delay = {0,0.5},
-				pos = {650,800},					
+				pos = {800,1000},					
 				property = {
-					placeName = "place4", 
+					placeName = "place10", 
 					startState = "rollleft",
 					id = 2,
 					type = "dao",
@@ -138,9 +182,9 @@ local waves = {
 		enemys = {
             {
 				time = 2,	
-				num = 4,
-				pos = {200,260,320,400},
-				delay = {0,0.5,0.8,1,},
+				num = 3,
+				pos = {200,400,600},
+				delay = {0,0.5,1,},
 				property = { 
 					placeName = "place2",
 					startState = "rollright",
@@ -150,11 +194,11 @@ local waves = {
 			{
 				time = 3,	
 				num = 2,
-				pos = {250,350},
+				pos = {300,550},
 				delay = {0.5,1},
 				property = { 
-					placeName = "place1",
-					startState = "rollleft",
+					placeName = "place4",
+					startState = "rollright",
 					id = 2,
 					type = "dao",
 					missileId = 3,
@@ -172,11 +216,42 @@ local waves = {
 					startState = "rollleft",	
 				},
 			},
+
+			{
+				time = 4,
+				num = 1,
+				delay = {0,},
+				pos = {930,},
+				property = { 
+					placeName = "place4" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.3,              --回血百分比
+					id = 10,
+				},
+			},
+			{
+				time = 5,	                                               --奖励箱子
+				num = 1,
+				pos = {450},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 500,
+					placeName = "place3",
+				},
+			},
 			{
 				time = 5,
 				num = 3,
 				delay = {0,1,1.5},
-				pos = {190,270,350},
+				pos = {200,400,600},
 				property = { 
 					placeName = "place10",
 					id = 1,
@@ -186,14 +261,26 @@ local waves = {
 			{
 				time = 6,
 				num = 1,
-				delay = {0.5},
+				delay = {0},
 				pos = {45},
-				property = { 
+				property = {
+					renzhiName = "人质2",      --  一组统一标示
+					type = "bangfei",
 					placeName = "place7",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					id = 11,
+				},
+			},
+			{
+				time = 6,
+				num = 1,
+				delay = {0},
+				pos = {45},
+				property = {
+					renzhiName = "人质2",     --  一组统一标示
+					type = "bangren",
+					placeName = "place7",
+					id = 12,
+					exit = "middle",--解救后消失
 				},
 			},
 			{
@@ -211,13 +298,16 @@ local waves = {
 			},
 			{
 				time = 8,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {790,900,1050},
+				num = 1,
+				delay = {0,},
+				pos = {350,},
 				property = { 
-					placeName = "place10",
-					id = 1,
-					startState = "rollleft",	
+					placeName = "place2" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.3,              --回血百分比
+					id = 10,
 				},
 			},
 			{
@@ -238,10 +328,10 @@ local waves = {
 				time = 10,	
 				num = 3,
 				delay = {0,0.5,1,},
-				pos = {200,300,350,},
+				pos = {200,300,400,},
 				property = { 
 					placeName = "place2",
-					startState = "rollright",                                          --第二波20个怪
+					startState = "rollright",                                         
 					id = 1,
 				},
 			},
@@ -314,21 +404,24 @@ local waves = {
 				},
 			},	
 			{
-				time = 4,	
+				time = 4,
 				num = 1,
-				pos = {400},
-				delay = {0.4},
+				delay = {0,},
+				pos = {350,},
 				property = { 
-					placeName = "place2",
-					startState = "rollright",
-					id = 1,
+					placeName = "place4" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterleft",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.3,              --回血百分比
+					id = 10,
 				},
 			},
             {
 				time = 5,	
-				num = 4,
-				pos = {200,250,300,350,},
-				delay = {0,0.5,0.8,1,},
+				num = 3,
+				pos = {200,400,600,},
+				delay = {0,0.5,1,},
 				property = { 
 					placeName = "place2",
 					startState = "rollright",
@@ -351,7 +444,7 @@ local waves = {
 			{
 				time = 7,	
 				num = 2,
-				pos = {300,350},
+				pos = {200,350},
 				delay = {0.5,1},
 				property = { 
 					placeName = "place1",
@@ -377,11 +470,25 @@ local waves = {
 				time = 9,
 				num = 3,
 				delay = {0,1,0.5},
-				pos = {190,230,250},
+				pos = {200,400,600},
 				property = { 
 					placeName = "place10",
 					id = 1,
 					startState = "rollright",	
+				},
+			},
+			{
+				time = 9,
+				num = 1,
+				delay = {0,},
+				pos = {80,},
+				property = { 
+					placeName = "place3" ,
+					type = "yiliao",                                --医疗兵
+					startState = "enterright",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.3,              --回血百分比
+					id = 10,
 				},
 			},
 			{
@@ -400,25 +507,53 @@ local waves = {
 			{
 				time = 11,
 				num = 1,
-				delay = {0.5},
+				delay = {0},
 				pos = {45},
-				property = { 
+				property = {
+					renzhiName = "人质3",      --  一组统一标示
+					type = "bangfei",
 					placeName = "place6",
-					id = 5,
-					type = "dao",
-					missileId = 6,
-					missileType = "daodan",
+					id = 11,
+				},
+			},
+			{
+				time = 11,
+				num = 1,
+				delay = {0},
+				pos = {45},
+				property = {
+					renzhiName = "人质3",     --  一组统一标示
+					type = "bangren",
+					placeName = "place6",
+					id = 12,
+					exit = "middle",--解救后消失
 				},
 			},
 			{
 				time = 12,
 				num = 3,
 				delay = {0.5,1,1.5},
-				pos = {190,230,250},
+				pos = {250,500,750},
 				property = { 
 					placeName = "place10",
 					id = 1,
 					startState = "rollright",	
+				},
+			},
+			{
+				time = 13,	                                               --奖励箱子
+				num = 1,
+				pos = {430},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 500,
+					placeName = "place2",
 				},
 			},
 			{
@@ -438,11 +573,11 @@ local waves = {
 			{
 				time = 14,	
 				num = 3,
-				pos = {200,300,350},
+				pos = {200,400,600},
 				delay = {0,0.5,1},
 				property = { 
 					placeName = "place2",
-					startState = "rollright",                                          --第一波20个怪
+					startState = "rollright",                                          
 					id = 1,
 				},
 			},	
@@ -450,7 +585,6 @@ local waves = {
 		},
 	},
 	{
-		waveType = "award",
 		enemys = {
 			{
 				time = 2,
@@ -674,52 +808,41 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于7  怪物数据
+--enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于5  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=24,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=15,hp=1000000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=1000000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=28,hp=2000,
+	{id=3,image="shoulei",demage=20,hp=1000000,
 	weak1=1},
-
+	
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=1000000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=35,hp=3000,
-	weak1=1},	
-
-	--近战兵         --type = "jin",          180-- 相对地图的y轴位置       1.7-- 狼牙棒兵 盾兵到身前的比例
-	{id=7,image="jinzhanb",demage=24,hp=30000,fireRate=180,fireCd=4,speed= 60,
-	weak1=2},
+	{id=6,image="daodan",demage=25,hp=1000000,
+	weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=30,hp=70000,fireRate=180,fireCd=5,speed= 40,
+	{id=8,image="dunbing",demage=20,hp=1000000,fireRate=180,fireCd=5,speed= 40,
 	weak1=2},
 
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=120,
-	weak1=2},	
-
-	
-	--人质         type = "renzhi",                                             speakRate =120,speakCd = 5.0,人质喊话cd
-	{id=10,image="hs",demage=0,hp=6666,walkRate=120,walkCd = 1.0,rollRate=180,rollCd=2, speakRate =240,speakCd = 5.0,
+	--医疗兵      type = "yiliao",
+	{id=10,image="yiliaob",demage=20,hp=1000000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
-	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=100000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
-	weak1=2,    award = 60},
+	--绑匪
+	{id=11,image="tufeib",demage=12,hp=1000000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
 
-	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
-	weak1=2,    award = 60},
+	--被绑架人        --type = "bangren",
+	{id=12,image="hs", hp=5, weak1=1},
 
 	--金币绿气球   type = "jinbi",
 	{id=13,image="qiqiu03",hp=1,weak1=2,award = 9},	--award = 9   金币数量为9	
@@ -729,29 +852,21 @@ local enemys = {
 
 	--金币黄气球   type = "jinbi",
 	{id=15,image="qiqiu01",hp=1,weak1=2,award = 30},	--award = 30  金币数量为30
-
-	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=120,hp=20000,fireRate=60,fireCd=2,speed=40,scale = 2.5 ,
-	weak1=2},                                                          --scale = 3.0,  近战走到屏幕最近放缩比例
+                                                        --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="xiaorz",demage=20,hp=1000000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=5000}, 
+	{id=18,image="feibiao",demage=15,hp=1000000}, 
+	  
 	
-	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=20000}, 
-
-	--盾兵BOSS         --type = "jin",
-	{id=20,image="dunbing",demage=21,hp=100000,fireRate=60,fireCd= 3 ,speed= 80, scale = 2.6,
-	weak1=2},  
-	   
 	-- 金武箱子奖励  type = "awardSan",
-	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励                      
-}
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励     
 
+
+}
 
 
 
@@ -764,6 +879,17 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
+	self.fightMode =  {
+		type 	  = "puTong",
 
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		-- type 	  = "xianShi",
+		-- limitTime = 60,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
+	}
 end
 return waveClass

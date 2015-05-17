@@ -186,8 +186,12 @@ function DDNormalEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
-function DDNormalEnemyView:isBeBuff()
-    return false
+function DDNormalEnemyView:isBeBuff(type)
+    if type == "pause" or type == "addHp"  then
+        return false
+    else
+        return true
+    end
 end
 
 return DDNormalEnemyView

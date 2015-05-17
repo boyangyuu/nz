@@ -11,8 +11,9 @@ end
 
 function ChongBossView:playFire()
 	self.armature:getAnimation():play("daodan" , -1, 1) 
-	local offsetPoses ={cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) }
-	for i=1, 4 do
+	-- local offsetPoses ={cc.p(-100,-100), cc.p(-100, 100), cc.p(100, 100), cc.p(100,-100) }
+	local missileOffsets = self.property["missileOffsets"]
+	for i=1, #missileOffsets do
 		local boneName = "dao"..i
 		local bone = self.armature:getBone(boneName):getDisplayRenderNode()		
 		local delay = 0.3 + 0.10 * i 
@@ -21,7 +22,7 @@ function ChongBossView:playFire()
 			srcScale = self:getScale() * 0.3, --导弹view用
 			id = self.property["missileId"], 
 			demageScale = self.enemy:getDemageScale(),
-			offset = offsetPoses[i],
+			offset = missileOffsets[i],
 		}
 		local function callfuncAddDao()
 			local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))

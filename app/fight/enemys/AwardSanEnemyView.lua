@@ -135,9 +135,4 @@ function AwardSanEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
-
-function AwardSanEnemyView:isBeBuff()
-    return false
-end
-
 return AwardSanEnemyView

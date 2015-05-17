@@ -10,10 +10,10 @@ function FightControlLayer:ctor()
     self.fight 			= fightFactory:getFight()
     self.fightProp 		= md:getInstance("FightProp")
     local propModel     = md:getInstance("PropModel")
+
 	--instance
 	self.timerHp = nil
 	self.hpCdPercent = 0
-
 	self:loadCCS()
 	self:initUI()
 	self:refreshData()
@@ -25,6 +25,9 @@ function FightControlLayer:ctor()
 	cc.EventProxy.new(self.hero, self)
 			:addEventListener(self.hero.SKILL_ADDHP_EVENT, handler(self, self.startHpCd))
 				
+	cc.EventProxy.new(ui, self)
+			:addEventListener(ui.LAYER_PAUSE_EVENT, handler(self, self.onLayerPause))
+		
 	self:setTouchEnabled(true)
 	self:setNodeEventEnabled(true)
 	self:setTouchSwallowEnabled(false) 
@@ -85,6 +88,11 @@ function FightControlLayer:startHpCd(event)
 	end
 	local offsetTime = cdTimes / 100
 	sch = self:schedule(resumeCd, offsetTime)
+end
+
+function FightControlLayer:onLayerPause(event)
+	local isPause = event.isPause
+	self.fight:pauseFight(isPause)
 end
 
 return FightControlLayer

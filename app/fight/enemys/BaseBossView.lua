@@ -530,11 +530,15 @@ function BaseBossView:checkSkill(demage)
 	local hp = self.enemy:getHp()
 	local persentO = (hp + demage)
 	local persentC = hp
+	print("persentO", persentO)
+	print("persentC", persentC)
+
 	local skilltrigger = self.config["skilltrigger"]
 	for skillName,persents in pairs(skilltrigger) do
 		for i, v in ipairs(persents) do
 			local v = v * maxHp
 			if persentC < v and v <= persentO then 
+				print("v", v)
 				local function callfuncSkill()
 					self:playSkill(skillName, i)
 				end

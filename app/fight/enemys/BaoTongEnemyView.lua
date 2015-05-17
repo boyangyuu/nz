@@ -99,8 +99,4 @@ function BaoTongEnemyView:getModel(property)
     return Enemy.new(property)
 end
 
-function BaoTongEnemyView:isBeBuff()
-    return false
-end
-
 return BaoTongEnemyView

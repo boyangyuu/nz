@@ -11,9 +11,6 @@ UI.POPUP_CLOSEALL_EVENT = "POPUP_CLOSEALL_EVENT"
 UI.LOAD_SHOW_EVENT 		= "LOAD_SHOW_EVENT"
 UI.LOAD_HIDE_EVENT 		= "LOAD_HIDE_EVENT"
 
-UI.PAUSESCENE_SHOW_EVENT     = "SCENE_SHOW_EVENT"
-UI.PAUSESCENE_CLOSE_EVENT    = "SCENE_CLOSE_EVENT"
-
 --保存layer
 local layerClasses = {}
 -- layerClasses["LoadingLayer"] 		 = import("..load.LoadingLayer")
@@ -41,11 +38,10 @@ layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
 
--- giftBag
+-- buy
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
-
-
+layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
 
 --awardTime
 layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")

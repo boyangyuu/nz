@@ -135,7 +135,7 @@ local waves = {
 				time = 5,	
 				num = 1,
 				pos = {750},
-				delay = {0.1},
+				delay = {0},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -147,7 +147,7 @@ local waves = {
 				time = 7,	
 				num = 1,
 				pos = {450},
-				delay = {0.1},
+				delay = {0},
 				property = {
 					placeName = "place1" ,
 					id = 17,
@@ -156,7 +156,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 9,
 				num = 1,
 				pos = {550,},
 				delay = {0,},                          -- 吉普车
@@ -172,10 +172,10 @@ local waves = {
 				},
 			},
 			{
-				time = 9,	
+				time = 11,	
 				num = 1,
 				pos = {200},
-				delay = {0.1},
+				delay = {0},
 				property = {
 					placeName = "place2" ,
 					id = 17,
@@ -184,10 +184,10 @@ local waves = {
 				},
 			},
 			{
-				time = 11,	
-				num = 2,
-				pos = {400,1050},
-				delay = {0.1,0.6},
+				time = 13,	
+				num = 1,
+				pos = {1050},
+				delay = {0},
 				property = {
 					placeName = "place3" ,
 					id = 17,
@@ -196,10 +196,10 @@ local waves = {
 				},
 			},	
 			{
-				time = 13,	
+				time = 15,	
 				num = 2,
 				pos = {250,690},
-				delay = {0.1,0.6},
+				delay = {0,0.6},
 				property = {
 					placeName = "place1" ,
 					id = 17,
@@ -251,7 +251,7 @@ local enemys = {
 	{id=18,image="feibiao",demage=15,hp=5000}, 
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=15,hp=5000, speed=100,
+	{id=20,image="xiaozz",demage=15,hp=5000, speed=80,
 	weak1=1},
 }
 

@@ -98,8 +98,12 @@ function DDWuEnemyView:getModel(property)
 end
 
 
-function DDWuEnemyView:isBeBuff()
-    return false
+function DDWuEnemyView:isBeBuff(type)
+    if type == "pause" or type == "addHp" then
+        return false
+    else
+        return true
+    end
 end
 
 return DDWuEnemyView

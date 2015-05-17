@@ -338,7 +338,6 @@ function LevelDetailLayer:onClickBtnGold()
 end
 
 function LevelDetailLayer:onCancelWeaponGift()
-
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local cost = weaponRecord["cost"]
 	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
@@ -351,14 +350,11 @@ function LevelDetailLayer:onCancelWeaponGift()
             self.buyModel:showBuy("stone450", {}, strPos)
         end
     end
-
-    local tips = "是否花费"..cost.."宝石购买该武器？"
     ui:showPopup("StoneBuyPopup",
-         {tips = tips, 
+         {price = cost, 
+         jsonName = "weaponBuy", 
          onClickConfirm = onClickConfirm},
          {opacity = 150})
-    -- local strPos  =  "关卡详情_点击解锁高级武器" .. weaponName
-    -- self.buyModel:showBuy("stone450", {tips = "宝石不足，请购买宝石"}, strPos)    
 end
 
 function LevelDetailLayer:buyWeaponByStone(cost)

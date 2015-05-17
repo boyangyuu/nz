@@ -10,11 +10,9 @@ local FightRelivePopup = class("FightRelivePopup", function()
 end)
 
 function FightRelivePopup:ctor(property)
-
 	--instance
 	self.property = property
-    -- cc.EventProxy.new(self.fightGun, self)
-    --     :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
+	self.buyModel = md:getInstance("BuyModel")
     self:loadCCS()
     self:setNodeEventEnabled(true) 
 end
@@ -40,13 +38,13 @@ function FightRelivePopup:loadCCS()
 end
 
 function FightRelivePopup:buyReliveByStone()
-	print("function FightProp:buyReliveByStone()")	
 	local cost = self:getReliveCost()
 	local user = md:getInstance("UserModel")
     local isAfforded = user:costDiamond(cost) 
     if isAfforded then
 		self.property["onReliveFunc"]()
 		self:closePopup()
+		ui:closePopup("StoneBuyPopup")
         return true
     else
         return false
@@ -54,17 +52,26 @@ function FightRelivePopup:buyReliveByStone()
 end
 
 function FightRelivePopup:onClickRelive()
-	print("function FightRelivePopup:onClickRelive()")
-	local buyModel = md:getInstance("BuyModel")
-    if self:buyReliveByStone() then 
+	self:pause()
+    --
+	local price = self:getReliveCost()
+    local function onClickConfirm()
+        if self:buyReliveByStone() then 
 
-    else 
-        local strPos  =  "战斗界面_点击钻石复活"
-        buyModel:showBuy("stone450",
-    	{showType = "iap",
-    	payDoneFunc = handler(self, self.buyReliveByStone)}, 
-    	strPos)
-    end	
+        else 
+            local strPos  =  "战斗界面_点击钻石复活"
+            self.buyModel:showBuy("stone450", 
+        	{payDoneFunc = handler(self, self.buyReliveByStone)}, 
+        	strPos)
+        end
+    end
+
+    ui:showPopup("StoneBuyPopup",
+         {type = "relive", 
+         price = price,
+         jsonName = "relive",
+         onClickConfirm = onClickConfirm},
+         {animName = "moveDown", opacity = 150})    
 end
 
 function FightRelivePopup:onClickGiveUp()
@@ -80,7 +87,6 @@ function FightRelivePopup:onShow()
 	
 	--cost
 	local cost = self:getReliveCost()
-	print("cost", cost)	
 	labelCost:setString(cost)
 
 	--time
@@ -88,11 +94,10 @@ function FightRelivePopup:onShow()
 	local function timeFunc()
 		remainTimes = remainTimes - 1
 		if remainTimes == 0 then 
-			-- self:onClickGiveUp()
+			self:onClickGiveUp()
 			return
 		end
 		labelTime:setString(remainTimes)
-		print("remainTimes", remainTimes)
 	end
 	self:schedule(timeFunc, 1.0)
 end
@@ -105,6 +110,10 @@ end
 
 function FightRelivePopup:closePopup()
 	ui:closePopup("FightRelivePopup", {animName = "normal"})
+end
+
+function FightRelivePopup:pause(event)
+	transition.pauseTarget(self)
 end
 
 return FightRelivePopup

@@ -107,8 +107,8 @@ function RZBangrenEnemyView:animationEvent(armatureBack,movementType,movementID)
     end
 end
 
-function RZBangrenEnemyView:isBeBuff()
-    return false
+function RZBangrenEnemyView:isBeBuff(type)
+        return false
 end
 
 return RZBangrenEnemyView

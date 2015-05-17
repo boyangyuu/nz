@@ -61,9 +61,8 @@ function MapView:ctor()
     cc.EventProxy.new(self.fight, self)   
         :addEventListener(self.fight.FIGHT_START_EVENT, handler(self, self.onStartFight))
         :addEventListener(self.fight.PAUSE_SWITCH_EVENT, handler(self, self.onFightPause))
-        :addEventListener(self.fight.FIGHT_RELIVE_EVENT, handler(self, self.onFightRelive))
-
-
+		:addEventListener(self.fight.FIGHT_RELIVE_EVENT, handler(self, self.onFightRelive))
+		
 	cc.EventProxy.new(self.mapModel, self)
 		:addEventListener(self.mapModel.MAP_ZOOM_OPEN_EVENT   , handler(self, self.openZoom))
         :addEventListener(self.mapModel.MAP_ZOOM_RESUME_EVENT , handler(self, self.resumeZoom))
@@ -165,7 +164,15 @@ function MapView:onFightPause(event)
 end
 
 function MapView:onFightRelive(event)
-	self:checkWave() 
+	--check enemy
+	local leftnum   =  self:getLeftEnemyNum()
+	local cachenum  = #self.cacheEnemys
+	if leftnum == 0 and cachenum == 0 then 
+		local waveIndex = self.mapModel:getWaveIndex() 
+		print("第"..waveIndex.."波怪物消灭完毕")
+		self.mapModel:setWaveIndex(waveIndex + 1)
+		self:updateEnemys()
+	end
 end
 
 function MapView:updateEnemys()

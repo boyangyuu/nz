@@ -568,11 +568,10 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     local rect = self.btnFire:getCascadeBoundingBox()      
     local isTouch = cc.rectContainsPoint(rect, cc.p(point.x, point.y)) 
     
-    -- --in touch
-    -- if isTouch then
-    --     local isOpenJu = self:checkJuFire()
-    --     if isOpenJu then return false end 
-    -- end
+    --in touch
+    if not self:checkJuFire() then
+        return isTouch
+    end
 
     if isTouch  then
         if self.touchFireId == nil and 
@@ -594,19 +593,16 @@ function FightPlayer:checkBtnFire(id,point,eventName)
     return isTouch
 end
 
--- function FightPlayer:checkJuFire()
---     --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
---     local isJuLevel = self.fight:isJujiFight()
---     local map           = md:getInstance("Map")
---     local isOpenJu      = map:getIsOpenJu()
-
---     local isJuAble      = map:getIsJuAble()    
---     if isJuLevel and not isOpenJu then 
---         map:setIsOpenJu(true)
---         return true
---     end 
---     return false
--- end
+function FightPlayer:checkJuFire()
+    --检查狙                   是狙图 则开狙击镜 延迟1秒 可以自由开火
+    local isJuLevel = self.fight:isJujiFight()
+    local map           = md:getInstance("Map")
+    local isOpenJu      = map:getIsOpenJu() 
+    if isJuLevel and not isOpenJu then 
+        return false
+    end 
+    return true
+end
 
 function FightPlayer:onBtnFire()
     local robot = md:getInstance("Robot")

@@ -212,7 +212,6 @@ function GunView:setCoolDown(time)
 end
 
 function GunView:addDanke()
-	print("function GunView:addDanke()")
 	local dk = ccs.Armature:create("danke")
 	dk:getAnimation():play("danke", -1, 1)
 	local function animationEvent(armatureBack,movementType,movementId) 

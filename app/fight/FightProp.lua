@@ -123,16 +123,16 @@ function FightProp:costHpBag()
         else 
             local strPos  =  "战斗界面_点击血包"
             self.buyModel:showBuy("stone450", 
-        	{showType = "iap",
-        	payDoneFunc = handler(self, self.buyHpBagByStone)}, 
+        	{payDoneFunc = handler(self, self.buyHpBagByStone)}, 
         	strPos)
         end
     end
 
-    local tips = "是否花费"..kValue.."宝石购买医疗包x6？"
     ui:showPopup("StoneBuyPopup",
-         {tips = tips},
-         {opacity = 0})	
+         {type = "hpBag", 
+         price = kValue,
+         onClickConfirm = onClickConfirm},
+         {animName = "moveDown", opacity = 150})	
 
 end
 
@@ -145,7 +145,6 @@ function FightProp:buyHpBagByStone()
 		local hero = md:getInstance("Hero")
 		hero:costHpBag()
        	self.propModel:addProp("hpBag",6)  
-       	print("addProp")
         ui:closePopup("StoneBuyPopup")
         return true
     else

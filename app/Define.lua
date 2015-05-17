@@ -92,7 +92,7 @@ Define.kMissileWangTime			= 1    --飞过来的时间
 Define.kMissileWangHitTime      = 1    -- 攻击间隔
 
 
---------------------------角色---------------------------------
+--------------------------玩家---------------------------------
 --hero
 Define.kHeroBaseHp 				= 100.0  --角色血量
 Define.kHeroCritScale 			= 3.0  --暴击倍数

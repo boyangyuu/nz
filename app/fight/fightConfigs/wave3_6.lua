@@ -39,9 +39,25 @@ local waves = {
 					missileId = 3,
 					missileType = "lei",              --雷
 				},
-			},	
+			},
 			{
-				time = 6,	
+				time = 6,
+				num = 1,
+				pos = {350,},
+				delay = {0},                          -- 吉普车
+				property = {
+					type = "jipu" ,
+					id = 12,
+					placeName = "place1",
+					missileId = 13,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 60.0,		--持续时间			
+				},
+			},
+			{
+				time = 7,	
 				num = 10,
 				pos = {400,550,700,850,1000,250,900,750,600,350},              --自爆
 				delay = {0,0.5,1.5,1,2,2.5,3,3.5,4,4.5},
@@ -53,7 +69,7 @@ local waves = {
 				},
 			},		
 			{
-				time = 7,
+				time = 8,
 				num = 3,
 				delay = {0.1,0.6,1},
 				pos = {250,460,800},
@@ -66,7 +82,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 9,	
 				num = 5,
 				pos = {250,320,410,470,600},
 				delay = {0.1,0.6,1.5,1.8,0.8},
@@ -126,25 +142,9 @@ local waves = {
 					startState = "san",
 				},
 			},
-			{
-				time = 15,
-				num = 2,
-				pos = {350,550},
-				delay = {0,2.5},                          -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place1",
-					missileId = 13,
-					missileType = "dao_wu",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},
+
 		},
 	},
-
 	{
 		enemys = {
 			{
@@ -181,20 +181,10 @@ local waves = {
 					missileId = 18,               --忍者
 				},
 			},
+
 			{
-				time = 10,	
-				num = 5,
-				pos = {250,320,410,470,600},
-				delay = {0.1,0.6,1.5,1.8,0.8},
-				property = {
-					placeName = "place3" ,         --普
-					startState = "rollright",
-					id = 1,
-				},
-			},
-			{
-				time = 12,
-				num = 2,
+				time = 10,
+				num = 1,
 				pos = {350,},
 				delay = {0,},                          -- 吉普车
 				property = {
@@ -206,6 +196,17 @@ local waves = {
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
 					lastTime = 60.0,		--持续时间			
+				},
+			},
+			{
+				time = 12,	
+				num = 5,
+				pos = {250,320,410,470,600},
+				delay = {0.1,0.6,1.5,1.8,0.8},
+				property = {
+					placeName = "place3" ,         --普
+					startState = "rollright",
+					id = 1,
 				},
 			},
 			{
@@ -268,25 +269,8 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			{
-				time = 20,
-				num = 2,
-				pos = {650,},
-				delay = {0,},                          -- 吉普车
-				property = {
-					type = "jipu" ,
-					id = 12,
-					placeName = "place1",
-					missileId = 13,
-					missileType = "dao_wu",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 60.0,		--持续时间			
-				},
-			},
 		},
 	},
-
 	{	
 		waveType = "boss",                                      --强敌出现
 		enemys = {                                                
@@ -365,7 +349,7 @@ local enemys = {
 	{id=22,image="daodan03",demage=20,hp=5000, weak1=1},--打击者金武平均伤害5558
 
 	--小蜘蛛   --type = "bao",
-	{id=28,image="xiaozz",demage=25,hp=5000, speed=80, weak1=1},
+	{id=28,image="xiaozz",demage=25,hp=5000, speed=70, weak1=1},
 
 }
 
@@ -377,7 +361,7 @@ local bosses = {
 		award = 50000,                   --boss产出金币数量
 		hp = 200000,
 		fireRate = 120,                  --普攻频率
-		fireCd = 4,                     --普攻cd
+		fireCd = 5,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
@@ -392,10 +376,10 @@ local bosses = {
 			wudi = { 0.90, 0.70, 0.50, 0.30, 0.10,
 			}, 
 
-			zhaohuan = { 0.92, 0.72, 0.52, 0.32,                   --召唤小兵
+			zhaohuan = { 0.91, 0.71, 0.51, 0.31,                   --召唤小兵
 			},   
 
-			daoDan1 = {                                            --两发导弹
+			daoDan1 = {                                            --3发烟雾导弹
 				0.99, 0.80, 0.60, 0.40, 0.20, 0.05,
 			},
 
@@ -407,27 +391,25 @@ local bosses = {
 			},
 			weak1 = { 0.90,0.50,0.30,                             --头 技能触发(可以同时)	                        
 			},
-			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},
-			demage300 = {
+			demage200 = {
 				0.60,
 			},
-			demage400 = {
+			demage300 = {
 				0.40,
 			},			
 		},
 
-
 		daoDan1 = {
 		    id = 22,                                  --烟雾
 			type = "dao_wu",  
-			timeOffset = 0.06,                        --导弹间隔时间                 
+			timeOffset = 2.0,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(150, 150), cc.p(150, -150),
+            	cc.p(150, 150), cc.p(170, -190), cc.p(-150, -50),
         	},
         },
-
 
 		enemys1 = {                                                   --第1波召唤蜘蛛兵
 			{

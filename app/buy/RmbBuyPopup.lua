@@ -2,24 +2,24 @@
 
 local BuyConfigs = import(".BuyConfigs")
 
-local StoneBuyPopup = class("StoneBuyPopup", function()
+local RmbBuyPopup = class("RmbBuyPopup", function()
 	return display.newLayer()
 end)
 
-function StoneBuyPopup:ctor(properties)
+function RmbBuyPopup:ctor(properties)
 	print(properties.popupName)
 	--instance
 	self.buyModel = md:getInstance("BuyModel")
 	self.properties = properties
 
-	--events
-    -- cc.EventProxy.new(self.buyModel, self)
-    --     :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.close))
+	-- events
+    cc.EventProxy.new(self.buyModel, self)
+        :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.close))
 
 	self:loadCCS()
 end
 
-function StoneBuyPopup:loadCCS()
+function RmbBuyPopup:loadCCS()
     local jsonName = self.properties["jsonName"] 
     print("jsonName", jsonName)
     jsonName = "buy_stone"
@@ -38,23 +38,23 @@ function StoneBuyPopup:loadCCS()
          self:onClickConfirm()
     end)    
 
-    --price
+    --content
     local price = cc.uiloader:seekNodeByName(self.node, "content")
     price:setString(self.properties["price"])
 end
 
-function StoneBuyPopup:onClickDeny(event)
+function RmbBuyPopup:onClickDeny(event)
     self:close()
 end
 
-function StoneBuyPopup:onClickConfirm(event)
+function RmbBuyPopup:onClickConfirm(event)
     if self.properties["onClickConfirm"] then 
         self.properties["onClickConfirm"]() 
     end
 end
 
-function StoneBuyPopup:close()
-	ui:closePopup("StoneBuyPopup",{animName = "normal"})
+function RmbBuyPopup:close()
+	ui:closePopup("RmbBuyPopup",{animName = "normal"})
 end
 
-return StoneBuyPopup
+return RmbBuyPopup
