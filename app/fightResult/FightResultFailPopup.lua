@@ -83,9 +83,10 @@ function FightResultFailPopup:onClickRelive()
     --     deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true,isNotPopKefu = true},
     --  "失败页面_点击复活按钮")
     
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("relive",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
-     "战斗失败页面_点击复活按钮")
+    -- local buyModel = md:getInstance("BuyModel")
+    -- buyModel:showBuy("relive",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
+    --  "战斗失败页面_点击复活按钮")
+    self:payReliveDone()
 end
 
 function FightResultFailPopup:onClickBackHome()

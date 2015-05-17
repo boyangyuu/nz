@@ -3,10 +3,10 @@ local BossModeConfigs = class("BossModeConfigs", cc.mvc.ModelBase)
 local BossConfigs = {}
 
 BossConfigs["chapter1"] = {
-	name = "丛林野战",
+	name = "BOSS竞技场",
 	desc = "阵地射击，战地集结的号角一触即发！",
 	weaponId = 9,
-	weaponSkill = "多重攻击",
+	weaponSkill = "麒麟之怒",
 	reward1 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
 	reward2 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
 	reward3 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},

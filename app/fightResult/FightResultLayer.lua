@@ -141,7 +141,7 @@ function FightResultLayer:initUI()
     labelDiamond = cc.uiloader:seekNodeByName(self, "labelDiamond")
     labelMoney:setString("本关战斗获得"..self.fightData["goldNum"].."金币")
     if self.fightData["isFirst"] then
-    	local record = self.levelDetailModel:getConfig(self.fightData["groupId"],self.fightData["groupId"])
+    	local record = self.levelDetailModel:getConfig(self.fightData["groupId"],self.fightData["levelId"])
 		labelDiamond:setString("首次战斗获得"..record["giftDiamond"].."宝石")
 		self.userModel:addDiamond(record["giftDiamond"])
 	end
