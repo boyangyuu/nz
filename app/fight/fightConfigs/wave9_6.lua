@@ -6,7 +6,7 @@ local waves = {
 	{
 		enemys = {                                                                -- 魔化鬼眼boss
 			{
-				descId = "renzb", --简介
+				descId = "renzb_01", --简介
 				time = 2,	
 				num = 1,
 				pos = {550},
@@ -80,7 +80,7 @@ local bosses = {
 	--出场的boss
 	{
 		award = 100000,
-		image = "renzb",                       --图片名字                                  魔化鬼眼
+		image = "renzb_01",                       --图片名字                                  魔化鬼眼
 		--hp = 100000,
 		hp = 350000,
 		fireRate = 60,               --普攻频率

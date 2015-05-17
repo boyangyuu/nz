@@ -176,6 +176,15 @@ configs["renzb"] = {
 	describe = "行动敏捷的伊贺忍者后裔，眼镜蛇三号人物。擅长伪装、暗杀。",
 	playanim = "stand",
 }
+configs["renzb_01"] = {
+	title = "BOSS信息！",
+	name = "魔化鬼眼",
+	spc = "技能：",
+	skill = {"影分身","狂野召唤","风魔手里剑"},
+	weakness = "头部、腿部",
+	describe = "魔化后的鬼眼，拥有恐怖的战斗力。",
+	playanim = "stand",
+}
 configs["nvrenzb"] = {
 	title = "BOSS信息！",
 	name = "魔女贝娜",
