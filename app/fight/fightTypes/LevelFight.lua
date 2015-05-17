@@ -25,14 +25,14 @@ function LevelFight:getResultData()
     resultData["groupId"]   = self:getGroupId()
     resultData["fightType"] = self:getFightType()
     resultData["result"]    = self:getResult()
-    resultData["isFirst"]   = true
+    resultData["isFirst"]   = self.isFirstFight
     return resultData
 end
 
 function LevelFight:isJujiFight()
     local levelModel = md:getInstance("LevelDetailModel")
     local gid,lid    = self:getCurGroupAndLevel()
-    local isju       = levelModel:isJujiFight(gid,lid) 
+    local isju       = levelModel:isJujiFight(gid, lid) 
     return isju 
 end
 

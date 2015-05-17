@@ -34,6 +34,7 @@ Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
     self.fightData = nil
+    self.isFirstFight = false
 end
 
 function Fight:beginFight()
@@ -89,26 +90,20 @@ end
 
 function Fight:refreshUmFightTimesEvent()
     local data = getUserData()
-
-    local fightedGid = data.user.fightedGroupId
-    local fightedLid = data.user.fightedlevelId
-
-    local fGid, fLid = self:getCurGroupAndLevel()    
-    local isUnFighted = (fightedGid <= fGid and fightedLid < fLid) 
-                        or (fightedGid < fGid)
-    local str = nil
-    if isUnFighted then
-        data.user.fightedGroupId = fGid
-        data.user.fightedlevelId = fLid
-        setUserData(data)
-        str = "关卡开始_首次进入"
+    local fightedLevels = data.user.fightedLevels
+    local levelInfo     = self:getLevelInfo()
+    local umStr         = nil
+    local isFighted     = fightedLevels[levelInfo]
+    self.isFirstFight   = not isFighted
+    if isFighted then 
+        umStr = "关卡开始_重复进入"
     else
-        str = "关卡开始_重复进入" 
+        data.user.fightedLevels[levelInfo] = true
+        umStr = "关卡开始_首次进入"
     end
 
     local umData = {}
-    local levelInfo = self:getLevelInfo()
-    umData[levelInfo] = str
+    umData[levelInfo] = umStr
     um:event("关卡次数情况", umData)        
 end
 

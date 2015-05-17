@@ -162,9 +162,7 @@ function MyApp:createGameStateFile()
 
         user = {
             level = 1,
-            fightedGroupId = 0, --打过的最远的关卡groupId
-            fightedlevelId = 0, --打过的最远的关卡levelId
-
+            fightedLevels = {},
             userName  = "玩家自己",
             vipLevel  = 0,
         },
