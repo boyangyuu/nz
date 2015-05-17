@@ -249,13 +249,7 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
         if  self:getPauseOtherAnim() and  movementID ~= "die"  then
             return 
         end
-
         armatureBack:stopAllActions()
-        if movementID == "shanchu" or movementID == "zhaohuan" then 
-            -- self:setVisible(false) -- todo
-            return
-        end
-
         if movementID == "die" then
             self:setDeadDone()
             return
