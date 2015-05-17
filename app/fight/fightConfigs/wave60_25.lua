@@ -3,6 +3,12 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 450,    --钻石话费
+			gunId = 10,      --武器id10  寒冰巴雷特
+		},
+------------------------------------------------------------------推荐武器
 		enemys = { 
 			{
 				time = 2,
@@ -42,7 +48,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -56,7 +62,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -277,7 +283,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -534,7 +540,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -560,7 +566,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.1,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -728,7 +734,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=25760,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=6, fireCd=7.0,
+	{id=12,image="yyc",demage=0,hp=25760,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=6, fireCd=8.0,
 	weak1=2,    award = 60},
 
 	--忍者兵            冲锋伤害  type = "renzhe",

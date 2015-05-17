@@ -4,13 +4,13 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 
 	{
--------------------------------------------------------------推荐武器
+
 		adviseData = {
 			type = "blt",   --goldJijia
 			cost  = 450,    --钻石话费
 			gunId = 10,      --武器id10  寒冰巴雷特
 		},
-
+------------------------------------------------------------------推荐武器
 		enemys = { 
 			{
 				descId = "yyc", --简介
@@ -51,7 +51,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -212,7 +212,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
@@ -396,7 +396,7 @@ local waves = {
 					type = "yiliao",                                --医疗兵
 					startState = "enterright",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,              --回血百分比
+					skillValue = 0.3,              --回血百分比
 					id = 10,
 				},
 			},
