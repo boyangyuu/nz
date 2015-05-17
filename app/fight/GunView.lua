@@ -42,7 +42,7 @@ function GunView:fire()
 	self.gun:setCurBulletNum(num)
 	if self.jqk then 
 		self.jqk   :setVisible(true)
-		self.jqk:getAnimation()	 :play("fire" , -1, 0)
+		self.jqk:getAnimation():play("fire" , -1, 0)
 	end
 
 	if self.qkzd then
@@ -50,9 +50,9 @@ function GunView:fire()
 		self.qkzd:getAnimation():play("qkzd" , -1, 0)
 	end
 
-	self:addDanke()
+	-- self:addDanke()
 
-	self.armature:getAnimation():play("fire" , -1, 0)	
+	self.armature:getAnimation():play("fire" , -1, 1)	
 
 	--sound
 	local config = self.gun:getConfig()
@@ -121,8 +121,8 @@ function GunView:refreshGun()
 	    self.qkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
     end
 
-    -- --蛋壳
-    -- self:addDanke()
+    --蛋壳
+    self:addDanke()
 end
 
 function GunView:onHeroFire(event)
