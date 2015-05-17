@@ -3,6 +3,12 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
+		adviseData = {
+			type = "blt",   --goldJijia
+			cost  = 450,    --钻石话费
+			gunId = 10,      --武器id10  寒冰巴雷特
+		},
+------------------------------------------------------------------推荐武器
 		enemys = {                                                                
 			{
 				descId = "nvrenzb", --简介
