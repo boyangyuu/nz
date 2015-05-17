@@ -91,8 +91,8 @@ function MyApp:createGameStateFile()
         weapons = {
             bags = {
                 {
-                    intenlevel = 0,
-                    weaponid   = 1,
+                    intenlevel = 10,
+                    weaponid   = 9,
                 },
                 {
                     intenlevel = 0,
@@ -105,7 +105,7 @@ function MyApp:createGameStateFile()
             },
             weaponed = {
                 bag1 = {
-                    weaponid   = 1,
+                    weaponid   = 9,
                 },
                 bag2 = {
                     weaponid   = 2,
@@ -145,7 +145,7 @@ function MyApp:createGameStateFile()
         
         --开启的关卡
         currentlevel =  {
-            group = 1,
+            group = 9,
             level = 6,
         },
 
@@ -159,7 +159,6 @@ function MyApp:createGameStateFile()
             scoreAwarded = {
             },
         },            
-
 
         user = {
             level = 1,
