@@ -46,7 +46,7 @@ function LevelMapLayer:initData()
     elseif self.fightData.fightType == "jujiFight" then
         self.curGroupId = groupId
     elseif groupId == 0 and levelId == 0 and fightType == "levelFight" then
-        self.curGroupId = groupId
+        self.curGroupId = 1
     else
         self.curGroupId = self.fightData.groupId
     end
@@ -329,10 +329,6 @@ function LevelMapLayer:initChooseLayer()
             self.telNum:setVisible(false)
         end
     end)
-end
-
-function LevelMapLayer:refreshData()
-    self.levelMapModel:hideGiftBagIcon()
 end
 
 function LevelMapLayer:hideWeaponGiftBag(event)
