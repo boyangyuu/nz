@@ -4,7 +4,7 @@ local BossConfigs = {}
 
 BossConfigs["chapter1"] = {
 	name = "丛林野战",
-	desc = "决战吧！@小骚辉",
+	desc = "阵地射击，战地集结的号角一触即发！",
 	weaponId = 9,
 	weaponSkill = "多重攻击",
 	reward1 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
