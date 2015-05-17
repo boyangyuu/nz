@@ -24,15 +24,16 @@ function BossFight:startFightResult()
 	local isNewProgress = bossModeModel:passWave(self.chapterIndex, curWaveIndex) 
 	
 	--desc
-    local fightDescModel = md:getInstance("FightDescModel")
+    -- local fightDescModel = md:getInstance("FightDescModel")
     local data = {
-	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
+	    -- name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
     	isAwardBujian= isNewProgress,
     	closeFunc    = closeFunc,
 	}
-    fightDescModel:dispatchEvent(data)
+    ui:showPopup("BossResultLayer",data,{animName = "normal"})
+    -- fightDescModel:dispatchEvent(data)
 end
 
 function BossFight:getResultData()
@@ -71,16 +72,17 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 
 	local map = md:getInstance("Map")
 	local waveIndex = map:getWaveIndex()
-    local fightDescModel = md:getInstance("FightDescModel")
+    -- local fightDescModel = md:getInstance("FightDescModel")
     local eventData = {
-	    name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
+	    -- name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
     	closeFunc    = closeFunc,
     	isAwardBujian= isNewProgress,
 	}
-	dump(eventData, "eventData")
-    fightDescModel:dispatchEvent(eventData)
+	-- dump(eventData, "eventData")
+ --    fightDescModel:dispatchEvent(eventData)
+    ui:showPopup("BossResultLayer",eventData,{animName = "normal"})
     self:pauseFight(true)
 end
 

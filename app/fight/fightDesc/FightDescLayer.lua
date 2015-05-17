@@ -13,8 +13,8 @@ function FightDescLayer:ctor()
         :addEventListener(self.model.WAVESTART_ANIM_EVENT, handler(self, self.onWaveStart))
         :addEventListener(self.model.ENEMYINTRO_ANIM_EVENT, handler(self, self.onShowEnemyIntro))
         :addEventListener(self.model.GOLDWAVE_ANIM_EVENT, handler(self, self.onGoldWaveStart))
-        :addEventListener(self.model.BOSSGIFT_ANIM_EVENT, handler(self, self.onBossGift))
-        :addEventListener(self.model.JUJIGIFT_ANIM_EVENT, handler(self, self.onJujiGift))
+        -- :addEventListener(self.model.BOSSGIFT_ANIM_EVENT, handler(self, self.onBossGift))
+        -- :addEventListener(self.model.JUJIGIFT_ANIM_EVENT, handler(self, self.onJujiGift))
 
 	self:loadCCS()
     self:setTouchSwallowEnabled(false)
@@ -81,13 +81,13 @@ function FightDescLayer:onBossStart(event)
     self.audioId =  audio.playSound(soundSrc,false)    
 end
 
-function FightDescLayer:onBossGift(event)
-    ui:showPopup("BossResultLayer",event,{animName = "normal"})
-end
+-- function FightDescLayer:onBossGift(event)
+--     ui:showPopup("BossResultLayer",event,{animName = "normal"})
+-- end
 
-function FightDescLayer:onJujiGift(event)
-    ui:showPopup("JujiResultLayer",event,{animName = "normal"})
-end
+-- function FightDescLayer:onJujiGift(event)
+--     ui:showPopup("JujiResultLayer",event,{animName = "normal"})
+-- end
 
 function FightDescLayer:onWaveStart(event)
     local label = display.newBMFontLabel({
