@@ -122,6 +122,7 @@ function UserModel:setUserName(nameString)
 	local data = getUserData()
 	data.user.userName = nameString
 	setUserData(data)
+	self:dispatchEvent({name = "REFRESH_PLAYERNAME_EVENT"})
 end
 
 return UserModel
