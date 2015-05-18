@@ -77,25 +77,31 @@ function FightResultFailPopup:onCancelGoldGift()
 end
 
 function FightResultFailPopup:onClickRelive()
-    -- 保留，暂时不用
-    -- local buyModel = md:getInstance("BuyModel")
-    -- buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.payReliveDone),
-    --     deneyBuyFunc = handler(self,self.onCancelGoldGift), isNotPopup = true,isNotPopKefu = true},
-    --  "失败页面_点击复活按钮")
-    
-    -- local buyModel = md:getInstance("BuyModel")
-    -- buyModel:showBuy("relive",{payDoneFunc = handler(self,self.payReliveDone),isNotPopKefu = true},
-    --  "战斗失败页面_点击复活按钮")
-    self:payReliveDone()
+    self:buyReliveByStone()
 end
 
 function FightResultFailPopup:onClickBackHome()
-    local fightFactory =     md:getInstance("FightFactory")
+    local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     fight:doGiveUp()
     local result = fight:getResultData()
     ui:closePopup("FightResultFailPopup")
     ui:changeLayer("HomeBarLayer",{fightData = result})
+end
+
+
+function FightResultFailPopup:buyReliveByStone()
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
+    local cost = fight:getReliveCost() 
+    local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(cost, true, "普通模式_钻石复活") 
+    if isAfforded then
+        self:payReliveDone()
+        return true
+    else
+        return false
+    end     
 end
 
 function FightResultFailPopup:payReliveDone()

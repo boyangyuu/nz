@@ -217,6 +217,10 @@ function isDefendDX()
     end
 end
 
+function isDirectIap()
+    return true
+end
+
 function getIapName()
     local iapName = 'mm'
     if device.platform == 'android' then
@@ -226,6 +230,7 @@ function getIapName()
     print("iapName:",iapName)
     return iapName
 end
+
 
 
 -- function isMobileSimCard()

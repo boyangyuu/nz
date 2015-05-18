@@ -228,20 +228,7 @@ function WeaponListLayer:onClickBtnUpgrade(event)
 end
 
 function WeaponListLayer:onClickBtnBuy(event)
-    local function onClickConfirm()
-        if self:buyWeaponByStone() then 
-            ui:closePopup("StoneBuyPopup")
-        else 
-            local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
-            self.buyModel:showBuy("stone450", {}, strPos)
-        end
-    end
-    ui:showPopup("StoneBuyPopup",
-         {jsonName = "weaponBuy", 
-         price = self.weaponRecord["cost"],
-         onClickConfirm = onClickConfirm},
-         {opacity = 150})
-
+    self:buyWeaponByStone()
 end
 
 function WeaponListLayer:onCancelOncefull()
@@ -253,7 +240,9 @@ function WeaponListLayer:onBuyWeaponGiftSucc()
 end
 
 function WeaponListLayer:buyWeaponByStone()
-    local isAfforded = self.userModel:costDiamond(self.weaponRecord["cost"]) 
+    local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
+    local isAfforded = self.userModel:costDiamond(
+        self.weaponRecord["cost"], true, strPos) 
     if isAfforded then
         self.weaponListModel:buyWeapon(self.weaponId)
         if self.weapontype == "ju" then

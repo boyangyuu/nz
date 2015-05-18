@@ -38,7 +38,15 @@ function RankModel:getRankData(sortType)
     end
 
 	--add self
-	self.rankData[#self.rankData + 1] = self:getUserRankData(sortType)
+	local userData = self:getUserRankData(sortType)
+	self.rankData[#self.rankData + 1] = userData
+
+	--add enemy
+	local offset = math.random(0,3)
+	local enemy = self:getUserRankData(sortType)
+    enemy["name"] = "楼下的，请用力！"
+    enemy["jujiLevel"] = userData["jujiLevel"] + offset
+    self.rankData[#self.rankData + 1] = enemy
 
     --sort
 	local function sortFunction(record1, record2)
@@ -49,6 +57,8 @@ function RankModel:getRankData(sortType)
 	table.sort(self.rankData, sortFunction)
 	return self.rankData
 end
+
+
 
 function RankModel:getUserRank()
 	for i,v in ipairs(self.rankData) do

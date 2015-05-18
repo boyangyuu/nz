@@ -338,28 +338,18 @@ function LevelDetailLayer:onClickBtnGold()
 end
 
 function LevelDetailLayer:onCancelWeaponGift()
-	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
-	local cost = weaponRecord["cost"]
-	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
-    
-    local function onClickConfirm()
-        if self:buyWeaponByStone(cost) then 
-            ui:closePopup("StoneBuyPopup")
-        else 
-            local strPos  =  "关卡详情_点击解锁武器" .. weaponName
-            self.buyModel:showBuy("stone450", {}, strPos)
-        end
-    end
-    ui:showPopup("StoneBuyPopup",
-         {price = cost, 
-         jsonName = "weaponBuy", 
-         onClickConfirm = onClickConfirm},
-         {opacity = 150})
+	self:buyWeaponByStone()
 end
 
-function LevelDetailLayer:buyWeaponByStone(cost)
+function LevelDetailLayer:buyWeaponByStone()
+	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
+	local cost = weaponRecord["cost"]
+	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)	
+	local strPos  =  "关卡详情_点击解锁武器" .. weaponName
+	
+	--costDiamond
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(cost) 
+    local isAfforded = user:costDiamond(cost, true, strPos) 
     if isAfforded then
         self.weaponListModel:buyWeapon(self.recomWeaponId)
         ui:showPopup("WeaponNotifyLayer",
@@ -369,16 +359,6 @@ function LevelDetailLayer:buyWeaponByStone(cost)
         return false
     end
 end
-
--- function LevelDetailLayer:onBuyWeaponGiftSucc()
---     local levelMapModel = md:getInstance("LevelMapModel")
---     levelMapModel:hideGiftBagIcon()
--- 	self.weaponListModel:equipBag(self.recomWeaponId,1)
--- end
-
--- function LevelDetailLayer:onBuyWeaponSucc()
--- 	self.weaponListModel:equipBag(self.recomWeaponId,1)
--- end
 
 ---- initData ----
 function LevelDetailLayer:initData()

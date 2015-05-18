@@ -29,27 +29,23 @@ local configs = {
 	},
 	armedMecha     = {				--机甲
 			showType = "prop_rmb",
-			jsonName = "jijia",
 			price = 4,
 			name = "机甲变身2次",
 	},
 	handGrenade    = {             --手雷
 			showType = "prop_rmb",
-			jsonName = "shouLei",
 			price = 4,
 			name = "手雷20个",
 	},
 	goldWeapon     = {				--金武
 			showType = "prop_rmb",
-			jsonName = "huanWu",
 			price = 4,
 			name = "金武2次",
 	},
 	onceFull       = {				--一键满级
 			showType = "prop_rmb",
-			jsonName = "manJi",
 			price = 2,
-			name = "一键满级",
+			name = "武器满级",
 	},
 
 	stone120         = {
@@ -63,7 +59,7 @@ local configs = {
 			name = "钻石260个",
 	},
 	stone450         = {
-			showType = "iap",
+			showType = "prop_rmb",
 			price = 30,
 			name = "钻石450个",
 	},
@@ -90,7 +86,7 @@ local configs = {
 }
 
 function BuyConfigs.getConfig(name)
-	dump(name, "name")
+	-- dump(name, "name")
 	assert(configs[name], "invalid name :"..name)
 	return configs[name]
 end

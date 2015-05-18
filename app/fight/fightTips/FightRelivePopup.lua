@@ -40,11 +40,10 @@ end
 function FightRelivePopup:buyReliveByStone()
 	local cost = self:getReliveCost()
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(cost) 
+    local isAfforded = user:costDiamond(cost, true, "xx模式_钻石复活") 
     if isAfforded then
 		self.property["onReliveFunc"]()
 		self:closePopup()
-		ui:closePopup("StoneBuyPopup")
         return true
     else
         return false
@@ -53,25 +52,7 @@ end
 
 function FightRelivePopup:onClickRelive()
 	self:pause()
-    --
-	local price = self:getReliveCost()
-    local function onClickConfirm()
-        if self:buyReliveByStone() then 
-
-        else 
-            local strPos  =  "战斗界面_点击钻石复活"
-            self.buyModel:showBuy("stone450", 
-        	{payDoneFunc = handler(self, self.buyReliveByStone)}, 
-        	strPos)
-        end
-    end
-
-    ui:showPopup("StoneBuyPopup",
-         {type = "relive", 
-         price = price,
-         jsonName = "relive",
-         onClickConfirm = onClickConfirm},
-         {animName = "moveDown", opacity = 150})    
+    self:buyReliveByStone()
 end
 
 function FightRelivePopup:onClickGiveUp()

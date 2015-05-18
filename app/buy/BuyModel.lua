@@ -47,19 +47,19 @@ function BuyModel:showBuy(configId, buyData, strPos)
 
 	--pay
 	local showType = buyConfig.showType 
+	local isDirectIap = isDirectIap()
 
 	if showType == "gift" then
         ui:showPopup("GiftBagPopup",
         	{popupName = configId},
         	{animName = "shake"})
-    elseif showType == "iap" then 
+    elseif showType == "iap" or isDirectIap then 
     	self:iapPay()        
     elseif showType =="prop_rmb" then --非钻石购买的道具
-    	ui:showPopup("RmbBuyPopup",
-			 {jsonName = buyConfig.jsonName, 
-			 price = buyConfig.price,
+    	ui:showPopup("RmbBuyPopup", 
+    		 {configId = configId,
 			 onClickConfirm = handler(self, self.iapPay)},
-			 {animName = "moveDown", opacity = 0})    			  
+			 {animName = "moveDown", opacity = 150})    			  
     else
     	assert(false, "invalid showType", showType)
     end
