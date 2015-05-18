@@ -49,24 +49,27 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 	else
 		if isBuy then 
 			print("宝石不足请购买！")
-			--
-			ui:showPopup("StoneLessPopup", {}, {animName = "normal"})
+			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
 			local function delayCall( )
-				self.buyModel:showBuy("stone450", {}, strPos)
+				self.buyModel:showBuy("stone450", {isNotPopKefu = true}, strPos)
 			end
-			scheduler.performWithDelayGlobal(delayCall, 0.5)
+			scheduler.performWithDelayGlobal(delayCall, 1.0)
 			
 		end
 		return false
 	end
 end
 
- function UserModel:addDiamond(diamond)
+ function UserModel:addDiamond(diamond, isBuy)
  	if diamond <= 0 then return end
 	local data = getUserData()
 	data.diamond = data.diamond + diamond
 	setUserData(data)
 	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
+	if isBuy then 
+		print("宝石购买成功")
+		ui:showPopup("BuyTipsPopup", {type = "boneBuyed"}, {animName = "normal"})
+	end	
 end
 
  function UserModel:addMoney(money)

@@ -11,9 +11,9 @@ end
 
 
 function FightAdviseModel:showAdvise(data)
-    if data.type == "goldJijia" then return end
+    local isJijia = data.type == "goldJijia" 
     local isWeaponExist = self.weaponModel:isWeaponExist(data.gunId)
-    if isWeaponExist then return end
+    if isWeaponExist and not isJijia then return end
     ui:showPopup("FightAdvisePopup", 
         data, 
         {animName = "scale"})    
