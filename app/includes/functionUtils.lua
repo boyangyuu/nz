@@ -218,7 +218,7 @@ function isDefendDX()
 end
 
 function isDirectIap()
-    return true
+    return false
 end
 
 function getIapName()

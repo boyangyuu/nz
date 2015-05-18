@@ -72,6 +72,11 @@ function FightRelivePopup:onShow()
 
 	--time
 	labelTime:setString(remainTimes)
+	local seq = transition.sequence({
+		cc.ScaleTo:create(0.05, 6),
+		cc.ScaleTo:create(0.1, 2)
+		})
+	labelTime:runAction(seq)	
 	local function timeFunc()
 		remainTimes = remainTimes - 1
 		if remainTimes == 0 then 
@@ -79,6 +84,13 @@ function FightRelivePopup:onShow()
 			return
 		end
 		labelTime:setString(remainTimes)
+
+		--action
+		local seq = transition.sequence({
+			cc.ScaleTo:create(0.05, 6),
+			cc.ScaleTo:create(0.1, 2)
+			})
+		labelTime:runAction(seq)
 	end
 	self:schedule(timeFunc, 1.0)
 end

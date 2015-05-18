@@ -73,11 +73,9 @@ function GunHelpPopup:onClickGet()
     local fight = fightFactory:getFight()
     fight:pauseFight(false)
 
-    if self.gunId == 8 then
-        local hero = md:getInstance("Hero")
-        hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
-    end
-
+    --
+    local hero = md:getInstance("Hero")
+    hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
     ui:closePopup("GunHelpPopup", {animName = "normal"})
 end
 

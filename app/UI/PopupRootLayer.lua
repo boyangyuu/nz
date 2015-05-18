@@ -44,6 +44,16 @@ function PopupRootLayer:showPopup(event)
 		local act2 = cc.ScaleTo:create(0.1, 0.8)
 		local act3 = cc.ScaleTo:create(0.1, 1)
 		layer:runAction(cc.Sequence:create(act1,act2, act3))
+	elseif animName == "fade" then
+		local seq = transition.sequence({
+			cc.FadeIn:create(0.5),
+			cc.FadeOut:create(0.5),
+			cc.CallFunc:create(function ()
+				self:removePopup(str)
+			end),
+			})
+		layer:runAction(seq)
+		layer:moveBy(0.4, 0, 200)
 	end
 end
 

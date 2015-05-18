@@ -1,4 +1,5 @@
-
+--import
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local UserModel = class("UserModel", cc.mvc.ModelBase)
 
 function UserModel:ctor(properties)
@@ -48,7 +49,13 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 	else
 		if isBuy then 
 			print("宝石不足请购买！")
-			self.buyModel:showBuy("stone450", {}, strPos)
+			--
+			ui:showPopup("StoneLessPopup", {}, {animName = "fade"})
+			local function delayCall( )
+				self.buyModel:showBuy("stone450", {}, strPos)
+			end
+			scheduler.performWithDelayGlobal(delayCall, 1.0)
+			
 		end
 		return false
 	end

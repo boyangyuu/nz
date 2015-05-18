@@ -61,7 +61,12 @@ end
 
 function LevelFight:getReliveCost()
     local times = self:getRelivedTimes()
-    local costs = define.kLevelReliveCosts
+
+    --cost in config
+    local map = md:getInstance("Map")
+    local waveCfg = map:getCurWaveConfig()
+    local costsWave = waveCfg:getReliveCosts()
+    local costs = costsWave or define.kLevelReliveCosts
     local maxCost = costs[#costs]
     return costs[times + 1] or maxCost
 end

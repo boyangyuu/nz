@@ -138,6 +138,7 @@ function Gun:getReloadTime()
     else
         value = baseValue
     end		
+    value = value / 2
 	return value
 end
 

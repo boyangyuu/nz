@@ -233,7 +233,7 @@ function RenBossView:zhaohuan(index)
     local function hide()
         self:setVisible(false)
     end
-    self:performWithDelay(hide, 0.8)     
+    self:performWithDelay(hide, 0.8)
 end
 
 function RenBossView:onKillLastCall()
