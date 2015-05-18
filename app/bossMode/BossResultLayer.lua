@@ -21,7 +21,13 @@ function BossResultLayer:getAwards()
 	local info = bossModeModel:getChapterModel(self.chapterIndex,self.waveIndex)
 	assert(info, "getChapterModel is nil")
 	if not self.properties.isAwardBujian then
-		table.remove(info,1)
+		for i,v in ipairs(info) do
+			for k,v1 in pairs(v) do
+				if v[k] == "part" then
+					table.remove(info,i)
+				end
+			end
+		end
 	end
 	return info
 end

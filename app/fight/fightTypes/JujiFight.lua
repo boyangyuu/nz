@@ -20,14 +20,15 @@ function JujiFight:startFightResult()
 	end
 	
 	--desc
-    local fightDescModel = md:getInstance("FightDescModel")
+    -- local fightDescModel = md:getInstance("FightDescModel")
     local data = {
-	    name         = fightDescModel.JUJIGIFT_ANIM_EVENT,
+	    -- name         = fightDescModel.JUJIGIFT_ANIM_EVENT,
     	levelIndex   = self:getLevelId() + 1,
     	waveIndex    = self.passLevelNum,
     	closeFunc    = closeFunc,
 	}
-    fightDescModel:dispatchEvent(data)	
+    -- fightDescModel:dispatchEvent(data)	
+    ui:showPopup("JujiResultLayer",data,{animName = "normal"})
 end
 
 function JujiFight:getResultData()
