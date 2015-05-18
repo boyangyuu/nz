@@ -118,18 +118,11 @@ function FightProp:costHpBag()
     --buy
 	local kValue = 40
     local function onClickConfirm()
-        if self:buyHpBagByStone() then 
-            ui:closePopup("StoneBuyPopup")
-        else 
-            local strPos  =  "战斗界面_点击血包"
-            self.buyModel:showBuy("stone450", 
-        	{payDoneFunc = handler(self, self.buyHpBagByStone)}, 
-        	strPos)
-        end
+        self:buyHpBagByStone()
     end
 
     ui:showPopup("StoneBuyPopup",
-         {type = "hpBag", 
+         {name = "医疗包x4", 
          price = kValue,
          onClickConfirm = onClickConfirm},
          {animName = "moveDown", opacity = 150})	
@@ -140,11 +133,11 @@ function FightProp:buyHpBagByStone()
 	print("function FightProp:buyHpBagByStone()")	
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue) 
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_点击医疗包") 
     if isAfforded then
 		local hero = md:getInstance("Hero")
 		hero:costHpBag()
-       	self.propModel:addProp("hpBag",6)  
+       	self.propModel:addProp("hpBag", 6)  
         ui:closePopup("StoneBuyPopup")
         return true
     else

@@ -11,19 +11,11 @@ function StoneBuyPopup:ctor(properties)
 	--instance
 	self.buyModel = md:getInstance("BuyModel")
 	self.properties = properties
-
-	--events
-    -- cc.EventProxy.new(self.buyModel, self)
-    --     :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.close))
-
 	self:loadCCS()
 end
 
 function StoneBuyPopup:loadCCS()
-    local jsonName = self.properties["jsonName"] 
-    print("jsonName", jsonName)
-    jsonName = "buy_stone"
-    self.node = cc.uiloader:load("res/gouMai/"..jsonName..".ExportJson")
+    self.node = cc.uiloader:load("res/gouMai/buyBone.ExportJson")
     self:addChild(self.node)
 
     --btn close
@@ -39,8 +31,10 @@ function StoneBuyPopup:loadCCS()
     end)    
 
     --price
-    local price = cc.uiloader:seekNodeByName(self.node, "content")
-    price:setString(self.properties["price"])
+    local labelPrice = cc.uiloader:seekNodeByName(self.node, "labelPrice")
+    labelPrice:setString("消耗宝石：" .. self.properties["price"] .. "个")
+    local labelDesc = cc.uiloader:seekNodeByName(self.node, "labelDesc")
+    labelDesc:setString("购买物品：" .. self.properties["name"])
 end
 
 function StoneBuyPopup:onClickDeny(event)

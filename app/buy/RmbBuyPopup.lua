@@ -7,11 +7,10 @@ local RmbBuyPopup = class("RmbBuyPopup", function()
 end)
 
 function RmbBuyPopup:ctor(properties)
-	print(properties.popupName)
 	--instance
 	self.buyModel = md:getInstance("BuyModel")
 	self.properties = properties
-
+    self.configId = self.properties["configId"] 
 	-- events
     cc.EventProxy.new(self.buyModel, self)
         :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.close))
@@ -20,10 +19,7 @@ function RmbBuyPopup:ctor(properties)
 end
 
 function RmbBuyPopup:loadCCS()
-    local jsonName = self.properties["jsonName"] 
-    print("jsonName", jsonName)
-    jsonName = "buy_stone"
-    self.node = cc.uiloader:load("res/gouMai/"..jsonName..".ExportJson")
+    self.node = cc.uiloader:load("res/gouMai/buyRmb.ExportJson")
     self:addChild(self.node)
 
     --btn close
@@ -39,8 +35,11 @@ function RmbBuyPopup:loadCCS()
     end)    
 
     --content
-    local price = cc.uiloader:seekNodeByName(self.node, "content")
-    price:setString(self.properties["price"])
+    local config = BuyConfigs.getConfig(self.configId)
+    local labelPrice = cc.uiloader:seekNodeByName(self.node, "labelPrice")
+    labelPrice:setString("消耗金额：" .. config["price"] .. "元")
+    local labelDesc = cc.uiloader:seekNodeByName(self.node, "labelDesc")
+    labelDesc:setString("购买物品：" .. config["name"])    
 end
 
 function RmbBuyPopup:onClickDeny(event)

@@ -58,7 +58,7 @@ end
 function BossFight:waveUpdate(nextWaveIndex, waveType)
 	if nextWaveIndex == 1 then return end
 	--award
-
+	
 	local curWaveIndex = nextWaveIndex - 1
 	local bossModeModel = md:getInstance("BossModeModel")
 	local isNewProgress = bossModeModel:passWave(self.chapterIndex, curWaveIndex) 
@@ -79,7 +79,7 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
     	closeFunc    = closeFunc,
     	isAwardBujian= isNewProgress,
 	}
-	dump(eventData, "eventData")
+	-- dump(eventData, "eventData")
     fightDescModel:dispatchEvent(eventData)
     self:pauseFight(true)
 end
