@@ -16,12 +16,15 @@ end
 
 function JujiModeLayer:onEnter()
 	self:performWithDelay(handler(self,self.refreshListView),0.5)
-	self:performWithDelay(handler(self,self.setUserName),0.5)
+	self:performWithDelay(handler(self,self.checkUserName),0.5)
 end
 
 
-function JujiModeLayer:setUserName()
+function JujiModeLayer:checkUserName()
 	local user = md:getInstance("UserModel")
+	if user:getUserName() ~= "玩家自己" then
+		return 
+	end
 	local function onClickedConfirm()
 		ui:showPopup("InputBoxPopup",
 		     {callfuncCofirm = onClickedConfirm,

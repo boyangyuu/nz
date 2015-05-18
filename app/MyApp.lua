@@ -168,9 +168,9 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 1,
+            level = 7,
             fightedLevels = {},
-            userName  = "玩家自己",
+            userName  = "玩家自己!",
             vipLevel  = 0,
         },
         guide = {
