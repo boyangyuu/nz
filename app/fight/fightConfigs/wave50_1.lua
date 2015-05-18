@@ -4021,12 +4021,12 @@ end
 function waveClass:randomWaves()
 	local waves = {}
 	local order = {}
-	order[1] = math.random(8,8) 	
-	-- order[1] = math.random(1,3)
-	-- order[2] = math.random(4,6)
-	-- order[3] = math.random(7,8)
-	-- order[4] = math.random(9,10)
-	-- order[5] = math.random(11, 11)  
+	--order[1] = math.random(8,8) 	
+	order[1] = math.random(1,3)
+	order[2] = math.random(4,6)
+	order[3] = math.random(7,8)
+	order[4] = math.random(9,10)
+	order[5] = math.random(11, 11)  
 	dump(order, "order")
 
 	for i,index in ipairs(order) do
