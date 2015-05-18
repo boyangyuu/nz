@@ -147,8 +147,8 @@ function BossModeLayer:refreshContent()
 	local weaponId = self.choseInfo["weaponId"]
 	local imgName = self.weaponListModel:getWeaponImgByID(weaponId)
 	local weaponImg = display.newSprite("#icon_"..imgName..".png")
-	weaponImg:setFlippedX(true)
-	weaponImg:setRotation(-10)
+	-- weaponImg:setFlippedX(true)
+	weaponImg:setRotation(10)
 	weaponImg:setScale(1.1)
 	addChildCenter(weaponImg, self.panelGun)
 
