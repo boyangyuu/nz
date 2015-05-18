@@ -22,7 +22,7 @@ function BuyTipsPopup:loadCCS()
     image:scale(0.0)
     local action = transition.sequence({
         cc.ScaleTo:create(0.3, 1),
-        cc.DelayTime:create(0.4),
+        cc.DelayTime:create(0.7),
         cc.CallFunc:create(function()
             self:close()
             end),
