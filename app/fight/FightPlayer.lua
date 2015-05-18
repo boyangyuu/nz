@@ -28,10 +28,8 @@ function FightPlayer:ctor(properties)
     local fightFactory = md:getInstance("FightFactory")
     fightFactory:refreshData(properties.fightData)
     self.fight      = fightFactory:getFight()
-
     self.fight:refreshData(properties.fightData)
     
-   
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
@@ -896,6 +894,10 @@ function FightPlayer:initGuideChange()
             for id, point in pairs(touchEvent.points) do
                 self:checkBtnChange(point)
             end
+            --扫射提示
+            local hero = md:getInstance("Hero")
+            hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, 
+                animName = "saoshe"})             
         end
     })  
 end
@@ -916,7 +918,7 @@ function FightPlayer:initGuideDun()
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
                 self:checkBtnDefence(point)
-            end
+            end           
         end
     }) 
 end

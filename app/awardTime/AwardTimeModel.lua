@@ -17,6 +17,25 @@ function AwardTimeModel:getRemainTime()
 	return self.remainTime
 end
 
+function AwardTimeModel:getContent()
+	if self:isCanAward() then 
+	    local cfg = AwardTimeConfig.getConfig(self.awardIndex)
+	    local moneyNum   = cfg["money"]
+	    return moneyNum .. "g"
+	end
+	local time = self.remainTime
+	local minutes = math.floor(time / 60)
+	if minutes <  10 then 
+		minutes = "0" .. minutes
+	end
+
+	local seconds = time % 60 
+	if seconds < 10 then 
+		seconds = "0" .. seconds
+	end
+	return minutes .. ":" .. seconds	
+end
+
 function AwardTimeModel:refreshTimer()
 	local config = AwardTimeConfig.getConfig(self.awardIndex)
 	local needTime = config["time"]
@@ -28,24 +47,29 @@ function AwardTimeModel:refreshTimer()
 end
 
 function AwardTimeModel:updateTime()
-	self.remainTime = self.remainTime - 1
 	if self.remainTime == 0 then return end
+	self.remainTime = self.remainTime - 1
+end
+
+function AwardTimeModel:isCanAward()
+	return self.remainTime == 0 
 end
 
 function AwardTimeModel:achieveAward()
+	if self:isCanAward() == false then return end
 	--send award
-    local cfg = AwardTimeConfig.getAward(self.awardIndex)
+    local cfg = AwardTimeConfig.getConfig(self.awardIndex)
     local moneyNum   = cfg["money"] or 0
     local diamondNum = cfg["diamond"] or 0
     local user       = md:getInstance("UserModel")
     user:addDiamond(diamondNum)
     user:addMoney(moneyNum)
-    print("function AwardTimeModel:achieveAward()")
+    -- print("function AwardTimeModel:achieveAward()")
 
     --next
-    local num = cfg.getAwardNum()
+    local num = AwardTimeConfig.getAwardNum()
     if num == self.awardIndex then 
-    	self.awardIndex = 0
+    	
 	else
     	self.awardIndex = self.awardIndex + 1 	 
     end

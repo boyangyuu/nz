@@ -101,7 +101,6 @@ function EnemyFactory.createEnemy(property)
 	--爆炸
 	elseif type == "bao_tong" then 
 		enemyView = BaoTongEnemyView.new(property)
-
 	--医疗兵
 	elseif type == "yiliao" then 
 		enemyView = DoctorEnemyView.new(property)	

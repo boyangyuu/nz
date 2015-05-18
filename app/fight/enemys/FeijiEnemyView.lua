@@ -27,10 +27,9 @@ function FeijiEnemyView:ctor(property)
     local lastTime = self.property["lastTime"]
     self:schedule(handler(self, self.playExit), lastTime)
     
-   if self.property["feiji"] then 
+    if self.property["type"] == "feiji" then 
 	    self:setIsFlying(true)
 	end
-
     self:setData()
 end
 

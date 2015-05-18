@@ -132,7 +132,7 @@ function LevelMapLayer:initBgLayer(event)
     self.armature:setPosition(display.width/2,display.height1/2)
     self:addChild(self.armature)
     
-    print("self.curGroupId", self.curGroupId)
+    -- print("self.curGroupId", self.curGroupId)
     if self.curGroupId == 0 then
         self.curGroupId = 1
     end
@@ -150,9 +150,6 @@ function LevelMapLayer:initAwardLayer()
     self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
-    local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
-    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")
-
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
         self.panelgift:setVisible(false)
@@ -208,7 +205,14 @@ function LevelMapLayer:initAwardLayer()
     btnfirstgift:addChild(libaoArmature)
     libaoArmature:getAnimation():play("libao" , -1, 1)
 
+    --限时奖励
+    self:initAwardTime()
+end
+
+function LevelMapLayer:initAwardTime()
     --限时礼包
+    local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
+    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")    
     btnTime:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
@@ -216,8 +220,32 @@ function LevelMapLayer:initAwardLayer()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            --todo
+            self:onClickedBtnAwardTime()
         end)
+
+    --timer
+    local function funcTime()
+        local awardModel = md:getInstance("AwardTimeModel") 
+        local str = awardModel:getContent()   
+        -- print("str", str)
+        labelTime:setString(str)
+    end
+    self:schedule(funcTime, 1.0)
+end
+
+function LevelMapLayer:onClickedBtnAwardTime()
+    local awardModel = md:getInstance("AwardTimeModel")   
+    local isCanAward = awardModel:isCanAward()
+    if isCanAward then 
+        awardModel:achieveAward()
+       ui:showPopup("commonPopup",
+         {type = "style2", content = "领取成功"},
+         { opacity = 0})          
+    else
+       ui:showPopup("commonPopup",
+         {type = "style2", content = "时间未到请稍后！"},
+         { opacity = 0})        
+    end
 end
 
 function LevelMapLayer:initFightActLayer()
