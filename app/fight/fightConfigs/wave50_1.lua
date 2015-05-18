@@ -979,10 +979,10 @@ local enemys = {
 	{id=23,image="daodan02",demage=100,hp=10000, weak1=1},
 
 	--BOSS铁球
-	{id=24,image="tieqiu",demage= 100,hp=15000, weak1=1},
+	{id=24,image="tieqiu",demage= 100,hp=14000, weak1=1},
 
 	--boss扔的汽车
-	{id=25,image="qiche",demage=100,hp=16000,weak1=1},
+	{id=25,image="qiche",demage=100,hp=14000,weak1=1},
 
 	--高级召唤医疗兵      type = "yiliao",
 	{id=26,image="yiliaob",demage=30,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
