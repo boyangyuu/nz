@@ -195,7 +195,7 @@ local bosses = {
 	--出场的boss
 	{
 		image = "boss01_2", --图片名字                         紫炮
-		award = 50000,                   --boss产出金币数量
+		award = 20000,                   --boss产出金币数量
 		hp = 200000,
 		demage = 5,                        --普通攻击伤害
 		fireRate = 30,

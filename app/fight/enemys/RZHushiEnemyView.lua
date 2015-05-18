@@ -83,9 +83,10 @@ end
 function RZHushiEnemyView:playEnter(direct)
 	self.isEntering = true
 	local isLeft = direct == "left" 
-	local animName = "run" .. direct
-	self.armature:getAnimation():play(animName , -1, 1) 
 	self.direct = "right"
+	local animName = "run" .. self.direct
+	self.armature:getAnimation():play(animName , -1, 1) 
+	
 	local toPosx = self:getPositionX()
 	print("toPosx", toPosx)
 

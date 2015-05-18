@@ -120,23 +120,12 @@ local waves = {
 					missileId = 3,
 					missileType = "lei",
 				},
-			},
-			{
-				time = 3,
-				num = 1,
-				delay = {0.5},
-				pos = {230},
-				property = { 
-					placeName = "place5", 
-					startState = "rollright",
-					id = 1,
-				},
 			},						
 			{
-				time = 3.5,
+				time = 3,
 				num = 2,
 				delay = {0, 0.3},
-				pos = {170,330},
+				pos = {170,430},
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",

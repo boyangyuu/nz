@@ -56,7 +56,7 @@ local waves = {
 				},
 			},
 			{
-				time = 7,
+				time = 8,
 				num = 1,
 				delay = {0.5},
 				pos = {880},
@@ -70,7 +70,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,	
+				time = 10,	
 				num = 2,
 				pos = {270,370},
 				delay = {0.2,1},
@@ -80,31 +80,7 @@ local waves = {
 					id = 1,
 				},
 			},
-			{
-				time = 9,	
-				num = 2,
-				pos = {820,660},
-				delay = {0,0.8},
-				property = { 
-					placeName = "place2",
-					startState = "rollleft",
-					id = 6,
-					type = "dao",
-					missileId = 7,
-					missileType = "lei",
-				},
-			},	
-			{
-				time = 10,	
-				num = 3,
-				pos = {250,350,470},
-				delay = {0,0.6,1.2},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 1,
-				},
-			},	                                     	
+	                                     	
 		},                                                              --21个
 	},	
 	{   
@@ -233,6 +209,22 @@ local waves = {
 					missileId = 7,
 					missileType = "lei",
 				},
+			},
+			{
+				time = 10,	                                               --奖励箱子
+				num = 1,
+				pos = {250},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place3",
+				},
 			},	
 			{
 				time = 11,	
@@ -299,6 +291,22 @@ local waves = {
 				},
 			},
 			{
+				time = 11,	                                               --奖励箱子
+				num = 1,
+				pos = {950},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place3",
+				},
+			},
+			{
 				time = 12,
 				num = 4,
 				delay = {0.1,0.7,1.2,1.8},
@@ -309,7 +317,7 @@ local waves = {
 					id = 1,
 				},
 			},
-			{                                                       --黄武触发位置
+			{                                                       
 				time = 13,
 				num = 2,
 				delay = {0.2,0.9},
@@ -444,6 +452,8 @@ local enemys = {
 	{id=11,image="dunbing",demage=6,hp=5544,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
 	weak1=3},		                                                           --scale = 2.0,  近战走到屏幕最近放缩比例
 
+	-- 金武箱子奖励  type = "awardSan",
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 }
 
 
@@ -464,7 +474,7 @@ function waveClass:ctor()
 		-- saveNums  = 4,                 --解救人质数量
 
 		type 	  = "xianShi",
-		limitTime = 60,                   --限时模式时长
+		limitTime = 80,                   --限时模式时长
 
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量

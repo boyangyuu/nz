@@ -254,7 +254,7 @@ local waves = {
 		enemys = {                                                                --boss
 			{
 				descId = "boss01",  --简介
-				time = 3,	
+				time = 2,	
 				num = 1,
 				pos = {500},
 				delay = {4},
@@ -325,7 +325,6 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "boss01", --图片名字
-		-- hp = 150000,
 		award = 10000,                   --boss产出金币数量
 		hp = 60000,
 		demage = 5,                        --普通攻击伤害
@@ -423,6 +422,22 @@ local bosses = {
 					placeName = "place3" ,
 					id = 16,
 					type = "bao",
+				},
+			},
+			{
+				time = 0,	                                               --金武奖励箱子
+				num = 1,
+				pos = {350},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 20,
+					placeName = "place4",
+					--award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					award = "healthBag",                 --医疗包
+					value = 1,
 				},
 			},
 		},

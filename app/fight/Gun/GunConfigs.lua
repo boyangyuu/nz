@@ -12,7 +12,7 @@ configs["huoqilin"] = {
 	    	local gunId = 9
 		    local weaponModel = md:getInstance("WeaponListModel")
 		    local level 	  = weaponModel:getIntenlevel(9) 
-			local demage = 15000 + 1000 * level   --实际伤害5000+2000*等级*3次
+			local demage = 15000 + 1000 * level   --实际伤害(15000+1000*等级)*3次
 			local buffData = {
 				buffAnimName  = "hqljn_mz",
 				value = demage,
@@ -45,7 +45,7 @@ configs["baleite"] = {
 			local enemyM = md:getInstance("EnemyManager")
 			enemyM:doBuff("doBuffAll_pause", buffData)
 	    end,
-		cd       = 10.0,		
+		cd       = 30.0,		
 	},	
 }
 

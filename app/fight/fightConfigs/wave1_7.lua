@@ -84,6 +84,22 @@ local waves = {
 					id = 9,	
 				},
 			},
+			{
+				time = 14,	                                               --金武奖励箱子
+				num = 1,
+				pos = {250},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place3",
+				},
+			},
 		},
 	},
 
@@ -153,7 +169,11 @@ local waves = {
 				property = { 
 					type = "awardSan",
 					id = 19,
-					award = "goldWeapon",
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 1,
 					placeName = "place2",
 				},
 			},
@@ -360,6 +380,22 @@ local bosses = {
 					id = 17,
 					type = "renzhe",
 					missileId = 18,
+				},
+			},
+			{
+				time = 2,	                                               --金武奖励箱子
+				num = 1,
+				pos = {730},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					--award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place3",
 				},
 			},
 		},	

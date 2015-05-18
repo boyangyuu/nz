@@ -12,41 +12,41 @@ scoreAward = {
 }
 
 fightAward = {
-	{{healthBag = 2},{lei = 3},{money = 65199}}, --第一关奖励
-	{{healthBag = 2},{lei = 3},{money = 65199}},--2
-	{{healthBag = 2},{lei = 3},{money = 65199}},--3
-	{{healthBag = 2},{lei = 3},{money = 65199}},--4
-	{{healthBag = 2},{lei = 3},{money = 65199}},--5
-	{{healthBag = 2},{lei = 3},{money = 65199}},--6
-	{{healthBag = 2},{lei = 3},{money = 65199}},--7
-	{{healthBag = 2},{lei = 3},{money = 65199}},--8
-	{{healthBag = 2},{lei = 3},{money = 65199}},--9
-	{{healthBag = 2},{lei = 3},{money = 65199}},--10
-	{{healthBag = 2},{lei = 3},{money = 65199}},--11
-	{{healthBag = 2},{lei = 3},{money = 65199}},--12
-	{{healthBag = 2},{lei = 3},{money = 65199}},--13
-	{{healthBag = 2},{lei = 3},{money = 65199}},--14
-	{{healthBag = 2},{lei = 3},{money = 65199}},--15
-	{{healthBag = 2},{lei = 3},{money = 65199}},--16
-	{{healthBag = 2},{lei = 3},{money = 65199}},--17
-	{{healthBag = 2},{lei = 3},{money = 65199}},--18
-	{{healthBag = 2},{lei = 3},{money = 65199}},--19
-	{{healthBag = 2},{lei = 3},{money = 65199}},--20
-	{{healthBag = 2},{lei = 3},{money = 65199}},--21
-	{{healthBag = 2},{lei = 3},{money = 65199}},--22
-	{{healthBag = 2},{lei = 3},{money = 65199}},--23
-	{{healthBag = 2},{lei = 3},{money = 65199}},--24
-	{{healthBag = 2},{lei = 3},{money = 65199}},--25
-	{{healthBag = 2},{lei = 3},{money = 65199}},--26
-	{{healthBag = 2},{lei = 3},{money = 65199}},--27
-	{{healthBag = 2},{lei = 3},{money = 65199}},--28
-	{{healthBag = 2},{lei = 3},{money = 65199}},--29
-	{{healthBag = 2},{lei = 3},{money = 65199}},--30
-	{{healthBag = 2},{lei = 3},{money = 65199}},--31
-	{{healthBag = 2},{lei = 3},{money = 65199}},--32
-	{{healthBag = 2},{lei = 3},{money = 65199}},--33
-	{{healthBag = 2},{lei = 3},{money = 65199}},--34
-	{{healthBag = 2},{lei = 3},{money = 65199}},--35
+	{{money = 500}}, --第一关奖励
+	{{lei = 2},{money = 500}},--2
+	{{lei = 2},{money = 1000}},--3
+	{{lei = 2},{money = 1000}},--4
+	{{lei = 2},{money = 1500}},--5
+	{{lei = 2},{money = 1500}},--6
+	{{healthBag = 2},{lei = 5},{money = 5000}},--7坎boss
+	{{lei = 3},{money = 2000}},--8
+	{{lei = 3},{money = 2000}},--9
+	{{lei = 3},{money = 2000}},--10
+	{{lei = 3},{money = 2000}},--11坎
+	{{lei = 3},{money = 2000}},--12
+	{{lei = 3},{money = 2000}},--13
+	{{healthBag = 3},{lei = 5},{money = 5000}},--14坎boss
+	{{healthBag = 2},{lei = 3},{money = 2000}},--15坎
+	{{healthBag = 2},{lei = 3},{money = 2000}},--16
+	{{healthBag = 2},{lei = 3},{money = 2000}},--17
+	{{healthBag = 2},{lei = 3},{money = 2000}},--18
+	{{healthBag = 2},{lei = 3},{money = 2000}},--19
+	{{healthBag = 2},{lei = 3},{money = 2000}},--20
+	{{healthBag = 2},{lei = 3},{money = 5000}},--21坎boss
+	{{healthBag = 2},{lei = 3},{money = 2000}},--22
+	{{healthBag = 2},{lei = 3},{money = 2000}},--23
+	{{healthBag = 2},{lei = 3},{money = 2000}},--24
+	{{healthBag = 2},{lei = 3},{money = 2000}},--25坎
+	{{healthBag = 2},{lei = 3},{money = 2000}},--26
+	{{healthBag = 2},{lei = 3},{money = 2000}},--27
+	{{healthBag = 2},{lei = 3},{money = 5000}},--28坎boss
+	{{healthBag = 2},{lei = 3},{money = 2000}},--29
+	{{healthBag = 2},{lei = 3},{money = 2000}},--30
+	{{healthBag = 2},{lei = 3},{money = 2000}},--31
+	{{healthBag = 2},{lei = 3},{money = 2000}},--32
+	{{healthBag = 2},{lei = 3},{money = 2000}},--33
+	{{healthBag = 2},{lei = 3},{money = 2000}},--34
+	{{healthBag = 2},{lei = 3},{money = 2000}},--35
 }
 
 function JujiModeConfigs.getFightAward(levelIndex)
