@@ -233,7 +233,7 @@ end
 function LevelDetailLayer:onClickBtnStart()
 	local data = getUserData()
 	local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 3
+    local isDone = userModel:getUserLevel() >= 4
 	if table.nums(data.inlay.inlayed) ~= 0 then
 		self:startGame()
 	elseif isDone and table.nums(data.inlay.inlayed) == 0 then

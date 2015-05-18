@@ -139,6 +139,8 @@ function FightResultLayer:initUI()
 
     labelMoney = cc.uiloader:seekNodeByName(self, "labelMoney")
     labelDiamond = cc.uiloader:seekNodeByName(self, "labelDiamond")
+    labelMoney:setColor(cc.c3b(255, 205, 0))
+    labelDiamond:setColor(cc.c3b(255, 205, 0))
     labelMoney:enableOutline(cc.c4b(0, 0, 0,255), 2)
     labelDiamond:enableOutline(cc.c4b(0, 0, 0,255), 2)
     labelMoney:setString("本关战斗获得"..self.fightData["goldNum"].."金币")
@@ -149,6 +151,7 @@ function FightResultLayer:initUI()
     	local record = self.levelDetailModel:getConfig(gId,lId)
 		labelDiamond:setString("首次战斗获得"..record["giftDiamond"].."宝石")
 		self.userModel:addDiamond(record["giftDiamond"])
+		-- if record["giftDiamond"] == 0 then labelDiamond:setVisible(false) end
 	end
 
 	function showButton()
