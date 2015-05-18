@@ -51,17 +51,17 @@ local configs = {
 	stone120         = {
 			showType = "iap",
 			price = 10,
-			name = "钻石120个",
+			name = "宝石120个",
 	},
 	stone260         = {
 			showType = "iap",
 			price = 20,
-			name = "钻石260个",
+			name = "宝石260个",
 	},
 	stone450         = {
 			showType = "prop_rmb",
 			price = 30,
-			name = "钻石450个",
+			name = "宝石450个",
 	},
 	-- hpBag         = {
 	-- 		showType = "prop_stone",

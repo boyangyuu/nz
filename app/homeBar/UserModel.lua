@@ -50,11 +50,11 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 		if isBuy then 
 			print("宝石不足请购买！")
 			--
-			ui:showPopup("StoneLessPopup", {}, {animName = "fade"})
+			ui:showPopup("StoneLessPopup", {}, {animName = "normal"})
 			local function delayCall( )
 				self.buyModel:showBuy("stone450", {}, strPos)
 			end
-			scheduler.performWithDelayGlobal(delayCall, 1.0)
+			scheduler.performWithDelayGlobal(delayCall, 0.5)
 			
 		end
 		return false

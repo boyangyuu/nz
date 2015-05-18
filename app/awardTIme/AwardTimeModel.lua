@@ -5,7 +5,6 @@ local AwardTimeModel = class("AwardTimeModel", cc.mvc.ModelBase)
 function AwardTimeModel:ctor(property)
 	self.remainTime = nil
 	self.awardIndex = 1
-	self.isAwardedAll = false
 	self:refreshTimer()
 end
 
@@ -19,12 +18,10 @@ function AwardTimeModel:getRemainTime()
 end
 
 function AwardTimeModel:getContent()
-	if self.isAwardedAll then 
-		return "已全部领取"
-	elseif self:isCanAward() then 
+	if self:isCanAward() then 
 	    local cfg = AwardTimeConfig.getConfig(self.awardIndex)
 	    local moneyNum   = cfg["money"]
-	    return moneyNum .. "金币"
+	    return moneyNum .. "g"
 	end
 	local time = self.remainTime
 	local minutes = math.floor(time / 60)
@@ -55,7 +52,7 @@ function AwardTimeModel:updateTime()
 end
 
 function AwardTimeModel:isCanAward()
-	return not self.isAwardedAll and self.remainTime == 0 
+	return self.remainTime == 0 
 end
 
 function AwardTimeModel:achieveAward()
@@ -67,12 +64,12 @@ function AwardTimeModel:achieveAward()
     local user       = md:getInstance("UserModel")
     user:addDiamond(diamondNum)
     user:addMoney(moneyNum)
-    print("function AwardTimeModel:achieveAward()")
+    -- print("function AwardTimeModel:achieveAward()")
 
     --next
     local num = AwardTimeConfig.getAwardNum()
     if num == self.awardIndex then 
-    	self.isAwardedAll = true
+    	
 	else
     	self.awardIndex = self.awardIndex + 1 	 
     end

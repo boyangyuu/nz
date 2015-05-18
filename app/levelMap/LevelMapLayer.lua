@@ -132,7 +132,7 @@ function LevelMapLayer:initBgLayer(event)
     self.armature:setPosition(display.width/2,display.height1/2)
     self:addChild(self.armature)
     
-    print("self.curGroupId", self.curGroupId)
+    -- print("self.curGroupId", self.curGroupId)
     if self.curGroupId == 0 then
         self.curGroupId = 1
     end
@@ -227,7 +227,7 @@ function LevelMapLayer:initAwardTime()
     local function funcTime()
         local awardModel = md:getInstance("AwardTimeModel") 
         local str = awardModel:getContent()   
-        print("str", str)
+        -- print("str", str)
         labelTime:setString(str)
     end
     self:schedule(funcTime, 1.0)
