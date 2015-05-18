@@ -50,7 +50,7 @@ function GunView:fire()
 		self.qkzd:getAnimation():play("qkzd" , -1, 0)
 	end
 
-	-- self:addDanke()
+	self:addDanke()
 
 	self.armature:getAnimation():play("fire" , -1, 1)	
 

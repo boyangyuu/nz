@@ -4,6 +4,7 @@ local UserModel = class("UserModel", cc.mvc.ModelBase)
 function UserModel:ctor(properties)
 	UserModel.super.ctor(self, properties)
 	self.LevelMapModel = md:getInstance("LevelMapModel")
+	self.buyModel      = md:getInstance("BuyModel")
 	self:addComponent("components.behavior.EventProtocol"):exportMethods()
 end
 
@@ -35,7 +36,9 @@ end
 	end
 end
 
-function UserModel:costDiamond(diamond)
+function UserModel:costDiamond(diamond, isBuy, strPos)
+	isBuy = isBuy or false
+	strPos = strPos or "宝石不足"
 	local data = getUserData()
 	if data.diamond >= diamond then
 		data.diamond = data.diamond - diamond 
@@ -43,6 +46,10 @@ function UserModel:costDiamond(diamond)
 		self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 		return true
 	else
+		if isBuy then 
+			print("宝石不足请购买！")
+			self.buyModel:showBuy("stone450", {}, strPos)
+		end
 		return false
 	end
 end

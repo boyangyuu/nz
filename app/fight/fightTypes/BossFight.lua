@@ -61,7 +61,7 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
 
 	--addHp 
 	self.hero:costHpBag()
-	
+
 	--award
 	local curWaveIndex = nextWaveIndex - 1
 	local bossModeModel = md:getInstance("BossModeModel")
@@ -84,7 +84,6 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
     	isAwardBujian= isNewProgress,
 	}
 	-- dump(eventData, "eventData")
- --    fightDescModel:dispatchEvent(eventData)
     ui:showPopup("BossResultLayer",eventData,{animName = "normal"})
     self:pauseFight(true)
 end
