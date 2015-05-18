@@ -231,7 +231,7 @@ function LevelMapLayer:initFightActLayer()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            ui:showPopup("JujiModeLayer")
+            ui:showPopup("JujiModeLayer", {}, {animName = "leftScale"})
         end)
 
     --boss
@@ -245,7 +245,7 @@ function LevelMapLayer:initFightActLayer()
         :onButtonClicked(function( event )
             local bossModeModel = md:getInstance("BossModeModel")
             local chapterIndex = bossModeModel:getAlreadyChapter()
-            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex})
+            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex}, {animName = "leftScale"})
         end)
 end
 
