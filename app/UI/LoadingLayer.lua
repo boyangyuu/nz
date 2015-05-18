@@ -42,9 +42,10 @@ function LoadingLayer:initUI()
 
     self.loadpercent:enableOutline(cc.c3b( 0, 0, 0), 2)
 
-    self.img1 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_di02.png")
-    self.img2 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_wai.png")
-    self.img3 = cc.ui.UIImage.new("res/Loading/loading_yuan/loadingz_zhong.png")
+    cc.FileUtils:getInstance():addSearchPath("res/Loading/loading_yuan")
+    self.img1 = cc.ui.UIImage.new("loadingz_di02.png")
+    self.img2 = cc.ui.UIImage.new("loadingz_wai.png")
+    self.img3 = cc.ui.UIImage.new("loadingz_zhong.png")
     addChildCenter(self.img1,quan)
     addChildCenter(self.img2,quan)
     addChildCenter(self.img3,quan)

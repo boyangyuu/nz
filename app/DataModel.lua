@@ -25,8 +25,28 @@ function DataModel:setNewData()
     -- data.user = {level = 1, 
     -- fightedGroupId = 0, 
     -- fightedlevelId = 0}
+    
+    --hpBag
+    data.prop = {
+            hpBag = {num = 1},
+        }
 
-    data.weapons.awardedIds = {}
+    --bossMode
+    data.bossMode = {chapterIndex = 1, 
+            waveIndex = 0,}
+
+    --jujiMode
+    data.jujiMode = {
+            waveIndex = 40, 
+            scoreAwarded = {},
+        }
+    
+    --user
+    data.user = {
+            fightedLevels = {},
+            userName  = "玩家自己",
+            vipLevel  = 0,
+        }
 
     --引导
     local guideModel = md:getInstance("Guide")

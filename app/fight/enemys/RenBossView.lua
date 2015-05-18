@@ -255,6 +255,8 @@ function RenBossView:animationEvent(armatureBack,movementType,movementID)
             return
         end
 
+        if self.isShaning then return end
+
         if movementID == "stand" then 
             self:doNextPlay()
         else 

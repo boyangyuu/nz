@@ -87,6 +87,7 @@ function UserModel:setUserLevel(level)
 	end
 	
 	--save
+	if data.user.level == level then return end
 	data.user.level = level
 	setUserData(data)
 

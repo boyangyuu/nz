@@ -45,7 +45,7 @@ function LevelMapLayer:initData()
         self.curGroupId = groupId
     elseif self.fightData.fightType == "jujiFight" then
         self.curGroupId = groupId
-    elseif groupId == 0 and levelId == 0 and fightType == "levelFight" then
+    elseif self.fightData.groupId == 0 and self.fightData.levelId == 0 then
         self.curGroupId = 1
     else
         self.curGroupId = self.fightData.groupId
@@ -249,22 +249,61 @@ function LevelMapLayer:onClickedBtnAwardTime()
 end
 
 function LevelMapLayer:initFightActLayer()
+    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
     --无限狙击
     local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
-
-    btnjuji:onButtonPressed(function( event )
+    
+    local userModel = md:getInstance("UserModel")
+    local isOpenJuji = userModel:getUserLevel() >= 5
+    if not isOpenJuji then
+        btnjuji:setButtonImage(btnjuji.NORMAL, "btn_wuxianjuji1.png")
+        btnjuji:setButtonImage(btnjuji.PRESSED, "btn_wuxianjuji1.png")
+        btnjuji:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
         :onButtonRelease(function( event )
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            ui:showPopup("JujiModeLayer")
+            ui:showPopup("commonPopup",
+                     {type = "style2", content = "通过狙击关卡后开启！"},
+                     {opacity = 0})
         end)
+    else
+        btnjuji:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("JujiModeLayer", {}, {animName = "leftScale"})
+        end)
+    end  
+
 
     --boss
     local btnboss = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnboss")
-    btnboss:onButtonPressed(function( event )
+    
+    local userModel = md:getInstance("UserModel")
+    local isOpenBoss = userModel:getUserLevel() >= 7
+    if not isOpenBoss then
+        btnboss:setButtonImage(btnboss.NORMAL, "btn_wuxianboss1.png")
+        btnboss:setButtonImage(btnboss.PRESSED, "btn_wuxianboss1.png")
+
+        btnboss:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("commonPopup",
+                     {type = "style2", content = "通关第一章后开启！"},
+                     {opacity = 0})
+        end)
+    else
+        btnboss:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
         :onButtonRelease(function( event )
@@ -273,8 +312,9 @@ function LevelMapLayer:initFightActLayer()
         :onButtonClicked(function( event )
             local bossModeModel = md:getInstance("BossModeModel")
             local chapterIndex = bossModeModel:getAlreadyChapter()
-            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex})
+            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex}, {animName = "leftScale"})
         end)
+    end
 end
 
 function LevelMapLayer:initKefuLayer()

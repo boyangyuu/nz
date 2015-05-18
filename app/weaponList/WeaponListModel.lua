@@ -131,6 +131,26 @@ function WeaponListModel:onceFull(weaponId)
 		lastLevel = lastLevel, weaponId = weaponId})
 end
 
+function WeaponListModel:halfFull(weaponId)
+	local data = getUserData()
+	local lastLevel
+	for k,v in pairs(data.weapons.bags) do
+		if v.weaponid == weaponId then
+			if data.weapons.bags[k].intenlevel < 5 then
+				lastLevel = data.weapons.bags[k].intenlevel
+				data.weapons.bags[k].intenlevel = 5
+				setUserData(data)
+			else
+		    	print("已5级")
+		    	lastLevel = 5
+			end
+		end
+	end
+	self:refreshData()
+	self:dispatchEvent({name = WeaponListModel.WEAPON_STAR_FULL_EVENT, 
+		lastLevel = lastLevel, weaponId = weaponId})
+end
+
 --isWeInBag
 function WeaponListModel:isWeaponExist(weaponid)
 	local data = getUserData()

@@ -40,9 +40,20 @@ function PopupRootLayer:showPopup(event)
 
 	elseif animName == "shake" then
 		layer:scale(0.8)
-		local act1 = cc.ScaleTo:create(0.1, 1.1)
-		local act2 = cc.ScaleTo:create(0.1, 0.8)
-		local act3 = cc.ScaleTo:create(0.1, 1)
+		local act1 = cc.ScaleTo:create(0.04, 1.2)
+		local act2 = cc.ScaleTo:create(0.05, 0.9)
+		local act3 = cc.ScaleTo:create(0.07, 1.05)
+		local act4 = cc.ScaleTo:create(0.08, 0.95)
+		local act5 = cc.ScaleTo:create(0.09, 1.0)
+		-- local act6 = cc.ScaleTo:create(0.1, 1.0)
+
+
+		layer:runAction(cc.Sequence:create(act1,act2,act3,act4,act5))
+	elseif animName == "leftScale" then
+		layer:setAnchorPoint(0.0, 0.0)
+		layer:scale(0.5)
+		local act1 = cc.ScaleTo:create(0.18, 1.1)
+		local act2 = cc.ScaleTo:create(0.15, 1.0)
 		layer:runAction(cc.Sequence:create(act1,act2, act3))
 	elseif animName == "fade" then
 		local seq = transition.sequence({
