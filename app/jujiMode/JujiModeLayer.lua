@@ -19,6 +19,10 @@ function JujiModeLayer:onEnter()
 	self:performWithDelay(handler(self,self.setUserName),0.5)
 end
 
+-- ui:showPopup("commonPopup",
+--                  {type = "style6",callfuncCofirm = handler(self,self.checkActivateCode)},
+--                  {opacity = 0})
+
 function JujiModeLayer:setUserName()
 	local user = md:getInstance("UserModel")
 	if  user:getUserName() == "玩家自己" then
