@@ -114,10 +114,10 @@ end
 
 function Fight:startFight()
     self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-    if not self.fightData["isContinue"] then 
-        print("function Fight:startFight()")
+    -- if not self.fightData["isContinue"] then 
+        -- print("function Fight:startFight()")/
         self.inlay:checkNativeGold()    
-    end
+    -- end
 
     --check guide
     local guide = md:getInstance("Guide")

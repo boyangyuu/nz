@@ -70,7 +70,7 @@ end
 end
 
  function UserModel:addMoney(money)
- 	if money <= 0 then return end
+ 	if money == nil or money <= 0 then return end
 	local data = getUserData()
 	data.money = data.money + money
 	setUserData(data)

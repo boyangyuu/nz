@@ -25,8 +25,8 @@ function JujiModeLayer:onEnter()
 end
 
 
+
 function JujiModeLayer:setUserName()
-	
 	if  self.user:getUserName() == "玩家自己" then
 		ui:showPopup("InputBoxPopup",{opacity = 0})
 	end

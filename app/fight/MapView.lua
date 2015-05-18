@@ -579,14 +579,17 @@ end
 
 --返回rect里包含enemy的点位置的enemys
 function MapView:getEnemysInRect(rect)
-	-- dump(rect, "rect") 
+
+    local map = md:getInstance("Map")
+    local mapScale = map:getIsOpenJu() and define.kJuRange or 1.0
+
 	local enemys = {}
 	local allEnemys = self.enemyM:getAllEnemys()
 	for i,enemy in ipairs(allEnemys) do
 		if enemy then
 			local armature = enemy:getEnemyArmature()
 			local box = armature:getBoundingBox()
-			local scale = enemy:getScale()
+			local scale = enemy:getScale() * mapScale
 			local pos = armature:convertToWorldSpace(cc.p(0,0))
 			pos = cc.p(pos.x - box.width/2 * scale, pos.y)  --pos 为左下角
 			local enemyRect = cc.rect(pos.x, pos.y, 
@@ -701,13 +704,6 @@ end
 function MapView:enemysHittedInRange(event)
 	-- target
 	assert(event.destRect, "event destRect is nil")
-	
-	--scale
-    local map = md:getInstance("Map")
-    local scale = map:getIsOpenJu() and define.kJuRange or 1.0
-    event.destRect.width  = event.destRect.width * scale
-    event.destRect.height = event.destRect.height * scale	
-	
     --enemys
 	local enemys = self:getEnemysInRect(event.destRect)
 	for i,enemy in ipairs(enemys) do
@@ -738,8 +734,8 @@ function MapView:onThrowGrenade(event)
 	local focusWorld = event.focusWorld
 	local destPos = self.mapAnim:convertToNodeSpace(cc.p(focusWorld.x, focusWorld.y))
 
-	local destRect = cc.rect(destPos.x - define.kLeiRangeW/2, 
-							 destPos.y - define.kLeiRangeH/2,
+	local destRect = cc.rect(focusWorld.x - define.kLeiRangeW/2, 
+							 focusWorld.y - define.kLeiRangeH/2,
 							 define.kLeiRangeW,define.kLeiRangeH)
 	--lei
 	local function playBombEffect()
