@@ -846,7 +846,7 @@ local waves = {
 					placeName = "place1",
 					wangId    = 27,     --网ID
 					missileId = 23,     --大黑导弹
-					missileOffsets = {cc.p(-150,-150) , cc.p(0, 150) , cc.p(150, -150)},
+					missileOffsets = {cc.p(-150,-150) ,  },
 					id = 10,
 				},
 			},
@@ -862,7 +862,7 @@ local waves = {
 		},
 		enemys = {                                                             
 			{
-				descId = "renzb", --简介
+				descId = "renzb_01", --简介
 				time = 2,	
 				num = 1,
 				pos = {550},
@@ -881,7 +881,6 @@ local waves = {
 	{
 		enemys = {                                                                
 			{
-				descId = "boss02_1",--简介
 				time = 2,	
 				num = 1,
 				pos = {500},
@@ -901,7 +900,6 @@ local waves = {
 	{
 		enemys = {                                                                
 			{
-				descId = "boss01_2", --简介
 				time = 2,	
 				num = 1,
 				pos = {500},
@@ -919,7 +917,6 @@ local waves = {
 	{	
 		enemys = {                                                               
 			{
-				descId = "dzboss", --简介
 				time = 2,	
 				num = 1,
 				pos = {500},
@@ -951,7 +948,7 @@ local enemys = {
 	weak1=2, weak4=4},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=10000,fireRate=30,speed=100,scale = 1.7,
+	{id=9,image="zibaob",demage=50,hp=10000,fireRate=30,speed=100,scale = 1.8,
 	weak1=2},
 
 	--越野车       type = "jipu" ,
@@ -985,17 +982,17 @@ local enemys = {
 	{id=24,image="tieqiu",demage= 100,hp=15000, weak1=1},
 
 	--boss扔的汽车
-	{id=25,image="qiche",demage=100,hp=18000,weak1=1},
+	{id=25,image="qiche",demage=100,hp=16000,weak1=1},
 
 	--高级召唤医疗兵      type = "yiliao",
-	{id=26,image="yiliaob",demage=28,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=26,image="yiliaob",demage=30,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--蜘蛛网
 	{id=27,image="zzw",demage=15,hp=20000},
 
 	--小蜘蛛   --type = "bao",
-	{id=28,image="xiaozz",demage=25,hp=5000, speed=120, weak1=1},
+	{id=28,image="xiaozz",demage=25,hp=3000, speed=75, weak1=1},
 
 	--绑匪                                     140--左右移动距离       280--滚动距离
 	{id=29,image="tufeib",demage=35,hp=20000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=2},
@@ -1156,7 +1153,7 @@ local bosses = {
 --------------------------------------------------------------------------------------------------第1个出场的boss 盾牌	id = 1
 	{
 		image = "boss01_1", --图片名字
-		award = 10000,                   --boss产出金币数量
+		award = 1000,                   --boss产出金币数量
 		hp = 100000,
 		demage = 5,
 		fireRate = 60,                  --0就不普通攻击了
@@ -1221,10 +1218,10 @@ local bosses = {
 			timeOffset = 0.1,                        --导弹间隔时间 
             flyTime = 6.0,                           --导弹飞到脸前的时间 
             srcPoses = {
-						cc.p(-150, 0), cc.p(-75, -150), cc.p(0, 0), cc.p(75,-150), cc.p(150, 0),
+						cc.p(-150, 0), cc.p(-75, -150), cc.p(75,-150), cc.p(150, 0),
 			}, 
 			offsetPoses = { 
-						cc.p(-200, 0), cc.p(-120, -200), cc.p(0, 0), cc.p(120,-200), cc.p(200, 0),
+						cc.p(-200, 0), cc.p(-120, -200), cc.p(120,-200), cc.p(200, 0),
 			},
 		},
 
@@ -1289,7 +1286,7 @@ local bosses = {
 --------------------------------------------------------------------------------------------------第2个出场的boss 红枪  id = 2
 	{
 		image = "boss01_2", --图片名字                         紫炮
-		award = 10000,                   --boss产出金币数量
+		award = 1000,                   --boss产出金币数量
 		hp = 100000,
 		demage = 5,                        --普通攻击伤害
 		fireRate = 60,
@@ -1744,7 +1741,7 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------第3个出场的boss 紫炮	id = 3
 	{
 		image = "boss02", --图片名字
-		award = 20000,                   --boss产出金币数量
+		award = 2000,                   --boss产出金币数量
 		hp = 200000,
 		demage = 3, 		         	--这个是没用的
 		fireRate = 120,               --普攻频率
@@ -1813,7 +1810,7 @@ local bosses = {
 	},
 --------------------------------------------------------------------------------------------------第4个出场的boss 冲锋蓝 id = 4
 	{
-		award = 20000,         ----boss产出金币数量
+		award = 2000,         ----boss产出金币数量
 		image = "boss02_1",                              --CF肌肉boss
 		hp = 150000,
 		demage = 3, 			--这个是没用的
@@ -2005,7 +2002,7 @@ local bosses = {
 	},
 ---------------------------------------------------------------------------------------------------第5个出场的boss CF肌肉 id = 5
 	{
-		award = 20000,         ----boss产出金币数量
+		award = 2000,         ----boss产出金币数量
 		image = "boss02_2",    --蓝boss变色黄boss
 		hp = 200000,
 		demage = 3, 			--这个是没用的
@@ -2084,7 +2081,7 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------第6个出场的boss 冲锋黄 id = 6
 	{
 		image = "nvrenzb",                       --图片名字                            红衣女忍者
-		award = 20000,                   --boss产出金币数量
+		award = 2000,                   --boss产出金币数量
 		hp = 250000,
 		fireRate = 120,               --普攻频率
 		fireCd = 4,                     --普攻cd
@@ -2322,7 +2319,7 @@ local bosses = {
 	},
 ---------------------------------------------------------------------------------------------------第7个出场的boss 女忍者  id = 7
 	{
-		award = 20000,
+		award = 2000,
 		image = "renzb",                       --图片名字                                  鬼眼
 		hp = 250000,
 		fireRate = 60,               --普攻频率
@@ -2519,29 +2516,29 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------第8个出场的boss 鬼眼   id = 8
 	{
 		image = "dzboss", --图片名字                                                             多足boss巨炮泰坦
-		award = 20000,                   --boss产出金币数量
+		award = 2000,                   --boss产出金币数量
 		hp = 300000,
 		fireRate = 180,                  --普攻频率
-		fireCd = 5,                     --普攻cd
+		fireCd = 6,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
 		weak1 = 1.1,						--头 弱点伤害倍数
 		weak2 = 1.1,					--左腿 弱点伤害倍数
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
-		wudiTime = 5.0,					--无敌时间
+		wudiTime = 3.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
 
 			-- wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15        --网
 			-- },
-			wudi = { 0.90, 0.70, 0.50, 0.30, 0.10,
+			wudi = { 0.89, 0.69, 0.49, 0.29, 0.09,
 			}, 
 
-			zhaohuan = { 0.91, 0.71, 0.51, 0.31, 0.11,                  --召唤小兵
+			zhaohuan = { 0.90, 0.70, 0.50, 0.30, 0.10,                  --召唤小兵
 			},   
 
 			daoDan1 = {                                                   --大黑导弹
-				0.95, 0.80, 0.60, 0.40, 0.20, 
+				0.99, 0.80, 0.60, 0.40, 0.20, 
 			},
 
 
@@ -2555,7 +2552,7 @@ local bosses = {
 				0.90,
 			},
 			demage300 = {
-				0.60,
+				0.70,
 			},
 			demage400 = {
 				0.40,
@@ -2568,7 +2565,7 @@ local bosses = {
 			type = "missile",  
 			timeOffset = 2.5,                        --导弹间隔时间                 
 			offsetPoses = {                           --目标偏移点
-            	cc.p( -150, -50),cc.p( 150, 50),
+            	cc.p( -250, -200),cc.p( 200, -250), cc.p( 200, 200),
         	},
         },
 
@@ -2578,7 +2575,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -2591,12 +2588,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -2608,18 +2605,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
-					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
+					id = 9,	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -2634,7 +2630,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -2647,12 +2643,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -2664,18 +2660,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -2690,7 +2685,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -2703,12 +2698,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -2720,18 +2715,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -2746,7 +2740,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -2759,12 +2753,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -2776,18 +2770,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -2802,7 +2795,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -2815,12 +2808,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -2832,18 +2825,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -2856,29 +2848,29 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------第9个出场的boss 多足   id = 9
 	{
 		image = "dzboss_1", --图片名字                                                             --毒刺boss
-		award = 60000,                   --boss产出金币数量
-		hp = 200000,
-		fireRate = 120,                  --普攻频率
-		fireCd = 5,                     --普攻cd
+		award = 2000,                   --boss产出金币数量
+		hp = 300000,
+		fireRate = 6,                  --普攻频率
+		fireCd = 10,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
 		weak1 = 1.1,						--头 弱点伤害倍数
 		weak2 = 1.1,					--左腿 弱点伤害倍数
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
-		wudiTime = 5.0,					--无敌时间
+		wudiTime = 4.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
 			-- wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15                    --网
 			-- },
 
-			wudi = { 0.90, 0.70, 0.50, 0.30, 0.10,
+			wudi = { 0.89, 0.69, 0.49, 0.29, 0.09,
 			}, 
 
-			zhaohuan = { 0.91, 0.71, 0.51, 0.31,                   --召唤小兵
+			zhaohuan = { 0.90, 0.70, 0.50, 0.30, 0.10,                   --召唤小兵
 			},   
 
 			daoDan1 = {                                            --3发烟雾导弹
-				0.99, 0.80, 0.60, 0.40, 0.20, 0.05,
+				0.95, 0.80, 0.60, 0.40, 0.20,
 			},
 
 
@@ -2889,13 +2881,13 @@ local bosses = {
 			},
 			weak1 = { 0.90,0.50,0.30,                             --头 技能触发(可以同时)	                        
 			},
-			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},
-			demage200 = {
-				0.60,
-			},
 			demage300 = {
+				0.70,
+			},
+			demage400 = {
 				0.40,
 			},			
 		},
@@ -2903,14 +2895,42 @@ local bosses = {
 		daoDan1 = {
 		    id = 22,                                  --烟雾
 			type = "dao_wu",  
-			timeOffset = 2.0,                        --导弹间隔时间                 
+			timeOffset = 3.0,                        --导弹间隔时间                 
 			offsetPoses = {                  --目标点
-            	cc.p(150, 150), cc.p(170, -190), cc.p(-150, -50),
+            	cc.p(250, 150), cc.p(170, -200), cc.p(-250, -100),
         	},
         },
 
 
-		enemys1 = {                                                   --第1波召唤蜘蛛兵
+		enemys1 = { 
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {300,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			}, 
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {1050,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			},                                                 --第1波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -2926,32 +2946,73 @@ local bosses = {
 		enemys2 = {                                                   --第2波召唤蜘蛛兵
 			{
 				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {300,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			}, 
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {1050,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
 				num = 20,
 				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
 				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
 				property = { 
 					placeName = "place3" ,
 					type = "bao",      --爆
-					id = 28,
-					demageScale = 2 ,                   --伤害翻1.5倍	
+					id = 28,	
 				},
 			},
 	    },	
 		enemys3 = {                                                   --第3波召唤蜘蛛兵
 			{
 				time = 0,
-				num = 20,
-				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
-				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
+				num = 1,
+				delay = {0,},
+				pos = {300,},
 				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 28,
-					demageScale = 3  ,                  --伤害翻2倍	
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			}, 
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {1050,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
 				},
 			},
-		},
-		enemys4 = {                                                   --第4波召唤蜘蛛兵
 			{
 				time = 0,
 				num = 20,
@@ -2961,18 +3022,97 @@ local bosses = {
 					placeName = "place3" ,
 					type = "bao",      --爆
 					id = 28,
-					demageScale = 3  ,                  --伤害翻2倍	
 				},
 			},
 		},
-
+		enemys4 = {                                                   --第4波召唤蜘蛛兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {300,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			}, 
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {1050,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",      --爆
+					id = 28,	
+				},
+			},
+		},
+		enemys5 = {                                                   --第5波召唤蜘蛛兵
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {300,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterleft",       --从左面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			}, 
+			{
+				time = 0,
+				num = 1,
+				delay = {0,},
+				pos = {1050,},
+				property = { 
+					placeName = "place5" ,
+					type = "yiliao",                                              --医疗兵
+					startState = "enterright",       --从右面跑出来
+					skillCd = 5.0,                  --回血cd
+					skillValue = 0.1,               --回血百分比
+					id = 26,
+				},
+			},
+			{
+				time = 0,
+				num = 20,
+				delay = {0.1,0.2,0.3,0.4,0.5,0.1,0.2,0.3,0.4,0.5,0.4,0.3,0.2,0.1,0.5,0.9,1.5,2.0,2.5,3.0},
+				pos = {300,400,450,550,600,750,850,950,1000,1100,300,400,500,600,700,800,900,1000,1100,950},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",      --爆
+					id = 28,	
+				},
+			},
+		},
 	},
 ---------------------------------------------------------------------------------------------------第10个出场的boss 毒刺  id = 10
 	{
-		award = 100000,
+		award = 2000,
 		image = "renzb_01",                       --图片名字                                  魔化鬼眼
-		--hp = 100000,
-		hp = 250000,
+		hp = 300000,
 		fireRate = 60,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --扔飞镖,按飞镖伤害
@@ -2983,21 +3123,17 @@ local bosses = {
 		shanRate = 180, 				--瞬移
 		shanCd	= 2,					
 
-		chongfengDemage = 35,                --冲锋造成伤害
+		chongfengDemage = 40,                --冲锋造成伤害
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--左腿 弱点伤害倍数
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
 		
 		skilltrigger = {   			          --技能触发(可以同时)
-			feibiao1 = { 0.95,                --暴雨梨花针1
-			},
-			feibiao2 = { 0.75,                --暴雨梨花针2	
-			},
-			feibiao3 = { 0.50,                --暴雨梨花针3
-			},						
+			feibiao1 = { 0.95, 0.75, 0.50, 0.30,                --暴雨梨花针1
+			},					
 			zhaohuan = { 0.90, 0.60, 0.30                    --召唤分身
 			},                                           
-			chongfeng = { 0.99, 0.80,0.65, 0.55, 0.45, 0.35, 0.25, 0.15     --冲锋
+			chongfeng = { 0.99, 0.80, 0.65, 0.55, 0.45, 0.35, 0.25, 0.15     --冲锋
 			},
 
 			weak3 = {                               --右腿 技能触发(可以同时)
@@ -3009,14 +3145,14 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.90,0.50,0.30,                       
 			},
-			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage200 = {  
-				0.60,
-			},	
 			demage300 = {  
-				0.30,
+				0.70,
+			},	
+			demage400 = {  
+				0.40,
 			},	
 						
 		},
@@ -3034,30 +3170,6 @@ local bosses = {
 			},               
 		},
 
-		feibiao2 = {
-			srcPoses = {
-						cc.p(0, 150), cc.p(-105, 105), cc.p(-150, 0), cc.p(-105, -105),
-						cc.p(0, -150), cc.p(105, -105), cc.p(150, 0), cc.p(105, 105), 
-						cc.p(0, 150), cc.p(-105, 105), cc.p(-150, 0), cc.p(-105, -105),           
-			}, 
-			offsetPoses = {
-			            cc.p(0, 200), cc.p(-140, 140), cc.p(-200, 0), cc.p(-140, -140),
-						cc.p(0, -200), cc.p(140, -140), cc.p(200, 0), cc.p(140, 140),
-						cc.p(0, 200), cc.p(-140, 140), cc.p(-200, 0), cc.p(-140, -140),
-			},               
-		},
-		feibiao3 = {
-			srcPoses = {
-						cc.p(0, 150), cc.p(-105, 105), cc.p(-150, 0), cc.p(-105, -105),
-						cc.p(0, -150), cc.p(105, -105), cc.p(150, 0), cc.p(105, 105), 
-						cc.p(0, 150), cc.p(-105, 105), cc.p(-150, 0), cc.p(-105, -105),           
-			}, 
-			offsetPoses = {
-			            cc.p(0, 200), cc.p(-140, 140), cc.p(-200, 0), cc.p(-140, -140),
-						cc.p(0, -200), cc.p(140, -140), cc.p(200, 0), cc.p(140, 140),
-						cc.p(0, 200), cc.p(-140, 140), cc.p(-200, 0), cc.p(-140, -140),
-			}, 
-		},
 
 		enemys1 = {                                                   --第一波召唤的BOSS
 			{
@@ -3100,12 +3212,12 @@ local bosses = {
 				pos = {500},
 				delay = {0},
 				property = { 
-					type = "duozuBoss",
+					type = "duozuBoss",                             --多足兔子脸
 					placeName = "place11",
 					wangId    = 27,    --网ID
 					missileId = 20,    --BOSS导弹
 					missileOffsets = {cc.p(-150,-150) , cc.p(0, 150) , cc.p(150, -150)},
-					id = 9,
+					id = 14,
 				},
 			},
 
@@ -3113,17 +3225,15 @@ local bosses = {
 	},
 ---------------------------------------------------------------------------------------------第11波出场的boss    魔化鬼眼    id = 11
 	{
-		award = 10000,         ----boss产出金币数量
+		award = 1000,         ----boss产出金币数量
 		image = "boss02_1",                              --CF肌肉boss
-		hp = 100000,
+		hp = 150000,
 		demage = 3, 			--这个是没用的
-		fireRate = 120,               --普攻频率
+		fireRate = 60,               --普攻频率
 		fireCd = 3,                     --普攻cd
-
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd
-
-		chongfengDemage = 25,                --冲锋造成伤害
+		chongfengDemage = 30,                --冲锋造成伤害
 
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--手 弱点伤害倍数               
@@ -3153,14 +3263,14 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.60, 0.20,                      
 			},
-			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {
-				0.60,
+			demage200 = {
+				0.70,
 			},	
-			demage400 = {
-				0.30,
+			demage300 = {
+				0.40,
 			},						
 		},
 
@@ -3175,7 +3285,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3189,7 +3299,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterright",       --从右面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3205,7 +3315,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3219,7 +3329,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterright",       --从右面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3235,7 +3345,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3249,7 +3359,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterright",       --从右面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3265,7 +3375,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3279,7 +3389,7 @@ local bosses = {
 					type = "yiliao",     --医疗兵
 					startState = "enterright",       --从右面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3306,8 +3416,7 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------魔化鬼眼召唤的boss1 CF肌肉 id = 12
 	{
 		image = "boss01_2", --图片名字
-		-- hp = 100000,
-		award = 10000,                   --boss产出金币数量
+		award = 1000,                   --boss产出金币数量
 		hp = 150000,
 		demage = 5,                        --普通攻击伤害
 		fireRate = 30,
@@ -3321,29 +3430,28 @@ local bosses = {
 		weak1 = 1.2,					--手  弱点伤害倍数
 		weak2 = 1.2,					--腹  弱点伤害倍数
 		weak3 = 1.2,					--头  弱点伤害倍数
-		skilltrigger = {   			   --技能触发(可以同时)
-                       
-			-- wudi = {0.91,0.71,0.51,0.31                    --无敌
-			-- },                                        
+		skilltrigger = {   			   --技能触发(可以同时)                
+			                                        
+			saoShe = { 0.92, 0.72, 0.42 },                --调用普通攻击的伤害  扫射 
 
-			saoShe = { 0.90, 0.63, 0.35 },                --调用普通攻击的伤害  扫射 
+			wudi = {0.91, 0.71, 0.41, 0.31, },                    --无敌
 
-			zhaohuan = {0.95, 0.70, 0.40 },                         --召唤小怪 
+			zhaohuan = {0.90, 0.70, 0.40, },                         --召唤小怪 
 
-			moveLeftFire = { 0.85 , 0.30 },
+			moveLeftFire = { 0.80 , 0.30, },
 			moveRightFire = { 0.60, },
 			
 
 			daoDan1 = {                                            --两发导弹
-				0.99, 0.45, 0.10
+				0.99, 0.65, 0.35,
 			},
 
 			daoDan2 = {                                            --两发导弹
-				0.80, 0.50, 0.20
+				0.85, 0.55, 0.25,
 			},
 
 			daoDan3 = {                                            --两发导弹
-				0.75, 0.25, 0.15
+				0.75, 0.45, 0.15,
 			},
 
 			weak1 = {
@@ -3355,39 +3463,38 @@ local bosses = {
 			weak3 = {
 				0.80,0.20,
 			},
-
 			
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {  
-				0.65,
+			demage200 = {  
+				0.70,
 			},	
-			demage400 = {  
-				0.30,
+			demage300 = {  
+				0.40,
 			},							
 		},
 
 		daoDan1 = {
-		    id = 20,                                 --boss导弹
-			type = "missile",                  
+		    id = 22,                                 --boss导弹
+			type = "dao_wu",                  
 			offsetPoses = {
                 cc.p(-300, 0), cc.p(300, 0), 
-           }               
+            }               
 		},
 		daoDan2 = {
-			id = 20,                                 --boss导弹
-			type = "missile",
+			id = 22,                                 --boss导弹
+			type = "dao_wu",
 			offsetPoses = {
-                cc.p(0, 0), cc.p(0, -500), 
-           }               
+                cc.p(-300, -100), cc.p(300, -100), 
+            }               
 		},
 		daoDan3 = {
-			id = 20,                                 --boss导弹
-			type = "missile",                        
+			id = 22,                                 --boss导弹
+			type = "dao_wu",                       
 			offsetPoses = {
-                cc.p(-300, -300), cc.p(300, -300), 
-           }               
+                cc.p(-300, -200), cc.p(300, -200), 
+            }               
 		},
 
 
@@ -3396,7 +3503,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {500,},
+				pos = {700,},
 				property = { 
 					placeName = "place5" ,
 					type = "jin",                  --盾
@@ -3407,13 +3514,13 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0.3,},
-				pos = {500,},
+				pos = {300,},
 				property = { 
 					placeName = "place4" ,
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3421,18 +3528,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0.6,},
-				pos = {800,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {900},
+				pos = {550},
 				delay = {0.9},
 				property = {
 					placeName = "place4" ,
@@ -3442,12 +3548,12 @@ local bosses = {
 				},
 			},
 		},
-		enemys2 = {                                                     --第2波召唤
+		enemys2 = {                                                     --第1波召唤
 			{
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {500,},
+				pos = {700,},
 				property = { 
 					placeName = "place5" ,
 					type = "jin",                  --盾
@@ -3458,13 +3564,13 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0.3,},
-				pos = {500,},
+				pos = {300,},
 				property = { 
 					placeName = "place4" ,
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3472,18 +3578,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0.6,},
-				pos = {800,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {900},
+				pos = {550},
 				delay = {0.9},
 				property = {
 					placeName = "place4" ,
@@ -3493,12 +3598,12 @@ local bosses = {
 				},
 			},
 		},
-		enemys3 = {                                                     --第3波召唤
+		enemys3 = {                                                     --第1波召唤
 			{
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {500,},
+				pos = {700,},
 				property = { 
 					placeName = "place5" ,
 					type = "jin",                  --盾
@@ -3509,13 +3614,13 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0.3,},
-				pos = {500,},
+				pos = {300,},
 				property = { 
 					placeName = "place4" ,
 					type = "yiliao",     --医疗兵
 					startState = "enterleft",       --从左面跑出来
 					skillCd = 5.0,                  --回血cd
-					skillValue = 0.05,               --回血百分比
+					skillValue = 0.1,               --回血百分比
 					id = 26,
 				},
 			},
@@ -3523,18 +3628,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0.6,},
-				pos = {800,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {900},
+				pos = {550},
 				delay = {0.9},
 				property = {
 					placeName = "place4" ,
@@ -3567,29 +3671,29 @@ local bosses = {
 ---------------------------------------------------------------------------------------------------魔化鬼眼召唤的boss2 紫炮   id = 13
 	{
 		image = "dzboss", --图片名字                                                             多足boss巨炮泰坦
-		award = 10000,                   --boss产出金币数量
-		hp = 200000,
-		fireRate = 60,                  --普攻频率
-		fireCd = 4,                     --普攻cd
+		award = 1000,                   --boss产出金币数量
+		hp = 300000,
+		fireRate = 180,                  --普攻频率
+		fireCd = 6,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
 		weak1 = 1.1,						--头 弱点伤害倍数
 		weak2 = 1.1,					--左腿 弱点伤害倍数
 		weak3 = 1.1,					--右腿 弱点伤害倍数	
-		wudiTime = 5.0,					--无敌时间
+		wudiTime = 3.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
-			wudi = { 0.91, 0.71, 0.51 , 0.31, 0.11
+
+			-- wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15        --网
+			-- },
+			wudi = { 0.89, 0.69, 0.49, 0.29, 0.09,
 			}, 
 
 			zhaohuan = { 0.90, 0.70, 0.50, 0.30, 0.10,                  --召唤小兵
 			},   
 
-			wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15        --网
-			},
-
 			daoDan1 = {                                                   --大黑导弹
-				0.95, 0.80, 0.75, 0.64, 0.55, 0.45, 0.34, 0.22, 0.15, 
+				0.99, 0.80, 0.60, 0.40, 0.20, 
 			},
 
 
@@ -3603,7 +3707,7 @@ local bosses = {
 				0.90,
 			},
 			demage300 = {
-				0.60,
+				0.70,
 			},
 			demage400 = {
 				0.40,
@@ -3614,9 +3718,9 @@ local bosses = {
 		daoDan1 = {
 		    id = 23,                                  --大黑导弹
 			type = "missile",  
-			timeOffset = 0.06,                        --导弹间隔时间                 
+			timeOffset = 2.0,                        --导弹间隔时间                 
 			offsetPoses = {                           --目标偏移点
-            	cc.p(0, 0),
+            	cc.p( -250, -200),cc.p( 200, -250), cc.p( 200, 200),
         	},
         },
 
@@ -3626,7 +3730,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -3639,12 +3743,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -3656,18 +3760,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
-					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
+					id = 9,	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -3682,7 +3785,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -3695,12 +3798,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -3712,18 +3815,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -3738,7 +3840,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -3751,12 +3853,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -3768,18 +3870,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -3794,7 +3895,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -3807,12 +3908,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -3824,18 +3925,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -3850,7 +3950,7 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {400,},
+				pos = {300,},
 				property = { 
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
@@ -3863,12 +3963,12 @@ local bosses = {
 			{
 				time = 0,
 				num = 1,
-				pos = {800,},
+				pos = {400,},
 				delay = {0,},                                                     -- 吉普车
 				property = {
 					type = "jipu" ,
 					id = 12,
-					placeName = "place1",
+					placeName = "place11",
 					missileId = 22,
 					missileType = "dao_wu",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
@@ -3880,18 +3980,17 @@ local bosses = {
 				time = 0,
 				num = 1,
 				delay = {0,},
-				pos = {700,},
+				pos = {900,},
 				property = { 
 					placeName = "place11" ,
 					type = "bao",                                                    --自爆兵
 					id = 9,
-					demageScale = 3 ,                   --伤害翻3倍	
 				},
 			},
 			{
 				time = 0,	
 				num = 1,
-				pos = {1000,},
+				pos = {1100,},
 				delay = {0,},
 				property = {
 					placeName = "place4" ,
@@ -3922,7 +4021,7 @@ end
 function waveClass:randomWaves()
 	local waves = {}
 	local order = {}
-	order[1] = math.random(9,9) 	
+	order[1] = math.random(8,8) 	
 	-- order[1] = math.random(1,3)
 	-- order[2] = math.random(4,6)
 	-- order[3] = math.random(7,8)
