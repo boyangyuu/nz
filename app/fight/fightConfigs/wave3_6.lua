@@ -358,7 +358,7 @@ local bosses = {
 
 	{
 		image = "dzboss_1", --图片名字                                                             --毒刺boss
-		award = 50000,                   --boss产出金币数量
+		award = 20000,                   --boss产出金币数量
 		hp = 200000,
 		fireRate = 120,                  --普攻频率
 		fireCd = 5,                     --普攻cd

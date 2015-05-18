@@ -265,7 +265,7 @@ local bosses = {
 	--出场的boss
 	{
 		image = "nvrenzb",                       --图片名字                            红衣女忍者
-		award = 50000,                   --boss产出金币数量
+		award = 20000,                   --boss产出金币数量
 		hp = 250000,
 		fireRate = 120,               --普攻频率
 		fireCd = 4,                     --普攻cd

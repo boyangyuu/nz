@@ -58,6 +58,9 @@ function MapAnimView:playEffectShooted(event)
 		animName = "zd_dimian"
 	end
 
+	
+	-- animName = "zd_dimian" -- todo
+
 	--pos
 	local pos = self:convertToNodeSpace(cc.p(pWorld.x, pWorld.y))
 	assert(animName, "animName is nil type"..animName)

@@ -21,7 +21,7 @@ function AwardTimeModel:getContent()
 	if self:isCanAward() then 
 	    local cfg = AwardTimeConfig.getConfig(self.awardIndex)
 	    local moneyNum   = cfg["money"]
-	    return moneyNum .. "g"
+	    return moneyNum .. "y"
 	end
 	local time = self.remainTime
 	local minutes = math.floor(time / 60)

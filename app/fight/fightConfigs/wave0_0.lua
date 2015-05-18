@@ -96,7 +96,23 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},                                 	
+			}, 
+			{
+				time = 2,	                                               --奖励箱子
+				num = 1,
+				pos = {300},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place3",
+				},
+			},                                	
 		},
 	},	
 	
@@ -216,6 +232,22 @@ local waves = {
 					placeName = "place3", 
 					startState = "rollleft",
 					id = 1,
+				},
+			}, 
+			{
+				time = 5,	                                               --奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place3",
 				},
 			},                                                       --共20个怪		                                     	
 		},
@@ -403,6 +435,22 @@ local waves = {
 					missileType = "lei",
 				},
 			},
+			{
+				time = 7,	                                               --奖励箱子
+				num = 1,
+				pos = {380},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 21,
+					--award = "goldWeapon",     --黄金武器
+					award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 100,
+					placeName = "place4",
+				},
+			}, 
 		},
 	},
 
@@ -460,6 +508,10 @@ local enemys = {
 	--飞机         type = "feiji" ,
 	{id=9,image="feiji",demage=0,hp=3200, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=2,    award = 60},
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
+
 }
 
 --boss的关卡配置

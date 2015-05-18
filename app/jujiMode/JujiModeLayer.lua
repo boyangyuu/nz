@@ -39,6 +39,13 @@ function JujiModeLayer:loadCCS()
 end
 
 function JujiModeLayer:initUI()
+    local src = "res/JujiMode/zhoujiangli/zhoujiangli.ExportJson"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+    local plist = "res/JujiMode/zhoujiangli/zhoujiangli0.plist"
+    local png = "res/JujiMode/zhoujiangli/zhoujiangli0.png"
+    display.addSpriteFrames(plist,png)
+
 	self.listViewPlayer = cc.uiloader:seekNodeByName(self, "listViewPlayer")
 	local btnBack = cc.uiloader:seekNodeByName(self, "btnBack")
 	local btnReward = cc.uiloader:seekNodeByName(self, "raward")
@@ -46,6 +53,11 @@ function JujiModeLayer:initUI()
 	local playerRank = cc.uiloader:seekNodeByName(self, "rank")
 	self.playerName = cc.uiloader:seekNodeByName(self, "playerName")
 	local playerPoint = cc.uiloader:seekNodeByName(self, "point")
+
+	local armature = ccs.Armature:create("zhoujiangli")
+    armature:setPosition(cc.p(-100,0))
+    btnReward:addChild(armature,100)
+    armature:getAnimation():play("zhoujiangli" , -1, 1)
 
 	local myselfRecord = self.rankModel:getUserRankData("jujiLevel")
 	local myselfRank = self.rankModel:getUserRank()
