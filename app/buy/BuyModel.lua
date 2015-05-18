@@ -147,7 +147,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	local weaponIndex = 1
 	for k,v in pairs(weaponIds) do
 		weaponListModel:buyWeapon(v)
-		weaponListModel:onceFull(v)
+		weaponListModel:halfFull(v)
 	end
 	self:setBought("weaponGiftBag")
 

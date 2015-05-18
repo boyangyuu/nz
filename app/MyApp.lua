@@ -34,6 +34,9 @@ function MyApp:ctor()
     
     -- um 设置玩家账户及等级
     um:setUserAccount()
+
+    --create instance
+    -- self:createInstance()
 end
 
 function MyApp:run()
@@ -81,6 +84,10 @@ function MyApp:initVariables()
     result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
     result, appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
     print("MyApp-isAnalytics:",isAnalytics)
+end
+
+function MyApp:createInstance()
+    md:getInstance("AwardTimeModel") 
 end
 
 function MyApp:createGameStateFile()
@@ -145,7 +152,7 @@ function MyApp:createGameStateFile()
         
         --开启的关卡
         currentlevel =  {
-            group = 9,
+            group = 1,
             level = 6,
         },
 
@@ -161,9 +168,9 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 1,
+            level = 7,
             fightedLevels = {},
-            userName  = "玩家自己",
+            userName  = "玩家自己!",
             vipLevel  = 0,
         },
         guide = {
@@ -185,21 +192,21 @@ function MyApp:createGameStateFile()
             afterfight01    = true,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = true,
-            fight_dun       = true,
+            fight_change    = false,
+            fight_dun       = false,
 
             --第1-2关之前
-            xiangqian       = true,   --镶嵌一套青铜
+            xiangqian       = false,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = true,   -- 升级武器
-            afterfight03    = true,   -- 回到主界面
+            weapon          = false,   -- 升级武器
+            afterfight03    = false,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = true,  
+            fightJu         = false,  
 
             --第1-4失败之后
-            fightRelive     = true,                      
+            fightRelive     = false,                      
         },
         fight = {
            isPreferBag1 = true,

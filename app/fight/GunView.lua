@@ -53,6 +53,13 @@ function GunView:fire()
 	self:addDanke()
 
 	self.armature:getAnimation():play("fire" , -1, 1)	
+	local function animationEvent(armatureBack,movementType,movementId) 
+    	if movementType == ccs.MovementEventType.loopComplete then
+			armatureBack:getAnimation():stop()
+			armatureBack:stopAllActions()
+    	end
+	end		
+	self.armature:getAnimation():setMovementEventCallFunc(animationEvent)
 
 	--sound
 	local config = self.gun:getConfig()

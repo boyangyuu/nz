@@ -53,6 +53,7 @@ function Fight:refreshData(fightData)
     --clear   
     self.result = nil
     self.resultData = {}
+    self.goldValue  = 0.0
     self.isPause = false  
     self.fightData = fightData   
     md:createInstance("FightMode")
@@ -72,7 +73,7 @@ function Fight:refreshData(fightData)
 
     self.hero       = md:getInstance("Hero") 
     self.inlay      = self.hero:getFightInlay()
-    self.goldValue  = 0.0
+    
     self.relivedTimes = 0
 end
 
@@ -113,10 +114,10 @@ end
 
 function Fight:startFight()
     self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-    if not self.fightData["isContinue"] then 
-        print("function Fight:startFight()")
+    -- if not self.fightData["isContinue"] then 
+        -- print("function Fight:startFight()")/
         self.inlay:checkNativeGold()    
-    end
+    -- end
 
     --check guide
     local guide = md:getInstance("Guide")

@@ -43,7 +43,21 @@ function PopupRootLayer:showPopup(event)
 		local act1 = cc.ScaleTo:create(0.1, 1.1)
 		local act2 = cc.ScaleTo:create(0.1, 0.8)
 		local act3 = cc.ScaleTo:create(0.1, 1)
-		layer:runAction(cc.Sequence:create(act1,act2, act3))
+		layer:runAction(cc.Sequence:create(act1,act2,act3))
+	elseif animName == "leftScale" then
+		layer:setAnchorPoint(0.0, 0.0)
+		layer:scale(0.5)
+		local act1 = cc.ScaleTo:create(0.18, 1.1)
+		local act2 = cc.ScaleTo:create(0.15, 1.0)
+		layer:runAction(cc.Sequence:create(act1,act2))
+	elseif animName == "fade" then
+		local seq = transition.sequence({
+			cc.DelayTime:create(0.6),
+			cc.CallFunc:create(function ()
+				self:removePopup(str)
+			end),
+			})
+		layer:runAction(seq)
 	end
 end
 

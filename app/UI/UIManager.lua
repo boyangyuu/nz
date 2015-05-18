@@ -37,15 +37,16 @@ layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopu
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
+layerClasses["InputBoxPopup"]    = import("..commonPopup.InputBoxPopup")
 
 -- buy
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
 layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
+layerClasses["StoneLessPopup"]       = import("..buy.StoneLessPopup")
 
 --awardTime
 layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")
-
 
 --jujiFight
 layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")

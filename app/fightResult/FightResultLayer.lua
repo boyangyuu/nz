@@ -143,7 +143,10 @@ function FightResultLayer:initUI()
     labelDiamond:enableOutline(cc.c4b(0, 0, 0,255), 2)
     labelMoney:setString("本关战斗获得"..self.fightData["goldNum"].."金币")
     if self.fightData["isFirst"] then
-    	local record = self.levelDetailModel:getConfig(self.fightData["groupId"],self.fightData["levelId"])
+    	local gId = self.fightData["groupId"]
+    	local lId = self.fightData["levelId"]
+    	self:popOpenModeNoti(gId,lId)
+    	local record = self.levelDetailModel:getConfig(gId,lId)
 		labelDiamond:setString("首次战斗获得"..record["giftDiamond"].."宝石")
 		self.userModel:addDiamond(record["giftDiamond"])
 	end
@@ -217,6 +220,19 @@ function FightResultLayer:initUI()
         	self:onClickBtnNext()
         end
     end)
+end
+
+function FightResultLayer:popOpenModeNoti(groupId,levelId)
+    if groupId == 1 and levelId == 5 then
+    	ui:showPopup("commonPopup",
+         {type = "style1", content = "恭喜无尽狙击模式开启！"},
+         {opacity = 0})
+    end
+    if groupId == 1 and levelId == 7 then
+    	ui:showPopup("commonPopup",
+         {type = "style1", content = "恭喜BOSS竞技场开启！"},
+         {opacity = 0})
+    end
 end
 
 function FightResultLayer:onClickBtnNext()

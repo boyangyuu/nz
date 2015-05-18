@@ -29,6 +29,10 @@ function JujiFight:startFightResult()
 	}
     -- fightDescModel:dispatchEvent(data)	
     ui:showPopup("JujiResultLayer",data,{animName = "normal"})
+
+    --save goldValue
+    local user = md:getInstance("UserModel") 
+    user:addMoney(money)
 end
 
 function JujiFight:getResultData()

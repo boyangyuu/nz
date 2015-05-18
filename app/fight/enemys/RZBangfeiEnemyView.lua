@@ -66,7 +66,6 @@ end
 
 function RZBangfeiEnemyView:playWalk()
     local random = math.random(0, 1)
-    print("random", random)
     if random == 1 then 
         self:play("playWalkLeft", handler(self, self.playWalkLeft))
     else

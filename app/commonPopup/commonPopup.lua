@@ -28,8 +28,12 @@ end)
 			 callfuncGoldWeapon = handler(self,self.****)},
 			 {opacity = 0})
 	style6:关闭按钮，确定按钮，输入框，激活码
+			ui:showPopup("commonPopup",
+                 {type = "style6",callfuncCofirm = handler(self,self.****)},
+                 {opacity = 0})
+ 	style8:关闭按钮，确定按钮，输入框，玩家姓名
 		ui:showPopup("commonPopup",
-			 {type = "style6"},
+			 {type = "style8",callfuncCofirm = handler(self,self.****)},
 			 {opacity = 0})
 ]]
 function commonPopup:ctor(properties)
@@ -187,12 +191,15 @@ function commonPopup:initUI(properties)
 	        end
 	    end)
     elseif typeName == "style6" then
-    	local content = cc.uiloader:seekNodeByName(self, "content")
+    	local contentBox = cc.uiloader:seekNodeByName(self, "content")
 	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
 	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
     	btntrue:setTouchEnabled(true)
     	btnfalse:setTouchEnabled(true)
-    	content:addEventListener(function(editbox, eventType)
+    	if properties.content then
+	    	contentBox:setText(properties.content)
+	    end
+    	contentBox:addEventListener(function(editbox, eventType)
 			print("CCSSample2Scene editbox input")
 		end)
     	addBtnEventListener(btntrue, function(event)
@@ -200,7 +207,6 @@ function commonPopup:initUI(properties)
 	            return true
 	        elseif event.name=='ended' then		
 		        self:onClickCofirm()
-
 	        end
 	    end)
     	addBtnEventListener(btnfalse, function(event)
@@ -231,6 +237,43 @@ function commonPopup:initUI(properties)
 	        elseif event.name=='ended' then		
 
 		     self:onClickClose()
+	        end
+	    end)
+	elseif typeName == "style8" then
+    	local contentBox = cc.uiloader:seekNodeByName(self, "content")
+	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
+	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
+    	if properties.content then
+	    	contentBox:setText(properties.content)
+	    end
+    	btntrue:setTouchEnabled(true)
+    	btnfalse:setTouchEnabled(true)
+    	local contentString = ""
+    	contentBox:addEventListener(function(contentBox, eventType)
+			if eventType == "began" then
+		        -- 开始输入
+		    elseif eventType == "changed" then
+		        -- 输入框内容发生变化
+		    elseif eventType == "ended" then
+		        contentString = contentBox:getText()
+		    elseif eventType == "return" then
+		        -- 从输入框返回
+		        contentString = contentBox:getText()
+		    end
+		end)
+    	addBtnEventListener(btntrue, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then		
+		        self:onClickCofirm()
+	        end
+	    end)
+    	addBtnEventListener(btnfalse, function(event)
+	        if event.name=='began' then
+	            return true
+	        elseif event.name=='ended' then		
+		        self:onClickClose()
+		        -- return ""
 	        end
 	    end)
 	end

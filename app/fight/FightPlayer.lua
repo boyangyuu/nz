@@ -28,10 +28,8 @@ function FightPlayer:ctor(properties)
     local fightFactory = md:getInstance("FightFactory")
     fightFactory:refreshData(properties.fightData)
     self.fight      = fightFactory:getFight()
-
     self.fight:refreshData(properties.fightData)
     
-   
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
@@ -402,20 +400,16 @@ function FightPlayer:checkJuOpen(point)
 end
 
 function FightPlayer:onJuClose(event)
-    -- self.btnRobot:setVisible(true)
-    -- self.label_jijiaNum:setVisible(true)
-    self.btnLei:setVisible(true)
-    self.label_leiNum:setVisible(true)
+    self.btnLei:setVisible(false)
+    self.label_leiNum:setVisible(false)
     self.gunView:setVisible(true)
     self.focusNode:setVisible(false)
     self.btnJu:setVisible(false)
 end
 
 function FightPlayer:onJuOpen(event)
-    -- self.btnRobot:setVisible(false)
-    -- self.label_jijiaNum:setVisible(false)
-    self.btnLei:setVisible(false)
-    self.label_leiNum:setVisible(false)
+    self.btnLei:setVisible(true)
+    self.label_leiNum:setVisible(true)
     self.gunView:setVisible(false)
     self.focusNode:setVisible(true)
     self.btnJu:setVisible(true)
@@ -896,6 +890,10 @@ function FightPlayer:initGuideChange()
             for id, point in pairs(touchEvent.points) do
                 self:checkBtnChange(point)
             end
+            --扫射提示
+            local hero = md:getInstance("Hero")
+            hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, 
+                animName = "saoshe"})             
         end
     })  
 end
@@ -916,7 +914,7 @@ function FightPlayer:initGuideDun()
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
                 self:checkBtnDefence(point)
-            end
+            end           
         end
     }) 
 end

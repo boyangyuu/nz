@@ -132,7 +132,7 @@ function LevelMapLayer:initBgLayer(event)
     self.armature:setPosition(display.width/2,display.height1/2)
     self:addChild(self.armature)
     
-    print("self.curGroupId", self.curGroupId)
+    -- print("self.curGroupId", self.curGroupId)
     if self.curGroupId == 0 then
         self.curGroupId = 1
     end
@@ -150,9 +150,6 @@ function LevelMapLayer:initAwardLayer()
     self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
-    local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
-    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")
-
     local buyModel = md:getInstance("BuyModel")
     if buyModel:checkBought("novicesBag") then
         self.panelgift:setVisible(false)
@@ -208,7 +205,14 @@ function LevelMapLayer:initAwardLayer()
     btnfirstgift:addChild(libaoArmature)
     libaoArmature:getAnimation():play("libao" , -1, 1)
 
+    --限时奖励
+    self:initAwardTime()
+end
+
+function LevelMapLayer:initAwardTime()
     --限时礼包
+    local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
+    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")    
     btnTime:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
@@ -216,27 +220,90 @@ function LevelMapLayer:initAwardLayer()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            --todo
+            self:onClickedBtnAwardTime()
         end)
+
+    --timer
+    local function funcTime()
+        local awardModel = md:getInstance("AwardTimeModel") 
+        local str = awardModel:getContent()   
+        -- print("str", str)
+        labelTime:setString(str)
+    end
+    self:schedule(funcTime, 1.0)
+end
+
+function LevelMapLayer:onClickedBtnAwardTime()
+    local awardModel = md:getInstance("AwardTimeModel")   
+    local isCanAward = awardModel:isCanAward()
+    if isCanAward then 
+        awardModel:achieveAward()
+       ui:showPopup("commonPopup",
+         {type = "style2", content = "领取成功"},
+         { opacity = 0})          
+    else
+       ui:showPopup("commonPopup",
+         {type = "style2", content = "时间未到请稍后！"},
+         { opacity = 0})        
+    end
 end
 
 function LevelMapLayer:initFightActLayer()
+    cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
     --无限狙击
     local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
-
-    btnjuji:onButtonPressed(function( event )
+    
+    local userModel = md:getInstance("UserModel")
+    local isOpenJuji = userModel:getUserLevel() >= 5
+    if not isOpenJuji then
+        btnjuji:setButtonImage(btnjuji.NORMAL, "btn_wuxianjuji1.png")
+        btnjuji:setButtonImage(btnjuji.PRESSED, "btn_wuxianjuji1.png")
+        btnjuji:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
         :onButtonRelease(function( event )
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            ui:showPopup("JujiModeLayer")
+            ui:showPopup("commonPopup",
+                     {type = "style2", content = "通过狙击关卡后开启！"},
+                     {opacity = 0})
         end)
+    else
+        btnjuji:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("JujiModeLayer", {}, {animName = "leftScale"})
+        end)
+    end  
+
 
     --boss
     local btnboss = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnboss")
-    btnboss:onButtonPressed(function( event )
+    
+    local userModel = md:getInstance("UserModel")
+    local isOpenBoss = userModel:getUserLevel() >= 7
+    if not isOpenBoss then
+        btnboss:setButtonImage(btnboss.NORMAL, "btn_wuxianboss1.png")
+        btnboss:setButtonImage(btnboss.PRESSED, "btn_wuxianboss1.png")
+
+        btnboss:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function( event )
+            ui:showPopup("commonPopup",
+                     {type = "style2", content = "通关第一章后开启！"},
+                     {opacity = 0})
+        end)
+    else
+        btnboss:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
         :onButtonRelease(function( event )
@@ -245,8 +312,9 @@ function LevelMapLayer:initFightActLayer()
         :onButtonClicked(function( event )
             local bossModeModel = md:getInstance("BossModeModel")
             local chapterIndex = bossModeModel:getAlreadyChapter()
-            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex})
+            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex}, {animName = "leftScale"})
         end)
+    end
 end
 
 function LevelMapLayer:initKefuLayer()

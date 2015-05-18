@@ -62,4 +62,8 @@ function BaseWave:randomWaves()
 	self.waves = waves
 end
 
+function BaseWave:getReliveCosts()
+	return self.reliveCosts
+end
+
 return BaseWave

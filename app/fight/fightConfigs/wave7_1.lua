@@ -363,17 +363,11 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.fightMode =  {
-		--type 	  = "puTong",
-
-		--type 	  = "renZhi",
-		--saveNums  = 3,                 --解救人质数量
-
 		type 	  = "xianShi",
 		limitTime = 120,                   --限时模式时长
-
-		-- type 	  = "taoFan"
-		-- limitNums = 5,                      --逃跑逃犯数量
 	}
+
+	self.reliveCosts = {10,10,10}
 end
 
 return waveClass

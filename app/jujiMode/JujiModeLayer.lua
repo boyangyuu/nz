@@ -7,10 +7,15 @@ end)
 function JujiModeLayer:ctor()
 	self.jujiModel = md:getInstance("JujiModeModel")
 	self.rankModel = md:getInstance("RankModel")
+	self.user = md:getInstance("UserModel")
 	self.rankTable = self.jujiModel:getRankData() 
 
 	self:loadCCS()
 	self:initUI()
+
+    cc.EventProxy.new(self.user, self)
+	    :addEventListener("REFRESH_PLAYERNAME_EVENT" , handler(self, self.refreshUI))
+
 	self:setNodeEventEnabled(true)
 end
 
@@ -19,19 +24,11 @@ function JujiModeLayer:onEnter()
 	self:performWithDelay(handler(self,self.setUserName),0.5)
 end
 
--- ui:showPopup("commonPopup",
---                  {type = "style6",callfuncCofirm = handler(self,self.checkActivateCode)},
---                  {opacity = 0})
+
 
 function JujiModeLayer:setUserName()
-	local user = md:getInstance("UserModel")
-	if  user:getUserName() == "玩家自己" then
-		self.userName = device.showInputBox("请输入昵称","昵称只能修改一次喔！")
-		while self.userName == "" do
-			self.userName = device.showInputBox("请输入昵称","昵称不能为空！")
-		end
-		user:setUserName(self.userName)
-		self.playerName:setString(user:getUserName())
+	if  self.user:getUserName() == "玩家自己" then
+		ui:showPopup("InputBoxPopup",{opacity = 0})
 	end
 end
 
@@ -42,6 +39,13 @@ function JujiModeLayer:loadCCS()
 end
 
 function JujiModeLayer:initUI()
+    local src = "res/JujiMode/zhoujiangli/zhoujiangli.ExportJson"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(src)
+    local plist = "res/JujiMode/zhoujiangli/zhoujiangli0.plist"
+    local png = "res/JujiMode/zhoujiangli/zhoujiangli0.png"
+    display.addSpriteFrames(plist,png)
+
 	self.listViewPlayer = cc.uiloader:seekNodeByName(self, "listViewPlayer")
 	local btnBack = cc.uiloader:seekNodeByName(self, "btnBack")
 	local btnReward = cc.uiloader:seekNodeByName(self, "raward")
@@ -49,6 +53,11 @@ function JujiModeLayer:initUI()
 	local playerRank = cc.uiloader:seekNodeByName(self, "rank")
 	self.playerName = cc.uiloader:seekNodeByName(self, "playerName")
 	local playerPoint = cc.uiloader:seekNodeByName(self, "point")
+
+	local armature = ccs.Armature:create("zhoujiangli")
+    armature:setPosition(cc.p(-100,0))
+    btnReward:addChild(armature,100)
+    armature:getAnimation():play("zhoujiangli" , -1, 1)
 
 	local myselfRecord = self.rankModel:getUserRankData("jujiLevel")
 	local myselfRank = self.rankModel:getUserRank()
@@ -83,6 +92,10 @@ function JujiModeLayer:initUI()
     :onButtonClicked(function()
         self:onClickBtnStart()
     end)
+end
+
+function JujiModeLayer:refreshUI(event)
+	self.playerName:setString(self.user:getUserName())
 end
 
 function JujiModeLayer:onClickBtnStart()
