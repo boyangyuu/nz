@@ -45,7 +45,7 @@ function LevelMapLayer:initData()
         self.curGroupId = groupId
     elseif self.fightData.fightType == "jujiFight" then
         self.curGroupId = groupId
-    elseif groupId == 0 and levelId == 0 and fightType == "levelFight" then
+    elseif self.fightData.groupId == 0 and self.fightData.levelId == 0 then
         self.curGroupId = 1
     else
         self.curGroupId = self.fightData.groupId

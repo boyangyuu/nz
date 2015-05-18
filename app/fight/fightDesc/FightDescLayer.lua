@@ -94,6 +94,7 @@ function FightDescLayer:onWaveStart(event)
         text = "A"..event.waveNum.."BCDEF",
         font = "res/fnt/NO7.fnt",
         })
+
     addChildCenter(label, self.animPanl)
 
     action1 = cc.ScaleTo:create(0.5, 2)
