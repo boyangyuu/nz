@@ -54,7 +54,7 @@ function PopupRootLayer:showPopup(event)
 		layer:scale(0.5)
 		local act1 = cc.ScaleTo:create(0.18, 1.1)
 		local act2 = cc.ScaleTo:create(0.15, 1.0)
-		layer:runAction(cc.Sequence:create(act1,act2, act3))
+		layer:runAction(cc.Sequence:create(act1,act2))
 	end
 end
 
