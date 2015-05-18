@@ -27,17 +27,8 @@ function InputBoxPopup:initUI()
 	local contentString = ""
 	local user = md:getInstance("UserModel")
 	contentBox:addEventListener(function(contentBox, eventType)
-		if eventType == "began" then
-	        -- 开始输入
-	    elseif eventType == "changed" then
-	        -- 输入框内容发生变化
-	    elseif eventType == "ended" then
-	        contentString = contentBox:getText()
-	    elseif eventType == "return" then
-	        -- 从输入框返回
-	        contentString = contentBox:getText()
-	    end
-	end)
+		 contentString = contentBox:getText()
+		end)
 
 	addBtnEventListener(btntrue, function(event)
         if event.name=='began' then
@@ -45,8 +36,11 @@ function InputBoxPopup:initUI()
         elseif event.name=='ended' then		
         	if contentString ~= "" then
         		user:setUserName(contentString)
+        		ui:closePopup("InputBoxPopup")
         	else
-		        self:onClickCofirm()
+		        ui:showPopup("commonPopup",
+				 {type = "style1",content = "名称不能为空"},
+				 {opacity = 100})
         	end
         end
     end)
@@ -60,22 +54,9 @@ function InputBoxPopup:initUI()
     end)
 end
 
-function InputBoxPopup:onClickCofirm()
-	ui:closePopup("InputBoxPopup")
-	local func =  self.properties.callfuncCofirm
-	if func ~= nil then
-		print("callfuncCofirm")
-		func()		
-	end
-end
 
 function InputBoxPopup:onClickClose()
 	ui:closePopup("InputBoxPopup")
-	local func =  self.properties.callfuncClose
-	if func ~= nil then
-		print("callfuncClose")
-		func()
-	end	
 end
 
 return InputBoxPopup

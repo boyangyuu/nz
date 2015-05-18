@@ -7,54 +7,29 @@ end)
 function JujiModeLayer:ctor()
 	self.jujiModel = md:getInstance("JujiModeModel")
 	self.rankModel = md:getInstance("RankModel")
+	self.user = md:getInstance("UserModel")
 	self.rankTable = self.jujiModel:getRankData() 
 
 	self:loadCCS()
 	self:initUI()
+
+    cc.EventProxy.new(self.user, self)
+	    :addEventListener("REFRESH_PLAYERNAME_EVENT" , handler(self, self.refreshUI))
+
 	self:setNodeEventEnabled(true)
 end
 
 function JujiModeLayer:onEnter()
 	self:performWithDelay(handler(self,self.refreshListView),0.5)
-	self:performWithDelay(handler(self,self.checkUserName),0.5)
+	self:performWithDelay(handler(self,self.setUserName),0.5)
 end
 
 
-function JujiModeLayer:checkUserName()
-	local user = md:getInstance("UserModel")
-	if user:getUserName() ~= "玩家自己" then
-		return 
+
+function JujiModeLayer:setUserName()
+	if  self.user:getUserName() == "玩家自己" then
+		ui:showPopup("InputBoxPopup",{opacity = 0})
 	end
-	local function onClickedConfirm()
-		ui:showPopup("InputBoxPopup",
-		     {callfuncCofirm = onClickedConfirm,
-		     callfuncClose = onClickedConfirm,content = "昵称不能为空！"},{opacity = 0})
-		self.playerName:setString(user:getUserName())
-	end
-	ui:showPopup("InputBoxPopup",
-	     {callfuncCofirm = onClickedConfirm,
-	     callfuncClose = onClickedConfirm},{opacity = 0})
-
-
-
-
-	-- local user = md:getInstance("UserModel")
-	-- if  user:getUserName() == "玩家自己" then
-	-- 	local function onClickedConfirm(nameStr)
-	-- 		user:setUserName(userName)
-	-- 	end
-	-- 	ui:showPopup("commonPopup",
- --             {type = "style8",callfuncCofirm = onClickedConfirm},
- --             {opacity = 0})
-
-	-- 	while userName == "" do
-	-- 		ui:showPopup("commonPopup",
- --                 {type = "style8",content = "昵称不能为空！",callfuncCofirm = },
- --                 {opacity = 0})
-	-- 	end
-		
-	-- 	self.playerName:setString(user:getUserName())
-	-- end
 end
 
 function JujiModeLayer:loadCCS()
@@ -105,6 +80,10 @@ function JujiModeLayer:initUI()
     :onButtonClicked(function()
         self:onClickBtnStart()
     end)
+end
+
+function JujiModeLayer:refreshUI(event)
+	self.playerName:setString(self.user:getUserName())
 end
 
 function JujiModeLayer:onClickBtnStart()
