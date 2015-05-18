@@ -7,11 +7,11 @@ BossConfigs["chapter1"] = {
 	desc = "阵地射击，战地集结的号角一触即发！",
 	weaponId = 9,
 	weaponSkill = "麒麟之怒",
-	reward1 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
-	reward2 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
-	reward3 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
-	reward4 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
-	reward5 = {{part = 1},{healthBag = 2},{lei = 3},{money = 65199}},
+	reward1 = {{part = 1},{lei = 5},{money = 10000}},
+	reward2 = {{part = 1},{healthBag = 1},{lei = 5},{money = 10000}},
+	reward3 = {{part = 1},{healthBag = 2},{lei = 10},{money = 20000}},
+	reward4 = {{part = 1},{healthBag = 3},{lei = 10},{money = 30000}},
+	reward5 = {{part = 1},{healthBag = 4},{lei = 20},{money = 40000}},
 }
 
 -- BossConfigs["chapter2"] = {
