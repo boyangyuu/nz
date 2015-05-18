@@ -19,20 +19,39 @@ function JujiModeLayer:onEnter()
 	self:performWithDelay(handler(self,self.setUserName),0.5)
 end
 
--- ui:showPopup("commonPopup",
---                  {type = "style6",callfuncCofirm = handler(self,self.checkActivateCode)},
---                  {opacity = 0})
 
 function JujiModeLayer:setUserName()
 	local user = md:getInstance("UserModel")
-	if  user:getUserName() == "玩家自己" then
-		self.userName = device.showInputBox("请输入昵称","昵称只能修改一次喔！")
-		while self.userName == "" do
-			self.userName = device.showInputBox("请输入昵称","昵称不能为空！")
-		end
-		user:setUserName(self.userName)
+	local function onClickedConfirm()
+		ui:showPopup("InputBoxPopup",
+		     {callfuncCofirm = onClickedConfirm,
+		     callfuncClose = onClickedConfirm,content = "昵称不能为空！"},{opacity = 0})
 		self.playerName:setString(user:getUserName())
 	end
+	ui:showPopup("InputBoxPopup",
+	     {callfuncCofirm = onClickedConfirm,
+	     callfuncClose = onClickedConfirm},{opacity = 0})
+
+
+
+
+	-- local user = md:getInstance("UserModel")
+	-- if  user:getUserName() == "玩家自己" then
+	-- 	local function onClickedConfirm(nameStr)
+	-- 		user:setUserName(userName)
+	-- 	end
+	-- 	ui:showPopup("commonPopup",
+ --             {type = "style8",callfuncCofirm = onClickedConfirm},
+ --             {opacity = 0})
+
+	-- 	while userName == "" do
+	-- 		ui:showPopup("commonPopup",
+ --                 {type = "style8",content = "昵称不能为空！",callfuncCofirm = },
+ --                 {opacity = 0})
+	-- 	end
+		
+	-- 	self.playerName:setString(user:getUserName())
+	-- end
 end
 
 function JujiModeLayer:loadCCS()
