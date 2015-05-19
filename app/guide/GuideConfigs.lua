@@ -98,8 +98,8 @@ configs["xiangqian"] = {
 		{id = "xiangqian_xiangqian3", msg = "点击装备", },
 		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌，镶嵌背包内最好的道具", },
 		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具哦！", rolepos = "right", skipMode = "clickScreen" },
-		{id = "xiangqian_back", msg = "点击按钮返回大地图", },		
-		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关",  contentOffset = {x = 0, y = 0},},		
+		{id = "xiangqian_back", msg = "点击按钮返回大地图" },		
+		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关", rolepos = "right",  contentOffset = {x = 0, y = -100},},		
 	}
 }
 
@@ -112,7 +112,7 @@ configs["weapon"] = {
 		{id = "weapon_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
 		{id = "weapon_shengji3", msg = "恭喜杰哥 ， 升级成功！ ", skipMode = "clickScreen"},
 		{id = "weapon_back", msg = "点击按钮返回大地图",rolepos = "right", },		
-		{id = "weapon_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "left", contentOffset = {x = 0, y = -100}},			
+		{id = "weapon_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "right", contentOffset = {x = 0, y = -200}},			
 		{id = "weapon_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮，开始战斗！", },
 	}
 }

@@ -121,7 +121,7 @@ end
 function InfoLayer:onRefreshBullet(event)
 	local num = event.num
 	assert(num, "num is nil") 
-	self.labelBulletNum:setString(num .. "/无限子弹")
+	self.labelBulletNum:setString(num)
 end
 
 function InfoLayer:onHeroHpChange(event)

@@ -30,38 +30,44 @@ local configs = {
 	armedMecha     = {				--机甲
 			showType = "prop_rmb",
 			price = 4,
-			name = "机甲变身2次",
+			name = "无敌机甲 x2",
+			iapName = "无敌机甲2次",
 	},
 	handGrenade    = {             --手雷
 			showType = "prop_rmb",
 			price = 4,
-			name = "手雷20个",
+			name = "手雷 x20",
+			iapName = "手雷20个",
 	},
 	goldWeapon     = {				--金武
 			showType = "prop_rmb",
 			price = 4,
-			name = "金武2次",
+			name = "黄金武器 x2",
+			iapName = "黄金武器2次",
 	},
 	onceFull       = {				--一键满级
 			showType = "prop_rmb",
 			price = 2,
-			name = "武器满级",
+			name = "当前武器一键满级",
+			iapName = "当前武器一键满级",
 	},
-
 	stone120         = {
 			showType = "iap",
 			price = 10,
-			name = "宝石120个",
+			name = "宝石 x120",
+			iapName = "一麻袋宝石",
 	},
 	stone260         = {
 			showType = "iap",
 			price = 20,
-			name = "宝石260个",
+			name = "宝石 x260",
+			iapName = "一箱子宝石",
 	},
 	stone450         = {
 			showType = "prop_rmb",
 			price = 30,
-			name = "宝石450个",
+			name = "宝石 x450",
+			iapName = "堆成山的宝石",
 	},
 	-- hpBag         = {
 	-- 		showType = "prop_stone",

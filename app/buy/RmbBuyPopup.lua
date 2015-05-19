@@ -36,6 +36,8 @@ function RmbBuyPopup:loadCCS()
 
     --content
     local config = BuyConfigs.getConfig(self.configId)
+    local labelIapName = cc.uiloader:seekNodeByName(self.node, "labelIapName")
+    labelIapName:setString(config["iapName"])
     local labelPrice = cc.uiloader:seekNodeByName(self.node, "labelPrice")
     labelPrice:setString("消耗金额：" .. config["price"] .. "元")
     local labelDesc = cc.uiloader:seekNodeByName(self.node, "labelDesc")

@@ -10,7 +10,6 @@ local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
 BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
 
-local proInfo = require("app.commonPopup.ProductInfoConfig")
 -- 定义事件
 function BuyModel:ctor(properties)
     BuyModel.super.ctor(self, properties)

@@ -188,7 +188,13 @@ function Hero:checkKeepKill()
         scheduler.unscheduleGlobal(self.keepKillHandler)
         self.keepKillHandler = nil
     end
-    self.keepKillHandler = scheduler.scheduleGlobal(handler(self, self.restoreKeepKill), define.kHeroKillKeepCd)
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
+    local isJu = fight:isJujiFight()
+    local scale   = isJu and 1.5 or 1
+    self.keepKillHandler = scheduler.scheduleGlobal(
+        handler(self, self.restoreKeepKill),
+         define.kHeroKillKeepCd * scale)
 end
 
 function Hero:restoreKeepKill()
