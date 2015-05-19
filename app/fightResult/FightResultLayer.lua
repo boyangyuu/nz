@@ -228,12 +228,12 @@ end
 function FightResultLayer:popOpenModeNoti(groupId,levelId)
     if groupId == 1 and levelId == 5 then
     	ui:showPopup("commonPopup",
-         {type = "style1", content = "恭喜无尽狙击模式开启！"},
+         {type = "style1", content = "恭喜您开启无尽狙击模式，快去尝试吧！"},
          {opacity = 0})
     end
     if groupId == 1 and levelId == 7 then
     	ui:showPopup("commonPopup",
-         {type = "style1", content = "恭喜BOSS竞技场开启！"},
+         {type = "style1", content = "恭喜您开启BOSS竞技场！"},
          {opacity = 0})
     end
 end
