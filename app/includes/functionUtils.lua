@@ -218,6 +218,7 @@ function isDefendDX()
 end
 
 function isDirectIap()
+    if device.platform ~= 'android' then return true end
     local className = "com/hgtt/com/IAPControl"
     local methodName = "getIsDirectIap"
     local args = {}
