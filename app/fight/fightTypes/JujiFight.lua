@@ -19,6 +19,11 @@ function JujiFight:startFightResult()
 	    ui:changeLayer("FightPlayer",{fightData = resultData})
 	end
 	
+    --save goldValue
+    local user = md:getInstance("UserModel") 
+    print("self.goldValue", self.goldValue)
+    user:addMoney(self.goldValue)
+
 	--desc
     -- local fightDescModel = md:getInstance("FightDescModel")
     local data = {
@@ -26,13 +31,12 @@ function JujiFight:startFightResult()
     	levelIndex   = self:getLevelId() + 1,
     	waveIndex    = self.passLevelNum,
     	closeFunc    = closeFunc,
+    	goldValue    = self.goldValue,
 	}
     -- fightDescModel:dispatchEvent(data)	
     ui:showPopup("JujiResultLayer",data,{animName = "normal"})
 
-    --save goldValue
-    local user = md:getInstance("UserModel") 
-    user:addMoney(money)
+
 end
 
 function JujiFight:getResultData()

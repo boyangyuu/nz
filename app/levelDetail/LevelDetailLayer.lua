@@ -353,7 +353,7 @@ function LevelDetailLayer:buyWeaponByStone()
     if isAfforded then
         self.weaponListModel:buyWeapon(self.recomWeaponId)
         ui:showPopup("WeaponNotifyLayer",
-         {type = "gun",weaponId = self.recomWeaponId})
+         {type = "gun",weaponId = self.recomWeaponId},{opacity = 255})
         return true
     else
         return false

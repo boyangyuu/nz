@@ -24,7 +24,7 @@ function JujiPlayerCell:initCellUI()
     local detail = self.record["record"]
     playerRank:setString(self.record["rank"])
     playerName:setString(detail["name"])
-    playerPoint:setString(detail["jujiLevel"])
+    playerPoint:setString(detail["jujiLevel"]*100)
 
     if self.record["rank"] == 1 then
         playerNO1:setVisible(true)

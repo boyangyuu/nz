@@ -102,7 +102,7 @@ Define.kHeroHpBag				= 200   --回血包
 Define.kHeroHpCost				= 40  	--回血包价格
 Define.kHeroHpBagCd				= 10    --回血包cd
 Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
-Define.kHeroKillKeepCd			= 3.0 	--连杀cd 2秒清空连杀
+Define.kHeroKillKeepCd			= 3.0 	--连杀cd 3秒清空连杀
 
 --黄金武器
 Define.kGoldTime 				= 8     --黄金武器激活时间

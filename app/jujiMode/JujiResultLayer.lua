@@ -26,6 +26,9 @@ end
 
 function JujiResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
+	local labelReward = cc.uiloader:seekNodeByName(self, "reward")
+	local labelGold = cc.uiloader:seekNodeByName(self, "labelGold")
+	labelReward:setVisible(false)
 	self.awardsTable = self:getAwards()
 	local numTable = {}
 	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
@@ -61,7 +64,7 @@ function JujiResultLayer:initUI()
 		end
 	end
 
-    waveNum:setString("d"..self.waveIndex.."b")
+    waveNum:setString("d"..self.levelIndex.."b")
     local action = cc.MoveBy:create(0.3, cc.p(0,-100))
     waveNum:runAction(action)
 
@@ -72,6 +75,8 @@ function JujiResultLayer:initUI()
 				for k,v in pairs(numTable) do
 					v:setVisible(true)
 				end
+				labelReward:setVisible(true)
+				labelGold:setString("战斗获得："..self.properties.goldValue.."金币")
                 layerBtn:setTouchEnabled(true)
                 addBtnEventListener(layerBtn, function(event)
 					if event.name == 'began' then

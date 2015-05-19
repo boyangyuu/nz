@@ -59,7 +59,7 @@ function BossModeModel:setWeapon(chapterIndex)
 		local weaponId = info["weaponId"]
 		self.weaponListModel:buyWeapon(weaponId)
 		ui:showPopup("WeaponNotifyLayer",
-	     {type = "gun",weaponId = weaponId})
+	     {type = "gun",weaponId = weaponId},{opacity = 255})
 
 	end
 end

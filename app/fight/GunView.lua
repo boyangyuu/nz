@@ -54,9 +54,9 @@ function GunView:fire()
 
 	self.armature:getAnimation():play("fire" , -1, 1)	
 	local function animationEvent(armatureBack,movementType,movementId) 
-    	if movementType == ccs.MovementEventType.loopComplete then
-			armatureBack:getAnimation():stop()
-			armatureBack:stopAllActions()
+    	if movementType == ccs.MovementEventType.loopComplete
+    	 and movementId == "fire"  then
+			armatureBack:getAnimation():play("stand" , -1, 1)
     	end
 	end		
 	self.armature:getAnimation():setMovementEventCallFunc(animationEvent)

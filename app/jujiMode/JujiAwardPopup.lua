@@ -92,7 +92,7 @@ function JujiAwardPopup:onClickGet(itemIndex)
         str = "积分不足，无法领取！"
     end	
 
-    ui:showPopup("commonPopup",{type = "style2",content = str, delay = 0.5},
+    ui:showPopup("commonPopup",{type = "style2",content = str, delay = 2},
          {opacity = 100})    
 end
 
