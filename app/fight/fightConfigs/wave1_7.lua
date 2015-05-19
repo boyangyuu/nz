@@ -497,6 +497,7 @@ function waveClass:ctor()
 		type 	  = "puTong",
 	}
 
+	self.reliveCosts = {10, 10, 10}
 end
 
 return waveClass
