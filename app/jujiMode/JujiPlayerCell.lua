@@ -8,7 +8,7 @@ function JujiPlayerCell:ctor(record)
 end
 
 function JujiPlayerCell:initCellUI()
-	cc.FileUtils:getInstance():addSearchPath("res/JujiMode")
+	cc.FileUtils:getInstance():addSearchPath("res/JujiMode/wuxianjuji")
     local controlNode = cc.uiloader:load("cellPlayer.json")
     controlNode:setPosition(0, 0)
     self:addChild(controlNode)
