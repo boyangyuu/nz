@@ -36,6 +36,12 @@ function FightResultFailPopup:initUI()
 
     local btnback = cc.uiloader:seekNodeByName(self, "btnback")
     self.btnRevive = cc.uiloader:seekNodeByName(self, "btnrevive")
+    local reviveCost = cc.uiloader:seekNodeByName(self, "reviveNum")
+    local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
+    local reliveCost = fight:getReliveCost()
+    dump(reliveCost,"reliveCost")
+    reviveCost:setString(reliveCost)
 
     --add res
     local manager = ccs.ArmatureDataManager:getInstance()
