@@ -129,8 +129,8 @@ configs["afterfight03"] = {
 configs["fightJu"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fightJu_open",contentOffset = {x = 0, y = -220}, msg = "请先点击开镜", rolepos = "right"}, 
-		{id = "fightJu_fire",contentOffset = {x = 0, y = -220}, msg = "之后点击开火", }, 
+		{id = "fightJu_open",contentOffset = {x = 0, y = -220}, msg = "点击敌人位置开镜", rolepos = "right"}, 
+		{id = "fightJu_fire",contentOffset = {x = 0, y = -220}, msg = "点击开火", }, 
 		{id = "fightJu_close",contentOffset = {x = 0, y = -220}, msg = " 点击关镜按钮", }, 
 		{id = "fightJu_finish", msg = "消灭剩下来的敌人！", skipMode = "clickScreen", opacity = 0.0},
 	}	

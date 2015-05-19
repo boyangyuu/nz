@@ -21,6 +21,7 @@ function Robot:ctor()
     --instance
     self.isRoboting = false
 	self.isCoolDone = true
+	self.isGoldRobot = false
     --event
 end
 
@@ -34,11 +35,13 @@ end
 
 function Robot:getDemage()
 	assert(define.kRobotDemage, "demage is nil")
+	local baseValue = self.isGoldRobot and define.kRobotGoldDemage
+		or define.kRobotDemage
 	local fightFactory =   md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
 	local gid = fight:getGroupId()
 	local scale = gid > 2 and 2.0 or 1.0
-	return define.kRobotDemage * scale
+	return  baseValue * scale
 end
 
 function Robot:isCoolDownDone()
@@ -76,6 +79,9 @@ end
 function Robot:startGoldRobot(time)
 	print("Robot:startGoldRobot()")
     
+	--gold
+	self.isGoldRobot = true
+
     --um
     local fightFactory =     md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
@@ -106,6 +112,10 @@ end
 
 function Robot:startRobot(time)
 	print("Robot:startRobot()")
+
+	--
+	self.isGoldRobot = false
+
     local levelModel = md:getInstance("LevelDetailModel")
     local fightFactory =     md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
