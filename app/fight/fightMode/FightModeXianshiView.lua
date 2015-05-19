@@ -16,7 +16,7 @@ end
 function FightModeXianshiView:initUI()
 	FightModeXianshiView.super.initUI(self)
 	self.labelTime = cc.uiloader:seekNodeByName(self.ui, "labelTime")
-	self.labelTime:setColor(cc.c3b(255, 0, 4))
+	-- self.labelTime:setColor(cc.c3b(255, 0, 4))
 end
 
 function FightModeXianshiView:refreshUI()
@@ -64,16 +64,17 @@ function FightModeXianshiView:onTimeEnd()
 end
 
 function FightModeXianshiView:getTimeStr(time)
-	local minutes = math.floor(time / 60)
-	if minutes <  10 then 
-		minutes = "0" .. minutes
-	end
+	-- local minutes = math.floor(time / 60)
+	-- if minutes <  10 then 
+	-- 	minutes = "0" .. minutes
+	-- end
 
-	local seconds = time % 60 
-	if seconds < 10 then 
-		seconds = "0" .. seconds
-	end
-	return minutes .. ":" .. seconds
+	-- local seconds = time % 60 
+	-- if seconds < 10 then 
+	-- 	seconds = "0" .. seconds
+	-- end
+	-- return minutes .. ":" .. seconds
+	return time
 end
 
 return FightModeXianshiView
