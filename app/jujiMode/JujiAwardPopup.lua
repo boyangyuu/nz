@@ -87,7 +87,7 @@ function JujiAwardPopup:onClickGet(itemIndex)
     elseif isAvaliable then 
     	self.jujiMode:getAward(itemIndex)
     	self:refreshList()
-        str = "成功获取奖励！"
+        str = "领取成功！"
     else
         str = "积分不足，无法领取！"
     end	

@@ -35,10 +35,8 @@ function JujiFight:startFightResult()
     	closeFunc    = closeFunc,
     	goldValue    = self.goldValue,
 	}
-    -- fightDescModel:dispatchEvent(data)	
+    -- fightDescModel:dispatchEvent(data)
     ui:showPopup("JujiResultLayer",data,{animName = "normal"})
-
-
 end
 
 function JujiFight:getResultData()
