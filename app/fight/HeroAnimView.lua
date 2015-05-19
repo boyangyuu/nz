@@ -207,6 +207,13 @@ function HeroAnimView:playKeepKill(event)
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 
 	--sound
+	if self.isSounding then return end
+	self.isSounding = true
+	local function cdFunc()
+		self.isSounding = false
+	end
+	self:performWithDelay(cdFunc, 0.4)
+
 	local soundIndex = nil
 	if count <= 7 then 
 		soundIndex = count

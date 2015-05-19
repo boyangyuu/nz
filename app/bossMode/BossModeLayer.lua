@@ -228,7 +228,10 @@ function BossModeLayer:onClickBtnAward(i)
 		end
 	end
 	local bujianName = {"枪柄部件", "枪口部件", "枪匣部件", "枪托部件", "枪身部件"}
-	local msg = "奖励：".. bujianName[i] .. "x1，手雷x"..reward["lei"] .."，药包x"..reward["healthBag"].."，金币x"..reward["money"]
+	local msg = "奖励：".. (bujianName[i] or 0)
+	.. "x1，手雷x"..(reward["lei"] or 0)
+	.."，药包x"..(reward["healthBag"] or 0)
+	.."，金币x"..(reward["money"] or 0)
 	
 	ui:showPopup("commonPopup",
 	 {type = "style1",content = msg},

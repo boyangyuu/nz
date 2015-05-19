@@ -692,7 +692,7 @@ function FightPlayer:onResumePos(event)
     self.focusNode:setPosition(display.width/2, display.height1/2)
     self.layerGun:setPositionX(display.width/2 + 200)
     self.layerMap:setPosition(0, 0)
-    self:justBgPos(self.layerMap)
+    self:justBgPos()
 end
 
 function FightPlayer:moveFocus(offsetX, offsetY)
@@ -726,7 +726,7 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
 
     local x, y = layerMap:getPosition()
-    self:justBgPos(layerMap)
+    self:justBgPos()
 end
 
 function FightPlayer:moveGun(offsetX, offsetY)
@@ -736,7 +736,7 @@ function FightPlayer:moveGun(offsetX, offsetY)
     layerGun:setPosition(offsetX + xOri, offsetY + yOri)
 end
 
-function FightPlayer:justBgPos(node)
+function FightPlayer:justBgPos()
     local layerMap = self.layerMap
     local bgMap = self.mapView
     local box = bgMap:getBoundingBox()
@@ -747,13 +747,13 @@ function FightPlayer:justBgPos(node)
     local isOpenJu = map:getIsOpenJu()
     local scale = isOpenJu and define.kJuRange or 1.0
 
-    local w, h = bgMap:getBgSize().width* scale  ,
-        bgMap:getBgSize().height  * scale
+    local w, h = bgMap:getBgSize().width * scale  ,
+        bgMap:getBgSize().height * scale
     local offset = bgMap:getBgOffset()
     local xL = (w - display.width1) / 2  
     local yL1 = -(h - display.height1 + offset.y * 2) / 2 
     local yL2 = (h - display.height1 - offset.y * 2) / 2
-    local x, y = node:getPosition()
+    local x, y = layerMap:getPosition()
 
     --x
     if x <= -xL then
@@ -768,7 +768,7 @@ function FightPlayer:justBgPos(node)
     elseif y >=  yL2  then  --下限
         y = yL2
     end    
-    node:setPosition(x, y)    
+    layerMap:setPosition(x, y)    
 end
 
 function FightPlayer:justFocusPos(node)

@@ -1,4 +1,5 @@
 local Fight   = import(".Fight") 
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local BossFight = class("BossFight", Fight)
 function BossFight:ctor(properties)
@@ -24,7 +25,6 @@ function BossFight:startFightResult()
 	local isNewProgress = bossModeModel:passWave(self.chapterIndex, curWaveIndex) 
 	
 	--desc
-    -- local fightDescModel = md:getInstance("FightDescModel")
     local data = {
 	    -- name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
@@ -33,7 +33,6 @@ function BossFight:startFightResult()
     	closeFunc    = closeFunc,
 	}
     ui:showPopup("BossResultLayer",data,{animName = "normal"})
-    -- fightDescModel:dispatchEvent(data)
 end
 
 function BossFight:getResultData()
@@ -59,33 +58,46 @@ end
 function BossFight:waveUpdate(nextWaveIndex, waveType)
 	if nextWaveIndex == 1 then return end
 
-	--addHp 
-	self.hero:costHpBag()
-
 	--award
 	local curWaveIndex = nextWaveIndex - 1
 	local bossModeModel = md:getInstance("BossModeModel")
 	local isNewProgress = bossModeModel:passWave(self.chapterIndex, curWaveIndex) 
 
-	--desc
-	local function closeFunc()
-		print("closeFunc!")
-		self:pauseFight(false)
-	end
-
+	--award
 	local map = md:getInstance("Map")
 	local waveIndex = map:getWaveIndex()
-    -- local fightDescModel = md:getInstance("FightDescModel")
     local eventData = {
-	    -- name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
-    	closeFunc    = closeFunc,
+    	closeFunc    = handler(self, self.onClickedAwardBtn),
     	isAwardBujian= isNewProgress,
+    	goldValue    = self.goldValue,
 	}
-	-- dump(eventData, "eventData")
     ui:showPopup("BossResultLayer",eventData,{animName = "normal"})
     self:pauseFight(true)
+
+    --money
+    local user = md:getInstance("UserModel") 
+    user:addMoney(self.goldValue)
+    self.goldValue = 0    
+end
+
+function BossFight:onClickedAwardBtn(event)
+	--next wave
+	local function delayCall()
+		local map = md:getInstance("Map")
+		local waveIndex = map:getWaveIndex()
+	    local fightDescModel = md:getInstance("FightDescModel")
+	    fightDescModel:waveStart(waveIndex)	
+	   
+	    --add hp
+	    self.hero:costHpBag()
+
+	    --pause
+	    self:pauseFight(false)
+	end
+
+	scheduler.performWithDelayGlobal(delayCall, 2.0)      
 end
 
 function BossFight:endFightFail()

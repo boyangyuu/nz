@@ -154,9 +154,7 @@ function Gun:getCritPercent()
 end
 
 function Gun:getDemage()
-
 	local baseValue = self.config.demage
-	print("baseValue", baseValue)
 	assert(baseValue, "baseValue nil bagIndex:"..self.bagIndex)
 	return baseValue
 end
