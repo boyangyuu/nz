@@ -37,13 +37,14 @@ layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopu
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
-layerClasses["InputBoxPopup"]    = import("..commonPopup.InputBoxPopup")
+layerClasses["InputBoxPopup"]        = import("..commonPopup.InputBoxPopup")
+layerClasses["BossAdvisePopup"]      = import("..bossMode.BossAdvisePopup")
 
 -- buy
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
 layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
-layerClasses["BuyTipsPopup"]       = import("..buy.BuyTipsPopup")
+layerClasses["BuyTipsPopup"]         = import("..buy.BuyTipsPopup")
 
 --awardTime
 layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")
