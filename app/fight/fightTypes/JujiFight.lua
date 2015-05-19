@@ -2,6 +2,8 @@
 local Fight   = import(".Fight") 
 
 local JujiFight = class("JujiFight", Fight)
+JujiFight.JUJIFIGHT_SCORE_EVENT = "JUJIFIGHT_SCORE_EVENT"
+
 function JujiFight:ctor(properties)
 	JujiFight.super.ctor(self, properties)
 
