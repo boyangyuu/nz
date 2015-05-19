@@ -31,8 +31,14 @@ function BossFight:startFightResult()
     	waveIndex    = curWaveIndex,
     	isAwardBujian= isNewProgress,
     	closeFunc    = closeFunc,
+    	goldValue    = self.goldValue,
 	}
     ui:showPopup("BossResultLayer",data,{animName = "normal"})
+
+    --money
+    local user = md:getInstance("UserModel") 
+    user:addMoney(self.goldValue)
+    self.goldValue = 0       
 end
 
 function BossFight:getResultData()

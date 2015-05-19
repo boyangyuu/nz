@@ -218,6 +218,18 @@ function isDefendDX()
 end
 
 function isDirectIap()
+    local className = "com/hgtt/com/IAPControl"
+    local methodName = "getIsDirectIap"
+    local args = {}
+    local sig = "()Z"
+    local isDirect = nil
+    local luajResult = nil
+    luajResult, isDirect = luaj.callStaticMethod(className, methodName, args, sig)
+    print("luajResult:", luajResult)
+    print("isDirect:", isDirect)
+    if luajResult then
+        return isDirect
+    end
     return false
 end
 

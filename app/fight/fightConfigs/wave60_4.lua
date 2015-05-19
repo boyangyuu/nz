@@ -306,7 +306,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 15,
+				time = 18,
 				num = 5,
 				delay = {0,0.7,1.4, 2.1,2.8},
 				pos = {380,490,570,660,700},					
@@ -317,18 +317,18 @@ local waves = {
 					id = 1,
 				},
 			},
-			{
-				time = 28,
-				num = 5,
-				delay = {2.1,2.8,0.7,1.4,0.9 },
-				pos = {720,610,380,490,570},					
-				property = {
-					placeName = "place9",  
-					type = "common",
-					startState = "san",
-					id = 1,
-				},
-			},
+			-- {
+			-- 	time = 28,
+			-- 	num = 5,
+			-- 	delay = {2.1,2.8,0.7,1.4,0.9 },
+			-- 	pos = {720,610,380,490,570},					
+			-- 	property = {
+			-- 		placeName = "place9",  
+			-- 		type = "common",
+			-- 		startState = "san",
+			-- 		id = 1,
+			-- 	},
+			-- },
 			-- {
 			-- 	time = 33,	      --忍者
 			-- 	num = 1,
@@ -342,7 +342,7 @@ local waves = {
 			-- 	},
 			-- },	
 			{
-				time = 35,	      --忍者
+				time = 30,	      --忍者
 				num = 2,
 				pos = {400,700},
 				delay = {0.5,1.3},
