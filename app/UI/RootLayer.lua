@@ -18,7 +18,7 @@ function RootLayer:ctor()
     -- add keyPad listener
     self:setKeypadEnabled(true)
     self:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
-        if event.name == "clicked" then
+        if event.key == "back" then
             device.showAlert("","您就这样离开吗？", {"离开", "继续"}, handler{self, self.onClickListener})
         end
     end)
