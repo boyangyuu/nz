@@ -10,7 +10,6 @@ local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
 BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
 
-local proInfo = require("app.commonPopup.ProductInfoConfig")
 -- 定义事件
 function BuyModel:ctor(properties)
     BuyModel.super.ctor(self, properties)
@@ -174,7 +173,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		end
 	    print("weaponId",weaponId)
 	    ui:showPopup("WeaponNotifyLayer",
-	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify})  
+	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify},{opacity = 255})  
 	    weaponIndex = weaponIndex + 1    	
     end
     showWeaponNotify()
@@ -212,7 +211,7 @@ function BuyModel:buy_goldGiftBag( buydata )
 	propModel:addProp("lei",30)
 
 	if not buydata.isNotPopup then 
-		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
 	end
 end
 
@@ -230,7 +229,7 @@ function BuyModel:buy_goldGiftBag_dx( buydata )
 	propModel:addProp("lei",20)
 
 	if not buydata.isNotPopup then 
-		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
 	end
 end
 

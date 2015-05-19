@@ -23,8 +23,8 @@ function BossModeLayer:ctor(properties)
 end
 
 function BossModeLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/BossMode")
-    local controlNode = cc.uiloader:load("wuxianboss.ExportJson")
+	cc.FileUtils:getInstance():addSearchPath("res/BossMode/wuxianboss")
+    local controlNode = cc.uiloader:load("wuxianboss.json")
     self:addChild(controlNode)
 end
 
@@ -50,7 +50,10 @@ function BossModeLayer:initUI()
 	self.weaponDesc = cc.uiloader:seekNodeByName(self.panelMain, "weaponDesc")
 	self.name = cc.uiloader:seekNodeByName(self.panelMain, "name")
 	self.desc = cc.uiloader:seekNodeByName(self.panelMain, "desc")
-
+	self.skillName:setColor(cc.c3b(255, 205, 0))
+	self.weaponDesc:setColor(cc.c3b(255, 205, 0))
+	self.name:setColor(cc.c3b(255, 205, 0))
+	self.desc:setColor(cc.c3b(255, 205, 0))
 	--btn
 	self.btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
 	local btnStart = cc.uiloader:seekNodeByName(self, "btnStart")
@@ -165,7 +168,7 @@ function BossModeLayer:refreshContent()
 
 	--
 	self.panelChapter:removeAllChildren()
-    local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
+    local bossBtnNode = cc.uiloader:load("res/BossMode/wuxianboss/chapter"..self.choseChapter..".json")
     
     local btnChapter = {}
     for i=1,5 do
@@ -225,7 +228,10 @@ function BossModeLayer:onClickBtnAward(i)
 		end
 	end
 	local bujianName = {"枪柄部件", "枪口部件", "枪匣部件", "枪托部件", "枪身部件"}
-	local msg = "奖励：".. bujianName[i] .. "x1，手雷x"..reward["lei"] .."，药包x"..reward["healthBag"].."，金币x"..reward["money"]
+	local msg = "奖励：".. (bujianName[i] or 0)
+	.. "x1，手雷x"..(reward["lei"] or 0)
+	.."，药包x"..(reward["healthBag"] or 0)
+	.."，金币x"..(reward["money"] or 0)
 	
 	ui:showPopup("commonPopup",
 	 {type = "style1",content = msg},

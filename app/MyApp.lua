@@ -98,8 +98,8 @@ function MyApp:createGameStateFile()
         weapons = {
             bags = {
                 {
-                    intenlevel = 10,
-                    weaponid   = 9,
+                    intenlevel = 1,
+                    weaponid   = 1,
                 },
                 {
                     intenlevel = 0,
@@ -112,7 +112,7 @@ function MyApp:createGameStateFile()
             },
             weaponed = {
                 bag1 = {
-                    weaponid   = 9,
+                    weaponid   = 1,
                 },
                 bag2 = {
                     weaponid   = 2,
@@ -147,12 +147,12 @@ function MyApp:createGameStateFile()
 
         weaponsuipian = {},
 
-        money = 2000000,
+        money = 2000,
         diamond = 0,
         
         --开启的关卡
         currentlevel =  {
-            group = 1,
+            group = 2,
             level = 6,
         },
 
@@ -162,13 +162,13 @@ function MyApp:createGameStateFile()
         },
 
         jujiMode = {
-            waveIndex = 40, 
+            waveIndex = 0, 
             scoreAwarded = {
             },
         },            
 
         user = {
-            level = 7,
+            level = 10,
             fightedLevels = {},
             userName  = "玩家自己!",
             vipLevel  = 0,

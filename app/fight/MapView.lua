@@ -449,8 +449,8 @@ function MapView:getBgSize()
 end
 
 function MapView:getBgOffset()
-	local pos = cc.p(self.bg:getPositionX() - 1136/2, 
-		self.bg:getPositionY() - 640/2)
+	local pos = cc.p(self.bg:getPositionX() - display.width1/2, 
+		self.bg:getPositionY() - display.height1/2)
 	return pos
 end
 
@@ -471,8 +471,6 @@ function MapView:openZoom(event)
 		self.isZooming = false
 	end
 	local pWorldMap = self:convertToWorldSpace(cc.p(0, 0))
-
-	
 	local offsetX = (-destWorldPos.x  + pWorldMap.x) * (scale)
 	local offsetY = (-destWorldPos.y + pWorldMap.y) * (scale)
 	local action = cc.MoveBy:create(time, cc.p(offsetX, offsetY))
