@@ -74,10 +74,10 @@ function  DailyLoginModel:setGift(dailyID)
 	return false
 end
 
-function DailyLoginModel:isToday()
+function DailyLoginModel:isSameDay(curTimeStamp)
 	local DailyInfo = self:getDailyInfo()
 	dump(DailyInfo)
-	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",self.date) then
+	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",curTimeStamp) then
 		return true
 	else
 		return false
@@ -122,8 +122,14 @@ function DailyLoginModel:refreshTime(event, callfunc)
 	    -- dump(response, "请求成功 response")
 	    if response then
 	    	local curTimeStamp = response
+	    	local isSameDay = self:isSameDay(curTimeStamp)
+	    	if not isSameDay then
+				self:setGet(false)
+		    	callfunc("success")
+		    else
+		    	callfunc("fail")
+	    	end
 	    	self:saveTimeData(curTimeStamp)
-	    	callfunc("success")
 		end
     end
 end

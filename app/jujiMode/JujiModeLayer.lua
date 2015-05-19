@@ -33,7 +33,7 @@ function JujiModeLayer:setUserName()
 end
 
 function JujiModeLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/JujiMode")
+	cc.FileUtils:getInstance():addSearchPath("res/JujiMode/wuxianjuji")
     local controlNode = cc.uiloader:load("main.json")
     self:addChild(controlNode)
 end

@@ -258,12 +258,6 @@ function StartLayer:isGuideDone()
 end
 
 function StartLayer:initDailyLogin()
-    local isToday = self.dailyLoginModel:isToday()
-    if isToday == false then
-        self.dailyLoginModel:setGet(false)
-        self.dailyLoginModel:saveTimeData()
-    end
-
     local function callfunc(status)
         print("网络请求", status)
         if status == "success" then

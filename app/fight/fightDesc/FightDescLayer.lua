@@ -90,9 +90,10 @@ end
 -- end
 
 function FightDescLayer:onWaveStart(event)
+    cc.FileUtils:getInstance():addSearchPath("res/fnt")
     local label = display.newBMFontLabel({
         text = "A"..event.waveNum.."BCDEF",
-        font = "res/fnt/NO7.fnt",
+        font = "NO7.fnt",
         })
 
     addChildCenter(label, self.animPanl)

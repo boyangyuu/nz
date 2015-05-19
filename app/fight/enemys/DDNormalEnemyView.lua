@@ -152,7 +152,7 @@ function DDNormalEnemyView:playKill(event)
     DDNormalEnemyView.super.playKill(self, event)
     self.armature:getAnimation():play("die" , -1, 1)
     local missileType = self.property["missileType"]
-    if missileType == "tie" or missileType == "lei" then
+    if missileType == "lei" then
         self:playBombEffects()
     end     
 end
