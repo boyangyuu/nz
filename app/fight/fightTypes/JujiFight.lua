@@ -25,15 +25,11 @@ function JujiFight:startFightResult()
     user:addMoney(self.goldValue)
 
 	--desc
-    -- local fightDescModel = md:getInstance("FightDescModel")
     local data = {
-	    -- name         = fightDescModel.JUJIGIFT_ANIM_EVENT,
-    	levelIndex   = self:getLevelId() + 1,
-    	waveIndex    = self.passLevelNum,
+    	levelIndex   = self:getLevelId(),
     	closeFunc    = closeFunc,
     	goldValue    = self.goldValue,
-	}
-    -- fightDescModel:dispatchEvent(data)	
+	}	
     ui:showPopup("JujiResultLayer",data,{animName = "normal"})
 
 

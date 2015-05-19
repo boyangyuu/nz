@@ -6,7 +6,6 @@ end)
 
 function JujiResultLayer:ctor(properties)
 	self.levelIndex = properties.levelIndex
-	self.waveIndex  = properties.waveIndex
 	self.properties = properties
 	self:loadCCS()
 	self:initUI()
