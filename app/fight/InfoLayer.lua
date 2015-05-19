@@ -146,10 +146,29 @@ function InfoLayer:onHide(event)
 end
 
 function InfoLayer:onJujiScoreUpdate(event)
-	local score = event.score
 	local label_jujiFight = cc.uiloader:seekNodeByName(self.root, "label_jujiFight")	
-	label_jujiFight:setVisible(true)
-	label_jujiFight:setString(score)
+	label_jujiFight:setVisible(true)	
+	local score = event.score
+	local isDirect = event.isDirect
+	if isDirect then 
+		label_jujiFight:setString(score) 
+		return 
+	end
+	
+	--add
+	local num = score - 100
+	if num < 0 then num = score end
+	local function addScore()	
+		if num == score then 
+			transition.removeAction(self.sch)
+			self.sch = nil
+			return
+		end
+
+		num = num + 1
+		label_jujiFight:setString(num)
+	end
+	self.sch = self:schedule(addScore, 0.02)
 end
 
 function InfoLayer:onEnter()
