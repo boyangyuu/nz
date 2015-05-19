@@ -237,7 +237,7 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)         
     end    
 
-    local bulletImgs = {"zd_dimian", "zd_hjqmz", "zd_ptmz", "zd_hqlmz"}
+    local bulletImgs = {"zd_dimian", "zd_hjqmz", "zd_ptmz"}
     for i,v in ipairs(bulletImgs) do
         local src = "res/Fight/bulletAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
