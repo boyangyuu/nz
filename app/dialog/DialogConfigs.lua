@@ -42,8 +42,8 @@ kDialogConfig["group1"]  = {
 		},	
 
 		after = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "你太帅了！！敌人还没来得及反应就被你消灭了！", pos = "right"},		
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯，打击者是把好枪", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "恭喜你坚守成功！！", pos = "right"},		
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "嗯，多亏了打击者这把好枪", pos = "left"},
 			{role = "杰",imgname = "role_jie", msg = "打击者的确好用啊！ 怪不得号称大杀器！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，打击者和加特林都在武器大礼包里哦！！赶快领取吧！！", pos = "right"},
 		},						
