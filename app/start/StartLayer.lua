@@ -156,6 +156,8 @@ end
 function StartLayer:playBgMusic()
     local startMusic = "res/Music/bg/bjyx.wav"
     audio.playMusic(startMusic,true)
+
+    audio.setMusicVolume(0.8)
 end
 
 function StartLayer:playEnterSound()
