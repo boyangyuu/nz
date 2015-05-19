@@ -185,12 +185,16 @@ function BuyModel:buy_novicesBag( buydata )
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("PropModel")
+	local userModel = md:getInstance("UserModel")
 	--黄武*4
-	inlayModel:buyGoldsInlay(4)
+	inlayModel:buyGoldsInlay(1)
 	--机甲*3
-	propModel:addProp("jijia",3)
+	propModel:addProp("jijia",1)
 	--手雷*10
 	propModel:addProp("lei",10)
+
+	userModel:addMoney(188888)
+	
 	self:setBought("novicesBag")
 end
 
