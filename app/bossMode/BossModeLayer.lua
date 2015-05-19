@@ -23,8 +23,8 @@ function BossModeLayer:ctor(properties)
 end
 
 function BossModeLayer:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/BossMode")
-    local controlNode = cc.uiloader:load("wuxianboss.ExportJson")
+	cc.FileUtils:getInstance():addSearchPath("res/BossMode/wuxianboss")
+    local controlNode = cc.uiloader:load("wuxianboss.json")
     self:addChild(controlNode)
 end
 
@@ -168,7 +168,7 @@ function BossModeLayer:refreshContent()
 
 	--
 	self.panelChapter:removeAllChildren()
-    local bossBtnNode = cc.uiloader:load("res/BossMode/chapter"..self.choseChapter..".ExportJson")
+    local bossBtnNode = cc.uiloader:load("res/BossMode/wuxianboss/chapter"..self.choseChapter..".json")
     
     local btnChapter = {}
     for i=1,5 do
