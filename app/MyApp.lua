@@ -140,7 +140,7 @@ function MyApp:createGameStateFile()
             },
         },
         prop = {
-            lei = {num = 10},
+            lei = {num = 20},
             jijia = {num = 1},
             hpBag = {num = 1},
         },
@@ -152,8 +152,8 @@ function MyApp:createGameStateFile()
         
         --开启的关卡
         currentlevel =  {
-            group = 2,
-            level = 6,
+            group = 1,
+            level = 1,
         },
 
         bossMode = {
