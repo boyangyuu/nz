@@ -114,10 +114,7 @@ end
 
 function Fight:startFight()
     self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-    -- if not self.fightData["isContinue"] then 
-        -- print("function Fight:startFight()")/
-        self.inlay:checkNativeGold()    
-    -- end
+    self.inlay:checkNativeGold()
 
     --check guide
     local guide = md:getInstance("Guide")
@@ -130,6 +127,16 @@ function Fight:startFight()
             guide:check("fightJu")
         end, 0.0)   
     end
+
+    self:checkLongPress()
+end
+
+function Fight:checkLongPress( )
+    if self:isJujiFight() then return end
+    if self.groupId ~= 1 then return end 
+    if 1 == self.levelId then  return end
+    local hero = md:getInstance("Hero")
+    hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
 end
 
 function Fight:endFightWin()
