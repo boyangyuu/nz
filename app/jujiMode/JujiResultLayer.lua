@@ -64,7 +64,7 @@ function JujiResultLayer:initUI()
 		end
 	end
 
-    waveNum:setString("d"..self.waveIndex.."b")
+    waveNum:setString("d"..self.levelIndex.."b")
     local action = cc.MoveBy:create(0.3, cc.p(0,-100))
     waveNum:runAction(action)
 
