@@ -140,7 +140,7 @@ function MyApp:createGameStateFile()
             },
         },
         prop = {
-            lei = {num = 10},
+            lei = {num = 20},
             jijia = {num = 1},
             hpBag = {num = 1},
         },
