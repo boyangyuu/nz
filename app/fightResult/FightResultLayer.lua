@@ -325,12 +325,12 @@ end
 
 function FightResultLayer:popSuipianNotify(suipianId)
 	ui:showPopup("WeaponNotifyLayer",
-		 {type = "suipian",weaponId = suipianId})
+		 {type = "suipian",weaponId = suipianId},{opacity = 255})
 end
 
 function FightResultLayer:popGunNotify(weaponId)
 	ui:showPopup("WeaponNotifyLayer",
-		 {type = "gun",weaponId = weaponId, onCloseFunc = handler(self, self.checkGuide)})
+		 {type = "gun",weaponId = weaponId, onCloseFunc = handler(self, self.checkGuide)},{opacity = 255})
 end
 
 function FightResultLayer:checkGuide()

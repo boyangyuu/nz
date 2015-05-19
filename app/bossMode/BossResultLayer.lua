@@ -34,6 +34,10 @@ end
 
 function BossResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
+	local labelReward = cc.uiloader:seekNodeByName(self, "reward")
+	local labelGold = cc.uiloader:seekNodeByName(self, "labelGold")
+	labelReward:setVisible(false)
+
 	self.awardsTable = self:getAwards()
 	local numTable = {}
 	numTable["num1"] = cc.uiloader:seekNodeByName(self, "num1")
@@ -80,6 +84,8 @@ function BossResultLayer:initUI()
 				for k,v in pairs(numTable) do
 					v:setVisible(true)
 				end
+				labelReward:setVisible(true)
+				labelGold:setString("战斗获得："..self.properties.goldValue.."金币")
                 layerBtn:setTouchEnabled(true)
                 addBtnEventListener(layerBtn, function(event)
 					if event.name == 'began' then

@@ -174,7 +174,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		end
 	    print("weaponId",weaponId)
 	    ui:showPopup("WeaponNotifyLayer",
-	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify})  
+	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify},{opacity = 255})  
 	    weaponIndex = weaponIndex + 1    	
     end
     showWeaponNotify()
@@ -208,7 +208,7 @@ function BuyModel:buy_goldGiftBag( buydata )
 	propModel:addProp("lei",30)
 
 	if not buydata.isNotPopup then 
-		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
 	end
 end
 
@@ -226,7 +226,7 @@ function BuyModel:buy_goldGiftBag_dx( buydata )
 	propModel:addProp("lei",20)
 
 	if not buydata.isNotPopup then 
-		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
 	end
 end
 
