@@ -114,6 +114,8 @@ function LevelMapLayer:mapPopUp(event)
     elseif self.properties.fightData.fightType == "bossFight" then
         local chapterIndex = self.properties.fightData.chapterIndex
         ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
+    elseif self.properties.fightData.fightType == "jujiFight" then
+        ui:showPopup("JujiModeLayer", {}, {animName = "normal"})
     end  
 end
 
