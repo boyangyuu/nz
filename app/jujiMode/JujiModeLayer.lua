@@ -53,6 +53,7 @@ function JujiModeLayer:initUI()
 	local playerRank = cc.uiloader:seekNodeByName(self, "rank")
 	self.playerName = cc.uiloader:seekNodeByName(self, "playerName")
 	local playerPoint = cc.uiloader:seekNodeByName(self, "point")
+	self.notiReward = cc.uiloader:seekNodeByName(self, "noti")
 
 	local armature = ccs.Armature:create("zhoujiangli")
     armature:setPosition(cc.p(-100,0))
@@ -63,7 +64,7 @@ function JujiModeLayer:initUI()
 	local myselfRank = self.rankModel:getUserRank()
 	playerRank:setString(myselfRank)
 	self.playerName:setString(myselfRecord["name"])
-	playerPoint:setString(myselfRecord["jujiLevel"] )
+	playerPoint:setString(myselfRecord["jujiLevel"]*100 )
 
 	btnBack:setTouchEnabled(true)
 	addBtnEventListener(btnBack, function(event)
@@ -122,6 +123,7 @@ end
 
 function JujiModeLayer:onClickBtnReward()
 	print("JujiModeLayer:onClickBtnReward()")
+	self.notiReward:setVisible(false)
 	ui:showPopup("JujiAwardPopup")
 end
 

@@ -1,4 +1,3 @@
-
 local WeaponNotifyLayer = class("WeaponNotifyLayer", function()
 	return display.newLayer()
 end)
@@ -6,7 +5,7 @@ end)
 
 --[[
 		ui:showPopup("WeaponNotifyLayer",
-			 {type = "gun",weaponId = 3})
+			 {type = "gun",weaponId = 3},{opacity = 255})
 ]]
 function WeaponNotifyLayer:ctor(properties)
 	self.weaponListModel = md:getInstance("WeaponListModel")

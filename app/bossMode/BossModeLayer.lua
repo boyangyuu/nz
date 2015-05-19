@@ -50,7 +50,10 @@ function BossModeLayer:initUI()
 	self.weaponDesc = cc.uiloader:seekNodeByName(self.panelMain, "weaponDesc")
 	self.name = cc.uiloader:seekNodeByName(self.panelMain, "name")
 	self.desc = cc.uiloader:seekNodeByName(self.panelMain, "desc")
-
+	self.skillName:setColor(cc.c3b(255, 205, 0))
+	self.weaponDesc:setColor(cc.c3b(255, 205, 0))
+	self.name:setColor(cc.c3b(255, 205, 0))
+	self.desc:setColor(cc.c3b(255, 205, 0))
 	--btn
 	self.btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
 	local btnStart = cc.uiloader:seekNodeByName(self, "btnStart")

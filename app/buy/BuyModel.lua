@@ -173,7 +173,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 		end
 	    print("weaponId",weaponId)
 	    ui:showPopup("WeaponNotifyLayer",
-	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify})  
+	     {type = "gun",weaponId = weaponId, onCloseFunc = showWeaponNotify},{opacity = 255})  
 	    weaponIndex = weaponIndex + 1    	
     end
     showWeaponNotify()
@@ -184,12 +184,16 @@ function BuyModel:buy_novicesBag( buydata )
 	local inlayModel = md:getInstance("InlayModel")
 	local storeModel = md:getInstance("StoreModel")
 	local propModel = md:getInstance("PropModel")
+	local userModel = md:getInstance("UserModel")
 	--黄武*4
-	inlayModel:buyGoldsInlay(4)
+	inlayModel:buyGoldsInlay(1)
 	--机甲*3
-	propModel:addProp("jijia",3)
+	propModel:addProp("jijia",1)
 	--手雷*10
 	propModel:addProp("lei",10)
+
+	userModel:addMoney(188888)
+	
 	self:setBought("novicesBag")
 end
 
@@ -207,7 +211,7 @@ function BuyModel:buy_goldGiftBag( buydata )
 	propModel:addProp("lei",30)
 
 	if not buydata.isNotPopup then 
-		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
 	end
 end
 
@@ -225,7 +229,7 @@ function BuyModel:buy_goldGiftBag_dx( buydata )
 	propModel:addProp("lei",20)
 
 	if not buydata.isNotPopup then 
-		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"})
+		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
 	end
 end
 

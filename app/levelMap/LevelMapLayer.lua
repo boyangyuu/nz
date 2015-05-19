@@ -114,6 +114,8 @@ function LevelMapLayer:mapPopUp(event)
     elseif self.properties.fightData.fightType == "bossFight" then
         local chapterIndex = self.properties.fightData.chapterIndex
         ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
+    elseif self.properties.fightData.fightType == "jujiFight" then
+        ui:showPopup("JujiModeLayer", {}, {animName = "normal"})
     end  
 end
 
@@ -210,6 +212,9 @@ function LevelMapLayer:initAwardLayer()
 end
 
 function LevelMapLayer:initAwardTime()
+    local notiTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "noti")
+
+
     --限时礼包
     local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
     local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")    
@@ -229,6 +234,14 @@ function LevelMapLayer:initAwardTime()
         local str = awardModel:getContent()   
         -- print("str", str)
         labelTime:setString(str)
+        --check
+        local awardModel = md:getInstance("AwardTimeModel")   
+        local isCanAward = awardModel:isCanAward()
+        if isCanAward then 
+            notiTime:setVisible(true)
+        else
+            notiTime:setVisible(false)
+        end
     end
     self:schedule(funcTime, 1.0)
 end
@@ -250,6 +263,9 @@ end
 
 function LevelMapLayer:initFightActLayer()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
+    local notiJuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "notijuji")
+    local notiBoss = cc.uiloader:seekNodeByName(self.chooseRootNode, "notiboss")
+
     --无限狙击
     local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
     
@@ -269,6 +285,7 @@ function LevelMapLayer:initFightActLayer()
                      {type = "style2", content = "通过狙击关卡后开启！"},
                      {opacity = 0})
         end)
+        notiJuji:setVisible(false)
     else
         btnjuji:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
@@ -278,8 +295,9 @@ function LevelMapLayer:initFightActLayer()
         end)
         :onButtonClicked(function( event )
             ui:showPopup("JujiModeLayer", {}, {animName = "leftScale"})
-        end)
-    end  
+            notiJuji:setVisible(false)
+        end) 
+    end
 
 
     --boss
@@ -302,6 +320,7 @@ function LevelMapLayer:initFightActLayer()
                      {type = "style2", content = "通关第一章后开启！"},
                      {opacity = 0})
         end)
+        notiBoss:setVisible(false)
     else
         btnboss:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
@@ -313,6 +332,7 @@ function LevelMapLayer:initFightActLayer()
             local bossModeModel = md:getInstance("BossModeModel")
             local chapterIndex = bossModeModel:getAlreadyChapter()
             ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex}, {animName = "leftScale"})
+            notiBoss:setVisible(false)
         end)
     end
 end
@@ -321,7 +341,7 @@ function LevelMapLayer:initKefuLayer()
     --客服
     self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
     self.telNum:setColor(cc.c3b(255, 0, 0))
-    self.telNum:enableOutline(cc.c4b(255, 255, 255,255), 2)
+    self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 

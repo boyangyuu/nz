@@ -252,7 +252,7 @@ function WeaponListLayer:buyWeaponByStone()
         audio.playSound(gmcg,false)
 
         ui:showPopup("WeaponNotifyLayer",
-         {type = "gun",weaponId = self.weaponId})
+         {type = "gun",weaponId = self.weaponId},{opacity = 255})
         return true
     else
         return false

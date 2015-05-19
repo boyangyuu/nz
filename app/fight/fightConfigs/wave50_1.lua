@@ -956,7 +956,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--鬼眼分身           冲锋伤害  type = "renzhe",
-	{id=16,image="renzb",demage=40,hp=60000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=16,image="renzb",demage=40,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
 	shanRate = 100, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--黑衣忍者兵            冲锋伤害  type = "renzhe",
@@ -979,10 +979,10 @@ local enemys = {
 	{id=23,image="daodan02",demage=100,hp=10000, weak1=1},
 
 	--BOSS铁球
-	{id=24,image="tieqiu",demage= 100,hp=14000, weak1=1},
+	{id=24,image="tieqiu",demage= 100,hp=11000, weak1=1},
 
 	--boss扔的汽车
-	{id=25,image="qiche",demage=100,hp=14000,weak1=1},
+	{id=25,image="qiche",demage=100,hp=11000,weak1=1},
 
 	--高级召唤医疗兵      type = "yiliao",
 	{id=26,image="yiliaob",demage=30,hp=30000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
@@ -4021,12 +4021,12 @@ end
 function waveClass:randomWaves()
 	local waves = {}
 	local order = {}
-	order[1] = math.random(8,8) 	
-	-- order[1] = math.random(1,3)
-	-- order[2] = math.random(4,6)
-	-- order[3] = math.random(7,8)
-	-- order[4] = math.random(9,10)
-	-- order[5] = math.random(11, 11)  
+	--order[1] = math.random(8,8) 	
+	order[1] = math.random(1,3)
+	order[2] = math.random(4,6)
+	order[3] = math.random(7,8)
+	order[4] = math.random(9,10)
+	order[5] = math.random(11, 11)  
 	dump(order, "order")
 
 	for i,index in ipairs(order) do
