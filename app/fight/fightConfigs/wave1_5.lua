@@ -6,7 +6,7 @@ local waves = {
 	{
 		enemys = { 
 			{
-				time = 3,
+				time = 2,
 				num = 1,
 				delay = {0},
 				pos = {20},
@@ -222,25 +222,25 @@ local waves = {
 --enemy的关卡配置
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=3,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4, weak1=3},
+	{id=1,image="anim_enemy_002",demage=1,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4, weak1=3},
 
 	--导弹兵      --type = "dao",
 	{id=2,image="zpbing",demage=0,hp=700,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=3,image="daodan",demage=10,hp=1,
+	{id=3,image="daodan",demage=5,hp=1,
 	weak1=1},
 
 	--手雷兵
 	{id=4,image="shouleib",demage=0,hp=220,walkRate=180,walkCd=2,rollRate=360,rollCd=5,fireRate=420,fireCd=5, weak1=3},	
 
 	--手雷
-	{id=5,image="shoulei",demage=4,hp=1, weak1=3,},
+	{id=5,image="shoulei",demage=2,hp=1, weak1=3,},
 
 
 	--绑匪                                     140--左右移动距离       280--滚动距离
-	{id=7,image="tufeib",demage=3,hp=220,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+	{id=7,image="tufeib",demage=1,hp=220,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
 
 	--被绑架人        --type = "bangren",
 	{id=8,image="hs", hp=500, weak1=1},	

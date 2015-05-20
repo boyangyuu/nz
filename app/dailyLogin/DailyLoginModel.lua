@@ -76,7 +76,7 @@ end
 
 function DailyLoginModel:isSameDay(curTimeStamp)
 	local DailyInfo = self:getDailyInfo()
-	dump(DailyInfo)
+	if DailyInfo["loginTime"] == nil then return false end
 	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",curTimeStamp) then
 		return true
 	else
@@ -127,7 +127,7 @@ function DailyLoginModel:refreshTime(event, callfunc)
 				self:setGet(false)
 		    	callfunc("success")
 		    else
-		    	callfunc("fail")
+		    	callfunc("success notPop")
 	    	end
 	    	self:saveTimeData(curTimeStamp)
 		end

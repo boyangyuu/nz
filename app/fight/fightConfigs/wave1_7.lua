@@ -252,7 +252,7 @@ local enemys = {
 	{id=9,image="zibaob",demage=15,hp=403,fireRate=30,speed=100, weak1=2},	 --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=30,hp=15000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=30,hp=10000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
@@ -268,7 +268,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		award = 25000,
+		award = 20000,
 		image = "renzb",                       --图片名字
 		hp = 100000,
 		fireRate = 60,               --普攻频率
@@ -295,7 +295,7 @@ local bosses = {
 			},						
 			zhaohuan = { 0.90, 0.60, 0.30                    --召唤分身
 			},                                           
-			chongfeng = { 0.99, 0.80,0.65, 0.55, 0.45, 0.35, 0.25, 0.15     --冲锋
+			chongfeng = { 0.99, 0.80, 0.65, 0.55, 0.45, 0.35, 0.15     --冲锋
 			},
 
 			weak3 = {                               --右腿 技能触发(可以同时)
@@ -307,14 +307,14 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.90,0.50,0.30,                       
 			},
-			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.90,
-			},	
-			demage200 = {  
-				0.60,
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.95,
 			},	
 			demage300 = {  
-				0.30,
+				0.70,
+			},	
+			demage300 = {  
+				0.40,
 			},	
 						
 		},
@@ -382,22 +382,7 @@ local bosses = {
 					missileId = 18,
 				},
 			},
-			{
-				time = 2,	                                               --金武奖励箱子
-				num = 1,
-				pos = {730},
-				delay = {0},
-				property = { 
-					type = "awardSan",
-					id = 19,
-					--award = "goldWeapon",     --黄金武器
-					--award = "coin",                        --金币
-					--award = "shouLei",        --手雷
-					award = "healthBag",                 --医疗包
-					value = 1,
-					placeName = "place3",
-				},
-			},
+			
 		},	
 
 
@@ -478,6 +463,22 @@ local bosses = {
 					missileId = 18,
 				},
 			},
+			{
+				time = 0,	                                               --金武奖励箱子
+				num = 1,
+				pos = {730},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					--award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place3",
+				},
+			},
 			
 		},
 	},
@@ -492,12 +493,18 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.limit  = limit
 	self.fightMode =  {
 		type 	  = "puTong",
+
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		-- type 	  = "xianShi",
+		-- limitTime = 40,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
 	}
-
-	self.reliveCosts = {10, 10, 10}
+	
 end
-
 return waveClass

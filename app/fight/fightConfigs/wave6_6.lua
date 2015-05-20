@@ -276,7 +276,7 @@ local enemys = {
 local bosses = {
 	{
 		image = "dzboss", --图片名字                                                             多足boss巨炮泰坦
-		award = 20000,                   --boss产出金币数量
+		award = 50000,                   --boss产出金币数量
 		hp = 250000,
 		fireRate = 180,                  --普攻频率
 		fireCd = 4,                     --普攻cd

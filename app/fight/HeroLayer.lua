@@ -122,7 +122,7 @@ function HeroLayer:updateHp()
 
 		if value == 0 then return end
 		self.hero:increaseHp(value)
-
+		
 	end
 	self.hpUpdateHandler = self:schedule(updateHpFunc, 1.0)
 end

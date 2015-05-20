@@ -21,18 +21,86 @@ function DDNormalEnemyView:ctor(property)
     self.destPos   = property.destPos
     self.srcScale  = property.srcScale
     self.offsetPos = property.offset or cc.p(0.0,0.0) 
-
+    self.blood     = nil
     --events
     cc.EventProxy.new(self.enemy, self)
         :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.playHitted)) 
         :addEventListener(Actor.KILL_EVENT, handler(self, self.playKill)) 
-
+        :addEventListener(Actor.HP_INCREASE_EVENT, handler(self, self.refreshBlood)) 
+        :addEventListener(Actor.HP_DECREASE_EVENT, handler(self, self.refreshBlood))
     self:playFire() 
 end
 
 function DDNormalEnemyView:tick()
     
 end
+
+--ui
+function DDNormalEnemyView:onEnter()
+    DDNormalEnemyView.super.onEnter(self)
+    self:initBlood()
+end
+
+function DDNormalEnemyView:initBlood()
+    --pos
+    local boneBlood = self.armature:getBone("blood")
+    if boneBlood == nil then return end
+
+    --add blood
+    local node = cc.uiloader:load("res/Fight/fightLayer/fightBlood/enemyBlood.ExportJson")    
+    self.blood = node
+    local bound = self.armature:getBoundingBox()
+
+    local posBone = boneBlood:convertToWorldSpace(cc.p(0, 0))
+    local posArm = self.armature:convertToWorldSpace(cc.p(0, 0))
+    local destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
+    dump(destpos, "destpos")
+    self.blood:setPosition(destpos.x, destpos.y)
+    self.armature:addChild(self.blood)
+    
+    --set
+    self:refreshBlood({})
+    self.blood:setVisible(false)
+end
+
+function DDNormalEnemyView:refreshBlood(event)
+    if self.blood == nil then return end
+    local maxHp = self.enemy:getMaxHp()
+    local hp = self.enemy:getHp()
+    local per = hp/maxHp * 100
+
+    if per == 0 then 
+        self.blood:setVisible(false) 
+        return
+    end
+
+    --value
+    local bloodUp   = cc.uiloader:seekNodeByName(self.blood, "bloodUp")
+    local bloodDown = cc.uiloader:seekNodeByName(self.blood, "bloodDown")
+
+    --visible
+    if self.bloodAction then 
+        transition.removeAction(self.bloodAction)
+        self.bloodAction = nil
+    end
+    self.blood:setVisible(true)
+    local function hide()
+        self.blood:setVisible(false)
+    end
+    self.bloodAction = self.blood:performWithDelay(hide, 1.0)
+    
+    if event.name == Actor.HP_INCREASE_EVENT  then 
+        bloodUp:setScaleX(per/100)
+        transition.scaleTo(bloodDown, {scaleX = per/100, time = 0.1})       
+    else
+        bloodDown:setScaleX(per/100)
+        transition.scaleTo(bloodUp, {scaleX = per/100, time = 0.1})         
+    end 
+end
+
+
+
+
 
 function DDNormalEnemyView:playFire()
     local missileType = self.property["missileType"] or "daodan"
@@ -87,7 +155,8 @@ function DDNormalEnemyView:playTieqiuFire()
     self.armature:getAnimation():play("fire" , -1, 1) 
     local seq = cc.Sequence:create(scaleAction, cc.CallFunc:create(callFunc))
     self:runAction(seq)
-    self:runAction(cc.MoveTo:create(time, self.offsetPos))    
+
+    self:runAction(cc.MoveBy:create(time, cc.p(0, -150)))    
 end
 
 function DDNormalEnemyView:playLeiFire()

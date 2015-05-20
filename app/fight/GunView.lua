@@ -63,7 +63,11 @@ function GunView:fire()
 
 	--sound
 	local config = self.gun:getConfig()
-	local soundName = config.imgName 			--动作特效	
+	local soundName = config.imgName 			--动作特效
+	
+	--todo
+	if soundName == "blt" then soundName = "lmd" end
+	if soundName == "hql" then soundName = "ak" end		
 	local soundSrc  = "res/Music/weapon/"..soundName.."fire.wav"
 	self.audioId =  audio.playSound(soundSrc,false)		
 end

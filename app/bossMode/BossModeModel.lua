@@ -34,7 +34,7 @@ end
 
 function BossModeModel:passWave(chapterIndex,waveIndex)
 	local data = getUserData()
-	if data.bossMode.chapterIndex == chapterIndex 
+	if data.bossMode.chapterIndex == chapterIndex
 		and data.bossMode.waveIndex < waveIndex then
 		data.bossMode.waveIndex = waveIndex
 
@@ -54,7 +54,8 @@ end
 
 function BossModeModel:setWeapon(chapterIndex)
 	local data = getUserData()
-	if data.bossMode.chapterIndex > chapterIndex then
+	if data.bossMode.chapterIndex >= chapterIndex 
+		and data.bossMode.waveIndex == 5 then
 		local info = self:getInfo(chapterIndex)
 		local weaponId = info["weaponId"]
 		self.weaponListModel:buyWeapon(weaponId)

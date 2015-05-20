@@ -252,7 +252,7 @@ function LevelMapLayer:onClickedBtnAwardTime()
     if isCanAward then 
         awardModel:achieveAward()
        ui:showPopup("commonPopup",
-         {type = "style2", content = "恭喜您领取成功！"},
+         {type = "style2", content = "领取成功！"},
          { opacity = 0})          
     else
        ui:showPopup("commonPopup",
@@ -340,7 +340,7 @@ end
 function LevelMapLayer:initKefuLayer()
     --客服
     self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
-    self.telNum:setColor(cc.c3b(255, 0, 0))
+    self.telNum:setColor(cc.c3b(255, 255, 255))
     self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")

@@ -8,7 +8,8 @@ scoreAward = {
 	{score = 6000, diamond = 50},
 	{score = 4000, money = 300000},
 	{score = 2000, money = 150000},
-	{score = 1000, money = 50000},
+	-- {score = 1000, money = 50000},
+	{score = 100, money = 50000},	
 }
 
 fightAward = {

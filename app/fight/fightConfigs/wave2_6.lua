@@ -353,7 +353,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		award = 25000,         ----boss产出金币数量
+		award = 50000,         ----boss产出金币数量
 		image = "boss02_1",    --蓝boss基础上改的肌肉boss
 		hp = 150000,
 		demage = 3, 			--这个是没用的 需要告诉俊松

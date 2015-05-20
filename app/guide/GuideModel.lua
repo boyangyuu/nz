@@ -189,7 +189,8 @@ function Guide:fillData()
 
 	--cur data
 	local guideIds = 
-		{ "fight01_move", "fight01_fire", "fight01_lei", 
+		{ "login", "preStory",
+		"fight01_move", "fight01_fire", "fight01_lei", 
 		"fight01_gold", "fight01_jijia", "afterfight01", 
 		"fight_change", "fight_dun", "xiangqian", --镶嵌
 		"weapon", "afterfight03", "fightJu", "fightRelive_relive"}

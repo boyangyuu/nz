@@ -1,4 +1,3 @@
-local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 
 local FightGun = class("FightGun", cc.mvc.ModelBase)
 
@@ -20,15 +19,11 @@ function FightGun:showGunIntro(gunData) -- showEnemyIntro
 						 {animName = "normal",  opacity = 0})
 	end
 
-	local function callfuncStart()
-		local fightFactory = md:getInstance("FightFactory")
-	    local fight = fightFactory:getFight()
-		fight:pauseFight(true)
-	    local dialog = md:getInstance("DialogModel")
-	    dialog:check("award",  callfuncDialogEnd)   
-	end
-
-	scheduler.performWithDelayGlobal(callfuncStart, gunData.delay)
+	local fightFactory = md:getInstance("FightFactory")
+    local fight = fightFactory:getFight()
+	fight:pauseFight(true)
+    local dialog = md:getInstance("DialogModel")
+    dialog:check("award",  callfuncDialogEnd)   
 end
 
 function FightGun:changeHelpGun(id)

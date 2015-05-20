@@ -30,9 +30,9 @@ end
 		self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
 		return true
 	else
-		-- ui:showPopup("commonPopup",
-		-- 		 {type = "style2", content = "您的金币不足"},
-		-- 		 {opacity = 155})
+		ui:showPopup("commonPopup",
+				 {type = "style2", content = "金币不足，请去无限狙击获取"},
+				 {opacity = 155})
 		return false
 	end
 end

@@ -10,6 +10,9 @@ function BossModeLayer:ctor(properties)
 
 	self.bossModeModel = md:getInstance("BossModeModel")
 	self.weaponListModel = md:getInstance("WeaponListModel")
+	self.inlayModel 	 = md:getInstance("InlayModel")
+	self.userModel        = md:getInstance("UserModel")
+	self.buyModel = md:getInstance("BuyModel")
 
 	cc.EventProxy.new(self.bossModeModel , self)
      :addEventListener(self.bossModeModel.REFRESH_BOSSLAYER_EVENT, handler(self, self.refreshUI))
@@ -159,7 +162,7 @@ function BossModeLayer:refreshContent()
     gunArmature:getAnimation():play("bosschixu" , -1, 1)
 
 	self.skillIcon:removeAllChildren()
-	local skillIconImg = display.newSprite("#skill1_"..imgName..".png")
+	local skillIconImg = display.newSprite("#skill2_"..imgName..".png")
 	addChildCenter(skillIconImg, self.skillIcon)
 
 	self.weaponName:removeAllChildren()
@@ -275,14 +278,54 @@ function BossModeLayer:onClickBtnStart()
 	        data, 
 	        {animName = "scale"}) 
 		return
+	else
+		local data = getUserData()
+		local isDone = self.userModel:getUserLevel() >= 5
+		if isDone and table.nums(data.inlay.inlayed) == 0 then
+			ui:showPopup("commonPopup",
+				 {type = "style5",
+				 callfuncQuickInlay = handler(self,self.onClickQuickInlay),
+				 callfuncGoldWeapon = handler(self,self.onClickGoldWeapon),
+				 callfuncClose = handler(self,self.onClickCloseInlayNoti)})
+		else
+			self:startGame()
+		end
 	end
 
+end
+
+function BossModeLayer:onClickGoldWeapon()
+	function confirmPopGoldGift()
+		self.inlayModel:equipAllInlays()
+		self:startGame()
+	end
+
+	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
+	if goldweaponNum > 0 then
+        self.inlayModel:equipAllInlays()
+        self:startGame()	
+	else
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
+	    	deneyBuyFunc = handler(self, self.startGame)}, "BOSS模式_提示未镶嵌点击单个黄武")
+    end
+end
+
+function BossModeLayer:onClickQuickInlay()
+	self.inlayModel:equipAllInlays()
+	self:startGame()
+end
+
+function BossModeLayer:onClickCloseInlayNoti()
+	self:startGame()
+end
+
+function BossModeLayer:startGame()
 	local fightData = {groupId = 50, levelId = 1, 
 		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
 	ui:closePopup("BossModeLayer")
-end
 
+end
 function BossModeLayer:onClickBtnGet()
 	self.bossModeModel:setWeapon(self.choseChapter)
 	-- self.bossModeModel:refreshInfo()
