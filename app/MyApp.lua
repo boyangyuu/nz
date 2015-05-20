@@ -147,7 +147,7 @@ function MyApp:createGameStateFile()
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 6,
+            level = 1,
         },
 
         bossMode = {
@@ -162,8 +162,8 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 7,
-            fightedLevels = {},
+            level = 1,
+            fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
             vipLevel  = 0,
         },
