@@ -47,7 +47,9 @@ end
 
 function JujiModeModel:isScoreAwardGetted(awardIndex)
 	local data = getUserData()
-	local isGetted = data.jujiMode.scoreAwarded[awardIndex] 	
+	local isGetted = data.jujiMode.scoreAwarded[awardIndex] 
+	print("awardIndex", awardIndex)	
+	print("isGetted", isGetted)
 	return isGetted
 end
 

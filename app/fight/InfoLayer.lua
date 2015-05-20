@@ -1,6 +1,7 @@
 
-local Hero 				= import(".Hero")
+local Hero 				 = import(".Hero")
 local ModeViewFactory    = import(".fightMode.ModeViewFactory")
+local JujiFight          = import(".fightTypes.JujiFight")
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
 end)
@@ -23,7 +24,7 @@ function InfoLayer:ctor()
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
 		:addEventListener(self.fight.INFO_SHOW_EVENT, handler(self, self.onShow))
-		:addEventListener(self.fight.JUJIFIGHT_SCORE_EVENT, handler(self, self.onJujiScoreUpdate))
+		:addEventListener(JujiFight.JUJIFIGHT_SCORE_EVENT, handler(self, self.onJujiScoreUpdate))
 	
 	self:loadCCS()
 	self:initUI()
@@ -146,12 +147,14 @@ function InfoLayer:onHide(event)
 end
 
 function InfoLayer:onJujiScoreUpdate(event)
-	local label_jujiFight = cc.uiloader:seekNodeByName(self.root, "label_jujiFight")	
-	label_jujiFight:setVisible(true)	
+	local layer = cc.uiloader:seekNodeByName(self.root, "layer_jujiFight")
+	local label = cc.uiloader:seekNodeByName(self.root, "label")	
+	layer:setVisible(true)	
 	local score = event.score
 	local isDirect = event.isDirect
+	isDirect = true
 	if isDirect then 
-		label_jujiFight:setString(score) 
+		label:setString(score) 
 		return 
 	end
 	
@@ -166,7 +169,7 @@ function InfoLayer:onJujiScoreUpdate(event)
 		end
 
 		num = num + 1
-		label_jujiFight:setString(num)
+		label:setString(num)
 	end
 	self.sch = self:schedule(addScore, 0.02)
 end

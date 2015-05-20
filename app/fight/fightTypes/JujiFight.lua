@@ -59,12 +59,14 @@ end
 
 function JujiFight:waveUpdate(nextWaveIndex, waveType)
 	--save
+	local isDirect = true
 	if nextWaveIndex ~= 1 then
 		self:passLevel()
+		isDirect = false
 	end
     --jifen
     self:dispatchEvent({name = self.JUJIFIGHT_SCORE_EVENT, 
-	    score = self:getJujiScore()})
+	    score = self:getJujiScore(), isDirect = isDirect})
 
 	--desc
     local fightDescModel = md:getInstance("FightDescModel")
