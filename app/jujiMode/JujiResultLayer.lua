@@ -9,6 +9,12 @@ function JujiResultLayer:ctor(properties)
 	self.properties = properties
 	self:loadCCS()
 	self:initUI()
+    self:setNodeEventEnabled(true) 
+end
+
+function JujiResultLayer:onEnter()
+    local rwwc   = "res/Music/ui/rwwc.wav"
+    audio.playSound(rwwc,false)
 end
 
 function JujiResultLayer:loadCCS()
