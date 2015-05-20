@@ -6,6 +6,7 @@ function BossResultLayer:ctor(properties)
 	self.chapterIndex = properties.chapterIndex
 	self.waveIndex = properties.waveIndex
 	self.properties = properties
+	dump(self.properties)
 	self:loadCCS()
 	self:initUI()
 end
@@ -23,7 +24,7 @@ function BossResultLayer:getAwards()
 	if not self.properties.isAwardBujian then
 		for i,v in ipairs(info) do
 			for k,v1 in pairs(v) do
-				if v[k] == "part" then
+				if k == "part" then
 					table.remove(info,i)
 				end
 			end
