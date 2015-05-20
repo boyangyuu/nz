@@ -109,9 +109,7 @@ function AwardSanEnemyView:onHitted(targetData)
 
     --爆头
     if self.enemy:getHp() == 0 then 
-        if demageType == "head" then 
-            -- local soundSrc  = "res/Music/fight/btts.wav"
-            -- self.audioId =  audio.playSound(soundSrc, false)             
+        if demageType == "head" then             
             self.hero:dispatchEvent({
                 name = self.hero.ENEMY_KILL_HEAD_EVENT})
         end

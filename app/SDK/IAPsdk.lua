@@ -64,7 +64,7 @@ function IAPsdk:initConfigs()
 		--礼包
 		config["novicesBag"]       = "5156701"		--新手礼包
 		config["weaponGiftBag"]    = "5156712"		--武器到礼包
-		config["goldGiftBag"]      = "5156713"		--土豪金礼包
+		config["goldGiftBag_dx"]   = "5156713"		--土豪金礼包
 
 		--单件
 		config["goldWeapon"]       = "5128230"		--黄武
