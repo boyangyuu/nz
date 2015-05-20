@@ -269,7 +269,6 @@ function Hero:getMaxHp()
     else
         valueMaxHp = kMaxHp
     end
-    print("Hero:getMaxHp()", valueMaxHp)
     return valueMaxHp
 end
 

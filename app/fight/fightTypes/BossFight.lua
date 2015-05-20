@@ -26,7 +26,6 @@ function BossFight:startFightResult()
 	
 	--desc
     local data = {
-	    -- name         = fightDescModel.BOSSGIFT_ANIM_EVENT,
     	chapterIndex = self.chapterIndex,
     	waveIndex    = curWaveIndex,
     	isAwardBujian= isNewProgress,
