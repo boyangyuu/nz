@@ -325,7 +325,7 @@ local bosses = {
 	--第一个出场的boss
 	{
 		image = "boss01", --图片名字
-		award = 10000,                   --boss产出金币数量
+		award = 5000,                   --boss产出金币数量
 		hp = 60000,
 		demage = 5,                        --普通攻击伤害
 		fireRate = 30,
@@ -379,7 +379,7 @@ local bosses = {
 				0.90,
 			},	
 			demage300 = {  
-				0.65,
+				0.70,--0.65,
 			},	
 			demage400 = {  
 				0.30,
@@ -434,10 +434,10 @@ local bosses = {
 					id = 20,
 					placeName = "place4",
 					--award = "goldWeapon",     --黄金武器
-					--award = "coin",                        --金币
+					award = "coin",                        --金币
 					--award = "shouLei",        --手雷
-					award = "healthBag",                 --医疗包
-					value = 1,
+					--award = "healthBag",                 --医疗包
+					value = 100,
 				},
 			},
 		},
