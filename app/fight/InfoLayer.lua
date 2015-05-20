@@ -59,14 +59,27 @@ function InfoLayer:loadCCS()
 	self.goldAnim:setVisible(false)
 	self.goldProgress:setVisible(false)
 
-	local displayHp = math.floor(self.hero:getHp())
-	self.bloodLabel:setString(displayHp)
+
 end
 
 function InfoLayer:initUI()
 	self:initGun()
 	self:initBullet()
 	self:initBtns()
+	self:initBlood()
+end
+
+function InfoLayer:initBlood()
+	local maxHp = math.floor(self.hero:getMaxHp())
+	self.bloodLabel:setString(maxHp)
+
+	--
+	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
+	print("per", per)
+	local displayHp = math.floor(self.hero:getHp() )
+	self.bloodLabel:setString(displayHp)
+    self.blood2:setPercent(per)
+    self.blood1:setPercent(per)	
 end
 
 function InfoLayer:initGun()

@@ -159,8 +159,9 @@ function Fight:endFightWin()
     self:dispatchEvent({name = Fight.FIGHT_WIN_EVENT})
     self:pauseFight(true)
     self:checkDialogAfter()
-    self:clearFightData()
-
+    if self:getFightType() ~= "jujiFight" then 
+        self:clearFightData()
+    end
     --um 任务
     local levelInfo = self:getLevelInfo() 
     um:finishLevel(levelInfo)
@@ -177,8 +178,6 @@ function Fight:endFightWin()
     local levelMapModel = md:getInstance("LevelMapModel")
     levelMapModel:levelPass(self.groupId, self.levelId)
 end
-
-
 
 
 function Fight:startFightResult()
