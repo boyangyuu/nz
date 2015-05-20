@@ -17,7 +17,7 @@ isTest  = false     --战斗的各种框
 isDebug = true      --debug页面
 isAnalytics = nil --统计功能开关
 isAsync = false
-__versionId = nil   --游戏当前版本
+__versionId = "1.2.2"   --游戏当前版本
 appName = nil       --游戏当前名称
 
 ui        = UI.new()
@@ -34,9 +34,6 @@ function MyApp:ctor()
     
     -- um 设置玩家账户及等级
     um:setUserAccount()
-
-    --create instance
-    -- self:createInstance()
 end
 
 function MyApp:run()
@@ -86,9 +83,6 @@ function MyApp:initVariables()
     print("MyApp-isAnalytics:",isAnalytics)
 end
 
-function MyApp:createInstance()
-    md:getInstance("AwardTimeModel") 
-end
 
 function MyApp:createGameStateFile()
     print("createGameStateFile")
@@ -98,7 +92,7 @@ function MyApp:createGameStateFile()
         weapons = {
             bags = {
                 {
-                    intenlevel = 1,
+                    intenlevel = 0,
                     weaponid   = 1,
                 },
                 {
@@ -148,12 +142,12 @@ function MyApp:createGameStateFile()
         weaponsuipian = {},
 
         money = 20000000,
-        diamond = 100000,
+        diamond = 200000,
         
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 7,
+            level = 6,
         },
 
         bossMode = {
@@ -168,9 +162,9 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 10,
+            level = 7,
             fightedLevels = {},
-            userName  = "玩家自己!",
+            userName  = "玩家自己",
             vipLevel  = 0,
         },
         guide = {
@@ -192,21 +186,21 @@ function MyApp:createGameStateFile()
             afterfight01    = true,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = false,
-            fight_dun       = false,
+            fight_change    = true,
+            fight_dun       = true,
 
             --第1-2关之前
-            xiangqian       = false,   --镶嵌一套青铜
+            xiangqian       = true,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = false,   -- 升级武器
-            afterfight03    = false,   -- 回到主界面
+            weapon          = true,   -- 升级武器
+            afterfight03    = true,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = false,  
+            fightJu         = true,  
 
             --第1-4失败之后
-            fightRelive     = false,                      
+            fightRelive     = true,                      
         },
         fight = {
            isPreferBag1 = true,

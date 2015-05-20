@@ -46,7 +46,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 
 	--pay
 	local showType = buyConfig.showType 
-	local isDirectIap = isDirectIap()
+	local isDirectIap = isDirectIap() or buyData.isDirectIap
 
 	if showType == "gift" then
         ui:showPopup("GiftBagPopup",

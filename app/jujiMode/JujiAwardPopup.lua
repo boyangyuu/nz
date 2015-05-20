@@ -16,7 +16,7 @@ function JujiAwardPopup:ctor(property)
 	self.property = property
     -- cc.EventProxy.new(self.fightGun, self)
     --     :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
-    self:loadCCS()
+    self:refreshUI()
     self:setNodeEventEnabled(true) 
 end
 
@@ -24,11 +24,16 @@ function JujiAwardPopup:onEnter()
 
 end
 
-function JujiAwardPopup:loadCCS()
+function JujiAwardPopup:refreshUI()
+    if self.node then 
+        self.node:removeSelf()
+        self.node = nil 
+    end
+    
 	self.node = cc.uiloader:load("res/JujiMode/wuxianjuji/paihang.json")
     self:addChild(self.node)    
 
-    self:refreshList()
+    self:initList()
 
     --btn close
     local btnClose = cc.uiloader:seekNodeByName(self.node, "btnClose")
@@ -40,7 +45,7 @@ function JujiAwardPopup:loadCCS()
     bg:setOpacity(190)
 end
 
-function JujiAwardPopup:refreshList()
+function JujiAwardPopup:initList()
     --item
     local itemIndex = 1
     while true do
@@ -83,11 +88,11 @@ function JujiAwardPopup:onClickGet(itemIndex)
 	local isGetted    = self.jujiMode:isScoreAwardGetted(itemIndex)
     local str = ""
     if isGetted then 
-        str = "该奖励已领取！"
+        str = "已领取！"
     elseif isAvaliable then 
     	self.jujiMode:getAward(itemIndex)
-    	self:refreshList()
-        str = "成功获取奖励！"
+    	self:refreshUI()
+        str = "领取成功！"
     else
         str = "积分不足，无法领取！"
     end	

@@ -175,10 +175,6 @@ function WeaponListLayer:initUI()
                 local wqsj = "res/Music/ui/wqsj.wav"
                 audio.playSound(wqsj,false)
                 self:onClickBtnUpgrade(self.weaponId)
-            else
-                ui:showPopup("commonPopup",
-                  {type = "style2", content = "您的金币不足"},
-                  {opacity = 155})
             end
         end
     end)

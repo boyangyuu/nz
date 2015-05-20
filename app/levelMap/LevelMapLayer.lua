@@ -252,7 +252,7 @@ function LevelMapLayer:onClickedBtnAwardTime()
     if isCanAward then 
         awardModel:achieveAward()
        ui:showPopup("commonPopup",
-         {type = "style2", content = "恭喜您领取成功！"},
+         {type = "style2", content = "领取成功！"},
          { opacity = 0})          
     else
        ui:showPopup("commonPopup",

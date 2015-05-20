@@ -9,6 +9,8 @@ function DataModel:checkData()
     -- dump(data)
 	if data.versionId ~= __versionId then
 		print(" function DataModel:checkData() unmatch!!!!!!!")
+        print("data.versionId", data.versionId)
+        print("__versionId", __versionId)
         self:setNewData()
     else
         print("match")
