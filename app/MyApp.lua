@@ -141,8 +141,8 @@ function MyApp:createGameStateFile()
 
         weaponsuipian = {},
 
-        money = 2000,
-        diamond = 0,
+        money = 20000000,
+        diamond = 200000,
         
         --开启的关卡
         currentlevel =  {
@@ -200,7 +200,7 @@ function MyApp:createGameStateFile()
             fightJu         = true,  
 
             --第1-4失败之后
-            fightRelive     = false,                      
+            fightRelive     = true,                      
         },
         fight = {
            isPreferBag1 = true,

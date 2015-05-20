@@ -252,7 +252,7 @@ local enemys = {
 	{id=9,image="zibaob",demage=15,hp=403,fireRate=30,speed=100, weak1=2},	 --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=30,hp=15000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
+	{id=17,image="renzb",demage=30,hp=10000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
@@ -268,7 +268,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		award = 25000,
+		award = 20000,
 		image = "renzb",                       --图片名字
 		hp = 100000,
 		fireRate = 60,               --普攻频率
