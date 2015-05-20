@@ -52,13 +52,13 @@ local configs = {
 			iapName = "当前武器一键满级",
 	},
 	stone120         = {
-			showType = "iap",
+			showType = "prop_rmb",
 			price = 10,
 			name = "120个宝石",
 			iapName = "一麻袋宝石",
 	},
 	stone260         = {
-			showType = "iap",
+			showType = "prop_rmb",
 			price = 20,
 			name = "260个宝石",
 			iapName = "一箱子宝石",
