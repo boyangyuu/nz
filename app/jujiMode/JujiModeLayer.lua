@@ -7,13 +7,15 @@ end)
 function JujiModeLayer:ctor()
 	self.jujiModel = md:getInstance("JujiModeModel")
 	self.rankModel = md:getInstance("RankModel")
-	self.user = md:getInstance("UserModel")
+	self.userModel = md:getInstance("UserModel")
+	self.inlayModel = md:getInstance("InlayModel")
+	self.buyModel = md:getInstance("BuyModel")
 	self.rankTable = self.jujiModel:getRankData() 
 
 	self:loadCCS()
 	self:initUI()
 
-    cc.EventProxy.new(self.user, self)
+    cc.EventProxy.new(self.userModel, self)
 	    :addEventListener("REFRESH_PLAYERNAME_EVENT" , handler(self, self.refreshUI))
 
 	self:setNodeEventEnabled(true)
@@ -27,7 +29,7 @@ end
 
 
 function JujiModeLayer:setUserName()
-	if  self.user:getUserName() == "玩家自己" then
+	if  self.userModel:getUserName() == "玩家自己" then
 		ui:showPopup("InputBoxPopup",{opacity = 0})
 	end
 end
@@ -96,10 +98,48 @@ function JujiModeLayer:initUI()
 end
 
 function JujiModeLayer:refreshUI(event)
-	self.playerName:setString(self.user:getUserName())
+	self.playerName:setString(self.userModel:getUserName())
 end
 
 function JujiModeLayer:onClickBtnStart()
+	local data = getUserData()
+	local isDone = self.userModel:getUserLevel() >= 5
+	if isDone and table.nums(data.inlay.inlayed) == 0 then
+		ui:showPopup("commonPopup",
+			 {type = "style5",
+			 callfuncQuickInlay = handler(self,self.onClickQuickInlay),
+			 callfuncGoldWeapon = handler(self,self.onClickGoldWeapon),
+			 callfuncClose = handler(self,self.onClickCloseInlayNoti)})
+	else
+		self:startGame()
+	end
+end
+
+function JujiModeLayer:onClickGoldWeapon()
+	function confirmPopGoldGift()
+		self.inlayModel:equipAllInlays()
+		self:startGame()
+	end
+
+	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
+	if goldweaponNum > 0 then
+        self.inlayModel:equipAllInlays()
+        self:startGame()	
+	else
+	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
+	    	deneyBuyFunc = handler(self, self.startGame)}, "Juji模式_提示未镶嵌点击单个黄武")
+    end
+end
+
+function JujiModeLayer:onClickQuickInlay()
+	self.inlayModel:equipAllInlays()
+	self:startGame()
+end
+
+function JujiModeLayer:onClickCloseInlayNoti()
+	self:startGame()
+end
+function JujiModeLayer:startGame()
 	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
 	ui:closePopup("JujiModeLayer")

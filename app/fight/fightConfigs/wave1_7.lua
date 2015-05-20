@@ -295,7 +295,7 @@ local bosses = {
 			},						
 			zhaohuan = { 0.90, 0.60, 0.30                    --召唤分身
 			},                                           
-			chongfeng = { 0.99, 0.80,0.65, 0.55, 0.45, 0.35, 0.25, 0.15     --冲锋
+			chongfeng = { 0.99, 0.80, 0.65, 0.55, 0.45, 0.35, 0.15     --冲锋
 			},
 
 			weak3 = {                               --右腿 技能触发(可以同时)
@@ -307,14 +307,14 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.90,0.50,0.30,                       
 			},
-			demage125 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.90,
-			},	
-			demage200 = {  
-				0.60,
+			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.95,
 			},	
 			demage300 = {  
-				0.30,
+				0.70,
+			},	
+			demage300 = {  
+				0.40,
 			},	
 						
 		},
@@ -382,22 +382,7 @@ local bosses = {
 					missileId = 18,
 				},
 			},
-			{
-				time = 2,	                                               --金武奖励箱子
-				num = 1,
-				pos = {730},
-				delay = {0},
-				property = { 
-					type = "awardSan",
-					id = 19,
-					--award = "goldWeapon",     --黄金武器
-					--award = "coin",                        --金币
-					--award = "shouLei",        --手雷
-					award = "healthBag",                 --医疗包
-					value = 1,
-					placeName = "place3",
-				},
-			},
+			
 		},	
 
 
@@ -478,6 +463,22 @@ local bosses = {
 					missileId = 18,
 				},
 			},
+			{
+				time = 0,	                                               --金武奖励箱子
+				num = 1,
+				pos = {730},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					--award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place3",
+				},
+			},
 			
 		},
 	},
@@ -492,12 +493,18 @@ function waveClass:ctor()
 	self.enemys = enemys
 	self.bosses = bosses
 	self.mapId  = mapId
-	self.limit  = limit
 	self.fightMode =  {
 		type 	  = "puTong",
+
+		-- type 	  = "renZhi",
+		-- saveNums  = 4,                 --解救人质数量
+
+		-- type 	  = "xianShi",
+		-- limitTime = 40,                   --限时模式时长
+
+		-- type 	  = "taoFan"
+		-- limitNums = 5,                      --逃跑逃犯数量
 	}
-
-	self.reliveCosts = {10, 10, 10}
+	
 end
-
 return waveClass
