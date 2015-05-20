@@ -55,15 +55,8 @@ function LevelMapLayer:initGroupId()
     elseif self.fightData.fightType == "levelFight" then 
         if self.fightData.groupId == 0 and self.fightData.levelId == 0 then
             self.curGroupId = 1
-        elseif self.fightData.groupId < 10 then
-            local levelNum = self.levelMapModel:getLevelNum(self.fightData.groupId)
-            if self.fightData.levelId == levelNum  then
-                self.curGroupId = self.fightData.groupId + 1
-            else
-                self.curGroupId = self.fightData.groupId
-            end
         else
-            self.curGroupId = 10
+            self.curGroupId = groupId
         end
     end
     assert(self.curGroupId, "self.curGroupId is nil")
