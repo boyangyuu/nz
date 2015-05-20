@@ -74,8 +74,10 @@ function JujiFight:waveUpdate(nextWaveIndex, waveType)
         fightDescModel:bossShow()
     elseif waveType == "award" then  
         fightDescModel:goldShow()
-    elseif waveType == "normalWave" then 
-        fightDescModel:waveStart(nextWaveIndex)
+    elseif waveType == "normalWave" then
+		-- local jujiModeModel = md:getInstance("JujiModeModel")    	
+    	local waveIndex = self.passLevelNum + 1
+        fightDescModel:waveStart(waveIndex)
     else
         assert(waveType, "waveType is nil")
     end
