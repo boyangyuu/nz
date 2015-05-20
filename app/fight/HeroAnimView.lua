@@ -197,6 +197,7 @@ end
 
 function HeroAnimView:playKeepKill(event)
 	local count = event.count
+	print("count", count)
 	self.labelKeepKill:setString(count)
 	self.labelKeepKill:setVisible(true)
 	self.labelKeepKill:setScale(1.0)
@@ -206,24 +207,17 @@ function HeroAnimView:playKeepKill(event)
 	transition.execute(self.labelKeepKill, seq, {easing = "Out",})
 	self.armatureKeepKill:getAnimation():play("ls" , -1, 0)
 
-	--sound
-	if self.isSounding then return end
-	self.isSounding = true
-	local function cdFunc()
-		self.isSounding = false
-	end
-	self:performWithDelay(cdFunc, 0.7)
-
 	local soundIndex = nil
 	if count <= 7 then 
 		soundIndex = count
 	elseif count % 10 == 0 then
 		soundIndex = 8 
 	else
-
+		
 	end
 
 	if soundIndex ~= nil then
+		print("soundIndex", soundIndex)
 	    local soundSrc   = "res/Music/fight/combo_" .. soundIndex .. ".wav"
 	    audio.playSound(soundSrc,false) 	
 	end
