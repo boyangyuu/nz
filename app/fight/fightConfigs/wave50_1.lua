@@ -991,7 +991,7 @@ local enemys = {
 local bosses = {
 	{
 		image = "boss01", --图片名字
-		award = 10000,                   --boss产出金币数量
+		award = 1000,                   --boss产出金币数量
 		hp = 100000,
 		demage = 5,                        --普通攻击伤害
 		fireRate = 30,                  --0就不普通攻击了
