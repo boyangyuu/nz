@@ -171,20 +171,6 @@ function InfoLayer:onJujiScoreUpdate(event)
 		return 
 	end
 	
-	--add
-	local num = score - 100
-	if num < 0 then num = score end
-	local function addScore()	
-		if num == score then 
-			transition.removeAction(self.sch)
-			self.sch = nil
-			return
-		end
-
-		num = num + 1
-		label:setString(num)
-	end
-	self.sch = self:schedule(addScore, 0.02)
 end
 
 function InfoLayer:onEnter()
