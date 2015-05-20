@@ -37,6 +37,8 @@ function BossResultLayer:initUI()
 	local layerBtn = cc.uiloader:seekNodeByName(self, "layerBtn")
 	local labelReward = cc.uiloader:seekNodeByName(self, "reward")
 	local labelGold = cc.uiloader:seekNodeByName(self, "labelGold")
+	local labelRule = cc.uiloader:seekNodeByName(self, "Label_58")
+	labelRule:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	labelReward:setVisible(false)
 
 	self.awardsTable = self:getAwards()

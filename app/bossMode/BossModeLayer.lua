@@ -162,7 +162,7 @@ function BossModeLayer:refreshContent()
     gunArmature:getAnimation():play("bosschixu" , -1, 1)
 
 	self.skillIcon:removeAllChildren()
-	local skillIconImg = display.newSprite("#skill1_"..imgName..".png")
+	local skillIconImg = display.newSprite("#skill2_"..imgName..".png")
 	addChildCenter(skillIconImg, self.skillIcon)
 
 	self.weaponName:removeAllChildren()
