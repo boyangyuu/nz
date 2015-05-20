@@ -242,6 +242,7 @@ function StartLayer:onClickBegan()
         local fightData = {
             fightType = "levelFight",
             groupId = groupId,
+            levelId = levelId,
         }
         ui:changeLayer("HomeBarLayer",{fightData = fightData,loadingType = "home_first"})
 
