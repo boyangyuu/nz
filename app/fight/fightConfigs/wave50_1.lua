@@ -840,7 +840,7 @@ local waves = {
 		adviseData = {
 			type = "goldJijia", --黄金机甲
 			cost  = 450,  --钻石花费 
-			delay = {4.0},
+			delay = 4,
 		},
 --------------------------------------推荐黄金机甲
 		enemys = {                                                             
@@ -981,7 +981,7 @@ local enemys = {
 	{id=29,image="tufeib",demage=40,hp=20000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=2},
 
 	--被绑架人        --type = "bangren",
-	{id=30,image="hs", hp=5000, weak1=1},
+	{id=30,image="hs", hp=7000, weak1=1},
 
 	
 
@@ -1145,7 +1145,7 @@ local bosses = {
 		walkCd = 2,         --移动cd	
 		wudiTime = 5 , 	
 		saoFireOffset = 0.1, 		--扫射时间间隔
-		saoFireTimes = 10, 			--一次扫射10下
+		saoFireTimes = 4, 			--一次扫射10下
 		weak1 = 1.2,					--手  弱点伤害倍数
 		weak2 = 1.2,					--腹  弱点伤害倍数
 		weak3 = 1.2,					--头  弱点伤害倍数
@@ -4057,12 +4057,12 @@ end
 function waveClass:randomWaves()
 	local waves = {}
 	local order = {}
-	-- order[1] = math.random(11,11) 	
-	order[1] = math.random(1,3)
-	order[2] = math.random(4,6)
-	order[3] = math.random(7,8)
-	order[4] = math.random(9,10)
-	order[5] = math.random(11, 11)  
+	order[1] = math.random(10,10) 	
+	-- order[1] = math.random(1,3)
+	-- order[2] = math.random(4,6)
+	-- order[3] = math.random(7,8)
+	-- order[4] = math.random(9,10)
+	-- order[5] = math.random(11, 11)  
 	dump(order, "order")
 
 	for i,index in ipairs(order) do

@@ -3,7 +3,7 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-			adviseData = {
+		adviseData = {
 			type = "jtl",
 			cost  = 120,    --钻石
 			gunId = 8,      --武器id8  加特林
