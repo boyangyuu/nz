@@ -89,7 +89,7 @@ function IAPsdk:pay(name)
 	if isFree or self.iapName == nil then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")
-	elseif self:iapName == 'unknown' then
+	elseif self.iapName == 'unknown' then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
