@@ -34,7 +34,6 @@ Fight.RESULT_FAIL_EVENT      = "RESULT_FAIL_EVENT"
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
     self.fightData = nil
-    self.isFirstFight = false
 end
 
 function Fight:beginFight()
@@ -90,22 +89,39 @@ function Fight:refreshUm()
 end
 
 function Fight:refreshUmFightTimesEvent()
-    local data = getUserData()
-    local fightedLevels = data.user.fightedLevels
     local levelInfo     = self:getLevelInfo()
     local umStr         = nil
-    local isFighted     = fightedLevels[levelInfo]
-    self.isFirstFight   = not isFighted
+    local isFighted     = self:getFightedLevelData()
     if isFighted then 
         umStr = "关卡开始_重复进入"
     else
-        data.user.fightedLevels[levelInfo] = true
+        self:saveFightedLevelData("enter")
         umStr = "关卡开始_首次进入"
     end
 
     local umData = {}
     umData[levelInfo] = umStr
     um:event("关卡次数情况", umData)        
+end
+
+function Fight:saveFightedLevelData(_status, levelInfo)
+    levelInfo = levelInfo or self:getLevelInfo() 
+    assert(_status, "_status is nil")
+    local data = getUserData()
+    local status = data.user.fightedLevels[levelInfo]
+    if status == "awarded" then return end 
+    data.user.fightedLevels[levelInfo] = _status
+    setUserData(data)    
+end
+
+function Fight:getFightedLevelData(levelInfo)
+    levelInfo = levelInfo or self:getLevelInfo()
+    local data = getUserData()
+    local status = data.user.fightedLevels[levelInfo]
+    print("levelInfo", levelInfo)
+    print("getFightedLevelData status", status)
+    dump(data.user.fightedLevels, "getFightedLevelData")
+    return status
 end
 
 function Fight:willStartFight()
@@ -143,8 +159,9 @@ function Fight:endFightWin()
     self:dispatchEvent({name = Fight.FIGHT_WIN_EVENT})
     self:pauseFight(true)
     self:checkDialogAfter()
-    self:clearFightData()
-
+    if self:getFightType() ~= "jujiFight" then 
+        self:clearFightData()
+    end
     --um 任务
     local levelInfo = self:getLevelInfo() 
     um:finishLevel(levelInfo)
@@ -154,12 +171,13 @@ function Fight:endFightWin()
     umData[levelInfo] = "关卡胜利"
     um:event("关卡完成情况", umData)
 
+    --save data
+    self:saveFightedLevelData("win")
+
     --level
     local levelMapModel = md:getInstance("LevelMapModel")
     levelMapModel:levelPass(self.groupId, self.levelId)
 end
-
-
 
 
 function Fight:startFightResult()
@@ -201,9 +219,12 @@ function Fight:doGiveUp()
     umData[levelInfo] = "关卡失败"    
     um:event("关卡完成情况", umData)
 
+    -- save data
+    self:saveFightedLevelData("fail")
+
+    --um
     local failCause = self:getFailCause()
     um:failLevel(levelInfo, failCause)
-
 end
 
 function Fight:doRelive()

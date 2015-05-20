@@ -19,13 +19,18 @@ function LevelFight:getResultData()
     local isGold = inlay:getIsNativeGold()
     local hpPercent = isGold and 1.00 or hpPercent
 
+    --isNotWin
+    local isFirstWin = self:getFightedLevelData() == "win"
+    self:saveFightedLevelData("awarded")
+
+
     resultData["goldNum"]   = self.goldValue
     resultData["hpPercent"] = hpPercent  
     resultData["levelId"]   = self:getLevelId()
     resultData["groupId"]   = self:getGroupId()
     resultData["fightType"] = self:getFightType()
     resultData["result"]    = self:getResult()
-    resultData["isFirst"]   = self.isFirstFight
+    resultData["isFirstWin"]   = isFirstWin
     return resultData
 end
 
