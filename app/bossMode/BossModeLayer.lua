@@ -39,6 +39,9 @@ function BossModeLayer:initUI()
 	self.panelChapter = cc.uiloader:seekNodeByName(self.panelMain, "panelChapter")
 	self.weaponName   = cc.uiloader:seekNodeByName(self.panelMain, "weaponName")
 
+	local labelRule = cc.uiloader:seekNodeByName(self, "Label_58")
+	labelRule:enableOutline(cc.c4b(0, 0, 0,255), 2)
+
 	--gun
 	self.panelGun = cc.uiloader:seekNodeByName(self.panelMain, "panelGun")
 	self.skillIcon = cc.uiloader:seekNodeByName(self.panelMain, "skillIcon")
