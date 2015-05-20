@@ -23,7 +23,8 @@ function InfoLayer:ctor()
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
 		:addEventListener(self.fight.INFO_SHOW_EVENT, handler(self, self.onShow))
-
+		:addEventListener(self.fight.JUJIFIGHT_SCORE_EVENT, handler(self, self.onJujiScoreUpdate))
+	
 	self:loadCCS()
 	self:initUI()
 	self:setTouchEnabled(true)
@@ -110,7 +111,6 @@ end
 function InfoLayer:onRefreshGun(event)
 	self.gunDisplay:removeAllChildren()
 	local record = self.hero:getGun():getConfig()
-	-- dump(record, "function InfoLayer:onRefreshGun(event)")
 	local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 	icon:setScaleX(0.05)
 	icon:setScaleY(0.05)
@@ -128,7 +128,7 @@ function InfoLayer:onHeroHpChange(event)
 	local per = self.hero:getHp() / self.hero:getMaxHp() * 100
 	local displayHp = math.floor(self.hero:getHp() )
 	self.bloodLabel:setString(displayHp)
-	if event.name == "HP_DECREASE_EVENT" then 
+	if event.name == self.hero.HP_DECREASE_EVENT then 
 	    self.blood2:setPercent(per)
 	    self.blood1:setPercentWithDelay(per, 0.3)
 	else
@@ -143,6 +143,32 @@ end
 
 function InfoLayer:onHide(event)
 	self:setVisible(false)
+end
+
+function InfoLayer:onJujiScoreUpdate(event)
+	local label_jujiFight = cc.uiloader:seekNodeByName(self.root, "label_jujiFight")	
+	label_jujiFight:setVisible(true)	
+	local score = event.score
+	local isDirect = event.isDirect
+	if isDirect then 
+		label_jujiFight:setString(score) 
+		return 
+	end
+	
+	--add
+	local num = score - 100
+	if num < 0 then num = score end
+	local function addScore()	
+		if num == score then 
+			transition.removeAction(self.sch)
+			self.sch = nil
+			return
+		end
+
+		num = num + 1
+		label_jujiFight:setString(num)
+	end
+	self.sch = self:schedule(addScore, 0.02)
 end
 
 function InfoLayer:onEnter()

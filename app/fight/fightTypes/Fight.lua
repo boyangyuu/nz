@@ -10,7 +10,7 @@ local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Fight = class("Fight", cc.mvc.ModelBase)
 
 --events
-Fight.PAUSE_SWITCH_EVENT   = "PAUSE_SWITCH_EVENT"
+Fight.PAUSE_SWITCH_EVENT     = "PAUSE_SWITCH_EVENT"
 
 Fight.FIGHT_START_EVENT      = "FIGHT_START_EVENT"
 Fight.FIGHT_WIN_EVENT        = "FIGHT_WIN_EVENT"
@@ -25,11 +25,11 @@ Fight.CONTROL_HIDE_EVENT     = "CONTROL_HIDE_EVENT"
 Fight.CONTROL_SHOW_EVENT     = "CONTROL_SHOW_EVENT"
 Fight.CONTROL_SET_EVENT      = "CONTROL_SET_EVENT"
 
-Fight.INFO_HIDE_EVENT = "INFO_HIDE_EVENT"
-Fight.INFO_SHOW_EVENT = "INFO_SHOW_EVENT"
+Fight.INFO_HIDE_EVENT        = "INFO_HIDE_EVENT"
+Fight.INFO_SHOW_EVENT        = "INFO_SHOW_EVENT"
 
-Fight.RESULT_WIN_EVENT   = "RESULT_WIN_EVENT"
-Fight.RESULT_FAIL_EVENT  = "RESULT_FAIL_EVENT"
+Fight.RESULT_WIN_EVENT       = "RESULT_WIN_EVENT"
+Fight.RESULT_FAIL_EVENT      = "RESULT_FAIL_EVENT"
 
 function Fight:ctor(properties)
     Fight.super.ctor(self, properties)
@@ -114,10 +114,7 @@ end
 
 function Fight:startFight()
     self:dispatchEvent({name = Fight.FIGHT_START_EVENT})
-    -- if not self.fightData["isContinue"] then 
-        -- print("function Fight:startFight()")/
-        self.inlay:checkNativeGold()    
-    -- end
+    self.inlay:checkNativeGold()
 
     --check guide
     local guide = md:getInstance("Guide")
@@ -130,6 +127,16 @@ function Fight:startFight()
             guide:check("fightJu")
         end, 0.0)   
     end
+
+    self:checkLongPress()
+end
+
+function Fight:checkLongPress( )
+    if self:isJujiFight() then return end
+    if self.groupId ~= 1 then return end 
+    if 1 == self.levelId then  return end
+    local hero = md:getInstance("Hero")
+    hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
 end
 
 function Fight:endFightWin()

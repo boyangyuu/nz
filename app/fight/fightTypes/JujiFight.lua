@@ -2,6 +2,8 @@
 local Fight   = import(".Fight") 
 
 local JujiFight = class("JujiFight", Fight)
+JujiFight.JUJIFIGHT_SCORE_EVENT = "JUJIFIGHT_SCORE_EVENT"
+
 function JujiFight:ctor(properties)
 	JujiFight.super.ctor(self, properties)
 
@@ -25,18 +27,12 @@ function JujiFight:startFightResult()
     user:addMoney(self.goldValue)
 
 	--desc
-    -- local fightDescModel = md:getInstance("FightDescModel")
     local data = {
-	    -- name         = fightDescModel.JUJIGIFT_ANIM_EVENT,
-    	levelIndex   = self:getLevelId() + 1,
-    	waveIndex    = self.passLevelNum,
+    	levelIndex   = self:getLevelId(),
     	closeFunc    = closeFunc,
     	goldValue    = self.goldValue,
 	}
-    -- fightDescModel:dispatchEvent(data)	
     ui:showPopup("JujiResultLayer",data,{animName = "normal"})
-
-
 end
 
 function JujiFight:getResultData()
@@ -57,15 +53,30 @@ function JujiFight:isJujiFight()
     return true
 end
 
+function JujiFight:getJujiScore()
+	return self.passLevelNum * 100
+end
+
 function JujiFight:waveUpdate(nextWaveIndex, waveType)
 	--save
 	if nextWaveIndex ~= 1 then
 		self:passLevel()
 	end
+    --jifen
+    self:dispatchEvent({name = self.JUJIFIGHT_SCORE_EVENT, 
+	    score = self:getJujiScore()})
 
 	--desc
     local fightDescModel = md:getInstance("FightDescModel")
-    fightDescModel:waveStart(self.passLevelNum + 1)
+    if waveType == "boss" then 
+        fightDescModel:bossShow()
+    elseif waveType == "award" then  
+        fightDescModel:goldShow()
+    elseif waveType == "normalWave" then 
+        fightDescModel:waveStart(nextWaveIndex)
+    else
+        assert(waveType, "waveType is nil")
+    end
 end
 
 function JujiFight:passLevel()

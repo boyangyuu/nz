@@ -98,7 +98,7 @@ function MyApp:createGameStateFile()
         weapons = {
             bags = {
                 {
-                    intenlevel = 1,
+                    intenlevel = 0,
                     weaponid   = 1,
                 },
                 {
@@ -147,13 +147,13 @@ function MyApp:createGameStateFile()
 
         weaponsuipian = {},
 
-        money = 20000000,
-        diamond = 100000,
+        money = 2000,
+        diamond = 0,
         
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 7,
+            level = 1,
         },
 
         bossMode = {
@@ -168,28 +168,28 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 10,
+            level = 1,
             fightedLevels = {},
-            userName  = "玩家自己!",
+            userName  = "玩家自己",
             vipLevel  = 0,
         },
         guide = {
             --记得和 filldata对应!
 
             --登陆
-            login           = true,
+            login           = false,
             --前戏
-            preStory        = true,
+            preStory        = false,
             --第0-0关之内
-            fight01_move    = true,
-            fight01_fire    = true,
-            fight01_lei     = true,
-            fight01_gold    = true,
-            fight01_change  = true,
-            fight01_jijia   = true, 
+            fight01_move    = false,
+            fight01_fire    = false,
+            fight01_lei     = false,
+            fight01_gold    = false,
+            fight01_change  = false,
+            fight01_jijia   = false, 
 
             --第0-0关之后  
-            afterfight01    = true,   -- 进入下一关
+            afterfight01    = false,   -- 进入下一关
          
             --第1-1之内
             fight_change    = false,

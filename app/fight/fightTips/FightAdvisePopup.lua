@@ -9,8 +9,15 @@ local FightAdvisePopup = class("FightAdvisePopup", function()
     return display.newLayer()
 end)
 
+
+--[[
+    type : 画布名称
+    cost : 钻石数目
+    gunId : 枪ID
+]]
 function FightAdvisePopup:ctor(property)
 	--instance
+    self.buyModel = md:getInstance("BuyModel")
 	self.buyModel = md:getInstance("BuyModel")
 	self.property = property    
 	self.type     = property["type"]
@@ -43,20 +50,7 @@ function FightAdvisePopup:onShow()
 end
 
 function FightAdvisePopup:onClickConfirm()
-	local user = md:getInstance("UserModel")
-    -- if user:getDiamond() >= self.property["cost"] then
-    --     ui:showPopup("commonPopup",
-    --         {type = "style3", content = "是否花费"..self.property["cost"].."宝石购买该武器？",
-    --          callfuncCofirm =  handler(self, self.onBuyWeaponSucc), },
-    --          { opacity = 0})
-    -- else
-    --     local cost = self.property["cost"]
-    --     local strPos  =  "战斗界面_弹出推荐武器:"..self.type
-    --     self.buyModel:showBuy("stone450", 
-    --     	{tips = "宝石不足，请购买宝石",
-    --     	payDoneFunc = handler(self, self.onBuyWeaponSucc),
-    --     	}, strPos)
-    -- end
+
     self:buyWeapon()
 end
 
@@ -66,7 +60,7 @@ function FightAdvisePopup:buyWeapon()
     if not isAfforded then return end
 	
 	--装备上
-	if self.type == "goldJijia" then 
+    if self.type == "goldJijia" then 
         self:onEquipRobot()
     else 
         self:onEquipGun()
