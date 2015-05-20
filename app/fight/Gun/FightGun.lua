@@ -46,11 +46,16 @@ function FightGun:buyGun(id)
 	--equip in bag
     weaponListModel:equipBag(id, bagIndex)	
 
+    --gold weapon
+	local inlayModel = md:getInstance("InlayModel")
+	inlayModel:equipGoldInlays()
+	local fightInlay = md:getInstance("FightInlay")
+	fightInlay:checkNativeGold()
+
     --refresh hero
     hero:initGuns()
     hero:refreshGun()
 end
-
 
 function FightGun:playSkill(animName)
 	self:dispatchEvent({name = FightGun.GUN_SKILL_EVENT, animName = animName})
