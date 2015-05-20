@@ -89,6 +89,11 @@ function IAPsdk:pay(name)
 	if isFree or self.iapName == nil then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")
+	elseif self:iapName == 'unknown' then
+		self:callbackFaild()
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
+			 {opacity = 0})
 	else
 		if device.platform == 'android' then
 			luaj.callStaticMethod(className, "pay", args, sig)

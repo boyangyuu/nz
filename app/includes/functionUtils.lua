@@ -235,7 +235,7 @@ function isDirectIap()
 end
 
 function getIapName()
-    local iapName = 'mm'
+    local iapName = 'unknown'
     if device.platform == 'android' then
         local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapName", {}, "()Ljava/lang/String;")
         return iapName

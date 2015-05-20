@@ -840,15 +840,16 @@ local waves = {
 		adviseData = {
 			type = "goldJijia", --黄金机甲
 			cost  = 450,  --钻石花费 
+			delay = {4.0},
 		},
 --------------------------------------推荐黄金机甲
 		enemys = {                                                             
 			{
 				descId = "renzb_01", --简介
-				time = 4,	
+				time = 6,	
 				num = 1,
 				pos = {550},
-				delay = {6},
+				delay = {8},
 				property = { 
 					type = "renzheBoss",                                              -- 魔化鬼眼boss
 					placeName = "place1",
