@@ -195,14 +195,22 @@ function MapView:updateEnemys()
 
 	--gunData
 	if wave.gunData then  
-		local fightGun = md:getInstance("FightGun")
-		fightGun:showGunIntro(wave.gunData)
+		local delay = wave.gunData["delay"] or 0.1
+		local function callfuncShowGun()
+			local fightGun = md:getInstance("FightGun")
+			fightGun:showGunIntro(wave.gunData)		
+		end
+		self:performWithDelay(callfuncShowGun, delay)		
 	end
 
 	--adviseData
-	if wave.adviseData then  
-		local fightAdvise = md:getInstance("FightAdviseModel")		
-		fightAdvise:showAdvise(wave.adviseData)
+	if wave.adviseData then 
+		local delay = wave.adviseData["delay"] or 0.1
+		local function callfuncShowAdvise()
+			local fightAdvise = md:getInstance("FightAdviseModel")		
+			fightAdvise:showAdvise(wave.adviseData)			
+		end 
+		self:performWithDelay(callfuncShowAdvise, delay)
 	end
 
 	--addEnemys
