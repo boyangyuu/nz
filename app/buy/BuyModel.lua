@@ -24,8 +24,10 @@ end
 
 function BuyModel:showBuy(configId, buyData, strPos)
 	if configId == "goldGiftBag" and isDefendDX() then configId = "goldGiftBag_dx" end
+	if configId == "stone450" and isDefendDX() then  configId = "stone260" end
+
 	if configId == "weaponGiftBag" and self:checkBought("weaponGiftBag") then return end
-	print("BuyModel:showBuy", strPos)
+	-- print("BuyModel:showBuy", strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
     self.curId = configId

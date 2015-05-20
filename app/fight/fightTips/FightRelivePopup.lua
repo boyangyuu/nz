@@ -91,6 +91,10 @@ function FightRelivePopup:onShow()
 			cc.ScaleTo:create(0.1, 2)
 			})
 		labelTime:runAction(seq)
+
+		--sound
+		local soundSrc  = "res/Music/fight/daojishi.wav"
+		audio.playSound(soundSrc, false)
 	end
 	self:schedule(timeFunc, 1.0)
 end

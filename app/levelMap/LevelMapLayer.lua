@@ -9,13 +9,18 @@ local smallTime, bigTime = 0.5, 0.5  --Amplify times and time of background
 
 function LevelMapLayer:ctor(properties)
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/")
+
+    --instance
     self.levelMapModel      = md:getInstance("LevelMapModel")
     self.FightResultModel   = md:getInstance("FightResultModel")
     self.UserModel          = md:getInstance("UserModel")
     self.LevelDetailModel   = md:getInstance("LevelDetailModel")
-    
     self.properties = properties
-    self:initData()
+    self.fightData = self.properties.fightData
+    self.preGroupId = 0
+    self.groupNum = self.levelMapModel:getGroupNum()    
+
+    self:initGroupId()
     self:initUI()
     self:refreshLevelLayer(self.curGroupId)
 
@@ -35,26 +40,33 @@ function LevelMapLayer:initUI()
     self:initAwardLayer()
 end
 
-function LevelMapLayer:initData()
+function LevelMapLayer:initGroupId()
     assert(self.properties.fightData, "self.properties.fightData is nil")
-    self.fightData = self.properties.fightData
     assert(self.fightData.groupId, "self.fightData.groupId is nil")
     assert(self.fightData.fightType, "self.fightData.fightType is nil")
+    
+    --set groupId
     local groupId, levelId = self.levelMapModel:getConfig()
+    assert(groupId, "groupId getConfig")
     if self.fightData.fightType == "bossFight" then
         self.curGroupId = groupId
     elseif self.fightData.fightType == "jujiFight" then
         self.curGroupId = groupId
-    elseif self.fightData.groupId == 0 and self.fightData.levelId == 0 then
-        self.curGroupId = 1
-    else
-        self.curGroupId = self.fightData.groupId
+    elseif self.fightData.fightType == "levelFight" then 
+        if self.fightData.groupId == 0 and self.fightData.levelId == 0 then
+            self.curGroupId = 1
+        elseif self.fightData.groupId < 10 then
+            local levelNum = self.levelMapModel:getLevelNum(self.fightData.groupId)
+            if self.fightData.levelId == levelNum  then
+                self.curGroupId = self.fightData.groupId + 1
+            else
+                self.curGroupId = self.fightData.groupId
+            end
+        else
+            self.curGroupId = 10
+        end
     end
-    --userData
-    self.preGroupId = 0
-
-    --config
-    self.groupNum = self.levelMapModel:getGroupNum()
+    assert(self.curGroupId, "self.curGroupId is nil")
 end
 
 function LevelMapLayer:popUpWeaponGift()
@@ -77,37 +89,9 @@ function LevelMapLayer:refreshData()
     self.levelMapModel:hideGiftBagIcon()
 end
 
-function LevelMapLayer:popUpNextLevel()
-    local result = self.fightData["result"]
-    if result == "fail" or result == nil then return end
-    local isPopupNext = false
-    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
-
-    --todo
-    if curLevel == 6 and curGroup < 10 then
-     curGroup = curGroup + 1
-    end
-    local isCurLevel = self.levelMapModel:isCurGroupAndLevel(curGroup, curLevel)
-
-    --check guide
-    local guide = md:getInstance("Guide")
-    local isGuidedWeapon = guide:isDone("weapon")
-    local popupNext = isGuidedWeapon and true or false
-    if result == "win" and isCurLevel then 
-        isPopupNext = popupNext 
-    end
-    if isPopupNext then    
-        local curGroup, curLevel = self.fightData["groupId"], 
-            self.fightData["levelId"]
-        local nextG,nextL = self.levelMapModel:getNextGroupAndLevel(curGroup,curLevel)
-        ui:showPopup("LevelDetailLayer", {groupId = nextG, levelId = nextL})
-    end
-end
-
 function LevelMapLayer:mapPopUp(event)
     if self.properties.fightData.fightType == "levelFight" then 
         function delayPopUpLF()
-            self:popUpNextLevel()
             self:popUpWeaponGift()   
         end
         self:performWithDelay(delayPopUpLF, 1)
@@ -340,7 +324,7 @@ end
 function LevelMapLayer:initKefuLayer()
     --客服
     self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
-    self.telNum:setColor(cc.c3b(255, 255, 255))
+    self.telNum:setColor(cc.c3b(255, 0, 0))
     self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
@@ -424,6 +408,7 @@ function LevelMapLayer:hideWeaponGiftBag(event)
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
+    -- assert(adf,"groupId"..groupId)
     self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".ExportJson")
     self:addChild(self.levelBtnRootNode, Zorder_up)
 

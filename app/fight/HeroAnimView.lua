@@ -212,7 +212,7 @@ function HeroAnimView:playKeepKill(event)
 	local function cdFunc()
 		self.isSounding = false
 	end
-	self:performWithDelay(cdFunc, 0.4)
+	self:performWithDelay(cdFunc, 0.7)
 
 	local soundIndex = nil
 	if count <= 7 then 
