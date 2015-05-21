@@ -123,8 +123,11 @@ function DailyLoginModel:refreshTime(event, callfunc)
 	    if response then
 	    	local curTimeStamp = response
 	    	local isSameDay = self:isSameDay(curTimeStamp)
+	    	local isGet = self:isGet()
 	    	if not isSameDay then
 				self:setGet(false)
+		    	callfunc("success")
+		    elseif isSameDay and isGet == false then
 		    	callfunc("success")
 		    else
 		    	callfunc("success notPop")

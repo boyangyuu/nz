@@ -263,11 +263,8 @@ end
 function StartLayer:initDailyLogin()
     local function callfunc(status)
         print("网络请求", status)
-        if status == "success" then
-            local isGet = self.dailyLoginModel:isGet()
-            if isGet == false then
-                ui:showPopup("DailyLoginLayer", {})
-            end
+        if status == "success" then            
+            ui:showPopup("DailyLoginLayer", {})
         end
     end
 
