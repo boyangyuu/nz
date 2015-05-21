@@ -58,12 +58,15 @@ function RankModel:getRankData(sortType)
 	return self.rankData
 end
 
-
-
 function RankModel:getUserRank()
 	for i,v in ipairs(self.rankData) do
 		if v.name == self.user:getUserName() and v.isUser == true then
-			return i
+			if 100 < i then 
+				i = 499 * (i - 100) + 100	 
+				return i
+			else
+				return i
+			end
 		end
 	end
 end

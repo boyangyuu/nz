@@ -9,6 +9,12 @@ function BossResultLayer:ctor(properties)
 	dump(self.properties)
 	self:loadCCS()
 	self:initUI()
+    self:setNodeEventEnabled(true) 
+end
+
+function BossResultLayer:onEnter()
+    local rwwc   = "res/Music/ui/rwwc.wav"
+    audio.playSound(rwwc,false)
 end
 
 function BossResultLayer:loadCCS()
