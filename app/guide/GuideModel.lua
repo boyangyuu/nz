@@ -174,6 +174,9 @@ function Guide:checkGuideUM(id)
 	if isGuided then return end
 	um:startLevel("新手:" .. id)
 	um:finishLevel("新手:" .. id)
+	local data = getUserData()
+	data.guide[id] = true
+	setUserData(data)
 end
 
 function Guide:clearData()
