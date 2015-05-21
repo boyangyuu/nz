@@ -197,8 +197,11 @@ end
 
 function RZHushiEnemyView:playKill(event)
 	--clear
+	self.isEntering = false
+	self.isExiting = false
 	RZHushiEnemyView.super.playKill(self, event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
+
 	--sound
     local soundSrc  = "res/Music/fight/rz_die.wav"
     local audioId =  audio.playSound(soundSrc,false)   	
