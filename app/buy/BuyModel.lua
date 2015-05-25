@@ -25,7 +25,6 @@ end
 function BuyModel:showBuy(configId, buyData, strPos)
 	if configId == "goldGiftBag" and isDefendDX() then configId = "goldGiftBag_dx" end
 	if configId == "stone450" and isDefendDX() then  configId = "stone260" end
-
 	if configId == "weaponGiftBag" and self:checkBought("weaponGiftBag") then return end
 	-- print("BuyModel:showBuy", strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
@@ -48,13 +47,13 @@ function BuyModel:showBuy(configId, buyData, strPos)
 
 	--pay
 	local showType = buyConfig.showType 
-	local isDirectIap = isDirectIap() or buyData.isDirectIap
+	local iapType = getIapType() or buyData.iapType
 
 	if showType == "gift" then
         ui:showPopup("GiftBagPopup",
         	{popupName = configId},
         	{animName = "shake"})
-    elseif showType == "iap" or isDirectIap then 
+    elseif showType == "iap" or iapType == "noConfirm" then 
     	self:iapPay()        
     elseif showType =="prop_rmb" then --非钻石购买的道具
     	ui:showPopup("RmbBuyPopup", 
@@ -76,6 +75,15 @@ function BuyModel:payGift()
 end
 
 function BuyModel:iapPay()
+	local iapType = getIapType()
+	iapType = "noIap"
+	
+	if iapType == "noIap" then 
+		ui:showPopup("commonPopup",{type = "style4",
+        opacity = 0})
+		return	
+	end
+
 	display.pause()
 	self.iap:pay(self.curId)
 end
