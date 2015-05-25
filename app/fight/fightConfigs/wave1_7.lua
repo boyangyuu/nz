@@ -511,6 +511,6 @@ function waveClass:ctor()
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量
 	}
-	
+	self.reliveCosts = {10, 20}
 end
 return waveClass

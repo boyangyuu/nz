@@ -204,7 +204,7 @@ function StoreCell:addBtnEvent()
         elseif self.type == "bank" then
             self.buyModel:showBuy("stone"..self.record["number"],
                 {payDoneFunc = handler(self,self.playSound),
-                isDirectIap = true}, 
+                iapType = "noConfirm"}, 
                 "商城界面_点击钻石"..self.record["number"])
         elseif self.type == "inlay" then
             if self.userModel:costMoney(self.record["goldPrice"]) then
