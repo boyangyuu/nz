@@ -15,6 +15,7 @@ function LevelMapLayer:ctor(properties)
     self.FightResultModel   = md:getInstance("FightResultModel")
     self.UserModel          = md:getInstance("UserModel")
     self.LevelDetailModel   = md:getInstance("LevelDetailModel")
+    self.buyModel           = md:getInstance("BuyModel")
     self.properties = properties
     self.fightData = self.properties.fightData
     self.preGroupId = 0
@@ -63,8 +64,7 @@ function LevelMapLayer:initGroupId()
 end
 
 function LevelMapLayer:popUpWeaponGift()
-    local buyModel = md:getInstance("BuyModel")
-    local isNotBought = buyModel:checkBought("weaponGiftBag") == false
+    local isNotBought = self.buyModel:checkBought("weaponGiftBag") == false
     local isPopWeaponGift = false
     local userModel = md:getInstance("UserModel")
     local isDone = userModel:getUserLevel() >= 6
@@ -74,7 +74,7 @@ function LevelMapLayer:popUpWeaponGift()
     --开始菜单进世界地图，玩家等级 >= 6
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
-        buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
+        self.buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
     end
 end
 
@@ -128,12 +128,16 @@ function LevelMapLayer:initAwardLayer()
     self.btnWeapon     = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
     local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
-    local buyModel = md:getInstance("BuyModel")
-    if buyModel:checkBought("novicesBag") then
+    if self.buyModel:checkBought("novicesBag") then
         self.panelgift:setVisible(false)
+        btnVip:setVisible(true)
+    else
+        self.panelgift:setVisible(true)
+        btnVip:setVisible(false)
     end
-    if buyModel:checkBought("weaponGiftBag") then
+    if self.buyModel:checkBought("weaponGiftBag") then
         self.btnWeapon:setVisible(false)
     end    
 
@@ -148,8 +152,7 @@ function LevelMapLayer:initAwardLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
+            self.buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
         end
     end)
 
@@ -159,8 +162,7 @@ function LevelMapLayer:initAwardLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            local buyModel = md:getInstance("BuyModel")
-            buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),
+            self.buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),
                 isNotPopKefu = true}, "主界面_点击武器大礼包")
         end
     end)
@@ -174,10 +176,20 @@ function LevelMapLayer:initAwardLayer()
 
     function hideGiftIcon()
         self.panelgift:setVisible(false)
+        btnVip:setVisible(true)
     end
 
     btnfirstgift:onButtonClicked(function()
-        buyModel:showBuy("novicesBag",{payDoneFunc = hideGiftIcon}, "主界面_点击新手礼包")
+        self.buyModel:showBuy("novicesBag",{payDoneFunc = hideGiftIcon}, "主界面_点击新手礼包")
+        end)
+    btnVip:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function()
+            self:initVipPopup()
         end)
 
     local libaoArmature = ccs.Armature:create("libao")
@@ -186,6 +198,22 @@ function LevelMapLayer:initAwardLayer()
 
     --限时奖励
     self:initAwardTime()
+end
+
+function LevelMapLayer:initVipPopup()
+    local isAvailable = network.isInternetConnectionAvailable()
+    if isAvailable then
+        local isBought = self.buyModel:checkBought("vip")
+        if isBought then
+            ui:showPopup("VipPopup",{style = "haveBought"},{opacity = 255})
+        else
+            ui:showPopup("VipPopup",{style = "notBought"},{opacity = 255})
+        end
+    else
+        ui:showPopup("commonPopup",
+             {type = "style1",content = "当前网络连接失败，请连接网络后领取奖励！"},
+             {opacity = 0})
+    end 
 end
 
 function LevelMapLayer:initAwardTime()

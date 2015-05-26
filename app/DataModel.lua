@@ -50,6 +50,16 @@ function DataModel:setNewData()
             vipLevel  = 0,
         }
 
+    if data.giftBag.vip == nil then
+        data.giftBag.vip = false
+    end
+
+    if data.vip == nil then
+        data.vip = {
+            isGet = false,
+        }
+    end
+
     --引导
     local guideModel = md:getInstance("Guide")
     guideModel:fillData()

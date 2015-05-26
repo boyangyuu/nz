@@ -125,6 +125,8 @@ function DailyLoginModel:refreshTime(event, callfunc)
 	    	local isSameDay = self:isSameDay(curTimeStamp)
 	    	local isGet = self:isGet()
 	    	if not isSameDay then
+	    		local vipModel = md:getInstance("VipModel")
+				vipModel:setGet(false)
 				self:setGet(false)
 		    	callfunc("success")
 		    elseif isSameDay and isGet == false then

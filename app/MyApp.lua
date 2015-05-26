@@ -211,6 +211,11 @@ function MyApp:createGameStateFile()
                     --false 为未购买
             weaponGiftBag =  false,
             novicesBag = false,
+            vip = false,
+        },
+
+        vip = {
+            isGet = false,
         },
         dailylogin = {
             loginTime = nil,  --时间戳
