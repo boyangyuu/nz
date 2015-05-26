@@ -216,22 +216,22 @@ function isDefendDX()
         return false
     end
 end
-
-function isDirectIap()
+                               
+function getIapType()   -- "confirm", "noIap", "noConfirm"
     if device.platform ~= 'android' then return true end
     local className = "com/hgtt/com/IAPControl"
-    local methodName = "getIsDirectIap"
+    local methodName = "getIapType"
     local args = {}
-    local sig = "()Z"
-    local isDirect = nil
+    local sig = "()Ljava/lang/String;"
+    local iapType = nil
     local luajResult = nil
-    luajResult, isDirect = luaj.callStaticMethod(className, methodName, args, sig)
+    luajResult, iapType = luaj.callStaticMethod(className, methodName, args, sig)
     print("luajResult:", luajResult)
-    print("isDirect:", isDirect)
+    print("iapType:", iapType)
     if luajResult then
-        return isDirect
+        return iapType
     end
-    return false
+    return "confirm"
 end
 
 function getIapName()

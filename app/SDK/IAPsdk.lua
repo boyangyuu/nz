@@ -33,17 +33,17 @@ function IAPsdk:initConfigs()
 	
 	elseif self.iapName == 'jd' then --基地
 		config["novicesBag"]       = "001"		--新手礼包1
-		config["weaponGiftBag"]    = "002"		--武器到礼包1
-		config["goldGiftBag"]      = "003"		--土豪金礼包1
+		config["weaponGiftBag"]    = "007"		--武器到礼包1
+		config["goldGiftBag"]      = "008"		--土豪金礼包1
 
 		--单件
-		config["goldWeapon"]       = "004"		--黄武
-		config["handGrenade"]      = "005"		--手雷
-		config["armedMecha"]       = "006"		--机甲1
-		config["onceFull"]         = "007"		--一键满级1
-		config["stone120"]         = "009"		--一麻袋宝石
-		config["stone260"]         = "010"		--一箱子宝石
-		config["stone450"]         = "011"		--堆成山的宝石
+		config["goldWeapon"]       = "002"		--黄武
+		config["handGrenade"]      = "003"		--手雷
+		config["armedMecha"]       = "009"		--机甲1
+		config["onceFull"]         = "010"		--一键满级1
+		config["stone120"]         = "004"		--一麻袋宝石
+		config["stone260"]         = "005"		--一箱子宝石
+		config["stone450"]         = "006"		--堆成山的宝石
 
 	elseif self.iapName == "unicom" then --联通
 		--礼包

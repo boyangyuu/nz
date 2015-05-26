@@ -122,7 +122,7 @@ function FightProp:costHpBag()
     end
 
     ui:showPopup("StoneBuyPopup",
-         {name = "医疗包x4", 
+         {name = "医疗包x6", 
          price = kValue,
          onClickConfirm = onClickConfirm},
          {animName = "moveDown", opacity = 150})	
