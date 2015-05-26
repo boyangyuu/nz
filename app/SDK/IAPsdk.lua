@@ -17,19 +17,18 @@ function IAPsdk:initConfigs()
 	-- assert(iapName, "iapName:")
 	if self.iapName == "mm" then --mm
 		--礼包
-		config["novicesBag"]       = "30000883682301"		--新手礼包
-		config["weaponGiftBag"]    = "30000883682317"		--武器礼包
-		config["goldGiftBag"]      = "30000883682318"		--土豪金礼包
+		config["novicesBag"]       = "30000899255201"		--新手礼包
+		config["weaponGiftBag"]    = "30000899255207"		--武器礼包
+		config["goldGiftBag"]      = "30000899255208"		--土豪金礼包
 
 		--单件
-		config["goldWeapon"]       = "30000883682306"		--黄武
-		config["handGrenade"]      = "30000883682307"		--手雷
-		config["armedMecha"]       = "30000883682319"		--机甲
-		config["onceFull"]         = "30000883682320"		--一键满级
-		config["stone45"]          = "30000883682312"		--一堆宝石
-		config["stone120"]         = "30000883682313"		--一麻袋宝石
-		config["stone260"]         = "30000883682314"		--一箱子宝石
-		config["stone450"]         = "30000883682315"		--堆成山的宝石
+		config["goldWeapon"]       = "30000899255202"		--黄武
+		config["handGrenade"]      = "30000899255203"		--手雷
+		config["armedMecha"]       = "30000899255209"		--机甲
+		config["onceFull"]         = "30000899255210"		--一键满级
+		config["stone120"]         = "30000899255204"		--一麻袋宝石
+		config["stone260"]         = "30000899255205"		--一箱子宝石
+		config["stone450"]         = "30000899255206"		--堆成山的宝石
 	
 	elseif self.iapName == 'jd' then --基地
 		config["novicesBag"]       = "001"		--新手礼包1
