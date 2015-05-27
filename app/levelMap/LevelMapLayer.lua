@@ -205,9 +205,9 @@ function LevelMapLayer:initVipPopup()
     if isAvailable then
         local isBought = self.buyModel:checkBought("vip")
         if isBought then
-            ui:showPopup("VipPopup",{style = "haveBought"},{opacity = 255})
+            ui:showPopup("VipPopup",{style = "haveBought"},{opacity = 170})
         else
-            ui:showPopup("VipPopup",{style = "notBought"},{opacity = 255})
+            ui:showPopup("VipPopup",{style = "notBought"},{opacity = 170})
         end
     else
         ui:showPopup("commonPopup",

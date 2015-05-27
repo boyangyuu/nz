@@ -86,6 +86,9 @@ function VipPopup:onClickConfirm()
     self.vipModel:setGet(true)
     local buyModel = md:getInstance("BuyModel")
     buyModel:setBought("vip")
+    ui:showPopup("commonPopup",
+     {type = "style1", content = "恭喜开启VIP专属特权，奖励领取成功！"},
+     { opacity = 170})        
     ui:closePopup("VipPopup")
 end
 
@@ -96,6 +99,9 @@ end
 function VipPopup:onClickGet()
 	self.vipModel:setGift()
     self.vipModel:setGet(true)
+    ui:showPopup("commonPopup",
+     {type = "style2", content = "领取成功！"},
+     { opacity = 170})        
     ui:closePopup("VipPopup")
 end
 
