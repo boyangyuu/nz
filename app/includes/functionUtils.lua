@@ -222,7 +222,7 @@ function getIapType()   -- "confirm", "noIap", "noConfirm"
     local className = "com/hgtt/com/IAPControl"
     local methodName = "getIapType"
     local args = {}
-    local sig = "()Ljava/Lang/String;"
+    local sig = "()Ljava/lang/String;"
     local iapType = nil
     local luajResult = nil
     luajResult, iapType = luaj.callStaticMethod(className, methodName, args, sig)

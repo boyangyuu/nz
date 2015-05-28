@@ -54,7 +54,8 @@ function BuyModel:showBuy(configId, buyData, strPos)
         	{popupName = configId},
         	{animName = "shake"})
     elseif showType == "iap" or iapType == "noConfirm" then 
-    	self:iapPay()        
+    	self:iapPay()  
+
     elseif showType =="prop_rmb" then --非钻石购买的道具
     	ui:showPopup("RmbBuyPopup", 
     		 {configId = configId,
@@ -75,9 +76,7 @@ function BuyModel:payGift()
 end
 
 function BuyModel:iapPay()
-	local iapType = getIapType()
-	iapType = "noIap"
-	
+	local iapType = getIapType()	
 	if iapType == "noIap" then 
 		ui:showPopup("commonPopup",{type = "style4",
         opacity = 0})

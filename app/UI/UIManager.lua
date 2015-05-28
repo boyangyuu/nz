@@ -45,6 +45,7 @@ layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
 layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
 layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
 layerClasses["BuyTipsPopup"]         = import("..buy.BuyTipsPopup")
+layerClasses["VipPopup"]             = import("..levelMap.VipPopup")
 
 --awardTime
 layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")
