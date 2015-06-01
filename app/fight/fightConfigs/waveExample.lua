@@ -1,3 +1,4 @@
+--[[
 local BaseWave = import(".BaseWave")
 local waveClass = class("waveExample", BaseWave)
 
@@ -306,3 +307,5 @@ function waveClass:ctor()
 end
 
 return waveClass
+
+]]

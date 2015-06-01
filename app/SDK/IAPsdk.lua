@@ -62,18 +62,18 @@ function IAPsdk:initConfigs()
 	elseif self.iapName == "dx" then -- 电信
 		--礼包
 		--游游共赢的
-		-- config["novicesBag"]       = "5156701"		--新手礼包
-		-- config["weaponGiftBag"]    = "5156712"		--武器到礼包
-		-- config["goldGiftBag_dx"]   = "5156713"		--土豪金礼包
+		config["novicesBag"]       = "5156701"		--新手礼包
+		config["weaponGiftBag"]    = "5156712"		--武器到礼包
+		config["goldGiftBag_dx"]   = "5156713"		--土豪金礼包
 
-		-- --单件
-		-- config["goldWeapon"]       = "5128230"		--黄武
-		-- config["handGrenade"]      = "5128231"		--手雷
-		-- config["armedMecha"]       = "5156714"		--机甲
-		-- config["onceFull"]         = "5156715"		--一键满级
-		-- config["stone120"]         = "5128237"		--一麻袋宝石
-		-- config["stone260"]         = "5128238"		--一箱子宝石
-		-- config["stone450"]         = "5128239"		--堆成山的宝石
+		--单件
+		config["goldWeapon"]       = "5128230"		--黄武
+		config["handGrenade"]      = "5128231"		--手雷
+		config["armedMecha"]       = "5156714"		--机甲
+		config["onceFull"]         = "5156715"		--一键满级
+		config["stone120"]         = "5128237"		--一麻袋宝石
+		config["stone260"]         = "5128238"		--一箱子宝石
+		config["stone450"]         = "5128239"		--堆成山的宝石
 	end
 end
 
@@ -91,10 +91,10 @@ function IAPsdk:pay(name)
 			 {opacity = 0})	
 		 return	
 	end
-
+	print("self.iapName", self.iapName)
 	assert(self.config[name], "self.config[name] is nil".. name)
 	local args = {self.config[name], name, handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
-	if device.platform == 'android' then
+	if device.platform ~= 'android' then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")
 	else

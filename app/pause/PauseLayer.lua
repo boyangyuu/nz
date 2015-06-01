@@ -34,6 +34,16 @@ function PauseLayer:showPopup(event)
 	layer:setPositionY(display.offset)
 	self:addChild(self.layer)
 	
+	--百度暂停
+	self:onPause()
+end
+
+function PauseLayer:onPause()
+    --callfunc java
+    if device.platform ~= 'android' then return true end
+    local className = "com/hgtt/com/IAPControl"
+    local methodName = "lua_gamePause"
+    luaj.callStaticMethod(className, methodName)
 end
 
 function PauseLayer:closePopup(event)
