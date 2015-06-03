@@ -135,8 +135,8 @@ function MyApp:createGameStateFile()
         },
         prop = {
             lei = {num = 20},
-            jijia = {num = 1},
-            hpBag = {num = 1},
+            jijia = {num = 0},
+            hpBag = {num = 0},
         },
 
         weaponsuipian = {},
@@ -239,7 +239,7 @@ end
 
 function MyApp:onEnterBackground()
     local pauseModel = md:getInstance("PauseModel")
-    pauseModel:showPopup("HomePausePopup",{},{anim = true})
+    pauseModel:showPopup("HomePausePopup",{},{anim = true, isOnEnterBackground = true})
 end
 
 function MyApp:onEnterForeground()
