@@ -18,7 +18,7 @@ function GunHelpPopup:loadCCS()
     display.addSpriteFrames("res/Fight/uiAnim/yd_saosan/yd_saosan0.plist", 
         "res/Fight/uiAnim/yd_saosan/yd_saosan0.png")     
 
-	self.node = cc.uiloader:load("res/fight/fightLayer/fightTips/helpWeapon.ExportJson")
+	self.node = cc.uiloader:load("res/Fight/fightLayer/fightTips/helpWeapon.ExportJson")
     self:addChild(self.node)
     self.nameNode   = cc.uiloader:seekNodeByName(self.node, "nameNode")
     self.btnGet     = cc.uiloader:seekNodeByName(self.node, "btnGet")

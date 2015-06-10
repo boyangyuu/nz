@@ -23,7 +23,7 @@ end
 
 function FightRelivePopup:loadCCS()
     local manager = ccs.ArmatureDataManager:getInstance() 
-	self.node = cc.uiloader:load("res/fight/fightLayer/fightTips/relive.ExportJson")
+	self.node = cc.uiloader:load("res/Fight/fightLayer/fightTips/relive.ExportJson")
     self:addChild(self.node)    
 
     --btns
