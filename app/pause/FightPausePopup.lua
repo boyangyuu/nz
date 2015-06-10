@@ -36,7 +36,7 @@ function FightPausePopup:initButtons()
 		    local fight = fightFactory:getFight()
 	        local groupId,levelId = fight:getCurGroupAndLevel()
 	        local fightType = fight:getFightType()
-	        if fightType == "jujiFight" then 
+	        if fightType == "jujiFight" or fightType == "bossFight" then 
 	        	local inlayModel = md:getInstance("InlayModel")
 	        	inlayModel:removeAllInlay()
 	        end

@@ -44,7 +44,7 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "005"		--一箱子宝石
 		config["stone450"]         = "006"		--堆成山的宝石
 
-	elseif self.iapName == "unicom" then --联通
+	elseif self.iapName == "lt" then --联通
 		--礼包
 		config["novicesBag"]       = "001"		--新手礼包1
 		config["weaponGiftBag"]    = "018"		--武器到礼包1
@@ -59,8 +59,9 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "014"		--一箱子宝石
 		config["stone450"]         = "015"		--堆成山的宝石
 
-	elseif self.iapName == "telecom" then -- 电信
+	elseif self.iapName == "dx" then -- 电信
 		--礼包
+		--游游共赢的
 		config["novicesBag"]       = "5156701"		--新手礼包
 		config["weaponGiftBag"]    = "5156712"		--武器到礼包
 		config["goldGiftBag_dx"]   = "5156713"		--土豪金礼包
@@ -76,27 +77,28 @@ function IAPsdk:initConfigs()
 	end
 end
 
---[[
-	example:
-
-
-]]
-
 function IAPsdk:pay(name)
-	-- print(name)
-	local args = {self.config[name],name, handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
-	if isFree or self.iapName == nil then
-		self:callbackSuccess()
-		print("请在手机上支付 傻逼！")
-	elseif self.iapName == 'unknown' then
+	if self.iapName == "noSim" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
 			 {opacity = 0})
+		return
+	elseif self.iapName == 'invalid' then
+		self:callbackFaild()
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "请在插有移动卡的手机上支付！", delay = 1},
+			 {opacity = 0})	
+		 return	
+	end
+	print("self.iapName", self.iapName)
+	assert(self.config[name], "self.config[name] is nil".. name)
+	local args = {self.config[name], name, handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
+	if device.platform ~= 'android' then
+		self:callbackSuccess()
+		print("请在手机上支付 傻逼！")
 	else
-		if device.platform == 'android' then
-			luaj.callStaticMethod(className, "pay", args, sig)
-		end
+		luaj.callStaticMethod(className, "pay", args, sig)
 	end
 end
 
@@ -111,13 +113,7 @@ function IAPsdk:callbackFaild(result)
 
 end
 
--- function IAPsdk:isMobileSimCard()
---     if self.iapName ~= 'unicom' and self.iapName ~= 'telecom' and self.iapName ~= 'unknown' then
---         return false, 6
---     else
---         return true, 1
---     end
--- end
+
 
 return IAPsdk
 

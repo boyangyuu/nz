@@ -210,7 +210,7 @@ function isDefendMM()
 end
 
 function isDefendDX()
-    if getIapName() == "telecom" then
+    if getIapName() == "dx" then
         return true
     else
         return false
@@ -235,27 +235,12 @@ function getIapType()   -- "confirm", "noIap", "noConfirm"
 end
 
 function getIapName()
-    local iapName = 'unknown'
+    local iapName = 'invalid'
     if device.platform == 'android' then
-        local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapName", {}, "()Ljava/lang/String;")
+        local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapStatus", {}, "()Ljava/lang/String;")
         return iapName
     end
     print("iapName:",iapName)
     return iapName
 end
 
-
-
--- function isMobileSimCard()
---     if device.platform ~= 'android' then return true, 1 end
---     local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapName", {}, "()Ljava/lang/String;")
-
---     if iapName == nil then return true, 1 end
-
---     if iapName == 'mm' or iapName == 'andGame' then
---         return true, 1
---     else
---         return false, 6
---     end
-
--- end

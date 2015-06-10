@@ -20,6 +20,7 @@ function RootLayer:ctor()
     self:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
         if event.key == "back" then
             device.showAlert("","您就这样离开吗？", {"离开", "继续"}, handler{self, self.onClickListener})
+            self:onClickExitGame()
         end
     end)
 
@@ -27,6 +28,14 @@ function RootLayer:ctor()
     cc.EventProxy.new(ui, self)
         :addEventListener(ui.LAYER_CHANGE_EVENT, handler(self, self.switchLayer))
         :addEventListener(ui.LAYER_PAUSE_EVENT, handler(self, self.onPauseSwitch))
+end
+
+function RootLayer:onClickExitGame()
+    --callfunc java
+    if device.platform ~= 'android' then return true end
+    local className = "com/hgtt/com/IAPControl"
+    local methodName = "lua_gameExit"
+    luaj.callStaticMethod(className, methodName)
 end
 
 function RootLayer:onClickListener(event)

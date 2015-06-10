@@ -109,7 +109,7 @@ function InfoLayer:initBtns()
                 return true
             elseif event.name =='ended' then
             	local pauseModel = md:getInstance("PauseModel")
-			    pauseModel:showPopup("FightPausePopup",{},{anim = true,isPauseScene = true})
+			    pauseModel:showPopup("FightPausePopup",{},{anim = true})
             end
         end)
 
