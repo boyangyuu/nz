@@ -89,6 +89,8 @@ function MapView:loadCCS()
 
 	--bg
 	self.bg = cc.uiloader:seekNodeByName(self.map, "bg")
+	print("self.bg scale", self.bg:getScaleX())
+	
 	self.mapModel:setMapBgNode(self.map)
 	self:loadPlaces()
 end
@@ -589,6 +591,7 @@ function MapView:getEnemysInRect(rect)
     local map = md:getInstance("Map")
     local mapScale = map:getIsOpenJu() and define.kJuRange or 1.0
 
+    -- mapScale = 2.0 --todoyyy
 	local enemys = {}
 	local allEnemys = self.enemyM:getAllEnemys()
 	for i,enemy in ipairs(allEnemys) do
@@ -677,6 +680,10 @@ function MapView:onHeroFire(event)
 	end
 	self.mapAnim:playEffectShooted({isHitted = isHitted, 
 		pWorld = pWorldFocus})
+
+	if isHitted then 
+		-- self:playEffectHit()
+	end
 end
 
 function MapView:mutiFire(datas)
@@ -788,6 +795,12 @@ function MapView:playEffectShaked(event)
 	local tMove = cc.MoveBy:create(0.07, cc.p(-36, -40))
 	self:runAction(cc.Sequence:create(tMove, tMove:reverse(),
 		 tMove, tMove:reverse(), tMove, tMove:reverse(), tMove, tMove:reverse()))
+end
+
+function MapView:playEffectHit()
+	local tMove1 = cc.MoveBy:create(0.03, cc.p(5, 5))
+	local tMove2 = cc.MoveBy:create(0.03, cc.p(-5, -5))
+	self:runAction(cc.Sequence:create(tMove1, tMove2))
 end
 
 function MapView:playEffectJuShaked(event)

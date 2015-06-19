@@ -20,6 +20,7 @@ function InfoLayer:ctor()
 		:addEventListener(Hero.GUN_BULLET_EVENT 	, handler(self, self.onRefreshBullet))	
 		:addEventListener(Hero.HP_INCREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.HP_DECREASE_EVENT	, handler(self, self.onHeroHpChange))
+		:addEventListener(Hero.EFFECT_FIGHTTIPS_EVENT, handler(self, self.playAnimFightTips))
 	
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
@@ -170,7 +171,26 @@ function InfoLayer:onJujiScoreUpdate(event)
 		label:setString(score) 
 		return 
 	end
-	
+end
+
+function InfoLayer:playAnimFightTips(event)
+	print("function HeroAnimView:playAnimFightTips(event)")
+	if self.fightTips then return end
+	local strTips = event.strTips
+	self.fightTips = cc.uiloader:load("res/fight/fightLayer/fightTips/fightTips.ExportJson")
+    local labelTips = cc.uiloader:seekNodeByName(self.fightTips, "labelTips")
+    labelTips:setString(strTips)
+    labelTips :enableOutline(cc.c4b(255, 255, 255,255), 2)
+    self:addChild(self.fightTips, 1000)
+    local seq = transition.sequence({
+    	cc.MoveBy:create(0.5, cc.p(0,-10)), 
+    	cc.MoveBy:create(0.5, cc.p(0,10)),}) 
+    self.fightTips:runAction(cc.RepeatForever:create(seq))
+    local removeFunc = function ()
+		self.fightTips:removeSelf()
+		self.fightTips = nil
+    end
+    self:performWithDelay(removeFunc, 3.0)	    
 end
 
 function InfoLayer:onEnter()

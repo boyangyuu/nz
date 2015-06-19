@@ -274,20 +274,17 @@ function LevelDetailLayer:onClickGoldWeapon()
         self.inlayModel:equipAllInlays()
         self:startGame()	
 	else
-		-- 保留，暂时不用
-		-- function deneyPopGoldGift()
-		    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-		    	deneyBuyFunc = handler(self, self.startGame)}, "关卡详情"..self.levelInfo.."_提示未镶嵌点击单个黄武")
-		-- end
-	 --    self.buyModel:showBuy("goldGiftBag",{payDoneFunc = confirmPopGoldGift,
-	 --    	deneyBuyFunc = deneyPopGoldGift, isNotPopup = true},
-		--      "关卡详情"..self.levelInfo.."_提示未镶嵌点击黄武按钮")
+	    --buy
+	    ui:showPopup("StoneBuyPopup",
+	         {name = "黄金武器x2", 
+	         price = 40,
+	         onClickConfirm = handler(self, self.buyGoldByStone)},
+	         {animName = "moveDown", opacity = 150})
 
 	    local umData = {}
 		umData[self.levelInfo] = "点击黄金武器"
 		um:event("关卡提示未镶嵌", umData)
     end
-
 end
 
 function LevelDetailLayer:onClickBtnBibei()
@@ -309,11 +306,31 @@ end
 function LevelDetailLayer:onClickBtnJijia()
 	-- 保留，暂时不用
 	-- function deneyGoldGiftJijia()
-	    self.buyModel:showBuy("armedMecha",{}, "关卡详情_点击机甲按钮")
+	    -- self.buyModel:showBuy("armedMecha",{}, 
+	    -- 	"关卡详情_点击机甲按钮")
 	-- end
  --    self.buyModel:showBuy("goldGiftBag",{deneyBuyFunc = deneyGoldGiftJijia},
  --     	"关卡详情_点击机甲按钮")
 
+    --buy
+    ui:showPopup("StoneBuyPopup",
+         {name = "无敌机甲x2", 
+         price = 40,
+         onClickConfirm = handler(self, self.buyRobotByStone)},
+         {animName = "moveDown", opacity = 150})
+
+end
+
+function LevelDetailLayer:buyRobotByStone()
+	print("function FightProp:buyRobotByStone()")	
+	local kValue = 40
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(kValue, true, "关卡详情界面_无敌机甲x2") 
+    if isAfforded then
+    	local propModel = md:getInstance("PropModel")
+    	propModel:addProp("jijia", 2)
+        ui:closePopup("StoneBuyPopup")
+    end		
 end
 
 function LevelDetailLayer:equipGold()
@@ -321,20 +338,35 @@ function LevelDetailLayer:equipGold()
 end
 
 function LevelDetailLayer:onClickBtnGold()
-	
 	function deneyGoldGift()
 	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self, self.equipGold)}, "关卡详情_黄武按钮取消土豪礼包")
 	end
 
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
-	local isDone = self.guide:isDone("weapon")
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()	
-    else
-	    -- self.buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self, self.equipGold),deneyBuyFunc = deneyGoldGift},
-	    --  "关卡详情_点击黄武按钮")
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self, self.equipGold)}, "关卡详情_黄武按钮取消土豪礼包")
-	end
+        return 
+    end
+
+    --buy
+    ui:showPopup("StoneBuyPopup",
+         {name = "黄金武器x2", 
+         price = 40,
+         onClickConfirm = handler(self, self.buyGoldByStone)},
+         {animName = "moveDown", opacity = 150})
+
+end
+
+function LevelDetailLayer:buyGoldByStone()
+	print("function LevelDetailLayer:buyGoldByStone()")	
+	local kValue = 40
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(kValue, true, "关卡详情界面_黄金武器x2") 
+    if isAfforded then
+    	local inlayModel = md:getInstance("InlayModel")
+    	inlayModel:buyGoldsInlay(2)
+        ui:closePopup("StoneBuyPopup")
+    end		
 end
 
 function LevelDetailLayer:onCancelWeaponGift()

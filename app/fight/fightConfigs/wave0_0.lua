@@ -5,7 +5,7 @@ local waves = {
 	{		
 		enemys = {                                          --1波1个
 			{
-				time = 1,
+				time = 0,
 				num = 1,
 				delay = {0},
 				pos = {15},
@@ -21,7 +21,7 @@ local waves = {
 	{
 		enemys = {                                          
 			{
-				time = 1,
+				time = 0,
 				num = 2,
 				delay ={0, 0.2},
 				pos = {10,120},		
@@ -32,7 +32,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 1,
+				time = 0,
 				num = 1,
 				delay = {0.1},
 				pos = {70},
@@ -595,7 +595,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = "map_1_2"
 	self.limit  = 10
-	self.isNotMoveMap = true    --此关不能移动
+	-- self.isNotMoveMap = true    --此关不能移动
 	
 	self.fightMode =  {
 		type 	  = "puTong",

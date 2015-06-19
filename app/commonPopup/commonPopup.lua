@@ -125,9 +125,12 @@ function commonPopup:initUI(properties)
 		local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
 		local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
 		local btncall = cc.uiloader:seekNodeByName(self, "btncall")
+		local label_kefu = cc.uiloader:seekNodeByName(self, "label_kefu")
 		btntrue:setTouchEnabled(true)
 		btnfalse:setTouchEnabled(true)
 		btncall:setTouchEnabled(true)
+		label_kefu:setString(__kefuNum)
+		label_kefu:setColor(cc.c3b(255, 205, 0))
 
 		addBtnEventListener(btntrue, function( event )
 			if event.name == "began" then

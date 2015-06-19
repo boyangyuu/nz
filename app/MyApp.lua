@@ -15,8 +15,9 @@ myApp = MyApp
 isTest  = false     --战斗的各种框     
 isDebug = false      --debug页面 --dabao为false
 isAsync = false
-__versionId = "1.2.2"   --游戏当前版本
-appName = nil       --游戏当前名称
+__versionId = nil   --游戏当前版本
+__appName = nil       --游戏当前名称
+__kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
 md        = MD.new()
@@ -76,7 +77,7 @@ function MyApp:initVariables()
     local stringSig = "()Ljava/lang/String;"
     local result = nil
     result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
-    result, appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
 end
 
 
@@ -124,7 +125,6 @@ function MyApp:createGameStateFile()
             
             }, --{inlayid = 1,ownednum = 1}
             inlayed  = {
-                --存id bullet = 1,
                 bullet = nil,
                 clip = nil,
                 speed = nil,
@@ -134,7 +134,7 @@ function MyApp:createGameStateFile()
             },
         },
         prop = {
-            lei = {num = 20},
+            lei = {num = 0},
             jijia = {num = 0},
             hpBag = {num = 0},
         },
@@ -147,7 +147,7 @@ function MyApp:createGameStateFile()
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 1,
+            level = 7,
         },
 
         bossMode = {
@@ -171,36 +171,36 @@ function MyApp:createGameStateFile()
             --记得和 filldata对应!
 
             --登陆
-            login           = false,
+            login           = true,
             --前戏
-            preStory        = false,
+            preStory        = true,
             --第0-0关之内
-            fight01_move    = false,
-            fight01_fire    = false,
-            fight01_lei     = false,
-            fight01_gold    = false,
-            fight01_change  = false,
-            fight01_jijia   = false, 
+            fight01_move    = true,
+            fight01_fire    = true,
+            fight01_lei     = true,
+            fight01_gold    = true,
+            fight01_change  = true,
+            fight01_jijia   = true, 
 
             --第0-0关之后  
-            afterfight01    = false,   -- 进入下一关
+            afterfight01    = true,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = false,
-            fight_dun       = false,
+            fight_change    = true,
+            fight_dun       = true,
 
             --第1-2关之前
-            xiangqian       = false,   --镶嵌一套青铜
+            xiangqian       = true,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = false,   -- 升级武器
-            afterfight03    = false,   -- 回到主界面
+            weapon          = true,   -- 升级武器
+            afterfight03    = true,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = false,  
+            fightJu         = true,  
 
             --第1-4失败之后
-            fightRelive     = false,                      
+            fightRelive     = true,                      
         },
         fight = {
            isPreferBag1 = true,
@@ -243,7 +243,11 @@ function MyApp:onEnterBackground()
 end
 
 function MyApp:onEnterForeground()
-   display.resume()
+    -- print("function MyApp:onEnterForeground()")
+    -- local pauseModel = md:getInstance("PauseModel")
+    -- if pauseModel:getIsPause() then 
+    --     display.pause()
+    -- end
 end
 
 return MyApp
