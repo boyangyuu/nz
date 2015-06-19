@@ -323,6 +323,7 @@ function LevelMapLayer:initKefuLayer()
     self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
     self.telNum:setColor(cc.c3b(255, 0, 0))
     self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
+    self.telNum:setString("官方唯一投诉电话："..__kefuNum)
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 

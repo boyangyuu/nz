@@ -27,18 +27,18 @@ function DataModel:setNewData()
     local diamond    = data.diamond
 
     myApp:createGameStateFile()
-    local data = getUserData()
+    local data          = getUserData()
     data.weapons.bags   = bagsWeapon
     data.inlay.bags     = bagsInlay
     data.money          = money
     data.diamond        = diamond
+
     --引导
     local guideModel = md:getInstance("Guide")
     guideModel:fillData()    
     
     dump(data, "新data")
     setUserData(data)
-
 end
 
 return DataModel

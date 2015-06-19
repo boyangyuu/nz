@@ -15,9 +15,9 @@ myApp = MyApp
 isTest  = false     --战斗的各种框     
 isDebug = false      --debug页面 --dabao为false
 isAsync = false
-isFree = true
-__versionId = "1.2.2"   --游戏当前版本
-appName = nil       --游戏当前名称
+__versionId = nil   --游戏当前版本
+__appName = nil       --游戏当前名称
+__kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
 md        = MD.new()
@@ -77,7 +77,7 @@ function MyApp:initVariables()
     local stringSig = "()Ljava/lang/String;"
     local result = nil
     result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
-    result, appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
 end
 
 
@@ -125,7 +125,6 @@ function MyApp:createGameStateFile()
             
             }, --{inlayid = 1,ownednum = 1}
             inlayed  = {
-                --存id bullet = 1,
                 bullet = nil,
                 clip = nil,
                 speed = nil,
@@ -135,7 +134,7 @@ function MyApp:createGameStateFile()
             },
         },
         prop = {
-            lei = {num = 20},
+            lei = {num = 0},
             jijia = {num = 0},
             hpBag = {num = 0},
         },
@@ -148,7 +147,7 @@ function MyApp:createGameStateFile()
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 1,
+            level = 7,
         },
 
         bossMode = {
@@ -243,7 +242,11 @@ function MyApp:onEnterBackground()
 end
 
 function MyApp:onEnterForeground()
-   display.resume()
+    -- print("function MyApp:onEnterForeground()")
+    -- local pauseModel = md:getInstance("PauseModel")
+    -- if pauseModel:getIsPause() then 
+    --     display.pause()
+    -- end
 end
 
 return MyApp

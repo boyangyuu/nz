@@ -136,7 +136,7 @@ end
 
 function StartLayer:initMusicUI()
     local data = getUserData()
-    local isOpenMusic = data.preference["isOpenMusic"]
+    local isOpenMusic = data.preference["isOpenMusic"]   
 
     self.btnMusic:setTouchEnabled(true)
     local play = cc.uiloader:seekNodeByName(self.btnMusic, "play")
@@ -152,6 +152,7 @@ function StartLayer:initMusicUI()
         end
     end)    
 end
+
 
 function StartLayer:playBgMusic()
     local startMusic = "res/Music/bg/bjyx.wav"
@@ -203,7 +204,7 @@ function StartLayer:switchSound()
     play:setVisible(not isPlaying)
     audio.switchAllMusicAndSounds(isPlaying)
     audio.stopSound(self.enterSound)
-    self:playBgMusic()
+    -- self:playBgMusic()
 
     --save
     local data = getUserData()
@@ -219,7 +220,7 @@ function StartLayer:onEnter()
 
     --music 
     self:playEnterSound()
-    self:playBgMusic() 
+    -- self:playBgMusic() 
 
     --um
     local guide = md:getInstance("Guide")

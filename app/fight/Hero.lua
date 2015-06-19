@@ -19,6 +19,7 @@ Hero.EFFECT_HURT_BOLI_EVENT      = "EFFECT_HURT_BOLI_EVENT"    --效果_玻璃
 Hero.EFFECT_HURT_YAN_EVENT       = "EFFECT_HURT_YAN_EVENT"     --效果_烟雾
 Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
 Hero.EFFECT_GUIDE_EVENT          = "EFFECT_GUIDE_EVENT"        --效果_引导
+Hero.EFFECT_FIGHTTIPS_EVENT      = "EFFECT_FIGHTTIPS_EVENT"    --效果_提示
 
 --skill
 Hero.SKILL_ADDHP_EVENT            = "SKILL_ADDHP_EVENT"        --效果_加血

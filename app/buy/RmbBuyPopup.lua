@@ -39,7 +39,9 @@ function RmbBuyPopup:loadCCS()
     local labelIapName = cc.uiloader:seekNodeByName(self.node, "labelIapName")
     labelIapName:setString("商品名称：" .. config["iapName"])
     local labelPrice = cc.uiloader:seekNodeByName(self.node, "labelPrice")
-    labelPrice:setString("消耗金额：" .. config["price"] .. "元")
+    labelPrice:setString("金额：" .. config["price"] .. "元")
+
+    --易接
     local labelDesc = cc.uiloader:seekNodeByName(self.node, "labelDesc")
     labelDesc:setString("购买物品：" .. config["name"])    
 end

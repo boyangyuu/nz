@@ -34,7 +34,7 @@ function CommonEnemyView:playKill(event)
 	self.armature:getAnimation():play("die" ,-1 , 1)
 	
 	--sound
-	local soundSrc  = "res/Music/fight/die.wav"
+	local soundSrc  = "res/Music/fight/die02.wav"
 	self.audioId =  audio.playSound(soundSrc,false)	
 end
 

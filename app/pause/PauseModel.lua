@@ -10,9 +10,11 @@ layerClasses["MapPausePopup"]       = import("..pause.MapPausePopup")
 
 function PauseModel:ctor(properties)
     PauseModel.super.ctor(self, properties) 
+    self.isPause = false
 end
 
 function PauseModel:showPopup(layerId, properties, extra)
+	self.isPause = true
 	local opacity 
 	local anim
 	local animName
@@ -36,7 +38,12 @@ function PauseModel:showPopup(layerId, properties, extra)
 end
 
 function PauseModel:closePopup()
+	self.isPause = false
 	self:dispatchEvent({name = PauseModel.PAUSELAYER_CLOSE_EVENT})
+end
+
+function PauseModel:getIsPause()
+	return self.isPause
 end
 
 function PauseModel:getLayerCls(layerId)
