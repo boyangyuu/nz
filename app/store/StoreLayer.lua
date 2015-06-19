@@ -44,10 +44,10 @@ function StoreLayer:initUI()
 	self.listview = cc.uiloader:seekNodeByName(panelListView, "listview")
 	self.btnprop = cc.uiloader:seekNodeByName(panelBtn, "btnprop")
 	self.btnbank = cc.uiloader:seekNodeByName(panelBtn, "btnbank")
-	self.btninlay = cc.uiloader:seekNodeByName(panelBtn, "btninlay")
+	self.btnmoney = cc.uiloader:seekNodeByName(panelBtn, "btnmoney")
 	self.btnprop:setTouchEnabled(true)
 	self.btnbank:setTouchEnabled(true)
-	self.btninlay:setTouchEnabled(true)
+	self.btnmoney:setTouchEnabled(true)
     self.btnprop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
             if event.name=='began' then                
                 return true
@@ -62,11 +62,11 @@ function StoreLayer:initUI()
             self:refreshUI("bank")
         end
     end)
-     self.btninlay:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
+     self.btnmoney:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
         if event.name=='began' then                
             return true
         elseif event.name=='ended' then
-            self:refreshUI("inlay")
+            self:refreshUI("money")
         end
     end)
 end
@@ -93,9 +93,9 @@ function StoreLayer:refreshUI(type)
     self:refreshListView(type)
     self.btnprop:setColor(cc.c3b(80, 80, 80))
     self.btnbank:setColor(cc.c3b(80, 80, 80))
-    self.btninlay:setColor(cc.c3b(80, 80, 80))
-    if type == "inlay" then
-        self.btninlay:setColor(cc.c3b(255, 255, 255))
+    self.btnmoney:setColor(cc.c3b(80, 80, 80))
+    if type == "money" then
+        self.btnmoney:setColor(cc.c3b(255, 255, 255))
     elseif type == "bank" then
         self.btnbank:setColor(cc.c3b(255, 255, 255))
     elseif type == "prop" then

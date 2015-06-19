@@ -261,6 +261,7 @@ function FightResultLayer:initUIContent()
     		local record = self.fightResultModel:getInlayrecordByID(v["id"])
 			self.cardlabel[k]:setString(record["describe2"])
 			local icon = display.newSprite("#"..record["imgname"]..".png")
+			icon:setScale(1.33)
 			addChildCenter(icon, self.cardicon[k])
 			if record["property"] == 2 then
 				self.cardgold[k]:setVisible(false)

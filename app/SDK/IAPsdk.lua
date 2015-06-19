@@ -78,6 +78,7 @@ function IAPsdk:initConfigs()
 end
 
 function IAPsdk:pay(name)
+	if isFree then 	self:callbackSuccess() return end
 	if self.iapName == "noSim" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",

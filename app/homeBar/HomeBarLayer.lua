@@ -139,6 +139,8 @@ function HomeBarLayer:initHomeLayer()
     end)
     self.btnStore:onButtonClicked(function()
         self:onBtnStoreClicked()
+        local storeModel  = md:getInstance("StoreModel")
+        storeModel:refreshInfo("bank")
         buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
 end

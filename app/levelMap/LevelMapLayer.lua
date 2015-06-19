@@ -127,16 +127,11 @@ end
 function LevelMapLayer:initAwardLayer()
     self.btnWeapon     = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
-    local btnfirstgift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
     local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
-    if self.buyModel:checkBought("novicesBag") then
-        self.panelgift:setVisible(false)
-        btnVip:setVisible(true)
-    else
-        self.panelgift:setVisible(true)
-        btnVip:setVisible(false)
-    end
+    self.panelgift:setVisible(false)
+    btnVip:setVisible(true)
+
     if self.buyModel:checkBought("weaponGiftBag") then
         self.btnWeapon:setVisible(false)
     end    
@@ -167,21 +162,6 @@ function LevelMapLayer:initAwardLayer()
         end
     end)
 
-    --新手礼包
-
-    local armature = ccs.Armature:create("guang")
-    armature:setScale(2)
-    addChildCenter(armature, self.panelgift)
-    armature:getAnimation():play("guangtx" , -1, 1)
-
-    function hideGiftIcon()
-        self.panelgift:setVisible(false)
-        btnVip:setVisible(true)
-    end
-
-    btnfirstgift:onButtonClicked(function()
-        self.buyModel:showBuy("novicesBag",{payDoneFunc = hideGiftIcon}, "主界面_点击新手礼包")
-        end)
     btnVip:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
@@ -191,10 +171,6 @@ function LevelMapLayer:initAwardLayer()
         :onButtonClicked(function()
             self:initVipPopup()
         end)
-
-    local libaoArmature = ccs.Armature:create("libao")
-    btnfirstgift:addChild(libaoArmature)
-    libaoArmature:getAnimation():play("libao" , -1, 1)
 
     --限时奖励
     self:initAwardTime()
