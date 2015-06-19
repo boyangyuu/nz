@@ -651,7 +651,7 @@ end
 function FightPlayer:checkLongFire()
     local gid = self.fight:getGroupId()
     local isCheck = gid == 1
-    if self.checkLongFireTimes >= 4 and isCheck then 
+    if self.checkLongFireTimes >= 4 or not isCheck then 
         return 
     end
 

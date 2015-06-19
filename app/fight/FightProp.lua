@@ -112,7 +112,10 @@ function FightProp:costGoldWeapon()
 	if isNativeGold then return end
 
 	local num = self:getGoldNum()
-	if num >= 1 then
+	local isfree = self:isFreeCost() 
+	if isfree then 
+		fightInlay:checkNativeGold()
+	elseif num >= 1 then
 		local inlayModel = md:getInstance("InlayModel")
 		inlayModel:equipAllInlays()
 		fightInlay:checkNativeGold()
