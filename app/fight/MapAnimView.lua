@@ -29,7 +29,7 @@ end
 
 function MapAnimView:getScaleByPos(pos)
 	local offsetScale = (math.abs(pos.y - display.height/2)) / (display.height/2)
-	local scale = 0.6 + 0.4 * offsetScale
+	local scale = 0.8 + 1.2 * offsetScale
 	return scale
 end
 
@@ -42,6 +42,7 @@ function MapAnimView:playEffectShooted(event)
 
 	--robot gold or special gun
 	local isGold = inlay:getIsActiveGold()
+	isGold = false
 	-- print("isGold", isGold)
 	local isRobot = md:getInstance("Robot"):getIsRoboting()
 	local hero    = md:getInstance("Hero")
