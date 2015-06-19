@@ -542,11 +542,11 @@ function WeaponListLayer:refreshBtns()
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
         self.btnEquip:setVisible(false)
-        if self.weaponRecord["cost"] == 0 then
-            self.btnBuy:setVisible(false)
-        else
+        -- if self.weaponRecord["cost"] == 0 then
+        --     self.btnBuy:setVisible(false)
+        -- else
             self.btnBuy:setVisible(true)
-        end
+        -- end
     end
     if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)
