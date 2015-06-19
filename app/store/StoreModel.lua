@@ -8,7 +8,7 @@ function StoreModel:ctor(properties, events, callbacks)
 end
 
 function StoreModel:initConfigTable()
-	self.xqconfig = getConfig("config/items_xq.json")
+	self.moneyconfig = getConfig("config/items_mm.json")
 	self.bankconfig = getConfig("config/items_bank.json")
 	self.fightconfig = getConfig("config/items_fight.json")
 	local isDX = isDefendDX()
@@ -28,10 +28,9 @@ function StoreModel:getConfigTable(type)
 	elseif type == "bank" then
 		newTable = self.bankconfig
 			dump(self.bankconfig)
-
-	elseif type == "inlay" then
-		 local config = self.xqconfig
-		newTable = self:orderByGold(config)
+	elseif type == "money" then
+		 newTable = self.moneyconfig
+		 dump(newTable)
 	end
 	return newTable
 end

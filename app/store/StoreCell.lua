@@ -46,7 +46,7 @@ function StoreCell:initCellUI()
     
     self.property= cc.ui.UILabel.new({
         UILabelType = 2, text = self.record["name"], size = 28})
-    :align(display.CENTER, 0, -20)
+    :align(display.CENTER, 0, -30)
     :addTo(self)
     self.buynumber= cc.ui.UILabel.new({
         UILabelType = 2, text = "X 50", size = 29, color = cc.c3b(254, 233, 2)})
@@ -79,7 +79,7 @@ function StoreCell:initCellUI()
     :align(display.CENTER, -16, 3)
     :addTo(self.btnbuy)
     self.price:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    self.redline = display.newScale9Sprite("#honggang.png",0,-23,cc.size(160,9),cc.rect(12,0,1,1))
+    self.redline = display.newScale9Sprite("#honggang.png",0,-33,cc.size(160,9),cc.rect(12,0,1,1))
     self.redline:setRotation(170)
     self:addChild(self.redline)
     self.redline:setVisible(false)
@@ -152,19 +152,16 @@ function StoreCell:initCellData()
             discount:setVisible(false)
             self.redline:setVisible(false)
         end
-    elseif self.type == "inlay" then
-        self.buynumber:setVisible(false)
-        self.icon_jibi:setVisible(true)
-
-        local Img = display.newSprite("#"..self.record["imgname"]..".png",-240,0)
-        Img:setScale(1.2)
+    elseif self.type == "money" then
+        self.ownnumber:setVisible(false)
+        self.already:setVisible(false)
+        self.icon_zuanshi:setVisible(true)
+        local Img = display.newSprite("#"..self.record["imgname"]..".png",-230,0)
         self:addChild(Img)
-        self.detail:setString(self.record["describe2"])
-        self.detail:setPosition(0,25)
-        self.property:setString(self.record["describe1"].." "..self.record["valueDisplay"])
-        self.property:setPosition(0,-20)
-        self.price:setString(self.record["goldPrice"])
-        self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
+        self.detail:setString("金币")
+        self.buynumber:setString("X "..self.record["name"])
+        self.property:setString("赠送："..self.record["gift"])
+        self.price:setString(self.record["price"])
     end
 end
 
@@ -205,29 +202,19 @@ function StoreCell:addBtnEvent()
             self.buyModel:showBuy("stone"..self.record["number"],
                 {payDoneFunc = handler(self,self.playSound),
                 iapType = "noConfirm"}, 
-                "商城界面_点击钻石"..self.record["number"])
-        elseif self.type == "inlay" then
-            if self.userModel:costMoney(self.record["goldPrice"]) then
+                "商城界面_点击钻石"..self.record["number"]) 
+        elseif self.type == "money" then
+            if self.userModel:costDiamond(self.record["price"],true,"商城页面购买金币") then
                 self:playSound()
-                self.inlayModel:buyInlay(self.record["id"])
-                self.ownnumber:setString(self.inlayModel:getInlayNum(self.record["id"]))
-            else
-                function deneyGoldGift()
-                    ui:showPopup("commonPopup",
-                        {type = "style2",content = "金币不足，请去狙击模式获取"},
-                        {opacity = 155})
-                end
-                self.buyModel:showBuy("goldGiftBag",{payDoneFunc = handler(self,self.onBuyGoldGiftSucc) ,
-                    deneyBuyFunc = deneyGoldGift},
-                     "商城页面_购买单个镶嵌金币不足")
+                self.userModel:addMoney(self.record["number"])
             end
-            um:buy(self.record["describe2"], 1, self.record["goldPrice"])   
+
         end
     end)
 end
 
 function StoreCell:onBuyGoldGiftSucc()
-    self.storeModel:refreshInfo("inlay")
+    self.storeModel:refreshInfo("money")
 end
 
 function StoreCell:deneyGoldGift()

@@ -211,7 +211,6 @@ function MyApp:createGameStateFile()
         giftBag = { --buy
                     --false 为未购买
             weaponGiftBag =  false,
-            novicesBag = false,
             vip = false,
         },
 
