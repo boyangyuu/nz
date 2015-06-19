@@ -28,7 +28,7 @@ kDialogConfig["group1"]  = {
 	},
 	level2 = {
 		forward = {
-			{role = "杰",imgname = "role_jie", msg = "哈哈，镶嵌之后强力了好多哦！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "哈哈，装备之后强力了好多哦！", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "高防御的近战兵会冲在最前面，他们身后藏着的手雷兵才是更大的威胁！！", pos = "right"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "优先击杀后面的红衣手雷兵，他造成的伤害更高！", pos = "right"},
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "永远记住击杀敌人的顺序很重要！！", pos = "left"},
@@ -65,17 +65,17 @@ kDialogConfig["group1"]  = {
 
 		after = {
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "进步神速啊！以后敌人的弱点就靠你自己发现了", pos = "left"},
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "战斗结束后会奖励大量镶嵌道具！不用吝惜使用哦！！", pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "装备镶嵌道具能大幅提升战斗力！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "太好了，我这就去镶嵌一下！", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "战斗结束后会奖励大量装备道具！不用吝惜使用哦！！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "装备装备道具能大幅提升战斗力！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "太好了，我这就去装备一下！", pos = "left"},
 		},	
 	},
 	level4 = {
 		forward = {
 			{role = "鬼眼",imgname = "role_guiyan", msg = "敌人派出了一个巨大机械怪物-黑暗金刚！找到弱点，消灭它！", pos = "right"},
-			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，战斗前记得装备镶嵌道具！",pos = "left"},
-			{role = "安琪儿",imgname = "role_anqi", msg = "全套黄金镶嵌才能触发黄金武器哦！", pos = "right"},
-			{role = "杰",imgname = "role_jie", msg = "明白了，镶嵌完毕", pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "杰，战斗前记得装备装备道具！",pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "全套黄金装备才能触发黄金武器哦！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "明白了，装备完毕", pos = "left"},
 		},
 	},
 

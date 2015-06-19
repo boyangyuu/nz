@@ -91,13 +91,13 @@ configs["fight_dun"] = {
 configs["xiangqian"] = {
 	preGuideId = "afterfight01",
 	steps = {
-		--进镶嵌页面  一套青铜 
-		{id = "xiangqian_xiangqian", msg = "点击按钮进入镶嵌界面", }, 
-		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择镶嵌属性", rolepos = "right"}, 
+		--进装备页面  一套青铜 
+		{id = "xiangqian_xiangqian", msg = "点击按钮进入装备界面", }, 
+		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择装备属性", rolepos = "right"}, 
 		{id = "xiangqian_xiangqian2", msg = "点击购买",},
 		{id = "xiangqian_xiangqian3", msg = "点击装备", },
-		{id = "xiangqian_xiangqian4", msg = "也可点击快速镶嵌，镶嵌背包内最好的道具", },
-		{id = "xiangqian_xiangqian5", msg = "镶嵌是消耗性道具哦！", rolepos = "right", skipMode = "clickScreen" },
+		{id = "xiangqian_xiangqian4", msg = "也可点击快速装备，装备背包内最好的道具", },
+		{id = "xiangqian_xiangqian5", msg = "装备是消耗性道具哦！", rolepos = "right", skipMode = "clickScreen" },
 		{id = "xiangqian_back", msg = "点击按钮返回大地图" },		
 		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关", rolepos = "right",  contentOffset = {x = 0, y = -100},},		
 	}
@@ -120,7 +120,7 @@ configs["weapon"] = {
 configs["afterfight03"] = {
 	preGuideId = "weapon",
 	steps = {
-		{id = "afterfight03_inlay", msg = "点击按钮，镶嵌道具" },
+		{id = "afterfight03_inlay", msg = "点击按钮，装备道具" },
 		{id = "afterfight03_next", msg = "点击按钮，进入下一关" },		
 	}
 }

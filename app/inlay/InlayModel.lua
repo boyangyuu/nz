@@ -78,7 +78,7 @@ function InlayModel:equipInlay(inlayid,isNotRefresh)
 	end
 	if self:isBagsExist(inlayid) == false then
 		ui:showPopup("commonPopup",
-			 {type = "style2", content = "您还未拥有此镶嵌，请购买"},
+			 {type = "style2", content = "您还未拥有此装备，请购买"},
 			 {opacity = 150})
 
 		return
