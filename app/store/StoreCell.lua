@@ -207,6 +207,9 @@ function StoreCell:addBtnEvent()
             if self.userModel:costDiamond(self.record["price"],true,"商城页面购买金币") then
                 self:playSound()
                 self.userModel:addMoney(self.record["number"])
+                ui:showPopup("commonPopup",
+                     {type = "style2", content = "购买成功！"},
+                     { opacity = 0})
             end
 
         end
