@@ -334,7 +334,7 @@ function WeaponListLayer:refreshComment()
         self.layerGun:addChild(weaponImg)
     end
 
-    if self.weaponRecord["cost"] == 0 then
+    if self.weaponRecord["cost"] == 900 then
         self.labelNote:setVisible(true)
     else
         self.labelNote:setVisible(false)
