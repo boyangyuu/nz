@@ -20,7 +20,8 @@ function RootLayer:ctor()
     self:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
         if event.key == "back" then
             device.showAlert("","您就这样离开吗？", {"离开", "继续"}, handler{self, self.onClickListener})
-            -- self:onClickExitGame()
+            display.pause()
+            self:onClickExitGame()
         end
     end)
 
@@ -42,7 +43,7 @@ function RootLayer:onClickListener(event)
     if event.buttonIndex == 1 then
         os.exit(1);
     else
-
+        display.resume()
     end
 end
 
