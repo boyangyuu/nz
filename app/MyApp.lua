@@ -1,3 +1,4 @@
+
 require("config")
 
 require("framework.init")
@@ -15,6 +16,7 @@ myApp = MyApp
 isTest  = false     --战斗的各种框     
 isDebug = true      --debug页面 --dabao为false
 isAsync = false
+isFree = true
 __versionId = nil   --游戏当前版本
 __appName = nil       --游戏当前名称
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
@@ -147,7 +149,7 @@ function MyApp:createGameStateFile()
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 6,
+            level = 7,
         },
 
         bossMode = {
@@ -162,7 +164,7 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 1,
+            level = 7,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
             vipLevel  = 0,

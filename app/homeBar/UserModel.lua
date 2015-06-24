@@ -2,6 +2,9 @@
 local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local UserModel = class("UserModel", cc.mvc.ModelBase)
 
+--events
+UserModel.REFRESH_PLAYERNAME_EVENT     = "REFRESH_PLAYERNAME_EVENT"
+
 function UserModel:ctor(properties)
 	UserModel.super.ctor(self, properties)
 	self.LevelMapModel = md:getInstance("LevelMapModel")
@@ -31,7 +34,7 @@ end
 		return true
 	else
 		ui:showPopup("commonPopup",
-				 {type = "style2", content = "金币不足，请去无限狙击获取"},
+				 {type = "style2", content = "金币不足，请去商城购买"},
 				 {opacity = 155})
 		return false
 	end
@@ -123,10 +126,11 @@ function UserModel:getUserName()
 end
 
 function UserModel:setUserName(nameString)
+	print("function UserModel:setUserName(nameString)", nameString)
 	local data = getUserData()
 	data.user.userName = nameString
 	setUserData(data)
-	self:dispatchEvent({name = "REFRESH_PLAYERNAME_EVENT"})
+	self:dispatchEvent({name = UserModel.REFRESH_PLAYERNAME_EVENT})
 end
 
 return UserModel

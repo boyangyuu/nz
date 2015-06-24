@@ -67,7 +67,7 @@ function InlayListCell:initCellUI(record)
         :addTo(self)
     function deneyGoldGift()
         ui:showPopup("commonPopup",
-            {type = "style2",content = "金币不足，请去无限狙击获取"},
+            {type = "style2",content = "金币不足，请去商城购买"},
             {opacity = 155})
     end
     cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})

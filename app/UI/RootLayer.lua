@@ -19,9 +19,18 @@ function RootLayer:ctor()
     self:setKeypadEnabled(true)
     self:addNodeEventListener(cc.KEYPAD_EVENT, function(event)
         if event.key == "back" then
-            device.showAlert("","您就这样离开吗？", {"离开", "继续"}, handler{self, self.onClickListener})
+            print("RootLayer:KEYPAD_EVENT ")
             display.pause()
-            self:onClickExitGame()
+            local message = "您就这样离开吗？"
+            local buttonLabels = {"离开", "继续"}
+
+            luaj.callStaticMethod(
+                "org/cocos2dx/utils/PSNative",
+                "createAlert", 
+                {"", message, buttonLabels,  handler(self, self.onClickListener)}, 
+                "(Ljava/lang/String;Ljava/lang/String;Ljava/util/Vector;I)V");
+
+            -- self:onClickExitGame()
         end
     end)
 
@@ -39,8 +48,8 @@ function RootLayer:onClickExitGame()
     luaj.callStaticMethod(className, methodName)
 end
 
-function RootLayer:onClickListener(event)
-    if event.buttonIndex == 1 then
+function RootLayer:onClickListener(buttonIndex)
+    if buttonIndex == "1" then
         os.exit(1);
     else
         display.resume()
