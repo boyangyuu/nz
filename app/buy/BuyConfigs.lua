@@ -15,6 +15,12 @@ local configs = {
 			price = 20,
 			name = "土豪金礼包",
 	},	
+	yijiaoBag     = {              --1角礼包
+			ccsPath = dir.."YijiaoBag.json",
+			showType = "gift",
+			price = 0.1,
+			name = "1角礼包",
+	}, 	
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
 			showType = "gift",

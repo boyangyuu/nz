@@ -125,18 +125,30 @@ function LevelMapLayer:initBgLayer(event)
 end
 
 function LevelMapLayer:initAwardLayer()
-    self.btnWeapon     = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
-    self.panelgift     = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
-    local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
-    local btnGold      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
-    self.panelgift:setVisible(false)
-    btnVip:setVisible(true)
+    --一角（新手）礼包
+    local isShowGift   = not self.buyModel:checkBought("yijiaoBag") 
+    local giftAnimNode = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
+    local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    giftAnimNode:setVisible(isShowGift)   
 
-    if self.buyModel:checkBought("weaponGiftBag") then
-        self.btnWeapon:setVisible(false)
-    end    
+    local armature = ccs.Armature:create("guang")
+    armature:setScale(2)
+    addChildCenter(armature, giftAnimNode)
+    armature:getAnimation():play("guangtx", -1, 1)
+
+    function payDoneFunc()
+        local isShowGift = not self.buyModel:checkBought("yijiaoBag") 
+        giftAnimNode:setVisible(isShowGift)
+        local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
+        btnVip:setVisible(not isShowGift)
+    end
+    btnFirstGift:onButtonClicked(function ()
+        self.buyModel:showBuy("yijiaoBag", {payDoneFunc = payDoneFunc}, "主界面_点击新手礼包")
+    end)
+
 
     --土豪金
+    local btnGold  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
     local armature = ccs.Armature:create("thj_bx")
     armature:setPosition(-73,-10)
     btnGold:addChild(armature) 
@@ -152,6 +164,10 @@ function LevelMapLayer:initAwardLayer()
     end)
 
     --武器礼包
+    if self.buyModel:checkBought("weaponGiftBag") then
+        self.btnWeapon:setVisible(false)
+    end        
+    self.btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     self.btnWeapon:setTouchEnabled(true)
     addBtnEventListener(self.btnWeapon, function(event)
         if event.name=='began' then
@@ -162,6 +178,10 @@ function LevelMapLayer:initAwardLayer()
         end
     end)
 
+    --vip
+    local isBuyedYijiao = self.buyModel:checkBought("yijiaoBag") 
+    local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
+    btnVip:setVisible(isBuyedYijiao)
     btnVip:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
@@ -169,14 +189,14 @@ function LevelMapLayer:initAwardLayer()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function()
-            self:initVipPopup()
+            self:onClickGift_vip()
         end)
 
     --限时奖励
     self:initAwardTime()
 end
 
-function LevelMapLayer:initVipPopup()
+function LevelMapLayer:onClickGift_vip()
     local isAvailable = network.isInternetConnectionAvailable()
     if isAvailable then
         local isBought = self.buyModel:checkBought("vip")
@@ -194,7 +214,6 @@ end
 
 function LevelMapLayer:initAwardTime()
     local notiTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "noti")
-
 
     --限时礼包
     local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
