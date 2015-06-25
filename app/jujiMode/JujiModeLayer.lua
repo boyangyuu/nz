@@ -16,22 +16,30 @@ function JujiModeLayer:ctor()
 	self:initUI()
 
     cc.EventProxy.new(self.userModel, self)
-	    :addEventListener("REFRESH_PLAYERNAME_EVENT" , handler(self, self.refreshUI))
+	    :addEventListener(self.userModel.REFRESH_PLAYERNAME_EVENT,
+	     handler(self, self.refreshUI))
 
 	self:setNodeEventEnabled(true)
 end
 
 function JujiModeLayer:onEnter()
 	self:performWithDelay(handler(self,self.refreshListView),0.5)
-	self:performWithDelay(handler(self,self.setUserName),0.5)
+	self:performWithDelay(handler(self,self.checkUserName),0.5)
 end
 
-
-
-function JujiModeLayer:setUserName()
+function JujiModeLayer:checkUserName()
 	if  self.userModel:getUserName() == "玩家自己" then
-		ui:showPopup("InputBoxPopup",{opacity = 0})
+		ui:showPopup("InputBoxPopup", 
+			{content = "请输入游戏姓名",
+			 onClickConfirm = handler(self, self.onClickConfirm_InputName)}, 
+			 {opacity = 0})
 	end
+end
+
+function JujiModeLayer:onClickConfirm_InputName(event)
+	dump(event, "event")
+    local user = md:getInstance("UserModel")
+	user:setUserName(event.inputString)
 end
 
 function JujiModeLayer:loadCCS()

@@ -88,9 +88,7 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-               ui:showPopup("commonPopup",
-                 {type = "style6",callfuncCofirm = handler(self,self.checkActivateCode)},
-                 {opacity = 0})
+            self:onClickActiveCode()
         end
     end)
 
@@ -120,10 +118,21 @@ function StartLayer:initUI()
         end)
 end
 
-function StartLayer:checkActivateCode()
-    ui:showPopup("commonPopup",
-             {type = "style2", content = "激活码错误！"},
-             {opacity = 0})
+function StartLayer:onClickActiveCode()
+    ui:showPopup("InputBoxPopup", 
+        {content = "请输入激活码",
+         onClickConfirm = handler(self, self.onInputActiveCode)}, 
+         {opacity = 0})
+end
+
+function StartLayer:onInputActiveCode(event)
+    dump(event, "event")
+    local str = event.inputString
+    if str ~= "11" then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "激活码错误！"},
+         {opacity = 0}) 
+    end
 end
 
 function StartLayer:initMusicUI()

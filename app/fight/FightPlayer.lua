@@ -650,7 +650,7 @@ end
 
 function FightPlayer:checkLongFire()
     local gid = self.fight:getGroupId()
-    local isCheck = gid == 1
+    local isCheck = (gid == 1 or gid == 2 ) and not self.fight:isJujiFight()
     if self.checkLongFireTimes >= 4 or not isCheck then 
         return 
     end

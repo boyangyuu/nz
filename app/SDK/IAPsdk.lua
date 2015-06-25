@@ -31,9 +31,10 @@ function IAPsdk:initConfigs()
 		config["stone450"]         = "30000899255206"		--堆成山的宝石
 	
 	elseif self.iapName == 'jd' then --基地
-		config["novicesBag"]       = "001"		--新手礼包1
-		config["weaponGiftBag"]    = "007"		--武器到礼包1
-		config["goldGiftBag"]      = "008"		--土豪金礼包1
+		config["yijiaoBag"]        = "014"		--1角礼包
+		config["novicesBag"]       = "001"		--新手礼包
+		config["weaponGiftBag"]    = "007"		--武器到礼包
+		config["goldGiftBag"]      = "008"		--土豪金礼包
 
 		--单件
 		config["goldWeapon"]       = "002"		--黄武

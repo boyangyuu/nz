@@ -188,6 +188,13 @@ function BuyModel:buy_weaponGiftBag(buydata)
     showWeaponNotify()
 end
 
+function BuyModel:buy_yijiaoBag( buydata )
+	print("BuyModel:buy_yijiaoBag(buydata)")
+	local userModel = md:getInstance("UserModel")
+	userModel:addMoney(188888)
+	self:setBought("yijiaoBag")
+end
+
 function BuyModel:buy_novicesBag( buydata )
 	print("BuyModel:buy_novicesBag(buydata)")
 	local inlayModel = md:getInstance("InlayModel")
