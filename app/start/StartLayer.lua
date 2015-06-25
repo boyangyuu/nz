@@ -19,6 +19,7 @@ end
 
 function StartLayer:initUI()
     local panlAnim = cc.uiloader:seekNodeByName(self, "panlAnim")
+    local p = cc.uiloader:seekNodeByName(self, "Image_17")
     local src = "res/Start/caidantx/caidantx.ExportJson"
     local logosrc = "res/Start/dl_logo/dl_logo.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
@@ -34,11 +35,10 @@ function StartLayer:initUI()
 
     local armature = ccs.Armature:create("caidantx")
     armature:setPosition(cc.p(568,320))
-    self:addChild(armature,100)
+    p:addChild(armature,100)
     armature:getAnimation():play("caidantx" , -1, 1)
 
     local dlArmature = ccs.Armature:create("dl_logo")
-    dlArmature:setScale(1.3)
     dlArmature:getAnimation():setMovementEventCallFunc(   
          function (armatureBack,movementType,movement) 
             if movementType == ccs.MovementEventType.complete then
@@ -49,19 +49,11 @@ function StartLayer:initUI()
     panlAnim:addChild(dlArmature)
     dlArmature:getAnimation():play("start" , -1, 0)
 
-    --test
-    self:performWithDelay(handler(self, self.playEnterAnim), 1.9) 
-    -- self:performWithDelay(handler(self, self.playEnterAnim), 0.1) 
-
     self.btnBegin = cc.uiloader:seekNodeByName(self, "btnBegin")
     self.btnAbout = cc.uiloader:seekNodeByName(self, "btnAbout")
     self.btnHelp = cc.uiloader:seekNodeByName(self, "btnHelp")
     self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
-    self.imgBegin = cc.uiloader:seekNodeByName(self, "imgbegin")
-    self.imgBegin:setScale(5)
-    self.imgBegin:setVisible(false)
-    
 
     self.btnBegin:setTouchEnabled(true)
     addBtnEventListener(self.btnBegin, function(event)
@@ -165,33 +157,6 @@ function StartLayer:playEnterSound()
     local soundSrc  = "res/Music/ui/dl_logo.wav"
     self.enterSound = audio.playSound(soundSrc,false)  
 end
-
-function StartLayer:playEnterAnim()
-    local i = 1
-    local btnKeys = {"btnActivate", "btnAbout","btnHelp","btnMusic","btnBegin"}
-    for i,v in ipairs(btnKeys) do
-        local delay = i * 0.1
-        function delayMoveBy()
-            local action = cc.MoveBy:create(0.2, cc.p(-450,0))
-            self[v]:runAction(action)
-        end
-        i= i+1
-        self:performWithDelay(delayMoveBy, delay) 
-    end
-
-    function delayScaleTo()
-        self.imgBegin:setVisible(true)
-        local sequence = transition.sequence({
-            cc.ScaleTo:create(0.2, 1.5),
-            cc.ScaleTo:create(0.1, 1.7),
-            cc.ScaleTo:create(0.1, 1.5),
-        })
-
-        transition.execute(self.imgBegin, sequence)
-    end
-    self:performWithDelay(delayScaleTo, 0.7) 
-end
-
 
 function StartLayer:switchSound()
     local play      = cc.uiloader:seekNodeByName(self.btnMusic, "play")

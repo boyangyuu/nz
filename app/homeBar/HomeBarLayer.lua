@@ -127,12 +127,8 @@ function HomeBarLayer:initHomeLayer()
     end)
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
-        local userModel = md:getInstance("UserModel")
-        local isDone = userModel:getUserLevel() >= 3
-        if isDone then
-            buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
-                "打开武器库_自动弹出武器大礼包")
-        end
+        buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
+            "打开武器库_自动弹出武器大礼包")
     end)
     self.btnInlay:onButtonClicked(function()
         self:onBtnInlayClicked()
