@@ -141,13 +141,13 @@ function MyApp:createGameStateFile()
 
         weaponsuipian = {},
 
-        money = 20000000,
-        diamond = 0,
+        money = 188888,
+        diamond = 10,
         
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 1,
+            level = 6,
         },
 
         bossMode = {
@@ -162,7 +162,7 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 1,
+            level = 5,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
             vipLevel  = 0,
