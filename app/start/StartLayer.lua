@@ -54,6 +54,12 @@ function StartLayer:initUI()
     self.btnHelp = cc.uiloader:seekNodeByName(self, "btnHelp")
     self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
+    self.btnGonggao = cc.uiloader:seekNodeByName(self, "btnGonggao")
+
+    local seq = transition.sequence({
+        cc.ScaleTo:create(0.6, 1.04), 
+        cc.ScaleTo:create(0.6, 0.96),}) 
+    self.btnBegin:runAction(cc.RepeatForever:create(seq))
 
     self.btnBegin:setTouchEnabled(true)
     addBtnEventListener(self.btnBegin, function(event)
@@ -80,6 +86,15 @@ function StartLayer:initUI()
             return true
         elseif event.name == "ended" then 
            ui:showPopup("AboutPopup",{popupName = "bangzhu"},{animName = "normal"})
+        end
+    end)
+
+    self.btnGonggao:setTouchEnabled(true)
+    addBtnEventListener(self.btnGonggao, function( event )
+        if event.name == "began" then
+            return true
+        elseif event.name == "ended" then 
+           ui:showPopup("AboutPopup",{popupName = "gonggao"},{animName = "normal"})
         end
     end)
 
