@@ -163,7 +163,7 @@ function waveClass:ctor()
 	self.bosses = bosses
 	self.mapId  = mapId
 	self.limit  = 10
-	self.isNotMoveMap = isNotMoveMap
+	-- self.isNotMoveMap = isNotMoveMap
 
 	self.fightMode =  {
 		type 	  = "puTong",

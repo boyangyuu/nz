@@ -76,9 +76,11 @@ function StoryLayer:initTalkWords(talk, talkName)
 end
 
 function StoryLayer:initTouchEvent()
-	self.btnContinue = cc.uiloader:seekNodeByName(self.storyNode, "btncontinue")
-	self.btnContinue:setVisible(true)
-	self:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
+	local touchLayer = display.newLayer()
+	touchLayer:setContentSize(cc.size(1136, 640))
+	self:addChild(touchLayer)
+	touchLayer:setTouchEnabled(true)
+	touchLayer:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then

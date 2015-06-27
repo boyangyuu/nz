@@ -36,6 +36,8 @@ layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopu
 
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
+layerClasses["KefuPopup"] 		 	 = import("..commonPopup.KefuPopup")
+
 layerClasses["WeaponNotifyLayer"]    = import("..weaponNotify.WeaponNotifyLayer")
 layerClasses["InputBoxPopup"]        = import("..commonPopup.InputBoxPopup")
 layerClasses["BossAdvisePopup"]      = import("..bossMode.BossAdvisePopup")

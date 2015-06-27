@@ -80,10 +80,10 @@ function DaoEnemyView:playFire()
         demageScale = self.enemy:getDemageScale(),
         missileType = self.property["missileType"],
     }
-    local function callfuncDaoDan()
+    -- local function callfuncDaoDan()
          self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
-    end
-    self:performWithDelay(callfuncDaoDan, 0.3)   
+    -- end
+    -- self:performWithDelay(callfuncDaoDan, 0.3)   
 end
 
 function DaoEnemyView:playKill(event)

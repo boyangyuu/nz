@@ -18,6 +18,10 @@ function PauseLayer:ctor()
 end 
 
 function PauseLayer:showPopup(event)
+	if self.layer ~= nil then 
+		return 
+	end
+
 	self:setVisible(true)
 	display.pause()
 
@@ -25,11 +29,7 @@ function PauseLayer:showPopup(event)
 	self.str = cls.__cname
 	local pro = event.properties
 	local layer = cls.new(pro)
-	if self.layer ~= nil then 
-		self.layer:removeSelf()
-		self.layer = nil
-		return 
-	end
+
 	self.layer = layer
 	layer:setPositionY(display.offset)
 	self:addChild(self.layer)

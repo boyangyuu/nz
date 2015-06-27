@@ -115,7 +115,7 @@ function HomeBarLayer:initHomeLayer()
         elseif event.name=='ended' then
             print("settingBtn is pressed!")
             local pauseModel = md:getInstance("PauseModel")
-            pauseModel:showPopup("MapPausePopup",{popupName = "mapset"},{anim = true, isPauseScene = true})
+            pauseModel:showPopup("MapPausePopup",{popupName = "mapset"},{anim = true})
         end
     end)
     addBtnEventListener(self.btnBack, function(event)
@@ -127,18 +127,16 @@ function HomeBarLayer:initHomeLayer()
     end)
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
-        local userModel = md:getInstance("UserModel")
-        local isDone = userModel:getUserLevel() >= 3
-        if isDone then
-            buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
-                "打开武器库_自动弹出武器大礼包")
-        end
+        buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
+            "打开武器库_自动弹出武器大礼包")
     end)
     self.btnInlay:onButtonClicked(function()
         self:onBtnInlayClicked()
     end)
     self.btnStore:onButtonClicked(function()
         self:onBtnStoreClicked()
+        local storeModel  = md:getInstance("StoreModel")
+        storeModel:refreshInfo("bank")
         buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
 end

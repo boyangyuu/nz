@@ -37,9 +37,24 @@ function FightProp:costRobot(callfuncSuccess)
         	self.propModel:costProp("jijia",1)  
         end
 	else
-		self.buyModel:showBuy("armedMecha", {
-			isNotPopKefu = true}, "战斗界面_点击机甲")
+	    --buy
+	    ui:showPopup("StoneBuyPopup",
+	         {name = "无敌机甲x2", 
+	         price = 40,
+	         onClickConfirm = handler(self, self.buyRobotByStone)},
+	         {animName = "moveDown", opacity = 150})	
 	end
+end
+
+function FightProp:buyRobotByStone()
+	print("function FightProp:buyRobotByStone()")	
+	local kValue = 40
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_无敌机甲x2") 
+    if isAfforded then
+    	self.propModel:addProp("jijia", 2)
+        ui:closePopup("StoneBuyPopup")
+    end		
 end
 
 function FightProp:getRobotNum()
@@ -64,9 +79,26 @@ function FightProp:costLei(callfuncSuccess)
 	    	self.propModel:costProp("lei",1) 
 	    end
 	else
-		self.buyModel:showBuy("handGrenade", {
-			isNotPopKefu = true}, "战斗界面_点击手雷")
+		-- self.buyModel:showBuy("handGrenade", {
+		-- 	isNotPopKefu = true}, "战斗界面_点击手雷")
+	    --buy
+	    ui:showPopup("StoneBuyPopup",
+	         {name = "手雷x20", 
+	         price = 40,
+	         onClickConfirm = handler(self, self.buyLeiByStone)},
+	         {animName = "moveDown", opacity = 150})		
 	end
+end
+
+function FightProp:buyLeiByStone()
+	print("function FightProp:buyLeiByStone()")	
+	local kValue = 40
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_手雷x20") 
+    if isAfforded then
+    	self.propModel:addProp("lei", 20)
+        ui:closePopup("StoneBuyPopup")
+    end		
 end
 
 function FightProp:getLeiNum()
@@ -80,14 +112,34 @@ function FightProp:costGoldWeapon()
 	if isNativeGold then return end
 
 	local num = self:getGoldNum()
-	if num >= 1 then
+	local isfree = self:isFreeCost() 
+	if isfree then 
+		fightInlay:checkNativeGold()
+	elseif num >= 1 then
 		local inlayModel = md:getInstance("InlayModel")
 		inlayModel:equipAllInlays()
 		fightInlay:checkNativeGold()
 	else
-		self.buyModel:showBuy("goldWeapon", {payDoneFunc = handler(self, self.startGoldWeaponByPay),
-			isNotPopKefu = true}, "战斗界面_点击黄武")
+	    --buy
+	    ui:showPopup("StoneBuyPopup",
+	         {name = "黄金武器x2", 
+	         price = 40,
+	         onClickConfirm = handler(self, self.buyGoldsInlayByStone)},
+	         {animName = "moveDown", opacity = 150})	
 	end
+end
+
+function FightProp:buyGoldsInlayByStone()
+	print("function FightProp:buyGoldsInlayByStone()")	
+	local kValue = 40
+	local user = md:getInstance("UserModel")
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_黄金武器x2") 
+    if isAfforded then
+		local inlayModel = md:getInstance("InlayModel")
+		inlayModel:buyGoldsInlay(2)
+		inlayModel:dispatchEvent({name = inlayModel.REFRESH_INLAY_EVENT})
+        ui:closePopup("StoneBuyPopup")
+    end		
 end
 
 function FightProp:getGoldNum()
@@ -139,9 +191,6 @@ function FightProp:buyHpBagByStone()
 		hero:costHpBag()
        	self.propModel:addProp("hpBag", 6)  
         ui:closePopup("StoneBuyPopup")
-        return true
-    else
-        return false
     end	
 end
 

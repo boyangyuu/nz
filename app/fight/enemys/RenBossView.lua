@@ -158,24 +158,25 @@ function RenBossView:playFeibiao(skillName)
     --pos
     local config = self.config[skillName] 
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
-    local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
-    
     --play
     for i=1,#config.offsetPoses do
+        print("function RenBossView:playFeibiao(skillName)", i)
         local delay = 0.6 + 0.20 * i 
-        local property = {
-            srcPos = pWorldBone,
-            srcScale = self:getScale() * 0.4,
-            destScale = 1.5,
-            destPos = pWorldBone,
-            offset = config.offsetPoses[i],
-            type = "missile",
-            id = self.property["missileId"],
-            demageScale = self.enemy:getDemageScale(),
-            missileType = "feibiao",
-        }
         local function callfuncDaoDan()
-             self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+            
+            local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))            
+            local property = {
+                srcPos = pWorldBone,
+                srcScale = self:getScale() * 0.4,
+                destScale = 1.5,
+                destPos = pWorldBone,
+                offset = config.offsetPoses[i],
+                type = "missile",
+                id = self.property["missileId"],
+                demageScale = self.enemy:getDemageScale(),
+                missileType = "feibiao",
+            }
+            self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
         end
         self:performWithDelay(callfuncDaoDan, delay)     
     end    

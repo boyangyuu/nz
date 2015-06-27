@@ -1,3 +1,4 @@
+
 require("config")
 
 require("framework.init")
@@ -11,14 +12,14 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 
 -- global var
 GameData={}
-
-isFree = true       --付费免费
+myApp = MyApp
 isTest  = false     --战斗的各种框     
-isDebug = true      --debug页面
-isAnalytics = nil --统计功能开关
+isDebug = true      --debug页面 --dabao为false
 isAsync = false
-__versionId = "1.2.2"   --游戏当前版本
-appName = nil       --游戏当前名称
+isFree = true
+__versionId = nil   --游戏当前版本
+__appName = nil       --游戏当前名称
+__kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
 md        = MD.new()
@@ -66,7 +67,7 @@ function MyApp:initGameState()
         GameData=GameState.load()
     else
         self:createGameStateFile()
-        GameData=GameState.load()
+        
     end
 end
 
@@ -77,10 +78,8 @@ function MyApp:initVariables()
     local boolSig = "()Z"
     local stringSig = "()Ljava/lang/String;"
     local result = nil
-    result, isAnalytics = luaj.callStaticMethod(className, "getIsAnalytics", params,boolSig)
     result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
-    result, appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
-    print("MyApp-isAnalytics:",isAnalytics)
+    result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
 end
 
 
@@ -102,7 +101,11 @@ function MyApp:createGameStateFile()
                 {
                     intenlevel = 0,
                     weaponid   = 6, 
-                }
+                },
+                -- {
+                --     intenlevel = 10,
+                --     weaponid   = 3,
+                -- },                
             },
             weaponed = {
                 bag1 = {
@@ -124,7 +127,6 @@ function MyApp:createGameStateFile()
             
             }, --{inlayid = 1,ownednum = 1}
             inlayed  = {
-                --存id bullet = 1,
                 bullet = nil,
                 clip = nil,
                 speed = nil,
@@ -135,7 +137,7 @@ function MyApp:createGameStateFile()
         },
         prop = {
             lei = {num = 20},
-            jijia = {num = 1},
+            jijia = {num = 0},
             hpBag = {num = 1},
         },
 
@@ -143,11 +145,13 @@ function MyApp:createGameStateFile()
 
         money = 188888,
         diamond = 10,
+
         
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 6,
+            level = 1,
+
         },
 
         bossMode = {
@@ -162,45 +166,45 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 5,
+            level = 1,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
             vipLevel  = 0,
         },
-        guide = {
+        guide = { --dabao为false 
             --记得和 filldata对应!
 
             --登陆
-            login           = true,
+            login           = false,
             --前戏
-            preStory        = true,
+            preStory        = false,
             --第0-0关之内
-            fight01_move    = true,
-            fight01_fire    = true,
-            fight01_lei     = true,
-            fight01_gold    = true,
-            fight01_change  = true,
-            fight01_jijia   = true, 
+            fight01_move    = false,
+            fight01_fire    = false,
+            fight01_lei     = false,
+            fight01_gold    = false,
+            fight01_change  = false,
+            fight01_jijia   = false, 
 
             --第0-0关之后  
-            afterfight01    = true,   -- 进入下一关
+            afterfight01    = false,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = true,
-            fight_dun       = true,
+            fight_change    = false,
+            fight_dun       = false,
 
             --第1-2关之前
-            xiangqian       = true,   --镶嵌一套青铜
+            xiangqian       = false,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = true,   -- 升级武器
-            afterfight03    = true,   -- 回到主界面
+            weapon          = false,   -- 升级武器
+            afterfight03    = false,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = true,  
+            fightJu         = false,  
 
             --第1-4失败之后
-            fightRelive     = true,                      
+            fightRelive     = false,                      
         },
         fight = {
            isPreferBag1 = true,
@@ -210,7 +214,6 @@ function MyApp:createGameStateFile()
         giftBag = { --buy
                     --false 为未购买
             weaponGiftBag =  false,
-            novicesBag = false,
             vip = false,
         },
 
@@ -229,6 +232,7 @@ function MyApp:createGameStateFile()
             
     }
     GameState.save(data)
+    GameData=GameState.load()
 end
 
 function MyApp:showError(debugInfo)
@@ -237,11 +241,16 @@ function MyApp:showError(debugInfo)
 end
 
 function MyApp:onEnterBackground()
-
+    local pauseModel = md:getInstance("PauseModel")
+    pauseModel:showPopup("HomePausePopup",{},{anim = true, isOnEnterBackground = true})
 end
 
 function MyApp:onEnterForeground()
-   
+    print("function MyApp:onEnterForeground()")
+    local pauseModel = md:getInstance("PauseModel")
+    if pauseModel:getIsPause() then 
+        display.pause()
+    end
 end
 
 return MyApp

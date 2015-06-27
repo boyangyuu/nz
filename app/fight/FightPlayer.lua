@@ -11,7 +11,8 @@ local FightControlLayer = import(".FightControlLayer")
 local GunSkillLayer     = import(".Gun.GunSkillLayer")
 
 local KFightConfig = {
-    scaleMoveBg = 1.0, 
+    -- scaleMoveBg = 1.0, 
+    scaleMoveBg = 2.0, --todoyyy
     scaleMoveFocus = 2.3,
     scaleMoveGun = 2.3, 
 }
@@ -44,6 +45,7 @@ function FightPlayer:ctor(properties)
     self.resumeDefenceHandler = nil
     self.btnFireSch = nil
     self.touchFireId = nil
+    self.checkLongFireTimes = 0
 
     --views
     self.focusView      = FocusView.new()
@@ -627,6 +629,7 @@ function FightPlayer:onBtnFire()
 end
 
 function FightPlayer:onCancelledFire()
+    self:checkLongFire()
 
     --robot ju
     local robot         = md:getInstance("Robot")
@@ -643,6 +646,29 @@ function FightPlayer:onCancelledFire()
         transition.removeAction(self.btnFireSch)
     end
     self.touchFireId = nil 
+end
+
+function FightPlayer:checkLongFire()
+    local gid = self.fight:getGroupId()
+    local isCheck = (gid == 1 or gid == 2 ) and not self.fight:isJujiFight()
+    if self.checkLongFireTimes >= 4 or not isCheck then 
+        return 
+    end
+
+    local function checkFireTime()
+        if self.touchFireId then
+            self.checkLongFireTimes = self.checkLongFireTimes + 1
+            self.hero:dispatchEvent({name = self.hero.EFFECT_FIGHTTIPS_EVENT,
+                strTips = "长按连击，可增加伤害!"})
+            -- self.hero:dispatchEvent({name = self.hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
+        end
+    end
+    local action = nil
+    local function removeSch()
+        transition.removeAction(action) 
+    end
+    action = self:schedule(checkFireTime, 0.1)
+    self:performWithDelay(removeSch, 0.3)
 end
 
 function FightPlayer:stopFire(event)
@@ -698,6 +724,7 @@ end
 function FightPlayer:moveFocus(offsetX, offsetY)
     --check ju
     if self.fight:isJujiFight() then return end
+    if 1 == 1 then return end
 
     local focusNode = self.focusNode
     local xOri, yOri = focusNode:getPosition()
@@ -710,7 +737,6 @@ function FightPlayer:moveFocus(offsetX, offsetY)
     --变红 todoyby
     local x, y = focusNode:getPosition()
     self:moveGun(x - xOri,y - yOri)
-
 end
 
 function FightPlayer:moveBgLayer(offsetX, offsetY)
@@ -719,8 +745,10 @@ function FightPlayer:moveBgLayer(offsetX, offsetY)
     if isNotMove then return end    
 
     local isOpenJu = map:getIsOpenJu()
+    --todo
     local scale = isOpenJu and KFightConfig.scaleMoveBg * define.kJuRange  or KFightConfig.scaleMoveBg 
-
+    local kScale = KFightConfig.scaleMoveBg
+    local scale = isOpenJu and kScale * 1 or kScale
     local layerMap = self.layerMap
     local xOri, yOri = layerMap:getPosition()
     layerMap:setPosition(xOri - offsetX * scale, yOri - offsetY * scale)
@@ -818,14 +846,13 @@ function FightPlayer:initGuide1()
     local function checkGuideFire()
         self:onCancelledFire()       
         self.guide:check("fight01_fire")
+
+
         local comps = {btnLei = true, label_leiNum =  true,}
         self.fight:dispatchEvent({name = self.fight.CONTROL_SET_EVENT,
             comps = comps})           
         
-        local ox, oy = self.focusNode:getPosition()
-        local offsetX, offsetY = 536 - ox , 225 - oy
-        self:moveFocus(offsetX/ KFightConfig.scaleMoveFocus,
-         offsetY / KFightConfig.scaleMoveFocus)
+        self.layerMap:setPosition(40, 85)
     end
 
     self.guide:addClickListener({
@@ -833,7 +860,8 @@ function FightPlayer:initGuide1()
         groupId = "fight01_move",
         rect = cc.rect(0, 0, display.width1, display.height1),
         endfunc = function (touchEvent)
-            self:performWithDelay(checkGuideFire, 2.0)
+            -- checkGuideFire()
+            self:performWithDelay(checkGuideFire, 4.0)
         end
      })
     
@@ -889,11 +917,7 @@ function FightPlayer:initGuideChange()
         endfunc = function (touchEvent)
             for id, point in pairs(touchEvent.points) do
                 self:checkBtnChange(point)
-            end
-            --扫射提示
-            local hero = md:getInstance("Hero")
-            hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, 
-                animName = "saoshe"})             
+            end            
         end
     })  
 end

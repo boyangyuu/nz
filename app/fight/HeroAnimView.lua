@@ -15,7 +15,6 @@ function HeroAnimView:ctor()
     self.fight 		 = fightFactory:getFight()
 	local fightInlay = md:getInstance("FightInlay")
 	local fightMode  = md:getInstance("FightMode")
-	self.isPlayCombo = false
 
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(self.hero.EFFECT_HURT_BOLI_EVENT	, handler(self, self.playHurtedBomb_boli))	
@@ -24,7 +23,7 @@ function HeroAnimView:ctor()
 		:addEventListener(self.hero.EFFECT_KEEPKILL_EVENT	, handler(self, self.playKeepKill))
 		:addEventListener(self.hero.EFFECT_GUIDE_EVENT		, handler(self, self.playAnimGuide))
 		:addEventListener(self.hero.SKILL_ADDHP_EVENT		, handler(self, self.playAnimAddHp))
-		
+
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playKillHead))	
 		:addEventListener(self.hero.ENEMY_KILL_HEAD_EVENT 	, handler(self, self.playWindEffect))	
 		:addEventListener(self.hero.ENEMY_KILL_BOSS_EVENT 	, handler(self, self.playEffectBling))	
@@ -240,6 +239,7 @@ function HeroAnimView:playFightTips(event)
 end
 
 function HeroAnimView:playAnimGuide(event)   
+	print("function HeroAnimView:playAnimGuide(event)   ")
 	--add res 
 	local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo("res/Fight/heroAnim/yd_saos/yd_saos.ExportJson")
@@ -254,7 +254,7 @@ function HeroAnimView:playAnimGuide(event)
         armature:removeSelf()
         armature = nil
     end
-    self:performWithDelay(removeFunc, 8.0)	
+    self:performWithDelay(removeFunc, 6.0)	
 end
 
 function HeroAnimView:playAnimAddHp(event)

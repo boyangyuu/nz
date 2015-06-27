@@ -15,7 +15,6 @@ function WeaponListLayer:ctor()
     self.weaponId = 1
 
     self.weaponListModel = md:getInstance("WeaponListModel")
-    self.commonPopModel = md:getInstance("commonPopModel")
     self.userModel = md:getInstance("UserModel")
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     self.buyModel = md:getInstance("BuyModel")
@@ -334,7 +333,7 @@ function WeaponListLayer:refreshComment()
         self.layerGun:addChild(weaponImg)
     end
 
-    if self.weaponRecord["cost"] == 0 then
+    if self.weaponRecord["cost"] == 900 then
         self.labelNote:setVisible(true)
     else
         self.labelNote:setVisible(false)
@@ -542,11 +541,11 @@ function WeaponListLayer:refreshBtns()
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
         self.btnEquip:setVisible(false)
-        if self.weaponRecord["cost"] == 0 then
-            self.btnBuy:setVisible(false)
-        else
+        -- if self.weaponRecord["cost"] == 0 then
+        --     self.btnBuy:setVisible(false)
+        -- else
             self.btnBuy:setVisible(true)
-        end
+        -- end
     end
     if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)

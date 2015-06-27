@@ -65,7 +65,7 @@ function AboutPopup:initText()
 				"\n武器库:购买各种武器，玩家可以选择2把武器带入战",
 				"斗。",
 				"\n武器升级:花费金币提高武器的属性。",
-				"\n镶嵌:为武器镶嵌各种零件，额外提高武器能力。",
+				"\n装备:为主角装备各种零件，额外提高战斗力量。",
 				"战斗结束后零件消失。",
 				"\n商城:花费购买各种道具。"										
 				}
@@ -89,7 +89,7 @@ function AboutPopup:initContent()
 		local versionLabel = cc.uiloader:seekNodeByName(self.aboutNode, "version")
 		versionLabel:setString(__versionId)
 		local gameName = cc.uiloader:seekNodeByName(self.aboutNode, "gameName")
-		gameName:setString(appName)
+		gameName:setString(__appName)
 		local gameType = cc.uiloader:seekNodeByName(self.aboutNode, "gameType")
 		gameType:setString("射击")
 		local company = cc.uiloader:seekNodeByName(self.aboutNode, "company")

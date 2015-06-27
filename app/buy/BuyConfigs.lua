@@ -2,6 +2,11 @@ local BuyConfigs = class("BuyConfigs", cc.mvc.ModelBase)
 
 local dir = "res/GiftBag/GiftBag/GiftBag_"
 
+--[[
+	name:	 俗称
+	iapName: 计费点名称
+]]
+
 local configs = {
 	goldGiftBag    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag.json",
@@ -15,6 +20,12 @@ local configs = {
 			price = 20,
 			name = "土豪金礼包",
 	},	
+	yijiaoBag     = {              --1角礼包
+			ccsPath = dir.."YijiaoBag.json",
+			showType = "gift",
+			price = 0.1,
+			name = "1角礼包",
+	}, 	
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
 			showType = "gift",
@@ -69,6 +80,28 @@ local configs = {
 			name = "450个宝石",
 			iapName = "堆成山的宝石",
 	},
+	stone600         = {
+			showType = "prop_rmb",
+			price = 60,
+			name = "支付宝宝石",
+			iapName = "支付宝宝石",
+			iapType = "al",
+	},
+	stone900         = {
+			showType = "prop_rmb",
+			price = 90,
+			name = "支付宝宝石",
+			iapName = "支付宝宝石",
+			iapType = "al",
+	},
+	stone1200        = {
+			showType = "prop_rmb",
+			price = 120,
+			name = "支付宝宝石",
+			iapName = "支付宝宝石",
+			iapType = "al",			
+	},
+
 	-- hpBag         = {
 	-- 		showType = "prop_stone",
 	-- 		price = 30,

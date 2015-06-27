@@ -78,9 +78,9 @@ Define.kAwardSanTime			= 5.0    	--箱子落地持续时间
 Define.kAwardEnemySanSpeed		= 50.0      --伞速
 
 --导弹
-Define.kMissileDaoTime				= 2.5    --导弹飞行时间
+Define.kMissileDaoTime				= 3.5    --导弹飞行时间
 Define.kMissileTieqiuTime           = 2.0    --铁球和汽车飞行时间
-Define.kMissileLeiTime				= 2.5    --手雷飞行时间 
+Define.kMissileLeiTime				= 3.5    --手雷飞行时间 
 Define.kYanEffectTime				= 5      --烟雾白屏时间 
 
 --飞镖

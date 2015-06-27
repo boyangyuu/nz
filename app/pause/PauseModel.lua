@@ -10,11 +10,11 @@ layerClasses["MapPausePopup"]       = import("..pause.MapPausePopup")
 
 function PauseModel:ctor(properties)
     PauseModel.super.ctor(self, properties) 
-	--instance
-	self.isShowPauseScene = true
+    self.isPause = false
 end
 
 function PauseModel:showPopup(layerId, properties, extra)
+	self.isPause = true
 	local opacity 
 	local anim
 	local animName
@@ -22,7 +22,6 @@ function PauseModel:showPopup(layerId, properties, extra)
 		opacity = extra.opacity
 		anim = extra.anim
 		animName = extra.animName
-		isNotScrenCapture = extra.isNotScrenCapture
 	end
 
 	local layerCls = self:getLayerCls(layerId)
@@ -30,11 +29,21 @@ function PauseModel:showPopup(layerId, properties, extra)
 	self:dispatchEvent({name = PauseModel.PAUSELAYER_SHOW_EVENT, layerCls = layerCls,
 		opacity = opacity, anim = anim, properties = properties})
 
+
+	--sdk暂停
+	if extra.isOnEnterBackground then 
+		return 
+	end
+	self:onPause()
 end
 
 function PauseModel:closePopup()
-	self.isShowPauseScene = true
+	self.isPause = false
 	self:dispatchEvent({name = PauseModel.PAUSELAYER_CLOSE_EVENT})
+end
+
+function PauseModel:getIsPause()
+	return self.isPause
 end
 
 function PauseModel:getLayerCls(layerId)
@@ -43,5 +52,12 @@ function PauseModel:getLayerCls(layerId)
 	return cls
 end
 
+function PauseModel:onPause()
+    --callfunc java
+    if device.platform ~= 'android' then return true end
+    local className = "com/hgtt/com/IAPControl"
+    local methodName = "lua_gamePause"
+    luaj.callStaticMethod(className, methodName)
+end
 
 return PauseModel

@@ -5,7 +5,7 @@
 ]]
 local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
-
+local JavaUtils = import("..includes.JavaUtils")
 --events
 BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
 BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
@@ -17,25 +17,28 @@ end
 
 function BuyModel:clearData()
     self.curId = nil
-    self.curBuyData =  nil
+    self.curBuyData = nil
     self.orderId = nil
     self.strDesc = nil
+    self.payType = nil
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
-	if configId == "goldGiftBag" and isDefendDX() then configId = "goldGiftBag_dx" end
-	if configId == "stone450" and isDefendDX() then  configId = "stone260" end
+	if configId == "goldGiftBag" and JavaUtils.isDefendDX() then configId = "goldGiftBag_dx" end
+	if configId == "stone450" and JavaUtils.isDefendDX() then  configId = "stone260" end
 	if configId == "weaponGiftBag" and self:checkBought("weaponGiftBag") then return end
-	-- print("BuyModel:showBuy", strPos)
+
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
-    
+    self.payType = buyData.payType or "duanxin"
+    self.payType = "al"
+        
     --um pay
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configId) 
-    -- print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
+    print("展示付费点:" .. buyConfig.name .. ", 位置:" .. strPos)
     self.strDesc = buyConfig.name .. "__" ..strPos
     self.iap = md:getInstance("IAPsdk")
     um:onChargeRequest(self.orderId, self.strDesc, buyConfig.price, "CNY", 0, self.iap.telecomOperator)
@@ -47,12 +50,15 @@ function BuyModel:showBuy(configId, buyData, strPos)
 
 	--pay
 	local showType = buyConfig.showType 
-	local iapType = getIapType() or buyData.iapType
+	local iapType = JavaUtils.getIapType() or buyData.iapType
+	local isGiftValid = JavaUtils.getIsGiftValid()
 
 	if showType == "gift" then
-        ui:showPopup("GiftBagPopup",
-        	{popupName = configId},
-        	{animName = "shake"})
+		if isGiftValid  or buyData.isGiftDirect then 
+	        ui:showPopup("GiftBagPopup",
+	        	{popupName = configId},
+	        	{animName = "shake"})
+	    end
     elseif showType == "iap" or iapType == "noConfirm" then 
     	self:iapPay()  
 
@@ -76,9 +82,10 @@ function BuyModel:payGift()
 end
 
 function BuyModel:iapPay()
-	local iapType = getIapType()	
+	local iapType = JavaUtils.getIapType()	
 	if iapType == "noIap" then 
-		ui:showPopup("commonPopup",{type = "style4",
+		ui:showPopup("KefuPopup",{
+		content = "对不起, 游戏计费暂停了",
         opacity = 0})
 		return	
 	end
@@ -94,7 +101,7 @@ end
 -- 生成订单号
 function BuyModel:getRandomOrderId()
 	local deviceId = "windows"
-	if device.platform == "android" and isAnalytics then 
+	if device.platform == "android" then 
 		deviceId = TalkingDataGA:getDeviceId()
 	end
 	local osTime = os.time()
@@ -119,7 +126,7 @@ function BuyModel:payDone(result)
 
 	local isNotPopKefu = self.curBuyData.isNotPopKefu
 	if not isNotPopKefu then 
-		ui:showPopup("commonPopup",{type = "style4",
+		ui:showPopup("KefuPopup",{
                 opacity = 0})
 	end
 
@@ -186,6 +193,13 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	    weaponIndex = weaponIndex + 1    	
     end
     showWeaponNotify()
+end
+
+function BuyModel:buy_yijiaoBag( buydata )
+	print("BuyModel:buy_yijiaoBag(buydata)")
+	local userModel = md:getInstance("UserModel")
+	userModel:addMoney(188888)
+	self:setBought("yijiaoBag")
 end
 
 function BuyModel:buy_novicesBag( buydata )

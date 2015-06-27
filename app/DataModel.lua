@@ -19,50 +19,25 @@ end
 
 function DataModel:setNewData()
     local data = getUserData()
+    dump(data, "旧data")
 
-    --版本
-    data.versionId = __versionId
+    local bagsWeapon = clone(data.weapons.bags)
+    local bagsInlay  = clone(data.inlay.bags)
+    local money      = data.money
+    local diamond    = data.diamond
 
-    -- 用户等级
-    -- data.user = {level = 1, 
-    -- fightedGroupId = 0, 
-    -- fightedlevelId = 0}
-    
-    --hpBag
-    data.prop = {
-            hpBag = {num = 1},
-        }
-
-    --bossMode
-    data.bossMode = {chapterIndex = 1, 
-            waveIndex = 0,}
-
-    --jujiMode
-    data.jujiMode = {
-            waveIndex = 40, 
-            scoreAwarded = {},
-        }
-    
-    --user
-    data.user = {
-            fightedLevels = {},
-            userName  = "玩家自己",
-            vipLevel  = 0,
-        }
-
-    if data.giftBag.vip == nil then
-        data.giftBag.vip = false
-    end
-
-    if data.vip == nil then
-        data.vip = {
-            isGet = false,
-        }
-    end
+    myApp:createGameStateFile()
+    local data          = getUserData()
+    data.weapons.bags   = bagsWeapon
+    data.inlay.bags     = bagsInlay
+    data.money          = money
+    data.diamond        = diamond
 
     --引导
     local guideModel = md:getInstance("Guide")
-    guideModel:fillData()
+    guideModel:fillData()    
+    
+    dump(data, "新data")
     setUserData(data)
 end
 
