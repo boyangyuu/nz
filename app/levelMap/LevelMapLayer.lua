@@ -151,16 +151,9 @@ function LevelMapLayer:initUI_yijiaoGift()
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     giftAnimNode:setVisible(isShowGift)   
 
-    local armature = ccs.Armature:create("guang")
-    armature:setScale(2)
-    addChildCenter(armature, giftAnimNode)
-    armature:getAnimation():play("guangtx", -1, 1)
-
     function payDoneFunc()
         local isShowGift = not self.buyModel:checkBought("yijiaoBag") 
         giftAnimNode:setVisible(isShowGift)
-        local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
-        btnVip:setVisible(not isShowGift)
     end
     btnFirstGift:onButtonClicked(function ()
         self.buyModel:showBuy("yijiaoBag", 
@@ -213,9 +206,7 @@ end
 
 function LevelMapLayer:initUI_vipGift()
     --vip
-    local isBuyedYijiao = self.buyModel:checkBought("yijiaoBag") 
     local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
-    btnVip:setVisible(isBuyedYijiao)
     btnVip:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
