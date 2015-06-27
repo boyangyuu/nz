@@ -19,6 +19,15 @@ function StorePropNode:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/Store")
     self.ui = cc.uiloader:load("prop.ExportJson")
     self:addChild(self.ui)
+
+    --armature
+    local sctbsrc = "res/Store/shangchengz_tb/shangchengz_tb.ExportJson"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(sctbsrc)
+    local plist = "res/Store/shangchengz_tb/shangchengz_tb0.plist"
+    local png = "res/Store/shangchengz_tb/shangchengz_tb0.png"
+    display.addSpriteFrames(plist,png)
+
 end
 
 function StorePropNode:refreshUI()
@@ -29,10 +38,15 @@ function StorePropNode:refreshUI()
     btnBuy:onButtonClicked(function()
          self:onClickBtn_lei()
     end)       
+    
+    -- armature
     local btnarmature = ccs.Armature:create("bt_yjzb")
-    -- btnarmature
     btnBuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
+    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+    local iconArmature = ccs.Armature:create("shangchengz_tb")
+    addChildCenter(iconArmature, panelimg, -1)
+    iconArmature:getAnimation():play("die" , -1, 1)
 
     local ownnumber = cc.uiloader:seekNodeByName(item, "ownnumber")
     local num = self.propModel:getPropNum("lei")
@@ -45,15 +59,15 @@ function StorePropNode:refreshUI()
     btnBuy:onButtonClicked(function()
          self:onClickBtn_jijia()
     end)  
-
+    
+    -- armature
     local btnarmature = ccs.Armature:create("bt_yjzb")
-    -- btnarmature
     btnBuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
-
-    local ownnumber = cc.uiloader:seekNodeByName(item, "ownnumber")
-    local num = self.propModel:getPropNum("jijia")
-    ownnumber:setString(num)
+    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+    local iconArmature = ccs.Armature:create("shangchengz_tb")
+    addChildCenter(iconArmature, panelimg, -1)
+    iconArmature:getAnimation():play("die" , -1, 1)
 
     --item goldWeapon
     local item = cc.uiloader:seekNodeByName(self.ui, "item3")
@@ -62,10 +76,15 @@ function StorePropNode:refreshUI()
     btnBuy:onButtonClicked(function()
          self:onClickBtn_goldWeapon()
     end)    
+
+    -- armature
     local btnarmature = ccs.Armature:create("bt_yjzb")
-    -- btnarmature
     btnBuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
+    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+    local iconArmature = ccs.Armature:create("shangchengz_tb")
+    addChildCenter(iconArmature, panelimg, -1)
+    iconArmature:getAnimation():play("die" , -1, 1)
     
     local ownnumber = cc.uiloader:seekNodeByName(item, "ownnumber")
     local num = self.inlayModel:getGoldWeaponNum()

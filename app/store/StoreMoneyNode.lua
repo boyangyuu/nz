@@ -21,6 +21,14 @@ function StoreMoneyNode:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/Store")
     self.ui = cc.uiloader:load("money.ExportJson")
     self:addChild(self.ui)
+    
+    --armature
+    local sctbsrc = "res/Store/shangchengz_tb/shangchengz_tb.ExportJson"
+    local manager = ccs.ArmatureDataManager:getInstance()
+    manager:addArmatureFileInfo(sctbsrc)
+    local plist = "res/Store/shangchengz_tb/shangchengz_tb0.plist"
+    local png = "res/Store/shangchengz_tb/shangchengz_tb0.png"
+    display.addSpriteFrames(plist,png)    
 end
 
 function StoreMoneyNode:refreshUI()
@@ -41,7 +49,11 @@ function StoreMoneyNode:refreshUI()
         -- btnarmature 
         local btnarmature = ccs.Armature:create("bt_yjzb")
         btnBuy:addChild(btnarmature)
-        btnarmature:getAnimation():play("yjzb" , -1, 1)        
+        btnarmature:getAnimation():play("yjzb" , -1, 1)  
+        local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+        local iconArmature = ccs.Armature:create("shangchengz_tb")
+        addChildCenter(iconArmature, panelimg, -1)
+        iconArmature:getAnimation():play("die" , -1, 1)              
 
         itemIndex = itemIndex + 1
     end  

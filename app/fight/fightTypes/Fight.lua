@@ -151,7 +151,7 @@ function Fight:startFight()
 end
 
 function Fight:checkFightStartAds()
-    if self.groupId <= 0 or self.levelId % 2 == 1 then 
+    if self.groupId <= 1 or self.levelId % 2 == 1 then 
         return 
     end
     print("function Fight:checkFightStartAds()")
