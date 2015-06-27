@@ -259,7 +259,12 @@ function FightResultLayer:initUIContent()
 			addChildCenter(icon, self.cardicon[k])
     	elseif v["falltype"] == "inlay" then
     		local record = self.fightResultModel:getInlayrecordByID(v["id"])
-			self.cardlabel[k]:setString(record["describe2"])
+    		local property = self.inlayModel:getInlayProperty(v["id"])
+			if property ~= 4 then
+				self.cardlabel[k]:setString(record["describe2"].."X2")
+			else
+				self.cardlabel[k]:setString(record["describe2"])
+			end
 			local icon = display.newSprite("#"..record["imgname"]..".png")
 			icon:setScale(1.33)
 			addChildCenter(icon, self.cardicon[k])
@@ -317,7 +322,12 @@ function FightResultLayer:onSentAward()
 	for k,v in pairs(self.giveTable) do
 		table.insert(self.itemsTable,v)
 		if v["falltype"] == "inlay" then
-			self.inlayModel:buyInlay(v["id"])
+			local property = self.inlayModel:getInlayProperty(v["id"])
+			if property ~= 4 then
+				self.inlayModel:buyInlay(v["id"],2)
+			else
+				self.inlayModel:buyInlay(v["id"])
+			end
 		elseif v["falltype"] == "gun" then
 			self.weaponId = v["id"]
 		elseif v["falltype"] == "suipian" then

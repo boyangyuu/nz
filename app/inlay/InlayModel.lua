@@ -264,6 +264,13 @@ function InlayModel:getInlayType(inlayid)
 	return self:getConfigTable("id", inlayid)[1]["type"]
 end
 
+function InlayModel:getInlayProperty(inlayid)
+	assert(inlayid, "inlayid")
+	-- dump(inlayid)
+
+	return self:getConfigTable("id", inlayid)[1]["property"]
+end
+
 function InlayModel:getInlayRecord(inlayid)
 	return self:getConfigTable("id", inlayid)[1]
 end
