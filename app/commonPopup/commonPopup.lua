@@ -17,28 +17,14 @@ end)
 		ui:showPopup("commonPopup",
 			 {type = "style3", content = "必须装备狙击枪"},
 			 {opacity = 0})
-	style4:仨按钮, 确定取消打电话
-		ui:showPopup("commonPopup",
-			 {type = "style4"},
-			 {opacity = 0})
 	style5:仨按钮：快速镶嵌，黄金武器，关闭
 		ui:showPopup("commonPopup",
 			 {type = "style5",
 			 callfuncQuickInlay = handler(self,self.****),
 			 callfuncGoldWeapon = handler(self,self.****)},
 			 {opacity = 0})
-	style6:关闭按钮，确定按钮，输入框，激活码
-			ui:showPopup("commonPopup",
-                 {type = "style6",callfuncCofirm = handler(self,self.****)},
-                 {opacity = 0})
- 	style8:关闭按钮，确定按钮，输入框，玩家姓名
-		ui:showPopup("commonPopup",
-			 {type = "style8",callfuncCofirm = handler(self,self.****)},
-			 {opacity = 0})
 ]]
 function commonPopup:ctor(properties)
-	self.commonPopModel = md:getInstance("commonPopModel")
-
 	self.properties = properties
 	local typeName = properties.type
 	self:loadCCS(typeName)
@@ -120,50 +106,6 @@ function commonPopup:initUI(properties)
 		     self:onClickClose()
 	        end
 	    end)
-
-	elseif typeName == "style4" then
-		local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
-		local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
-		local btncall = cc.uiloader:seekNodeByName(self, "btncall")
-		local label_kefu = cc.uiloader:seekNodeByName(self, "label_kefu")
-		btntrue:setTouchEnabled(true)
-		btnfalse:setTouchEnabled(true)
-		btncall:setTouchEnabled(true)
-		label_kefu:setString(__kefuNum)
-		label_kefu:setColor(cc.c3b(255, 205, 0))
-
-		addBtnEventListener(btntrue, function( event )
-			if event.name == "began" then
-				return true
-			elseif event.name == "ended" then
-				print("btntrue is pressed!") 
-				ui:closePopup("commonPopup")
-			end
-		end)
-
-		addBtnEventListener(btnfalse, function( event )
-			if event.name == "began" then
-				return true
-			elseif event.name == "ended" then
-				print("btnfalse is pressed!")
-				ui:closePopup("commonPopup")
-			end
-		end)
-
-		btncall:addNodeEventListener(cc.NODE_TOUCH_EVENT, function( event )
-			if event.name == "began" then
-				print("btncall is pressed!")
-				return true
-			elseif event.name == "ended" then
-				
-				if device.platform == "android" then
-
-					local className = "com/hgtt/com/IAPControl"
-					luaj.callStaticMethod(className, "callPhone")
-					print("btncall is pressed!")
-				end
-			end
-		end)
 	elseif typeName == "style5" then
 		local btnQuickInlay = cc.uiloader:seekNodeByName(self, "btnquickinlay")
 		local btnGoldWeapon = cc.uiloader:seekNodeByName(self, "btngoldweapon")
@@ -191,92 +133,6 @@ function commonPopup:initUI(properties)
 	            return true
 	        elseif event.name=='ended' then
 	            self:onClickGoldWeapon()
-	        end
-	    end)
-    elseif typeName == "style6" then
-    	local contentBox = cc.uiloader:seekNodeByName(self, "content")
-	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
-	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
-    	btntrue:setTouchEnabled(true)
-    	btnfalse:setTouchEnabled(true)
-    	if properties.content then
-	    	contentBox:setText(properties.content)
-	    end
-    	contentBox:addEventListener(function(editbox, eventType)
-			print("CCSSample2Scene editbox input")
-		end)
-    	addBtnEventListener(btntrue, function(event)
-	        if event.name=='began' then
-	            return true
-	        elseif event.name=='ended' then		
-		        self:onClickCofirm()
-	        end
-	    end)
-    	addBtnEventListener(btnfalse, function(event)
-	        if event.name=='began' then
-	            return true
-	        elseif event.name=='ended' then		
-		        self:onClickClose()
-	        end
-	    end)
-	elseif typeName == "style7" then
-		local content = cc.uiloader:seekNodeByName(self, "content")
-		content:setString(properties.content)
-		
-	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
-	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
-    	btntrue:setTouchEnabled(true)
-    	btnfalse:setTouchEnabled(true)
-    	addBtnEventListener(btntrue, function(event)
-	        if event.name=='began' then
-	            return true
-	        elseif event.name=='ended' then		
-		        self:onClickCofirm()
-	        end
-	    end)
-    	addBtnEventListener(btnfalse, function(event)
-	        if event.name=='began' then
-	            return true
-	        elseif event.name=='ended' then		
-
-		     self:onClickClose()
-	        end
-	    end)
-	elseif typeName == "style8" then
-    	local contentBox = cc.uiloader:seekNodeByName(self, "content")
-	    local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
-	    local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
-    	if properties.content then
-	    	contentBox:setText(properties.content)
-	    end
-    	btntrue:setTouchEnabled(true)
-    	btnfalse:setTouchEnabled(true)
-    	local contentString = ""
-    	contentBox:addEventListener(function(contentBox, eventType)
-			if eventType == "began" then
-		        -- 开始输入
-		    elseif eventType == "changed" then
-		        -- 输入框内容发生变化
-		    elseif eventType == "ended" then
-		        contentString = contentBox:getText()
-		    elseif eventType == "return" then
-		        -- 从输入框返回
-		        contentString = contentBox:getText()
-		    end
-		end)
-    	addBtnEventListener(btntrue, function(event)
-	        if event.name=='began' then
-	            return true
-	        elseif event.name=='ended' then		
-		        self:onClickCofirm()
-	        end
-	    end)
-    	addBtnEventListener(btnfalse, function(event)
-	        if event.name=='began' then
-	            return true
-	        elseif event.name=='ended' then		
-		        self:onClickClose()
-		        -- return ""
 	        end
 	    end)
 	end

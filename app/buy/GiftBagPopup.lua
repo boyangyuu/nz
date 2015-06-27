@@ -66,7 +66,7 @@ function GiftBagPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			ui:showPopup("commonPopup",{type = "style4",
+			ui:showPopup("KefuPopup",{
 			                    opacity = 0})
 		end
 	end)

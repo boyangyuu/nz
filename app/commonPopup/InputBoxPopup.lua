@@ -11,7 +11,7 @@ end
 
 function InputBoxPopup:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/CommonPopup/erjijiemian")
-    local controlNode = cc.uiloader:load("style8.ExportJson")
+    local controlNode = cc.uiloader:load("style_input.ExportJson")
     self:addChild(controlNode)
 end
 

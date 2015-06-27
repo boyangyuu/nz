@@ -15,7 +15,6 @@ function WeaponListLayer:ctor()
     self.weaponId = 1
 
     self.weaponListModel = md:getInstance("WeaponListModel")
-    self.commonPopModel = md:getInstance("commonPopModel")
     self.userModel = md:getInstance("UserModel")
     self.levelDetailModel = md:getInstance("LevelDetailModel")
     self.buyModel = md:getInstance("BuyModel")
