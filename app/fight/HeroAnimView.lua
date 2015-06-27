@@ -254,7 +254,7 @@ function HeroAnimView:playAnimGuide(event)
         armature:removeSelf()
         armature = nil
     end
-    self:performWithDelay(removeFunc, 6.0)	
+    self:performWithDelay(removeFunc, 10.0)	
 end
 
 function HeroAnimView:playAnimAddHp(event)

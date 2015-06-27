@@ -53,6 +53,7 @@ function GunSkillLayer:refreshUI(event)
         self.skillCdPercent[skillId] = 0
 	    local bar = display.newProgressTimer("#btn_cd1.png", display.PROGRESS_TIMER_RADIAL)
 		btn:addChild(bar)
+		bar:setPosition(-3, 10)
 	    bar:setAnchorPoint(0.5, 0.5)
 	    bar:setReverseDirection(true)
 	    bar:setPercentage(100)
