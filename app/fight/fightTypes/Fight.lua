@@ -137,12 +137,27 @@ function Fight:startFight()
     if self.groupId == 0 and self.levelId == 0 then 
         scheduler.performWithDelayGlobal(function()
             guide:check("fight01_move")
-        end, 0.0)       
+        end, 0.0)
+        return       
     elseif self.groupId == 1 and self.levelId == 5 then 
         scheduler.performWithDelayGlobal(function()
             guide:check("fightJu")
-        end, 0.0)   
+        end, 0.0)
+        return   
     end
+
+    --check ad
+    self:checkFightStartAds()
+end
+
+function Fight:checkFightStartAds()
+    if self.groupId <= 0 or self.levelId % 2 == 1 then 
+        return 
+    end
+    print("function Fight:checkFightStartAds()")
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:showBuy("goldGiftBag", 
+        {isNotPopup = true,isNotPopKefu = true},"战斗界面_战斗开始")  
 end
 
 function Fight:endFightWin()

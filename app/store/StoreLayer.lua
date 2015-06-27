@@ -1,13 +1,18 @@
 import("..includes.functionUtils")
 
-local StoreCell = import(".StoreCell")
+local StoreCell       = import(".StoreCell")
+local StoreBankNode   = import(".StoreBankNode")
+local StoreMoneyNode  = import(".StoreMoneyNode")
+local StorePropNode   = import(".StorePropNode")
 
 local StoreLayer = class("StoreLayer", function()
     return display.newLayer()
 end)
 
 function StoreLayer:ctor()
+    --instance
     self.storeModel = md:getInstance("StoreModel")
+    self.selectType = ""
 end
 
 function StoreLayer:onShow()
@@ -18,7 +23,8 @@ function StoreLayer:onShow()
     end
 
     -- refresh
-    self:refreshUI("prop")
+    -- self:refreshUI("prop")
+    self:refreshUI("bank")
     
     --event
     cc.EventProxy.new(self.storeModel , self)
@@ -31,20 +37,18 @@ function StoreLayer:loadCCS()
     if self.ui then
         return
     end
+
     self.ui = controlNode
     self:addChild(controlNode)
-
     display.addSpriteFrames("shangcheng0.plist", "shangcheng0.png")
-
 end
 
 function StoreLayer:initUI()
-    local panelBtn = cc.uiloader:seekNodeByName(self, "panelbtn")
-    local panelListView = cc.uiloader:seekNodeByName(self, "panellistview")
-	self.listview = cc.uiloader:seekNodeByName(panelListView, "listview")
-	self.btnprop = cc.uiloader:seekNodeByName(panelBtn, "btnprop")
-	self.btnbank = cc.uiloader:seekNodeByName(panelBtn, "btnbank")
-	self.btnmoney = cc.uiloader:seekNodeByName(panelBtn, "btnmoney")
+    local panelBtn      = cc.uiloader:seekNodeByName(self.ui, "panelbtn")
+	self.layerContent   = cc.uiloader:seekNodeByName(self.ui, "layerContent")
+	self.btnprop        = cc.uiloader:seekNodeByName(panelBtn, "btnprop")
+	self.btnbank        = cc.uiloader:seekNodeByName(panelBtn, "btnbank")
+	self.btnmoney       = cc.uiloader:seekNodeByName(panelBtn, "btnmoney")
 	self.btnprop:setTouchEnabled(true)
 	self.btnbank:setTouchEnabled(true)
 	self.btnmoney:setTouchEnabled(true)
@@ -77,17 +81,22 @@ function StoreLayer:refresh(event)
 end
 
 function StoreLayer:refreshListView(type)
-    removeAllItems(self.listview)
-    local table = self.storeModel:getConfigTable(type)
-    for i=1,#table do
-        local item = self.listview:newItem()
-        local content = StoreCell.new({record = table[i],celltype = type})
-        item:addContent(content)
-        item:setItemSize(758, 165)
-        self.listview:addItem(item)
+    self.layerContent:removeAllChildren()
+
+    local contentNode = nil
+    if type == "prop" then 
+        contentNode = StorePropNode.new()
+    elseif type == "bank" then 
+        contentNode = StoreBankNode.new()
+    elseif type == "money" then 
+        contentNode = StoreMoneyNode.new()
+    else
+        assert(false, "type is invalid" .. type)
     end
-    self.listview:reload()
+
+    self.layerContent:addChild(contentNode)
 end
+
 
 function StoreLayer:refreshUI(type)
     self:refreshListView(type)

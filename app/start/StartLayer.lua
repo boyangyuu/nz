@@ -113,7 +113,7 @@ function StartLayer:initUI()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            ui:showPopup("commonPopup",{type = "style4",
+            ui:showPopup("KefuPopup",{
                     opacity = 0})
         end)
 end

@@ -10,6 +10,7 @@ end
 function addBtnEventListener(node, callfunc)
     assert(node, "node is invalid")
     assert(callfunc, "callfunc is invalid")
+    node:setTouchEnabled(true)
     node:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)        
         if event.name=='began' then
             -- cc.ColorUtil:isHighLighted(node, true)
@@ -179,68 +180,4 @@ function addBtnEffect(btn)
     sch = scheduler.performWithDelayGlobal(restore, 0.1)   
 end
 
-
-function isDefendMM()
-    local endYear = 2016
-    local endMonth = 4
-    local endDay = 25
-
-    local time = os.time()
-    local year  = tonumber(os.date("%Y", time))
-    local month = tonumber(os.date("%m", time))
-    local day   = tonumber(os.date("%d", time))
-
-    if year < endYear then
-        return true
-    elseif year > endYear then
-        return false
-    else
-        if month < endMonth then
-            return true
-        elseif month > endMonth then
-            return false
-        else 
-            if day <= endDay then
-                return true
-            else
-                return false
-            end
-        end
-    end
-end
-
-function isDefendDX()
-    if getIapName() == "dx" then
-        return true
-    else
-        return false
-    end
-end
-                               
-function getIapType()   -- "confirm", "noIap", "noConfirm"
-    if device.platform ~= 'android' then return true end
-    local className = "com/hgtt/com/IAPControl"
-    local methodName = "getIapType"
-    local args = {}
-    local sig = "()Ljava/lang/String;"
-    local iapType = nil
-    local luajResult = nil
-    luajResult, iapType = luaj.callStaticMethod(className, methodName, args, sig)
-    print("luajResult:", luajResult)
-    print("iapType:", iapType)
-    if luajResult then
-        return iapType
-    end
-    return "confirm"
-end
-
-function getIapName()
-    local iapName = 'invalid'
-    if device.platform == 'android' then
-        local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", "getIapStatus", {}, "()Ljava/lang/String;")
-        return iapName
-    end
-    print("iapName:",iapName)
-    return iapName
-end
 

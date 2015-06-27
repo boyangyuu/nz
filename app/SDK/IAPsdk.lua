@@ -1,21 +1,20 @@
 
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
-
+local BuyConfigs = import("..buy.BuyConfigs")
 local className = "com/hgtt/com/IAPControl"
 
-local sig = "(Ljava/lang/String;Ljava/lang/String;II)V"
+local sig = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V"
 
 function IAPsdk:ctor()
-	self.iapName = getIapName()
-	self:initConfigs()
+	local JavaUtils = require("app.includes.JavaUtils")
+	self.iapName = JavaUtils.getIapName()
 	self.buyModel = md:getInstance("BuyModel")
 end
 
-function IAPsdk:initConfigs()
-	self.config = {}
-	local config = self.config
+function IAPsdk:getPayConfig(iapName)
+	local config = {}
 	-- assert(iapName, "iapName:")
-	if self.iapName == "mm" then --mm
+	if iapName == "mm" then --mm
 		--礼包
 		config["novicesBag"]       = "30000899255201"		--新手礼包
 		config["weaponGiftBag"]    = "30000899255207"		--武器礼包
@@ -30,7 +29,7 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "30000899255205"		--一箱子宝石
 		config["stone450"]         = "30000899255206"		--堆成山的宝石
 	
-	elseif self.iapName == 'jd' then --基地
+	elseif iapName == 'jd' then --基地
 		config["yijiaoBag"]        = "014"		--1角礼包
 		config["novicesBag"]       = "001"		--新手礼包
 		config["weaponGiftBag"]    = "007"		--武器到礼包
@@ -45,7 +44,7 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "005"		--一箱子宝石
 		config["stone450"]         = "006"		--堆成山的宝石
 
-	elseif self.iapName == "lt" then --联通
+	elseif iapName == "lt" then --联通
 		--礼包
 		config["novicesBag"]       = "001"		--新手礼包1
 		config["weaponGiftBag"]    = "018"		--武器到礼包1
@@ -60,7 +59,7 @@ function IAPsdk:initConfigs()
 		config["stone260"]         = "014"		--一箱子宝石
 		config["stone450"]         = "015"		--堆成山的宝石
 
-	elseif self.iapName == "dx" then -- 电信
+	elseif iapName == "dx" then -- 电信
 		--礼包
 		--游游共赢的
 		config["novicesBag"]       = "5156701"		--新手礼包
@@ -75,27 +74,71 @@ function IAPsdk:initConfigs()
 		config["stone120"]         = "5128237"		--一麻袋宝石
 		config["stone260"]         = "5128238"		--一箱子宝石
 		config["stone450"]         = "5128239"		--堆成山的宝石
+
+	elseif iapName == "al" then -- alibaba
+		--礼包
+		config["yijiaoBag"]        = "0.01"		--1角礼包
+		config["novicesBag"]       = "0.01"		--新手礼包
+		config["weaponGiftBag"]    = "0.01"		--武器到礼包
+		config["goldGiftBag_dx"]   = "0.01"		--土豪金礼包
+
+		--单件
+		config["goldWeapon"]       = "5128230"		--黄武
+		config["handGrenade"]      = "5128231"		--手雷
+		config["armedMecha"]       = "5156714"		--机甲
+		config["onceFull"]         = "5156715"		--一键满级
+		config["stone120"]         = "5128237"		--一麻袋宝石
+		config["stone260"]         = "5128238"		--一箱子宝石
+		config["stone450"]         = "5128239"		--堆成山的宝石		
 	end
+	dump(config, "iapName:"..iapName)
+	assert(config, "config is nil: iapName:" .. iapName)
+	return config
 end
 
-function IAPsdk:pay(name)
-	if isFree then 	self:callbackSuccess() return end
-	if self.iapName == "noSim" then
+function IAPsdk:isPayValid()
+	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
 			 {opacity = 0})
-		return
-	elseif self.iapName == 'invalid' then
+		return false
+	elseif self.iapName == 'invalid' and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "请在插有移动卡的手机上支付！", delay = 1},
 			 {opacity = 0})	
-		 return	
+		 return	false
 	end
+	return true
+end
+
+function IAPsdk:getPaycode(configId, payType)
+	local iapName = nil
+	if payType == "duanxin" then 
+		iapName = self.iapName
+	else
+		iapName = payType
+	end
+	local config = self:getPayConfig(iapName)
+	assert(config, "config is nil")
+	assert(config[configId], "config[configId] is nil")
+	return config[configId]
+end
+
+function IAPsdk:pay(configId, payType)
+	if isFree then 	self:callbackSuccess() return end
+	if not self:isPayValid() then return end
+
 	print("self.iapName", self.iapName)
-	assert(self.config[name], "self.config[name] is nil".. name)
-	local args = {self.config[name], name, handler(self, self.callbackSuccess), handler(self, self.callbackFaild)}
+	local paycode = self:getPaycode(configId, payType)
+	local buyName = BuyConfigs.getConfig(configId)["name"]
+	local args = {
+		paycode, 
+		buyName, 
+		payType,
+		handler(self, self.callbackSuccess), 
+		handler(self, self.callbackFaild)}
 	if device.platform ~= 'android' then
 		self:callbackSuccess()
 		print("请在手机上支付 傻逼！")
@@ -110,9 +153,7 @@ function IAPsdk:callbackSuccess( result )
 end
 
 function IAPsdk:callbackFaild(result)
-
 	self.buyModel:deneyPay()
-
 end
 
 

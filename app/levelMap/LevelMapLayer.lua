@@ -38,7 +38,7 @@ function LevelMapLayer:initUI()
     self:initChooseLayer()
     self:initKefuLayer()
     self:initFightActLayer()
-    self:initAwardLayer()
+    self:initGiftLayer()
 end
 
 function LevelMapLayer:initGroupId()
@@ -74,7 +74,10 @@ function LevelMapLayer:popUpWeaponGift()
     --开始菜单进世界地图，玩家等级 >= 6
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
-        self.buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),isNotPopKefu = true},"主界面_进游戏自动弹出")
+        self.buyModel:showBuy("weaponGiftBag", 
+            {payDoneFunc = handler(self, self.refreshData),
+            isNotPopKefu = true},
+            "主界面_进游戏自动弹出")
     end
 end
 
@@ -124,7 +127,24 @@ function LevelMapLayer:initBgLayer(event)
 
 end
 
-function LevelMapLayer:initAwardLayer()
+function LevelMapLayer:initGiftLayer()
+    --一角礼包
+    self:initUI_yijiaoGift()
+
+    --土豪礼包
+    self:initUI_goldGift()
+
+    --武器礼包
+    self:initUI_weaponGift()
+
+    --vip礼包
+    self:initUI_vipGift()
+
+    --限时奖励礼包
+    self:initUI_timeGift()
+end
+
+function LevelMapLayer:initUI_yijiaoGift()
     --一角（新手）礼包
     local isShowGift   = not self.buyModel:checkBought("yijiaoBag") 
     local giftAnimNode = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
@@ -136,10 +156,14 @@ function LevelMapLayer:initAwardLayer()
         giftAnimNode:setVisible(isShowGift)
     end
     btnFirstGift:onButtonClicked(function ()
-        self.buyModel:showBuy("yijiaoBag", {payDoneFunc = payDoneFunc}, "主界面_点击新手礼包")
-    end)
+        self.buyModel:showBuy("yijiaoBag", 
+            {payDoneFunc = payDoneFunc, 
+            isGiftDirect = true},
+            "主界面_点击新手礼包")
+    end)    
+end
 
-
+function LevelMapLayer:initUI_goldGift()
     --土豪金
     local btnGold  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
     local armature = ccs.Armature:create("thj_bx")
@@ -152,25 +176,35 @@ function LevelMapLayer:initAwardLayer()
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.buyModel:showBuy("goldGiftBag", {}, "主界面_点击土豪金礼包")
+            self.buyModel:showBuy("goldGiftBag", {
+                isGiftDirect = true,
+                }, 
+                "主界面_点击土豪金礼包")
         end
     end)
+end
 
+function LevelMapLayer:initUI_weaponGift()
     --武器礼包
+    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     if self.buyModel:checkBought("weaponGiftBag") then
-        self.btnWeapon:setVisible(false)
+        btnWeapon:setVisible(false)
     end        
-    self.btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
-    self.btnWeapon:setTouchEnabled(true)
-    addBtnEventListener(self.btnWeapon, function(event)
+    btnWeapon:setTouchEnabled(true)
+    addBtnEventListener(btnWeapon, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.buyModel:showBuy("weaponGiftBag", {payDoneFunc = handler(self, self.refreshData),
-                isNotPopKefu = true}, "主界面_点击武器大礼包")
+            self.buyModel:showBuy("weaponGiftBag", 
+                {payDoneFunc = handler(self, self.refreshData),
+                isGiftDirect = true,
+                isNotPopKefu = true}, 
+                "主界面_点击武器大礼包")
         end
     end)
+end
 
+function LevelMapLayer:initUI_vipGift()
     --vip
     local btnVip = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnvip")
     btnVip:onButtonPressed(function( event )
@@ -181,10 +215,7 @@ function LevelMapLayer:initAwardLayer()
         end)
         :onButtonClicked(function()
             self:onClickGift_vip()
-        end)
-
-    --限时奖励
-    self:initAwardTime()
+        end)   
 end
 
 function LevelMapLayer:onClickGift_vip()
@@ -203,7 +234,7 @@ function LevelMapLayer:onClickGift_vip()
     end 
 end
 
-function LevelMapLayer:initAwardTime()
+function LevelMapLayer:initUI_timeGift()
     local notiTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "noti")
 
     --限时礼包
@@ -345,7 +376,7 @@ function LevelMapLayer:initKefuLayer()
             event.target:runAction(cc.ScaleTo:create(0.1, 1))
         end)
         :onButtonClicked(function( event )
-            ui:showPopup("commonPopup",{type = "style4",
+            ui:showPopup("KefuPopup",{
                     opacity = 0})
         end)
 end
@@ -412,7 +443,8 @@ function LevelMapLayer:initChooseLayer()
 end
 
 function LevelMapLayer:hideWeaponGiftBag(event)
-    self.btnWeapon:setVisible(false)
+    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
+    btnWeapon:setVisible(false)
 end
 
 function LevelMapLayer:refreshLevelLayer(groupId)
