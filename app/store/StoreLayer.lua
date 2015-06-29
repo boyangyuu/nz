@@ -10,25 +10,17 @@ local StoreLayer = class("StoreLayer", function()
 end)
 
 function StoreLayer:ctor()
-    --instance
-    self.storeModel = md:getInstance("StoreModel")
-    self.selectType = ""
+    print("function StoreLayer:ctor()")
 end
 
 function StoreLayer:onShow()
+    print("function StoreLayer:onShow()")
     --load ccs
     if self.ui == nil then
         self:loadCCS()
         self:initUI()
     end
-
-    -- refresh
-    -- self:refreshUI("prop")
     self:refreshUI("bank")
-    
-    --event
-    cc.EventProxy.new(self.storeModel , self)
-        :addEventListener("REFRESH_STORE_EVENT", handler(self, self.refresh))
 end
 
 function StoreLayer:loadCCS()
@@ -75,12 +67,13 @@ function StoreLayer:initUI()
     end)
 end
 
-function StoreLayer:refresh(event)
-    local type = event.typename
-    self:refreshUI(type)
-end
+-- function StoreLayer:refresh(event)
+--     local type = event.typename
+--     self:refreshUI(type)
+-- end
 
 function StoreLayer:refreshListView(type)
+    print("function StoreLayer:refreshListView(type)")
     self.layerContent:removeAllChildren()
 
     local contentNode = nil

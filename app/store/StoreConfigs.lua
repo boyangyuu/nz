@@ -2,7 +2,18 @@ local StoreConfigs = class("StoreConfigs", cc.mvc.ModelBase)
 
 local configs = {
 	prop = {
-
+		{
+			costDiamond = 40,
+			num		    = 20,
+		},
+		{
+			costDiamond = 40,
+			num		    = 2,
+		},
+		{
+			costDiamond = 40,
+			num		    = 2,
+		},
 	},	
 	bank = {
 		{
@@ -27,12 +38,15 @@ local configs = {
 	money = {
 		{
 			costDiamond = 40,
+			number		= 450000,
 		},
 		{
 			costDiamond = 80,
+			number		= 950000,
 		},
 		{
 			costDiamond = 160,
+			number		= 2000000,
 		},	
 	},		
 }

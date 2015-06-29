@@ -9,6 +9,37 @@ function StartLayer:ctor()
     self:setNodeEventEnabled(true)
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
+
+--[[
+    local function onRequestFinished(event)
+        local ok = (event.name == "completed")
+        local request = event.request
+     
+        if not ok then
+            -- 请求失败，显示错误代码和错误消息
+            print(request:getErrorCode(), request:getErrorMessage())
+            return
+        end
+     
+        local code = request:getResponseStatusCode()
+        if code ~= 200 then
+            -- 请求结束，但没有返回 200 响应代码
+            print(code)
+            return
+        end
+
+        --请求成功
+        local response = request:getResponseString()
+        print("请求成功 response", response)        
+    end
+ 
+    local url = "http://121.42.208.220:21080/gift/dsx_gift/get_gift.php"
+
+    
+    local request = network.createHTTPRequest(onRequestFinished, url, "POST")
+    request:addPOSTValue("activeCode","A408c58646f0e46f6")
+    request:start()
+    ]]    
 end
 
 function StartLayer:loadCCS()

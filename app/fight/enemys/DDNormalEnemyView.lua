@@ -175,7 +175,7 @@ function DDNormalEnemyView:playLeiFire()
     local seq =  cc.Sequence:create(action,cc.CallFunc:create(callFunc) )    
     self:runAction(seq)
     self:setScale(0.05)
-    self:runAction(cc.ScaleTo:create(jumpTime, 4.0))
+    self:runAction(cc.ScaleTo:create(jumpTime, 3.0))
 end
 
 function DDNormalEnemyView:playFeibiaoFire()
@@ -227,10 +227,7 @@ function DDNormalEnemyView:playKill(event)
 end
 
 function DDNormalEnemyView:playBombEffects()
-    for i=1, 8 do
-        self:performWithDelay(handler(self, self.playBombEffect), 
-            i * 0.1)
-    end    
+    self:playBombEffect() 
 end
 
 function DDNormalEnemyView:onHitted(targetData)

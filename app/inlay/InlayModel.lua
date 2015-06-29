@@ -3,6 +3,7 @@ local InlayModel = class("InlayModel", cc.mvc.ModelBase)
 
 --events
 InlayModel.REFRESH_INLAY_EVENT = "REFRESH_INLAY_EVENT"
+InlayModel.REFRESH_ALLINLAY_EVENT = "REFRESH_ALLINLAY_EVENT"
 
 function InlayModel:ctor(properties, events, callbacks)
 	InlayModel.super.ctor(self, properties)
@@ -43,6 +44,7 @@ function InlayModel:buyGoldsInlay(buynumber)
 	for k,v in pairs(goldtable) do
 		self:buyInlay(v["id"],buynumber)
 	end
+	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})	
 end
 
 function InlayModel:buyInlay(inlayid,buyNum)

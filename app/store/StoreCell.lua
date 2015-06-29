@@ -6,7 +6,6 @@ function StoreCell:ctor(parameter)
     self.inlayModel = md:getInstance("InlayModel")
     self.propModel = md:getInstance("PropModel")
     self.userModel = md:getInstance("UserModel")
-    self.storeModel = md:getInstance("StoreModel")
     self.buyModel = md:getInstance("BuyModel")
 
     self.record = parameter.record
@@ -217,7 +216,7 @@ function StoreCell:addBtnEvent()
 end
 
 function StoreCell:onBuyGoldGiftSucc()
-    self.storeModel:refreshInfo("money")
+    
 end
 
 function StoreCell:deneyGoldGift()
@@ -232,7 +231,6 @@ end
 
 function StoreCell:onBuyPropGoldGift()
     self:playSound()
-    self.storeModel:refreshInfo("prop")
 end
 
 function StoreCell:playSound()

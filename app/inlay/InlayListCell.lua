@@ -103,6 +103,9 @@ function InlayListCell:onClickBtnBuy(record)
         self.inlayModel:buyInlay(record["id"])
         um:buy(record["describe2"],1, record["goldPrice"])   
     else
+        local guideModel = md:getInstance("GuideModel")
+        if guideModel:getIsGuiding() then return end
+
         local buyModel = md:getInstance("BuyModel")
         buyModel:showBuy("goldGiftBag",{payDoneFunc = refresh,deneyBuyFunc = deneyGoldGift},
              "镶嵌页面_购买单个镶嵌金币不足")

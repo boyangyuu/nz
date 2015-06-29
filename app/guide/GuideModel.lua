@@ -145,6 +145,7 @@ end
 
 function Guide:getIsGuiding()
 	return self.isGuiding
+	-- return true
 end
 
 function Guide:getCurData()

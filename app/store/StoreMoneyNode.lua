@@ -8,7 +8,6 @@ end)
 
 function StoreMoneyNode:ctor(property)
     --instance
-    self.storeModel = md:getInstance("StoreModel")
     self.userModel  = md:getInstance("UserModel")
     self.buyModel   = md:getInstance("BuyModel")
 
@@ -62,7 +61,7 @@ end
 function StoreMoneyNode:onClickBtnBuy(configIndex)
     local configs = StoreConfigs.getConfig("money")
     local config  = configs[configIndex]
-    -- dump(config, "config")  
+    dump(config, "config")  
     local result = self.userModel:costDiamond(
         config["costDiamond"],true,
         "商城页面购买金币")

@@ -8,7 +8,6 @@ end)
 
 function StoreBankNode:ctor(property)
     --instance
-    self.storeModel = md:getInstance("StoreModel")
     self.userModel  = md:getInstance("UserModel")
     self.buyModel   = md:getInstance("BuyModel")
     --ui
