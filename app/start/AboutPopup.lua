@@ -5,6 +5,7 @@ local config = {}
 
 config["guangyu"]      = dir.."guangyu"..postfix
 config["bangzhu"]      = dir.."bangzhu"..postfix
+config["gonggao"]      = dir.."gonggao"..postfix
 
 local AboutPopup = class("AboutPopup", function()
 	return display.newLayer()
