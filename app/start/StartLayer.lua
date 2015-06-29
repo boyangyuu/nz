@@ -145,6 +145,12 @@ function StartLayer:onInputActiveCode(event)
     self.activeCode = event.inputString
     dump(self.activeCode)
 
+    if self.activeCodeModel:checkGet(self.activeCode) then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "您已经领取过该礼包！"},
+         {opacity = 0})
+        return
+    end
 
     local url = "http://121.42.208.220:21080/gift/dsx_gift/get_gift.php"
     local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "POST")
@@ -178,28 +184,19 @@ function StartLayer:onRequestFinished(event)
     print("请求成功 response", response)     
 
     if response == "-1" then
-    dump(response)   
         ui:showPopup("commonPopup",
          {type = "style2", content = "该激活码已被领取！"},
          {opacity = 0})
     elseif response == "-2" then
-    dump(response)   
         ui:showPopup("commonPopup",
          {type = "style2", content = "激活码无效！"},
          {opacity = 0})
     elseif response == "1" then
-    dump(response)   
-        if self.activeCodeModel:checkGet(self.activeCode) then
-            ui:showPopup("commonPopup",
-             {type = "style2", content = "您已经领取过该礼包！"},
-             {opacity = 0})
-        else
-            ui:showPopup("commonPopup",
-             {type = "style2", content = "领取成功！"},
-             {opacity = 0})
-            self.activeCodeModel:sentActiveGift(self.activeCode)
-            self.activeCodeModel:setGet(self.activeCode)
-        end
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "领取成功！"},
+         {opacity = 0})
+        self.activeCodeModel:sentActiveGift(self.activeCode)
+        self.activeCodeModel:setGet(self.activeCode)
     end
 end
 
