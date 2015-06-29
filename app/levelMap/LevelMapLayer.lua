@@ -166,9 +166,10 @@ end
 function LevelMapLayer:initUI_goldGift()
     --土豪金
     local btnGold  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_gold")
+    local panelTuhaoAnim  = cc.uiloader:seekNodeByName(self.chooseRootNode, "animtuhao")
     local armature = ccs.Armature:create("thj_bx")
-    armature:setPosition(-73,-10)
-    btnGold:addChild(armature) 
+    armature:setPosition(5,-6)
+    panelTuhaoAnim:addChild(armature) 
     armature:getAnimation():play("thj_bx" , -1, 1)
 
     btnGold:setTouchEnabled(true)
