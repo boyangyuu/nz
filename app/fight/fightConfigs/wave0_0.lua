@@ -121,8 +121,8 @@ local waves = {
 		--体验枪
 		gunData = 
 			{ 
-			    id = 8,    --枪id
-			    delay = 5, --5s之后出现
+			    id = 9,    --枪id
+			    delay = 4, --5s之后出现
 		    },		    
 		enemys = {
 

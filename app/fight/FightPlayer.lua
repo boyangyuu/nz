@@ -838,6 +838,7 @@ function FightPlayer:initGuide1()
     self.label_jijiaNum:setVisible(false)
     self.label_leiNum:setVisible(false)
     self.label_gold:setVisible(false)
+    self.infoLayer:setVisible(false)
 
     --touch
     self.guide:setTouchSwallow(false)

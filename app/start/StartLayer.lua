@@ -200,7 +200,6 @@ function StartLayer:onRequestFinished(event)
     end
 end
 
-
 function StartLayer:initMusicUI()
     local data = getUserData()
     local isOpenMusic = data.preference["isOpenMusic"]   
@@ -219,7 +218,6 @@ function StartLayer:initMusicUI()
         end
     end)    
 end
-
 
 function StartLayer:playBgMusic()
     local startMusic = "res/Music/bg/bjyx.wav"

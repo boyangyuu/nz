@@ -297,7 +297,7 @@ end
 
 function BuyModel:checkBought(giftId)
 	local data = getUserData()
-	local isDone = data.giftBag[giftId] 
+	local isDone = data.giftBag[giftId] == true
 	return isDone
 end
 

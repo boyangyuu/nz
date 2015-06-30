@@ -125,14 +125,8 @@ function HomeBarLayer:initHomeLayer()
     end)
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
-        -- buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
-        --     "打开武器库_自动弹出武器大礼包")
-
-        ui:showPopup("GiftBagStonePopup", 
-            {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "打开武器库_自动弹出限时大促",
-            stoneCost = 900},
-            {anim = true})
+        buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
+            "打开武器库_自动弹出武器大礼包")
 
     end)
     self.btnInlay:onButtonClicked(function()

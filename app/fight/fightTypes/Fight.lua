@@ -297,24 +297,33 @@ function Fight:checkDialogAfter()
 end
 
 function Fight:onDialogAfterEnd()
-    local isAd = self.groupId == 1 and self.levelId == 2
-        or self.groupId == 0 and self.levelId == 0
-    if not isAd then 
-        self:startFightResult()
-        return 
+    if (self.groupId == 0 and self.levelId == 0) then 
+        ui:showPopup("GiftBagStonePopup", 
+            {ccsName = "GiftBag_Xianshidacu",
+            strPos   = "打开武器库_自动弹出限时大促",
+            stoneCost = 900, 
+            closeAllFunc = handler(self, self.startFightResult),
+            },
+            {animName = "shake"})    
+        return        
     end
 
-    --ad
-    local buyModel = md:getInstance("BuyModel")
-    if not buyModel:checkBought("weaponGiftBag") then 
-        buyModel:showBuy("weaponGiftBag", {
-            closeAllFunc = handler(self, self.startFightResult),
-            deneyBuyFunc = handler(self, self.startFightResult),
-            isNotPopKefu = true},
-            self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
-    else
-        self:startFightResult()
+
+    if (self.groupId == 1 and self.levelId == 2) or 
+        (self.groupId == 1 and self.levelId == 6) then 
+        --ad 1-2 
+        local buyModel = md:getInstance("BuyModel")
+        if not buyModel:checkBought("weaponGiftBag") then 
+            buyModel:showBuy("weaponGiftBag", {
+                closeAllFunc = handler(self, self.startFightResult),
+                deneyBuyFunc = handler(self, self.startFightResult),
+                isNotPopKefu = true},
+                self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
+            return 
+        end
     end
+
+    self:startFightResult()
 end
 
 ---- 关卡相关 ----

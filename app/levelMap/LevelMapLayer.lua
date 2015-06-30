@@ -142,6 +142,9 @@ function LevelMapLayer:initGiftLayer()
 
     --限时奖励礼包
     self:initUI_timeGift()
+
+    --限时大促
+    self:initUI_dacuGift()
 end
 
 function LevelMapLayer:initUI_yijiaoGift()
@@ -267,6 +270,21 @@ function LevelMapLayer:initUI_timeGift()
         end
     end
     self:schedule(funcTime, 1.0)
+end
+
+function LevelMapLayer:initUI_dacuGift()
+    local buyModel = md:getInstance("BuyModel")
+    local isBuyed   = buyModel:checkBought("GiftBag_Xianshidacu")    
+    print("function LevelMapLayer:initUI_dacuGift():", isBuyed)
+    local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
+    btnXianshi:setVisible(not isBuyed)
+    btnXianshi:onButtonClicked(function( event )
+        ui:showPopup("GiftBagStonePopup", 
+            {ccsName = "GiftBag_Xianshidacu",
+            strPos   = "打开武器库_自动弹出限时大促",
+            stoneCost = 900},
+            {animName = "shake"})        
+    end)
 end
 
 function LevelMapLayer:onClickedBtnAwardTime()
