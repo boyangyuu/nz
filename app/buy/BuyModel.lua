@@ -269,7 +269,6 @@ function BuyModel:buy_goldWeapon( buydata )
 	print("BuyModel:buy_goldWeapon( buydata )")
 	--黄武*2
 	local inlayModel = md:getInstance("InlayModel")
-	local propModel = md:getInstance("PropModel")
 	inlayModel:buyGoldsInlay(2)
 end
 

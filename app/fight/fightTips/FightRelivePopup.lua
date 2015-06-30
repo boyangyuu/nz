@@ -40,7 +40,8 @@ end
 function FightRelivePopup:buyReliveByStone()
 	local cost = self:getReliveCost()
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(cost, true, "xx模式_钻石复活") 
+	local fightType = self.property["fightType"]
+    local isAfforded = user:costDiamond(cost, true, fightType .. "模式_钻石复活") 
     if isAfforded then
 		self.property["onReliveFunc"]()
 		self:closePopup()

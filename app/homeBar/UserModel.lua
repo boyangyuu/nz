@@ -41,9 +41,11 @@ end
 end
 
 function UserModel:costDiamond(diamond, isBuy, strPos)
-	local strBuy = diamond > 260 and "stone450" or "stone260"
-	isBuy = isBuy or false
-	strPos = strPos or "宝石不足"
+	-- local strBuy = diamond > 260 and "stone450" or "stone260"
+	-- isBuy = isBuy or false
+	-- strPos = strPos or "宝石不足"
+
+	local strBuy = "stone450"
 	local data = getUserData()
 	if data.diamond >= diamond then
 		data.diamond = data.diamond - diamond 

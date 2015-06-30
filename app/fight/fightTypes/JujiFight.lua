@@ -104,7 +104,8 @@ function JujiFight:endFightFail()
     self:pauseFight(true)
 	ui:showPopup("FightRelivePopup",
 		{onReliveFunc = handler(self, self.onReliveConfirm),
-		 onGiveUpFunc = handler(self, self.onReliveDeny)},
+		 onGiveUpFunc = handler(self, self.onReliveDeny),
+		 fightType = "juji"},
 		{animName = "normal"})
     self:clearFightData()
 end

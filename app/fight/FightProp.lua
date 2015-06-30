@@ -5,6 +5,8 @@
 ]]
 
 local FightProp  = class("FightProp", cc.mvc.ModelBase)
+local StoreLayer   = import("..store.StoreLayer")
+
 
 --events
 FightProp.PROP_UPDATE_EVENT           = "PROP_UPDATE_EVENT"

@@ -33,6 +33,7 @@ layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
 layerClasses["GunHelpPopup"]         = import("..fight.Gun.GunHelpPopup")
 layerClasses["FightAdvisePopup"]     = import("..fight.fightTips.FightAdvisePopup")
 layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopup")
+layerClasses["FightStorePopup"]      = import("..fight.FightStorePopup")
 
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
@@ -44,6 +45,9 @@ layerClasses["BossAdvisePopup"]      = import("..bossMode.BossAdvisePopup")
 
 -- buy
 layerClasses["GiftBagPopup"]      	 = import("..buy.GiftBagPopup")
+layerClasses["GiftBagStonePopup"]    = import("..buy.GiftBagStonePopup")
+layerClasses["GiftBagStoneGetPopup"] = import("..buy.GiftBagStoneGetPopup")
+
 layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
 layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
 layerClasses["BuyTipsPopup"]         = import("..buy.BuyTipsPopup")

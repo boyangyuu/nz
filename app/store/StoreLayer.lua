@@ -1,6 +1,4 @@
-import("..includes.functionUtils")
 
-local StoreCell       = import(".StoreCell")
 local StoreBankNode   = import(".StoreBankNode")
 local StoreMoneyNode  = import(".StoreMoneyNode")
 local StorePropNode   = import(".StorePropNode")
@@ -10,12 +8,10 @@ local StoreLayer = class("StoreLayer", function()
 end)
 
 function StoreLayer:ctor()
-    print("function StoreLayer:ctor()")
+
 end
 
 function StoreLayer:onShow()
-    print("function StoreLayer:onShow()")
-    --load ccs
     if self.ui == nil then
         self:loadCCS()
         self:initUI()
@@ -66,11 +62,6 @@ function StoreLayer:initUI()
         end
     end)
 end
-
--- function StoreLayer:refresh(event)
---     local type = event.typename
---     self:refreshUI(type)
--- end
 
 function StoreLayer:refreshListView(type)
     print("function StoreLayer:refreshListView(type)")

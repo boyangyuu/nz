@@ -10,7 +10,7 @@ function StartLayer:ctor()
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
 
---[[
+
     local function onRequestFinished(event)
         local ok = (event.name == "completed")
         local request = event.request
@@ -37,9 +37,9 @@ function StartLayer:ctor()
 
     
     local request = network.createHTTPRequest(onRequestFinished, url, "POST")
-    request:addPOSTValue("activeCode","A408c58646f0e46f6")
+    request:addPOSTValue("activeCode","Ab588f3eed1810591")
     request:start()
-    ]]    
+       
 end
 
 function StartLayer:loadCCS()

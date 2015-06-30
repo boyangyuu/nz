@@ -110,7 +110,8 @@ function BossFight:endFightFail()
     self:pauseFight(true)
 	ui:showPopup("FightRelivePopup",
 		{onReliveFunc = handler(self, self.onReliveConfirm),
-		 onGiveUpFunc = handler(self, self.onReliveDeny)},
+		 onGiveUpFunc = handler(self, self.onReliveDeny),
+		 fightType = "boss"},
 		{animName = "normal"})
     self:clearFightData()
 end

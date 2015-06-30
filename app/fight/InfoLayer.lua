@@ -2,6 +2,9 @@
 local Hero 				 = import(".Hero")
 local ModeViewFactory    = import(".fightMode.ModeViewFactory")
 local JujiFight          = import(".fightTypes.JujiFight")
+
+local StoreLayer   = import("..store.StoreLayer")
+
 local InfoLayer = class("InfoLayer", function()
     return display.newLayer()
 end)
@@ -59,8 +62,6 @@ function InfoLayer:loadCCS()
     self.goldProgress:setPercent(1)
 	self.goldAnim:setVisible(false)
 	self.goldProgress:setVisible(false)
-
-
 end
 
 function InfoLayer:initUI()
@@ -121,6 +122,13 @@ function InfoLayer:initBtns()
 	if gid == 0 and lid == 0 then 
 		btnStop:setVisible(false)
 	end
+
+	--shop
+	local btnShop = cc.uiloader:seekNodeByName(self.root, "btnShop")
+	btnShop:setTouchEnabled(true)
+	btnShop:onButtonClicked(function()
+         ui:showPopup("FightStorePopup",{},{animName = "scale"})
+    end)
 end
 
 function InfoLayer:onRefreshGun(event)
