@@ -9,37 +9,7 @@ function StartLayer:ctor()
     self:setNodeEventEnabled(true)
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
-
-
-    local function onRequestFinished(event)
-        local ok = (event.name == "completed")
-        local request = event.request
-     
-        if not ok then
-            -- 请求失败，显示错误代码和错误消息
-            print(request:getErrorCode(), request:getErrorMessage())
-            return
-        end
-     
-        local code = request:getResponseStatusCode()
-        if code ~= 200 then
-            -- 请求结束，但没有返回 200 响应代码
-            print(code)
-            return
-        end
-
-        --请求成功
-        local response = request:getResponseString()
-        print("请求成功 response", response)        
-    end
- 
-    local url = "http://121.42.208.220:21080/gift/dsx_gift/get_gift.php"
-
-    
-    local request = network.createHTTPRequest(onRequestFinished, url, "POST")
-    request:addPOSTValue("activeCode","Ab588f3eed1810591")
-    request:start()
-       
+    self.activeCodeModel = md:getInstance("ActiveCodeModel")
 end
 
 function StartLayer:loadCCS()
@@ -172,14 +142,64 @@ function StartLayer:onClickActiveCode()
 end
 
 function StartLayer:onInputActiveCode(event)
-    dump(event, "event")
-    local str = event.inputString
-    if str ~= "11" then
+    self.activeCode = event.inputString
+    dump(self.activeCode)
+
+    if self.activeCodeModel:checkGet(self.activeCode) then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "激活码错误！"},
-         {opacity = 0}) 
+         {type = "style2", content = "您已经领取过该礼包！"},
+         {opacity = 0})
+        return
+    end
+
+    local url = "http://123.57.213.26/gift/dsx_gift/get_gift.php"
+    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "POST")
+    request:addPOSTValue("activeCode",self.activeCode)
+    request:start()
+
+end
+
+function StartLayer:onRequestFinished(event)
+    local ok = (event.name == "completed")
+    local request = event.request
+ 
+    if not ok then
+        -- 请求失败，显示错误代码和错误消息
+        print(request:getErrorCode(), request:getErrorMessage())
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "请保持网络通畅！"},
+         {opacity = 0})
+        return
+    end
+ 
+    local code = request:getResponseStatusCode()
+    if code ~= 200 then
+        -- 请求结束，但没有返回 200 响应代码
+        print(code)
+        return
+    end
+
+    --请求成功
+    local response = request:getResponseString()
+    print("请求成功 response", response)     
+
+    if response == "-1" then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "该激活码已被领取！"},
+         {opacity = 0})
+    elseif response == "-2" then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "激活码无效！"},
+         {opacity = 0})
+    elseif response == "1" then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "领取成功！"},
+         {opacity = 0})
+        self.activeCodeModel:sentActiveGift(self.activeCode)
+        self.activeCodeModel:setGet(self.activeCode)
     end
 end
+
 
 function StartLayer:initMusicUI()
     local data = getUserData()
@@ -275,6 +295,9 @@ function StartLayer:onClickBegan()
         ui:changeLayer("storyLayer",{})
     end
 end
+
+
+ 
 
 function StartLayer:isGuideDone()
     local guide = md:getInstance("Guide")

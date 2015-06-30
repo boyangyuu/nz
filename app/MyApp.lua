@@ -217,6 +217,12 @@ function MyApp:createGameStateFile()
             vip = false,
         },
 
+        activeCode = {
+            --false 未获取
+            wuxing = false,
+            qudao = false,
+        },
+
         vip = {
             isGet = false,
         },

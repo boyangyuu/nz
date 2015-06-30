@@ -23,6 +23,10 @@ function InputBoxPopup:initUI()
 	btntrue:setTouchEnabled(true)
 	btnfalse:setTouchEnabled(true)
 
+
+
+    contentBox:setMaxLengthEnabled(true)
+    contentBox:setMaxLength(25)
 	
 	contentBox:addEventListener(function(contentBox, eventType)
 		 self.inputString = contentBox:getText()
