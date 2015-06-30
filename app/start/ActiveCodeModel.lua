@@ -31,15 +31,15 @@ end
 
 function ActiveCodeModel:getType(activeCode)
 	local acParam = string.sub(activeCode,0,1)
-	if acParam == "A" then
+	if acParam == "A" or acParam == "a" then
 		return "wuxing"
-    elseif acParam == "B" then
+    elseif acParam == "B" or acParam == "b" then
 		return "qudao"
-    elseif acParam == "C" then
+    elseif acParam == "C" or acParam == "c" then
 		return "diamond120"
-    elseif acParam == "D" then
+    elseif acParam == "D" or acParam == "d" then
 		return "diamond260"
-    elseif acParam == "E" then
+    elseif acParam == "E" or acParam == "e" then
 		return "diamond450"
     end
 end

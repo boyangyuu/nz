@@ -165,17 +165,17 @@ function StartLayer:onRequestFinished(event)
  
     if not ok then
         -- 请求失败，显示错误代码和错误消息
-        print(request:getErrorCode(), request:getErrorMessage())
-        ui:showPopup("commonPopup",
-         {type = "style2", content = "请保持网络通畅！"},
-         {opacity = 0})
+        print("getErrorMessage", request:getErrorMessage())
         return
     end
  
     local code = request:getResponseStatusCode()
     if code ~= 200 then
-        -- 请求结束，但没有返回 200 响应代码
-        print(code)
+        print("getErrorMessage", request:getErrorMessage())
+        print("request:getErrorCode()", request:getErrorCode())
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "请保持网络通畅！"},
+         {opacity = 0})
         return
     end
 
@@ -197,6 +197,8 @@ function StartLayer:onRequestFinished(event)
          {opacity = 0})
         self.activeCodeModel:sentActiveGift(self.activeCode)
         self.activeCodeModel:setGet(self.activeCode)
+    else
+        
     end
 end
 
