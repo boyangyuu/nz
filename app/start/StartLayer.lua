@@ -181,7 +181,9 @@ function StartLayer:onRequestFinished(event)
 
     --请求成功
     local response = request:getResponseString()
-    print("请求成功 response", response)     
+    print("请求成功 response", response)   
+
+    response = string.sub(response,4,string.len(response))  
 
     if response == "-1" then
         ui:showPopup("commonPopup",
@@ -198,7 +200,7 @@ function StartLayer:onRequestFinished(event)
         self.activeCodeModel:sentActiveGift(self.activeCode)
         self.activeCodeModel:setGet(self.activeCode)
     else
-        
+        dump(response)
     end
 end
 
