@@ -27,12 +27,15 @@ local configs = {
 		},
 		{
 			buyId = "stone600",
+			payType = "al",
 		},
 		{
 			buyId = "stone900",
+			payType = "al",
 		},
 		{
 			buyId = "stone1200",
+			payType = "al",
 		},
 	},
 	money = {

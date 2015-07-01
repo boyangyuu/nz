@@ -125,10 +125,11 @@ function GunView:refreshGun()
     --枪火遮挡
     local jqkzdName = config.jqkzdName
     if jqkzdName ~= "null" then 
+    	print("jqkzdName")
 	    self.qkzd = ccs.Armature:create(jqkzdName)
 	    self.qkzd:setVisible(false)
 	   	self.qkzd:setPosition(destpos.x, destpos.y)
-	    armature:addChild(self.qkzd , 1)
+	    armature:addChild(self.qkzd , 100)
 	    self.qkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
     end
 

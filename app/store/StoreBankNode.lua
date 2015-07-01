@@ -50,7 +50,7 @@ function StoreBankNode:onClickBtnBuy(configIndex)
     local config  = configs[configIndex]
     dump(config, "config")  
     self.buyModel:showBuy(config["buyId"],
-        {iapType = "noConfirm"}, 
+        {iapType = "noConfirm", payType = config["payType"]}, 
         "商城界面_点击"..config["buyId"])       
 end
 

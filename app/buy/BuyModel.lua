@@ -33,8 +33,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
     self.curId = configId
     self.curBuyData =  buyData
     self.payType = buyData.payType or "duanxin"
-    self.payType = "al"
-        
+    
     --um pay
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configId) 
@@ -50,7 +49,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 
 	--pay
 	local showType = buyConfig.showType 
-	local iapType = JavaUtils.getIapType() or buyData.iapType
+	local iapType = JavaUtils.getIapType() 
 	local isGiftValid = JavaUtils.getIsGiftValid()
 
 	if showType == "gift" then
@@ -91,7 +90,7 @@ function BuyModel:iapPay()
 	end
 
 	display.pause()
-	self.iap:pay(self.curId)
+	self.iap:pay(self.curId, self.payType)
 end
 
 function BuyModel:gameResume()
@@ -286,13 +285,31 @@ function BuyModel:buy_stone120( buydata )
 	local userModel = md:getInstance("UserModel")
 	userModel:addDiamond(120, true)
 end
+
 function BuyModel:buy_stone260( buydata )
 	local userModel = md:getInstance("UserModel")
 	userModel:addDiamond(260, true)
 end
+
 function BuyModel:buy_stone450( buydata )
 	local userModel = md:getInstance("UserModel")
 	userModel:addDiamond(450, true)
+end
+
+
+function BuyModel:buy_stone600( buydata )
+	local userModel = md:getInstance("UserModel")
+	userModel:addDiamond(1200, true)
+end
+
+function BuyModel:buy_stone900( buydata )
+	local userModel = md:getInstance("UserModel")
+	userModel:addDiamond(1980, true)
+end
+
+function BuyModel:buy_stone1200( buydata )
+	local userModel = md:getInstance("UserModel")
+	userModel:addDiamond(3000, true)
 end
 
 function BuyModel:checkBought(giftId)
