@@ -19,7 +19,7 @@ function InputBoxPopup:initUI()
 	local contentBox = cc.uiloader:seekNodeByName(self, "content")
     local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
     local btnfalse = cc.uiloader:seekNodeByName(self, "btnfalse")
-    contentBox:setText(self.properties.content)
+    contentBox:setPlaceHolder(self.properties.content)
 	btntrue:setTouchEnabled(true)
 	btnfalse:setTouchEnabled(true)
 
