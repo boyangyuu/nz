@@ -11,6 +11,18 @@ function LevelFight:getFightType()
     return "levelFight"
 end
 
+function LevelFight:checkFightStartAds()
+    print("function Fight:checkFightStartAds()")
+    if self.groupId <= 1 or self.levelId % 2 == 1 then 
+        return 
+    end
+    
+    local buyModel = md:getInstance("BuyModel")
+    buyModel:showBuy("goldGiftBag", 
+        {isNotPopup = true,isNotPopKefu = true},"战斗界面_战斗开始")  
+end
+
+
 function LevelFight:getResultData()
     local resultData = {}
     local hpPercent = self.hero:getHp() / self.hero:getMaxHp()

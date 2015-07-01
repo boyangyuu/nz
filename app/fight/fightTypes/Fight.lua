@@ -151,13 +151,7 @@ function Fight:startFight()
 end
 
 function Fight:checkFightStartAds()
-    if self.groupId <= 1 or self.levelId % 2 == 1 then 
-        return 
-    end
-    print("function Fight:checkFightStartAds()")
-    local buyModel = md:getInstance("BuyModel")
-    buyModel:showBuy("goldGiftBag", 
-        {isNotPopup = true,isNotPopKefu = true},"战斗界面_战斗开始")  
+    --子类复写
 end
 
 function Fight:endFightWin()
