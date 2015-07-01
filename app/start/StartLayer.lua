@@ -269,6 +269,9 @@ function StartLayer:onEnter()
 
     --login award
     self:initDailyLogin()
+
+    --gonggao
+    ui:showPopup("AboutPopup",{popupName = "gonggao"})
 end
 
 function StartLayer:onClickBegan()
