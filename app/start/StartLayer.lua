@@ -181,24 +181,25 @@ function StartLayer:onRequestFinished(event)
 
     --请求成功
     local response = request:getResponseString()
-    print("请求成功 response", response)     
+    print("请求成功 response", response)   
+    response = string.sub(response,string.len(response)-1,string.len(response))  
 
-    if response == "-1" then
+    if response == "11" then
         ui:showPopup("commonPopup",
          {type = "style2", content = "该激活码已被领取！"},
          {opacity = 0})
-    elseif response == "-2" then
+    elseif response == "12" then
         ui:showPopup("commonPopup",
          {type = "style2", content = "激活码无效！"},
          {opacity = 0})
-    elseif response == "1" then
+    elseif response == "01" then
         ui:showPopup("commonPopup",
          {type = "style2", content = "领取成功！"},
          {opacity = 0})
         self.activeCodeModel:sentActiveGift(self.activeCode)
         self.activeCodeModel:setGet(self.activeCode)
     else
-        
+        dump(response)
     end
 end
 
