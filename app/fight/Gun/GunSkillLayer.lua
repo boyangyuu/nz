@@ -7,7 +7,8 @@ function GunSkillLayer:ctor()
 	--instance
 	self.hero     = md:getInstance("Hero")
 	self.fightGun = md:getInstance("FightGun")
-
+    local fightFactory = md:getInstance("FightFactory")
+    self.fight      = fightFactory:getFight()
 
 	--events
 	cc.EventProxy.new(self.hero, self)
@@ -43,6 +44,7 @@ function GunSkillLayer:refreshUI(event)
 
 	--btns timers
 	for skillId,skillConfig in pairs(self.config) do
+		print("skillId",skillId)
 		local btn = cc.uiloader:seekNodeByName(self.ui, "btn_" .. skillId)
 		assert(btn, "btn")
         btn:onButtonClicked(function()
@@ -60,6 +62,11 @@ function GunSkillLayer:refreshUI(event)
 	    bar:setVisible(false)
 		self.timers[skillId] = bar
 	end
+
+	--guide
+
+	self:initGuide()
+	self:checkGuide()	
 end
 
 function GunSkillLayer:onClickBtnSkill(skillId)	
@@ -106,5 +113,40 @@ function GunSkillLayer:startSkillCd(skillId)
 	local offsetTime = cdTimes / 100
 	sch = self:schedule(resumeCd, offsetTime)
 end
+
+function GunSkillLayer:checkGuide()
+	local gun   = self.hero:getGun() 
+	local name  = gun:getGunName()
+    --guide
+    local function guide()
+        print("function GunSkillLayer:checkGuide()")
+        local guide = md:getInstance("Guide")
+        guide:check("fight01_skill") 
+    end
+
+	if name == "huoqilin" then 
+        self:performWithDelay(guide, 2.0)
+    end	
+end
+
+function GunSkillLayer:initGuide()
+    local gid, lid= self.fight:getGroupId(), self.fight:getLevelId()
+    local isWillGuide = lid == 0 and gid == 0
+    if isWillGuide == false then return end
+
+    --skill
+    local skillId = "skill1"
+    self.guide      = md:getInstance("Guide")
+    local btn = cc.uiloader:seekNodeByName(self.ui, "btn_" .. skillId)
+    self.guide:addClickListener( {
+        id = "fight_skill",
+        groupId = "fight01_skill",
+        rect = cc.rect(565,25, 100, 100),
+        endfunc = function (touchEvent)
+        	self:onClickBtnSkill(skillId)
+        end
+    })  	
+end
+
 
 return GunSkillLayer

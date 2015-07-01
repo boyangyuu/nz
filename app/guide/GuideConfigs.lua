@@ -45,6 +45,12 @@ configs["fight01_fire"] = {
 	}
 }
 
+configs["fight01_skill"] = {
+	preGuideId = nil,
+	steps = {
+		{id = "fight_skill", msg = "点击按钮，释放技能！", skipDelay = 1.0,rolepos = "left"},
+	}
+}
 
 ---- 第0关 黄金枪----
 configs["fight01_gold"] = {

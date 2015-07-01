@@ -181,6 +181,7 @@ function MyApp:createGameStateFile()
             fight01_move    = false,
             fight01_fire    = false,
             fight01_lei     = false,
+            fight01_skill   = false,
             fight01_gold    = false,
             fight01_change  = false,
             fight01_jijia   = false, 
