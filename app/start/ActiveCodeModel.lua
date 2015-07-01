@@ -32,18 +32,24 @@ end
 function ActiveCodeModel:getType(activeCode)
 	local acParam = string.sub(activeCode,0,1)
 	if acParam == "A" or acParam == "a" then
-		return "wuxing"
+		return "qudao"
     elseif acParam == "B" or acParam == "b" then
     	return "qudao"
-	elseif acParam == "F" or acParam == "f" then
-		return "qudao"
-	elseif acParam == "G" or acParam == "g" then
-		return "qudao"
     elseif acParam == "C" or acParam == "c" then
-		return "diamond120"
+		return "qudao"
     elseif acParam == "D" or acParam == "d" then
-		return "diamond260"
+		return "qudao"
     elseif acParam == "E" or acParam == "e" then
+		return "qudao"
+	elseif acParam == "F" or acParam == "f" then
+		return "wuxing"
+	elseif acParam == "G" or acParam == "g" then
+		return "wuxing"
+    elseif acParam == "H" or acParam == "h" then
+		return "diamond120"
+	elseif acParam == "I" or acParam == "i" then
+		return "diamond260"
+	elseif acParam == "J" or acParam == "j" then
 		return "diamond450"
     end
 end
