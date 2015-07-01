@@ -34,6 +34,10 @@ function ActiveCodeModel:getType(activeCode)
 	if acParam == "A" or acParam == "a" then
 		return "wuxing"
     elseif acParam == "B" or acParam == "b" then
+    	return "qudao"
+	elseif acParam == "F" or acParam == "f" then
+		return "qudao"
+	elseif acParam == "G" or acParam == "g" then
 		return "qudao"
     elseif acParam == "C" or acParam == "c" then
 		return "diamond120"
