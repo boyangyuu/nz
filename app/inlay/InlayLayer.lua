@@ -142,11 +142,17 @@ function InlayLayer:onClickGoldWeaponBtn()
         end
         
         -- function deneyGoldGift()
-            self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
+            -- self.buyModel:showBuy("goldWeapon",{payDoneFunc = equipGold}, "镶嵌页面_土豪礼包取消")
         -- end
         -- self.buyModel:showBuy("goldGiftBag",{payDoneFunc = equipGold,deneyBuyFunc = deneyGoldGift},
         --      "镶嵌页面_点击一键黄武")
-
+        
+        local userModel = md:getInstance("UserModel")
+        local isBuyed = userModel:costDiamond(40,
+            true, "镶嵌界面_点击黄金武器") 
+        if isBuyed then 
+            self.inlayModel:buyGoldsInlay(2) 
+        end   
     end
 end
 

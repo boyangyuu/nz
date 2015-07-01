@@ -23,14 +23,14 @@ function JujiFight:startFightResult()
 	
     --save goldValue
     local user = md:getInstance("UserModel") 
-    print("self.goldValue", self.goldValue)
-    user:addMoney(self.goldValue)
+    print("self.goldGet", self.goldGet)
+    user:addMoney(self.goldGet)
 
 	--desc
     local data = {
     	levelIndex   = self:getLevelId(),
     	closeFunc    = closeFunc,
-    	goldValue    = self.goldValue,
+    	goldValue    = self.goldGet,
 	}
     ui:showPopup("JujiResultLayer",data,{animName = "normal"})
 end

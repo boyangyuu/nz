@@ -21,7 +21,7 @@ function LevelFight:getResultData()
 
     --isNotWin
     local isFirstWin = self:getFightedLevelData() == "win"
-    resultData["goldNum"]   = self.goldValue
+    resultData["goldNum"]   = self.goldGet
     resultData["hpPercent"] = hpPercent  
     resultData["levelId"]   = self:getLevelId()
     resultData["groupId"]   = self:getGroupId()

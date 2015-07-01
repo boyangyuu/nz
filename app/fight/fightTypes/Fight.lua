@@ -52,7 +52,7 @@ function Fight:refreshData(fightData)
     --clear   
     self.result = nil
     self.resultData = {}
-    self.goldValue  = 0.0
+    self.goldGet  = 0
     self.isPause = false  
     self.fightData = fightData   
     md:createInstance("FightMode")
@@ -368,12 +368,13 @@ function Fight:cleanModels()
  
 end
 
-function Fight:setGoldValue(goldValue_)
-    self.goldValue = goldValue_
+function Fight:addGoldValue(goldValue_)
+    self.goldGet = self.goldGet + goldValue_ 
 end
 
 function Fight:getGoldValue()
-    return self.goldValue
+    local user = md:getInstance("UserModel")
+    return self.goldGet + user:getMoney()
 end
 
 function Fight:getResult()

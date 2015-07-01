@@ -31,6 +31,7 @@ function FightPlayer:ctor(properties)
     self.fight      = fightFactory:getFight()
     self.fight:refreshData(properties.fightData)
     
+    self.user       = md:getInstance("UserModel")
     self.hero       = md:getInstance("Hero")
     self.guide      = md:getInstance("Guide")
     self.dialog     = md:getInstance("DialogModel")
@@ -39,8 +40,8 @@ function FightPlayer:ctor(properties)
     self.fightProp  = md:getInstance("FightProp")
     local propModel = md:getInstance("PropModel")
     local inlayModel = md:getInstance("InlayModel")
+
     --datas
-    self.curGold    = 0
     self.tempChangeGoldHandler = nil
     self.resumeDefenceHandler = nil
     self.btnFireSch = nil
@@ -62,8 +63,11 @@ function FightPlayer:ctor(properties)
 
     --事件
     self:addNodeEventListener(cc.NODE_ENTER_FRAME_EVENT, handler(self, self.tick))
+    
+    cc.EventProxy.new(self.user, self)
+        :addEventListener(self.user.REFRESH_MONEY_EVENT, handler(self, self.refreshUserMoney))
+
     cc.EventProxy.new(self.hero, self)
-        
         :addEventListener(self.hero.KILL_EVENT, handler(self, self.onHeroKill))
         :addEventListener(self.hero.AWARD_GOLD_INCREASE_EVENT, handler(self, self.changeGoldCount)) 
         :addEventListener(self.hero.FIRE_EVENT, handler(self, self.onHeroFire))
@@ -102,8 +106,7 @@ end
 
 function FightPlayer:changeGoldCount(event)
     local lastTotalGold =  self.fight:getGoldValue() 
-    local totalGold = event.value + lastTotalGold
-    self.fight:setGoldValue(totalGold)
+    self.fight:addGoldValue(event.value)
 
     local function changeGold()
         local totalGold = self.fight:getGoldValue()
@@ -187,8 +190,8 @@ function FightPlayer:initUI()
     self.layerMap = cc.uiloader:seekNodeByName(self, "layerMap")
     addChildCenter(self.mapView, self.layerMap) 
 
-    --gold
-    self.labelGold = cc.uiloader:seekNodeByName(self, "labelGoldCount")
+    --money and diamond
+    self:refreshUserMoney()    
 
     --load gun 
     self.layerGun = cc.uiloader:seekNodeByName(self, "layerGun")
@@ -227,6 +230,19 @@ function FightPlayer:initUI()
     scheduler.performWithDelayGlobal(handler(self, self.initGuideDun), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide3), 0.1)    
     scheduler.performWithDelayGlobal(handler(self, self.initGuide4), 0.1)    
+end
+
+function FightPlayer:refreshUserMoney(event)
+    self.curGold    = self.fight:getGoldValue()
+    self.curDiamond = md:getInstance("UserModel"):getDiamond()
+
+    --gold
+    self.labelGold = cc.uiloader:seekNodeByName(self, "labelGoldCount")
+    self.labelGold:setString(self.curGold)
+
+    --stone
+    self.labelDiamond = cc.uiloader:seekNodeByName(self, "labelDiamondCount")
+    self.labelDiamond:setString(self.curDiamond)    
 end
 
 --启动盾牌恢复

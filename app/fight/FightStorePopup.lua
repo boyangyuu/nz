@@ -1,6 +1,5 @@
 
 local LayerColor_BLACK = cc.c4b(0, 0, 0, 0)
-local kOpacity = 200.0
 local StoreLayer   = import("..store.StoreLayer")
 
 local FightStorePopup = class("FightStorePopup",function()
@@ -8,6 +7,11 @@ local FightStorePopup = class("FightStorePopup",function()
 end)
 
 function FightStorePopup:ctor(property)
+	self.userModel   = md:getInstance("UserModel")
+
+	--events
+    cc.EventProxy.new(self.userModel , self)
+        :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
 
 	--ui
 	self:loadCCS()
@@ -24,10 +28,26 @@ function FightStorePopup:loadCCS()
 	layer:onShow()
 	layerContent:addChild(layer)
 
+	--btn
 	local buttonClose = cc.uiloader:seekNodeByName(self.root, "buttonClose")
-    buttonClose:onButtonClicked(function()
-         self:closePopup()
-    end)		
+    addBtnEventListener(buttonClose, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+        	self:closePopup()
+        end
+    end)    
+
+    self:refreshMoney()
+end
+
+function FightStorePopup:refreshMoney(event)
+    --stone and money
+    local labelStoneNum = cc.uiloader:seekNodeByName(self.root, "labelStoneNum")
+    labelStoneNum:setString(self.userModel:getDiamond())	
+
+    local labelCoinNum = cc.uiloader:seekNodeByName(self.root, "labelCoinNum")
+    labelCoinNum:setString(self.userModel:getMoney())
 end
 
 function FightStorePopup:closePopup(event)
