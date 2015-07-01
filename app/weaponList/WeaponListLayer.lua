@@ -231,7 +231,7 @@ function WeaponListLayer:onCancelOncefull()
 end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()
-    self.levelMapModel:hideGiftBagIcon()
+    
 end
 
 function WeaponListLayer:buyWeaponByStone()

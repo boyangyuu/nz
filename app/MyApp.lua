@@ -13,10 +13,10 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 myApp = MyApp
-isTest  = false     --战斗的各种框     
-isDebug = true      --debug页面 --dabao为false
-isAsync = false
-__isFree = true
+isTest    = false     --战斗的各种框     
+__isDebug = true      --debug页面 
+isAsync   = false
+__isFree  = false
 __versionId = nil   --游戏当前版本
 __appName = nil       --游戏当前名称
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
@@ -143,15 +143,14 @@ function MyApp:createGameStateFile()
 
         weaponsuipian = {},
 
-        money = 188888,
-        diamond = 10,
+        money = 2000,
+        diamond = 0,
 
         
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 6,
-
+            level = 1,
         },
 
         bossMode = {
@@ -166,7 +165,7 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 6,
+            level = 1,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
             vipLevel  = 0,
@@ -175,36 +174,36 @@ function MyApp:createGameStateFile()
             --记得和 filldata对应!
 
             --登陆
-            login           = true,
+            login           = false,
             --前戏
-            preStory        = true,
+            preStory        = false,
             --第0-0关之内
-            fight01_move    = true,
-            fight01_fire    = true,
-            fight01_lei     = true,
-            fight01_gold    = true,
-            fight01_change  = true,
-            fight01_jijia   = true, 
+            fight01_move    = false,
+            fight01_fire    = false,
+            fight01_lei     = false,
+            fight01_gold    = false,
+            fight01_change  = false,
+            fight01_jijia   = false, 
 
             --第0-0关之后  
-            afterfight01    = true,   -- 进入下一关
+            afterfight01    = false,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = true,
-            fight_dun       = true,
+            fight_change    = false,
+            fight_dun       = false,
 
             --第1-2关之前
-            xiangqian       = true,   --镶嵌一套青铜
+            xiangqian       = false,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = true,   -- 升级武器
-            afterfight03    = true,   -- 回到主界面
+            weapon          = false,   -- 升级武器
+            afterfight03    = false,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = true,  
+            fightJu         = false,  
 
             --第1-4失败之后
-            fightRelive     = true,                      
+            fightRelive     = false,                      
         },
         fight = {
            isPreferBag1 = true,

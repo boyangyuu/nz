@@ -7,8 +7,9 @@ local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 local JavaUtils = import("..includes.JavaUtils")
 --events
-BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
-BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
+BuyModel.BUY_SUCCESS_EVENT   		 = "BUY_SUCCESS_EVENT"
+BuyModel.BUY_FAIL_EVENT   	 		 = "BUY_FAIL_EVENT"
+BuyModel.BUY_GIFTUPDATE_EVENT   	 = "BUY_GIFTUPDATE_EVENT"
 
 -- 定义事件
 function BuyModel:ctor(properties)
@@ -91,6 +92,10 @@ function BuyModel:iapPay()
 
 	display.pause()
 	self.iap:pay(self.curId, self.payType)
+end
+
+function BuyModel:getPayType()
+	return self.payType
 end
 
 function BuyModel:gameResume()
@@ -296,7 +301,6 @@ function BuyModel:buy_stone450( buydata )
 	userModel:addDiamond(450, true)
 end
 
-
 function BuyModel:buy_stone600( buydata )
 	local userModel = md:getInstance("UserModel")
 	userModel:addDiamond(1200, true)
@@ -315,6 +319,7 @@ end
 function BuyModel:checkBought(giftId)
 	local data = getUserData()
 	local isDone = data.giftBag[giftId] == true
+	print("giftId", isDone)
 	return isDone
 end
 
@@ -322,6 +327,7 @@ function BuyModel:setBought(giftId)
 	local data = getUserData()
 	data.giftBag[giftId] = true
 	setUserData(data)
+	self:dispatchEvent({name = BuyModel.BUY_GIFTUPDATE_EVENT, giftId = giftId})
 end
 
 return BuyModel

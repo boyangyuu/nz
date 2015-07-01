@@ -100,10 +100,6 @@ function LevelMapModel:isExistNextLevel(groupId, levelId)
 	end	
 end
 
-function LevelMapModel:hideGiftBagIcon()
-	self:dispatchEvent({name = "HIDE_GIFTBAGICON_EVENT"})
-end
-
 function LevelMapModel:levelPass(groupId,levelId)
 	assert(groupId, "groupId")
 	assert(levelId, "levelId")
