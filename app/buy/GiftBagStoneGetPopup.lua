@@ -1,7 +1,7 @@
-
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 
 local GiftBagStoneGetPopup = class("GiftBagStoneGetPopup", function()
-	return display.newLayer()
+	return display.newColorLayer(LayerColor_BLACK)
 end)
 
 function GiftBagStoneGetPopup:ctor(property)
@@ -48,10 +48,15 @@ function GiftBagStoneGetPopup:loadCCS()
 end
 
 function GiftBagStoneGetPopup:onBtnGetClicked()
+    if self.property["onGetDoneFunc"] then 
+        self.property["onGetDoneFunc"]()
+    end    
+        
 	self:onClickClose()
 end
 
 function GiftBagStoneGetPopup:onClickClose()
+
 	ui:closePopup("GiftBagStoneGetPopup")
 end
 

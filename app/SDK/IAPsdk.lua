@@ -12,6 +12,7 @@ function IAPsdk:ctor()
 end
 
 function IAPsdk:getPayConfig(iapName)
+	print("function IAPsdk:getPayConfig(iapName):",iapName)
 	local config = {}
 	-- assert(iapName, "iapName:")
 	if iapName == "mm" then --mm
@@ -77,19 +78,9 @@ function IAPsdk:getPayConfig(iapName)
 
 	elseif iapName == "al" then -- alibaba
 		--礼包
-		config["yijiaoBag"]        = "0.01"		--1角礼包
-		config["novicesBag"]       = "0.01"		--新手礼包
-		config["weaponGiftBag"]    = "0.01"		--武器到礼包
-		config["goldGiftBag_dx"]   = "0.01"		--土豪金礼包
-
-		--单件
-		config["goldWeapon"]       = "5128230"		--黄武
-		config["handGrenade"]      = "5128231"		--手雷
-		config["armedMecha"]       = "5156714"		--机甲
-		config["onceFull"]         = "5156715"		--一键满级
-		config["stone120"]         = "5128237"		--一麻袋宝石
-		config["stone260"]         = "5128238"		--一箱子宝石
-		config["stone450"]         = "5128239"		--堆成山的宝石		
+		config["stone600"]         = "60"		--60 yuan
+		config["stone900"]         = "90"		--90
+		config["stone1200"]        = "120"		--120		
 	end
 	dump(config, "iapName:"..iapName)
 	assert(config, "config is nil: iapName:" .. iapName)
@@ -121,16 +112,20 @@ function IAPsdk:getPaycode(configId, payType)
 		iapName = payType
 	end
 	local config = self:getPayConfig(iapName)
-	assert(config, "config is nil")
+	dump(config, "config")
+	assert(config, "config is nil payType" .. payType)
 	assert(config[configId], "config[configId] is nil")
 	return config[configId]
 end
 
 function IAPsdk:pay(configId, payType)
-	if isFree then 	self:callbackSuccess() return end
+	print("configId", configId)
+	print("payType", payType)	
+	print("self.iapName", self.iapName)
+	if __isFree then 	self:callbackSuccess() return end
 	if not self:isPayValid() then return end
 
-	print("self.iapName", self.iapName)
+	
 	local paycode = self:getPaycode(configId, payType)
 	local buyName = BuyConfigs.getConfig(configId)["name"]
 	local args = {
@@ -140,8 +135,10 @@ function IAPsdk:pay(configId, payType)
 		handler(self, self.callbackSuccess), 
 		handler(self, self.callbackFaild)}
 	if device.platform ~= 'android' then
-		self:callbackSuccess()
-		print("请在手机上支付 傻逼！")
+		ui:showPopup("commonPopup",
+			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
+			 {opacity = 0})		
+		display.resume()
 	else
 		luaj.callStaticMethod(className, "pay", args, sig)
 	end

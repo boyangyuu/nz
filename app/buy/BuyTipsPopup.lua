@@ -1,9 +1,9 @@
 
-
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 local BuyConfigs = import(".BuyConfigs")
 
 local BuyTipsPopup = class("BuyTipsPopup", function()
-	return display.newLayer()
+	return display.newColorLayer(LayerColor_BLACK)
 end)
 
 function BuyTipsPopup:ctor(properties)

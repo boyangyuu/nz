@@ -100,13 +100,16 @@ function GiftBagStonePopup:onBuyDone()
     local weaponId = 9
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(weaponId)
-	ui:showPopup("GiftBagStoneGetPopup")
+	weaponListModel:equipBag(weaponId, 1)
+
 	--setData
 	local buyModel = md:getInstance("BuyModel")
 	buyModel:setBought("GiftBag_Xianshidacu")
 
-	--close
-	self:onClickClose()
+	--anim
+	ui:showPopup("GiftBagStoneGetPopup", 
+		{onGetDoneFunc = handler(self, self.onClickClose)}
+		)	
 end
 
 function GiftBagStonePopup:onClickClose()
