@@ -12,6 +12,7 @@ function ActiveCodeModel:sentActiveGift(activeCode)
 
 	local userModel = md:getInstance("UserModel")
 	local propModel = md:getInstance("PropModel")
+	local inlayModel = md:getInstance("InlayModel")
 
     for i=1,#rewardTable do
 		local award = rewardTable[i]
@@ -24,6 +25,8 @@ function ActiveCodeModel:sentActiveGift(activeCode)
 				userModel:addMoney(v)
 			elseif k == "diamond" then
 				userModel:addDiamond(v)
+			elseif k == "silverweapon" then
+				inlayModel:buyInlayDozen(v,3)
 			end
 		end
 	end

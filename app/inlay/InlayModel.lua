@@ -47,6 +47,14 @@ function InlayModel:buyGoldsInlay(buynumber)
 	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})	
 end
 
+function InlayModel:buyInlayDozen(buynumber,property)
+	local inlayTable = self:getConfigTable("property", property)
+	for k,v in pairs(inlayTable) do
+		self:buyInlay(v["id"],buynumber)
+	end
+	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})	
+end
+
 function InlayModel:buyInlay(inlayid,buyNum)
 	-- dump(buyNum)
  	local data = getUserData()

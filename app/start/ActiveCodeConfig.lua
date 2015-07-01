@@ -8,13 +8,14 @@ configs["wuxing"] = {
 	{lei = 20},
 	{healthBag = 5},
 	{money = 50000},
+	{silverweapon = 5}, 
 }
 
 -- 渠道活动包
 configs["qudao"] = {
-	{lei = 30},
-	{healthBag = 5},
-	{money = 100000},
+	{lei = 10},
+	{silverweapon = 5},
+	{money = 18888},
 }
 
 -- 补偿性 宝石120
