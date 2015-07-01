@@ -31,7 +31,7 @@ function FightResultLayer:ctor()
     self.itemsTable = {}
  
     self.userModel:addMoney(self.fightData["goldNum"])
-    um:bonusVirtualCurrency(self.fightData["goldNum"],4)
+    um:bonusVirtualCurrency(self.fightData["goldNum"], 4)
     local hpPercent = self.fightData["hpPercent"]
     self.grade = self.fightResultModel:getGrade(hpPercent)
 

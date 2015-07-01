@@ -74,7 +74,7 @@ function GunHelpPopup:onClickGet()
     fight:pauseFight(false)
 
     --check
-    if self.gunId == 8 then 
+    if self.gunId == 9 then 
         local hero = md:getInstance("Hero")
         hero:dispatchEvent({name = hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
     end

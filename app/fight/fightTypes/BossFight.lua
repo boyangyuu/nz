@@ -30,14 +30,14 @@ function BossFight:startFightResult()
     	waveIndex    = curWaveIndex,
     	isAwardBujian= isNewProgress,
     	closeFunc    = closeFunc,
-    	goldValue    = self.goldValue,
+    	goldValue    = self.goldGet,
 	}
     ui:showPopup("BossResultLayer",data,{animName = "normal"})
 
     --money
     local user = md:getInstance("UserModel") 
-    user:addMoney(self.goldValue)
-    self.goldValue = 0       
+    user:addMoney(self.goldGet)
+    self.goldGet = 0       
 end
 
 function BossFight:getResultData()
@@ -76,15 +76,15 @@ function BossFight:waveUpdate(nextWaveIndex, waveType)
     	waveIndex    = curWaveIndex,
     	closeFunc    = handler(self, self.onClickedAwardBtn),
     	isAwardBujian= isNewProgress,
-    	goldValue    = self.goldValue,
+    	goldValue    = self.goldGet,
 	}
     ui:showPopup("BossResultLayer",eventData,{animName = "normal"})
     self:pauseFight(true)
 
     --money
     local user = md:getInstance("UserModel") 
-    user:addMoney(self.goldValue)
-    self.goldValue = 0    
+    user:addMoney(self.goldGet)
+    self.goldGet = 0    
 end
 
 function BossFight:onClickedAwardBtn(event)

@@ -4,6 +4,7 @@ local UserModel = class("UserModel", cc.mvc.ModelBase)
 
 --events
 UserModel.REFRESH_PLAYERNAME_EVENT     = "REFRESH_PLAYERNAME_EVENT"
+UserModel.REFRESH_MONEY_EVENT    	   = "REFRESH_MONEY_EVENT"
 
 function UserModel:ctor(properties)
 	UserModel.super.ctor(self, properties)
@@ -15,12 +16,12 @@ end
 function UserModel:panelAction()
 	self:dispatchEvent({name = "HOMEBAR_ACTION_UP_EVENT"})
 end
-function UserModel:getMoney(  )
+function UserModel:getMoney()
 	local data = getUserData()
 	 return data.money
 end
 
- function UserModel:getDiamond(  )
+ function UserModel:getDiamond()
 	local data = getUserData()
 	 return data.diamond
 end
