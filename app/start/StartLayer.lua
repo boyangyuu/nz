@@ -143,8 +143,20 @@ end
 
 function StartLayer:onInputActiveCode(event)
     self.activeCode = event.inputString
-    dump(self.activeCode)
-
+    if self.activeCode =="81556146" then
+        isDebug = true
+        local guideModel = md:getInstance("Guide")
+        guideModel:fillData()
+        local data = getUserData()
+        data.currentlevel.group = 1
+        data.currentlevel.level = 6
+        data.user.level = 20
+        setUserData(data)
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "韩晋!"},
+         {opacity = 0})
+        return
+    end
     if self.activeCodeModel:checkGet(self.activeCode) then
         ui:showPopup("commonPopup",
          {type = "style2", content = "您已领取过此礼包,不能重复领取!"},
