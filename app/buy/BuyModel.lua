@@ -25,8 +25,8 @@ function BuyModel:clearData()
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
-	if configId == "goldGiftBag" and JavaUtils.isDefendDX() then configId = "goldGiftBag_dx" end
-	if configId == "stone450" and JavaUtils.isDefendDX() then  configId = "stone260" end
+	if configId == "goldGiftBag" and JavaUtils.isSIMDX() then configId = "goldGiftBag_dx" end
+	if configId == "stone450" and JavaUtils.isSIMDX() then  configId = "stone260" end
 	if configId == "weaponGiftBag" and self:checkBought("weaponGiftBag") then return end
 
 	assert(strPos, "strPos is nil configId :"..configId)
@@ -58,6 +58,12 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	        ui:showPopup("GiftBagPopup",
 	        	{popupName = configId},
 	        	{animName = "shake"})
+	    else
+			self:gameResume()
+			local deneyBuyFunc = self.curBuyData.deneyBuyFunc
+			if deneyBuyFunc then  
+				deneyBuyFunc() 
+			end
 	    end
     elseif showType == "iap" or iapType == "noConfirm" then 
     	self:iapPay()  
@@ -150,6 +156,11 @@ function BuyModel:deneyPay()
 	if deneyBuyFunc then  
 		deneyBuyFunc() 
 	end
+
+	local closeAllFunc = self.curBuyData.closeAllFunc
+	if closeAllFunc then  
+		closeAllFunc() 
+	end	
 
 	-- um event
 	local umData = {}

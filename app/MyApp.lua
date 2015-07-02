@@ -7,6 +7,7 @@ local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 local DataModel = require("app.DataModel")
+JavaUtils = require("app.includes.JavaUtils")
 GameState = require("framework.cc.utils.GameState")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 
@@ -181,6 +182,7 @@ function MyApp:createGameStateFile()
             fight01_move    = false,
             fight01_fire    = false,
             fight01_lei     = false,
+            fight01_skill   = false,
             fight01_gold    = false,
             fight01_change  = false,
             fight01_jijia   = false, 

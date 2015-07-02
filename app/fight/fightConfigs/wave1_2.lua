@@ -475,7 +475,7 @@ function waveClass:ctor()
 
 		type 	  = "xianShi",
 		limitTime = 80,                   --限时模式时长
-
+		-- limitTime = 10, 
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量
 	}

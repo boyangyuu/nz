@@ -572,9 +572,13 @@ function LevelMapLayer:refreshGift(event)
     local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
     btnXianshi:setVisible(not isBuyed)
 
+
     local isBuyed   = self.buyModel:checkBought("yijiaoBag") 
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     btnFirstGift:setVisible(not isBuyed)
+    if not JavaUtils.isSIMJD() then 
+        btnFirstGift:setVisible(false)
+    end    
 end
 
 function LevelMapLayer:initGuide()
