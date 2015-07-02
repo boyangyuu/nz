@@ -41,13 +41,13 @@ function ActiveCodeModel:getType(activeCode)
     elseif acParam == "C" or acParam == "c" then
 		return "qudao"
     elseif acParam == "D" or acParam == "d" then
-		return "qudao"
+		return "wuxing"
     elseif acParam == "E" or acParam == "e" then
-		return "qudao"
+		return "tequan"
 	elseif acParam == "F" or acParam == "f" then
-		return "wuxing"
+		return "dujia"
 	elseif acParam == "G" or acParam == "g" then
-		return "wuxing"
+		return "dujia"
     elseif acParam == "H" or acParam == "h" then
 		return "diamond120"
 	elseif acParam == "I" or acParam == "i" then
