@@ -7,6 +7,7 @@ local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
 local Define = require("app.Define")
 local DataModel = require("app.DataModel")
+JavaUtils = require("app.includes.JavaUtils")
 GameState = require("framework.cc.utils.GameState")
 local MyApp = class("MyApp", cc.mvc.AppBase)
 

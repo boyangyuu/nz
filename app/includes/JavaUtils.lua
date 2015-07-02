@@ -21,6 +21,7 @@ function JavaUtils.getIsGiftValid()
         "getIapGiftStatus", {}, "()Ljava/lang/String;")
     local isValid = status == "open"
     print("function JavaUtils.getIsGiftValid()", isValid)
+    -- return false
     return isValid
 end
 
@@ -33,7 +34,14 @@ function JavaUtils.getIapName()
 
 end
 
-function JavaUtils.isDefendDX()
+--sim为移动jd
+function JavaUtils.isSIMJD()
+    if device.platform ~= 'android' then return true end
+    return JavaUtils.getIapName() == "jd"
+end
+
+--sim为dx
+function JavaUtils.isSIMDX()
     -- return true
     if JavaUtils.getIapName() == "dx" then
         return true

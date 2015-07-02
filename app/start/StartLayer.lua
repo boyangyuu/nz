@@ -152,9 +152,8 @@ function StartLayer:onInputActiveCode(event)
         return
     end
 
-    local url = "http://123.57.213.26/gift/dsx_gift/get_gift.php"
-    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "POST")
-    request:addPOSTValue("activeCode",self.activeCode)
+    local url = "http://123.57.213.26/gift/dsx_gift/get_gift.php?activeCode="..self.activeCode
+    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "GET")
     request:start()
 
 end
