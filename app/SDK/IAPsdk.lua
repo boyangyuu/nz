@@ -88,6 +88,7 @@ function IAPsdk:getPayConfig(iapName)
 end
 
 function IAPsdk:isPayValid()
+	local payType =  self.buyModel:getPayType()
 	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
@@ -104,8 +105,9 @@ function IAPsdk:isPayValid()
 	return true
 end
 
-function IAPsdk:getPaycode(configId, payType)
+function IAPsdk:getPaycode(configId)
 	local iapName = nil
+	local payType = self.buyModel:getPayType()
 	if payType == "duanxin" then 
 		iapName = self.iapName
 	else
@@ -118,7 +120,8 @@ function IAPsdk:getPaycode(configId, payType)
 	return config[configId]
 end
 
-function IAPsdk:pay(configId, payType)
+function IAPsdk:pay(configId)
+	payType = self.buyModel:getPayType()
 	print("configId", configId)
 	print("payType", payType)	
 	print("self.iapName", self.iapName)

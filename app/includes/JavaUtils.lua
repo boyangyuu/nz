@@ -17,10 +17,11 @@ end
 
 function JavaUtils.getIsGiftValid()
     if device.platform ~= 'android' then return true end
-    local result,isGiftValid = luaj.callStaticMethod("com/hgtt/com/IAPControl", 
+    local result,status = luaj.callStaticMethod("com/hgtt/com/IAPControl", 
         "getIapGiftStatus", {}, "()Ljava/lang/String;")
-    print("isGiftValid:",isGiftValid)
-    return isGiftValid
+    local isValid = status == "open"
+    print("function JavaUtils.getIsGiftValid()", isValid)
+    return isValid
 end
 
 function JavaUtils.getIapName()

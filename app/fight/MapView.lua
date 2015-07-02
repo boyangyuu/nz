@@ -604,8 +604,8 @@ function MapView:getEnemysInRect(rect)
 			local enemyRect = cc.rect(pos.x, pos.y, 
 				box.width * scale, box.height * scale)   
 
-			dump(rect, "rect")
-			dump(enemyRect, "enemyRect")
+			-- dump(rect, "rect")
+			-- dump(enemyRect, "enemyRect")
 			if cc.rectIntersectsRect(rect, enemyRect) then
 				enemys[#enemys + 1] = enemy
 			end
