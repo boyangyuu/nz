@@ -143,17 +143,17 @@ end
 
 function StartLayer:onInputActiveCode(event)
     self.activeCode = event.inputString
-    if self.activeCode =="81556146" then
-        isDebug = true
+    if self.activeCode == "81556146laose" then
+        __isDebug = true
         local guideModel = md:getInstance("Guide")
         guideModel:fillData()
         local data = getUserData()
         data.currentlevel.group = 1
-        data.currentlevel.level = 6
-        data.user.level = 20
+        data.currentlevel.level = 4
+        data.user.level = 4
         setUserData(data)
         ui:showPopup("commonPopup",
-         {type = "style2", content = "韩晋!"},
+         {type = "style2", content = "激活码无效！！!"},
          {opacity = 0})
         return
     end

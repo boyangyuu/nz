@@ -169,7 +169,6 @@ function MyApp:createGameStateFile()
             level = 1,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
-            vipLevel  = 0,
         },
         guide = { --dabao为false 
             --记得和 filldata对应!

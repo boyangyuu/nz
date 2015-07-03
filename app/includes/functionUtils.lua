@@ -180,4 +180,3 @@ function addBtnEffect(btn)
     sch = scheduler.performWithDelayGlobal(restore, 0.1)   
 end
 
-
