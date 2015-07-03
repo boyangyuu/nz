@@ -171,9 +171,17 @@ function StartLayer:onInputActiveCode(event)
 end
 
 function StartLayer:onRequestFinished(event)
+    dump(event.name)
     local ok = (event.name == "completed")
     local request = event.request
  
+     if event.name == "failed" then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "请保持网络通畅！"},
+         {opacity = 0})
+        return
+    end
+
     if not ok then
         -- 请求失败，显示错误代码和错误消息
         print("getErrorMessage", request:getErrorMessage())
