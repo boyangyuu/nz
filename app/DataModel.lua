@@ -34,13 +34,6 @@ function DataModel:setNewData()
     data.diamond        = diamond
 
 
-    if data.activeCode == nil then
-        data.activeCode = {
-            wuxing = false,
-            qudao = false,
-        }
-    end
-
     --引导
     local guideModel = md:getInstance("Guide")
     guideModel:fillData()    
