@@ -70,7 +70,8 @@ end
 
 function ActiveCodeModel:setGet(activeCode)
 	local acType = self:getType(activeCode)
-	if acType == "wuxing" or acType == "qudao" then
+	if acType == "wuxing" or acType == "qudao" or acType == "tequan" 
+		or acType == "dujia" then
 		local data = getUserData()
 		data.activeCode[acType] = true
 		setUserData(data)

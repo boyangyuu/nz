@@ -159,7 +159,7 @@ function StartLayer:onInputActiveCode(event)
     end
     if self.activeCodeModel:checkGet(self.activeCode) then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "您已领取过此礼包,不能重复领取!"},
+         {type = "style2", content = "您已领过此礼包,不能重复领取!"},
          {opacity = 0})
         return
     end

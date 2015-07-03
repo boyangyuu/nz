@@ -221,6 +221,8 @@ function MyApp:createGameStateFile()
             --false 未获取
             wuxing = false,
             qudao = false,
+            tequan = false,
+            dujia = false,
         },
 
         vip = {
