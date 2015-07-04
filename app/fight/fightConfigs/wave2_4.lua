@@ -652,7 +652,7 @@ local enemys = {
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=12,hp=750,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=12,hp=750,fireRate=30,speed=80,
 	weak1=2},	
 
 	--飞机         type = "feiji" ,

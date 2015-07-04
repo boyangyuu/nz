@@ -255,7 +255,7 @@ local enemys = {
 	{id=8,image="dunbing",demage=10,hp=4536,fireRate=180,fireCd=5,speed=40, weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=15,hp=403,fireRate=30,speed=100, weak1=2},	 --scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=9,image="zibaob",demage=15,hp=403,fireRate=30,speed=80, weak1=2},	 --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="renzb",demage=30,hp=10000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 

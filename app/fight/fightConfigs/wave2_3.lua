@@ -382,7 +382,7 @@ local enemys = {
 	{id=3,image="shoulei",demage=8,hp=1, weak1=1},
 
 	--自爆兵        --type = "bao",
-	{id=4,image="zibaob",demage=10,hp=571,fireRate=30,speed=130,
+	{id=4,image="zibaob",demage=10,hp=571,fireRate=30,speed=80,
 	weak1=2, weak4=3},
 
     --导弹          --missileType = "daodan",

@@ -321,7 +321,7 @@ local enemys = {
 	weak1=2, weak4=4},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=130,
+	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=100,
 	weak1=2, weak4=3},
 
 	--越野车       type = "jipu" ,

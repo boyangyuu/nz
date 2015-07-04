@@ -299,17 +299,17 @@ local enemys = {
 	weak1=2},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=8,hp=504,fireRate=30,speed=110,
+	{id=9,image="zibaob",demage=8,hp=504,fireRate=30,speed=80,
 	weak1=2},	
 
 	--boss召唤第一波自爆兵        --type = "bao",
-	{id=16,image="zibaob",demage=12,hp=504,fireRate=30,speed=120, weak1=2},
+	{id=16,image="zibaob",demage=12,hp=504,fireRate=30,speed=80, weak1=2},
 
 	--boss召唤第二波自爆兵        --type = "bao",	
-	{id=17,image="zibaob",demage=17,hp=756,fireRate=30,speed=120, weak1=2},
+	{id=17,image="zibaob",demage=17,hp=756,fireRate=30,speed=80, weak1=2},
 
 	--自爆兵BOSS        --type = "bao",自爆boss
-	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=110,scale = 3.0, weak1=2},	
+	{id=18,image="zibaob",demage=20,hp=2200,fireRate=30,speed=80,scale = 3.0, weak1=2},	
 	                                                --scale = 3.0,  近战走到屏幕最近放缩比例	 
 	--boss导弹          type = "missile",
 	{id=19,image="daodan",demage=10,hp=10,
