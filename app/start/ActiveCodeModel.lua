@@ -12,6 +12,7 @@ function ActiveCodeModel:sentActiveGift(activeCode)
 
 	local userModel = md:getInstance("UserModel")
 	local propModel = md:getInstance("PropModel")
+	local inlayModel = md:getInstance("InlayModel")
 
     for i=1,#rewardTable do
 		local award = rewardTable[i]
@@ -24,6 +25,8 @@ function ActiveCodeModel:sentActiveGift(activeCode)
 				userModel:addMoney(v)
 			elseif k == "diamond" then
 				userModel:addDiamond(v)
+			elseif k == "silverweapon" then
+				inlayModel:buyInlayDozen(v,3)
 			end
 		end
 	end
@@ -32,18 +35,24 @@ end
 function ActiveCodeModel:getType(activeCode)
 	local acParam = string.sub(activeCode,0,1)
 	if acParam == "A" or acParam == "a" then
-		return "wuxing"
+		return "qudao"
     elseif acParam == "B" or acParam == "b" then
     	return "qudao"
-	elseif acParam == "F" or acParam == "f" then
-		return "qudao"
-	elseif acParam == "G" or acParam == "g" then
-		return "qudao"
     elseif acParam == "C" or acParam == "c" then
-		return "diamond120"
+		return "qudao"
     elseif acParam == "D" or acParam == "d" then
-		return "diamond260"
+		return "wuxing"
     elseif acParam == "E" or acParam == "e" then
+		return "tequan"
+	elseif acParam == "F" or acParam == "f" then
+		return "dujia"
+	elseif acParam == "G" or acParam == "g" then
+		return "dujia"
+    elseif acParam == "H" or acParam == "h" then
+		return "diamond120"
+	elseif acParam == "I" or acParam == "i" then
+		return "diamond260"
+	elseif acParam == "J" or acParam == "j" then
 		return "diamond450"
     end
 end
@@ -61,7 +70,8 @@ end
 
 function ActiveCodeModel:setGet(activeCode)
 	local acType = self:getType(activeCode)
-	if acType == "wuxing" or acType == "qudao" then
+	if acType == "wuxing" or acType == "qudao" or acType == "tequan" 
+		or acType == "dujia" then
 		local data = getUserData()
 		data.activeCode[acType] = true
 		setUserData(data)

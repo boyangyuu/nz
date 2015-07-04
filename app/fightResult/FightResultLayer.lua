@@ -87,7 +87,7 @@ function FightResultLayer:playStar(numStar)
 		    		function(armatureBack,movementType,movementId ) 
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
-		         		self:performWithDelay(showButton, 1)
+		         		self:performWithDelay(showButton, 1.5)
 		         	end    
 	            end)
 		    end
@@ -121,14 +121,14 @@ function FightResultLayer:initUI()
     self.alreadyInlay  = cc.uiloader:seekNodeByName(self, "alreadyinlay")
     self.alreadyGetAll = cc.uiloader:seekNodeByName(self, "alreadygetall")
     self.panlgetall    = cc.uiloader:seekNodeByName(self, "panlgetall")
-    self.btnback       = cc.uiloader:seekNodeByName(self, "btnnext")
+    self.btnNext       = cc.uiloader:seekNodeByName(self, "btnnext")
 	self.alreadyInlay:setVisible(false)
 	self.alreadyGetAll:setVisible(false)
 	self.btnInlay:setOpacity(0)
 	self.btnGetAll:setOpacity(0)
 	self.btnInlay:setButtonEnabled(false)
 	self.btnGetAll:setButtonEnabled(false)
-	self.btnback:setButtonEnabled(false)
+	self.btnNext:setVisible(false)
 
     self.inlayArmature = ccs.Armature:create("bt_ksxq")
     self.getallArmature = ccs.Armature:create("bt_ksxq")
@@ -180,7 +180,8 @@ function FightResultLayer:initUI()
 				self.getallArmature = nil
 			end
 		end
-		self.btnback:setButtonEnabled(true)
+		self.btnNext:setVisible(true)
+		self.btnNext:setButtonEnabled(true)
 
 
 	    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
@@ -222,7 +223,7 @@ function FightResultLayer:initUI()
 				 {opacity = 155})
         end
     end)
-	addBtnEventListener(self.btnback, function(event)
+	addBtnEventListener(self.btnNext, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then		
@@ -419,7 +420,7 @@ function FightResultLayer:initGuide()
     self.guide:addClickListener({
         id = "afterfight01_jixu",
         groupId = "afterfight01",
-        rect = self.btnback:getCascadeBoundingBox(),
+        rect = self.btnNext:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
 			ui:changeLayer("HomeBarLayer",{fightData = fightData})
         end
@@ -471,7 +472,7 @@ function FightResultLayer:initGuide3()
     self.guide:addClickListener({
         id = "afterfight03_next",
         groupId = "afterfight03",
-        rect = self.btnback:getCascadeBoundingBox(),
+        rect = self.btnNext:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
 			self:onClickBtnNext()  
         end

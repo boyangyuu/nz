@@ -48,33 +48,32 @@ function IAPsdk:getPayConfig(iapName)
 	elseif iapName == "lt" then --联通
 		--礼包
 		config["novicesBag"]       = "001"		--新手礼包1
-		config["weaponGiftBag"]    = "018"		--武器到礼包1
-		config["goldGiftBag"]      = "019"		--土豪金礼包1
+		config["weaponGiftBag"]    = "007"		--武器到礼包1
+		config["goldGiftBag"]      = "008"		--土豪金礼包1
 
 		--单件
-		config["goldWeapon"]       = "006"		--黄武
-		config["handGrenade"]      = "007"		--手雷
-		config["armedMecha"]       = "020"		--机甲1
-		config["onceFull"]         = "021"		--一键满级1
-		config["stone120"]         = "013"		--一麻袋宝石
-		config["stone260"]         = "014"		--一箱子宝石
-		config["stone450"]         = "015"		--堆成山的宝石
+		config["goldWeapon"]       = "002"		--黄武
+		config["handGrenade"]      = "003"		--手雷
+		config["armedMecha"]       = "009"		--机甲1
+		config["onceFull"]         = "010"		--一键满级1
+		config["stone120"]         = "004"		--一麻袋宝石
+		config["stone260"]         = "005"		--一箱子宝石
+		config["stone450"]         = "006"		--堆成山的宝石
 
 	elseif iapName == "dx" then -- 电信
 		--礼包
 		--游游共赢的
-		config["novicesBag"]       = "5156701"		--新手礼包
-		config["weaponGiftBag"]    = "5156712"		--武器到礼包
-		config["goldGiftBag_dx"]   = "5156713"		--土豪金礼包
+		config["novicesBag"]       = "TOOL5"		--新手礼包
+		config["weaponGiftBag"]    = "TOOL6"		--武器到礼包
+		config["goldGiftBag_dx"]   = "TOOL7"		--土豪金礼包
 
 		--单件
-		config["goldWeapon"]       = "5128230"		--黄武
-		config["handGrenade"]      = "5128231"		--手雷
-		config["armedMecha"]       = "5156714"		--机甲
-		config["onceFull"]         = "5156715"		--一键满级
-		config["stone120"]         = "5128237"		--一麻袋宝石
-		config["stone260"]         = "5128238"		--一箱子宝石
-		config["stone450"]         = "5128239"		--堆成山的宝石
+		config["goldWeapon"]       = "TOOL1"		--黄武
+		config["handGrenade"]      = "TOOL2"		--手雷
+		config["armedMecha"]       = "TOOL8"		--机甲
+		config["onceFull"]         = "TOOL9"		--一键满级
+		config["stone120"]         = "TOOL3"		--一麻袋宝石
+		config["stone260"]         = "TOOL4"		--一箱子宝石
 
 	elseif iapName == "al" then -- alibaba
 		--礼包
@@ -88,6 +87,7 @@ function IAPsdk:getPayConfig(iapName)
 end
 
 function IAPsdk:isPayValid()
+	local payType =  self.buyModel:getPayType()
 	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
@@ -104,8 +104,9 @@ function IAPsdk:isPayValid()
 	return true
 end
 
-function IAPsdk:getPaycode(configId, payType)
+function IAPsdk:getPaycode(configId)
 	local iapName = nil
+	local payType = self.buyModel:getPayType()
 	if payType == "duanxin" then 
 		iapName = self.iapName
 	else
@@ -118,7 +119,8 @@ function IAPsdk:getPaycode(configId, payType)
 	return config[configId]
 end
 
-function IAPsdk:pay(configId, payType)
+function IAPsdk:pay(configId)
+	payType = self.buyModel:getPayType()
 	print("configId", configId)
 	print("payType", payType)	
 	print("self.iapName", self.iapName)

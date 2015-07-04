@@ -30,7 +30,7 @@ function RootLayer:ctor()
                 {"", message, buttonLabels,  handler(self, self.onClickListener)}, 
                 "(Ljava/lang/String;Ljava/lang/String;Ljava/util/Vector;I)V");
 
-            -- self:onClickExitGame()
+            self:onClickExitGame()
         end
     end)
 

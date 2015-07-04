@@ -7,8 +7,9 @@ local BuyConfigs = import(".BuyConfigs")
 local BuyModel = class("BuyModel", cc.mvc.ModelBase)
 local JavaUtils = import("..includes.JavaUtils")
 --events
-BuyModel.BUY_SUCCESS_EVENT   = "BUY_SUCCESS_EVENT"
-BuyModel.BUY_FAIL_EVENT   	 = "BUY_FAIL_EVENT"
+BuyModel.BUY_SUCCESS_EVENT   		 = "BUY_SUCCESS_EVENT"
+BuyModel.BUY_FAIL_EVENT   	 		 = "BUY_FAIL_EVENT"
+BuyModel.BUY_GIFTUPDATE_EVENT   	 = "BUY_GIFTUPDATE_EVENT"
 
 -- 定义事件
 function BuyModel:ctor(properties)
@@ -24,8 +25,8 @@ function BuyModel:clearData()
 end
 
 function BuyModel:showBuy(configId, buyData, strPos)
-	if configId == "goldGiftBag" and JavaUtils.isDefendDX() then configId = "goldGiftBag_dx" end
-	if configId == "stone450" and JavaUtils.isDefendDX() then  configId = "stone260" end
+	if configId == "goldGiftBag" and JavaUtils.isSIMDX() then configId = "goldGiftBag_dx" end
+	if configId == "stone450" and JavaUtils.isSIMDX() then  configId = "stone260" end
 	if configId == "weaponGiftBag" and self:checkBought("weaponGiftBag") then return end
 
 	assert(strPos, "strPos is nil configId :"..configId)
@@ -57,6 +58,12 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	        ui:showPopup("GiftBagPopup",
 	        	{popupName = configId},
 	        	{animName = "shake"})
+	    else
+			self:gameResume()
+			local deneyBuyFunc = self.curBuyData.deneyBuyFunc
+			if deneyBuyFunc then  
+				deneyBuyFunc() 
+			end
 	    end
     elseif showType == "iap" or iapType == "noConfirm" then 
     	self:iapPay()  
@@ -91,6 +98,10 @@ function BuyModel:iapPay()
 
 	display.pause()
 	self.iap:pay(self.curId, self.payType)
+end
+
+function BuyModel:getPayType()
+	return self.payType
 end
 
 function BuyModel:gameResume()
@@ -145,6 +156,11 @@ function BuyModel:deneyPay()
 	if deneyBuyFunc then  
 		deneyBuyFunc() 
 	end
+
+	local closeAllFunc = self.curBuyData.closeAllFunc
+	if closeAllFunc then  
+		closeAllFunc() 
+	end	
 
 	-- um event
 	local umData = {}
@@ -296,7 +312,6 @@ function BuyModel:buy_stone450( buydata )
 	userModel:addDiamond(450, true)
 end
 
-
 function BuyModel:buy_stone600( buydata )
 	local userModel = md:getInstance("UserModel")
 	userModel:addDiamond(1200, true)
@@ -315,6 +330,7 @@ end
 function BuyModel:checkBought(giftId)
 	local data = getUserData()
 	local isDone = data.giftBag[giftId] == true
+	print("giftId", isDone)
 	return isDone
 end
 
@@ -322,6 +338,7 @@ function BuyModel:setBought(giftId)
 	local data = getUserData()
 	data.giftBag[giftId] = true
 	setUserData(data)
+	self:dispatchEvent({name = BuyModel.BUY_GIFTUPDATE_EVENT, giftId = giftId})
 end
 
 return BuyModel

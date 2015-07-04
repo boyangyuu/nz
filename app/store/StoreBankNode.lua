@@ -31,7 +31,7 @@ function StoreBankNode:refreshUI()
         local item = cc.uiloader:seekNodeByName(self.ui, "item"..itemIndex)
         if item == nil then break end
 
-        if itemIndex == 3 and JavaUtils.isDefendDX() then
+        if itemIndex == 3 and JavaUtils.isSIMDX() then
             item:setVisible(false)
         end
 

@@ -216,7 +216,7 @@ function HeroAnimView:playKeepKill(event)
 	end
 
 	if soundIndex ~= nil then
-		print("soundIndex", soundIndex)
+		-- print("soundIndex", soundIndex)
 	    local soundSrc   = "res/Music/fight/combo_" .. soundIndex .. ".wav"
 	    audio.playSound(soundSrc,false) 	
 	end

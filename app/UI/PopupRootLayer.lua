@@ -17,11 +17,11 @@ function PopupRootLayer:ctor(properties)
 end
 
 function PopupRootLayer:showPopup(event)
-	self:setVisible(true)
 	local cls = event.layerCls
 	local str = cls.__cname
 	local pro = event.properties
 	local layer = cls.new(pro)
+
 	if self.layers[str] ~= nil then 	
 		self.layers[str]:removeSelf()
 		self.layers[str] = nil
@@ -29,6 +29,8 @@ function PopupRootLayer:showPopup(event)
 	self.layers[str] = layer
 	self:setOpacity(event.opacity or kOpacity)
 	self:addChild(layer)
+
+	self:setVisible(true)
 
 	--action
 	local animName = event.animName or "scale"

@@ -7,7 +7,7 @@
 --events
 
 --includes
-
+local scheduler = require(cc.PACKAGE_NAME .. ".scheduler")
 local Gun = class("Gun", cc.mvc.ModelBase)
 local GunConfigs = import(".Gun.GunConfigs")
 
@@ -43,6 +43,9 @@ function Gun:initConfig()
 	--skill
 	local name = self:getGunName()
 	self.skillConfig = GunConfigs.getConfig(name)
+	if self.skillConfig == nil then return end
+	self.skillCd = 0
+
 end
 
 function Gun:getConfig()
@@ -165,6 +168,30 @@ end
 
 function Gun:getGunName()
 	return self.config.growTable
+end
+
+function Gun:getSkillCdRemain(skillId)
+	return self.skillCd
+end
+
+function Gun:getSkillCd(skillId)
+	if self.skillConfig == nil then return end
+	return  self.skillConfig[skillId].cd
+end
+
+function Gun:startSkillCd(skillId, cdEndFunc)
+	self.skillCd = self.skillConfig[skillId]["cd"]
+
+	local handle 
+	local function resumeFunc()
+		if self.skillCd <= 0 then 
+			scheduler.unscheduleGlobal(handle)
+			self.skillCd = 0
+			return
+		end
+		self.skillCd = self.skillCd - 0.1
+	end
+	handle = scheduler.scheduleGlobal(resumeFunc, 0.1) 
 end
 
 return Gun

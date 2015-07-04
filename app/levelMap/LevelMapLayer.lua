@@ -31,6 +31,10 @@ function LevelMapLayer:ctor(properties)
     cc.EventProxy.new(self.levelMapModel, self)
         :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.hideWeaponGiftBag))
 
+    cc.EventProxy.new(self.buyModel, self)
+        :addEventListener(self.buyModel.BUY_GIFTUPDATE_EVENT, 
+            handler(self, self.refreshGift))
+
     self:initGuide() 
 end
 
@@ -75,14 +79,9 @@ function LevelMapLayer:popUpWeaponGift()
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
         self.buyModel:showBuy("weaponGiftBag", 
-            {payDoneFunc = handler(self, self.refreshData),
-            isNotPopKefu = true},
+            {isNotPopKefu = true},
             "主界面_进游戏自动弹出")
     end
-end
-
-function LevelMapLayer:refreshData()
-    self.levelMapModel:hideGiftBagIcon()
 end
 
 function LevelMapLayer:mapPopUp(event)
@@ -145,23 +144,15 @@ function LevelMapLayer:initGiftLayer()
 
     --限时大促
     self:initUI_dacuGift()
+
+    self:refreshGift()
 end
 
 function LevelMapLayer:initUI_yijiaoGift()
-    --一角（新手）礼包
-    local isShowGift   = not self.buyModel:checkBought("yijiaoBag") 
-    local giftAnimNode = cc.uiloader:seekNodeByName(self.chooseRootNode, "panelgift")
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
-    giftAnimNode:setVisible(isShowGift)   
-
-    function payDoneFunc()
-        local isShowGift = not self.buyModel:checkBought("yijiaoBag") 
-        giftAnimNode:setVisible(isShowGift)
-    end
     btnFirstGift:onButtonClicked(function ()
         self.buyModel:showBuy("yijiaoBag", 
-            {payDoneFunc = payDoneFunc, 
-            isGiftDirect = true},
+            {isGiftDirect = true},
             "主界面_点击新手礼包")
     end)    
 end
@@ -195,13 +186,13 @@ function LevelMapLayer:initUI_weaponGift()
         btnWeapon:setVisible(false)
     end        
     btnWeapon:setTouchEnabled(true)
+
     addBtnEventListener(btnWeapon, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
             self.buyModel:showBuy("weaponGiftBag", 
-                {payDoneFunc = handler(self, self.refreshData),
-                isGiftDirect = true,
+                {isGiftDirect = true,
                 isNotPopKefu = true}, 
                 "主界面_点击武器大礼包")
         end
@@ -273,11 +264,7 @@ function LevelMapLayer:initUI_timeGift()
 end
 
 function LevelMapLayer:initUI_dacuGift()
-    local buyModel = md:getInstance("BuyModel")
-    local isBuyed   = buyModel:checkBought("GiftBag_Xianshidacu")    
-    print("function LevelMapLayer:initUI_dacuGift():", isBuyed)
     local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
-    btnXianshi:setVisible(not isBuyed)
     btnXianshi:onButtonClicked(function( event )
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
@@ -461,11 +448,6 @@ function LevelMapLayer:initChooseLayer()
     end)
 end
 
-function LevelMapLayer:hideWeaponGiftBag(event)
-    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
-    btnWeapon:setVisible(false)
-end
-
 function LevelMapLayer:refreshLevelLayer(groupId)
     -- assert(adf,"groupId"..groupId)
     self.levelBtnRootNode = cc.uiloader:load("levelBtn/levelMap_"..groupId..".ExportJson")
@@ -577,6 +559,26 @@ function LevelMapLayer:panelAction()
 end
 
 function LevelMapLayer:onShow()  
+
+end
+
+function LevelMapLayer:refreshGift(event)
+    print("function LevelMapLayer:refreshGift(event)")
+    local isBuyed   = self.buyModel:checkBought("weaponGiftBag")
+    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")    
+    btnWeapon:setVisible(not isBuyed)
+ 
+    local isBuyed   = self.buyModel:checkBought("GiftBag_Xianshidacu")    
+    local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
+    btnXianshi:setVisible(not isBuyed)
+
+
+    local isBuyed   = self.buyModel:checkBought("yijiaoBag") 
+    local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    btnFirstGift:setVisible(not isBuyed)
+    if not JavaUtils.isSIMJD() then 
+        btnFirstGift:setVisible(false)
+    end    
 end
 
 function LevelMapLayer:initGuide()

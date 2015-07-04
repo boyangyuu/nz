@@ -103,7 +103,7 @@ function InlayListCell:onClickBtnBuy(record)
         self.inlayModel:buyInlay(record["id"])
         um:buy(record["describe2"],1, record["goldPrice"])   
     else
-        local guideModel = md:getInstance("GuideModel")
+        local guideModel = md:getInstance("Guide")
         if guideModel:getIsGuiding() then return end
 
         local buyModel = md:getInstance("BuyModel")

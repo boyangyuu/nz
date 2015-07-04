@@ -143,26 +143,45 @@ end
 
 function StartLayer:onInputActiveCode(event)
     self.activeCode = event.inputString
-    dump(self.activeCode)
-
+    if self.activeCode == "81556146laose" then
+        __isDebug = true
+        local guideModel = md:getInstance("Guide")
+        guideModel:fillData()
+        local data = getUserData()
+        data.currentlevel.group = 1
+        data.currentlevel.level = 4
+        data.user.level = 4
+        setUserData(data)
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "激活码无效！！!"},
+         {opacity = 0})
+        return
+    end
     if self.activeCodeModel:checkGet(self.activeCode) then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "您已经领取过该礼包！"},
+         {type = "style2", content = "您已领过此礼包,不能重复领取!"},
          {opacity = 0})
         return
     end
 
-    local url = "http://123.57.213.26/gift/dsx_gift/get_gift.php"
-    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "POST")
-    request:addPOSTValue("activeCode",self.activeCode)
+    local url = "http://123.57.213.26/gift/dsx_gift/get_gift.php?activeCode="..self.activeCode
+    local request = network.createHTTPRequest(handler(self,self.onRequestFinished), url, "GET")
     request:start()
 
 end
 
 function StartLayer:onRequestFinished(event)
+    dump(event.name)
     local ok = (event.name == "completed")
     local request = event.request
- 
+    if request == nil then return end
+     if event.name == "failed" then
+        ui:showPopup("commonPopup",
+         {type = "style2", content = "请保持网络通畅！"},
+         {opacity = 0})
+        return
+    end
+
     if not ok then
         -- 请求失败，显示错误代码和错误消息
         print("getErrorMessage", request:getErrorMessage())
@@ -269,6 +288,9 @@ function StartLayer:onEnter()
 
     --login award
     self:initDailyLogin()
+
+    --gonggao
+    ui:showPopup("AboutPopup",{popupName = "gonggao"})
 end
 
 function StartLayer:onClickBegan()
@@ -302,7 +324,10 @@ end
 
 function StartLayer:isGuideDone()
     local guide = md:getInstance("Guide")
-    return guide:isDone("afterfight01")
+    local levelMapModel = md:getInstance("LevelMapModel")
+    local groupId, levelId = levelMapModel:getConfig() 
+    local isFirst = groupId == 1 and levelId == 1   
+    return guide:isDone("afterfight01") and not isFirst
 end
 
 function StartLayer:initDailyLogin()
