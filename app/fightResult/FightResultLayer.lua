@@ -313,7 +313,7 @@ function FightResultLayer:playCard()
 			function popUpGunNoti()
 				self:popGunNotify(self.weaponId)
 			end
-			self:performWithDelay(popUpGunNoti, 1)
+			self:performWithDelay(popUpGunNoti, 0.1)
 		end
 	end
 end

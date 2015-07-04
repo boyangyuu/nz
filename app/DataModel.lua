@@ -25,6 +25,8 @@ function DataModel:setNewData()
     local bagsInlay  = clone(data.inlay.bags)
     local money      = data.money
     local diamond    = data.diamond
+    local currentlevel = data.currentlevel
+    local user       = data.user
 
     myApp:createGameStateFile()
     local data          = getUserData()
@@ -32,7 +34,8 @@ function DataModel:setNewData()
     data.inlay.bags     = bagsInlay
     data.money          = money
     data.diamond        = diamond
-
+    data.currentlevel   = currentlevel
+    data.user           = user
 
     --引导
     local guideModel = md:getInstance("Guide")
