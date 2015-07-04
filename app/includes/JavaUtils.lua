@@ -67,4 +67,13 @@ function JavaUtils.getIsIapSDKValid(sdkName)
     return true
 end
 
+function JavaUtils.getIsShenhe()
+    local d = os.date("*t")
+    if d.year <= 2015 and d.month <= 7 and d.day <= 8 then 
+        return true
+    else
+        return false
+    end
+end
+
 return JavaUtils
