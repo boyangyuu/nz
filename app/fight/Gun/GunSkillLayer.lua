@@ -27,13 +27,13 @@ function GunSkillLayer:refreshUI(event)
 	end
 	self.timers = {}
 	self.config = {}
-	self.skillCdPercent = {}
+	-- self.skillCdPercent = {}
 	self:stopAllActions()
 
 	--config
-	local gun   = self.hero:getGun() 
-	local name  = gun:getGunName()
-	self.config = gun:getSkillConfig()
+	self.gun   = self.hero:getGun() 
+	local name  = self.gun:getGunName()
+	self.config = self.gun:getSkillConfig()
 	if self.config == nil then return end
 
 	--ui
@@ -52,16 +52,15 @@ function GunSkillLayer:refreshUI(event)
 	    end)
 
         --timer
-        self.skillCdPercent[skillId] = 0
 	    local bar = display.newProgressTimer("#btn_cd1.png", display.PROGRESS_TIMER_RADIAL)
 		btn:addChild(bar)
 		bar:setPosition(-3, 10)
 	    bar:setAnchorPoint(0.5, 0.5)
 	    bar:setReverseDirection(true)
-	    bar:setPercentage(100)
-	    bar:setVisible(false)
-		self.timers[skillId] = bar
+	    self.timers[skillId] = bar
 	end
+
+	self:schRefresh()
 
 	--guide
 
@@ -69,13 +68,28 @@ function GunSkillLayer:refreshUI(event)
 	self:checkGuide()	
 end
 
+function GunSkillLayer:schRefresh()
+	self:schedule(handler(self, self.refreshTimers), 0.1)
+end
+
+function GunSkillLayer:refreshTimers()
+	for skillId,timerBar in pairs(self.timers) do
+		local cdRemain = self.gun:getSkillCdRemain()
+		-- print("cdRemain", cdRemain)
+		local isHide   = cdRemain == 0
+		local cd       = self.gun:getSkillCd("skill1")
+		local per      = cdRemain / cd * 100
+		timerBar:setPercentage(per)
+		timerBar:setVisible(not isHide)
+	end	
+end
+
 function GunSkillLayer:onClickBtnSkill(skillId)	
 	--check cooldown
-	local percent = self:getSkillCdPercent(skillId)
-	if percent ~= 0 then
+	if self.gun:getSkillCdRemain() ~= 0 then
 		return 
 	end
-	self:startSkillCd(skillId)
+	self.gun:startSkillCd(skillId)
 
 	--config
 	local skillConfig = self.config[skillId]
@@ -89,30 +103,6 @@ function GunSkillLayer:onClickBtnSkill(skillId)
 	skillConfig.buffFunc()
 end
 
-function GunSkillLayer:getSkillCdPercent(skillId)
-	local percent = self.skillCdPercent[skillId]
-	assert(percent ~= nil, "percent cd is nil" .. skillId)	
-	return percent
-end
-
-function GunSkillLayer:startSkillCd(skillId)
-	self.skillCdPercent[skillId] = 100
-	self.timers[skillId]:setVisible(true)
-	local cdTimes = self.config[skillId]["cd"]
-	assert(cdTimes ~= nil, "cdTimes is nil" .. skillId)
-	local sch = nil	
-	local function resumeCd()
-		if self.skillCdPercent[skillId] == 0 then 
-			transition.removeAction(sch)
-			return
-		end
-		local nextPer = self.skillCdPercent[skillId] - 1	
-		self.skillCdPercent[skillId] = nextPer
-		self.timers[skillId]:setPercentage(nextPer)
-	end
-	local offsetTime = cdTimes / 100
-	sch = self:schedule(resumeCd, offsetTime)
-end
 
 function GunSkillLayer:checkGuide()
 	local gun   = self.hero:getGun() 

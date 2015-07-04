@@ -324,7 +324,10 @@ end
 
 function StartLayer:isGuideDone()
     local guide = md:getInstance("Guide")
-    return guide:isDone("afterfight01")
+    local levelMapModel = md:getInstance("LevelMapModel")
+    local groupId, levelId = levelMapModel:getConfig() 
+    local isFirst = groupId == 1 and levelId == 1   
+    return guide:isDone("afterfight01") and not isFirst
 end
 
 function StartLayer:initDailyLogin()

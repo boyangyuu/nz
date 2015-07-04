@@ -175,18 +175,18 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                     M4A1 5级白银镶嵌   1枪伤害621  dps大于等于3  怪物数据
+--enemy的关卡配置                                                     M4A1 5级白银镶嵌   1枪伤害621  dps大于等于2  怪物数据
 local enemys = {
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=10000,fireRate=180,fireCd=5,speed=35, weak1=2},
+	{id=8,image="dunbing",demage=10,hp=10000,fireRate=180,fireCd=5,speed=35, weak1=2},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=12,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
+	{id=17,image="xiaorz",demage=8,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
 	shanRate = 120, shanCd = 4, chongRate = 180, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=12,hp=600},
+	{id=18,image="feibiao",demage=8,hp=600},
                            
 }
 

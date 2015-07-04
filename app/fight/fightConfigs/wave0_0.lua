@@ -521,7 +521,7 @@ local bosses = {
 
 		image = "boss02", --图片名字
 		award = 10000,                   --boss产出金币数量
-		hp = 150000,
+		hp = 200000,
 		demage = 3, 		         	--这个是没用的 需要告诉俊松
 		fireRate = 120,               --普攻频率
 		fireCd = 3,                     --普攻cd
