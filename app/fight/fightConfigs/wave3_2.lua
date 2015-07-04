@@ -640,10 +640,10 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    M4A1 6级白银镶嵌   1枪伤害621  dps大于等于3  怪物数据
+--enemy的关卡配置                                                    M4A1 6级白银镶嵌   1枪伤害621  dps大于等于2  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=10,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
@@ -651,14 +651,14 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=100,
+	{id=3,image="shoulei",demage=8,hp=100,
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=5,hp=3000, weak1=2, weak4= 4,},
 	                                                          
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=12,hp=100,
+	{id=6,image="daodan",demage=10,hp=100,
 	weak1=1},
 
 	--盾兵         --type = "jin",
@@ -673,7 +673,7 @@ local enemys = {
 	weak1=2,    award = 60},
 
 	--吉普车烟雾导弹          missileType = "dao_wu",
-	{id=13,image="daodan03",demage=12,hp=100, weak1=1},
+	{id=13,image="daodan03",demage=10,hp=100, weak1=1},
 
 	--医疗兵      --type = "yiliao",
 	{id=25,image="yiliaob",demage=8,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,

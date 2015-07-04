@@ -674,10 +674,10 @@ local waves = {
 
 
 
---enemy的关卡配置                                                    M4A1 7级白银镶嵌   1枪伤害333  dps大于等于3  怪物数据
+--enemy的关卡配置                                                    M4A1 7级白银镶嵌   1枪伤害333  dps大于等于2  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=9,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
@@ -685,7 +685,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=300,
+	{id=3,image="shoulei",demage=8,hp=300,
 	weak1=1},                                                           
 
 	--导弹兵      --type = "dao",
@@ -693,11 +693,11 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=300,
+	{id=6,image="daodan",demage=12,hp=300,
 	weak1=1},	
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=10000,fireRate=180,fireCd=5,speed= 40,
+	{id=8,image="dunbing",demage=8,hp=10000,fireRate=180,fireCd=5,speed= 40,
 	weak1=2},
 
 	--金币绿气球   type = "jinbi",
@@ -710,11 +710,11 @@ local enemys = {
 	{id=15,image="qiqiu01",hp=1,weak1=2,award = 30},	--award = 30  金币数量为30
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=12,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
+	{id=17,image="xiaorz",demage=8,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=500}, 
+	{id=18,image="feibiao",demage=8,hp=500}, 
                       
 }
 

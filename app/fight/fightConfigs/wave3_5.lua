@@ -441,10 +441,10 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    M4A1 8级白银镶嵌   1枪伤害333  dps大于等于3  怪物数据
+--enemy的关卡配置                                                    M4A1 8级白银镶嵌   1枪伤害333  dps大于等于2  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=9,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2, weak4=4},
 
 	--手雷兵      --type = "dao",
@@ -452,7 +452,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=12,hp=300,
+	{id=3,image="shoulei",demage=8,hp=300,
 	weak1=1},
 	                                                           
 
@@ -461,11 +461,11 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=15,hp=300,
+	{id=6,image="daodan",demage=10,hp=300,
 	weak1=1},
 
 	--绑匪                                     140--左右移动距离       280--滚动距离
-	{id=7,image="tufeib",demage=12,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+	{id=7,image="tufeib",demage=8,hp=3000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
 
 	--被绑架人        --type = "bangren",
 	{id=8,image="hs", hp=3000, weak1=1},
@@ -477,11 +477,11 @@ local enemys = {
 
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=12,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
+	{id=17,image="xiaorz",demage=8,hp=7000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},
 
 	--飞镖
-	{id=18,image="feibiao",demage=12,hp=500}, 
+	{id=18,image="feibiao",demage=8,hp=500}, 
 
 
 }
