@@ -67,4 +67,16 @@ function JavaUtils.getIsIapSDKValid(sdkName)
     return true
 end
 
+function JavaUtils.getIsShenhe()
+    local d = os.date("*t")
+    local limit = __reviewLimitData
+    if d.year <= limit.year and 
+        d.month <= limit.month and 
+        d.day <= limit.day then 
+        return true
+    else
+        return false
+    end
+end
+
 return JavaUtils

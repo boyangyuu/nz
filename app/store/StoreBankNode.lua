@@ -17,7 +17,7 @@ end
 
 function StoreBankNode:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/Store")
-    local isAlValid = JavaUtils.getIsIapSDKValid("al")
+    local isAlValid = JavaUtils.getIsIapSDKValid("al") and not JavaUtils.getIsShenhe()
     local ccsName = isAlValid and "bank_zhifubao" or "bank"
     self.ui = cc.uiloader:load(ccsName .. ".ExportJson")
     self:addChild(self.ui)

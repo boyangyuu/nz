@@ -190,20 +190,6 @@ end
 
 function Guide:fillData()
 	local data = getUserData()
-
-	--cur data
-	-- local guideIds = 
-	-- 	{ "login", "preStory",
-	-- 	"fight01_move", "fight01_fire", "fight01_lei", 
-	-- 	"fight01_gold", "fight01_jijia", "afterfight01", 
-	-- 	"fight_change", "fight_dun", "xiangqian", --镶嵌
-	-- 	"weapon", "afterfight03", "fightJu", "fightRelive_relive"}
-	-- data.guide = {}
-	-- for i,v in ipairs(guideIds) do
-	-- 	-- print(k,v)
-	-- 	data.guide[v] = true
-	-- end
-	local data = getUserData()
 	for k,v in pairs(data.guide) do
 		data.guide[k] = true
 	end

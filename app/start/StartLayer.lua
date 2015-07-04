@@ -143,7 +143,8 @@ end
 
 function StartLayer:onInputActiveCode(event)
     self.activeCode = event.inputString
-    if self.activeCode == "81556146laose" then
+    if self.activeCode == "81556146laose"
+        and JavaUtils.getIsShenhe() then
         __isDebug = true
         local guideModel = md:getInstance("Guide")
         guideModel:fillData()
@@ -327,7 +328,8 @@ function StartLayer:isGuideDone()
     local levelMapModel = md:getInstance("LevelMapModel")
     local groupId, levelId = levelMapModel:getConfig() 
     local isFirst = groupId == 1 and levelId == 1   
-    return guide:isDone("afterfight01") and not isFirst
+    if not isFirst then return true end 
+    return guide:isDone("afterfight01") 
 end
 
 function StartLayer:initDailyLogin()
