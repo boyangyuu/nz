@@ -174,7 +174,7 @@ function StartLayer:onRequestFinished(event)
     dump(event.name)
     local ok = (event.name == "completed")
     local request = event.request
- 
+    if request == nil then return end
      if event.name == "failed" then
         ui:showPopup("commonPopup",
          {type = "style2", content = "请保持网络通畅！"},

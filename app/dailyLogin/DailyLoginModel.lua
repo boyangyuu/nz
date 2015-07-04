@@ -106,7 +106,7 @@ function DailyLoginModel:refreshTime(event, callfunc)
 	-- dump(event, "event refreshTime")
     local name = event.name 
     local request = event.request
- 	
+ 	if request == nil then return end
     if name ~= "completed" then
         print("网络请求中", request:getErrorCode()..request:getErrorMessage())
         return
