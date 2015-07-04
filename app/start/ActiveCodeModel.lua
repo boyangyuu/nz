@@ -47,7 +47,7 @@ function ActiveCodeModel:getType(activeCode)
 	elseif acParam == "F" or acParam == "f" then
 		return "dujia"
 	elseif acParam == "G" or acParam == "g" then
-		return "dujia"
+		return "wuxing"
     elseif acParam == "H" or acParam == "h" then
 		return "diamond120"
 	elseif acParam == "I" or acParam == "i" then

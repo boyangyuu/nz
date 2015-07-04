@@ -9,7 +9,7 @@ configs["qudao"] = {
 	{money = 18888},
 }
 
---  五星好评礼包 D
+--  五星好评礼包 D G
 configs["wuxing"] = {
 	{lei = 20},
 	{healthBag = 5},
@@ -25,7 +25,7 @@ configs["tequan"] = {
 	{silverweapon = 5}, 
 }
 
--- 独家包 F G
+-- 独家包 F 
 configs["dujia"] = {
 	{lei = 20},
 	{healthBag = 5},
