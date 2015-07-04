@@ -192,10 +192,13 @@ function FightResultLayer:initUI()
 
 	end
 
-    addBtnEventListener(self.btnInlay, function(event)
-        if event.name=='began' then
-            return true
-        elseif event.name=='ended' then
+    self.btnInlay:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function(event)
 	        ui:showPopup("commonPopup",
 				 {type = "style2", content = "镶嵌成功",delay = 0.5},
 				 {opacity = 155})				
@@ -210,25 +213,29 @@ function FightResultLayer:initUI()
 				self.inlayArmature:removeFromParent()
 				self.inlayArmature = nil
 			end
-        end
     end)
 
-    addBtnEventListener(self.btnGetAll, function(event)
-        if event.name=='began' then
-            return true
-        elseif event.name=='ended' then
+    self.btnGetAll:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function(event)
 	        ui:showPopup("commonPopup",
 				 {type = "style1", content = "是否花费10颗宝石翻开剩余卡牌",
 				 callfuncCofirm =  handler(self, self.onCofirmLeftCard)},
 				 {opacity = 155})
-        end
     end)
-	addBtnEventListener(self.btnNext, function(event)
-        if event.name=='began' then
-            return true
-        elseif event.name=='ended' then		
+        
+	self.btnNext:onButtonPressed(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
+        end)
+        :onButtonRelease(function( event )
+            event.target:runAction(cc.ScaleTo:create(0.1, 1))
+        end)
+        :onButtonClicked(function(event)
         	self:onClickBtnNext()
-        end
     end)
 end
 
