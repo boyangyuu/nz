@@ -69,17 +69,17 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			{
-				time = 10,	
-				num = 2,
-				pos = {270,370},
-				delay = {0.2,1},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},
+			-- {
+			-- 	time = 10,	
+			-- 	num = 2,
+			-- 	pos = {270,370},
+			-- 	delay = {0.2,1},
+			-- 	property = { 
+			-- 		placeName = "place3",
+			-- 		startState = "rollright",
+			-- 		id = 1,
+			-- 	},
+			-- },
 	                                     	
 		},                                                              --21个
 	},	
@@ -218,11 +218,11 @@ local waves = {
 				property = { 
 					type = "awardSan",
 					id = 21,
-					--award = "goldWeapon",     --黄金武器
-					award = "coin",                        --金币
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
 					--award = "shouLei",        --手雷
 					--award = "healthBag",                 --医疗包
-					value = 100,
+					value = 1,
 					placeName = "place3",
 				},
 			},	

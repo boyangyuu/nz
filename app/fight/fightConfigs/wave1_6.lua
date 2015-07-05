@@ -160,7 +160,7 @@ local waves = {
 	    --体验枪
 		gunData = 
 			{ 
-			    id = 5,    --枪id
+			    id = 8,    --枪id
 			    delay = 3, --10s之后出现
 		    },
 		enemys = {

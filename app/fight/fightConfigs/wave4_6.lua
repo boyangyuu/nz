@@ -160,7 +160,7 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于5  怪物数据
+--enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于4  怪物数据
 local enemys = {
 
     --boss导弹          --missileType = "daodan",
@@ -168,7 +168,7 @@ local enemys = {
 	weak1=1},
 
 	--医疗兵      type = "yiliao",
-	{id=10,image="yiliaob",demage=20,hp=25000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=10,image="yiliaob",demage=16,hp=25000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--越野车       type = "jipu" ,
@@ -179,7 +179,7 @@ local enemys = {
 	{id=13,image="daodan03",demage=25,hp=5000, weak1=1},
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=25,hp=5000, speed=80,
+	{id=20,image="xiaozz",demage=25,hp=5000, speed=70,
 	weak1=1},
 
 	--绑匪

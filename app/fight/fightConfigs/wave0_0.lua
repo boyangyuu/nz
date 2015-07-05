@@ -75,17 +75,17 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			{
-				time = 2,	
-				num = 1,
-				pos = {450},
-				delay = {0},
-				property = { 
-					placeName = "place3",
-					startState = "rollright",
-					id = 1,
-				},
-			},	
+			-- {
+			-- 	time = 2,	
+			-- 	num = 1,
+			-- 	pos = {450},
+			-- 	delay = {0},
+			-- 	property = { 
+			-- 		placeName = "place3",
+			-- 		startState = "rollright",
+			-- 		id = 1,
+			-- 	},
+			-- },	
 			{
 				time = 2.5,	
 				num = 1,
@@ -98,7 +98,7 @@ local waves = {
 				},
 			}, 
 			{
-				time = 2,	                                               --奖励箱子
+				time = 1.5,	                                               --奖励箱子
 				num = 1,
 				pos = {300},
 				delay = {0},

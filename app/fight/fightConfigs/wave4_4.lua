@@ -524,7 +524,7 @@ function waveClass:ctor()
 		-- limitTime = 60,                   --限时模式时长
 
 		type 	  = "taoFan",
-		limitNums = 5,                      --逃跑逃犯数量
+		limitNums = 7,                      --逃跑逃犯数量
 	}
 end
 return waveClass

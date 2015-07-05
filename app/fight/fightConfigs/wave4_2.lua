@@ -324,18 +324,18 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于5  怪物数据
+--enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于3  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=20,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=12,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2, weak4=3},
 
 	--狙击兵      --type = "juji",
-	{id=4,image="jujib",demage=30,hp=25000, rollRate=180,rollCd=3,fireRate=6, fireCd = 6,
+	{id=4,image="jujib",demage=18,hp=25000, rollRate=180,rollCd=3,fireRate=6, fireCd = 6,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=5000,
+	{id=6,image="daodan",demage=20,hp=5000,
 	weak1=1},
 
 	--绑匪
@@ -345,11 +345,11 @@ local enemys = {
 	{id=8,image="hs", hp=5000, weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=9,image="dunbing",demage=25,hp=70000,fireRate=180,fireCd=5,speed=35, scale = 1.9,--scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=9,image="dunbing",demage=15,hp=70000,fireRate=180,fireCd=5,speed=35, scale = 1.9,--scale = 3.0,  近战走到屏幕最近放缩比例
 	weak1=2},
 
 	--医疗兵      type = "yiliao",
-	{id=10,image="yiliaob",demage=20,hp=25000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=10,image="yiliaob",demage=12,hp=25000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--飞机         type = "feiji" ,
@@ -361,17 +361,17 @@ local enemys = {
 	weak1=2,    award = 60},
                                                          
 	--吉普车烟雾导弹          missileType = "dao_wu",
-	{id=13,image="daodan03",demage=25,hp=5000, weak1=1},
+	{id=13,image="daodan03",demage=20,hp=5000, weak1=1},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=20,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
+	{id=17,image="xiaorz",demage=15,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=5000}, 
+	{id=18,image="feibiao",demage=12,hp=5000}, 
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=15,hp=5000, speed=80,
+	{id=20,image="xiaozz",demage=12,hp=5000, speed=70,
 	weak1=1},
 }
 

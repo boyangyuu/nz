@@ -65,6 +65,18 @@ local waves = {
 				},
 			},	
 			{
+				time = 3,	                                               --金武奖励箱子
+				num = 1,
+				pos = {200},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 11,
+					award = "goldWeapon",
+					placeName = "place1",
+				},
+			},
+			{
 				time = 3,
 				num = 1,
 				delay = {0.1},
