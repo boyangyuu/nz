@@ -2,7 +2,6 @@
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 local BuyConfigs = import("..buy.BuyConfigs")
 local className = "com/hgtt/com/IAPControl"
-local OCclassName = "IAPControl"
 
 local sig = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V"
 
@@ -81,7 +80,7 @@ function IAPsdk:getPayConfig(iapName)
 		config["stone600"]         = "60"		--60 yuan
 		config["stone900"]         = "90"		--90
 		config["stone1200"]        = "120"		--120
-	elseif iapName == "ios" then -- alibaba
+	elseif iapName == "ios" then -- ios i4
 		--礼包
 		config["stone600"]         = "60"		--60 yuan
 		config["stone900"]         = "90"		--90
@@ -100,7 +99,7 @@ function IAPsdk:getPayConfig(iapName)
 		config["stone260"]         = "20"		--一箱子宝石
 		config["stone450"]         = "30"		--堆成山的宝石
 	end
-	-- dump(config, "iapName:"..iapName)
+	dump(config, "iapName:"..iapName)
 	assert(config, "config is nil: iapName:" .. iapName)
 	return config
 end
@@ -130,9 +129,6 @@ end
 function IAPsdk:getPaycode(configId)
 	local iapName = nil
 	local payType = self.buyModel:getPayType()
-	dump(payType)
-	dump(iapName)
-	dump(self.iapName)
 	if payType == "duanxin" then 
 		iapName = self.iapName
 	else
@@ -142,17 +138,12 @@ function IAPsdk:getPaycode(configId)
 	local config = self:getPayConfig(iapName)
 	dump(config, "config")
 	assert(config, "config is nil payType" .. payType)
-	-- dump(config)
-	-- dump(configId)
 	assert(config[configId], "config[configId] is nil")
 	return config[configId]
 end
 
 function IAPsdk:pay(configId)
 	payType = self.buyModel:getPayType()
-	print("configId", configId)
-	print("payType", payType)	
-	print("self.iapName", self.iapName)
 	if __isFree then 	self:callbackSuccess() return end
 	if not self:isPayValid() then return end
 
@@ -166,8 +157,8 @@ function IAPsdk:pay(configId)
 		handler(self, self.callbackSuccess), 
 		handler(self, self.callbackFaild)}
 	if device.platform == 'ios' then
-
-		luaoc.callStaticMethod(OCclassName, "pay", args, sig)
+		print("!@#$%^&**((!@#$%^*(*&^%$#@#$%^&*&^%$#@")
+		luaoc.callStaticMethod("IAPControl", "pay", args)
 
 	elseif device.platform ~= 'android' then
 		ui:showPopup("commonPopup",
