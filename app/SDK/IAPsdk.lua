@@ -2,6 +2,7 @@
 local IAPsdk = class("IAPsdk", cc.mvc.ModelBase)
 local BuyConfigs = import("..buy.BuyConfigs")
 local className = "com/hgtt/com/IAPControl"
+local OCclassName = "IAPControl"
 
 local sig = "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V"
 
@@ -79,14 +80,36 @@ function IAPsdk:getPayConfig(iapName)
 		--礼包
 		config["stone600"]         = "60"		--60 yuan
 		config["stone900"]         = "90"		--90
+		config["stone1200"]        = "120"		--120
+	elseif iapName == "ios" then -- alibaba
+		--礼包
+		config["stone600"]         = "60"		--60 yuan
+		config["stone900"]         = "90"		--90
 		config["stone1200"]        = "120"		--120		
+						--礼包
+		config["novicesBag"]       = "1"		--新手礼包1
+		config["weaponGiftBag"]    = "20"		--武器到礼包1
+		config["goldGiftBag"]      = "30"		--土豪金礼包1
+
+		--单件
+		config["goldWeapon"]       = "4"		--黄武
+		config["handGrenade"]      = "4"		--手雷
+		config["armedMecha"]       = "4"		--机甲1
+		config["onceFull"]         = "2"		--一键满级1
+		config["stone120"]         = "10"		--一麻袋宝石
+		config["stone260"]         = "20"		--一箱子宝石
+		config["stone450"]         = "30"		--堆成山的宝石
 	end
-	dump(config, "iapName:"..iapName)
+	-- dump(config, "iapName:"..iapName)
 	assert(config, "config is nil: iapName:" .. iapName)
 	return config
 end
 
 function IAPsdk:isPayValid()
+	if device.platform == "ios" then
+		return true
+	end
+
 	local payType =  self.buyModel:getPayType()
 	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
@@ -107,14 +130,20 @@ end
 function IAPsdk:getPaycode(configId)
 	local iapName = nil
 	local payType = self.buyModel:getPayType()
+	dump(payType)
+	dump(iapName)
+	dump(self.iapName)
 	if payType == "duanxin" then 
 		iapName = self.iapName
 	else
 		iapName = payType
 	end
+
 	local config = self:getPayConfig(iapName)
 	dump(config, "config")
 	assert(config, "config is nil payType" .. payType)
+	-- dump(config)
+	-- dump(configId)
 	assert(config[configId], "config[configId] is nil")
 	return config[configId]
 end
@@ -131,12 +160,16 @@ function IAPsdk:pay(configId)
 	local paycode = self:getPaycode(configId, payType)
 	local buyName = BuyConfigs.getConfig(configId)["name"]
 	local args = {
-		paycode, 
-		buyName, 
+		paycode, --OC价钱
+		buyName, -- "当前武器一键满级"
 		payType,
 		handler(self, self.callbackSuccess), 
 		handler(self, self.callbackFaild)}
-	if device.platform ~= 'android' then
+	if device.platform == 'ios' then
+
+		luaoc.callStaticMethod(OCclassName, "pay", args, sig)
+
+	elseif device.platform ~= 'android' then
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
 			 {opacity = 0})		

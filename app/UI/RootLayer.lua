@@ -74,6 +74,9 @@ function RootLayer:onPauseSwitch(event)
 end
 
 function RootLayer:initLoginLayer()
+    if device.platform == "ios" then
+        luaoc.callStaticMethod("IAPControl","loginIn")
+    end
     self.curLayer = StartLayer.new()
     self:addChild(self.curLayer)      
 end
