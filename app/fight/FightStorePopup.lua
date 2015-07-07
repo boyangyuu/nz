@@ -1,9 +1,12 @@
 
 local LayerColor_BLACK = cc.c4b(0, 0, 0, 0)
+local kOpacity = 200.0
 local StoreLayer   = import("..store.StoreLayer")
 
 local FightStorePopup = class("FightStorePopup",function()
-	return display.newColorLayer(LayerColor_BLACK)
+	local layer = display.newColorLayer(LayerColor_BLACK)
+	layer:setOpacity(kOpacity)
+	return layer
 end)
 
 function FightStorePopup:ctor(property)

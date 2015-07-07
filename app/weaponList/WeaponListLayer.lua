@@ -256,6 +256,8 @@ function WeaponListLayer:buyWeaponByStone()
         end
 
         --award
+        ui:showPopup("WeaponNotifyLayer",
+         {type = "gun",weaponId = self.weaponId},{opacity = 255})        
         self:sendGunAward()
 
         return true

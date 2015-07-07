@@ -387,10 +387,33 @@ function LevelDetailLayer:buyWeaponByStone()
         self.weaponListModel:buyWeapon(self.recomWeaponId)
         ui:showPopup("WeaponNotifyLayer",
          {type = "gun",weaponId = self.recomWeaponId},{opacity = 255})
+        
+
+        --equip
+		local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)        
+        if recomWeapon["type"] == "ju"  then
+            self.weaponListModel:equipBag(self.recomWeaponId, 3)
+        else
+            self.weaponListModel:equipBag(self.recomWeaponId, 1) 
+        end
+
+        self:sendGunAward()
         return true
     else
         return false
     end
+end
+
+function LevelDetailLayer:sendGunAward()
+    --黄武*3
+    local inlayModel = md:getInstance("InlayModel")    
+    inlayModel:buyGoldsInlay(4)    
+    inlayModel:equipAllInlays()
+
+    --award
+    ui:showPopup("commonPopup",
+         {type = "style1",content = "感谢您的支持！！活动期间赠送3套黄武，助您一臂之力"},
+         {opacity = 100})
 end
 
 ---- initData ----

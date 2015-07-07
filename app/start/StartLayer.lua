@@ -97,7 +97,7 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-           ui:showPopup("AboutPopup",{popupName = "gonggao"},{animName = "normal"})
+           ui:showPopup("AboutPopup",{popupName = "gonggao_1"},{animName = "normal"})
         end
     end)
 
@@ -290,7 +290,7 @@ function StartLayer:onEnter()
     guide:checkGuideUM("login")
 
     --gonggao
-    ui:showPopup("AboutPopup",{popupName = "gonggao"}, {animName = "normal"})
+    ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
 
     --login award 服务器请求不能与loadccd并行！！
     self:initDailyLogin()
@@ -332,9 +332,10 @@ function StartLayer:isGuideDone()
 end
 
 function StartLayer:initDailyLogin()
+    local guide = md:getInstance("Guide")
     local function callfunc(status)
         print("网络请求", status)
-        if status == "success" then            
+        if status == "success" and not guide:getIsGuiding() then            
             ui:showPopup("DailyLoginLayer", {})
         end
     end

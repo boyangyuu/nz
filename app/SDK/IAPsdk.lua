@@ -119,9 +119,9 @@ function IAPsdk:isPayValid()
 		return false
 	elseif self.iapName == 'invalid' and payType == "duanxin" then
 		self:callbackFaild()
-		ui:showPopup("commonPopup",
-			 {type = "style2", content = "请在插有移动卡的手机上支付！", delay = 1},
-			 {opacity = 0})	
+		-- ui:showPopup("commonPopup",
+		-- 	 {type = "style2", content = "请在插有移动卡的手机上支付！", delay = 1},
+		-- 	 {opacity = 0})	
 		 return	false
 	end
 	return true
