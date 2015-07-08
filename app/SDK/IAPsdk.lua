@@ -157,9 +157,11 @@ function IAPsdk:pay(configId)
 		handler(self, self.callbackSuccess), 
 		handler(self, self.callbackFaild)}
 	if device.platform == 'ios' then
-		print("!@#$%^&**((!@#$%^*(*&^%$#@#$%^&*&^%$#@")
-		luaoc.callStaticMethod("IAPControl", "pay", args)
-
+		local OCargs = {
+			payPrice = paycode,
+			buyName = buyName,
+		}
+		luaoc.callStaticMethod("IAPControl", "pay", OCargs)
 	elseif device.platform ~= 'android' then
 		ui:showPopup("commonPopup",
 			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
