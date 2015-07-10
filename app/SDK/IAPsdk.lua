@@ -82,12 +82,12 @@ function IAPsdk:getPayConfig(iapName)
 		config["stone1200"]        = "120"		--120
 	elseif iapName == "ios" then -- ios 
 		--礼包
-		config["stone120"]         = "600"		--600钻石
-		config["stone260"]         = "880"		--一箱子宝石
-		config["stone450"]         = "1280"		--堆成山的宝石
-		config["stone600"]         = "60"		--60 yuan
-		config["stone900"]         = "180"		--90
-		config["stone1200"]        = "300"		--120	
+		config["stone120"]         = "60"		--600钻石
+		config["stone260"]         = "180"		--一箱子宝石
+		config["stone450"]         = "300"		--堆成山的宝石
+		config["stone600"]         = "600"		--60 yuan
+		config["stone900"]         = "880"		--90
+		config["stone1200"]        = "1280"		--120	
 	end
 	dump(config, "iapName:"..iapName)
 	assert(config, "config is nil: iapName:" .. iapName)
@@ -103,7 +103,7 @@ function IAPsdk:isPayValid()
 	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
-			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
+			 {type = "style2", content = "请在插有SIM卡的手机上支付", delay = 1},
 			 {opacity = 0})
 		return false
 	elseif self.iapName == 'invalid' and payType == "duanxin" then
@@ -136,22 +136,24 @@ function IAPsdk:pay(configId)
 	if __isFree then 	self:callbackSuccess() return end
 	if not self:isPayValid() then return end
 	
-	local paycode = self:getPaycode(configId, payType)
-	if device.platform == 'windows' or 'mac' then
+	if device.platform == 'ios' then
+		self:pay_ios(configId)
+	elseif device.platform == 'windows' or 'mac' then
 		self:pay_win()
 	elseif device.platform == 'android' then
 		self:pay_android(configId)
-	elseif device.platform == 'ios' then
-		self:pay_ios()
 	end
 end
 
-function IAPsdk:pay_ios()
+function IAPsdk:pay_ios(configId)
+	print("aaaaaios")
+	payType = self.buyModel:getPayType()
 	local paycode = self:getPaycode(configId, payType)
+	dump(paycode)
 	local args = {
 		buyType = paycode,
 	}
-	luaoc.callStaticMethod("IAPControl", "buy", OCargs)
+	luaoc.callStaticMethod("IAPControl", "buy", args)
 end
 
 function IAPsdk:pay_android(configId)
