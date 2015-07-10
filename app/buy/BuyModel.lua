@@ -33,8 +33,14 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
-    self.payType = buyData.payType or "duanxin"
-    
+
+    --tododd
+    if device.platform == "ios" then 
+    	self.payType = "ios"
+    else
+	    self.payType = buyData.payType or "duanxin"
+	end
+
     --um pay
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configId) 
