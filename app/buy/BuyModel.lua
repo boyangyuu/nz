@@ -34,7 +34,6 @@ function BuyModel:showBuy(configId, buyData, strPos)
     self.curId = configId
     self.curBuyData =  buyData
 
-    --tododd
     if device.platform == "ios" then 
     	self.payType = "ios"
     else
