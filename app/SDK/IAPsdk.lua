@@ -153,7 +153,7 @@ function IAPsdk:pay_ios(configId)
 	local args = {
 		buyType = paycode,
 		success = handler(self, self.callbackSuccess),
-		fail = handler(self, self.callbackFaild)}
+		fail = handler(self, self.callbackFaild)
 	}
 	luaoc.callStaticMethod("IAPControl", "buy", args)
 end
@@ -178,7 +178,7 @@ function IAPsdk:pay_win()
 	display.resume()
 end
 
-function IAPsdk:callbackSuccess( result )
+function IAPsdk:callbackSuccess(result)
 	-- body
 	self.buyModel:payDone(result)
 end
