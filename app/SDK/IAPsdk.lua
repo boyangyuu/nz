@@ -146,6 +146,11 @@ function IAPsdk:pay(configId)
 end
 
 function IAPsdk:pay_ios(configId)
+	dump(configId)
+	if configId == "weaponGiftBag" or configId == "goldGiftBag" then
+		self:callbackSuccess()
+		return
+	end
 	print("aaaaaios")
 	payType = self.buyModel:getPayType()
 	local paycode = self:getPaycode(configId, payType)

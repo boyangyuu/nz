@@ -41,6 +41,10 @@ end
 	end
 end
 
+
+--[[
+
+]]
 function UserModel:costDiamond(diamond, isBuy, strPos)
 	-- local strBuy = diamond > 260 and "stone450" or "stone260"
 	-- isBuy = isBuy or false
@@ -61,7 +65,8 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 				self.buyModel:showBuy(strBuy, {isNotPopKefu = true}, strPos)
 			end
 			scheduler.performWithDelayGlobal(delayCall, 1.0)
-			
+		else
+			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
 		end
 		return false
 	end

@@ -305,32 +305,56 @@ end
 
 function BuyModel:buy_stone120( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(120, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(60, true)
+	else
+		userModel:addDiamond(120, true)
+	end
 end
 
 function BuyModel:buy_stone260( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(260, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(225, true)
+	else
+		userModel:addDiamond(260, true)
+	end
 end
 
 function BuyModel:buy_stone450( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(450, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(450, true)
+	else
+		userModel:addDiamond(450, true)
+	end
 end
 
 function BuyModel:buy_stone600( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(1200, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(1200, true)
+	else
+		userModel:addDiamond(1200, true)
+	end
 end
 
 function BuyModel:buy_stone900( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(1980, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(2200, true)
+	else
+		userModel:addDiamond(1980, true)
+	end
 end
 
 function BuyModel:buy_stone1200( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(3000, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(3840, true)
+	else
+		userModel:addDiamond(3000, true)
+	end
 end
 
 function BuyModel:checkBought(giftId)
