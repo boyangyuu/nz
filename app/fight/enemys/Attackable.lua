@@ -76,12 +76,12 @@ function Attackable:setPause(event)
 	if tAnimation == nil then return end
 	if isPause then
 		self:pause()
-		tAnimation:pause()
+		self.armature:pause()
 		actionManager:pauseTarget(self)
 		actionManager:pauseTarget(self.armature)
 	else
 		self:resume()
-		tAnimation:resume()
+		self.armature:resume()
 		actionManager:resumeTarget(self)
 		actionManager:resumeTarget(self.armature)
 	end
@@ -378,7 +378,7 @@ end
 function Attackable:restoreStand()
 	self.playAnimId = nil 
 	self.armature:stopAllActions()	
-	self.armature:getAnimation():stop()
+	self.armature:stop()
 	self:setPauseOtherAnim(false)
 end
 

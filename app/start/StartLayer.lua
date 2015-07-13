@@ -58,7 +58,10 @@ function StartLayer:initUI()
     self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
     self.btnGonggao = cc.uiloader:seekNodeByName(self, "btnGonggao")
-
+    if device.platform == "ios" then
+        self.btnGonggao:setVisible(false)
+    end
+    
     local seq = transition.sequence({
         cc.ScaleTo:create(0.6, 1.04), 
         cc.ScaleTo:create(0.6, 0.96),}) 
@@ -107,7 +110,8 @@ function StartLayer:initUI()
             return true
         elseif event.name == "ended" then 
             if device.platform == "ios" then
-                self:onClickBtnGongGao()
+                ui:showPopup("KefuPopup",{
+                    opacity = 0})
             else
                 self:onClickActiveCode()
             end
@@ -298,7 +302,9 @@ function StartLayer:onEnter()
     guide:checkGuideUM("login")
 
     --gonggao
-    ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
+    if device.platform ~= "ios" then
+        ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
+    end
 
     --login award 服务器请求不能与loadccd并行！！
     self:initDailyLogin()
