@@ -214,8 +214,22 @@ function WeaponListLayer:onClickBtnEquip(weaponid)
 end
 
 function WeaponListLayer:onClickBtnOncefull()
-    self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
-             "武器库界面_点击一键满级"..self.weaponRecord["name"])
+    if device.platform ~= "ios" then
+        self.buyModel:showBuy("onceFull",{weaponid = self.weaponId},
+                 "武器库界面_点击一键满级"..self.weaponRecord["name"])
+    else
+        ui:showPopup("commonPopup",
+        {type = "style3", content = "是否花费40宝石将武器一键满级？",
+             callfuncCofirm =  handler(self, self.cofirmOnceFull_ios)},
+         { opacity = 0})
+    end
+end
+
+function WeaponListLayer:cofirmOnceFull_ios()
+   local isAfforded = self.userModel:costDiamond(40)
+   if isAfforded then
+        self.weaponListModel:onceFull(self.weaponId)
+   end
 end
 
 function WeaponListLayer:onClickBtnUpgrade(event)

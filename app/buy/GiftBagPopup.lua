@@ -49,9 +49,11 @@ function GiftBagPopup:initButtons()
 	end)
 
 	--按钮动画
-	local armature = ccs.Armature:create("lb_ljgm")
-	armature:getAnimation():play("lb_ljgm", -1, 1)
-	addChildCenter(armature, receiveBtn)
+	if device.platform ~= "ios" then 
+		local armature = ccs.Armature:create("lb_ljgm")
+		armature:getAnimation():play("lb_ljgm", -1, 1)
+		addChildCenter(armature, receiveBtn)
+	end
 
 	--
 	local btnClose = cc.uiloader:seekNodeByName(self, "btn_Closed")

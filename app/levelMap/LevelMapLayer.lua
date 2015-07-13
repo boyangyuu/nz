@@ -156,6 +156,7 @@ end
 
 function LevelMapLayer:initUI_yijiaoGift()
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    if device.platform == "ios" then btnFirstGift:setVisible(false) return end
     btnFirstGift:onButtonClicked(function ()
         self.buyModel:showBuy("yijiaoBag", 
             {isGiftDirect = true},
@@ -582,7 +583,8 @@ function LevelMapLayer:refreshGift(event)
     local isBuyed   = self.buyModel:checkBought("yijiaoBag") 
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     btnFirstGift:setVisible(not isBuyed)
-    if not JavaUtils.isSIMJD() then 
+    local isIOS = device.platform == "ios"
+    if not JavaUtils.isSIMJD() or isIOS then 
         btnFirstGift:setVisible(false)
     end    
 end
