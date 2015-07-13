@@ -97,7 +97,7 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-           ui:showPopup("AboutPopup",{popupName = "gonggao_1"},{animName = "normal"})
+            self:onClickBtnGongGao()
         end
     end)
 
@@ -106,7 +106,11 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-            self:onClickActiveCode()
+            if device.platform == "ios" then
+                self:onClickBtnGongGao()
+            else
+                self:onClickActiveCode()
+            end
         end
     end)
 
@@ -134,6 +138,10 @@ function StartLayer:initUI()
             ui:showPopup("KefuPopup",{
                     opacity = 0})
         end)
+end
+
+function StartLayer:onClickBtnGongGao()
+   ui:showPopup("AboutPopup",{popupName = "gonggao_1"},{animName = "normal"})
 end
 
 function StartLayer:onClickActiveCode()
