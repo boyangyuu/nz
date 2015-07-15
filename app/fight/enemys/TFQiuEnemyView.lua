@@ -26,7 +26,7 @@ function TFQiuEnemyView:playStartState(state)
     elseif state == "enterright" then
         self:playEnter("right")            
     else 
-        self:playStand()
+        self:playMoveToNext()
     end
 end
 

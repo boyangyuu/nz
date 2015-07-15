@@ -1,7 +1,20 @@
 --[[
 local BaseWave = import(".BaseWave")
 local waveClass = class("waveExample", BaseWave)
-
+---------- 导弹兵配置 ------
+			{
+				time = 12.5,
+				num = 1,
+				delay = {0},
+				pos = {330},					
+				property = {
+					placeName = "place1",   
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},
 
 ---------- 绑架人质配置 --------------------------------
 	{
@@ -226,7 +239,11 @@ local enemys = {
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=20,hp=375,
 	weak1=3},
-	                                                           
+
+	--囚犯            type = "taofan_qiu",
+	{id=4,image="qiufan",demage=4,hp=550,
+	weak1=4, weak4=4},
+                                                           
 	--导弹兵      --type = "dao",
 	{id=5,image="zpbing",demage=0,hp=562,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=3},

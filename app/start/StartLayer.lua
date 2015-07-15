@@ -10,7 +10,7 @@ function StartLayer:ctor()
     self:setNodeEventEnabled(true)
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
-    self.activeCodeModel = md:getInstance("ActiveCodeModel")
+    self.activeCodeModel = md:getInstance("ActiveCodeModel") 
 
 end
 
@@ -288,6 +288,7 @@ function StartLayer:switchSound()
 end
 
 function StartLayer:onEnter()
+
     --set sound
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
@@ -311,6 +312,7 @@ function StartLayer:onEnter()
 end
 
 function StartLayer:onClickBegan()
+    --[[
     print("function StartLayer:onClickBegan()")
           
     local guide = md:getInstance("Guide")
@@ -334,6 +336,10 @@ function StartLayer:onClickBegan()
         --story
         ui:changeLayer("storyLayer",{})
     end
+    ]]
+    --test
+    local fightData = { groupId = 70,levelId = 7, fightType = "jujiFight"}  --无限狙击
+    ui:changeLayer("FightPlayer", {fightData = fightData})       
 end
 
 function StartLayer:isGuideDone()
