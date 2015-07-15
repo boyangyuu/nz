@@ -20,7 +20,7 @@ isAsync   = false
 __isFree  = true
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
-__reviewLimitData = {year = 2015, month = 7, day = 9} 
+__reviewLimitData = {year = 2015, month = 7, day = 14} 
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
@@ -171,8 +171,8 @@ function MyApp:createGameStateFile()
             },
         },            
 
-        user = {
-            level = 7,
+        user = {D
+           level = 7,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
         },
@@ -243,7 +243,10 @@ function MyApp:createGameStateFile()
         preference = {
             isOpenMusic = true
         },
-            
+        buy = {
+            boughtDate = nil, --上一次购买日期
+            boughtMoneySum = nil, --当日累计消费
+        },            
     }
     GameState.save(data)
     GameData=GameState.load()
