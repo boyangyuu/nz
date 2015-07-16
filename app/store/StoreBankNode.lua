@@ -19,6 +19,9 @@ function StoreBankNode:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/Store")
     local isAlValid = JavaUtils.getIsIapSDKValid("al") and not JavaUtils.getIsShenhe()
     local ccsName = isAlValid and "bank_zhifubao" or "bank"
+    if device.platform == "ios" then
+        ccsName = "bank_ios"
+    end
     self.ui = cc.uiloader:load(ccsName .. ".ExportJson")
     self:addChild(self.ui)
 end
@@ -46,6 +49,25 @@ function StoreBankNode:refreshUI()
 end
 
 function StoreBankNode:onClickBtnBuy(configIndex)
+    -- if device.platform == "ios" then
+    --     local buyConfig = {
+    --     item1="600",
+    --     item2="880",
+    --     item3="1280",
+    --     item4="180",
+    --     item5="60",
+    --     item6="300",
+    --     }
+
+    --     local buyType = buyConfig["item"..configIndex]
+    --     if device.platform == 'ios' then
+    --         local OCargs = {
+    --             buyType = buyType,
+    --         }
+    --         luaoc.callStaticMethod("IAPControl", "buy", OCargs)
+    --     end
+    --     return
+    -- end
     local configs = StoreConfigs.getConfig("bank")
     local config  = configs[configIndex]
     dump(config, "config")  

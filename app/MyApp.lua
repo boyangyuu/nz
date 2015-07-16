@@ -80,8 +80,13 @@ function MyApp:initVariables()
     local boolSig = "()Z"
     local stringSig = "()Ljava/lang/String;"
     local result = nil
-    result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
-    result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    if device.platform == "ios" then
+        __versionId = "1.0"
+        __appName = "全民突袭"
+    else
+        result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
+        result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    end
 end
 
 
