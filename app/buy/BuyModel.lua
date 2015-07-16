@@ -92,10 +92,17 @@ function BuyModel:iapPay()
 	local iapType = JavaUtils.getIapType()	
 	if iapType == "noIap" then 
 		ui:showPopup("KefuPopup",{
-		content = "对不起, 游戏计费暂停了",
+		content = "游戏计费暂停了，感谢您的支持！",
         opacity = 0})
 		return	
 	end
+
+	if self:isBoughtUpLimited() then 
+		ui:showPopup("KefuPopup",{
+		content = "当日付费已达上限，感谢您的支持！",
+        opacity = 0})
+		return	
+	end		
 
 	display.pause()
 	self.iap:pay(self.curId, self.payType)
@@ -145,6 +152,9 @@ function BuyModel:payDone(result)
 	local umData = {}
 	umData[self.strDesc] = "支付成功"
 	um:event("支付情况", umData)
+
+	--data
+	self:updateBuyData()	
 
 	--events
 	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
@@ -340,6 +350,41 @@ function BuyModel:setBought(giftId)
 	data.giftBag[giftId] = true
 	setUserData(data)
 	self:dispatchEvent({name = BuyModel.BUY_GIFTUPDATE_EVENT, giftId = giftId})
+end
+
+function BuyModel:isBoughtUpLimited()
+	print("function BuyModel:isBoughtUpLimit()")
+
+	local data = getUserData()
+	dump(data.buy, "data.buy")
+	local d = os.date("*t")
+	local dataStr = d.year .. d.month .. d.day
+
+	--is today
+	if data.buy.boughtDate == dataStr and 
+		data.buy.boughtMoneySum > 80 then 
+		return true
+	else
+		return false
+	end 	
+end
+
+function BuyModel:updateBuyData()
+	--userData
+    local data = getUserData()
+	local d = os.date("*t")
+	local dataStr = d.year .. d.month .. d.day
+	if data.buy.boughtDate ~= dataStr then 
+		print("clear")
+		data.buy.boughtDate = dataStr
+		data.buy.boughtMoneySum = 0 
+	end
+	local buyConfig = BuyConfigs.getConfig(self.curId) 
+	local price = buyConfig["price"]
+	print("price", buyConfig["price"])
+	data.buy.boughtMoneySum = data.buy.boughtMoneySum + price
+	setUserData(data)
+	dump(data.buy, "data.buy")
 end
 
 return BuyModel
