@@ -236,6 +236,7 @@ function FeijiEnemyView:playFire()
 		offsetIndex = offsetIndex + 1
 		index = index + 2
 		local name = "dao"..index
+		local name = "dao1"
 	    local boneDao = self.armature:getBone(name)
 	    if boneDao == nil then break end
 	    local boneImage = boneDao:getDisplayRenderNode()

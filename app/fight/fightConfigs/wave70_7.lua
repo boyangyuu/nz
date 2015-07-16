@@ -344,26 +344,26 @@ local waves = {
 local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=8,hp=820,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=3},
+	weak1=2},
 
 	--手雷兵
 	{id=2,image="shouleib",demage=0,hp=660,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
-	weak1=3},
+	weak1=2},
 
 	--手雷
-	{id=3,image="shoulei",demage=16,hp=1,
+	{id=3,image="shoulei",demage=10,hp=330,
 	weak1=2},
 
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=8,hp=1100,
-	weak1=4, weak4=4},
+	weak1=2, weak4=3},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=60,hp=550,fireRate=30,speed=120,
+	{id=9,image="zibaob",demage=24,hp=550,fireRate=30,speed=120,
 	weak1=3},
 
 	-- 盾兵
-	{id=8,image="dunbing",demage=4,hp=5500,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
+	{id=8,image="dunbing",demage=10,hp=9800,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
 	weak1=3},		                                                           --scale = 2.0,  近战走到屏幕最近放缩比例
 
 	-- 金武箱子奖励  type = "awardSan",

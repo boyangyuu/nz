@@ -279,7 +279,7 @@ local enemys = {
 	weak1=3},
 
 	--手雷
-	{id=7,image="shoulei",demage=8,hp=1,
+	{id=7,image="shoulei",demage=10,hp=250,
 	weak1=2},
 
 	--导弹兵      --type = "dao",
@@ -287,11 +287,11 @@ local enemys = {
 	weak1=3},
 
     --导弹          --missileType = "daodan",
-	{id=8,image="daodan",demage=24,hp=370,
+	{id=8,image="daodan",demage=10,hp=370,
 	weak1=1},
 
 	-- 盾兵
-	{id=11,image="dunbing",demage=4,hp=6000,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
+	{id=11,image="dunbing",demage=4,hp=8100,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
 	weak1=3},		                                                           --scale = 2.0,  近战走到屏幕最近放缩比例
 
 	-- 金武箱子奖励  type = "awardSan",

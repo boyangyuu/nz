@@ -338,7 +338,7 @@ function StartLayer:onClickBegan()
     end
     ]]
     --test
-    local fightData = { groupId = 70,levelId = 7, fightType = "jujiFight"}  --无限狙击
+    local fightData = { groupId = 70,levelId = 11, fightType = "jujiFight"}  --无限狙击
     ui:changeLayer("FightPlayer", {fightData = fightData})       
 end
 
