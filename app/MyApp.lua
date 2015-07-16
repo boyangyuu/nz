@@ -171,8 +171,8 @@ function MyApp:createGameStateFile()
             },
         },            
 
-        user = {D
-           level = 7,
+        user = {
+            level = 7,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
         },
