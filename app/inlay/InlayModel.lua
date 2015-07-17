@@ -282,17 +282,15 @@ end
 --[[
 	@return {id = 1, ... }
 ]]
-function InlayModel:getGoldByType( typeName )
+function InlayModel:getInlayConfigByTypeAndPri(typeName, priority)
 	local records = self:getConfigTable("type", typeName)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
-			local kGoldPriority = 4
-			if k1 == "property" and v1 == kGoldPriority then
+			if k1 == "property" and v1 == priority then
 				return v
 			end
 		end
 	end
-	return false
 end
 
 function InlayModel:getGoldWeaponNum()

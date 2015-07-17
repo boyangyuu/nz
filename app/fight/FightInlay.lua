@@ -127,21 +127,29 @@ end
     return: value, isInlayed
 ]]
 function FightInlay:getInlayedValue(type)
-    local record = nil
     local isGoldForbid = type == "blood" or type == "helper" or type == "bullet"
-    local isGoldForbid = type == "blood" or type == "bullet"
+    local isGoldForbid = type == "blood" 
 
+    --gold
     local isGoldType = (not isGoldForbid and self:getIsActiveGold() ) 
                     or self:getIsNativeGold()
     if isGoldType then 
-        record = self.inlayModel:getGoldByType(type)
-        assert(record, "record is nil type:"..type)
+        local record = self.inlayModel:getInlayConfigByTypeAndPri(type, 4)
+        local value = record.valueProgram
+        return value, true        
+    end
+
+    --not gold
+    local record = nil
+    local inlays = self.inlayModel:getAllInlayed()
+    local inlayedId  = inlays[type]
+    if inlayedId == nil then  
+        record = self.inlayModel:getInlayConfigByTypeAndPri(type, 2)
     else
-        local inlays = self.inlayModel:getAllInlayed()
-        local inlayedId  = inlays[type]
-        if inlayedId == nil then return nil,false end
         record = self.inlayModel:getInlayRecord(inlayedId)
     end
+    assert(record, "record is nil type:"..type)
+
     local value = record.valueProgram
     return value, true
 end 
