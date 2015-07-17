@@ -65,7 +65,8 @@ function BuyModel:showBuy(configId, buyData, strPos)
 				deneyBuyFunc() 
 			end
 	    end
-    elseif showType == "iap" or iapType == "noConfirm" then 
+    elseif showType == "iap" or iapType == "noConfirm" 
+    	or self.payType ~= "duanxin"  then 
     	self:iapPay()  
 
     elseif showType =="prop_rmb" then --非钻石购买的道具

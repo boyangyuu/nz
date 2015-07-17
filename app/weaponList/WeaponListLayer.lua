@@ -250,17 +250,30 @@ function WeaponListLayer:buyWeaponByStone()
     if isAfforded then
         self.weaponListModel:buyWeapon(self.weaponId)
         if self.weapontype == "ju" then
-            self.weaponListModel:equipBag(self.weaponId,3)
+            self.weaponListModel:equipBag(self.weaponId, 3)
+        else
+            self.weaponListModel:equipBag(self.weaponId, 1) 
         end
-        local gmcg = "res/Music/ui/gmcg.wav"
-        audio.playSound(gmcg,false)
 
-        ui:showPopup("WeaponNotifyLayer",
-         {type = "gun",weaponId = self.weaponId},{opacity = 255})
+        --award
+        self:sendGunAward()
+
         return true
     else
         return false
     end
+end
+
+function WeaponListLayer:sendGunAward()
+    --黄武*3
+    local inlayModel = md:getInstance("InlayModel")    
+    inlayModel:buyGoldsInlay(3)    
+    inlayModel:equipAllInlays()
+
+    --award
+    ui:showPopup("commonPopup",
+         {type = "style1",content = "感谢您的支持！！活动期间赠送3套黄武，助您一臂之力"},
+         {opacity = 100})
 end
 
 function WeaponListLayer:initListView()

@@ -126,7 +126,7 @@ configs["weapon"] = {
 configs["afterfight03"] = {
 	preGuideId = "weapon",
 	steps = {
-		{id = "afterfight03_inlay", msg = "点击按钮，装备道具" },
+		-- {id = "afterfight03_inlay", msg = "点击按钮，装备道具" },
 		{id = "afterfight03_next", msg = "点击按钮，进入下一关" },		
 	}
 }

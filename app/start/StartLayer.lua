@@ -280,7 +280,7 @@ function StartLayer:onEnter()
     audio.switchAllMusicAndSounds(isPlaying)
 
     --music 
-    self:playEnterSound()
+    -- self:playEnterSound()
     -- self:playBgMusic() 
 
     --um
@@ -291,7 +291,8 @@ function StartLayer:onEnter()
     self:initDailyLogin()
 
     --gonggao
-    ui:showPopup("AboutPopup",{popupName = "gonggao"})
+    ui:showPopup("AboutPopup",{popupName = "gonggao"}, {animName = "normal"})
+
 end
 
 function StartLayer:onClickBegan()
@@ -319,9 +320,6 @@ function StartLayer:onClickBegan()
         ui:changeLayer("storyLayer",{})
     end
 end
-
-
- 
 
 function StartLayer:isGuideDone()
     local guide = md:getInstance("Guide")
