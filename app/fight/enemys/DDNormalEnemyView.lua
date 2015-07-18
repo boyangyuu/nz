@@ -98,10 +98,6 @@ function DDNormalEnemyView:refreshBlood(event)
     end 
 end
 
-
-
-
-
 function DDNormalEnemyView:playFire()
     local missileType = self.property["missileType"] or "daodan"
     

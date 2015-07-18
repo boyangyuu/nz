@@ -12,7 +12,9 @@ local waves = {
 				property = { 
 					placeName = "place6",
 					startState = "rollleft",
-					id = 1,
+					-- id = 1,
+					id = "common",
+					level = 1,
 				},
 			},
 			{
@@ -23,7 +25,8 @@ local waves = {
 				property = { 
 					placeName = "place5",
 					startState = "rollright",
-					id = 1,
+					id = "common",
+					level = 1,
 				},
 			},					
 		},
@@ -38,7 +41,8 @@ local waves = {
 				property = { 
 					placeName = "place4",
 					startState = "rollleft",
-					id = 1,
+					id = "common",
+					level = 1,
 				},
 			},	
 			{
@@ -48,10 +52,11 @@ local waves = {
 				pos = {80},
 				property = { 
 					placeName = "place3",
-					id = 2,
+					id = "shouleib",
+					level = 1,
 					startState = "rollright",
-					type = "dao",
-					missileId = 3,
+					missileId = "shoulei",
+					missileLevel = 1,
 					missileType = "lei",
 				},
 			},
@@ -63,7 +68,8 @@ local waves = {
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",
-					id = 1,
+					id = "common",
+					level = 1,
 				},
 			},						
 		},
@@ -78,7 +84,8 @@ local waves = {
 				property = {
 					placeName = "place6", 
 					startState = "rollleft",
-					id = 1,
+					id = "common",
+					level = 1,
 				},
 			},
 					
@@ -89,10 +96,12 @@ local waves = {
 				pos = {60},
 				property = { 
 					placeName = "place3",
-					id = 2,
+					id = "shouleib",
+					level = 1,
 					startState = "rollright",
 					type = "dao",
-					missileId = 3,
+					missileId = "shoulei",
+					missileLevel = 1,
 					missileType = "lei",
 				},
 			},
@@ -104,7 +113,8 @@ local waves = {
 				property = { 
 					placeName = "place4", 
 					startState = "rollleft",
-					id = 1,
+					id = "common",
+					level = 1,
 				},
 			},
 			-- {
@@ -114,10 +124,12 @@ local waves = {
 			-- 	pos = {40},
 			-- 	property = { 
 			-- 		placeName = "place8", 
-			-- 		id = 2,
+			-- 		id = "shouleib",
+					-- level = 1,
 			-- 		startState = "",
 			-- 		type = "dao",
-			-- 		missileId = 3,
+			-- 		missileId = "shoulei",
+			--		missileLevel = 1,
 			-- 		missileType = "lei",
 			-- 	},
 			-- },						
@@ -129,7 +141,8 @@ local waves = {
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",
-					id = 1,
+					id = "common",
+					level = 1,
 				},
 			},
 		},

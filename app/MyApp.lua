@@ -69,7 +69,6 @@ function MyApp:initGameState()
         GameData=GameState.load()
     else
         self:createGameStateFile()
-        
     end
 end
 
@@ -246,6 +245,15 @@ function MyApp:createGameStateFile()
         buy = {
             boughtDate = nil, --上一次购买日期
             boughtMoneySum = nil, --当日累计消费
+        },
+        dailyTask = {
+            buyTimes = 0,   --购买次数
+            keepKill = 0,   --连杀次数
+            totalKill = 0,  --总杀次数
+            fight_xianShi = 0, --限时模式
+            fight_renZhi = 0, --人质模式
+            fight_taoFan = 0, --逃犯模式
+            fight_puTong = 0, --普通模式
         },            
     }
     GameState.save(data)

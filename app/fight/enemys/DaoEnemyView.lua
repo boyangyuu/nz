@@ -75,15 +75,13 @@ function DaoEnemyView:playFire()
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,
         destPos = pWorldBone,
-        type = "missile",
-        id = self.property["missileId"],
+        id = self.property["missileId"], 
+        level = self.property["missileLevel"],
         demageScale = self.enemy:getDemageScale(),
         missileType = self.property["missileType"],
     }
-    -- local function callfuncDaoDan()
-         self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
-    -- end
-    -- self:performWithDelay(callfuncDaoDan, 0.3)   
+    self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
+
 end
 
 function DaoEnemyView:playKill(event)

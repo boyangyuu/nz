@@ -312,9 +312,7 @@ function StartLayer:onEnter()
 end
 
 function StartLayer:onClickBegan()
-    --[[
-    print("function StartLayer:onClickBegan()")
-          
+    print("function StartLayer:onClickBegan()")     
     local guide = md:getInstance("Guide")
 
     if self:isGuideDone() then
@@ -335,11 +333,7 @@ function StartLayer:onClickBegan()
 
         --story
         ui:changeLayer("storyLayer",{})
-    end
-    ]]
-    --test
-    local fightData = { groupId = 70,levelId = 7, fightType = "jujiFight"}  --无限狙击
-    ui:changeLayer("FightPlayer", {fightData = fightData})       
+    end      
 end
 
 function StartLayer:isGuideDone()

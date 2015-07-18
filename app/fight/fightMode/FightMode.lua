@@ -25,6 +25,8 @@ function FightMode:getModeConfig()
 	local waveConfig = map:getCurWaveConfig()
 	local modeConfig = waveConfig:getFightMode()
 	assert(modeConfig, "modeConfig is nil")
+	local type = modeConfig.type
+	assert(FightMode.kModeTypes[type], "invalid type:" .. type)
 	return modeConfig
 end
 

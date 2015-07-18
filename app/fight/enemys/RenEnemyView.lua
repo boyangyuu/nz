@@ -132,7 +132,8 @@ function RenEnemyView:playFire()
         destPos = pWorldBone,
         destScale = 1.2,
         type = "missile",
-        id = self.property["missileId"],
+        id = self.property["missileId"], 
+        level = self.property["missileLevel"],
         demageScale = self.enemy:getDemageScale(),
         missileType = "feibiao",
     }

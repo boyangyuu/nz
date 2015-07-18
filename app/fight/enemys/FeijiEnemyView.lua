@@ -250,7 +250,8 @@ function FeijiEnemyView:playFire()
 	        destPos = pWorldBone,
 	        flyTime =  self.property["flyTime"],
 	        type = "missile",
-	        id = self.property["missileId"],
+			id = self.property["missileId"], 
+			level = self.property["missileLevel"],
 	        demageScale = self.enemy:getDemageScale(),
 	        missileType = self.property["missileType"],
 	        offset = offset

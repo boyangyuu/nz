@@ -63,6 +63,7 @@ function Hero:ctor(properties)
     self.isReloading = false
     self.killCnt = 0
     self.killKeepCnt = 0
+    self.killKeepCntMax = 0
     self.killGoldIndex = 1
     self.isLessHp = false
     self:initGuns()
@@ -199,11 +200,18 @@ function Hero:checkKeepKill()
 end
 
 function Hero:restoreKeepKill()
+    if self.killKeepCnt > self.killKeepCntMax then 
+        self.killKeepCntMax = self.killKeepCnt
+    end
     self.killKeepCnt = 0
 end
 
 function Hero:getKillCnt()
     return self.killCnt
+end
+
+function Hero:getKillKeepCntMax()
+    return self.killKeepCntMax
 end
 
 function Hero:canFire()

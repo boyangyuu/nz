@@ -111,6 +111,7 @@ function BuyModel:iapPay()
 
 	display.pause()
 	self.iap:pay(self.curId, self.payType)
+
 end
 
 function BuyModel:getPayType()
@@ -139,7 +140,7 @@ function BuyModel:payDone(result)
 	self[funcStr](self, self.curBuyData)
 
 	-- TalkingData 支付成功标志
-	local buyConfig = BuyConfigs.getConfig(self.curId ) 
+	local buyConfig = BuyConfigs.getConfig(self.curId) 
 	print("成功记录付费点:", buyConfig["name"])
 	um:onChargeSuccess(self.orderId)
 	
@@ -413,7 +414,10 @@ function BuyModel:updateBuyData()
 	print("price", buyConfig["price"])
 	data.buy.boughtMoneySum = data.buy.boughtMoneySum + price
 	setUserData(data)
-	dump(data.buy, "data.buy")
+
+	--dailyTask
+	local dailyTask = md:getInstance("DailyTaskModel")
+	dailyTask:addTaskTimes("buyTimes")	
 end
 
 return BuyModel

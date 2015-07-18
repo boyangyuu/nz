@@ -59,6 +59,8 @@ modelClasses["RankModel"]              = import("..rank.RankModel")
 --awardTIme
 modelClasses["AwardTimeModel"]              = import("..awardTime.AwardTimeModel")
 
+--dailyTask
+modelClasses["DailyTaskModel"]         = import("..dailyTask.DailyTaskModel")
 
 --need create
 needCreateClasses["FightMode"] = true
