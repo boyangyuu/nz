@@ -333,7 +333,11 @@ function StartLayer:onClickBegan()
 
         --story
         ui:changeLayer("storyLayer",{})
-    end      
+
+    end
+    -- --test
+    -- local fightData = { groupId = 70,levelId = 11, fightType = "jujiFight"}  --无限狙击
+    -- ui:changeLayer("FightPlayer", {fightData = fightData})       
 end
 
 function StartLayer:isGuideDone()

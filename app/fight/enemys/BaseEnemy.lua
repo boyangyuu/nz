@@ -73,7 +73,8 @@ function BaseEnemy:beginWalkCd()
         resumeCd, walkCd)
 end
 
-function BaseEnemy:getRollRate()       
+
+function BaseEnemy:getRollRate()        
 	return 30, not self.isRollCd
 end
 

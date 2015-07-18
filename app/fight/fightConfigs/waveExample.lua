@@ -102,6 +102,57 @@ local waveClass = class("waveExample", BaseWave)
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=21,hp=11, weak1=1},	
 
+	-----------------自爆兵----------
+
+				{
+				time = 14,
+				num = 5,
+				delay = {0，0.3,0.6,0.9,1.2},
+				pos = {180,300,550,750,930},
+				property = { 
+					placeName = "place3" ,
+					type = "bao",      --爆
+					id = 9,	
+				},
+			},
+
+	-----------------吉普车----------
+
+			{
+				time = 6,
+				num = 1,
+				pos = {300,},
+				delay = {0,},                         
+				property = {
+					type = "jipu" ,                -- 吉普车
+					id = 12,
+					placeName = "place1",
+					missileId = 13,
+					missileType = "dao_wu",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 60.0,		--持续时间			
+				},
+			},
+
+---------- 飞机配置---------
+			{
+				time = 7,
+				num = 1,
+				pos = {450},
+				delay = {0.2},                         -- 飞机
+				property = {
+					type = "feiji" ,
+					id = 11,
+					placeName = "place11",
+					missileId = 6,
+					missileType = "daodan",
+					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)，cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+					startState = "enterleft",
+					lastTime = 10.0,		                                    --持续时间		
+				},
+			},
+
 ---------- 汽油桶配置 -----------------------------
 			{
 				time = 1,
@@ -155,7 +206,7 @@ local waveClass = class("waveExample", BaseWave)
 			},	
 
 	--医疗兵      --type = "yiliao",
-	{id=4,image="yiliaob",demage=20,hp=1110,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=14,image="yiliaob",demage=20,hp=1110,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=3},
 
 ---------- 奖励兵配置 -----------------------------
@@ -166,7 +217,7 @@ local waveClass = class("waveExample", BaseWave)
 				delay = {0},
 				property = { 
 					type = "awardSan",
-					id = 11,
+					id = 21,
 					award = "goldWeapon",         --黄金武器
 					placeName = "place1",
 				},
@@ -178,7 +229,7 @@ local waveClass = class("waveExample", BaseWave)
 				delay = {0},
 				property = { 
 					type = "awardSan",
-					id = 11,
+					id = 21,
 					award = "shouLei",            --手雷
 					value = 1,
 					placeName = "place1",
@@ -191,7 +242,7 @@ local waveClass = class("waveExample", BaseWave)
 				delay = {0},
 				property = { 
 					type = "awardSan",
-					id = 11,
+					id = 21,
 					award = "coin",                 --金币
 					value = 1000,
 					placeName = "place1",
@@ -204,7 +255,7 @@ local waveClass = class("waveExample", BaseWave)
 				delay = {0},
 				property = { 
 					type = "awardSan",
-					id = 11,
+					id = 21,
 					award = "healthBag",             --医疗包
 					value = 1,
 					placeName = "place1",
@@ -273,18 +324,16 @@ local enemys = {
 	{id=11,image="feiji",demage=0,hp=10000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=180, fireCd=4.0,
 	weak1=3,    award = 60},
 
-	--越野车       type = "jipu" ,
+	--吉普       type = "jipu" ,
 	{id=12,image="yyc",demage=0,hp=10000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate=120, fireCd=3.0,
 	weak1=3,    award = 60},
 
-	--金币绿气球   type = "jinbi",
-	{id=13,image="qiqiu03",hp=1,weak1=3,award = 9},	--award = 9   金币数量为9	
+	--吉普车烟雾导弹          missileType = "dao_wu",
+  	{id=13,image="daodan03",demage=25,hp=20000, weak1=1},
 
-	--金币蓝气球   type = "jinbi",
-	{id=14,image="qiqiu02",hp=1,weak1=3,award = 15},	--award = 15  金币数量为15
-
-	--金币黄气球   type = "jinbi",
-	{id=15,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
+	--医疗兵      type = "yiliao",
+	{id=14,image="yiliaob",demage=20,hp=25000,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4.0,
+	weak1=2},
 	
 
 	--忍者兵            冲锋伤害  type = "renzhe",
@@ -295,13 +344,21 @@ local enemys = {
 	{id=18,image="feibiao",demage=10,hp=2500},                             --scale = 3.0,  近战走到屏幕最近放缩比例
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=10,hp=12500}, 
 
-	--汽车
-	{id=20,image="qiche",demage=10,hp=12500},	
+	{id=19,image="zzw",demage=10,hp=12500},
 
-	--汽车
-	{id=21,image="tieqiu",demage=10,hp=12500},		
+	-- 金武箱子奖励  type = "awardSan",
+	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
+
+	--金币绿气球   type = "jinbi",
+	{id=33,image="qiqiu03",hp=1,weak1=3,award = 9},	--award = 9   金币数量为9	
+
+	--金币蓝气球   type = "jinbi",
+	{id=34,image="qiqiu02",hp=1,weak1=3,award = 15},	--award = 15  金币数量为15
+
+	--金币黄气球   type = "jinbi",
+	{id=35,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
+
 }
 
 

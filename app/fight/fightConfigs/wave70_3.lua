@@ -50,7 +50,7 @@ local waves = {
 				delay ={0,0.5},
 				pos = {130,280},		
 				property = { 
-					placeName = "place8",
+					placeName = "place3",
 					startState = "rollleft",
 					id = 1,
 				},

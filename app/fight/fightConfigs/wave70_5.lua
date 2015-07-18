@@ -321,14 +321,14 @@ local waves = {
 local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=8,hp=550,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
-	weak1=3},
+	weak1=2},
 
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=440,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
-	weak1=3},
+	weak1=2},
 
 	--手雷
-	{id=7,image="shoulei",demage=8,hp=1,
+	{id=7,image="shoulei",demage=10,hp=220,
 	weak1=2},
 
 	-- 盾兵
