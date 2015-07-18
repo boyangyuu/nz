@@ -117,6 +117,22 @@ local waves = {
 				},
 			},
 			{
+				time = 11,	                                               --金武奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place2",
+				},
+			},
+			{
 				time = 12,	
 				num = 3,
 				pos = {250,330,410},
@@ -554,7 +570,8 @@ local enemys = {
 	--囚犯            type = "taofan_qiu",
 	{id=4,image="qiufan",demage=5,hp=2500, weak1=2, weak4= 4,},
 
-
+	-- 金武箱子奖励  type = "awardSan",
+	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 
 }
 

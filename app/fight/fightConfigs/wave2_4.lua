@@ -56,6 +56,22 @@ local waves = {
 				},
 			},
 			{
+				time = 13,	                                               --金武奖励箱子
+				num = 1,
+				pos = {900},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place3",
+				},
+			},
+			{
 				time = 14,
 				num = 1,
 				delay = {0},
@@ -662,6 +678,9 @@ local enemys = {
 	--医疗兵      --type = "yiliao",
 	{id=25,image="yiliaob",demage=8,hp=1123,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=2},
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 
 }
 

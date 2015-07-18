@@ -294,10 +294,10 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于5  怪物数据
+--enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于4  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=15,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=12,hp=6000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=2, weak4=3},
 
 	--手雷兵      --type = "dao",
@@ -305,7 +305,7 @@ local enemys = {
 	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=20,hp=300,
+	{id=3,image="shoulei",demage=16,hp=300,
 	weak1=1},
                                                            
 	--导弹兵      --type = "dao",
@@ -313,15 +313,15 @@ local enemys = {
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=25,hp=300,
+	{id=6,image="daodan",demage=20,hp=300,
 	weak1=1},	
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=25,hp=20000,fireRate=180,fireCd=5,speed=40, scale = 1.8 ,
+	{id=8,image="dunbing",demage=20,hp=20000,fireRate=180,fireCd=5,speed=40, scale = 1.8 ,
 	weak1=2, weak4=4},
 
 	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=25,hp=5000,fireRate=30,speed=100,
+	{id=9,image="zibaob",demage=20,hp=5000,fireRate=30,speed=70,
 	weak1=2, weak4=3},
 
 	--越野车       type = "jipu" ,
@@ -332,14 +332,14 @@ local enemys = {
 	{id=13,image="daodan03",demage=15,hp=300, weak1=1},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=40,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
+	{id=17,image="xiaorz",demage=30,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=15,hp=5000}, 
+	{id=18,image="feibiao",demage=12,hp=5000}, 
 	
 	--蜘蛛网
-	{id=19,image="zzw",demage=15,hp=20000},  
+	{id=19,image="zzw",demage=12,hp=20000},  
 
 	--BOSS导弹          --missileType = "daodan",
 	{id=20,image="daodan",demage=25,hp=3000,

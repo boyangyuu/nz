@@ -219,6 +219,22 @@ local waves = {
 				},
 			},
 			{
+				time = 11,	                                               --金武奖励箱子
+				num = 1,
+				pos = {400},
+				delay = {0},
+				property = { 
+					type = "awardSan",
+					id = 19,
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
+					--award = "shouLei",        --手雷
+					--award = "healthBag",                 --医疗包
+					value = 1,
+					placeName = "place5",
+				},
+			},
+			{
 				time = 15,
 				num = 1,
 				delay = {0},
@@ -404,12 +420,15 @@ local enemys = {
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=2500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=1500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	--导弹          --missileType = "daodan",
 	{id=6,image="daodan",demage=5,hp=1,
 	weak1=1},
+
+	-- 金武箱子奖励  type = "awardSan",
+	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
 
 
 }
@@ -437,7 +456,7 @@ function waveClass:ctor()
 		-- limitTime = 60,                   --限时模式时长
 
 		type 	  = "taoFan",
-		limitNums = 5,                      --逃跑逃犯数量
+		limitNums = 10,                      --逃跑逃犯数量
 	}
 end
 return waveClass

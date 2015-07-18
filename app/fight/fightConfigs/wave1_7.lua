@@ -91,18 +91,18 @@ local waves = {
 				},
 			},
 			{
-				time = 14,	                                               --金武奖励箱子
+				time = 10,	                                               --金武奖励箱子
 				num = 1,
 				pos = {250},
 				delay = {0},
 				property = { 
 					type = "awardSan",
 					id = 19,
-					--award = "goldWeapon",     --黄金武器
-					award = "coin",                        --金币
+					award = "goldWeapon",     --黄金武器
+					--award = "coin",                        --金币
 					--award = "shouLei",        --手雷
 					--award = "healthBag",                 --医疗包
-					value = 100,
+					value = 1,
 					placeName = "place3",
 				},
 			},
