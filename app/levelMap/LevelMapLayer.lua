@@ -1,3 +1,4 @@
+local GiftBoxConfig = import(".GiftBoxConfig")
 
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
@@ -12,6 +13,7 @@ function LevelMapLayer:ctor(properties)
 
     --instance
     self.levelMapModel      = md:getInstance("LevelMapModel")
+    self.giftBoxModel       = md:getInstance("GiftBoxModel")
     self.FightResultModel   = md:getInstance("FightResultModel")
     self.UserModel          = md:getInstance("UserModel")
     self.LevelDetailModel   = md:getInstance("LevelDetailModel")
@@ -465,6 +467,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local levelIcon = {}
     local levelAnim = {}
     local panelBtn = {}
+    self.shadow = {}
     local panelGray = {}
     -- local dian = {}
     local imgIcon = {}
@@ -474,6 +477,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     for k,v in pairs(groupInfo) do
         panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)
         panelGray[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "gray_"..v)
+        self.shadow[v] = cc.uiloader:seekNodeByName(self, "shadow_"..v)
     end
 
     for k,v in pairs(panelBtn) do
@@ -485,11 +489,10 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     end
 
     for k,v in pairs(groupInfo) do
-        local record = self.LevelDetailModel:getConfig(group,level)
         if  group > groupId or group == groupId and level > v then
 
         elseif group == groupId and level == v then
-            panelGray[v]:setVisible(false)            
+            panelGray[v]:setOpacity(0)           
             local action = transition.sequence({
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX() , levelName[v]:getPositionY()+ 15)), 
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX(), levelName[v]:getPositionY() - 15))})
@@ -522,7 +525,55 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 end
             end
         end)
+
+
+        --宝箱
+        local giftBoxInfo = GiftBoxConfig.getConfig(groupId,v)
+        if giftBoxInfo then
+            self:initGiftBox(groupId,k)
+        end
     end
+end
+
+function LevelMapLayer:initGiftBox(groupId,levelId)
+    local receiveState = self.giftBoxModel:getReceiveState(groupId,levelId)
+    if receiveState == "canReceive" then
+        local giftBoxImg = display.newSprite("#icon_yijiao.png")
+        giftBoxImg:setPosition(cc.p(200,60))
+        self.shadow[levelId]:addChild(giftBoxImg)
+        addBtnEventListener(giftBoxImg, function(event)
+            if event.name == 'began' then
+                return true
+            elseif event.name == 'ended' then
+                self:onClickCanReceive()
+            end
+        end)    
+
+    elseif receiveState == "alreadyReceive" then
+        local giftBoxImg = display.newSprite("#icon_yijiao.png")
+        giftBoxImg:setPosition(cc.p(200,60))
+        self.shadow[levelId]:addChild(giftBoxImg) 
+
+    elseif receiveState == "futureReceive" then
+        local giftBoxImg = display.newSprite("#icon_yijiao.png")
+        giftBoxImg:setPosition(cc.p(200,60))
+        self.shadow[levelId]:addChild(giftBoxImg)    
+        addBtnEventListener(giftBoxImg, function(event)
+            if event.name == 'began' then
+                return true
+            elseif event.name == 'ended' then
+                self:onClickFutureReceive()
+            end
+        end)    
+    end
+end
+
+function LevelMapLayer:onClickCanReceive()
+    print("onClickCanReceive")
+end
+
+function LevelMapLayer:onClickFutureReceive()
+    print("onClickFutureReceive")
 end
 
 function LevelMapLayer:bgAction()    

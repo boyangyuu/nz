@@ -7,6 +7,7 @@ local needCreateClasses = {}
 modelClasses["UserModel"]           = import("..homeBar.UserModel")
 modelClasses["DialogModel"]         = import("..dialog.DialogModel")
 modelClasses["LevelMapModel"]       = import("..levelMap.LevelMapModel")
+modelClasses["GiftBoxModel"]       = import("..levelMap.GiftBoxModel")
 modelClasses["FightResultModel"]    = import("..fightResult.FightResultModel")
 modelClasses["LevelDetailModel"]    = import("..levelDetail.LevelDetailModel")
 modelClasses["PropModel"]           = import("..store.PropModel")
