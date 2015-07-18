@@ -98,6 +98,7 @@ function DuozuBossView:playFire()
             type = "missile",
             srcScale = self:getScale() * 0.3, 
             id = self.property["missileId"], 
+            level = self.property["missileLevel"],
             demageScale = self.enemy:getDemageScale(),
             offset = missileOffsets[i],
         }

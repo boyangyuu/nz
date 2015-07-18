@@ -5,41 +5,27 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 1.5,
+				time = 1,
 				num = 1,
-				delay = {0.1},
-				pos = {80},
+				delay = {0},
+				pos = {330},
 				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place6",
+					startState = "rollleft",
+					id = 1,
 				},
-			},		
-			-- {
-			-- 	time = 1,
-			-- 	num = 1,
-			-- 	delay = {0},
-			-- 	pos = {330},
-			-- 	property = { 
-			-- 		placeName = "place6",
-			-- 		startState = "rollleft",
-			-- 		id = 1,
-			-- 	},
-			-- },
-			-- {
-			-- 	time = 1,
-			-- 	num = 1,
-			-- 	delay = {0.5},
-			-- 	pos = {135},
-			-- 	property = { 
-			-- 		placeName = "place5",
-			-- 		startState = "rollright",
-			-- 		id = 1,
-			-- 	},
-			-- },							
+			},
+			{
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {135},
+				property = { 
+					placeName = "place5",
+					startState = "rollright",
+					id = 1,
+				},
+			},					
 		},
 	},
 	{
@@ -58,15 +44,15 @@ local waves = {
 			{
 				time = 1.5,
 				num = 1,
-				delay = {0.1},
-				pos = {80},
+				pos = {200},                               
+				delay = {0},                            
 				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					id = 10,
+					type = "renzhi",
+					placeName = "place6",
+					startState = "enterleft", 
+					lastTime = 5,                       -- 人质离开时间
+					                    			     -- 人质
 				},
 			},
 			{
@@ -104,7 +90,6 @@ local waves = {
 				property = { 
 					placeName = "place3",
 					id = 2,
-					level = 1,
 					startState = "rollright",
 					type = "dao",
 					missileId = 3,
@@ -114,14 +99,41 @@ local waves = {
 			{
 				time = 2,
 				num = 1,
-				delay = {0.5},
-				pos = {175},
-				property = { 
-					placeName = "place4", 
-					startState = "rollleft",
-					id = 1,
+				delay = {0},
+				pos = {150},
+				property = {
+					renzhiName = "人质4",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place5",
+					id = 5,
 				},
-			},					
+			},
+			{
+				time = 2,
+				num = 1,
+				delay = {0},
+				pos = {150},
+				property = {
+					renzhiName = "人质4",     --  一组统一标示
+					type = "bangren",
+					placeName = "place5",
+					id = 6,
+				},
+			},
+			-- {
+			-- 	time = 2.5,
+			-- 	num = 1,
+			-- 	delay = {0.5},
+			-- 	pos = {40},
+			-- 	property = { 
+			-- 		placeName = "place8", 
+			-- 		id = 2,
+			-- 		startState = "",
+			-- 		type = "dao",
+			-- 		missileId = 3,
+			-- 		missileType = "lei",
+			-- 	},
+			-- },						
 			{
 				time = 3,
 				num = 2,
@@ -140,17 +152,26 @@ local waves = {
 --enemy的关卡配置                         无镶嵌 mp5伤害55  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=1,hp=160,walkCd=2,rollCd=3,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=1,hp=220,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
 	weak1=3},
 
 	--手雷            --missileType = "lei",
 	{id=3,image="shoulei",demage=2,hp=1,
 	weak1=1},
 
+	--绑匪                                     140--左右移动距离       280--滚动距离
+	{id=5,image="tufeib",demage=4,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4, weak1=3},
+
+	--被绑架人        --type = "bangren",
+	{id=6,image="hs", hp=1000, weak1=1},
+
+	--女人质         type = "renzhi",                                             speakRate =120,speakCd = 2.0,人质喊话cd
+	{id=10,image="hs",demage=0,hp=1000,walkRate=120,walkCd = 1.0,rollRate=120,rollCd=2.0, speakRate =60,speakCd = 2.0,
+	weak1=1},
 }
 
 
@@ -167,10 +188,10 @@ function waveClass:ctor()
 	-- self.isNotMoveMap = isNotMoveMap
 
 	self.fightMode =  {
-		type 	  = "puTong",
+		-- type 	  = "puTong",
 
-		-- type 	  = "renZhi",
-		-- saveNums  = 4,                 --解救人质数量
+		 type 	  = "renZhi",
+		 saveNums  = 2,                 --解救人质数量
 
 		-- type 	  = "xianShi",
 		-- limitTime = 40,                   --限时模式时长

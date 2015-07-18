@@ -50,7 +50,7 @@ function JujiFight:getFightType()
 end
 
 function JujiFight:isJujiFight()
-    return true
+    return false
 end
 
 function JujiFight:getJujiScore()

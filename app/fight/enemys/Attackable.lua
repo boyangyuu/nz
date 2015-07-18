@@ -285,7 +285,7 @@ end
 
 function Attackable:play(state, handlerFunc)
 	local per = self.enemy:getHp() / self.enemy:getMaxHp()
-	-- print("进栈 state: "..state..", 当前血量:"..per)
+	print("进栈 state: "..state..", 当前血量:"..per)
 	
 	local function play()
 		handlerFunc()
@@ -317,9 +317,12 @@ end
 function Attackable:doNextPlay()
 	if self:getPauseOtherAnim() then return end
 	local playCache = self:getPlayCache()		
-	if playCache then 
+	if playCache then
+		print("self:playCache()") 
 		playCache()
-	else 					
+		table.remove(self.playCache, 1)		
+	else 	
+		print("self:playStand()")				
 		self:playStand()
 	end
 end

@@ -17,10 +17,10 @@ myApp = MyApp
 isTest    = false     --战斗的各种框     
 __isDebug = true      --debug页面 
 isAsync   = false
-__isFree  = false
+__isFree  = true
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
-__reviewLimitData = {year = 2015, month = 7, day = 9} 
+__reviewLimitData = {year = 2015, month = 7, day = 14} 
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
@@ -69,7 +69,6 @@ function MyApp:initGameState()
         GameData=GameState.load()
     else
         self:createGameStateFile()
-        
     end
 end
 
@@ -156,7 +155,7 @@ function MyApp:createGameStateFile()
         
         --开启的关卡
         currentlevel =  {
-            group = 1,
+            group = 2,
             level = 1,
         },
 
@@ -172,7 +171,7 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 1,
+            level = 7,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
         },
@@ -180,37 +179,37 @@ function MyApp:createGameStateFile()
             --记得和 filldata对应!
 
             --登陆
-            login           = false,
+            login           = true,
             --前戏
-            preStory        = false,
+            preStory        = true,
             --第0-0关之内
-            fight01_move    = false,
-            fight01_fire    = false,
-            fight01_lei     = false,
-            fight01_skill   = false,
-            fight01_gold    = false,
-            fight01_change  = false,
-            fight01_jijia   = false, 
+            fight01_move    = true,
+            fight01_fire    = true,
+            fight01_lei     = true,
+            fight01_skill   = true,
+            fight01_gold    = true,
+            fight01_change  = true,
+            fight01_jijia   = true, 
 
             --第0-0关之后  
-            afterfight01    = false,   -- 进入下一关
+            afterfight01    = true,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = false,
-            fight_dun       = false,
+            fight_change    = true,
+            fight_dun       = true,
 
             --第1-2关之前
-            xiangqian       = false,   --镶嵌一套青铜
+            xiangqian       = true,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = false,   -- 升级武器
-            afterfight03    = false,   -- 回到主界面
+            weapon          = true,   -- 升级武器
+            afterfight03    = true,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = false,  
+            fightJu         = true,  
 
             --第1-4失败之后
-            fightRelive     = false,                      
+            fightRelive     = true,                      
         },
         fight = {
            isPreferBag1 = true,
@@ -243,7 +242,19 @@ function MyApp:createGameStateFile()
         preference = {
             isOpenMusic = true
         },
-            
+        buy = {
+            boughtDate = nil, --上一次购买日期
+            boughtMoneySum = nil, --当日累计消费
+        },
+        dailyTask = {
+            buyTimes = 0,   --购买次数
+            keepKill = 0,   --连杀次数
+            totalKill = 0,  --总杀次数
+            fight_xianShi = 0, --限时模式
+            fight_renZhi = 0, --人质模式
+            fight_taoFan = 0, --逃犯模式
+            fight_puTong = 0, --普通模式
+        },            
     }
     GameState.save(data)
     GameData=GameState.load()

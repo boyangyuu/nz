@@ -482,11 +482,7 @@ local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=0.5,hp=70,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
 	weak1=3},
-
-	--近战兵
-	{id=2,image="jinzhanb",demage=3,hp=70,fireRate=180,fireCd=3,speed=40,scale = 1.4,
-	weak1=3},                                                           --scale = 3.0,  近战走到屏幕最近放缩比例
-           
+                                                         --scale = 3.0,  近战走到屏幕最近放缩比例     
     --导弹          --missileType = "daodan",
 	{id=4,image="daodan",demage=1,hp=1,
 	weak1=1},
@@ -497,6 +493,7 @@ local enemys = {
 	--手雷兵
 	{id=6,image="shouleib",demage=0,hp=70,walkRate=120,walkCd=2,rollRate=120,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
+
 	--手雷
 	{id=7,image="shoulei",demage=0.5,hp=1,
 	weak1=2},
@@ -511,7 +508,6 @@ local enemys = {
 
 	-- 金武箱子奖励  type = "awardSan",
 	{id=21,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
-
 }
 
 --boss的关卡配置
