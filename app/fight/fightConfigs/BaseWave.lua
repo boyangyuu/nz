@@ -5,25 +5,25 @@ function BaseWave:getWaves(waveIndex)
 	return self.waves[waveIndex] 
 end
 
--- function BaseWave:getConfigById(id)
--- 	for i,enemy in ipairs(self.enemys) do
--- 		if id == enemy.id then 
--- 			return enemy
--- 		end
--- 	end
--- 	assert(false, "no id in this waveConfig", id)
--- end
-
-function BaseWave:getConfigById(id, level)
-	local configStr = "config/enemy/enemy_" .. id .. ".json"
-	local config = getRecordByKey(configStr, "level", level)[1]
-	assert(config, "no id in this waveConfig", id)
-	return config
+function BaseWave:getConfigById(id)
+	for i,enemy in ipairs(self.enemys) do
+		if id == enemy.id then 
+			return enemy
+		end
+	end
+	assert(false, "no id in this waveConfig", id)
 end
 
-function BaseWave:getEnemys(id, level)
+-- function BaseWave:getConfigById(id, level)
+-- 	local configStr = "config/enemy/enemy_" .. id .. ".json"
+-- 	local config = getRecordByKey(configStr, "level", level)[1]
+-- 	assert(config, "no id in this waveConfig", id)
+-- 	return config
+-- end
+
+function BaseWave:getEnemys(id)
 	-- id = tonumber(id)
-	return self:getConfigById(id, level)
+	return self:getConfigById(id)
 end
 
 function BaseWave:getBoss(id)

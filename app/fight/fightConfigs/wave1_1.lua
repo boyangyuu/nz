@@ -5,30 +5,41 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 1,
+				time = 1.5,
 				num = 1,
-				delay = {0},
-				pos = {330},
+				delay = {0.1},
+				pos = {80},
 				property = { 
-					placeName = "place6",
-					startState = "rollleft",
-					-- id = 1,
-					id = "common",
-					level = 1,
-				},
-			},
-			{
-				time = 1,
-				num = 1,
-				delay = {0.5},
-				pos = {135},
-				property = { 
-					placeName = "place5",
+					placeName = "place3",
+					id = 2,
 					startState = "rollright",
-					id = "common",
-					level = 1,
+					type = "dao",
+					missileId = 3,
+					missileType = "lei",
 				},
-			},					
+			},		
+			-- {
+			-- 	time = 1,
+			-- 	num = 1,
+			-- 	delay = {0},
+			-- 	pos = {330},
+			-- 	property = { 
+			-- 		placeName = "place6",
+			-- 		startState = "rollleft",
+			-- 		id = 1,
+			-- 	},
+			-- },
+			-- {
+			-- 	time = 1,
+			-- 	num = 1,
+			-- 	delay = {0.5},
+			-- 	pos = {135},
+			-- 	property = { 
+			-- 		placeName = "place5",
+			-- 		startState = "rollright",
+			-- 		id = 1,
+			-- 	},
+			-- },							
 		},
 	},
 	{
@@ -41,8 +52,7 @@ local waves = {
 				property = { 
 					placeName = "place4",
 					startState = "rollleft",
-					id = "common",
-					level = 1,
+					id = 1,
 				},
 			},	
 			{
@@ -52,11 +62,10 @@ local waves = {
 				pos = {80},
 				property = { 
 					placeName = "place3",
-					id = "shouleib",
-					level = 1,
+					id = 2,
 					startState = "rollright",
-					missileId = "shoulei",
-					missileLevel = 1,
+					type = "dao",
+					missileId = 3,
 					missileType = "lei",
 				},
 			},
@@ -68,8 +77,7 @@ local waves = {
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",
-					id = "common",
-					level = 1,
+					id = 1,
 				},
 			},						
 		},
@@ -84,8 +92,7 @@ local waves = {
 				property = {
 					placeName = "place6", 
 					startState = "rollleft",
-					id = "common",
-					level = 1,
+					id = 1,
 				},
 			},
 					
@@ -96,12 +103,11 @@ local waves = {
 				pos = {60},
 				property = { 
 					placeName = "place3",
-					id = "shouleib",
+					id = 2,
 					level = 1,
 					startState = "rollright",
 					type = "dao",
-					missileId = "shoulei",
-					missileLevel = 1,
+					missileId = 3,
 					missileType = "lei",
 				},
 			},
@@ -113,26 +119,9 @@ local waves = {
 				property = { 
 					placeName = "place4", 
 					startState = "rollleft",
-					id = "common",
-					level = 1,
+					id = 1,
 				},
-			},
-			-- {
-			-- 	time = 2.5,
-			-- 	num = 1,
-			-- 	delay = {0.5},
-			-- 	pos = {40},
-			-- 	property = { 
-			-- 		placeName = "place8", 
-			-- 		id = "shouleib",
-					-- level = 1,
-			-- 		startState = "",
-			-- 		type = "dao",
-			-- 		missileId = "shoulei",
-			--		missileLevel = 1,
-			-- 		missileType = "lei",
-			-- 	},
-			-- },						
+			},					
 			{
 				time = 3,
 				num = 2,
@@ -141,8 +130,7 @@ local waves = {
 				property = { 
 					placeName = "place5", 
 					startState = "rollright",
-					id = "common",
-					level = 1,
+					id = 1,
 				},
 			},
 		},
@@ -152,7 +140,7 @@ local waves = {
 --enemy的关卡配置                         无镶嵌 mp5伤害55  dps大于等于1 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=1,hp=160,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=1,hp=160,walkCd=2,rollCd=3,fireCd=3,
 	weak1=3},
 
 	--手雷兵      --type = "dao",
