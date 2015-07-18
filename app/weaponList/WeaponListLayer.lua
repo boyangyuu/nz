@@ -267,7 +267,7 @@ end
 function WeaponListLayer:sendGunAward()
     --黄武*3
     local inlayModel = md:getInstance("InlayModel")    
-    inlayModel:buyGoldsInlay(3)    
+    inlayModel:buyGoldsInlay(4)    
     inlayModel:equipAllInlays()
 
     --award

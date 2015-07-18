@@ -169,9 +169,9 @@ function BaseBossView:playKill(event)
 end
 
 function BaseBossView:playBombEffects()
-	for i=1, 20 do
+	for i=1, 10 do
 		self:performWithDelay(handler(self, self.playBombEffect), 
-			i * 0.08)
+			i * 0.2)
 	end
 end
 

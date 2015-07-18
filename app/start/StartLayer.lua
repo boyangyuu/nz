@@ -1,15 +1,17 @@
 local StartLayer = class("StartLayer", function()
-	return display.newLayer()
+    return display.newLayer()
 end)
 
 function StartLayer:ctor()
-	self:loadCCS()
-	self:initUI()
+    --test 3
+    self:loadCCS()
+    self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
     self.activeCodeModel = md:getInstance("ActiveCodeModel")
+
 end
 
 function StartLayer:loadCCS()
@@ -287,12 +289,11 @@ function StartLayer:onEnter()
     local guide = md:getInstance("Guide")
     guide:checkGuideUM("login")
 
-    --login award
-    self:initDailyLogin()
-
     --gonggao
     ui:showPopup("AboutPopup",{popupName = "gonggao"}, {animName = "normal"})
 
+    --login award 服务器请求不能与loadccd并行！！
+    self:initDailyLogin()
 end
 
 function StartLayer:onClickBegan()
@@ -338,6 +339,7 @@ function StartLayer:initDailyLogin()
         end
     end
 
+    --test
     self.dailyLoginModel:requestDateSever(callfunc)
 end
 

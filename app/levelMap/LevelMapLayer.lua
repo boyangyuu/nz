@@ -71,16 +71,22 @@ function LevelMapLayer:popUpWeaponGift()
     local isNotBought = self.buyModel:checkBought("weaponGiftBag") == false
     local isPopWeaponGift = false
     local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 6
+    local isDone = userModel:getUserLevel() >= 4
 
     --战斗失败返回世界地图
     if self.fightData["result"] == "fail" then isPopWeaponGift = true end
-    --开始菜单进世界地图，玩家等级 >= 6
+    --开始菜单进世界地图，玩家等级 >= 4
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
         self.buyModel:showBuy("weaponGiftBag", 
-            {isNotPopKefu = true},
+            {isNotPopKefu = false},
             "主界面_进游戏自动弹出")
+    elseif isPopWeaponGift then 
+        self.buyModel:showBuy("goldGiftBag", 
+            {isNotPopKefu = false},
+            "主界面_进游戏自动弹出")   
+    else 
+
     end
 end
 
