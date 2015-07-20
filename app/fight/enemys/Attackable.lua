@@ -465,7 +465,7 @@ function Attackable:playBuff(buffName, buffPos)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.complete then
-				armatureBack:getAnimation():stop()		
+				armatureBack:stop()		
 	    		armatureBack:removeSelf()
 	    		armatureBack = nil
 	    	end 
