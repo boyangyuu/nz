@@ -289,9 +289,9 @@ end
 function JipuEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		if movementID == "runright" or movementID == "runleft" then 
-			return 
-		end
+		-- if movementID == "runright" or movementID == "runleft" then 
+		-- 	return 
+		-- end
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			self:doNextPlay()
     	elseif movementID == "dieright" or movementID == "dieleft" then 
