@@ -73,7 +73,6 @@ function MyApp:initGameState()
 end
 
 function MyApp:initVariables()
-    if device.platform ~= "android" then return end
     local className = "com/hgtt/com/IAPControl"
     local params = {}
     local boolSig = "()Z"
