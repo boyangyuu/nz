@@ -308,9 +308,9 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
 		-- print("animationEvent id ", movementID)
-		if movementID == "runright" or movementID == "runleft" then 
-			return 
-		end
+		-- if movementID == "runright" or movementID == "runleft" then 
+		-- 	return 
+		-- end
 
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			self:doNextPlay()

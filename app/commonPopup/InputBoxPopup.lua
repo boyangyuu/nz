@@ -29,7 +29,11 @@ function InputBoxPopup:initUI()
     contentBox:setMaxLength(25)
 	
 	contentBox:addEventListener(function(contentBox, eventType)
-		 self.inputString = contentBox:getText()
+            if device.platform == "ios" then
+        		 self.inputString = contentBox:getString()
+            elseif device.platform == "android" then
+                 self.inputString = contentBox:getText()
+            end
 		end)
 
 	addBtnEventListener(btntrue, function(event)
