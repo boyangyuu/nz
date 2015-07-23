@@ -76,12 +76,12 @@ function Attackable:setPause(event)
 	if tAnimation == nil then return end
 	if isPause then
 		self:pause()
-		tAnimation:pause()
+		self.armature:pause()
 		actionManager:pauseTarget(self)
 		actionManager:pauseTarget(self.armature)
 	else
 		self:resume()
-		tAnimation:resume()
+		self.armature:resume()
 		actionManager:resumeTarget(self)
 		actionManager:resumeTarget(self.armature)
 	end
@@ -317,9 +317,12 @@ end
 function Attackable:doNextPlay()
 	if self:getPauseOtherAnim() then return end
 	local playCache = self:getPlayCache()		
-	if playCache then 
+	if playCache then
+		print("self:playCache()") 
 		playCache()
-	else 					
+		table.remove(self.playCache, 1)		
+	else 	
+		print("self:playStand()")				
 		self:playStand()
 	end
 end
@@ -378,7 +381,7 @@ end
 function Attackable:restoreStand()
 	self.playAnimId = nil 
 	self.armature:stopAllActions()	
-	self.armature:getAnimation():stop()
+	self.armature:stop()
 	self:setPauseOtherAnim(false)
 end
 
@@ -462,7 +465,7 @@ function Attackable:playBuff(buffName, buffPos)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.complete then
-				armatureBack:getAnimation():stop()		
+				armatureBack:stop()		
 	    		armatureBack:removeSelf()
 	    		armatureBack = nil
 	    	end 

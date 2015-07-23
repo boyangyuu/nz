@@ -237,7 +237,8 @@ function JipuEnemyView:playFire()
 	        srcScale = self:getScale() * 0.3,
 	        destPos = pWorldBone,
 	        type = self.property["missileType"],
-	        id = self.property["missileId"],
+			id = self.property["missileId"], 
+			level = self.property["missileLevel"],
 	        demageScale = self.enemy:getDemageScale(),
 	        flyTime =  self.property["flyTime"],
 	        offset = offset
@@ -288,9 +289,9 @@ end
 function JipuEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		if movementID == "runright" or movementID == "runleft" then 
-			return 
-		end
+		-- if movementID == "runright" or movementID == "runleft" then 
+		-- 	return 
+		-- end
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			self:doNextPlay()
     	elseif movementID == "dieright" or movementID == "dieleft" then 

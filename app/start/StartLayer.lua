@@ -1,15 +1,17 @@
 local StartLayer = class("StartLayer", function()
-	return display.newLayer()
+    return display.newLayer()
 end)
 
 function StartLayer:ctor()
-	self:loadCCS()
-	self:initUI()
+    --test 3
+    self:loadCCS()
+    self:initUI()
     self:initMusicUI()
     self:setNodeEventEnabled(true)
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
-    self.activeCodeModel = md:getInstance("ActiveCodeModel")
+    self.activeCodeModel = md:getInstance("ActiveCodeModel") 
+    
 end
 
 function StartLayer:loadCCS()
@@ -56,7 +58,10 @@ function StartLayer:initUI()
     self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
     self.btnGonggao = cc.uiloader:seekNodeByName(self, "btnGonggao")
-
+    if device.platform == "ios" then
+        self.btnGonggao:setVisible(false)
+    end
+    
     local seq = transition.sequence({
         cc.ScaleTo:create(0.6, 1.04), 
         cc.ScaleTo:create(0.6, 0.96),}) 
@@ -95,7 +100,7 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-           ui:showPopup("AboutPopup",{popupName = "gonggao"},{animName = "normal"})
+            self:onClickBtnGongGao()
         end
     end)
 
@@ -104,7 +109,12 @@ function StartLayer:initUI()
         if event.name == "began" then
             return true
         elseif event.name == "ended" then 
-            self:onClickActiveCode()
+            if device.platform == "ios" then
+                ui:showPopup("KefuPopup",{
+                    opacity = 0})
+            else
+                self:onClickActiveCode()
+            end
         end
     end)
 
@@ -132,6 +142,10 @@ function StartLayer:initUI()
             ui:showPopup("KefuPopup",{
                     opacity = 0})
         end)
+end
+
+function StartLayer:onClickBtnGongGao()
+   ui:showPopup("AboutPopup",{popupName = "gonggao_1"},{animName = "normal"})
 end
 
 function StartLayer:onClickActiveCode()
@@ -274,29 +288,34 @@ function StartLayer:switchSound()
 end
 
 function StartLayer:onEnter()
+
     --set sound
     local data = getUserData()
     local isPlaying = data.preference["isOpenMusic"]
     audio.switchAllMusicAndSounds(isPlaying)
 
     --music 
-    self:playEnterSound()
+    -- self:playEnterSound()
     -- self:playBgMusic() 
 
     --um
     local guide = md:getInstance("Guide")
     guide:checkGuideUM("login")
 
-    --login award
-    self:initDailyLogin()
-
     --gonggao
-    ui:showPopup("AboutPopup",{popupName = "gonggao"})
+    --[[
+    if device.platform ~= "ios" then
+        ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
+    end
+    ]]
+    
+    
+    --login award 服务器请求不能与loadccd并行！！
+    self:initDailyLogin()
 end
 
 function StartLayer:onClickBegan()
-    print("function StartLayer:onClickBegan()")
-          
+    print("function StartLayer:onClickBegan()")     
     local guide = md:getInstance("Guide")
 
     if self:isGuideDone() then
@@ -317,11 +336,12 @@ function StartLayer:onClickBegan()
 
         --story
         ui:changeLayer("storyLayer",{})
+
     end
+    -- --test
+    -- local fightData = { groupId = 70,levelId = 11, fightType = "jujiFight"}  --无限狙击
+    -- ui:changeLayer("FightPlayer", {fightData = fightData})       
 end
-
-
- 
 
 function StartLayer:isGuideDone()
     local guide = md:getInstance("Guide")
@@ -333,13 +353,15 @@ function StartLayer:isGuideDone()
 end
 
 function StartLayer:initDailyLogin()
+    local guide = md:getInstance("Guide")
     local function callfunc(status)
         print("网络请求", status)
-        if status == "success" then            
+        if status == "success" and not guide:getIsGuiding() then            
             ui:showPopup("DailyLoginLayer", {})
         end
     end
 
+    --test
     self.dailyLoginModel:requestDateSever(callfunc)
 end
 

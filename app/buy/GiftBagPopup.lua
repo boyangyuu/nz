@@ -9,7 +9,7 @@ end)
 function GiftBagPopup:ctor(properties)
 	print(properties.popupName)
 	--instance
-	self.buyModel = md:getInstance("BuyModel")
+	
 
 	self.param = properties
 	self:loadCCS()
@@ -19,6 +19,13 @@ end
 function GiftBagPopup:loadCCS()
 	local name = self.param.popupName
 	local title = BuyConfigs.getConfig(name)
+	if device.platform == "ios" then
+		if name == "weaponGiftBag" then
+			title.ccsPath = "res/GiftBag/GiftBag/GiftBag_WeaponGiftBag_ios.json"
+		elseif name == "goldGiftBag" then
+			title.ccsPath = "res/GiftBag/GiftBag/GiftBag_GoldGiftBag_ios.json"
+		end
+	end
 	local giftBagNode = cc.uiloader:load(title.ccsPath)
     self:addChild(giftBagNode)
 
@@ -37,15 +44,16 @@ function GiftBagPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			self:close()
-			self.buyModel:payGift()
+			self:payThis()
 		end
 	end)
 
 	--按钮动画
-	local armature = ccs.Armature:create("lb_ljgm")
-	armature:getAnimation():play("lb_ljgm", -1, 1)
-	addChildCenter(armature, receiveBtn)
+	if device.platform ~= "ios" then 
+		local armature = ccs.Armature:create("lb_ljgm")
+		armature:getAnimation():play("lb_ljgm", -1, 1)
+		addChildCenter(armature, receiveBtn)
+	end
 
 	--
 	local btnClose = cc.uiloader:seekNodeByName(self, "btn_Closed")
@@ -55,7 +63,8 @@ function GiftBagPopup:initButtons()
 			return true
 		elseif event.name == 'ended' then
 			self:close()
-			self.buyModel:deneyPay()
+			local buyModel = md:getInstance("BuyModel")
+			buyModel:deneyPay()
 			print("btnClose is pressed!")
 		end
 	end)
@@ -76,6 +85,34 @@ function GiftBagPopup:initButtons()
 		if bitmap then
 			bitmap:setColor(cc.c3b(0, 255, 161))
 		end
+	end
+end
+
+function GiftBagPopup:payThis()
+	local buyModel = md:getInstance("BuyModel")
+	if device.platform == "android" then
+		self:close()
+		buyModel:payGift()
+	elseif device.platform == "ios" then
+		local userModel = md:getInstance("UserModel")
+		local name = self.param.popupName
+		
+		if name == "weaponGiftBag" then
+			local isAfforded = userModel:costDiamond(260)
+			if isAfforded then
+				self:close()
+				buyModel:payGift()
+			end
+		elseif name == "goldGiftBag" then
+			local isAfforded = userModel:costDiamond(450)
+			if isAfforded then
+				self:close()
+				buyModel:payGift()
+			end
+		end
+	else
+		self:close()
+		buyModel:payGift()
 	end
 end
 

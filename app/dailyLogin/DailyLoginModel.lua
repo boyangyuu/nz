@@ -75,9 +75,9 @@ function  DailyLoginModel:setGift(dailyID)
 end
 
 function DailyLoginModel:isSameDay(curTimeStamp)
-	local DailyInfo = self:getDailyInfo()
-	if DailyInfo["loginTime"] == nil then return false end
-	if os.date("%x",DailyInfo["loginTime"]) == os.date("%x",curTimeStamp) then
+	local dailyInfo = self:getDailyInfo()
+	if dailyInfo["loginTime"] == nil then return false end
+	if os.date("%x",dailyInfo["loginTime"]) == os.date("%x",curTimeStamp) then
 		return true
 	else
 		return false
@@ -95,18 +95,18 @@ end
 
 function DailyLoginModel:requestDateSever(callfunc)
 	local function onRequestFinished(event)
-		self:refreshTime(event, callfunc)
+		self:onRequestEvent(event, callfunc)
 	end
     local url = "http://123.57.213.26/timestamp.php"
     local request = network.createHTTPRequest(onRequestFinished, url, "GET")
     request:start()
 end
 
-function DailyLoginModel:refreshTime(event, callfunc)
-	-- dump(event, "event refreshTime")
+function DailyLoginModel:onRequestEvent(event, callfunc)
+	-- dump(event, "event onRequestEvent")
     local name = event.name 
     local request = event.request
- 	if request == nil then return end
+ 	-- if request == nil then return end
     if name ~= "completed" then
         print("网络请求中", request:getErrorCode()..request:getErrorMessage())
         return
@@ -117,35 +117,33 @@ function DailyLoginModel:refreshTime(event, callfunc)
         print("网络请求失败", code)
         callfunc("fail")
     else
-	    print("网络请求成功", code) 
-	    local response = request:getResponseString()
-	    -- dump(response, "请求成功 response")
-	    if response then
-	    	local curTimeStamp = response
-	    	local isSameDay = self:isSameDay(curTimeStamp)
-	    	local isGet = self:isGet()
-	    	if not isSameDay then
-	    		local vipModel = md:getInstance("VipModel")
-				vipModel:setGet(false)
-				self:setGet(false)
-		    	callfunc("success")
-		    elseif isSameDay and isGet == false then
-		    	callfunc("success")
-		    else
-		    	callfunc("success notPop")
-	    	end
-	    	self:saveTimeData(curTimeStamp)
-		end
+    	print("网络请求成功", code) 
+    	local timeStamp = request:getResponseString()
+    	if timeStamp == nil then return end
+    	self:refreshTime(timeStamp, callfunc)
     end
 end
 
-function DailyLoginModel:saveTimeData(curTimeStamp)
-	local data = getUserData()
-	data.dailylogin.loginTime = curTimeStamp
-	if data.dailylogin.registTime == nil then
-		data.dailylogin.registTime = curTimeStamp
+function DailyLoginModel:refreshTime(timeStamp, callfunc)
+	--refresh
+	local userModel = md:getInstance("UserModel")
+	print("timeStamp", timeStamp)
+	local isSameDay = self:isSameDay(timeStamp)
+	local isGet = self:isGet()
+	if not isSameDay then
+		local vipModel = md:getInstance("VipModel")
+		vipModel:setGet(false)
+		self:setGet(false)
+    	callfunc("success")
+    	userModel:updateLoginDate()
+
+    elseif isSameDay and isGet == false then
+    	callfunc("success")
+    else
+    	callfunc("success notPop")
 	end
-	setUserData(data)
+	
+	userModel:saveTimeData(timeStamp)
 end
 
 return DailyLoginModel

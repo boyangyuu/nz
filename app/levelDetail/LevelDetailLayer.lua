@@ -233,7 +233,7 @@ end
 function LevelDetailLayer:onClickBtnStart()
 	local data = getUserData()
 	local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 5
+    local isDone = userModel:getUserLevel() >= 3
 	if table.nums(data.inlay.inlayed) ~= 0 then
 		self:startGame()
 	elseif isDone and table.nums(data.inlay.inlayed) == 0 then
@@ -255,7 +255,8 @@ function LevelDetailLayer:onClickCloseInlayNoti()
 end
 
 function LevelDetailLayer:onClickQuickInlay()
-	self.inlayModel:equipAllInlays()
+	local limit = self.config["type"] == "boss" and 4 or 3
+	self.inlayModel:equipAllInlays(limit)
 	self:startGame() 
 
 	local umData = {}
@@ -386,10 +387,33 @@ function LevelDetailLayer:buyWeaponByStone()
         self.weaponListModel:buyWeapon(self.recomWeaponId)
         ui:showPopup("WeaponNotifyLayer",
          {type = "gun",weaponId = self.recomWeaponId},{opacity = 255})
+        
+
+        --equip
+		local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)        
+        if recomWeapon["type"] == "ju"  then
+            self.weaponListModel:equipBag(self.recomWeaponId, 3)
+        else
+            self.weaponListModel:equipBag(self.recomWeaponId, 1) 
+        end
+
+        self:sendGunAward()
         return true
     else
         return false
     end
+end
+
+function LevelDetailLayer:sendGunAward()
+    --黄武*3
+    local inlayModel = md:getInstance("InlayModel")    
+    inlayModel:buyGoldsInlay(4)    
+    inlayModel:equipAllInlays()
+
+    --award
+    ui:showPopup("commonPopup",
+         {type = "style1",content = "感谢您的支持！！活动期间赠送3套黄武，助您一臂之力"},
+         {opacity = 100})
 end
 
 ---- initData ----

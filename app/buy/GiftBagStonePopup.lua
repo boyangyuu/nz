@@ -70,7 +70,12 @@ function GiftBagStonePopup:onClickBuy()
 	local user = md:getInstance("UserModel")
 	local strPos = self.property["strPos"] or  "钻石不足_限时大促“火麒麟”"
     local cost   = self.property["stoneCost"]
-    local isAfforded = user:costDiamond(cost, true, strPos) 
+    local isAfforded = nil
+    if device.platform == "ios" then
+	    isAfforded = user:costDiamond(cost) 
+	else    	
+	    isAfforded = user:costDiamond(cost, true, strPos) 
+    end
     if isAfforded then
 		self:onBuyDone()
     end		

@@ -3,12 +3,12 @@ local InlayLayer = import("..inlay.InlayLayer")
 local WeaponListLayer = import("..weaponList.WeaponListLayer")
 local StoreLayer = import("..store.StoreLayer")
 local FightDescLayer = import("..fight.fightDesc.FightDescLayer")
+local ActivitysMainLayer = import("..activitys.ActivitysMainLayer")
 
 
 local HomeBarLayer = class("HomeBarLayer", function()
     return display.newLayer()
 end)
-
 
 function HomeBarLayer:ctor(properties)
     self.usermodel   = md:getInstance("UserModel")
@@ -19,6 +19,10 @@ function HomeBarLayer:ctor(properties)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
     
+    local activityModel = md:getInstance("ActivityMainModel")
+    cc.EventProxy.new(activityModel , self)
+        :addEventListener(activityModel.SHOW_ACTIVITYMAIN, handler(self, self.onBtnActsClicked))
+    
     self.properties = properties
     self.fightData  = properties["fightData"]
 
@@ -28,16 +32,17 @@ function HomeBarLayer:ctor(properties)
     self:initGuideWeapon()
     self:initGuideInlay()
 
-    self:refreshCommonLayer("levelMapLayer")
+    -- self:refreshCommonLayer("levelMapLayer")
+    self:onBtnActsClicked()
     self:setNodeEventEnabled(true)
 end
 
 function HomeBarLayer:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/HomeBarLayer")
-    local rootNode = cc.uiloader:load("biaotou.ExportJson")
-    self:addChild(rootNode)
-    self.homeRootNode = cc.uiloader:seekNodeByName(rootNode, "biaotou")
-    self.commonRootNode = cc.uiloader:seekNodeByName(rootNode, "commonlayer")
+    self.rootNode = cc.uiloader:load("biaotou.ExportJson")
+    self:addChild(self.rootNode)
+    self.homeRootNode = cc.uiloader:seekNodeByName(self.rootNode, "biaotou")
+    self.commonRootNode = cc.uiloader:seekNodeByName(self.rootNode, "commonlayer")
     self.btnMoney = cc.uiloader:seekNodeByName(self.homeRootNode, "money")
     self.btnDiamond = cc.uiloader:seekNodeByName(self.homeRootNode, "diamond")
 end
@@ -92,6 +97,7 @@ function HomeBarLayer:initHomeLayer()
     self.commonlayers["inlayLayer"] = InlayLayer.new()
     self.commonlayers["StoreLayer"] = StoreLayer.new()
     self.commonlayers["levelMapLayer"] = LevelMapLayer.new({fightData = self.fightData})
+    self.commonlayers["ActsLayer"] = ActivitysMainLayer.new()
     for k,v in pairs(self.commonlayers) do
         v:setVisible(false)
         self.commonRootNode:addChild(v)
@@ -136,6 +142,12 @@ function HomeBarLayer:initHomeLayer()
         self:onBtnStoreClicked()
         buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
+
+    -- --活动
+    -- local btn_acts = cc.uiloader:seekNodeByName(self.rootNode, "btn_acts")
+    -- btn_acts:onButtonClicked(function ()
+    --     self:onBtnActsClicked()
+    -- end)
 end
 
 function HomeBarLayer:refreshCommonLayer(layer)
@@ -174,6 +186,12 @@ function HomeBarLayer:onEnter()
     -- music
     local startMusic = "res/Music/bg/bjyx.wav"
     audio.playMusic(startMusic,true)        
+end
+
+function HomeBarLayer:onBtnActsClicked(event)
+    self.btnSetting:setVisible(false)
+    self.btnBack:setVisible(true)    
+    self:refreshCommonLayer("ActsLayer")
 end
 
 function HomeBarLayer:onBtnStoreClicked()

@@ -143,6 +143,12 @@ function Guide:finishGuide()
 	self.groupId = nil	
 end
 
+function Guide:finishGuideID(groupId)
+	local data = getUserData()
+	data.guide[groupId] = true
+	setUserData(data)	
+end
+
 function Guide:getIsGuiding()
 	return self.isGuiding
 	-- return true

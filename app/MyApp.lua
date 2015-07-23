@@ -17,10 +17,10 @@ myApp = MyApp
 isTest    = false     --战斗的各种框     
 __isDebug = true      --debug页面 
 isAsync   = false
-__isFree  = false
+__isFree  = true
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
-__reviewLimitData = {year = 2015, month = 7, day = 8} 
+__reviewLimitData = {year = 2015, month = 7, day = 14} 
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
@@ -51,7 +51,7 @@ function MyApp:initGameState()
     GameState.init(function(param)
         local returnValue=nil
         if param.errorCode then
-            CCLuaLog("error")
+            print("error")
         else
             -- crypto
             if param.name=="save" then
@@ -69,19 +69,22 @@ function MyApp:initGameState()
         GameData=GameState.load()
     else
         self:createGameStateFile()
-        
     end
 end
 
 function MyApp:initVariables()
-    if device.platform ~= "android" then return end
     local className = "com/hgtt/com/IAPControl"
     local params = {}
     local boolSig = "()Z"
     local stringSig = "()Ljava/lang/String;"
     local result = nil
-    result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
-    result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    if device.platform == "ios" then
+        __versionId = "1.0"
+        __appName = "全民突袭"
+    elseif device.platform == "android" then
+        result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
+        result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
+    end
 end
 
 
@@ -147,11 +150,10 @@ function MyApp:createGameStateFile()
 
         money = 2000,
         diamond = 1000000,
-
-        
+ 
         --开启的关卡
         currentlevel =  {
-            group = 1,
+            group = 2,
             level = 1,
         },
 
@@ -167,7 +169,7 @@ function MyApp:createGameStateFile()
         },            
 
         user = {
-            level = 1,
+            level = 7,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
         },
@@ -205,7 +207,7 @@ function MyApp:createGameStateFile()
             fightJu         = true,  
 
             --第1-4失败之后
-            fightRelive     = false,                      
+            fightRelive     = true,                      
         },
         fight = {
            isPreferBag1 = true,
@@ -238,7 +240,25 @@ function MyApp:createGameStateFile()
         preference = {
             isOpenMusic = true
         },
-            
+        buy = {
+            boughtDate = nil, --上一次购买日期
+            boughtMoneySum = nil, --当日累计消费
+        },
+        dailyTask = {
+            tasks = {
+                buyTimes = 2,   --购买次数
+                keepKill = 40,   --连杀次数
+                totalKill = 100,  --总杀次数
+                fight_xianShi = 1, --限时模式
+                fight_renZhi = 0, --人质模式
+                fight_taoFan = 1, --逃犯模式
+                fight_puTong = 0, --普通模式
+            },
+            awardedTasks = {
+                -- index1 = true,
+
+            },
+        },            
     }
     GameState.save(data)
     GameData=GameState.load()

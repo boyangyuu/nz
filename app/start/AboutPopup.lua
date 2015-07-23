@@ -1,11 +1,11 @@
 
 local dir = "res/help/bangzhu/"
-local postfix = ".ExportJson"
 local config = {}
 
-config["guangyu"]      = dir.."guangyu"..postfix
-config["bangzhu"]      = dir.."bangzhu"..postfix
-config["gonggao"]      = dir.."gonggao"..postfix
+config["guangyu"]      = dir.."guangyu.ExportJson"
+config["bangzhu"]      = dir.."bangzhu.ExportJson"
+config["gonggao_1"]      = dir.."gonggao_1.ExportJson"
+config["gonggao_2"]      = dir.."gonggao_2.ExportJson"
 
 local AboutPopup = class("AboutPopup", function()
 	return display.newLayer()
@@ -16,10 +16,10 @@ function AboutPopup:ctor(param)
 	self:initText()
 	self:loadCCS()
 	self:initButtons()
-	
 end
 
 function AboutPopup:loadCCS()
+	print("self.popupName", self.popupName)
 	self.aboutNode = cc.uiloader:load(config[self.popupName])
 	self.aboutNode:setScale(1.0)
 	self:initContent()
@@ -33,13 +33,18 @@ function AboutPopup:initButtons()
 		if event.name == 'began' then
 			return true
 		elseif event.name == 'ended' then
-			if self.popupName == "bangzhu" then
-				ui:closePopup("AboutPopup", {animName = "normal"})
-			else
-				ui:closePopup("AboutPopup")
-			end
+			self:onClickBtnClose()
 		end
 	end)
+end
+
+function AboutPopup:onClickBtnClose()
+	if self.popupName == "gonggao_1" then
+		ui:closePopup("AboutPopup", {animName = "normal"})
+        ui:showPopup("AboutPopup",{popupName = "gonggao_2"},{animName = "normal"})
+    else
+    	ui:closePopup("AboutPopup", {animName = "normal"})
+    end
 end
 
 function AboutPopup:initText()

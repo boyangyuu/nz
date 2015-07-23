@@ -264,7 +264,7 @@ function InlayLayer:initGuide()
     guide:addClickListener({
         id = "xiangqian_xiangqian2",
         groupId = "xiangqian",
-        rect = cc.rect(780, 70, 140, 50),
+        rect = cc.rect(780, 50, 140, 50),
         endfunc = function (touchEvent)
             self.inlayModel:buyInlay(6,1) 
 
@@ -276,7 +276,7 @@ function InlayLayer:initGuide()
     guide:addClickListener({
         id = "xiangqian_xiangqian3",
         groupId = "xiangqian",
-        rect = cc.rect(940, 70, 140, 50),
+        rect = cc.rect(940, 50, 140, 50),
         endfunc = function (touchEvent)
             self.inlayModel:equipInlay(6) 
 

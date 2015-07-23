@@ -148,7 +148,7 @@ function JujiModeLayer:onClickCloseInlayNoti()
 	self:startGame()
 end
 function JujiModeLayer:startGame()
-	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
+	local fightData = { groupId = 70,levelId = 4, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
 	ui:closePopup("JujiModeLayer")
 end
@@ -184,7 +184,7 @@ function JujiModeLayer:refreshListView()
         local content = JujiPlayerCell.new({record = self.rankTable[i],rank = i})
         local item = self.listViewPlayer:newItem()
         item:addContent(content)
-        item:setItemSize(524, 88)
+        item:setItemSize(392, 68)
         self.listViewPlayer:addItem(item)
     end
     self.listViewPlayer:reload()

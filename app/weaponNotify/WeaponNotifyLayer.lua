@@ -1,5 +1,10 @@
+local LayerColor_BLACK = cc.c4b(0, 0, 0, 0)
+local kOpacity = 200.0
+
 local WeaponNotifyLayer = class("WeaponNotifyLayer", function()
-	return display.newLayer()
+	local layer = display.newColorLayer(LayerColor_BLACK)
+	layer:setOpacity(kOpacity)
+	return layer
 end)
 
 

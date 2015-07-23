@@ -64,7 +64,7 @@ function BossResultLayer:initUI()
     display.addSpriteFrames(plist, png)  
 
     local armature = ccs.Armature:create("wxboss_jiesuan")
-    armature:setPosition(display.cx,display.cy)
+    armature:setPosition(569,320)
     self:addChild(armature)
     armature:getAnimation():play("kaishi" , -1, 0)
 

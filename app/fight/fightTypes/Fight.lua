@@ -105,13 +105,41 @@ function Fight:refreshUmFightTimesEvent()
 end
 
 function Fight:saveFightedLevelData(_status, levelInfo)
+    --save task
+    self:updateTaskData()
+
+    --save levelInfo
     levelInfo = levelInfo or self:getLevelInfo() 
     assert(_status, "_status is nil")
     local data = getUserData()
     local status = data.user.fightedLevels[levelInfo]
     if status == "awarded" then return end 
     data.user.fightedLevels[levelInfo] = _status
-    setUserData(data)    
+    setUserData(data)   
+end
+
+function Fight:updateTaskData()
+    --连杀
+    local dailyTask       = md:getInstance("DailyTaskModel")
+    local keepKillNums    = self.hero:getKillKeepCntMax()
+    local keepKillNumsOri = dailyTask:getTaskTimes("keepKill")
+    if keepKillNumsOri < keepKillNums then 
+        dailyTask:setTaskTimes("keepKill", keepKillNums)
+    end
+
+    --总杀
+    local killNums = self.hero:getKillCnt()
+    local killNumsOri = dailyTask:getTaskTimes("totalKill")
+    if killNumsOri < killNums then 
+        dailyTask:setTaskTimes("totalKill", killNums)
+    end    
+
+    --战斗类型
+    local map      = md:getInstance("Map")
+    local waveCfg  = map:getCurWaveConfig()
+    local modeType = waveCfg:getFightMode().type 
+    local taskType = "fight_"..modeType
+    dailyTask:addTaskTimes(taskType) 
 end
 
 function Fight:getFightedLevelData(levelInfo)
@@ -294,7 +322,7 @@ function Fight:onDialogAfterEnd()
     if (self.groupId == 0 and self.levelId == 0) then 
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "打开武器库_自动弹出限时大促",
+            strPos   = "战斗结束_自动弹出限时大促",
             stoneCost = 900, 
             closeAllFunc = handler(self, self.startFightResult),
             },

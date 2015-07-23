@@ -79,7 +79,15 @@ function IAPsdk:getPayConfig(iapName)
 		--礼包
 		config["stone600"]         = "60"		--60 yuan
 		config["stone900"]         = "90"		--90
-		config["stone1200"]        = "120"		--120		
+		config["stone1200"]        = "120"		--120
+	elseif iapName == "ios" then -- ios 
+		--礼包
+		config["stone120"]         = "60"		--600钻石
+		config["stone260"]         = "180"		--一箱子宝石
+		config["stone450"]         = "300"		--堆成山的宝石
+		config["stone600"]         = "600"		--60 yuan
+		config["stone900"]         = "880"		--90
+		config["stone1200"]        = "1280"		--120	
 	end
 	dump(config, "iapName:"..iapName)
 	assert(config, "config is nil: iapName:" .. iapName)
@@ -87,18 +95,22 @@ function IAPsdk:getPayConfig(iapName)
 end
 
 function IAPsdk:isPayValid()
+	if device.platform == "ios" then
+		return true
+	end
+
 	local payType =  self.buyModel:getPayType()
 	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
-			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
+			 {type = "style2", content = "请在插有SIM卡的手机上支付", delay = 1},
 			 {opacity = 0})
 		return false
 	elseif self.iapName == 'invalid' and payType == "duanxin" then
 		self:callbackFaild()
-		ui:showPopup("commonPopup",
-			 {type = "style2", content = "请在插有移动卡的手机上支付！", delay = 1},
-			 {opacity = 0})	
+		-- ui:showPopup("commonPopup",
+		-- 	 {type = "style2", content = "请在插有移动卡的手机上支付！", delay = 1},
+		-- 	 {opacity = 0})	
 		 return	false
 	end
 	return true
@@ -112,6 +124,7 @@ function IAPsdk:getPaycode(configId)
 	else
 		iapName = payType
 	end
+
 	local config = self:getPayConfig(iapName)
 	dump(config, "config")
 	assert(config, "config is nil payType" .. payType)
@@ -120,14 +133,38 @@ function IAPsdk:getPaycode(configId)
 end
 
 function IAPsdk:pay(configId)
-	payType = self.buyModel:getPayType()
-	print("configId", configId)
-	print("payType", payType)	
-	print("self.iapName", self.iapName)
 	if __isFree then 	self:callbackSuccess() return end
 	if not self:isPayValid() then return end
-
 	
+	if device.platform == 'ios' then
+		self:pay_ios(configId)
+	elseif device.platform == 'windows' or 'mac' then
+		self:pay_win()
+	elseif device.platform == 'android' then
+		self:pay_android(configId)
+	end
+end
+
+function IAPsdk:pay_ios(configId)
+	dump(configId)
+	if configId == "weaponGiftBag" or configId == "goldGiftBag" then
+		self:callbackSuccess()
+		return
+	end
+	print("aaaaaios")
+	payType = self.buyModel:getPayType()
+	local paycode = self:getPaycode(configId, payType)
+	dump(paycode)
+	local args = {
+		buyType = paycode,
+		success = handler(self, self.callbackSuccess),
+		fail = handler(self, self.callbackFaild)
+	}
+	luaoc.callStaticMethod("IAPControl", "buy", args)
+end
+
+function IAPsdk:pay_android(configId)
+	payType = self.buyModel:getPayType()
 	local paycode = self:getPaycode(configId, payType)
 	local buyName = BuyConfigs.getConfig(configId)["name"]
 	local args = {
@@ -136,17 +173,17 @@ function IAPsdk:pay(configId)
 		payType,
 		handler(self, self.callbackSuccess), 
 		handler(self, self.callbackFaild)}
-	if device.platform ~= 'android' then
-		ui:showPopup("commonPopup",
-			 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
-			 {opacity = 0})		
-		display.resume()
-	else
-		luaj.callStaticMethod(className, "pay", args, sig)
-	end
+	luaj.callStaticMethod(className, "pay", args, sig)
 end
 
-function IAPsdk:callbackSuccess( result )
+function IAPsdk:pay_win()
+	ui:showPopup("commonPopup",
+		 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
+		 {opacity = 0})		
+	display.resume()
+end
+
+function IAPsdk:callbackSuccess(result)
 	-- body
 	self.buyModel:payDone(result)
 end

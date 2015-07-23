@@ -22,13 +22,7 @@ end
 
 ---- state ----
 function DaoEnemyView:playStartState(state)
-    if state == "rollleft" then 
-        self:playRollLeft()
-    elseif state == "rollright" then
-        self:playRollRight()    
-    else 
-        self:playStand()
-    end
+    self:playStand()
 end
 
 function DaoEnemyView:tick()
@@ -52,16 +46,7 @@ function DaoEnemyView:tick()
             self:play("playWalk", handler(self, self.playWalk))
         end
     end
-
-    --roll
-    local rollRate, isAble = self.enemy:getRollRate()
-    if isAble then 
-        assert(rollRate > 1, "invalid rollRate")
-        randomSeed =  math.random(1, rollRate)
-        if randomSeed > rollRate - 1 then 
-            self:playRoll()
-        end
-    end    
+  
 end
 
 function DaoEnemyView:playFire()
@@ -72,18 +57,15 @@ function DaoEnemyView:playFire()
     local boneDao = self.armature:getBone("dao1"):getDisplayRenderNode()
     local pWorldBone = boneDao:convertToWorldSpace(cc.p(0, 0))
     local property = {
+        type = "missile",
         srcPos = pWorldBone,
         srcScale = self:getScale() * 0.3,
         destPos = pWorldBone,
-        type = "missile",
-        id = self.property["missileId"],
+        id = self.property["missileId"], 
         demageScale = self.enemy:getDemageScale(),
         missileType = self.property["missileType"],
     }
-    -- local function callfuncDaoDan()
-         self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
-    -- end
-    -- self:performWithDelay(callfuncDaoDan, 0.3)   
+    self.hero:dispatchEvent({name = self.hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 end
 
 function DaoEnemyView:playKill(event)
@@ -94,45 +76,7 @@ function DaoEnemyView:playKill(event)
     self.audioId =  audio.playSound(soundSrc,false) 
 end
 
-function DaoEnemyView:playRoll()
-    local randomSeed = math.random(1, 2)
-    local canRoll = self.property["missileType"] == "lei"
-    if not canRoll then return end
-    
-    if randomSeed == 1 then 
-        self:play("playRollLeft", handler(self, self.playRollLeft))
-    else
-        self:play("playRollRight", handler(self, self.playRollRight))
-    end
-end
 
-function DaoEnemyView:playRollLeft()
-    if not self:checkPlace(-define.kEnemyRollWidth * self:getScale()) then 
-        return
-    end
-
-    self.armature:getAnimation():play("rollleft" , -1, 1) 
-    local speed = define.kEnemyRollSpeed  * self:getScale() 
-
-    local action = cc.MoveBy:create(1/60, cc.p(-speed, 0))
-    local seq = cc.Sequence:create(action)  
-    self.armature:runAction(cc.RepeatForever:create(seq))   
-    self.enemy:beginRollCd()    
-end
-
-function DaoEnemyView:playRollRight()
-    if not self:checkPlace(define.kEnemyRollWidth * self:getScale()) then 
-        return
-    end
-
-    self.armature:getAnimation():play("rollright" , -1, 1) 
-    local speed = define.kEnemyRollSpeed  * self:getScale() 
-
-    local action = cc.MoveBy:create(1/60, cc.p(speed, 0))
-    local seq = cc.Sequence:create(action)  
-    self.armature:runAction(cc.RepeatForever:create(seq))  
-    self.enemy:beginRollCd()             
-end
 
 --Attackable interface
 function DaoEnemyView:playHitted(event)
@@ -150,7 +94,7 @@ function DaoEnemyView:animationEvent(armatureBack,movementType,movementID)
         or  movementType == ccs.MovementEventType.complete   then
         -- print("animationEvent id ", movementID)
         armatureBack:stopAllActions()
-        if movementID ~= "die" then
+        if movementID ~= "die" and not self:getPauseOtherAnim() then
             self:doNextPlay()
         elseif movementID == "die" then 
             self:setDeadDone()

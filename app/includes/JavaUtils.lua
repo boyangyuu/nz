@@ -26,11 +26,16 @@ function JavaUtils.getIsGiftValid()
 end
 
 function JavaUtils.getIapName()
-    if device.platform ~= 'android' then return 'invalid' end
-    local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", 
-        "getIapStatus", {}, "()Ljava/lang/String;")
-    print("iapName:",iapName)
-    return iapName
+    if device.platform == 'android' then 
+        local result,iapName = luaj.callStaticMethod("com/hgtt/com/IAPControl", 
+            "getIapStatus", {}, "()Ljava/lang/String;")
+        print("iapName:",iapName)
+        return iapName
+    elseif device.platform == 'ios' then
+        return 'ios'
+    else
+        return 'invalid'
+    end
 
 end
 

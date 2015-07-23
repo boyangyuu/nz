@@ -151,25 +151,40 @@ function InlayModel:equipGoldInlays()
 	self:equipAllInlays()
 end
 
-function InlayModel:equipAllInlays()
+--[[
+	
+]]
+function InlayModel:getInlaysUnEquiped()
+	local data = getUserData()
+	local inlaysUnEquiped  = clone(data.inlay.bags)
+	return inlaysUnEquiped	
+end
+
+function InlayModel:equipAllInlays(limitPriority)
+	local limitPriority = limitPriority or 4
 	local bestInlay = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
-	local data = getUserData()
 	local allinlayed = self:getAllInlayed()
-	local bags = {}
-	for k,v in pairs(data.inlay.bags) do
-		bags[k] = v
-	end
-	for k,v in pairs(bags) do
+	local inlaysUnEquiped = self:getInlaysUnEquiped()
+	
+	--
+	for k,v in pairs(inlaysUnEquiped) do
+		-- print(k, v)
 		local priority = self:getInlayRecord(v.inlayid)["property"]
 		local typename = self:getInlayType(v.inlayid)
-		if priority > bestInlay[typename] then
+		if priority > bestInlay[typename] and priority <= limitPriority then
 			bestInlay[typename] = priority
 		end
-		for k1,v1 in pairs(allinlayed) do
-			local inlayedPriority = self:getInlayRecord(v1)["property"]
 
-			if k1 == typename and bestInlay[typename] < inlayedPriority then
+		for k1,v1 in pairs(allinlayed) do
+			print(k1, v1)
+			local inlayedPriority = self:getInlayRecord(v1)["property"]
+			print("inlayedPriority", inlayedPriority)
+			if k1 == typename 
+				and bestInlay[typename] < inlayedPriority
+				-- and bestInlay[typename] ~= 4
+				and inlayedPriority <= limitPriority
+				then
 				bestInlay[typename] = inlayedPriority
 			end
 		end
@@ -191,36 +206,6 @@ function InlayModel:equipAllInlays()
 		end
 	end
 	self:refreshInfo("speed", true)
-end
-
-function InlayModel:equipAllBestInlays(table)
-	local bestInlay = {bullet=0,clip=0,speed=0,crit=0,blood=0,helper=0}	
-	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
-	for k,v in pairs(table) do
-		local priority = self:getInlayRecord(v.inlayid)["property"]
-
-		local typename = self:getInlayType(v.inlayid)
-		if priority > bestInlay[typename] then
-			bestInlay[typename] = priority
-		end
-	end
-	
-	for k,v in pairs(bestInlay) do
-	local typeTable = self:getConfigTable("type", k)
-	    for k1,v1 in pairs(typeTable) do
-	        for k2,v2 in pairs(v1) do
-	            if k2 == "property" and v2 == bestInlay[k] then
-	                bestInlayId[k] = v1["id"]
-	            end
-	        end
-	    end
-	end
-
-	for k,v in pairs(bestInlayId) do
-		if v ~= 0 then
-			self:equipInlay(v,true)
-		end
-	end
 end
 
 function InlayModel:isBagsExist(inlayid)
@@ -297,17 +282,15 @@ end
 --[[
 	@return {id = 1, ... }
 ]]
-function InlayModel:getGoldByType( typeName )
+function InlayModel:getInlayConfigByTypeAndPri(typeName, priority)
 	local records = self:getConfigTable("type", typeName)
 	for k,v in pairs(records) do
 		for k1,v1 in pairs(v) do
-			local kGoldPriority = 4
-			if k1 == "property" and v1 == kGoldPriority then
+			if k1 == "property" and v1 == priority then
 				return v
 			end
 		end
 	end
-	return false
 end
 
 function InlayModel:getGoldWeaponNum()

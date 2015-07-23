@@ -63,6 +63,13 @@ function EnemyFactory.createEnemy(property)
 		enemyView = DuozuBossView.new(property)	
 
 	--dao
+	-- else
+	-- 	local configStr = "config/enemy/enemy_" .. property.id .. ".json"
+	-- 	local config = getRecordByKey(configStr, "level", property.level)[1]		
+	-- 	type = config.type
+	-- 	print("普通兵", type)
+	-- end
+
 	elseif type == "dao_wang" then
 		enemyView = DDWangEnemyView.new(property)
 	elseif type == "missile" then

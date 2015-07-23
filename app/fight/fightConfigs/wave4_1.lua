@@ -68,7 +68,7 @@ local waves = {
 		enemys = { 
 
 			{
-				time = 2,
+				time = 1,
 				num = 1,
 				pos = {450,},
 				delay = {0,},                          -- 吉普车
@@ -92,6 +92,17 @@ local waves = {
 					placeName = "place2" ,
 					type = "bao",      --爆
 					id = 20,	
+				},
+			},
+			{
+				time = 2,
+				num = 3,
+				delay = {0,1,0.5},
+				pos = {300,600,900},
+				property = { 
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
 				},
 			},
 			{
@@ -172,7 +183,41 @@ local waves = {
 				},
 			},
 			{
-				time = 11,	
+				time = 9,	
+				num = 10,
+				pos = {200,270,330,400,450,550,600,680,850,940},    -- 伞
+				delay = {0,0.7,2.1,1.4,2.8,0.7,1.7,1,3,3.5},
+				property = {
+					placeName = "place2",
+					type = "common",
+					startState = "san",
+					id = 1,
+				},
+			},
+			{
+				time = 10,
+				num = 3,
+				delay = {0,1,0.5},
+				pos = {300,600,900},
+				property = { 
+					placeName = "place2" ,
+					type = "jin",                  --盾
+					id = 8,
+				},
+			},
+			{
+				time = 10,
+				num = 20,
+				delay = {0.5,1.2,0,0.4,0.9,1.1,1.2,1.3,1.4,1.5,2.4,2.3,2.2,2.1,2.5,3.9,3.5,3.0,3.5,3.0},
+				pos = {180,300,550,750,930,850,250,550,200,400,180,300,550,750,930,850,250,550,200,400},
+				property = { 
+					placeName = "place2" ,
+					type = "bao",      --爆
+					id = 20,	
+				},
+			},
+			{
+				time = 12,	
 				num = 1,
 				pos = {200},
 				delay = {0},
@@ -184,7 +229,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,	
+				time = 14,	
 				num = 1,
 				pos = {1050},
 				delay = {0},
@@ -196,7 +241,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 15,	
+				time = 16,	
 				num = 2,
 				pos = {250,690},
 				delay = {0,0.6},
@@ -214,44 +259,44 @@ local waves = {
 }
 
 
---enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于2  怪物数据
+--enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于4  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=8,hp=8000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=16,hp=9100,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2, weak4=3},
                                                         
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=10000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=24267,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=500,
+	{id=6,image="daodan",demage=16,hp=3033,
 	weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=10,hp=25000,fireRate=180,fireCd=5,speed=35, scale = 2.0,
+	{id=8,image="dunbing",demage=8,hp=48500,fireRate=180,fireCd=5,speed=35, scale = 2.0,
 	weak1=2},                                                        --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=30000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=72800, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=30000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=8.0,
+	{id=12,image="yyc",demage=0,hp=72800,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=8.0,
 	weak1=2,    award = 60},
                                                          
 	--吉普车烟雾导弹          missileType = "dao_wu",
-	{id=13,image="daodan03",demage=25,hp=500, weak1=1},
+	{id=13,image="daodan03",demage=25,hp=3033, weak1=1},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=10,hp=25000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
+	{id=17,image="xiaorz",demage=12,hp=24267,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage=10,hp=5000}, 
+	{id=18,image="feibiao",demage=8,hp=3033}, 
 
 	--小蜘蛛   --type = "bao",
-	{id=20,image="xiaozz",demage=10,hp=5000, speed=70,
+	{id=20,image="xiaozz",demage=12,hp=3033, speed=70,
 	weak1=1},
 }
 

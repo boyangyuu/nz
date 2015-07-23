@@ -169,9 +169,9 @@ function BaseBossView:playKill(event)
 end
 
 function BaseBossView:playBombEffects()
-	for i=1, 20 do
+	for i=1, 10 do
 		self:performWithDelay(handler(self, self.playBombEffect), 
-			i * 0.08)
+			i * 0.2)
 	end
 end
 
@@ -313,8 +313,9 @@ function BaseBossView:playMoveDaoDan()
 			srcScale = self:getScale() * 0.3, --导弹view用
 			demageScale = self.enemy:getDemageScale(),
 			id = self.property["missileId"], 
-		}
-		local function callfuncAddDao()
+			level = self.property["missileLevel"],
+		}		
+			local function callfuncAddDao()
 			local boneName = "dao2"
 			local bone = self.armature:getBone(boneName):getDisplayRenderNode()
 			local srcPos = bone:convertToWorldSpace(cc.p(0.0,0.0))

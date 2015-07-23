@@ -116,25 +116,17 @@ function FightResultLayer:initUI()
     	self.cardover[i]:setScaleX(0)
     end
 
-    self.btnInlay      = cc.uiloader:seekNodeByName(self, "btninlay")
     self.btnGetAll     = cc.uiloader:seekNodeByName(self, "btngetall")
-    self.alreadyInlay  = cc.uiloader:seekNodeByName(self, "alreadyinlay")
     self.alreadyGetAll = cc.uiloader:seekNodeByName(self, "alreadygetall")
     self.panlgetall    = cc.uiloader:seekNodeByName(self, "panlgetall")
     self.btnNext       = cc.uiloader:seekNodeByName(self, "btnnext")
-	self.alreadyInlay:setVisible(false)
 	self.alreadyGetAll:setVisible(false)
-	self.btnInlay:setOpacity(0)
 	self.btnGetAll:setOpacity(0)
-	self.btnInlay:setButtonEnabled(false)
 	self.btnGetAll:setButtonEnabled(false)
 	self.btnNext:setVisible(false)
 
-    self.inlayArmature = ccs.Armature:create("bt_ksxq")
     self.getallArmature = ccs.Armature:create("bt_ksxq")
-    self.btnInlay:addChild(self.inlayArmature)
     self.btnGetAll:addChild(self.getallArmature)
-    self.inlayArmature:getAnimation():play("yjzb" , -1, 1)
     self.getallArmature:getAnimation():play("yjzb" , -1, 1)
 
     labelMoney = cc.uiloader:seekNodeByName(self, "labelMoney")
@@ -164,9 +156,7 @@ function FightResultLayer:initUI()
 		self:startGuide()
 
 		self.btnGetAll:setButtonEnabled(true)
-		self.btnInlay:setButtonEnabled(true)
 		self.btnGetAll:runAction(cc.FadeIn:create(0.3))
-		self.btnInlay:runAction(cc.FadeIn:create(0.3))
 
 		if table.nums(self.lockTable) == 0 then
 			self.btnGetAll:setButtonEnabled(false)
@@ -190,51 +180,20 @@ function FightResultLayer:initUI()
 	    umData[levelInfo] = "快速镶嵌展示"
 	    um:event("关卡结算_快速镶嵌", umData)
 
+
+	    self:initBtns()
 	end
+end
 
-    self.btnInlay:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function(event)
-	        ui:showPopup("commonPopup",
-				 {type = "style2", content = "镶嵌成功",delay = 0.5},
-				 {opacity = 155})				
-        	self:quickInlay()
-	        self.btnInlay:setButtonEnabled(false)
-			self.alreadyInlay:setVisible(true)
-			self.alreadyInlay:setScale(5)
-			transition.execute(self.alreadyInlay, cc.ScaleTo:create(0.2, 1), {
-					    easing = "Out",
-					})
-			if self.inlayArmature then
-				self.inlayArmature:removeFromParent()
-				self.inlayArmature = nil
-			end
-    end)
-
-    self.btnGetAll:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function(event)
+function FightResultLayer:initBtns()
+    self.btnGetAll:onButtonClicked(function(event)
 	        ui:showPopup("commonPopup",
 				 {type = "style1", content = "是否花费10颗宝石翻开剩余卡牌",
 				 callfuncCofirm =  handler(self, self.onCofirmLeftCard)},
 				 {opacity = 155})
     end)
         
-	self.btnNext:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function(event)
+	self.btnNext:onButtonClicked(function(event)
         	self:onClickBtnNext()
     end)
 end
@@ -370,15 +329,6 @@ function FightResultLayer:checkGuide()
 	end
 end
 
-function FightResultLayer:quickInlay()
-	self.inlayModel:equipAllInlays()
-    local curGroup, curLevel = self.fightData["groupId"], self.fightData["levelId"]
-	local levelInfo = curGroup.."_"..curLevel
-	local umData = {}
-    umData[levelInfo] = "快速镶嵌点击"
-    um:event("关卡结算_快速镶嵌", umData)
-end
-
 function FightResultLayer:onCofirmLeftCard()
 	if self.userModel:costDiamond(10) then
 		self:onTurnLeftCard()
@@ -437,45 +387,6 @@ end
 function FightResultLayer:initGuide3()
     local isDone = self.guide:isDone("afterfight03")
     if isDone then return end
-    self.guide:addClickListener({
-        id = "afterfight03_inlay",
-        groupId = "afterfight03",
-        rect = self.btnInlay:getCascadeBoundingBox(),
-        endfunc = function (touchEvent)
-	        ui:showPopup("commonPopup",
-				 {type = "style2", content = "镶嵌成功"},
-				 {opacity = 155})
-        	self:quickInlay()
-	        self.btnInlay:setButtonEnabled(false)  
-			self.alreadyInlay:setVisible(true)
-			self.alreadyInlay:setScale(5)
-			transition.execute(self.alreadyInlay, cc.ScaleTo:create(0.2, 1), {
-					    easing = "Out",
-					})
-			if self.inlayArmature then
-				self.inlayArmature:removeFromParent()
-				self.inlayArmature = nil
-			end
-
-			--镶嵌
-            self.inlayModel:buyInlay(2,1) 
-            self.inlayModel:buyInlay(5,1) 
-            self.inlayModel:buyInlay(8,1) 
-            self.inlayModel:buyInlay(11,1) 
-            self.inlayModel:buyInlay(14,1) 
-            self.inlayModel:buyInlay(17,1) 
-
-            self.inlayModel:equipInlay(2)
-            self.inlayModel:equipInlay(5)
-            self.inlayModel:equipInlay(8)
-            self.inlayModel:equipInlay(11)
-            self.inlayModel:equipInlay(14)
-            self.inlayModel:equipInlay(17)
-
-		    playSoundBtn()    
-        end
-     }) 
-
     self.guide:addClickListener({
         id = "afterfight03_next",
         groupId = "afterfight03",

@@ -1,3 +1,4 @@
+local GiftBoxConfig = import(".GiftBoxConfig")
 
 local LevelMapLayer = class("LevelMapLayer", function()
     return display.newLayer()
@@ -12,6 +13,7 @@ function LevelMapLayer:ctor(properties)
 
     --instance
     self.levelMapModel      = md:getInstance("LevelMapModel")
+    self.giftBoxModel       = md:getInstance("GiftBoxModel")
     self.FightResultModel   = md:getInstance("FightResultModel")
     self.UserModel          = md:getInstance("UserModel")
     self.LevelDetailModel   = md:getInstance("LevelDetailModel")
@@ -71,16 +73,22 @@ function LevelMapLayer:popUpWeaponGift()
     local isNotBought = self.buyModel:checkBought("weaponGiftBag") == false
     local isPopWeaponGift = false
     local userModel = md:getInstance("UserModel")
-    local isDone = userModel:getUserLevel() >= 6
+    local isDone = userModel:getUserLevel() >= 4
 
     --战斗失败返回世界地图
     if self.fightData["result"] == "fail" then isPopWeaponGift = true end
-    --开始菜单进世界地图，玩家等级 >= 6
+    --开始菜单进世界地图，玩家等级 >= 4
     if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
     if isPopWeaponGift and isNotBought then
         self.buyModel:showBuy("weaponGiftBag", 
-            {isNotPopKefu = true},
+            {isNotPopKefu = false},
             "主界面_进游戏自动弹出")
+    elseif isPopWeaponGift then 
+        self.buyModel:showBuy("goldGiftBag", 
+            {isNotPopKefu = false},
+            "主界面_进游戏自动弹出")   
+    else 
+
     end
 end
 
@@ -150,6 +158,7 @@ end
 
 function LevelMapLayer:initUI_yijiaoGift()
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    if device.platform == "ios" then btnFirstGift:setVisible(false) return end
     btnFirstGift:onButtonClicked(function ()
         self.buyModel:showBuy("yijiaoBag", 
             {isGiftDirect = true},
@@ -268,7 +277,7 @@ function LevelMapLayer:initUI_dacuGift()
     btnXianshi:onButtonClicked(function( event )
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "打开武器库_自动弹出限时大促",
+            strPos   = "地图界面_点击限时大促",
             stoneCost = 900},
             {animName = "shake"})        
     end)
@@ -293,6 +302,13 @@ function LevelMapLayer:initFightActLayer()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
     local notiJuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "notijuji")
     local notiBoss = cc.uiloader:seekNodeByName(self.chooseRootNode, "notiboss")
+    local btn_acts = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_acts")
+
+    --acts
+    btn_acts:onButtonClicked(function ()
+        local actModel = md:getInstance("ActivityMainModel")
+        actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
+    end)
 
     --无限狙击
     local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
@@ -458,6 +474,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     local levelIcon = {}
     local levelAnim = {}
     local panelBtn = {}
+    self.shadow = {}
     local panelGray = {}
     -- local dian = {}
     local imgIcon = {}
@@ -467,6 +484,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     for k,v in pairs(groupInfo) do
         panelBtn[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "Panel_"..v)
         panelGray[v] = cc.uiloader:seekNodeByName(self.levelBtnRootNode, "gray_"..v)
+        self.shadow[v] = cc.uiloader:seekNodeByName(self, "shadow_"..v)
     end
 
     for k,v in pairs(panelBtn) do
@@ -478,11 +496,10 @@ function LevelMapLayer:refreshLevelLayer(groupId)
     end
 
     for k,v in pairs(groupInfo) do
-        local record = self.LevelDetailModel:getConfig(group,level)
         if  group > groupId or group == groupId and level > v then
 
         elseif group == groupId and level == v then
-            panelGray[v]:setVisible(false)            
+            panelGray[v]:setOpacity(0)           
             local action = transition.sequence({
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX() , levelName[v]:getPositionY()+ 15)), 
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX(), levelName[v]:getPositionY() - 15))})
@@ -515,7 +532,55 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 end
             end
         end)
+
+
+        --宝箱
+        local giftBoxInfo = GiftBoxConfig.getConfig(groupId,v)
+        if giftBoxInfo then
+            self:initGiftBox(groupId,k)
+        end
     end
+end
+
+function LevelMapLayer:initGiftBox(groupId,levelId)
+    local receiveState = self.giftBoxModel:getReceiveState(groupId,levelId)
+    if receiveState == "canReceive" then
+        local giftBoxImg = display.newSprite("#icon_yijiao.png")
+        giftBoxImg:setPosition(cc.p(200,60))
+        self.shadow[levelId]:addChild(giftBoxImg)
+        addBtnEventListener(giftBoxImg, function(event)
+            if event.name == 'began' then
+                return true
+            elseif event.name == 'ended' then
+                self:onClickCanReceive()
+            end
+        end)    
+
+    elseif receiveState == "alreadyReceive" then
+        local giftBoxImg = display.newSprite("#icon_yijiao.png")
+        giftBoxImg:setPosition(cc.p(200,60))
+        self.shadow[levelId]:addChild(giftBoxImg) 
+
+    elseif receiveState == "futureReceive" then
+        local giftBoxImg = display.newSprite("#icon_yijiao.png")
+        giftBoxImg:setPosition(cc.p(200,60))
+        self.shadow[levelId]:addChild(giftBoxImg)    
+        addBtnEventListener(giftBoxImg, function(event)
+            if event.name == 'began' then
+                return true
+            elseif event.name == 'ended' then
+                self:onClickFutureReceive()
+            end
+        end)    
+    end
+end
+
+function LevelMapLayer:onClickCanReceive()
+    print("onClickCanReceive")
+end
+
+function LevelMapLayer:onClickFutureReceive()
+    print("onClickFutureReceive")
 end
 
 function LevelMapLayer:bgAction()    
@@ -576,7 +641,8 @@ function LevelMapLayer:refreshGift(event)
     local isBuyed   = self.buyModel:checkBought("yijiaoBag") 
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     btnFirstGift:setVisible(not isBuyed)
-    if not JavaUtils.isSIMJD() then 
+    local isIOS = device.platform == "ios"
+    if not JavaUtils.isSIMJD() or isIOS then 
         btnFirstGift:setVisible(false)
     end    
 end

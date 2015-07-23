@@ -33,8 +33,13 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	self:clearData()
     self.curId = configId
     self.curBuyData =  buyData
-    self.payType = buyData.payType or "duanxin"
-    
+
+    if device.platform == "ios" then 
+    	self.payType = "ios"
+    else
+	    self.payType = buyData.payType or "duanxin"
+	end
+
     --um pay
     self.orderId = self:getRandomOrderId()
     local buyConfig = BuyConfigs.getConfig(configId) 
@@ -65,7 +70,8 @@ function BuyModel:showBuy(configId, buyData, strPos)
 				deneyBuyFunc() 
 			end
 	    end
-    elseif showType == "iap" or iapType == "noConfirm" then 
+    elseif showType == "iap" or iapType == "noConfirm" 
+    	or self.payType ~= "duanxin"  then 
     	self:iapPay()  
 
     elseif showType =="prop_rmb" then --非钻石购买的道具
@@ -91,13 +97,21 @@ function BuyModel:iapPay()
 	local iapType = JavaUtils.getIapType()	
 	if iapType == "noIap" then 
 		ui:showPopup("KefuPopup",{
-		content = "对不起, 游戏计费暂停了",
+		content = "游戏计费暂停了，感谢您的支持！",
         opacity = 0})
 		return	
 	end
 
+	if self:isBoughtUpLimited() then 
+		ui:showPopup("KefuPopup",{
+		content = "当日付费已达上限，感谢您的支持！",
+        opacity = 0})
+		return	
+	end		
+
 	display.pause()
 	self.iap:pay(self.curId, self.payType)
+
 end
 
 function BuyModel:getPayType()
@@ -126,7 +140,7 @@ function BuyModel:payDone(result)
 	self[funcStr](self, self.curBuyData)
 
 	-- TalkingData 支付成功标志
-	local buyConfig = BuyConfigs.getConfig(self.curId ) 
+	local buyConfig = BuyConfigs.getConfig(self.curId) 
 	print("成功记录付费点:", buyConfig["name"])
 	um:onChargeSuccess(self.orderId)
 	
@@ -144,6 +158,9 @@ function BuyModel:payDone(result)
 	local umData = {}
 	umData[self.strDesc] = "支付成功"
 	um:event("支付情况", umData)
+
+	--data
+	self:updateBuyData()	
 
 	--events
 	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
@@ -299,32 +316,56 @@ end
 
 function BuyModel:buy_stone120( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(120, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(60, true)
+	else
+		userModel:addDiamond(120, true)
+	end
 end
 
 function BuyModel:buy_stone260( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(260, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(225, true)
+	else
+		userModel:addDiamond(260, true)
+	end
 end
 
 function BuyModel:buy_stone450( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(450, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(450, true)
+	else
+		userModel:addDiamond(450, true)
+	end
 end
 
 function BuyModel:buy_stone600( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(1200, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(1200, true)
+	else
+		userModel:addDiamond(1200, true)
+	end
 end
 
 function BuyModel:buy_stone900( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(1980, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(2200, true)
+	else
+		userModel:addDiamond(1980, true)
+	end
 end
 
 function BuyModel:buy_stone1200( buydata )
 	local userModel = md:getInstance("UserModel")
-	userModel:addDiamond(3000, true)
+	if device.platform == "ios" then
+		userModel:addDiamond(3840, true)
+	else
+		userModel:addDiamond(3000, true)
+	end
 end
 
 function BuyModel:checkBought(giftId)
@@ -339,6 +380,44 @@ function BuyModel:setBought(giftId)
 	data.giftBag[giftId] = true
 	setUserData(data)
 	self:dispatchEvent({name = BuyModel.BUY_GIFTUPDATE_EVENT, giftId = giftId})
+end
+
+function BuyModel:isBoughtUpLimited()
+	print("function BuyModel:isBoughtUpLimit()")
+
+	local data = getUserData()
+	dump(data.buy, "data.buy")
+	local d = os.date("*t")
+	local dataStr = d.year .. d.month .. d.day
+
+	--is today
+	if data.buy.boughtDate == dataStr and 
+		data.buy.boughtMoneySum > 80 then 
+		return true
+	else
+		return false
+	end 	
+end
+
+function BuyModel:updateBuyData()
+	--userData
+    local data = getUserData()
+	local d = os.date("*t")
+	local dataStr = d.year .. d.month .. d.day
+	if data.buy.boughtDate ~= dataStr then 
+		print("clear")
+		data.buy.boughtDate = dataStr
+		data.buy.boughtMoneySum = 0 
+	end
+	local buyConfig = BuyConfigs.getConfig(self.curId) 
+	local price = buyConfig["price"]
+	print("price", buyConfig["price"])
+	data.buy.boughtMoneySum = data.buy.boughtMoneySum + price
+	setUserData(data)
+
+	--dailyTask
+	local dailyTask = md:getInstance("DailyTaskModel")
+	dailyTask:addTaskTimes("buyTimes")	
 end
 
 return BuyModel

@@ -236,6 +236,7 @@ function FeijiEnemyView:playFire()
 		offsetIndex = offsetIndex + 1
 		index = index + 2
 		local name = "dao"..index
+		local name = "dao1"
 	    local boneDao = self.armature:getBone(name)
 	    if boneDao == nil then break end
 	    local boneImage = boneDao:getDisplayRenderNode()
@@ -250,7 +251,8 @@ function FeijiEnemyView:playFire()
 	        destPos = pWorldBone,
 	        flyTime =  self.property["flyTime"],
 	        type = "missile",
-	        id = self.property["missileId"],
+			id = self.property["missileId"], 
+			level = self.property["missileLevel"],
 	        demageScale = self.enemy:getDemageScale(),
 	        missileType = self.property["missileType"],
 	        offset = offset
@@ -306,9 +308,9 @@ function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
 		-- print("animationEvent id ", movementID)
-		if movementID == "runright" or movementID == "runleft" then 
-			return 
-		end
+		-- if movementID == "runright" or movementID == "runleft" then 
+		-- 	return 
+		-- end
 
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			self:doNextPlay()

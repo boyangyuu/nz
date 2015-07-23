@@ -5,6 +5,8 @@ local UserModel = class("UserModel", cc.mvc.ModelBase)
 --events
 UserModel.REFRESH_PLAYERNAME_EVENT     = "REFRESH_PLAYERNAME_EVENT"
 UserModel.REFRESH_MONEY_EVENT    	   = "REFRESH_MONEY_EVENT"
+UserModel.REFRESH_LOGINDATE_EVENT      = "REFRESH_LOGINDATE_EVENT"
+UserModel.REFRESH_TIME_EVENT      	   = "REFRESH_TIME_EVENT"
 
 function UserModel:ctor(properties)
 	UserModel.super.ctor(self, properties)
@@ -41,6 +43,10 @@ end
 	end
 end
 
+
+--[[
+
+]]
 function UserModel:costDiamond(diamond, isBuy, strPos)
 	-- local strBuy = diamond > 260 and "stone450" or "stone260"
 	-- isBuy = isBuy or false
@@ -61,7 +67,8 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 				self.buyModel:showBuy(strBuy, {isNotPopKefu = true}, strPos)
 			end
 			scheduler.performWithDelayGlobal(delayCall, 1.0)
-			
+		else
+			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
 		end
 		return false
 	end
@@ -134,6 +141,32 @@ function UserModel:setUserName(nameString)
 	data.user.userName = nameString
 	setUserData(data)
 	self:dispatchEvent({name = UserModel.REFRESH_PLAYERNAME_EVENT})
+end
+
+function UserModel:saveTimeData(curTimeStamp)
+	local data = getUserData()
+	data.dailylogin.loginTime = curTimeStamp
+	if data.dailylogin.registTime == nil then
+		data.dailylogin.registTime = curTimeStamp
+	end
+	setUserData(data)
+
+	--event
+	self:dispatchEvent({name = UserModel.REFRESH_TIME_EVENT})
+end
+
+function UserModel:getLoginTime()
+	local data = getUserData()
+	return data.loginTime
+end
+
+function UserModel:updateLoginDate()
+	--登陆日期更新
+	local dailyTaskModel = md:getInstance("DailyTaskModel")
+	dailyTaskModel:clearData()	
+
+	--event
+	self:dispatchEvent({name = UserModel.REFRESH_LOGINDATE_EVENT})
 end
 
 return UserModel
