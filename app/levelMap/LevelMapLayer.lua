@@ -275,7 +275,7 @@ function LevelMapLayer:initUI_dacuGift()
     btnXianshi:onButtonClicked(function( event )
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "打开武器库_自动弹出限时大促",
+            strPos   = "地图界面_点击限时大促",
             stoneCost = 900},
             {animName = "shake"})        
     end)
@@ -300,6 +300,13 @@ function LevelMapLayer:initFightActLayer()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
     local notiJuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "notijuji")
     local notiBoss = cc.uiloader:seekNodeByName(self.chooseRootNode, "notiboss")
+    local btn_acts = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_acts")
+
+    --acts
+    btn_acts:onButtonClicked(function ()
+        local actModel = md:getInstance("ActivityMainModel")
+        actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
+    end)
 
     --无限狙击
     local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")

@@ -55,7 +55,7 @@ function BaseEnemy:beginFireCd()
 end
 
 function BaseEnemy:getWalkRate()    
-	return 60, not self.isWalkCd
+	return 120, not self.isWalkCd
 end
 
 function BaseEnemy:beginWalkCd()
@@ -75,7 +75,7 @@ end
 
 
 function BaseEnemy:getRollRate()        
-	return 20, not self.isRollCd
+	return 80, not self.isRollCd
 end
 
 function BaseEnemy:beginRollCd()

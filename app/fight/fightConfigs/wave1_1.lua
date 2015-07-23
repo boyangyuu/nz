@@ -5,41 +5,27 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 1.5,
+				time = 1,
 				num = 1,
-				delay = {0.1},
-				pos = {80},
+				delay = {0},
+				pos = {330},
 				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place6",
+					startState = "rollleft",
+					id = 1,
 				},
-			},		
-			-- {
-			-- 	time = 1,
-			-- 	num = 1,
-			-- 	delay = {0},
-			-- 	pos = {330},
-			-- 	property = { 
-			-- 		placeName = "place6",
-			-- 		startState = "rollleft",
-			-- 		id = 1,
-			-- 	},
-			-- },
-			-- {
-			-- 	time = 1,
-			-- 	num = 1,
-			-- 	delay = {0.5},
-			-- 	pos = {135},
-			-- 	property = { 
-			-- 		placeName = "place5",
-			-- 		startState = "rollright",
-			-- 		id = 1,
-			-- 	},
-			-- },							
+			},
+			{
+				time = 1,
+				num = 1,
+				delay = {0.5},
+				pos = {135},
+				property = { 
+					placeName = "place5",
+					startState = "rollright",
+					id = 1,
+				},
+			},							
 		},
 	},
 	{

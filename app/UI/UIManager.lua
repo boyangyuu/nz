@@ -61,6 +61,8 @@ layerClasses["BossModeLayer"]        = import("..bossMode.BossModeLayer")
 layerClasses["BossResultLayer"]      = import("..bossMode.BossResultLayer")
 layerClasses["JujiAwardPopup"]       = import("..jujiMode.JujiAwardPopup")
 
+layerClasses["ActivitysMainLayer"]   = import("..activitys.ActivitysMainLayer")
+
 
 
 function UI:ctor(properties)

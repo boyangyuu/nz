@@ -322,7 +322,7 @@ function Fight:onDialogAfterEnd()
     if (self.groupId == 0 and self.levelId == 0) then 
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "打开武器库_自动弹出限时大促",
+            strPos   = "战斗结束_自动弹出限时大促",
             stoneCost = 900, 
             closeAllFunc = handler(self, self.startFightResult),
             },

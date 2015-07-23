@@ -285,7 +285,7 @@ end
 
 function Attackable:play(state, handlerFunc)
 	local per = self.enemy:getHp() / self.enemy:getMaxHp()
-	print("进栈 state: "..state..", 当前血量:"..per)
+	-- print("进栈 state: "..state..", 当前血量:"..per)
 	
 	local function play()
 		handlerFunc()

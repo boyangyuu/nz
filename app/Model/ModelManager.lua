@@ -61,6 +61,9 @@ modelClasses["AwardTimeModel"]              = import("..awardTime.AwardTimeModel
 
 --dailyTask
 modelClasses["DailyTaskModel"]         = import("..dailyTask.DailyTaskModel")
+modelClasses["ActivityMainModel"]      = import("..activitys.ActivityMainModel")
+
+
 
 --need create
 needCreateClasses["FightMode"] = true

@@ -51,7 +51,7 @@ function MyApp:initGameState()
     GameState.init(function(param)
         local returnValue=nil
         if param.errorCode then
-            CCLuaLog("error")
+            print("error")
         else
             -- crypto
             if param.name=="save" then
@@ -151,7 +151,6 @@ function MyApp:createGameStateFile()
 
         money = 2000,
         diamond = 0,
-
         
         --开启的关卡
         currentlevel =  {
@@ -247,13 +246,19 @@ function MyApp:createGameStateFile()
             boughtMoneySum = nil, --当日累计消费
         },
         dailyTask = {
-            buyTimes = 0,   --购买次数
-            keepKill = 0,   --连杀次数
-            totalKill = 0,  --总杀次数
-            fight_xianShi = 0, --限时模式
-            fight_renZhi = 0, --人质模式
-            fight_taoFan = 0, --逃犯模式
-            fight_puTong = 0, --普通模式
+            tasks = {
+                buyTimes = 2,   --购买次数
+                keepKill = 40,   --连杀次数
+                totalKill = 100,  --总杀次数
+                fight_xianShi = 1, --限时模式
+                fight_renZhi = 0, --人质模式
+                fight_taoFan = 1, --逃犯模式
+                fight_puTong = 0, --普通模式
+            },
+            awardedTasks = {
+                -- index1 = true,
+
+            },
         },            
     }
     GameState.save(data)

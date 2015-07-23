@@ -11,7 +11,7 @@ function StartLayer:ctor()
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
     self.activeCodeModel = md:getInstance("ActiveCodeModel") 
-
+    
 end
 
 function StartLayer:loadCCS()
@@ -303,10 +303,13 @@ function StartLayer:onEnter()
     guide:checkGuideUM("login")
 
     --gonggao
+    --[[
     if device.platform ~= "ios" then
         ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
     end
-
+    ]]
+    
+    
     --login award 服务器请求不能与loadccd并行！！
     self:initDailyLogin()
 end
