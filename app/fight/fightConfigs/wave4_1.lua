@@ -217,34 +217,34 @@ local waves = {
 --enemy的关卡配置                                                    黄金镶嵌 m4a1满级180  dps大于等于2  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=8,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=8000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2, weak4=3},
                                                         
 	--导弹兵      --type = "dao",
-	{id=5,image="zpbing",demage=0,hp=25000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	{id=5,image="zpbing",demage=0,hp=10000,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
 	weak1=2},
 
     --导弹          --missileType = "daodan",
-	{id=6,image="daodan",demage=10,hp=5000,
+	{id=6,image="daodan",demage=10,hp=500,
 	weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=10,hp=70000,fireRate=180,fireCd=5,speed=35, scale = 2.0,
+	{id=8,image="dunbing",demage=10,hp=25000,fireRate=180,fireCd=5,speed=35, scale = 2.0,
 	weak1=2},                                                        --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=100000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=30000, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2,    award = 60},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=8.0,
+	{id=12,image="yyc",demage=0,hp=30000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=8.0,
 	weak1=2,    award = 60},
                                                          
 	--吉普车烟雾导弹          missileType = "dao_wu",
-	{id=13,image="daodan03",demage=25,hp=5000, weak1=1},
+	{id=13,image="daodan03",demage=25,hp=500, weak1=1},
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=10,hp=35000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
+	{id=17,image="xiaorz",demage=10,hp=25000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
 
 	--飞镖

@@ -258,11 +258,11 @@ local enemys = {
 	{id=9,image="zibaob",demage=15,hp=403,fireRate=30,speed=80, weak1=2},	 --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="renzb",demage=30,hp=10000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
-	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 4, weak1=2},	
+	{id=17,image="renzb",demage=20,hp=5000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=4.0, 
+	shanRate = 100, shanCd = 4, chongRate = 100, chongCd = 5, weak1=2},	
 
 	--飞镖
-	{id=18,image="feibiao",demage= 5 ,hp= 500 },
+	{id=18,image="feibiao",demage= 4 ,hp= 10 },
 
 	-- 金武箱子奖励  type = "awardSan",
 	{id=19,image="dl_xz",hp=1, weak1=1},	--金武箱子奖励
@@ -274,9 +274,9 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		award = 20000,
+		award = 10000,
 		image = "renzb",                       --图片名字
-		hp = 100000,
+		hp = 80000,
 		fireRate = 60,               --普攻频率
 		fireCd = 4,                     --普攻cd
 		demage = 0,  				 --扔飞镖,按飞镖伤害
@@ -287,7 +287,7 @@ local bosses = {
 		shanRate = 180, 				--瞬移
 		shanCd	= 2,					
 
-		chongfengDemage = 35,                --冲锋造成伤害
+		chongfengDemage = 30,                --冲锋造成伤害
 		weak1 = 1.2,						--头 弱点伤害倍数
 		weak2 = 1.2,					--左腿 弱点伤害倍数
 		weak3 = 1.2,					--右腿 弱点伤害倍数	
@@ -313,13 +313,13 @@ local bosses = {
 			weak1 = {                               --头 技能触发(可以同时)
 				0.90,0.50,0.30,                       
 			},
-			demage200 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
-				0.95,
+			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+				0.90,
 			},	
-			demage300 = {  
+			demage200 = {  
 				0.70,
 			},	
-			demage300 = {  
+			demage250 = {  
 				0.40,
 			},	
 						

@@ -776,11 +776,11 @@ local waves = {
 --enemy的关卡配置                                                    黄金镶嵌 m4a1满级  dps大于等于3  怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=9,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
+	{id=1,image="anim_enemy_002",demage=9,hp=8000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=3,
 	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=10000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
+	{id=2,image="shouleib",demage=0,hp=8000,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=240,fireCd=4,
 	weak1=2},
 
 	--手雷            --missileType = "lei",
@@ -796,7 +796,7 @@ local enemys = {
 	weak1=1},
 
 	--盾兵         --type = "jin",
-	{id=8,image="dunbing",demage=15,hp=70000,fireRate=180,fireCd=5,speed= 40,
+	{id=8,image="dunbing",demage=15,hp=30000,fireRate=180,fireCd=5,speed= 40,
 	weak1=2},
 
 	--医疗兵      type = "yiliao",
@@ -814,7 +814,7 @@ local enemys = {
                                                         --scale = 3.0,  近战走到屏幕最近放缩比例
 
 	--忍者兵            冲锋伤害  type = "renzhe",
-	{id=17,image="xiaorz",demage=12,hp=50000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
+	{id=17,image="xiaorz",demage=12,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=3.0, 
 	shanRate = 120, shanCd = 4, chongRate = 120, chongCd = 4, weak1=2},	
 
 	--飞镖

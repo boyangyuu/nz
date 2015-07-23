@@ -280,7 +280,7 @@ local enemys = {
 
 
 	--盾兵         --type = "jin",
-	{id=9,image="dunbing",demage=15,hp=70000,fireRate=180,fireCd=5,speed=35, scale = 1.9,--scale = 3.0,  近战走到屏幕最近放缩比例
+	{id=9,image="dunbing",demage=15,hp=30000,fireRate=180,fireCd=5,speed=35, scale = 1.9,--scale = 3.0,  近战走到屏幕最近放缩比例
 	weak1=2},
 
 	--医疗兵      type = "yiliao",
@@ -288,7 +288,7 @@ local enemys = {
 	weak1=2},
 
 	--越野车       type = "jipu" ,
-	{id=12,image="yyc",demage=0,hp=100000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=8.0,
+	{id=12,image="yyc",demage=0,hp=50000,walkRate=180,walkCd = 2.0,rollRate=240, rollCd = 1.5, fireRate= 6, fireCd=8.0,
 	weak1=2,    award = 60},
                                                          
 	--吉普车烟雾导弹          missileType = "dao_wu",

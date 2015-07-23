@@ -126,7 +126,7 @@ local waves = {
 				time = 14,
 				num = 1,
 				delay = {0},
-				pos = {100},
+				pos = {200},
 				property = {
 					placeName = "place2",  
 					startState = "rollright",
@@ -208,7 +208,7 @@ local waves = {
 				time = 32,
 				num = 1,
 				delay = {0},
-				pos = {50},
+				pos = {300},
 				property = {
 					placeName = "place5",  
 					id = 1,
@@ -225,7 +225,7 @@ local enemys = {
 	{id=1,image="anim_enemy_002",demage=1,hp=220,walkRate=180,walkCd=1,rollRate=240,rollCd=1,fireRate=240,fireCd=4, weak1=3},
 
 	--导弹兵      --type = "dao",
-	{id=2,image="zpbing",demage=0,hp=700,walkRate=60,walkCd=1,fireRate=120,fireCd=2,
+	{id=2,image="zpbing",demage=0,hp=700,walkRate=60,walkCd=1,fireRate=120,fireCd=6,
 	weak1=3},
 
     --导弹          --missileType = "daodan",

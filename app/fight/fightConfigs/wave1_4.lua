@@ -378,10 +378,10 @@ local bosses = {
 			demage150 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},	
-			demage300 = {  
+			demage250 = {  
 				0.70,--0.65,
 			},	
-			demage400 = {  
+			demage300 = {  
 				0.30,
 			},							
 		},

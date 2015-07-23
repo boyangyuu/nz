@@ -319,7 +319,7 @@ local waves = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 40.0,		                                    --持续时间			
+					lastTime = 5.0,		                                    --持续时间			
 				},
 			},
 			{ 
@@ -382,9 +382,9 @@ local waves = {
 
 			{ 
 				time = 15,
-				num = 3,
-				delay = {0,0.7,1.4},
-				pos = {10,280,640,},
+				num = 2,
+				delay = {0.7,1.4},
+				pos = {280,640,},
 				property = { 
 					type = "taofan_qiu",
 					placeName = "place5",
@@ -407,7 +407,7 @@ local waves = {
 
 
 
---enemy的关卡配置                                   雷明顿4星基础伤害390伤害 青铜难度1枪  550         dps大于等于5
+--enemy的关卡配置                                   雷明顿3星基础伤害390伤害 青铜难度1枪  550         dps大于等于5
 local enemys = {
 
 	--汽油桶         --type = "bao_tong",
@@ -415,7 +415,7 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=5,hp=550,
+	{id=4,image="qiufan",demage=5,hp=350,
 	weak1=4, weak4=4},
 
 
