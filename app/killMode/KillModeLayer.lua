@@ -1,33 +1,33 @@
-local JujiPlayerCell = import(".JujiPlayerCell")
+-- local JujiPlayerCell = import(".JujiPlayerCell")
 
-local JujiModeLayer = class("JujiModeLayer", function()
+local KillModeLayer = class("KillModeLayer", function()
     return display.newLayer()
 end)
 
-function JujiModeLayer:ctor()
-	self.jujiModel = md:getInstance("JujiModeModel")
-	self.rankModel = md:getInstance("RankModel")
-	self.userModel = md:getInstance("UserModel")
-	self.inlayModel = md:getInstance("InlayModel")
-	self.buyModel = md:getInstance("BuyModel")
-	self.rankTable = self.jujiModel:getRankData() 
+function KillModeLayer:ctor()
+	-- self.jujiModel = md:getInstance("JujiModeModel")
+	-- self.rankModel = md:getInstance("RankModel")
+	-- self.userModel = md:getInstance("UserModel")
+	-- self.inlayModel = md:getInstance("InlayModel")
+	-- self.buyModel = md:getInstance("BuyModel")
+	-- self.rankTable = self.jujiModel:getRankData() 
 
 	self:loadCCS()
-	self:initUI()
+	-- self:initUI()
 
-    cc.EventProxy.new(self.userModel, self)
-	    :addEventListener(self.userModel.REFRESH_PLAYERNAME_EVENT,
-	     handler(self, self.refreshUI))
+    -- cc.EventProxy.new(self.userModel, self)
+	   --  :addEventListener(self.userModel.REFRESH_PLAYERNAME_EVENT,
+	   --   handler(self, self.refreshUI))
 
-	self:setNodeEventEnabled(true)
+	-- self:setNodeEventEnabled(true)
 end
 
-function JujiModeLayer:onEnter()
-	self:performWithDelay(handler(self,self.refreshListView),0.5)
-	self:performWithDelay(handler(self,self.checkUserName),0.5)
+function KillModeLayer:onEnter()
+	-- self:performWithDelay(handler(self,self.refreshListView),0.5)
+	-- self:performWithDelay(handler(self,self.checkUserName),0.5)
 end
 
-function JujiModeLayer:checkUserName()
+function KillModeLayer:checkUserName()
 	if  self.userModel:getUserName() == "玩家自己" then
 		ui:showPopup("InputBoxPopup", 
 			{content = "请输入游戏姓名",
@@ -36,19 +36,19 @@ function JujiModeLayer:checkUserName()
 	end
 end
 
-function JujiModeLayer:onClickConfirm_InputName(event)
+function KillModeLayer:onClickConfirm_InputName(event)
 	dump(event, "event")
     local user = md:getInstance("UserModel")
 	user:setUserName(event.inputString)
 end
 
-function JujiModeLayer:loadCCS()
+function KillModeLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/JujiMode/wuxianjuji")
-    local controlNode = cc.uiloader:load("main.json")
+    local controlNode = cc.uiloader:load("wujinshalu.json")
     self:addChild(controlNode)
 end
 
-function JujiModeLayer:initUI()
+function KillModeLayer:initUI()
     local src = "res/JujiMode/zhoujiangli/zhoujiangli.ExportJson"
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo(src)
@@ -105,11 +105,11 @@ function JujiModeLayer:initUI()
     end)
 end
 
-function JujiModeLayer:refreshUI(event)
+function KillModeLayer:refreshUI(event)
 	self.playerName:setString(self.userModel:getUserName())
 end
 
-function JujiModeLayer:onClickBtnStart()
+function KillModeLayer:onClickBtnStart()
 	local data = getUserData()
 	local isDone = self.userModel:getUserLevel() >= 5
 	if isDone and table.nums(data.inlay.inlayed) == 0 then
@@ -123,7 +123,7 @@ function JujiModeLayer:onClickBtnStart()
 	end
 end
 
-function JujiModeLayer:onClickGoldWeapon()
+function KillModeLayer:onClickGoldWeapon()
 	function confirmPopGoldGift()
 		self.inlayModel:equipAllInlays()
 		self:startGame()
@@ -139,21 +139,21 @@ function JujiModeLayer:onClickGoldWeapon()
     end
 end
 
-function JujiModeLayer:onClickQuickInlay()
+function KillModeLayer:onClickQuickInlay()
 	self.inlayModel:equipAllInlays()
 	self:startGame()
 end
 
-function JujiModeLayer:onClickCloseInlayNoti()
+function KillModeLayer:onClickCloseInlayNoti()
 	self:startGame()
 end
-function JujiModeLayer:startGame()
+function KillModeLayer:startGame()
 	local fightData = { groupId = 70,levelId = 4, fightType = "jujiFight"}  --无限狙击
 	ui:changeLayer("FightPlayer", {fightData = fightData})	
-	ui:closePopup("JujiModeLayer")
+	ui:closePopup("KillModeLayer")
 end
 
-function JujiModeLayer:checkNetWork()
+function KillModeLayer:checkNetWork()
 	local isAvailable = network.isInternetConnectionAvailable()
 	if isAvailable then
 		print("network isAvailable")
@@ -164,18 +164,18 @@ function JujiModeLayer:checkNetWork()
 	end	
 end
 
-function JujiModeLayer:onClickBtnClose()
+function KillModeLayer:onClickBtnClose()
 	self.listViewPlayer:setVisible(false)
-	ui:closePopup("JujiModeLayer")
+	ui:closePopup("KillModeLayer")
 end
 
-function JujiModeLayer:onClickBtnReward()
-	print("JujiModeLayer:onClickBtnReward()")
+function KillModeLayer:onClickBtnReward()
+	print("KillModeLayer:onClickBtnReward()")
 	self.notiReward:setVisible(false)
 	ui:showPopup("JujiAwardPopup")
 end
 
-function JujiModeLayer:refreshListView()
+function KillModeLayer:refreshListView()
 	--net
 	self:checkNetWork()
 
@@ -190,4 +190,4 @@ function JujiModeLayer:refreshListView()
     self.listViewPlayer:reload()
 end
 
-return JujiModeLayer
+return KillModeLayer
