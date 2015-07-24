@@ -71,14 +71,7 @@ function WeaponListModel:getWeaponProperity(weaponid, levelParam)
 		level = 1	
 	end
 	local growtableStr = "config/weapon_"..growTableName..".json"
-	local intenlevelData = getRecordByKey(growtableStr,"level",level)[1]
-	local bulletNum = intenlevelData["bulletNum"]
-	local accuracy = intenlevelData["accuracy"]
-	local reloadTime = intenlevelData["reloadTime"]
-	local demage = intenlevelData["demage"]
-	local upgradecost = intenlevelData["cost"]
-	local property = {bulletNum = bulletNum,accuracy  = accuracy,reloadTime = reloadTime,
-		demage = demage,upgradecost = upgradecost}
+	local property = getRecordByKey(growtableStr,"level",level)[1]
 	return property
 end
 
@@ -254,7 +247,9 @@ end
 function WeaponListModel:getFightWeaponValue(configId, isHelpGun)
 	local param = isHelpGun and "minLevel" or nil 
 	local weaponValue = self:getWeaponProperity(configId, param) 
+	dump(weaponValue, "weaponValue")
 	assert(weaponValue, "weaponValue is nil id :"..configId)
+
 	--cooldown
 	local record = getRecordByID("config/weapon_weapon.json", configId)
 	assert(record, "record is nil configId:"..configId)

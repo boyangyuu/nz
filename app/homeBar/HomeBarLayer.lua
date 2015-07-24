@@ -148,12 +148,6 @@ function HomeBarLayer:initHomeLayer()
         self:onBtnStoreClicked()
         buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
-
-    -- --活动
-    -- local btn_acts = cc.uiloader:seekNodeByName(self.rootNode, "btn_acts")
-    -- btn_acts:onButtonClicked(function ()
-    --     self:onBtnActsClicked()
-    -- end)
 end
 
 function HomeBarLayer:refreshCommonLayer(layer, data)
@@ -183,7 +177,7 @@ function HomeBarLayer:refreshCommonLayer(layer, data)
     elseif layer == "StoreLayer" then 
         self.btnStore:setButtonEnabled(false)
     elseif layer == "ActsLayer" then
-        
+
     end
 end
 
@@ -224,45 +218,22 @@ function HomeBarLayer:onBtnStoreClicked()
     self.notiStore:setVisible(false)
     playSoundBtn() 
     self:refreshCommonLayer("StoreLayer")
-
-    -- self.btnSetting:setVisible(false)
-    -- self.btnBack:setVisible(true)
-    -- self.btnInlay:setButtonEnabled(true)
-    -- self.btnStore:setButtonEnabled(false)
-    -- self.btnArsenal:setButtonEnabled(true)
 end
 
 function HomeBarLayer:onBtnInlayClicked()
     self:refreshCommonLayer("inlayLayer")
     playSoundBtn()
-
-    -- self.btnInlay:setButtonEnabled(false)
-    -- self.btnSetting:setVisible(false)
-    -- self.btnBack:setVisible(true)    
-    -- self.btnStore:setButtonEnabled(true)
-    -- self.btnArsenal:setButtonEnabled(true) 
 end
 
 function HomeBarLayer:onBtnArsenalClicked()
     self.notiArsenal:setVisible(false)
     self:refreshCommonLayer("WeaponListLayer")
     playSoundBtn()
-
-    -- self.btnSetting:setVisible(false)
-    -- self.btnBack:setVisible(true)    
-    -- self.btnInlay:setButtonEnabled(true)
-    -- self.btnStore:setButtonEnabled(true)
-    -- self.btnArsenal:setButtonEnabled(false)
 end
 
 function HomeBarLayer:onBtnBackClicked()
     self:refreshCommonLayer("levelMapLayer")
-
-    -- self.btnBack:setVisible(false)
-    -- self.btnSetting:setVisible(true)    
-    -- self.btnInlay:setButtonEnabled(true)
-    -- self.btnStore:setButtonEnabled(true)
-    -- self.btnArsenal:setButtonEnabled(true)
+    playSoundBtn()
 end
 
 function HomeBarLayer:initGuideWeapon()

@@ -254,7 +254,6 @@ function Hero:getDemage()
 
     --crit
     local critNum = self.gun:getCritPercent() * 100
-    -- print("critNum:", critNum)
     if critNum > math.random(0, 100) then 
         value = value * define.kHeroCritScale
     end
