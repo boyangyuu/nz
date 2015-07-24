@@ -1,6 +1,7 @@
 local ActJujiNode   = import("..jujiMode.JujiModeLayer")
 local ActBossNode   = import("..bossMode.BossModeLayer")
 local DailyTaskNode = import("..dailyTask.DailyTaskLayer")
+local ActKillNode   = import("..killMode.KillModeLayer")
 
 local ActivitysMainLayer = class("ActivitysMainLayer", function()
 	return display.newLayer()
@@ -39,7 +40,7 @@ function ActivitysMainLayer:loadCCS()
 
     local btn_kill = cc.uiloader:seekNodeByName(self.ui, "btn_kill")
     btn_kill:onButtonClicked(function ()
-        self:refreshListView("boss")
+        self:refreshListView("kill")
     end)
 
     local btn_boss = cc.uiloader:seekNodeByName(self.ui, "btn_boss")
@@ -56,9 +57,13 @@ function ActivitysMainLayer:refreshListView(type)
     if type == "juji" then 
         contentNode = ActJujiNode.new()
     elseif type == "boss" then 
-        contentNode = ActBossNode.new()
+        local bossModeModel = md:getInstance("BossModeModel")
+        local chapterIndex = bossModeModel:getAlreadyChapter()
+        contentNode = ActBossNode.new({chapterIndex = chapterIndex})
     elseif type == "dailyTask" then 
         contentNode = DailyTaskNode.new()
+    elseif type == "kill" then 
+        contentNode = ActKillNode.new()
     else
         assert(false, "type is invalid" .. type)
     end
