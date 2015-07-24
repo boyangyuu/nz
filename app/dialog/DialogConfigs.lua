@@ -178,6 +178,50 @@ kDialogConfig["group2"]  = {
 	},
 }
 
+--[[kDialogConfig["group70"]  = {
+	level1 = {
+		forward = {
+			{role = "夜玫瑰", imgname = "role_yemeigui",msg = "沙漠深处发现鬼眼行踪！", pos = "left"},
+			{role = "安琪儿", imgname = "role_anqi", msg = "杰这家伙也不见了", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "坏了，一定是他自己追捕鬼眼去了！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "我去追他！！", pos = "right"},
+			{role = "鬼眼",imgname = "role_guiyan", msg = "呵呵，可爱的小朋友，又追来了，我忙着哪，没工夫陪你玩哦。", pos = "right"},		
+		},
+	},
+	level2 = {
+		forward = {
+			{role = "杰",imgname = "role_jie", msg = "幸好你来了，不然我也要被俘获了！！哭。。", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "你个笨笨，总让我为你操心！！", pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "敌人越来越多，快炸毁大门，挡住敌人。", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "收到！", pos = "left"},
+		},	
+	},
+	level4 = {
+		forward = {
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "鬼眼逃跑时掉落了一瓶药剂，这很可能是他拥有超级体制的秘密，我要把这瓶药剂带回总部分析。",pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "我有一种不祥的预感，恐怕眼镜蛇部队在制造生化兵。",pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "生化兵？感觉好恐怖啊！", pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "可恶的家伙，继续追击！", pos = "left"},
+		},
+	},
+	level5 = {
+		forward = {
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "全球反恐会议会场查到了有炸弹！",pos = "left"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "一级警报！清除炸弹，解救人质！", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "龙组行动！",  pos = "right"},
+			{role = "杰",imgname = "role_jie", msg = "行动！",  pos = "left"},
+		},
+	},
+	level6 = {
+		forward = {
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "会场外又遭到了一个巨大机械怪物的袭击，消灭它。", pos = "left"},
+			{role = "安琪儿",imgname = "role_anqi", msg = "这个BOSS好巨大啊，破坏力好恐怖！",pos = "right"},
+			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "又是一场恶战，全员出击！", pos = "left"},
+			{role = "杰",imgname = "role_jie", msg = "可恶的家伙，拼了！全员启用黄金武器！！", pos = "left"},
+		},
+	},
+}]]--
+
 function DialogConfigs.getConfig(groupId,levelId,appear)
 	local configGroup = kDialogConfig["group" .. groupId]
 	if configGroup == nil then return 
@@ -197,4 +241,4 @@ function DialogConfigs.getConfig(groupId,levelId,appear)
 	return config
 end
 
-return DialogConfigs
+return DialogConfigs 

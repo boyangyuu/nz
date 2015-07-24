@@ -71,15 +71,16 @@ function JipuEnemyView:tick()
 		end
 	end
 
-	--roll
-	local rollRate, isAble = self.enemy:getRollRate()
-	assert(rollRate > 1, "invalid rollRate")
-	if isAble then 
-		local randomSeed =  math.random(1, rollRate)
-		if randomSeed > rollRate - 1 then 
-			self:playRun()
-		end
-	end
+	--
+	-- --roll
+	-- local rollRate, isAble = self.enemy:getRollRate()
+	-- assert(rollRate > 1, "invalid rollRate")
+	-- if isAble then 
+	-- 	local randomSeed =  math.random(1, rollRate)
+	-- 	if randomSeed > rollRate - 1 then 
+	-- 		self:playRun()
+	-- 	end
+	-- end
 end
 
 function JipuEnemyView:playEnter(direct)
@@ -288,9 +289,6 @@ end
 function JipuEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		if movementID == "runright" or movementID == "runleft" then 
-			return 
-		end
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
 			self:doNextPlay()
     	elseif movementID == "dieright" or movementID == "dieleft" then 

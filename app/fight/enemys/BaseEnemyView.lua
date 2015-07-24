@@ -98,7 +98,7 @@ function BaseEnemyView:playAfterAlert(type,handler)
 	local alertAfterFunc = function ()
 		self:play(type, handler)
 	end
-	self:performWithDelay(alertAfterFunc, 2.0)
+	self:performWithDelay(alertAfterFunc, 1.5)
 end
 
 function BaseEnemyView:showAlert()

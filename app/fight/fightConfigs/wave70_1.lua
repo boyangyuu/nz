@@ -1,28 +1,29 @@
+
 local BaseWave = import(".BaseWave")
 local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
-		enemys = {
+		enemys = { 		
 			{
 				time = 1,
 				num = 1,
 				delay = {0},
-				pos = {330},
+				pos = {220},
 				property = { 
-					placeName = "place6",
-					startState = "rollleft",
+					placeName = "place5",
+					startState = "rollright",
 					id = 1,
 				},
 			},
 			{
-				time = 1,
+				time = 3,
 				num = 1,
 				delay = {0.5},
-				pos = {135},
+				pos = {200},
 				property = { 
-					placeName = "place4",
-					startState = "rollright",
+					placeName = "place6",
+					startState = "rollleft",
 					id = 1,
 				},
 			},					
@@ -31,47 +32,44 @@ local waves = {
 	{
 		enemys = {
 			{
-				time = 1,
+				time = 2,
 				num = 2,
 				delay ={0, 0.5},
 				pos = {130,280},		
 				property = { 
-					placeName = "place5",
+					placeName = "place6",
 					startState = "rollleft",
 					id = 1,
 				},
-			},	
-			{
-				time = 1.5,
-				num = 1,
-				delay = {0.1},
-				pos = {80},
-				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
-				},
 			},
 			{
-				time = 2,
+				time = 4,
 				num = 1,
-				delay = {0.3},
-				pos = {200},
+				delay = {0.5},
+				pos = {135},
 				property = { 
-					placeName = "place4", 
+					placeName = "place3",
 					startState = "rollright",
 					id = 1,
 				},
-			},						
+			},
+			{
+				time = 6,
+				num = 2,
+				delay = {0,0.5},
+				pos = {90,180},
+				property = { 
+					placeName = "place4",
+					startState = "rollright",
+					id = 1,
+				},
+			},							
 		},
 	},	
 	{
 		enemys = {
 			{
-				time = 1,
+				time = 2,
 				num = 2,
 				delay = {0, 0.6},
 				pos = {200,400},
@@ -83,21 +81,18 @@ local waves = {
 			},
 					
 			{
-				time = 1.5,
+				time = 4,
 				num = 1,
 				delay = {0},
-				pos = {60},
+				pos = {0},
 				property = { 
-					placeName = "place3",
-					id = 2,
-					startState = "rollright",
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",
+					placeName = "place8",
+					startState = "rollleft",
+					id = 1,
 				},
 			},
 			{
-				time = 2,
+				time = 6,
 				num = 1,
 				delay = {0.5},
 				pos = {175},
@@ -106,28 +101,14 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
-			},
-			-- {
-			-- 	time = 2.5,
-			-- 	num = 1,
-			-- 	delay = {0.5},
-			-- 	pos = {40},
-			-- 	property = { 
-			-- 		placeName = "place8", 
-			-- 		id = 2,
-			-- 		startState = "",
-			-- 		type = "dao",
-			-- 		missileId = 3,
-			-- 		missileType = "lei",
-			-- 	},
-			-- },						
+			},						
 			{
-				time = 3,
+				time = 8,
 				num = 2,
 				delay = {0, 0.3},
-				pos = {170,430},
+				pos = {20,160},
 				property = { 
-					placeName = "place5", 
+					placeName = "place3", 
 					startState = "rollright",
 					id = 1,
 				},
