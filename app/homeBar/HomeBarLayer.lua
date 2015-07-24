@@ -11,6 +11,7 @@ local HomeBarLayer = class("HomeBarLayer", function()
 end)
 
 function HomeBarLayer:ctor(properties)
+    dump(properties, "properties")
     self.usermodel   = md:getInstance("UserModel")
     self.guide       = md:getInstance("Guide")
     self.levelMapModel = md:getInstance("LevelMapModel")
@@ -32,7 +33,13 @@ function HomeBarLayer:ctor(properties)
     self:initGuideWeapon()
     self:initGuideInlay()
 
-    self:refreshCommonLayer("levelMapLayer")
+    if self.fightData["fightType"] == "jujiFight" then 
+        self:refreshCommonLayer("ActsLayer", {selectId = "jujiFight"})
+    elseif self.fightData["fightType"] == "bossFight" then 
+        self:refreshCommonLayer("ActsLayer", {selectId = "bossFight"})
+    else
+        self:refreshCommonLayer("levelMapLayer")
+    end
     self:setNodeEventEnabled(true)
 end
 
@@ -141,22 +148,36 @@ function HomeBarLayer:initHomeLayer()
         self:onBtnStoreClicked()
         buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
-
-    -- --活动
-    -- local btn_acts = cc.uiloader:seekNodeByName(self.rootNode, "btn_acts")
-    -- btn_acts:onButtonClicked(function ()
-    --     self:onBtnActsClicked()
-    -- end)
 end
 
-function HomeBarLayer:refreshCommonLayer(layer)
+function HomeBarLayer:refreshCommonLayer(layer, data)
     for k,v in pairs(self.commonlayers) do
         if k == layer then
             v:setVisible(true)
-            v:onShow()
+            v:onShow(data)
         else
             v:setVisible(false)
         end
+    end
+
+    --events
+    self.btnSetting:setVisible(false)
+    self.btnBack:setVisible(true)
+    self.btnInlay:setButtonEnabled(true)
+    self.btnStore:setButtonEnabled(true)
+    self.btnArsenal:setButtonEnabled(true)
+
+    if layer == "levelMapLayer" then 
+        self.btnSetting:setVisible(true)
+        self.btnBack:setVisible(false)
+    elseif layer == "inlayLayer" then 
+        self.btnInlay:setButtonEnabled(false)
+    elseif layer == "WeaponListLayer" then 
+        self.btnArsenal:setButtonEnabled(false)
+    elseif layer == "StoreLayer" then 
+        self.btnStore:setButtonEnabled(false)
+    elseif layer == "ActsLayer" then
+
     end
 end
 
@@ -190,49 +211,29 @@ end
 function HomeBarLayer:onBtnActsClicked(event)
     self.btnSetting:setVisible(false)
     self.btnBack:setVisible(true)    
-    self:refreshCommonLayer("ActsLayer")
+    self:refreshCommonLayer("ActsLayer", {selectId = "dailyTask"})
 end
 
 function HomeBarLayer:onBtnStoreClicked()
     self.notiStore:setVisible(false)
-    local dianji = "res/Music/ui/button.wav"
-    audio.playSound(dianji,false)
-    self.btnSetting:setVisible(false)
-    self.btnBack:setVisible(true)
+    playSoundBtn() 
     self:refreshCommonLayer("StoreLayer")
-    self.btnInlay:setButtonEnabled(true)
-    self.btnStore:setButtonEnabled(false)
-    self.btnArsenal:setButtonEnabled(true)
 end
 
 function HomeBarLayer:onBtnInlayClicked()
-    self.btnSetting:setVisible(false)
-    self.btnBack:setVisible(true)
     self:refreshCommonLayer("inlayLayer")
-    self.btnInlay:setButtonEnabled(false)
-    self.btnStore:setButtonEnabled(true)
-    self.btnArsenal:setButtonEnabled(true)
-    playSoundBtn()    
+    playSoundBtn()
 end
 
 function HomeBarLayer:onBtnArsenalClicked()
     self.notiArsenal:setVisible(false)
-    self.btnSetting:setVisible(false)
-    self.btnBack:setVisible(true)
     self:refreshCommonLayer("WeaponListLayer")
-    self.btnInlay:setButtonEnabled(true)
-    self.btnStore:setButtonEnabled(true)
-    self.btnArsenal:setButtonEnabled(false)
     playSoundBtn()
 end
 
 function HomeBarLayer:onBtnBackClicked()
-    self.btnBack:setVisible(false)
-    self.btnSetting:setVisible(true)
     self:refreshCommonLayer("levelMapLayer")
-    self.btnInlay:setButtonEnabled(true)
-    self.btnStore:setButtonEnabled(true)
-    self.btnArsenal:setButtonEnabled(true)
+    playSoundBtn()
 end
 
 function HomeBarLayer:initGuideWeapon()
@@ -240,7 +241,6 @@ function HomeBarLayer:initGuideWeapon()
     if isDone then return end
 
     print("function HomeBarLayer:initGuide()")
-
     self.guide:addClickListener({
         id = "weapon_wuqiku",
         groupId = "weapon",

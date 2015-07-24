@@ -318,11 +318,9 @@ function Attackable:doNextPlay()
 	if self:getPauseOtherAnim() then return end
 	local playCache = self:getPlayCache()		
 	if playCache then
-		print("self:playCache()") 
 		playCache()
 		table.remove(self.playCache, 1)		
-	else 	
-		print("self:playStand()")				
+	else 				
 		self:playStand()
 	end
 end

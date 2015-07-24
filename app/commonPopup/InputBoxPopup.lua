@@ -22,16 +22,12 @@ function InputBoxPopup:initUI()
     contentBox:setPlaceHolder(self.properties.content)
 	btntrue:setTouchEnabled(true)
 	btnfalse:setTouchEnabled(true)
-
-
-
     contentBox:setMaxLengthEnabled(true)
     contentBox:setMaxLength(25)
-	
 	contentBox:addEventListener(function(contentBox, eventType)
             if device.platform == "ios" then
-        		 self.inputString = contentBox:getString()
-            elseif device.platform == "android" then
+        		 self.inputString = contentBox:getString() --cocos 3.5
+            else
                  self.inputString = contentBox:getText()
             end
 		end)
