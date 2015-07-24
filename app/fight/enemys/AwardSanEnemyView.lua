@@ -28,7 +28,11 @@ end
 
 function AwardSanEnemyView:onEnter()
     AwardSanEnemyView.super.onEnter(self)
-    self:playFall()    
+    if self.property["isStand"] then 
+        self:stopFall()
+    else
+        self:playFall()
+    end    
 end
 
 function AwardSanEnemyView:tick()
@@ -58,6 +62,7 @@ end
 
 function AwardSanEnemyView:stopFall()
     self.isFalling = false
+    self:setVisible(true)    
     self:stopAllActions()
     self.armature:getAnimation():play("stand" , -1, 1) 
     self:setWillRemoved(define.kAwardSanTime)

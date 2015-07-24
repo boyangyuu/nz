@@ -72,7 +72,7 @@ function GiftBagStonePopup:onClickBuy()
     local cost   = self.property["stoneCost"]
     local isAfforded = nil
     if device.platform == "ios" then
-	    isAfforded = user:costDiamond(cost) 
+	   	isAfforded = user:costDiamond(cost) 
 	else    	
 	    isAfforded = user:costDiamond(cost, true, strPos) 
     end

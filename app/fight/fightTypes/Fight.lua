@@ -105,9 +105,6 @@ function Fight:refreshUmFightTimesEvent()
 end
 
 function Fight:saveFightedLevelData(_status, levelInfo)
-    --save task
-    self:updateTaskData()
-
     --save levelInfo
     levelInfo = levelInfo or self:getLevelInfo() 
     assert(_status, "_status is nil")
@@ -200,6 +197,9 @@ function Fight:endFightWin()
 
     --save data
     self:saveFightedLevelData("win")
+
+    --save task
+    self:updateTaskData()    
 
     --level
     local levelMapModel = md:getInstance("LevelMapModel")

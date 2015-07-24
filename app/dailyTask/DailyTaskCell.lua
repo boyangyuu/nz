@@ -8,8 +8,6 @@ end)
 function DailyTaskCell:ctor(index)
 	--instance
 	self.model = md:getInstance("DailyTaskModel")
-
-	-- dump(property, "DailyTaskCell property")
 	self.index = index
 	self:loadCCS()
 	self:refreshUI()
@@ -75,7 +73,6 @@ function DailyTaskCell:refreshUI()
 end
 
 function DailyTaskCell:onClickGet()
-	print("DailyTaskCell onClickGet")
 	local isCanGet = self.property["isCanGet"]
 	local isGetted = self.property["isGetted"]
     local str = ""

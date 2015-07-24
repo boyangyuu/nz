@@ -61,6 +61,7 @@ function FeijiEnemyView:tick()
 		local randomSeed = math.random(1, fireRate)
 		if randomSeed > fireRate - 1 then 
 			self:playAfterAlert("skill", handler(self, self.playFire))
+			print("FeijiEnemyView:tick()")
 			self.enemy:beginFireCd()
 		end
 	end
@@ -75,15 +76,15 @@ function FeijiEnemyView:tick()
 		end
 	end
 
-	--roll
-	local rollRate, isAble = self.enemy:getRollRate()
-	assert(rollRate > 1, "invalid rollRate")
-	if isAble then 
-		local randomSeed =  math.random(1, rollRate)
-		if randomSeed > rollRate - 1 then 
-			self:playRun()
-		end
-	end
+	-- --roll
+	-- local rollRate, isAble = self.enemy:getRollRate()
+	-- assert(rollRate > 1, "invalid rollRate")
+	-- if isAble then 
+	-- 	local randomSeed =  math.random(1, rollRate)
+	-- 	if randomSeed > rollRate - 1 then 
+	-- 		self:playRun()
+	-- 	end
+	-- end
 end
 
 function FeijiEnemyView:playEnter(direct)
@@ -224,7 +225,7 @@ function FeijiEnemyView:playWalkRight()
 end
 
 function FeijiEnemyView:playFire()
-	-- print("function FeijiEnemyView:playFire()")
+	print("function FeijiEnemyView:playFire()")
 	local name = self.direct == "right" and "fireright" or "fireleft"
 	self.armature:getAnimation():play(name , -1, 1)
 
@@ -236,8 +237,8 @@ function FeijiEnemyView:playFire()
 		offsetIndex = offsetIndex + 1
 		index = index + 2
 		local name = "dao"..index
-		local name = "dao1"
 	    local boneDao = self.armature:getBone(name)
+
 	    if boneDao == nil then break end
 	    local boneImage = boneDao:getDisplayRenderNode()
 	    local pWorldBone = boneImage:convertToWorldSpace(cc.p(0, 0))
@@ -262,7 +263,7 @@ function FeijiEnemyView:playFire()
 	    	local hero = md:getInstance("Hero")
 	        hero:dispatchEvent({name = hero.ENEMY_ADD_MISSILE_EVENT, property = property})
 	    end
-	    self:performWithDelay(callfuncDaoDan, 0.5)
+	    callfuncDaoDan()
 	end
 end
 
@@ -307,12 +308,12 @@ end
 function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		-- print("animationEvent id ", movementID)
 		-- if movementID == "runright" or movementID == "runleft" then 
 		-- 	return 
 		-- end
 
 		if movementID ~= "dieright" and movementID ~= "dieleft" then
+			print("self:doNextPlay()")
 			self:doNextPlay()
     	elseif movementID == "dieright" or movementID == "dieleft" then 
     		self:setDeadDone()

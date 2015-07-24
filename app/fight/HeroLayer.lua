@@ -73,7 +73,7 @@ function HeroLayer:killEnmeyGold(event)
 	local flySpeed = 900.0
 	-- print("value", value)
 	local num = math.floor(value / baseValue)
-	if num > 12 then num = 12 end 
+	if num > 16 then num = 16 end 
 	local isMany = num > 3
 	local w = isMany and 5 or 5
 	local d = 0.1

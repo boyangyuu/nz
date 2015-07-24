@@ -36,7 +36,7 @@ function BaseEnemy:getDemageScale()
 end
 
 function BaseEnemy:getFireRate()
-	return 30, not self.isFireCd
+	return 180, not self.isFireCd
 end
 
 function BaseEnemy:beginFireCd()
@@ -75,7 +75,7 @@ end
 
 
 function BaseEnemy:getRollRate()        
-	return 80, not self.isRollCd
+	return 120, not self.isRollCd
 end
 
 function BaseEnemy:beginRollCd()
@@ -113,7 +113,7 @@ function BaseEnemy:beginSpeakCd()
 end
 
 function BaseEnemy:getShanRate()
-    return 120, not self.isSpeakCd
+    return 200, not self.isSpeakCd
 end
 
 function BaseEnemy:beginShanCd()

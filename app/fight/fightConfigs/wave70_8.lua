@@ -11,7 +11,7 @@ local waves = {
 				pos = {400,600},
 				delay = {0,0.5},
 				property = { 
-					placeName = "place2",
+					placeName = "place5",
 					startState = "rollright",
 					id = 1,
 				},
@@ -30,21 +30,22 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-				{
-				time = 4,
-				num = 3,
-				delay = {0.3,0.6,0.9,},
-				pos = {220,460,700},
-				property = { 
-					placeName = "place2" ,
-					type = "bao",      --爆
-					id = 9,	
+			{
+				time = 5,
+				num = 2,
+				delay = {0,0.5},
+				pos = {300,700},					
+				property = {
+					placeName = "place3",   
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
 				},
 			},
-
 			{
-				time = 6,	
-				num = 3,
+				time = 7,	
+				num = 2,
 				pos = {220,360,800},
 				delay = {0,0.4,0.8},
 				property = { 
@@ -54,7 +55,7 @@ local waves = {
 				},
 			},
 			{
-				time = 8,
+				time = 9,
 				num = 2,
 				pos = {300,720,880},
 				delay = {0,0.4},
@@ -67,25 +68,26 @@ local waves = {
 					missileType = "lei",
 				},
 			},
-			-- {
-			-- 	time = 10,	
-			-- 	num = 2,
-			-- 	pos = {270,370},
-			-- 	delay = {0.2,1},
-			-- 	property = { 
-			-- 		placeName = "place3",
-			-- 		startState = "rollright",
-			-- 		id = 1,
-			-- 	},
-			-- },
-	                                     	
+			{
+				time = 11,
+				num = 2,
+				delay = {0,0.5},
+				pos = {480,600},					
+				property = {
+					placeName = "place1",   
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
+				},
+			},                             	
 		},                                                              --21个
 	},	
 	{   	    
 		enemys = {
 
 			{ 
-				time = 1,
+				time = 2,
 				num = 2,
 				delay = {0,0.3},
 				pos = {270,720},
@@ -96,7 +98,7 @@ local waves = {
 				},				
 			},
 			{ 
-				time = 1,
+				time = 3,
 				num = 2,
 				delay = {0.5,0.7},
 				pos = {400,600},
@@ -110,34 +112,36 @@ local waves = {
 				},
 			},
 			{
-				time = 3,	
+				time = 6,	
 				num = 3,
 				pos = {260,500,780},
 				delay = {0,0.6,1.2},
 				property = { 
-					placeName = "place2",
+					placeName = "place4",
 					startState = "rollleft", 
 					id = 1,
 				},
 			},
 			{
-				time = 5,
-				num = 5,
-				delay = {0,0.3,0.6,0.9,1.2},
-				pos = {180,280,550,780,820},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 9,	
+				time = 8,
+				num = 2,
+				delay = {0,0.5},
+				pos = {420,640},					
+				property = {
+					placeName = "place2",   
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
 				},
-			},
+			}, 
 			{
-				time = 7,
+				time = 9,
 				num = 2,
 				pos = {330,600},
-				delay = {0,0.4,0.7},
+				delay = {0,0.4,},
 				property = { 
-					placeName = "place4",
+					placeName = "place5",
 					id = 2,
 					startState = "rollleft",
 					type = "dao",
@@ -146,12 +150,12 @@ local waves = {
 				},
 			}, 
 			{
-				time = 3,	
+				time = 11,	
 				num = 3,
 				pos = {500,780,880},
 				delay = {0,0.6,1.2},
 				property = { 
-					placeName = "place2",
+					placeName = "place3",
 					startState = "rollleft", 
 					id = 1,
 				}, 
@@ -163,23 +167,23 @@ local waves = {
 	{
 		enemys = {                            --第三波
 			{ 
-				time = 1,
+				time = 2,
 				num = 3,
 				delay = {0,0.4,0.8},
 				pos = {220,660,800},
 				property = { 
-					placeName = "place2",
+					placeName = "place4",
 					id = 1,
 					startState = "san",  --从伞进入												
 				},
 			},
 			{ 
-				time = 1,
+				time = 2,
 				num = 3,
-				delay = {0,0.5,0.7},
+				delay = {0.2,0.6,1.0},
 				pos = {320,720,860},
 				property = { 
-					placeName = "place1",
+					placeName = "place2",
 					id = 2,
 					startState = "san",
 					type = "dao",
@@ -188,29 +192,31 @@ local waves = {
 				},
 			},
 			{
-				time = 3,
-				num = 5,
-				delay = {0,0.3,0.6,0.9,1.2},
-				pos = {220,340,550,660,750},
-				property = { 
-					placeName = "place2" ,
-					type = "bao",      --爆
-					id = 9,	
+				time = 6,
+				num = 2,
+				delay = {0,0.5},
+				pos = {420,640},					
+				property = {
+					placeName = "place3",   
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
 				},
 			},
 			{
-				time = 5,
+				time = 7,
 				num = 2,
 				delay = {0.1,0.6},
 				pos = {300,600},					
 				property = {
-					placeName = "place4",  
+					placeName = "place5",  
 					startState = "rollleft",
 					id = 1,
 				},
 			},
 			{                                                       
-				time = 7,
+				time = 9,
 				num = 3,
 				delay = {0.2,0.7,1.5},
 				pos = {220,360,550},
@@ -224,45 +230,47 @@ local waves = {
 				},
 			},
 			{ 
-				time = 8,
+				time = 10,
 				num = 3,
 				delay = {0.5,0.8,1.2},
 				pos = {440,590,760},
 				property = { 
-					placeName = "place3",
+					placeName = "place4",
 					startState = "san",  --从伞进入											
 					id = 1,					
 				},
 			},
 			{
-				time = 9,
+				time = 12,
 				num = 2,
 				delay = {0.1,0.6},
 				pos = {580,750},					
 				property = {
-					placeName = "place3",  
+					placeName = "place6",  
 					startState = "rollleft",
 					id = 1,
 				},
 			},
 			{
-				time = 11,
-				num = 5,
-				delay = {0,0.3,0.6,0.9,1.2},
-				pos = {220,340,550,660,750},
-				property = { 
-					placeName = "place2" ,
-					type = "bao",      --爆
-					id = 9,	
+				time = 14,
+				num = 2,
+				delay = {0,0.5},
+				pos = {420,640},					
+				property = {
+					placeName = "place1",   
+					id = 5,
+					type = "dao",
+					missileId = 6,
+					missileType = "daodan",
 				},
 			},
 			{                                                       
-				time = 13,
-				num = 3,
-				delay = {0,0.4,0.8},
-				pos = {420,600,880},
+				time = 16,
+				num = 2,
+				delay = {0,0.4},
+				pos = {220,500},
 				property = {
-					placeName = "place1",
+					placeName = "place3",
 					startState = "rollleft",
 					id = 2,
 					type = "dao",
@@ -279,23 +287,27 @@ local waves = {
 --enemy的关卡配置                           mp5 55  dps大于等于4 怪物数据
 local enemys = {
 	--普通兵
-	{id=1,image="anim_enemy_002",demage=8,hp=1100,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
+	{id=1,image="anim_enemy_002",demage=8,hp=980,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
 	weak1=2},
 
 	--手雷兵
-	{id=2,image="shouleib",demage=0,hp=820,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
+	{id=2,image="shouleib",demage=0,hp=780,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=5,
 	weak1=2},
 
 	--手雷
-	{id=3,image="shoulei",demage=10,hp=410,
+	{id=3,image="shoulei",demage=10,hp=310,
 	weak1=2},
 
-	--自爆兵        --type = "bao",
-	{id=9,image="zibaob",demage=24,hp=550,fireRate=30,speed=120,
-	weak1=3},
+	--导弹兵      --type = "dao",
+	{id=5,image="zpbing",demage=0,hp=1970,walkRate=120,walkCd=2,fireRate=240,fireCd=5,
+	weak1=2},
+
+    --导弹          --missileType = "daodan",
+	{id=6,image="daodan",demage=15,hp=450,
+	weak1=1},
 
 	-- 盾兵
-	{id=8,image="dunbing",demage=10,hp=11000,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
+	{id=8,image="dunbing",demage=10,hp=8250,fireRate=240,fireCd=5,speed=35,   --scale = 2.0,
 	weak1=3},		                                                           --scale = 2.0,  近战走到屏幕最近放缩比例
 
 	-- 金武箱子奖励  type = "awardSan",
@@ -305,7 +317,7 @@ local enemys = {
 
 
 local mapId = "map_1_2"
-local limit = 15   				--此关敌人上限
+local limit = 10   				--此关敌人上限
 
 function waveClass:ctor()
 	self.waves  = waves
