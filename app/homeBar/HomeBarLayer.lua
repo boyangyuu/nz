@@ -32,8 +32,7 @@ function HomeBarLayer:ctor(properties)
     self:initGuideWeapon()
     self:initGuideInlay()
 
-    -- self:refreshCommonLayer("levelMapLayer")
-    self:onBtnActsClicked()
+    self:refreshCommonLayer("levelMapLayer")
     self:setNodeEventEnabled(true)
 end
 

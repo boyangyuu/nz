@@ -28,7 +28,6 @@ function DailyTaskModel:addTaskTimes(type)
 	data.dailyTask.tasks[type] = data.dailyTask.tasks[type] + 1
 	setUserData(data)
 	self:dispatchEvent({name = DailyTaskModel.DAILYTASK_UPDATE_EVENT})
-	dump(data.dailyTask.tasks, "data.dailyTask.tasks")
 end
 
 function DailyTaskModel:setTaskTimes(type, times)
@@ -105,8 +104,6 @@ end
 
 function DailyTaskModel:isTaskGetted(index)
 	local data = getUserData()
-	print("index", index)
-	print("data.dailyTask.awardedTasks.index", data.dailyTask.awardedTasks.index)
 	return data.dailyTask.awardedTasks[index] == true
 end
 

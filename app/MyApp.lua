@@ -81,7 +81,7 @@ function MyApp:initVariables()
     if device.platform == "ios" then
         __versionId = "1.0"
         __appName = "全民突袭"
-    else
+    elseif device.platform == "android" then
         result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
         result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
     end
