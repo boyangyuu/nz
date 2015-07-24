@@ -57,6 +57,10 @@ function FightGun:buyGun(id)
     hero:refreshGun()
 end
 
+function FightGun:refreshGun()
+	
+end
+
 function FightGun:playSkill(animName)
 	self:dispatchEvent({name = FightGun.GUN_SKILL_EVENT, animName = animName})
 end
