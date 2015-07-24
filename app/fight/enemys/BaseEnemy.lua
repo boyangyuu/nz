@@ -36,7 +36,7 @@ function BaseEnemy:getDemageScale()
 end
 
 function BaseEnemy:getFireRate()
-	return 180, not self.isFireCd
+	return self.config["fireRate"] or 180, not self.isFireCd
 end
 
 function BaseEnemy:beginFireCd()
@@ -55,7 +55,7 @@ function BaseEnemy:beginFireCd()
 end
 
 function BaseEnemy:getWalkRate()    
-	return 120, not self.isWalkCd
+	return self.config["walkRate"] or 120, not self.isWalkCd
 end
 
 function BaseEnemy:beginWalkCd()
@@ -75,7 +75,7 @@ end
 
 
 function BaseEnemy:getRollRate()        
-	return 120, not self.isRollCd
+	return self.config["rollRate"] or 120, not self.isRollCd
 end
 
 function BaseEnemy:beginRollCd()
@@ -99,7 +99,7 @@ end
 
 function BaseEnemy:beginSpeakCd()
     self.isSpeakCd = true
-    assert(self.config["speakCd"] , "config speakCd is nil")
+    assert(self.config["speakCd"] or 180 , "config speakCd is nil")
     local speakCd = self.config["speakCd"]
     print("speakCd", speakCd)
     local function resumeCd()
@@ -113,12 +113,12 @@ function BaseEnemy:beginSpeakCd()
 end
 
 function BaseEnemy:getShanRate()
-    return 200, not self.isSpeakCd
+    return self.config["shanRate"] or 120, not self.isSpeakCd
 end
 
 function BaseEnemy:beginShanCd()
     self.isShanCd = true
-    assert(self.config["shanCd"] , "config shanCd is nil")
+    assert(self.config["shanCd"] or 320, "config shanCd is nil")
     local shanCd = self.config["shanCd"]
     local function resumeCd()
         self.isShanCd = false
