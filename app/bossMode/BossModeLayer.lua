@@ -157,10 +157,11 @@ function BossModeLayer:refreshContent()
 	local imgName = self.weaponListModel:getWeaponImgByID(weaponId)
 	local weaponImg = display.newSprite("#icon_"..imgName..".png")
 	weaponImg:setRotation(10)
-	weaponImg:setScale(1.1)
+	weaponImg:setScale(0.85)
 	addChildCenter(weaponImg, self.panelGun)
 
 	local gunArmature = ccs.Armature:create("icon"..imgName.."_tx")
+	gunArmature:setScale(0.78)
     addChildCenter(gunArmature,self.panelGun)
     gunArmature:getAnimation():play("bosschixu" , -1, 1)
 

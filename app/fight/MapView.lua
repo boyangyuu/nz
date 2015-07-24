@@ -494,7 +494,7 @@ function MapView:resumeZoom(event)
 
 	local time = event.time
 	local function zoomEnd()
-		self.isZooming = false
+		self.isZooming = false		
 	end
 	local w, h = display.width, display.height1
 	self:setPosition(cc.p(w * 0.5, h * 0.5))
@@ -809,6 +809,14 @@ function MapView:playEffectJuShaked(event)
 	local posx, posy = self:getPositionX(), self:getPositionY()
 	local tMove = cc.MoveTo:create(event.time1, cc.p(posx-x, posy-y))
 	local tMove1 = cc.MoveTo:create(event.time2, cc.p(posx, posy))
+	
+	--todo
+	-- local endfunc = function ()
+	-- 	print("endfunc")
+	-- 	--1.3.1.5
+	-- 	local map = md:getInstance("Map")
+	-- 	map:setIsOpenJu(false)
+	-- end
 	self:runAction(cc.Sequence:create(tMove, tMove1))
 end
 

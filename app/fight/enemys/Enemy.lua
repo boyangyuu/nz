@@ -19,7 +19,6 @@ function Enemy:ctor(enemy_property)
         maxHp = self.config.hp * hpScale,
     }
     Enemy.super.ctor(self, actor_property, enemy_property) 
-
 end
 
 return Enemy

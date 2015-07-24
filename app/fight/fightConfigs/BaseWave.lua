@@ -14,8 +14,15 @@ function BaseWave:getConfigById(id)
 	assert(false, "no id in this waveConfig", id)
 end
 
+-- function BaseWave:getConfigById(id, level)
+-- 	local configStr = "config/enemy/enemy_" .. id .. ".json"
+-- 	local config = getRecordByKey(configStr, "level", level)[1]
+-- 	assert(config, "no id in this waveConfig", id)
+-- 	return config
+-- end
+
 function BaseWave:getEnemys(id)
-	id = tonumber(id)
+	-- id = tonumber(id)
 	return self:getConfigById(id)
 end
 

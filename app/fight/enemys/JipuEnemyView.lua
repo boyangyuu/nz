@@ -238,7 +238,8 @@ function JipuEnemyView:playFire()
 	        srcScale = self:getScale() * 0.3,
 	        destPos = pWorldBone,
 	        type = self.property["missileType"],
-	        id = self.property["missileId"],
+			id = self.property["missileId"], 
+			level = self.property["missileLevel"],
 	        demageScale = self.enemy:getDemageScale(),
 	        flyTime =  self.property["flyTime"],
 	        offset = offset

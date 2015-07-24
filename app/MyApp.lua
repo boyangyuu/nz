@@ -51,7 +51,7 @@ function MyApp:initGameState()
     GameState.init(function(param)
         local returnValue=nil
         if param.errorCode then
-            CCLuaLog("error")
+            print("error")
         else
             -- crypto
             if param.name=="save" then
@@ -69,12 +69,10 @@ function MyApp:initGameState()
         GameData=GameState.load()
     else
         self:createGameStateFile()
-        
     end
 end
 
 function MyApp:initVariables()
-    if device.platform ~= "android" then return end
     local className = "com/hgtt/com/IAPControl"
     local params = {}
     local boolSig = "()Z"
@@ -83,7 +81,7 @@ function MyApp:initVariables()
     if device.platform == "ios" then
         __versionId = "1.0"
         __appName = "全民突袭"
-    else
+    elseif device.platform == "android" then
         result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
         result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
     end
@@ -152,7 +150,6 @@ function MyApp:createGameStateFile()
 
         money = 2000,
         diamond = 0,
-
         
         --开启的关卡
         currentlevel =  {
@@ -246,6 +243,21 @@ function MyApp:createGameStateFile()
         buy = {
             boughtDate = nil, --上一次购买日期
             boughtMoneySum = nil, --当日累计消费
+        },
+        dailyTask = {
+            tasks = {
+                buyTimes = 2,   --购买次数
+                keepKill = 40,   --连杀次数
+                totalKill = 100,  --总杀次数
+                fight_xianShi = 1, --限时模式
+                fight_renZhi = 0, --人质模式
+                fight_taoFan = 1, --逃犯模式
+                fight_puTong = 0, --普通模式
+            },
+            awardedTasks = {
+                -- index1 = true,
+
+            },
         },            
     }
     GameState.save(data)

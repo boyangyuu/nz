@@ -11,7 +11,7 @@ function StartLayer:ctor()
 
     self.dailyLoginModel = md:getInstance("DailyLoginModel")
     self.activeCodeModel = md:getInstance("ActiveCodeModel") 
-
+    
 end
 
 function StartLayer:loadCCS()
@@ -303,18 +303,19 @@ function StartLayer:onEnter()
     guide:checkGuideUM("login")
 
     --gonggao
+    --[[
     if device.platform ~= "ios" then
         ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
     end
-
+    ]]
+    
+    
     --login award 服务器请求不能与loadccd并行！！
     self:initDailyLogin()
 end
 
 function StartLayer:onClickBegan()
-    --[[
-    print("function StartLayer:onClickBegan()")
-          
+    print("function StartLayer:onClickBegan()")     
     local guide = md:getInstance("Guide")
 
     if self:isGuideDone() then
@@ -335,8 +336,9 @@ function StartLayer:onClickBegan()
 
         --story
         ui:changeLayer("storyLayer",{})
+
     end
-    ]]
+
     --test
     local fightData = { groupId = 70,levelId = 3, fightType = "jujiFight"}  --无限狙击
     ui:changeLayer("FightPlayer", {fightData = fightData})       

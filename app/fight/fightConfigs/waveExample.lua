@@ -449,9 +449,6 @@ local enemys = {
 	--被绑架人        --type = "bangren",
 	{id=15,image="hs", hp=1000, weak1=1},
 	
-	--近战boss兵         --type = "jin",
-	{id=16,image="jinzhanb",demage=120,hp=20000,fireRate=60,fireCd=2,speed=40,scale = 3.0,
-	weak1=3}, 
 
 	--忍者兵            冲锋伤害  type = "renzhe",
 	{id=17,image="xiaorz",demage=50,hp=30000,walkRate=100,walkCd = 1.0,rollRate=40, rollCd = 1.5,fireRate=180, fireCd=2.0, 
@@ -461,6 +458,7 @@ local enemys = {
 	{id=18,image="feibiao",demage=10,hp=2500},                             --scale = 3.0,  近战走到屏幕最近放缩比例
 	
 	--蜘蛛网
+
 	{id=19,image="zzw",demage=10,hp=12500},
 
 	--医疗兵      type = "yiliao",
@@ -485,9 +483,7 @@ local enemys = {
 
 	--金币黄气球   type = "jinbi",
 	{id=35,image="qiqiu01",hp=1,weak1=3,award = 30},	--award = 30  金币数量为30
-	--狙击兵      --type = "juji",
-	{id=4,image="jujib",demage=18,hp=3000, rollRate=180,rollCd=3,fireRate=2, fireCd = 6,
-	weak1=2}, 
+
 }
 
 

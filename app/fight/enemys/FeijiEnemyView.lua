@@ -252,7 +252,8 @@ function FeijiEnemyView:playFire()
 	        destPos = pWorldBone,
 	        flyTime =  self.property["flyTime"],
 	        type = "missile",
-	        id = self.property["missileId"],
+			id = self.property["missileId"], 
+			level = self.property["missileLevel"],
 	        demageScale = self.enemy:getDemageScale(),
 	        missileType = self.property["missileType"],
 	        offset = offset
@@ -307,7 +308,6 @@ end
 function FeijiEnemyView:animationEvent(armatureBack,movementType,movementID)
 	if self.isEntering or self.isExiting then return end
 	if movementType == ccs.MovementEventType.loopComplete then
-		print("animationEvent id ", movementID)
 		-- if movementID == "runright" or movementID == "runleft" then 
 		-- 	return 
 		-- end

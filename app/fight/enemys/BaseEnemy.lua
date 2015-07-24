@@ -55,7 +55,7 @@ function BaseEnemy:beginFireCd()
 end
 
 function BaseEnemy:getWalkRate()    
-	return 60, not self.isWalkCd
+	return 120, not self.isWalkCd
 end
 
 function BaseEnemy:beginWalkCd()
@@ -72,6 +72,7 @@ function BaseEnemy:beginWalkCd()
     self.resumeWalkSch = scheduler.performWithDelayGlobal(
         resumeCd, walkCd)
 end
+
 
 function BaseEnemy:getRollRate()        
 	return 120, not self.isRollCd
@@ -138,7 +139,7 @@ function BaseEnemy:getConfig()
 end
 
 function BaseEnemy:getAward()
-    if  self:isKillAward() then 
+    if self:isKillAward() then 
         return self.config["award"] or define.kKillEnemyAwardGold
     else
         return nil

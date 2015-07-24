@@ -172,7 +172,8 @@ function RenBossView:playFeibiao(skillName)
                 destPos = pWorldBone,
                 offset = config.offsetPoses[i],
                 type = "missile",
-                id = self.property["missileId"],
+                id = self.property["missileId"], 
+                level = self.property["missileLevel"],
                 demageScale = self.enemy:getDemageScale(),
                 missileType = "feibiao",
             }
@@ -197,7 +198,8 @@ function RenBossView:playFire()
             destPos = pWorldBone,
             offset = offsetPoses[i],
             type = "missile",
-            id = self.property["missileId"],
+            id = self.property["missileId"], 
+            level = self.property["missileLevel"],
             demageScale = self.enemy:getDemageScale(),
             missileType = "feibiao",
         }

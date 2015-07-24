@@ -317,9 +317,12 @@ end
 function Attackable:doNextPlay()
 	if self:getPauseOtherAnim() then return end
 	local playCache = self:getPlayCache()		
-	if playCache then 
+	if playCache then
+		print("self:playCache()") 
 		playCache()
-	else 					
+		table.remove(self.playCache, 1)		
+	else 	
+		print("self:playStand()")				
 		self:playStand()
 	end
 end
@@ -462,7 +465,7 @@ function Attackable:playBuff(buffName, buffPos)
 	buffArmature:getAnimation():setMovementEventCallFunc(
 		function (armatureBack,movementType,movementId) 
 	    	if movementType == ccs.MovementEventType.complete then
-				armatureBack:getAnimation():stop()		
+				armatureBack:stop()		
 	    		armatureBack:removeSelf()
 	    		armatureBack = nil
 	    	end 
