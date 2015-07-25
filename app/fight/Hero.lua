@@ -237,7 +237,7 @@ end
 
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
-    local value = 0
+    local value = baseDemage
 
     local robot   = md:getInstance("Robot")
     if robot:getIsRoboting() then
@@ -245,13 +245,13 @@ function Hero:getDemage()
     end
     
     --inlay
-    local fightInlay = self:getFightInlay()
-    local scale, isInlayed = fightInlay:getInlayedValue("bullet")
-    if isInlayed then
-        value = baseDemage + baseDemage * scale
-    else
-        value = baseDemage
-    end
+    -- local fightInlay = self:getFightInlay()
+    -- local scale, isInlayed = fightInlay:getInlayedValue("bullet")
+    -- if isInlayed then
+    --     value = baseDemage + baseDemage * scale
+    -- else
+    --     value = baseDemage
+    -- end
 
     --crit
     local critNum = self.gun:getCritPercent() * 100
