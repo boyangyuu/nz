@@ -6,7 +6,7 @@ local WeaponListLayer = class("WeaponListLayer", function()
 end)
 
 local kMaxBullet = 200
-local kMaxAccuracy = 100
+local kMaxCrit = 100
 local kMaxSpeed = 1
 
 function WeaponListLayer:ctor()
@@ -382,17 +382,17 @@ function WeaponListLayer:refreshComment()
     local weaponproperitymax = self.weaponListModel:getWeaponProperity(self.weaponId,"maxLevel")
 
     local bulletNum = weaponproperity.bulletNum
-    local accuracy = weaponproperity.accuracy
+    local crit = weaponproperity.crit
     local reloadTime = weaponproperity.reloadTime
     local demage = weaponproperity.demage
 
     local bulletNumNext = weaponproperitynext.bulletNum
-    local accuracyNext = weaponproperitynext.accuracy
+    local critNext = weaponproperitynext.crit
     local reloadTimeNext = weaponproperitynext.reloadTime
     local demageNext = weaponproperitynext.demage
 
     local bulletNumMax = weaponproperitymax.bulletNum
-    local accuracyMax = weaponproperitymax.accuracy
+    local critMax = weaponproperitymax.crit
     local reloadTimeMax = weaponproperitymax.reloadTime
     local demageMax = weaponproperitymax.demage
 
@@ -400,11 +400,11 @@ function WeaponListLayer:refreshComment()
     self.upgradecost:setString(self.costupgrade)
 
     self.progBullet:setPercent(bulletNum/kMaxBullet*100)
-    self.progAccuracy:setPercent(accuracy/kMaxAccuracy*100)
+    self.progAccuracy:setPercent(crit/kMaxCrit*100)
     self.progReload  :setPercent((kMaxSpeed/reloadTime)*100)
 
     self.progBulletNext  :setPercent(bulletNumNext/kMaxBullet*100)
-    self.progAccuracyNext:setPercent(accuracyNext/kMaxAccuracy*100)
+    self.progAccuracyNext:setPercent(critNext/kMaxCrit*100)
     self.progReloadNext  :setPercent((kMaxSpeed/reloadTimeNext)*100)
 
     self.progBulletNext:setBreath()
@@ -413,7 +413,7 @@ function WeaponListLayer:refreshComment()
 
     self.progBulletMax:setPercent(bulletNumMax/kMaxBullet*100)
     self.progReloadMax:setPercent((kMaxSpeed/reloadTimeMax)*100)
-    self.progAccuracyMax:setPercent(accuracyMax/kMaxAccuracy*100)
+    self.progAccuracyMax:setPercent(critMax/kMaxCrit*100)
     self.labelDamage:setScale(0.7)
     self.labelDamage :setString(demage)
     local num = ((demageNext-demage)/demageMax*100)-((demageNext-demage)/demageMax*100)%0.01
