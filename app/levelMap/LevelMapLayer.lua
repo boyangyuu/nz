@@ -55,17 +55,18 @@ function LevelMapLayer:initGroupId()
     --set groupId
     local groupId, levelId = self.levelMapModel:getConfig()
     assert(groupId, "groupId getConfig")
-    if self.fightData.fightType == "bossFight" then
+    -- if self.fightData.fightType == "bossFight" then
+    --     self.curGroupId = groupId
+    -- elseif self.fightData.fightType == "jujiFight" then
+    --     self.curGroupId = groupId
+    -- else
+    -- if self.fightData.fightType == "levelFight" then 
+    if self.fightData.groupId == 0 and self.fightData.levelId == 0 then
+        self.curGroupId = 1
+    else
         self.curGroupId = groupId
-    elseif self.fightData.fightType == "jujiFight" then
-        self.curGroupId = groupId
-    elseif self.fightData.fightType == "levelFight" then 
-        if self.fightData.groupId == 0 and self.fightData.levelId == 0 then
-            self.curGroupId = 1
-        else
-            self.curGroupId = groupId
-        end
     end
+    -- end
     assert(self.curGroupId, "self.curGroupId is nil")
 end
 
@@ -93,17 +94,17 @@ function LevelMapLayer:popUpWeaponGift()
 end
 
 function LevelMapLayer:mapPopUp(event)
-    if self.properties.fightData.fightType == "levelFight" then 
-        function delayPopUpLF()
-            self:popUpWeaponGift()   
-        end
-        self:performWithDelay(delayPopUpLF, 1)
-    elseif self.properties.fightData.fightType == "bossFight" then
-        local chapterIndex = self.properties.fightData.chapterIndex
-        ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
-    elseif self.properties.fightData.fightType == "jujiFight" then
-        ui:showPopup("JujiModeLayer", {}, {animName = "normal"})
-    end  
+    -- if self.properties.fightData.fightType == "levelFight" then 
+    function delayPopUpLF()
+        self:popUpWeaponGift()   
+    end
+    self:performWithDelay(delayPopUpLF, 1)
+    -- elseif self.properties.fightData.fightType == "bossFight" then
+    --     local chapterIndex = self.properties.fightData.chapterIndex
+    --     ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
+    -- elseif self.properties.fightData.fightType == "jujiFight" then
+    --     ui:showPopup("JujiModeLayer", {}, {animName = "normal"})
+    -- end  
 end
 
 function LevelMapLayer:initBgLayer(event)

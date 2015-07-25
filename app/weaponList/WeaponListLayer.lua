@@ -396,7 +396,7 @@ function WeaponListLayer:refreshComment()
     local reloadTimeMax = weaponproperitymax.reloadTime
     local demageMax = weaponproperitymax.demage
 
-    self.costupgrade = weaponproperitynext.upgradecost
+    self.costupgrade = weaponproperitynext.cost
     self.upgradecost:setString(self.costupgrade)
 
     self.progBullet:setPercent(bulletNum/kMaxBullet*100)

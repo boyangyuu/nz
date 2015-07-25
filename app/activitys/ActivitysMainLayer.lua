@@ -11,13 +11,14 @@ function ActivitysMainLayer:ctor()
 	
 end
 
-function ActivitysMainLayer:onShow()
+function ActivitysMainLayer:onShow(data)
+    self.property = data
     if self.ui == nil then 
         self:loadCCS()
     end
 
     --start
-    self:refreshListView("dailyTask")
+    self:refreshListView(self.property["selectId"])
 end
 
 function ActivitysMainLayer:loadCCS()
@@ -35,7 +36,7 @@ function ActivitysMainLayer:loadCCS()
 
     local btn_juji = cc.uiloader:seekNodeByName(self.ui, "btn_juji")
     btn_juji:onButtonClicked(function ()
-    	self:refreshListView("juji")
+    	self:refreshListView("jujiFight")
     end)
 
     local btn_kill = cc.uiloader:seekNodeByName(self.ui, "btn_kill")
@@ -45,7 +46,7 @@ function ActivitysMainLayer:loadCCS()
 
     local btn_boss = cc.uiloader:seekNodeByName(self.ui, "btn_boss")
     btn_boss:onButtonClicked(function ()
-        self:refreshListView("boss")
+        self:refreshListView("bossFight")
     end)    
 end
 
@@ -54,9 +55,9 @@ function ActivitysMainLayer:refreshListView(type)
     self.comment:removeAllChildren()
 
     local contentNode = nil
-    if type == "juji" then 
+    if type == "jujiFight" then 
         contentNode = ActJujiNode.new()
-    elseif type == "boss" then 
+    elseif type == "bossFight" then 
         local bossModeModel = md:getInstance("BossModeModel")
         local chapterIndex = bossModeModel:getAlreadyChapter()
         contentNode = ActBossNode.new({chapterIndex = chapterIndex})

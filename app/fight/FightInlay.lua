@@ -129,7 +129,7 @@ end
 function FightInlay:getInlayedValue(type)
     local isGoldForbid = type == "blood" or type == "helper" or type == "bullet"
     local isGoldForbid = type == "blood" 
-
+    
     --gold
     local isGoldType = (not isGoldForbid and self:getIsActiveGold() ) 
                     or self:getIsNativeGold()
@@ -140,7 +140,7 @@ function FightInlay:getInlayedValue(type)
     end
 
     --not gold
-    local record = nil
+    local record = {valueProgram = 0}
     local inlays = self.inlayModel:getAllInlayed()
     local inlayedId  = inlays[type]
     if inlayedId == nil then  
