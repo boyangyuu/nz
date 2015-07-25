@@ -134,14 +134,10 @@ function Gun:isFireThrough()
 end
 
 function Gun:getReloadTime()
-	local baseValue = self.config.reloadTime
-	local value = 0.0 
-	-- local inlayValue, isInlayed = self.inlay:getInlayedValue("speed")
- --    if isInlayed then
- --        value = baseValue - baseValue * inlayValue
- --    else
-    value = baseValue
-    -- end		
+	local value = self.config.reloadTime
+	local fightInlay = md:getInstance("FightInlay")
+	local isGold = fightInlay:getIsActiveGold()
+	if isGold then value = 1 end 		
 	return value
 end
 

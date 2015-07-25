@@ -20,6 +20,7 @@ Hero.EFFECT_HURT_YAN_EVENT       = "EFFECT_HURT_YAN_EVENT"     --效果_烟雾
 Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
 Hero.EFFECT_GUIDE_EVENT          = "EFFECT_GUIDE_EVENT"        --效果_引导
 Hero.EFFECT_FIGHTTIPS_EVENT      = "EFFECT_FIGHTTIPS_EVENT"    --效果_提示
+Hero.TIPS_CLICK_EVENT            = "TIPS_CLICK_EVENT"          --提示
 
 --skill
 Hero.SKILL_ADDHP_EVENT            = "SKILL_ADDHP_EVENT"        --效果_加血
@@ -310,6 +311,11 @@ function Hero:onHpChange()
         self.isLessHp = isLess
         self:dispatchEvent({name = Hero.HP_STATE_EVENT, 
             isLessHp = self.isLessHp})
+    end
+
+    if (hp / maxHp) < define.kTipsHpBag then 
+        self:dispatchEvent({name = Hero.TIPS_CLICK_EVENT, 
+            id = "hpBag"})
     end
 end
 
