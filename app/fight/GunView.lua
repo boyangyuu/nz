@@ -193,6 +193,7 @@ function GunView:playReload()
 
 	--回调 子弹full
 	local reloadTime = self.gun:getReloadTime()
+	print("reloadTime", reloadTime)
 	local speedScale = 1 / reloadTime
 	local function reloadDone()
 		self.hero:setIsReloading(false)

@@ -190,7 +190,9 @@ function HeroAnimView:playActiveGold(event)
     audio.playSound(soundSrc,false) 
 end
 
-function HeroAnimView:playGunReload()
+function HeroAnimView:playGunReload(event)
+	local scale = event.speedScale
+	self.armatureReload:getAnimation():setSpeedScale(scale)
 	self.armatureReload:getAnimation():playWithIndex(0 , -1, 0)
 end
 

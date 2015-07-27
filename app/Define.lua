@@ -148,6 +148,11 @@ Define.kGuideActiveJijia	 	= 0.30  --boss还有百分之30血时 触发机甲
 --enenmy动画缩放比例
 Define.kEnemyAnimScale      	= 1 / 0.7
 
+--提示
+Define.kTipsJijia               = 0.20 -- boss血量少于 0.10 提示机甲
+Define.kTipsJijiaHeroHp         = 100 --  英雄血量少于100 提示机甲
+Define.kTipsHpBag               = 0.05 -- 英雄血量少于0.05提示医疗包 
+-- Define.kTipsGold                =
 
 --------------------------战斗---------------------------------
 Define.kJujiReliveCosts         = {20, 20, 40, 40, 60, 60, 80, 80, 100,}  --无限狙击模式复活
