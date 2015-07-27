@@ -123,18 +123,18 @@ local waves = {
 	},				
 }
 
---enemy的关卡配置                         无镶嵌 mp5伤害55  dps大于等于1 怪物数据
+--enemy的关卡配置                        mp5伤害55  青铜头盔恢复2 怪物dps大于等于2 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
-	{id=1,image="anim_enemy_002",demage=1,hp=160,walkCd=2,rollCd=3,fireCd=3,
-	weak1=3},
+	{id=1,image="anim_enemy_002",demage=6,hp=165,walkCd=2,rollCd=3,fireCd=3,
+	weak1=2},
 
 	--手雷兵      --type = "dao",
-	{id=2,image="shouleib",demage=0,hp=120,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
-	weak1=3},
+	{id=2,image="shouleib",demage=0,hp=165,walkRate=180,walkCd=2,rollRate=180,rollCd=3,fireRate=180,fireCd=4,
+	weak1=2},
 
 	--手雷            --missileType = "lei",
-	{id=3,image="shoulei",demage=2,hp=1,
+	{id=3,image="shoulei",demage=8,hp=1,
 	weak1=1},
 
 }
