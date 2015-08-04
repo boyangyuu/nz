@@ -6,7 +6,7 @@ local WeaponListLayer = class("WeaponListLayer", function()
 end)
 
 local kMaxBullet = 200
-local kMaxCrit = 100
+local kMaxCrit = 1.5
 local kMaxSpeed = 1
 
 function WeaponListLayer:ctor()
