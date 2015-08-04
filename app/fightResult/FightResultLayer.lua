@@ -209,6 +209,20 @@ function FightResultLayer:popOpenModeNoti(groupId,levelId)
          {type = "style1", content = "恭喜您开启BOSS竞技场！"},
          {opacity = 0})
     end
+	if groupId == 1 and levelId == 6 and device.platform == "ios" then
+	   ui:showPopup("commonPopup",
+         {type = "style1",content = "去AppStore给我们五星好评，送手雷x20,药包x5,金币x50000.",
+          callfuncCofirm =  handler(self, self.onClickAppStore)},
+         {opacity = 100})
+    end
+end
+
+function FightResultLayer:onClickAppStore()
+	luaoc.callStaticMethod("IAPControl", "comment")
+	local propModel = md:getInstance("PropModel")
+	propModel:addProp("hpBag",5)
+	propModel:addProp("lei",20)
+	self.userModel:addMoney(50000)
 end
 
 function FightResultLayer:onClickBtnNext()
