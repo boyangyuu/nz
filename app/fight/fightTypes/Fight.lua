@@ -127,9 +127,10 @@ function Fight:updateTaskData()
     --总杀
     local killNums = self.hero:getKillCnt()
     local killNumsOri = dailyTask:getTaskTimes("totalKill")
-    if killNumsOri < killNums then 
-        dailyTask:setTaskTimes("totalKill", killNums)
-    end    
+    -- if killNumsOri < killNums then 
+    --     dailyTask:setTaskTimes("totalKill", killNums)
+    -- end    
+    dailyTask:setTaskTimes("totalKill", killNums+killNumsOri)
 
     --战斗类型
     local map      = md:getInstance("Map")
