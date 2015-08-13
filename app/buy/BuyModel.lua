@@ -415,9 +415,7 @@ function BuyModel:updateBuyData()
 	data.buy.boughtMoneySum = data.buy.boughtMoneySum + price
 	setUserData(data)
 
-	--dailyTask
-	local dailyTask = md:getInstance("DailyTaskModel")
-	dailyTask:addTaskTimes("buyTimes")	
+
 end
 
 return BuyModel

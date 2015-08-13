@@ -137,6 +137,9 @@ function DailyLoginModel:refreshTime(timeStamp, callfunc)
     	callfunc("success")
     	userModel:updateLoginDate()
 
+		-- resetDailyTask()
+    	dailyTaskModel = md:getInstance("DailyTaskModel")
+		dailyTaskModel:resetDailyTask()
     elseif isSameDay and isGet == false then
     	callfunc("success")
     else

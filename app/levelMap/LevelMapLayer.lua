@@ -301,84 +301,23 @@ end
 
 function LevelMapLayer:initFightActLayer()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
-    local notiJuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "notijuji")
-    local notiBoss = cc.uiloader:seekNodeByName(self.chooseRootNode, "notiboss")
-    local btn_acts = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_acts")
+    local btn_acts  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_acts")
+    local noti_acts = cc.uiloader:seekNodeByName(self.chooseRootNode, "noti_acts")
 
     --acts
     btn_acts:onButtonClicked(function ()
         local actModel = md:getInstance("ActivityMainModel")
         actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
+        noti_acts:setVisible(false)
     end)
 
-    --无限狙击
-    local btnjuji = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnjuji")
-    
     local userModel = md:getInstance("UserModel")
-    local isOpenJuji = userModel:getUserLevel() >= 5
-    if not isOpenJuji then
-        btnjuji:setButtonImage(btnjuji.NORMAL, "btn_wuxianjuji1.png")
-        btnjuji:setButtonImage(btnjuji.PRESSED, "btn_wuxianjuji1.png")
-        btnjuji:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function( event )
-            ui:showPopup("commonPopup",
-                     {type = "style2", content = "通过狙击关卡后开启！"},
-                     {opacity = 0})
-        end)
-        notiJuji:setVisible(false)
+    local isNoti = userModel:getUserLevel() >= 5
+
+    if isNoti then
+        noti_acts:setVisible(true)
     else
-        btnjuji:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function( event )
-            ui:showPopup("JujiModeLayer", {}, {animName = "leftScale"})
-            notiJuji:setVisible(false)
-        end) 
-    end
-
-
-    --boss
-    local btnboss = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnboss")
-    
-    local userModel = md:getInstance("UserModel")
-    local isOpenBoss = userModel:getUserLevel() >= 7
-    if not isOpenBoss then
-        btnboss:setButtonImage(btnboss.NORMAL, "btn_wuxianboss1.png")
-        btnboss:setButtonImage(btnboss.PRESSED, "btn_wuxianboss1.png")
-
-        btnboss:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function( event )
-            ui:showPopup("commonPopup",
-                     {type = "style2", content = "通关第一章后开启！"},
-                     {opacity = 0})
-        end)
-        notiBoss:setVisible(false)
-    else
-        btnboss:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function( event )
-            local bossModeModel = md:getInstance("BossModeModel")
-            local chapterIndex = bossModeModel:getAlreadyChapter()
-            ui:showPopup("BossModeLayer",{chapterIndex = chapterIndex}, {animName = "leftScale"})
-            notiBoss:setVisible(false)
-        end)
+        noti_acts:setVisible(false)
     end
 end
 
@@ -536,10 +475,10 @@ function LevelMapLayer:refreshLevelLayer(groupId)
 
 
         --宝箱
-        local giftBoxInfo = GiftBoxConfig.getConfig(groupId,v)
-        if giftBoxInfo then
-            self:initGiftBox(groupId,k)
-        end
+        -- local giftBoxInfo = GiftBoxConfig.getConfig(groupId,v)
+        -- if giftBoxInfo then
+        --     self:initGiftBox(groupId,k)
+        -- end
     end
 end
 

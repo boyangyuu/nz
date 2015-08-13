@@ -35,12 +35,8 @@ function BossModeLayer:initUI()
 	self.panelMain = cc.uiloader:seekNodeByName(self, "panelMain")
 	self.panelDown = cc.uiloader:seekNodeByName(self, "panelDown")
 
-	local panelWeapon = cc.uiloader:seekNodeByName(self.panelDown, "panelWeapon")
+	local panelWeapon = cc.uiloader:seekNodeByName(self, "panelWeapon")
 	self.panelChapter = cc.uiloader:seekNodeByName(self.panelMain, "panelChapter")
-	self.weaponName   = cc.uiloader:seekNodeByName(self.panelMain, "weaponName")
-
-	local labelRule = cc.uiloader:seekNodeByName(self, "Label_58")
-	labelRule:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
 	--gun
 	self.panelGun = cc.uiloader:seekNodeByName(self.panelMain, "panelGun")
@@ -51,33 +47,15 @@ function BossModeLayer:initUI()
 		self.partsImg[i] = cc.uiloader:seekNodeByName(panelWeapon, "panel0"..i)
 	end
 
-	--label
-	self.skillName = cc.uiloader:seekNodeByName(self.panelMain, "skillName")
-	self.weaponDesc = cc.uiloader:seekNodeByName(self.panelMain, "weaponDesc")
-	self.name = cc.uiloader:seekNodeByName(self.panelMain, "name")
-	self.desc = cc.uiloader:seekNodeByName(self.panelMain, "desc")
-	self.skillName:setColor(cc.c3b(255, 205, 0))
-	self.weaponDesc:setColor(cc.c3b(255, 205, 0))
-	self.name:setColor(cc.c3b(255, 205, 0))
-	self.desc:setColor(cc.c3b(255, 205, 0))
 	--btn
 	self.btnGet = cc.uiloader:seekNodeByName(self, "btnGet")
 	local btnStart = cc.uiloader:seekNodeByName(self, "btnStart")
 	self.btnPre = cc.uiloader:seekNodeByName(self, "btnPre")
 	self.btnNext = cc.uiloader:seekNodeByName(self, "btnNext")
-	local btnClose = cc.uiloader:seekNodeByName(self, "btnClose")
 	self.btnNext:setTouchEnabled(true)
 	self.btnPre:setTouchEnabled(true)
-	btnClose:setTouchEnabled(true)
 	btnStart:setTouchEnabled(true)
 	self.btnGet:setTouchEnabled(true)
-	addBtnEventListener(btnClose, function(event)
-		if event.name == 'began' then
-			return true
-		elseif event.name == 'ended' then
-			self:onClickBtnClose()
-		end
-	end)
 	addBtnEventListener(self.btnNext, function(event)
 		if event.name == 'began' then
 			return true
@@ -167,11 +145,8 @@ function BossModeLayer:refreshContent()
 
 	self.skillIcon:removeAllChildren()
 	local skillIconImg = display.newSprite("#skill2_"..imgName..".png")
+	skillIconImg:setScale(0.8)
 	addChildCenter(skillIconImg, self.skillIcon)
-
-	self.weaponName:removeAllChildren()
-	local weaponName = display.newSprite("#name_"..imgName..".png")
-	addChildCenter(weaponName, self.weaponName)
 
 	--
 	self.panelChapter:removeAllChildren()
@@ -191,15 +166,6 @@ function BossModeLayer:refreshContent()
     end
     self.panelChapter:addChild(bossBtnNode)
 
-    --label
-    self.skillName:setString(self.choseInfo["weaponSkill"])
-    self.weaponDesc:setString(self.choseInfo["weaponSkill"])
-	local info = self.weaponListModel:getWeaponRecord(self.choseInfo["weaponId"])
-	local descString = info["describe"]
-    self.weaponDesc:setString(descString)
-    self.name:setString(self.choseInfo["name"])
-    self.desc:setString(self.choseInfo["desc"])
-
     --btn
     self.btnGet:setButtonEnabled(true)
     local isGetWeapon = self.weaponListModel:isWeaponExist(self.choseInfo["weaponId"])
@@ -209,7 +175,7 @@ function BossModeLayer:refreshContent()
 
     --lingjian
     local alreadyGet = self.bossModeModel:getAlreadyWave(self.choseChapter)
-    for k,v in pairs(self.partsImg) do
+ 	for k,v in pairs(self.partsImg) do
     	local lingjianImg = display.newSprite("#icon_"..imgName.."0"..k..".png")
     	lingjianImg:setColor(cc.c3b(100, 100, 100))
     	if k <= alreadyGet then
@@ -219,7 +185,7 @@ function BossModeLayer:refreshContent()
     		lingjianImg:setColor(cc.c3b(255, 255, 255))
     	end
 
-    	lingjianImg:setScale(1.2)
+    	lingjianImg:setScale(0.75)
     	addChildCenter(lingjianImg,v)
     end
 end
