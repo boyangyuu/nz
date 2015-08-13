@@ -124,6 +124,12 @@ function JujiModeLayer:onClickGoldWeapon()
         self.inlayModel:equipAllInlays()
         self:startGame()	
 	else
+		if device.platform == "ios" then
+			ui:showPopup("commonPopup",
+    				 {type = "style2", content = "黄武不足，请去商城购买"},
+    				 {opacity = 155})
+			return
+		end
 	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
 	    	deneyBuyFunc = handler(self, self.startGame)}, "Juji模式_提示未镶嵌点击单个黄武")
     end
