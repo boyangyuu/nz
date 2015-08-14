@@ -310,15 +310,6 @@ function LevelMapLayer:initFightActLayer()
         actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
         noti_acts:setVisible(false)
     end)
-
-    local userModel = md:getInstance("UserModel")
-    local isNoti = userModel:getUserLevel() >= 5
-
-    if isNoti then
-        noti_acts:setVisible(true)
-    else
-        noti_acts:setVisible(false)
-    end
 end
 
 function LevelMapLayer:initKefuLayer()
