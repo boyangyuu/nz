@@ -20,7 +20,7 @@ Hero.EFFECT_HURT_YAN_EVENT       = "EFFECT_HURT_YAN_EVENT"     --效果_烟雾
 Hero.EFFECT_KEEPKILL_EVENT       = "EFFECT_KEEPKILL_EVENT"     --效果_连杀
 Hero.EFFECT_GUIDE_EVENT          = "EFFECT_GUIDE_EVENT"        --效果_引导
 Hero.EFFECT_FIGHTTIPS_EVENT      = "EFFECT_FIGHTTIPS_EVENT"    --效果_提示
-Hero.TIPS_CLICK_EVENT            = "TIPS_CLICK_EVENT"          --提示
+-- Hero.TIPS_CLICK_EVENT            = "TIPS_CLICK_EVENT"          --提示
 
 --skill
 Hero.SKILL_ADDHP_EVENT            = "SKILL_ADDHP_EVENT"        --效果_加血
@@ -237,7 +237,7 @@ end
 
 function Hero:getDemage()
     local baseDemage = self.gun:getDemage()
-    local value = baseDemage
+    local value = 0
 
     local robot   = md:getInstance("Robot")
     if robot:getIsRoboting() then
@@ -245,20 +245,19 @@ function Hero:getDemage()
     end
     
     --inlay
-    -- local fightInlay = self:getFightInlay()
-    -- local scale, isInlayed = fightInlay:getInlayedValue("bullet")
-    -- if isInlayed then
-    --     value = baseDemage + baseDemage * scale
-    -- else
-    --     value = baseDemage
-    -- end
+    local fightInlay = self:getFightInlay()
+    local scale, isInlayed = fightInlay:getInlayedValue("bullet")
+    if isInlayed then
+        value = baseDemage + baseDemage * scale
+    else
+        value = baseDemage
+    end
 
     --crit
     local critNum = self.gun:getCritPercent() * 100
     if critNum > math.random(0, 100) then 
         value = value * define.kHeroCritScale
     end
-
     return value
 end
 
@@ -313,10 +312,10 @@ function Hero:onHpChange()
             isLessHp = self.isLessHp})
     end
 
-    if (hp / maxHp) < define.kTipsHpBag then 
-        self:dispatchEvent({name = Hero.TIPS_CLICK_EVENT, 
-            id = "hpBag"})
-    end
+    -- if (hp / maxHp) < define.kTipsHpBag then 
+    --     self:dispatchEvent({name = Hero.TIPS_CLICK_EVENT, 
+    --         id = "hpBag"})
+    -- end
 end
 
 function Hero:getIsLessHp()

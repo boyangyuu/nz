@@ -87,9 +87,8 @@ function getConfig( configFileDir )
     local fileUtil = cc.FileUtils:getInstance()
     local fullPath = fileUtil:fullPathForFilename(configFileDir)
     local jsonStr = fileUtil:getStringFromFile(fullPath)
-    -- local decodeJsonStr = crypto.decodeBase64(jsonStr)
-    -- local configTb = json.decode(decodeJsonStr)
-    local configTb = json.decode(jsonStr)
+    local decodeJsonStr = crypto.decodeBase64(jsonStr)
+    local configTb = json.decode(decodeJsonStr)
     assert(configTb, "config is nil , name:"..configFileDir)
     return configTb
 end

@@ -75,7 +75,7 @@ function BaseBossView:refreshBlood(event)
 
 	--guide
 	if persent < define.kGuideActiveJijia then self:checkGuide1() end
-	if persent < define.kTipsJijia then self:checkTips() end
+	-- if persent < define.kTipsJijia then self:checkTips() end
 
 	--init
 	local isIncrease = event.name == Actor.HP_INCREASE_EVENT
@@ -628,13 +628,13 @@ end
 function BaseBossView:onEnter()
 	BaseBossView.super.onEnter(self)
 
-	--tips
-	local fightInlay = md:getInstance("FightInlay")
-	local isGold = fightInlay:getIsNativeGold()
-	if isGold then return end
-	local hero = md:getInstance("Hero")
-	hero:dispatchEvent({name = hero.TIPS_CLICK_EVENT, 
-	        id = "gold"})	
+	-- --tips
+	-- local fightInlay = md:getInstance("FightInlay")
+	-- local isGold = fightInlay:getIsNativeGold()
+	-- if isGold then return end
+	-- local hero = md:getInstance("Hero")
+	-- hero:dispatchEvent({name = hero.TIPS_CLICK_EVENT, 
+	--         id = "gold"})	
 	--
 end
 
@@ -665,12 +665,12 @@ function BaseBossView:checkGuide1()
 	end
 end
 
-function BaseBossView:checkTips()
-	local hero = md:getInstance("Hero")
-	if hero:getHp() < 100 then 
-	    hero:dispatchEvent({name = hero.TIPS_CLICK_EVENT, 
-	        id = "jijia"})
-	end
-end
+-- function BaseBossView:checkTips()
+-- 	local hero = md:getInstance("Hero")
+-- 	if hero:getHp() < 100 then 
+-- 	    hero:dispatchEvent({name = hero.TIPS_CLICK_EVENT, 
+-- 	        id = "jijia"})
+-- 	end
+-- end
 
 return BaseBossView
