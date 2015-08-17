@@ -57,7 +57,6 @@ function JujiModeLayer:initUI()
     display.addSpriteFrames(plist,png)
 
 	self.listViewPlayer = cc.uiloader:seekNodeByName(self, "listViewPlayer")
-	local btnBack = cc.uiloader:seekNodeByName(self, "btnBack")
 	local btnReward = cc.uiloader:seekNodeByName(self, "raward")
 	local btnStart = cc.uiloader:seekNodeByName(self, "start")
 	local playerRank = cc.uiloader:seekNodeByName(self, "rank")
@@ -75,15 +74,6 @@ function JujiModeLayer:initUI()
 	playerRank:setString(myselfRank)
 	self.playerName:setString(myselfRecord["name"])
 	playerPoint:setString(myselfRecord["jujiLevel"]*100 )
-
-	btnBack:setTouchEnabled(true)
-	addBtnEventListener(btnBack, function(event)
-			if event.name == 'began' then
-				return true
-			elseif event.name == 'ended' then
-				self:onClickBtnClose()
-			end
-		end)
 
     btnReward:onButtonPressed(function( event )
         event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
@@ -134,6 +124,12 @@ function JujiModeLayer:onClickGoldWeapon()
         self.inlayModel:equipAllInlays()
         self:startGame()	
 	else
+		if device.platform == "ios" then
+			ui:showPopup("commonPopup",
+    				 {type = "style2", content = "黄武不足，请去商城购买"},
+    				 {opacity = 155})
+			return
+		end
 	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
 	    	deneyBuyFunc = handler(self, self.startGame)}, "Juji模式_提示未镶嵌点击单个黄武")
     end
@@ -162,11 +158,6 @@ function JujiModeLayer:checkNetWork()
 			 {type = "style1",content = "当前网络连接失败，连接网络后排名数据将会统计"},
 			 {opacity = 0})
 	end	
-end
-
-function JujiModeLayer:onClickBtnClose()
-	self.listViewPlayer:setVisible(false)
-	ui:closePopup("JujiModeLayer")
 end
 
 function JujiModeLayer:onClickBtnReward()

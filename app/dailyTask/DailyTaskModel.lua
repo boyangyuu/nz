@@ -107,4 +107,13 @@ function DailyTaskModel:isTaskGetted(index)
 	return data.dailyTask.awardedTasks[index] == true
 end
 
+function DailyTaskModel:resetDailyTask()
+	local data = getUserData()
+	for k,v in pairs(data.dailyTask.tasks) do
+		data.dailyTask.tasks[k] = 0
+	end
+	data.dailyTask.awardedTasks = {}
+	setUserData(data)
+end
+
 return DailyTaskModel

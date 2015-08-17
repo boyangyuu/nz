@@ -61,12 +61,13 @@ end
 
 function Gun:getCooldown()
 	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
-	local baseValue = 1 / self.config.coolDown
+	local baseValue = self.config.coolDown
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
 	local value = scale * baseValue
 
 	local value = self:justCooldownValue(value)
+	dump(value)
 	return value
 end
 
@@ -110,13 +111,14 @@ function Gun:getBulletNum()
 	assert(self.config.bulletNum, "bulletNum is nil bagIndex:"..self.bagIndex)
 	local baseValue = self.config.bulletNum
 	local value = 0.0
-    -- local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
-    -- if isInlayed then
-    --     value = baseValue + baseValue * inlayValue
-    -- else
-    value = baseValue
-    -- end	
+    local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
+    if isInlayed then
+        value = baseValue + baseValue * inlayValue
+    else
+	    value = baseValue
+    end	
     value = math.floor(value)
+    dump(value,"Gun:getBulletNum()")
 	return value
 end
 
@@ -134,22 +136,32 @@ function Gun:isFireThrough()
 end
 
 function Gun:getReloadTime()
-	local value = self.config.reloadTime
-	local fightInlay = md:getInstance("FightInlay")
-	local isGold = fightInlay:getIsActiveGold()
-	if isGold then value = 1 end 		
+	-- local value = self.config.reloadTime
+	-- local fightInlay = md:getInstance("FightInlay")
+	-- local isGold = fightInlay:getIsActiveGold()
+	-- if isGold then value = 1 end 		
+	-- return value
+	local baseValue = self.config.reloadTime
+	local value = 0.0 
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("speed")
+    if isInlayed then
+        value = baseValue - baseValue * inlayValue
+    else
+        value = baseValue
+    end		
+    dump(value,"Gun:getReloadTime()")
 	return value
 end
 
 function Gun:getCritPercent()
-	local value = (self.config["crit"] - 1)
-
-	-- local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
- --    if isInlayed then
- --        value = 0.00 + inlayValue
- --    else
- --        value = 0.00
- --    end		
+	local value
+	-- local value = (self.config["crit"] - 1)
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
+    if isInlayed then
+        value = 0.00 + inlayValue
+    else
+        value = 0.00
+    end		
  	return value
 	-- return value	
 end

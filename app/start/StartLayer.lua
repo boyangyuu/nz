@@ -303,11 +303,11 @@ function StartLayer:onEnter()
     guide:checkGuideUM("login")
 
     --gonggao
-    --[[
     if device.platform ~= "ios" then
         ui:showPopup("AboutPopup",{popupName = "gonggao_1"}, {animName = "normal"})
+    elseif device.platform == "ios" then
+        ui:showPopup("AboutPopup",{popupName = "gonggao_2"}, {animName = "normal"})            
     end
-    ]]
     
     
     --login award 服务器请求不能与loadccd并行！！

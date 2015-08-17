@@ -58,6 +58,11 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 		data.diamond = data.diamond - diamond 
 		setUserData(data)
 		self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
+	
+		--dailyTask
+		local dailyTask = md:getInstance("DailyTaskModel")
+		dailyTask:setTaskTimes("buyTimes",data.dailyTask.tasks.buyTimes+diamond)	
+
 		return true
 	else
 		if isBuy then 

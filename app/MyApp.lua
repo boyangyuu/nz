@@ -154,7 +154,7 @@ function MyApp:createGameStateFile()
         --开启的关卡
         currentlevel =  {
             group = 1,
-            level = 6,
+            level = 1,
         },
 
         bossMode = {
@@ -177,37 +177,37 @@ function MyApp:createGameStateFile()
             --记得和 filldata对应!
 
             --登陆
-            login           = true,
+            login           = false,
             --前戏
-            preStory        = true,
+            preStory        = false,
             --第0-0关之内
-            fight01_move    = true,
-            fight01_fire    = true,
-            fight01_lei     = true,
-            fight01_skill   = true,
-            fight01_gold    = true,
-            fight01_change  = true,
-            fight01_jijia   = true, 
+            fight01_move    = false,
+            fight01_fire    = false,
+            fight01_lei     = false,
+            fight01_skill   = false,
+            fight01_gold    = false,
+            fight01_change  = false,
+            fight01_jijia   = false, 
 
             --第0-0关之后  
-            afterfight01    = true,   -- 进入下一关
+            afterfight01    = false,   -- 进入下一关
          
             --第1-1之内
-            fight_change    = true,
-            fight_dun       = true,
+            fight_change    = false,
+            fight_dun       = false,
 
             --第1-2关之前
-            xiangqian       = true,   --镶嵌一套青铜
+            xiangqian       = false,   --镶嵌一套青铜
 
             --第1-3关之前
-            weapon          = true,   -- 升级武器
-            afterfight03    = true,   -- 回到主界面
+            weapon          = false,   -- 升级武器
+            afterfight03    = false,   -- 回到主界面
             
             --第1-5关之内
-            fightJu         = true,  
+            fightJu         = false,  
 
             --第1-4失败之后
-            fightRelive     = true,                      
+            fightRelive     = false,                      
         },
         fight = {
            isPreferBag1 = true,
@@ -246,17 +246,16 @@ function MyApp:createGameStateFile()
         },
         dailyTask = {
             tasks = {
-                buyTimes = 2,   --购买次数
-                keepKill = 40,   --连杀次数
-                totalKill = 100,  --总杀次数
-                fight_xianShi = 1, --限时模式
+                buyTimes = 0,   --购买次数
+                keepKill = 0,   --连杀次数
+                totalKill = 0,  --总杀次数
+                fight_xianShi = 0, --限时模式
                 fight_renZhi = 0, --人质模式
-                fight_taoFan = 1, --逃犯模式
+                fight_taoFan = 0, --逃犯模式
                 fight_puTong = 0, --普通模式
             },
             awardedTasks = {
                 -- index1 = true,
-
             },
         },            
     }

@@ -49,6 +49,33 @@ configs["baleite"] = {
 	},	
 }
 
+configs["baojun"] = {
+
+	skill1 = {
+		animName = "skill_bj",
+	    buffFunc = function ()
+	    	local gunId = 9
+		    local weaponModel = md:getInstance("WeaponListModel")
+		    local level 	  = weaponModel:getIntenlevel(11) 
+			local demage = 15000 + 1000 * level   --实际伤害(15000+1000*等级)*3次
+			local buffData = {
+				buffAnimName  = "hqljn_mz",
+				value = demage,
+			}
+			local enemyM = md:getInstance("EnemyManager")
+			local function buffFunc()
+				enemyM:doBuff("doBuffAll_decreaseHp", buffData)
+			end	
+			local delay = 0.0
+			for i=1, 3 do
+				delay = delay + 0.3
+				scheduler.performWithDelayGlobal(buffFunc, delay)
+			end
+	    end,
+		cd       = 30.0, 
+	},
+}
+
 
 function GunConfigs.getConfig(gunName)
 	return configs[gunName]

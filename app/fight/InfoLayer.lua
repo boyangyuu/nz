@@ -17,7 +17,7 @@ function InfoLayer:ctor()
     local fightFactory  = md:getInstance("FightFactory")
     self.fight 			= fightFactory:getFight()
 	self.inlay 			= md:getInstance("FightInlay")
-	self.fightTippedIds = {}
+	-- self.fightTippedIds = {}
 
 	cc.EventProxy.new(self.hero, self)
 		:addEventListener(Hero.GUN_CHANGE_EVENT		, handler(self, self.onRefreshGun))
@@ -25,7 +25,7 @@ function InfoLayer:ctor()
 		:addEventListener(Hero.HP_INCREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.HP_DECREASE_EVENT	, handler(self, self.onHeroHpChange))
 		:addEventListener(Hero.EFFECT_FIGHTTIPS_EVENT, handler(self, self.playAnimFightTips))
-		:addEventListener(Hero.TIPS_CLICK_EVENT		, handler(self, self.playAnimFightTipsClick))
+		-- :addEventListener(Hero.TIPS_CLICK_EVENT		, handler(self, self.playAnimFightTipsClick))
 
 	cc.EventProxy.new(self.fight, self)
 		:addEventListener(self.fight.INFO_HIDE_EVENT, handler(self, self.onHide))
@@ -203,35 +203,35 @@ function InfoLayer:playAnimFightTips(event)
     self:performWithDelay(removeFunc, 3.0)	    
 end
 
-function InfoLayer:playAnimFightTipsClick(event)
-	print("function infolayer:playAnimFightTipsClick(event)")
-	local id = event.id 
-	if self.fightTippedIds[id] == "isTiped" then return end
-	self.fightTippedIds[id] = "isTiped"
-	local tips = {
-		gold  = {pos = cc.p(10, 10)},
-		jijia = {pos = cc.p(110, 110)},
-		hpBag = {pos = cc.p(110, 110)},
-	}
-	local tipCfg = tips[id]
-	assert(tipCfg, "tipCfg is nil" .. id)
+-- function InfoLayer:playAnimFightTipsClick(event)
+-- 	print("function infolayer:playAnimFightTipsClick(event)")
+-- 	local id = event.id 
+-- 	if self.fightTippedIds[id] == "isTiped" then return end
+-- 	self.fightTippedIds[id] = "isTiped"
+-- 	local tips = {
+-- 		gold  = {pos = cc.p(10, 10)},
+-- 		jijia = {pos = cc.p(110, 110)},
+-- 		hpBag = {pos = cc.p(110, 110)},
+-- 	}
+-- 	local tipCfg = tips[id]
+-- 	assert(tipCfg, "tipCfg is nil" .. id)
 
-	--res
-    local manager = ccs.ArmatureDataManager:getInstance()   
-    manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.ExportJson")
-    display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
-        "res/xinshou/yd_dianji/yd_dianji0.png")	
-	local armature = ccs.Armature:create("yd_dianji")
-	armature:getAnimation():play("yd_dianji" , -1, 1)
-	armature:setPosition(tipCfg.pos.x, tipCfg.pos.y)
-	self:addChild(armature)
+-- 	--res
+--     local manager = ccs.ArmatureDataManager:getInstance()   
+--     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.ExportJson")
+--     display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
+--         "res/xinshou/yd_dianji/yd_dianji0.png")	
+-- 	local armature = ccs.Armature:create("yd_dianji")
+-- 	armature:getAnimation():play("yd_dianji" , -1, 1)
+-- 	armature:setPosition(tipCfg.pos.x, tipCfg.pos.y)
+-- 	self:addChild(armature)
     
-    local removeFunc = function ()
-		armature:removeSelf()
-		armature = nil
-    end
-    self:performWithDelay(removeFunc, 3.0)		
-end
+--     local removeFunc = function ()
+-- 		armature:removeSelf()
+-- 		armature = nil
+--     end
+--     self:performWithDelay(removeFunc, 3.0)		
+-- end
 
 function InfoLayer:onEnter()
 

@@ -24,16 +24,27 @@ end
 
 function DailyTaskLayer:initUI()
     self:initListUI()
+    self:checkNetWork()
+end
+
+function DailyTaskLayer:checkNetWork()
+    local isAvailable = network.isInternetConnectionAvailable()
+    if isAvailable then
+        print("network isAvailable")
+    else
+        ui:showPopup("commonPopup",
+             {type = "style1",content = "当前网络连接失败，请确保网络连接正常"},
+             {opacity = 0})
+    end 
 end
 
 function DailyTaskLayer:initListUI()
     local datas = self.model:getSortedDatas()   
-    dump(datas, "DailyTaskLayer:initListUI() datas")
     for i,data in ipairs(datas) do
         local item = self.listTasks:newItem()
         local content = DailyTaskCell.new(data["index"])
         item:addContent(content)
-        item:setItemSize(910, 115)
+        item:setItemSize(900, 90)
         self.listTasks:addItem(item)
     end
     self.listTasks:reload()    

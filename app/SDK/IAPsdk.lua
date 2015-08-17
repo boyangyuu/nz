@@ -138,7 +138,7 @@ function IAPsdk:pay(configId)
 	
 	if device.platform == 'ios' then
 		self:pay_ios(configId)
-	elseif device.platform == 'windows' or 'mac' then
+	elseif device.platform == 'windows' or device.platform == 'mac' then
 		self:pay_win()
 	elseif device.platform == 'android' then
 		self:pay_android(configId)

@@ -6,7 +6,7 @@ local WeaponListLayer = class("WeaponListLayer", function()
 end)
 
 local kMaxBullet = 200
-local kMaxCrit = 100
+local kMaxCrit = 1.5
 local kMaxSpeed = 1
 
 function WeaponListLayer:ctor()
@@ -371,7 +371,7 @@ function WeaponListLayer:refreshComment()
         self.layerGun:addChild(weaponImg)
     end
 
-    if self.weaponRecord["cost"] == 900 then
+    if self.weaponRecord["id"] == 9 then
         self.labelNote:setVisible(true)
     else
         self.labelNote:setVisible(false)
@@ -579,11 +579,11 @@ function WeaponListLayer:refreshBtns()
         self.btnOncefull:setVisible(false)
         self.btnUpgrade:setVisible(false)
         self.btnEquip:setVisible(false)
-        -- if self.weaponRecord["cost"] == 0 then
-        --     self.btnBuy:setVisible(false)
-        -- else
+        if self.weaponRecord["cost"] == 0 then
+            self.btnBuy:setVisible(false)
+        else
             self.btnBuy:setVisible(true)
-        -- end
+        end
     end
     if self.weaponListModel:getWeaponStatus(weaponid) ~= 0 then
         self.btnEquiped:setVisible(true)

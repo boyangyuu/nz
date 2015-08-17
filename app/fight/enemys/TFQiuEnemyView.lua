@@ -52,7 +52,6 @@ function TFQiuEnemyView:playMoveToNext()
     local data    = self.posDatas[self.posIndex]
     local direct  = self.posDatas["direct"]
     if data == nil then 
-        print("АлїЄ")
         self:exit()
         return
     end 

@@ -198,6 +198,12 @@ function RootLayer:addResHome()
     local png   = "res/WeaponList/iconblt_tx/iconblt_tx0.png"
     self:addFrameRes(plist, png)     
 
+    local bjsrc = "res/WeaponList/iconbj_tx/iconbj_tx.ExportJson"
+    self:addArmatureRes(bjsrc)
+    local plist = "res/WeaponList/iconbj_tx/iconbj_tx0.plist"
+    local png   = "res/WeaponList/iconbj_tx/iconbj_tx0.png"
+    self:addFrameRes(plist, png)   
+
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.ExportJson"
     self:addArmatureRes(thjbxsrc)
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"

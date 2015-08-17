@@ -24,7 +24,7 @@ function DailyTaskCell:refreshUI()
 	end
 	self.ui = cc.uiloader:load("res/dailyTask/item.ExportJson")
     self:addChild(self.ui)  	
-
+	self.ui:setPosition(0, 0)
     self.property = self.model:getTaskData(self.index)
 	--label
 	local str = self.property["str"]
@@ -41,7 +41,7 @@ function DailyTaskCell:refreshUI()
 	--award value
 	local awardValue     = self.property["awardValue"]
 	local label_awardNum = cc.uiloader:seekNodeByName(self.ui, "awardNum")
-	label_awardNum:setString(awardValue)
+	label_awardNum:setString("X"..awardValue)
 
 	--progress
 	local pers = self.property["curValue"] / self.property["limit"] * 100
@@ -55,21 +55,53 @@ function DailyTaskCell:refreshUI()
 	local bg1    = cc.uiloader:seekNodeByName(self.ui, "bg1")
 	local bg2    = cc.uiloader:seekNodeByName(self.ui, "bg2")
 	local btn    = cc.uiloader:seekNodeByName(self.ui, "btnGet")
+	local label_jl = cc.uiloader:seekNodeByName(self.ui, "jiangli")
 
+
+    function setUI()
+        bg2:setVisible(true)
+        label_str:setColor(cc.c3b(111, 31, 61))
+        label_jl:setColor(cc.c3b(121, 31, 61))
+        label_jl:setPosition(cc.p(300, 30))
+        progress:setVisible(false)
+        icon_gold:setPosition(cc.p(390, 25))
+        icon_diamond:setPosition(cc.p(390, 25))
+        icon_gold:setScale(0.8)
+        icon_diamond:setScale(0.8)
+        label_awardNum:setPosition(cc.p(420, 30))
+        label_awardNum:setColor(cc.c3b(111, 31, 61))
+    end
     if isGetted then 
-    	bg2:setVisible(true)
-    	btn:setButtonImage(btn.NORMAL, "btn_rwlingqu_3.png")
+    	setUI()
+    	btn:setButtonEnabled(false)
     elseif isCanGet then 
-    	bg2:setVisible(true)
-    	btn:setButtonImage(btn.NORMAL, "btn_rwlingqu_1.png")
+        setUI()
     else
     	bg1:setVisible(true)
-    	btn:setButtonImage(btn.NORMAL, "btn_rwlingqu_2.png")
+    	btn:setVisible(false)
     end
 
 	btn:onButtonClicked(function()
-         self:onClickGet()
+        local isAvailable = network.isInternetConnectionAvailable()
+        if isAvailable then
+            self:onClickGet()
+        else
+            ui:showPopup("commonPopup",
+                 {type = "style1",content = "请正常连接网络后，再领取"},
+                 {opacity = 0})
+        end
     end)
+end
+
+function DailyTaskCell:checkNetWork()
+    local isAvailable = network.isInternetConnectionAvailable()
+    if isAvailable then
+        print("network isAvailable")
+    else
+        ui:showPopup("commonPopup",
+             {type = "style1",content = "当前网络连接失败，请确保网络连接正常"},
+             {opacity = 0})
+    end 
 end
 
 function DailyTaskCell:onClickGet()
