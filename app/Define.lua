@@ -47,7 +47,7 @@ Define.kTufeiWalkTime			= 0.6      --行走时间
 Define.kBangrenSpeed			= 200	   --逃跑速度
 
 --逃犯兵
-Define.kQiufanSpeed             = 200       --逃跑速度
+Define.kQiufanSpeed             = 100       --逃跑速度
 Define.kQiufanJuSpeed           = 80        --逃跑速度
 Define.kQiufanSanSpeed 		    = 50.0 		--伞降落速度
 

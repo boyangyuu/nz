@@ -484,7 +484,7 @@ local waves = {
 	},		
 }
 
---enemy的关卡配置                    无镶嵌 MP5伤害65  dps大于等于1 怪物数据
+--enemy的关卡配置                     MP5伤害65  dps大于等于1 怪物数据
 local enemys = {
 
 	--普通兵
