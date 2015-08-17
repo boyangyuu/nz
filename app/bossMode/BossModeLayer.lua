@@ -300,8 +300,6 @@ function BossModeLayer:startGame()
 	local fightData = {groupId = 50, levelId = 1, 
 		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
-	ui:closePopup("BossModeLayer")
-
 end
 function BossModeLayer:onClickBtnGet()
 	self.bossModeModel:setWeapon(self.choseChapter)

@@ -137,7 +137,9 @@ function Fight:updateTaskData()
     local waveCfg  = map:getCurWaveConfig()
     local modeType = waveCfg:getFightMode().type 
     local taskType = "fight_"..modeType
-    dailyTask:addTaskTimes(taskType) 
+    if modeType == "xianShi" or modeType == "renZhi" or modeType == "taoFan" or modeType == "puTong" then
+        dailyTask:addTaskTimes(taskType) 
+    end
 end
 
 function Fight:getFightedLevelData(levelInfo)

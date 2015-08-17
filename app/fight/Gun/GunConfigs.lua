@@ -67,10 +67,10 @@ configs["baojun"] = {
 				enemyM:doBuff("doBuffAll_decreaseHp", buffData)
 			end	
 			local delay = 0.0
-			for i=1, 3 do
-				delay = delay + 0.3
+			-- for i=1, 3 do
+			-- 	delay = delay + 0.3
 				scheduler.performWithDelayGlobal(buffFunc, delay)
-			end
+			-- end
 	    end,
 		cd       = 30.0, 
 	},
