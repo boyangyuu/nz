@@ -318,6 +318,17 @@ local waves = {
 				},
 			},
 			{
+				time = 6,
+				num = 4,
+				delay = {0.1,0.7,1.2,1.8},
+				pos = {510,630,820,970},					
+				property = {
+					placeName = "place2",  
+					startState = "rollleft",
+					id = 1,
+				},
+			},
+			{
 				time = 7,
 				num = 4,
 				delay = {0.1,0.7,1.2,1.8},
@@ -326,6 +337,20 @@ local waves = {
 					placeName = "place2",  
 					startState = "rollleft",
 					id = 1,
+				},
+			},
+			{                                                       
+				time = 8,
+				num = 2,
+				delay = {0.2,0.9},
+				pos = {333,700},
+				property = {
+					placeName = "place2",
+					startState = "rollleft",
+					id = 6,
+					type = "dao",
+					missileId = 7,
+					missileType = "lei",
 				},
 			},
 			{                                                       
@@ -343,6 +368,17 @@ local waves = {
 				},
 			},
 			{
+				time = 10,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
 				time = 11,
 				num = 5,
 				delay = {0.1,0.7,1.2,1.7,2.2},
@@ -354,7 +390,7 @@ local waves = {
 				},
 			},
 			{
-				time = 13,
+				time = 12,
 				num = 3,
 				delay = {0.1,0.7,1.2},
 				pos = {470,550,620},					
@@ -368,7 +404,18 @@ local waves = {
 				},
 			},
 			{
-				time = 15,
+				time = 13,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 14,
 				num = 3,
 				delay = {0, 0.6, 1.3},
 				pos = {300,460,530},	
@@ -379,7 +426,18 @@ local waves = {
 				},
 			},
 			{
-				time = 17,
+				time = 15,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 16,
 				num = 3,
 				delay = {0, 0.6, 1.3},
 				pos = {760,820,900},	
@@ -388,9 +446,20 @@ local waves = {
 					startState = "rollleft",
 					id = 1,
 				},
+			},
+			{
+				time = 17,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
 			},	
 			{
-				time = 19,
+				time = 18,
 				num = 3,
 				delay = {0.2,0.9, 1.4},
 				pos = {580,650,800},					
@@ -401,7 +470,18 @@ local waves = {
 				},
 			},
 			{
-				time = 21,
+				time = 19,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 20,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {580,750},					
@@ -415,7 +495,18 @@ local waves = {
 				},
 			},	
 			{
-				time = 23,	
+				time = 21,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 22,	
 				num = 1,
 				pos = {300},
 				delay = {0.5},
@@ -429,7 +520,18 @@ local waves = {
 				},
 			},
 			{
-				time = 25,
+				time = 23,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 24,
 				num = 4,
 				delay = {0.1,0.7,1.2,1.8},
 				pos = {510,630,820,970},					
@@ -440,7 +542,18 @@ local waves = {
 				},
 			},
 			{
-				time = 27,
+				time = 25,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 26,
 				num = 3,
 				delay = {0, 0.6, 1.3},
 				pos = {300,460,530},	
@@ -452,6 +565,17 @@ local waves = {
 			},
 			{
 				time = 27,
+				num = 5,
+				delay = {0.1,0.7,1.2,1.7,2.2},
+				pos = {230,310,480,600,680},					
+				property = {
+					placeName = "place2",  
+					startState = "rollright",
+					id = 1,
+				},
+			},
+			{
+				time = 28,
 				num = 2,
 				delay = {0.2,0.9},
 				pos = {580,750},					
@@ -470,7 +594,7 @@ local waves = {
 
 }
 
---enemy的关卡配置                            mp5伤害65  打击者青铜头盔恢复2 怪物dps大于等于2 怪物数据
+--enemy的关卡配置                            mp5  1级 伤害65  打击者青铜头盔恢复2 怪物dps大于等于2 怪物数据
 local enemys = {
 	--普通兵
 	{id=1,image="anim_enemy_002",demage=8,hp=165,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,
@@ -510,7 +634,7 @@ function waveClass:ctor()
 		-- saveNums  = 4,                 --解救人质数量
 
 		type 	  = "xianShi",
-		limitTime = 80,                   --限时模式时长
+		limitTime = 70,                   --限时模式时长
 		-- limitTime = 10, 
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量

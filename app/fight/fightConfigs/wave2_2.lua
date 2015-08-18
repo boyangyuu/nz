@@ -319,7 +319,7 @@ local waves = {
 					missileType = "daodan",
 					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
 					startState = "enterleft",
-					lastTime = 40.0,		                                    --持续时间			
+					lastTime = 0,		                                    --持续时间			
 				},
 			},
 			{ 
@@ -415,12 +415,12 @@ local enemys = {
 	weak1=1},
 
 	--囚犯            type = "taofan_qiu",
-	{id=4,image="qiufan",demage=5,hp=550,
+	{id=4,image="qiufan",demage=5,hp=270,
 	weak1=4, weak4=4},
 
 
 	--飞机         type = "feiji" ,
-	{id=11,image="feiji",demage=0,hp=1500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
+	{id=11,image="feiji",demage=0,hp=500, walkRate=180,walkCd = 2.0,rollRate=120, rollCd = 1.5, fireRate=60, fireCd=4.0,
 	weak1=2.0,    award = 60},
 
 	--导弹          --missileType = "daodan",

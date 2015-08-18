@@ -170,6 +170,7 @@ function FightDescLayer:initEnemyIntro(enemyID)
     display.addSpriteFrames(plist, png)  
 
     --add
+     if enemyID == "bangren" then enemyID = "hs" end
     local armature = ccs.Armature:create(enemyID)
     armature:setScale(define.kEnemyAnimScale)
     addChildCenter(armature, playanim)

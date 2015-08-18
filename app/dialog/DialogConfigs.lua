@@ -9,7 +9,7 @@ kDialogConfig["group0"] = {
 		},	
 
 		after = {
-			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊！你用“麒麟之怒”的姿势真的真的好帅啊！！", pos = "right"},		
+			{role = "安琪儿",imgname = "role_anqi", msg = "好厉害啊！你用“麒麟之怒”真的好帅啊！！", pos = "right"},		
 			{role = "夜玫瑰",imgname = "role_yemeigui", msg = "废话，谁用“麒麟之怒”都帅", pos = "left"},
 			{role = "安琪儿",imgname = "role_anqi", msg = "阿杰，想得到这把酷酷的武器的话，现在就可以领取哦！！", pos = "right"},		
 		},			
