@@ -149,7 +149,7 @@ function GunView:stopFire()
 		self.qkzd:setVisible(false)
 	end
 
-	self:playIdle()
+	-- self:playIdle()
 end
 
 function GunView:playChange(event)
