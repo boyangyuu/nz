@@ -279,7 +279,7 @@ function LevelMapLayer:initUI_dacuGift()
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
             strPos   = "地图界面_点击限时大促",
-            stoneCost = 900},
+            stoneCost = 450},
             {animName = "shake"})        
     end)
 end

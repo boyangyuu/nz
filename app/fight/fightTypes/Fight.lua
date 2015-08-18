@@ -326,7 +326,7 @@ function Fight:onDialogAfterEnd()
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
             strPos   = "战斗结束_自动弹出限时大促",
-            stoneCost = 900, 
+            stoneCost = 450, 
             closeAllFunc = handler(self, self.startFightResult),
             },
             {animName = "shake"})    
@@ -334,8 +334,7 @@ function Fight:onDialogAfterEnd()
     end
 
 
-    if (self.groupId == 1 and self.levelId == 2) or 
-        (self.groupId == 1 and self.levelId == 6) then 
+    if (self.groupId == 1 and self.levelId == 2) then 
         --ad 1-2 
         local buyModel = md:getInstance("BuyModel")
         if not buyModel:checkBought("weaponGiftBag") then 

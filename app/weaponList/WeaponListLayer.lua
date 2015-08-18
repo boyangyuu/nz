@@ -253,7 +253,7 @@ function WeaponListLayer:buyWeaponByStone()
         ui:showPopup("GiftBagStonePopup", 
             {ccsName = "GiftBag_Xianshidacu",
             strPos   = "武器库_购买火麒麟",
-            stoneCost = 900, 
+            stoneCost = 450, 
             })
         return
     end

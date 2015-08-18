@@ -67,6 +67,22 @@ configs = {
 		awardType = "coin",
 		str  = "1000杀敌",	
 	},
+	{
+		index = "totalKill3",
+		type  = "totalKill",
+		limit = 2000,
+		awardValue= 20000,
+		awardType = "coin",
+		str  = "2000杀敌",	
+	},
+	{
+		index = "totalKill4",
+		type  = "totalKill",
+		limit = 3000,
+		awardValue= 30000,
+		awardType = "coin",
+		str  = "3000杀敌",	
+	},
 	{	
 		index = "fight_xianShi1",
 		type  = "fight_xianShi",
