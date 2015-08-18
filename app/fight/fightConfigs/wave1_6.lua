@@ -4,19 +4,30 @@ local waveClass = class("waveClass", BaseWave)
 local waves = {
 	{
 		enemys = {
+
 			{
-				descId = "hs", --简介
 				time = 3,
 				num = 1,
-				pos = {600},                               
-				delay = {4},                            
-				property = { 
-					id = 10,
-					type = "renzhi",
-					placeName = "place4",
-					startState = "enterleft", 
-					lastTime = 7,                       -- 人质离开时间
-					                    			     -- 人质
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质1",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place11",
+					id = 5,
+				},
+			},
+			{
+				descId = "bangren", --简介
+				time = 3,
+				num = 1,
+				delay = {0},
+				pos = {700},
+				property = {
+					renzhiName = "人质1",     --  一组统一标示
+					type = "bangren",
+					placeName = "place11",
+					id = 6,
 				},
 			},
             {
@@ -104,30 +115,6 @@ local waves = {
 				},
 			},
 			{
-				time = 16,
-				num = 1,
-				delay = {0},
-				pos = {700},
-				property = {
-					renzhiName = "人质4",      --  一组统一标示
-					type = "bangfei",
-					placeName = "place10",
-					id = 5,
-				},
-			},
-			{
-				time = 16,
-				num = 1,
-				delay = {0},
-				pos = {700},
-				property = {
-					renzhiName = "人质4",     --  一组统一标示
-					type = "bangren",
-					placeName = "place10",
-					id = 6,
-				},
-			},
-			{
 				time = 17,
 				num = 1,
 				delay = {1},
@@ -157,65 +144,34 @@ local waves = {
 
 	
 	{
-	    --体验枪
-		gunData = 
-			{ 
-			    id = 8,    --枪id
-			    delay = 3, --10s之后出现
-		    },
+
 		enemys = {
 			{
-				time = 2,
+				time = 12,
 				num = 1,
 				delay = {0},
 				pos = {700},
 				property = {
-					renzhiName = "人质1",      --  一组统一标示
+					renzhiName = "人质2",      --  一组统一标示
 					type = "bangfei",
 					placeName = "place11",
 					id = 5,
 				},
 			},
 			{
-				time = 2,
+				time = 12,
 				num = 1,
 				delay = {0},
 				pos = {700},
 				property = {
-					renzhiName = "人质1",     --  一组统一标示
+					renzhiName = "人质2",     --  一组统一标示
 					type = "bangren",
 					placeName = "place11",
 					id = 6,
 				},
-			},	
-
-
+			},		
 			{
 				time = 3,
-				num = 1,
-				delay = {0.1},
-				pos = {0},                                 --不用改
-				property = {
-					placeName = "place10",
-					startState = "enterleft",
-					type = "shangren",	
-					id = 16,
-					data = {
-						{
-							pos = 230,                  --第一次蹲下的位置
-							time = 3,                   --第一次蹲下的时间
-							direct = "right",           --往那面跑
-						},
-						{
-							pos = 530,
-							time = 3,
-							direct = "right",							
-						},					
-					},
-				},
-			},	
-			{
-				time = 4,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -319,72 +275,9 @@ local waves = {
                                                                                        --第二波20个怪
 	{
 		enemys = {
+	
 			{
 				time = 2,
-				num = 1,
-				delay = {0},
-				pos = {300},
-				property = {
-					renzhiName = "人质2",      --  一组统一标示
-					type = "bangfei",
-					placeName = "place4",
-					id = 5,
-				},
-			},
-			{
-				time = 2,
-				num = 1,
-				delay = {0},
-				pos = {300},
-				property = {
-					renzhiName = "人质2",     --  一组统一标示
-					type = "bangren",
-					placeName = "place4",
-					id = 6,
-				},
-			},
-
-			{
-				time = 2.5,
-				num = 1,
-				delay = {0},
-				pos = {0},                                 --不用改
-				property = {
-					placeName = "place10",
-					startState = "enterleft",
-					type = "shangren",	
-					id = 16,
-					data = {
-						{
-							pos = 630,                  --第一次蹲下的位置
-							time = 3,                   --第一次蹲下的时间
-							direct = "right",           --往那面跑
-						},		
-					},
-				},
-			},	
-
-			{
-				time = 3.5,
-				num = 1,
-				delay = {0.1},
-				pos = {0},                                 --不用改
-				property = {                               --黄衣人质
-					placeName = "place11",
-					startState = "enterleft",
-					type = "shangren",	
-					id = 16,
-					data = {
-						{
-							pos = 1000,
-							time = 3,
-							direct = "right",							
-						},						
-					},
-				},
-			},	
-			{
-				time = 5,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,350,400,600},					
@@ -396,7 +289,7 @@ local waves = {
 				},
 			},	
 			{
-				time = 8,
+				time = 6,
 				num = 4,
 				delay = {0.7,1.4, 2.1,2.8},
 				pos = {300,400,600,700},					
@@ -405,31 +298,6 @@ local waves = {
 					type = "common",
 					startState = "san",
 					id = 1,
-				},
-			},
-			{
-
-				time = 8,
-				num = 1,
-				delay = {0},
-				pos = {960},
-				property = {
-					renzhiName = "人质3",      --  一组统一标示
-					type = "bangfei",
-					placeName = "place10",
-					id = 5,
-				},
-			},
-			{
-				time = 8,
-				num = 1,
-				delay = {0},
-				pos = {960},
-				property = {
-					renzhiName = "人质3",     --  一组统一标示
-					type = "bangren",
-					placeName = "place10",
-					id = 6,
 				},
 			},
 			{
@@ -456,6 +324,30 @@ local waves = {
 				},
 			},
 			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {300},
+				property = {
+					renzhiName = "人质3",      --  一组统一标示
+					type = "bangfei",
+					placeName = "place4",
+					id = 5,
+				},
+			},
+			{
+				time = 12,
+				num = 1,
+				delay = {0},
+				pos = {300},
+				property = {
+					renzhiName = "人质3",     --  一组统一标示
+					type = "bangren",
+					placeName = "place4",
+					id = 6,
+				},
+			},
+			{
 				time = 13,
 				num = 2,
 				delay = {0.5,1},
@@ -472,7 +364,7 @@ local waves = {
 	    },		
 	}
 }
---enemy的关卡配置                        mp5伤害65  青铜镶嵌   3枪伤害195  4枪伤害260 dps<1
+--enemy的关卡配置                       mp5  4级 伤害95     3枪伤害285   dps<1
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=4,hp=327,walkRate=180,walkCd=2,rollRate=180,rollCd=2,fireRate=180,fireCd=4,

@@ -123,7 +123,7 @@ local waves = {
 	},				
 }
 
---enemy的关卡配置                        mp5伤害55  青铜头盔恢复2 怪物dps大于等于2 怪物数据
+--enemy的关卡配置                        mp5  0级 伤害55  青铜头盔恢复2 怪物dps大于等于2 怪物数据
 local enemys = {
 	--普通兵                                      140--左右移动距离       280--滚动距离
 	{id=1,image="anim_enemy_002",demage=6,hp=165,walkCd=2,rollCd=3,fireCd=3,

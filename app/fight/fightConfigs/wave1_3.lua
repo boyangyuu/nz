@@ -3,6 +3,12 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 	{
+				    --体验枪
+		gunData = 
+			{ 
+			    id = 8,    --枪id
+			    delay = 3, --10s之后出现
+		    },
 		enemys = {
 -------------- 汽油桶配置 ----------------------
 			{
@@ -17,6 +23,7 @@ local waves = {
 				},
 			},
 ----------------------------------------------	
+
 			{
 				time = 1,
 				num = 1,
@@ -484,7 +491,7 @@ local waves = {
 	},		
 }
 
---enemy的关卡配置                     MP5伤害65  dps大于等于1 怪物数据
+--enemy的关卡配置                     mp5  2级 伤害55  dps大于等于1 怪物数据
 local enemys = {
 
 	--普通兵
