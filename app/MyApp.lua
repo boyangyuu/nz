@@ -148,8 +148,8 @@ function MyApp:createGameStateFile()
 
         weaponsuipian = {},
 
-        money = 20000000,
-        diamond = 1000000,
+        money = 2000,
+        diamond = 0,
         
         --开启的关卡
         currentlevel =  {
