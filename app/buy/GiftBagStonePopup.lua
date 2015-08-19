@@ -60,12 +60,6 @@ function GiftBagStonePopup:initButtons()
          self:onClickClose()
     end)
 
-	--tousu
-	local btnTousu = cc.uiloader:seekNodeByName(self.ui, "btn_tousu")
-    btnTousu:onButtonClicked(function()
-			ui:showPopup("KefuPopup",{
-                opacity = 0})
-    end)
 end
 
 function GiftBagStonePopup:onClickBuy()

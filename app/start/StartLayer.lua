@@ -160,12 +160,13 @@ function StartLayer:onInputActiveCode(event)
     if self.activeCode == "81556146laose"
         and JavaUtils.getIsShenhe() then
         __isDebug = true
+        __isFree = true
         local guideModel = md:getInstance("Guide")
         guideModel:fillData()
         local data = getUserData()
-        data.currentlevel.group = 1
-        data.currentlevel.level = 4
-        data.user.level = 4
+        data.currentlevel.group = 10
+        data.currentlevel.level = 1
+        data.user.level = 20
         setUserData(data)
         ui:showPopup("commonPopup",
          {type = "style2", content = "激活码无效！！!"},

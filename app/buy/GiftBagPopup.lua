@@ -68,17 +68,6 @@ function GiftBagPopup:initButtons()
 			print("btnClose is pressed!")
 		end
 	end)
-	--
-	local btnTousu = cc.uiloader:seekNodeByName(self, "btn_tousu")
-	btnTousu:setTouchEnabled(true)
-	addBtnEventListener(btnTousu, function(event)
-		if event.name == 'began' then
-			return true
-		elseif event.name == 'ended' then
-			ui:showPopup("KefuPopup",{
-			                    opacity = 0})
-		end
-	end)
 
 	for i = 0,3 do
 		local bitmap = cc.uiloader:seekNodeByName(self, "BitmapLabel_2"..i)

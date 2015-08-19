@@ -15,9 +15,9 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 GameData={}
 myApp = MyApp
 isTest    = false     --战斗的各种框     
-__isDebug = true      --debug页面 
+__isDebug = false      --debug页面 
 isAsync   = false
-__isFree  = true
+__isFree  = false
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
 __reviewLimitData = {year = 2015, month = 8, day = 24} 
