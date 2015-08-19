@@ -74,8 +74,20 @@ function RootLayer:onPauseSwitch(event)
 end
 
 function RootLayer:initLoginLayer()
-    self.curLayer = StartLayer.new()
-    self:addChild(self.curLayer)      
+    self:initLogo()
+    self:performWithDelay(function ()
+        self.curLayer = StartLayer.new()
+        self:addChild(self.curLayer)
+    end,3)
+end
+
+function RootLayer:initLogo()
+    cc.FileUtils:getInstance():addSearchPath("res/Logo")
+    self.logoNode = cc.uiloader:load("baidu.ExportJson")
+    self:addChild(self.logoNode,1000)
+    self:performWithDelay(function ()
+        self.logoNode:removeFromParent()
+    end,3)
 end
 
 function RootLayer:switchLayer(event)
