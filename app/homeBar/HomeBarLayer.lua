@@ -137,16 +137,12 @@ function HomeBarLayer:initHomeLayer()
     end)
     self.btnArsenal:onButtonClicked(function()
         self:onBtnArsenalClicked()
-        buyModel:showBuy("weaponGiftBag", {isNotPopKefu = true},
-            "打开武器库_自动弹出武器大礼包")
-
     end)
     self.btnInlay:onButtonClicked(function()
         self:onBtnInlayClicked()
     end)
     self.btnStore:onButtonClicked(function()
         self:onBtnStoreClicked()
-        buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
     end)
 end
 
