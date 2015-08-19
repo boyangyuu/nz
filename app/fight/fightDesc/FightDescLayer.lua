@@ -162,6 +162,7 @@ function FightDescLayer:initEnemyIntro(enemyID)
     bossjjarm:getAnimation():play("bossjj", -1, 1)
 
     --load
+    if enemyID == "bangren" then enemyID = "hs" end
     local manager = ccs.ArmatureDataManager:getInstance()
     local src = "res/Fight/enemys/"..enemyID.."/"..enemyID..".ExportJson"
     local plist = "res/Fight/enemys/"..enemyID.."/"..enemyID.."0.plist"
@@ -170,7 +171,6 @@ function FightDescLayer:initEnemyIntro(enemyID)
     display.addSpriteFrames(plist, png)  
 
     --add
-     if enemyID == "bangren" then enemyID = "hs" end
     local armature = ccs.Armature:create(enemyID)
     armature:setScale(define.kEnemyAnimScale)
     addChildCenter(armature, playanim)
