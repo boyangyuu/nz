@@ -634,7 +634,7 @@ function waveClass:ctor()
 		-- saveNums  = 4,                 --解救人质数量
 
 		type 	  = "xianShi",
-		limitTime = 70,                   --限时模式时长
+		limitTime = 55,                   --限时模式时长
 		-- limitTime = 10, 
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量

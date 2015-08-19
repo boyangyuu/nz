@@ -274,7 +274,7 @@ local enemys = {
 local bosses = {
 	--第一个出场的boss
 	{
-		award = 20000,
+		award = 10000,
 		image = "renzb",                       --图片名字
 		hp = 100000,
 		fireRate = 60,               --普攻频率
