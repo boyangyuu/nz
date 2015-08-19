@@ -70,24 +70,28 @@ function LevelMapLayer:initGroupId()
     assert(self.curGroupId, "self.curGroupId is nil")
 end
 
-function LevelMapLayer:popUpWeaponGift()
-    local isNotBought = self.buyModel:checkBought("weaponGiftBag") == false
-    local isPopWeaponGift = false
+function LevelMapLayer:popUpGoldGift()
+    -- local isNotBought = self.buyModel:checkBought("weaponGiftBag") == false
+    local isPopGoldGift = false
     local userModel = md:getInstance("UserModel")
     local isDone = userModel:getUserLevel() >= 4
 
     --战斗失败返回世界地图
-    if self.fightData["result"] == "fail" then isPopWeaponGift = true end
+    if self.fightData["result"] == "fail" then isPopGoldGift = true end
     --开始菜单进世界地图，玩家等级 >= 4
-    if self.fightData["result"] == nil and isDone then isPopWeaponGift = true end
-    if isPopWeaponGift and isNotBought then
-        self.buyModel:showBuy("weaponGiftBag", 
-            {isNotPopKefu = false},
-            "主界面_进游戏自动弹出")
-    elseif isPopWeaponGift then 
+    if self.fightData["result"] == nil and isDone then isPopGoldGift = true end
+    -- if isPopWeaponGift and isNotBought then
+    --     self.buyModel:showBuy("weaponGiftBag", 
+    --         {isNotPopKefu = false},
+    --         "主界面_进游戏自动弹出")
+    -- elseif isPopWeaponGift then 
+    --     self.buyModel:showBuy("goldGiftBag", 
+    --         {isNotPopKefu = false},
+    --         "主界面_进游戏自动弹出")   
+    if isPopGoldGift then
         self.buyModel:showBuy("goldGiftBag", 
             {isNotPopKefu = false},
-            "主界面_进游戏自动弹出")   
+            "主界面_进游戏自动弹出")
     else 
 
     end
@@ -96,7 +100,7 @@ end
 function LevelMapLayer:mapPopUp(event)
     -- if self.properties.fightData.fightType == "levelFight" then 
     function delayPopUpLF()
-        self:popUpWeaponGift()   
+        self:popUpGoldGift()   
     end
     self:performWithDelay(delayPopUpLF, 1)
     -- elseif self.properties.fightData.fightType == "bossFight" then

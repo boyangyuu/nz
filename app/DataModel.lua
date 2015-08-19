@@ -27,6 +27,11 @@ function DataModel:setNewData()
     local diamond    = data.diamond
     local currentlevel = data.currentlevel
     local user       = data.user
+    local prop       = data.prop
+    local jujiMode   = data.jujiMode
+    local giftBag    = data.giftBag
+    local vip        = data.vip
+    local dailylogin = data.dailylogin
 
     myApp:createGameStateFile()
     local data          = getUserData()
@@ -36,6 +41,11 @@ function DataModel:setNewData()
     data.diamond        = diamond
     data.currentlevel   = currentlevel
     data.user           = user
+    data.prop           = prop
+    data.jujiMode       = jujiMode
+    data.giftBag        = giftBag
+    data.vip            = vip
+    data.dailylogin     = dailylogin
 
     --引导
     local guideModel = md:getInstance("Guide")

@@ -143,8 +143,9 @@ function FightResultLayer:initUI()
     	local lId = self.fightData["levelId"]
     	self:popOpenModeNoti(gId,lId)
     	local record = self.levelDetailModel:getConfig(gId,lId)
-		labelDiamond:setString("首次战斗获得"..record["giftDiamond"].."宝石")
-		self.userModel:addDiamond(record["giftDiamond"])
+		-- labelDiamond:setString("首次战斗获得"..record["giftDiamond"].."宝石")
+		labelDiamond:setString("")
+		-- self.userModel:addDiamond(record["giftDiamond"])
 
 		--save data
 	    local fightFactory    =  md:getInstance("FightFactory")

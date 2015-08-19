@@ -322,20 +322,34 @@ function Fight:checkDialogAfter()
 end
 
 function Fight:onDialogAfterEnd()
-    if (self.groupId == 0 and self.levelId == 0) then 
-        ui:showPopup("GiftBagStonePopup", 
-            {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "战斗结束_自动弹出限时大促",
-            stoneCost = 900, 
-            closeAllFunc = handler(self, self.startFightResult),
-            },
-            {animName = "shake"})    
-        return        
+    local weaponListModel = md:getInstance("WeaponListModel")
+    if not weaponListModel:isWeaponExist(9) then
+        if (self.groupId == 0 and self.levelId == 0) then 
+            ui:showPopup("GiftBagStonePopup", 
+                {ccsName = "GiftBag_Xianshidacu",
+                strPos   = "战斗结束_自动弹出限时大促",
+                stoneCost = 900, 
+                closeAllFunc = handler(self, self.startFightResult),
+                },
+                {animName = "shake"})    
+            return   
+        end     
     end
 
+    if (self.groupId == 2 and self.levelId == 1) then 
+        if not weaponListModel:isWeaponExist(11) then
+            ui:showPopup("GiftBagStonePopup", 
+                {ccsName = "GiftBag_Chuanqiwuqi",
+                strPos   = "战斗结束_自动弹出传奇武器",
+                stoneCost = 900, 
+                closeAllFunc = handler(self, self.startFightResult),
+                },
+                {animName = "shake"})    
+            return
+        end
+    end
 
-    if (self.groupId == 1 and self.levelId == 2) or 
-        (self.groupId == 1 and self.levelId == 6) then 
+    if (self.groupId == 1 and self.levelId == 2) then 
         --ad 1-2 
         local buyModel = md:getInstance("BuyModel")
         if not buyModel:checkBought("weaponGiftBag") then 

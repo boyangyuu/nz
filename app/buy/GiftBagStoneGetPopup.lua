@@ -38,13 +38,19 @@ function GiftBagStoneGetPopup:loadCCS()
     local layerContent = cc.uiloader:seekNodeByName(self.ui, "layerContent")
     layerContent:addChild(armature)
 
+
+    if self.property.weaponId == 9 then 
+        animName = "xsdc"
+    elseif self.property.weaponId == 11 then
+        animName = "cqwq"
+    end
     armature:getAnimation():setMovementEventCallFunc(
 	    function (armatureBack,movementType,movement) 
 	        if movementType == ccs.MovementEventType.complete then
-	            armature:getAnimation():play("chixu_xsdc" , -1, 1)
+	            armature:getAnimation():play("chixu_"..animName , -1, 1)
 	        end
 	    end)
-    armature:getAnimation():play("start_xsdc" , -1, 0)    
+    armature:getAnimation():play("start_"..animName , -1, 0)    
 end
 
 function GiftBagStoneGetPopup:onBtnGetClicked()

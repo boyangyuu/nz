@@ -32,7 +32,7 @@ function GiftBagStonePopup:loadCCS()
     manager:addArmatureFileInfo(hqlsrc)
     local plist = "res/WeaponList/iconhql_tx/iconhql_tx0.plist"
     local png   = "res/WeaponList/iconhql_tx/iconhql_tx0.png"
-    display.addSpriteFrames(plist, png)       
+    display.addSpriteFrames(plist, png)     
 end
 
 function GiftBagStonePopup:initButtons()
@@ -46,11 +46,13 @@ function GiftBagStonePopup:initButtons()
 	armature:getAnimation():play("lb_ljgm", -1, 1)
 	addChildCenter(armature, receiveBtn)
 
-	local gunArmature = ccs.Armature:create("iconhql_tx")
-    gunArmature:getAnimation():play("bosschixu" , -1, 1)
-    gunArmature:setScale(1.3)
-    gunArmature:setPosition(cc.p(457, 330))
-    self:addChild(gunArmature)
+	if self.property["ccsName"] == "GiftBag_Xianshidacu" then
+		local gunArmature = ccs.Armature:create("iconhql_tx")
+	    gunArmature:getAnimation():play("bosschixu" , -1, 1)
+	    gunArmature:setScale(1.3)
+	    gunArmature:setPosition(cc.p(457, 330))
+	    self:addChild(gunArmature)
+	end
 
 	--close
 	local btnClose = cc.uiloader:seekNodeByName(self.ui, "btn_Closed")
@@ -103,6 +105,12 @@ function GiftBagStonePopup:onBuyDone()
 
     --武器
     local weaponId = 9
+    if self.property["ccsName"] == "GiftBag_Xianshidacu" then
+		weaponId = 9
+	elseif self.property["ccsName"] == "GiftBag_Chuanqiwuqi" then
+		weaponId = 11
+	end
+
 	local weaponListModel = md:getInstance("WeaponListModel")
 	weaponListModel:buyWeapon(weaponId)
 	weaponListModel:equipBag(weaponId, 1)
@@ -113,7 +121,8 @@ function GiftBagStonePopup:onBuyDone()
 
 	--anim
 	ui:showPopup("GiftBagStoneGetPopup", 
-		{onGetDoneFunc = handler(self, self.onClickClose)}
+		{onGetDoneFunc = handler(self, self.onClickClose),
+		weaponId = weaponId}
 		)	
 end
 

@@ -257,7 +257,14 @@ function WeaponListLayer:buyWeaponByStone()
             })
         return
     end
-
+    if self.weaponId == 11 then
+        ui:showPopup("GiftBagStonePopup", 
+            {ccsName = "GiftBag_Chuanqiwuqi",
+            strPos   = "武器库_购买暴君",
+            stoneCost = 900, 
+            })
+        return
+    end
     local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
     local isAfforded = self.userModel:costDiamond(
         self.weaponRecord["cost"], true, strPos) 
