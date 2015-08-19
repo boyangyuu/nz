@@ -50,7 +50,15 @@ configs = {
 		awardValue= 3000,
 		awardType = "coin",
 		str = "50连杀",
-	},		
+	},
+	{
+		index = "keepKill4",
+		type  = "keepKill",
+		limit = 100,
+		awardValue= 6000,
+		awardType = "coin",
+		str = "100连杀",
+	},	
 	{
 		index = "totalKill1",
 		type  = "totalKill",
