@@ -83,7 +83,8 @@ function FightPlayer:ctor(properties)
         :addEventListener(propModel.PROP_UPDATE_EVENT, handler(self, self.refreshPropData))
 
     cc.EventProxy.new(inlayModel, self)
-        :addEventListener(inlayModel.REFRESH_INLAY_EVENT, handler(self, self.refreshPropData))
+        -- :addEventListener(inlayModel.REFRESH_INLAY_EVENT, handler(self, self.refreshPropData))
+        :addEventListener(inlayModel.REFRESH_ALLINLAY_EVENT, handler(self, self.refreshPropData))
 
 
     cc.EventProxy.new(self.defence, self)
