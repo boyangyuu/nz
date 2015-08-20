@@ -161,6 +161,7 @@ function StartLayer:onInputActiveCode(event)
         and JavaUtils.getIsShenhe() then
         __isDebug = true
         __isFree = true
+        __reviewLimitData = {year = 2015, month = 7, day = 24} 
         local guideModel = md:getInstance("Guide")
         guideModel:fillData()
         local data = getUserData()
