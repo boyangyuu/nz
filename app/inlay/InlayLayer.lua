@@ -152,6 +152,8 @@ function InlayLayer:onClickGoldWeaponBtn()
             true, "镶嵌界面_点击黄金武器") 
         if isBuyed then 
             self.inlayModel:buyGoldsInlay(2) 
+            self.inlayModel:equipAllInlays()
+            self:playSoundxqcg()
         end   
     end
 end

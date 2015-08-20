@@ -139,7 +139,6 @@ function FightProp:buyGoldsInlayByStone()
     if isAfforded then
 		local inlayModel = md:getInstance("InlayModel")
 		inlayModel:buyGoldsInlay(2)
-		inlayModel:dispatchEvent({name = inlayModel.REFRESH_INLAY_EVENT})
         ui:closePopup("StoneBuyPopup")
     end		
 end
