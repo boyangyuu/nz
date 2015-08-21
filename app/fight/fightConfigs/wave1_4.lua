@@ -104,150 +104,150 @@ local waves = {
 			},
 		},                                                         
 	},
-	{
-		enemys = { 
-			{
-				time = 2,
-				num = 3,
-				delay = {0,0.5,1},
-				pos = {400,680,960},
-				property = { 
-					placeName = "place3" ,
-					type = "jin",                  --盾 15
-					id = 8,
-				},
-			},
-			{
-				time = 5,
-				num = 5,
-				delay = {4.1,2.5,3.8,2.2,3.5},
-				pos = {500,650,760,860,950},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",                   --爆
-					id = 9,
-					startState = "san",	
-				},
-			},
-			{
-				time = 6,	
-				num = 3,
-				pos = {480,760,970},
-				delay = {0,0.5,1.2},
-				property = {
-					placeName = "place3" ,         --近
-					id = 7,
-					type = "jin",
-				},
-			},
-			{
-				time = 7,	                                               --金武奖励箱子
-				num = 1,
-				pos = {930},
-				delay = {0},
-				property = { 
-					type = "awardSan",
-					id = 20,
-					award = "goldWeapon",
-					placeName = "place3",
-				},
-			},
-			{
-				time = 16,
-				num = 4,
-				delay = {0,0.9,1.6,0.4},
-				pos = {350,600,1050,870},
-				property = { 
-					placeName = "place3" ,
-					type = "bao",      --爆
-					id = 9,	
-				},
-			},
-			{
-				time = 18,
-				num = 1,
-				delay = {1.6},
-				pos = {670},
-				property = { 
-					placeName = "place11" ,
-					type = "bao",                  --自爆boss                                 
-					id = 18,
-				},
-			},
-			{
-				time = 18,
-				num = 1,
-				delay = {0,},
-				pos = {350,},
-				property = { 
-					placeName = "place2" ,
-					startState = "rollright",
-					id = 1,
-				},                                                          
-			},	
-			{
-				time = 19,
-				num = 1,
-				delay = {0.2,},
-				pos = {900,},
-				property = { 
-					placeName = "place3" ,
-					id = 1,
-					startState = "rollleft",
-				},                                                          
-			},	
-			{
-				time = 20,		
-				num = 1,
-				pos = {360,},
-				delay = {0.3,},
-				property = { 
-					placeName = "place4",
-					startState = "rollright",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                        
-				},
-			},
-			{
-				time = 21,
-				num = 2,
-				delay = {0.1,0.6,},
-				pos = {870,1090},
-				property = { 
-					placeName = "place3" ,
-					id = 1,
-					startState = "rollleft",	
-				},                                                        
-			},
-			{
-				time = 22,		
-				num = 1,
-				pos = {460,},
-				delay = {0.3,},
-				property = { 
-					placeName = "place4",
-					startState = "rollleft",
-					id = 2,
-					type = "dao",
-					missileId = 3,
-					missileType = "lei",	                                        
-				},
-			},
-			{
-				time = 23,
-				num = 1,
-				delay = {0},
-				pos = {350,},
-				property = { 
-					placeName = "place2" ,
-					startState = "rollright",                   --29
-					id = 1,
-				},                                                          
-			},	
-		},
-	},	
+	-- {
+	-- 	enemys = { 
+	-- 		{
+	-- 			time = 2,
+	-- 			num = 3,
+	-- 			delay = {0,0.5,1},
+	-- 			pos = {400,680,960},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "jin",                  --盾 15
+	-- 				id = 8,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 5,
+	-- 			num = 5,
+	-- 			delay = {4.1,2.5,3.8,2.2,3.5},
+	-- 			pos = {500,650,760,860,950},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "bao",                   --爆
+	-- 				id = 9,
+	-- 				startState = "san",	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 6,	
+	-- 			num = 3,
+	-- 			pos = {480,760,970},
+	-- 			delay = {0,0.5,1.2},
+	-- 			property = {
+	-- 				placeName = "place3" ,         --近
+	-- 				id = 7,
+	-- 				type = "jin",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 7,	                                               --金武奖励箱子
+	-- 			num = 1,
+	-- 			pos = {930},
+	-- 			delay = {0},
+	-- 			property = { 
+	-- 				type = "awardSan",
+	-- 				id = 20,
+	-- 				award = "goldWeapon",
+	-- 				placeName = "place3",
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 16,
+	-- 			num = 4,
+	-- 			delay = {0,0.9,1.6,0.4},
+	-- 			pos = {350,600,1050,870},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				type = "bao",      --爆
+	-- 				id = 9,	
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 18,
+	-- 			num = 1,
+	-- 			delay = {1.6},
+	-- 			pos = {670},
+	-- 			property = { 
+	-- 				placeName = "place11" ,
+	-- 				type = "bao",                  --自爆boss                                 
+	-- 				id = 18,
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 18,
+	-- 			num = 1,
+	-- 			delay = {0,},
+	-- 			pos = {350,},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				startState = "rollright",
+	-- 				id = 1,
+	-- 			},                                                          
+	-- 		},	
+	-- 		{
+	-- 			time = 19,
+	-- 			num = 1,
+	-- 			delay = {0.2,},
+	-- 			pos = {900,},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				id = 1,
+	-- 				startState = "rollleft",
+	-- 			},                                                          
+	-- 		},	
+	-- 		{
+	-- 			time = 20,		
+	-- 			num = 1,
+	-- 			pos = {360,},
+	-- 			delay = {0.3,},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollright",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                        
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 21,
+	-- 			num = 2,
+	-- 			delay = {0.1,0.6,},
+	-- 			pos = {870,1090},
+	-- 			property = { 
+	-- 				placeName = "place3" ,
+	-- 				id = 1,
+	-- 				startState = "rollleft",	
+	-- 			},                                                        
+	-- 		},
+	-- 		{
+	-- 			time = 22,		
+	-- 			num = 1,
+	-- 			pos = {460,},
+	-- 			delay = {0.3,},
+	-- 			property = { 
+	-- 				placeName = "place4",
+	-- 				startState = "rollleft",
+	-- 				id = 2,
+	-- 				type = "dao",
+	-- 				missileId = 3,
+	-- 				missileType = "lei",	                                        
+	-- 			},
+	-- 		},
+	-- 		{
+	-- 			time = 23,
+	-- 			num = 1,
+	-- 			delay = {0},
+	-- 			pos = {350,},
+	-- 			property = { 
+	-- 				placeName = "place2" ,
+	-- 				startState = "rollright",                   --29
+	-- 				id = 1,
+	-- 			},                                                          
+	-- 		},	
+	-- 	},
+	-- },	
 
 	{
 		waveType = "boss",                                      --强敌出现
