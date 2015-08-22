@@ -239,12 +239,13 @@ function BossModeLayer:onClickBtnStart()
 	local isRpgExist = weaponListModel:isWeaponExist(7)
 	local isM134Exist = weaponListModel:isWeaponExist(8)
 	local isHQLExist = weaponListModel:isWeaponExist(9)
+	local isBJExist = weaponListModel:isWeaponExist(9)
 	local isRpgLevelFull = weaponListModel:isFull(7)
 	local isM134LevelFull = weaponListModel:isFull(8)
 	local isRpgSatisfied = isRpgExist and isRpgLevelFull
 	local isM134Satisfied = isM134Exist and isM134LevelFull
 	local data = {type = "m134"}
-	if not(isRpgSatisfied or isM134Satisfied or isHQLExist) then
+	if not(isRpgSatisfied or isM134Satisfied or isHQLExist or isBJExist) then
 		ui:showPopup("BossAdvisePopup", 
 	        data, 
 	        {animName = "scale"}) 

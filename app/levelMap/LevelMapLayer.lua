@@ -280,11 +280,19 @@ end
 function LevelMapLayer:initUI_dacuGift()
     local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
     btnXianshi:onButtonClicked(function( event )
-        ui:showPopup("GiftBagStonePopup", 
-            {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "地图界面_点击限时大促",
-            stoneCost = 900},
-            {animName = "shake"})        
+        if device.platform == "ios" then
+            ui:showPopup("GiftBagStonePopup", 
+                {ccsName = "GiftBag_Xianshidacu_ios",
+                strPos   = "地图界面_点击限时大促",
+                stoneCost = 900},
+                {animName = "shake"})        
+        else
+            ui:showPopup("GiftBagStonePopup", 
+                {ccsName = "GiftBag_Xianshidacu",
+                strPos   = "地图界面_点击限时大促",
+                stoneCost = 450},
+                {animName = "shake"})        
+        end
     end)
 end
 

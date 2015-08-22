@@ -325,14 +325,25 @@ function Fight:onDialogAfterEnd()
     local weaponListModel = md:getInstance("WeaponListModel")
     if not weaponListModel:isWeaponExist(9) then
         if (self.groupId == 0 and self.levelId == 0) then 
-            ui:showPopup("GiftBagStonePopup", 
-                {ccsName = "GiftBag_Xianshidacu",
-                strPos   = "战斗结束_自动弹出限时大促",
-                stoneCost = 900, 
-                closeAllFunc = handler(self, self.startFightResult),
-                },
-                {animName = "shake"})    
-            return   
+            if device.platform == "ios" then
+                ui:showPopup("GiftBagStonePopup", 
+                    {ccsName = "GiftBag_Xianshidacu_ios",
+                    strPos   = "战斗结束_自动弹出限时大促",
+                    stoneCost = 900, 
+                    closeAllFunc = handler(self, self.startFightResult),
+                    },
+                    {animName = "shake"})    
+                return   
+            else
+                ui:showPopup("GiftBagStonePopup", 
+                    {ccsName = "GiftBag_Xianshidacu",
+                    strPos   = "战斗结束_自动弹出限时大促",
+                    stoneCost = 450, 
+                    closeAllFunc = handler(self, self.startFightResult),
+                    },
+                    {animName = "shake"})    
+                return 
+            end
         end     
     end
 

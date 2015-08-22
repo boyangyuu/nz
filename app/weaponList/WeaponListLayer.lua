@@ -250,12 +250,21 @@ end
 
 function WeaponListLayer:buyWeaponByStone()
     if self.weaponId == 9 then
-        ui:showPopup("GiftBagStonePopup", 
-            {ccsName = "GiftBag_Xianshidacu",
-            strPos   = "武器库_购买火麒麟",
-            stoneCost = 900, 
-            })
-        return
+        if device.platform == "ios" then
+            ui:showPopup("GiftBagStonePopup", 
+                {ccsName = "GiftBag_Xianshidacu_ios",
+                strPos   = "武器库_购买火麒麟",
+                stoneCost = 900, 
+                })
+            return
+        else
+            ui:showPopup("GiftBagStonePopup", 
+                {ccsName = "GiftBag_Xianshidacu",
+                strPos   = "武器库_购买火麒麟",
+                stoneCost = 450, 
+                })
+            return
+        end
     end
     if self.weaponId == 11 then
         ui:showPopup("GiftBagStonePopup", 
@@ -288,14 +297,14 @@ function WeaponListLayer:buyWeaponByStone()
 end
 
 function WeaponListLayer:sendGunAward()
-    --黄武*3
+    --黄武*10
     local inlayModel = md:getInstance("InlayModel")    
-    inlayModel:buyGoldsInlay(4)    
+    inlayModel:buyGoldsInlay(11)    
     inlayModel:equipAllInlays()
 
     --award
     ui:showPopup("commonPopup",
-         {type = "style1",content = "感谢您的支持！！活动期间赠送3套黄武，助您一臂之力"},
+         {type = "style1",content = "感谢您的支持！！活动期间赠送10套黄武，助您一臂之力"},
          {opacity = 100})
 end
 
@@ -347,7 +356,11 @@ function WeaponListLayer:refreshComment()
     self.weaponId = self.weaponRecord["id"]
     self.weapontype = self.weaponRecord["type"]
     self.labelName:setString(self.weaponRecord["name"])
-    self.buycost:setString(self.weaponRecord["cost"])
+    local weaponBuyCost = self.weaponRecord["cost"]
+    if device.platform == "ios" and self.weaponId == 9 then
+        weaponBuyCost = 900
+    end
+        self.buycost:setString(weaponBuyCost)
     self.labelDescribe:setString(self.weaponRecord["describe"])
     local imageName = self.weaponRecord["imgName"]
     local weaponImg = display.newSprite("#icon_"..imageName..".png")

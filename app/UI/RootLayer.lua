@@ -78,7 +78,7 @@ function RootLayer:initLoginLayer()
     self:performWithDelay(function ()
         self.curLayer = StartLayer.new()
         self:addChild(self.curLayer)
-    end,1.5)
+    end,1.0)
 end
 
 function RootLayer:initLogo()
@@ -87,7 +87,7 @@ function RootLayer:initLogo()
     self:addChild(self.logoNode,1000)
     self:performWithDelay(function ()
         self.logoNode:removeFromParent()
-    end,1.5)
+    end,1.0)
 end
 
 function RootLayer:switchLayer(event)

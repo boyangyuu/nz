@@ -4,8 +4,8 @@ local config = {}
 
 config["guangyu"]      = dir.."guangyu.ExportJson"
 config["bangzhu"]      = dir.."bangzhu.ExportJson"
-config["gonggao_1"]      = dir.."gonggao_1.ExportJson"
-config["gonggao_2"]      = dir.."gonggao_2.ExportJson"
+config["gonggao_1"]      = dir.."gonggao.ExportJson"
+config["gonggao_2"]      = dir.."gonggao_0.ExportJson"
 
 local AboutPopup = class("AboutPopup", function()
 	return display.newLayer()
@@ -41,6 +41,7 @@ end
 function AboutPopup:onClickBtnClose()
 	if self.popupName == "gonggao_1" then
 		ui:closePopup("AboutPopup", {animName = "normal"})
+		if device.platform == "ios" then return end
         ui:showPopup("AboutPopup",{popupName = "gonggao_2"},{animName = "normal"})
     else
     	ui:closePopup("AboutPopup", {animName = "normal"})

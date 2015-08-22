@@ -98,13 +98,20 @@ function WeaponNotifyLayer:initUI(properties)
 	    armature:getBone("icon_libao1"):changeDisplayWithIndex(1, true)
 	    armature:getBone("icon_libao2"):changeDisplayWithIndex(1, true)
 	    armature:getBone("icon_libao3"):changeDisplayWithIndex(1, true)
+
+	    local playName = nil
+	    if true and JavaUtils.isSIMDX() then
+	    	playName = "03_dx"
+	    else
+	    	playName = "03"
+	    end
 		armature:getAnimation():setMovementEventCallFunc(   
          function (armatureBack,movementType,movement) 
             if movementType == ccs.MovementEventType.complete then
-                armature:getAnimation():play("chixu03" , -1, 1)
+                armature:getAnimation():play("chixu"..playName , -1, 1)
             end
         end)
-	    armature:getAnimation():play("start03" , -1, 0)
+	    armature:getAnimation():play("start"..playName , -1, 0)
 	end
 end
 

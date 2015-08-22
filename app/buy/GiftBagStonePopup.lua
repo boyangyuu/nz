@@ -87,7 +87,7 @@ function GiftBagStonePopup:onBuyDone()
 
 	--黄武
 	local inlayModel = md:getInstance("InlayModel")
-	inlayModel:buyGoldsInlay(5)
+	inlayModel:buyGoldsInlay(10)
 
 	--白银
     inlayModel:buyInlay(2,10) 

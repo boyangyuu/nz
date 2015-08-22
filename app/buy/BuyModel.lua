@@ -198,7 +198,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	self:setBought("weaponGiftBag")
 
 	--黄武*3
-	inlayModel:buyGoldsInlay(3)
+	inlayModel:buyGoldsInlay(10)
 	if buydata.isNotPopFiveWeapon == true then
 		ui:showPopup("commonPopup",
 		 {type = "style1",content = "购买成功，请在武器库装备！"},
@@ -255,12 +255,14 @@ function BuyModel:buy_goldGiftBag( buydata )
 	local inlayModel = md:getInstance("InlayModel")
 	local propModel = md:getInstance("PropModel")
 	--黄武*15
-	inlayModel:buyGoldsInlay(15)
+	inlayModel:buyGoldsInlay(20)
 
 	--机甲*15
 	propModel:addProp("jijia",15)
 	--手雷*30
 	propModel:addProp("lei",30)
+
+	propModel:addProp("hpBag", 1)
 
 	if not buydata.isNotPopup then 
 		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
@@ -272,12 +274,14 @@ function BuyModel:buy_goldGiftBag_dx( buydata )
 	local inlayModel = md:getInstance("InlayModel")
 	local propModel = md:getInstance("PropModel")
 	--黄武*10
-	inlayModel:buyGoldsInlay(10)
+	inlayModel:buyGoldsInlay(15)
 
 	--机甲*10
 	propModel:addProp("jijia",10)
 	--手雷*20
 	propModel:addProp("lei",20)
+
+	propModel:addProp("hpBag", 1)
 
 	if not buydata.isNotPopup then 
 		ui:showPopup("WeaponNotifyLayer",{type = "goldGift"},{opacity = 255})
