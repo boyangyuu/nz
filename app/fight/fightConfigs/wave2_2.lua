@@ -306,24 +306,24 @@ local waves = {
 					id = 1,
 				},
 			},------------------------------------------------------------ 汽油桶配置 ----------------------
-		    {
-				time = 0,
-				num = 1,
-				pos = {700},
-				delay = {0},                         -- 飞机          
-				property = {
-					type = "feiji" ,
-					id = 11,
-					placeName = "place17",
-					missileId = 6,
-					missileType = "daodan",
-					missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
-					startState = "enterleft",
-					lastTime = 0,		                                    --持续时间			
-				},
-			},
+		 --    {
+			-- 	time = 0,
+			-- 	num = 1,
+			-- 	pos = {700},
+			-- 	delay = {0},                         -- 飞机          
+			-- 	property = {
+			-- 		type = "feiji" ,
+			-- 		id = 11,
+			-- 		placeName = "place17",
+			-- 		missileId = 6,
+			-- 		missileType = "daodan",
+			-- 		missileOffsets = {cc.p(250,-250), cc.p(-150, -150)},	--炮筒位置发出xy轴偏移值,第一个位置右一,第二位置个右二
+			-- 		startState = "enterleft",
+			-- 		lastTime = 0,		                                    --持续时间			
+			-- 	},
+			-- },
 			{ 
-				time = 5,
+				time = 2,
 				num = 2,
 				delay = {0,0.7,},
 				pos = {350,500,},
@@ -342,7 +342,7 @@ local waves = {
 				},
 			},
 			{ 
-				time = 8,
+				time = 7,
 				num = 2,
 				delay = {0,0.7,},
 				pos = {200,500,},
@@ -361,7 +361,7 @@ local waves = {
 				},
 			},
 			{ 
-				time = 10,
+				time = 12,
 				num = 2,
 				delay = {0,0.7,},
 				pos = {260,500,},
@@ -381,7 +381,7 @@ local waves = {
 			},
 
 			{ 
-				time = 15,
+				time = 17,
 				num = 3,
 				delay = {0,0.7,1.4},
 				pos = {10,280,640,},
