@@ -211,12 +211,43 @@ function FightResultLayer:popOpenModeNoti(groupId,levelId)
          {opacity = 0})
     end
 	if groupId == 1 and levelId == 6 and device.platform == "ios" then
-	   ui:showPopup("commonPopup",
+		local url = "http://123.57.213.26/appstore.php"
+	    local request = network.createHTTPRequest(handler(self,self.onRequestEvent), url, "GET")
+	    request:start()
+    end
+end
+
+function FightResultLayer:onRequestEvent(event)
+    local name = event.name 
+    local request = event.request
+ 	-- if request == nil then return end
+    if name ~= "completed" then
+        print("网络请求中", request:getErrorCode()..request:getErrorMessage())
+        return
+    end
+ 	
+    local code = request:getResponseStatusCode()
+    if code ~= 200 then
+        print("网络请求失败", code)
+    else
+    	print("网络请求成功", code) 
+    	local appStoreState = request:getResponseString()
+    	if appStoreState == "close" then return end
+	    ui:showPopup("commonPopup",
          {type = "style1",content = "去AppStore给我们五星好评，送手雷x20,药包x5,金币x50000.",
           callfuncCofirm =  handler(self, self.onClickAppStore)},
          {opacity = 100})
     end
 end
+
+function FightResultLayer:onClickAppStore()
+	luaoc.callStaticMethod("IAPControl", "comment")
+	local propModel = md:getInstance("PropModel")
+	propModel:addProp("hpBag",5)
+	propModel:addProp("lei",20)
+	self.userModel:addMoney(50000)
+end
+
 
 function FightResultLayer:onClickBtnNext()
 	 ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
