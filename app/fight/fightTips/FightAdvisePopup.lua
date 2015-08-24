@@ -79,6 +79,9 @@ function FightAdvisePopup:onEquipGun()
     assert(gunId, "gunId is nil")
 
     --buy
+    local inlayModel = md:getInstance("InlayModel")
+    --黄武*10
+    inlayModel:buyGoldsInlay(10)
 
     --weaponListModel
     local fightGun = md:getInstance("FightGun")
