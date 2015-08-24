@@ -56,7 +56,7 @@ function InputBoxPopup:onClickConfirm()
         ui:closePopup("InputBoxPopup")
     else
         ui:showPopup("commonPopup",
-         {type = "style1",content = "名称不能为空"},
+         {type = "style1",content = "不能为空"},
          {opacity = 100})
     end
 end
