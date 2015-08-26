@@ -14,13 +14,13 @@ local MyApp = class("MyApp", cc.mvc.AppBase)
 -- global var
 GameData={}
 myApp = MyApp
-isTest    = false     --战斗的各种框     
-__isDebug = false      --debug页面 
+isTest    = false     --战斗的各种框
+__isDebug = false      --debug页面
 isAsync   = false
 __isFree  = false
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
-__reviewLimitData = {year = 2015, month = 8, day = 28} 
+__reviewLimitData = {year = 2015, month = 9, day = 1}
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
@@ -33,8 +33,8 @@ function MyApp:ctor()
     MyApp.super.ctor(self)
     self.objects_ = {}
     self:initVariables()
-    self:initGameState()    
-    
+    self:initGameState()
+
     -- um 设置玩家账户及等级
     um:setUserAccount()
 end
@@ -43,7 +43,7 @@ function MyApp:run()
     print("MyApp:run()!")
     cc.FileUtils:getInstance():addSearchPath("res/")
     self:enterScene("MainScene")
-    dataModel:checkData() 
+    dataModel:checkData()
 end
 
 function MyApp:initGameState()
@@ -101,16 +101,16 @@ function MyApp:createGameStateFile()
                 },
                 {
                     intenlevel = 0,
-                    weaponid   = 2 ,           
+                    weaponid   = 2 ,
                 },
                 {
                     intenlevel = 0,
-                    weaponid   = 6, 
+                    weaponid   = 6,
                 },
                 -- {
                 --     intenlevel = 10,
                 --     weaponid   = 3,
-                -- },                
+                -- },
             },
             weaponed = {
                 bag1 = {
@@ -126,18 +126,18 @@ function MyApp:createGameStateFile()
             awardedIds = {
             },
 
-        }, 
+        },
         inlay = {
             bags = {
-            
+
             }, --{inlayid = 1,ownednum = 1}
             inlayed  = {
                 bullet = nil,
                 clip = nil,
                 speed = nil,
                 crit = nil,
-                blood = nil,    
-                helper = nil,   
+                blood = nil,
+                helper = nil,
             },
         },
         prop = {
@@ -150,7 +150,7 @@ function MyApp:createGameStateFile()
 
         money = 2000,
         diamond = 0,
-        
+
         --开启的关卡
         currentlevel =  {
             group = 1,
@@ -158,22 +158,22 @@ function MyApp:createGameStateFile()
         },
 
         bossMode = {
-            chapterIndex = 1, 
-            waveIndex = 0, 
+            chapterIndex = 1,
+            waveIndex = 0,
         },
 
         jujiMode = {
-            waveIndex = 0, 
+            waveIndex = 0,
             scoreAwarded = {
             },
-        },            
+        },
 
         user = {
             level = 1,
             fightedLevels = {}, --"enter" "fail" "win"
             userName  = "玩家自己",
         },
-        guide = { --dabao为false 
+        guide = { --dabao为false
             --记得和 filldata对应!
 
             --登陆
@@ -187,11 +187,11 @@ function MyApp:createGameStateFile()
             fight01_skill   = false,
             fight01_gold    = false,
             fight01_change  = false,
-            fight01_jijia   = false, 
+            fight01_jijia   = false,
 
-            --第0-0关之后  
+            --第0-0关之后
             afterfight01    = false,   -- 进入下一关
-         
+
             --第1-1之内
             fight_change    = false,
             fight_dun       = false,
@@ -202,12 +202,12 @@ function MyApp:createGameStateFile()
             --第1-3关之前
             weapon          = false,   -- 升级武器
             afterfight03    = false,   -- 回到主界面
-            
+
             --第1-5关之内
-            fightJu         = false,  
+            fightJu         = false,
 
             --第1-4失败之后
-            fightRelive     = false,                      
+            fightRelive     = false,
         },
         fight = {
            isPreferBag1 = true,
@@ -257,7 +257,7 @@ function MyApp:createGameStateFile()
             awardedTasks = {
                 -- index1 = true,
             },
-        },            
+        },
     }
     GameState.save(data)
     GameData=GameState.load()
@@ -276,7 +276,7 @@ end
 function MyApp:onEnterForeground()
     print("function MyApp:onEnterForeground()")
     local pauseModel = md:getInstance("PauseModel")
-    if pauseModel:getIsPause() then 
+    if pauseModel:getIsPause() then
         display.pause()
     end
 end
