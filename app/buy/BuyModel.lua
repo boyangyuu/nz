@@ -149,7 +149,7 @@ function BuyModel:payDone(result)
 	if payDoneFunc then payDoneFunc() end
 
 	local isNotPopKefu = self.curBuyData.isNotPopKefu
-	if not isNotPopKefu then
+	if not isNotPopKefu and device.platform == "android" then
 		ui:showPopup("KefuPopup",{
                 opacity = 0})
 	end
