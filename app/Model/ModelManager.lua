@@ -15,7 +15,7 @@ modelClasses["InlayModel"]          = import("..inlay.InlayModel")
 modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
 modelClasses["DailyLoginModel"]     = import("..dailyLogin.DailyLoginModel")
 modelClasses["VipModel"]            = import("..levelMap.VipModel")
-modelClasses["ActiveCodeModel"]     = import("..start.ActiveCodeModel")
+modelClasses["ActiveCodeModel"]     = import("..activitys.ActiveCodeModel")
 
 --bossFight
 modelClasses["BossModeModel"]       = import("..bossMode.BossModeModel")
@@ -74,7 +74,7 @@ needCreateClasses["Hero"] = true
 needCreateClasses["FightInlay"] = true
 
 function ModelManager:ctor()
-    ModelManager.super.ctor(self) 
+    ModelManager.super.ctor(self)
     self.objects_ = {}
 end
 
@@ -97,16 +97,16 @@ function ModelManager:getInstance(clsName)
     -- print("ModelManager:getInstanc", clsName)
     local classModel = modelClasses[clsName]
     assert(classModel, "classModel is not in modelmanager: clsName"
-        ..clsName) 
+        ..clsName)
 
-    local modelObj 
+    local modelObj
     if not self:isObjectExists(clsName) then
         local allowAutoCreate = needCreateClasses[clsName] == nil
         assert(allowAutoCreate, "不允许私自创建的类："..clsName)
         modelObj = self:createInstance(clsName)
     else
         modelObj = self:getObject(clsName)
-    end  
+    end
     return modelObj
 end
 
@@ -118,7 +118,7 @@ function ModelManager:createInstance(clsName)
     local classModel = modelClasses[clsName]
     local modelObj = classModel.new({id = classModel.__cname})
     self:setObject(clsName, modelObj)
-    return modelObj    
+    return modelObj
 end
 
 function ModelManager:deleteInstance(clsName)

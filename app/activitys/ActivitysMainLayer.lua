@@ -1,18 +1,19 @@
 local ActJujiNode   = import("..jujiMode.JujiModeLayer")
 local ActBossNode   = import("..bossMode.BossModeLayer")
 local DailyTaskNode = import("..dailyTask.DailyTaskLayer")
+local ActiveCodeNode= import("..activitys.ActiveCodeLayer")
 
 local ActivitysMainLayer = class("ActivitysMainLayer", function()
 	return display.newLayer()
 end)
 
 function ActivitysMainLayer:ctor()
-	
+
 end
 
 function ActivitysMainLayer:onShow(data)
     self.property = data
-    if self.ui == nil then 
+    if self.ui == nil then
         self:loadCCS()
     end
 
@@ -45,12 +46,12 @@ function ActivitysMainLayer:loadCCS()
             ui:showPopup("commonPopup",
                      {type = "style2", content = "通过狙击关卡后开启！"},
                      {opacity = 0})
-        end)  
+        end)
     else
         self.btn_juji:onButtonClicked(function( event )
-            
+
             self:refreshListView("jujiFight")
-        end) 
+        end)
     end
 
 
@@ -74,6 +75,13 @@ function ActivitysMainLayer:loadCCS()
                self:refreshListView("bossFight")
         end)
     end
+
+
+    --activeCode
+    self.btn_activate = cc.ui.uiloader:seekNodeByName:(self.ui, "btn_activate")
+    self.btn_activate:onButtonClicked(function( event )
+               self:refreshListView("activeCode")
+        end)
 end
 
 function ActivitysMainLayer:refreshListView(type)
@@ -84,17 +92,19 @@ function ActivitysMainLayer:refreshListView(type)
     self.comment:removeAllChildren()
 
     local contentNode = nil
-    if type == "jujiFight" then 
+    if type == "jujiFight" then
         self.btn_juji:setButtonEnabled(false)
         contentNode = ActJujiNode.new()
-    elseif type == "bossFight" then 
+    elseif type == "bossFight" then
         self.btn_boss:setButtonEnabled(false)
         local bossModeModel = md:getInstance("BossModeModel")
         local chapterIndex = bossModeModel:getAlreadyChapter()
         contentNode = ActBossNode.new({chapterIndex = chapterIndex})
-    elseif type == "dailyTask" then 
+    elseif type == "dailyTask" then
         self.btn_dailyTask:setButtonEnabled(false)
         contentNode = DailyTaskNode.new()
+    elseif type == "activeCode" then
+        self.btn_activate:setButtonEnabled(false)
     else
         assert(false, "type is invalid" .. type)
     end

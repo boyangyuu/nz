@@ -33,7 +33,6 @@ layerClasses["JujiResultLayer"]      = import("..jujiMode.JujiResultLayer")
 layerClasses["GunHelpPopup"]         = import("..fight.Gun.GunHelpPopup")
 layerClasses["FightAdvisePopup"]     = import("..fight.fightTips.FightAdvisePopup")
 layerClasses["FightRelivePopup"]     = import("..fight.fightTips.FightRelivePopup")
-layerClasses["FightStorePopup"]      = import("..fight.FightStorePopup")
 
 layerClasses["AboutPopup"]           = import("..start.AboutPopup")
 layerClasses["commonPopup"] 		 = import("..commonPopup.commonPopup")
@@ -52,6 +51,8 @@ layerClasses["StoneBuyPopup"]      	 = import("..buy.StoneBuyPopup")
 layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
 layerClasses["BuyTipsPopup"]         = import("..buy.BuyTipsPopup")
 layerClasses["VipPopup"]             = import("..levelMap.VipPopup")
+layerClasses["StorePopup"]           = import("..store.StorePopup")
+
 
 --awardTime
 layerClasses["AwardTimePopup"]       = import("..awardTime.AwardTimePopup")
@@ -66,7 +67,7 @@ layerClasses["ActivitysMainLayer"]   = import("..activitys.ActivitysMainLayer")
 
 
 function UI:ctor(properties)
-    UI.super.ctor(self, properties) 
+    UI.super.ctor(self, properties)
 	--instance
 end
 
@@ -74,12 +75,12 @@ function UI:changeLayer(layerId, properties)
 	print("function UI:changeLayer(layerId)")
 	local loadingType = nil
 	if properties then loadingType = properties.loadingType end
-	if loadingType == nil and layerId ==  "FightPlayer" then 
-		loadingType = "fight" 
-	elseif loadingType == nil and layerId == "HomeBarLayer" then 
+	if loadingType == nil and layerId ==  "FightPlayer" then
+		loadingType = "fight"
+	elseif loadingType == nil and layerId == "HomeBarLayer" then
 		loadingType = "home"
 	else
-		
+
 	end
 
 	local layerCls = self:getLayerCls(layerId)
@@ -88,18 +89,18 @@ function UI:changeLayer(layerId, properties)
 end
 
 function UI:showPopup(layerId, properties, extra)
-	local opacity 
+	local opacity
 	local anim
 	local animName
 	local isPauseScene
 	local isPauseSecond
-	if extra then 
+	if extra then
 		opacity = extra.opacity
 		anim = extra.anim
 		animName = extra.animName
 	end
 	local layerCls = self:getLayerCls(layerId)
-	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls, 
+	self:dispatchEvent({name = UI.POPUP_SHOW_EVENT, layerCls = layerCls,
 		opacity = opacity, anim = anim, animName = animName,
 		properties = properties})
 

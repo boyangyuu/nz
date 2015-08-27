@@ -55,17 +55,17 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 	local strBuy = "stone450"
 	local data = getUserData()
 	if data.diamond >= diamond then
-		data.diamond = data.diamond - diamond 
+		data.diamond = data.diamond - diamond
 		setUserData(data)
 		self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
-	
+
 		--dailyTask
 		local dailyTask = md:getInstance("DailyTaskModel")
-		dailyTask:setTaskTimes("buyTimes",data.dailyTask.tasks.buyTimes+diamond)	
+		dailyTask:setTaskTimes("buyTimes",data.dailyTask.tasks.buyTimes+diamond)
 
 		return true
 	else
-		if isBuy then 
+		if isBuy then
 			print("宝石不足请购买！")
 			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
 			local function delayCall( )
@@ -74,6 +74,10 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 			scheduler.performWithDelayGlobal(delayCall, 1.0)
 		else
 			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
+			function delayPopUpStore()
+				ui:showPopup("StorePopup",{},{animName = "scale"})
+			end
+			scheduler.performWithDelayGlobal(delayPopUpStore, 1.0)
 		end
 		return false
 	end
@@ -85,10 +89,10 @@ end
 	data.diamond = data.diamond + diamond
 	setUserData(data)
 	self:dispatchEvent({name = "REFRESH_MONEY_EVENT"})
-	if isBuy then 
+	if isBuy then
 		print("宝石购买成功")
 		ui:showPopup("BuyTipsPopup", {type = "boneBuyed"}, {animName = "normal"})
-	end	
+	end
 end
 
  function UserModel:addMoney(money)
@@ -102,25 +106,25 @@ end
 function UserModel:setUserLevel(level)
 	--check
 	local data = getUserData()
-	local curLevel = data.user.level 
+	local curLevel = data.user.level
 	-- assert(level >= curLevel and level < curLevel + 2, "invalid level : " .. level)
-	if level ~= curLevel + 1 then 
+	if level ~= curLevel + 1 then
 		print("等级异常: 当前等级:" .. curLevel .. "目标等级:" .. level)
 	end
-	
+
 	--save
 	if data.user.level == level then return end
 	data.user.level = level
 	setUserData(data)
 
 	--um
-	um:setLevel(level)	
+	um:setLevel(level)
 end
 
 function UserModel:getUserLevel()
 	local data = getUserData()
-	local curLevel = data.user.level 
-	return curLevel 
+	local curLevel = data.user.level
+	return curLevel
 end
 
 function UserModel:getLoginTime()
@@ -132,7 +136,7 @@ end
 function UserModel:getRegisterTime()
 	local data = getUserData()
 	local registerTime = data.dailylogin.registTime
-	return registerTime 
+	return registerTime
 end
 
 function UserModel:getUserName()
@@ -168,7 +172,7 @@ end
 function UserModel:updateLoginDate()
 	--登陆日期更新
 	local dailyTaskModel = md:getInstance("DailyTaskModel")
-	dailyTaskModel:clearData()	
+	dailyTaskModel:clearData()
 
 	--event
 	self:dispatchEvent({name = UserModel.REFRESH_LOGINDATE_EVENT})
