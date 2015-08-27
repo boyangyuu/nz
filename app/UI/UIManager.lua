@@ -52,6 +52,7 @@ layerClasses["RmbBuyPopup"]      	 = import("..buy.RmbBuyPopup")
 layerClasses["BuyTipsPopup"]         = import("..buy.BuyTipsPopup")
 layerClasses["VipPopup"]             = import("..levelMap.VipPopup")
 layerClasses["StorePopup"]           = import("..store.StorePopup")
+layerClasses["StoreLoadLayer"]       = import("..store.StoreLoadLayer")
 
 
 --awardTime

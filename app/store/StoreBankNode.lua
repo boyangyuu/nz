@@ -30,7 +30,7 @@ function StoreBankNode:refreshUI()
     --item
     local itemIndex = 1
     while true do
-        print("itemIndex") 
+        print("itemIndex")
         local item = cc.uiloader:seekNodeByName(self.ui, "item"..itemIndex)
         if item == nil then break end
 
@@ -42,38 +42,26 @@ function StoreBankNode:refreshUI()
         local btn  = cc.uiloader:seekNodeByName(item, "btnBuy")
         local index = itemIndex
         btn:onButtonClicked(function()
-             self:onClickBtnBuy(index)
+            if device.platform == "ios" then
+                ui:showPopup("StoreLoadLayer",{},{animName = "normal",opacity = 0})
+            end
+            function delayBuy()
+                 self:onClickBtnBuy(index)
+            end
+            self:performWithDelay(delayBuy, 0.5)
         end)
         itemIndex = itemIndex + 1
-    end  
+    end
 end
 
 function StoreBankNode:onClickBtnBuy(configIndex)
-    -- if device.platform == "ios" then
-    --     local buyConfig = {
-    --     item1="600",
-    --     item2="880",
-    --     item3="1280",
-    --     item4="180",
-    --     item5="60",
-    --     item6="300",
-    --     }
 
-    --     local buyType = buyConfig["item"..configIndex]
-    --     if device.platform == 'ios' then
-    --         local OCargs = {
-    --             buyType = buyType,
-    --         }
-    --         luaoc.callStaticMethod("IAPControl", "buy", OCargs)
-    --     end
-    --     return
-    -- end
     local configs = StoreConfigs.getConfig("bank")
     local config  = configs[configIndex]
-    dump(config, "config")  
+    dump(config, "config")
     self.buyModel:showBuy(config["buyId"],
-        {iapType = "noConfirm", payType = config["payType"]}, 
-        "商城界面_点击"..config["buyId"])       
+        {iapType = "noConfirm", payType = config["payType"]},
+        "商城界面_点击"..config["buyId"])
 end
 
 return StoreBankNode

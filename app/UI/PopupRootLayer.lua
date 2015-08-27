@@ -11,7 +11,7 @@ function PopupRootLayer:ctor(properties)
 	self.layers = {}
 	--event
 	cc.EventProxy.new(ui, self)
-		:addEventListener(ui.POPUP_SHOW_EVENT, handler(self, self.showPopup))	
+		:addEventListener(ui.POPUP_SHOW_EVENT, handler(self, self.showPopup))
 		:addEventListener(ui.POPUP_CLOSE_EVENT, handler(self, self.closePopup))
 		:addEventListener(ui.POPUP_CLOSEALL_EVENT, handler(self, self.closeAllPopups))
 end
@@ -22,7 +22,7 @@ function PopupRootLayer:showPopup(event)
 	local pro = event.properties
 	local layer = cls.new(pro)
 
-	if self.layers[str] ~= nil then 	
+	if self.layers[str] ~= nil then
 		self.layers[str]:removeSelf()
 		self.layers[str] = nil
 	end
@@ -35,7 +35,7 @@ function PopupRootLayer:showPopup(event)
 	--action
 	local animName = event.animName or "scale"
 	if event.animName == "normal" then
-
+		layer:scale(1)
 	elseif animName == "scale" then
 		layer:scale(0.0)
 		layer:scaleTo(0.15, 1)
@@ -77,13 +77,13 @@ function PopupRootLayer:closePopup(event)
 	-- print("animName", animName)
 	if animName == "normal" then
 		self:removePopup(event.layerId, onCloseFunc)
-	elseif animName == "scale" then 
+	elseif animName == "scale" then
 		transition.execute(self.layers[event.layerId], cc.ScaleTo:create(0.15, 0.0), {
 	    	delay = 0,
 	    	easing = "In",
-	    	onComplete = function() 
+	    	onComplete = function()
 	    		self:removePopup(event.layerId, onCloseFunc)
-	       end, 
+	       end,
 		})
 	end
 end

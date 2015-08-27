@@ -78,7 +78,7 @@ function ActivitysMainLayer:loadCCS()
 
 
     --activeCode
-    self.btn_activate = cc.ui.uiloader:seekNodeByName:(self.ui, "btn_activate")
+    self.btn_activate = cc.uiloader:seekNodeByName(self.ui, "btn_activate")
     self.btn_activate:onButtonClicked(function( event )
                self:refreshListView("activeCode")
         end)
@@ -88,6 +88,7 @@ function ActivitysMainLayer:refreshListView(type)
     self.btn_juji:setButtonEnabled(true)
     self.btn_boss:setButtonEnabled(true)
     self.btn_dailyTask:setButtonEnabled(true)
+    self.btn_activate:setButtonEnabled(true)
     print("function ActivitysMainLayer:refreshListView(type)")
     self.comment:removeAllChildren()
 
@@ -105,6 +106,7 @@ function ActivitysMainLayer:refreshListView(type)
         contentNode = DailyTaskNode.new()
     elseif type == "activeCode" then
         self.btn_activate:setButtonEnabled(false)
+        contentNode = ActiveCodeNode.new()
     else
         assert(false, "type is invalid" .. type)
     end
