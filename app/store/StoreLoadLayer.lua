@@ -5,8 +5,8 @@ end)
 function StoreLoadLayer:ctor()
     self.buyModel = md:getInstance("BuyModel")
     cc.EventProxy.new(self.buyModel, self)
-        :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.close))
-        :addEventListener(self.buyModel.BUY_FAIL_EVENT, handler(self, self.close))
+        :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.closeSucc))
+        :addEventListener(self.buyModel.BUY_FAIL_EVENT, handler(self, self.closeFail))
 
     self:initUI()
 end
@@ -25,8 +25,15 @@ function StoreLoadLayer:initUI()
     armature:getAnimation():play("Animation1" , -1, 1)
 end
 
-function StoreLoadLayer:close()
+function StoreLoadLayer:closeSucc()
     ui:closePopup("StoreLoadLayer",{animName = "normal"})
+end
+
+function StoreLoadLayer:closeFail()
+    ui:closePopup("StoreLoadLayer",{animName = "normal"})
+    ui:showPopup("commonPopup",
+             {type = "style1",content = "购买失败，请重新尝试！"},
+             {opacity = 100})
 end
 
 return StoreLoadLayer

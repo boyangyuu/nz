@@ -49,15 +49,11 @@ function ActivitysMainLayer:loadCCS()
         end)
     else
         self.btn_juji:onButtonClicked(function( event )
-
             self:refreshListView("jujiFight")
         end)
     end
 
-
-
     --boss
-
     self.btn_boss = cc.uiloader:seekNodeByName(self.ui, "btn_boss")
     local userModel = md:getInstance("UserModel")
     local isOpenBoss = userModel:getUserLevel() >= 7
@@ -76,19 +72,55 @@ function ActivitysMainLayer:loadCCS()
         end)
     end
 
-
     --activeCode
     self.btn_activate = cc.uiloader:seekNodeByName(self.ui, "btn_activate")
+    self.btn_activate:setVisible(false)
+    self:request()
     self.btn_activate:onButtonClicked(function( event )
-               self:refreshListView("activeCode")
-        end)
+        self:refreshListView("activeCode")
+    end)
+end
+
+function ActivitysMainLayer:request()
+    self.isShowActiveCode = false
+    if device.platform == "ios" then
+        local url = "http://123.57.213.26/openactive.php"
+        local request = network.createHTTPRequest(handler(self,self.onRequestEvent), url, "GET")
+        request:start()
+    else
+        self.btn_activate:setVisible(true)
+    end
+end
+
+function ActivitysMainLayer:onRequestEvent(event)
+    local name = event.name
+    local request = event.request
+    -- if request == nil then return end
+    if name ~= "completed" then
+        print("网络请求中", request:getErrorCode()..request:getErrorMessage())
+        return
+    end
+
+    local code = request:getResponseStatusCode()
+    if code ~= 200 then
+        print("网络请求失败", code)
+    else
+        print("网络请求成功", code)
+        local appStoreState = request:getResponseString()
+        dump(appStoreState)
+        if appStoreState == "open" then
+            self.btn_activate:setVisible(true)
+        else
+            self.btn_activate:setVisible(false)
+        end
+    end
 end
 
 function ActivitysMainLayer:refreshListView(type)
     self.btn_juji:setButtonEnabled(true)
     self.btn_boss:setButtonEnabled(true)
-    self.btn_dailyTask:setButtonEnabled(true)
     self.btn_activate:setButtonEnabled(true)
+    self.btn_dailyTask:setButtonEnabled(true)
     print("function ActivitysMainLayer:refreshListView(type)")
     self.comment:removeAllChildren()
 

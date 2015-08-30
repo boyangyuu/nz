@@ -129,7 +129,7 @@ function InfoLayer:initBtns()
 	local btnShop = cc.uiloader:seekNodeByName(self.root, "btnShop")
 	btnShop:setTouchEnabled(true)
 	btnShop:onButtonClicked(function()
-         ui:showPopup("StorePopup",{},{animName = "scale"})
+         ui:showPopup("StorePopup",{},{animName = "normal"})
     end)
 end
 

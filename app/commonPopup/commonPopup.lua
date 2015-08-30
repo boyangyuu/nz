@@ -29,6 +29,7 @@ function commonPopup:ctor(properties)
 	local typeName = properties.type
 	self:loadCCS(typeName)
 	self:initUI(properties)
+	self:setTouchSwallowEnabled(true)
 end
 
 function commonPopup:loadCCS(typeName)
@@ -39,7 +40,7 @@ end
 
 function commonPopup:initUI(properties)
 	local typeName = properties.type
-	-- local funcStr = "initUI_" .. typeName 
+	-- local funcStr = "initUI_" .. typeName
 	-- self[funcStr](properties)
 	if typeName == "style1" then
 		local content = cc.uiloader:seekNodeByName(self, "content")
@@ -51,7 +52,7 @@ function commonPopup:initUI(properties)
     	addBtnEventListener(btntrue, function(event)
 	        if event.name=='began' then
 	            return true
-	        elseif event.name=='ended' then		
+	        elseif event.name=='ended' then
 		        self:onClickCofirm()
 
 	        end
@@ -59,7 +60,7 @@ function commonPopup:initUI(properties)
     	addBtnEventListener(btnfalse, function(event)
 	        if event.name=='began' then
 	            return true
-	        elseif event.name=='ended' then		
+	        elseif event.name=='ended' then
 		        self:onClickClose()
 	        end
 	    end)
@@ -94,14 +95,14 @@ function commonPopup:initUI(properties)
     	addBtnEventListener(btntrue, function(event)
 	        if event.name=='began' then
 	            return true
-	        elseif event.name=='ended' then		
+	        elseif event.name=='ended' then
 		        self:onClickCofirm()
 	        end
 	    end)
     	addBtnEventListener(btnfalse, function(event)
 	        if event.name=='began' then
 	            return true
-	        elseif event.name=='ended' then		
+	        elseif event.name=='ended' then
 
 		     self:onClickClose()
 	        end
@@ -139,7 +140,7 @@ function commonPopup:initUI(properties)
 end
 
 -- function callPhone:initUI_style1(properties)
-	
+
 -- end
 
 function commonPopup:onClickCofirm()
@@ -147,7 +148,7 @@ function commonPopup:onClickCofirm()
 	local func =  self.properties.callfuncCofirm
 	if func ~= nil then
 		print("callfuncCofirm")
-		func()		
+		func()
 	end
 end
 
@@ -157,14 +158,14 @@ function commonPopup:onClickClose()
 	if func ~= nil then
 		print("callfuncClose")
 		func()
-	end	
+	end
 end
 
 function commonPopup:onClickQuickInlay()
 	ui:closePopup("commonPopup")
 	local func =  self.properties.callfuncQuickInlay
 	if func ~= nil then
-		print("callfuncClose")  
+		print("callfuncClose")
 		func()
 	end
 end
@@ -173,7 +174,7 @@ function commonPopup:onClickGoldWeapon()
 	ui:closePopup("commonPopup")
 	local func =  self.properties.callfuncGoldWeapon
 	if func ~= nil then
-		print("callfuncClose")  
+		print("callfuncClose")
 		func()
 	end
 end

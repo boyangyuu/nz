@@ -19,6 +19,7 @@ function ActiveCodeLayer:initUI()
     btntrue:setTouchEnabled(true)
     contentBox:setMaxLengthEnabled(true)
     contentBox:setMaxLength(25)
+    self.inputString = ""
     contentBox:addEventListener(function(contentBox, eventType)
         if device.platform == "ios" then
              self.inputString = contentBox:getString() --cocos 3.5
@@ -37,6 +38,12 @@ end
 
 function ActiveCodeLayer:onInputActiveCode()
     self.activeCode = self.inputString
+    if self.activeCode == "" then
+        ui:showPopup("commonPopup",
+             {type = "style2",content = "不能为空"},
+             {opacity = 100})
+        return
+    end
     if self.activeCode == "81556146laose"
         and JavaUtils.getIsShenhe() then
         __isDebug = true

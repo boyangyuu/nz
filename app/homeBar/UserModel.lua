@@ -65,6 +65,7 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 
 		return true
 	else
+		if isBuy and device.platform == "ios" then isBuy = false end
 		if isBuy then
 			print("宝石不足请购买！")
 			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
@@ -74,8 +75,9 @@ function UserModel:costDiamond(diamond, isBuy, strPos)
 			scheduler.performWithDelayGlobal(delayCall, 1.0)
 		else
 			ui:showPopup("BuyTipsPopup", {type = "boneLess"}, {animName = "normal"})
+			if device.platform ~= "ios" then return end
 			function delayPopUpStore()
-				ui:showPopup("StorePopup",{},{animName = "scale"})
+				ui:showPopup("StorePopup",{},{animName = "normal"})
 			end
 			scheduler.performWithDelayGlobal(delayPopUpStore, 1.0)
 		end

@@ -9,7 +9,7 @@ local StorePopup = class("StorePopup",function()
 	return layer
 end)
 
-function StorePopup:ctor(property)
+function StorePopup:ctor()
 	self.userModel   = md:getInstance("UserModel")
 
 	--events

@@ -32,7 +32,7 @@ function GiftBagStonePopup:loadCCS()
     manager:addArmatureFileInfo(hqlsrc)
     local plist = "res/WeaponList/iconhql_tx/iconhql_tx0.plist"
     local png   = "res/WeaponList/iconhql_tx/iconhql_tx0.png"
-    display.addSpriteFrames(plist, png)     
+    display.addSpriteFrames(plist, png)
 end
 
 function GiftBagStonePopup:initButtons()
@@ -66,36 +66,31 @@ function GiftBagStonePopup:onClickBuy()
 	local user = md:getInstance("UserModel")
 	local strPos = self.property["strPos"] or  "钻石不足_限时大促“火麒麟”"
     local cost   = self.property["stoneCost"]
-    local isAfforded = nil
-    if device.platform == "ios" then
-	   	isAfforded = user:costDiamond(cost) 
-	else    	
-	    isAfforded = user:costDiamond(cost, true, strPos) 
-    end
+    local isAfforded = user:costDiamond(cost, true, strPos)
     if isAfforded then
 		self:onBuyDone()
-    end		
+    end
 end
 
 function GiftBagStonePopup:onBuyDone()
 	--lei
 	local propModel = md:getInstance("PropModel")
-	propModel:addProp("lei", 100)	
+	propModel:addProp("lei", 100)
 
-	--hpBag 
-	propModel:addProp("hpBag", 10)	
+	--hpBag
+	propModel:addProp("hpBag", 10)
 
 	--黄武
 	local inlayModel = md:getInstance("InlayModel")
 	inlayModel:buyGoldsInlay(10)
 
 	--白银
-    inlayModel:buyInlay(2,10) 
-    inlayModel:buyInlay(5,10) 
-    inlayModel:buyInlay(8,10) 
-    inlayModel:buyInlay(11,10) 
-    inlayModel:buyInlay(14,10) 
-    inlayModel:buyInlay(17,10) 	
+    inlayModel:buyInlay(2,10)
+    inlayModel:buyInlay(5,10)
+    inlayModel:buyInlay(8,10)
+    inlayModel:buyInlay(11,10)
+    inlayModel:buyInlay(14,10)
+    inlayModel:buyInlay(17,10)
 
     --武器
     local weaponId = 9
@@ -114,14 +109,14 @@ function GiftBagStonePopup:onBuyDone()
 	buyModel:setBought("GiftBag_Xianshidacu")
 
 	--anim
-	ui:showPopup("GiftBagStoneGetPopup", 
+	ui:showPopup("GiftBagStoneGetPopup",
 		{onGetDoneFunc = handler(self, self.onClickClose),
 		weaponId = weaponId}
-		)	
+		)
 end
 
 function GiftBagStonePopup:onClickClose()
-	if self.property["closeAllFunc"] then 
+	if self.property["closeAllFunc"] then
 		self.property["closeAllFunc"]()
 	end
 	ui:closePopup("GiftBagStonePopup",{animName = "normal"})

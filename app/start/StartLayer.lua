@@ -58,9 +58,9 @@ function StartLayer:initUI()
     self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
     self.btnGonggao = cc.uiloader:seekNodeByName(self, "btnGonggao")
-    if device.platform == "ios" then
-        self.btnGonggao:setVisible(false)
-    end
+    -- if device.platform == "ios" then
+    --     self.btnGonggao:setVisible(false)
+    -- end
 
     local seq = transition.sequence({
         cc.ScaleTo:create(0.6, 1.04),
@@ -126,6 +126,10 @@ function StartLayer:initUI()
     local tousuArm = ccs.Armature:create("tousu_tx")
     addChildCenter(tousuArm, btnTousu)
     tousuArm:getAnimation():play("Animation1" , -1, 1)
+
+    if device.platform == "ios" then
+        btnTousu:setVisible(false)
+    end
 
     -- 添加客服按钮点击事件
     btnTousu:onButtonPressed(function( event )
