@@ -549,7 +549,7 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self.ldArmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.curGroupId)
             self:refreshLevelLayer(self.curGroupId)
-            self.telNum:setVisible(true)
+            self.telNum:setVisible(false)
         end
     end
 end

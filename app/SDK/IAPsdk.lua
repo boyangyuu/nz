@@ -133,6 +133,7 @@ function IAPsdk:getPaycode(configId)
 end
 
 function IAPsdk:pay(configId)
+	dump(configId)
 	if __isFree then 	self:callbackSuccess() return end
 	if not self:isPayValid() then return end
 

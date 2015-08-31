@@ -33,14 +33,14 @@ function GunView:ctor()
 end
 
 function GunView:playIdle()
-	self.armature:getAnimation():play("stand" , -1, 1) 
+	self.armature:getAnimation():play("stand" , -1, 1)
 end
 
 function GunView:fire()
 	--bullet
 	local num = self.gun:getCurBulletNum() - 1
 	self.gun:setCurBulletNum(num)
-	if self.jqk then 
+	if self.jqk then
 		self.jqk   :setVisible(true)
 		self.jqk:getAnimation():play("fire" , -1, 0)
 	end
@@ -52,32 +52,33 @@ function GunView:fire()
 
 	self:addDanke()
 
-	self.armature:getAnimation():play("fire" , -1, 1)	
-	local function animationEvent(armatureBack,movementType,movementId) 
+	self.armature:getAnimation():play("fire" , -1, 1)
+	local function animationEvent(armatureBack,movementType,movementId)
     	if movementType == ccs.MovementEventType.loopComplete
     	 and movementId == "fire"  then
 			armatureBack:getAnimation():play("stand" , -1, 1)
     	end
-	end		
+	end
 	self.armature:getAnimation():setMovementEventCallFunc(animationEvent)
 
 	--sound
 	local config = self.gun:getConfig()
 	local soundName = config.imgName 			--动作特效
-	
+
 	--todo
 	if soundName == "blt" then soundName = "lmd" end
-	if soundName == "hql" then soundName = "ak" end		
+	if soundName == "hql" then soundName = "ak" end
+	if soundName == "bj" then soundName = "jfzc" end
 	local soundSrc  = "res/Music/weapon/"..soundName.."fire.wav"
-	self.audioId =  audio.playSound(soundSrc,false)		
+	self.audioId =  audio.playSound(soundSrc,false)
 end
 
 --hero层 发送换枪
 function GunView:refreshGun()
 	--clear
-	if self.armature then 
-		self.armature:removeFromParent() 
-	end	
+	if self.armature then
+		self.armature:removeFromParent()
+	end
 	self.gun   = nil
 	self.jqk   = nil
 	self.qkzd = nil
@@ -86,20 +87,20 @@ function GunView:refreshGun()
 	self.gun  = self.hero:getGun()
 	local config = self.gun:getConfig()
 	-- dump(config, "config")
-	
+
 	--armature
 	local animName = config.animName --动作特效
     local src = "res/Fight/gunsAnim/"..animName.."/"..animName..".ExportJson"
     local plist = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.plist"
     local png   = "res/Fight/gunsAnim/"..animName.."/"..animName.."0.png"
-    display.addSpriteFrames(plist, png)  
+    display.addSpriteFrames(plist, png)
     local manager = ccs.ArmatureDataManager:getInstance()
-    manager:addArmatureFileInfo(src)                
+    manager:addArmatureFileInfo(src)
 
 	local armature = ccs.Armature:create(animName)
     armature:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	self.armature = armature
-	self:playIdle()	
+	self:playIdle()
 	self:addChild(armature)
 
 	--isGold
@@ -114,23 +115,23 @@ function GunView:refreshGun()
 
     --枪火
     local jqkName = config.jqkName --机枪口特效
-    if jqkName ~= "null" then 
+    if jqkName ~= "null" then
 	    self.jqk = ccs.Armature:create(jqkName)
 	    self.jqk:setVisible(false)
-	    self.jqk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
+	    self.jqk:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
 	    self.jqk:setPosition(destpos.x, destpos.y)
 	    armature:addChild(self.jqk, -1)
 	end
 
     --枪火遮挡
     local jqkzdName = config.jqkzdName
-    if jqkzdName ~= "null" then 
+    if jqkzdName ~= "null" then
     	print("jqkzdName")
 	    self.qkzd = ccs.Armature:create(jqkzdName)
 	    self.qkzd:setVisible(false)
 	   	self.qkzd:setPosition(destpos.x, destpos.y)
 	    armature:addChild(self.qkzd , 100)
-	    self.qkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent)) 
+	    self.qkzd:getAnimation():setMovementEventCallFunc(handler(self,self.animationEvent))
     end
 
     --蛋壳
@@ -142,10 +143,10 @@ function GunView:onHeroFire(event)
 end
 
 function GunView:stopFire()
-	if self.jqk then 
+	if self.jqk then
 		self.jqk :setVisible(false)
 	end
-	if self.qkzd then 
+	if self.qkzd then
 		self.qkzd:setVisible(false)
 	end
 
@@ -154,7 +155,7 @@ end
 
 function GunView:playChange(event)
 	if self.isChanging then return end
-	
+
 	--clear
 	self:setPosition(cc.p(0.0,0.0))
 
@@ -167,15 +168,15 @@ function GunView:playChange(event)
 	end
 	local function callFuncChange()
 		self:refreshGun()
-	end 
+	end
 	local function callFuncFinishChange()
 		self.isChanging = false
 	end
 
 	local seq = cc.Sequence:create(
 		cc.CallFunc:create(callFuncBeginChange),
-		actionDown, 
-		cc.CallFunc:create(callFuncChange), 
+		actionDown,
+		cc.CallFunc:create(callFuncChange),
 		actionUp,
 		cc.CallFunc:create(callFuncFinishChange))
 
@@ -189,7 +190,7 @@ function GunView:playReload()
 
 	--effect
 	local soundSrc  = "res/Music/fight/hzd.wav"
-	self.audioId =  audio.playSound(soundSrc,false)	
+	self.audioId =  audio.playSound(soundSrc,false)
 
 	--回调 子弹full
 	local reloadTime = self.gun:getReloadTime()
@@ -200,22 +201,22 @@ function GunView:playReload()
 		self.gun:setFullBulletNum()
 	end
 	self:performWithDelay(reloadDone, reloadTime)
-	
+
 	self.hero:dispatchEvent({
 				name = self.hero.GUN_RELOAD_EVENT , speedScale = speedScale})
 end
 
-function GunView:canShot() 
+function GunView:canShot()
 	--bullets
-	if self.gun:getCurBulletNum() == 1 then 
+	if self.gun:getCurBulletNum() == 1 then
 		self:stopFire()
 		self:playReload()
 		local fightFactory = md:getInstance("FightFactory")
    	 	local fight = fightFactory:getFight()
 		fight:dispatchEvent({name = fight.GUN_RELOAD_EVENT})
-		return true 
+		return true
 	end
-	
+
 	--is changing
 	return not self.isChanging
 end
@@ -227,32 +228,32 @@ end
 function GunView:addDanke()
 	local dk = ccs.Armature:create("danke")
 	dk:getAnimation():play("danke", -1, 1)
-	local function animationEvent(armatureBack,movementType,movementId) 
+	local function animationEvent(armatureBack,movementType,movementId)
     	if movementType == ccs.MovementEventType.loopComplete then
 			dk:removeSelf()
     	end
-	end	
+	end
 	dk:getAnimation():setMovementEventCallFunc(animationEvent)
 
 	--special check
 	local config = self.gun:getConfig()
-	local animName = config["animName"]	
+	local animName = config["animName"]
 	local armature = self.armature
 
 	--danke
-    if self.destpos == nil then 
+    if self.destpos == nil then
 	    local boneDk = armature:getBone("dk")
 	    local posBone = boneDk:convertToWorldSpace(cc.p(0, 0))
 	    local posArm = armature:convertToWorldSpace(cc.p(0, 0))
 	    self.destpos = cc.p(posBone.x - posArm.x, posBone.y - posArm.y)
 	end
    	dk:setPosition(self.destpos.x, self.destpos.y)
-    armature:addChild(dk)	
+    armature:addChild(dk)
 end
 
 function GunView:setGoldGun(isGold)
 	local skinIndex = isGold and 1 or 0
-	self.armature:getBone("gun"):changeDisplayWithIndex(skinIndex, true) 
+	self.armature:getBone("gun"):changeDisplayWithIndex(skinIndex, true)
 	local boneIndex = 1
 
 	--other bone

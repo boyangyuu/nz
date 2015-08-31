@@ -32,6 +32,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 	assert(strPos, "strPos is nil configId :"..configId)
 	self:clearData()
     self.curId = configId
+    dump(self.curId,"appappappappappappappapp")
     self.curBuyData =  buyData
 
     if device.platform == "ios" then
@@ -164,6 +165,7 @@ function BuyModel:payDone(result)
 
 	--events
 	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
+	ui:closePopup("GiftBagPopup",{animName = "normal"})
 end
 
 function BuyModel:deneyPay()
@@ -185,6 +187,7 @@ function BuyModel:deneyPay()
 	um:event("支付情况", umData)
 
 	self:dispatchEvent({name = BuyModel.BUY_FAIL_EVENT})
+	ui:closePopup("GiftBagPopup",{animName = "normal"})
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)

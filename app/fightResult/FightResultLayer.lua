@@ -370,10 +370,10 @@ end
 function FightResultLayer:onCofirmLeftCard()
 	if self.userModel:costDiamond(10) then
 		self:onTurnLeftCard()
-	else
-        local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard),isNotPopKefu = true},
-         "战斗结算界面_点击翻牌")
+	-- else
+ --        local buyModel = md:getInstance("BuyModel")
+ --        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard),isNotPopKefu = true},
+ --         "战斗结算界面_点击翻牌")
 	end
 end
 

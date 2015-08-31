@@ -106,7 +106,9 @@ function GiftBagStonePopup:onBuyDone()
 
 	--setData
 	local buyModel = md:getInstance("BuyModel")
-	buyModel:setBought("GiftBag_Xianshidacu")
+    if self.property["ccsName"] == "GiftBag_Xianshidacu" then
+    	buyModel:setBought("GiftBag_Xianshidacu")
+    end
 
 	--anim
 	ui:showPopup("GiftBagStoneGetPopup",

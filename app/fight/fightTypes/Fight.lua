@@ -41,7 +41,7 @@ function Fight:beginFight()
     self:refreshUm()
 
     --dialog
-    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 2.0)    
+    scheduler.performWithDelayGlobal(handler(self, self.willStartFight), 2.0)
 end
 
 function Fight:refreshData(fightData)
@@ -49,30 +49,30 @@ function Fight:refreshData(fightData)
     self.levelId   = fightData.levelId
     self.inlayModel = md:getInstance("InlayModel")
 
-    --clear   
+    --clear
     self.result = nil
     self.resultData = {}
     self.goldGet  = 0
-    self.isPause = false  
-    self.fightData = fightData   
+    self.isPause = false
+    self.fightData = fightData
     md:createInstance("FightMode")
-    md:createInstance("FightConfigs")  
-    md:createInstance("Map") 
+    md:createInstance("FightConfigs")
+    md:createInstance("Map")
     md:createInstance("EnemyManager")
     md:createInstance("FightProp")
-    
+
     --init instance
     local isContinue = fightData["isContinue"]
     if isContinue then return end
-    
-    md:createInstance("FightInlay") 
-    md:createInstance("Hero")
-    md:createInstance("Defence")    
-    md:createInstance("Robot")     
 
-    self.hero       = md:getInstance("Hero") 
+    md:createInstance("FightInlay")
+    md:createInstance("Hero")
+    md:createInstance("Defence")
+    md:createInstance("Robot")
+
+    self.hero       = md:getInstance("Hero")
     self.inlay      = self.hero:getFightInlay()
-    
+
     self.relivedTimes = 0
 end
 
@@ -92,7 +92,7 @@ function Fight:refreshUmFightTimesEvent()
     local levelInfo     = self:getLevelInfo()
     local umStr         = nil
     local isFighted     = self:getFightedLevelData()
-    if isFighted then 
+    if isFighted then
         umStr = "关卡开始_重复进入"
     else
         self:saveFightedLevelData("enter")
@@ -101,18 +101,18 @@ function Fight:refreshUmFightTimesEvent()
 
     local umData = {}
     umData[levelInfo] = umStr
-    um:event("关卡次数情况", umData)        
+    um:event("关卡次数情况", umData)
 end
 
 function Fight:saveFightedLevelData(_status, levelInfo)
     --save levelInfo
-    levelInfo = levelInfo or self:getLevelInfo() 
+    levelInfo = levelInfo or self:getLevelInfo()
     assert(_status, "_status is nil")
     local data = getUserData()
     local status = data.user.fightedLevels[levelInfo]
-    if status == "awarded" then return end 
+    if status == "awarded" then return end
     data.user.fightedLevels[levelInfo] = _status
-    setUserData(data)   
+    setUserData(data)
 end
 
 function Fight:updateTaskData()
@@ -120,25 +120,25 @@ function Fight:updateTaskData()
     local dailyTask       = md:getInstance("DailyTaskModel")
     local keepKillNums    = self.hero:getKillKeepCntMax()
     local keepKillNumsOri = dailyTask:getTaskTimes("keepKill")
-    if keepKillNumsOri < keepKillNums then 
+    if keepKillNumsOri < keepKillNums then
         dailyTask:setTaskTimes("keepKill", keepKillNums)
     end
 
     --总杀
     local killNums = self.hero:getKillCnt()
     local killNumsOri = dailyTask:getTaskTimes("totalKill")
-    -- if killNumsOri < killNums then 
+    -- if killNumsOri < killNums then
     --     dailyTask:setTaskTimes("totalKill", killNums)
-    -- end    
+    -- end
     dailyTask:setTaskTimes("totalKill", killNums+killNumsOri)
 
     --战斗类型
     local map      = md:getInstance("Map")
     local waveCfg  = map:getCurWaveConfig()
-    local modeType = waveCfg:getFightMode().type 
+    local modeType = waveCfg:getFightMode().type
     local taskType = "fight_"..modeType
     if modeType == "xianShi" or modeType == "renZhi" or modeType == "taoFan" or modeType == "puTong" then
-        dailyTask:addTaskTimes(taskType) 
+        dailyTask:addTaskTimes(taskType)
     end
 end
 
@@ -162,16 +162,16 @@ function Fight:startFight()
 
     --check guide
     local guide = md:getInstance("Guide")
-    if self.groupId == 0 and self.levelId == 0 then 
+    if self.groupId == 0 and self.levelId == 0 then
         scheduler.performWithDelayGlobal(function()
             guide:check("fight01_move")
         end, 0.0)
-        return       
-    elseif self.groupId == 1 and self.levelId == 5 then 
+        return
+    elseif self.groupId == 1 and self.levelId == 5 then
         scheduler.performWithDelayGlobal(function()
             guide:check("fightJu")
         end, 0.0)
-        return   
+        return
     end
 
     --check ad
@@ -186,11 +186,11 @@ function Fight:endFightWin()
     self:dispatchEvent({name = Fight.FIGHT_WIN_EVENT})
     self:pauseFight(true)
     self:checkDialogAfter()
-    if self:getFightType() ~= "jujiFight" then 
+    if self:getFightType() ~= "jujiFight" then
         self:clearFightData()
     end
     --um 任务
-    local levelInfo = self:getLevelInfo() 
+    local levelInfo = self:getLevelInfo()
     um:finishLevel(levelInfo)
 
     --um 关卡完成情况事件
@@ -202,7 +202,7 @@ function Fight:endFightWin()
     self:saveFightedLevelData("win")
 
     --save task
-    self:updateTaskData()    
+    self:updateTaskData()
 
     --level
     local levelMapModel = md:getInstance("LevelMapModel")
@@ -225,13 +225,13 @@ end
 function Fight:willFail(time)
     if self:getResult() ~= nil then return end
     local delay = time or 2.0
-    self:setResult("willFail")    
+    self:setResult("willFail")
     scheduler.performWithDelayGlobal(handler(self, self.doFail), delay)
 end
 
 function Fight:doWin()
     assert(self.result)
-    self:endFightWin()  
+    self:endFightWin()
 end
 
 function Fight:doFail()
@@ -244,9 +244,9 @@ function Fight:doGiveUp()
     self.result = "fail"
 
      --um 关卡完成情况事件
-    local levelInfo = self:getLevelInfo() 
+    local levelInfo = self:getLevelInfo()
     local umData = {}
-    umData[levelInfo] = "关卡失败"    
+    umData[levelInfo] = "关卡失败"
     um:event("关卡完成情况", umData)
 
     -- save data
@@ -263,7 +263,7 @@ function Fight:doRelive()
     local umData = {}
     umData[levelInfo] = "复活"
     um:event("关卡道具使用", umData)
-  
+
     --clear
     self:clearFightData()
     self.result = nil
@@ -294,12 +294,12 @@ end
 
 function Fight:pauseFight(isPause)
     self.isPause = isPause
-    self:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT, 
+    self:dispatchEvent({name = Fight.PAUSE_SWITCH_EVENT,
         isPause = self.isPause})
 
     --fire
-    if isPause then 
-        self:stopFire() 
+    if isPause then
+        self:stopFire()
     end
 end
 
@@ -309,13 +309,13 @@ end
 
 function Fight:checkDialogForward()
     local dialog = md:getInstance("DialogModel")
-    dialog:check("forward", handler(self, self.onDialogForwardEnd))     
+    dialog:check("forward", handler(self, self.onDialogForwardEnd))
 end
 
 function Fight:onDialogForwardEnd()
     self:startFight()
 end
- 
+
 function Fight:checkDialogAfter()
     local dialog = md:getInstance("DialogModel")
     dialog:check("after",  handler(self, self.onDialogAfterEnd))
@@ -324,54 +324,55 @@ end
 function Fight:onDialogAfterEnd()
     local weaponListModel = md:getInstance("WeaponListModel")
     if not weaponListModel:isWeaponExist(9) then
-        if (self.groupId == 0 and self.levelId == 0) then 
+        if (self.groupId == 0 and self.levelId == 0) then
             if device.platform == "ios" then
-                ui:showPopup("GiftBagStonePopup", 
+                ui:showPopup("GiftBagStonePopup",
                     {ccsName = "GiftBag_Xianshidacu_ios",
                     strPos   = "战斗结束_自动弹出限时大促",
-                    stoneCost = 900, 
+                    stoneCost = 900,
                     closeAllFunc = handler(self, self.startFightResult),
                     },
-                    {animName = "shake"})    
-                return   
+                    {animName = "shake"})
+                return
             else
-                ui:showPopup("GiftBagStonePopup", 
+                ui:showPopup("GiftBagStonePopup",
                     {ccsName = "GiftBag_Xianshidacu",
                     strPos   = "战斗结束_自动弹出限时大促",
-                    stoneCost = 450, 
+                    stoneCost = 450,
                     closeAllFunc = handler(self, self.startFightResult),
                     },
-                    {animName = "shake"})    
-                return 
+                    {animName = "shake"})
+                return
             end
-        end     
+        end
     end
 
-    if (self.groupId == 2 and self.levelId == 1) then 
+    if (self.groupId == 2 and self.levelId == 1) then
         if not weaponListModel:isWeaponExist(11) then
-            ui:showPopup("GiftBagStonePopup", 
+            ui:showPopup("GiftBagStonePopup",
                 {ccsName = "GiftBag_Chuanqiwuqi",
                 strPos   = "战斗结束_自动弹出传奇武器",
-                stoneCost = 900, 
+                stoneCost = 900,
                 closeAllFunc = handler(self, self.startFightResult),
                 },
-                {animName = "shake"})    
+                {animName = "shake"})
             return
         end
     end
 
-    if (self.groupId == 1 and self.levelId == 2) then 
-        --ad 1-2 
-        local buyModel = md:getInstance("BuyModel")
-        if not buyModel:checkBought("weaponGiftBag") then 
-            buyModel:showBuy("weaponGiftBag", {
-                closeAllFunc = handler(self, self.startFightResult),
-                deneyBuyFunc = handler(self, self.startFightResult),
-                isNotPopKefu = true},
-                self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
-            return 
-        end
-    end
+--todo
+    -- if (self.groupId == 1 and self.levelId == 2) then
+    --     --ad 1-2
+    --     local buyModel = md:getInstance("BuyModel")
+    --     if not buyModel:checkBought("weaponGiftBag") then
+    --         buyModel:showBuy("weaponGiftBag", {
+    --             closeAllFunc = handler(self, self.startFightResult),
+    --             deneyBuyFunc = handler(self, self.startFightResult),
+    --             isNotPopKefu = true},
+    --             self:getLevelInfo() .. "战斗结束_自动弹出武器大礼包")
+    --         return
+    --     end
+    -- end
 
     self:startFightResult()
 end
@@ -391,17 +392,17 @@ function Fight:getLevelId()
 end
 
 function Fight:getCurGroupAndLevel()
-    return self.groupId , self.levelId 
+    return self.groupId , self.levelId
 end
 
 function Fight:getLevelInfo()
-    local str = self.groupId.."-"..self.levelId 
+    local str = self.groupId.."-"..self.levelId
     assert(str, "str is nil")
     return str
 end
 
 function Fight:setCompsVisible(componentVisibles)
-    self:dispatchEvent({name = Fight.CONTROL_SET_EVENT, 
+    self:dispatchEvent({name = Fight.CONTROL_SET_EVENT,
         comps = componentVisibles})
 end
 
@@ -415,11 +416,11 @@ function Fight:clearFightData()
 end
 
 function Fight:cleanModels()
- 
+
 end
 
 function Fight:addGoldValue(goldValue_)
-    self.goldGet = self.goldGet + goldValue_ 
+    self.goldGet = self.goldGet + goldValue_
 end
 
 function Fight:getGoldValue()
@@ -455,11 +456,11 @@ function Fight:isJujiFight()
 end
 
 function Fight:endFightFail()
-    assert(false, "must implement") 
+    assert(false, "must implement")
 end
 
 function Fight:onReliveConfirm()
-   assert(false, "must implement") 
+   assert(false, "must implement")
 end
 
 function Fight:onReliveDeny()
