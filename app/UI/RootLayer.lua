@@ -12,7 +12,7 @@ function RootLayer:ctor()
     self.isLoadImage = false
     self.isLoadedArma = false
 
-    --add res 
+    --add res
     self:initLoginLayer()
 
     -- add keyPad listener
@@ -26,8 +26,8 @@ function RootLayer:ctor()
 
             luaj.callStaticMethod(
                 "org/cocos2dx/utils/PSNative",
-                "createAlert", 
-                {"", message, buttonLabels,  handler(self, self.onClickListener)}, 
+                "createAlert",
+                {"", message, buttonLabels,  handler(self, self.onClickListener)},
                 "(Ljava/lang/String;Ljava/lang/String;Ljava/util/Vector;I)V");
 
             self:onClickExitGame()
@@ -58,19 +58,19 @@ end
 
 function RootLayer:onPauseSwitch(event)
     local isPause = event.isPause
-    -- if isPause then 
+    -- if isPause then
     --     self:pause()
     --     transition.pauseTarget(self)
     -- else
     --     self:resume()
     --     transition.resumeTarget(self)
-    -- end  
+    -- end
 
-    -- if isPause then 
+    -- if isPause then
     --     self:onExit()
     -- else
     --     self:onEnter()
-    -- end     
+    -- end
 end
 
 function RootLayer:initLoginLayer()
@@ -101,10 +101,10 @@ function RootLayer:switchLayer(event)
     local properties = event.properties
 
     if loadingType == "fight" or loadingType == "home"
-         or loadingType == "home_first" then 
+         or loadingType == "home_first" then
         self.waitLayerCls        = layerCls
         self.waitLayerProperties = properties
-        self:showLoadLayer(loadingType)       
+        self:showLoadLayer(loadingType)
     else
         self.curLayer = layerCls.new(properties)
         self:addChild(self.curLayer)
@@ -122,7 +122,7 @@ function RootLayer:showLoadLayer(type)
     --addcache
     self:addResPublic()
 
-    if type == "home" or type == "home_first" then 
+    if type == "home" or type == "home_first" then
         self:addResHome()
     elseif type == "fight" then
         self:addResFight()
@@ -134,8 +134,8 @@ function RootLayer:clearCache()
 end
 
 function RootLayer:addResPublic()
-    self:addFrameRes("res/commonPNG/role0.plist", "res/commonPNG/role0.png") 
-    self:addFrameRes("res/commonPNG/item0.plist", "res/commonPNG/item0.png") 
+    self:addFrameRes("res/commonPNG/role0.plist", "res/commonPNG/role0.png")
+    self:addFrameRes("res/commonPNG/item0.plist", "res/commonPNG/item0.png")
     self:addFrameRes("res/commonPNG/weaponicon0.plist", "res/commonPNG/weaponicon0.png")
 end
 
@@ -160,37 +160,37 @@ function RootLayer:addResHome()
     self:addArmatureRes(guangsrc)
     local plist = "res/Store/guang/guang0.plist"
     local png   = "res/Store/guang/guang0.png"
-    self:addFrameRes(plist, png)          
+    self:addFrameRes(plist, png)
 
     local sczgsrc = "res/Store/sczg/sczg.ExportJson"
     self:addArmatureRes(sczgsrc)
     local plist = "res/Store/sczg/sczg0.plist"
     local png   = "res/Store/sczg/sczg0.png"
-    self:addFrameRes(plist, png)          
+    self:addFrameRes(plist, png)
 
     local leidasrc = "res/LevelMap/leida/leida.ExportJson"
     self:addArmatureRes(leidasrc)
     local plist = "res/LevelMap/leida/leida0.plist"
     local png   = "res/LevelMap/leida/leida0.png"
-    self:addFrameRes(plist, png)          
+    self:addFrameRes(plist, png)
 
     local jbsrc = "res/HomeBarLayer/jbs/jbs.ExportJson"
     self:addArmatureRes(jbsrc)
     local plist = "res/HomeBarLayer/jbs/jbs0.plist"
     local png   = "res/HomeBarLayer/jbs/jbs0.png"
-    self:addFrameRes(plist, png)          
+    self:addFrameRes(plist, png)
 
     local zssrc = "res/HomeBarLayer/zss/zss.ExportJson"
     self:addArmatureRes(zssrc)
     local plist = "res/HomeBarLayer/zss/zss0.plist"
     local png   = "res/HomeBarLayer/zss/zss0.png"
-    self:addFrameRes(plist, png)          
+    self:addFrameRes(plist, png)
 
     local libaosrc = "res/LevelMap/libao/libao.ExportJson"
     self:addArmatureRes(libaosrc)
     local plist = "res/LevelMap/libao/libao0.plist"
     local png   = "res/LevelMap/libao/libao0.png"
-    self:addFrameRes(plist, png)          
+    self:addFrameRes(plist, png)
 
     local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
     self:addArmatureRes(yjzbsrc)
@@ -202,35 +202,35 @@ function RootLayer:addResHome()
     self:addArmatureRes(hqlsrc)
     local plist = "res/WeaponList/iconhql_tx/iconhql_tx0.plist"
     local png   = "res/WeaponList/iconhql_tx/iconhql_tx0.png"
-    self:addFrameRes(plist, png)    
+    self:addFrameRes(plist, png)
 
     local bltsrc = "res/WeaponList/iconblt_tx/iconblt_tx.ExportJson"
     self:addArmatureRes(bltsrc)
     local plist = "res/WeaponList/iconblt_tx/iconblt_tx0.plist"
     local png   = "res/WeaponList/iconblt_tx/iconblt_tx0.png"
-    self:addFrameRes(plist, png)     
+    self:addFrameRes(plist, png)
 
     local bjsrc = "res/WeaponList/iconbj_tx/iconbj_tx.ExportJson"
     self:addArmatureRes(bjsrc)
     local plist = "res/WeaponList/iconbj_tx/iconbj_tx0.plist"
     local png   = "res/WeaponList/iconbj_tx/iconbj_tx0.png"
-    self:addFrameRes(plist, png)   
+    self:addFrameRes(plist, png)
 
     local thjbxsrc = "res/LevelMap/thj_bx/thj_bx.ExportJson"
     self:addArmatureRes(thjbxsrc)
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
-    self:addFrameRes(plist, png) 
+    self:addFrameRes(plist, png)
 
     --
     self:onloadDone()
 end
 
-function RootLayer:addResFight() 
+function RootLayer:addResFight()
     local fightData = self.waitLayerProperties["fightData"]
     local gid, lid = fightData["groupId"], fightData["levelId"]
 
-    self:addFrameRes("res/Fight/public/public0.plist", "res/Fight/public/public0.png")  
+    self:addFrameRes("res/Fight/public/public0.plist", "res/Fight/public/public0.png")
 
     --armature
     local manager = ccs.ArmatureDataManager:getInstance()
@@ -243,17 +243,17 @@ function RootLayer:addResFight()
         self:addArmatureRes(src)
         local plist = "res/Fight/enemys/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/enemys/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)        
-    end    
+        self:addFrameRes(plist, png)
+    end
 
-    local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia", 
+    local heroImgs = {"baotou","avatarhit", "blood1", "blood2","hjwq", "jijia",
         "beizha_sl", "bls", "btqpg", "bossdies", "hjnlc", "ls", "yw", "tishi"}
     for i,v in ipairs(heroImgs) do
         local src = "res/Fight/heroAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
         local plist = "res/Fight/heroAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/heroAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)        
+        self:addFrameRes(plist, png)
     end
 
     local mapImgs = {"diaoluojiangli", "difang_dandao"}
@@ -262,7 +262,7 @@ function RootLayer:addResFight()
         self:addArmatureRes(src)
         local plist = "res/Fight/mapAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/mapAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)       
+        self:addFrameRes(plist, png)
     end
 
     local buffImgs = {"hqljn_mz", "bltjn_mz", "jiaxue"}
@@ -271,8 +271,8 @@ function RootLayer:addResFight()
         self:addArmatureRes(src)
         local plist = "res/Fight/buffAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/buffAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)         
-    end    
+        self:addFrameRes(plist, png)
+    end
 
     local bulletImgs = {"zd_dimian", "zd_hjqmz", "zd_ptmz"}
     for i,v in ipairs(bulletImgs) do
@@ -280,22 +280,22 @@ function RootLayer:addResFight()
         self:addArmatureRes(src)
         local plist = "res/Fight/bulletAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/bulletAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)         
-    end  
+        self:addFrameRes(plist, png)
+    end
 
     local uiImgs = { "huanzidan", "ruodiangj", "tanhao",
         "gold", "danke", "baozhasl_y", "baozha4",
-        "effect_gun_kaiqiang", "wdhd", 
+        "effect_gun_kaiqiang", "wdhd",
         "renwuks", "qiangdicx", "jinbijl", "jiaxue","renwuwc"}
     for i,v in ipairs(uiImgs) do
         local src = "res/Fight/uiAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
         local plist = "res/Fight/uiAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/uiAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)         
+        self:addFrameRes(plist, png)
     end
 
-    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"} 
+    local jqkImgs = {"effect_gun_jqk", "qkzd", "pzqk","hjtqk", "syqk", "syqkzd", "hjtqkzd"}
     for i,v in ipairs(jqkImgs) do
         local src = "res/Fight/jqkAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
@@ -304,24 +304,30 @@ function RootLayer:addResFight()
         self:addFrameRes(plist, png)
     end
 
-    local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx", "jiatl_zx"} 
+    local focusImgs = {"sandq_zx", "huojt_zx", "anim_zunxin_sq", "jijia_zx", "jiatl_zx"}
     for i,v in ipairs(focusImgs) do
         local src = "res/Fight/focusAnim/"..v.."/"..v..".ExportJson"
         self:addArmatureRes(src)
         local plist = "res/Fight/focusAnim/"..v.."/"..v.."0.plist"
         local png   = "res/Fight/focusAnim/"..v.."/"..v.."0.png"
-        self:addFrameRes(plist, png)         
-    end 
+        self:addFrameRes(plist, png)
+    end
 
-    
+
     local bossjjsrc = "res/CommonPopup/animLayer/bossjj/bossjj.ExportJson"
     self:addArmatureRes(bossjjsrc)
-    self:addFrameRes("res/CommonPopup/animLayer/bossjj/bossjj0.plist", 
-        "res/CommonPopup/animLayer/bossjj/bossjj0.png") 
+    self:addFrameRes("res/CommonPopup/animLayer/bossjj/bossjj0.plist",
+        "res/CommonPopup/animLayer/bossjj/bossjj0.png")
 
     local plist = "res/LevelMap/thj_bx/thj_bx0.plist"
     local png   = "res/LevelMap/thj_bx/thj_bx0.png"
-    self:addFrameRes(plist, png)     
+    self:addFrameRes(plist, png)
+
+    local yjzbsrc = "res/LevelDetail/btequipanim/bt_yjzb.ExportJson"
+    self:addArmatureRes(yjzbsrc)
+    local plist = "res/LevelDetail/btequipanim/bt_yjzb0.plist"
+    local png   = "res/LevelDetail/btequipanim/bt_yjzb0.png"
+    self:addFrameRes(plist, png)
 end
 
 --sprite
@@ -329,7 +335,7 @@ function RootLayer:imageLoaded(plist, image)
     --todo 加个尾图 方便测试 例如ima ge == "res/ended.png"
     -- if image == "res/LevelMap/thj_bx/thj_bx0.png" then
     local lastImage
-    if device.platform == "windows" or  device.platform == "mac" then 
+    if device.platform == "windows" or  device.platform == "mac" then
         lastImage = "res/LevelMap/thj_bx/thj_bx0.png"
     else
         lastImage =  "res/thj_bx0.png"
@@ -346,9 +352,9 @@ function RootLayer:dataLoaded(percent)
     if percent == 1 then
         if self.isLoadedArma then return end
         --clear load
-        self.isLoadedArma = true 
+        self.isLoadedArma = true
         self:onloadDone()
-        
+
     end
 end
 
@@ -367,17 +373,17 @@ function RootLayer:addFrameRes(plist,png)
     else
         display.addSpriteFrames(plist, png)
 
-        local lastImage = "res/LevelMap/thj_bx/thj_bx0.png"        
+        local lastImage = "res/LevelMap/thj_bx/thj_bx0.png"
         if png == lastImage then
             self.isLoadImage  = true
-            self.isLoadedArma = true 
+            self.isLoadedArma = true
             self:onloadDone()
         end
-    end  
+    end
 end
 
 function RootLayer:onloadDone()
-    if self.isLoadedArma and self.isLoadImage then 
+    if self.isLoadedArma and self.isLoadImage then
         self.isLoadedArma = false
         self.isLoadImage  = false
         local p = self.waitLayerProperties

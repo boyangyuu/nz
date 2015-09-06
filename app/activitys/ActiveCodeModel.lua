@@ -47,7 +47,7 @@ function ActiveCodeModel:getType(activeCode)
 	elseif acParam == "F" or acParam == "f" then
 		return "dujia"
 	elseif acParam == "G" or acParam == "g" then
-		return "wuxing"
+		return "diamond1200"
     elseif acParam == "H" or acParam == "h" then
 		return "diamond120"
 	elseif acParam == "I" or acParam == "i" then
@@ -61,7 +61,7 @@ function ActiveCodeModel:checkGet(activeCode)
 	local acType = self:getType(activeCode)
 	if acType == "wuxing" or acType == "qudao" then
 		local data = getUserData()
-		local isGet = data.activeCode[acType] 
+		local isGet = data.activeCode[acType]
 		return isGet
 	else
 		return false
@@ -70,7 +70,7 @@ end
 
 function ActiveCodeModel:setGet(activeCode)
 	local acType = self:getType(activeCode)
-	if acType == "wuxing" or acType == "qudao" or acType == "tequan" 
+	if acType == "wuxing" or acType == "qudao" or acType == "tequan"
 		or acType == "dujia" then
 		local data = getUserData()
 		data.activeCode[acType] = true

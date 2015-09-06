@@ -2,7 +2,7 @@ local AwardTimeConfig = class("AwardTimeConfig", cc.mvc.ModelBase)
 
 local configs = {}
 
-award = {	
+award = {
 	{time = 60 * 1, money = 500},
 	{time = 60 * 3, money = 1000},
 	{time = 60 * 6, money = 1500},
