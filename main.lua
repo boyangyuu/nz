@@ -12,6 +12,7 @@ function __G__TRACKBACK__(errorMessage)
     print("LUA ERROR: " .. tostring(errorMessage) .. "\n")
     print(debug.traceback("", 2))
     print("----------------------------------------")
+    print("text dome")
     myApp:showError(debugInfo)
 end
 
