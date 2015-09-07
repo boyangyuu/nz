@@ -42,9 +42,14 @@ function StartLayer:initUI()
     armature:getAnimation():play("caidantx" , -1, 1)
 
     local dlArmature = ccs.Armature:create("dl_logo")
-    dlArmature:setPosition(cc.p(-80,-10))
+    dlArmature:getAnimation():setMovementEventCallFunc(
+     function (armatureBack,movementType,movement)
+        if movementType == ccs.MovementEventType.complete then
+            dlArmature:getAnimation():play("chixu" , -1, 1)
+        end
+    end)
     panlAnim:addChild(dlArmature)
-    dlArmature:getAnimation():play("chixu" , -1, 1)
+    dlArmature:getAnimation():play("start" , -1, 0)
 
     self.btnBegin = cc.uiloader:seekNodeByName(self, "btnBegin")
     self.btnAbout = cc.uiloader:seekNodeByName(self, "btnAbout")
