@@ -336,13 +336,26 @@ function LevelMapLayer:initFightActLayer()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
     local btn_acts  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_acts")
     local noti_acts = cc.uiloader:seekNodeByName(self.chooseRootNode, "noti_acts")
+    local animImg = cc.uiloader:seekNodeByName(self.chooseRootNode, "animImg")
 
-    --acts
-    btn_acts:onButtonClicked(function ()
-        local actModel = md:getInstance("ActivityMainModel")
-        actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
-        noti_acts:setVisible(false)
+    local lbArmature = ccs.Armature:create("libao")
+    lbArmature:setPosition(cc.p(60,60))
+    animImg:addChild(lbArmature)
+    lbArmature:getAnimation():play("libao" , -1, 1)
+
+
+
+    btn_acts:setTouchEnabled(true)
+    addBtnEventListener(btn_acts, function(event)
+        if event.name == 'began' then
+            return true
+        elseif event.name == 'ended' then
+            local actModel = md:getInstance("ActivityMainModel")
+            actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
+            noti_acts:setVisible(false)
+        end
     end)
+
 end
 
 function LevelMapLayer:initKefuLayer()
