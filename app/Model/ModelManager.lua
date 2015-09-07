@@ -16,6 +16,7 @@ modelClasses["WeaponListModel"]     = import("..weaponList.WeaponListModel")
 modelClasses["DailyLoginModel"]     = import("..dailyLogin.DailyLoginModel")
 modelClasses["VipModel"]            = import("..levelMap.VipModel")
 modelClasses["ActiveCodeModel"]     = import("..activitys.ActiveCodeModel")
+modelClasses["ADModel"]             = import("..store.ADModel")
 
 --bossFight
 modelClasses["BossModeModel"]       = import("..bossMode.BossModeModel")

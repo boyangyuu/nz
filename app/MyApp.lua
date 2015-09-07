@@ -258,6 +258,9 @@ function MyApp:createGameStateFile()
                 -- index1 = true,
             },
         },
+        dailyAD = {
+            watchTimes = 0,
+        }
     }
     GameState.save(data)
     GameData=GameState.load()

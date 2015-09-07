@@ -55,6 +55,11 @@ function StoreBankNode:refreshUI()
 end
 
 function StoreBankNode:onClickBtnBuy(configIndex)
+    if device.platform == "ios" and configIndex == 7 then
+        local adModel = md:getInstance("ADModel")
+        adModel:watchAD()
+        return
+    end
 
     local configs = StoreConfigs.getConfig("bank")
     local config  = configs[configIndex]

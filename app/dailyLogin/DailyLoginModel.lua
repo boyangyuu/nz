@@ -104,20 +104,20 @@ end
 
 function DailyLoginModel:onRequestEvent(event, callfunc)
 	-- dump(event, "event onRequestEvent")
-    local name = event.name 
+    local name = event.name
     local request = event.request
  	-- if request == nil then return end
     if name ~= "completed" then
         print("网络请求中", request:getErrorCode()..request:getErrorMessage())
         return
     end
- 	
+
     local code = request:getResponseStatusCode()
     if code ~= 200 then
         print("网络请求失败", code)
         callfunc("fail")
     else
-    	print("网络请求成功", code) 
+    	print("网络请求成功", code)
     	local timeStamp = request:getResponseString()
     	if timeStamp == nil then return end
     	self:refreshTime(timeStamp, callfunc)
@@ -138,14 +138,16 @@ function DailyLoginModel:refreshTime(timeStamp, callfunc)
     	userModel:updateLoginDate()
 
 		-- resetDailyTask()
-    	dailyTaskModel = md:getInstance("DailyTaskModel")
+        dailyTaskModel = md:getInstance("DailyTaskModel")
+        adModel = md:getInstance("ADModel")
 		dailyTaskModel:resetDailyTask()
+        adModel:resetWatchTimes()
     elseif isSameDay and isGet == false then
     	callfunc("success")
     else
     	callfunc("success notPop")
 	end
-	
+
 	userModel:saveTimeData(timeStamp)
 end
 
