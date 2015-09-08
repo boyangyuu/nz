@@ -11,7 +11,7 @@ function ADModel:watchAD()
             onWatchADSuccess = handler(self, self.onWatchADSuccess),
             onWatchADFail = handler(self, self.onWatchADFail),
         }
-        luaoc.callStaticMethod("IAPControl", "buy", args)
+        luaoc.callStaticMethod("AdsmogoControl", "showInterstitialVideo", args)
     else
         ui:showPopup("commonPopup",
          {type = "style1",content = "今天没有可以观看的视频了喔，明天再试"},
