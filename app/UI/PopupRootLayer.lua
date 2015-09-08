@@ -90,7 +90,7 @@ end
 
 function PopupRootLayer:removePopup(layerId, onCloseFunc)
 	dump(layerId)
-	if layerId == nil then
+	if self.layers[layerId] == nil then
 		return
 	end
 	self.layers[layerId]:setVisible(false)
