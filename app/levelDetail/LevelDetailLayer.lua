@@ -218,6 +218,7 @@ function LevelDetailLayer:initBtns()
 end
 
 function LevelDetailLayer:startGame()
+	-- luaoc.callStaticMethod("AdsmogoControl", "loadInterstitial")
 	local fightData = {
 		groupId = self.groupId, 
 		levelId = self.levelId,

@@ -74,6 +74,7 @@ function RootLayer:onPauseSwitch(event)
 end
 
 function RootLayer:initLoginLayer()
+    luaoc.callStaticMethod("AdsmogoControl", "loadInterstitialVideo")
     self:initLogo()
     self:performWithDelay(function ()
         self.curLayer = StartLayer.new()

@@ -361,10 +361,10 @@ function Fight:onDialogAfterEnd()
     end
 
 
-    local args = {
-        closeAllFunc = handler(self, self.startFightResult),
-    }
-    luaoc.callStaticMethod("AdsmogoControl", "showInterstitial", args)
+    -- local args = {
+    --     closeAllFunc = handler(self, self.startFightResult),
+    -- }
+    -- luaoc.callStaticMethod("AdsmogoControl", "showInterstitial", args)
 
 
 --todo
