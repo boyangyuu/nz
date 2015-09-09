@@ -5,6 +5,14 @@ function ADModel:ctor()
 end
 
 function ADModel:watchAD()
+    local isAvailable = network.isInternetConnectionAvailable()
+    if not isAvailable then
+        ui:showPopup("commonPopup",
+             {type = "style1",content = "网络连接异常，请检查网络！"},
+             {opacity = 0})
+        return
+    end
+
     local isCanWatch = self:isCanWatch()
     if isCanWatch then
         local args = {
@@ -37,7 +45,7 @@ end
 
 function ADModel:isCanWatch()
     local alreadyWatchTimes = self:getWatchTimes()
-    if alreadyWatchTimes < 10 then
+    if alreadyWatchTimes < 5 then
         return true
     end
     return false
