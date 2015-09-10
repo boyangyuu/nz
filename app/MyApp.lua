@@ -79,7 +79,7 @@ function MyApp:initVariables()
     local stringSig = "()Ljava/lang/String;"
     local result = nil
     if device.platform == "ios" then
-        __versionId = "1.3.1.7"
+        __versionId = "1.3.2"
         __appName = "全民突袭"
     elseif device.platform == "android" then
         result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
