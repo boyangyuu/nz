@@ -61,8 +61,10 @@ function BuyModel:showBuy(configId, buyData, strPos)
 
 	if showType == "gift" then
 		if isGiftValid  or buyData.isGiftDirect then
+			-- buyData
 	        ui:showPopup("GiftBagPopup",
-	        	{popupName = configId},
+	        	{popupName = configId,
+	        	buyDataParm = {curId = self.curId,payType = self.payType}},
 	        	{animName = "shake"})
 	    else
 			self:gameResume()
@@ -85,8 +87,8 @@ function BuyModel:showBuy(configId, buyData, strPos)
     end
 end
 
-function BuyModel:payGift()
-	self:iapPay()
+function BuyModel:payGift(buyDataParm)
+	self:iapPay(buyDataParm)
 
 	--um
 	local umData = {}
@@ -94,7 +96,7 @@ function BuyModel:payGift()
 	um:event("支付情况", umData)
 end
 
-function BuyModel:iapPay()
+function BuyModel:iapPay(buyDataParm)
 	local iapType = JavaUtils.getIapType()
 	if iapType == "noIap" then
 		ui:showPopup("KefuPopup",{
@@ -111,6 +113,12 @@ function BuyModel:iapPay()
 	end
 
 	display.pause()
+
+
+	if buyDataParm then
+		self.curId = buyDataParm.curId
+		self.payType = buyDataParm.payType
+	end
 	self.iap:pay(self.curId, self.payType)
 
 end
@@ -165,7 +173,7 @@ function BuyModel:payDone(result)
 
 	--events
 	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
-	ui:closePopup("GiftBagPopup",{animName = "normal"})
+	-- ui:closePopup("GiftBagPopup",{animName = "normal"})
 end
 
 function BuyModel:deneyPay()
@@ -187,7 +195,7 @@ function BuyModel:deneyPay()
 	um:event("支付情况", umData)
 
 	self:dispatchEvent({name = BuyModel.BUY_FAIL_EVENT})
-	ui:closePopup("GiftBagPopup",{animName = "normal"})
+	-- ui:closePopup("GiftBagPopup",{animName = "normal"})
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)

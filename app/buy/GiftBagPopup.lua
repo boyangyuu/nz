@@ -9,7 +9,7 @@ end)
 function GiftBagPopup:ctor(properties)
 	print(properties.popupName)
 	--instance
-	
+
 
 	self.param = properties
 	self:loadCCS()
@@ -34,7 +34,7 @@ function GiftBagPopup:loadCCS()
     manager:addArmatureFileInfo(src)
     local plist = "res/GiftBag/lb_ljgm/lb_ljgm0.plist"
     local png   = "res/GiftBag/lb_ljgm/lb_ljgm0.png"
-    display.addSpriteFrames(plist, png)          
+    display.addSpriteFrames(plist, png)
 end
 
 function GiftBagPopup:initButtons()
@@ -49,7 +49,7 @@ function GiftBagPopup:initButtons()
 	end)
 
 	--按钮动画
-	if device.platform ~= "ios" then 
+	if device.platform ~= "ios" then
 		local armature = ccs.Armature:create("lb_ljgm")
 		armature:getAnimation():play("lb_ljgm", -1, 1)
 		addChildCenter(armature, receiveBtn)
@@ -85,18 +85,17 @@ function GiftBagPopup:payThis()
 	elseif device.platform == "ios" then
 		local userModel = md:getInstance("UserModel")
 		local name = self.param.popupName
-		
 		if name == "weaponGiftBag" then
 			local isAfforded = userModel:costDiamond(260)
 			if isAfforded then
+				buyModel:payGift(self.param.buyDataParm)
 				self:close()
-				buyModel:payGift()
 			end
 		elseif name == "goldGiftBag" then
 			local isAfforded = userModel:costDiamond(450)
 			if isAfforded then
+				buyModel:payGift(self.param.buyDataParm)
 				self:close()
-				buyModel:payGift()
 			end
 		end
 	else
