@@ -172,7 +172,6 @@ function BuyModel:payDone(result)
 
 	--events
 	self:dispatchEvent({name = BuyModel.BUY_SUCCESS_EVENT})
-	ui:closePopup("GiftBagPopup",{animName = "normal"})
 end
 
 function BuyModel:deneyPay()
@@ -194,7 +193,6 @@ function BuyModel:deneyPay()
 	um:event("支付情况", umData)
 
 	self:dispatchEvent({name = BuyModel.BUY_FAIL_EVENT})
-	ui:closePopup("GiftBagPopup",{animName = "normal"})
 end
 
 function BuyModel:buy_weaponGiftBag(buydata)
