@@ -140,8 +140,10 @@ function DailyLoginModel:refreshTime(timeStamp, callfunc)
 		-- resetDailyTask()
         dailyTaskModel = md:getInstance("DailyTaskModel")
         adModel = md:getInstance("ADModel")
+        local midAutumnModel = md:getInstance("MidAutumnModel")
 		dailyTaskModel:resetDailyTask()
         adModel:resetWatchTimes()
+        midAutumnModel:resetMidAutTimes()
     elseif isSameDay and isGet == false then
     	callfunc("success")
     else

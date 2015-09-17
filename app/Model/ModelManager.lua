@@ -24,6 +24,9 @@ modelClasses["BossModeModel"]       = import("..bossMode.BossModeModel")
 --jujiFight
 modelClasses["JujiModeModel"]       = import("..jujiMode.JujiModeModel")
 
+--normalFight
+modelClasses["MidAutumnModel"]      = import("..midAutumn.MidAutumnModel")
+
 --fight
 modelClasses["FightFactory"]        = import("..fight.fightTypes.FightFactory")
 modelClasses["FightInlay"]          = import("..fight.FightInlay")
@@ -56,14 +59,15 @@ modelClasses["PauseModel"]          = import("..pause.PauseModel")
 modelClasses["IAPsdk"]              = import("..SDK.IAPsdk")
 
 -- rank
-modelClasses["RankModel"]              = import("..rank.RankModel")
+modelClasses["RankModel"]           = import("..rank.RankModel")
 
 --awardTIme
-modelClasses["AwardTimeModel"]              = import("..awardTime.AwardTimeModel")
+modelClasses["AwardTimeModel"]      = import("..awardTime.AwardTimeModel")
 
 --dailyTask
-modelClasses["DailyTaskModel"]         = import("..dailyTask.DailyTaskModel")
-modelClasses["ActivityMainModel"]      = import("..activitys.ActivityMainModel")
+modelClasses["DailyTaskModel"]      = import("..dailyTask.DailyTaskModel")
+modelClasses["ActivityMainModel"]   = import("..activitys.ActivityMainModel")
+
 
 
 
