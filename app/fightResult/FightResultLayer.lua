@@ -29,7 +29,7 @@ function FightResultLayer:ctor()
     self.lockTable = {}
 
     self.itemsTable = {}
- 
+
     self.userModel:addMoney(self.fightData["goldNum"])
     um:bonusVirtualCurrency(self.fightData["goldNum"], 4)
     local hpPercent = self.fightData["hpPercent"]
@@ -70,7 +70,7 @@ function FightResultLayer:loadCCS()
     manager:addArmatureFileInfo(ksxqsrc)
     local plist = "res/LevelDetail/bt_ksxq/bt_ksxq0.plist"
     local png   = "res/LevelDetail/bt_ksxq/bt_ksxq0.png"
-    display.addSpriteFrames(plist, png)          
+    display.addSpriteFrames(plist, png)
 
 end
 
@@ -84,11 +84,11 @@ function FightResultLayer:playStar(numStar)
 		    self.star[i]:addChild(starArmature)
 		    if i == numStar then
 		    	starArmature:getAnimation():setMovementEventCallFunc(
-		    		function(armatureBack,movementType,movementId ) 
+		    		function(armatureBack,movementType,movementId )
 	                if movementType == ccs.MovementEventType.complete then
 		         		self:playCard()
 		         		self:performWithDelay(showButton, 1.5)
-		         	end    
+		         	end
 	            end)
 		    end
 			starArmature:getAnimation():play("gkjs_xing" , -1, 0)
@@ -193,7 +193,7 @@ function FightResultLayer:initBtns()
 				 callfuncCofirm =  handler(self, self.onCofirmLeftCard)},
 				 {opacity = 155})
     end)
-        
+
 	self.btnNext:onButtonClicked(function(event)
         	self:onClickBtnNext()
     end)
@@ -211,12 +211,43 @@ function FightResultLayer:popOpenModeNoti(groupId,levelId)
          {opacity = 0})
     end
 	if groupId == 1 and levelId == 6 and device.platform == "ios" then
-	   ui:showPopup("commonPopup",
+		local url = "http://123.57.213.26/appstore.php"
+	    local request = network.createHTTPRequest(handler(self,self.onRequestEvent), url, "GET")
+	    request:start()
+    end
+end
+
+function FightResultLayer:onRequestEvent(event)
+    local name = event.name
+    local request = event.request
+ 	-- if request == nil then return end
+    if name ~= "completed" then
+        print("网络请求中", request:getErrorCode()..request:getErrorMessage())
+        return
+    end
+
+    local code = request:getResponseStatusCode()
+    if code ~= 200 then
+        print("网络请求失败", code)
+    else
+    	print("网络请求成功", code)
+    	local appStoreState = request:getResponseString()
+    	if appStoreState == "close" then return end
+	    ui:showPopup("commonPopup",
          {type = "style1",content = "去AppStore给我们五星好评，送手雷x20,药包x5,金币x50000.",
           callfuncCofirm =  handler(self, self.onClickAppStore)},
          {opacity = 100})
     end
 end
+
+function FightResultLayer:onClickAppStore()
+	luaoc.callStaticMethod("IAPControl", "comment")
+	local propModel = md:getInstance("PropModel")
+	propModel:addProp("hpBag",5)
+	propModel:addProp("lei",20)
+	self.userModel:addMoney(50000)
+end
+
 
 function FightResultLayer:onClickBtnNext()
 	 ui:changeLayer("HomeBarLayer",{fightData = self.fightData})
@@ -328,27 +359,27 @@ function FightResultLayer:checkGuide()
 	local guide 		= md:getInstance("Guide")
 	local levelMapModel = md:getInstance("LevelMapModel")
 	local curGroup, curLevel = levelMapModel:getConfig()
-	if curGroup == 1 and curLevel == 1 then 
-		guide:check("afterfight01")	
+	if curGroup == 1 and curLevel == 1 then
+		guide:check("afterfight01")
 	end
-	if curGroup == 1 and curLevel == 4 then 
-		guide:check("afterfight03")	
+	if curGroup == 1 and curLevel == 4 then
+		guide:check("afterfight03")
 	end
 end
 
 function FightResultLayer:onCofirmLeftCard()
 	if self.userModel:costDiamond(10) then
 		self:onTurnLeftCard()
-	else
-        local buyModel = md:getInstance("BuyModel")
-        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard),isNotPopKefu = true},
-         "战斗结算界面_点击翻牌")
+	-- else
+ --        local buyModel = md:getInstance("BuyModel")
+ --        buyModel:showBuy("stone120",{payDoneFunc = handler(self,self.onTurnLeftCard),isNotPopKefu = true},
+ --         "战斗结算界面_点击翻牌")
 	end
 end
 
 function FightResultLayer:onTurnLeftCard()
 	for k,v in pairs(self.lockTable) do
-        um:buy("翻拍", 1, 10)   
+        um:buy("翻拍", 1, 10)
 		if v["falltype"] == "inlay" then
 			self.inlayModel:buyInlay(v["id"])
 			table.insert(self.giveTable,{id = v["id"], falltype = "inlay"})
@@ -374,7 +405,7 @@ function FightResultLayer:onTurnLeftCard()
 end
 
 function FightResultLayer:startGuide()
-	
+
 end
 
 function FightResultLayer:initGuide()
@@ -388,7 +419,7 @@ function FightResultLayer:initGuide()
         endfunc = function (touchEvent)
 			ui:changeLayer("HomeBarLayer",{fightData = fightData})
         end
-     })    	
+     })
 end
 
 function FightResultLayer:initGuide3()
@@ -399,9 +430,9 @@ function FightResultLayer:initGuide3()
         groupId = "afterfight03",
         rect = self.btnNext:getCascadeBoundingBox(),
         endfunc = function (touchEvent)
-			self:onClickBtnNext()  
+			self:onClickBtnNext()
         end
-     })       	
+     })
 end
 
 return FightResultLayer

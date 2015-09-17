@@ -1,20 +1,18 @@
-
-local LayerColor_BLACK = cc.c4b(0, 0, 0, 180)
 local BuyConfigs = import(".BuyConfigs")
 
 local BuyTipsPopup = class("BuyTipsPopup", function()
-	return display.newColorLayer(LayerColor_BLACK)
+	return display.newLayer()
 end)
 
 function BuyTipsPopup:ctor(properties)
 	--instance
 	self.buyModel = md:getInstance("BuyModel")
 	self.properties = properties
-    self.type       = properties["type"] 
+    self.type       = properties["type"]
 	self:loadCCS()
 end
 
-function BuyTipsPopup:loadCCS() 
+function BuyTipsPopup:loadCCS()
     self.node = cc.uiloader:load("res/gouMai/".. self.type  ..".ExportJson")
     local image = cc.uiloader:seekNodeByName(self.node, "image")
     self:addChild(self.node)

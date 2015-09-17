@@ -30,9 +30,9 @@ function WeaponListLayer:onShow()
         self:initUI()
         self:initListView()
     end
-    
+
     --refersh
-    self:refreshUI() 
+    self:refreshUI()
 
     --events
     cc.EventProxy.new(self.weaponListModel, self)
@@ -68,7 +68,7 @@ function WeaponListLayer:loadCCS()
     manager:addArmatureFileInfo(wqsjsrc)
     local plist = "res/WeaponList/wqsj/wqsj0.plist"
     local png   = "res/WeaponList/wqsj/wqsj0.png"
-    display.addSpriteFrames(plist, png)  
+    display.addSpriteFrames(plist, png)
 end
 
 function WeaponListLayer:initUI()
@@ -121,9 +121,9 @@ function WeaponListLayer:initUI()
     self.upgradecost:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.damagepluse:enableOutline(cc.c4b(0, 255, 79,255), 2)
     self.damagepluse:setColor(cc.c3b(0, 255, 79))
-    
+
     self.stars = {}
-    self.panlStars = {}    
+    self.panlStars = {}
     for i=1,10 do
         self.stars[i] = cc.uiloader:seekNodeByName(self.paneldetail, "icon_sx0"..i)
         self.stars[i]:setVisible(false)
@@ -152,7 +152,7 @@ function WeaponListLayer:initUI()
     self.equipedone:setVisible(false)
     self.equipedtwo:setVisible(false)
     self.equipedju:setVisible(false)
-    
+
     self.weaponLV:onTouch(handler(self,self.touchListener))
     self.btnBuy:setTouchEnabled(true)
     self.btnUpgrade:setTouchEnabled(true)
@@ -219,14 +219,14 @@ function WeaponListLayer:onClickBtnOncefull()
                  "武器库界面_点击一键满级"..self.weaponRecord["name"])
     else
         ui:showPopup("commonPopup",
-        {type = "style3", content = "是否花费40宝石将武器一键满级？",
+        {type = "style3", content = "是否花费"..self.weaponRecord["onceFull"].."宝石将武器一键满级？",
              callfuncCofirm =  handler(self, self.cofirmOnceFull_ios)},
          { opacity = 0})
     end
 end
 
 function WeaponListLayer:cofirmOnceFull_ios()
-   local isAfforded = self.userModel:costDiamond(40)
+   local isAfforded = self.userModel:costDiamond(self.weaponRecord["onceFull"])
    if isAfforded then
         self.weaponListModel:onceFull(self.weaponId)
    end
@@ -245,49 +245,49 @@ function WeaponListLayer:onCancelOncefull()
 end
 
 function WeaponListLayer:onBuyWeaponGiftSucc()
-    
+
 end
 
 function WeaponListLayer:buyWeaponByStone()
     if self.weaponId == 9 then
         if device.platform == "ios" then
-            ui:showPopup("GiftBagStonePopup", 
+            ui:showPopup("GiftBagStonePopup",
                 {ccsName = "GiftBag_Xianshidacu_ios",
                 strPos   = "武器库_购买火麒麟",
-                stoneCost = 900, 
+                stoneCost = 900,
                 })
             return
         else
-            ui:showPopup("GiftBagStonePopup", 
+            ui:showPopup("GiftBagStonePopup",
                 {ccsName = "GiftBag_Xianshidacu",
                 strPos   = "武器库_购买火麒麟",
-                stoneCost = 450, 
+                stoneCost = 450,
                 })
             return
         end
     end
     if self.weaponId == 11 then
-        ui:showPopup("GiftBagStonePopup", 
+        ui:showPopup("GiftBagStonePopup",
             {ccsName = "GiftBag_Chuanqiwuqi",
             strPos   = "武器库_购买暴君",
-            stoneCost = 900, 
+            stoneCost = 900,
             })
         return
     end
     local strPos  =  "武器库界面_点击解锁武器"..self.weaponRecord["name"]
     local isAfforded = self.userModel:costDiamond(
-        self.weaponRecord["cost"], true, strPos) 
+        self.weaponRecord["cost"], true, strPos)
     if isAfforded then
         self.weaponListModel:buyWeapon(self.weaponId)
         if self.weapontype == "ju" then
             self.weaponListModel:equipBag(self.weaponId, 3)
         else
-            self.weaponListModel:equipBag(self.weaponId, 1) 
+            self.weaponListModel:equipBag(self.weaponId, 1)
         end
 
         --award
         ui:showPopup("WeaponNotifyLayer",
-         {type = "gun",weaponId = self.weaponId},{opacity = 255})        
+         {type = "gun",weaponId = self.weaponId},{opacity = 255})
         self:sendGunAward()
 
         return true
@@ -298,8 +298,8 @@ end
 
 function WeaponListLayer:sendGunAward()
     --黄武*10
-    local inlayModel = md:getInstance("InlayModel")    
-    inlayModel:buyGoldsInlay(11)    
+    local inlayModel = md:getInstance("InlayModel")
+    inlayModel:buyGoldsInlay(11)
     inlayModel:equipAllInlays()
 
     --award
@@ -311,7 +311,7 @@ end
 function WeaponListLayer:initListView()
     removeAllItems(self.weaponLV)
     local configTab = getConfig("config/weapon_weapon.json")
-   
+
     for i=1, #configTab do
         local weaponRecord = self.weaponListModel:getWeaponRecord(i)
         local item = self.weaponLV:newItem()
@@ -380,10 +380,10 @@ function WeaponListLayer:refreshComment()
         gunArmature:getBone("gun"):addDisplay(weaponImg, 0)
         gunArmature:getBone("gun"):changeDisplayWithIndex(0, true)
         gunArmature:getAnimation():setMovementEventCallFunc(
-        function ( armatureBack,movementType,movement) 
+        function ( armatureBack,movementType,movement)
             if movementType == ccs.MovementEventType.complete then
                 gunArmature:getAnimation():play("chixu", -1, 0)
-            end 
+            end
         end)
         gunArmature:getAnimation():play("start" , -1, 0)
     else
@@ -495,11 +495,11 @@ function WeaponListLayer:playOneStar(event)
     armature:setPosition(750,450)
     self:addChild(armature)
     armature:getAnimation():setMovementEventCallFunc(
-    function ( armatureBack,movementType,movement) 
+    function ( armatureBack,movementType,movement)
         if movementType == ccs.MovementEventType.complete then
             armatureBack:stopAllActions()
-            armatureBack:removeFromParent() 
-        end 
+            armatureBack:removeFromParent()
+        end
     end)
     armature:getAnimation():play("wqsj" , -1, 0)
 end
@@ -531,11 +531,11 @@ function WeaponListLayer:playFullStar(event)
     armature:setPosition(750,450)
     self:addChild(armature)
     armature:getAnimation():setMovementEventCallFunc(
-    function ( armatureBack,movementType,movement) 
+    function ( armatureBack,movementType,movement)
         if movementType == ccs.MovementEventType.complete then
             armatureBack:stopAllActions()
-            armatureBack:removeFromParent() 
-        end 
+            armatureBack:removeFromParent()
+        end
     end)
     armature:getAnimation():play("wqsj" , -1, 0)
 end
@@ -559,7 +559,7 @@ end
 function WeaponListLayer:hideStars()
     for i,v in pairs(self.stars) do
         v:setVisible(false)
-    end    
+    end
 end
 
 function WeaponListLayer:refreshBtns()
@@ -588,7 +588,7 @@ function WeaponListLayer:refreshBtns()
             end
             self.btnFull:setVisible(false)
             self.btnUpgrade:setVisible(true)
-        end        
+        end
     else
         self.progBulletNext:setVisible(false)
         self.progAccuracyNext:setVisible(false)
@@ -623,14 +623,14 @@ function WeaponListLayer:refreshBtns()
             self.equipedtwo:setVisible(false)
         end
     end
-end              
+end
 
 function WeaponListLayer:closePopup()
     ui:closePopup("commonPopup")
 end
 
 function WeaponListLayer:initGuide()
-    --check   
+    --check
     local guide = md:getInstance("Guide")
     local isDone = guide:isDone("weapon")
     if isDone then return end
@@ -644,7 +644,7 @@ function WeaponListLayer:initGuide()
         endfunc = function (touchEvent)
             self:touchListener({name = "clicked", itemPos = 2})
         end
-     })       
+     })
 
     --点击右侧升级
     local rect2 = cc.rect(945, 130, 131, 64)
@@ -657,7 +657,7 @@ function WeaponListLayer:initGuide()
                 self:onClickBtnUpgrade(self.weaponId)
             end
         end
-     })   
+     })
 
     --祝贺
     guide:addClickListener({
@@ -667,8 +667,8 @@ function WeaponListLayer:initGuide()
         endfunc = function (touchEvent)
 
         end
-     })   
-     
+     })
+
 end
 
 return WeaponListLayer

@@ -21,7 +21,7 @@ function LevelMapLayer:ctor(properties)
     self.properties = properties
     self.fightData = self.properties.fightData
     self.preGroupId = 0
-    self.groupNum = self.levelMapModel:getGroupNum()    
+    self.groupNum = self.levelMapModel:getGroupNum()
 
     self:initGroupId()
     self:initUI()
@@ -34,10 +34,10 @@ function LevelMapLayer:ctor(properties)
         :addEventListener("HIDE_GIFTBAGICON_EVENT", handler(self, self.hideWeaponGiftBag))
 
     cc.EventProxy.new(self.buyModel, self)
-        :addEventListener(self.buyModel.BUY_GIFTUPDATE_EVENT, 
+        :addEventListener(self.buyModel.BUY_GIFTUPDATE_EVENT,
             handler(self, self.refreshGift))
 
-    self:initGuide() 
+    self:initGuide()
 end
 
 function LevelMapLayer:initUI()
@@ -51,7 +51,7 @@ function LevelMapLayer:initGroupId()
     assert(self.properties.fightData, "self.properties.fightData is nil")
     assert(self.fightData.groupId, "self.fightData.groupId is nil")
     assert(self.fightData.fightType, "self.fightData.fightType is nil")
-    
+
     --set groupId
     local groupId, levelId = self.levelMapModel:getConfig()
     assert(groupId, "groupId getConfig")
@@ -60,7 +60,7 @@ function LevelMapLayer:initGroupId()
     -- elseif self.fightData.fightType == "jujiFight" then
     --     self.curGroupId = groupId
     -- else
-    -- if self.fightData.fightType == "levelFight" then 
+    -- if self.fightData.fightType == "levelFight" then
     if self.fightData.groupId == 0 and self.fightData.levelId == 0 then
         self.curGroupId = 1
     else
@@ -81,26 +81,26 @@ function LevelMapLayer:popUpGoldGift()
     --开始菜单进世界地图，玩家等级 >= 4
     if self.fightData["result"] == nil and isDone then isPopGoldGift = true end
     -- if isPopWeaponGift and isNotBought then
-    --     self.buyModel:showBuy("weaponGiftBag", 
+    --     self.buyModel:showBuy("weaponGiftBag",
     --         {isNotPopKefu = false},
     --         "主界面_进游戏自动弹出")
-    -- elseif isPopWeaponGift then 
-    --     self.buyModel:showBuy("goldGiftBag", 
+    -- elseif isPopWeaponGift then
+    --     self.buyModel:showBuy("goldGiftBag",
     --         {isNotPopKefu = false},
-    --         "主界面_进游戏自动弹出")   
+    --         "主界面_进游戏自动弹出")
     if isPopGoldGift then
-        self.buyModel:showBuy("goldGiftBag", 
+        self.buyModel:showBuy("goldGiftBag",
             {isNotPopKefu = false},
             "主界面_进游戏自动弹出")
-    else 
+    else
 
     end
 end
 
 function LevelMapLayer:mapPopUp(event)
-    -- if self.properties.fightData.fightType == "levelFight" then 
+    -- if self.properties.fightData.fightType == "levelFight" then
     function delayPopUpLF()
-        self:popUpGoldGift()   
+        self:popUpGoldGift()
     end
     self:performWithDelay(delayPopUpLF, 1)
     -- elseif self.properties.fightData.fightType == "bossFight" then
@@ -108,14 +108,14 @@ function LevelMapLayer:mapPopUp(event)
     --     ui:showPopup("BossModeLayer", {chapterIndex = chapterIndex},{animName = "normal"})
     -- elseif self.properties.fightData.fightType == "jujiFight" then
     --     ui:showPopup("JujiModeLayer", {}, {animName = "normal"})
-    -- end  
+    -- end
 end
 
 function LevelMapLayer:initBgLayer(event)
     -- bg starting animation
     self.armature = ccs.Armature:create("shijiemap")
     self.armature:getAnimation():setMovementEventCallFunc(handler(self, self.animationEvent))
-    
+
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/shijiemap")
     local mapSrcName = "map_shijie.jpg"
     local skin = ccs.Skin:create(mapSrcName)
@@ -125,7 +125,7 @@ function LevelMapLayer:initBgLayer(event)
     self.armature:setAnchorPoint(0.5,0.5)
     self.armature:setPosition(display.width/2,display.height1/2)
     self:addChild(self.armature)
-    
+
     -- print("self.curGroupId", self.curGroupId)
     if self.curGroupId == 0 then
         self.curGroupId = 1
@@ -165,10 +165,10 @@ function LevelMapLayer:initUI_yijiaoGift()
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     if device.platform == "ios" then btnFirstGift:setVisible(false) return end
     btnFirstGift:onButtonClicked(function ()
-        self.buyModel:showBuy("yijiaoBag", 
+        self.buyModel:showBuy("yijiaoBag",
             {isGiftDirect = true},
             "主界面_点击新手礼包")
-    end)    
+    end)
 end
 
 function LevelMapLayer:initUI_goldGift()
@@ -177,7 +177,7 @@ function LevelMapLayer:initUI_goldGift()
     local panelTuhaoAnim  = cc.uiloader:seekNodeByName(self.chooseRootNode, "animtuhao")
     local armature = ccs.Armature:create("thj_bx")
     armature:setPosition(5,-6)
-    panelTuhaoAnim:addChild(armature) 
+    panelTuhaoAnim:addChild(armature)
     armature:getAnimation():play("thj_bx" , -1, 1)
 
     btnGold:setTouchEnabled(true)
@@ -187,7 +187,7 @@ function LevelMapLayer:initUI_goldGift()
         elseif event.name=='ended' then
             self.buyModel:showBuy("goldGiftBag", {
                 isGiftDirect = true,
-                }, 
+                },
                 "主界面_点击土豪金礼包")
         end
     end)
@@ -198,16 +198,16 @@ function LevelMapLayer:initUI_weaponGift()
     local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     if self.buyModel:checkBought("weaponGiftBag") then
         btnWeapon:setVisible(false)
-    end        
+    end
     btnWeapon:setTouchEnabled(true)
 
     addBtnEventListener(btnWeapon, function(event)
         if event.name=='began' then
             return true
         elseif event.name=='ended' then
-            self.buyModel:showBuy("weaponGiftBag", 
+            self.buyModel:showBuy("weaponGiftBag",
                 {isGiftDirect = true,
-                isNotPopKefu = true}, 
+                isNotPopKefu = true},
                 "主界面_点击武器大礼包")
         end
     end)
@@ -224,7 +224,7 @@ function LevelMapLayer:initUI_vipGift()
         end)
         :onButtonClicked(function()
             self:onClickGift_vip()
-        end)   
+        end)
 end
 
 function LevelMapLayer:onClickGift_vip()
@@ -240,7 +240,7 @@ function LevelMapLayer:onClickGift_vip()
         ui:showPopup("commonPopup",
              {type = "style1",content = "当前网络连接失败，请连接网络后领取奖励！"},
              {opacity = 0})
-    end 
+    end
 end
 
 function LevelMapLayer:initUI_timeGift()
@@ -248,7 +248,7 @@ function LevelMapLayer:initUI_timeGift()
 
     --限时礼包
     local btnTime      = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_time")
-    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")    
+    local labelTime    = cc.uiloader:seekNodeByName(self.chooseRootNode, "label_time")
     btnTime:onButtonPressed(function( event )
             event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
         end)
@@ -261,14 +261,14 @@ function LevelMapLayer:initUI_timeGift()
 
     --timer
     local function funcTime()
-        local awardModel = md:getInstance("AwardTimeModel") 
-        local str = awardModel:getContent()   
+        local awardModel = md:getInstance("AwardTimeModel")
+        local str = awardModel:getContent()
         -- print("str", str)
         labelTime:setString(str)
         --check
-        local awardModel = md:getInstance("AwardTimeModel")   
+        local awardModel = md:getInstance("AwardTimeModel")
         local isCanAward = awardModel:isCanAward()
-        if isCanAward then 
+        if isCanAward then
             notiTime:setVisible(true)
         else
             notiTime:setVisible(false)
@@ -281,33 +281,33 @@ function LevelMapLayer:initUI_dacuGift()
     local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
     btnXianshi:onButtonClicked(function( event )
         if device.platform == "ios" then
-            ui:showPopup("GiftBagStonePopup", 
+            ui:showPopup("GiftBagStonePopup",
                 {ccsName = "GiftBag_Xianshidacu_ios",
                 strPos   = "地图界面_点击限时大促",
                 stoneCost = 900},
-                {animName = "shake"})        
+                {animName = "shake"})
         else
-            ui:showPopup("GiftBagStonePopup", 
+            ui:showPopup("GiftBagStonePopup",
                 {ccsName = "GiftBag_Xianshidacu",
                 strPos   = "地图界面_点击限时大促",
                 stoneCost = 450},
-                {animName = "shake"})        
+                {animName = "shake"})
         end
     end)
 end
 
 function LevelMapLayer:onClickedBtnAwardTime()
-    local awardModel = md:getInstance("AwardTimeModel")   
+    local awardModel = md:getInstance("AwardTimeModel")
     local isCanAward = awardModel:isCanAward()
-    if isCanAward then 
+    if isCanAward then
         awardModel:achieveAward()
        ui:showPopup("commonPopup",
          {type = "style2", content = "领取成功！"},
-         { opacity = 0})          
+         { opacity = 0})
     else
        ui:showPopup("commonPopup",
          {type = "style2", content = "领取时间未到哦！"},
-         { opacity = 0})        
+         { opacity = 0})
     end
 end
 
@@ -315,13 +315,26 @@ function LevelMapLayer:initFightActLayer()
     cc.FileUtils:getInstance():addSearchPath("res/LevelMap/chooseLevel")
     local btn_acts  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_acts")
     local noti_acts = cc.uiloader:seekNodeByName(self.chooseRootNode, "noti_acts")
+    local animImg = cc.uiloader:seekNodeByName(self.chooseRootNode, "animImg")
 
-    --acts
-    btn_acts:onButtonClicked(function ()
-        local actModel = md:getInstance("ActivityMainModel")
-        actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
-        noti_acts:setVisible(false)
+    local lbArmature = ccs.Armature:create("libao")
+    lbArmature:setPosition(cc.p(60,60))
+    animImg:addChild(lbArmature)
+    lbArmature:getAnimation():play("libao" , -1, 1)
+
+
+
+    btn_acts:setTouchEnabled(true)
+    addBtnEventListener(btn_acts, function(event)
+        if event.name == 'began' then
+            return true
+        elseif event.name == 'ended' then
+            local actModel = md:getInstance("ActivityMainModel")
+            actModel:dispatchEvent({name = actModel.SHOW_ACTIVITYMAIN})
+            noti_acts:setVisible(false)
+        end
     end)
+
 end
 
 function LevelMapLayer:initKefuLayer()
@@ -330,6 +343,7 @@ function LevelMapLayer:initKefuLayer()
     self.telNum:setColor(cc.c3b(255, 0, 0))
     self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
     self.telNum:setString("官方唯一投诉电话："..__kefuNum)
+    if device.platform == "ios" then self.telNum:setVisible(false) end
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 
@@ -352,21 +366,21 @@ function LevelMapLayer:initChooseLayer()
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
     self.btnPre = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_pre")
-    
+
     self.levelNum = cc.uiloader:seekNodeByName(self.chooseRootNode, "levelnum")
     self.panelRight = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_right")
     self.panelDown = cc.uiloader:seekNodeByName(self.chooseRootNode, "panl_level")
     self.panelLeft = cc.uiloader:seekNodeByName(self.chooseRootNode, "panel_left")
-    
+
     self.levelNum:setString(self.curGroupId)
 
     local actionPre = transition.sequence({
-    cc.MoveTo:create(0.5, cc.p(self.btnPre:getPositionX()-10 , self.btnPre:getPositionY())), 
+    cc.MoveTo:create(0.5, cc.p(self.btnPre:getPositionX()-10 , self.btnPre:getPositionY())),
     cc.MoveTo:create(0.5, cc.p(self.btnPre:getPositionX()+10, self.btnPre:getPositionY()))})
     self.btnPre:runAction(cc.RepeatForever:create(actionPre))
 
     local actionNext = transition.sequence({
-    cc.MoveTo:create(0.5, cc.p(self.btnNext:getPositionX()+10 , self.btnNext:getPositionY())), 
+    cc.MoveTo:create(0.5, cc.p(self.btnNext:getPositionX()+10 , self.btnNext:getPositionY())),
     cc.MoveTo:create(0.5, cc.p(self.btnNext:getPositionX()-10, self.btnNext:getPositionY()))})
     self.btnNext:runAction(cc.RepeatForever:create(actionNext))
 
@@ -442,9 +456,9 @@ function LevelMapLayer:refreshLevelLayer(groupId)
         if  group > groupId or group == groupId and level > v then
 
         elseif group == groupId and level == v then
-            panelGray[v]:setOpacity(0)           
+            panelGray[v]:setOpacity(0)
             local action = transition.sequence({
-            cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX() , levelName[v]:getPositionY()+ 15)), 
+            cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX() , levelName[v]:getPositionY()+ 15)),
             cc.MoveTo:create(0.625, cc.p(levelName[v]:getPositionX(), levelName[v]:getPositionY() - 15))})
             levelName[v]:runAction(cc.RepeatForever:create(action))
 
@@ -452,12 +466,12 @@ function LevelMapLayer:refreshLevelLayer(groupId)
             levelAnim[level]:addChild(armature)
             armature:getAnimation():play("kaishi" , -1, 0)
             armature:getAnimation():setMovementEventCallFunc(
-            function ( armatureBack,movementType,movementId ) 
+            function ( armatureBack,movementType,movementId )
                 if movementType == ccs.MovementEventType.complete then
                     armature:getAnimation():play("chixu" , -1, 1)
                 end
             end)
-        else       
+        else
             levelName[v]:setOpacity(0)
             imgIcon[v]:setOpacity(0)
         end
@@ -468,7 +482,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                 if  group > groupId or group == groupId and level >= v  then
                     local levelId = v
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
-                else                            
+                else
                     ui:showPopup("commonPopup",
                      {type = "style2", content = "本关还没开启"},
                      { opacity = 0})
@@ -497,24 +511,24 @@ function LevelMapLayer:initGiftBox(groupId,levelId)
             elseif event.name == 'ended' then
                 self:onClickCanReceive()
             end
-        end)    
+        end)
 
     elseif receiveState == "alreadyReceive" then
         local giftBoxImg = display.newSprite("#icon_yijiao.png")
         giftBoxImg:setPosition(cc.p(200,60))
-        self.shadow[levelId]:addChild(giftBoxImg) 
+        self.shadow[levelId]:addChild(giftBoxImg)
 
     elseif receiveState == "futureReceive" then
         local giftBoxImg = display.newSprite("#icon_yijiao.png")
         giftBoxImg:setPosition(cc.p(200,60))
-        self.shadow[levelId]:addChild(giftBoxImg)    
+        self.shadow[levelId]:addChild(giftBoxImg)
         addBtnEventListener(giftBoxImg, function(event)
             if event.name == 'began' then
                 return true
             elseif event.name == 'ended' then
                 self:onClickFutureReceive()
             end
-        end)    
+        end)
     end
 end
 
@@ -526,7 +540,7 @@ function LevelMapLayer:onClickFutureReceive()
     print("onClickFutureReceive")
 end
 
-function LevelMapLayer:bgAction()    
+function LevelMapLayer:bgAction()
     -- To make button disabled for a while
     self.ldArmature:removeFromParent()
     self.btnNext:setTouchEnabled(false)
@@ -548,7 +562,7 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self.ldArmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.curGroupId)
             self:refreshLevelLayer(self.curGroupId)
-            self.telNum:setVisible(true)
+            self.telNum:setVisible(false)
         end
     end
 end
@@ -558,7 +572,7 @@ function LevelMapLayer:panelAction()
     self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelRight:getContentSize().width+8, 0)))
     self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelLeft:getContentSize().width-100, 0)))
     self.panelDown:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelDown:getContentSize().height-5)))
-    self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
+    self.panelDown:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime),
         cc.CallFunc:create(function()
                 self.panelRight:runAction(cc.MoveBy:create(changeTime, cc.p(-self.panelRight:getContentSize().width-8, 0)))
                 self.panelLeft:runAction(cc.MoveBy:create(changeTime, cc.p(self.panelLeft:getContentSize().width+100, 0)))
@@ -566,28 +580,28 @@ function LevelMapLayer:panelAction()
             end)}))
 end
 
-function LevelMapLayer:onShow()  
+function LevelMapLayer:onShow()
 
 end
 
 function LevelMapLayer:refreshGift(event)
     print("function LevelMapLayer:refreshGift(event)")
     local isBuyed   = self.buyModel:checkBought("weaponGiftBag")
-    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")    
+    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
     btnWeapon:setVisible(not isBuyed)
- 
-    local isBuyed   = self.buyModel:checkBought("GiftBag_Xianshidacu")    
+
+    local isBuyed   = self.buyModel:checkBought("GiftBag_Xianshidacu")
     local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")
     btnXianshi:setVisible(not isBuyed)
 
 
-    local isBuyed   = self.buyModel:checkBought("yijiaoBag") 
+    local isBuyed   = self.buyModel:checkBought("yijiaoBag")
     local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
     btnFirstGift:setVisible(not isBuyed)
     local isIOS = device.platform == "ios"
-    if not JavaUtils.isSIMJD() or isIOS then 
+    if not JavaUtils.isSIMJD() or isIOS then
         btnFirstGift:setVisible(false)
-    end    
+    end
 end
 
 function LevelMapLayer:initGuide()
@@ -615,7 +629,7 @@ function LevelMapLayer:initGuide()
             ui:showPopup("LevelDetailLayer", {groupId = 1, levelId = 3})
             playSoundBtn()
         end
-     })       
+     })
 end
 
 return LevelMapLayer

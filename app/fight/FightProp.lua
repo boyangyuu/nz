@@ -14,14 +14,14 @@ FightProp.PROP_UPDATE_EVENT           = "PROP_UPDATE_EVENT"
 function FightProp:ctor(properties)
     --instance
     FightProp.super.ctor(self, properties)
-    self.propModel = md:getInstance("PropModel") 
+    self.propModel = md:getInstance("PropModel")
     self.buyModel  = md:getInstance("BuyModel")
 end
 
 function FightProp:isFreeCost()
     local fightFactory = md:getInstance("FightFactory")
 	local fight = fightFactory:getFight()
-    if fight:getLevelId() == 0 and fight:getGroupId() == 0 then 
+    if fight:getLevelId() == 0 and fight:getGroupId() == 0 then
         return true
     else
         return false
@@ -30,33 +30,33 @@ end
 
 function FightProp:costRobot(callfuncSuccess)
 	local num = self.propModel:getPropNum("jijia")
-	local isfree = self:isFreeCost() 	
-	if num >= 1 or isfree then 
+	local isfree = self:isFreeCost()
+	if num >= 1 or isfree then
         local robot = md:getInstance("Robot")
         robot:startRobot()
         if callfuncSuccess then callfuncSuccess() end
-        if not isfree then 
-        	self.propModel:costProp("jijia",1)  
+        if not isfree then
+        	self.propModel:costProp("jijia",1)
         end
 	else
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "无敌机甲x2", 
+	         {name = "无敌机甲x2",
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyRobotByStone)},
-	         {animName = "moveDown", opacity = 150})	
+	         {animName = "moveDown", opacity = 150})
 	end
 end
 
 function FightProp:buyRobotByStone()
-	print("function FightProp:buyRobotByStone()")	
+	print("function FightProp:buyRobotByStone()")
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue, true, "战斗界面_无敌机甲x2") 
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_无敌机甲x2")
     if isAfforded then
     	self.propModel:addProp("jijia", 2)
         ui:closePopup("StoneBuyPopup")
-    end		
+    end
 end
 
 function FightProp:getRobotNum()
@@ -66,8 +66,8 @@ end
 
 function FightProp:costLei(callfuncSuccess)
 	local num = self.propModel:getPropNum("lei")
-	local  isfree = self:isFreeCost() 
-	if num >= 1 then  
+	local  isfree = self:isFreeCost()
+	if num >= 1 then
 		callfuncSuccess()
 	    --um
 	    local fightFactory = md:getInstance("FightFactory")
@@ -77,30 +77,30 @@ function FightProp:costLei(callfuncSuccess)
 	    local umData = {}
 	    umData[levelInfo] = "手雷"
 	    um:event("关卡道具使用", umData)
-	    if not isfree then 
-	    	self.propModel:costProp("lei",1) 
+	    if not isfree then
+	    	self.propModel:costProp("lei",1)
 	    end
 	else
 		-- self.buyModel:showBuy("handGrenade", {
 		-- 	isNotPopKefu = true}, "战斗界面_点击手雷")
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "手雷x20", 
+	         {name = "手雷x20",
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyLeiByStone)},
-	         {animName = "moveDown", opacity = 150})		
+	         {animName = "moveDown", opacity = 150})
 	end
 end
 
 function FightProp:buyLeiByStone()
-	print("function FightProp:buyLeiByStone()")	
+	print("function FightProp:buyLeiByStone()")
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue, true, "战斗界面_手雷x20") 
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_手雷x20")
     if isAfforded then
     	self.propModel:addProp("lei", 20)
         ui:closePopup("StoneBuyPopup")
-    end		
+    end
 end
 
 function FightProp:getLeiNum()
@@ -114,8 +114,8 @@ function FightProp:costGoldWeapon()
 	if isNativeGold then return end
 
 	local num = self:getGoldNum()
-	local isfree = self:isFreeCost() 
-	if isfree then 
+	local isfree = self:isFreeCost()
+	if isfree then
 		fightInlay:checkNativeGold()
 	elseif num >= 1 then
 		local inlayModel = md:getInstance("InlayModel")
@@ -124,23 +124,23 @@ function FightProp:costGoldWeapon()
 	else
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "黄金武器x2", 
+	         {name = "黄金武器x2",
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyGoldsInlayByStone)},
-	         {animName = "moveDown", opacity = 150})	
+	         {animName = "moveDown", opacity = 150})
 	end
 end
 
 function FightProp:buyGoldsInlayByStone()
-	print("function FightProp:buyGoldsInlayByStone()")	
+	print("function FightProp:buyGoldsInlayByStone()")
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue, true, "战斗界面_黄金武器x2") 
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_黄金武器x2")
     if isAfforded then
 		local inlayModel = md:getInstance("InlayModel")
 		inlayModel:buyGoldsInlay(2)
         ui:closePopup("StoneBuyPopup")
-    end		
+    end
 end
 
 function FightProp:getGoldNum()
@@ -158,14 +158,14 @@ end
 
 function FightProp:costHpBag()
 	local num = self.propModel:getPropNum("hpBag")
-	local isfree = self:isFreeCost()  
-	if num >= 1 or isfree then 
+	local isfree = self:isFreeCost()
+	if num >= 1 or isfree then
 		local hero = md:getInstance("Hero")
 		hero:costHpBag()
-        if not isfree then 
-	       	self.propModel:costProp("hpBag",1)  
+        if not isfree then
+	       	self.propModel:costProp("hpBag",1)
         end
-        return 
+        return
     end
 
     --buy
@@ -175,31 +175,31 @@ function FightProp:costHpBag()
     end
 
     ui:showPopup("StoneBuyPopup",
-         {name = "医疗包x6", 
+         {name = "医疗包x6",
          price = kValue,
          onClickConfirm = onClickConfirm},
-         {animName = "moveDown", opacity = 150})	
+         {animName = "moveDown", opacity = 150})
 
 end
 
 function FightProp:buyHpBagByStone()
-	print("function FightProp:buyHpBagByStone()")	
+	print("function FightProp:buyHpBagByStone()")
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue, true, "战斗界面_点击医疗包") 
+    local isAfforded = user:costDiamond(kValue, true, "战斗界面_点击医疗包")
     if isAfforded then
 		local hero = md:getInstance("Hero")
 		hero:costHpBag()
-       	self.propModel:addProp("hpBag", 6)  
+       	self.propModel:addProp("hpBag", 6)
         ui:closePopup("StoneBuyPopup")
-    end	
+    end
 end
 
 function FightProp:onBuyHpSucc()
 	local user = md:getInstance("UserModel")
-	local isAfforded = user:costDiamond(20) 
-	if isAfforded then 
-		self.propModel:costProp("hpBag",1) 
+	local isAfforded = user:costDiamond(20)
+	if isAfforded then
+		self.propModel:costProp("hpBag",1)
 	end
 end
 
@@ -210,18 +210,18 @@ end
 function FightProp:sendAward(awardData)
 	local awardType = awardData.awardType
 	local value 	= awardData.awardValue
-	if awardType == "goldWeapon" then 
+	if awardType == "goldWeapon" then
 		local fightInlay = md:getInstance("FightInlay")
-		fightInlay:activeGold()		
-	elseif awardType == "healthBag" then 
+		fightInlay:activeGold()
+	elseif awardType == "healthBag" then
 		self.propModel:addProp("hpBag", value)
 	elseif awardType == "shouLei" then
 		self.propModel:addProp("lei", value)
-	elseif awardType == "coin" then	
+	elseif awardType == "coin" then
 		local hero = md:getInstance("Hero")
-	    hero:dispatchEvent({name = hero.AWARD_GOLD_INCREASE_EVENT, 
+	    hero:dispatchEvent({name = hero.AWARD_GOLD_INCREASE_EVENT,
                     value = value})
-	end	
+	end
 end
 
 return FightProp

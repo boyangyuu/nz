@@ -19,11 +19,11 @@ function HomeBarLayer:ctor(properties)
     cc.EventProxy.new(self.usermodel , self)
         :addEventListener("REFRESH_MONEY_EVENT", handler(self, self.refreshMoney))
         :addEventListener("HOMEBAR_ACTION_UP_EVENT", handler(self, self.homeBarAction))
-    
+
     local activityModel = md:getInstance("ActivityMainModel")
     cc.EventProxy.new(activityModel , self)
         :addEventListener(activityModel.SHOW_ACTIVITYMAIN, handler(self, self.onBtnActsClicked))
-    
+
     self.properties = properties
     self.fightData  = properties["fightData"]
 
@@ -33,9 +33,9 @@ function HomeBarLayer:ctor(properties)
     self:initGuideWeapon()
     self:initGuideInlay()
 
-    if self.fightData["fightType"] == "jujiFight" then 
+    if self.fightData["fightType"] == "jujiFight" then
         self:refreshCommonLayer("ActsLayer", {selectId = "jujiFight"})
-    elseif self.fightData["fightType"] == "bossFight" then 
+    elseif self.fightData["fightType"] == "bossFight" then
         self:refreshCommonLayer("ActsLayer", {selectId = "bossFight"})
     else
         self:refreshCommonLayer("levelMapLayer")
@@ -56,7 +56,7 @@ end
 function HomeBarLayer:refreshMoney()
     self.btnMoney:setString(self.usermodel:getMoney())
     self.btnDiamond:setString(self.usermodel:getDiamond())
-end   
+end
 
 function HomeBarLayer:initHomeLayer()
     self.btnSetting = cc.uiloader:seekNodeByName(self.homeRootNode, "btnset")
@@ -82,9 +82,9 @@ function HomeBarLayer:initHomeLayer()
         self.notiArsenal:setVisible(false)
         self.notiStore:setVisible(false)
     end
-    
-    self.btnBack:setTouchEnabled(true)  
-    self.btnSetting:setTouchEnabled(true)  
+
+    self.btnBack:setTouchEnabled(true)
+    self.btnSetting:setTouchEnabled(true)
     self.btnBack:setVisible(false)
     self.btnBuyCoin:setTouchEnabled(true)
 
@@ -111,11 +111,10 @@ function HomeBarLayer:initHomeLayer()
 
     local buyModel = md:getInstance("BuyModel")
     self.btnBuyCoin:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then                
+        if event.name=='began' then
             return true
         elseif event.name=='ended' then
             self:onBtnStoreClicked()
-            buyModel:showBuy("goldGiftBag", {}, "打开商城_自动弹出土豪金礼包")
         end
     end)
 
@@ -163,14 +162,14 @@ function HomeBarLayer:refreshCommonLayer(layer, data)
     self.btnStore:setButtonEnabled(true)
     self.btnArsenal:setButtonEnabled(true)
 
-    if layer == "levelMapLayer" then 
+    if layer == "levelMapLayer" then
         self.btnSetting:setVisible(true)
         self.btnBack:setVisible(false)
-    elseif layer == "inlayLayer" then 
+    elseif layer == "inlayLayer" then
         self.btnInlay:setButtonEnabled(false)
-    elseif layer == "WeaponListLayer" then 
+    elseif layer == "WeaponListLayer" then
         self.btnArsenal:setButtonEnabled(false)
-    elseif layer == "StoreLayer" then 
+    elseif layer == "StoreLayer" then
         self.btnStore:setButtonEnabled(false)
     elseif layer == "ActsLayer" then
 
@@ -181,7 +180,7 @@ function HomeBarLayer:homeBarAction()
     local changeTime = 0.2
     local smallTime, bigTime = 0.5, 0.5
     self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, self.panelUp:getContentSize().height)))
-    self.panelUp:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime), 
+    self.panelUp:runAction(transition.sequence({cc.DelayTime:create(smallTime + bigTime),
         cc.CallFunc:create(function()
             self.panelUp:runAction(cc.MoveBy:create(changeTime, cc.p(0, -self.panelUp:getContentSize().height)))
         end)}))
@@ -191,28 +190,28 @@ function HomeBarLayer:onEnter()
     local fightFactory =   md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     local gid, lid  = self.levelMapModel:getConfig()
-    if lid == 2 and gid == 1 then 
+    if lid == 2 and gid == 1 then
         self.guide:check("xiangqian")
     end
 
-    if lid == 3 and gid == 1 then 
+    if lid == 3 and gid == 1 then
         self.guide:check("weapon")
     end
 
     -- music
     local startMusic = "res/Music/bg/bjyx.wav"
-    audio.playMusic(startMusic,true)        
+    audio.playMusic(startMusic,true)
 end
 
 function HomeBarLayer:onBtnActsClicked(event)
     self.btnSetting:setVisible(false)
-    self.btnBack:setVisible(true)    
+    self.btnBack:setVisible(true)
     self:refreshCommonLayer("ActsLayer", {selectId = "dailyTask"})
 end
 
 function HomeBarLayer:onBtnStoreClicked()
     self.notiStore:setVisible(false)
-    playSoundBtn() 
+    playSoundBtn()
     self:refreshCommonLayer("StoreLayer")
 end
 
@@ -244,7 +243,7 @@ function HomeBarLayer:initGuideWeapon()
         endfunc = function (touchEvent)
             self:onBtnArsenalClicked()
         end
-     })    
+     })
 
     self.guide:addClickListener({
         id = "weapon_back",
@@ -253,11 +252,11 @@ function HomeBarLayer:initGuideWeapon()
         endfunc = function (touchEvent)
             self:onBtnBackClicked()
         end
-     })        
+     })
 
 end
 
-function HomeBarLayer:initGuideInlay() 
+function HomeBarLayer:initGuideInlay()
     local isDone = self.guide:isDone("xiangqian")
     if isDone then return end
 
@@ -269,7 +268,7 @@ function HomeBarLayer:initGuideInlay()
         endfunc = function (touchEvent)
             self:onBtnInlayClicked()
         end
-     })    
+     })
 
     --点击返回按钮
     self.guide:addClickListener({
@@ -279,7 +278,7 @@ function HomeBarLayer:initGuideInlay()
         endfunc = function (touchEvent)
             self:onBtnBackClicked()
         end
-     })        
+     })
 
 end
 

@@ -7,7 +7,7 @@ local StoreLayer = class("StoreLayer", function()
     return display.newLayer()
 end)
 
-function StoreLayer:ctor()
+function StoreLayer:ctor(property)
 
 end
 
@@ -16,6 +16,7 @@ function StoreLayer:onShow()
         self:loadCCS()
         self:initUI()
     end
+
     self:refreshUI("bank")
 end
 
@@ -41,21 +42,21 @@ function StoreLayer:initUI()
 	self.btnbank:setTouchEnabled(true)
 	self.btnmoney:setTouchEnabled(true)
     self.btnprop:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-            if event.name=='began' then                
+            if event.name=='began' then
                 return true
             elseif event.name=='ended' then
                 self:refreshUI("prop")
             end
         end)
      self.btnbank:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then 
+        if event.name=='began' then
             return true
         elseif event.name=='ended' then
             self:refreshUI("bank")
         end
     end)
      self.btnmoney:addNodeEventListener(cc.NODE_TOUCH_EVENT, function(event)
-        if event.name=='began' then                
+        if event.name=='began' then
             return true
         elseif event.name=='ended' then
             self:refreshUI("money")
@@ -68,11 +69,11 @@ function StoreLayer:refreshListView(type)
     self.layerContent:removeAllChildren()
 
     local contentNode = nil
-    if type == "prop" then 
+    if type == "prop" then
         contentNode = StorePropNode.new()
-    elseif type == "bank" then 
+    elseif type == "bank" then
         contentNode = StoreBankNode.new()
-    elseif type == "money" then 
+    elseif type == "money" then
         contentNode = StoreMoneyNode.new()
     else
         assert(false, "type is invalid" .. type)

@@ -56,12 +56,12 @@ function KefuPopup:initUI()
             return true
         elseif event.name == "ended" then
             
-            if device.platform == "android" then
+            -- if device.platform == "android" then
 
-                local className = "com/hgtt/com/IAPControl"
-                luaj.callStaticMethod(className, "callPhone")
-                print("btncall is pressed!")
-            end
+            --     local className = "com/hgtt/com/IAPControl"
+            --     luaj.callStaticMethod(className, "callPhone")
+            --     print("btncall is pressed!")
+            -- end
         end
     end)
 end
