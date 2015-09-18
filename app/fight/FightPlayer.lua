@@ -977,6 +977,17 @@ function FightPlayer:initGuide1()
         end
     })
 
+    --麒麟连射
+    self.guide:addClickListener( {
+        id = "fight_fusillade",
+        groupId = "fight01_skill",
+        rect = self.btnFire:getBoundingBox(),
+        endfunc = function (touchEvent)
+            self:fire()
+            scheduler.performWithDelayGlobal(handler(self, self.onCancelledFire), 0.05)
+        end
+    })
+
     --黄金武器
     self.guide:addClickListener( {
         id = "fight_gold",

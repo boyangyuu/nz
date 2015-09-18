@@ -36,11 +36,11 @@ end
 function GuideLayer:onTouch(event)
 	-- dump(event, "event")
 	if not self.isGuiding then return false end
-    if event.name == "began" or event.name == "added" then    	
+    if event.name == "began" or event.name == "added" then
         return self:onMutiTouchBegin(event)
     elseif event.name == "ended" or event.name == "cancelled" or event.name == "removed" then
         return self:onMutiTouchEnd(event)
-    elseif event.name == "moved" then 
+    elseif event.name == "moved" then
         return self:onMutiTouchMoved(event)
     end
     return false
@@ -49,11 +49,11 @@ end
 function GuideLayer:onMutiTouchBegin(event)
 	-- dump(event, "onMutiTouchBegin event")
 	if event.points == nil then return false end
-	if #event.points > 1 then return end 
+	if #event.points > 1 then return end
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
-		if isTouch then 
+		if isTouch then
 			print("Begin 点击到指定区域")
 			self:onTouchTarget(event)
 			return true
@@ -67,7 +67,7 @@ function GuideLayer:onMutiTouchMoved(event)
     for id, point in pairs(event.points) do
 		local pos = cc.p(point.x, point.y)
 		local isTouch = self:isTouchTarget(pos)
-		if isTouch then 
+		if isTouch then
 			print("Moved 点击到指定区域")
 			self:onTouchTarget(event)
 			return true
@@ -106,7 +106,7 @@ function GuideLayer:onTouchTarget(event)
 	local endfunc = listenData.endfunc
 	assert(endfunc, "endfunc is nil stepid is:"..listenData.id)
 	-- print("endfunc excute eventname:"..event.name)
-	
+
 	--do next
 	if cfg.skipMode ~= "condition" then
 		--回调
@@ -135,7 +135,7 @@ function GuideLayer:hideForTime(event)
 	self.bg:setVisible(false)
 
 	--restore after time
-	self:performWithDelay(restoreFunc, delay)	
+	self:performWithDelay(restoreFunc, delay)
 end
 
 function GuideLayer:getTargetRect()
@@ -149,7 +149,7 @@ end
 function GuideLayer:isTouchTarget(pos)
 	-- dump(pos, "pos")
 
-	pos.y = pos.y - display.offset 
+	pos.y = pos.y - display.offset
 	local rect = self:getTargetRect()
 	-- dump(rect, "rect")
 	local b = cc.rectContainsPoint(rect, pos)
@@ -158,7 +158,7 @@ end
 
 function GuideLayer:loadCCS()
 	cc.FileUtils:getInstance():addSearchPath("res/commonPNG")
-    display.addSpriteFrames("res/commonPNG/role0.plist", "res/commonPNG/role0.png") 
+    display.addSpriteFrames("res/commonPNG/role0.plist", "res/commonPNG/role0.png")
     self.guideNode = cc.uiloader:load("res/xinshou/xinshou.ExportJson")
     self:addChild(self.guideNode, 10)
 
@@ -172,26 +172,27 @@ function GuideLayer:checkFirstGuide()
 	--res
     local manager = ccs.ArmatureDataManager:getInstance()
     manager:addArmatureFileInfo("res/xinshou/xinsyd/xinsyd.ExportJson")
-    display.addSpriteFrames("res/xinshou/xinsyd/xinsyd.plist", 
-        "res/xinshou/yd_zyhua/yd_zyhua0.png")     
+    display.addSpriteFrames("res/xinshou/xinsyd/xinsyd.plist",
+        "res/xinshou/yd_zyhua/yd_zyhua0.png")
     manager:addArmatureFileInfo("res/xinshou/yd_dianji/yd_dianji.ExportJson")
-    display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist", 
-        "res/xinshou/yd_dianji/yd_dianji0.png")	
+    display.addSpriteFrames("res/xinshou/yd_dianji/yd_dianji0.plist",
+        "res/xinshou/yd_dianji/yd_dianji0.png")
 
-    --touch 
-    self.touchAll:setTouchEnabled(true) 
-    self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)	
+    --touch
+    self.touchAll:setTouchEnabled(true)
+    self.touchAll:setTouchMode(cc.TOUCH_MODE_ALL_AT_ONCE)
     local isSwallow = self:getIsTouchSwallow()
-    self.touchAll:setTouchSwallowEnabled(isSwallow) 	
-    self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))     
+    self.touchAll:setTouchSwallowEnabled(isSwallow)
+    self.touchAll:addNodeEventListener(cc.NODE_TOUCH_EVENT, handler(self, self.onTouch))
 end
 
 function GuideLayer:refreshUI()
 	local cfg = self.guide:getCurConfig()
+	dump(cfg, "2223232323")
 
 	--clear
-	if self.bg then 
-		self.bg:removeFromParent() 
+	if self.bg then
+		self.bg:removeFromParent()
 		self.bg = nil
 	end
 
@@ -201,11 +202,11 @@ function GuideLayer:refreshUI()
 		rect = cc.rect(0, 0, display.width1, display.height1)
 	end
 	-- dump(rect, "rect")
-	local params = {fillColor = cc.c4f(255,0,0,255), 
-			borderColor = cc.c4f(0,0,0,0), 
+	local params = {fillColor = cc.c4f(255,0,0,255),
+			borderColor = cc.c4f(0,0,0,0),
 			borderWidth = 5}
 	local circle = display.newRect(rect, params) --todo改为九宫格
-	local opacityCfg = cfg.opacity 
+	local opacityCfg = cfg.opacity
 	local render = cc.RenderTexture:create(display.width1, display.height1)
 	local opacity = opacityCfg or 0.8 --透明度
 	render:clear(0.1, 0.1, 0.1, opacity)
@@ -221,27 +222,27 @@ function GuideLayer:refreshUI()
 	self:addChild(self.bg)
 
 	--add hand
-	if self.armature then 
+	if self.armature then
 		self.armature:removeFromParent()
 		self.armature = nil
 	end
 
 	--hand cfg
-	if cfg["hand"] == "move" then 
+	if cfg["hand"] == "move" then
 		self.armature = ccs.Armature:create("xinsyd")
 		self.armature:getAnimation():play("huadong" , -1, 1)
 		self.armature:setPosition(display.width1/2,
-				display.height1/2)						
-	elseif cfg["hand"] == "fire" then 
+				display.height1/2)
+	elseif cfg["hand"] == "fire" then
 		self.armature = ccs.Armature:create("xinsyd")
 		self.armature:getAnimation():play("dianji" , -1, 1)
 		self.armature:setPosition(display.width1/2,
-				display.height1/2)					
+				display.height1/2)
 	else
 		self.armature = ccs.Armature:create("yd_dianji")
-		self.armature:getAnimation():play("yd_dianji" , -1, 1)		
+		self.armature:getAnimation():play("yd_dianji" , -1, 1)
 		self.armature:setPosition(rect.x + rect.width/2,
-				rect.y + rect.height/2)							
+				rect.y + rect.height/2)
 	end
 
 	self.guideNode:addChild(self.armature)
@@ -254,13 +255,13 @@ function GuideLayer:refreshCommentUI()
 	--guide offset
 	local contentNode = cc.uiloader:seekNodeByName(self.guideNode, "guide")
 	local offset = cfg.contentOffset or {x = 0, y = 0}
-	local pos = cc.p(display.width1/2 + offset.x, 
+	local pos = cc.p(display.width1/2 + offset.x,
 				display.height1/2 + offset.y)
 	-- dump(pos, "")
-	contentNode:setPosition(pos)	
-	if cfg.rolepos == "hide" then 
+	contentNode:setPosition(pos)
+	if cfg.rolepos == "hide" then
 		contentNode:setVisible(false)
-		return 
+		return
 	else
 		contentNode:setVisible(true)
 	end
@@ -272,18 +273,18 @@ function GuideLayer:refreshCommentUI()
 
 	--guide role
 	local image_role = cc.uiloader:seekNodeByName(self.guideNode, "image_role")
-	local isRight = cfg.rolepos == "right" 
+	local isRight = cfg.rolepos == "right"
 	image_role:setFlippedX(not isRight)
-	if cfg.rolepos == "right" then  
+	if cfg.rolepos == "right" then
 		label_content:setPositionX(90)
 		image_role:setPositionX(700)
 	else
 		label_content:setPositionX(250)
 		image_role:setPositionX(-40)
-	end	
+	end
 
 	label_content:setString(msg)
-	-- label_content:speak(0.1)	
+	-- label_content:speak(0.1)
 end
 
 function GuideLayer:start(event)
@@ -302,7 +303,7 @@ function GuideLayer:finish(event)
 	--touch
 	self.isGuiding = false
 	self.isFirst = false
-	self.touchAll:removeAllNodeEventListeners()	
+	self.touchAll:removeAllNodeEventListeners()
 	self.isSwallow  = true
 
 	--visible

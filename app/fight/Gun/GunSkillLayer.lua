@@ -13,7 +13,7 @@ function GunSkillLayer:ctor()
 	--events
 	cc.EventProxy.new(self.hero, self)
 			:addEventListener(self.hero.GUN_CHANGE_EVENT, handler(self, self.refreshUI))
-		
+
 	self:refreshUI()
 	self:setTouchEnabled(true)
 	self:setTouchSwallowEnabled(false)
@@ -21,9 +21,9 @@ end
 
 function GunSkillLayer:refreshUI(event)
 	--clear
-	if self.ui then 
+	if self.ui then
 		self.ui:removeSelf()
-		self.ui = nil 
+		self.ui = nil
 	end
 	self.timers = {}
 	self.config = {}
@@ -31,16 +31,16 @@ function GunSkillLayer:refreshUI(event)
 	self:stopAllActions()
 
 	--config
-	self.gun   = self.hero:getGun() 
+	self.gun   = self.hero:getGun()
 	local name  = self.gun:getGunName()
 	self.config = self.gun:getSkillConfig()
 	if self.config == nil then return end
 
 	--ui
-	self.ui = cc.uiloader:load("res/Fight/fightLayer/gunSkill/" 
+	self.ui = cc.uiloader:load("res/Fight/fightLayer/gunSkill/"
 		.. name .. ".ExportJson")
 	assert(self.ui, "no GunSkillLayer ui: " .. name)
-	self:addChild(self.ui)	
+	self:addChild(self.ui)
 
 	--btns timers
 	for skillId,skillConfig in pairs(self.config) do
@@ -65,7 +65,7 @@ function GunSkillLayer:refreshUI(event)
 	--guide
 
 	self:initGuide()
-	self:checkGuide()	
+	self:checkGuide()
 end
 
 function GunSkillLayer:schRefresh()
@@ -81,13 +81,13 @@ function GunSkillLayer:refreshTimers()
 		local per      = cdRemain / cd * 100
 		timerBar:setPercentage(per)
 		timerBar:setVisible(not isHide)
-	end	
+	end
 end
 
-function GunSkillLayer:onClickBtnSkill(skillId)	
+function GunSkillLayer:onClickBtnSkill(skillId)
 	--check cooldown
 	if self.gun:getSkillCdRemain() ~= 0 then
-		return 
+		return
 	end
 	self.gun:startSkillCd(skillId)
 
@@ -105,18 +105,18 @@ end
 
 
 function GunSkillLayer:checkGuide()
-	local gun   = self.hero:getGun() 
+	local gun   = self.hero:getGun()
 	local name  = gun:getGunName()
     --guide
     local function guide()
         print("function GunSkillLayer:checkGuide()")
         local guide = md:getInstance("Guide")
-        guide:check("fight01_skill") 
+        guide:check("fight01_skill")
     end
 
-	if name == "huoqilin" then 
+	if name == "huoqilin" then
         self:performWithDelay(guide, 2.0)
-    end	
+    end
 end
 
 function GunSkillLayer:initGuide()
@@ -135,7 +135,7 @@ function GunSkillLayer:initGuide()
         endfunc = function (touchEvent)
         	self:onClickBtnSkill(skillId)
         end
-    })  	
+    })
 end
 
 
