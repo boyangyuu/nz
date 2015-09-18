@@ -57,7 +57,7 @@ function MidAutumnLayer:startGame()
         ui:changeLayer("FightPlayer", {fightData = fightData})
     else
         ui:showPopup("commonPopup",
-         {type = "style2", content = "今天的已经没有机会了，明天再试吧"},
+         {type = "style1", content = "今天的已经没有机会了，请明天再来尝试吧"},
          {opacity = 155})
         return
     end

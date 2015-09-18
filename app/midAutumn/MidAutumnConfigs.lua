@@ -3,7 +3,7 @@ local MidAutumnConfigs = class("MidAutumnConfigs", cc.mvc.ModelBase)
 local fightAward = {}
 
 fightAward = {
-    {{moonCake = 10},{money = 2000}},
+    {{moonCake = 10},{money = 1000}},
 }
 
 

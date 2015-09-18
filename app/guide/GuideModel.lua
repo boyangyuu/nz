@@ -104,7 +104,6 @@ end
 function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
-	dump(data,"000000000:")
 	local isDone = data.guide[groupId]
 	-- print(" Guide:isDone groupId " .. groupId .. "isDone:", isDone)
 	assert(isDone ~= nil, "no exist groupId:".. groupId)
