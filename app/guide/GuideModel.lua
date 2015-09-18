@@ -16,8 +16,8 @@ Guide.GUIDE_HIDE_EVENT 			= "GUIDE_HIDE_EVENT"
 Guide.GUIDE_TOUCHSWALLOW_EVENT  = "GUIDE_TOUCHSWALLOW_EVENT"
 
 function Guide:ctor(properties)
-    Guide.super.ctor(self, properties) 
-	
+    Guide.super.ctor(self, properties)
+
 	--instance
 	self.datas = {}
 	self.groupId = nil
@@ -29,29 +29,29 @@ end
 function Guide:check(groupId)
 	assert(groupId, "groupId is nil")
 	if self.isGuiding then return end
-	
+
 	local configGroup =  GuideConfigs.getConfig(groupId)
 	assert(configGroup, "configGroup is nil groupId:"..groupId)
 	local preGroupId = configGroup["preGuideId"]
 	local isPreDone = true
-	if preGroupId then 
+	if preGroupId then
 		isPreDone = self:isDone(preGroupId)
 	end
 	local isCurDone = self:isDone(groupId)
-	if not isCurDone and isPreDone then 
+	if not isCurDone and isPreDone then
 		self:startGuide(groupId)
 		return true
 	end
 end
 
 function Guide:setTouchSwallow(isSwallow)
-	self:dispatchEvent({name = Guide.GUIDE_TOUCHSWALLOW_EVENT, 
+	self:dispatchEvent({name = Guide.GUIDE_TOUCHSWALLOW_EVENT,
 				isSwallow = isSwallow})
 end
 
 function Guide:doGuideNext()
 	--check finish
-	if self:isDone(self.groupId) then 
+	if self:isDone(self.groupId) then
 		return
 	end
 	local configGroup =  GuideConfigs.getConfig(self.groupId)
@@ -59,7 +59,7 @@ function Guide:doGuideNext()
 	--um finish
 	local umStr = nil
 	if self.stepIndex ~= 0 then
-		local lastconfigStep = configGroup["steps"][self.stepIndex]	
+		local lastconfigStep = configGroup["steps"][self.stepIndex]
 		--todo 改为自定义事件
 		assert(lastconfigStep["id"], "lastconfigStep is nil")
 		um:finishLevel("新手:" .. lastconfigStep["id"])
@@ -68,11 +68,11 @@ function Guide:doGuideNext()
 	self.stepIndex = self.stepIndex + 1
 
 	--update config
-	local configStep = configGroup["steps"][self.stepIndex]	
+	local configStep = configGroup["steps"][self.stepIndex]
 	self.curConfig = configStep
 
 	--check finish
-	if self.curConfig == nil then 
+	if self.curConfig == nil then
 		self:finishGuide()
 		return
 	end
@@ -83,13 +83,13 @@ function Guide:doGuideNext()
 
 	--update listenData
 	local id = configStep.id
-	local listenData = self.datas[id]	
+	local listenData = self.datas[id]
 	self.curData = listenData
 
 	--dispatch
 	-- print("GuideModel开始新引导: stepIndex:"..self.stepIndex..",  stepId:"..id)
-	self:dispatchEvent({name = Guide.GUIDE_START_EVENT, 
-				groupId = self.groupId})	
+	self:dispatchEvent({name = Guide.GUIDE_START_EVENT,
+				groupId = self.groupId})
 end
 
 function Guide:startGuide(groupId)
@@ -104,8 +104,9 @@ end
 function Guide:isDone(groupId)
 	--read userdata
 	local data = getUserData()
+	dump(data,"000000000:")
 	local isDone = data.guide[groupId]
-	-- print(" Guide:isDone groupId " .. groupId .. "isDone:", isDone) 
+	-- print(" Guide:isDone groupId " .. groupId .. "isDone:", isDone)
 	assert(isDone ~= nil, "no exist groupId:".. groupId)
 	return isDone
 end
@@ -120,33 +121,33 @@ function Guide:addClickListener(data)
 end
 
 function Guide:hideGuideForTime(delay)
-	self:dispatchEvent({name = Guide.GUIDE_HIDE_EVENT, 
-				delay = delay})	
+	self:dispatchEvent({name = Guide.GUIDE_HIDE_EVENT,
+				delay = delay})
 end
 
 function Guide:finishGuide()
 	--save userdata
 	local data = getUserData()
 	local groupId = self.groupId
-	assert(data.guide[groupId] == false, 
+	assert(data.guide[groupId] == false,
 			"引导已经做过 重复引导了， groupId:"..self.groupId)
 	data.guide[groupId] = true
 	setUserData(data)
 
 	--dispatch
-	self:dispatchEvent({name = Guide.GUIDE_FINISH_EVENT, 
+	self:dispatchEvent({name = Guide.GUIDE_FINISH_EVENT,
 				groupId = self.groupId})
 
 	--clear
 	self.stepIndex = 0
-	self.isGuiding = false	
-	self.groupId = nil	
+	self.isGuiding = false
+	self.groupId = nil
 end
 
 function Guide:finishGuideID(groupId)
 	local data = getUserData()
 	data.guide[groupId] = true
-	setUserData(data)	
+	setUserData(data)
 end
 
 function Guide:getIsGuiding()
@@ -165,7 +166,7 @@ function Guide:getCurConfig()
 end
 
 function Guide:getCurGuideId()
-	if self.curConfig == nil then 
+	if self.curConfig == nil then
 		return nil
 	else
 		return self.curConfig["id"]
