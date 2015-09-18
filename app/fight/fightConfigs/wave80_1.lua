@@ -6,7 +6,7 @@ local waves = {
 	{	
 		enemys = {                                                               
 			{
-				descId = "dzboss", --简介
+				descId = "dzboss_2", --简介
 				time = 4,	
 				num = 1,
 				pos = {500},
@@ -217,17 +217,17 @@ local enemys = {
 local bosses = {
 
 	{
-		image = "dzboss", --图片名字                                                             多足boss巨炮泰坦
-		award = 200,                   --boss产出金币数量
-		hp = 100000,
-		fireRate = 180,                  --普攻频率
-		fireCd = 4,                     --普攻cd
+		image = "dzboss_2", --图片名字                                                             多足boss巨炮泰坦
+		award = 100,                   --boss产出金币数量
+		hp = 50000,
+		fireRate = 240,                  --普攻频率
+		fireCd = 15,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 60,                    --移动频率
 		walkCd = 2,                         --移动cd				
-		weak1 = 1.1,						--头 弱点伤害倍数
-		weak2 = 1.1,					--左腿 弱点伤害倍数
-		weak3 = 1.1,					--右腿 弱点伤害倍数	
+		weak1 = 5,						--头 弱点伤害倍数
+		weak2 = 5,					--左腿 弱点伤害倍数
+		weak3 = 5,					--右腿 弱点伤害倍数	
 		wudiTime = 5.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
 
@@ -240,7 +240,7 @@ local bosses = {
 			},   
 
 			daoDan1 = {                                                   --烟雾导弹
-				0.99, 0.80, 0.60, 0.40,
+				0.99, 0.80, 0.60, 0.40, 
 			},
 
 
@@ -250,13 +250,13 @@ local bosses = {
 			},
 			weak1 = { 0.90,0.50,0.30,                             --头 技能触发(可以同时)	                        
 			},
-			demage130 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			demage110 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},
-			demage160 = {
+			demage130 = {
 				0.70,
 			},
-			demage200 = {
+			demage150 = {
 				0.30,
 			},			
 		},
@@ -267,7 +267,7 @@ local bosses = {
 			type = "dao_wu",  
 			timeOffset = 3.0,                        --导弹间隔时间                 
 			offsetPoses = {                           --目标偏移点
-            	cc.p( -250, -200),cc.p( 200, -250), cc.p( 200, 200),
+            	cc.p( -250, -200),cc.p( 200, -250),
         	},
         },
 
@@ -347,6 +347,6 @@ function waveClass:ctor()
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量
 	}
-	self.reliveCosts = {20,}
+
 end
 return waveClass
