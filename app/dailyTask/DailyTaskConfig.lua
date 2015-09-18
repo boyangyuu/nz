@@ -105,7 +105,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成限时模式1次",
+		str = "完成限时关卡1次",
 	},
 	{
 		index = "fight_renZhi09",
@@ -113,7 +113,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成人质模式1次",
+		str = "完成人质关卡1次",
 	},
 	{
 		index = "fight_taoFan09",
@@ -121,7 +121,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成逃犯模式1次",
+		str = "完成逃犯关卡1次",
 	},
 	{
 		index = "fight_puTong09",
@@ -129,7 +129,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成杀戮模式1次",
+		str = "完成杀戮关卡1次",
 	},
 }
 --[[
