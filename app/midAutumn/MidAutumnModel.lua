@@ -61,7 +61,11 @@ function MidAutumnModel:resetMidAutTimes()
 end
 
 function MidAutumnModel:getCouldPlayTimes()
-    local url = "http://123.57.213.26/midautumn.php"
+    if device.platform == "ios" then
+        local url = "http://123.57.213.26/midautumnios.php"
+    else
+        local url = "http://123.57.213.26/midautumn.php"
+    end
     local request = network.createHTTPRequest(handler(self,self.onRequestEvent), url, "GET")
     request:start()
 end

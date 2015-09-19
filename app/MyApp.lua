@@ -20,7 +20,7 @@ isAsync   = false
 __isFree  = false
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
-__reviewLimitData = {year = 2015, month = 8, day = 31}
+__reviewLimitData = {year = 2015, month = 9, day = 25}
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
