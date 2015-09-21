@@ -28,12 +28,12 @@ function ADModel:watchAD()
 end
 
 function ADModel:onWatchADSuccess()
-    local inlayModel = md:getInstance("InlayModel")
-    --黄武*1
-    inlayModel:buyGoldsInlay(1)
+    local userModel = md:getInstance("UserModel")
+    --钻石*1
+    userModel:addDiamond(1)
     self:addWatchTimes()
     ui:showPopup("commonPopup",
-         {type = "style1",content = "恭喜您获得黄金武器1套！"},
+         {type = "style1",content = "恭喜您获得1个宝石！"},
          {opacity = 0})
 end
 
