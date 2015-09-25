@@ -4,8 +4,9 @@ local config = {}
 
 config["guangyu"]      = dir.."guangyu.ExportJson"
 config["bangzhu"]      = dir.."bangzhu.ExportJson"
-config["gonggao_1"]      = dir.."gonggao.ExportJson"
-config["gonggao_2"]      = dir.."gonggao_0.ExportJson"
+config["gonggao_1"]      = dir.."gonggao_1.ExportJson"--中秋
+config["gonggao_2"]      = dir.."gonggao_2.ExportJson"--黄武大赠送
+config["gonggao_3"]      = dir.."gonggao_3.ExportJson"--五星
 
 local AboutPopup = class("AboutPopup", function()
 	return display.newLayer()
@@ -41,8 +42,11 @@ end
 function AboutPopup:onClickBtnClose()
 	if self.popupName == "gonggao_1" then
 		ui:closePopup("AboutPopup", {animName = "normal"})
+		ui:showPopup("AboutPopup",{popupName = "gonggao_2"},{animName = "normal"})
+	elseif self.popupName == "gonggao_2" then
+		ui:closePopup("AboutPopup", {animName = "normal"})
 		if device.platform == "ios" then return end
-        ui:showPopup("AboutPopup",{popupName = "gonggao_2"},{animName = "normal"})
+        ui:showPopup("AboutPopup",{popupName = "gonggao_3"},{animName = "normal"})
     else
     	ui:closePopup("AboutPopup", {animName = "normal"})
     end
@@ -66,7 +70,7 @@ function AboutPopup:initText()
 				"牌时可以继续攻击。",
 				"\n机甲变身:点击屏幕右上方的机甲按钮，驾驶机甲，可",
 				"免受任何伤害。",
-				"\n黄金变身:点击黄金变身按钮，对敌人造成巨大伤害。 ",		
+				"\n黄金变身:点击黄金变身按钮，对敌人造成巨大伤害。 ",
 				"\n功能界面:",
 				"\n点击关卡图标:进入准备界面。",
 				"\n武器库:购买各种武器，玩家可以选择2把武器带入战",
@@ -74,9 +78,9 @@ function AboutPopup:initText()
 				"\n武器升级:花费金币提高武器的属性。",
 				"\n装备:为主角装备各种零件，额外提高战斗力量。",
 				"战斗结束后零件消失。",
-				"\n商城:花费购买各种道具。"										
+				"\n商城:花费购买各种道具。"
 				}
-						
+
 		self.text = "";
 		for k,v in pairs(text) do
 			self.text = self.text..v
@@ -106,7 +110,7 @@ function AboutPopup:initContent()
 		local email = cc.uiloader:seekNodeByName(self.aboutNode, "email")
 		email:setString("2758942941@qq.com")
 		local qq = cc.uiloader:seekNodeByName(self.aboutNode, "qq")
-		qq:setString("2758942941") 
+		qq:setString("2758942941")
 	end
 end
 

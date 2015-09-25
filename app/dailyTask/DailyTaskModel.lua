@@ -15,7 +15,7 @@ function DailyTaskModel:clearData()
 	-- local data = getUserData()
 	-- for k,v in pairs(data.dailyTask.tasks) do
 	-- 	v = 0
-	-- end	
+	-- end
 	-- data.dailyTask.awardedTasks = {}
 
 	setUserData(data)
@@ -36,13 +36,13 @@ function DailyTaskModel:setTaskTimes(type, times)
 	assert(times, "times is nil")
 	data.dailyTask.tasks[type] = times
 	setUserData(data)
-	self:dispatchEvent({name = DailyTaskModel.DAILYTASK_UPDATE_EVENT})	
+	self:dispatchEvent({name = DailyTaskModel.DAILYTASK_UPDATE_EVENT})
 end
 
 function DailyTaskModel:getTaskTimes(type)
 	local data = getUserData()
 	assert(data.dailyTask.tasks[type] ~= nil, "invalid type:" .. type)
-	return data.dailyTask.tasks[type] 
+	return data.dailyTask.tasks[type]
 end
 
 function DailyTaskModel:getSortedDatas()
@@ -59,12 +59,13 @@ function DailyTaskModel:getSortedDatas()
 		local isGetted2V = record2["isGetted"] and -100 or 0
 		local isCanGet1V = record1["isCanGet"] and 100 or 0
 		local isCanGet2V = record2["isCanGet"] and 100 or 0
-		local index1    = tonumber(string.sub(record1["index"], -1, -1))
-		local index2    = tonumber(string.sub(record2["index"], -1, -1))
+		local index1    = tonumber(string.sub(record1["index"], -2))
+		local index2    = tonumber(string.sub(record2["index"], -2))
+
 		return isGetted1V + isCanGet1V + index1 > isGetted2V + isCanGet2V + index2
 	end
 	table.sort(datas, sortFunction)
-	return datas	
+	return datas
 end
 
 function DailyTaskModel:getTaskData(index)
@@ -85,20 +86,20 @@ function DailyTaskModel:receiveTaskAward(index)
 	assert(self:getTaskData(index)["isCanGet"], "awarded!! :" .. index)
 	data.dailyTask.awardedTasks[index] = true
 	setUserData(data)
-	
+
 	--send award
 	local cfg = DailyTaskConfig.getConfig(index)
     print("发奖励")
     local user       = md:getInstance("UserModel")
-    if cfg["awardType"] == "diamond" then 
+    if cfg["awardType"] == "diamond" then
     	user:addDiamond(cfg["awardValue"])
-	elseif cfg["awardType"] == "coin" then 
-	    user:addMoney(cfg["awardValue"])	
-	else 
+	elseif cfg["awardType"] == "coin" then
+	    user:addMoney(cfg["awardValue"])
+	else
 		assert(false, "cfg[awardType] is invalid".. cfg["awardType"])
 	end
 
-	self:dispatchEvent({name = DailyTaskModel.DAILYTASK_UPDATE_EVENT, 
+	self:dispatchEvent({name = DailyTaskModel.DAILYTASK_UPDATE_EVENT,
 		taskIndex = cfg.index})
 end
 

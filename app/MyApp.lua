@@ -20,7 +20,7 @@ isAsync   = false
 __isFree  = false
 __versionId = nil       --游戏当前版本
 __appName = nil       --游戏当前名称
-__reviewLimitData = {year = 2015, month = 8, day = 31}
+__reviewLimitData = {year = 2015, month = 9, day = 30}
 __kefuNum =  "01082602182"     --易接： "4006706603" 浩歌 01082602182
 
 ui        = UI.new()
@@ -79,7 +79,7 @@ function MyApp:initVariables()
     local stringSig = "()Ljava/lang/String;"
     local result = nil
     if device.platform == "ios" then
-        __versionId = "1.0"
+        __versionId = "1.3.3"
         __appName = "全民突突突"
     elseif device.platform == "android" then
         result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
@@ -150,6 +150,7 @@ function MyApp:createGameStateFile()
 
         money = 2000,
         diamond = 0,
+        moonCake = 0,
 
         --开启的关卡
         currentlevel =  {
@@ -258,6 +259,12 @@ function MyApp:createGameStateFile()
                 -- index1 = true,
             },
         },
+        dailyAD = {
+            watchTimes = 0,
+        },
+        midAutumn = {
+            playTimes = 0,
+        }
     }
     GameState.save(data)
     GameData=GameState.load()

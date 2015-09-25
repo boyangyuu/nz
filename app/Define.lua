@@ -3,7 +3,7 @@
 local Define = class("Define", cc.mvc.ModelBase)
 
 ---------------------- 怪物 --------------------------
---手雷兵 远程兵 
+--手雷兵 远程兵
 Define.kEnemyWalkSpeed 			= 10.0       --左右移动速度
 Define.kEnemyWalkWidth 			= 300 * 1	--左右移动距离原来140改为200
 Define.kEnemyRollSpeed 			= 20.0	   --滚动速度 每帧率
@@ -57,13 +57,13 @@ Define.kRenzheSpeed				= 600.0    --忍者跑动速度 像素/s
 Define.kRenzheRunTime			= 2.0       --忍者跑步时间
 Define.kRenzheWalkTime			= 0.5   	--忍者行走时间
 Define.kRenzheShanTime			= 3.0   	--忍者瞬移时间
-Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离 
-Define.kRenzheShanOffsetMax		= 600		--忍者瞬移最大距离 
+Define.kRenzheShanOffsetMin		= 300 		--忍者瞬移最小距离
+Define.kRenzheShanOffsetMax		= 600		--忍者瞬移最大距离
 
 --蓝色boss 红色boss
 Define.kBlueBossWalkTime			= 1.0    --小范围移动时间(与配置动画时间是对应的 不能改)
 
---飞机兵 
+--飞机兵
 Define.kfeijiSpeed				= 500.0  --速度
 Define.kfeijiRunTime 			= 1.0	 --大范围移动时间
 Define.kfeijiWalkTime			= 0.6    --小范围移动时间
@@ -80,8 +80,8 @@ Define.kAwardEnemySanSpeed		= 50.0      --伞速
 --导弹
 Define.kMissileDaoTime				= 3.5    --导弹飞行时间
 Define.kMissileTieqiuTime           = 2.0    --铁球和汽车飞行时间
-Define.kMissileLeiTime				= 3.5    --手雷飞行时间 
-Define.kYanEffectTime				= 5      --烟雾白屏时间 
+Define.kMissileLeiTime				= 3.5    --手雷飞行时间
+Define.kYanEffectTime				= 5      --烟雾白屏时间
 
 --飞镖
 Define.kMissileFeibiaTime		= 1.0        --飞过来的时间
@@ -101,7 +101,7 @@ Define.kHeroHelper				= 0  	--默认回血0/s
 Define.kHeroHpBag				= 200   --回血包
 Define.kHeroHpCost				= 40  	--回血包价格
 Define.kHeroHpBagCd				= 10    --回血包cd
-Define.kHeroKillKeepCnt			= 1 	--启动连杀动画 
+Define.kHeroKillKeepCnt			= 1 	--启动连杀动画
 Define.kHeroKillKeepCd			= 3.0 	--连杀cd 3秒清空连杀
 
 --黄金武器
@@ -137,7 +137,7 @@ Define.kKillEnemyAwardGold     	= 10	--杀敌奖励
 Define.kGoldCoinValue			= 3.33		--单个金币值为3
 
 --购买相关
-Define.kBuyFullHpTime 			= 0.11  -- 10%血  
+Define.kBuyFullHpTime 			= 0.11  -- 10%血
 
 --狙击枪
 Define.kJuRange 				= 4.0  -- 狙击镜放大的范围
@@ -151,16 +151,17 @@ Define.kEnemyAnimScale      	= 1 / 0.7
 --提示
 -- Define.kTipsJijia               = 0.20 -- boss血量少于 0.10 提示机甲
 -- Define.kTipsJijiaHeroHp         = 100 --  英雄血量少于100 提示机甲
--- Define.kTipsHpBag               = 0.05 -- 英雄血量少于0.05提示医疗包 
+-- Define.kTipsHpBag               = 0.05 -- 英雄血量少于0.05提示医疗包
 -- Define.kTipsGold                =
 
 --------------------------战斗---------------------------------
 Define.kJujiReliveCosts         = {20, 20, 40, 40, 60, 60, 80, 80, 100,}  --无限狙击模式复活
 Define.kBossReliveCosts         = {20, 20, 40, 40, 60, 60, 80, 80, 100,}  --boss竞技模式复活
+Define.kNormalReliveCosts       = {20, 20, 40, 40, 60, 60, 80, 80, 100,}  --月饼normal模式复活
 Define.kLevelReliveCosts        = {20, 40, 60, 80, 100,} 				--普通关卡模式复活
 
 function Define:ctor()
-    Define.super.ctor(self) 
+    Define.super.ctor(self)
 end
 
 return Define

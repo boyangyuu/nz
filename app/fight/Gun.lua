@@ -20,7 +20,7 @@ function Gun:ctor(properties)
     self.weaponModel = md:getInstance("WeaponListModel")
     self.bagIndex    = properties.bagIndex
     self.configId    = properties.configId
-    self.config      = nil 
+    self.config      = nil
     self.skillConfig = nil
 
 	self:initConfig()
@@ -28,9 +28,9 @@ function Gun:ctor(properties)
 end
 
 function Gun:initConfig()
-	
-	local isHelpGun = self.configId ~= nil 
-	if not isHelpGun then 
+
+	local isHelpGun = self.configId ~= nil
+	if not isHelpGun then
 		local data = getUserData()
 		local weapon = data.weapons.weaponed[self.bagIndex]
 		self.configId = weapon["weaponid"]
@@ -61,31 +61,31 @@ end
 
 function Gun:getCooldown()
 	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
-	local baseValue = self.config.coolDown
+	local baseValue = 1 / self.config.coolDown
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
 	local value = scale * baseValue
 
 	local value = self:justCooldownValue(value)
-	dump(value)
+    print(value)
 	return value
 end
 
 function Gun:justCooldownValue(value)
-	if device.platform ~= "android" then 
+	if device.platform ~= "android" then
 		return value
 	end
 	-- print("justCooldownValue value:", value)
 	local scale = 1.0
-	if 0.15 < value and value <= 0.5 then 
-		scale = 0.90 	
-	elseif 0.1 < value and value <= 0.15 then 
-		scale = 0.85 
-	elseif 0.08 < value and value <= 0.1 then 
-		scale = 0.80 
-	elseif 0.06 < value and value <= 0.08 then 
+	if 0.15 < value and value <= 0.5 then
+		scale = 0.90
+	elseif 0.1 < value and value <= 0.15 then
+		scale = 0.85
+	elseif 0.08 < value and value <= 0.1 then
+		scale = 0.80
+	elseif 0.06 < value and value <= 0.08 then
 		scale = 0.75
-	elseif  value <= 0.06 then 
+	elseif  value <= 0.06 then
 		scale = 0.75
 	end
 	local value = value * scale
@@ -100,11 +100,11 @@ end
 function Gun:setCurBulletNum(num)
 	self.curBulletNum  = num
 	local hero = md:getInstance("Hero")
-	hero:dispatchEvent({name = hero.GUN_BULLET_EVENT, num = num})	
+	hero:dispatchEvent({name = hero.GUN_BULLET_EVENT, num = num})
 end
 
 function Gun:getCurBulletNum()
-	return self.curBulletNum 
+	return self.curBulletNum
 end
 
 function Gun:getBulletNum()
@@ -116,7 +116,7 @@ function Gun:getBulletNum()
         value = baseValue + baseValue * inlayValue
     else
 	    value = baseValue
-    end	
+    end
     value = math.floor(value)
     dump(value,"Gun:getBulletNum()")
 	return value
@@ -126,9 +126,9 @@ function Gun:isFireThrough()
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local type = self.config["type"]
 	assert(type, "type is nil")
-	if type == "pz" or type == "rpg" then 
+	if type == "pz" or type == "rpg" then
 		return true
-	elseif isGold then 
+	elseif isGold then
 		return true
 	else
 		return false
@@ -139,31 +139,31 @@ function Gun:getReloadTime()
 	-- local value = self.config.reloadTime
 	-- local fightInlay = md:getInstance("FightInlay")
 	-- local isGold = fightInlay:getIsActiveGold()
-	-- if isGold then value = 1 end 		
+	-- if isGold then value = 1 end
 	-- return value
 	local baseValue = self.config.reloadTime
-	local value = 0.0 
+	local value = 0.0
 	local inlayValue, isInlayed = self.inlay:getInlayedValue("speed")
     if isInlayed then
         value = baseValue - baseValue * inlayValue
     else
         value = baseValue
-    end		
+    end
     dump(value,"Gun:getReloadTime()")
 	return value
 end
 
 function Gun:getCritPercent()
-	local value
-	-- local value = (self.config["crit"] - 1)
-	local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
-    if isInlayed then
-        value = 0.00 + inlayValue
-    else
-        value = 0.00
-    end		
- 	return value
-	-- return value	
+	-- local value
+	local value = (self.config["crit"] - 1)
+	-- local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
+ --    if isInlayed then
+ --        value = 0.00 + inlayValue
+ --    else
+ --        value = 0.00
+ --    end
+ -- 	return value
+	return value
 end
 
 function Gun:getDemage()
@@ -192,16 +192,16 @@ end
 function Gun:startSkillCd(skillId, cdEndFunc)
 	self.skillCd = self.skillConfig[skillId]["cd"]
 
-	local handle 
+	local handle
 	local function resumeFunc()
-		if self.skillCd <= 0 then 
+		if self.skillCd <= 0 then
 			scheduler.unscheduleGlobal(handle)
 			self.skillCd = 0
 			return
 		end
 		self.skillCd = self.skillCd - 0.1
 	end
-	handle = scheduler.scheduleGlobal(resumeFunc, 0.1) 
+	handle = scheduler.scheduleGlobal(resumeFunc, 0.1)
 end
 
 return Gun

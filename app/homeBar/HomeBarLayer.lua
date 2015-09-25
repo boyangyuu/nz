@@ -37,6 +37,8 @@ function HomeBarLayer:ctor(properties)
         self:refreshCommonLayer("ActsLayer", {selectId = "jujiFight"})
     elseif self.fightData["fightType"] == "bossFight" then
         self:refreshCommonLayer("ActsLayer", {selectId = "bossFight"})
+    elseif self.fightData["fightType"] == "normalFight" then
+        self:refreshCommonLayer("ActsLayer", {selectId = "midAutumn"})
     else
         self:refreshCommonLayer("levelMapLayer")
     end
