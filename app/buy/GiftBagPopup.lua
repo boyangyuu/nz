@@ -85,7 +85,6 @@ function GiftBagPopup:payThis()
 	elseif device.platform == "ios" then
 		local userModel = md:getInstance("UserModel")
 		local name = self.param.popupName
-
 		if name == "weaponGiftBag" then
 			local isAfforded = userModel:costDiamond(260)
 			if isAfforded then

@@ -9,8 +9,9 @@ local FightFactory = class("FightFactory", cc.mvc.ModelBase)
 
 local LevelFight  = import(".LevelFight")
 local BossFight   = import(".BossFight")
-local PKFight     = import(".PKFight")   
-local JujiFight   = import(".JujiFight")   
+local NormalFight   = import(".NormalFight")
+local PKFight     = import(".PKFight")
+local JujiFight   = import(".JujiFight")
 
 function FightFactory:ctor()
 	self.fightType = nil
@@ -24,15 +25,17 @@ function FightFactory:refreshData(fightData)
 	self.fightInstance = nil
 	local fightType = fightData.fightType or "levelFight"
 	self.fightType = fightType
-	if self.fightType == "levelFight" then 
+	if self.fightType == "levelFight" then
 		self.fightInstance = LevelFight.new(fightData)
-	elseif self.fightType == "bossFight" then 
+	elseif self.fightType == "bossFight" then
 		self.fightInstance = BossFight.new(fightData)
-	elseif self.fightType == "jujiFight" then 
-		self.fightInstance = JujiFight.new(fightData)		
+	elseif self.fightType == "jujiFight" then
+		self.fightInstance = JujiFight.new(fightData)
+	elseif self.fightType == "normalFight" then
+		self.fightInstance = NormalFight.new(fightData)
 	else
 		assert(false)
-	end	
+	end
 end
 
 function FightFactory:getFight()

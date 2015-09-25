@@ -1,7 +1,7 @@
 local DataModel = class("DataModel", cc.mvc.ModelBase)
 
 function DataModel:ctor()
-    DataModel.super.ctor(self) 
+    DataModel.super.ctor(self)
 end
 
 function DataModel:checkData()
@@ -21,17 +21,18 @@ function DataModel:setNewData()
     local data = getUserData()
     dump(data, "旧data")
 
-    local bagsWeapon = clone(data.weapons.bags)
-    local bagsInlay  = clone(data.inlay.bags)
-    local money      = data.money
-    local diamond    = data.diamond
-    local currentlevel = data.currentlevel
-    local user       = data.user
-    local prop       = data.prop
-    local jujiMode   = data.jujiMode
-    local giftBag    = data.giftBag
-    local vip        = data.vip
-    local dailylogin = data.dailylogin
+    local bagsWeapon    = clone(data.weapons.bags)
+    local bagsInlay     = clone(data.inlay.bags)
+    local money         = data.money
+    local diamond       = data.diamond
+    local currentlevel  = data.currentlevel
+    local user          = data.user
+    local prop          = data.prop
+    local jujiMode      = data.jujiMode
+    local giftBag       = data.giftBag
+    local vip           = data.vip
+    local dailylogin    = data.dailylogin
+    local weaponsuipian = data.weaponsuipian
 
     myApp:createGameStateFile()
     local data          = getUserData()
@@ -46,11 +47,12 @@ function DataModel:setNewData()
     data.giftBag        = giftBag
     data.vip            = vip
     data.dailylogin     = dailylogin
+    data.weaponsuipian  = weaponsuipian
 
     --引导
     local guideModel = md:getInstance("Guide")
-    guideModel:fillData()    
-    
+    guideModel:fillData()
+
     dump(data, "新data")
     setUserData(data)
 end

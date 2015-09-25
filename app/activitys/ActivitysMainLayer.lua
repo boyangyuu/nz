@@ -2,6 +2,7 @@ local ActJujiNode   = import("..jujiMode.JujiModeLayer")
 local ActBossNode   = import("..bossMode.BossModeLayer")
 local DailyTaskNode = import("..dailyTask.DailyTaskLayer")
 local ActiveCodeNode= import("..activitys.ActiveCodeLayer")
+local MidAutumnNode = import("..midAutumn.MidAutumnLayer")
 
 local ActivitysMainLayer = class("ActivitysMainLayer", function()
 	return display.newLayer()
@@ -72,6 +73,13 @@ function ActivitysMainLayer:loadCCS()
         end)
     end
 
+    --jieri
+    self.btn_festival = cc.uiloader:seekNodeByName(self.ui, "btn_festival")
+    self.btn_festival:onButtonClicked(function ()
+        self:refreshListView("midAutumn")
+    end)
+
+
     --activeCode
     self.btn_activate = cc.uiloader:seekNodeByName(self.ui, "btn_activate")
     self.btn_activate:setVisible(false)
@@ -121,6 +129,7 @@ function ActivitysMainLayer:refreshListView(type)
     self.btn_boss:setButtonEnabled(true)
     self.btn_activate:setButtonEnabled(true)
     self.btn_dailyTask:setButtonEnabled(true)
+    self.btn_festival:setButtonEnabled(true)
     print("function ActivitysMainLayer:refreshListView(type)")
     self.comment:removeAllChildren()
 
@@ -139,6 +148,10 @@ function ActivitysMainLayer:refreshListView(type)
     elseif type == "activeCode" then
         self.btn_activate:setButtonEnabled(false)
         contentNode = ActiveCodeNode.new()
+    elseif type == "midAutumn" then
+        self.btn_festival:setButtonEnabled(false)
+        contentNode = MidAutumnNode.new()
+
     else
         assert(false, "type is invalid" .. type)
     end

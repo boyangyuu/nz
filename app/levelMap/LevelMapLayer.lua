@@ -147,7 +147,14 @@ function LevelMapLayer:initGiftLayer()
     self:initUI_goldGift()
 
     --武器礼包
-    self:initUI_weaponGift()
+    if device.platform ~= "ios" then
+        self:initUI_weaponGift()
+    end
+
+    --广告黄武
+    if device.platform == "ios" then
+        self:initUI_adGift()
+    end
 
     --vip礼包
     self:initUI_vipGift()
@@ -159,6 +166,20 @@ function LevelMapLayer:initGiftLayer()
     self:initUI_dacuGift()
 
     self:refreshGift()
+end
+
+function LevelMapLayer:initUI_adGift()
+    -- 广告
+    local btnAD  = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_ad")
+    btnAD:setTouchEnabled(true)
+    addBtnEventListener(btnAD, function(event)
+        if event.name=='began' then
+            return true
+        elseif event.name=='ended' then
+            local adModel = md:getInstance("ADModel")
+            adModel:watchAD()
+        end
+    end)
 end
 
 function LevelMapLayer:initUI_yijiaoGift()
@@ -361,7 +382,11 @@ function LevelMapLayer:initKefuLayer()
 end
 
 function LevelMapLayer:initChooseLayer()
-    self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.ExportJson")
+    if device.platform ~= "ios" then
+        self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer.ExportJson")
+    else
+        self.chooseRootNode = cc.uiloader:load("chooseLevel/chooseLevelLayer_ios_ad.ExportJson")
+    end
     self:addChild(self.chooseRootNode, Zorder_up)
 
     self.btnNext = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_next")
@@ -586,9 +611,11 @@ end
 
 function LevelMapLayer:refreshGift(event)
     print("function LevelMapLayer:refreshGift(event)")
-    local isBuyed   = self.buyModel:checkBought("weaponGiftBag")
-    local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
-    btnWeapon:setVisible(not isBuyed)
+    if device.platform ~= "ios" then
+        local isBuyed   = self.buyModel:checkBought("weaponGiftBag")
+        local btnWeapon = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_weapon")
+        btnWeapon:setVisible(not isBuyed)
+    end
 
     local isBuyed   = self.buyModel:checkBought("GiftBag_Xianshidacu")
     local btnXianshi = cc.uiloader:seekNodeByName(self.chooseRootNode, "btn_xianshidacu")

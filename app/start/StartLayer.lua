@@ -43,12 +43,11 @@ function StartLayer:initUI()
 
     local dlArmature = ccs.Armature:create("dl_logo")
     dlArmature:getAnimation():setMovementEventCallFunc(
-         function (armatureBack,movementType,movement)
-            if movementType == ccs.MovementEventType.complete then
-                dlArmature:getAnimation():play("chixu" , -1, 1)
-            end
-        end)
-
+     function (armatureBack,movementType,movement)
+        if movementType == ccs.MovementEventType.complete then
+            dlArmature:getAnimation():play("chixu" , -1, 1)
+        end
+    end)
     panlAnim:addChild(dlArmature)
     dlArmature:getAnimation():play("start" , -1, 0)
 

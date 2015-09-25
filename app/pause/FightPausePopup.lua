@@ -17,9 +17,9 @@ function FightPausePopup:initButtons()
 	local gameContinue = cc.uiloader:seekNodeByName(self, "Panel_GameContinue")
 	gameContinue:setTouchEnabled(true)
 	addBtnEventListener(gameContinue, function( event )
-		if event.name == 'began' then 
+		if event.name == 'began' then
 			return true
-		elseif event.name == 'ended' then 
+		elseif event.name == 'ended' then
 			self:closePopup()
 		end
 	end)
@@ -36,13 +36,13 @@ function FightPausePopup:initButtons()
 		    local fight = fightFactory:getFight()
 	        local groupId,levelId = fight:getCurGroupAndLevel()
 	        local fightType = fight:getFightType()
-	        if fightType == "jujiFight" or fightType == "bossFight" then 
+	        if fightType == "jujiFight" or fightType == "bossFight" or fightType == "normalFight" then
 	        	local inlayModel = md:getInstance("InlayModel")
 	        	inlayModel:removeAllInlay()
 	        end
 	        local fightData = {groupId = groupId, fightType = fightType}
 	        local levelInfo = groupId.."-"..levelId
-	        
+
 	        --um
 	        local umData = {}
 	    	umData[levelInfo] = "中途退出"
@@ -53,12 +53,12 @@ function FightPausePopup:initButtons()
 
 			--pauseModel
 			self:closePopup()
-			
+
 		end
 	end)
 
 	-- 音乐开关
-	
+
 	local musicClosedBtn = cc.uiloader:seekNodeByName(self, "Panel_MusicClosed")
 	local musicplay = cc.uiloader:seekNodeByName(musicClosedBtn, "musicplay")
 	local musicclose = cc.uiloader:seekNodeByName(musicClosedBtn, "musicclose")
@@ -72,13 +72,13 @@ function FightPausePopup:initButtons()
 		musicplay:setVisible(true)
 		musicclose:setVisible(false)
 	end
-	
+
 	musicClosedBtn:setTouchEnabled(true)
 	addBtnEventListener(musicClosedBtn, function( event )
 		if event.name == 'began' then
 			self:btnColor(musicClosedBtn, true)
 			return true
-		elseif event.name == 'ended' then 
+		elseif event.name == 'ended' then
 
 		self:btnColor(musicClosedBtn, false)
 			local userData = getUserData()
@@ -120,9 +120,9 @@ function FightPausePopup:onEnter()
 end
 
 function FightPausePopup:btnColor(btn,isPress)
-	if isPress then 
+	if isPress then
 		btn:setColor(cc.c3b(150, 150, 150))
-	else 
+	else
 		btn:setColor(cc.c3b(0, 0, 0))
 	end
 end

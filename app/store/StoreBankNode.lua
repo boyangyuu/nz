@@ -20,7 +20,7 @@ function StoreBankNode:loadCCS()
     local isAlValid = JavaUtils.getIsIapSDKValid("al") and not JavaUtils.getIsShenhe()
     local ccsName = isAlValid and "bank_zhifubao" or "bank"
     if device.platform == "ios" then
-        ccsName = "bank_ios"
+        ccsName = "bank_ios_ad"
     end
     self.ui = cc.uiloader:load(ccsName .. ".ExportJson")
     self:addChild(self.ui)
@@ -42,7 +42,7 @@ function StoreBankNode:refreshUI()
         local btn  = cc.uiloader:seekNodeByName(item, "btnBuy")
         local index = itemIndex
         btn:onButtonClicked(function()
-            if device.platform == "ios" then
+            if device.platform == "ios" and index ~= 7 then
                 ui:showPopup("StoreLoadLayer",{},{animName = "normal",opacity = 0})
             end
             function delayBuy()
@@ -55,6 +55,11 @@ function StoreBankNode:refreshUI()
 end
 
 function StoreBankNode:onClickBtnBuy(configIndex)
+    if device.platform == "ios" and configIndex == 7 then
+        local adModel = md:getInstance("ADModel")
+        adModel:watchAD()
+        return
+    end
 
     local configs = StoreConfigs.getConfig("bank")
     local config  = configs[configIndex]

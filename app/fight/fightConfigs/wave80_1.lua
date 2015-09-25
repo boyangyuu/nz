@@ -3,15 +3,15 @@ local waveClass = class("waveClass", BaseWave)
 
 local waves = {
 
-	{	
-		enemys = {                                                               
+	{
+		enemys = {
 			{
-				descId = "dzboss", --简介
-				time = 4,	
+				descId = "dzboss_2", --简介
+				time = 4,
 				num = 1,
 				pos = {500},
 				delay = {6},
-				property = { 
+				property = {
 					type = "duozuBoss",                                              -- 多足boss巨炮泰坦
 					placeName = "place1",
 					--wangId    = 27,    --网ID
@@ -29,7 +29,7 @@ local waves = {
 				num = 1,
 				pos = {450},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -45,7 +45,7 @@ local waves = {
 				num = 1,
 				pos = {1050},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -61,7 +61,7 @@ local waves = {
 				num = 1,
 				pos = {800},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -77,7 +77,7 @@ local waves = {
 				num = 1,
 				pos = {300},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -93,7 +93,7 @@ local waves = {
 				num = 1,
 				pos = {550},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -109,7 +109,7 @@ local waves = {
 				num = 1,
 				pos = {680},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -125,7 +125,7 @@ local waves = {
 				num = 1,
 				pos = {1060},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -141,7 +141,7 @@ local waves = {
 				num = 1,
 				pos = {750},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -157,7 +157,7 @@ local waves = {
 				num = 1,
 				pos = {400},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -173,7 +173,7 @@ local waves = {
 				num = 1,
 				pos = {950},
 				delay = {0},
-				property = { 
+				property = {
 					type = "awardSan",
 					id = 21,
 					--award = "goldWeapon",     --黄金武器
@@ -209,7 +209,7 @@ local enemys = {
 	weak1=2},
 
 
-	
+
 
 }
 
@@ -217,57 +217,57 @@ local enemys = {
 local bosses = {
 
 	{
-		image = "dzboss", --图片名字                                                             多足boss巨炮泰坦
-		award = 200,                   --boss产出金币数量
-		hp = 100000,
-		fireRate = 180,                  --普攻频率
-		fireCd = 4,                     --普攻cd
+		image = "dzboss_2", --图片名字                                                             多足boss巨炮泰坦
+		award = 100,                   --boss产出金币数量
+		hp = 50000,
+		fireRate = 240,                  --普攻频率
+		fireCd = 15,                     --普攻cd
 		demage = 0,  				    --
 		walkRate = 60,                    --移动频率
-		walkCd = 2,                         --移动cd				
-		weak1 = 1.1,						--头 弱点伤害倍数
-		weak2 = 1.1,					--左腿 弱点伤害倍数
-		weak3 = 1.1,					--右腿 弱点伤害倍数	
+		walkCd = 2,                         --移动cd
+		weak1 = 5,						--头 弱点伤害倍数
+		weak2 = 5,					--左腿 弱点伤害倍数
+		weak3 = 5,					--右腿 弱点伤害倍数
 		wudiTime = 5.0,					--无敌时间
 		skilltrigger = {   			          --技能触发(可以同时)
 
 			-- wang = { 0.95,0.85,0.75,0.65,0.55,0.45,0.35,0.25,0.15        --网
 			-- },
 			wudi = { 0.90, 0.70, 0.30,
-			}, 
+			},
 
 			zhaohuan = { 0.91, 0.71, 0.31,                  --召唤小兵
-			},   
+			},
 
 			daoDan1 = {                                                   --烟雾导弹
 				0.99, 0.80, 0.60, 0.40,
 			},
 
 
-			weak3 = { 0.70,0.40,0.10,                              --右腿 技能触发(可以同时)          
-			},	
-			weak2 = { 0.80,0.60,0.20,                                --左腿 技能触发(可以同时)	                      
+			weak3 = { 0.70,0.40,0.10,                              --右腿 技能触发(可以同时)
 			},
-			weak1 = { 0.90,0.50,0.30,                             --头 技能触发(可以同时)	                        
+			weak2 = { 0.80,0.60,0.20,                                --左腿 技能触发(可以同时)
 			},
-			demage130 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
+			weak1 = { 0.90,0.50,0.30,                             --头 技能触发(可以同时)
+			},
+			demage110 = {  --伤害乘以2.0  备注不要超过三位数 比如demage1200是不行的
 				0.90,
 			},
-			demage160 = {
+			demage130 = {
 				0.70,
 			},
-			demage200 = {
+			demage150 = {
 				0.30,
-			},			
+			},
 		},
 
 
 		daoDan1 = {
 		    id = 22,                                  --烟雾导弹
-			type = "dao_wu",  
-			timeOffset = 3.0,                        --导弹间隔时间                 
+			type = "dao_wu",
+			timeOffset = 3.0,                        --导弹间隔时间
 			offsetPoses = {                           --目标偏移点
-            	cc.p( -250, -200),cc.p( 200, -250), cc.p( 200, 200),
+            	cc.p( -250, -200),cc.p( 200, -250),
         	},
         },
 
@@ -278,7 +278,7 @@ local bosses = {
 				num = 1,
 				delay = {0,},
 				pos = {400,},
-				property = { 
+				property = {
 					placeName = "place5" ,
 					type = "yiliao",                                              --医疗兵
 					startState = "enterleft",       --从左面跑出来
@@ -295,7 +295,7 @@ local bosses = {
 				num = 1,
 				delay = {0,},
 				pos = {800,},
-				property = { 
+				property = {
 					placeName = "place6" ,
 					type = "yiliao",                                              --医疗兵
 					startState = "enterright",       --从左面跑出来
@@ -312,7 +312,7 @@ local bosses = {
 				num = 1,
 				delay = {0,},
 				pos = {300,},
-				property = { 
+				property = {
 					placeName = "place4" ,
 					type = "yiliao",                                              --医疗兵
 					startState = "enterleft",       --从左面跑出来
@@ -322,7 +322,7 @@ local bosses = {
 				},
 			},
 		},
-												
+
 	},
 
 }
@@ -347,6 +347,5 @@ function waveClass:ctor()
 		-- type 	  = "taoFan"
 		-- limitNums = 5,                      --逃跑逃犯数量
 	}
-	self.reliveCosts = {20,}
 end
 return waveClass

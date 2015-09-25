@@ -52,7 +52,7 @@ configs["boss01_1"] = {                            --红色机甲开枪为主
 	playanim = "stand",
 }
 
-configs["boss01_2"] = {                            --银灰冷色终结者            
+configs["boss01_2"] = {                            --银灰冷色终结者
 	title = "BOSS信息！",
 	name = "地狱终结者",
 	spc = "技能：",
@@ -175,6 +175,15 @@ configs["dzboss_1"] = {
 	skill = {"烟雾弹","召唤蛛海","恐怖蛛网"},
 	weakness = "头部、手部、腹部",
 	describe = "蜘蛛的毒液是致命的。",
+	playanim = "stand",
+}
+configs["dzboss_2"] = {
+	title = "BOSS信息！",
+	name = "机械兔",
+	spc = "技能：",
+	skill = {"烟雾弹","召唤医疗","无敌"},
+	weakness = "头部、手部、腹部",
+	describe = "中秋佳节送月饼。",
 	playanim = "stand",
 }
 configs["renzb"] = {
