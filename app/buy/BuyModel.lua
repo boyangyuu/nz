@@ -64,11 +64,7 @@ function BuyModel:showBuy(configId, buyData, strPos)
 			-- buyData
 	        ui:showPopup("GiftBagPopup",
 	        	{popupName = configId,
-<<<<<<< HEAD
-	        	buyDataParm = {curId = self.curId,payType = self.payType}},},
-=======
 	        	buyDataParm = {curId = self.curId,payType = self.payType}},
->>>>>>> nz_ad
 	        	{animName = "shake"})
 	    else
 			self:gameResume()
