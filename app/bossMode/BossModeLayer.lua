@@ -151,7 +151,7 @@ function BossModeLayer:refreshContent()
 	--
 	self.panelChapter:removeAllChildren()
     local bossBtnNode = cc.uiloader:load("res/BossMode/wuxianboss/chapter"..self.choseChapter..".json")
-    
+
     local btnChapter = {}
     for i=1,5 do
 		btnChapter[i] = cc.uiloader:seekNodeByName(bossBtnNode, "part"..i)
@@ -205,7 +205,7 @@ function BossModeLayer:onClickBtnAward(i)
 	.. "x1，手雷x"..(reward["lei"] or 0)
 	.."，药包x"..(reward["healthBag"] or 0)
 	.."，金币x"..(reward["money"] or 0)
-	
+
 	ui:showPopup("commonPopup",
 	 {type = "style1",content = msg},
 	 {opacity = 0})
@@ -246,9 +246,9 @@ function BossModeLayer:onClickBtnStart()
 	local isM134Satisfied = isM134Exist and isM134LevelFull
 	local data = {type = "m134"}
 	if not(isRpgSatisfied or isM134Satisfied or isHQLExist or isBJExist) then
-		ui:showPopup("BossAdvisePopup", 
-	        data, 
-	        {animName = "scale"}) 
+		ui:showPopup("BossAdvisePopup",
+	        data,
+	        {animName = "scale"})
 		return
 	else
 		local data = getUserData()
@@ -275,7 +275,7 @@ function BossModeLayer:onClickGoldWeapon()
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
-        self:startGame()	
+        self:startGame()
 	else
 		if device.platform == "ios" then
 			ui:showPopup("commonPopup",
@@ -283,8 +283,11 @@ function BossModeLayer:onClickGoldWeapon()
     				 {opacity = 155})
 			return
 		end
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	    	deneyBuyFunc = handler(self, self.startGame)}, "BOSS模式_提示未镶嵌点击单个黄武")
+		ui:showPopup("StoneBuyPopup",
+	         {name = "黄金武器x2",
+	         price = 40,
+	         onClickConfirm = confirmPopGoldGift},
+	         {animName = "moveDown", opacity = 150})
     end
 end
 
@@ -298,7 +301,7 @@ function BossModeLayer:onClickCloseInlayNoti()
 end
 
 function BossModeLayer:startGame()
-	local fightData = {groupId = 50, levelId = 1, 
+	local fightData = {groupId = 50, levelId = 1,
 		fightType = "bossFight", chapterIndex = self.choseChapter}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
 end

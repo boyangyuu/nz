@@ -42,15 +42,15 @@ function StorePropNode:initUI(event)
     --item lei
     local item = cc.uiloader:seekNodeByName(self.ui, "item1")
 
-    local btnBuy  = cc.uiloader:seekNodeByName(item, "btnBuy")  
+    local btnBuy  = cc.uiloader:seekNodeByName(item, "btnBuy")
     btnBuy:onButtonClicked(function()
          self:onClickBtn_lei()
-    end)       
+    end)
 
     local btnarmature = ccs.Armature:create("bt_yjzb")
     btnBuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
-    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")
     local iconArmature = ccs.Armature:create("shangchengz_tb")
     addChildCenter(iconArmature, panelimg, -1)
     iconArmature:getAnimation():play("die" , -1, 1)
@@ -65,12 +65,12 @@ function StorePropNode:initUI(event)
     local btnBuy  = cc.uiloader:seekNodeByName(item, "btnBuy")
     btnBuy:onButtonClicked(function()
          self:onClickBtn_jijia()
-    end)  
+    end)
 
     local btnarmature = ccs.Armature:create("bt_yjzb")
     btnBuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
-    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")
     local iconArmature = ccs.Armature:create("shangchengz_tb")
     addChildCenter(iconArmature, panelimg, -1)
     iconArmature:getAnimation():play("die" , -1, 1)
@@ -84,19 +84,19 @@ function StorePropNode:initUI(event)
     local btnBuy  = cc.uiloader:seekNodeByName(item, "btnBuy")
     btnBuy:onButtonClicked(function()
          self:onClickBtn_goldWeapon()
-    end)    
+    end)
 
     local btnarmature = ccs.Armature:create("bt_yjzb")
     btnBuy:addChild(btnarmature)
     btnarmature:getAnimation():play("yjzb" , -1, 1)
-    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")  
+    local panelimg = cc.uiloader:seekNodeByName(item, "panelimg")
     local iconArmature = ccs.Armature:create("shangchengz_tb")
     addChildCenter(iconArmature, panelimg, -1)
     iconArmature:getAnimation():play("die" , -1, 1)
-    
+
     local ownnumber = cc.uiloader:seekNodeByName(item, "ownnumber")
     local num = self.inlayModel:getGoldWeaponNum()
-    ownnumber:setString(num)    
+    ownnumber:setString(num)
 end
 
 function StorePropNode:refreshUI(event)
@@ -116,52 +116,48 @@ function StorePropNode:refreshUI(event)
     local item = cc.uiloader:seekNodeByName(self.ui, "item3")
     local ownnumber = cc.uiloader:seekNodeByName(item, "ownnumber")
     local num = self.inlayModel:getGoldWeaponNum()
-    ownnumber:setString(num)     
+    ownnumber:setString(num)
 end
 
 function StorePropNode:onClickBtn_lei()
     print("function StorePropNode:onClickBtn_lei()")
     local configs = StoreConfigs.getConfig("prop")
     local config  = configs[1]
-    dump(config, "config")    
-    local isBuyed = self.userModel:costDiamond(config["costDiamond"], 
-        true, "商城界面_钻石不足买手雷") 
+    dump(config, "config")
+    local isBuyed = self.userModel:costDiamond(config["costDiamond"],
+        true, "商城界面_钻石不足买手雷")
     if isBuyed then
         self.propModel:addProp("lei",config["num"])
     else
         -- self.buyModel:showBuy("handGrenade",
-        --     {payDoneFunc = handler(self,self.onBuySuccessed)}, 
-        --     "商城界面_钻石不足买手雷")        
+        --     {payDoneFunc = handler(self,self.onBuySuccessed)},
+        --     "商城界面_钻石不足买手雷")
     end
 end
 
 function StorePropNode:onClickBtn_goldWeapon()
-    print("function StorePropNode:onClickBtn_goldWeapon()")    
+    print("function StorePropNode:onClickBtn_goldWeapon()")
     local configs = StoreConfigs.getConfig("prop")
-    local config  = configs[2]    
+    local config  = configs[2]
     local isBuyed = self.userModel:costDiamond(config["costDiamond"],
-        true, "商城界面_钻石不足买黄武") 
-    if isBuyed then 
-        self.inlayModel:buyGoldsInlay(config["num"]) 
-    end    
-
-    -- self.buyModel:showBuy("goldWeapon",
-    --     {payDoneFunc = handler(self,self.onBuySuccessed)}, 
-    --     "商城界面_钻石不足买黄武")
+        true, "商城界面_钻石不足买黄武")
+    if isBuyed then
+        self.inlayModel:buyGoldsInlay(config["num"])
+    end
 end
 
 function StorePropNode:onClickBtn_jijia()
     print("function StorePropNode:onClickBtn_jijia()")
     local configs = StoreConfigs.getConfig("prop")
-    local config  = configs[3]    
+    local config  = configs[3]
     local isBuyed = self.userModel:costDiamond(config["costDiamond"],
-        true, "商城界面_钻石不足买机甲") 
+        true, "商城界面_钻石不足买机甲")
     if isBuyed then
         self.propModel:addProp("jijia",
             config["num"])
-    else     
+    else
         -- self.buyModel:showBuy("armedMecha",
-        --     {payDoneFunc = handler(self,self.onBuySuccessed)}, 
+        --     {payDoneFunc = handler(self,self.onBuySuccessed)},
         --     "商城界面_钻石不足买机甲")
     end
 end

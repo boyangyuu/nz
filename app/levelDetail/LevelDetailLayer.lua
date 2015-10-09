@@ -23,7 +23,7 @@ function LevelDetailLayer:ctor(properties)
     cc.EventProxy.new(self.inlayModel, self)
         :addEventListener(self.inlayModel.REFRESH_INLAY_EVENT      , handler(self, self.refreshUI))
 	self:initData()
-	
+
 	--ui
 	self:loadCCS()
 	self:initUI()
@@ -42,10 +42,10 @@ function LevelDetailLayer:loadCCS()
     --armature
 	local manager = ccs.ArmatureDataManager:getInstance()
     local src = "res/LevelDetail/bt_kaishi/bt_kaishi.ExportJson"
-    manager:addArmatureFileInfo(src) 
+    manager:addArmatureFileInfo(src)
     local plist = "res/LevelDetail/bt_kaishi/bt_kaishi0.plist"
     local png   = "res/LevelDetail/bt_kaishi/bt_kaishi0.png"
-    display.addSpriteFrames(plist, png)          
+    display.addSpriteFrames(plist, png)
 
     --seek panels
 	self.panelDetail  = cc.uiloader:seekNodeByName(self, "paneldetail")
@@ -80,11 +80,11 @@ function LevelDetailLayer:loadCCS()
 	self.labelTitle:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.labelId:enableOutline(cc.c4b(0, 0, 0,255), 2)
 	self.target:enableOutline(cc.c4b(0, 0, 0,255), 2)
-	
+
 	-- seek layer for image
 	self.layerMap   = cc.uiloader:seekNodeByName(self.panelmap, "mapimage")
-	self.layerBibei = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")    
-	self.layerEnemy = cc.uiloader:seekNodeByName(self.panelmap, "panlenemy")   
+	self.layerBibei = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")
+	self.layerEnemy = cc.uiloader:seekNodeByName(self.panelmap, "panlenemy")
 
 	-- seek already image
 	self.alreadyBibei   = cc.uiloader:seekNodeByName(self.panelRecommend, "alreadybibei")
@@ -120,10 +120,10 @@ function LevelDetailLayer:initUI()
 		local enemyPlay = self.config["enemyPlay"]
 		local manager = ccs.ArmatureDataManager:getInstance()
         local src = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay..".ExportJson"
-        manager:addArmatureFileInfo(src) 
+        manager:addArmatureFileInfo(src)
         local plist = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.plist"
         local png   = "res/Fight/enemys/"..enemyPlay.."/"..enemyPlay.."0.png"
-        display.addSpriteFrames(plist, png)          
+        display.addSpriteFrames(plist, png)
 
 		local armature = ccs.Armature:create(enemyPlay)
 		armature:setScale(self.config["scale"])
@@ -137,7 +137,7 @@ function LevelDetailLayer:initUI()
 	local weaponimg = display.newSprite("#icon_"..recomWeapon["imgName"]..".png")
 	weaponimg:setScale(0.57)
 	local bibeiimg = cc.uiloader:seekNodeByName(self.panelRecommend, "bibeiimg")
-	addChildCenter(weaponimg, bibeiimg) 
+	addChildCenter(weaponimg, bibeiimg)
 
 	self:initBtns()
 end
@@ -220,7 +220,7 @@ end
 function LevelDetailLayer:startGame()
 	-- luaoc.callStaticMethod("AdsmogoControl", "loadInterstitial")
 	local fightData = {
-		groupId = self.groupId, 
+		groupId = self.groupId,
 		levelId = self.levelId,
 	}
 	ui:changeLayer("FightPlayer", {fightData = fightData})
@@ -252,17 +252,17 @@ function LevelDetailLayer:onClickCloseInlayNoti()
 	self:startGame()
 	local umData = {}
 	umData[self.levelInfo] = "关闭镶嵌提示进战斗"
-	um:event("关卡提示未镶嵌", umData)   
+	um:event("关卡提示未镶嵌", umData)
 end
 
 function LevelDetailLayer:onClickQuickInlay()
 	local limit = self.config["type"] == "boss" and 4 or 3
 	self.inlayModel:equipAllInlays(limit)
-	self:startGame() 
+	self:startGame()
 
 	local umData = {}
 	umData[self.levelInfo] = "点击快速镶嵌"
-	um:event("关卡提示未镶嵌", umData)   
+	um:event("关卡提示未镶嵌", umData)
 end
 
 function LevelDetailLayer:onClickGoldWeapon()
@@ -274,11 +274,11 @@ function LevelDetailLayer:onClickGoldWeapon()
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
-        self:startGame()	
+        self:startGame()
 	else
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "黄金武器x2", 
+	         {name = "黄金武器x2",
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyGoldByStone)},
 	         {animName = "moveDown", opacity = 150})
@@ -299,7 +299,7 @@ function LevelDetailLayer:onClickBtnBibei()
 	else
 		-- 保留，暂时不用
         -- self.buyModel:showBuy("weaponGiftBag",{ payDoneFunc = handler(self, self.onBuyWeaponGiftSucc),
-        -- deneyBuyFunc = handler(self,self.onCancelWeaponGift),isNotPopKefu = true}, 
+        -- deneyBuyFunc = handler(self,self.onCancelWeaponGift),isNotPopKefu = true},
         -- 	"关卡详情_点击必备按钮")
 		self:onCancelWeaponGift()
 	end
@@ -308,7 +308,7 @@ end
 function LevelDetailLayer:onClickBtnJijia()
 	-- 保留，暂时不用
 	-- function deneyGoldGiftJijia()
-	    -- self.buyModel:showBuy("armedMecha",{}, 
+	    -- self.buyModel:showBuy("armedMecha",{},
 	    -- 	"关卡详情_点击机甲按钮")
 	-- end
  --    self.buyModel:showBuy("goldGiftBag",{deneyBuyFunc = deneyGoldGiftJijia},
@@ -316,7 +316,7 @@ function LevelDetailLayer:onClickBtnJijia()
 
     --buy
     ui:showPopup("StoneBuyPopup",
-         {name = "无敌机甲x2", 
+         {name = "无敌机甲x2",
          price = 40,
          onClickConfirm = handler(self, self.buyRobotByStone)},
          {animName = "moveDown", opacity = 150})
@@ -324,15 +324,15 @@ function LevelDetailLayer:onClickBtnJijia()
 end
 
 function LevelDetailLayer:buyRobotByStone()
-	print("function FightProp:buyRobotByStone()")	
+	print("function FightProp:buyRobotByStone()")
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue, true, "关卡详情界面_无敌机甲x2") 
+    local isAfforded = user:costDiamond(kValue, true, "关卡详情界面_无敌机甲x2")
     if isAfforded then
     	local propModel = md:getInstance("PropModel")
     	propModel:addProp("jijia", 2)
         ui:closePopup("StoneBuyPopup")
-    end		
+    end
 end
 
 function LevelDetailLayer:equipGold()
@@ -341,18 +341,22 @@ end
 
 function LevelDetailLayer:onClickBtnGold()
 	function deneyGoldGift()
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = handler(self, self.equipGold)}, "关卡详情_黄武按钮取消土豪礼包")
+        ui:showPopup("StoneBuyPopup",
+             {name = "黄金武器x2",
+             price = 40,
+             onClickConfirm = handler(self, self.equipGold)},
+             {animName = "moveDown", opacity = 150})
 	end
 
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	if goldweaponNum > 0 then
-        self.inlayModel:equipAllInlays()	
-        return 
+        self.inlayModel:equipAllInlays()
+        return
     end
 
     --buy
     ui:showPopup("StoneBuyPopup",
-         {name = "黄金武器x2", 
+         {name = "黄金武器x2",
          price = 40,
          onClickConfirm = handler(self, self.buyGoldByStone)},
          {animName = "moveDown", opacity = 150})
@@ -360,15 +364,15 @@ function LevelDetailLayer:onClickBtnGold()
 end
 
 function LevelDetailLayer:buyGoldByStone()
-	print("function LevelDetailLayer:buyGoldByStone()")	
+	print("function LevelDetailLayer:buyGoldByStone()")
 	local kValue = 40
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(kValue, true, "关卡详情界面_黄金武器x2") 
+    local isAfforded = user:costDiamond(kValue, true, "关卡详情界面_黄金武器x2")
     if isAfforded then
     	local inlayModel = md:getInstance("InlayModel")
     	inlayModel:buyGoldsInlay(2)
         ui:closePopup("StoneBuyPopup")
-    end		
+    end
 end
 
 function LevelDetailLayer:onCancelWeaponGift()
@@ -378,24 +382,24 @@ end
 function LevelDetailLayer:buyWeaponByStone()
 	local weaponRecord = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
 	local cost = weaponRecord["cost"]
-	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)	
+	local weaponName = self.weaponListModel:getWeaponNameByID(self.recomWeaponId)
 	local strPos  =  "关卡详情_点击解锁武器" .. weaponName
-	
+
 	--costDiamond
 	local user = md:getInstance("UserModel")
-    local isAfforded = user:costDiamond(cost, true, strPos) 
+    local isAfforded = user:costDiamond(cost, true, strPos)
     if isAfforded then
         self.weaponListModel:buyWeapon(self.recomWeaponId)
         ui:showPopup("WeaponNotifyLayer",
          {type = "gun",weaponId = self.recomWeaponId},{opacity = 255})
-        
+
 
         --equip
-		local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)        
+		local recomWeapon = self.weaponListModel:getWeaponRecord(self.recomWeaponId)
         if recomWeapon["type"] == "ju"  then
             self.weaponListModel:equipBag(self.recomWeaponId, 3)
         else
-            self.weaponListModel:equipBag(self.recomWeaponId, 1) 
+            self.weaponListModel:equipBag(self.recomWeaponId, 1)
         end
 
         self:sendGunAward()
@@ -407,8 +411,8 @@ end
 
 function LevelDetailLayer:sendGunAward()
     --黄武*3
-    local inlayModel = md:getInstance("InlayModel")    
-    inlayModel:buyGoldsInlay(11)    
+    local inlayModel = md:getInstance("InlayModel")
+    inlayModel:buyGoldsInlay(11)
     inlayModel:equipAllInlays()
 
     --award
@@ -428,7 +432,7 @@ function LevelDetailLayer:initGuide()
 	local guide = md:getInstance("Guide")
     local isDone = guide:isDone("weapon")
     if isDone then return end
-    
+
     --点击进入战斗
     guide:addClickListener({
         id = "weapon_enter",
@@ -437,7 +441,7 @@ function LevelDetailLayer:initGuide()
         endfunc = function (touchEvent)
             self:onClickBtnStart()
         end
-     })     
+     })
 end
 
 function LevelDetailLayer:refreshUI(event)

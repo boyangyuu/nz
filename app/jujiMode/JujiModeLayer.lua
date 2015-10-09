@@ -10,7 +10,7 @@ function JujiModeLayer:ctor()
 	self.userModel = md:getInstance("UserModel")
 	self.inlayModel = md:getInstance("InlayModel")
 	self.buyModel = md:getInstance("BuyModel")
-	self.rankTable = self.jujiModel:getRankData() 
+	self.rankTable = self.jujiModel:getRankData()
 
 	self:loadCCS()
 	self:initUI()
@@ -29,9 +29,9 @@ end
 
 function JujiModeLayer:checkUserName()
 	if  self.userModel:getUserName() == "玩家自己" then
-		ui:showPopup("InputBoxPopup", 
+		ui:showPopup("InputBoxPopup",
 			{content = "请输入游戏姓名",
-			 onClickConfirm = handler(self, self.onClickConfirm_InputName)}, 
+			 onClickConfirm = handler(self, self.onClickConfirm_InputName)},
 			 {opacity = 0})
 	end
 end
@@ -122,7 +122,7 @@ function JujiModeLayer:onClickGoldWeapon()
 	local goldweaponNum = self.inlayModel:getGoldWeaponNum()
 	if goldweaponNum > 0 then
         self.inlayModel:equipAllInlays()
-        self:startGame()	
+        self:startGame()
 	else
 		if device.platform == "ios" then
 			ui:showPopup("commonPopup",
@@ -130,8 +130,11 @@ function JujiModeLayer:onClickGoldWeapon()
     				 {opacity = 155})
 			return
 		end
-	    self.buyModel:showBuy("goldWeapon",{payDoneFunc = confirmPopGoldGift,
-	    	deneyBuyFunc = handler(self, self.startGame)}, "Juji模式_提示未镶嵌点击单个黄武")
+        ui:showPopup("StoneBuyPopup",
+             {name = "黄金武器x2",
+             price = 40,
+             onClickConfirm = confirmPopGoldGift},
+             {animName = "moveDown", opacity = 150})
     end
 end
 
@@ -145,7 +148,7 @@ function JujiModeLayer:onClickCloseInlayNoti()
 end
 function JujiModeLayer:startGame()
 	local fightData = { groupId = 60,levelId = 1, fightType = "jujiFight"}  --无限狙击
-	ui:changeLayer("FightPlayer", {fightData = fightData})	
+	ui:changeLayer("FightPlayer", {fightData = fightData})
 end
 
 function JujiModeLayer:checkNetWork()
@@ -156,7 +159,7 @@ function JujiModeLayer:checkNetWork()
 		ui:showPopup("commonPopup",
 			 {type = "style1",content = "当前网络连接失败，连接网络后排名数据将会统计"},
 			 {opacity = 0})
-	end	
+	end
 end
 
 function JujiModeLayer:onClickBtnReward()
