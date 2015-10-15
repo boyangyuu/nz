@@ -57,8 +57,6 @@ function InlayLayer:initUI()
     self.rootListView = cc.uiloader:seekNodeByName(self.panelListView, "listview")
     self.oneForAllBtn = cc.uiloader:seekNodeByName(self.panelInlay, "btnforall")
     self.goldWeaponBtn = cc.uiloader:seekNodeByName(self.panelInlay, "btngoldweapon")
-    cc.uiloader:seekNodeByName(self.oneForAllBtn, "yijianxiangqian")
-            :enableOutline(cc.c4b(140, 49, 2,255), 2)
 
     local manager = ccs.ArmatureDataManager:getInstance()
     local inlaybtnsrc = "res/InlayShop/xqan_hjwq/xqan_hjwq.ExportJson"

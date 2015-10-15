@@ -105,35 +105,6 @@ function StartLayer:initUI()
                     opacity = 0})
         end
     end)
-
-    local btnTousu = cc.uiloader:seekNodeByName(self, "btnTousu")
-
-    local manager = ccs.ArmatureDataManager:getInstance()
-    local toususrc = "res/LevelMap/tousu_tx/tousu_tx.ExportJson"
-    manager:addArmatureFileInfo(toususrc)
-    local plist = "res/LevelMap/tousu_tx/tousu_tx0.plist"
-    local png   = "res/LevelMap/tousu_tx/tousu_tx0.png"
-    display.addSpriteFrames(plist, png)
-
-    local tousuArm = ccs.Armature:create("tousu_tx")
-    addChildCenter(tousuArm, btnTousu)
-    tousuArm:getAnimation():play("Animation1" , -1, 1)
-
-    if device.platform == "ios" then
-        btnTousu:setVisible(false)
-    end
-
-    -- 添加客服按钮点击事件
-    btnTousu:onButtonPressed(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.05, 1.1))
-        end)
-        :onButtonRelease(function( event )
-            event.target:runAction(cc.ScaleTo:create(0.1, 1))
-        end)
-        :onButtonClicked(function( event )
-            ui:showPopup("KefuPopup",{
-                    opacity = 0})
-        end)
 end
 
 function StartLayer:onClickBtnGongGao()

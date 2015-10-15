@@ -19,6 +19,9 @@ function StoreBankNode:loadCCS()
     cc.FileUtils:getInstance():addSearchPath("res/Store")
     local isAlValid = JavaUtils.getIsIapSDKValid("al") and not JavaUtils.getIsShenhe()
     local ccsName = isAlValid and "bank_zhifubao" or "bank"
+    if device.platform == "windows" or device.platform == "mac" then
+        ccsName = "bank_ios_ad"
+    end
     if device.platform == "ios" then
         ccsName = "bank_ios_ad"
     end
