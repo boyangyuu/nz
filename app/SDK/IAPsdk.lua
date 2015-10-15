@@ -31,19 +31,19 @@ function IAPsdk:getPayConfig(iapName)
 		config["stone450"]         = "30000899255206"		--堆成山的宝石
 
 	elseif iapName == 'jd' then --基地
-		config["yijiaoBag"]        = "014"		--1角礼包
-		config["novicesBag"]       = "001"		--新手礼包
-		config["weaponGiftBag"]    = "007"		--武器到礼包
-		config["goldGiftBag"]      = "008"		--土豪金礼包
+		config["yijiaoBag"]        = "001"		--1角礼包
+		-- config["novicesBag"]       = "001"		--新手礼包
+		config["weaponGiftBag"]    = "006"		--武器到礼包
+		config["goldGiftBag"]      = "007"		--土豪金礼包
 
-		--单件
-		config["goldWeapon"]       = "002"		--黄武
-		config["handGrenade"]      = "003"		--手雷
-		config["armedMecha"]       = "009"		--机甲1
-		config["onceFull"]         = "010"		--一键满级1
-		config["stone120"]         = "004"		--一麻袋宝石
-		config["stone260"]         = "005"		--一箱子宝石
-		config["stone450"]         = "006"		--堆成山的宝石
+		-- --单件
+		-- config["goldWeapon"]       = "002"		--黄武
+		-- config["handGrenade"]      = "003"		--手雷
+		-- config["armedMecha"]       = "009"		--机甲1
+		config["onceFull"]         = "002"		--一键满级1
+		config["stone120"]         = "003"		--一麻袋宝石
+		config["stone260"]         = "004"		--一箱子宝石
+		config["stone450"]         = "005"		--堆成山的宝石
 
 	elseif iapName == "lt" then --联通
 		--礼包
