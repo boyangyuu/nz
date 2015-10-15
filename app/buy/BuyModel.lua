@@ -100,14 +100,14 @@ function BuyModel:iapPay(buyDataParm)
 	local iapType = JavaUtils.getIapType()
 	if iapType == "noIap" then
 		ui:showPopup("KefuPopup",{
-		content = "游戏计费暂停了，感谢您的支持！",
+		content = LanguageManager.getStringForKey("string_hint38"),
         opacity = 0})
 		return
 	end
 
 	if self:isBoughtUpLimited() then
 		ui:showPopup("KefuPopup",{
-		content = "当日付费已达上限，感谢您的支持！",
+		content = LanguageManager.getStringForKey("string_hint39"),
         opacity = 0})
 		return
 	end
@@ -212,7 +212,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	inlayModel:buyGoldsInlay(10)
 	if buydata.isNotPopFiveWeapon == true then
 		ui:showPopup("commonPopup",
-		 {type = "style1",content = "购买成功，请在武器库装备！"},
+		 {type = "style1",content = LanguageManager.getStringForKey("string_hint40")},
 		 {opacity = 0})
 		return
 	end
@@ -224,7 +224,7 @@ function BuyModel:buy_weaponGiftBag(buydata)
 	    local weaponId = weaponIds[weaponIndex]
 	    if weaponId == nil then
 			ui:showPopup("commonPopup",
-			 {type = "style1",content = "武器已购买，请在武器库装备！"},
+			 {type = "style1",content = LanguageManager.getStringForKey("string_hint41")},
 			 {opacity = 0})
 			if closeAllFunc then  closeAllFunc() end
 			return

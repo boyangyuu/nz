@@ -34,18 +34,18 @@ Hero.SKILL_GRENADE_START_EVENT    = "SKILL_GRENADE_START_EVENT"  --扔手雷开�
 
 --enemy
 Hero.ENEMY_ATTACK_MUTI_EVENT    = "ENEMY_ATTACK_MUTI_EVENT"   --群攻
-Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人      
+Hero.ENEMY_KILL_ENEMY_EVENT     = "ENEMY_KILL_ENEMY_EVENT"  --杀死敌人
 Hero.ENEMY_KILL_HEAD_EVENT      = "ENEMY_KILL_HEAD_EVENT"   --爆头
-Hero.ENEMY_KILL_BOSS_EVENT      = "ENEMY_KILL_BOSS_EVENT"   --杀死boss 
-Hero.ENEMY_KILL_CALL_EVENT       = "ENEMY_KILL_CALL_EVENT"   --杀死召唤 
+Hero.ENEMY_KILL_BOSS_EVENT      = "ENEMY_KILL_BOSS_EVENT"   --杀死boss
+Hero.ENEMY_KILL_CALL_EVENT       = "ENEMY_KILL_CALL_EVENT"   --杀死召唤
 
 Hero.ENEMY_ADD_EVENT            = "ENEMY_ADD_EVENT"
 Hero.ENEMY_WAVE_ADD_EVENT       = "ENEMY_WAVE_ADD_EVENT"
 Hero.ENEMY_ADD_MISSILE_EVENT    = "ENEMY_ADD_MISSILE_EVENT"
 
 --gun
-Hero.GUN_RELOAD_EVENT           = "GUN_RELOAD_EVENT" 
-Hero.GUN_BULLET_EVENT           = "GUN_BULLET_EVENT"             
+Hero.GUN_RELOAD_EVENT           = "GUN_RELOAD_EVENT"
+Hero.GUN_BULLET_EVENT           = "GUN_BULLET_EVENT"
 Hero.GUN_CHANGE_EVENT           = "GUN_CHANGE_EVENT"
 Hero.GUN_FIRE_EVENT             = "GUN_FIRE_EVENT"
 
@@ -57,7 +57,7 @@ Hero.HP_STATE_EVENT             = "HP_STATE_EVENT"
 function Hero:ctor(properties)
     --instance
     Hero.super.ctor(self, properties)
-    
+
     --init
     self.bags = {}
     self.isGun1 = false
@@ -72,7 +72,7 @@ end
 
 --枪械相关
 function Hero:initGuns()
-    self.bags["bag1"] = Gun.new({bagIndex = "bag1"}) 
+    self.bags["bag1"] = Gun.new({bagIndex = "bag1"})
     self.bags["bag2"] = Gun.new({bagIndex = "bag2"})
 
     --ju
@@ -80,23 +80,23 @@ function Hero:initGuns()
     local fightFactory = md:getInstance("FightFactory")
     local fight = fightFactory:getFight()
     local isJuLevel = fight:isJujiFight()
-    if isJuLevel then 
-        self.bags["bag1"] = Gun.new({bagIndex = "bag3"}) 
+    if isJuLevel then
+        self.bags["bag1"] = Gun.new({bagIndex = "bag3"})
         self.bags["bag2"] = Gun.new({bagIndex = "bag3"})
     end
     self.isGun1 = self:isPreferBag1()
     local bagIndex = self:getCurBagIndex()
-    self:setGun(bagIndex)     
+    self:setGun(bagIndex)
 end
 
 function Hero:getCurBagIndex()
     local bagIndex = nil
-    if self.isGun1 then 
+    if self.isGun1 then
         bagIndex = "bag1"
     else
         bagIndex = "bag2"
-    end   
-    return bagIndex   
+    end
+    return bagIndex
 end
 
 function Hero:getGun()
@@ -106,7 +106,7 @@ end
 function Hero:changeGun()
     self.isGun1 = not self.isGun1
     local bagIndex = nil
-    if self.isGun1 then 
+    if self.isGun1 then
         bagIndex = "bag1"
     else
         bagIndex = "bag2"
@@ -126,16 +126,16 @@ end
 
 function Hero:changeTempGun(configid)
     local bagIndex = self:getCurBagIndex()
-    
-    -- self.oriGun = clone(self.bags[bagIndex])  --旧枪  
-    self.bags[bagIndex] = Gun.new({bagIndex = bagIndex ,configId = configid}) 
+
+    -- self.oriGun = clone(self.bags[bagIndex])  --旧枪
+    self.bags[bagIndex] = Gun.new({bagIndex = bagIndex ,configId = configid})
 
     --refresh
     self:setGun(bagIndex)
     -- self:dispatchEvent({name = Hero.GUN_CHANGE_EVENT, bagIndex = bagIndex})
     self:refreshGun()
     local bulletNum = self.gun:getCurBulletNum()
-    self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})    
+    self:dispatchEvent({name = Hero.GUN_BULLET_EVENT, num = bulletNum})
 
     --hide change
 end
@@ -148,7 +148,7 @@ end
 function Hero:setPreferBagIndex(bagIndex)
     local isPreferBag1 =  bagIndex == "bag1"
     local data = getUserData()
-    data["fight"].isPreferBag1 =  isPreferBag1 
+    data["fight"].isPreferBag1 =  isPreferBag1
     setUserData(data)
 end
 
@@ -169,25 +169,25 @@ function Hero:getCooldown()
 end
 
 function Hero:killEnemyAward(enemyPos, award)
-    self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT, 
+    self:dispatchEvent({name = self.AWARD_GOLD_INCREASE_EVENT,
                         value = award})
-    self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT, 
+    self:dispatchEvent({name = Hero.ENEMY_KILL_ENEMY_EVENT,
         enemyPos = enemyPos, award = award})
 end
 
 function Hero:killEnemy()
     --check keep kill
     self.killCnt = self.killCnt + 1
-    self:checkKeepKill()    
+    self:checkKeepKill()
 end
 
 function Hero:checkKeepKill()
     self.killKeepCnt = self.killKeepCnt + 1
     if self.killKeepCnt >= define.kHeroKillKeepCnt then
-        self:dispatchEvent{name = Hero.EFFECT_KEEPKILL_EVENT, 
+        self:dispatchEvent{name = Hero.EFFECT_KEEPKILL_EVENT,
             count = self.killKeepCnt}
     end
-    if self.keepKillHandler then 
+    if self.keepKillHandler then
         scheduler.unscheduleGlobal(self.keepKillHandler)
         self.keepKillHandler = nil
     end
@@ -201,7 +201,7 @@ function Hero:checkKeepKill()
 end
 
 function Hero:restoreKeepKill()
-    if self.killKeepCnt > self.killKeepCntMax then 
+    if self.killKeepCnt > self.killKeepCntMax then
         self.killKeepCntMax = self.killKeepCnt
     end
     self.killKeepCnt = 0
@@ -222,7 +222,7 @@ function Hero:canFire()
 end
 
 function Hero:getIsReloading()
-    return self.isReloading 
+    return self.isReloading
 end
 
 function Hero:setIsReloading(isReloading)
@@ -231,7 +231,7 @@ end
 
 --镶嵌相关
 function Hero:getFightInlay()
-    local fightInlay = md:getInstance("FightInlay")    
+    local fightInlay = md:getInstance("FightInlay")
     return fightInlay
 end
 
@@ -241,9 +241,9 @@ function Hero:getDemage()
 
     local robot   = md:getInstance("Robot")
     if robot:getIsRoboting() then
-        return robot:getDemage()    
+        return robot:getDemage()
     end
-    
+
     --inlay
     local fightInlay = self:getFightInlay()
     local scale, isInlayed = fightInlay:getInlayedValue("bullet")
@@ -255,7 +255,7 @@ function Hero:getDemage()
 
     --crit
     local critNum = self.gun:getCritPercent() * 100
-    if critNum > math.random(0, 100) then 
+    if critNum > math.random(0, 100) then
         value = value * define.kHeroCritScale
     end
     return value
@@ -267,12 +267,12 @@ function Hero:doRelive()
 end
 
 function Hero:getMaxHp()
-    local kMaxHp = define.kHeroBaseHp 
+    local kMaxHp = define.kHeroBaseHp
     local baseMaxHp = Hero.super.getMaxHp(self)
     local valueMaxHp = 0.0
     local fightInlay = self:getFightInlay()
     local value, isInlayed = fightInlay:getInlayedValue("blood")
-    if isInlayed then 
+    if isInlayed then
         valueMaxHp = kMaxHp + kMaxHp * value
     else
         valueMaxHp = kMaxHp
@@ -282,7 +282,7 @@ end
 
 function Hero:costHpBag()
     self:increaseHp(define.kHeroHpBag)
-    self:dispatchEvent({name = Hero.SKILL_ADDHP_EVENT})    
+    self:dispatchEvent({name = Hero.SKILL_ADDHP_EVENT})
 end
 
 function Hero:decreaseHp(hp)
@@ -290,7 +290,7 @@ function Hero:decreaseHp(hp)
 
     local defence = md:getInstance("Defence")
     local robot   = md:getInstance("Robot")
-    if defence:getIsDefending() then 
+    if defence:getIsDefending() then
         defence:onHitted(hp)
     elseif robot:getIsRoboting() then
         robot:onHitted()
@@ -306,14 +306,14 @@ function Hero:onHpChange()
     local maxHp = self:getMaxHp()
     local hp    = self:getHp()
     local isLess = (hp / maxHp) < define.kHeroHpLess
-    if self.isLessHp ~= isLess then 
+    if self.isLessHp ~= isLess then
         self.isLessHp = isLess
-        self:dispatchEvent({name = Hero.HP_STATE_EVENT, 
+        self:dispatchEvent({name = Hero.HP_STATE_EVENT,
             isLessHp = self.isLessHp})
     end
 
-    -- if (hp / maxHp) < define.kTipsHpBag then 
-    --     self:dispatchEvent({name = Hero.TIPS_CLICK_EVENT, 
+    -- if (hp / maxHp) < define.kTipsHpBag then
+    --     self:dispatchEvent({name = Hero.TIPS_CLICK_EVENT,
     --         id = "hpBag"})
     -- end
 end
@@ -325,23 +325,23 @@ end
 function Hero:isHelpHp(demage)
     if self:isDead() then return false end
     local defence   = md:getInstance("Defence")
-    local isDefenceAble =  defence:getIsAble() and 
+    local isDefenceAble =  defence:getIsAble() and
                 not defence:getIsDefending()
     local maxhp = self:getMaxHp()
     local desthp = self:getHp() - demage
     local destPer = desthp / maxhp
-    local isLessHp =  destPer < define.kBuyFullHpTime  
+    local isLessHp =  destPer < define.kBuyFullHpTime
 
-    --致死 
-    if desthp <= 0 then return false end 
-    
-    return isDefenceAble and isLessHp 
+    --致死
+    if desthp <= 0 then return false end
+
+    return isDefenceAble and isLessHp
 end
 
 --如果有盾 则 return true
 function Hero:helpFullHp()
     --is helped
-    if self.isHelped then return end 
+    if self.isHelped then return end
     self.isHelped = true
 
     --pause
@@ -351,17 +351,17 @@ function Hero:helpFullHp()
 
     --pop
     ui:showPopup("commonPopup",
-        {type = "style3", content = "是否立即回复生命？",
+        {type = "style3", content = LanguageManager.getStringForKey("string_hint149"),
              callfuncCofirm =  handler(self, self.showTuhao),
              callfuncClose  =  handler(self, self.onDenyFullHp)},
-         { opacity = 0})      
+         { opacity = 0})
 end
 
 function Hero:showTuhao()
     local buyModel = md:getInstance("BuyModel")
     buyModel:showBuy("goldGiftBag", {payDoneFunc = handler(self, self.onBuyFullHp),
                     deneyBuyFunc = handler(self, self.onDenyFullHp), isNotPopup = true,isNotPopKefu = true}
-                    ,"战斗界面_10%血")    
+                    ,"战斗界面_10%血")
 end
 
 function Hero:onBuyFullHp()
@@ -373,10 +373,10 @@ function Hero:onBuyFullHp()
     self:setFullHp()
 
     --um
-    local levelInfo = fight:getLevelInfo()    
+    local levelInfo = fight:getLevelInfo()
     local umData = {}
     umData[levelInfo] = "满血"
-    um:event("关卡道具使用", umData)    
+    um:event("关卡道具使用", umData)
 end
 
 function Hero:onDenyFullHp()
@@ -385,7 +385,7 @@ function Hero:onDenyFullHp()
     fight:pauseFight(false)
 
     local defence   = md:getInstance("Defence")
-    defence:startDefence()    
+    defence:startDefence()
 end
 
 --map

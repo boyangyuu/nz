@@ -10,7 +10,7 @@ end
 
 function HomePausePopup:initLayer()
 	cc.ui.UILabel.new({
-        UILabelType = 2, text = "请触屏继续...", size = 35, color = cc.c3b(255, 255, 255)})
+        UILabelType = 2, text = LanguageManager.getStringForKey("string_hint173"), size = 35, color = cc.c3b(255, 255, 255)})
     :align(display.CENTER, display.cx, display.cy)
     :addTo(self)
 

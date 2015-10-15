@@ -9,7 +9,7 @@ function JujiResultLayer:ctor(properties)
 	self.properties = properties
 	self:loadCCS()
 	self:initUI()
-    self:setNodeEventEnabled(true) 
+    self:setNodeEventEnabled(true)
 end
 
 function JujiResultLayer:onEnter()
@@ -50,7 +50,7 @@ function JujiResultLayer:initUI()
     manager:addArmatureFileInfo(src)
     local plist = "res/BossMode/wxboss_jiesuan/wxboss_jiesuan0.plist"
     local png   = "res/BossMode/wxboss_jiesuan/wxboss_jiesuan0.png"
-    display.addSpriteFrames(plist, png)  
+    display.addSpriteFrames(plist, png)
 
     local armature = ccs.Armature:create("wxboss_jiesuan")
     armature:setPosition(569,320)
@@ -81,7 +81,7 @@ function JujiResultLayer:initUI()
 					v:setVisible(true)
 				end
 				labelReward:setVisible(true)
-				labelGold:setString("战斗获得："..self.properties.goldValue.."金币")
+				labelGold:setString(LanguageManager.getStringForKey("string_hint24")..self.properties.goldValue..LanguageManager.getStringForKey("string_hint334"))
                 layerBtn:setTouchEnabled(true)
                 addBtnEventListener(layerBtn, function(event)
 					if event.name == 'began' then
@@ -113,7 +113,7 @@ function JujiResultLayer:onClickBtnGet()
 	ui:closePopup("JujiResultLayer")
 
 	--closefunc
-	if self.properties["closeFunc"] then 
+	if self.properties["closeFunc"] then
 		self.properties["closeFunc"]()
 	end
 end

@@ -200,11 +200,12 @@ function BossModeLayer:onClickBtnAward(i)
 			reward[k] = v
 		end
 	end
-	local bujianName = {"枪柄部件", "枪口部件", "枪匣部件", "枪托部件", "枪身部件"}
-	local msg = "奖励：".. (bujianName[i] or 0)
-	.. "x1，手雷x"..(reward["lei"] or 0)
-	.."，药包x"..(reward["healthBag"] or 0)
-	.."，金币x"..(reward["money"] or 0)
+	local bujianName = {LanguageManager.getStringForKey("string_hint12"), LanguageManager.getStringForKey("string_hint13"),
+					LanguageManager.getStringForKey("string_hint14"), LanguageManager.getStringForKey("string_hint15"), LanguageManager.getStringForKey("string_hint16")}
+	local msg = LanguageManager.getStringForKey("string_hint17").. (bujianName[i] or 0)
+	.. LanguageManager.getStringForKey("string_hint18")..(reward["lei"] or 0)
+	..LanguageManager.getStringForKey("string_hint19")..(reward["healthBag"] or 0)
+	..LanguageManager.getStringForKey("string_hint20")..(reward["money"] or 0)
 
 	ui:showPopup("commonPopup",
 	 {type = "style1",content = msg},
@@ -231,7 +232,7 @@ function BossModeLayer:onClickBtnStart()
 	local data = getUserData()
 	if self.choseChapter > data.bossMode.chapterIndex then
 		ui:showPopup("commonPopup",
-			 {type = "style1",content = "未开启，请通关前面章节！"},
+			 {type = "style1",content = LanguageManager.getStringForKey("string_hint21")},
 			 {opacity = 100})
 		return
 	end
@@ -279,7 +280,7 @@ function BossModeLayer:onClickGoldWeapon()
 	else
 		if device.platform == "ios" then
 			ui:showPopup("commonPopup",
-    				 {type = "style2", content = "黄武不足，请去商城购买"},
+    				 {type = "style2", content = LanguageManager.getStringForKey("string_hint22")},
     				 {opacity = 155})
 			return
 		end
@@ -311,7 +312,7 @@ function BossModeLayer:onClickBtnGet()
 	self:refreshContent()
 	if self.btnGet:isButtonEnabled() then
 		ui:showPopup("commonPopup",
-			 {type = "style1",content = "您的武器零件还没凑齐喔"},
+			 {type = "style1",content = LanguageManager.getStringForKey("string_hint23")},
 			 {opacity = 100})
 	end
 end

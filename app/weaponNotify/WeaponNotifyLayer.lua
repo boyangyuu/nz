@@ -54,11 +54,11 @@ function WeaponNotifyLayer:initUI(properties)
 	    armature:getBone("icon_wuqi"):changeDisplayWithIndex(1, true)
 
 
-		armature:getAnimation():setMovementEventCallFunc(   
-         function (armatureBack,movementType,movement) 
+		armature:getAnimation():setMovementEventCallFunc(
+         function (armatureBack,movementType,movement)
             if movementType == ccs.MovementEventType.complete then
                 armature:getAnimation():play("chixu" , -1, 1)
-            end 
+            end
         end)
 	    armature:getAnimation():play("start" , -1, 0)
 
@@ -73,8 +73,8 @@ function WeaponNotifyLayer:initUI(properties)
 	    armature:getBone("icon_wuqi"):addDisplay(skin, 1)
 	    armature:getBone("icon_wuqi"):changeDisplayWithIndex(1, true)
 
-		armature:getAnimation():setMovementEventCallFunc(   
-         function (armatureBack,movementType,movement) 
+		armature:getAnimation():setMovementEventCallFunc(
+         function (armatureBack,movementType,movement)
             if movementType == ccs.MovementEventType.complete then
                 armature:getAnimation():play("chixu02" , -1, 1)
             end
@@ -83,7 +83,7 @@ function WeaponNotifyLayer:initUI(properties)
 
 		local weaponName = self.weaponListModel:getWeaponNameByID(properties.weaponId)
 		labelSuipian:enableOutline(cc.c4b(0, 0, 0,255), 1)
-	    labelSuipian:setString(weaponName.."零件")
+	    labelSuipian:setString(weaponName..LanguageManager.getStringForKey("string_hint155"))
 	    labelGun:setVisible(false)
     elseif properties.type == "goldGift" then
     	labelSuipian:setVisible(false)
@@ -105,8 +105,8 @@ function WeaponNotifyLayer:initUI(properties)
 	    else
 	    	playName = "03"
 	    end
-		armature:getAnimation():setMovementEventCallFunc(   
-         function (armatureBack,movementType,movement) 
+		armature:getAnimation():setMovementEventCallFunc(
+         function (armatureBack,movementType,movement)
             if movementType == ccs.MovementEventType.complete then
                 armature:getAnimation():play("chixu"..playName , -1, 1)
             end

@@ -78,7 +78,7 @@ function MidAutumnResultLayer:initUI()
                     v:setVisible(true)
                 end
                 labelReward:setVisible(true)
-                labelGold:setString("战斗获得："..self.properties.goldValue.."金币")
+                labelGold:setString(LanguageManager.getStringForKey("string_hint24")..self.properties.goldValue..LanguageManager.getStringForKey("string_hint334"))
                 layerBtn:setTouchEnabled(true)
                 addBtnEventListener(layerBtn, function(event)
                     if event.name == 'began' then

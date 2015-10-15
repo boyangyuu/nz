@@ -219,7 +219,7 @@ function WeaponListLayer:onClickBtnOncefull()
                  "武器库界面_点击一键满级"..self.weaponRecord["name"])
     else
         ui:showPopup("commonPopup",
-        {type = "style3", content = "是否花费"..self.weaponRecord["onceFull"].."宝石将武器一键满级？",
+        {type = "style3", content = string.format(LanguageManager.getStringForKey("string_hint199"),self.weaponRecord["onceFull"]),
              callfuncCofirm =  handler(self, self.cofirmOnceFull_ios)},
          { opacity = 0})
     end
@@ -304,7 +304,7 @@ function WeaponListLayer:sendGunAward()
 
     --award
     ui:showPopup("commonPopup",
-         {type = "style1",content = "感谢您的支持！！活动期间赠送10套黄武，助您一臂之力"},
+         {type = "style1",content = LanguageManager.getStringForKey("string_hint167")},
          {opacity = 100})
 end
 

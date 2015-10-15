@@ -21,7 +21,7 @@ function InlayListCell:initCellUI(record)
     icon_jibi:setScale(0.7)
     self:addChild(icon_jibi)
     local already = cc.ui.UILabel.new({
-        UILabelType = 2, text = "已拥有:", size = 25})
+        UILabelType = 2, text = LanguageManager.getStringForKey("string_hint157"), size = 25})
     :align(display.CENTER, 150, 48)
     :addTo(self)
     already:enableOutline(cc.c4b(0, 0, 0,255), 2)
@@ -46,9 +46,9 @@ function InlayListCell:initCellUI(record)
     :addTo(self)
     self.ownNumber:enableOutline(cc.c4b(0, 0, 0,255), 2)
 
-    local buy = cc.ui.UILabel.new({text = "购买",size = 30})
+    local buy = cc.ui.UILabel.new({text = LanguageManager.getStringForKey("string_hint158"),size = 30})
     buy:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    local equip = cc.ui.UILabel.new({text = "装备",size = 30})
+    local equip = cc.ui.UILabel.new({text = LanguageManager.getStringForKey("string_hint159"),size = 30})
     equip:enableOutline(cc.c4b(0, 0, 0,255), 2)
     -- 按钮
     cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})
@@ -67,7 +67,7 @@ function InlayListCell:initCellUI(record)
         :addTo(self)
     function deneyGoldGift()
         ui:showPopup("commonPopup",
-            {type = "style2",content = "金币不足，请去商城购买"},
+            {type = "style2",content = LanguageManager.getStringForKey("string_hint156")},
             {opacity = 155})
     end
     cc.ui.UIPushButton.new("#btn_g3.png", {scale9 = true})
@@ -101,7 +101,7 @@ function InlayListCell:onClickBtnBuy(record)
         self.num = self.num + 1
         self.ownNumber:setString(self.num)
         self.inlayModel:buyInlay(record["id"])
-        um:buy(record["describe2"],1, record["goldPrice"])   
+        um:buy(record["describe2"],1, record["goldPrice"])
     else
         local guideModel = md:getInstance("Guide")
         if guideModel:getIsGuiding() then return end

@@ -40,7 +40,7 @@ function ActiveCodeLayer:onInputActiveCode()
     self.activeCode = self.inputString
     if self.activeCode == "" then
         ui:showPopup("commonPopup",
-             {type = "style2",content = "不能为空"},
+             {type = "style2",content = LanguageManager.getStringForKey("string_hint1")},
              {opacity = 100})
         return
     end
@@ -57,13 +57,13 @@ function ActiveCodeLayer:onInputActiveCode()
         data.user.level = 20
         setUserData(data)
         ui:showPopup("commonPopup",
-         {type = "style2", content = "激活码无效！！!"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint2")},
          {opacity = 0})
         return
     end
     if self.activeCodeModel:checkGet(self.activeCode) then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "您已领过此礼包,不能重复领取!"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint3")},
          {opacity = 0})
         return
     end
@@ -80,7 +80,7 @@ function ActiveCodeLayer:onRequestFinished(event)
     if request == nil then return end
      if event.name == "failed" then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "请保持网络通畅！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint4")},
          {opacity = 0})
         return
     end
@@ -96,7 +96,7 @@ function ActiveCodeLayer:onRequestFinished(event)
         print("getErrorMessage", request:getErrorMessage())
         print("request:getErrorCode()", request:getErrorCode())
         ui:showPopup("commonPopup",
-         {type = "style2", content = "请保持网络通畅！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint4")},
          {opacity = 0})
         return
     end
@@ -108,15 +108,15 @@ function ActiveCodeLayer:onRequestFinished(event)
 
     if response == "11" then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "该激活码已被领取！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint5")},
          {opacity = 0})
     elseif response == "12" then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "激活码无效！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint2")},
          {opacity = 0})
     elseif response == "01" then
         ui:showPopup("commonPopup",
-         {type = "style2", content = "领取成功！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint6")},
          {opacity = 0})
         self.activeCodeModel:sentActiveGift(self.activeCode)
         self.activeCodeModel:setGet(self.activeCode)

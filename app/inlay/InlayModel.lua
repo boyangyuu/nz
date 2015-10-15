@@ -44,7 +44,7 @@ function InlayModel:buyGoldsInlay(buynumber)
 	for k,v in pairs(goldtable) do
 		self:buyInlay(v["id"],buynumber)
 	end
-	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})	
+	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})
 end
 
 function InlayModel:buyInlayDozen(buynumber,property)
@@ -52,7 +52,7 @@ function InlayModel:buyInlayDozen(buynumber,property)
 	for k,v in pairs(inlayTable) do
 		self:buyInlay(v["id"],buynumber)
 	end
-	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})	
+	self:dispatchEvent({name = InlayModel.REFRESH_ALLINLAY_EVENT})
 end
 
 function InlayModel:buyInlay(inlayid,buyNum)
@@ -64,7 +64,7 @@ function InlayModel:buyInlay(inlayid,buyNum)
 				if buyNum == nil then
 					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + 1
 				else
-					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + buyNum					
+					data.inlay.bags[k].ownednum = data.inlay.bags[k].ownednum + buyNum
 				end
 			end
 		end
@@ -88,7 +88,7 @@ function InlayModel:equipInlay(inlayid,isNotRefresh)
 	end
 	if self:isBagsExist(inlayid) == false then
 		ui:showPopup("commonPopup",
-			 {type = "style2", content = "您还未拥有此装备，请购买"},
+			 {type = "style2", content =LanguageManager.getStringForKey("string_hint160")},
 			 {opacity = 150})
 
 		return
@@ -119,7 +119,7 @@ function InlayModel:equipInlay(inlayid,isNotRefresh)
 				if data.inlay.bags[k].ownednum == 0 then
 					table.remove(data.inlay.bags,k)
 				end
-			end 
+			end
 		end
 	end
     setUserData(data)
@@ -152,12 +152,12 @@ function InlayModel:equipGoldInlays()
 end
 
 --[[
-	
+
 ]]
 function InlayModel:getInlaysUnEquiped()
 	local data = getUserData()
 	local inlaysUnEquiped  = clone(data.inlay.bags)
-	return inlaysUnEquiped	
+	return inlaysUnEquiped
 end
 
 function InlayModel:equipAllInlays(limitPriority)
@@ -166,7 +166,7 @@ function InlayModel:equipAllInlays(limitPriority)
 	local bestInlayId = { bullet = 0,clip =0 ,speed = 0,crit = 0 ,blood = 0, helper = 0}
 	local allinlayed = self:getAllInlayed()
 	local inlaysUnEquiped = self:getInlaysUnEquiped()
-	
+
 	--
 	for k,v in pairs(inlaysUnEquiped) do
 		-- print(k, v)
@@ -180,7 +180,7 @@ function InlayModel:equipAllInlays(limitPriority)
 			print(k1, v1)
 			local inlayedPriority = self:getInlayRecord(v1)["property"]
 			print("inlayedPriority", inlayedPriority)
-			if k1 == typename 
+			if k1 == typename
 				and bestInlay[typename] < inlayedPriority
 				-- and bestInlay[typename] ~= 4
 				and inlayedPriority <= limitPriority
@@ -249,7 +249,7 @@ function InlayModel:isGetAllGold()
 			return false
 		end
 	end
-	return true	
+	return true
 end
 
 function InlayModel:getInlayType(inlayid)

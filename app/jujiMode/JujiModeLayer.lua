@@ -28,9 +28,9 @@ function JujiModeLayer:onEnter()
 end
 
 function JujiModeLayer:checkUserName()
-	if  self.userModel:getUserName() == "玩家自己" then
+	if  self.userModel:getUserName() == LanguageManager.getStringForKey("string_hint162") then
 		ui:showPopup("InputBoxPopup",
-			{content = "请输入游戏姓名",
+			{content = LanguageManager.getStringForKey("string_hint163"),
 			 onClickConfirm = handler(self, self.onClickConfirm_InputName)},
 			 {opacity = 0})
 	end
@@ -126,7 +126,7 @@ function JujiModeLayer:onClickGoldWeapon()
 	else
 		if device.platform == "ios" then
 			ui:showPopup("commonPopup",
-    				 {type = "style2", content = "黄武不足，请去商城购买"},
+    				 {type = "style2", content = LanguageManager.getStringForKey("string_hint22")},
     				 {opacity = 155})
 			return
 		end
@@ -157,7 +157,7 @@ function JujiModeLayer:checkNetWork()
 		print("network isAvailable")
 	else
 		ui:showPopup("commonPopup",
-			 {type = "style1",content = "当前网络连接失败，连接网络后排名数据将会统计"},
+			 {type = "style1",content = LanguageManager.getStringForKey("string_hint164")},
 			 {opacity = 0})
 	end
 end

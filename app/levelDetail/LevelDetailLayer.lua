@@ -113,8 +113,8 @@ function LevelDetailLayer:initUI()
 		local needWeaponNum = self.levelDetailModel:getNeedSuipianNum(self.config["suipianid"])
 		local alreadyGetNum = self.levelDetailModel:getSuiPianNum(self.config["suipianid"])
 		local suipianName = self.weaponListModel:getWeaponNameByID(self.config["suipianid"])
-		self.labelGet:setString("本关卡可获得"..suipianName
-					.."零件1个，当前"..alreadyGetNum.."/"..needWeaponNum)
+		self.labelGet:setString(LanguageManager.getStringForKey("string_hint165")..suipianName
+					..LanguageManager.getStringForKey("string_hint166")..alreadyGetNum.."/"..needWeaponNum)
 	end
 	if self.config["type"] == "boss" then
 		local enemyPlay = self.config["enemyPlay"]
@@ -417,7 +417,7 @@ function LevelDetailLayer:sendGunAward()
 
     --award
     ui:showPopup("commonPopup",
-         {type = "style1",content = "感谢您的支持！！活动期间赠送10套黄武，助您一臂之力"},
+         {type = "style1",content = LanguageManager.getStringForKey("string_hint167")},
          {opacity = 100})
 end
 
