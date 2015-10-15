@@ -12,7 +12,7 @@ function RmbBuyPopup:ctor(properties)
 	--instance
 	self.buyModel = md:getInstance("BuyModel")
 	self.properties = properties
-    self.configId = self.properties["configId"] 
+    self.configId = self.properties["configId"]
 	-- events
     cc.EventProxy.new(self.buyModel, self)
         :addEventListener(self.buyModel.BUY_SUCCESS_EVENT, handler(self, self.close))
@@ -34,18 +34,18 @@ function RmbBuyPopup:loadCCS()
     local btnConfirm = cc.uiloader:seekNodeByName(self.node, "btnConfirm")
     btnConfirm:onButtonClicked(function()
          self:onClickConfirm()
-    end)    
+    end)
 
     --content
     local config = BuyConfigs.getConfig(self.configId)
     local labelIapName = cc.uiloader:seekNodeByName(self.node, "labelIapName")
-    labelIapName:setString("商品名称：" .. config["iapName"])
+    labelIapName:setString(LanguageManager.getStringForKey("string_hint43") .. config["iapName"])
     local labelPrice = cc.uiloader:seekNodeByName(self.node, "labelPrice")
-    labelPrice:setString("金额：" .. config["price"] .. "元")
+    labelPrice:setString(LanguageManager.getStringForKey("string_hint44") .. config["price"] .. LanguageManager.getStringForKey("string_hint45"))
 
     --易接
     local labelDesc = cc.uiloader:seekNodeByName(self.node, "labelDesc")
-    labelDesc:setString("购买物品：" .. config["name"])    
+    labelDesc:setString(LanguageManager.getStringForKey("string_hint46") .. config["name"])
 end
 
 function RmbBuyPopup:onClickDeny(event)
@@ -53,8 +53,8 @@ function RmbBuyPopup:onClickDeny(event)
 end
 
 function RmbBuyPopup:onClickConfirm(event)
-    if self.properties["onClickConfirm"] then 
-        self.properties["onClickConfirm"]() 
+    if self.properties["onClickConfirm"] then
+        self.properties["onClickConfirm"]()
     end
 end
 

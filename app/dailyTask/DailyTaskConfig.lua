@@ -17,7 +17,7 @@ configs = {
 		limit = 100,
 		awardValue= 10,
 		awardType = "diamond",
-		str = "使用100宝石",
+		str = string.format(LanguageManager.getStringForKey("string_hint53"),100),
 	},
 	{
 		index = "buyTimes11",
@@ -25,7 +25,7 @@ configs = {
 		limit = 200,
 		awardValue= 20,
 		awardType = "diamond",
-		str = "使用200宝石",
+		str = string.format(LanguageManager.getStringForKey("string_hint53"),200),
 	},
 	{
 		index = "buyTimes12",
@@ -33,7 +33,7 @@ configs = {
 		limit = 300,
 		awardValue= 30,
 		awardType = "diamond",
-		str = "使用300宝石",
+		str = string.format(LanguageManager.getStringForKey("string_hint53"),300),
 	},
 	{
 		index = "keepKill01",
@@ -41,7 +41,7 @@ configs = {
 		limit = 10,
 		awardValue= 1000,
 		awardType = "coin",
-		str = "10连杀",
+		str = string.format(LanguageManager.getStringForKey("string_hint54"),10),
 	},
 	{
 		index = "keepKill02",
@@ -49,7 +49,7 @@ configs = {
 		limit = 30,
 		awardValue= 2000,
 		awardType = "coin",
-		str = "30连杀",
+		str = string.format(LanguageManager.getStringForKey("string_hint54"),30),
 	},
 	{
 		index = "keepKill03",
@@ -57,7 +57,7 @@ configs = {
 		limit = 50,
 		awardValue= 3000,
 		awardType = "coin",
-		str = "50连杀",
+		str = string.format(LanguageManager.getStringForKey("string_hint54"),50),
 	},
 	{
 		index = "keepKill05",
@@ -65,7 +65,7 @@ configs = {
 		limit = 100,
 		awardValue= 6000,
 		awardType = "coin",
-		str = "100连杀",
+		str = string.format(LanguageManager.getStringForKey("string_hint54"),100),
 	},
 	{
 		index = "totalKill04",
@@ -73,7 +73,7 @@ configs = {
 		limit = 500,
 		awardValue= 5000,
 		awardType = "coin",
-		str  = "500杀敌",
+		str  = string.format(LanguageManager.getStringForKey("string_hint42"),500),
 	},
 	{
 		index = "totalKill06",
@@ -81,7 +81,7 @@ configs = {
 		limit = 1000,
 		awardValue= 10000,
 		awardType = "coin",
-		str  = "1000杀敌",
+		str  = string.format(LanguageManager.getStringForKey("string_hint42"),1000),
 	},
 	{
 		index = "totalKill07",
@@ -89,7 +89,7 @@ configs = {
 		limit = 2000,
 		awardValue= 20000,
 		awardType = "coin",
-		str  = "2000杀敌",
+		str  = string.format(LanguageManager.getStringForKey("string_hint42"),2000),
 	},
 	{
 		index = "totalKill08",
@@ -97,7 +97,7 @@ configs = {
 		limit = 3000,
 		awardValue= 30000,
 		awardType = "coin",
-		str  = "3000杀敌",
+		str  = string.format(LanguageManager.getStringForKey("string_hint42"),3000),
 	},
 	{
 		index = "fight_xianShi09",
@@ -105,7 +105,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成限时关卡1次",
+		str = LanguageManager.getStringForKey("string_hint55"),
 	},
 	{
 		index = "fight_renZhi09",
@@ -113,7 +113,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成人质关卡1次",
+		str = LanguageManager.getStringForKey("string_hint56"),
 	},
 	{
 		index = "fight_taoFan09",
@@ -121,7 +121,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成逃犯关卡1次",
+		str = LanguageManager.getStringForKey("string_hint57"),
 	},
 	{
 		index = "fight_puTong09",
@@ -129,7 +129,7 @@ configs = {
 		limit = 1,
 		awardValue= 5,
 		awardType = "diamond",
-		str = "完成杀戮关卡1次",
+		str = LanguageManager.getStringForKey("string_hint58"),
 	},
 }
 --[[

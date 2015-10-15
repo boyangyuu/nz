@@ -52,12 +52,25 @@ function StartLayer:initUI()
     self.btnMusic = cc.uiloader:seekNodeByName(self, "btnMusic")
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
     self.btnGonggao = cc.uiloader:seekNodeByName(self, "btnGonggao")
+    self.btnRestore = cc.uiloader:seekNodeByName(self, "btnRestore")
+    -- if device.platform ~= "ios" then
+        self.btnRestore:setVisible(false)
+    -- end
 
     local seq = transition.sequence({
         cc.ScaleTo:create(0.6, 1.04),
         cc.ScaleTo:create(0.6, 0.96),})
     self.btnBegin:runAction(cc.RepeatForever:create(seq))
 
+    self.btnRestore:setTouchEnabled(true)
+    addBtnEventListener(self.btnRestore, function(event)
+        if event.name == 'began' then
+            print("btnBegin is begining!")
+            return true
+        elseif event.name == 'ended' then
+            self:onClickBtnRestore()
+        end
+    end)
 
     self.btnBegin:setTouchEnabled(true)
     addBtnEventListener(self.btnBegin, function(event)
@@ -211,6 +224,10 @@ function StartLayer:onEnter()
 
     --login award 服务器请求不能与loadccd并行！！
     self:initDailyLogin()
+end
+
+function StartLayer:onClickBtnRestore()
+    luaoc.callStaticMethod("IAPControl", "restoreButton")
 end
 
 function StartLayer:onClickBegan()

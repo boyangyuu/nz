@@ -13,7 +13,7 @@ function DailyTaskLayer:ctor()
 	self:initUI()
 
     local data = getUserData()
-    dump(data.dailyTask.awardedTasks, "ata.dailyTask.awardedTasks")    
+    dump(data.dailyTask.awardedTasks, "ata.dailyTask.awardedTasks")
 end
 
 function DailyTaskLayer:loadCCS()
@@ -33,13 +33,13 @@ function DailyTaskLayer:checkNetWork()
         print("network isAvailable")
     else
         ui:showPopup("commonPopup",
-             {type = "style1",content = "当前网络连接失败，请确保网络连接正常"},
+             {type = "style1",content = LanguageManager.getStringForKey("string_hint50"),},
              {opacity = 0})
-    end 
+    end
 end
 
 function DailyTaskLayer:initListUI()
-    local datas = self.model:getSortedDatas()   
+    local datas = self.model:getSortedDatas()
     for i,data in ipairs(datas) do
         local item = self.listTasks:newItem()
         local content = DailyTaskCell.new(data["index"])
@@ -47,7 +47,7 @@ function DailyTaskLayer:initListUI()
         item:setItemSize(900, 90)
         self.listTasks:addItem(item)
     end
-    self.listTasks:reload()    
+    self.listTasks:reload()
 end
 
 return DailyTaskLayer

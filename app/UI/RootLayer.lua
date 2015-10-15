@@ -21,8 +21,9 @@ function RootLayer:ctor()
         if event.key == "back" then
             print("RootLayer:KEYPAD_EVENT ")
             display.pause()
-            local message = "您就这样离开吗？"
-            local buttonLabels = {"离开", "继续"}
+            local message = LanguageManager.getStringForKey("string_hint196")
+            local buttonLabels = {LanguageManager.getStringForKey("string_hint197"),
+                                 LanguageManager.getStringForKey("string_hint198")}
 
             luaj.callStaticMethod(
                 "org/cocos2dx/utils/PSNative",

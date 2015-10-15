@@ -40,16 +40,16 @@ configs["fight01_move"] = {
 configs["fight01_fire"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_fire", msg = "点击按钮，开火射击！", skipDelay = 2.0,rolepos = "left"},
-		{id = "fight_lei", msg = "在高亮区域点击，将会投掷手雷"},
+		{id = "fight_fire", msg = LanguageManager.getStringForKey("string_hint305"), skipDelay = 2.0,rolepos = "left"},
+		{id = "fight_lei", msg = LanguageManager.getStringForKey("string_hint306")},
 	}
 }
 
 configs["fight01_skill"] = {
 	preGuideId = nil,
 	steps = {
-	{id = "fight_fusillade", msg = "按住扫射1.5秒!!!按住扫射会更轻松,一下一下点射会损伤手指^_^!", skipDelay = 3.0,rolepos = "left"},
-		{id = "fight_skill", msg = "点击按钮，释放技能!"},
+		{id = "fight_fusillade", msg = LanguageManager.getStringForKey("string_hint343"), skipDelay = 3.0,rolepos = "left"},
+		{id = "fight_skill", msg = LanguageManager.getStringForKey("string_hint307")},
 	}
 }
 
@@ -57,7 +57,7 @@ configs["fight01_skill"] = {
 configs["fight01_gold"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fight_gold", msg = "敌人越来越多，快使用黄金武器 ! "},
+		{id = "fight_gold", msg = LanguageManager.getStringForKey("string_hint308")},
 	}
 }
 
@@ -66,7 +66,7 @@ configs["fight01_jijia"] = {
 	preGuideId = nil,
 	steps = {
 		--毁灭者掉剩下10% 血 机甲开
-		{id = "fight01_jijia", msg = "开启无敌机甲和毁灭者决一死战！！", },
+		{id = "fight01_jijia", msg = LanguageManager.getStringForKey("string_hint309")},
 	}
 }
 
@@ -74,7 +74,7 @@ configs["fight01_jijia"] = {
 configs["afterfight01"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "afterfight01_jixu", msg = "点击按钮，进入下一关"},
+		{id = "afterfight01_jixu", msg = LanguageManager.getStringForKey("string_hint310")},
 	}
 }
 
@@ -82,7 +82,7 @@ configs["afterfight01"] = {
 configs["fight_change"] = {
 	preGuideId = "fight01_jijia",
 	steps = {
-		{id = "fight_change", msg = "在高亮区域点击，将会更换武器！"},
+		{id = "fight_change", msg = LanguageManager.getStringForKey("string_hint311")},
 	}
 }
 
@@ -90,7 +90,7 @@ configs["fight_change"] = {
 configs["fight_dun"] = {
 	preGuideId = "fight_change",
 	steps = {
-		{id = "fight_dun", msg = "使用盾牌可以抵挡大量伤害！"},
+		{id = "fight_dun", msg = LanguageManager.getStringForKey("string_hint312")},
 	}
 }
 
@@ -99,14 +99,14 @@ configs["xiangqian"] = {
 	preGuideId = "afterfight01",
 	steps = {
 		--进装备页面  一套青铜
-		{id = "xiangqian_xiangqian", msg = "点击按钮进入装备界面", },
-		{id = "xiangqian_xiangqian1", msg = "点击左侧按钮选择装备属性", rolepos = "right"},
-		{id = "xiangqian_xiangqian2", msg = "点击购买",},
-		{id = "xiangqian_xiangqian3", msg = "点击装备", },
-		{id = "xiangqian_xiangqian4", msg = "也可点击快速装备，装备背包内最好的道具", },
-		{id = "xiangqian_xiangqian5", msg = "装备是消耗性道具哦！", rolepos = "right", skipMode = "clickScreen" },
-		{id = "xiangqian_back", msg = "点击按钮返回大地图" },
-		{id = "xiangqian_nextLevel", msg = "点击按钮进入下一关", rolepos = "right",  contentOffset = {x = 0, y = -100},},
+		{id = "xiangqian_xiangqian", msg = LanguageManager.getStringForKey("string_hint313")},
+		{id = "xiangqian_xiangqian1", msg = LanguageManager.getStringForKey("string_hint314"), rolepos = "right"},
+		{id = "xiangqian_xiangqian2", msg = LanguageManager.getStringForKey("string_hint315"),},
+		{id = "xiangqian_xiangqian3", msg = LanguageManager.getStringForKey("string_hint316"), },
+		{id = "xiangqian_xiangqian4", msg = LanguageManager.getStringForKey("string_hint317"), },
+		{id = "xiangqian_xiangqian5", msg = LanguageManager.getStringForKey("string_hint318"), rolepos = "right", skipMode = "clickScreen" },
+		{id = "xiangqian_back", msg = LanguageManager.getStringForKey("string_hint319")},
+		{id = "xiangqian_nextLevel", msg = LanguageManager.getStringForKey("string_hint320"), rolepos = "right",  contentOffset = {x = 0, y = -100},},
 	}
 }
 
@@ -114,13 +114,13 @@ configs["xiangqian"] = {
 configs["weapon"] = {
 	preGuideId = "xiangqian",
 	steps = {
-		{id = "weapon_wuqiku", msg = "点击按钮进入武器界面", },
-		{id = "weapon_shengji1",contentOffset = {x = 100, y = 0}, msg = "点击左侧MP5", rolepos = "right"},
-		{id = "weapon_shengji2", msg = "点击右侧升级按钮", skipDelay = 2.0},
-		{id = "weapon_shengji3", msg = "恭喜杰哥 ， 升级成功！ ", skipMode = "clickScreen"},
-		{id = "weapon_back", msg = "点击按钮返回大地图",rolepos = "right", },
-		{id = "weapon_nextlevel", msg = "点击关卡按钮进入下一关", rolepos = "right", contentOffset = {x = 0, y = -200}},
-		{id = "weapon_enter", contentOffset = {x = -100, y = 0}, msg = "点击开始游戏按钮，开始战斗！", },
+		{id = "weapon_wuqiku", msg = LanguageManager.getStringForKey("string_hint321"), },
+		{id = "weapon_shengji1",contentOffset = {x = 100, y = 0}, msg = LanguageManager.getStringForKey("string_hint322"), rolepos = "right"},
+		{id = "weapon_shengji2", msg = LanguageManager.getStringForKey("string_hint323"), skipDelay = 2.0},
+		{id = "weapon_shengji3", msg = LanguageManager.getStringForKey("string_hint324"), skipMode = "clickScreen"},
+		{id = "weapon_back", msg = LanguageManager.getStringForKey("string_hint325"),rolepos = "right", },
+		{id = "weapon_nextlevel", msg = LanguageManager.getStringForKey("string_hint326"), rolepos = "right", contentOffset = {x = 0, y = -200}},
+		{id = "weapon_enter", contentOffset = {x = -100, y = 0}, msg = LanguageManager.getStringForKey("string_hint327"), },
 	}
 }
 
@@ -128,7 +128,7 @@ configs["afterfight03"] = {
 	preGuideId = "weapon",
 	steps = {
 		-- {id = "afterfight03_inlay", msg = "点击按钮，装备道具" },
-		{id = "afterfight03_next", msg = "点击按钮，进入下一关" },
+		{id = "afterfight03_next", msg = LanguageManager.getStringForKey("string_hint328") },
 	}
 }
 
@@ -136,17 +136,17 @@ configs["afterfight03"] = {
 configs["fightJu"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fightJu_open",contentOffset = {x = 0, y = -220}, msg = "点击敌人位置开镜", rolepos = "right"},
-		{id = "fightJu_fire",contentOffset = {x = 0, y = -220}, msg = "点击开火", opacity = 0.0 },
-		{id = "fightJu_close",contentOffset = {x = 0, y = -220}, msg = " 点击关镜按钮", opacity = 0.0},
-		{id = "fightJu_finish", msg = "消灭剩下来的敌人！", skipMode = "clickScreen", opacity = 0.0},
+		{id = "fightJu_open",contentOffset = {x = 0, y = -220}, msg = LanguageManager.getStringForKey("string_hint329"), rolepos = "right"},
+		{id = "fightJu_fire",contentOffset = {x = 0, y = -220}, msg = LanguageManager.getStringForKey("string_hint330"), opacity = 0.0 },
+		{id = "fightJu_close",contentOffset = {x = 0, y = -220}, msg = LanguageManager.getStringForKey("string_hint331"), opacity = 0.0},
+		{id = "fightJu_finish", msg = LanguageManager.getStringForKey("string_hint332"), skipMode = "clickScreen", opacity = 0.0},
 	}
 }
 
 configs["fightRelive"] = {
 	preGuideId = nil,
 	steps = {
-		{id = "fightRelive_relive", msg = "失败不要怕，信春哥，满状态复活！！", },
+		{id = "fightRelive_relive", msg = LanguageManager.getStringForKey("string_hint333"), },
 	}
 
 }

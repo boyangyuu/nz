@@ -5,7 +5,7 @@ local ActiveCodeNode= import("..activitys.ActiveCodeLayer")
 local MidAutumnNode = import("..midAutumn.MidAutumnLayer")
 
 local ActivitysMainLayer = class("ActivitysMainLayer", function()
-	return display.newLayer()
+    return display.newLayer()
 end)
 
 function ActivitysMainLayer:ctor()
@@ -32,7 +32,7 @@ function ActivitysMainLayer:loadCCS()
     --btns
     self.btn_dailyTask = cc.uiloader:seekNodeByName(self.ui, "btn_dailyTask")
     self.btn_dailyTask:onButtonClicked(function ()
-    	self:refreshListView("dailyTask")
+        self:refreshListView("dailyTask")
     end)
 
 
@@ -45,7 +45,7 @@ function ActivitysMainLayer:loadCCS()
         self.btn_juji:setButtonImage(self.btn_juji.PRESSED, "#btn_wuxianjuji4.png")
         self.btn_juji:onButtonClicked(function( event )
             ui:showPopup("commonPopup",
-                     {type = "style2", content = "通过狙击关卡后开启！"},
+                     {type = "style2", content = LanguageManager.getStringForKey("string_hint7")},
                      {opacity = 0})
         end)
     else
@@ -64,7 +64,7 @@ function ActivitysMainLayer:loadCCS()
 
         self.btn_boss:onButtonClicked(function( event )
             ui:showPopup("commonPopup",
-                     {type = "style2", content = "通关第一章后开启！"},
+                     {type = "style2", content = LanguageManager.getStringForKey("string_hint8")},
                      {opacity = 0})
         end)
     else

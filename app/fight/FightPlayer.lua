@@ -727,7 +727,7 @@ function FightPlayer:checkLongFire()
         if self.touchFireId then
             self.checkLongFireTimes = self.checkLongFireTimes + 1
             self.hero:dispatchEvent({name = self.hero.EFFECT_FIGHTTIPS_EVENT,
-                strTips = "长按连击，可增加伤害!"})
+                strTips = LanguageManager.getStringForKey("string_hint148")})
             -- self.hero:dispatchEvent({name = self.hero.EFFECT_GUIDE_EVENT, animName = "saoshe"})
         end
     end

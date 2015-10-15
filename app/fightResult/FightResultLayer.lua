@@ -135,7 +135,7 @@ function FightResultLayer:initUI()
     labelDiamond:setColor(cc.c3b(255, 205, 0))
     labelMoney:enableOutline(cc.c4b(0, 0, 0,255), 2)
     labelDiamond:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    labelMoney:setString("本关战斗获得"..self.fightData["goldNum"].."金币")
+    labelMoney:setString(LanguageManager.getStringForKey("string_hint150")..self.fightData["goldNum"]..LanguageManager.getStringForKey("string_hint334"))
     if self.fightData["isFirstWin"] then
 
     	--award
@@ -189,7 +189,7 @@ end
 function FightResultLayer:initBtns()
     self.btnGetAll:onButtonClicked(function(event)
 	        ui:showPopup("commonPopup",
-				 {type = "style1", content = "是否花费10颗宝石翻开剩余卡牌",
+				 {type = "style1", content = LanguageManager.getStringForKey("string_hint151"),
 				 callfuncCofirm =  handler(self, self.onCofirmLeftCard)},
 				 {opacity = 155})
     end)
@@ -202,12 +202,12 @@ end
 function FightResultLayer:popOpenModeNoti(groupId,levelId)
     if groupId == 1 and levelId == 5 then
     	ui:showPopup("commonPopup",
-         {type = "style1", content = "恭喜您开启无尽狙击模式，会获得丰富奖励，快去尝试吧！"},
+         {type = "style1", content = LanguageManager.getStringForKey("string_hint152")},
          {opacity = 0})
     end
     if groupId == 1 and levelId == 7 then
     	ui:showPopup("commonPopup",
-         {type = "style1", content = "恭喜您开启BOSS竞技场！"},
+         {type = "style1", content = LanguageManager.getStringForKey("string_hint153")},
          {opacity = 0})
     end
 	if groupId == 1 and levelId == 6 and device.platform == "ios" then
@@ -234,7 +234,7 @@ function FightResultLayer:onRequestEvent(event)
     	local appStoreState = request:getResponseString()
     	if appStoreState == "close" then return end
 	    ui:showPopup("commonPopup",
-         {type = "style1",content = "去AppStore给我们五星好评，送手雷x20,药包x5,金币x50000.",
+         {type = "style1",content = LanguageManager.getStringForKey("string_hint154"),
           callfuncCofirm =  handler(self, self.onClickAppStore)},
          {opacity = 100})
     end
@@ -285,7 +285,7 @@ function FightResultLayer:initUIContent()
 			end
     	elseif v["falltype"] == "suipian" then
     		local record = self.weaponListModel:getWeaponRecord(v["id"])
-			self.cardlabel[k]:setString("零件"..record["name"])
+			self.cardlabel[k]:setString(LanguageManager.getStringForKey("string_hint155")..record["name"])
 			local icon = display.newSprite("#icon_"..record["imgName"]..".png")
 			icon:setScale(0.27)
 			icon:setRotation(39)

@@ -259,7 +259,7 @@ function LevelMapLayer:onClickGift_vip()
         end
     else
         ui:showPopup("commonPopup",
-             {type = "style1",content = "当前网络连接失败，请连接网络后领取奖励！"},
+             {type = "style1",content = LanguageManager.getStringForKey("string_hint168")},
              {opacity = 0})
     end
 end
@@ -323,11 +323,11 @@ function LevelMapLayer:onClickedBtnAwardTime()
     if isCanAward then
         awardModel:achieveAward()
        ui:showPopup("commonPopup",
-         {type = "style2", content = "领取成功！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint6")},
          { opacity = 0})
     else
        ui:showPopup("commonPopup",
-         {type = "style2", content = "领取时间未到哦！"},
+         {type = "style2", content = LanguageManager.getStringForKey("string_hint169")},
          { opacity = 0})
     end
 end
@@ -363,7 +363,7 @@ function LevelMapLayer:initKefuLayer()
     self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
     self.telNum:setColor(cc.c3b(255, 0, 0))
     self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    self.telNum:setString("官方唯一投诉电话："..__kefuNum)
+    self.telNum:setString(LanguageManager.getStringForKey("string_hint170")..__kefuNum)
     if device.platform == "ios" then self.telNum:setVisible(false) end
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
@@ -509,7 +509,7 @@ function LevelMapLayer:refreshLevelLayer(groupId)
                     ui:showPopup("LevelDetailLayer", {groupId = groupId, levelId = levelId})
                 else
                     ui:showPopup("commonPopup",
-                     {type = "style2", content = "本关还没开启"},
+                     {type = "style2", content = LanguageManager.getStringForKey("string_hint171")},
                      { opacity = 0})
                 end
             end

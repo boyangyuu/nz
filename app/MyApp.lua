@@ -1,6 +1,11 @@
+
 require("config")
 
 require("framework.init")
+require("app.base.LanguageManager")
+LanguageManager.setLanguage("en")--device.language
+LanguageManager.init()
+
 local UI = require("app.UI.UIManager")
 local MD = require("app.Model.ModelManager")
 local UM = require("app.SDK.UMsdk")
@@ -78,8 +83,8 @@ function MyApp:initVariables()
     local stringSig = "()Ljava/lang/String;"
     local result = nil
     if device.platform == "ios" then
-        __versionId = "1.3.3"
-        __appName = "全民突突突"
+        __versionId = LanguageManager.getStringForKey("string_version")
+        __appName = LanguageManager.getStringForKey("string_hint201")
     elseif device.platform == "android" then
         result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
         result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
@@ -171,7 +176,7 @@ function MyApp:createGameStateFile()
         user = {
             level = 1,
             fightedLevels = {}, --"enter" "fail" "win"
-            userName  = "玩家自己",
+            userName  = LanguageManager.getStringForKey("string_hint162"),
         },
         guide = { --dabao为false
             --记得和 filldata对应!

@@ -80,15 +80,15 @@ function VipPopup:initButtonsHaveBought()
 end
 
 function VipPopup:onClickConfirm()
-    local isAfforded = self.userModel:costDiamond(260, true, "260钻石购买VIP") 
+    local isAfforded = self.userModel:costDiamond(260, true, "260钻石购买VIP")
     if not isAfforded then return end
     self.vipModel:setGift()
     self.vipModel:setGet(true)
     local buyModel = md:getInstance("BuyModel")
     buyModel:setBought("vip")
     ui:showPopup("commonPopup",
-     {type = "style1", content = "恭喜开启VIP专属特权，奖励领取成功！"},
-     { opacity = 170})        
+     {type = "style1", content = LanguageManager.getStringForKey("string_hint172")},
+     { opacity = 170})
     ui:closePopup("VipPopup")
 end
 
@@ -100,8 +100,8 @@ function VipPopup:onClickGet()
 	self.vipModel:setGift()
     self.vipModel:setGet(true)
     ui:showPopup("commonPopup",
-     {type = "style2", content = "领取成功！"},
-     { opacity = 170})        
+     {type = "style2", content = LanguageManager.getStringForKey("string_hint6")},
+     { opacity = 170})
     ui:closePopup("VipPopup")
 end
 

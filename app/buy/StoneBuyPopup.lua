@@ -28,13 +28,13 @@ function StoneBuyPopup:loadCCS()
     local btnConfirm = cc.uiloader:seekNodeByName(self.node, "btnConfirm")
     btnConfirm:onButtonClicked(function()
          self:onClickConfirm()
-    end)    
+    end)
 
     --price
     local labelPrice = cc.uiloader:seekNodeByName(self.node, "labelPrice")
-    labelPrice:setString("消耗宝石：" .. self.properties["price"] .. "个")
+    labelPrice:setString(LanguageManager.getStringForKey("string_hint47") .. self.properties["price"] .. "个")
     local labelDesc = cc.uiloader:seekNodeByName(self.node, "labelDesc")
-    labelDesc:setString("购买物品：" .. self.properties["name"])
+    labelDesc:setString(LanguageManager.getStringForKey("string_hint46") .. self.properties["name"])
 end
 
 function StoneBuyPopup:onClickDeny(event)
@@ -42,8 +42,8 @@ function StoneBuyPopup:onClickDeny(event)
 end
 
 function StoneBuyPopup:onClickConfirm(event)
-    if self.properties["onClickConfirm"] then 
-        self.properties["onClickConfirm"]() 
+    if self.properties["onClickConfirm"] then
+        self.properties["onClickConfirm"]()
     end
 end
 

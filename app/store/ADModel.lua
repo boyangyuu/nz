@@ -8,7 +8,7 @@ function ADModel:watchAD()
     local isAvailable = network.isInternetConnectionAvailable()
     if not isAvailable then
         ui:showPopup("commonPopup",
-             {type = "style1",content = "网络连接异常，请检查网络！"},
+             {type = "style1",content = LanguageManager.getStringForKey("string_hint347")},
              {opacity = 0})
         return
     end
@@ -22,7 +22,7 @@ function ADModel:watchAD()
         luaoc.callStaticMethod("AdsmogoControl", "showInterstitialVideo", args)
     else
         ui:showPopup("commonPopup",
-         {type = "style1",content = "今天没有可以观看的视频了喔，明天再试"},
+         {type = "style1",content = LanguageManager.getStringForKey("string_hint184")},
          {opacity = 0})
     end
 end
@@ -33,13 +33,13 @@ function ADModel:onWatchADSuccess()
     userModel:addDiamond(1)
     self:addWatchTimes()
     ui:showPopup("commonPopup",
-         {type = "style1",content = "恭喜您获得1个宝石！"},
+         {type = "style1",content = LanguageManager.getStringForKey("string_hint348")},
          {opacity = 0})
 end
 
 function ADModel:onWatchADFail()
     ui:showPopup("commonPopup",
-     {type = "style1",content = "观看视频失败，请重新尝试。"},
+     {type = "style1",content = LanguageManager.getStringForKey("string_hint186")},
      {opacity = 0})
 end
 

@@ -103,7 +103,7 @@ function IAPsdk:isPayValid()
 	if self.iapName == "noSim" and payType == "duanxin" then
 		self:callbackFaild()
 		ui:showPopup("commonPopup",
-			 {type = "style2", content = "请在插有SIM卡的手机上支付", delay = 1},
+			 {type = "style2", content = LanguageManager.getStringForKey("string_hint175"), delay = 1},
 			 {opacity = 0})
 		return false
 	elseif self.iapName == 'invalid' and payType == "duanxin" then
@@ -179,7 +179,7 @@ end
 
 function IAPsdk:pay_win()
 	ui:showPopup("commonPopup",
-		 {type = "style2", content = "请在插有SIM卡的手机上支付！", delay = 1},
+		 {type = "style2", content = LanguageManager.getStringForKey("string_hint175"), delay = 1},
 		 {opacity = 0})
 	display.resume()
 end

@@ -7,18 +7,18 @@ local speakActionTag = 10000
 
 local configs = {
 	talk1 = {
-		Label2 = "不知道安琪儿又搞什么飞机，什么也",
-		Label3 = "不说就让我来这里，我的战队还等我一起",
-		Label4 = "刷图呢！看来暑假就这么报废了！！！"
+		Label2 = LanguageManager.getStringForKey("string_hint176"),
+		Label3 = LanguageManager.getStringForKey("string_hint177"),
+		Label4 = LanguageManager.getStringForKey("string_hint178"),
 	},
 	talk2 = {
-		Label2 = "你师姐深陷敌人腹地！被他们俘获",
-		Label3 = "了！！现在只有你可以控制战神机甲，",
-		Label4 = "你已经破格被龙组录用了，代号“杰”。"
+		Label2 = LanguageManager.getStringForKey("string_hint179"),
+		Label3 = LanguageManager.getStringForKey("string_hint180"),
+		Label4 = LanguageManager.getStringForKey("string_hint181"),
  	},
  	talk3 = {
- 		Label2 = "啊！我师姐那么漂亮，岂不很危险！？",
- 		Label3 = "让开，快把机甲给我！我要去救她！！",
+ 		Label2 = LanguageManager.getStringForKey("string_hint182"),
+ 		Label3 = LanguageManager.getStringForKey("string_hint183"),
  		Label4 = ""
  	}
 }
@@ -61,7 +61,7 @@ function StoryLayer:initTalks()
 		purson:setPosition(posSet[i], 240)
 		self.pursons["purson"..i] = purson
 	end
-	
+
 	self:changeTalk()
 end
 
@@ -91,10 +91,10 @@ function StoryLayer:initTouchEvent()
 				self:changeTalk()
 			else
 				local fightData = {
-					groupId = 0, 
+					groupId = 0,
 					levelId = 0,
-				}				
-				ui:changeLayer("FightPlayer", {fightData = fightData})				
+				}
+				ui:changeLayer("FightPlayer", {fightData = fightData})
 			end
 		end
 	end)
@@ -125,7 +125,7 @@ function StoryLayer:speak(talk)
 		local label = cc.uiloader:seekNodeByName(talk, name..i)
 		if label then
 			table.insert(self.actions, cc.CallFunc:create(function()
-				print("antion : ",i)	
+				print("antion : ",i)
 				label:setVisible(true)
 				label:speak(0.05)
 			end))

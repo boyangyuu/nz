@@ -4,14 +4,14 @@ end)
 
 local configs = {}
 configs = {
-    "黄金武器的威力巨大，会给你意外惊喜！",
-    "机甲可以让你免受任何伤害，够酷吧！",
-    "购买武器大礼包是最划算的哦！!",
-    "子弹是无限而且免费的，还有比这更爽的射击游戏吗？",
-    "六个黄金装备可以启用黄金武器哦！亲！",
-    "购买武器大礼包是最划算的哦！!",
-    "BOSS威力强大，可是干掉后会掉落高级武器零件",
-    "购买武器大礼包是最划算的哦！!",
+    LanguageManager.getStringForKey("string_hint188"),
+    LanguageManager.getStringForKey("string_hint189"),
+    LanguageManager.getStringForKey("string_hint190"),
+    LanguageManager.getStringForKey("string_hint191"),
+    LanguageManager.getStringForKey("string_hint192"),
+    LanguageManager.getStringForKey("string_hint193"),
+    LanguageManager.getStringForKey("string_hint194"),
+    LanguageManager.getStringForKey("string_hint195"),
 }
 
 function LoadingLayer:ctor()
@@ -25,7 +25,7 @@ end
 function LoadingLayer:loadGiftCCS()
     math.randomseed(os.time())
     local rans = math.random(2,4)
-    local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")    
+    local controlNode = cc.uiloader:load("res/Loading/loading/loading_"..rans..".json")
     self:addChild(controlNode)
 end
 
@@ -63,7 +63,7 @@ function LoadingLayer:playAnim()
     local action3 = cc.RotateTo:create(0.5,  180)
     local action4 = cc.RotateTo:create(0.5,  360)
 
-    local seq1 = cc.Sequence:create(action1, action2) 
+    local seq1 = cc.Sequence:create(action1, action2)
     local seq2 = cc.Sequence:create(action3, action4)
 
     self.img2:runAction(cc.RepeatForever:create(seq1))

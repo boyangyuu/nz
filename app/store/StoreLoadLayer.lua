@@ -32,7 +32,7 @@ end
 function StoreLoadLayer:closeFail()
     ui:closePopup("StoreLoadLayer",{animName = "normal"})
     ui:showPopup("commonPopup",
-             {type = "style1",content = "购买失败，请重新尝试！"},
+             {type = "style1",content = LanguageManager.getStringForKey("string_hint187")},
              {opacity = 100})
 end
 

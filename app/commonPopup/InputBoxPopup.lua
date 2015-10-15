@@ -35,7 +35,7 @@ function InputBoxPopup:initUI()
 	addBtnEventListener(btntrue, function(event)
         if event.name=='began' then
             return true
-        elseif event.name=='ended' then		
+        elseif event.name=='ended' then
             self:onClickConfirm()
         end
     end)
@@ -43,7 +43,7 @@ function InputBoxPopup:initUI()
 	addBtnEventListener(btnfalse, function(event)
         if event.name=='began' then
             return true
-        elseif event.name=='ended' then		
+        elseif event.name=='ended' then
 	        self:onClickClose()
         end
     end)
@@ -56,7 +56,7 @@ function InputBoxPopup:onClickConfirm()
         ui:closePopup("InputBoxPopup")
     else
         ui:showPopup("commonPopup",
-         {type = "style1",content = "不能为空"},
+         {type = "style1",content = LanguageManager.getStringForKey("string_hint1")},
          {opacity = 100})
     end
 end

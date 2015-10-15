@@ -89,13 +89,13 @@ function MidAutumnModel:costMoonCake(needMoonCakeNum)
         data.moonCake = data.moonCake - needMoonCakeNum
         setUserData(data)
         ui:showPopup("commonPopup",
-                 {type = "style2", content = "兑换成功！"},
+                 {type = "style2", content = LanguageManager.getStringForKey("string_hint345")},
                  {opacity = 155})
         self:dispatchEvent({name = "REFRESH_MOONCAKE_EVENT"})
         return true
     else
         ui:showPopup("commonPopup",
-                 {type = "style2", content = "您的月饼不够喔，请去战斗吧！"},
+                 {type = "style2", content = LanguageManager.getStringForKey("string_hint346")},
                  {opacity = 155})
         return false
     end

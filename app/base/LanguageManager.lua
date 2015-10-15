@@ -44,7 +44,7 @@ end
 
 function LanguageManager.setLanguage(lan)
     if lan and languageNameTable[lan] then
-        Log.d("set language[%s]", tostring(languageNameTable[lan]))
+        print("set language[%s]"..tostring(languageNameTable[lan]))
         LanguageManager.loadLanguage(lan)
         LanguageManager._currentLanguage = lan
     end
@@ -64,7 +64,7 @@ function LanguageManager.loadLanguage(lan)
     if not lan then return end
     LanguageManager._languageTable = require(LAN_PATH .. lan)
     if LanguageManager._languageTable == nil then
-        Log.d("load language[%s] failed", tostring(lan))
+        print("load language[%s] failed"..tostring(lan))
     end
 end
 

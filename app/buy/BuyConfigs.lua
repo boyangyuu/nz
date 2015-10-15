@@ -12,55 +12,55 @@ local configs = {
 			ccsPath = dir.."GoldGiftBag.json",
 			showType = "gift",
 			price = 30,
-			name = "土豪金礼包",
+			name = LanguageManager.getStringForKey("string_hint25"),
 	},
 	goldGiftBag_dx    = {				--土豪金
 			ccsPath = dir.."GoldGiftBag_dx.json",
 			showType = "gift",
 			price = 20,
-			name = "土豪金礼包",
-	},	
+			name = LanguageManager.getStringForKey("string_hint25"),
+	},
 	yijiaoBag     = {              --1角礼包
 			ccsPath = dir.."YijiaoBag.json",
 			showType = "gift",
 			price = 0.1,
-			name = "1角礼包",
-	}, 	
+			name = LanguageManager.getStringForKey("string_hint26"),
+	},
 	novicesBag     = {              --新手礼包
 			ccsPath = dir.."NovicesBag.json",
 			showType = "gift",
 			price = 1,
-			name = "新手礼包",
-	}, 
+			name = LanguageManager.getStringForKey("string_hint27"),
+	},
 	weaponGiftBag  = {           --武器大礼包
 			ccsPath = dir.."WeaponGiftBag.json",
 			showType = "gift",
 			price = 20,
-			name = "武器大礼包",
+			name = LanguageManager.getStringForKey("string_hint28"),
 	},
 	armedMecha     = {				--机甲
 			showType = "prop_rmb",
 			price = 4,
-			name = "无敌机甲2次",
-			iapName = "无敌机甲2次",
+			name = LanguageManager.getStringForKey("string_hint29"),
+			iapName = LanguageManager.getStringForKey("string_hint29"),
 	},
 	handGrenade    = {             --手雷
 			showType = "prop_rmb",
 			price = 4,
-			name = "手雷20个",
-			iapName = "手雷20个",
+			name = LanguageManager.getStringForKey("string_hint30"),
+			iapName = LanguageManager.getStringForKey("string_hint30"),
 	},
 	goldWeapon     = {				--金武
 			showType = "prop_rmb",
 			price = 4,
-			name = "黄金武器2次",
-			iapName = "黄金武器2次",
+			name = LanguageManager.getStringForKey("string_hint31"),
+			iapName = LanguageManager.getStringForKey("string_hint31"),
 	},
 	onceFull       = {				--一键满级
 			showType = "prop_rmb",
 			price = 2,
-			name = "当前武器一键满级",
-			iapName = "当前武器一键满级",
+			name = LanguageManager.getStringForKey("string_hint32"),
+			iapName = LanguageManager.getStringForKey("string_hint32"),
 	},
 	stone120         = {
 			showType = "prop_rmb",
@@ -99,7 +99,7 @@ local configs = {
 			price = 120,
 			name = "支付宝宝石",
 			iapName = "支付宝宝石",
-			iapType = "al",			
+			iapType = "al",
 	},
 
 	-- hpBag         = {
@@ -108,20 +108,20 @@ local configs = {
 	-- 		jsonName = hpBag
 	-- 		name = "医疗包4个",
 	-- 		iapId = "stone450",
-	-- },	
+	-- },
 	-- weaponBuy      = {
 	-- 		showType = "prop_stone",
 	-- 		price = 30,
 	-- 		jsonName = weaponBuy
 	-- 		name = "武器解锁",
 	-- 		iapId = "stone450",
-	-- },	
+	-- },
 	-- relive   = {        		--复活
 	-- 		showType = "prop_stone",
 	-- 		jsonName = relive
 	-- 		price = 2,
 	-- 		name = "复活1次",
-	-- },		
+	-- },
 }
 
 function BuyConfigs.getConfig(name)

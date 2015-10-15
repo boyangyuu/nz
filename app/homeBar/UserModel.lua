@@ -37,7 +37,7 @@ end
 		return true
 	else
 		ui:showPopup("commonPopup",
-				 {type = "style2", content = "金币不足，请去商城购买"},
+				 {type = "style2", content = LanguageManager.getStringForKey("string_hint156")},
 				 {opacity = 155})
 		return false
 	end

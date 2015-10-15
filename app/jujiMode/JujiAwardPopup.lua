@@ -17,7 +17,7 @@ function JujiAwardPopup:ctor(property)
     -- cc.EventProxy.new(self.fightGun, self)
     --     :addEventListener(self.fightGun.HELP_START_EVENT, handler(self, self.onShow))
     self:refreshUI()
-    self:setNodeEventEnabled(true) 
+    self:setNodeEventEnabled(true)
 end
 
 function JujiAwardPopup:onEnter()
@@ -25,13 +25,13 @@ function JujiAwardPopup:onEnter()
 end
 
 function JujiAwardPopup:refreshUI()
-    if self.node then 
+    if self.node then
         self.node:removeSelf()
-        self.node = nil 
+        self.node = nil
     end
-    
+
 	self.node = cc.uiloader:load("res/JujiMode/wuxianjuji/paihang.json")
-    self:addChild(self.node)    
+    self:addChild(self.node)
 
     self:initList()
 
@@ -41,7 +41,7 @@ function JujiAwardPopup:refreshUI()
          self:onClickClose()
     end)
 
-    local bg =   cc.uiloader:seekNodeByName(self.node, "bg")  
+    local bg =   cc.uiloader:seekNodeByName(self.node, "bg")
     bg:setOpacity(190)
 end
 
@@ -49,7 +49,7 @@ function JujiAwardPopup:initList()
     --item
     local itemIndex = 1
     while true do
-    	print("itemIndex") 
+    	print("itemIndex")
     	local item = cc.uiloader:seekNodeByName(self.node, "item"..itemIndex)
     	if item == nil then break end
 
@@ -68,10 +68,10 @@ function JujiAwardPopup:initList()
 	         self:onClickGet(index)
 	    end)
 
-	    if isGetted then 
+	    if isGetted then
 	    	bg1:setVisible(false)
 	    	btn:setButtonImage(btn.NORMAL, "btn_lingqu3.png")
-	    elseif isAvaliable then 
+	    elseif isAvaliable then
 	    	btn:setButtonImage(btn.NORMAL, "btn_lingqu1.png")
 	    else
 	    	bg1:setVisible(false)
@@ -79,7 +79,7 @@ function JujiAwardPopup:initList()
 	    end
 
     	itemIndex = itemIndex + 1
-    end	
+    end
 end
 
 function JujiAwardPopup:onClickGet(itemIndex)
@@ -87,18 +87,18 @@ function JujiAwardPopup:onClickGet(itemIndex)
 	local isAvaliable = self.jujiMode:isScoreAwardAvailable(itemIndex)
 	local isGetted    = self.jujiMode:isScoreAwardGetted(itemIndex)
     local str = ""
-    if isGetted then 
-        str = "已领取！"
-    elseif isAvaliable then 
+    if isGetted then
+        str = LanguageManager.getStringForKey("string_hint51")
+    elseif isAvaliable then
     	self.jujiMode:getAward(itemIndex)
     	self:refreshUI()
-        str = "领取成功！"
+        str = LanguageManager.getStringForKey("string_hint6")
     else
-        str = "积分不足，无法领取！"
-    end	
+        str = LanguageManager.getStringForKey("string_hint161")
+    end
 
     ui:showPopup("commonPopup",{type = "style2",content = str, delay = 2},
-         {opacity = 100})    
+         {opacity = 100})
 end
 
 function JujiAwardPopup:onClickClose()

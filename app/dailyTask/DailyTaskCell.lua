@@ -14,16 +14,16 @@ function DailyTaskCell:ctor(index)
 end
 
 function DailyTaskCell:loadCCS()
-	cc.FileUtils:getInstance():addSearchPath("res/dailyTask/") 
+	cc.FileUtils:getInstance():addSearchPath("res/dailyTask/")
 end
 
 function DailyTaskCell:refreshUI()
 	--ui
-	if self.ui then 
+	if self.ui then
 		self.ui:removeSelf()
 	end
 	self.ui = cc.uiloader:load("res/dailyTask/item.ExportJson")
-    self:addChild(self.ui)  	
+    self:addChild(self.ui)
 	self.ui:setPosition(0, 0)
     self.property = self.model:getTaskData(self.index)
 	--label
@@ -48,7 +48,7 @@ function DailyTaskCell:refreshUI()
 	if pers >= 100 then pers = 100 end
 	local progress = cc.uiloader:seekNodeByName(self.ui, "progress")
 	progress:setPercent(pers)
-	
+
 	--can get
 	local isCanGet = self.property["isCanGet"]
 	local isGetted = self.property["isGetted"]
@@ -71,10 +71,10 @@ function DailyTaskCell:refreshUI()
         label_awardNum:setPosition(cc.p(420, 30))
         label_awardNum:setColor(cc.c3b(111, 31, 61))
     end
-    if isGetted then 
+    if isGetted then
     	setUI()
     	btn:setButtonEnabled(false)
-    elseif isCanGet then 
+    elseif isCanGet then
         setUI()
     else
     	bg1:setVisible(true)
@@ -87,7 +87,7 @@ function DailyTaskCell:refreshUI()
             self:onClickGet()
         else
             ui:showPopup("commonPopup",
-                 {type = "style1",content = "请正常连接网络后，再领取"},
+                 {type = "style1",content = LanguageManager.getStringForKey("string_hint49")},
                  {opacity = 0})
         end
     end)
@@ -99,27 +99,27 @@ function DailyTaskCell:checkNetWork()
         print("network isAvailable")
     else
         ui:showPopup("commonPopup",
-             {type = "style1",content = "当前网络连接失败，请确保网络连接正常"},
+             {type = "style1",content = LanguageManager.getStringForKey("string_hint50")},
              {opacity = 0})
-    end 
+    end
 end
 
 function DailyTaskCell:onClickGet()
 	local isCanGet = self.property["isCanGet"]
 	local isGetted = self.property["isGetted"]
     local str = ""
-    if isGetted then 
-        str = "已领取！"
-    elseif isCanGet then 
+    if isGetted then
+        str = LanguageManager.getStringForKey("string_hint51")
+    elseif isCanGet then
     	self.model:receiveTaskAward(self.property["index"])
-        str = "领取成功！"
+        str = LanguageManager.getStringForKey("string_hint6")
         self:refreshUI()
     else
-        str = "未完成，无法领取！"
-    end	
+        str = LanguageManager.getStringForKey("string_hint52")
+    end
 
     ui:showPopup("commonPopup",{type = "style2",content = str, delay = 2},
-         {opacity = 100})    		
+         {opacity = 100})
 end
 
 return DailyTaskCell
