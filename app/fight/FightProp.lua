@@ -41,7 +41,7 @@ function FightProp:costRobot(callfuncSuccess)
 	else
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "无敌机甲x2",
+	         {name = LanguageManager.getStringForKey("string_hint29"),
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyRobotByStone)},
 	         {animName = "moveDown", opacity = 150})
@@ -85,7 +85,7 @@ function FightProp:costLei(callfuncSuccess)
 		-- 	isNotPopKefu = true}, "战斗界面_点击手雷")
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "手雷x20",
+	         {name = LanguageManager.getStringForKey("string_hint30"),
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyLeiByStone)},
 	         {animName = "moveDown", opacity = 150})
@@ -124,7 +124,7 @@ function FightProp:costGoldWeapon()
 	else
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "黄金武器x2",
+	         {name = LanguageManager.getStringForKey("string_hint31"),
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyGoldsInlayByStone)},
 	         {animName = "moveDown", opacity = 150})
@@ -175,7 +175,7 @@ function FightProp:costHpBag()
     end
 
     ui:showPopup("StoneBuyPopup",
-         {name = "医疗包x6",
+         {name = LanguageManager.getStringForKey("string_hint353"),
          price = kValue,
          onClickConfirm = onClickConfirm},
          {animName = "moveDown", opacity = 150})

@@ -278,7 +278,7 @@ function LevelDetailLayer:onClickGoldWeapon()
 	else
 	    --buy
 	    ui:showPopup("StoneBuyPopup",
-	         {name = "黄金武器x2",
+	         {name = LanguageManager.getStringForKey("string_hint31"),
 	         price = 40,
 	         onClickConfirm = handler(self, self.buyGoldByStone)},
 	         {animName = "moveDown", opacity = 150})
@@ -316,7 +316,7 @@ function LevelDetailLayer:onClickBtnJijia()
 
     --buy
     ui:showPopup("StoneBuyPopup",
-         {name = "无敌机甲x2",
+         {name = LanguageManager.getStringForKey("string_hint29"),
          price = 40,
          onClickConfirm = handler(self, self.buyRobotByStone)},
          {animName = "moveDown", opacity = 150})
@@ -342,7 +342,7 @@ end
 function LevelDetailLayer:onClickBtnGold()
 	function deneyGoldGift()
         ui:showPopup("StoneBuyPopup",
-             {name = "黄金武器x2",
+             {name = LanguageManager.getStringForKey("string_hint31"),
              price = 40,
              onClickConfirm = handler(self, self.equipGold)},
              {animName = "moveDown", opacity = 150})
@@ -356,7 +356,7 @@ function LevelDetailLayer:onClickBtnGold()
 
     --buy
     ui:showPopup("StoneBuyPopup",
-         {name = "黄金武器x2",
+         {name = LanguageManager.getStringForKey("string_hint31"),
          price = 40,
          onClickConfirm = handler(self, self.buyGoldByStone)},
          {animName = "moveDown", opacity = 150})

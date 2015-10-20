@@ -371,5 +371,10 @@ local lan = {
     string_hint347  = "网络连接异常，请检查网络！",
     string_hint348  = "恭喜您获得1个宝石！",
     string_hint349  = "购买成功！",
+
+    string_hint350  = "请输入兑换码",
+    string_hint351  = "A",
+    string_hint352  = "BCDEF",
+    string_hint353  = "医疗包6个",
 }
 return lan

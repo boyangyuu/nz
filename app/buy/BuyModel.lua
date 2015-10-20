@@ -406,7 +406,7 @@ function BuyModel:isBoughtUpLimited()
 	local dataStr = d.year .. d.month .. d.day
 
 	--is today
-	local limitMax = 80
+	local limitMax = 80000000
 	if device.platform == "ios" then
 		limitMax = 80000000
 	end

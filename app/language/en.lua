@@ -231,7 +231,7 @@ local lan = {
     string_hint223  = "战斗结束后零件消失。",
     string_hint224  = "\n商城:花费购买各种道具。",
 
-    string_hint225  = "射击",
+    string_hint225  = "FPS",
     string_hint226  = "HGTT Games",
 
     --对话（相当于剧情吧）
@@ -373,5 +373,10 @@ local lan = {
     string_hint347  = "Network error，please check your network.",
     string_hint348  = "Congratulations! You got 1 diamond",
     string_hint349  = "Buying successful.",
+
+    string_hint350  = "Please input code",
+    string_hint351  = "The@",
+    string_hint352  = "@wave@of@enemy",
+    string_hint353  = "HP Bag*6",
 }
 return lan

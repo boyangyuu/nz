@@ -40,16 +40,16 @@ function AboutPopup:initButtons()
 end
 
 function AboutPopup:onClickBtnClose()
-	if self.popupName == "gonggao_1" then
-		ui:closePopup("AboutPopup", {animName = "normal"})
-		ui:showPopup("AboutPopup",{popupName = "gonggao_2"},{animName = "normal"})
-	elseif self.popupName == "gonggao_2" then
-		ui:closePopup("AboutPopup", {animName = "normal"})
-		if device.platform == "ios" then return end
-        ui:showPopup("AboutPopup",{popupName = "gonggao_3"},{animName = "normal"})
-    else
+	-- if self.popupName == "gonggao_1" then
+	-- 	ui:closePopup("AboutPopup", {animName = "normal"})
+	-- 	ui:showPopup("AboutPopup",{popupName = "gonggao_2"},{animName = "normal"})
+	-- elseif self.popupName == "gonggao_2" then
+	-- 	ui:closePopup("AboutPopup", {animName = "normal"})
+	-- 	if device.platform == "ios" then return end
+ --        ui:showPopup("AboutPopup",{popupName = "gonggao_3"},{animName = "normal"})
+ --    else
     	ui:closePopup("AboutPopup", {animName = "normal"})
-    end
+    -- end
 end
 
 function AboutPopup:initText()
@@ -105,12 +105,12 @@ function AboutPopup:initContent()
 		gameType:setString(LanguageManager.getStringForKey("string_hint225"))
 		local company = cc.uiloader:seekNodeByName(self.aboutNode, "company")
 		company:setString(LanguageManager.getStringForKey("string_hint226"))
-		local phone = cc.uiloader:seekNodeByName(self.aboutNode, "phone")
-		phone:setString("010-82602182")
+		-- local phone = cc.uiloader:seekNodeByName(self.aboutNode, "phone")
+		-- phone:setString("010-82602182")
 		local email = cc.uiloader:seekNodeByName(self.aboutNode, "email")
 		email:setString("2758942941@qq.com")
-		local qq = cc.uiloader:seekNodeByName(self.aboutNode, "qq")
-		qq:setString("2758942941")
+		-- local qq = cc.uiloader:seekNodeByName(self.aboutNode, "qq")
+		-- qq:setString("2758942941")
 	end
 end
 

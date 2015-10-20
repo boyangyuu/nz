@@ -61,7 +61,7 @@ end
 
 function Gun:getCooldown()
 	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
-	local baseValue = 1 / self.config.coolDown
+	local baseValue = self.config.coolDown
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
 	local value = scale * baseValue
@@ -109,7 +109,7 @@ end
 
 function Gun:getBulletNum()
 	assert(self.config.bulletNum, "bulletNum is nil bagIndex:"..self.bagIndex)
-	local baseValue = self.config.bulletNum
+	local baseValue = 1 / self.config.bulletNum
 	local value = 0.0
     local inlayValue, isInlayed = self.inlay:getInlayedValue("clip")
     if isInlayed then

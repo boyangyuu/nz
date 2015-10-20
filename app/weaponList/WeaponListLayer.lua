@@ -449,7 +449,7 @@ function WeaponListLayer:refreshComment()
     local isGot = self.weaponListModel:isWeaponExist(self.weaponId)
     if self.weaponRecord["partNum"] ~= "null" and not isGot then
         self.suipiannum:setVisible(true)
-        self.suipiannum:setString("DSLJ"..suipiannum.."/"..needSuipianNum)
+        self.suipiannum:setString("Aparts"..suipiannum.."/"..needSuipianNum)
     else
         self.suipiannum:setVisible(false)
     end

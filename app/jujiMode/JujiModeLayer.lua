@@ -131,7 +131,7 @@ function JujiModeLayer:onClickGoldWeapon()
 			return
 		end
         ui:showPopup("StoneBuyPopup",
-             {name = "黄金武器x2",
+             {name = LanguageManager.getStringForKey("string_hint31"),
              price = 40,
              onClickConfirm = confirmPopGoldGift},
              {animName = "moveDown", opacity = 150})

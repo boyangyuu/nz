@@ -17,6 +17,7 @@ function ActiveCodeLayer:initUI()
     local contentBox = cc.uiloader:seekNodeByName(self, "content")
     local btntrue = cc.uiloader:seekNodeByName(self, "btntrue")
     btntrue:setTouchEnabled(true)
+    contentBox:setPlaceHolder(LanguageManager.getStringForKey("string_hint350"))
     contentBox:setMaxLengthEnabled(true)
     contentBox:setMaxLength(25)
     self.inputString = ""

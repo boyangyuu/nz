@@ -42,7 +42,7 @@ end
 
 function LevelMapLayer:initUI()
     self:initChooseLayer()
-    self:initKefuLayer()
+    -- self:initKefuLayer()
     self:initFightActLayer()
     self:initGiftLayer()
 end
@@ -141,7 +141,7 @@ end
 
 function LevelMapLayer:initGiftLayer()
     --一角礼包
-    self:initUI_yijiaoGift()
+    -- self:initUI_yijiaoGift()
 
     --土豪礼包
     self:initUI_goldGift()
@@ -360,11 +360,6 @@ end
 
 function LevelMapLayer:initKefuLayer()
     --客服
-    self.telNum = cc.uiloader:seekNodeByName(self, "telNum")
-    self.telNum:setColor(cc.c3b(255, 0, 0))
-    self.telNum:enableOutline(cc.c4b(0, 0, 0,255), 2)
-    self.telNum:setString(LanguageManager.getStringForKey("string_hint170")..__kefuNum)
-    if device.platform == "ios" then self.telNum:setVisible(false) end
 
     local btnkefu = cc.uiloader:seekNodeByName(self.chooseRootNode, "btnkefu")
 
@@ -423,7 +418,6 @@ function LevelMapLayer:initChooseLayer()
             self:bgAction()
             self:panelAction()
             self.UserModel:panelAction()
-            self.telNum:setVisible(false)
         end
     end)
 
@@ -441,7 +435,6 @@ function LevelMapLayer:initChooseLayer()
             self:bgAction()
             self:panelAction()
             self.UserModel:panelAction()
-            self.telNum:setVisible(false)
         end
     end)
 end
@@ -587,7 +580,6 @@ function LevelMapLayer:animationEvent(armatureBack,movementType,movementID)
             self.ldArmature:getAnimation():play("leida" , -1, 1)
             self.levelNum:setString(self.curGroupId)
             self:refreshLevelLayer(self.curGroupId)
-            self.telNum:setVisible(false)
         end
     end
 end
@@ -622,13 +614,13 @@ function LevelMapLayer:refreshGift(event)
     btnXianshi:setVisible(not isBuyed)
 
 
-    local isBuyed   = self.buyModel:checkBought("yijiaoBag")
-    local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
-    btnFirstGift:setVisible(not isBuyed)
-    local isIOS = device.platform == "ios"
-    if not JavaUtils.isSIMJD() or isIOS then
-        btnFirstGift:setVisible(false)
-    end
+    -- local isBuyed   = self.buyModel:checkBought("yijiaoBag")
+    -- local btnFirstGift = cc.uiloader:seekNodeByName(self.chooseRootNode, "btngift")
+    -- btnFirstGift:setVisible(not isBuyed)
+    -- local isIOS = device.platform == "ios"
+    -- if not JavaUtils.isSIMJD() or isIOS then
+    --     btnFirstGift:setVisible(false)
+    -- end
 end
 
 function LevelMapLayer:initGuide()

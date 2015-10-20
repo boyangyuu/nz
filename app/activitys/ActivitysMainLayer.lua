@@ -75,18 +75,19 @@ function ActivitysMainLayer:loadCCS()
 
     --jieri
     self.btn_festival = cc.uiloader:seekNodeByName(self.ui, "btn_festival")
-    self.btn_festival:onButtonClicked(function ()
-        self:refreshListView("midAutumn")
-    end)
+    self.btn_festival:setVisible(false)
+    -- self.btn_festival:onButtonClicked(function ()
+    --     self:refreshListView("midAutumn")
+    -- end)
 
 
     --activeCode
     self.btn_activate = cc.uiloader:seekNodeByName(self.ui, "btn_activate")
     self.btn_activate:setVisible(false)
-    self:request()
-    self.btn_activate:onButtonClicked(function( event )
-        self:refreshListView("activeCode")
-    end)
+    -- self:request()
+    -- self.btn_activate:onButtonClicked(function( event )
+    --     self:refreshListView("activeCode")
+    -- end)
 end
 
 function ActivitysMainLayer:request()
