@@ -1,6 +1,6 @@
 local lan = {
     hello           = "Hello",
-    string_version  = "1.3.3",
+    string_version  = "1.0.0",
     string_hint1    = "Can't be empty.",
     string_hint2    = "Invalid promo code.",
     string_hint3    = "You already got the gift.",
@@ -59,7 +59,7 @@ local lan = {
     string_hint56   = "Finish hostage model 1 time",
     string_hint57   = "Finish prisoner escape model 1 time",
     string_hint58   = "Finish kill model 1 time",
-    string_hint59   = "New diverge of the military appears.",
+    string_hint59   = "New Enemy!",
     string_hint60   = "Sniper",
     string_hint61   = "Features:",
     string_hint62   = "Slow attack",
@@ -205,7 +205,7 @@ local lan = {
     string_hint199  = "Do you want to spend",
     string_hint200  = "Diamonds to highest equipped?",
 
-    string_hint201  = "全民突袭",
+    string_hint201  = "Rush Battlefield",
     --
     string_hint202  = "故事背景:\n",
     string_hint203  = "    故事发生在2034年，主人公“杰”收到姐姐的留言，要 ",
