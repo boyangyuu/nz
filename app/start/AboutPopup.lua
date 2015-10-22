@@ -54,7 +54,9 @@ end
 
 function AboutPopup:initText()
 	if self.popupName == "bangzhu" then
-		local text = {
+		local text = nil
+		if LanguageManager.getLanguageName() == "cn" then
+			text = {
 				-- "\n全民突袭 \n \n",
 				"故事背景:\n",
 				"    故事发生在2034年，主人公“杰”收到姐姐的留言，要",
@@ -80,7 +82,18 @@ function AboutPopup:initText()
 				"战斗结束后零件消失。",
 				"\n商城:花费购买各种道具。"
 				}
-
+			else
+				text = {
+				"Instruction:",
+				"\nAiming: Slide on the screen to move crosshair.",
+				"\nShooting: Find Shooting button on lower right corner, long-press for strafe.",
+				"\nGrenade: Aim to the enemy and press Grenade button.",
+				"\nShield: Press Shield button to withstand attack while shooting. ",
+				"\nMech. Change: Press Mech. button on upper right corner.",
+				"It can prevent all damage",
+				"\nGolden Change: Press Golden Change button to make huge damage to the enemy."
+				}
+			end
 		self.text = "";
 		for k,v in pairs(text) do
 			self.text = self.text..v
@@ -113,7 +126,5 @@ function AboutPopup:initContent()
 		-- qq:setString("2758942941")
 	end
 end
-
-
 
 return AboutPopup

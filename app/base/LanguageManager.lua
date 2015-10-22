@@ -52,11 +52,11 @@ end
 
 function LanguageManager.getLanguageName()
     local strLanguage = ""
-    if device.language == "cn" then
-        strLanguage = "zh"
-    else
+    -- if device.language == "cn" then
+    --     strLanguage = "zh"
+    -- else
         strLanguage = "en"
-    end
+    -- end
     return strLanguage
 end
 
