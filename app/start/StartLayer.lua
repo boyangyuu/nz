@@ -53,7 +53,7 @@ function StartLayer:initUI()
     self.btnActivate = cc.uiloader:seekNodeByName(self, "btnActivate")
     self.btnGonggao = cc.uiloader:seekNodeByName(self, "btnGonggao")
     self.btnRestore = cc.uiloader:seekNodeByName(self, "btnRestore")
-        self.btnRestore:setVisible(false)
+    self.btnRestore:setVisible(false)
 
     local seq = transition.sequence({
         cc.ScaleTo:create(0.6, 1.04),
