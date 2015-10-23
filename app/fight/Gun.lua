@@ -61,7 +61,7 @@ end
 
 function Gun:getCooldown()
 	assert(self.config.coolDown, "cooldown is nil bagIndex:"..self.bagIndex)
-	local baseValue = 1 / self.config.coolDown
+	local baseValue = self.config.coolDown
 	local isGold = md:getInstance("FightInlay"):getIsActiveGold()
 	local scale = isGold and self.config["goldCoolDownScale"] or 1.0
 	local value = scale * baseValue
@@ -154,16 +154,15 @@ function Gun:getReloadTime()
 end
 
 function Gun:getCritPercent()
-	-- local value
-	local value = (self.config["crit"] - 1)
-	-- local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
- --    if isInlayed then
- --        value = 0.00 + inlayValue
- --    else
- --        value = 0.00
- --    end
- -- 	return value
-	return value
+	local value
+	-- local value = (self.config["crit"] - 1)
+	local inlayValue, isInlayed = self.inlay:getInlayedValue("crit")
+    if isInlayed then
+        value = 0.00 + inlayValue
+    else
+        value = 0.00
+    end
+ 	return value
 end
 
 function Gun:getDemage()
