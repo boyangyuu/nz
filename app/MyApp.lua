@@ -83,8 +83,10 @@ function MyApp:initVariables()
     local stringSig = "()Ljava/lang/String;"
     local result = nil
     if device.platform == "ios" then
-        __versionId = LanguageManager.getStringForKey("string_version")
-        __appName = LanguageManager.getStringForKey("string_hint201")
+        -- __versionId = LanguageManager.getStringForKey("string_version")
+        -- __appName = LanguageManager.getStringForKey("string_hint201")
+        __versionId = "1.0.0"
+        __appName = "Rush Battlefield"
     elseif device.platform == "android" then
         result, __versionId = luaj.callStaticMethod(className, "getVersionName", params, stringSig)
         result, __appName = luaj.callStaticMethod(className, "getApplicationName", params, stringSig)
